@@ -27,7 +27,6 @@ import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 interface ToolPanelPopupComponentProps extends StrategyViewPopupProps<ToolPanelPopupComponent> {
   ToolPanelState: ToolPanelState;
   GridState: GridState;
-  Entitlements: Entitlement[] | undefined;
 
   onToolPanelSetFunctionButtons: (
     functionButtons: AdaptableFunctionButtons
@@ -41,8 +40,6 @@ interface ToolPanelPopupComponentProps extends StrategyViewPopupProps<ToolPanelP
   onToolPanelHideColumnsDropdown: () => ToolPanelRedux.ToolPanelHideColumnsDropdownAction;
   onToolPanelShowToolPanelsDropdown: () => ToolPanelRedux.ToolPanelShowToolPanelsDropdownAction;
   onToolPanelHideToolPanelsDropdown: () => ToolPanelRedux.ToolPanelHideToolPanelsDropdownAction;
-  onToolPanelShowGridInfoButton: () => ToolPanelRedux.ToolPanelShowGridInfoButtonAction;
-  onToolPanelHideGridInfoButton: () => ToolPanelRedux.ToolPanelHideGridInfoButtonAction;
 }
 
 export enum ToolPanelConfigView {
@@ -82,13 +79,13 @@ class ToolPanelPopupComponent extends React.Component<
     ).map(x => x.Label);
 
     let availableToolPanelNames: string[] = this.props.ToolPanelState.AvailableToolPanels!.filter(
-      at => this.isVisibleStrategy(at)
+      at => this.isFullStrategy(at)
     ).map(at => {
       return StrategyConstants.getFriendlyNameForStrategyId(at);
     });
 
     let visibleToolPanels: string[] = this.props.ToolPanelState.VisibleToolPanels!.filter(at =>
-      this.isVisibleStrategy(at)
+      this.isFullStrategy(at)
     ).map(at => {
       return StrategyConstants.getFriendlyNameForStrategyId(at);
     });
@@ -113,13 +110,6 @@ class ToolPanelPopupComponent extends React.Component<
           checked={this.props.ToolPanelState.ShowColumnsDropdown}
         >
           Columns Dropdown
-        </Checkbox>
-
-        <Checkbox
-          onChange={checked => this.onShowGridInfoButtonChanged(checked)}
-          checked={this.props.ToolPanelState.ShowGridInfoButton}
-        >
-          About (Grid) Button
         </Checkbox>
       </Flex>
     );
@@ -218,14 +208,6 @@ class ToolPanelPopupComponent extends React.Component<
     }
   }
 
-  onShowGridInfoButtonChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onToolPanelShowGridInfoButton();
-    } else {
-      this.props.onToolPanelHideGridInfoButton();
-    }
-  }
-
   onToolPanelButtonsChanged(selectedValues: AdaptableFunctionButtons) {
     let selectedFunctions: AdaptableFunctionButtons = selectedValues.map(
       sv => StrategyConstants.getIdForStrategyFriendlyName(sv) as AdaptableFunctionButton
@@ -240,14 +222,8 @@ class ToolPanelPopupComponent extends React.Component<
     this.props.onToolPanelSetToolPanels(selectedToolPanels);
   }
 
-  isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
-    let entitlement: Entitlement | undefined = this.props.Entitlements!.find(
-      x => x.FunctionName == functionName
-    );
-    if (entitlement) {
-      return entitlement.AccessLevel != 'Hidden';
-    }
-    return true;
+  isFullStrategy(functionName: AdaptableFunctionName): boolean {
+    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 
@@ -255,7 +231,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ToolPanelState: state.ToolPanel,
     GridState: state.Grid,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 
@@ -273,8 +248,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ToolPanelRedux.ToolPanelShowToolPanelsDropdown()),
     onToolPanelHideToolPanelsDropdown: () =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanelsDropdown()),
-    onToolPanelShowGridInfoButton: () => dispatch(ToolPanelRedux.ToolPanelShowGridInfoButton()),
-    onToolPanelHideGridInfoButton: () => dispatch(ToolPanelRedux.ToolPanelHideGridInfoButton()),
     onToolPanelSetToolPanels: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
   };

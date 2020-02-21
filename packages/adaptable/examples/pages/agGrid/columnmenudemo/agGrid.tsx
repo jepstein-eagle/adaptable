@@ -1,28 +1,46 @@
 import { useEffect } from 'react';
+
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
+import './index.css';
+
 import { GridOptions } from '@ag-grid-community/all-modules';
-import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  SearchChangedEventArgs,
+  MenuInfo,
+  AdaptableMenuItem,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableMenuItem, MenuInfo } from '../../../../src/PredefinedConfig/Common/Menu';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import Adaptable from '../../../../agGrid';
+import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var adaptableApi: AdaptableApi;
+
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(100);
+  const tradeCount: number = 100;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  //gridOptions.getContextMenuItems = getContextMenuItems;
 
-  //gridOptions.singleClickEdit = true;
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'column menu demo'
-  );
-  adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Column Menu Demo',
+
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+  };
   adaptableOptions.userInterfaceOptions = {
     // showAdaptableColumnMenu: true,
     // showAdaptableColumnMenu: false,
@@ -51,6 +69,7 @@ let demoConfig: PredefinedConfig = {
 
   UserInterface: {
     // the hardcoded way
+    /*
     ColumnMenuItems: [
       {
         Label: 'Mimise Dashboard',
@@ -88,24 +107,9 @@ let demoConfig: PredefinedConfig = {
         ],
       },
     ],
-  },
-};
+    */
+    // the function way
 
-export default () => {
-  useEffect(() => {
-    if (!(process as any).browser) {
-      return;
-    }
-
-    InitAdaptableDemo();
-  }, []);
-
-  return null;
-};
-
-/*
- // the function way
-    /*
     ColumnMenuItems: (menuinfo: MenuInfo) => {
       return menuinfo.Column.Sortable
         ? [
@@ -124,4 +128,17 @@ export default () => {
           ]
         : [];
     },
-    */
+  },
+};
+
+export default () => {
+  useEffect(() => {
+    if (!(process as any).browser) {
+      return;
+    }
+
+    InitAdaptableDemo();
+  }, []);
+
+  return null;
+};

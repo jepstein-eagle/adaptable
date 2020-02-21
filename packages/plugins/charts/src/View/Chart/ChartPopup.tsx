@@ -30,7 +30,7 @@ import {
 import { CategoryChartWizard } from './CategoryChart/Wizard/CategoryChartWizard';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
 import { SparklinesChartWizard } from './SparklinesChart/Wizard/SparklinesChartWizard';
-import { AccessLevel } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
+import { AccessLevel } from '@adaptabletools/adaptable/src/PredefinedConfig/EntitlementState';
 import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import EmptyContent from '@adaptabletools/adaptable/src/components/EmptyContent';
 import DropdownButton from '@adaptabletools/adaptable/src/components/DropdownButton';
@@ -99,18 +99,18 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.CategoryChart),
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.PieChart),
       label: 'Pie Chart',
     };
 
     let sparklinesChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.SparklinesChart),
       label: 'Sparklines Chart',
     };

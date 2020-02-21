@@ -317,29 +317,27 @@ export class AuditLogService implements IAuditLogService {
       adaptable_id: this.adaptable.adaptableOptions.adaptableId,
       number_of_missed_ping: this.numberOfMissedPing,
     };
-    let xhr = new XMLHttpRequest();
-    xhr.onerror = (ev: any) => {
-      LoggingHelper.LogAdaptableError('error sending ping: ' + ev.message);
-      this.SetCanSendLog(false);
-    };
-    xhr.ontimeout = (ev: ProgressEvent) => {
-      LoggingHelper.LogAdaptableError('timeout sending ping');
-      this.SetCanSendLog(false);
-    };
-    xhr.onload = (ev: ProgressEvent) => {
-      if (xhr.readyState == 4) {
-        if (xhr.status == 200) {
+
+    var url = this.adaptable.adaptableOptions.auditOptions.httpChannel;
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(pingMessage),
+    })
+      .then(response => {
+        if (response.status == 200) {
           this.SetCanSendLog(true);
         } else {
-          LoggingHelper.LogAdaptableError('error sending ping: ' + xhr.statusText);
+          LoggingHelper.LogAdaptableError('error sending ping: ' + response.statusText);
           this.SetCanSendLog(false);
         }
-      }
-    };
-    var url = '/auditlog';
-    xhr.open('POST', url, true);
-    xhr.setRequestHeader('Content-type', 'application/json');
-    xhr.send(JSON.stringify(pingMessage));
+      })
+      .catch(response => {
+        LoggingHelper.LogAdaptableError('error sending ping: ' + response.statusText);
+        this.SetCanSendLog(false);
+      });
   }
 
   private SetCanSendLog(enable: boolean) {
@@ -361,24 +359,18 @@ export class AuditLogService implements IAuditLogService {
     let obj = this.auditLogQueue.shift();
     // while (obj && this.sockJS.readyState == SockJS.OPEN) {
     while (obj) {
-      let xhr = new XMLHttpRequest();
-      xhr.onerror = (ev: any) =>
-        LoggingHelper.LogAdaptableError('error sending AuditLog: ' + ev.message);
-      xhr.ontimeout = (pe: ProgressEvent) =>
-        LoggingHelper.LogAdaptableError('timeout sending AuditLog');
-      xhr.onload = (pe: ProgressEvent) => {
-        if (xhr.readyState == 4) {
-          if (xhr.status != 200) {
-            LoggingHelper.LogAdaptableError('error sending AuditLog: ' + xhr.statusText);
-          }
-        }
-      };
-      var url = '/auditlog';
-      //we make the request async
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader('Content-type', 'application/json');
+      var url = this.adaptable.adaptableOptions.auditOptions.httpChannel;
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json',
+        },
+        body: JSON.stringify(obj),
+      }).catch(response => {
+        LoggingHelper.LogAdaptableError('error sending AuditLog: ' + response.statusText);
+        this.SetCanSendLog(false);
+      });
 
-      xhr.send(JSON.stringify(obj));
       obj = this.auditLogQueue.shift();
     }
   }
@@ -451,7 +443,7 @@ export class AuditLogService implements IAuditLogService {
       Header: header,
       Msg: message,
       AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-        MessageType.Error,
+        MessageType.Info,
         this.adaptable.adaptableOptions.auditOptions!.alertShowAsPopup as boolean
       ),
     };

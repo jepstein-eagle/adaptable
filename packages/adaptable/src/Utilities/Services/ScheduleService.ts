@@ -12,6 +12,7 @@ import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import DateExtensions from '../Extensions/DateExtensions';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
+import { LogAdaptableError } from '../Helpers/LoggingHelper';
 
 interface ScheduleJob {
   cancel: () => any;
@@ -201,7 +202,7 @@ export class ScheduleService implements IScheduleService {
             Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
           );
         } else if (glue42Schedule.Transmission == 'Live Data') {
-          console.log('we dont yet have live data for glue');
+          LogAdaptableError('we dont yet have live data for glue');
           //   this.adaptable.api.internalApi.dispatchReduxAction(
           //     Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
           //   );

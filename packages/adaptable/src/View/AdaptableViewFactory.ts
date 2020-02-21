@@ -26,6 +26,7 @@ import { CellValidationPopup } from './CellValidation/CellValidationPopup';
 import { GradientColumnPopup } from './GradientColumn/GradientColumnPopup';
 import { LayoutPopup } from './Layout/LayoutPopup';
 import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
+import { GridInfoPopup } from './GridInfo/GridInfoPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
@@ -92,6 +93,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FreeTextColumnPopup,
   Glue42Popup,
   Glue42LoginPopup,
+  GridInfoPopup,
   IPushPullPopup,
   IPushPullLoginPopup,
   IPushPullAddPagePopup,

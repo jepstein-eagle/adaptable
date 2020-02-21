@@ -154,7 +154,6 @@ class ColumnFilterToolPanelComponent extends React.Component<
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
-    Entitlements: state.Entitlements.FunctionEntitlements,
     IsQuickFilterActive: state.Grid.IsQuickFilterActive,
   };
 }

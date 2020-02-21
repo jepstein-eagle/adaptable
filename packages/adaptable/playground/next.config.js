@@ -1,43 +1,43 @@
-const path = require('path');
+const path = require("path")
 
-const withCSS = require('@zeit/next-css');
-const withSass = require('@zeit/next-sass');
-const withImages = require('next-images');
-const withFonts = require('next-fonts');
+const withCSS = require("@zeit/next-css")
+const withSass = require("@zeit/next-sass")
+const withImages = require("next-images")
+const withFonts = require("next-fonts")
 // make the app accept sources from everywhere in the monorepo
-const SRC_PATH = path.resolve('../../');
+const SRC_PATH = path.resolve("../../")
 
-const withMDX = require('@next/mdx')({
-  extension: /\.mdx?$/,
-});
+const withMDX = require("@next/mdx")({
+  extension: /\.mdx?$/
+})
 
 const withApp = (nextConfig = {}) => {
-  console.log('!', nextConfig);
+  console.log("!", nextConfig)
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
       config.module.rules.forEach(rule => {
         if (Array.isArray(rule.include)) {
           // accept files from anywhere in the monorepo
-          rule.include.push(SRC_PATH);
+          rule.include.push(SRC_PATH)
         }
-      });
+      })
 
-      config.resolve = config.resolve || {};
-      config.resolve.alias = config.resolve.alias || {};
-      config.resolve.alias.react = path.resolve('../node_modules/react');
-      config.resolve.alias['react-dom'] = path.resolve('../node_modules/react-dom');
-      config.resolve.alias['styled-components'] = path.resolve('../node_modules/styled-components');
-      config.resolve.alias.redux = path.resolve('../node_modules/redux');
-      config.resolve.alias['react-redux'] = path.resolve('../node_modules/react-redux');
+      config.resolve = config.resolve || {}
+      config.resolve.alias = config.resolve.alias || {}
+      config.resolve.alias.react = path.resolve("../node_modules/react")
+      config.resolve.alias["react-dom"] = path.resolve("../node_modules/react-dom")
+      config.resolve.alias["styled-components"] = path.resolve("../node_modules/styled-components")
+      config.resolve.alias.redux = path.resolve("../node_modules/redux")
+      config.resolve.alias["react-redux"] = path.resolve("../node_modules/react-redux")
 
-      if (typeof nextConfig.webpack === 'function') {
-        return nextConfig.webpack(config, options);
+      if (typeof nextConfig.webpack === "function") {
+        return nextConfig.webpack(config, options)
       }
 
-      return config;
-    },
-  });
-};
+      return config
+    }
+  })
+}
 
 // const withApp = (nextConfig = {}) => {
 //   console.log(nextConfig);
@@ -61,15 +61,15 @@ module.exports = withApp(
       Object.assign(
         {},
         withMDX({
-          pageExtensions: ['js', 'jsx', 'md', 'mdx', 'tsx', 'ts'],
+          pageExtensions: ["js", "jsx", "md", "mdx", "tsx", "ts"]
         }),
         {
-          cssModules: false,
+          cssModules: false
         }
       )
     )
   )
-);
+)
 // const withTypescript = (nextConfig = {}) => {
 //   if (!nextConfig.pageExtensions) {
 //     nextConfig.pageExtensions = ['jsx', 'js', 'ts', 'tsx', 'mdx'];

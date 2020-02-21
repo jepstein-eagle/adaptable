@@ -10,7 +10,6 @@ import {
   IConfirmationPopup,
   IAlertPopup,
   ILoadingPopup,
-  IGridInfoPopup,
   AdaptableAlert,
 } from '../../Utilities/Interface/IMessage';
 import { StrategyParams } from '../../View/Components/SharedProps/StrategyViewPopupProps';
@@ -20,8 +19,6 @@ export const POPUP_SHOW_SCREEN = 'POPUP_SHOW_SCREEN';
 export const POPUP_HIDE_SCREEN = 'POPUP_HIDE_SCREEN';
 export const POPUP_SHOW_LOADING = 'POPUP_SHOW_LOADING';
 export const POPUP_HIDE_LOADING = 'POPUP_HIDE_LOADING';
-export const POPUP_SHOW_GRID_INFO = 'POPUP_SHOW_GRID_INFO';
-export const POPUP_HIDE_GRID_INFO = 'POPUP_HIDE_GRID_INFO';
 export const POPUP_SHOW_ALERT = 'POPUP_SHOW_ALERT';
 export const POPUP_HIDE_ALERT = 'POPUP_HIDE_ALERT';
 export const POPUP_SHOW_PROMPT = 'POPUP_SHOW_PROMPT';
@@ -44,10 +41,6 @@ export interface PopupHideScreenAction extends Redux.Action {}
 export interface PopupShowLoadingAction extends Redux.Action {}
 
 export interface PopupHideLoadingAction extends Redux.Action {}
-
-export interface PopupShowGridInfoAction extends Redux.Action {}
-
-export interface PopupHideGridInfoAction extends Redux.Action {}
 
 export interface PopupShowAlertAction extends Redux.Action {
   Alert: AdaptableAlert;
@@ -113,13 +106,13 @@ export const PopupHideLoading = (): PopupHideLoadingAction => ({
   type: POPUP_HIDE_LOADING,
 });
 
-export const PopupShowGridInfo = (): PopupShowGridInfoAction => ({
-  type: POPUP_SHOW_GRID_INFO,
-});
+//export const PopupShowGridInfo = (): PopupShowGridInfoAction => ({
+//  type: POPUP_SHOW_GRID_INFO,
+//});
 
-export const PopupHideGridInfo = (): PopupHideGridInfoAction => ({
-  type: POPUP_HIDE_GRID_INFO,
-});
+//export const PopupHideGridInfo = (): PopupHideGridInfoAction => ({
+//  type: POPUP_HIDE_GRID_INFO,
+//});
 
 export const PopupShowPrompt = (Prompt: IUIPrompt): PopupShowPromptAction => ({
   type: POPUP_SHOW_PROMPT,
@@ -165,9 +158,6 @@ const initialPopupState: PopupState = {
 
   LoadingPopup: {
     ShowLoadingPopup: true,
-  },
-  GridInfoPopup: {
-    ShowGridInfoPopup: false,
   },
   AlertPopup: {
     ShowAlertPopup: false,
@@ -324,14 +314,6 @@ export const PopupReducer: Redux.Reducer<PopupState> = (
     case POPUP_HIDE_LOADING: {
       let newLoadingPopup: ILoadingPopup = { ShowLoadingPopup: false };
       return Object.assign({}, state, { LoadingPopup: newLoadingPopup });
-    }
-    case POPUP_SHOW_GRID_INFO: {
-      let newGridInfoPopup: IGridInfoPopup = { ShowGridInfoPopup: true };
-      return Object.assign({}, state, { GridInfoPopup: newGridInfoPopup });
-    }
-    case POPUP_HIDE_GRID_INFO: {
-      let newGridInfoPopup: IGridInfoPopup = { ShowGridInfoPopup: false };
-      return Object.assign({}, state, { GridInfoPopup: newGridInfoPopup });
     }
     case POPUP_CLEAR_PARAM: {
       let newScreenPopup: IScreenPopup = {

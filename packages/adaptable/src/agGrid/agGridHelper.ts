@@ -77,6 +77,7 @@ import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
 import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../Utilities/ObjectFactory';
+import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -168,6 +169,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(adaptable));
     strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
 
+    strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
 
@@ -526,6 +528,7 @@ export class agGridHelper {
       GridCell: clickedCell,
       Column: column,
       RowNode: params.node,
+      IsGroupedNode: params.node ? params.node.group : false,
       IsSingleSelectedColumn: isSingleSelectedColumn,
       PrimaryKeyValue: primaryKeyValue,
     };
@@ -756,6 +759,37 @@ export class agGridHelper {
             : customSortStrategy.getComparerFunction(groupCustomSort);
           this.adaptable.setCustomSort(colId, customSortComparerFunction);
         }
+      }
+    }
+  }
+
+  public checkShouldClearExistingFiltersOrSearches(): void {
+    // if they have selected to clear column filters on startup then do it
+    if (this.adaptable.adaptableOptions.filterOptions!.clearFiltersOnStartUp) {
+      if (
+        ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.columnFilterApi.getAllColumnFilter())
+      ) {
+        LoggingHelper.LogWarning(
+          'Clearing existing Column Filters as "clearFiltersOnStartUp" is true'
+        );
+        this.adaptable.api.columnFilterApi.clearAllColumnFilter();
+      }
+    }
+    // if they have selected to clear searches on startup then do it
+    if (this.adaptable.adaptableOptions.searchOptions!.clearSearchesOnStartUp) {
+      if (
+        StringExtensions.IsNotNullOrEmpty(
+          this.adaptable.api.quickSearchApi.getQuickSearchState().QuickSearchText
+        ) ||
+        ArrayExtensions.IsNotNullOrEmpty(
+          this.adaptable.api.advancedSearchApi.getAllAdvancedSearch()
+        ) ||
+        ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.dataSourceApi.getAllDataSource())
+      ) {
+        LoggingHelper.LogWarning('Clearing existing Searches as "clearSearchesOnStartUp" is true');
+        this.adaptable.api.quickSearchApi.clearQuickSearch();
+        this.adaptable.api.advancedSearchApi.clearAdvancedSearch();
+        this.adaptable.api.dataSourceApi.clearDataSource();
       }
     }
   }

@@ -50,10 +50,6 @@ export interface ILoadingPopup {
   ShowLoadingPopup: boolean;
 }
 
-export interface IGridInfoPopup {
-  ShowGridInfoPopup: boolean;
-}
-
 export interface IAlertPopup {
   ShowAlertPopup: boolean;
   Header: string;

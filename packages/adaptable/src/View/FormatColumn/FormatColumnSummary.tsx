@@ -161,7 +161,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
     Columns: state.Grid.Columns,
     FormatColumns: state.FormatColumn.FormatColumns,
     ColorPalette: state.UserInterface.ColorPalette,
-    Entitlements: state.Entitlements.FunctionEntitlements,
     StyleClassNames: state.UserInterface.StyleClassNames,
   };
 }

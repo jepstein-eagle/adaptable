@@ -21,7 +21,7 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   const tickingDataHelper = new TickingDataHelper();
-  const useTickingData: boolean = true;
+  const useTickingData: boolean = false;
 
   const adaptableOptions: AdaptableOptions = {
     vendorGrid: gridOptions,
@@ -30,6 +30,8 @@ function InitAdaptableDemo() {
     adaptableId: 'audit demo',
 
     auditOptions: {
+      httpChannel: 'https://adaptable-auditlog.netlify.com/.netlify/functions/auditlog',
+      alertShowAsPopup: true,
       auditInternalStateChanges: {
         //  auditAsEvent: true,
         //  auditToConsole: true,
@@ -39,7 +41,7 @@ function InitAdaptableDemo() {
         //    auditToConsole: true,
       },
       auditTickingDataUpdates: {
-        auditAsEvent: true,
+        //   auditAsEvent: true,
         //    auditToConsole: true,
       },
       auditUserStateChanges: {
@@ -47,8 +49,9 @@ function InitAdaptableDemo() {
         //  auditToConsole: true,
       },
       auditCellEdits: {
-        // auditAsEvent: true,
+        auditAsAlert: true,
         //  auditToConsole: true,
+        //  auditToHttpChannel: true,
       },
     },
   };

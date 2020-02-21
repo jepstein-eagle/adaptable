@@ -6,12 +6,12 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IColItem } from '../UIInterfaces';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Flex } from 'rebass';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
   ColumnFilters: ColumnFilter[];

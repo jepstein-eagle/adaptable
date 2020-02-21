@@ -1,3 +1,23 @@
+## 6.0.9
+
+Fixing alert bug in Object Factory
+
+## 6.0.8
+
+Doing a proper merge of recent changes in Dev
+
+## 6.0.7
+
+More Audit Log related types exported
+
+## 6.0.6
+
+Update to Audit Log so user can specify name of server to run audit log
+
+## 6.0.5
+
+Fix OpenFinHelper so it doesn't break tsc build
+
 ## 6.0.4
 
 Fix bug in state management preventing changes to Application Data Entries at run-time

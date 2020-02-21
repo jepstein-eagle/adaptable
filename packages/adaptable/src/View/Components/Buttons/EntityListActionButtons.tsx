@@ -3,9 +3,10 @@ import * as Redux from 'redux';
 
 import { ButtonEdit } from './ButtonEdit';
 import { ButtonDelete } from './ButtonDelete';
-import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+
 import { Flex } from 'rebass';
 import { ButtonShare } from './ButtonShare';
+import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
@@ -44,7 +45,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
     overrideDisableShare: false,
     ConfirmDeleteAction: null,
     EntityType: '',
-    AccessLevel: AccessLevel.Full,
+    AccessLevel: 'Full',
     editSize: 'xsmall',
     deleteSize: 'xsmall',
     shareSize: 'xsmall',
@@ -69,9 +70,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               fill: 'var(--ab-color-text-on-info)',
               background: 'var(--ab-color-info)',
             }}
-            disabled={
-              this.props.overrideDisableEdit || this.props.AccessLevel == AccessLevel.ReadOnly
-            }
+            disabled={this.props.overrideDisableEdit || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipEdit}
             AccessLevel={this.props.AccessLevel}
           />
@@ -87,9 +86,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               fill: 'var(--ab-color-text-on-error)',
               background: 'var(--ab-color-error)',
             }}
-            disabled={
-              this.props.overrideDisableDelete || this.props.AccessLevel == AccessLevel.ReadOnly
-            }
+            disabled={this.props.overrideDisableDelete || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipDelete}
             ConfirmAction={this.props.ConfirmDeleteAction}
             ConfirmationMsg={'Are you sure you want to delete this ' + this.props.EntityType + '?'}
@@ -101,9 +98,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
           <ButtonShare
             onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
             style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
-            disabled={
-              this.props.overrideDisableShare || this.props.AccessLevel == AccessLevel.ReadOnly
-            }
+            disabled={this.props.overrideDisableShare || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}
           />

@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 
-import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
@@ -34,6 +34,7 @@ function InitAdaptableDemo() {
 
     vendorGrid: {
       ...gridOptions,
+      rowModelType: 'serverSide',
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
@@ -45,10 +46,41 @@ function InitAdaptableDemo() {
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
+  adaptableOptions.filterOptions = {
+    clearFiltersOnStartUp: true,
+  };
+  adaptableOptions.searchOptions = {
+    clearSearchesOnStartUp: true,
+  };
 
   api = Adaptable.init(adaptableOptions);
 
+  const TOTAL_COUNT = 100;
+  // create ServerSideDatasource with a reference to your server
+  class ServerSideDatasource {
+    getRows(params: any) {
+      console.log(params);
+
+      let rows = examplesHelper.getTradesRange(
+        params.request.startRow,
+        params.request.endRow - params.request.startRow
+      );
+      if (params.request.sortInfo) {
+        // rows.sort
+      }
+      var lastRow = TOTAL_COUNT <= params.endRow ? TOTAL_COUNT : -1;
+
+      console.log(rows);
+      params.successCallback(rows, lastRow);
+    }
+  }
+
+  // register Server-side Datasource with the grid
+
+  var datasource = new ServerSideDatasource();
+
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    info.vendorGrid.api.setServerSideDatasource(datasource);
     // to see which is the pinned row then do...
     //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
   });
@@ -61,7 +93,7 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
+    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
@@ -73,7 +105,7 @@ let demoConfig: PredefinedConfig = {
   SystemStatus: {
     // ShowAlert: false,
     DefaultStatusMessage: 'This is default message and its quite long',
-    DefaultStatusType: 'Warning',
+    DefaultStatusType: 'Success',
     StatusMessage: 'overriding with this',
     StatusType: 'Error',
   },
@@ -99,7 +131,7 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnSorts: [],
         Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'fixing a bug',
+        Name: 'design-time layout',
         // GroupedColumns: ['currency'],
         GroupedColumns: [],
       },

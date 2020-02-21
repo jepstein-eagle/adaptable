@@ -14,8 +14,6 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
@@ -136,7 +134,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
-    Entitlements: state.Entitlements.FunctionEntitlements,
     IsQuickFilterActive: state.Grid.IsQuickFilterActive,
   };
 }

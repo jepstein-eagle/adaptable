@@ -8,8 +8,8 @@ import icons from '../icons';
 
 import { ReactComponentLike } from 'prop-types';
 import Tooltip from '../Tooltip';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { IconProps } from '../icons/DefaultIcon';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
 export const baseClassName = 'ab-SimpleButton';
 
@@ -91,11 +91,11 @@ const SimpleButton = (props: SimpleButtonProps) => {
     (buttonProps as any).type = type ? type : 'button';
   }
 
-  if (accessLevel === AccessLevel.Hidden) {
+  if (accessLevel === 'Hidden') {
     return null;
   }
 
-  if (accessLevel === AccessLevel.ReadOnly) {
+  if (accessLevel === 'ReadOnly') {
     disabled = true;
   }
 

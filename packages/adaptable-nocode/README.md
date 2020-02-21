@@ -1,2 +1,0 @@
-# Adaptable no-code wizard
-

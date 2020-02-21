@@ -10,10 +10,9 @@ import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IToolPanelComp, IToolPanelParams } from '@ag-grid-community/all-modules';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { Flex, Box } from 'rebass';
 import { IAdaptable } from '../../../types';
-import { Entitlement } from '../../../PredefinedConfig/EntitlementState';
+import { Entitlement, AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelFactory } from '../../AdaptableViewFactory';
@@ -46,8 +45,6 @@ interface AdaptableToolPanelProps {
   ShowFunctionsDropdown: boolean;
   ShowColumnsDropdown: boolean;
   ShowToolPanelsDropdown: boolean;
-  ShowGridInfoButton: boolean;
-  FunctionEntitlements: Entitlement[];
   MainMenuItems: AdaptableMenuItem[];
   Columns: AdaptableColumn[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
@@ -58,7 +55,6 @@ interface AdaptableToolPanelProps {
   onSetToolPanelVisibility: (
     toolPanels: AdaptableToolPanels
   ) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
-  onShowGridInfo: () => PopupRedux.PopupShowGridInfoAction;
 }
 
 export interface AdaptableToolPanelState {}
@@ -91,9 +87,9 @@ class AdaptableToolPanelComponent extends React.Component<
                 variant="text"
                 className={`ab-ToolPanel__Home__${kebabCase(menuItem.Label)}`}
                 tooltip={menuItem.Label}
-                //  disabled={this.props.AccessLevel == AccessLevel.ReadOnly}
+                //  disabled={this.props.AccessLevel == 'ReadOnly' }
                 onClick={() => this.props.onClick(menuItem.ReduxAction)}
-                AccessLevel={AccessLevel.Full}
+                AccessLevel={'Full'}
               />
             );
           }
@@ -114,18 +110,15 @@ class AdaptableToolPanelComponent extends React.Component<
     });
 
     // Build the Tool Panels
-    let hiddenEntitlements: Entitlement[] = this.props.FunctionEntitlements.filter(
-      e => e.AccessLevel == 'Hidden'
-    );
     let visibleToolPanels = this.props.VisibleToolsPanels.filter(vt =>
-      ArrayExtensions.NotContainsItem(hiddenEntitlements, vt)
+      this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(vt)
     );
     let visibleToolPanelControls = visibleToolPanels.map((control, idx) => {
-      let accessLevel: AccessLevel = AdaptableHelper.getEntitlementAccessLevelForStrategy(
-        this.props.FunctionEntitlements,
+      let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
         control
       );
-      if (accessLevel != AccessLevel.Hidden) {
+
+      if (accessLevel != 'Hidden') {
         let toolPanel = AdaptableToolPanelFactory.get(control);
         if (toolPanel) {
           let toolPanelElememt = React.createElement(toolPanel, {
@@ -158,24 +151,12 @@ class AdaptableToolPanelComponent extends React.Component<
     // function menu items
     let menuItems = allowedMenuItems.map(menuItem => {
       return {
-        //  disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+        //  disabled: this.props.AccessLevel == 'ReadOnly' ,
         onClick: () => this.props.onClick(menuItem.ReduxAction),
         icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
       };
     });
-
-    // gridInfo button
-    let gridInfoButton = (
-      <SimpleButton
-        tooltip="Grid Info"
-        icon={'info'}
-        variant="text"
-        className="ab-ToolPanel__info"
-        onClick={() => this.onClickGridInfo()}
-        AccessLevel={AccessLevel.Full}
-      />
-    );
 
     let functionsDropdown = (
       <DropdownButton
@@ -325,17 +306,12 @@ class AdaptableToolPanelComponent extends React.Component<
           {this.props.ShowFunctionsDropdown && functionsDropdown}
           {this.props.ShowToolPanelsDropdown && toolPanelsDropDown}
           {this.props.ShowColumnsDropdown && columnsDropDown}
-          {this.props.ShowGridInfoButton && gridInfoButton}
           {configureButton}
         </Flex>
         {ArrayExtensions.IsNotNullOrEmpty(shortcuts) ? <div>{grouped_shortcut_rows}</div> : null}
         {visibleToolPanelControls}
       </Flex>
     );
-  }
-
-  onClickGridInfo() {
-    this.props.onShowGridInfo();
   }
 
   onSetColumnVisibility(name: string) {
@@ -371,8 +347,6 @@ function mapStateToProps(state: AdaptableState) {
     ShowFunctionsDropdown: state.ToolPanel.ShowFunctionsDropdown,
     ShowColumnsDropdown: state.ToolPanel.ShowColumnsDropdown,
     ShowToolPanelsDropdown: state.ToolPanel.ShowToolPanelsDropdown,
-    ShowGridInfoButton: state.ToolPanel.ShowGridInfoButton,
-    FunctionEntitlements: state.Entitlements.FunctionEntitlements,
     MainMenuItems: state.Grid.MainMenuItems,
     Columns: state.Grid.Columns,
   };
@@ -385,7 +359,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetToolPanelVisibility: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),
-    onShowGridInfo: () => dispatch(PopupRedux.PopupShowGridInfo()),
   };
 }
 

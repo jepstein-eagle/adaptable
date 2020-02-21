@@ -48,17 +48,6 @@ export interface ToolPanelState extends RunTimeState {
   VisibleButtons?: AdaptableFunctionButtons;
 
   /**
-   * Whether to show the Grid Info button in the Adaptable ToolPanel.
-   *
-   * If 'true' then the button will be visible; clicking the button will open the GridInfo screen giving details of the Current Grid, version, row count etc.
-   *
-   * The GridInfo screen also a tab allowing you to see the currently selected set of Adaptable Options.
-   *
-   * **Default Value**: true
-   */
-  ShowGridInfoButton?: boolean;
-
-  /**
    * Whether to show the Functions dropdown in the Adaptable ToolPanel.
    *
    * If 'true' then the dropdown will be visible as the first item (with a 'house' icon).

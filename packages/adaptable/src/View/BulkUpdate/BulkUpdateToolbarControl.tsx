@@ -21,7 +21,7 @@ import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
-import { StatusColour, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { StatusColour } from '../../PredefinedConfig/Common/Enums';
 import { Flex } from 'rebass';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
@@ -78,7 +78,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     );
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      this.props.AccessLevel == 'ReadOnly' ||
       !this.props.BulkUpdateValidationResult.IsValid ||
       this.props.Adaptable.api.internalApi.isGridInPivotMode();
 

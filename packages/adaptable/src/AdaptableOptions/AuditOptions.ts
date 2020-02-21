@@ -5,7 +5,9 @@
  *
  * Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
  *
- * Each Audit message is essentially a combination of an `AuditTrigger` and an `AuditDestination`, and packaged as a simple JSON object.
+ * Each Audit message is essentially a combination of an `AuditMessage`, an `AuditTrigger` and an `AuditDestination`, packaged as a simple JSON object.
+ *
+ * There are 5 AuditTriggers and 4 AuditDestinations.
  *
  * You can set as many AuditTriggers as you want, and for each `AuditTrigger`, select as many AuditDestinations as you require.
  *
@@ -15,15 +17,15 @@
  *
  * - **TickingDataUpdate**: whenever the data in AdapTable is updated as a result of external action
  *
- * - **FunctionEvent**: whenever an AdapTable function is run (e.g. Quick Search, Smart Edit, Export)
+ * - **FunctionEvent**: whenever an AdapTable function is run (e.g. Quick Search, Smart Edit, Export etc.)
  *
  * - **UserStateChange**: whenever a change is made to the User's state (e.g. selected a new layout)
  *
- * - **InternalStateChange**: whenever a change is made to AdapTable's internal state (e.g. new cells selected)
+ * - **InternalStateChange**: whenever a change is made to AdapTable's internal state (e.g. new cells selected, a popup displayed)
  *
  * The 4 available Audit Destinations are:
  *
- * - **Http Channel**: If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. he Elastic Stack).
+ * - **Http Channel**: If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. the Elastic Stack).  You can also, optionally, set the name of the Http Channel (or use the default of '/auditlog').
  *
  * - **Console**: Audits messages to the console - useful for testing, support and debug purposes
  *
@@ -31,7 +33,7 @@
  *
  * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_api_auditeventapi_.auditeventapi.html)
  *
- * **The default for each option for each Audit Type is false** - meaning that audit is **only triggered** if you set at least one destination for one trigger to true.
+ * **The default for each option for each Audit Type is false** - meaning that audit is **only triggered** if you set at least one destination for one trigger to `true`.
  *
  * **Audit Options Example**
  *
@@ -55,7 +57,8 @@
  * auditTickingDataUpdates:{
  *    auditToConsole: true,
  * }
- *  pingInterval: 50,
+ *  httpChannel: '/MyChannel',
+ *  pingInterval: 120,
  *  auditLogsSendInterval: 3,
  *};
  * ```
@@ -63,6 +66,9 @@
  * In this example we have chosen to listen to all 5 of the Audit types (corresponding to each of the Audit Triggers).
  *
  * We have selected different Audit Destinations for each type (sometimes choosing more than one destination).
+ *
+ * We have also changed the default values so that Audit Log will send messages every 3 seconds, and - when using the Http Channel - will ping to test the connection every 2 minutes, using the the channel name that we provided.
+ *
  */
 export interface AuditOptions {
   /**
@@ -115,7 +121,16 @@ export interface AuditOptions {
   auditTickingDataUpdates?: AuditDestinationOptions;
 
   /**
-   * How often (in seconds) the Audit Log should ping to check that the listening service is up and running (if its been set).
+   *  The name of the channnel to use if auditing to an Http Channel.
+   *
+   * **Note: the Audit Log will only send audit updates to the Http Channel if one of the 4 audit options has *auditToHttpChannel* as set to true.**
+   *
+   *  **Default Value: '/auditlog' **
+   */
+  httpChannel?: string;
+
+  /**
+   * How often (in seconds) the Audit Log should ping to check that the Http Channel is up and running (if its been set).
    *
    * **Note: the Audit Log will only ping if at least one of the 4 audit options has *auditToHttpChannel* as set to true.**
    *
@@ -154,16 +169,16 @@ export interface AuditOptions {
  */
 export interface AuditDestinationOptions {
   /**
-   * Sends the Audit Messages to an (internal) HTTP channel for you to listen to.
+   * Sends the Audit Log Message to an (internal) HTTP channel for you to listen to.
    *
-   * This is the most popular option though requires you to use your internal, listening software (like the Elastic stack) to wire it up.
+   * This is the most popular option, though it requires you to use your internal, listening software (like the Elastic stack) to wire it up.
    *
    * **Default Value: false**
    */
   auditToHttpChannel?: boolean;
 
   /**
-   * Sends the Audit Message to the Console.
+   * Sends the Audit Log Message to the Console.
    *
    * Primarily used by developers as a useful design-time or debugging tool when building the application.
    *
@@ -174,7 +189,7 @@ export interface AuditDestinationOptions {
   auditToConsole?: boolean;
 
   /**
-   * Fires the Audit Message as an Audit Log (AuditLogEventArgs) event.
+   * Fires the Audit Log Message as an Audit Log (AuditLogEventArgs) event.
    *
    * You listen to this Event the same way that you do all other Adaptable events.
    *
@@ -183,7 +198,7 @@ export interface AuditDestinationOptions {
   auditAsEvent?: boolean;
 
   /**
-   * Fires the Audit Message as an Alert.
+   * Fires the Audit Log Message as an Alert.
    *
    * This Alert will appear in the Alert toolbar and, optionally, also as a popup (based on the value of the *alertShowAsPopup* property).
    *

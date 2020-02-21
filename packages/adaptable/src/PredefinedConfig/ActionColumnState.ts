@@ -64,7 +64,9 @@ export interface ActionColumnState extends DesignTimeState {
 /**
  * The `ActionColumn` object used in [Action Column State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html).
  *
- * An Action Column will be dynamically added to your Grid and display a button, which when clicked will trigger the `ActionColumnClicked` event.
+ * An Action Column will be dynamically added to your Grid and automatically display a button.
+ *
+ * When this button is clicked, it will trigger the `ActionColumnClicked` event to which you can subscribe and perform any functin
  *
  * You are, optionally, able to provide your own render function and specify for each row whether the button is displayed.
  */

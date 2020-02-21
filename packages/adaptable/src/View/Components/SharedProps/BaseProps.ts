@@ -3,9 +3,9 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
-import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
+import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 
 export interface BaseProps<View> extends React.ClassAttributes<View> {
   AccessLevel: AccessLevel;

@@ -28,6 +28,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
                 SortedColumns={this.props.Columns.filter(
                   x => !customSorts.find(y => y.ColumnId == x.ColumnId)
                 )}
+                CustomSorts={customSorts}
               />
             ),
           },

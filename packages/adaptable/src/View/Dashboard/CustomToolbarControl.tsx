@@ -8,17 +8,19 @@ import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import SimpleButton from '../../components/SimpleButton';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
-import { CustomToolbar } from '../../PredefinedConfig/DashboardState';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 import {
   ToolbarButtonClickedInfo,
   ToolbarButtonClickedEventArgs,
 } from '../../Api/Events/ToolbarButtonClicked';
 
+/**
+ * A Custom Toolbar has 2 Divs
+ * One for custom content
+ * One for just buttons
+ */
 interface CustomToolbarControlComponentProps
-  extends CustomToolbarStrategyViewPopupProps<CustomToolbarControlComponent> {
-  //  CustomToolbars: CustomToolbar[];
-}
+  extends CustomToolbarStrategyViewPopupProps<CustomToolbarControlComponent> {}
 class CustomToolbarControlComponent extends React.Component<
   CustomToolbarControlComponentProps,
   {}
@@ -27,6 +29,7 @@ class CustomToolbarControlComponent extends React.Component<
     let showGlyphicon: boolean = StringExtensions.IsNotNullOrEmpty(this.props.CustomToolbar.Glyph);
 
     let contentsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__contents';
+    let buttonsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__buttons';
 
     return (
       <PanelDashboard
@@ -35,18 +38,14 @@ class CustomToolbarControlComponent extends React.Component<
         showConfigureButton={false}
         showGlyphIcon={showGlyphicon}
         glyphicon={this.props.CustomToolbar.Glyph}
-        onClose={() => this.props.onClose(this.props.CustomToolbar.Name)} //this.props.customToolbar.Name)} // need to do...
+        onClose={() => this.props.onClose(this.props.CustomToolbar.Name)}
       >
         <div
           id={contentsDivId}
           className="CustomToolBarContents ab-CustomToolbar__contents ab-CustomToolbar__contents--render"
           style={{ minHeight: 22 }}
         />
-        <div
-          id="ab-CustomToolbar__buttons"
-          className="ab-CustomToolbar__buttons"
-          style={{ minHeight: 22 }}
-        >
+        <div id={buttonsDivId} className="ab-CustomToolbar__buttons" style={{ minHeight: 22 }}>
           {this.props.CustomToolbar.ToolbarButtons &&
             this.props.CustomToolbar.ToolbarButtons.map((button: ToolbarButton, index: number) => {
               let toolbarButtonClickedInfo: ToolbarButtonClickedInfo = {
@@ -86,9 +85,7 @@ class CustomToolbarControlComponent extends React.Component<
 }
 
 function mapStateToProps() {
-  return {
-    // CustomToolbars: state.Dashboard.CustomToolbars,
-  };
+  return {};
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {

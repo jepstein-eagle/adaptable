@@ -5,7 +5,7 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
-import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 
 // base props
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {

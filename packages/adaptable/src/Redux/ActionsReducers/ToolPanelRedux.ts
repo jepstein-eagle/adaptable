@@ -11,8 +11,6 @@ const TOOLPANEL_SHOW_TOOLPANEL = 'TOOLPANEL_SHOW_TOOLPANEL';
 const TOOLPANEL_HIDE_TOOLPANEL = 'TOOLPANEL_HIDE_TOOLPANEL';
 const TOOLPANEL_SET_FUNCTION_BUTTONS = 'TOOLPANEL_SET_FUNCTION_BUTTONS';
 const TOOLPANEL_MOVE_ITEM = 'TOOLPANEL_MOVE_ITEM';
-const TOOLPANEL_SHOW_GRID_INFO_BUTTON = 'TOOLPANEL_SHOW_GRID_INFO_BUTTON';
-const TOOLPANEL_HIDE_GRID_INFO_BUTTON = 'TOOLPANEL_HIDE_GRID_INFO_BUTTON';
 const TOOLPANEL_SHOW_FUNCTIONS_DROPDOWN = 'TOOLPANEL_SHOW_FUNCTIONS_DROPDOWN';
 const TOOLPANEL_HIDE_FUNCTIONS_DROPDOWN = 'TOOLPANEL_HIDE_FUNCTIONS_DROPDOWN';
 const TOOLPANEL_SHOW_COLUMNS_DROPDOWN = 'TOOLPANEL_SHOW_COLUMNS_DROPDOWN';
@@ -45,10 +43,6 @@ export interface ToolPanelMoveItemAction extends Redux.Action {
   toolPanel: AdaptableToolPanel;
   NewIndex: number;
 }
-
-export interface ToolPanelShowGridInfoButtonAction extends Redux.Action {}
-
-export interface ToolPanelHideGridInfoButtonAction extends Redux.Action {}
 
 export interface ToolPanelShowFunctionsDropdownAction extends Redux.Action {}
 
@@ -108,14 +102,6 @@ export const ToolPanelMoveItem = (
   type: TOOLPANEL_MOVE_ITEM,
   toolPanel,
   NewIndex,
-});
-
-export const ToolPanelShowGridInfoButton = (): ToolPanelShowGridInfoButtonAction => ({
-  type: TOOLPANEL_SHOW_GRID_INFO_BUTTON,
-});
-
-export const ToolPanelHideGridInfoButton = (): ToolPanelHideGridInfoButtonAction => ({
-  type: TOOLPANEL_HIDE_GRID_INFO_BUTTON,
 });
 
 export const ToolPanelShowFunctionsDropdown = (): ToolPanelShowFunctionsDropdownAction => ({
@@ -178,7 +164,6 @@ const initialToolPanelState: ToolPanelState = {
     'Theme',
   ],
   VisibleButtons: [],
-  ShowGridInfoButton: true,
   ShowFunctionsDropdown: true,
   ShowColumnsDropdown: true,
   ShowToolPanelsDropdown: true,
@@ -221,14 +206,6 @@ export const ToolPanelReducer: Redux.Reducer<ToolPanelState> = (
       const actionTyped = action as ToolPanelSetFunctionButtonsAction;
       const TOOLPANELFunctionButtons = actionTyped.functionButtons;
       return Object.assign({}, state, { VisibleButtons: TOOLPANELFunctionButtons });
-    }
-
-    case TOOLPANEL_SHOW_GRID_INFO_BUTTON: {
-      return Object.assign({}, state, { ShowGridInfoButton: true });
-    }
-
-    case TOOLPANEL_HIDE_GRID_INFO_BUTTON: {
-      return Object.assign({}, state, { ShowGridInfoButton: false });
     }
 
     case TOOLPANEL_SHOW_FUNCTIONS_DROPDOWN: {

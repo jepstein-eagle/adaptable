@@ -328,7 +328,7 @@ export class AdaptableStore implements IAdaptableStore {
       // Config State - set ONLY in PredefinedConfig and never changed at runtime
       ConfigConstants.ENTITLEMENTS,
       ConfigConstants.SYSTEM_FILTER,
-      ConfigConstants.USER_INTERFACE,
+      //  ConfigConstants.USER_INTERFACE,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
@@ -3158,8 +3158,6 @@ export function getNonPersistedReduxActions(): string[] {
     PopupRedux.POPUP_HIDE_SCREEN,
     PopupRedux.POPUP_SHOW_LOADING,
     PopupRedux.POPUP_HIDE_LOADING,
-    PopupRedux.POPUP_SHOW_GRID_INFO,
-    PopupRedux.POPUP_HIDE_GRID_INFO,
     PopupRedux.POPUP_SHOW_ALERT,
     PopupRedux.POPUP_HIDE_ALERT,
     PopupRedux.POPUP_SHOW_PROMPT,

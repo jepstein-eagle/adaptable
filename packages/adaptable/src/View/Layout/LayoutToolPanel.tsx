@@ -14,7 +14,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Layout } from '../../PredefinedConfig/LayoutState';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
 import join from '../../components/utils/join';
@@ -100,7 +99,7 @@ class LayoutToolPanelComponent extends React.Component<
         <Flex
           flexDirection="row"
           className={join(
-            this.props.AccessLevel == AccessLevel.ReadOnly ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-ToolPanel__Layout__wrap'
           )}
         >

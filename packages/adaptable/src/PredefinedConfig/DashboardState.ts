@@ -22,8 +22,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * export default {
  * Dashboard: {
  *   VisibleToolbars: ['Theme', 'Export', 'Layout', 'Chart'],
- *   VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
- *   ShowGridInfoButton: false,
+ *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
  *   ShowToolbarsDropdown: false,
  *   DashboardVisibility: 'Minimised',
  *   MinimisedHomeToolbarButtonStyle: {
@@ -38,8 +37,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * - set 5 Toolbars to be visible
  *
  * - set 4 Function Buttons to be visible
- *
- * - hidden the GridInfo button
  *
  * - hidden the Toolbars dropdown
  *
@@ -64,7 +61,7 @@ export interface DashboardState extends RunTimeState {
   /**
    * Which toolbars should be available for the user to select to see.
    *
-   * Only those toolbars listed here will be selectable
+   * Only those toolbars listed here will be selectable at run-time
    *
    * If you don't provide any value for this property, then ALL Adaptable toolbars will be available.
    *
@@ -86,7 +83,7 @@ export interface DashboardState extends RunTimeState {
    *
    * Each button is connected to a Function in Adaptable and opens the relevant popup screen.
    *
-   * **Default Value**:  'Dashboard', 'SmartEdit', 'ColumnChooser', 'ConditionalStyle', ''
+   * **Default Value**: 'SystemStatus', 'GridInfo', 'Dashboard', 'ColumnChooser', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
 
@@ -100,28 +97,6 @@ export interface DashboardState extends RunTimeState {
    * **Default Value**: 'Visible'
    */
   DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
-
-  /**
-   * Whether to show the System Status button in the Home Toolbar.
-   *
-   * If 'true' then the button will be visible; clicking the button will open the System Status popup showing any System Status messages.
-   *
-   * The colour of the button will reflect the `StatusType` of the last System Status message received.
-   *
-   * **Default Value**: true
-   */
-  ShowSystemStatusButton?: boolean;
-
-  /**
-   * Whether to show the Grid Info button in the Home Toolbar.
-   *
-   * If 'true' then the button will be visible; clicking the button will open the GridInfo screen giving details of the Current Grid, version, row count etc.
-   *
-   * The GridInfo screen also a tab allowing you to see the currently selected set of Adaptable Options.
-   *
-   * **Default Value**: true
-   */
-  ShowGridInfoButton?: boolean;
 
   /**
    * Whether to show the Functions dropdown in the Home Toolbar.
@@ -186,6 +161,20 @@ export interface DashboardState extends RunTimeState {
    * It can optionally also contain a Glyph and an array of `ToolbarButton`.
    */
   CustomToolbars?: CustomToolbar[];
+
+  /**
+   * This is now deprecated and no longer used
+   *
+   * Instead please make sure that 'SystemStatus' is included in the Visible Buttons collection
+   */
+  ShowSystemStatusButton?: boolean;
+
+  /**
+   * This is now deprecated and no longer used
+   *
+   * Instead please make sure that 'GridInfo' is included in Visible Buttons collection
+   */
+  ShowGridInfoButton?: boolean;
 }
 
 /**
@@ -325,9 +314,23 @@ export interface DashboardState extends RunTimeState {
  * ```
  */
 export interface CustomToolbar extends AdaptableObject {
+  /**
+   * The name of the Toolbar
+   *
+   * This is how it will be referred to in the Dashboard Popup when managing toolbars
+   */
   Name: string;
+
+  /**
+   * The title which will appear in the Toolbar when its displayed
+   */
   Title: string;
+
+  /**
+   * An (optional) Glyph to display in the Custom Toolbar
+   */
   Glyph?: string;
+
   /**
    * An array of Toolbar Buttons - each of which is rendered as a button in a Custom Toolbar.
    *

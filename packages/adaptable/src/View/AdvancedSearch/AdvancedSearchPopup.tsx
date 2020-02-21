@@ -22,7 +22,6 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
@@ -82,7 +81,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     ];
 
     let startWizardText =
-      this.props.AccessLevel == AccessLevel.ReadOnly
+      this.props.AccessLevel == 'ReadOnly'
         ? 'You have no Advanced Searches.'
         : " Click 'New' to start the Advanced Search Wizard to create a new Advanced Search.";
 

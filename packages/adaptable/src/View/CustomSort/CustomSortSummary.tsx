@@ -164,7 +164,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     Columns: state.Grid.Columns,
     CustomSorts: state.CustomSort.CustomSorts,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 
