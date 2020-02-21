@@ -300,6 +300,34 @@ export class Adaptable implements IAdaptable {
     return ab.api;
   }
 
+  public static async initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
+    const extraOptions = {
+      renderGrid: undefined as boolean,
+      runtimeConfig: null as RuntimeConfig,
+    };
+
+    if (Array.isArray(adaptableOptions.plugins)) {
+      for await (let plugin of adaptableOptions.plugins) {
+        await plugin.beforeInit(adaptableOptions, extraOptions);
+      }
+    }
+
+    const ab = new Adaptable(
+      adaptableOptions,
+      extraOptions.renderGrid,
+      extraOptions.runtimeConfig,
+      true
+    );
+
+    if (Array.isArray(adaptableOptions.plugins)) {
+      adaptableOptions.plugins.forEach(plugin => {
+        plugin.afterInit(ab);
+      });
+    }
+
+    return ab.api;
+  }
+
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
   constructor(
@@ -3463,6 +3491,10 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
       throw new Error('Cannot find container in which to render Adaptable No Code Wizard');
     }
 
+    // this allows people to customize the wizard dimensions & styling
+    // when it's visible
+    container.classList.add('adaptable--in-wizard');
+
     ReactDOM.render(
       React.createElement(AdaptableWizardView, {
         adaptableOptions: this.adaptableOptions,
@@ -3470,6 +3502,7 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
         onInit: (adaptableOptions: AdaptableOptions) => {
           let adaptable: IAdaptable | void;
 
+          container.classList.remove('adaptable--in-wizard');
           ReactDOM.unmountComponentAtNode(container!);
 
           adaptable = this.init({
@@ -3477,7 +3510,9 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
             gridOptions: adaptableOptions.vendorGrid,
           });
 
-          adaptable = adaptable || new Adaptable(adaptableOptions);
+          if (adaptable === undefined) {
+            new Adaptable(adaptableOptions);
+          }
         },
       }),
       container

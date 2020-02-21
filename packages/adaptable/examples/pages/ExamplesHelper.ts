@@ -117,6 +117,14 @@ export class ExamplesHelper {
     return trades;
   }
 
+  public getTradesRange(start: number = 0, count: number = 100): ITrade[] {
+    const trades: ITrade[] = [];
+    for (let i = start; i <= start + count; i++) {
+      trades.push(this.createTrade(i));
+    }
+    return trades;
+  }
+
   public getDollarTrades(count: number): ITrade[] {
     const trades: ITrade[] = [];
     for (let i = 1; i <= count; i++) {

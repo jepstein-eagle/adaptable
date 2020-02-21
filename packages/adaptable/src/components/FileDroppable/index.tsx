@@ -19,6 +19,7 @@ interface FileDroppableProps extends FlexProps {
   icon?: React.ReactNode;
   helpText?: React.ReactNode;
   defaultText?: React.ReactNode;
+  loadingText?: React.ReactNode;
   dragOverText?: React.ReactNode;
   message?: React.ReactNode;
   toJSON?: (str: string) => Promise<any> | any;
@@ -115,7 +116,11 @@ const FileDroppable = (props: FileDroppableProps) => {
         dispatch({
           type: ActionTypes.DROP_SUCCES,
           payload: {
-            message: <Box>{'Initializing adaptable...'}</Box>,
+            message: (
+              <Box>
+                {props.loadingText === undefined ? 'Initializing adaptable...' : props.loadingText}
+              </Box>
+            ),
           },
         });
         requestAnimationFrame(() => {

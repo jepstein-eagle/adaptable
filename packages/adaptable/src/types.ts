@@ -80,12 +80,4 @@ export { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
 
 // Audit Events
 export { AuditEventApi, AuditEventName } from './Api/AuditEventApi';
-export {
-  AuditLogEventArgs,
-  StateChangedDetails,
-  StatePropertyChangedDetails,
-  StateObjectChangedDetails,
-  FunctionAppliedDetails,
-  DataChangedDetails,
-  StateObjectChangeType,
-} from './Api/Events/AuditEvents';
+export * from './Api/Events/AuditEvents';

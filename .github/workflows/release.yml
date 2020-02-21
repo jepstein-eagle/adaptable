@@ -75,14 +75,6 @@ jobs:
     - name: Building angular
       run: cd packages/adaptable-ng-aggrid && npm run build-prod-no-cleanup
 
-    - name: Executing npm install in nocode
-      run: npm run install-nocode
-      env:
-        CI: true
-
-    # - name: Building nocode
-    #   run: cd packages/adaptable-nocode && npm run build-prod-no-cleanup
-
 
     - name: Executing npm install in plugins/charts
       run: npm run install-plugins-charts
@@ -91,6 +83,15 @@ jobs:
 
     - name: Building plugins-charts
       run: cd packages/plugins/charts && npm run build-prod-no-cleanup
+
+
+    - name: Executing npm install in plugins/nocode
+      run: npm run install-plugins-nocode
+      env:
+        CI: true
+
+    - name: Building plugins-nocode
+      run: cd packages/plugins/nocode && npm run build-prod-no-cleanup
 
     - name: Executing npm install in plugins/finance
       run: npm run install-plugins-finance
