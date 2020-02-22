@@ -5,23 +5,23 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * The Predefined Configuration for Entitlements
  *
- * The Entitlement section of Adaptable State allows you to manage which functions are available for which user and in which form.
+ * The Entitlement section of Adaptable State allows you to manage permissions in AdapTable, i.e. which functions are available for which user and in which form.
  *
  *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
  *
- *  Each Entitlement has 3 potential values:
+ *  Entitlements work at the Function Level.  Each Enitlemet has 3 potential `AccessLevel` values:
  *
  * - **Full** - the function is fully visible and editable
  *
  * - **ReadOnly** - the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created
  *
- * >> this is designed for when you want to let users use the reports or layouts you have pre-configured but not to be allowed to create their own.
+ * > this is designed for when you want to let users use the reports or layouts you have pre-configured but not to be allowed to create their own.
  *
  * - **Hidden** - the function is completely hidden from the user - it does not appear in any menus, toolbars, tool panels etc.
  *
- * Note:  By default every function has the Entitlement of <b>Full</b>.  However you can change this behaviour through setting the `DefaultAccessLevel` property.
+ * Note:  By default every function has the Entitlement of <b>Full</b>.  However you can change this behaviour through setting the `DefaultAccessLevel` property.  e.g. you can set it to 'Hidden' and then only functions explicity permissioned in Entitlements will be available.
  *
  * There are 2 ways to provide Entitlements:
  *
@@ -92,7 +92,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * - The Searching functions to be permissioned based on the results from an Entitlements Server we call.
  *
- *  - All other functions to be 'Full' (as we have not set the `DefaultAccessLevel` property)
+ * - All other functions to be 'Full' (as we have not set the `DefaultAccessLevel` property)
  */
 export interface EntitlementState extends DesignTimeState {
   /**
