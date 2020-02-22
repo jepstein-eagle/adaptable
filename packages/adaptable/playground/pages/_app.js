@@ -30,7 +30,9 @@ export default function App({ Component, pageProps }) {
           padding: PADDING,
           paddingLeft: NAV_WIDTH + PADDING,
           minHeight: "100vh",
-          boxSizing: "border-box"
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column"
         }}
       >
         <Component {...pageProps} />
