@@ -7,26 +7,27 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * The Entitlement section of Adaptable State allows you to manage which functions are available for which user and in which form.
  *
- * Each Entitlement has 3 potential values:
- *
- * - **Full** the function is fully visible and editable
- *
- * - **ReadOnly** the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created
- *
- * - **Hidden** the function is completely hidden from the user - it does not appear in any menus, toolbars, tool panels etc.
- *
- * By default every function has the Entitlement of <i>Full</i>, however you can change this behaviour through setting the `DefaultAccessLevel` property.
- *
- *
- *  *  **Further AdapTable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
  *
+ *  Each Entitlement has 3 potential values:
+ *
+ * - **Full** - the function is fully visible and editable
+ *
+ * - **ReadOnly** - the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created
+ *
+ * >> this is designed for when you want to let users use the reports or layouts you have pre-configured but not to be allowed to create their own.
+ *
+ * - **Hidden** - the function is completely hidden from the user - it does not appear in any menus, toolbars, tool panels etc.
+ *
+ * Note:  By default every function has the Entitlement of <b>Full</b>.  However you can change this behaviour through setting the `DefaultAccessLevel` property.
+ *
  * There are 2 ways to provide Entitlements:
  *
- * - a 'hard-coded' list provided via the `FunctionEntitlements` property
+ * 1. a 'hard-coded' list provided via the `FunctionEntitlements` property
  *
- * - a function which will be called each time an Entitlement is checked, provided via the `EntitlementLookUpFunction` property
+ * 2. a function which will be called each time an Entitlement is checked, provided via the `EntitlementLookUpFunction` property
  *
  * **Entitlements Predefined Config Example using `FunctionEntitlements` property**
  *
@@ -65,7 +66,7 @@ import { AdaptableFunctionName } from './Common/Types';
  * ```ts
  * export default {
  * Entitlements: {
- *   EntitlementLookUpFunction: (functionName: AdaptableFunctionName, userName: string, adaptableId, string) => {
+ *   EntitlementLookUpFunction: (funcName: AdaptableFunctionName, userName: string, adaptableId, string) => {
  *      switch (functionName) {
  *        case 'BulkUpdate':
  *        case 'CellValidation':
@@ -79,7 +80,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *        case 'UserFilter':
  *        case 'DataSource':
  *        case 'QuickSearch':
- *          return getPermissionServerResult(functionName, userName, adaptableId);
+ *          return getPermissionServerResult(funcName, userName, adaptableId);
  *      }
  *   },
  *  },
