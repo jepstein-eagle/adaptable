@@ -7,13 +7,52 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * The Entitlement section of Adaptable State allows you to manage which functions are available for which user and in which form.
  *
- * By default every function has the Entitlement of <i>Full</i>, so only set those which you want to be different to that default.
+ * By default every function has the Entitlement of <i>Full</i>, however you can change this behaviour through setting the `DefaultAccessLevel` property.
+ *
  *
  *  *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
  *
- * **Entitlements Predefined Config Example**
+ * There are 2 ways to provide Entitlements:
+ *
+ * - a 'hard-coded' list provided via the `FunctionEntitlements` property
+ *
+ * - a function which will be called each time an Entitlement is checked, provided via the `EntitlementLookUpFunction` property
+ *
+ * **Entitlements Predefined Config Example using `FunctionEntitlements` property**
+ *
+ * ```ts
+ * export default {
+ * Entitlements: {
+ *   FunctionEntitlements: [
+ *     {
+ *       FunctionName: 'ColumnCategory',
+ *       AccessLevel: 'Hidden',
+ *    },
+ *    {
+ *        FunctionName: 'AdvancedSearch',
+ *        AccessLevel: 'Hidden',
+ *      },
+ *      {
+ *        FunctionName: 'Layout',
+ *        AccessLevel: 'ReadOnly',
+ *     },
+ *      {
+ *        FunctionName: 'Export',
+ *        AccessLevel: 'ReadOnly',
+ *     },
+ *    ],
+ *  },
+ * } as PredefinedConfig;
+ * ```
+ * In this example we have set:
+ *
+ * - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
+ *
+ * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these functions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
+ *
+ * **Entitlements Predefined Config Example using `EntitlementLookUpFunction` property**
  *
  * ```ts
  * export default {
