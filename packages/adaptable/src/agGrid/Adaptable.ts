@@ -1721,6 +1721,10 @@ export class Adaptable implements IAdaptable {
         ),
     };
 
+    if (dataType == DataType.Number) {
+      newColDef.cellClass = 'number-cell';
+    }
+
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
 
