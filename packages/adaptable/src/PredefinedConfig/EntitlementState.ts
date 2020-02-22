@@ -7,6 +7,14 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * The Entitlement section of Adaptable State allows you to manage which functions are available for which user and in which form.
  *
+ * Each Entitlement has 3 potential values:
+ *
+ * - **Full** the function is fully visible and editable
+ *
+ * - **ReadOnly** the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created
+ *
+ * - **Hidden** the function is completely hidden from the user - it does not appear in any menus, toolbars, tool panels etc.
+ *
  * By default every function has the Entitlement of <i>Full</i>, however you can change this behaviour through setting the `DefaultAccessLevel` property.
  *
  *
@@ -57,32 +65,33 @@ import { AdaptableFunctionName } from './Common/Types';
  * ```ts
  * export default {
  * Entitlements: {
- *   FunctionEntitlements: [
- *     {
- *       FunctionName: 'ColumnCategory',
- *       AccessLevel: 'Hidden',
- *    },
- *    {
- *        FunctionName: 'AdvancedSearch',
- *        AccessLevel: 'Hidden',
- *      },
- *      {
- *        FunctionName: 'Layout',
- *        AccessLevel: 'ReadOnly',
- *     },
- *      {
- *        FunctionName: 'Export',
- *        AccessLevel: 'ReadOnly',
- *     },
- *    ],
+ *   EntitlementLookUpFunction: (functionName: AdaptableFunctionName, userName: string, adaptableId, string) => {
+ *      switch (functionName) {
+ *        case 'BulkUpdate':
+ *        case 'CellValidation':
+ *        case 'PlusMinus':
+ *        case 'SmartEdit':
+ *        case 'Shortcut':
+ *          return 'Hidden';
+ *
+ *      case 'AdvancedSearch':
+ *        case 'ColumnFilter':
+ *        case 'UserFilter':
+ *        case 'DataSource':
+ *        case 'QuickSearch':
+ *          return getPermissionServerResult(functionName, userName, adaptableId);
+ *      }
+ *   },
  *  },
  * } as PredefinedConfig;
  * ```
  * In this example we have set:
  *
- * - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
+ * - All Ediiting functions to be Hidden (e.g. we have a ReadOnly grid)
  *
- * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these functions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
+ * - The Searching functions to be permissioned based on the results from an Entitlements Server we call.
+ *
+ *  - All other functions to be 'Full' (as we have not set the `DefaultAccessLevel` property)
  */
 export interface EntitlementState extends DesignTimeState {
   /**
@@ -97,7 +106,8 @@ export interface EntitlementState extends DesignTimeState {
    */
   EntitlementLookUpFunction?: (
     functionName: AdaptableFunctionName,
-    userName: string
+    userName: string,
+    adaptableId: string
   ) => AccessLevel | undefined;
 
   /**
