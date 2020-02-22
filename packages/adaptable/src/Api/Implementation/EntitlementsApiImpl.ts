@@ -36,7 +36,8 @@ export class EntitlementsApiImpl extends ApiBase implements EntitlementsApi {
     if (entitlementLookUpFunction) {
       let accessLevel: AccessLevel = entitlementLookUpFunction(
         adaptableFunctionName,
-        this.adaptable.adaptableOptions.userName
+        this.adaptable.adaptableOptions.userName,
+        this.adaptable.adaptableOptions.adaptableId
       );
       if (accessLevel) {
         return accessLevel;
