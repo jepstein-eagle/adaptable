@@ -145,4 +145,7 @@ export interface Entitlement {
   AccessLevel: AccessLevel;
 }
 
+/**
+ * Type used for managing Entitlements
+ */
 export type AccessLevel = 'ReadOnly' | 'Hidden' | 'Full';
