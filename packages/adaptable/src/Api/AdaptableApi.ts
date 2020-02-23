@@ -50,13 +50,19 @@ import { GradientColumnApi } from './GradientColumnApi';
 /**
  * The `AdaptableApi` provides developers with run-time access to AdapTable.
  *
- * It offers ALL the functionality provided by AdapTable UI in code form.
+ * It offers ALL the functionality provided by the AdapTable UI through code.
  *
- * This enables developers to access the AdapTable Store at run-time in a 'safe' way.
+ * This enables developers to access the AdapTable Store, and all AdapTable functionality, at run-time in a 'safe' way.
  *
  * It also allows them to bypass the UI screens altogether if they so wish.
  *
- * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
+ * > The AdaptableAPI is essentially just a wrapper around the AdapTable Store but provides additional error-checking, logging, and auditing. And it also ensures that the immutable "purity" of the store is maintained.
+ *
+ * The AdaptableApi is the only object returned by the AdapTable constructor.
+ *
+ * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_api_eventapi_.eventapi.html) event.
+ *
+ * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented, please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
  *
  * ### API functions
  *
