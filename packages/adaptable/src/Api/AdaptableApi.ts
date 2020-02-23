@@ -86,6 +86,8 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [calendarApi](#calendarApi)                         | Allows you to choose which [Calendar](_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
  *  | [cellSummaryApi](#cellSummaryApi)                   | Choose which [Cell Summaries](_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellValidationApi)             | Manages the [Cell Validation](_predefinedconfig_cellvalidation_.cellvalidationstate.html) function so that Grid cell edits are validated |
+ *  | [chartApi](#chartApi)                               | Deals with the [Chart](_predefinedconfig_chart_.chartstate.html) functionality (available through a plugin) |
+ *  | [columnCategoryApi](#columnCategoryApi)             | Manages putting columns into [Column Categories](_predefinedconfig_columncategory_.columncategory.html) for when dealing with many columns |
  *  |
  */
 
