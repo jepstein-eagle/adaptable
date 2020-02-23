@@ -1,9 +1,8 @@
-import { TeamSharingState } from '../../PredefinedConfig/TeamSharingState';
+import { TeamSharingState, SharedEntity } from '../../PredefinedConfig/TeamSharingState';
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
-import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';

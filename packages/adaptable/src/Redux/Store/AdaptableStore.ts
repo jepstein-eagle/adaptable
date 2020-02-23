@@ -59,7 +59,6 @@ import {
   BulkUpdateValidationResult,
 } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { IExportStrategy } from '../../Strategy/Interface/IExportStrategy';
-import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 import { IAdaptableStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
@@ -132,6 +131,7 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
+import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -2713,7 +2713,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             let obj: SharedEntity = {
               entity: actionTyped.Entity,
               user: adaptable.adaptableOptions.userName,
-              adaptable_id: adaptable.adaptableOptions.adaptableId,
+              adaptableId: adaptable.adaptableOptions.adaptableId,
               functionName: actionTyped.FunctionName,
               timestamp: new Date(),
             };

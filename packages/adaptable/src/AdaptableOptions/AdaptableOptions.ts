@@ -93,7 +93,7 @@ export interface AdaptableOptions {
    *
    * If the [​`​​showMissingPrimaryKeyWarning`​](_adaptableoptions_generaloptions_.generaloptions.html#showmissingprimarykeywarning) ​​property is true (the default), AdapTable will warn you at start-up if you have provided a value which does ​​not ​​match a column in the grid.
    *
-   * If the [​`​​preventDuplicatePrimaryKeyValues​​`​](_adaptableoptions_generaloptions_.generaloptions.html#​​preventduplicateprimarykeyvalues​​) ​​property is true (the default), an error alert is triggered (and displayed) if a user attempts to enter a duplicate value into the Primary Key column.
+   * If the [​`​​preventDuplicatePrimaryKeyValues​​`​](_adaptableoptions_generaloptions_.generaloptions.html#preventduplicateprimarykeyvalues​​) ​​property is true (the default), an error alert is triggered (and displayed) if a user attempts to enter a duplicate value into the Primary Key column.
    *
    * **Default Value: N/A**
    */
