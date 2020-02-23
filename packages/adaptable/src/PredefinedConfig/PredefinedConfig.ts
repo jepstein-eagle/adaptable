@@ -40,9 +40,11 @@ import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
 
 /**
- * This is the main Predefined Config interface which users will populate if they wish to ship their AdapTable instance with initial state.
+ * This is the main Predefined Config interface which users will populate at design-time.
  *
- * The interface consists of a series of (nullable) properties that themselves each implement *ConfigState*.
+ * Typically you will want to "pre-populate" your deployed application with predefined config - the initial state that AdapTable will use when it first loads up.
+ *
+ * Predefined Config consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
  * Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
  *
@@ -52,12 +54,31 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * - **Run-Time**: Can be overriden & saved by user's actions (and persisted through State Management)
  *
- * Note.  Some objects are designed as 'Run-Time' but have properties which are **not** persisted (e.g. if its a function to be run - as functions cannot be 'stringified').
+ * Note: some objects are designed as 'Run-Time' but have properties which are **not** persisted (e.g. if its a function to be run - as functions cannot be 'stringified').
  *
- * Any property in RunTime state that is not persisted is marked in the docs and comments with:
- *  ### [Non-Persisted AdapTable State].
+ * If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfic, then set the Entitlement for that function to be `ReadOnly`.
  *
+ * Any property in RunTime state that is not persisted is marked in the docs and comments with: ### [Non-Persisted AdapTable State].
  *
+ * This object when populated forms the **predefinedConfig** property in *adaptableOptions*.  It can be passed in either as pure JSON or as a url to a file which contains the JSON.
+ *
+ * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
+ *
+ * #### Uuid
+ *
+ * The AdaptableObject base interface has a single Uuid property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted..
+ *
+ * This is included in all base objects and also frequently used objects like Expressions.
+ *
+ * **Do not set this property** when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the config is first read
+ *
+ * #### Bepspoke State
+ *
+ * The Application State property of Predefined Config contains an ApplicationDataEntries array.
+ *
+ * This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
+ *
+ *  ## Predefined Config contents
  *
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
@@ -102,8 +123,6 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [UserFilter](_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
  *  | [UserInterface](_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
  *
- *
- * This object when populated forms the **predefinedConfig** property in *adaptableOptions*.
  *
  * ## Predefined Config example
  *
