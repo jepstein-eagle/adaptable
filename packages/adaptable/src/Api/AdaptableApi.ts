@@ -321,7 +321,7 @@ export interface AdaptableApi {
   /**
    * API methods used internally within AdapTable.
    *
-   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable through code**
+   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable at runtime through code**
    *
    */
   internalApi: InternalApi;
