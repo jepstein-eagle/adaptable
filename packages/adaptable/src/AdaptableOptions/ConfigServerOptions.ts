@@ -24,7 +24,7 @@
  *
  * - **​​Headers​​**: This takes the form of { ab_username: string, ab_id: string }
  *
- * ​​- **Body**​​: This is the actual User State "stringified".
+ * - **Body**: TThis is the actual User State "stringified".
  *
  * Note:  Each ​​*ab_username​* and *​ab_id​​* combination is unique, so your server should persist the user state and use that combination as a key.
  *
@@ -32,7 +32,7 @@
  *
  * AdapTable will send a GET request to the ​​configServerUrl​​ to retrieve the persisted state with the following parameter:
  *
- * -​​ Headers​​: This takes the form of { ab_username: string, ab_id: string }
+ * - **​​Headers​​**: This takes the form of { ab_username: string, ab_id: string }
  *
  * On receiving this request, your server should return the user state related to the given ​​*ab_username*​ and *​ab_id*​​ combination as a JSON object.
  *
