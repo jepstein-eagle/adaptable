@@ -67,7 +67,7 @@ import { AdaptableFunctionName } from './Common/Types';
  * export default {
  * Entitlements: {
  *   EntitlementLookUpFunction: (funcName: AdaptableFunctionName, userName: string, adaptableId, string) => {
- *      switch (functionName) {
+ *      switch (funcName) {
  *        case 'BulkUpdate':
  *        case 'CellValidation':
  *        case 'PlusMinus':

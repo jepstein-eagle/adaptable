@@ -8,11 +8,14 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AccessLevel,
+  AdaptableFunctionName,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
-import { AdaptableFunctionName } from '../../../../src/PredefinedConfig/Common/Types';
-import { Entitlement, AccessLevel } from '../../../../src/PredefinedConfig/EntitlementState';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
