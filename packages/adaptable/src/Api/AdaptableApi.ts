@@ -84,10 +84,10 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [bulkUpdateApi](#bulkupdateapi)                     | Run Bulk Update so mutliple selected cells are given same value  |
  *  | [calculatedColumnApi](#calculatedcolumnapi)         | Manages [Calculated Columns](_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
  *  | [calendarApi](#calendarApi)                         | Allows you to choose which [Calendar](_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
- *  | [cellSummaryApi](#cellSummaryApi)                   | Choose which [Cell Summaries](_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
- *  | [cellValidationApi](#cellValidationApi)             | Manages the [Cell Validation](_predefinedconfig_cellvalidation_.cellvalidationstate.html) function so that Grid cell edits are validated |
- *  | [chartApi](#chartApi)                               | Deals with the [Chart](_predefinedconfig_chart_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columnCategoryApi)             | Manages putting columns into [Column Categories](_predefinedconfig_columncategory_.columncategory.html) for when dealing with many columns |
+ *  | [cellSummaryApi](#cellsummaryApi)                   | Choose which [Cell Summaries](_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
+ *  | [cellValidationApi](#cellvalidationApi)             | Manages the [Cell Validation](_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
+ *  | [chartApi](#chartApi)                               | Deals with the [Chart](_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
+ *  | [columnCategoryApi](#columncategoryApi)             | Manages putting columns into [Column Categories](_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
  *  |
  */
 
