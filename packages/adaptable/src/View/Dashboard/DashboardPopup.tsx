@@ -238,13 +238,7 @@ class DashboardPopupComponent extends React.Component<
   }
 
   isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
-    let entitlement: Entitlement = this.props.Entitlements.find(
-      x => x.FunctionName == functionName
-    );
-    if (entitlement) {
-      return entitlement.AccessLevel != 'Hidden';
-    }
-    return true;
+    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 
@@ -252,7 +246,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
     DashboardState: state.Dashboard,
     GridState: state.Grid,
-    Entitlements: state.Entitlements.FunctionEntitlements,
   };
 }
 

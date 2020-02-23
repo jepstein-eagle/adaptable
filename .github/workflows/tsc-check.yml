@@ -37,13 +37,6 @@ jobs:
     - name: tsc-angular
       run: npm run --prefix packages/adaptable-ng-aggrid link-core && npm run --prefix packages/adaptable-ng-aggrid tsc
 
-    - name: Executing npm install in nocode
-      run: npm install --prefix packages/adaptable-nocode
-      env:
-        CI: true
-    - name: tsc-nocode
-      run: npm run --prefix packages/adaptable-nocode link-core && npm run --prefix packages/adaptable-nocode tsc
-
     - name: Executing npm install in plugins:finance
       run: npm install --prefix packages/plugins/finance
       env:
@@ -51,6 +44,14 @@ jobs:
 
     - name: tsc-plugins-finance
       run: npm run --prefix packages/plugins/finance tsc
+
+    - name: Executing npm install in plugins:nocode
+      run: npm install --prefix packages/plugins/nocode
+      env:
+        CI: true
+
+    - name: tsc-plugins-nocode
+      run: npm run --prefix packages/plugins/nocode tsc
 
     - name: Executing npm install in plugins:charts
       run: npm install --prefix packages/plugins/charts

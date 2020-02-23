@@ -81,6 +81,17 @@ export interface EventApi {
   ): () => void;
 
   /**
+   * Unsubscribe from SearchChanged
+   *
+   * @param eventName SearchChanged
+   * @param callback
+   */
+  off(
+    eventName: 'SearchChanged',
+    callback: (searchChangedEventArgs: SearchChangedEventArgs) => void
+  ): void;
+
+  /**
    * Event fired whenever the Cell or Row **Selection in AdapTable changes**.
    *
    * @param eventName SelectionChanged - use as: adaptableApi.eventApi.on('SelectionChanged', (args: SelectionChangedEventArgs) => { .....[do stuff]...})
@@ -91,6 +102,14 @@ export interface EventApi {
     eventName: 'SelectionChanged',
     callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
   ): () => void;
+
+  /**
+   * Unsubscribe from SelectionChanged
+   */
+  off(
+    eventName: 'SelectionChanged',
+    callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
+  ): void;
 
   /**
    * Event fired whenever the **selected theme of AdapTable is changed**.
@@ -105,6 +124,14 @@ export interface EventApi {
   ): () => void;
 
   /**
+   * Unsubscribe from ThemeChanged
+   */
+  off(
+    eventName: 'ThemeChanged',
+    callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
+  ): void;
+
+  /**
    * Event fired whenever an **Alert is triggered** in AdapTable.
    *
    * @param eventName AlertFired - use as: adaptableApi.eventApi.on('AlertFired', (args: AlertFiredEventArgs) => { .....[do stuff]...})
@@ -115,6 +142,11 @@ export interface EventApi {
     eventName: 'AlertFired',
     callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
   ): () => void;
+
+  /**
+   * Unsubscribe from AlertFired
+   */
+  off(eventName: 'AlertFired', callback: (alertFiredEventArgs: AlertFiredEventArgs) => void): void;
 
   /**
    * Event fired whenever the **Button in an Action Column is clicked**.
@@ -129,6 +161,14 @@ export interface EventApi {
   ): () => void;
 
   /**
+   * Unsubscribe from ActionColumnClicked
+   */
+  off(
+    eventName: 'ActionColumnClicked',
+    callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
+  ): void;
+
+  /**
    * Event fired whenever **column order, visibility and sorts are changed in AdapTable**.
    *
    * @param eventName ColumnStateChanged - use as: adaptableApi.eventApi.on('ColumnStateChanged', (args: ColumnStateChangedEventArgs) => { .....[do stuff]...})
@@ -141,6 +181,14 @@ export interface EventApi {
   ): () => void;
 
   /**
+   * Unsubscribe from ColumnStateChanged
+   */
+  off(
+    eventName: 'ColumnStateChanged',
+    callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
+  ): void;
+
+  /**
    * Event fired whenever **when a button in a Custom Toolbar is clicked**
    *
    * @param eventName ToolbarButtonClicked - use as: adaptableApi.eventApi.on('ToolbarButtonClicked', (args: ToolbarButtonClickedEventArgs) => { .....[do stuff]...})
@@ -151,6 +199,14 @@ export interface EventApi {
     eventName: 'ToolbarButtonClicked',
     callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
   ): () => void;
+
+  /**
+   * Ubsubscribe from ToolbarButtonClicked
+   */
+  off(
+    eventName: 'ToolbarButtonClicked',
+    callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
+  ): void;
 
   /**
    * Event fired whenever **a toolbar in AdapTable becomes visible**
@@ -167,6 +223,14 @@ export interface EventApi {
   ): () => void;
 
   /**
+   * Unsubscribe from ToolbarVisibilityChanged
+   */
+  off(
+    eventName: 'ToolbarVisibilityChanged',
+    callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
+  ): void;
+
+  /**
    * Event fired whenever **a change occurs relating to live reports / data**
    *
    * Used in conjunction with AdapTable's partners OpenFin, ipushpull or Glue42
@@ -181,6 +245,14 @@ export interface EventApi {
   ): () => void;
 
   /**
+   * Unsubscribe from LiveDataChanged
+   */
+  off(
+    eventName: 'LiveDataChanged',
+    callback: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void
+  ): void;
+
+  /**
    * Fired when Adaptable is up and running - has no arguments.
    * @param eventName AdaptableReady - use as: adaptableApi.eventApi.on('AdaptableReady', (adaptableReadyInfo: AdaptableReadyInfo) => { .....[do stuff]...})
    *
@@ -190,6 +262,14 @@ export interface EventApi {
     eventName: 'AdaptableReady',
     callback: (adaptableReadyInfo: AdaptableReadyInfo) => void
   ): () => void;
+
+  /**
+   * Unsubscribe from AdaptableReady
+   */
+  off(
+    eventName: 'AdaptableReady',
+    callback: (adaptableReadyInfo: AdaptableReadyInfo) => void
+  ): void;
 
   emit(
     eventName:

@@ -114,7 +114,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
-import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
@@ -299,6 +299,34 @@ export class Adaptable implements IAdaptable {
     return ab.api;
   }
 
+  public static async initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
+    const extraOptions = {
+      renderGrid: undefined as boolean,
+      runtimeConfig: null as RuntimeConfig,
+    };
+
+    if (Array.isArray(adaptableOptions.plugins)) {
+      for await (let plugin of adaptableOptions.plugins) {
+        await plugin.beforeInit(adaptableOptions, extraOptions);
+      }
+    }
+
+    const ab = new Adaptable(
+      adaptableOptions,
+      extraOptions.renderGrid,
+      extraOptions.runtimeConfig,
+      true
+    );
+
+    if (Array.isArray(adaptableOptions.plugins)) {
+      adaptableOptions.plugins.forEach(plugin => {
+        plugin.afterInit(ab);
+      });
+    }
+
+    return ab.api;
+  }
+
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
   constructor(
@@ -343,6 +371,7 @@ export class Adaptable implements IAdaptable {
     this.DataService = new DataService(this);
     // the audit service needs to be created before the store
     this.AuditLogService = new AuditLogService(this);
+
     // create the store
     this.initStore();
 
@@ -1692,6 +1721,10 @@ export class Adaptable implements IAdaptable {
         ),
     };
 
+    if (dataType == DataType.Number) {
+      newColDef.cellClass = 'number-cell';
+    }
+
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
 
@@ -2453,7 +2486,7 @@ export class Adaptable implements IAdaptable {
       // couldnt find a way to listen for menu close. There is a Menu Item Select, but you can also close menu from filter and clicking outside menu....
       const colId: string = params.column.getColId();
 
-      const AdaptableMenuItems: AdaptableMenuItem[] = [];
+      const adaptableMenuItems: AdaptableMenuItem[] = [];
 
       const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
         colId,
@@ -2463,14 +2496,14 @@ export class Adaptable implements IAdaptable {
         this.strategies.forEach(s => {
           let menuItem: AdaptableMenuItem = s.addColumnMenuItem(adaptableColumn);
           if (menuItem) {
-            AdaptableMenuItems.push(menuItem);
+            adaptableMenuItems.push(menuItem);
           }
         });
         // add the column menu items from Home Strategy
         const homeStrategy: IHomeStrategy = this.strategies.get(
           StrategyConstants.HomeStrategyId
         ) as IHomeStrategy;
-        AdaptableMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
+        adaptableMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
       }
 
       let colMenuItems: (string | MenuItemDef)[];
@@ -2488,6 +2521,7 @@ export class Adaptable implements IAdaptable {
         Column: adaptableColumn,
         IsSelectedCell: false,
         IsSingleSelectedColumn: false,
+        IsGroupedNode: false,
         RowNode: undefined,
         PrimaryKeyValue: undefined,
       };
@@ -2496,16 +2530,18 @@ export class Adaptable implements IAdaptable {
         .showAdaptableColumnMenu;
 
       if (showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false) {
-        AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
-          let addContextMenuItem: boolean = true;
-          if (showAdaptableColumnMenu != null && typeof showAdaptableColumnMenu === 'function') {
-            addContextMenuItem = showAdaptableColumnMenu(AdaptableMenuItem, menuInfo);
-          }
-          if (addContextMenuItem) {
-            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-              AdaptableMenuItem
-            );
-            colMenuItems.push(menuItem);
+        adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+          if (adaptableMenuItem) {
+            let addColumnMenuItem: boolean = true;
+            if (showAdaptableColumnMenu != null && typeof showAdaptableColumnMenu === 'function') {
+              addColumnMenuItem = showAdaptableColumnMenu(adaptableMenuItem, menuInfo);
+            }
+            if (addColumnMenuItem) {
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+                adaptableMenuItem
+              );
+              colMenuItems.push(menuItem);
+            }
           }
         });
       }
@@ -2544,72 +2580,72 @@ export class Adaptable implements IAdaptable {
       }
       let menuInfo: MenuInfo;
 
-      // keep it simple for now - if its a grouped cell then do nothing
-      if (!params.node.group) {
-        const AdaptableMenuItems: AdaptableMenuItem[] = [];
-        const agGridColumn: Column = params.column;
-        if (agGridColumn) {
-          const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-            agGridColumn.getColId(),
-            this.api.gridApi.getColumns()
-          );
+      const adaptableMenuItems: AdaptableMenuItem[] = [];
+      const agGridColumn: Column = params.column;
+      if (agGridColumn) {
+        const adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+          agGridColumn.getColId(),
+          this.api.gridApi.getColumns()
+        );
 
-          if (adaptableColumn != null) {
-            menuInfo = this.agGridHelper.createMenuInfo(params, adaptableColumn);
+        if (adaptableColumn != null) {
+          menuInfo = this.agGridHelper.createMenuInfo(params, adaptableColumn);
+          // keep it simple for now - if its a grouped cell then don't add the shipped menu items
+          if (!params.node.group) {
             this.strategies.forEach(s => {
               let menuItem: AdaptableMenuItem | undefined = s.addContextMenuItem(menuInfo);
               if (menuItem) {
-                AdaptableMenuItems.push(menuItem);
+                adaptableMenuItems.push(menuItem);
               }
             });
-
-            // here we create Adaptable adaptable Menu items from OUR internal collection
-            // user has ability to decide whether to show or not
-            if (ArrayExtensions.IsNotNullOrEmpty(AdaptableMenuItems)) {
-              let showAdaptableContextMenu = this.adaptableOptions.userInterfaceOptions!
-                .showAdaptableContextMenu;
-              if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
-                contextMenuItems.push('separator');
-                AdaptableMenuItems.forEach((AdaptableMenuItem: AdaptableMenuItem) => {
+          }
+          // here we create Adaptable adaptable Menu items from OUR internal collection
+          // user has ability to decide whether to show or not
+          if (ArrayExtensions.IsNotNullOrEmpty(adaptableMenuItems)) {
+            let showAdaptableContextMenu = this.adaptableOptions.userInterfaceOptions!
+              .showAdaptableContextMenu;
+            if (showAdaptableContextMenu == null || showAdaptableContextMenu !== false) {
+              contextMenuItems.push('separator');
+              adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+                if (adaptableMenuItem) {
                   let addContextMenuItem: boolean = true;
                   if (
                     showAdaptableContextMenu != null &&
                     typeof showAdaptableContextMenu === 'function'
                   ) {
-                    addContextMenuItem = showAdaptableContextMenu(AdaptableMenuItem, menuInfo);
+                    addContextMenuItem = showAdaptableContextMenu(adaptableMenuItem, menuInfo);
                   }
                   if (addContextMenuItem) {
                     let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                      AdaptableMenuItem
+                      adaptableMenuItem
                     );
                     contextMenuItems.push(menuItem);
                   }
-                });
-              }
-            }
-
-            // here we add any User defined Context Menu Items
-            let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
-              .ContextMenuItems;
-
-            if (typeof userContextMenuItems === 'function') {
-              userContextMenuItems = userContextMenuItems(menuInfo);
-            }
-
-            if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
-              contextMenuItems.push('separator');
-              userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
-                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                  userMenuItem,
-                  menuInfo
-                );
-                contextMenuItems.push(menuItem);
+                }
               });
             }
           }
+
+          // here we add any User defined Context Menu Items
+          let state: any = this.api.userInterfaceApi.getUserInterfaceState();
+          let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
+            .ContextMenuItems;
+          if (typeof userContextMenuItems === 'function') {
+            userContextMenuItems = userContextMenuItems(menuInfo);
+          }
+
+          if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
+            contextMenuItems.push('separator');
+            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                userMenuItem,
+                menuInfo
+              );
+              contextMenuItems.push(menuItem);
+            });
+          }
         }
       }
-
       return contextMenuItems;
     };
   }
@@ -2617,22 +2653,26 @@ export class Adaptable implements IAdaptable {
   private postSpecialColumnEditDelete(doReload: boolean) {
     if (this.isInitialised) {
       //  reload the existing layout if its not default
-      let currentlayout = this.api.layoutApi.getCurrentLayout().Name;
-      if (currentlayout != DEFAULT_LAYOUT) {
-        if (doReload) {
-          this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
-          this.api.layoutApi.setLayout(currentlayout);
-          this.setColumnIntoStore();
-        } else {
-          this.api.layoutApi.setLayout(currentlayout);
+      let currentlayout: Layout = this.api.layoutApi.getCurrentLayout();
+      if (currentlayout) {
+        let currentlayoutName: string = this.api.layoutApi.getCurrentLayout().Name;
+        if (currentlayoutName != DEFAULT_LAYOUT) {
+          if (doReload) {
+            this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
+            this.api.layoutApi.setLayout(currentlayoutName);
+            this.setColumnIntoStore();
+          } else {
+            this.api.layoutApi.setLayout(currentlayoutName);
+          }
         }
       }
-    }
-    // if grid is initialised then emit AdaptableReady event so we can re-apply any styles
-    // and re-apply any specially rendered columns
-    if (this.isInitialised) {
-      this.api.eventApi.emit('AdaptableReady');
-      this.addSpecialRendereredColumns();
+
+      // if grid is initialised then emit AdaptableReady event so we can re-apply any styles
+      // and re-apply any specially rendered columns
+      if (doReload) {
+        this.api.eventApi.emit('AdaptableReady');
+        this.addSpecialRendereredColumns();
+      }
     }
   }
 
@@ -3452,6 +3492,10 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
       throw new Error('Cannot find container in which to render Adaptable No Code Wizard');
     }
 
+    // this allows people to customize the wizard dimensions & styling
+    // when it's visible
+    container.classList.add('adaptable--in-wizard');
+
     ReactDOM.render(
       React.createElement(AdaptableWizardView, {
         adaptableOptions: this.adaptableOptions,
@@ -3459,6 +3503,7 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
         onInit: (adaptableOptions: AdaptableOptions) => {
           let adaptable: IAdaptable | void;
 
+          container.classList.remove('adaptable--in-wizard');
           ReactDOM.unmountComponentAtNode(container!);
 
           adaptable = this.init({
@@ -3466,7 +3511,9 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
             gridOptions: adaptableOptions.vendorGrid,
           });
 
-          adaptable = adaptable || new Adaptable(adaptableOptions);
+          if (adaptable === undefined) {
+            new Adaptable(adaptableOptions);
+          }
         },
       }),
       container

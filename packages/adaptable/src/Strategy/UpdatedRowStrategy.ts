@@ -7,14 +7,11 @@ import { IUpdatedRowStrategy } from './Interface/IUpdatedRowStrategy';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
-import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {

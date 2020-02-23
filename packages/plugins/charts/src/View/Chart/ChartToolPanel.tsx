@@ -10,10 +10,9 @@ import { ToolbarStrategyViewPopupProps } from '@adaptabletools/adaptable/src/Vie
 import { ButtonEdit } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonEdit';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
-import {
-  SortOrder,
-  AccessLevel,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
+import { SortOrder } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
+
+import { AccessLevel } from '@adaptabletools/adaptable/src/PredefinedConfig/EntitlementState';
 import * as GeneralConstants from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 import { ChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { ButtonShowChart } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonShowChart';
@@ -87,7 +86,7 @@ class ChartToolPanelComponent extends React.Component<
       });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.CategoryChart,
@@ -97,7 +96,7 @@ class ChartToolPanelComponent extends React.Component<
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.PieChart,
@@ -107,7 +106,7 @@ class ChartToolPanelComponent extends React.Component<
       label: 'Pie Chart',
     };
     let sparkLineMenuItem = {
-      disabled: this.props.AccessLevel == AccessLevel.ReadOnly,
+      disabled: this.props.AccessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.SparklinesChart,
@@ -140,7 +139,7 @@ class ChartToolPanelComponent extends React.Component<
           flexDirection="row"
           alignItems="stretch"
           className={
-            this.props.AccessLevel == AccessLevel.ReadOnly
+            this.props.AccessLevel == 'ReadOnly'
               ? GeneralConstants.READ_ONLY_STYLE
               : 'ab-ToolPanel__Chart_wrap'
           }

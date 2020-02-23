@@ -15,17 +15,15 @@ import { SearchOptions } from './SearchOptions';
 import { ExportOptions } from './ExportOptions';
 
 /**
- * `AdaptableOptions` is the object created by you at design-time injected into the AdapTable constructor at startup.
- *
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
+ *
+ * This is the only object created that AdapTable requires to initialise and run; it is set up by developers at design-time and injected into the AdapTable constructor at startup.
  *
  * The `AdaptableOptions` class contains a few regular properties of which 2 (`vendorGrid` and `primaryKey`) are mandatory - and a number of `xxxOptions` properties where the type is itself a collection of related properties.
  *
  * Typically users will only populate a few of the properties in `AdaptableOptions`, and only a few properties in each class.
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
- *
- * **AdaptableOptions is the only argument used in AdapTable's static constructor.**
  *
  * The contents of `AdaptableOptions` are:
  *

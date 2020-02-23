@@ -13,6 +13,8 @@ import {
   PredefinedConfig,
   AdaptableApi,
   SearchChangedEventArgs,
+  AdaptableReadyInfo,
+  SelectedCellInfo,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
@@ -22,13 +24,8 @@ import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
-import { SelectedCellInfo } from '../../../../src/Utilities/Interface/Selection/SelectedCellInfo';
-import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../../../src/PredefinedConfig/Common/Enums';
-import { GridCell } from '../../../../src/Utilities/Interface/Selection/GridCell';
 import Helper from '../../../../src/Utilities/Helpers/Helper';
-
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {

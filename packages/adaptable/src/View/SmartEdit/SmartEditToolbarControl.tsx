@@ -16,7 +16,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { StatusColour, MathOperation, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { StatusColour, MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
@@ -102,7 +102,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     };
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == AccessLevel.ReadOnly ||
+      this.props.AccessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
       this.props.Adaptable.api.internalApi.isGridInPivotMode();
 

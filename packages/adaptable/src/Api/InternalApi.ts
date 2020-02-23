@@ -87,6 +87,8 @@ export interface InternalApi {
 
   setGridCell(gridCell: GridCell, internalUpdate: boolean, validateChange: boolean): void;
 
+  setToolbarTitle(): string;
+
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;
 }

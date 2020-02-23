@@ -13,11 +13,13 @@ import {
   PredefinedConfig,
   AdaptableApi,
   SearchChangedEventArgs,
+  MenuInfo,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var api: AdaptableApi;
 
@@ -54,14 +56,16 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
+  (globalThis as any).api = api;
+
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     // to see which is the pinned row then do...
     //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //  console.log('search changed');
+    //  console.log(searchChangedArgs.data[0].id);
   });
 }
 
@@ -73,9 +77,35 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
+  UserInterface: {
+    ColumnMenuItems: (menuinfo: MenuInfo) => {
+      console.log('in the function');
+      console.log(menuinfo);
+      return [];
+    },
+    ContextMenuItems: (menuinfo: MenuInfo) => {
+      //  console.log('in the function');
+      //   console.log(menuinfo);
+      return [
+        {
+          Label: 'Sort Column',
+          Icon:
+            '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+          UserMenuItemClickedFunction: () => {
+            let customSort: ColumnSort = {
+              Column: menuinfo.Column.ColumnId,
+              SortOrder: 'Ascending',
+            };
+            //      adaptableApi.gridApi.sortAdaptable([customSort]);
+          },
+        },
+      ];
+    },
+  },
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
   },
+
   SystemStatus: {
     // ShowAlert: false,
     DefaultStatusMessage: 'This is default message and its quite long',

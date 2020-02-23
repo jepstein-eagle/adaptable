@@ -1,16 +1,27 @@
 import { useEffect } from 'react';
+
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
-import '../../../../App_Scripts/index.scss';
-import '../../../../App_Scripts/themes/dark.scss';
+import '../../../../src/index.scss';
+import '../../../../src/themes/dark.scss';
+import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import Adaptable from '../../../../App_Scripts/agGrid';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../App_Scripts/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  SearchChangedEventArgs,
+  AdaptableMenuItem,
+  MenuInfo,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableMenuItem, MenuInfo } from '../../../../App_Scripts/PredefinedConfig/Common/Menu';
-import { ColumnSort } from '../../../../App_Scripts/PredefinedConfig/Common/ColumnSort';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import Adaptable from '../../../../agGrid';
+import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { UserMenuItem } from '../../../../src/PredefinedConfig/UserInterfaceState';
 
 var adaptableApi: AdaptableApi;
 function InitAdaptableDemo() {
@@ -19,12 +30,17 @@ function InitAdaptableDemo() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   //gridOptions.getContextMenuItems = getContextMenuItems;
 
-  //gridOptions.singleClickEdit = true;
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'context menu demo'
-  );
-  adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Context Menu Demo',
+
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+  };
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
     //showAdaptableContextMenu: true,
@@ -49,65 +65,35 @@ let demoConfig: PredefinedConfig = {
     ShowAlert: false,
   },
   UserInterface: {
-    // the hardcoded way
-    /*
-    ContextMenuItems: [
-      {
-        Label: 'Mimise Dashboard',
-        UserMenuItemClickedFunction: () => {
-          adaptableApi.dashboardApi.minimise();
-        },
-      },
-      {
-        Label: 'Set System Status',
-        SubMenuItems: [
-          {
-            Label: 'Set Error',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
-            },
-          },
-          {
-            Label: 'Set Warning',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
-            },
-          },
-          {
-            Label: 'Set Success',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
-            },
-          },
-          {
-            Label: 'Set Info',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
-            },
-          },
-        ],
-      },
-    ],
-*/
-
-    // the function way
     ContextMenuItems: (menuinfo: MenuInfo) => {
-      return menuinfo.Column.Sortable
-        ? [
-            {
-              Label: 'Sort Column',
-              Icon:
-                '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-              UserMenuItemClickedFunction: () => {
-                let customSort: ColumnSort = {
-                  Column: menuinfo.Column.ColumnId,
-                  SortOrder: 'Ascending',
-                };
-                adaptableApi.gridApi.sortAdaptable([customSort]);
-              },
-            },
-          ]
-        : [];
+      let menuItems: UserMenuItem[] = [];
+
+      if (menuinfo.Column.Sortable) {
+        let sortMenuItem = {
+          Label: 'Sort Column',
+          Icon:
+            '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+          UserMenuItemClickedFunction: () => {
+            let customSort: ColumnSort = {
+              Column: menuinfo.Column.ColumnId,
+              SortOrder: 'Ascending',
+            };
+            adaptableApi.gridApi.sortAdaptable([customSort]);
+          },
+        };
+        menuItems.push(sortMenuItem);
+      }
+      if (menuinfo.IsGroupedNode) {
+        let groupMenuItem = {
+          Label: 'Announce Grouping',
+
+          UserMenuItemClickedFunction: () => {
+            alert('this is a grouped row');
+          },
+        };
+        menuItems.push(groupMenuItem);
+      }
+      return menuItems;
     },
   },
 };

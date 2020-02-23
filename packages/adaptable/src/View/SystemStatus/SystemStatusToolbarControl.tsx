@@ -9,7 +9,7 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Text } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
@@ -57,7 +57,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
         variant="text"
         disabled={isDefaultMessage}
         marginTop={1}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Clear
       </SimpleButton>

@@ -7,7 +7,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Flex, Text } from 'rebass';
 import UIHelper from '../UIHelper';
 import SimpleButton from '../../components/SimpleButton';
@@ -58,7 +58,7 @@ class SystemStatusToolPanelComponent extends React.Component<
         variant="text"
         disabled={isDefaultMessage}
         marginTop={1}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Clear
       </SimpleButton>

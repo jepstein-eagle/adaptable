@@ -1,14 +1,14 @@
-import { FDC3Schema, AdaptableEventData, AdaptableEventArgs } from './AdaptableEvents';
+import { AdaptableEventData, AdaptableEventArgs } from './AdaptableEvents';
 import { AuditLogEntry } from '../../Utilities/Interface/AuditLogEntry';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 
-export interface AuditLogEventArgs extends AdaptableEventArgs {
-  data: AuditLogEventData[];
-}
-
 export interface AuditLogEventData extends AdaptableEventData {
   id: AuditLogEntry;
+}
+
+export interface AuditLogEventArgs extends AdaptableEventArgs {
+  data: AuditLogEventData[];
 }
 
 export interface StateChangedDetails {

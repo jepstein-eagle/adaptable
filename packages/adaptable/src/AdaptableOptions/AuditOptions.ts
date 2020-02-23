@@ -1,15 +1,23 @@
 /**
  * Options for managing the AdapTable Audit Log.
  *
- * ​​**Note: AdapTable has no knowledge of the messages Audit Log sends, nor where they are sent.**
+ * Every single action in AdapTable can, optionally, be fully audited for internal review purposes: each keystroke, menu click, configuration change, data edit and ticking data change.
+ *
+ * This provides you with complete oversight over everything that ever happens in AdapTable.
+ *
+ * For instance you can set up an alert to be informed whenever a value changes in a particular column, or if the new value exceeds set limits; or you can run reports showing a particular user's activity, or how data has changed over any time period.
+ *
+ *  > **Note: AdapTable has no knowledge of the messages Audit Log sends, nor where they are sent.  Information sent to Audit Log lives entirely within your systems at a destination specified by you.**
  *
  * Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
  *
- * Each Audit message is essentially a combination of an `AuditMessage`, an `AuditTrigger` and an `AuditDestination`, packaged as a simple JSON object.
+ * Each Audit Log message is essentially a combination of an `AuditMessage`, an `AuditTrigger` and an `AuditDestination`, packaged as a simple JSON object and sent to destination(s) you specify.
  *
  * There are 5 AuditTriggers and 4 AuditDestinations.
  *
  * You can set as many AuditTriggers as you want, and for each `AuditTrigger`, select as many AuditDestinations as you require.
+ *
+ * It no AuditTriggers are set, then AuditLog will be turned off.
  *
  * The 5 Audit Triggers are:
  *
@@ -21,7 +29,7 @@
  *
  * - **UserStateChange**: whenever a change is made to the User's state (e.g. selected a new layout)
  *
- * - **InternalStateChange**: whenever a change is made to AdapTable's internal state (e.g. new cells selected, a popup displayed)
+ * - **InternalStateChange**: whenever a change is made to AdapTable's internal state (e.g. new cells selected, a popup displayed). Note that this can be quite verbose.
  *
  * The 4 available Audit Destinations are:
  *

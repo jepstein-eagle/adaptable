@@ -83,7 +83,6 @@ export type AdaptableFunctionButton =
   | 'Glue42'
   | 'GradientColumn'
   | 'GridInfo'
-  | 'Home'
   | 'Layout'
   | 'PercentBar'
   | 'PieChart'

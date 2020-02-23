@@ -4,6 +4,14 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 function customizer(objValue: any, srcValue: any): any {
   if (_.isArray(objValue)) {
+    if (!Array.isArray(srcValue)) {
+      /**
+       * the new value might be a function: eg: UserInterface.ContextMenuItems defaults to an array
+       * in the redux state, while the user might provide a function
+       * so in this case, make the user provided value win
+       */
+      return srcValue;
+    }
     const length = srcValue ? srcValue.length : null;
     const result: any = _.mergeWith(objValue, srcValue, customizer);
 

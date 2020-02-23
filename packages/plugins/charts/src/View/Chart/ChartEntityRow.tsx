@@ -9,7 +9,7 @@ import {
   CategoryChartDefinition,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { ButtonShowChart } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonShowChart';
-import { AccessLevel } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
+import { AccessLevel } from '@adaptabletools/adaptable/src/PredefinedConfig/EntitlementState';
 import { EntityRowItem } from '@adaptabletools/adaptable/src/View/Components/EntityRowItem';
 import { ChartType } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
 

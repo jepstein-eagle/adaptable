@@ -20,6 +20,7 @@ interface AdaptableWizardViewProps {
   fileContentsToJSON?: (str: string) => Promise<any> | any;
   readFile?: (file: File) => Promise<any>;
   fileAccept?: string;
+  helpText?: React.ReactNode;
   loadingMessage?: ReactNode;
   defaultActionMessage?: ReactNode;
   dragOverActionMessage?: ReactNode;
@@ -188,9 +189,11 @@ const Wizard = (props: AdaptableWizardViewProps) => {
           toJSON={props.fileContentsToJSON}
           readFile={props.readFile}
           fileAccept={props.fileAccept}
+          helpText={props.helpText}
           message={state.error}
           defaultText={props.defaultActionMessage}
           dragOverText={props.dragOverActionMessage}
+          loadingText={props.loadingMessage}
           onDropSuccess={onDropSuccess}
         ></FileDroppable>
       ) : (

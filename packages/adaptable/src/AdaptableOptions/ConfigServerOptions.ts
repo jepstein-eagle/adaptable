@@ -1,12 +1,13 @@
 /**
  * Options for managing Config Server.
  *
- * This is used for saving state **remotely** (the default is to save state in local storage).
+ * ConfigServer enables you to save user state **remotely** (the default is to save state in local storage).
  *
- * Note that AdapTable also provides [state lifecycle management functions](_adaptableoptions_stateoptions_.stateoptions.html).
+ * Note that AdapTable also provides **[state lifecycle management functions](_adaptableoptions_stateoptions_.stateoptions.html)** which provides a superior and more flexible alternative to Config Server.  These allow you full control over managing state hydration, rehydration and persisttence and are now generally preferred by advanced users.
  *
- * These allow you full control over managing state hydration, rehydration and persisttence and are now generally preferred by advanced users.
+ * To use ConfigServer you need to set the ​​`enableConfigServer​` property to ​true​ and also provide a value for the ​`configServerUrl`​ property (where your config will be stored).
  *
+ *  ### Config Server example
  *
  * ```ts
  * configServerOptions = {
@@ -14,6 +15,27 @@
  *  configServerUrl: '/myServer/myFile',
  *};
  * ```
+ *
+ * ConfigServer works via a typical POST / GET requests mechanism.  This enables you to decide how to respond to the requests as per your own requirements and system set up.
+ *
+ * #### POST Request
+ *
+ * AdapTable will send a POST request to the ​​configServerUrl​​ to persist the state with the follower parameters:
+ *
+ * - **​​Headers​​**: This takes the form of { ab_username: string, ab_id: string }
+ *
+ * - **Body**: TThis is the actual User State "stringified".
+ *
+ * Note:  Each ​​*ab_username​* and *​ab_id​​* combination is unique, so your server should persist the user state and use that combination as a key.
+ *
+ * #### GET Request
+ *
+ * AdapTable will send a GET request to the ​​configServerUrl​​ to retrieve the persisted state with the following parameter:
+ *
+ * - **​​Headers​​**: This takes the form of { ab_username: string, ab_id: string }
+ *
+ * On receiving this request, your server should return the user state related to the given ​​*ab_username*​ and *​ab_id*​​ combination as a JSON object.
+ *
  */
 export interface ConfigServerOptions {
   /**

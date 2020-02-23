@@ -10,7 +10,7 @@ import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { Glue42State } from '../../PredefinedConfig/Glue42State';
-import { IGlue42Service, Glue42Config } from './Interface/IGlue42Service';
+import { IGlue42Service } from './Interface/IGlue42Service';
 import StringExtensions from '../Extensions/StringExtensions';
 
 export interface Glue42ExportError {
@@ -60,8 +60,7 @@ export class Glue42Service implements IGlue42Service {
             StringExtensions.IsNotNullOrEmpty(glue42State.Username) &&
             StringExtensions.IsNotNullOrEmpty(glue42State.Password)
           ) {
-            this.adaptable.api.glue42Api.setGlue42RunningOn();
-            // this.login(glue42State.Username, glue42State.Password, glue42State.GatewayURL);
+            this.login(glue42State.Username, glue42State.Password, glue42State.GatewayURL);
           }
         } else {
           this.adaptable.api.glue42Api.setGlue42AvailableOff();
@@ -109,7 +108,6 @@ export class Glue42Service implements IGlue42Service {
       this.subscribeToAddinStatusChanges();
       this.adaptable.api.glue42Api.setGlue42RunningOn();
     } catch (error) {
-      console.log(error);
       LogAdaptableError(error);
       this.adaptable.api.glue42Api.setGlue42RunningOff();
     }

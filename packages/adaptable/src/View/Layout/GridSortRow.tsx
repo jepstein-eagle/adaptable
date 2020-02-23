@@ -3,7 +3,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { SelectionMode, SortOrder, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { SelectionMode, SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
@@ -56,7 +56,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
         ConfirmationMsg={''}
         ConfirmationTitle={''}
         onClickAction={() => this.props.onDeleteColumnSort()}
-        AccessLevel={AccessLevel.Full} // only here if in wizard...
+        AccessLevel={'Full'} // only here if in wizard...
       />
     );
 

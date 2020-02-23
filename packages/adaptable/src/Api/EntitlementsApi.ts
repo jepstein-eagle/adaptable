@@ -1,4 +1,4 @@
-import { EntitlementState, Entitlement } from '../PredefinedConfig/EntitlementState';
+import { EntitlementState, Entitlement, AccessLevel } from '../PredefinedConfig/EntitlementState';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 /**
@@ -11,28 +11,56 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  */
 export interface EntitlementsApi {
   /**
-   * Retrieves the Entitlements section from Adaptable State
+   * Returns everything in the Entitlement section of AdapTable state
    */
-  getEntitlementsState(): EntitlementState;
+  getEntitlementState(): EntitlementState;
 
   /**
-   * Retrieves all the Entitlements in the Entitlement state
+   * Returns true if give function has an `AccessLevel` of 'Hidden'
+   *
+   * Will check the Entitlement section of AdapTable state.
+   *
+   * First it will call the `EntitlementLookUpFunction` if that has been provided
+   *
+   * If there is no function then it will get the value from `FunctionEntitlements`
+   *
+   * @param adaptableFunctionName the name of the function to check
    */
-  getAllEntitlements(): Entitlement[];
+  isFunctionHiddenEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
 
   /**
-   * Retrieves the Entitlement for a given Adaptable Function
-   * @param adaptableFunctionName Adaptable Function for which to get the Entitlement
+   * Returns true if give function has an `AccessLevel` of 'Full'
+   *
+   * Will check the Entitlement section of AdapTable state.
+   *
+   * First it will call the `EntitlementLookUpFunction` if that has been provided
+   *
+   * If there is no function then it will get the value from `FunctionEntitlements`
+   *
+   * @param adaptableFunctionName the name of the function to check
    */
-  getEntitlementByAdaptableFunctionName(adaptableFunctionName: AdaptableFunctionName): Entitlement;
+  isFunctionFullEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
+
+  /**
+   * Returns true if give function has an `AccessLevel` of 'ReadOnly'
+   *
+   * Will check the Entitlement section of AdapTable state.
+   *
+   * First it will call the `EntitlementLookUpFunction` if that has been provided
+   *
+   * If there is no function then it will get the value from `FunctionEntitlements`
+   *
+   * @param adaptableFunctionName the name of the function to check
+   */
+  isFunctionReadOnlyEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
 
   /**
    * Retrieves the Entitlement Access Level for a given Adaptable Function
    * @param adaptableFunctionName Adaptable Function for which to get the Entitlement Access Level
    */
-  getEntitlementAccessLevelForAdaptableFunctionName(
+  getEntitlementAccessLevelByAdaptableFunctionName(
     adaptableFunctionName: AdaptableFunctionName
-  ): string;
+  ): AccessLevel;
 
   /**
    * Adds an array of Entitlements to the Entitlement section of Adaptable State

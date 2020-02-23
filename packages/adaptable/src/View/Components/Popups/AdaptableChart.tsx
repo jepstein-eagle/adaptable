@@ -1,7 +1,7 @@
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { AccessLevel } from '../../../PredefinedConfig/Common/Enums';
+
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import { UIHelper } from '../../UIHelper';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
@@ -9,6 +9,7 @@ import * as ScreenPopups from '../../../Utilities/Constants/ScreenPopups';
 import { ChartDisplayPopupPropsBase } from '../SharedProps/ChartDisplayPopupPropsBase';
 import { AdaptablePopup } from './AdaptablePopup';
 import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
+import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 
 /*
 The Chart popup or Div.
@@ -42,10 +43,10 @@ export class AdaptableChart extends React.Component<IAdaptableChartProps, Adapta
         document,
         this.props.showModal
       ),
-      accessLevel: AdaptableHelper.getEntitlementAccessLevelForStrategy(
-        this.props.Adaptable.api.entitlementsApi.getAllEntitlements(),
+      accessLevel: this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
         StrategyConstants.ChartStrategyId
       ),
+
       isValidUserChartContainer: UIHelper.isValidUserChartContainer(
         this.props.Adaptable.adaptableOptions,
         document

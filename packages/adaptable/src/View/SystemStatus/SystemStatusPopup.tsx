@@ -7,7 +7,7 @@ import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedu
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { MessageType, AccessLevel } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { Text, Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
 import UIHelper from '../UIHelper';
@@ -61,7 +61,7 @@ class SystemStatusPopupComponent extends React.Component<
         tone="neutral"
         variant="raised"
         marginTop={3}
-        AccessLevel={AccessLevel.Full}
+        AccessLevel={'Full'}
       >
         Clear System Status
       </SimpleButton>

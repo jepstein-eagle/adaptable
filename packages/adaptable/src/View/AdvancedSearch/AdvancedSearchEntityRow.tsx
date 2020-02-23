@@ -9,7 +9,6 @@ import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import Radio from '../../components/Radio';
-import { AccessLevel } from '../../PredefinedConfig/Common/Enums';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
   extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {

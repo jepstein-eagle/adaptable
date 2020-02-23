@@ -12,6 +12,10 @@ jobs:
       matrix:
         node-version: [12.x]
 
+    env:
+      IPUSHPULL_API_SECRET: ${{ secrets.IPUSHPULL_API_SECRET }}
+      IPUSHPULL_API_KEY: ${{ secrets.IPUSHPULL_API_KEY }}
+
     steps:
     - uses: actions/checkout@v1
     - name: Use Node.js ${{ matrix.node-version }}
@@ -40,13 +44,6 @@ jobs:
     - name: tsc-angular
       run: npm run --prefix packages/adaptable-ng-aggrid link-core && npm run --prefix packages/adaptable-ng-aggrid tsc
 
-    - name: Executing npm install in nocode
-      run: npm install --prefix packages/adaptable-nocode
-      env:
-        CI: true
-    - name: tsc-nocode
-      run: npm run --prefix packages/adaptable-nocode link-core && npm run --prefix packages/adaptable-nocode tsc
-
     - name: Executing npm install in plugins:finance
       run: npm install --prefix packages/plugins/finance
       env:
@@ -55,9 +52,22 @@ jobs:
     - name: tsc-plugins-finance
       run: npm run --prefix packages/plugins/finance tsc
 
+    - name: Executing npm install in plugins:nocode
+      run: npm install --prefix packages/plugins/nocode
+      env:
+        CI: true
+
+    - name: tsc-plugins-nocode
+      run: npm run --prefix packages/plugins/nocode tsc
+
     - name: Executing npm install in plugins:charts
       run: npm install --prefix packages/plugins/charts
       env:
         CI: true
     - name: tsc-plugins-charts
       run: npm run --prefix packages/plugins/charts tsc
+
+    # - uses: preactjs/compressed-size-action@v1
+    #   with:
+    #     repo-token: "${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}"
+    #     build-script: ci-build-core-check-size

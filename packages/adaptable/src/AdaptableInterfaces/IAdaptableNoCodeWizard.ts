@@ -17,9 +17,10 @@ export interface IAdaptableNoCodeWizardOptions {
   defaultActionMessage?: React.ReactNode;
   dragOverActionMessage?: React.ReactNode;
   fetchData?: () => Promise<any>;
+  helpText?: React.ReactNode;
   fileContentsToJSON?: (str: string) => Promise<any> | any;
   readFile?: (file: File) => Promise<any>;
-  loadingMessage?: string | null;
+  loadingMessage?: React.ReactNode;
   prepareData?: (
     data: any,
     file?: File
