@@ -119,6 +119,8 @@ There are currently two plugins:
 
 > Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
 
+Further information is availalbe in the [Plugins ReadMe](./packages/plugins/README.md)
+
 
 ## Licences
 A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
