@@ -46,7 +46,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Predefined Config consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
- * Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
+ * > Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
  *
  * The State items in Predefined Config can be conceptually be put into 2 categories:
  *
@@ -56,11 +56,11 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Note: some objects are designed as 'Run-Time' but have properties which are **not** persisted (e.g. if its a function to be run - as functions cannot be 'stringified').
  *
- * If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfic, then set the Entitlement for that function to be `ReadOnly`.
+ * If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfig, then set the [Entitlement](_predefinedconfig_entitlementstate_.entitlementstate.html) for that function to be `ReadOnly`.
  *
  * Any property in RunTime state that is not persisted is marked in the docs and comments with: ### [Non-Persisted AdapTable State].
  *
- * This object when populated forms the **predefinedConfig** property in *adaptableOptions*.  It can be passed in either as pure JSON or as a url to a file which contains the JSON.
+ * This object when populated forms the [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig) property in *adaptableOptions*.  It can be passed in either as pure JSON or as a url to a file which contains the JSON.
  *
  * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
  *
@@ -74,7 +74,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * #### Bepspoke State
  *
- * The Application State property of Predefined Config contains an ApplicationDataEntries array.
+ * The Application State property of Predefined Config contains an [ApplicationDataEntries](_predefinedconfig_applicationstate_.applicationstate.html) array.
  *
  * This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
  *
