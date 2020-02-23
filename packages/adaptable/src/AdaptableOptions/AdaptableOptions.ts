@@ -81,13 +81,19 @@ export interface AdaptableOptions {
   /**
    * **MANDATORY property**
    *
-   * The name of a column in the grid guaranteed to contain unique values.
+   * The name of a column in AdapTable guaranteed to contain unique values.
    *
-   * Required for cell identification purpose when cell summary and editing functions.
+   * Required for cell identification purpose when using cell summary and editing functions.
    *
    * Also used by Audit Log to identify which cells have been edited.
    *
-   * Note: The column does not need to be visible but it does need to exist in the grid's data source.
+   * > Because AdapTable is fully data agnostic, the only way it can identify a particular cell is as a combination of Primary Key value and Column value (e.g. the user has edited in the 'Bid' column in the row where the value in the Primary Key Column is 15).
+   *
+   * Note: The column does not need to be visible but it **does need to exist in the grid's data source**.
+   *
+   * If the [​`​​showMissingPrimaryKeyWarning`​](_adaptableoptions_generaloptions_.generaloptions.html#showmissingprimarykeywarning) ​​property is true (the default), AdapTable will warn you at start-up if you have provided a value which does ​​not ​​match a column in the grid.
+   *
+   * If the [​`​​preventDuplicatePrimaryKeyValues​​`​](_adaptableoptions_generaloptions_.generaloptions.html#​​preventduplicateprimarykeyvalues​​) ​​property is true (the default), an error alert is triggered (and displayed) if a user attempts to enter a duplicate value into the Primary Key column.
    *
    * **Default Value: N/A**
    */
