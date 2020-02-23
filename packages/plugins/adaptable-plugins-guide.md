@@ -1,6 +1,6 @@
 # AdapTable Plugins Guide
 
-A theme is essentially a collection of css variables that AdapTable exposes, and you can customise. 
+In order to keep the 'core' download a manageable size, Version 6 (released in January 2020) of AdapTable introduced plugins. 
 
 You can have more css theme files imported in the app without them overriding each-other.
 
