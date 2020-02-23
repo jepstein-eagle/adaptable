@@ -168,6 +168,8 @@ Other Read Me docs that will be of interest are:
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
  
  - [Adaptable Theming and Styling Guide](./packages/adaptable/adaptable-theming-guide.md)
+ 
+ - [Plugins](./packages/plugins/README.md)
 
 ## Support
 
