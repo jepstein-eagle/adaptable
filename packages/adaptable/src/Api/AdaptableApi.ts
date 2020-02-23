@@ -83,6 +83,9 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [auditEventApi](#auditeventapi)                     | Listen to the [Audit Events](_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
  *  | [bulkUpdateApi](#bulkupdateapi)                     | Run Bulk Update so mutliple selected cells are given same value  |
  *  | [calculatedColumnApi](#calculatedcolumnapi)         | Manages [Calculated Columns](_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
+ *  | [calendarApi](#calendarApi)                         | Allows you to choose which [Calendar](_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
+ *  | [cellSummaryApi](#cellSummaryApi)                   | Choose which [Cell Summaries](_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
+ *  | [cellValidationApi](#cellValidationApi)             | Manages the [Cell Validation](_predefinedconfig_cellvalidation_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  |
  */
 
@@ -214,8 +217,14 @@ export interface AdaptableApi {
    */
   freeTextColumnApi: FreeTextColumnApi;
 
+  /**
+   *  Provides access to *Glue42* related functionality, the *Glue42* object and [Glue42 State](_predefinedconfig_glue42state_.glue42.html).
+   */
   glue42Api: Glue42Api;
 
+  /**
+   * Provides access to the *Gradient Column* function, the *Gradient Column* object and [Gradient Column State](_predefinedconfig_runtimestate_gradientcolumnstate_.gradientcolumnstate.html).
+   */
   gradientColumnApi: GradientColumnApi;
 
   /**
