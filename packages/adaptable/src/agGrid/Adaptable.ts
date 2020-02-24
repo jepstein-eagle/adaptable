@@ -3438,6 +3438,13 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     // at the end so load the current layout
     this.api.layoutApi.setLayout(currentlayout);
 
+    if (
+      currentlayout === DEFAULT_LAYOUT &&
+      this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true
+    ) {
+      this.gridOptions.columnApi!.autoSizeAllColumns();
+    }
+
     // in case we have an existing quick search we need to make sure its applied
     this.api.quickSearchApi.applyQuickSearch(this.api.quickSearchApi.getQuickSearchValue());
   }
