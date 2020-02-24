@@ -108,7 +108,8 @@ For the ag-Grid Angular Wrapper it will be:
 npm i @adaptabletools/adaptable-angular-aggrid
 ```
 
->  This downloaded contains everything required to run AdapTable and no other downloads are necessary.  AdapTable, once running, **does not make any external internet calls nor store any of your data**.  
+>  This downloaded contains everything required to run AdapTable and no other downloads are necessary.
+AdapTable, once running, **does not make any external internet calls nor store any of your data**.
 Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
 
 ## Plugins
