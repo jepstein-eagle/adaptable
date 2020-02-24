@@ -117,8 +117,8 @@ npm install @adaptabletools/adaptable-plugin-charts
 ```
 
 >  This downloaded contains everything required to run AdapTable and no other downloads are necessary.
-AdapTable, once running, **does not make any external internet calls nor store any of your data**.
-Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
+> AdapTable, once running, **does not make any external internet calls nor store any of your data**.
+> Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
 
 ## Plugins
 AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
