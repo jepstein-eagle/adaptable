@@ -160,9 +160,12 @@ note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has bee
 
 - **onAdaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
 
-An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
+An Adaptable event giving you access to 2 objects:
+1. The *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
 Also gives access to the underlying ag-Grid instance object.
 See [Developer Documentation](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
+
+2. The VendorGrid being used - in this case GridOptions.
 
 - **render|children: ({ grid, adaptable}) => ReactNode**  
 
