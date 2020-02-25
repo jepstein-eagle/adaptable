@@ -64,11 +64,13 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
  *
- * #### Uuid
+ * #### AdaptableObject
  *
- * The AdaptableObject base interface has a single Uuid property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted..
+ * Most objects in PredefinedConfig implement the [`AdaptableObject`](_predefinedconfig_common_adaptableobject_.adaptableobject.html) interface.
  *
- * This is included in all base objects and also frequently used objects like Expressions.
+ * This has a single `Uuid` [`Uuid`](_predefinedconfig_common_adaptableobject_.adaptableobject.html#uuid) property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted..
+ *
+ * This is included by AdapTable in all base objects and also frequently used objects like Expressions.
  *
  * **Do not set this property** when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the config is first read
  *
