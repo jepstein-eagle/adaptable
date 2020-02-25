@@ -77,6 +77,17 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
+  PercentBar: {
+    PercentBars: [
+      {
+        ColumnId: 'notional',
+        PositiveValue: 1496,
+        PositiveColor: '#006400',
+        ShowValue: false,
+        ShowToolTip: true,
+      },
+    ],
+  },
   UserInterface: {
     ColumnMenuItems: (menuinfo: MenuInfo) => {
       console.log('in the function');

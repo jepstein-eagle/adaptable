@@ -712,7 +712,6 @@ export class Adaptable implements IAdaptable {
   }
 
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
-    console.time('first');
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
 
     if (this.api.internalApi.isGridInPivotMode()) {
@@ -732,8 +731,6 @@ export class Adaptable implements IAdaptable {
         this.setColumnVisible(col, false);
       }
     });
-    // we need to do this to make sure agGrid and adaptable column collections are in sync
-
     this.setColumnIntoStore();
   }
 
@@ -1715,7 +1712,8 @@ export class Adaptable implements IAdaptable {
     };
 
     if (dataType == DataType.Number) {
-      newColDef.cellClass = 'number-cell';
+      newColDef.cellStyle = { ' text-align': 'right' };
+      // newColDef.type = 'numericColumn'; // dont like this as aligns header also
     }
 
     colDefs.push(newColDef);
@@ -1742,6 +1740,7 @@ export class Adaptable implements IAdaptable {
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
     const colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
+
     const newColDef: ColDef = {
       headerName: freeTextColumn.ColumnId,
       colId: freeTextColumn.ColumnId,
@@ -2646,6 +2645,9 @@ export class Adaptable implements IAdaptable {
   private postSpecialColumnEditDelete(doReload: boolean) {
     if (this.isInitialised) {
       //  reload the existing layout if its not default
+      // I have no idea any more why we do this but there must presumably be a good reason
+      // we really need to revisit how we manage special columns
+      // its still brittle but better than it was
       let currentlayout: Layout = this.api.layoutApi.getCurrentLayout();
       if (currentlayout) {
         let currentlayoutName: string = this.api.layoutApi.getCurrentLayout().Name;
@@ -2660,12 +2662,8 @@ export class Adaptable implements IAdaptable {
         }
       }
 
-      // if grid is initialised then emit AdaptableReady event so we can re-apply any styles
-      // and re-apply any specially rendered columns
-      if (doReload) {
-        this.api.eventApi.emit('AdaptableReady');
-        this.addSpecialRendereredColumns();
-      }
+      this.addSpecialRendereredColumns();
+      this._emit('SpecialColumnAdded');
     }
   }
 
@@ -2714,6 +2712,59 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
+    const renderedColumn = ColumnHelper.getColumnFromId(
+      sparklineColumn.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+    if (renderedColumn) {
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
+        sparklineColumn.ColumnId
+      );
+      // note we dont get it from the original (but I guess it will be applied next time you run...)
+      vendorGridColumn.getColDef().cellRenderer = null;
+      const coldDef: ColDef = vendorGridColumn.getColDef();
+      coldDef.cellRenderer = null;
+    }
+  }
+
+  public addGradientColumn(gradientColumn: GradientColumn): void {
+    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
+    if (agGridColDef) {
+      agGridColDef.cellStyle = (params: any) => {
+        var color: any;
+        var gradientValue: number | undefined;
+        let baseValue = gradientColumn.BaseValue;
+        let isNegativeValue = params.value < 0;
+        if (isNegativeValue) {
+          color = gradientColumn.NegativeColor;
+          gradientValue = gradientColumn.NegativeValue;
+        } else {
+          color = gradientColumn.PositiveColor;
+          gradientValue = gradientColumn.PositiveValue;
+        }
+        if (gradientValue && baseValue !== undefined) {
+          const increase: any = Math.abs(gradientValue - baseValue);
+          let percentage = ((params.value - baseValue) / increase) * 100;
+          if (isNegativeValue) {
+            percentage = percentage * -1;
+          }
+          let alpha = Number((percentage / 100).toPrecision(2)); //params.
+          return {
+            'background-color': new Color(color).toRgba(alpha),
+          };
+        }
+      };
+    }
+  }
+
+  public removeGradientColumn(gradientColumn: GradientColumn): void {
+    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
+    if (agGridColDef && agGridColDef.cellStyle) {
+      agGridColDef.cellStyle = undefined;
+    }
+  }
+
   public addPercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
       pcr.ColumnId,
@@ -2746,19 +2797,21 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
+  public removePercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
-      sparklineColumn.ColumnId,
+      pcr.ColumnId,
       this.api.gridApi.getColumns()
     );
     if (renderedColumn) {
-      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
-        sparklineColumn.ColumnId
-      );
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       // note we dont get it from the original (but I guess it will be applied next time you run...)
       vendorGridColumn.getColDef().cellRenderer = null;
       const coldDef: ColDef = vendorGridColumn.getColDef();
       coldDef.cellRenderer = null;
+      // change the style back if it was changed by us
+      if (coldDef.cellClass == 'number-cell-changed') {
+        coldDef.cellClass = 'number-cell';
+      }
     }
   }
 
@@ -2856,64 +2909,9 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public removePercentBar(pcr: PercentBar): void {
-    const renderedColumn = ColumnHelper.getColumnFromId(
-      pcr.ColumnId,
-      this.api.gridApi.getColumns()
-    );
-    if (renderedColumn) {
-      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
-      // note we dont get it from the original (but I guess it will be applied next time you run...)
-      vendorGridColumn.getColDef().cellRenderer = null;
-      const coldDef: ColDef = vendorGridColumn.getColDef();
-      coldDef.cellRenderer = null;
-      // change the style back if it was changed by us
-      if (coldDef.cellClass == 'number-cell-changed') {
-        coldDef.cellClass = 'number-cell';
-      }
-    }
-  }
-
   public editPercentBar(pcr: PercentBar): void {
     this.removePercentBar(pcr);
     this.addPercentBar(pcr);
-  }
-
-  public removeGradientColumn(gradientColumn: GradientColumn): void {
-    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
-    if (agGridColDef && agGridColDef.cellStyle) {
-      agGridColDef.cellStyle = undefined;
-    }
-  }
-
-  public addGradientColumn(gradientColumn: GradientColumn): void {
-    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
-    if (agGridColDef) {
-      agGridColDef.cellStyle = (params: any) => {
-        var color: any;
-        var gradientValue: number | undefined;
-        let baseValue = gradientColumn.BaseValue;
-        let isNegativeValue = params.value < 0;
-        if (isNegativeValue) {
-          color = gradientColumn.NegativeColor;
-          gradientValue = gradientColumn.NegativeValue;
-        } else {
-          color = gradientColumn.PositiveColor;
-          gradientValue = gradientColumn.PositiveValue;
-        }
-        if (gradientValue && baseValue !== undefined) {
-          const increase: any = Math.abs(gradientValue - baseValue);
-          let percentage = ((params.value - baseValue) / increase) * 100;
-          if (isNegativeValue) {
-            percentage = percentage * -1;
-          }
-          let alpha = Number((percentage / 100).toPrecision(2)); //params.
-          return {
-            'background-color': new Color(color).toRgba(alpha),
-          };
-        }
-      };
-    }
   }
 
   public editGradientColumn(gradientColumn: GradientColumn): void {
