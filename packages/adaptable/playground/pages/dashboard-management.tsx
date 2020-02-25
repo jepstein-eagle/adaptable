@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, ReactNode, useEffect, useMemo } from "react"
 import {
   DragDropContext,
   Draggable,
@@ -9,55 +9,37 @@ import {
 
 type Tab = {
   name: string
-  toolbars: string[]
+  toolbars: ToolbarName[]
 }
 
-const initialData: Tab[] = [
-  { name: "Unused", toolbars: ["T1", "T2", "T3"] },
-  { name: "Tab 1", toolbars: [] },
-  { name: "Tab 2", toolbars: [] },
-  { name: "Tab 3", toolbars: [] }
-]
+type ToolbarName = string
 
-function List({ tab, index }: { tab: Tab; index: number }) {
-  const droppable = (
-    <Droppable droppableId={tab.name} type="TOOLBAR">
-      {(droppableProvided, droppableSnapshot) => (
-        <div
-          ref={droppableProvided.innerRef}
-          {...droppableProvided.droppableProps}
-          style={{
-            flex: 1,
-            padding: 10,
-            background: droppableSnapshot.isDraggingOver ? "skyblue" : "white"
-          }}
-        >
-          {tab.toolbars.map((toolbar, index) => (
-            <Item key={toolbar} index={index} toolbar={toolbar} />
-          ))}
-          {droppableProvided.placeholder}
+function TabList({ tabs, onRemove }: { tabs: Tab[]; onRemove: (index: number) => void }) {
+  return (
+    <Droppable droppableId="MAIN" type="TAB" direction="horizontal">
+      {(provided, snapshot) => (
+        <div ref={provided.innerRef} {...provided.droppableProps} style={{ display: "flex" }}>
+          {tabs.map((tab, index) =>
+            index === 0 ? null : <Tab key={index} index={index} tab={tab} onRemove={onRemove} />
+          )}
+          {provided.placeholder}
         </div>
       )}
     </Droppable>
   )
+}
 
-  return index === 0 ? (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: 4,
-        marginRight: 10,
-        width: 200,
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "white"
-      }}
-    >
-      <h2 style={{ textAlign: "center" }}>{tab.name}</h2>
-      {droppable}
-    </div>
-  ) : (
-    <Draggable draggableId={tab.name} index={index}>
+function Tab({
+  tab,
+  index,
+  onRemove
+}: {
+  tab: Tab
+  index: number
+  onRemove: (index: number) => void
+}) {
+  return (
+    <Draggable draggableId={String(index)} index={index}>
       {(draggableProvided, draggableSnapshot) => (
         <div
           ref={draggableProvided.innerRef}
@@ -75,17 +57,41 @@ function List({ tab, index }: { tab: Tab; index: number }) {
         >
           <h2 {...draggableProvided.dragHandleProps} style={{ textAlign: "center" }}>
             {tab.name}
+            <button onClick={() => onRemove(index)}>x</button>
           </h2>
-          {droppable}
+          <ToolbarList toolbars={tab.toolbars} droppableId={String(index)} />
         </div>
       )}
     </Draggable>
   )
 }
 
-function Item({ toolbar, index }: { toolbar: string; index: number }) {
+function ToolbarList({ toolbars, droppableId }: { toolbars: ToolbarName[]; droppableId: string }) {
   return (
-    <Draggable draggableId={toolbar} index={index}>
+    <Droppable droppableId={droppableId} type="TOOLBAR">
+      {(droppableProvided, droppableSnapshot) => (
+        <div
+          ref={droppableProvided.innerRef}
+          {...droppableProvided.droppableProps}
+          style={{
+            flex: 1,
+            padding: 10,
+            background: droppableSnapshot.isDraggingOver ? "skyblue" : "white"
+          }}
+        >
+          {toolbars.map((toolbarName, index) => (
+            <Toolbar key={toolbarName} index={index} toolbarName={toolbarName} />
+          ))}
+          {droppableProvided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  )
+}
+
+function Toolbar({ toolbarName, index }: { toolbarName: ToolbarName; index: number }) {
+  return (
+    <Draggable draggableId={toolbarName} index={index}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -98,28 +104,66 @@ function Item({ toolbar, index }: { toolbar: string; index: number }) {
             marginBottom: 10
           }}
         >
-          {toolbar}
+          {toolbarName}
         </div>
       )}
     </Draggable>
   )
 }
 
-export default function DashboardManagement() {
-  const [data, setData] = useState(initialData)
+function UnusedToolbars({ toolbars }: { toolbars: ToolbarName[] }) {
+  return (
+    <div
+      style={{
+        border: "1px solid #ccc",
+        borderRadius: 4,
+        marginRight: 10,
+        width: 200,
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: "white"
+      }}
+    >
+      <h2 style={{ textAlign: "center" }}>Unused</h2>
+      <ToolbarList toolbars={toolbars} droppableId={String(0)} />
+    </div>
+  )
+}
+
+function DashboardManagement({
+  tabs,
+  onTabsChange,
+  availableToolbars
+}: {
+  tabs: Tab[]
+  onTabsChange: (tabs: Tab[]) => void
+  availableToolbars: ToolbarName[]
+}) {
+  const [localTabs, setLocalTabs] = useState<Tab[]>(() => {
+    const unusedToolbars = availableToolbars.filter(toolbarName => {
+      return !tabs.some(tab => tab.toolbars.includes(toolbarName))
+    })
+    return [{ name: "Unused", toolbars: unusedToolbars }, ...tabs]
+  })
+
+  useEffect(() => {
+    onTabsChange(localTabs.slice(1))
+  }, [localTabs])
 
   const handleToolbarDragEnd = (result: DropResult) => {
     const { source, destination } = result
 
     if (!source || !destination) return
 
-    const sourceToolbars = data.find(tab => tab.name === source.droppableId)!.toolbars
-    const destinationToolbars = data.find(tab => tab.name === destination.droppableId)!.toolbars
+    const newLocalTabs = [...localTabs]
 
-    const [removed] = sourceToolbars.splice(result.source.index, 1)
-    destinationToolbars.splice(result.destination!.index, 0, removed)
+    const sourceTab = newLocalTabs[Number(source.droppableId)]
+    const [removed] = sourceTab.toolbars.splice(source.index, 1)
 
-    setData(data)
+    const destinationTab = newLocalTabs[Number(destination.droppableId)]
+    destinationTab.toolbars.splice(destination.index, 0, removed)
+
+    setLocalTabs(newLocalTabs)
   }
 
   const handleTabDragEnd = (result: DropResult) => {
@@ -127,10 +171,24 @@ export default function DashboardManagement() {
 
     if (!source || !destination) return
 
-    const [removed] = data.splice(source.index, 1)
-    data.splice(destination.index, 0, removed)
+    const newLocalTabs = [...localTabs]
 
-    setData(data)
+    const [removed] = newLocalTabs.splice(source.index, 1)
+    newLocalTabs.splice(destination.index, 0, removed)
+
+    setLocalTabs(newLocalTabs)
+  }
+
+  const handleTabRemove = (index: number) => {
+    const newLocalTabs = [...localTabs]
+
+    newLocalTabs.splice(index, 1)
+
+    setLocalTabs(newLocalTabs)
+  }
+
+  const handleTabAdd = () => {
+    setLocalTabs([...localTabs, { name: "New Tab", toolbars: [] }])
   }
 
   return (
@@ -140,24 +198,31 @@ export default function DashboardManagement() {
         if (result.type === "TOOLBAR") handleToolbarDragEnd(result)
       }}
     >
-      <Droppable droppableId="MAIN" type="TAB" direction="horizontal">
-        {(provided, snapshot) => (
-          <div
-            ref={provided.innerRef}
-            {...provided.droppableProps}
-            style={{ display: "flex", flex: 1 }}
-          >
-            {data.map((tab, index) => (
-              <List key={tab.name} index={index} tab={tab} />
-            ))}
-          </div>
-        )}
-      </Droppable>
+      <div style={{ display: "flex", flex: 1 }}>
+        <UnusedToolbars toolbars={localTabs[0].toolbars} />
+        <TabList tabs={localTabs} onRemove={handleTabRemove} />
+        <button onClick={handleTabAdd}>Add Tab</button>
+      </div>
     </DragDropContext>
   )
 }
 
-DashboardManagement.getInitialProps = () => {
+export default function Page() {
+  const [tabs, setTabs] = useState<Tab[]>([
+    { name: "Tab 1", toolbars: ["T1"] },
+    { name: "Tab 2", toolbars: ["T4", "T5"] },
+    { name: "Tab 3", toolbars: [] }
+  ])
+  return (
+    <DashboardManagement
+      availableToolbars={["T1", "T2", "T3", "T4", "T5"]}
+      tabs={tabs}
+      onTabsChange={setTabs}
+    />
+  )
+}
+
+Page.getInitialProps = () => {
   resetServerContext()
   return {}
 }
