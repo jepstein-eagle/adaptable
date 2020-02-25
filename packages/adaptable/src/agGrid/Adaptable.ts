@@ -714,33 +714,24 @@ export class Adaptable implements IAdaptable {
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     console.time('first');
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
-    let startIndex: number = 0;
 
     if (this.api.internalApi.isGridInPivotMode()) {
       return;
     }
-    //  this is not quite right as it assumes that only the first column can be grouped
-    //  but lets do this for now and then refine and refactor later to deal with weirder use cases
-    if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
-      startIndex++;
-    }
 
-    VisibleColumnList.forEach((column, index) => {
-      const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
-      if (!col) {
-        LoggingHelper.LogAdaptableError(`Cannot find vendor column:${column.ColumnId}`);
-      } else {
-        if (!col.isVisible()) {
-          this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
-        }
-        this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, 'api');
+    const NewVisibleColumnIds = VisibleColumnList.map(c => c.ColumnId);
+    const NewVisibleColumnIdsMap = NewVisibleColumnIds.reduce((acc, id) => {
+      acc[id] = true;
+      return acc;
+    }, {} as { [key: string]: boolean });
+
+    this.setColumnOrder(NewVisibleColumnIds);
+
+    allColumns.forEach(col => {
+      if (!NewVisibleColumnIdsMap[col.getColId()]) {
+        this.setColumnVisible(col, false);
       }
     });
-    allColumns
-      .filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0)
-      .forEach(col => {
-        this.setColumnVisible(this.gridOptions.columnApi, col, false, 'api');
-      });
     // we need to do this to make sure agGrid and adaptable column collections are in sync
 
     this.setColumnIntoStore();
@@ -3220,12 +3211,13 @@ export class Adaptable implements IAdaptable {
 
   // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
   // not sure why as its not in the api
-  private setColumnVisible(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
-    columnApi.setColumnVisible(col, isVisible, columnEventType);
+  private setColumnVisible(col: any, isVisible: boolean) {
+    this.gridOptions.columnApi.setColumnVisible(col, isVisible);
   }
 
-  private moveColumn(columnApi: any, col: any, index: number, columnEventType: string) {
-    columnApi.moveColumn(col, index, columnEventType);
+  private setColumnOrder(columnIds: string[]) {
+    this.gridOptions.columnApi.setColumnsVisible(columnIds, true);
+    this.gridOptions.columnApi.moveColumns(columnIds, 0);
   }
 
   private setColumnState(columnApi: any, columnState: any, columnEventType: string) {
