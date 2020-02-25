@@ -9,19 +9,36 @@ import {
 
 type Tab = {
   name: string
-  toolbars: ToolbarName[]
+  toolbars: Toolbar[]
 }
 
-type ToolbarName = string
+type Toolbar = string
 
-function TabList({ tabs, onRemove }: { tabs: Tab[]; onRemove: (index: number) => void }) {
+function TabList({
+  tabs,
+  onRemoveTab,
+  onRemoveToolbar,
+  onChangeTabName
+}: {
+  tabs: Tab[]
+  onRemoveTab: (tabIndex: number) => void
+  onRemoveToolbar: (tabIndex: number, toolbarIndex: number) => void
+  onChangeTabName: (tabIndex: number, tabName: string) => void
+}) {
   return (
     <Droppable droppableId="MAIN" type="TAB" direction="horizontal">
-      {(provided, snapshot) => (
+      {provided => (
         <div ref={provided.innerRef} {...provided.droppableProps} style={{ display: "flex" }}>
-          {tabs.map((tab, index) =>
-            index === 0 ? null : <Tab key={index} index={index} tab={tab} onRemove={onRemove} />
-          )}
+          {tabs.map((tab, tabIndex) => (
+            <TabItem
+              key={tabIndex}
+              tabIndex={tabIndex}
+              tab={tab}
+              onRemove={() => onRemoveTab(tabIndex)}
+              onRemoveToolbar={toolbarIndex => onRemoveToolbar(tabIndex, toolbarIndex)}
+              onChangeTabName={tabName => onChangeTabName(tabIndex, tabName)}
+            />
+          ))}
           {provided.placeholder}
         </div>
       )}
@@ -29,23 +46,28 @@ function TabList({ tabs, onRemove }: { tabs: Tab[]; onRemove: (index: number) =>
   )
 }
 
-function Tab({
+function TabItem({
   tab,
-  index,
-  onRemove
+  tabIndex,
+  onRemove,
+  onRemoveToolbar,
+  onChangeTabName
 }: {
   tab: Tab
-  index: number
-  onRemove: (index: number) => void
+  tabIndex: number
+  onRemove: () => void
+  onRemoveToolbar: (toolbarIndex: number) => void
+  onChangeTabName: (tabName: string) => void
 }) {
   return (
-    <Draggable draggableId={String(index)} index={index}>
-      {(draggableProvided, draggableSnapshot) => (
+    <Draggable draggableId={String(tabIndex)} index={tabIndex}>
+      {provided => (
         <div
-          ref={draggableProvided.innerRef}
-          {...draggableProvided.draggableProps}
+          ref={provided.innerRef}
+          {...provided.draggableProps}
           style={{
-            ...draggableProvided.draggableProps.style,
+            ...provided.draggableProps.style,
+            boxSizing: "border-box",
             border: "1px solid #ccc",
             borderRadius: 4,
             marginRight: 10,
@@ -55,43 +77,154 @@ function Tab({
             backgroundColor: "white"
           }}
         >
-          <h2 {...draggableProvided.dragHandleProps} style={{ textAlign: "center" }}>
-            {tab.name}
-            <button onClick={() => onRemove(index)}>x</button>
-          </h2>
-          <ToolbarList toolbars={tab.toolbars} droppableId={String(index)} />
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              padding: 10,
+              borderBottom: "1px solid #ccc"
+            }}
+          >
+            <div
+              {...provided.dragHandleProps}
+              style={{ width: 16, height: 16, background: "black", marginRight: 10 }}
+            />
+            <input
+              type="text"
+              value={tab.name}
+              style={{ flex: 1, width: "100%", border: "none" }}
+              onChange={event => {
+                onChangeTabName(event.target.value)
+              }}
+            />
+            <button onClick={onRemove} style={{ appearance: "none" }}>
+              x
+            </button>
+          </div>
+
+          <ToolbarList
+            toolbars={tab.toolbars}
+            droppableId={String(tabIndex)}
+            onRemove={onRemoveToolbar}
+          />
         </div>
       )}
     </Draggable>
   )
 }
 
-function ToolbarList({ toolbars, droppableId }: { toolbars: ToolbarName[]; droppableId: string }) {
+function ToolbarList({
+  toolbars,
+  droppableId,
+  onRemove
+}: {
+  toolbars: Toolbar[]
+  droppableId: string
+  onRemove: (toolbarIndex: number) => void
+}) {
   return (
     <Droppable droppableId={droppableId} type="TOOLBAR">
-      {(droppableProvided, droppableSnapshot) => (
+      {(provided, snapshot) => (
         <div
-          ref={droppableProvided.innerRef}
-          {...droppableProvided.droppableProps}
+          ref={provided.innerRef}
+          {...provided.droppableProps}
           style={{
             flex: 1,
             padding: 10,
-            background: droppableSnapshot.isDraggingOver ? "skyblue" : "white"
+            background: snapshot.isDraggingOver ? "skyblue" : "white"
           }}
         >
-          {toolbars.map((toolbarName, index) => (
-            <Toolbar key={toolbarName} index={index} toolbarName={toolbarName} />
+          {toolbars.map((toolbar, toolbarIndex) => (
+            <ToolbarItem
+              key={toolbar}
+              toolbar={toolbar}
+              toolbarIndex={toolbarIndex}
+              onRemove={() => onRemove(toolbarIndex)}
+            />
           ))}
-          {droppableProvided.placeholder}
+          {provided.placeholder}
         </div>
       )}
     </Droppable>
   )
 }
 
-function Toolbar({ toolbarName, index }: { toolbarName: ToolbarName; index: number }) {
+function ToolbarItem({
+  toolbar,
+  toolbarIndex,
+  onRemove
+}: {
+  toolbar: Toolbar
+  toolbarIndex: number
+  onRemove: () => void
+}) {
   return (
-    <Draggable draggableId={toolbarName} index={index}>
+    <Draggable draggableId={toolbar} index={toolbarIndex}>
+      {(provided, snapshot) => (
+        <div
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          style={{
+            ...provided.draggableProps.style,
+            display: "flex",
+            alignItems: "center",
+            backgroundColor: snapshot.isDragging ? "lightgreen" : "#ddd",
+            padding: 10,
+            marginBottom: 10
+          }}
+        >
+          <div style={{ flex: 1 }}>{toolbar}</div>
+          <button onClick={onRemove}>x</button>
+        </div>
+      )}
+    </Draggable>
+  )
+}
+
+function UnusedPanel({ toolbars }: { toolbars: Toolbar[] }) {
+  return (
+    <div
+      style={{
+        border: "1px solid #ccc",
+        borderRadius: 4,
+        marginBottom: 10,
+        backgroundColor: "white"
+      }}
+    >
+      <div style={{ padding: 10 }}>Unused</div>
+      <UnusedToolbarList toolbars={toolbars} />
+    </div>
+  )
+}
+
+function UnusedToolbarList({ toolbars }: { toolbars: Toolbar[] }) {
+  return (
+    <Droppable droppableId="UNUSED" type="TOOLBAR" isDropDisabled={true} direction="horizontal">
+      {provided => (
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            paddingLeft: 10,
+            paddingRight: 10
+          }}
+        >
+          {toolbars.map((toolbar, toolbarIndex) => (
+            <UnusedToolbarItem key={toolbar} toolbar={toolbar} toolbarIndex={toolbarIndex} />
+          ))}
+          {provided.placeholder}
+        </div>
+      )}
+    </Droppable>
+  )
+}
+
+function UnusedToolbarItem({ toolbar, toolbarIndex }: { toolbar: Toolbar; toolbarIndex: number }) {
+  return (
+    <Draggable draggableId={toolbar} index={toolbarIndex}>
       {(provided, snapshot) => (
         <div
           ref={provided.innerRef}
@@ -101,32 +234,14 @@ function Toolbar({ toolbarName, index }: { toolbarName: ToolbarName; index: numb
             ...provided.draggableProps.style,
             backgroundColor: snapshot.isDragging ? "lightgreen" : "#ddd",
             padding: 10,
+            marginRight: 10,
             marginBottom: 10
           }}
         >
-          {toolbarName}
+          {toolbar}
         </div>
       )}
     </Draggable>
-  )
-}
-
-function UnusedToolbars({ toolbars }: { toolbars: ToolbarName[] }) {
-  return (
-    <div
-      style={{
-        border: "1px solid #ccc",
-        borderRadius: 4,
-        marginRight: 10,
-        width: 200,
-        display: "flex",
-        flexDirection: "column",
-        backgroundColor: "white"
-      }}
-    >
-      <h2 style={{ textAlign: "center" }}>Unused</h2>
-      <ToolbarList toolbars={toolbars} droppableId={String(0)} />
-    </div>
   )
 }
 
@@ -137,33 +252,32 @@ function DashboardManagement({
 }: {
   tabs: Tab[]
   onTabsChange: (tabs: Tab[]) => void
-  availableToolbars: ToolbarName[]
+  availableToolbars: Toolbar[]
 }) {
-  const [localTabs, setLocalTabs] = useState<Tab[]>(() => {
-    const unusedToolbars = availableToolbars.filter(toolbarName => {
-      return !tabs.some(tab => tab.toolbars.includes(toolbarName))
-    })
-    return [{ name: "Unused", toolbars: unusedToolbars }, ...tabs]
-  })
-
-  useEffect(() => {
-    onTabsChange(localTabs.slice(1))
-  }, [localTabs])
+  const unusedToolbars = useMemo(
+    () =>
+      availableToolbars.filter(toolbar => {
+        return !tabs.some(tab => tab.toolbars.includes(toolbar))
+      }),
+    [tabs, availableToolbars]
+  )
 
   const handleToolbarDragEnd = (result: DropResult) => {
-    const { source, destination } = result
+    const { source, destination, draggableId } = result
 
     if (!source || !destination) return
 
-    const newLocalTabs = [...localTabs]
+    if (source.droppableId !== "UNUSED") {
+      const sourceTabToolbars = tabs[Number(source.droppableId)].toolbars
+      sourceTabToolbars.splice(source.index, 1)
+    }
 
-    const sourceTab = newLocalTabs[Number(source.droppableId)]
-    const [removed] = sourceTab.toolbars.splice(source.index, 1)
+    if (destination.droppableId !== "UNUSED") {
+      const destinationTabToolbars = tabs[Number(destination.droppableId)].toolbars
+      destinationTabToolbars.splice(destination.index, 0, draggableId)
+    }
 
-    const destinationTab = newLocalTabs[Number(destination.droppableId)]
-    destinationTab.toolbars.splice(destination.index, 0, removed)
-
-    setLocalTabs(newLocalTabs)
+    onTabsChange([...tabs])
   }
 
   const handleTabDragEnd = (result: DropResult) => {
@@ -171,24 +285,42 @@ function DashboardManagement({
 
     if (!source || !destination) return
 
-    const newLocalTabs = [...localTabs]
+    const [removed] = tabs.splice(source.index, 1)
+    tabs.splice(destination.index, 0, removed)
 
-    const [removed] = newLocalTabs.splice(source.index, 1)
-    newLocalTabs.splice(destination.index, 0, removed)
-
-    setLocalTabs(newLocalTabs)
+    onTabsChange([...tabs])
   }
 
-  const handleTabRemove = (index: number) => {
-    const newLocalTabs = [...localTabs]
-
-    newLocalTabs.splice(index, 1)
-
-    setLocalTabs(newLocalTabs)
+  const handleRemoveTab = (tabIndex: number) => {
+    onTabsChange([...tabs].filter((_, index) => index !== tabIndex))
   }
 
   const handleTabAdd = () => {
-    setLocalTabs([...localTabs, { name: "New Tab", toolbars: [] }])
+    onTabsChange([...tabs, { name: "New Tab", toolbars: [] }])
+  }
+
+  const handleRemoveToolbar = (tabIndex: number, toolbarIndex: number) => {
+    onTabsChange(
+      tabs.map((tab, index) => {
+        if (index !== tabIndex) return tab
+        return {
+          ...tab,
+          toolbars: [...tab.toolbars].filter((_, index) => index !== toolbarIndex)
+        }
+      })
+    )
+  }
+
+  const handleChangeTabName = (tabIndex: number, tabName: string) => {
+    onTabsChange(
+      tabs.map((tab, index) => {
+        if (index !== tabIndex) return tab
+        return {
+          ...tab,
+          name: tabName
+        }
+      })
+    )
   }
 
   return (
@@ -198,9 +330,14 @@ function DashboardManagement({
         if (result.type === "TOOLBAR") handleToolbarDragEnd(result)
       }}
     >
+      <UnusedPanel toolbars={unusedToolbars} />
       <div style={{ display: "flex", flex: 1 }}>
-        <UnusedToolbars toolbars={localTabs[0].toolbars} />
-        <TabList tabs={localTabs} onRemove={handleTabRemove} />
+        <TabList
+          tabs={tabs}
+          onRemoveTab={handleRemoveTab}
+          onRemoveToolbar={handleRemoveToolbar}
+          onChangeTabName={handleChangeTabName}
+        />
         <button onClick={handleTabAdd}>Add Tab</button>
       </div>
     </DragDropContext>
@@ -214,11 +351,14 @@ export default function Page() {
     { name: "Tab 3", toolbars: [] }
   ])
   return (
-    <DashboardManagement
-      availableToolbars={["T1", "T2", "T3", "T4", "T5"]}
-      tabs={tabs}
-      onTabsChange={setTabs}
-    />
+    <>
+      <DashboardManagement
+        availableToolbars={["T1", "T2", "T3", "T4", "T5", "T6", "T7"]}
+        tabs={tabs}
+        onTabsChange={setTabs}
+      />
+      {/* <pre>{JSON.stringify(tabs, null, 2)}</pre> */}
+    </>
   )
 }
 
