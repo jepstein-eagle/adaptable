@@ -34,15 +34,19 @@ let demoConfig: PredefinedConfig = {
     CellValidations: [
       {
         ColumnId: 'price',
-        Expression: undefined,
         Range: {
           Operand1: '100',
           Operand1Type: 'Value',
-          Operand2: '',
-          Operand2Type: 'Value',
           Operator: 'PercentChange',
         },
         ActionMode: 'Warn User',
+      },
+      {
+        ColumnId: 'notional',
+        Range: {
+          Operator: 'IsNotNumber',
+        },
+        ActionMode: 'Stop Edit',
       },
     ],
   },

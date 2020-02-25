@@ -712,6 +712,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
+    console.time('first');
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
@@ -741,6 +742,7 @@ export class Adaptable implements IAdaptable {
         this.setColumnVisible(this.gridOptions.columnApi, col, false, 'api');
       });
     // we need to do this to make sure agGrid and adaptable column collections are in sync
+
     this.setColumnIntoStore();
   }
 
@@ -3207,6 +3209,15 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.columnApi.setPivotMode(false);
   }
 
+  public setLayout(layout: Layout): void {
+    if (
+      layout.Name === DEFAULT_LAYOUT &&
+      this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true
+    ) {
+      this.gridOptions.columnApi!.autoSizeAllColumns();
+    }
+  }
+
   // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
   // not sure why as its not in the api
   private setColumnVisible(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
@@ -3435,14 +3446,14 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
 
-    // at the end so load the current layout
-    this.api.layoutApi.setLayout(currentlayout);
-
-    if (
-      currentlayout === DEFAULT_LAYOUT &&
-      this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true
-    ) {
-      this.gridOptions.columnApi!.autoSizeAllColumns();
+    // if the current layout is the default or not set then autosize all columns if requested
+    if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
+    } else {
+      // at the end so load the current layout (as its not default)
+      this.api.layoutApi.setLayout(currentlayout);
     }
 
     // in case we have an existing quick search we need to make sure its applied

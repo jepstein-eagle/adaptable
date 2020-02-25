@@ -37,13 +37,10 @@ let demoConfig: PredefinedConfig = {
     AlertDefinitions: [
       {
         ColumnId: 'price',
-        Expression: undefined,
         MessageType: 'Warning',
         Range: {
           Operand1: '100',
           Operand1Type: 'Value',
-          Operand2: '',
-          Operand2Type: 'Value',
           Operator: 'PercentChange',
         },
         AlertProperties: {

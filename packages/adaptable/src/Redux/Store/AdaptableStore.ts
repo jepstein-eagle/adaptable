@@ -2264,6 +2264,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 currentLayout.VendorGridInfo = currentGridVendorInfo;
                 middlewareAPI.dispatch(LayoutRedux.LayoutSave(currentLayout));
               }
+
+              // tell grid the layout has been selected
+              adaptable.setLayout(currentLayout);
             }
             return returnAction;
           }

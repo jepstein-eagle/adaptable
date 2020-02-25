@@ -108,8 +108,6 @@ let demoConfig: PredefinedConfig = {
                 {
                   Operand1: '1400',
                   Operand1Type: 'Value',
-                  Operand2: '',
-                  Operand2Type: 'Value',
                   Operator: 'GreaterThan',
                 },
               ],

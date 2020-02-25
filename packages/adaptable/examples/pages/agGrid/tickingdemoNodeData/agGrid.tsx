@@ -71,13 +71,8 @@ let json: PredefinedConfig = {
     AlertDefinitions: [
       {
         ColumnId: 'notional',
-        Expression: undefined,
         MessageType: 'Info',
         Range: {
-          Operand1: '',
-          Operand1Type: 'Value',
-          Operand2: '',
-          Operand2Type: 'Value',
           Operator: 'AnyChange',
         },
         AlertProperties: {
