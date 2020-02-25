@@ -1,10 +1,24 @@
-import { IDataService, ChangeDirection } from './Interface/IDataService';
-import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
-import Emitter, { EmitterCallback } from '../../Utilities/Emitter';
+import { IDataService, ChangeDirection } from './../Interface/IDataService';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
+import { DataChangedInfo } from '../../../PredefinedConfig/Common/DataChangedInfo';
+import Emitter, { EmitterCallback } from '../../../Utilities/Emitter';
 
 // Used to be the Audit Service - now much reduced
 // Doesnt store any data (other than for flashing cell) - simply responsible for publishing DataChanged Events
+
+/**
+ * has it changed or not over a point/period of time?
+ * how many times has changed?
+ *
+ * alertOptions: {
+ *    historicAlerts?: {
+ *      columns!: true//, [] | (eachColumn) => true/false,
+ *      cacheDuration? (in minutes): 10*60,
+ *      clearAt? (defaults to midnight): () =>
+ *    }
+ * }
+ *
+ */
 
 export class DataService implements IDataService {
   private _columnValueList: Map<string, Map<any, number>>;
@@ -16,6 +30,8 @@ export class DataService implements IDataService {
     this._columnValueList = new Map();
 
     this.emitter = new Emitter();
+
+    // adaptable.api.alertApi.getAlertState();
   }
 
   on = (eventName: string, callback: EmitterCallback): (() => void) =>
