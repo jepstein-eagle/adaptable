@@ -79,16 +79,6 @@ export class ConditionalStyleScopeWizard
           >
             Whole Row
           </Radio>
-          {this.state.ConditionalStyleScope == 'Row' && (
-            <CheckBox
-              marginRight={3}
-              marginLeft={5}
-              onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
-              checked={this.state.ExcludeGroupedRows}
-            >
-              Exclude Grouped Rows
-            </CheckBox>
-          )}
 
           <HelpBlock marginBottom={1}>Apply the Conditional Style to a single Column</HelpBlock>
 
@@ -183,6 +173,20 @@ export class ConditionalStyleScopeWizard
                 />
               </Box>
             )}
+
+          <Box>
+            <HelpBlock marginBottom={2}>
+              Exclude any cells in a Grouped Row from applying the Style
+            </HelpBlock>
+
+            <CheckBox
+              marginLeft={3}
+              onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
+              checked={this.state.ExcludeGroupedRows}
+            >
+              Exclude Grouped Rows
+            </CheckBox>
+          </Box>
         </Flex>
       </WizardPanel>
 

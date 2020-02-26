@@ -11,6 +11,7 @@ import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/AdaptableEvents';
+import { AdaptableComparerFunction } from '../../PredefinedConfig/Common/AdaptableComparerFunction';
 
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
@@ -164,6 +165,50 @@ export function createFDC3Message(type: string, id: any): AdaptableEventArgs {
   };
 }
 
+export function runAdaptableComparerFunctiontestGetFunction(
+  columnId: string,
+  columnValues: any[],
+  adaptable: IAdaptable
+): AdaptableComparerFunction {
+  return function compareItemsOfCustomSort(
+    valueA: any,
+    valueB: any,
+    nodeA?: any,
+    nodeB?: any
+  ): number {
+    let firstElementValueString = nodeA
+      ? adaptable.getDisplayValueFromRowNode(nodeA, columnId)
+      : valueA;
+
+    let secondElementValueString = nodeB
+      ? adaptable.getDisplayValueFromRowNode(nodeB, columnId)
+      : valueB;
+
+    let indexFirstElement = columnValues.indexOf(firstElementValueString);
+    let containsFirstElement = indexFirstElement >= 0;
+    let indexSecondElement = columnValues.indexOf(secondElementValueString);
+    let containsSecondElement = indexSecondElement >= 0;
+    //if none of the element are in the list we jsut return normal compare
+    if (!containsFirstElement && !containsSecondElement) {
+      if (valueA == valueB) {
+        return 0;
+      }
+      return valueA < valueB ? -1 : 1;
+    }
+    //if first item not in the list make sure we put it after the second item
+    if (!containsFirstElement) {
+      return 1;
+    }
+    //if second item not in the list make sure we put it after the first item
+    if (!containsSecondElement) {
+      return -1;
+    }
+
+    //return the comparison from the list if the two items are in the list
+    return indexFirstElement - indexSecondElement;
+  };
+}
+
 export const AdaptableHelper = {
   assignadaptableOptions,
   isValidPrimaryKey,
@@ -171,5 +216,6 @@ export const AdaptableHelper = {
   AdaptableObjectExistsInState,
   CheckadaptableOptions,
   createFDC3Message,
+  runAdaptableComparerFunctiontestGetFunction,
 };
 export default AdaptableHelper;

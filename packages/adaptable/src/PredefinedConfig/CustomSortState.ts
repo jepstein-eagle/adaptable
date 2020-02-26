@@ -1,10 +1,13 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
 
 /**
  * The Predefined Configuration for the Custom Sort function
  *
  * Use Custom Sort when you want to sort a column in non default ways (i.e. not alphabetically or not in natural ascending / descending order).
+ *
+ * Custom Sorts will be applied both when you sort the Column in table view and in pivot view.
  *
  * When creating a Custom Sort you can set the sort in one of 2 ways:
  *
@@ -90,19 +93,5 @@ export interface CustomSort extends AdaptableObject {
    *
    * Each time it runs it is given 2 cell values to compare (as well as both rows to allow you to look up other values in the row if necessary)
    */
-  CustomSortComparerFunction?: CustomSortComparerFunction;
+  CustomSortComparerFunction?: AdaptableComparerFunction;
 }
-
-/**
- * A standard 'comparer' type function used to evaluate custom sorts at run-time.
- *
- * Like all comparer functions it will return -1, 0, 1 to set the sort order.
- *
- * Each time the function is run it is given 2 cell values to compare, and also both (equivalent) rows (to allow you to look up other values in the row if necessary)
- */
-export type CustomSortComparerFunction = (
-  valueA: any,
-  valueB: any,
-  nodeA: any,
-  nodeB: any
-) => number;

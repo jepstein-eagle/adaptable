@@ -28,7 +28,6 @@ import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
-import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { DashboardStrategy } from '../Strategy/DashboardStrategy';
 import { StateManagementStrategy } from '../Strategy/StateManagementStrategy';
 import { DataSourceStrategy } from '../Strategy/DataSourceStrategy';
@@ -74,10 +73,12 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
 import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
-import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
+import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
+import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -126,7 +127,7 @@ export class agGridHelper {
       StrategyConstants.ConditionalStyleStrategyId,
       new ConditionalStyleStrategyagGrid(adaptable)
     );
-    strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategyagGrid(adaptable));
+    strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(adaptable));
     strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(adaptable));
     strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(adaptable));
     strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(adaptable));
@@ -747,14 +748,14 @@ export class agGridHelper {
             .getColumnSorts()
             .find((gs: ColumnSort) => ColumnHelper.isSpecialColumn(gs.Column))
         ) {
-          const customSortStrategy: CustomSortStrategyagGrid = this.adaptable.strategies.get(
+          const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId
-          ) as CustomSortStrategyagGrid;
+          ) as CustomSortStrategy;
           const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
           groupCustomSort.ColumnId = colId;
           groupCustomSort.SortedValues = customSort.SortedValues;
 
-          const customSortComparerFunction: CustomSortComparerFunction = customSort.CustomSortComparerFunction
+          const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
             ? customSort.CustomSortComparerFunction
             : customSortStrategy.getComparerFunction(groupCustomSort);
           this.adaptable.setCustomSort(colId, customSortComparerFunction);

@@ -156,6 +156,7 @@ export interface VendorGridInfo {
   ColumnState?: any;
   ColumnGroupState?: any;
   InPivotMode?: boolean;
+  ValueColumns?: string[];
 }
 
 /**

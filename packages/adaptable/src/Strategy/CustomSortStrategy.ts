@@ -3,10 +3,12 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
+import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 
 export class CustomSortStrategy extends AdaptableStrategyBase implements ICustomSortStrategy {
   private CustomSorts: CustomSort[];
@@ -60,46 +62,18 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
 
   applyCustomSorts() {
     this.CustomSorts.forEach(customSort => {
-      const customSortComparerFunction: CustomSortComparerFunction = customSort.CustomSortComparerFunction
+      const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
         ? customSort.CustomSortComparerFunction
         : this.getComparerFunction(customSort);
       this.adaptable.setCustomSort(customSort.ColumnId, customSortComparerFunction);
     });
   }
 
-  // make this an abstract function?
-  public getComparerFunction(customSort: CustomSort): CustomSortComparerFunction {
-    let theadaptable = this.adaptable as IAdaptable;
-    return function compareItemsOfCustomSort(firstElement: any, secondElement: any): number {
-      let firstElementValueString = theadaptable.getDisplayValue(
-        theadaptable.getPrimaryKeyValueFromRowNode(firstElement),
-        customSort.ColumnId
-      ); //firstElement[customSort.ColumnId];
-      let secondElementValueString = theadaptable.getDisplayValue(
-        theadaptable.getPrimaryKeyValueFromRowNode(secondElement),
-        customSort.ColumnId
-      ); //secondElement[customSort.ColumnId];
-      let firstElementValue = firstElement[customSort.ColumnId];
-      let secondElementValue = secondElement[customSort.ColumnId];
-      let indexFirstElement = customSort.SortedValues.indexOf(firstElementValueString);
-      let containsFirstElement = indexFirstElement >= 0;
-      let indexSecondElement = customSort.SortedValues.indexOf(secondElementValueString);
-      let containsSecondElement = indexSecondElement >= 0;
-      //if none of the element are in the list we jsut return normal compare
-      if (!containsFirstElement && !containsSecondElement) {
-        return firstElementValue < secondElementValue ? -1 : 1;
-      }
-      //if first item not in the list make sure we put it after the second item
-      if (!containsFirstElement) {
-        return 1;
-      }
-      //if second item not in the list make sure we put it after the first item
-      if (!containsSecondElement) {
-        return -1;
-      }
-
-      //return the comparison from the list if the two items are in the list
-      return indexFirstElement - indexSecondElement;
-    };
+  public getComparerFunction(customSort: CustomSort): AdaptableComparerFunction {
+    return AdaptableHelper.runAdaptableComparerFunctiontestGetFunction(
+      customSort.ColumnId,
+      customSort.SortedValues,
+      this.adaptable
+    );
   }
 }

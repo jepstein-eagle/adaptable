@@ -1072,6 +1072,7 @@ export class ExamplesHelper {
       editable: true,
       enableRowGroup: true,
       enableValue: true,
+      enablePivot: true,
       //  valueFormatter: this.raduFormatter,
       valueFormatter: (params: any) => {
         return params.value ? params.value.toLocaleString() : undefined;
@@ -1093,6 +1094,7 @@ export class ExamplesHelper {
       sortable: true,
       aggFunc: 'sum',
       enableRowGroup: true,
+      enablePivot: true,
       enableValue: true, // what happerns
       type: 'abColDefString',
       resizable: true,
@@ -1183,6 +1185,7 @@ export class ExamplesHelper {
       sortable: true,
       enableRowGroup: true,
       enablePivot: true,
+      //   pivotComparator: this.statusComparator,
       // pivot: true,
       type: 'abColDefString',
       resizable: true,
@@ -1871,5 +1874,10 @@ export class ExamplesHelper {
 
   private raduFormatter = (params: any) => {
     return params.value ? params.value.toLocaleString() : null;
+  };
+
+  private statusComparator = (a: string, b: string) => {
+    var requiredOrder = ['Pending', 'Completed', 'Rejected'];
+    return requiredOrder.indexOf(a) - requiredOrder.indexOf(b);
   };
 }

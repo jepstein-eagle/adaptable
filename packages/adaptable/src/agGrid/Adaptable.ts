@@ -101,7 +101,6 @@ import {
   LIGHT_THEME,
   DARK_THEME,
 } from '../Utilities/Constants/GeneralConstants';
-import { CustomSortStrategyagGrid } from './Strategy/CustomSortStrategyagGrid';
 import { agGridHelper } from './agGridHelper';
 import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
@@ -115,7 +114,6 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
-import { CustomSort, CustomSortComparerFunction } from '../PredefinedConfig/CustomSortState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -156,6 +154,7 @@ import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
+import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -1133,12 +1132,13 @@ export class Adaptable implements IAdaptable {
     return (columnId: string) => this.getDisplayValueFromRowNode(rowwNode, columnId);
   }
 
-  public setCustomSort(columnId: string, comparer: Function): void {
+  public setCustomSort(columnId: string, comparer: AdaptableComparerFunction): void {
     const sortModel = this.gridOptions.api!.getSortModel();
     const columnDef = this.gridOptions.api!.getColumnDef(columnId);
 
     if (columnDef) {
       columnDef.comparator = <any>comparer;
+      columnDef.pivotComparator = <any>comparer;
     }
     this.gridOptions.api!.setSortModel(sortModel);
   }
@@ -3104,6 +3104,7 @@ export class Adaptable implements IAdaptable {
           ? JSON.stringify(columnGroupState)
           : null,
         InPivotMode: this.gridOptions.columnApi.isPivotMode(),
+        ValueColumns: this.gridOptions.columnApi.getValueColumns().map(c => c.getColId()),
       };
     }
     return null; // need this?
@@ -3140,6 +3141,10 @@ export class Adaptable implements IAdaptable {
         this.gridOptions.columnApi.setPivotMode(true);
       } else {
         this.gridOptions.columnApi.setPivotMode(false);
+      }
+
+      if (ArrayExtensions.IsNotNullOrEmpty(vendorGridInfo.ValueColumns)) {
+        this.gridOptions.columnApi.setValueColumns(vendorGridInfo.ValueColumns);
       }
     }
   }

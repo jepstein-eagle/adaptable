@@ -64,8 +64,8 @@ function InitAdaptableDemo() {
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //  console.log('search changed');
+    //  console.log(searchChangedArgs.data[0].id);
   });
 }
 
