@@ -160,9 +160,10 @@ note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has bee
 
 - **onAdaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
 
-An Adaptable event giving you access to the *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
-Also gives access to the underlying ag-Grid instance object.
-See [Developer Documentation](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
+An event that fires as soon as AdapTable is ready and which provides access to 2 important objects:
+1. The *AdaptableApi* object.  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.)
+
+2. The underlying VendorGrid instance being used - in this case GridOptions.  This is because AdapTable enriches the 'gridOptions' it receives with modules and other properties, so if you want access to the underlying grid then you should use this object.
 
 - **render|children: ({ grid, adaptable}) => ReactNode**  
 
@@ -228,7 +229,10 @@ export default () => <AdaptableReactAgGrid
   modules={[MenuModule, RangeSelectionModule]} // ag-grid modules 
   gridOptions={ ... }
   adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi) => { ... }}
+  onAdaptableReady={(adaptableApi, gridOptions) => { 
+    // use adaptableApi for full runtime access to AdapTable state and functions
+    // use gridOptions for full runtime access to any ag-Grid methods and events
+  }}
 />
 
 ```
