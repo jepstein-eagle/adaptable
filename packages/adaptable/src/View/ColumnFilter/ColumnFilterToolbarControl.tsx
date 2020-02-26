@@ -85,14 +85,13 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         <CheckBox
           className="ab-DashboardToolbar__ColumnFilter__active-check"
           disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
-          marginLeft={3}
           fontSize={2}
           checked={this.props.IsQuickFilterActive}
           onChange={(checked: boolean) => {
             checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
           }}
         >
-          Quick Filter
+          Visible
         </CheckBox>
       </Flex>
     );

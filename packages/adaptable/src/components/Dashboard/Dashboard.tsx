@@ -11,6 +11,7 @@ import useDraggable from '../utils/useDraggable';
 import SimpleButton from '../SimpleButton';
 import { DashboardTabProps } from './DashboardTab';
 import join from '../utils/join';
+import useProperty from '../utils/useProperty';
 
 export type DashboardPosition = {
   x: number;
@@ -43,33 +44,16 @@ export type DashboardProps = {
 export function Dashboard(props: DashboardProps) {
   const { title, children, left, right } = props;
 
-  const [activeTab, setActiveTab] = usePropState(
-    props.activeTab,
-    props.onActiveTabChange,
-    props.defaultActiveTab ?? 0
-  );
-  const [collapsed, setCollapsed] = usePropState(
-    props.collapsed,
-    props.onCollapsedChange,
-    props.defaultCollapsed ?? false
-  );
-  const [floating, setFloating] = usePropState(
-    props.floating,
-    props.onFloatingChange,
-    props.defaultFloating ?? false
-  );
-  const [position, setPosition] = usePropState(
-    props.position,
-    props.onPositionChange,
-    props.defaultPosition ?? { x: 0, y: 0 }
-  );
-  const positionRef = useRef(position);
-  positionRef.current = position;
+  const [activeTab, setActiveTab] = useProperty(props, 'activeTab', 0);
+  const [collapsed, setCollapsed] = useProperty(props, 'collapsed', false);
+  const [floating, setFloating] = useProperty(props, 'floating', false);
+  const [position, setPosition] = useProperty(props, 'position', { x: 0, y: 0 });
 
   const { handleRef, targetRef } = useDraggable({
     onDrop(dx: number, dy: number) {
-      const { x, y } = positionRef.current;
-      setPosition({ x: x + dx, y: y + dy });
+      setPosition(({ x, y }) => {
+        return { x: x + dx, y: y + dy };
+      });
     },
   });
 

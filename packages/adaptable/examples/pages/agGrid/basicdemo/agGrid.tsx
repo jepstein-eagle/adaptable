@@ -78,12 +78,12 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
-  Entitlements: {
-    FunctionEntitlements: [
-      { FunctionName: 'AdvancedSearch', AccessLevel: 'ReadOnly' },
-      { FunctionName: 'QuickSearch', AccessLevel: 'Hidden' },
-    ],
-  },
+  // Entitlements: {
+  //   FunctionEntitlements: [
+  //     { FunctionName: 'AdvancedSearch', AccessLevel: 'ReadOnly' },
+  //     { FunctionName: 'QuickSearch', AccessLevel: 'Hidden' },
+  //   ],
+  // },
   UserInterface: {
     ColumnMenuItems: (menuinfo: MenuInfo) => {
       console.log('in the function');

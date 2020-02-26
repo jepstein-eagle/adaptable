@@ -119,8 +119,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
             return (
               <Box
                 key={control}
-                marginTop={1}
-                marginRight={1}
                 className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
               >
                 {dashboardElememt}
@@ -222,6 +220,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
               this.props.DashboardState.FloatingPosition
             );
             this.props.onSetFloatingPosition(FloatingPosition);
+          } else {
+            this.props.onSetFloatingPosition(FloatingPositionCallback);
           }
         }}
         left={this.renderFunctionsDropdown()}
@@ -233,135 +233,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
           </DashboardTabUI>
         ))}
       </DashboardUI>
-    );
-
-    let showInstanceName: string = 'Show ' + instanceName + ' Dashboard';
-    let visibleDashboardControls = this.props.DashboardState.VisibleToolbars.filter(
-      vt =>
-        // will this break for custom toolbars????
-        !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(
-          vt as AdaptableFunctionName
-        )
-    );
-
-    let visibleDashboardElements = visibleDashboardControls.map(control => {
-      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
-        ct => ct.Name == control
-      );
-      if (customToolbar) {
-        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
-          StrategyConstants.DashboardStrategyId
-        );
-
-        if (accessLevel != 'Hidden') {
-          let customToolbarControl = AdaptableDashboardFactory.get(
-            StrategyConstants.DashboardStrategyId
-          );
-          if (customToolbarControl) {
-            let customDshboardElememt = React.createElement(customToolbarControl, {
-              Adaptable: this.props.Adaptable,
-              Columns: this.props.Columns,
-              UserFilters: this.props.UserFilters,
-              SystemFilters: this.props.SystemFilters,
-              ColorPalette: this.props.ColorPalette,
-              ColumnSorts: this.props.ColumnSorts,
-              AccessLevel: accessLevel,
-              CustomToolbar: customToolbar,
-            });
-            return (
-              <Box
-                key={customToolbar.Name}
-                marginTop={1}
-                marginRight={1}
-                className={`ab-Dashboard__container ab-Dashboard__container--customToolbar`}
-              >
-                {customDshboardElememt}
-              </Box>
-            );
-          } else {
-            LoggingHelper.LogAdaptableError(
-              'Cannot find CustomToolbar entitled: ' + customToolbar.Name
-            );
-          }
-        }
-      } else {
-        let shippedToolbar = control as AdaptableFunctionName;
-        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
-          shippedToolbar
-        );
-
-        if (accessLevel != 'Hidden') {
-          let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
-          if (dashboardControl) {
-            let dashboardElememt = React.createElement(dashboardControl, {
-              Adaptable: this.props.Adaptable,
-              Columns: this.props.Columns,
-              UserFilters: this.props.UserFilters,
-              SystemFilters: this.props.SystemFilters,
-              ColorPalette: this.props.ColorPalette,
-              ColumnSorts: this.props.ColumnSorts,
-              AccessLevel: accessLevel,
-            });
-            return (
-              <Box
-                key={control}
-                marginTop={1}
-                marginRight={1}
-                className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
-              >
-                {dashboardElememt}
-              </Box>
-            );
-          } else {
-            LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
-          }
-        }
-      }
-    });
-
-    let homeToolbar = AdaptableDashboardPermanentToolbarFactory.get(
-      StrategyConstants.HomeStrategyId
-    );
-    let homeToolbarElement = (
-      <Box
-        key={'home'}
-        marginTop={1}
-        marginRight={1}
-        className="ab-Dashboard__container ab-Dashboard__container--Home"
-      >
-        {React.createElement(homeToolbar, {
-          Adaptable: this.props.Adaptable,
-        })}
-      </Box>
-    );
-
-    return (
-      <Box padding={1} paddingTop={0} className={'ab-Dashboard'}>
-        {this.props.DashboardState.DashboardVisibility != Visibility.Hidden && (
-          <div className="ab_no_margin">
-            {this.props.DashboardState.DashboardVisibility == Visibility.Minimised ? (
-              <SimpleButton
-                variant={this.props.DashboardState.MinimisedHomeToolbarButtonStyle!.Variant}
-                tone={this.props.DashboardState.MinimisedHomeToolbarButtonStyle!.Tone}
-                m={1}
-                px={1}
-                py={1}
-                icon="arrow-down"
-                tooltip={showInstanceName}
-                className="ab-Dashboard__expand"
-                onClick={() => this.props.onSetDashboardVisibility(Visibility.Visible)}
-              >
-                {instanceName}
-              </SimpleButton>
-            ) : (
-              <Flex className="ab-Dashboard__inner" alignItems="stretch" style={{ zoom: 1 }}>
-                {homeToolbarElement}
-                {visibleDashboardElements}
-              </Flex>
-            )}
-          </div>
-        )}
-      </Box>
     );
   }
 }

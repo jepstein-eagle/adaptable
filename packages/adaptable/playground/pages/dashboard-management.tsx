@@ -6,6 +6,8 @@ import {
   DropResult,
   resetServerContext
 } from "react-beautiful-dnd"
+import { Icon } from "../../src/components/icons"
+import SimpleButton from "../../src/components/SimpleButton"
 
 type Tab = {
   name: string
@@ -85,21 +87,19 @@ function TabItem({
               borderBottom: "1px solid #ccc"
             }}
           >
-            <div
-              {...provided.dragHandleProps}
-              style={{ width: 16, height: 16, background: "black", marginRight: 10 }}
-            />
+            <div {...provided.dragHandleProps} style={{}}>
+              <Icon name="drag" />
+            </div>
+
             <input
               type="text"
               value={tab.name}
-              style={{ flex: 1, width: "100%", border: "none" }}
+              style={{ flex: 1, width: "100%", border: "none", margin: "0 10px" }}
               onChange={event => {
                 onChangeTabName(event.target.value)
               }}
             />
-            <button onClick={onRemove} style={{ appearance: "none" }}>
-              x
-            </button>
+            <SimpleButton icon="delete" variant="text" onClick={onRemove} />
           </div>
 
           <ToolbarList
@@ -175,7 +175,7 @@ function ToolbarItem({
           }}
         >
           <div style={{ flex: 1 }}>{toolbar}</div>
-          <button onClick={onRemove}>x</button>
+          <SimpleButton icon="clear" variant="text" onClick={onRemove} />
         </div>
       )}
     </Draggable>
@@ -292,7 +292,7 @@ function DashboardManagement({
   }
 
   const handleRemoveTab = (tabIndex: number) => {
-    onTabsChange([...tabs].filter((_, index) => index !== tabIndex))
+    onTabsChange(tabs.filter((_, index) => index !== tabIndex))
   }
 
   const handleTabAdd = () => {
@@ -305,7 +305,7 @@ function DashboardManagement({
         if (index !== tabIndex) return tab
         return {
           ...tab,
-          toolbars: [...tab.toolbars].filter((_, index) => index !== toolbarIndex)
+          toolbars: tab.toolbars.filter((_, index) => index !== toolbarIndex)
         }
       })
     )
@@ -338,7 +338,9 @@ function DashboardManagement({
           onRemoveToolbar={handleRemoveToolbar}
           onChangeTabName={handleChangeTabName}
         />
-        <button onClick={handleTabAdd}>Add Tab</button>
+        <SimpleButton onClick={handleTabAdd} px={3}>
+          Add Tab
+        </SimpleButton>
       </div>
     </DragDropContext>
   )

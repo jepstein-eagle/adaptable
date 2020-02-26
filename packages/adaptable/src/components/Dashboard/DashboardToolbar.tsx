@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react';
-import { Flex } from 'rebass';
-import { ButtonConfigure } from '../../View/Components/Buttons/ButtonConfigure';
+import SimpleButton from '../SimpleButton';
 
 export type DashboardToolbarProps = {
   title: string;
@@ -12,16 +11,17 @@ export function DashboardToolbar(props: DashboardToolbarProps) {
   return (
     <div className="ab-Dashboard__toolbar">
       <div className="ab-Dashboard__toolbar-content">{props.children}</div>
-      <Flex>
-        <div className="ab-Dashboard__toolbar-title">{props.title}</div>
-        <ButtonConfigure
+      <div className="ab-Dashboard__toolbar-title">
+        <span>{props.title}</span>
+        <SimpleButton
+          icon="build"
+          variant="text"
           iconSize={16}
-          marginLeft={2}
-          className="ab-DashboardPanel__header-configure-button"
+          marginLeft={1}
           tooltip={'Configure ' + props.title}
           onClick={() => props.onConfigure()}
         />
-      </Flex>
+      </div>
     </div>
   );
 }
