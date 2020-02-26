@@ -1,3 +1,7 @@
+## 6.0.10
+
+Pivot Sort improvements
+
 ## 6.0.9
 
 Fixing alert bug in Object Factory
