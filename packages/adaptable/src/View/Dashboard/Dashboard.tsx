@@ -1,6 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
+import * as _ from 'lodash';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import {
   DashboardState,
@@ -16,6 +17,9 @@ import {
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
+import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
+import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
+import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { Visibility, MessageType } from '../../PredefinedConfig/Common/Enums';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
@@ -33,11 +37,13 @@ import { AdaptableMenuItem } from '../../types';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { Icon } from '../../components/icons';
 import DropdownButton from '../../components/DropdownButton';
+import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
   GridState: GridState;
   StatusType: SystemStatusState['StatusType'];
+  QuickSearchText: string;
   dispatch: (action: Redux.Action) => Redux.Action;
   onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetActiveTab: (ActiveTab: number | null) => DashboardRedux.DashboardSetActiveTabAction;
@@ -46,9 +52,32 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
   onSetFloatingPosition: (
     FloatingPosition: DashboardFloatingPosition
   ) => DashboardRedux.DashboardSetFloatingPositionAction;
+  onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
+  onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
 }
 
-class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
+interface DashboardComponentState {
+  EditedQuickSearchText: string;
+}
+
+class DashboardComponent extends React.Component<DashboardComponentProps, DashboardComponentState> {
+  constructor(props: DashboardComponentProps) {
+    super(props);
+    this.state = { EditedQuickSearchText: this.props.QuickSearchText };
+  }
+  UNSAFE_componentWillReceiveProps(nextProps: DashboardComponentProps, nextContext: any) {
+    this.setState({
+      EditedQuickSearchText: nextProps.QuickSearchText,
+    });
+  }
+  debouncedRunQuickSearch = _.debounce(
+    () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
+    250
+  );
+  onUpdateQuickSearchText(searchText: string) {
+    this.setState({ EditedQuickSearchText: searchText });
+    this.debouncedRunQuickSearch();
+  }
   renderTab(tab: DashboardTab): React.ReactNode {
     let visibleDashboardControls = tab.Toolbars.filter(
       vt =>
@@ -196,6 +225,28 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
       </DropdownButton>
     );
   }
+  renderQuickSearch() {
+    return (
+      <>
+        <SimpleButton
+          icon="quick-search"
+          variant="text"
+          onClick={this.props.onShowQuickSearchPopup}
+          mr={2}
+          style={{ color: 'white', fill: 'currentColor' }}
+        />
+        <AdaptableFormControlTextClear
+          type="text"
+          placeholder="Search Text"
+          className="ab-DashboardToolbar__QuickSearch__text"
+          value={this.state.EditedQuickSearchText}
+          OnTextChange={x => this.onUpdateQuickSearchText(x)}
+          style={{ width: 'auto', border: 'none' }}
+          inputStyle={{ width: '7rem' }}
+        />
+      </>
+    );
+  }
   render() {
     let instanceName = this.props.Adaptable.api.internalApi.setToolbarTitle();
     return (
@@ -225,7 +276,12 @@ class DashboardComponent extends React.Component<DashboardComponentProps, {}> {
           }
         }}
         left={this.renderFunctionsDropdown()}
-        right={this.renderShortcuts()}
+        right={
+          <>
+            {this.renderShortcuts()}
+            {this.renderQuickSearch()}
+          </>
+        }
       >
         {this.props.DashboardState.VisibleTabs.map((tab, index) => (
           <DashboardTabUI key={index} title={tab.Name}>
@@ -242,6 +298,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
     DashboardState: state.Dashboard,
     GridState: state.Grid,
     StatusType: state.SystemStatus.StatusType,
+    QuickSearchText: state.QuickSearch.QuickSearchText,
     // need to get these props so we can 'feed' the toolbars...
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
@@ -265,6 +322,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetFloatingPosition(FloatingPosition)),
     onSetDashboardVisibility: (visibility: Visibility) =>
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
+    onRunQuickSearch: (newQuickSearchText: string) =>
+      dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
+    onShowQuickSearchPopup: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.QuickSearchStrategyId,
+          ScreenPopups.QuickSearchPopup
+        )
+      ),
   };
 }
 
