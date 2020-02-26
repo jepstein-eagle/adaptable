@@ -14,12 +14,13 @@ import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Box, Flex, Text } from 'rebass';
 import { GridState } from '../../PredefinedConfig/GridState';
 import HelpBlock from '../../components/HelpBlock';
-import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar, DashboardTab } from '../../PredefinedConfig/DashboardState';
 import {
   AdaptableFunctionButtons,
   AdaptableDashboardToolbars,
   AdaptableFunctionName,
 } from '../../PredefinedConfig/Common/Types';
+import DashboardManagerUI from '../../components/Dashboard/DashboardManager';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
@@ -39,12 +40,15 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardSetToolbars: (
     StrategyConstants: string[]
   ) => DashboardRedux.DashboardSetToolbarsAction;
+
+  onDashboardSetVisibleTabs: (
+    VisibleTabs: DashboardTab[]
+  ) => DashboardRedux.DashboardSetVisibleTabsAction;
 }
 
 export enum DashboardConfigView {
-  General = 'General',
-  Buttons = 'Buttons',
   Toolbars = 'Toolbars',
+  Buttons = 'Buttons',
 }
 
 export interface DashboardPopupState {
@@ -58,7 +62,7 @@ class DashboardPopupComponent extends React.Component<
   constructor(props: DashboardPopupComponentProps) {
     super(props);
     this.state = {
-      DashboardConfigView: DashboardConfigView.General,
+      DashboardConfigView: DashboardConfigView.Toolbars,
     };
   }
 
@@ -138,11 +142,12 @@ class DashboardPopupComponent extends React.Component<
           style={{ borderBottom: '1px solid var(--ab-color-primary)' }}
         >
           <Radio
-            value={DashboardConfigView.General}
-            checked={this.state.DashboardConfigView == DashboardConfigView.General}
+            marginLeft={3}
+            value={DashboardConfigView.Toolbars}
+            checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
             onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
           >
-            General Options
+            Function Toolbars
           </Radio>
           <Radio
             marginLeft={3}
@@ -152,19 +157,16 @@ class DashboardPopupComponent extends React.Component<
           >
             Function Buttons
           </Radio>
-          <Radio
-            marginLeft={3}
-            value={DashboardConfigView.Toolbars}
-            checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
-            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
-          >
-            Function Toolbars
-          </Radio>
         </Flex>
 
-        <Box style={{ overflow: 'auto', flex: 1, display: 'flex' }} padding={2}>
-          {this.state.DashboardConfigView == DashboardConfigView.General &&
-            individualHomeToolbarOptions}
+        <Box style={{ overflow: 'auto', flex: 1 }} padding={2}>
+          {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
+            <DashboardManagerUI
+              availableToolbars={this.props.DashboardState.AvailableToolbars}
+              tabs={this.props.DashboardState.VisibleTabs}
+              onTabsChange={this.props.onDashboardSetVisibleTabs}
+            />
+          )}
           {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
             <DualListBoxEditor
               AvailableValues={availableValues}
@@ -173,16 +175,6 @@ class DashboardPopupComponent extends React.Component<
               HeaderSelected="Visible Function Buttons"
               onChange={SelectedValues => this.onDashboardButtonsChanged(SelectedValues)}
               DisplaySize={DisplaySize.Large}
-            />
-          )}
-          {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
-            <DualListBoxEditor
-              AvailableValues={availableToolbarNames}
-              SelectedValues={visibleToolbarNames}
-              HeaderAvailable="Available Toolbars"
-              HeaderSelected="Visible Toolbars"
-              onChange={SelectedValues => this.onDashboardToolbarsChanged(SelectedValues)}
-              DisplaySize={DisplaySize.Small}
             />
           )}
         </Box>
@@ -263,6 +255,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
     onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
+    onDashboardSetVisibleTabs: (VisibleTabs: DashboardTab[]) =>
+      dispatch(DashboardRedux.DashboardSetVisibleTabs(VisibleTabs)),
   };
 }
 

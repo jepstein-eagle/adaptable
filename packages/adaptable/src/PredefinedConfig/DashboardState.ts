@@ -348,7 +348,7 @@ export interface CustomToolbar extends AdaptableObject {
 
 export interface DashboardTab extends AdaptableObject {
   Name: string;
-  Toolbars: AdaptableDashboardToolbars | string[];
+  Toolbars: AdaptableDashboardToolbars;
 }
 
 export interface DashboardFloatingPosition extends AdaptableObject {

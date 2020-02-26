@@ -11,6 +11,7 @@ import {
   DashboardState,
   CustomToolbar,
   DashboardFloatingPosition,
+  DashboardTab,
 } from '../../PredefinedConfig/DashboardState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
@@ -39,6 +40,7 @@ const DASHBOARD_SET_ACTIVE_TAB = 'DASHBOARD_SET_ACTIVE_TAB';
 const DASHBOARD_SET_IS_COLLAPSED = 'DASHBOARD_SET_IS_COLLAPSED';
 const DASHBOARD_SET_IS_FLOATING = 'DASHBOARD_SET_IS_FLOATING';
 const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
+const DASHBOARD_SET_VISIBLE_TABS = 'DASHBOARD_SET_VISIBLE_TABS';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   toolbars: AdaptableDashboardToolbars;
@@ -106,6 +108,10 @@ export interface DashboardSetIsFloatingAction extends Redux.Action {
 
 export interface DashboardSetFloatingPositionAction extends Redux.Action {
   FloatingPosition: DashboardFloatingPosition;
+}
+
+export interface DashboardSetVisibleTabsAction extends Redux.Action {
+  VisibleTabs: DashboardTab[];
 }
 
 export const DashboardSetAvailableToolbars = (
@@ -223,6 +229,13 @@ export const DashboardSetFloatingPosition = (
 ): DashboardSetFloatingPositionAction => ({
   type: DASHBOARD_SET_FLOATING_POSITION,
   FloatingPosition,
+});
+
+export const DashboardSetVisibleTabs = (
+  VisibleTabs: DashboardTab[]
+): DashboardSetVisibleTabsAction => ({
+  type: DASHBOARD_SET_VISIBLE_TABS,
+  VisibleTabs,
 });
 
 const initialDashboardState: DashboardState = {
@@ -384,6 +397,11 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_FLOATING_POSITION: {
       const { FloatingPosition } = action as DashboardSetFloatingPositionAction;
       return { ...state, FloatingPosition };
+    }
+
+    case DASHBOARD_SET_VISIBLE_TABS: {
+      const { VisibleTabs } = action as DashboardSetVisibleTabsAction;
+      return { ...state, VisibleTabs };
     }
 
     default:

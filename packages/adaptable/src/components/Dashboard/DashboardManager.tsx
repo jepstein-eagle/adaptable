@@ -1,36 +1,25 @@
-import React, { useState, useMemo } from "react"
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-  resetServerContext
-} from "react-beautiful-dnd"
-import { Icon } from "../../src/components/icons"
-import SimpleButton from "../../src/components/SimpleButton"
-
-type Tab = {
-  name: string
-  toolbars: Toolbar[]
-}
-
-type Toolbar = string
+import React, { useMemo } from 'react';
+import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import SimpleButton from '../SimpleButton';
+import { Icon } from '../icons';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 
 function TabList({
   tabs,
   onRemoveTab,
   onRemoveToolbar,
-  onChangeTabName
+  onChangeTabName,
 }: {
-  tabs: Tab[]
-  onRemoveTab: (tabIndex: number) => void
-  onRemoveToolbar: (tabIndex: number, toolbarIndex: number) => void
-  onChangeTabName: (tabIndex: number, tabName: string) => void
+  tabs: DashboardTab[];
+  onRemoveTab: (tabIndex: number) => void;
+  onRemoveToolbar: (tabIndex: number, toolbarIndex: number) => void;
+  onChangeTabName: (tabIndex: number, tabName: string) => void;
 }) {
   return (
     <Droppable droppableId="MAIN" type="TAB" direction="horizontal">
       {provided => (
-        <div ref={provided.innerRef} {...provided.droppableProps} style={{ display: "flex" }}>
+        <div ref={provided.innerRef} {...provided.droppableProps} style={{ display: 'flex' }}>
           {tabs.map((tab, tabIndex) => (
             <TabItem
               key={tabIndex}
@@ -45,7 +34,7 @@ function TabList({
         </div>
       )}
     </Droppable>
-  )
+  );
 }
 
 function TabItem({
@@ -53,13 +42,13 @@ function TabItem({
   tabIndex,
   onRemove,
   onRemoveToolbar,
-  onChangeTabName
+  onChangeTabName,
 }: {
-  tab: Tab
-  tabIndex: number
-  onRemove: () => void
-  onRemoveToolbar: (toolbarIndex: number) => void
-  onChangeTabName: (tabName: string) => void
+  tab: DashboardTab;
+  tabIndex: number;
+  onRemove: () => void;
+  onRemoveToolbar: (toolbarIndex: number) => void;
+  onChangeTabName: (tabName: string) => void;
 }) {
   return (
     <Draggable draggableId={String(tabIndex)} index={tabIndex}>
@@ -69,22 +58,22 @@ function TabItem({
           {...provided.draggableProps}
           style={{
             ...provided.draggableProps.style,
-            boxSizing: "border-box",
-            border: "1px solid #ccc",
+            boxSizing: 'border-box',
+            border: '1px solid #ccc',
             borderRadius: 4,
-            marginRight: 10,
-            width: 200,
-            display: "flex",
-            flexDirection: "column",
-            backgroundColor: "white"
+            marginRight: 6,
+            width: 160,
+            display: 'flex',
+            flexDirection: 'column',
+            backgroundColor: 'white',
           }}
         >
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              padding: 10,
-              borderBottom: "1px solid #ccc"
+              display: 'flex',
+              alignItems: 'center',
+              padding: 4,
+              borderBottom: '1px solid #ccc',
             }}
           >
             <div {...provided.dragHandleProps} style={{}}>
@@ -93,34 +82,34 @@ function TabItem({
 
             <input
               type="text"
-              value={tab.name}
-              style={{ flex: 1, width: "100%", border: "none", margin: "0 10px" }}
+              value={tab.Name}
+              style={{ flex: 1, width: '100%', border: 'none', marginLeft: 4, marginRight: 4 }}
               onChange={event => {
-                onChangeTabName(event.target.value)
+                onChangeTabName(event.target.value);
               }}
             />
             <SimpleButton icon="delete" variant="text" onClick={onRemove} />
           </div>
 
           <ToolbarList
-            toolbars={tab.toolbars}
+            toolbars={tab.Toolbars}
             droppableId={String(tabIndex)}
             onRemove={onRemoveToolbar}
           />
         </div>
       )}
     </Draggable>
-  )
+  );
 }
 
 function ToolbarList({
   toolbars,
   droppableId,
-  onRemove
+  onRemove,
 }: {
-  toolbars: Toolbar[]
-  droppableId: string
-  onRemove: (toolbarIndex: number) => void
+  toolbars: AdaptableDashboardToolbar[];
+  droppableId: string;
+  onRemove: (toolbarIndex: number) => void;
 }) {
   return (
     <Droppable droppableId={droppableId} type="TOOLBAR">
@@ -130,8 +119,10 @@ function ToolbarList({
           {...provided.droppableProps}
           style={{
             flex: 1,
-            padding: 10,
-            background: snapshot.isDraggingOver ? "skyblue" : "white"
+            padding: 4,
+            paddingBottom: 0,
+            background: snapshot.isDraggingOver ? 'skyblue' : '',
+            minHeight: 200,
           }}
         >
           {toolbars.map((toolbar, toolbarIndex) => (
@@ -146,17 +137,17 @@ function ToolbarList({
         </div>
       )}
     </Droppable>
-  )
+  );
 }
 
 function ToolbarItem({
   toolbar,
   toolbarIndex,
-  onRemove
+  onRemove,
 }: {
-  toolbar: Toolbar
-  toolbarIndex: number
-  onRemove: () => void
+  toolbar: AdaptableDashboardToolbar;
+  toolbarIndex: number;
+  onRemove: () => void;
 }) {
   return (
     <Draggable draggableId={toolbar} index={toolbarIndex}>
@@ -167,38 +158,38 @@ function ToolbarItem({
           {...provided.dragHandleProps}
           style={{
             ...provided.draggableProps.style,
-            display: "flex",
-            alignItems: "center",
-            backgroundColor: snapshot.isDragging ? "lightgreen" : "#ddd",
-            padding: 10,
-            marginBottom: 10
+            display: 'flex',
+            alignItems: 'center',
+            backgroundColor: snapshot.isDragging ? 'lightgreen' : '#ddd',
+            paddingLeft: 4,
+            marginBottom: 4,
           }}
         >
           <div style={{ flex: 1 }}>{toolbar}</div>
-          <SimpleButton icon="clear" variant="text" onClick={onRemove} />
+          <SimpleButton icon="clear" variant="text" padding={1} onClick={onRemove} />
         </div>
       )}
     </Draggable>
-  )
+  );
 }
 
-function UnusedPanel({ toolbars }: { toolbars: Toolbar[] }) {
+function UnusedPanel({ toolbars }: { toolbars: AdaptableDashboardToolbar[] }) {
   return (
     <div
       style={{
-        border: "1px solid #ccc",
+        border: '1px solid #ccc',
         borderRadius: 4,
-        marginBottom: 10,
-        backgroundColor: "white"
+        marginBottom: 6,
+        backgroundColor: 'white',
       }}
     >
-      <div style={{ padding: 10 }}>Unused</div>
+      <div style={{ padding: 6 }}>Unused Toolbars</div>
       <UnusedToolbarList toolbars={toolbars} />
     </div>
-  )
+  );
 }
 
-function UnusedToolbarList({ toolbars }: { toolbars: Toolbar[] }) {
+function UnusedToolbarList({ toolbars }: { toolbars: AdaptableDashboardToolbar[] }) {
   return (
     <Droppable droppableId="UNUSED" type="TOOLBAR" isDropDisabled={true} direction="horizontal">
       {provided => (
@@ -206,10 +197,11 @@ function UnusedToolbarList({ toolbars }: { toolbars: Toolbar[] }) {
           ref={provided.innerRef}
           {...provided.droppableProps}
           style={{
-            display: "flex",
-            flexDirection: "row",
-            paddingLeft: 10,
-            paddingRight: 10
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'wrap',
+            paddingLeft: 6,
+            paddingRight: 6,
           }}
         >
           {toolbars.map((toolbar, toolbarIndex) => (
@@ -219,10 +211,16 @@ function UnusedToolbarList({ toolbars }: { toolbars: Toolbar[] }) {
         </div>
       )}
     </Droppable>
-  )
+  );
 }
 
-function UnusedToolbarItem({ toolbar, toolbarIndex }: { toolbar: Toolbar; toolbarIndex: number }) {
+function UnusedToolbarItem({
+  toolbar,
+  toolbarIndex,
+}: {
+  toolbar: AdaptableDashboardToolbar;
+  toolbarIndex: number;
+}) {
   return (
     <Draggable draggableId={toolbar} index={toolbarIndex}>
       {(provided, snapshot) => (
@@ -232,106 +230,106 @@ function UnusedToolbarItem({ toolbar, toolbarIndex }: { toolbar: Toolbar; toolba
           {...provided.dragHandleProps}
           style={{
             ...provided.draggableProps.style,
-            backgroundColor: snapshot.isDragging ? "lightgreen" : "#ddd",
-            padding: 10,
-            marginRight: 10,
-            marginBottom: 10
+            backgroundColor: snapshot.isDragging ? 'lightgreen' : '#ddd',
+            padding: 4,
+            marginRight: 4,
+            marginBottom: 4,
           }}
         >
           {toolbar}
         </div>
       )}
     </Draggable>
-  )
+  );
 }
 
 function DashboardManager({
   tabs,
   onTabsChange,
-  availableToolbars
+  availableToolbars,
 }: {
-  tabs: Tab[]
-  onTabsChange: (tabs: Tab[]) => void
-  availableToolbars: Toolbar[]
+  tabs: DashboardTab[];
+  onTabsChange: (tabs: DashboardTab[]) => void;
+  availableToolbars: AdaptableDashboardToolbar[];
 }) {
   const unusedToolbars = useMemo(
     () =>
       availableToolbars.filter(toolbar => {
-        return !tabs.some(tab => tab.toolbars.includes(toolbar))
+        return !tabs.some(tab => tab.Toolbars.includes(toolbar));
       }),
     [tabs, availableToolbars]
-  )
+  );
 
   const handleToolbarDragEnd = (result: DropResult) => {
-    const { source, destination, draggableId } = result
+    const { source, destination, draggableId } = result;
 
-    if (!source || !destination) return
+    if (!source || !destination) return;
 
-    if (source.droppableId !== "UNUSED") {
-      const sourceTabToolbars = tabs[Number(source.droppableId)].toolbars
-      sourceTabToolbars.splice(source.index, 1)
+    if (source.droppableId !== 'UNUSED') {
+      const sourceTabToolbars = tabs[Number(source.droppableId)].Toolbars;
+      sourceTabToolbars.splice(source.index, 1);
     }
 
-    if (destination.droppableId !== "UNUSED") {
-      const destinationTabToolbars = tabs[Number(destination.droppableId)].toolbars
-      destinationTabToolbars.splice(destination.index, 0, draggableId)
+    if (destination.droppableId !== 'UNUSED') {
+      const destinationTabToolbars = tabs[Number(destination.droppableId)].Toolbars;
+      destinationTabToolbars.splice(destination.index, 0, draggableId as AdaptableDashboardToolbar);
     }
 
-    onTabsChange([...tabs])
-  }
+    onTabsChange([...tabs]);
+  };
 
   const handleTabDragEnd = (result: DropResult) => {
-    const { source, destination } = result
+    const { source, destination } = result;
 
-    if (!source || !destination) return
+    if (!source || !destination) return;
 
-    const [removed] = tabs.splice(source.index, 1)
-    tabs.splice(destination.index, 0, removed)
+    const [removed] = tabs.splice(source.index, 1);
+    tabs.splice(destination.index, 0, removed);
 
-    onTabsChange([...tabs])
-  }
+    onTabsChange([...tabs]);
+  };
 
   const handleRemoveTab = (tabIndex: number) => {
-    onTabsChange(tabs.filter((_, index) => index !== tabIndex))
-  }
+    onTabsChange(tabs.filter((_, index) => index !== tabIndex));
+  };
 
   const handleTabAdd = () => {
-    onTabsChange([...tabs, { name: "New Tab", toolbars: [] }])
-  }
+    onTabsChange([...tabs, { Name: 'New Tab', Toolbars: [] }]);
+  };
 
   const handleRemoveToolbar = (tabIndex: number, toolbarIndex: number) => {
     onTabsChange(
       tabs.map((tab, index) => {
-        if (index !== tabIndex) return tab
+        if (index !== tabIndex) return tab;
         return {
           ...tab,
-          toolbars: tab.toolbars.filter((_, index) => index !== toolbarIndex)
-        }
+          Toolbars: tab.Toolbars.filter((_, index) => index !== toolbarIndex),
+        };
       })
-    )
-  }
+    );
+  };
 
   const handleChangeTabName = (tabIndex: number, tabName: string) => {
     onTabsChange(
       tabs.map((tab, index) => {
-        if (index !== tabIndex) return tab
+        if (index !== tabIndex) return tab;
         return {
           ...tab,
-          name: tabName
-        }
+          Name: tabName,
+        };
       })
-    )
-  }
+    );
+  };
 
   return (
     <DragDropContext
       onDragEnd={result => {
-        if (result.type === "TAB") handleTabDragEnd(result)
-        if (result.type === "TOOLBAR") handleToolbarDragEnd(result)
+        if (result.type === 'TAB') handleTabDragEnd(result);
+        if (result.type === 'TOOLBAR') handleToolbarDragEnd(result);
       }}
     >
       <UnusedPanel toolbars={unusedToolbars} />
-      <div style={{ display: "flex", flex: 1 }}>
+      <div style={{ display: 'flex', flex: 1 }}>
         <TabList
           tabs={tabs}
           onRemoveTab={handleRemoveTab}
@@ -343,28 +341,7 @@ function DashboardManager({
         </SimpleButton>
       </div>
     </DragDropContext>
-  )
+  );
 }
 
-export default function Page() {
-  const [tabs, setTabs] = useState<Tab[]>([
-    { name: "Tab 1", toolbars: ["T1"] },
-    { name: "Tab 2", toolbars: ["T4", "T5"] },
-    { name: "Tab 3", toolbars: [] }
-  ])
-  return (
-    <>
-      <DashboardManager
-        availableToolbars={["T1", "T2", "T3", "T4", "T5", "T6", "T7"]}
-        tabs={tabs}
-        onTabsChange={setTabs}
-      />
-      {/* <pre>{JSON.stringify(tabs, null, 2)}</pre> */}
-    </>
-  )
-}
-
-Page.getInitialProps = () => {
-  resetServerContext()
-  return {}
-}
+export default DashboardManager;
