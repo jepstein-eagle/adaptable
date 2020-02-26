@@ -10,10 +10,48 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
  *
  */
 export interface EntitlementsApi {
+  /**
+   * Returns everything in the Entitlement section of AdapTable state
+   */
   getEntitlementState(): EntitlementState;
 
+  /**
+   * Returns true if give function has an `AccessLevel` of 'Hidden'
+   *
+   * Will check the Entitlement section of AdapTable state.
+   *
+   * First it will call the `EntitlementLookUpFunction` if that has been provided
+   *
+   * If there is no function then it will get the value from `FunctionEntitlements`
+   *
+   * @param adaptableFunctionName the name of the function to check
+   */
   isFunctionHiddenEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
+
+  /**
+   * Returns true if give function has an `AccessLevel` of 'Full'
+   *
+   * Will check the Entitlement section of AdapTable state.
+   *
+   * First it will call the `EntitlementLookUpFunction` if that has been provided
+   *
+   * If there is no function then it will get the value from `FunctionEntitlements`
+   *
+   * @param adaptableFunctionName the name of the function to check
+   */
   isFunctionFullEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
+
+  /**
+   * Returns true if give function has an `AccessLevel` of 'ReadOnly'
+   *
+   * Will check the Entitlement section of AdapTable state.
+   *
+   * First it will call the `EntitlementLookUpFunction` if that has been provided
+   *
+   * If there is no function then it will get the value from `FunctionEntitlements`
+   *
+   * @param adaptableFunctionName the name of the function to check
+   */
   isFunctionReadOnlyEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean;
 
   /**

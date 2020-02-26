@@ -8,7 +8,12 @@ export { IAdaptableStore } from './Redux/Store/Interface/IAdaptableStore';
 export { AdaptableApi } from './Api/AdaptableApi';
 export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 
+// Types we use
+export { AdaptableFunctionName } from './PredefinedConfig/Common/Types';
+
 // Adaptable Objects
+export { RowStyle } from './PredefinedConfig/UserInterfaceState';
+export { AccessLevel, Entitlement } from './PredefinedConfig/EntitlementState';
 
 // Predefined Config and Predefined Config Common Objects
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
@@ -20,9 +25,6 @@ export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo'
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';
-
-// State Objects
-export { RowStyle } from './PredefinedConfig/UserInterfaceState';
 
 // Adaptable Options Objects
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';

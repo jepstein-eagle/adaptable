@@ -119,6 +119,8 @@ There are currently two plugins:
 
 > Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
 
+Further information is availalbe in the [Plugins ReadMe](./packages/plugins/README.md)
+
 
 ## Licences
 A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
@@ -149,7 +151,7 @@ These include:
  
 ## Help
 
-Further information about AdapTable is available at our [Website](www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+Further information about AdapTable is available at our [Website](http://www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
 
@@ -166,6 +168,8 @@ Other Read Me docs that will be of interest are:
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
  
  - [Adaptable Theming and Styling Guide](./packages/adaptable/adaptable-theming-guide.md)
+ 
+ - [Plugins](./packages/plugins/README.md)
 
 ## Support
 

@@ -1,7 +1,7 @@
 import { createUuid, TypeUuid } from '../Uuid';
 
 /**
- * The main Expression (or Query) object used in multiple Adaptable functions
+ * The main Expression (or Query) object used in multiple AdapTable functions
  *
  * It is comprised of 3 (nullable) collections:
  *
@@ -117,17 +117,17 @@ export interface QueryRange {
   /**
    * Comparison value - can either be a static column valur or name of another column (set in Operand1Type property)
    */
-  Operand1: string;
+  Operand1?: string;
   /**
    * Comparison value - can either be a static column valur or name of another column (set in Operand2Type property).  Only used when operator is 'Between'
    */
-  Operand2: string;
+  Operand2?: string;
   /**
    * Whether first operand is a static value or the name of a column; if latter then we look up that column's value in real time when evaluating the expression
    */
-  Operand1Type: 'Value' | 'Column';
+  Operand1Type?: 'Value' | 'Column';
   /**
    * Whether second operand is a static value or the name of a column; if latter then we look up that column's value in real time when evaluating the expression
    */
-  Operand2Type: 'Value' | 'Column';
+  Operand2Type?: 'Value' | 'Column';
 }

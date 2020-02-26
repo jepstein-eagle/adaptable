@@ -7,7 +7,6 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
-import { SharedEntity } from '../../Utilities/Interface/SharedEntity';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
@@ -33,6 +32,7 @@ import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
 import ListGroup from '../../components/List/ListGroup';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;

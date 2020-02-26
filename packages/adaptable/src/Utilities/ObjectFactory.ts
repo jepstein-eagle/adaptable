@@ -528,10 +528,10 @@ export function CreateUserFilterFromColumnFilter(
 
 export function CreateRange(
   operator: LeafExpressionOperator,
-  operand1: any,
-  operand2: any,
-  rangeOperandType: RangeOperandType,
-  rangeOperandType2: RangeOperandType
+  operand1?: any,
+  operand2?: any,
+  rangeOperandType?: RangeOperandType,
+  rangeOperandType2?: RangeOperandType
 ): QueryRange {
   return {
     Operator: operator,

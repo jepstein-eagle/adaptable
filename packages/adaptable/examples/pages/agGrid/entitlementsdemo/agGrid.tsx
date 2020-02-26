@@ -8,11 +8,14 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AccessLevel,
+  AdaptableFunctionName,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
-import { AdaptableFunctionName } from '../../../../src/PredefinedConfig/Common/Types';
-import { Entitlement, AccessLevel } from '../../../../src/PredefinedConfig/EntitlementState';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -63,13 +66,11 @@ let demoConfig: PredefinedConfig = {
   },
   Entitlements: {
     DefaultAccessLevel: 'Hidden',
-    EntitlementLookUpFunction: (functionName: AdaptableFunctionName, userName: string) => {
-      // In this case the rules are
-      // 1. Editing is always 'Hidden'
-      // 2. Filtering is done based on an enitlement server
-      // 3. Everything else is 'Visible' so no need to do as that is the default
-
-      // Everyything is h
+    EntitlementLookUpFunction: (
+      functionName: AdaptableFunctionName,
+      userName: string,
+      adaptableId: string
+    ) => {
       switch (functionName) {
         // We want a readonly grid so lets hide all editing functions
         case 'BulkUpdate':
@@ -83,7 +84,7 @@ let demoConfig: PredefinedConfig = {
         case 'UserFilter':
         case 'DataSource':
         case 'QuickSearch':
-          return getMockPermissionServerResult(functionName, userName);
+          return getMockPermissionServerResult(functionName, userName, adaptableId);
       }
     },
 
@@ -130,7 +131,8 @@ let demoConfig: PredefinedConfig = {
 
 function getMockPermissionServerResult(
   functionName: AdaptableFunctionName,
-  userName: string
+  userName: string,
+  adaptableId: string
 ): AccessLevel {
   return 'Full';
 }

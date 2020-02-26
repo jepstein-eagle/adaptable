@@ -713,34 +713,24 @@ export class Adaptable implements IAdaptable {
 
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
-    let startIndex: number = 0;
 
     if (this.api.internalApi.isGridInPivotMode()) {
       return;
     }
-    //  this is not quite right as it assumes that only the first column can be grouped
-    //  but lets do this for now and then refine and refactor later to deal with weirder use cases
-    if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
-      startIndex++;
-    }
 
-    VisibleColumnList.forEach((column, index) => {
-      const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
-      if (!col) {
-        LoggingHelper.LogAdaptableError(`Cannot find vendor column:${column.ColumnId}`);
-      } else {
-        if (!col.isVisible()) {
-          this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
-        }
-        this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, 'api');
+    const NewVisibleColumnIds = VisibleColumnList.map(c => c.ColumnId);
+    const NewVisibleColumnIdsMap = NewVisibleColumnIds.reduce((acc, id) => {
+      acc[id] = true;
+      return acc;
+    }, {} as { [key: string]: boolean });
+
+    this.setColumnOrder(NewVisibleColumnIds);
+
+    allColumns.forEach(col => {
+      if (!NewVisibleColumnIdsMap[col.getColId()]) {
+        this.setColumnVisible(col, false);
       }
     });
-    allColumns
-      .filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0)
-      .forEach(col => {
-        this.setColumnVisible(this.gridOptions.columnApi, col, false, 'api');
-      });
-    // we need to do this to make sure agGrid and adaptable column collections are in sync
     this.setColumnIntoStore();
   }
 
@@ -1721,6 +1711,11 @@ export class Adaptable implements IAdaptable {
         ),
     };
 
+    if (dataType == DataType.Number) {
+      newColDef.cellStyle = { ' text-align': 'right' };
+      // newColDef.type = 'numericColumn'; // dont like this as aligns header also
+    }
+
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
 
@@ -1745,6 +1740,7 @@ export class Adaptable implements IAdaptable {
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
     const colDefs: (ColDef | ColGroupDef)[] = [...this.getColumnDefs()];
+
     const newColDef: ColDef = {
       headerName: freeTextColumn.ColumnId,
       colId: freeTextColumn.ColumnId,
@@ -2649,6 +2645,9 @@ export class Adaptable implements IAdaptable {
   private postSpecialColumnEditDelete(doReload: boolean) {
     if (this.isInitialised) {
       //  reload the existing layout if its not default
+      // I have no idea any more why we do this but there must presumably be a good reason
+      // we really need to revisit how we manage special columns
+      // its still brittle but better than it was
       let currentlayout: Layout = this.api.layoutApi.getCurrentLayout();
       if (currentlayout) {
         let currentlayoutName: string = this.api.layoutApi.getCurrentLayout().Name;
@@ -2663,12 +2662,8 @@ export class Adaptable implements IAdaptable {
         }
       }
 
-      // if grid is initialised then emit AdaptableReady event so we can re-apply any styles
-      // and re-apply any specially rendered columns
-      if (doReload) {
-        this.api.eventApi.emit('AdaptableReady');
-        this.addSpecialRendereredColumns();
-      }
+      this.addSpecialRendereredColumns();
+      this._emit('SpecialColumnAdded');
     }
   }
 
@@ -2717,6 +2712,59 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
+    const renderedColumn = ColumnHelper.getColumnFromId(
+      sparklineColumn.ColumnId,
+      this.api.gridApi.getColumns()
+    );
+    if (renderedColumn) {
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
+        sparklineColumn.ColumnId
+      );
+      // note we dont get it from the original (but I guess it will be applied next time you run...)
+      vendorGridColumn.getColDef().cellRenderer = null;
+      const coldDef: ColDef = vendorGridColumn.getColDef();
+      coldDef.cellRenderer = null;
+    }
+  }
+
+  public addGradientColumn(gradientColumn: GradientColumn): void {
+    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
+    if (agGridColDef) {
+      agGridColDef.cellStyle = (params: any) => {
+        var color: any;
+        var gradientValue: number | undefined;
+        let baseValue = gradientColumn.BaseValue;
+        let isNegativeValue = params.value < 0;
+        if (isNegativeValue) {
+          color = gradientColumn.NegativeColor;
+          gradientValue = gradientColumn.NegativeValue;
+        } else {
+          color = gradientColumn.PositiveColor;
+          gradientValue = gradientColumn.PositiveValue;
+        }
+        if (gradientValue && baseValue !== undefined) {
+          const increase: any = Math.abs(gradientValue - baseValue);
+          let percentage = ((params.value - baseValue) / increase) * 100;
+          if (isNegativeValue) {
+            percentage = percentage * -1;
+          }
+          let alpha = Number((percentage / 100).toPrecision(2)); //params.
+          return {
+            'background-color': new Color(color).toRgba(alpha),
+          };
+        }
+      };
+    }
+  }
+
+  public removeGradientColumn(gradientColumn: GradientColumn): void {
+    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
+    if (agGridColDef && agGridColDef.cellStyle) {
+      agGridColDef.cellStyle = undefined;
+    }
+  }
+
   public addPercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
       pcr.ColumnId,
@@ -2749,19 +2797,21 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
+  public removePercentBar(pcr: PercentBar): void {
     const renderedColumn = ColumnHelper.getColumnFromId(
-      sparklineColumn.ColumnId,
+      pcr.ColumnId,
       this.api.gridApi.getColumns()
     );
     if (renderedColumn) {
-      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
-        sparklineColumn.ColumnId
-      );
+      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       // note we dont get it from the original (but I guess it will be applied next time you run...)
       vendorGridColumn.getColDef().cellRenderer = null;
       const coldDef: ColDef = vendorGridColumn.getColDef();
       coldDef.cellRenderer = null;
+      // change the style back if it was changed by us
+      if (coldDef.cellClass == 'number-cell-changed') {
+        coldDef.cellClass = 'number-cell';
+      }
     }
   }
 
@@ -2859,64 +2909,9 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public removePercentBar(pcr: PercentBar): void {
-    const renderedColumn = ColumnHelper.getColumnFromId(
-      pcr.ColumnId,
-      this.api.gridApi.getColumns()
-    );
-    if (renderedColumn) {
-      const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
-      // note we dont get it from the original (but I guess it will be applied next time you run...)
-      vendorGridColumn.getColDef().cellRenderer = null;
-      const coldDef: ColDef = vendorGridColumn.getColDef();
-      coldDef.cellRenderer = null;
-      // change the style back if it was changed by us
-      if (coldDef.cellClass == 'number-cell-changed') {
-        coldDef.cellClass = 'number-cell';
-      }
-    }
-  }
-
   public editPercentBar(pcr: PercentBar): void {
     this.removePercentBar(pcr);
     this.addPercentBar(pcr);
-  }
-
-  public removeGradientColumn(gradientColumn: GradientColumn): void {
-    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
-    if (agGridColDef && agGridColDef.cellStyle) {
-      agGridColDef.cellStyle = undefined;
-    }
-  }
-
-  public addGradientColumn(gradientColumn: GradientColumn): void {
-    let agGridColDef: ColDef = this.gridOptions.api!.getColumnDef(gradientColumn.ColumnId);
-    if (agGridColDef) {
-      agGridColDef.cellStyle = (params: any) => {
-        var color: any;
-        var gradientValue: number | undefined;
-        let baseValue = gradientColumn.BaseValue;
-        let isNegativeValue = params.value < 0;
-        if (isNegativeValue) {
-          color = gradientColumn.NegativeColor;
-          gradientValue = gradientColumn.NegativeValue;
-        } else {
-          color = gradientColumn.PositiveColor;
-          gradientValue = gradientColumn.PositiveValue;
-        }
-        if (gradientValue && baseValue !== undefined) {
-          const increase: any = Math.abs(gradientValue - baseValue);
-          let percentage = ((params.value - baseValue) / increase) * 100;
-          if (isNegativeValue) {
-            percentage = percentage * -1;
-          }
-          let alpha = Number((percentage / 100).toPrecision(2)); //params.
-          return {
-            'background-color': new Color(color).toRgba(alpha),
-          };
-        }
-      };
-    }
   }
 
   public editGradientColumn(gradientColumn: GradientColumn): void {
@@ -3203,14 +3198,24 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.columnApi.setPivotMode(false);
   }
 
-  // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
-  // not sure why as its not in the api
-  private setColumnVisible(columnApi: any, col: any, isVisible: boolean, columnEventType: string) {
-    columnApi.setColumnVisible(col, isVisible, columnEventType);
+  public setLayout(layout: Layout): void {
+    if (
+      layout.Name === DEFAULT_LAYOUT &&
+      this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true
+    ) {
+      this.gridOptions.columnApi!.autoSizeAllColumns();
+    }
   }
 
-  private moveColumn(columnApi: any, col: any, index: number, columnEventType: string) {
-    columnApi.moveColumn(col, index, columnEventType);
+  // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
+  // not sure why as its not in the api
+  private setColumnVisible(col: any, isVisible: boolean) {
+    this.gridOptions.columnApi.setColumnVisible(col, isVisible);
+  }
+
+  private setColumnOrder(columnIds: string[]) {
+    this.gridOptions.columnApi.setColumnsVisible(columnIds, true);
+    this.gridOptions.columnApi.moveColumns(columnIds, 0);
   }
 
   private setColumnState(columnApi: any, columnState: any, columnEventType: string) {
@@ -3431,8 +3436,15 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
 
-    // at the end so load the current layout
-    this.api.layoutApi.setLayout(currentlayout);
+    // if the current layout is the default or not set then autosize all columns if requested
+    if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
+    } else {
+      // at the end so load the current layout (as its not default)
+      this.api.layoutApi.setLayout(currentlayout);
+    }
 
     // in case we have an existing quick search we need to make sure its applied
     this.api.quickSearchApi.applyQuickSearch(this.api.quickSearchApi.getQuickSearchValue());

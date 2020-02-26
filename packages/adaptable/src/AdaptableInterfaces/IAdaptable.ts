@@ -13,7 +13,7 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue, SortOrder } from '../PredefinedConfig/Common/Enums';
-import { VendorGridInfo, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -129,6 +129,7 @@ export interface IAdaptable {
   _on(eventName: 'GridRefreshed', callback: () => void): () => void;
   _on(eventName: 'GridFiltered', callback: () => void): () => void;
   _on(eventName: 'GridReloaded', callback: () => void): () => void;
+  _on(eventName: 'SpecialColumnAdded', callback: () => void): () => void;
   _on(eventName: 'ColumnResized', callback: (colId: string) => void): () => void;
   _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;
 
@@ -262,6 +263,7 @@ export interface IAdaptable {
   setGroupedColumns(groupedCols: string[]): void;
   setPivotingDetails(pivotDetails: PivotDetails): void;
   setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
+  setLayout(layout: Layout): void;
 
   // vendor grid related
   isSelectable(): boolean;

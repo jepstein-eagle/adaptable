@@ -50,13 +50,21 @@ import { GradientColumnApi } from './GradientColumnApi';
 /**
  * The `AdaptableApi` provides developers with run-time access to AdapTable.
  *
- * It offers ALL the functionality provided by AdapTable UI in code form.
+ * It offers ALL the functionality provided by the AdapTable UI through code.
  *
- * This enables developers to access the AdapTable Store at run-time in a 'safe' way.
+ * This enables developers to access the AdapTable Store, and all AdapTable functionality, at run-time in a 'safe' way.
  *
  * It also allows them to bypass the UI screens altogether if they so wish.
  *
- * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
+ * `The AdaptableAPI is essentially just a wrapper around the AdapTable Store but provides additional error-checking, logging, and auditing. And it also ensures that the immutable "purity" of the store is maintained.`
+ *
+ * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented, please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
+ *
+ * #### Accessing the AdaptableApi
+ *
+ * The AdaptableApi is the only object returned by the AdapTable static constructor.
+ *
+ * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_api_eventapi_.eventapi.html) event.
  *
  * ### API functions
  *
@@ -75,6 +83,11 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [auditEventApi](#auditeventapi)                     | Listen to the [Audit Events](_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
  *  | [bulkUpdateApi](#bulkupdateapi)                     | Run Bulk Update so mutliple selected cells are given same value  |
  *  | [calculatedColumnApi](#calculatedcolumnapi)         | Manages [Calculated Columns](_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
+ *  | [calendarApi](#calendarApi)                         | Allows you to choose which [Calendar](_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
+ *  | [cellSummaryApi](#cellsummaryApi)                   | Choose which [Cell Summaries](_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
+ *  | [cellValidationApi](#cellvalidationApi)             | Manages the [Cell Validation](_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
+ *  | [chartApi](#chartApi)                               | Deals with the [Chart](_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
+ *  | [columnCategoryApi](#columncategoryApi)             | Manages putting columns into [Column Categories](_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
  *  |
  */
 
@@ -206,8 +219,14 @@ export interface AdaptableApi {
    */
   freeTextColumnApi: FreeTextColumnApi;
 
+  /**
+   *  Provides access to *Glue42* related functionality, the *Glue42* object and [Glue42 State](_predefinedconfig_glue42state_.glue42.html).
+   */
   glue42Api: Glue42Api;
 
+  /**
+   * Provides access to the *Gradient Column* function, the *Gradient Column* object and [Gradient Column State](_predefinedconfig_runtimestate_gradientcolumnstate_.gradientcolumnstate.html).
+   */
   gradientColumnApi: GradientColumnApi;
 
   /**
@@ -315,7 +334,7 @@ export interface AdaptableApi {
   /**
    * API methods used internally within AdapTable.
    *
-   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable through code**
+   * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable at runtime through code**
    *
    */
   internalApi: InternalApi;
