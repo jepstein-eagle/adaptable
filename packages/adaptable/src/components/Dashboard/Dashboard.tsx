@@ -1,4 +1,11 @@
-import React, { ReactElement, ReactNode, Dispatch, SetStateAction, CSSProperties } from 'react';
+import React, {
+  ReactElement,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+  CSSProperties,
+  useRef,
+} from 'react';
 import usePropState from '../utils/usePropState';
 import useDraggable from '../utils/useDraggable';
 import SimpleButton from '../SimpleButton';
@@ -12,7 +19,6 @@ export type DashboardPosition = {
 
 export type DashboardProps = {
   title: string;
-  snapThreshold?: number;
   children: ReactElement<DashboardTabProps>[];
   left: ReactNode;
   right: ReactNode;
@@ -35,7 +41,7 @@ export type DashboardProps = {
 };
 
 export function Dashboard(props: DashboardProps) {
-  const { title, snapThreshold = 20, children, left, right } = props;
+  const { title, children, left, right } = props;
 
   const [activeTab, setActiveTab] = usePropState(
     props.activeTab,
@@ -57,19 +63,13 @@ export function Dashboard(props: DashboardProps) {
     props.onPositionChange,
     props.defaultPosition ?? { x: 0, y: 0 }
   );
+  const positionRef = useRef(position);
+  positionRef.current = position;
 
   const { handleRef, targetRef } = useDraggable({
-    onDrop(dx, dy) {
-      setPosition(oldPosition => {
-        const newPosition = { x: oldPosition.x + dx, y: oldPosition.y + dy };
-
-        // if (newPosition.y < snapThreshold) {
-        //   setFloating(false);
-        //   return oldPosition;
-        // }
-
-        return newPosition;
-      });
+    onDrop(dx: number, dy: number) {
+      const { x, y } = positionRef.current;
+      setPosition({ x: x + dx, y: y + dy });
     },
   });
 

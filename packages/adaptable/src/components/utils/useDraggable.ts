@@ -21,7 +21,7 @@ export default function useDraggable({
   const handleRef = useRef<HTMLElement>(null);
   const targetRef = useRef<HTMLElement>(null);
 
-  const handleRefCallback = useCallback(newNode => {
+  const handleRefCallback = useCallback((newNode: HTMLElement) => {
     const oldNode = handleRef.current;
 
     if (oldNode) {
