@@ -145,6 +145,23 @@ const ColumnsList = ({
   });
 
   const {
+    isSelected: isGroupableColumn,
+    isAllSelected: isAllGroupableColumns,
+    isNoneSelected: isNoneGroupableColumns,
+    selectColumn: setGroupableColumn,
+    deselectColumn: setUngroupableColumn,
+    selectAll: setAllGroupable,
+    deselectAll: setAllUngroupable,
+  } = useSelection(columns, true, 'enableRowGroup', {
+    onBatchChange: (flag: boolean) => {
+      onColumnBatchChange(flag, 'enableRowGroup');
+    },
+    onChange: (col, flag: boolean) => {
+      onColumnChange(col, flag, 'enableRowGroup');
+    },
+  });
+
+  const {
     isSelected: isResizableColumn,
     isAllSelected: isAllResizableColumns,
     isNoneSelected: isNoneResizableColumns,
@@ -203,6 +220,7 @@ const ColumnsList = ({
       key: 'included',
       Content: (
         <b>
+          <div>Included</div>
           <CheckBox
             checked={allIncluded ? true : allExcluded ? false : null}
             onChange={allIncluded => {
@@ -212,9 +230,7 @@ const ColumnsList = ({
                 excludeAllColumns();
               }
             }}
-          >
-            Included
-          </CheckBox>
+          ></CheckBox>
         </b>
       ),
       Size: 3,
@@ -225,7 +241,7 @@ const ColumnsList = ({
       key: 'sortable',
       Content: (
         <b>
-          {' '}
+          <div>Sortable</div>
           <CheckBox
             checked={isAllSortableColumns() ? true : isNoneSortableColumns() ? false : null}
             onChange={allSortable => {
@@ -235,9 +251,7 @@ const ColumnsList = ({
                 setAllUnsortable();
               }
             }}
-          >
-            Sortable
-          </CheckBox>
+          ></CheckBox>
         </b>
       ),
       Size: 3,
@@ -246,7 +260,7 @@ const ColumnsList = ({
       key: 'editable',
       Content: (
         <b>
-          {' '}
+          <div>Editable</div>
           <CheckBox
             checked={isAllEditableColumns() ? true : isNoneEditableColumns() ? false : null}
             onChange={allEditable => {
@@ -256,9 +270,7 @@ const ColumnsList = ({
                 setAllUneditable();
               }
             }}
-          >
-            Editable
-          </CheckBox>
+          ></CheckBox>
         </b>
       ),
       Size: 3,
@@ -268,7 +280,7 @@ const ColumnsList = ({
       key: 'resizable',
       Content: (
         <b>
-          {' '}
+          <div>Resizable</div>
           <CheckBox
             checked={isAllResizableColumns() ? true : isNoneResizableColumns() ? false : null}
             onChange={allResizable => {
@@ -278,16 +290,33 @@ const ColumnsList = ({
                 setAllUnresizable();
               }
             }}
-          >
-            Resizable
-          </CheckBox>
+          ></CheckBox>
+        </b>
+      ),
+    },
+    {
+      Size: 3,
+      key: 'enableRowGroup',
+      Content: (
+        <b>
+          <div>Groupable</div>
+          <CheckBox
+            checked={isAllGroupableColumns() ? true : isNoneGroupableColumns() ? false : null}
+            onChange={allGroupable => {
+              if (allGroupable) {
+                setAllGroupable();
+              } else {
+                setAllUngroupable();
+              }
+            }}
+          ></CheckBox>
         </b>
       ),
     },
     {
       Content: (
         <b>
-          {' '}
+          <div>Filterable</div>
           <CheckBox
             checked={isAllFilterableColumns() ? true : isNoneFilterableColumns() ? false : null}
             onChange={allFilterable => {
@@ -297,9 +326,7 @@ const ColumnsList = ({
                 setAllUnfilterable();
               }
             }}
-          >
-            Filterable
-          </CheckBox>
+          ></CheckBox>
         </b>
       ),
       Size: 3,
@@ -381,6 +408,15 @@ const ColumnsList = ({
     );
     cItems[7].Content = (
       <CheckBox
+        checked={isGroupableColumn(col.field)}
+        onChange={groupable => {
+          groupable ? setGroupableColumn(col.field) : setUngroupableColumn(col.field);
+        }}
+      />
+    );
+
+    cItems[8].Content = (
+      <CheckBox
         checked={isFilterableColumn(col.field)}
         onChange={filterable => {
           filterable ? setFilterableColumn(col.field) : setUnFilterableColumn(col.field);
@@ -397,7 +433,13 @@ const ColumnsList = ({
 
   return (
     <AdaptableObjectCollection
-      style={{ display: 'flex', flexFlow: 'column', height: '100%', textAlign: 'center' }}
+      headerAlign="flex-start"
+      style={{
+        display: 'flex',
+        flexFlow: 'column',
+        height: '100%',
+        textAlign: 'center',
+      }}
       colItems={colItems}
       items={items}
     ></AdaptableObjectCollection>

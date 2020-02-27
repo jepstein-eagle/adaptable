@@ -52,13 +52,13 @@ jobs:
     - name: tsc-plugins-finance
       run: npm run --prefix packages/plugins/finance tsc
 
-    - name: Executing npm install in plugins:nocode
-      run: npm install --prefix packages/plugins/nocode
+    - name: Executing npm install in plugins:nocode-aggrid
+      run: npm install --prefix packages/plugins/nocode-aggrid
       env:
         CI: true
 
-    - name: tsc-plugins-nocode
-      run: npm run --prefix packages/plugins/nocode tsc
+    - name: tsc-plugins-nocode-aggrid
+      run: npm run --prefix packages/plugins/nocode-aggrid tsc
 
     - name: Executing npm install in plugins:charts
       run: npm install --prefix packages/plugins/charts
