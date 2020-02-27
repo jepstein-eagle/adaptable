@@ -11,7 +11,7 @@ import { AdaptableOptions, PredefinedConfig } from '../../../../../../src/types'
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../../../agGrid';
-import nocode from '../../../../../../../plugins/nocode/src';
+import nocode from '../../../../../../../plugins/nocode-aggrid/src';
 import charts from '../../../../../../../plugins/charts/src';
 
 function InitAdaptableDemo() {
@@ -29,6 +29,8 @@ function InitAdaptableDemo() {
         // theme: 'light',
         // loadingMessage: 'Please wait ...',
         onInit: adaptableOptions => {
+          console.log(adaptableOptions);
+          adaptableOptions.vendorGrid.suppressFieldDotNotation = true;
           adaptableOptions.vendorGrid.modules = AllEnterpriseModules;
         },
       }),
@@ -43,7 +45,7 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Theme: {
-    CurrentTheme: 'dark',
+    // CurrentTheme: 'dark',
   },
 };
 

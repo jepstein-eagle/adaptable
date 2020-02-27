@@ -1,5 +1,5 @@
 import XLSX from 'xlsx';
-import Adaptable, { AdaptableNoCodeWizard } from '@adaptabletools/adaptable/agGrid';
+import { AdaptableNoCodeWizard } from '@adaptabletools/adaptable/agGrid';
 import { AdaptablePlugin, AdaptableOptions } from '@adaptabletools/adaptable/types';
 
 import { version } from '../package.json';
@@ -73,7 +73,7 @@ interface NoCodePluginOptions {
 
 class NoCodePlugin extends AdaptablePlugin {
   public options: NoCodePluginOptions;
-  public pluginId: string = 'nocode';
+  public pluginId: string = 'nocode-aggrid';
 
   constructor(options?: NoCodePluginOptions) {
     super(options);
@@ -94,7 +94,7 @@ class NoCodePlugin extends AdaptablePlugin {
     }
     let isJSON: boolean;
 
-    return new Promise((resolve, reject) => {
+    return new Promise(resolve => {
       new AdaptableNoCodeWizard(adaptableOptions, {
         fileAccept:
           '.json,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel',
