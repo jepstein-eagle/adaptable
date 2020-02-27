@@ -114,8 +114,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             return (
               <Box
                 key={customToolbar.Name}
-                marginTop={1}
-                marginRight={1}
                 className={`ab-Dashboard__container ab-Dashboard__container--customToolbar`}
               >
                 {customDshboardElememt}
@@ -283,7 +281,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
           </>
         }
       >
-        {this.props.DashboardState.VisibleTabs.map((tab, index) => (
+        {this.props.DashboardState.Tabs.map((tab, index) => (
           <DashboardTabUI key={index} title={tab.Name}>
             {this.renderTab(tab)}
           </DashboardTabUI>

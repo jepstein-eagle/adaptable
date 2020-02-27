@@ -78,7 +78,7 @@ export interface DashboardState extends RunTimeState {
    */
   VisibleToolbars?: AdaptableDashboardToolbars | string[];
 
-  VisibleTabs?: DashboardTab[];
+  Tabs?: DashboardTab[];
 
   ActiveTab?: number;
   IsCollapsed?: boolean;
@@ -331,7 +331,7 @@ export interface CustomToolbar extends AdaptableObject {
   /**
    * The title which will appear in the Toolbar when its displayed
    */
-  Title: string;
+  Title?: string;
 
   /**
    * An (optional) Glyph to display in the Custom Toolbar
@@ -348,7 +348,7 @@ export interface CustomToolbar extends AdaptableObject {
 
 export interface DashboardTab extends AdaptableObject {
   Name: string;
-  Toolbars: AdaptableDashboardToolbars;
+  Toolbars: (AdaptableDashboardToolbar | string)[];
 }
 
 export interface DashboardFloatingPosition extends AdaptableObject {

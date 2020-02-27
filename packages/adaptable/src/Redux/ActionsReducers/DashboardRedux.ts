@@ -40,7 +40,7 @@ const DASHBOARD_SET_ACTIVE_TAB = 'DASHBOARD_SET_ACTIVE_TAB';
 const DASHBOARD_SET_IS_COLLAPSED = 'DASHBOARD_SET_IS_COLLAPSED';
 const DASHBOARD_SET_IS_FLOATING = 'DASHBOARD_SET_IS_FLOATING';
 const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
-const DASHBOARD_SET_VISIBLE_TABS = 'DASHBOARD_SET_VISIBLE_TABS';
+const DASHBOARD_SET_TABS = 'DASHBOARD_SET_TABS';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   toolbars: AdaptableDashboardToolbars;
@@ -110,8 +110,8 @@ export interface DashboardSetFloatingPositionAction extends Redux.Action {
   FloatingPosition: DashboardFloatingPosition;
 }
 
-export interface DashboardSetVisibleTabsAction extends Redux.Action {
-  VisibleTabs: DashboardTab[];
+export interface DashboardSetTabsAction extends Redux.Action {
+  Tabs: DashboardTab[];
 }
 
 export const DashboardSetAvailableToolbars = (
@@ -231,11 +231,9 @@ export const DashboardSetFloatingPosition = (
   FloatingPosition,
 });
 
-export const DashboardSetVisibleTabs = (
-  VisibleTabs: DashboardTab[]
-): DashboardSetVisibleTabsAction => ({
-  type: DASHBOARD_SET_VISIBLE_TABS,
-  VisibleTabs,
+export const DashboardSetTabs = (Tabs: DashboardTab[]): DashboardSetTabsAction => ({
+  type: DASHBOARD_SET_TABS,
+  Tabs,
 });
 
 const initialDashboardState: DashboardState = {
@@ -256,7 +254,7 @@ const initialDashboardState: DashboardState = {
     'Theme',
   ],
   VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
-  VisibleTabs: [
+  Tabs: [
     { Name: 'Edit', Toolbars: ['BulkUpdate', 'SmartEdit'] },
     { Name: 'Search', Toolbars: ['QuickSearch', 'AdvancedSearch', 'ColumnFilter', 'DataSource'] },
   ],
@@ -399,9 +397,9 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
       return { ...state, FloatingPosition };
     }
 
-    case DASHBOARD_SET_VISIBLE_TABS: {
-      const { VisibleTabs } = action as DashboardSetVisibleTabsAction;
-      return { ...state, VisibleTabs };
+    case DASHBOARD_SET_TABS: {
+      const { Tabs } = action as DashboardSetTabsAction;
+      return { ...state, Tabs };
     }
 
     default:

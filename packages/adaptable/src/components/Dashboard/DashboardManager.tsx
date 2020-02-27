@@ -1,9 +1,25 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useContext, createContext } from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import SimpleButton from '../SimpleButton';
 import { Icon } from '../icons';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+
+export interface DashboardToolbar {
+  Id: AdaptableDashboardToolbar | string;
+  Title: string;
+}
+
+const DashboardManagerContext = createContext<{
+  availableToolbars: DashboardToolbar[];
+}>({
+  availableToolbars: [],
+});
+
+const getToolbarTitle = (availableToolbars: DashboardToolbar[], toolbarId: string) => {
+  const found = availableToolbars.find(t => t.Id === toolbarId);
+  return found ? found.Title : toolbarId;
+};
 
 function TabList({
   tabs,
@@ -107,7 +123,7 @@ function ToolbarList({
   droppableId,
   onRemove,
 }: {
-  toolbars: AdaptableDashboardToolbar[];
+  toolbars: string[];
   droppableId: string;
   onRemove: (toolbarIndex: number) => void;
 }) {
@@ -145,10 +161,11 @@ function ToolbarItem({
   toolbarIndex,
   onRemove,
 }: {
-  toolbar: AdaptableDashboardToolbar;
+  toolbar: string;
   toolbarIndex: number;
   onRemove: () => void;
 }) {
+  const { availableToolbars } = useContext(DashboardManagerContext);
   return (
     <Draggable draggableId={toolbar} index={toolbarIndex}>
       {(provided, snapshot) => (
@@ -165,7 +182,7 @@ function ToolbarItem({
             marginBottom: 4,
           }}
         >
-          <div style={{ flex: 1 }}>{toolbar}</div>
+          <div style={{ flex: 1 }}>{getToolbarTitle(availableToolbars, toolbar)}</div>
           <SimpleButton icon="clear" variant="text" padding={1} onClick={onRemove} />
         </div>
       )}
@@ -173,7 +190,7 @@ function ToolbarItem({
   );
 }
 
-function UnusedPanel({ toolbars }: { toolbars: AdaptableDashboardToolbar[] }) {
+function UnusedPanel({ toolbars }: { toolbars: string[] }) {
   return (
     <div
       style={{
@@ -189,7 +206,7 @@ function UnusedPanel({ toolbars }: { toolbars: AdaptableDashboardToolbar[] }) {
   );
 }
 
-function UnusedToolbarList({ toolbars }: { toolbars: AdaptableDashboardToolbar[] }) {
+function UnusedToolbarList({ toolbars }: { toolbars: string[] }) {
   return (
     <Droppable droppableId="UNUSED" type="TOOLBAR" isDropDisabled={true} direction="horizontal">
       {provided => (
@@ -214,13 +231,8 @@ function UnusedToolbarList({ toolbars }: { toolbars: AdaptableDashboardToolbar[]
   );
 }
 
-function UnusedToolbarItem({
-  toolbar,
-  toolbarIndex,
-}: {
-  toolbar: AdaptableDashboardToolbar;
-  toolbarIndex: number;
-}) {
+function UnusedToolbarItem({ toolbar, toolbarIndex }: { toolbar: string; toolbarIndex: number }) {
+  const { availableToolbars } = useContext(DashboardManagerContext);
   return (
     <Draggable draggableId={toolbar} index={toolbarIndex}>
       {(provided, snapshot) => (
@@ -236,7 +248,7 @@ function UnusedToolbarItem({
             marginBottom: 4,
           }}
         >
-          {toolbar}
+          {getToolbarTitle(availableToolbars, toolbar)}
         </div>
       )}
     </Draggable>
@@ -250,13 +262,22 @@ function DashboardManager({
 }: {
   tabs: DashboardTab[];
   onTabsChange: (tabs: DashboardTab[]) => void;
-  availableToolbars: AdaptableDashboardToolbar[];
+  availableToolbars: DashboardToolbar[];
 }) {
+  const contextValue = useMemo(
+    () => ({
+      availableToolbars,
+    }),
+    [availableToolbars]
+  );
+
   const unusedToolbars = useMemo(
     () =>
-      availableToolbars.filter(toolbar => {
-        return !tabs.some(tab => tab.Toolbars.includes(toolbar));
-      }),
+      availableToolbars
+        .map(t => t.Id)
+        .filter(toolbar => {
+          return !tabs.some(tab => tab.Toolbars.includes(toolbar));
+        }),
     [tabs, availableToolbars]
   );
 
@@ -328,18 +349,20 @@ function DashboardManager({
         if (result.type === 'TOOLBAR') handleToolbarDragEnd(result);
       }}
     >
-      <UnusedPanel toolbars={unusedToolbars} />
-      <div style={{ display: 'flex', flex: 1 }}>
-        <TabList
-          tabs={tabs}
-          onRemoveTab={handleRemoveTab}
-          onRemoveToolbar={handleRemoveToolbar}
-          onChangeTabName={handleChangeTabName}
-        />
-        <SimpleButton onClick={handleTabAdd} px={3}>
-          Add Tab
-        </SimpleButton>
-      </div>
+      <DashboardManagerContext.Provider value={contextValue}>
+        <UnusedPanel toolbars={unusedToolbars} />
+        <div style={{ display: 'flex', flex: 1 }}>
+          <TabList
+            tabs={tabs}
+            onRemoveTab={handleRemoveTab}
+            onRemoveToolbar={handleRemoveToolbar}
+            onChangeTabName={handleChangeTabName}
+          />
+          <SimpleButton onClick={handleTabAdd} px={3}>
+            Add Tab
+          </SimpleButton>
+        </div>
+      </DashboardManagerContext.Provider>
     </DragDropContext>
   );
 }

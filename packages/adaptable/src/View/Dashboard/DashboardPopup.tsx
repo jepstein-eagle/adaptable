@@ -22,6 +22,25 @@ import {
 } from '../../PredefinedConfig/Common/Types';
 import DashboardManagerUI from '../../components/Dashboard/DashboardManager';
 
+export const SystemToolbars: AdaptableFunctionName[] = [
+  'AdvancedSearch',
+  'Alert',
+  'BulkUpdate',
+  'CellSummary',
+  'Chart',
+  'ColumnFilter',
+  'Dashboard',
+  'DataSource',
+  'Export',
+  'Glue42',
+  'IPushPull',
+  'Layout',
+  'QuickSearch',
+  'SmartEdit',
+  'SystemStatus',
+  'Theme',
+];
+
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
   GridState: GridState;
@@ -41,9 +60,7 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
     StrategyConstants: string[]
   ) => DashboardRedux.DashboardSetToolbarsAction;
 
-  onDashboardSetVisibleTabs: (
-    VisibleTabs: DashboardTab[]
-  ) => DashboardRedux.DashboardSetVisibleTabsAction;
+  onDashboardSetTabs: (Tabs: DashboardTab[]) => DashboardRedux.DashboardSetTabsAction;
 }
 
 export enum DashboardConfigView {
@@ -75,60 +92,30 @@ class DashboardPopupComponent extends React.Component<
       }
     });
 
-    let availableToolbarNames: string[] = this.props.DashboardState.AvailableToolbars.filter(at =>
-      this.isVisibleStrategy(at)
-    ).map(at => {
-      return StrategyConstants.getFriendlyNameForStrategyId(at);
-    });
+    let systemToolbars = SystemToolbars.filter(at => this.isNotHiddenStrategy(at)).map(at => ({
+      Id: at,
+      Title: StrategyConstants.getFriendlyNameForStrategyId(at),
+    }));
 
-    let customToolbarNames: string[] = this.props.DashboardState.CustomToolbars.map(ct => {
-      return ct.Name;
-    });
+    let customToolbars = this.props.DashboardState.CustomToolbars.map(ct => ({
+      Id: ct.Name,
+      Title: ct.Title ?? ct.Name,
+    }));
 
-    availableToolbarNames.push(...customToolbarNames);
-    let visibleToolbarNames: string[] = this.props.DashboardState.VisibleToolbars.filter(
-      at => at
-    ).map(vt => {
-      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
-        ct => ct.Name == vt
-      );
-      if (customToolbar) {
-        return vt;
-      } else {
-        let vtFunctionName = vt as AdaptableFunctionName;
-        if (this.isVisibleStrategy(vtFunctionName)) {
-          return StrategyConstants.getFriendlyNameForStrategyId(vtFunctionName);
-        }
-      }
+    const tabs = this.props.DashboardState.Tabs.map(tab => {
+      const Toolbars = tab.Toolbars.filter(vt => {
+        let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
+          ct => ct.Name === vt
+        );
+        return customToolbar ? true : this.isNotHiddenStrategy(vt as AdaptableFunctionName);
+      });
+
+      return { ...tab, Toolbars };
     });
 
     let availableValues = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && selectedValues.indexOf(x.Label) == -1
     ).map(x => x.Label);
-
-    let individualHomeToolbarOptions = (
-      <Flex margin={2} flexDirection="column">
-        <HelpBlock>{'Select which items should be visible in the Home Toolbar.'}</HelpBlock>
-        <Checkbox
-          onChange={checked => this.onShowFunctionsDropdownChanged(checked)}
-          checked={this.props.DashboardState.ShowFunctionsDropdown}
-        >
-          Functions Dropdown
-        </Checkbox>
-        <Checkbox
-          onChange={checked => this.onShowColumnsDropdownChanged(checked)}
-          checked={this.props.DashboardState.ShowColumnsDropdown}
-        >
-          Columns Dropdown
-        </Checkbox>
-        <Checkbox
-          onChange={checked => this.onShowToolbarsDropdownChanged(checked)}
-          checked={this.props.DashboardState.ShowToolbarsDropdown}
-        >
-          Toolbars Dropdown
-        </Checkbox>
-      </Flex>
-    );
 
     return (
       <PanelWithButton
@@ -162,9 +149,9 @@ class DashboardPopupComponent extends React.Component<
         <Box style={{ overflow: 'auto', flex: 1 }} padding={2}>
           {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
             <DashboardManagerUI
-              availableToolbars={this.props.DashboardState.AvailableToolbars}
-              tabs={this.props.DashboardState.VisibleTabs}
-              onTabsChange={this.props.onDashboardSetVisibleTabs}
+              availableToolbars={[...systemToolbars, ...customToolbars]}
+              tabs={tabs}
+              onTabsChange={this.props.onDashboardSetTabs}
             />
           )}
           {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
@@ -232,6 +219,10 @@ class DashboardPopupComponent extends React.Component<
   isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
     return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
+
+  isNotHiddenStrategy(functionName: AdaptableFunctionName): boolean {
+    return !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(functionName);
+  }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any) {
@@ -255,8 +246,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
     onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
-    onDashboardSetVisibleTabs: (VisibleTabs: DashboardTab[]) =>
-      dispatch(DashboardRedux.DashboardSetVisibleTabs(VisibleTabs)),
+    onDashboardSetTabs: (Tabs: DashboardTab[]) => dispatch(DashboardRedux.DashboardSetTabs(Tabs)),
   };
 }
 

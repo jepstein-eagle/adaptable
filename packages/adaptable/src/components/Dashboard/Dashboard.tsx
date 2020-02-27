@@ -136,9 +136,11 @@ export function Dashboard(props: DashboardProps) {
           />
         </div>
       </div>
-      {!floating && !collapsed && (
+      {children.length && !floating && !collapsed ? (
         <div className="ab-Dashboard__content">
-          <div className="ab-Dashboard__content-inner">{children[activeTab].props.children}</div>
+          <div className="ab-Dashboard__content-inner">
+            {children[activeTab] ? children[activeTab].props.children : null}
+          </div>
           <SimpleButton
             icon="triangle-up"
             variant="text"
@@ -146,7 +148,7 @@ export function Dashboard(props: DashboardProps) {
             m={2}
           />
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

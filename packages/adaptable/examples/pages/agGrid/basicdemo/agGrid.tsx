@@ -71,12 +71,12 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
     HomeToolbarTitle: 'Test',
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
-    }, //
+    },
+    CustomToolbars: [{ Name: 'Custom1', Title: 'Custom 1' }],
   },
   // Entitlements: {
   //   FunctionEntitlements: [
