@@ -3210,11 +3210,14 @@ export class Adaptable implements IAdaptable {
   }
 
   public setLayout(layout: Layout): void {
-    if (
-      layout.Name === DEFAULT_LAYOUT &&
-      this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true
-    ) {
-      this.gridOptions.columnApi!.autoSizeAllColumns();
+    if (layout.Name === DEFAULT_LAYOUT) {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
+    } else {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
     }
   }
 
@@ -3449,7 +3452,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     // if the current layout is the default or not set then autosize all columns if requested
     if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
-      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true) {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
         this.gridOptions.columnApi!.autoSizeAllColumns();
       }
     } else {

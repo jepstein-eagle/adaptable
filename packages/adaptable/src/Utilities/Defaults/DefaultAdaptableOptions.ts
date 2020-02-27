@@ -57,7 +57,8 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   layoutOptions: {
     includeVendorStateInLayouts: true,
     autoSaveLayouts: true,
-    autoSizeColumnsInLayout: true,
+    autoSizeColumnsInLayout: false,
+    autoSizeColumnsInDefaultLayout: true,
     autoSizeColumnsInPivotLayout: false,
   },
   filterOptions: {

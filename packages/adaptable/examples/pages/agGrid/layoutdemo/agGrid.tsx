@@ -31,7 +31,7 @@ function InitAdaptableDemo() {
     layoutOptions: {
       includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
-      autoSizeColumnsInLayout: true,
+      //  autoSizeColumnsInLayout: true,
       autoSizeColumnsInPivotLayout: true,
     },
   };
