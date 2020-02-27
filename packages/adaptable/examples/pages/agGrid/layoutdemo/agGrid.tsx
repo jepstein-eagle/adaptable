@@ -49,7 +49,7 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         GroupedColumns: ['currency'],
-        Columns: ['tradeId', 'currency', 'counterparty'],
+        Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Basic Group Layout',
       },
       {
@@ -79,7 +79,7 @@ let demoConfig: PredefinedConfig = {
           },
         ],
         GroupedColumns: ['currency', 'country'],
-        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Grouping Layout',
       },
       {
