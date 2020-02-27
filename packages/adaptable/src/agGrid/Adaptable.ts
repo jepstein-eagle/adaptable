@@ -711,10 +711,16 @@ export class Adaptable implements IAdaptable {
   }
 
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
-    const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
-
     if (this.api.internalApi.isGridInPivotMode()) {
       return;
+    }
+    let firstColIndex: number = 0;
+
+    const allColumns: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
+    //  this is not quite right as it assumes that only the first column can be grouped
+    //  but lets do this for now and then refine and refactor later to deal with weirder use cases
+    if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
+      firstColIndex++;
     }
 
     const NewVisibleColumnIds = VisibleColumnList.map(c => c.ColumnId);
@@ -723,7 +729,7 @@ export class Adaptable implements IAdaptable {
       return acc;
     }, {} as { [key: string]: boolean });
 
-    this.setColumnOrder(NewVisibleColumnIds);
+    this.setColumnOrder(NewVisibleColumnIds, firstColIndex);
 
     allColumns.forEach(col => {
       if (!NewVisibleColumnIdsMap[col.getColId()]) {
@@ -735,8 +741,8 @@ export class Adaptable implements IAdaptable {
 
   public setColumnIntoStore() {
     // if pivotnig and we have 'special' columns as a result then do nothing ...
-    if (this.gridOptions.columnApi.isPivotMode()) {
-      if (ArrayExtensions.IsNotNullOrEmpty(this.gridOptions.columnApi.getPivotColumns())) {
+    if (this.gridOptions.columnApi!.isPivotMode()) {
+      if (ArrayExtensions.IsNotNullOrEmpty(this.gridOptions.columnApi!.getPivotColumns())) {
         return;
       }
     }
@@ -1017,7 +1023,7 @@ export class Adaptable implements IAdaptable {
     const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     const selectedRows: GridRow[] = [];
 
-    if (this.gridOptions.columnApi.isPivotMode()) {
+    if (this.gridOptions.columnApi!.isPivotMode()) {
       //  dont perform row selection in pivot mode
       return;
     }
@@ -3103,8 +3109,8 @@ export class Adaptable implements IAdaptable {
         ColumnGroupState: ArrayExtensions.IsNotNullOrEmpty(columnGroupState)
           ? JSON.stringify(columnGroupState)
           : null,
-        InPivotMode: this.gridOptions.columnApi.isPivotMode(),
-        ValueColumns: this.gridOptions.columnApi.getValueColumns().map(c => c.getColId()),
+        InPivotMode: this.gridOptions.columnApi!.isPivotMode(),
+        ValueColumns: this.gridOptions.columnApi!.getValueColumns().map(c => c.getColId()),
       };
     }
     return null; // need this?
@@ -3133,27 +3139,27 @@ export class Adaptable implements IAdaptable {
       if (vendorGridInfo.ColumnGroupState) {
         const columnGroupState: any = vendorGridInfo.ColumnGroupState;
         if (columnGroupState) {
-          this.gridOptions.columnApi.setColumnGroupState(JSON.parse(columnGroupState));
+          this.gridOptions.columnApi!.setColumnGroupState(JSON.parse(columnGroupState));
         }
       }
 
       if (vendorGridInfo.InPivotMode && vendorGridInfo.InPivotMode == true) {
-        this.gridOptions.columnApi.setPivotMode(true);
+        this.gridOptions.columnApi!.setPivotMode(true);
       } else {
-        this.gridOptions.columnApi.setPivotMode(false);
+        this.gridOptions.columnApi!.setPivotMode(false);
       }
 
       if (ArrayExtensions.IsNotNullOrEmpty(vendorGridInfo.ValueColumns)) {
-        this.gridOptions.columnApi.setValueColumns(vendorGridInfo.ValueColumns);
+        this.gridOptions.columnApi!.setValueColumns(vendorGridInfo.ValueColumns);
       }
     }
   }
 
   public setGroupedColumns(groupedCols: string[]): void {
     if (ArrayExtensions.IsNotNullOrEmpty(groupedCols)) {
-      this.gridOptions.columnApi.setRowGroupColumns(groupedCols);
+      this.gridOptions.columnApi!.setRowGroupColumns(groupedCols);
     } else {
-      this.gridOptions.columnApi.setRowGroupColumns([]);
+      this.gridOptions.columnApi!.setRowGroupColumns([]);
     }
 
     if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout == true) {
@@ -3166,16 +3172,16 @@ export class Adaptable implements IAdaptable {
 
     // if its not a pivot layout then turn off pivot mode and get out
     if (!isPivotLayout) {
-      this.gridOptions.columnApi.setPivotMode(false);
+      this.gridOptions.columnApi!.setPivotMode(false);
       return;
     }
 
     if (ArrayExtensions.IsNotNull(pivotDetails.PivotColumns)) {
-      this.gridOptions.columnApi.setPivotColumns(pivotDetails.PivotColumns);
+      this.gridOptions.columnApi!.setPivotColumns(pivotDetails.PivotColumns);
     }
 
     if (ArrayExtensions.IsNotNull(pivotDetails.AggregationColumns)) {
-      this.gridOptions.columnApi.setValueColumns(pivotDetails.AggregationColumns);
+      this.gridOptions.columnApi!.setValueColumns(pivotDetails.AggregationColumns);
     }
   }
 
@@ -3196,11 +3202,11 @@ export class Adaptable implements IAdaptable {
   }
 
   private turnOnPivoting(): void {
-    this.gridOptions.columnApi.setPivotMode(true);
+    this.gridOptions.columnApi!.setPivotMode(true);
   }
 
   private turnOffPivoting(): void {
-    this.gridOptions.columnApi.setPivotMode(false);
+    this.gridOptions.columnApi!.setPivotMode(false);
   }
 
   public setLayout(layout: Layout): void {
@@ -3215,12 +3221,12 @@ export class Adaptable implements IAdaptable {
   // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
   // not sure why as its not in the api
   private setColumnVisible(col: any, isVisible: boolean) {
-    this.gridOptions.columnApi.setColumnVisible(col, isVisible);
+    this.gridOptions.columnApi!.setColumnVisible(col, isVisible);
   }
 
-  private setColumnOrder(columnIds: string[]) {
-    this.gridOptions.columnApi.setColumnsVisible(columnIds, true);
-    this.gridOptions.columnApi.moveColumns(columnIds, 0);
+  private setColumnOrder(columnIds: string[], index: number) {
+    this.gridOptions.columnApi!.setColumnsVisible(columnIds, true);
+    this.gridOptions.columnApi!.moveColumns(columnIds, index);
   }
 
   private setColumnState(columnApi: any, columnState: any, columnEventType: string) {

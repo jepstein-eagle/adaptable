@@ -1039,7 +1039,7 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       filter: true,
       resizable: true,
-      cellRenderer: 'agGroupCellRenderer',
+      // cellRenderer: 'agGroupCellRenderer',
       cellRendererParams: {
         footerValueGetter: '"All Notionals (" + x + ")"',
       },
