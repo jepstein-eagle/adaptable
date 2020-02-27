@@ -81,8 +81,16 @@ class NoCodePlugin extends AdaptablePlugin {
   }
 
   beforeInit(adaptableOptions: AdaptableOptions) {
-    if (this.options.theme) {
-      document.documentElement.classList.add(`ab--theme-${this.options.theme}`);
+    const theme =
+      (this.options.theme as string) ||
+      (typeof adaptableOptions.predefinedConfig === 'object' &&
+      adaptableOptions.predefinedConfig.Theme &&
+      adaptableOptions.predefinedConfig.Theme.CurrentTheme
+        ? adaptableOptions.predefinedConfig.Theme.CurrentTheme
+        : null);
+
+    if (theme) {
+      document.documentElement.classList.add(`ab--theme-${theme}`);
     }
     let isJSON: boolean;
 

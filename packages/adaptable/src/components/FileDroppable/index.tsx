@@ -145,7 +145,7 @@ const FileDroppable = (props: FileDroppableProps) => {
 
   let form = (
     <form onSubmit={stop}>
-      <SimpleButton style={{ cursor: 'pointer' }} variant="text">
+      <SimpleButton style={{ cursor: 'pointer' }} variant="outlined">
         <div>{state.dragOver ? dragOverText : defaultText}</div>
         <input
           type="file"
@@ -154,6 +154,7 @@ const FileDroppable = (props: FileDroppableProps) => {
           style={{
             opacity: 0,
             position: 'absolute',
+            cursor: 'pointer',
             fontSize: 0,
             lineHeight: 0,
             top: 0,

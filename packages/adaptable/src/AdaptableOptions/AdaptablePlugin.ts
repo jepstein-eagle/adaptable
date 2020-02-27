@@ -10,6 +10,7 @@ export abstract class AdaptablePlugin {
   public options?: any;
 
   private values: { [key: string]: any };
+  public pluginId: string = '';
 
   constructor(options?: any) {
     this.options = options;

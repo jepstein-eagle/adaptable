@@ -18,21 +18,21 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Charts Plugin Basic Demo',
+    adaptableId: 'Nocode Plugin Basic Demo',
 
     predefinedConfig: demoConfig,
     plugins: [
       nocode({
-        headerMessage: 'Welcome to Adaptable!',
-        actionMessage: 'D&D an excel or json file',
-        dropActionMessage: 'Drop it while its hot!',
-        loadingMessage: 'Please wait ...',
-        theme: 'dark',
+        // headerMessage: 'Welcome to Adaptable!',
+        // // actionMessage: 'D&D an excel or json file',
+        // dropActionMessage: 'Drop it while its hot!',
+        // theme: 'light',
+        // loadingMessage: 'Please wait ...',
         onInit: adaptableOptions => {
           adaptableOptions.vendorGrid.modules = AllEnterpriseModules;
         },
       }),
-      charts(),
+      // charts(),
     ],
   };
 
@@ -41,7 +41,11 @@ function InitAdaptableDemo() {
   });
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Theme: {
+    CurrentTheme: 'dark',
+  },
+};
 
 export default () => {
   useEffect(() => {
