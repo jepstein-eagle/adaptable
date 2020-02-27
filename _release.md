@@ -1,3 +1,7 @@
+## 6.0.11
+
+Fixing grouping bug
+
 ## 6.0.10
 
 Pivot Sort improvements
