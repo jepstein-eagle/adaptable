@@ -1,3 +1,7 @@
+## 6.0.13
+
+Trying to fix grouping layouts
+
 ## 6.0.12
 
 Sorting out AutoSize layouts 
