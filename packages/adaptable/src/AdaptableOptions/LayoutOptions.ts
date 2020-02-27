@@ -40,6 +40,8 @@ export interface LayoutOptions {
    */
   autoSizeColumnsInLayout?: boolean;
 
+  autoSizeColumnsInDefaultLayout?: boolean;
+
   /**
    * Whether columns should be auto-sized when a Layout loads for the first time
    *

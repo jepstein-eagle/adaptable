@@ -722,7 +722,7 @@ export class Adaptable implements IAdaptable {
       this.hideFilterFormPopup();
     }
   }
-
+  /*
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     if (this.api.internalApi.isGridInPivotMode()) {
       return;
@@ -749,6 +749,43 @@ export class Adaptable implements IAdaptable {
         this.setColumnVisible(col, false);
       }
     });
+    this.setColumnIntoStore();
+  }
+  */
+
+  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
+    const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
+    let startIndex: number = 0;
+
+    if (this.api.internalApi.isGridInPivotMode()) {
+      return;
+    }
+    //  this is not quite right as it assumes that only the first column can be grouped
+    //  but lets do this for now and then refine and refactor later to deal with weirder use cases
+    if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
+      startIndex++;
+    }
+
+    VisibleColumnList.forEach((column, index) => {
+      const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
+      if (!col) {
+        LoggingHelper.LogAdaptableError(`Cannot find vendor column:${column.ColumnId}`);
+      } else {
+        if (!col.isVisible()) {
+          // this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
+          this.gridOptions.columnApi.setColumnVisible(col, true);
+        }
+        // this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, 'api');
+        this.gridOptions.columnApi.moveColumn(col, startIndex + index);
+      }
+    });
+    allColumns
+      .filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0)
+      .forEach(col => {
+        // this.setColumnVisible(this.gridOptions.columnApi, col, false, 'api');
+        this.gridOptions.columnApi.setColumnVisible(col, false);
+      });
+    // we need to do this to make sure agGrid and adaptable column collections are in sync
     this.setColumnIntoStore();
   }
 
@@ -3223,11 +3260,14 @@ export class Adaptable implements IAdaptable {
   }
 
   public setLayout(layout: Layout): void {
-    if (
-      layout.Name === DEFAULT_LAYOUT &&
-      this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true
-    ) {
-      this.gridOptions.columnApi!.autoSizeAllColumns();
+    if (layout.Name === DEFAULT_LAYOUT) {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
+    } else {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true) {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      }
     }
   }
 
@@ -3462,7 +3502,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     // if the current layout is the default or not set then autosize all columns if requested
     if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
-      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout === true) {
+      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
         this.gridOptions.columnApi!.autoSizeAllColumns();
       }
     } else {
