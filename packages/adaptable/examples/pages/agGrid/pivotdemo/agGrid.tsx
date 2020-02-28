@@ -8,26 +8,36 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
+import { GridOptions, Column } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradePivoting(tradeData);
 
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'pivot-demo'
-  );
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Pivot Demo',
 
-  adaptableOptions.filterOptions = {
-    useVendorFilterFormStyle: true,
-    autoApplyFilter: false,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
   };
+
+  (adaptableOptions.layoutOptions = {
+    //  autoSaveLayouts: false,
+  }),
+    (adaptableOptions.filterOptions = {
+      useVendorFilterFormStyle: true,
+      autoApplyFilter: false,
+    });
 
   adaptableOptions.predefinedConfig = demoConfig;
 
@@ -35,18 +45,37 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
+  CustomSort: {
+    CustomSorts: [
+      {
+        ColumnId: 'status',
+        SortedValues: ['Pending', 'Completed', 'Rejected'],
+      },
+    ],
+  },
   Layout: {
     Layouts: [
       {
+        Name: 'Not Pivot Layout',
+        Columns: ['deskId', 'country', 'currency', 'bid', 'ask', 'notional', 'counterparty'],
+        GroupedColumns: ['currency'],
+      },
+      {
         ColumnSorts: [],
-        Columns: ['tradeId', 'Triple Notional', 'notional', 'counterparty', 'Action'],
-        Name: 'Pivot Layout',
-        VendorGridInfo: {
-          InPivotMode: true,
+        Columns: [],
+        GroupedColumns: ['country', 'currency'],
+        PivotDetails: {
+          PivotColumns: ['status'],
+          AggregationColumns: ['notional', 'price'],
         },
+        Name: 'Pivot Layout',
+      },
+      {
+        Columns: ['price', 'bidOfferSpread', 'stars'],
+        Name: 'second Layout',
       },
     ],
-    CurrentLayout: 'Pivot Layout',
+    //  CurrentLayout: 'Pivot Layout',
   },
 };
 
