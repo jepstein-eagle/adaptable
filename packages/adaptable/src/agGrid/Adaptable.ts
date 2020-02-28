@@ -722,10 +722,11 @@ export class Adaptable implements IAdaptable {
       this.hideFilterFormPopup();
     }
   }
-  /*
-  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
+
+  public setNewColumnListOrderNew(VisibleColumnList: Array<AdaptableColumn>): void {
+    // this is wrong as its out of sync!
     if (this.api.internalApi.isGridInPivotMode()) {
-      return;
+      //  return;
     }
     let firstColIndex: number = 0;
 
@@ -751,7 +752,6 @@ export class Adaptable implements IAdaptable {
     });
     this.setColumnIntoStore();
   }
-  */
 
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
