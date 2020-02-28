@@ -41,7 +41,7 @@ export default () => <AdaptableReactAgGrid
   gridOptions={ ... }
   plugins={plugins}
   adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi, gridOptions) => { ... }}
+  onAdaptableReady={({adaptableApi, vendorGrid}) => { ... }}
 />
 ```
 Similarly in the Angular Wrappers there is a **Modules** attribute:
