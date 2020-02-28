@@ -214,7 +214,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         variant="text"
         tone="accent"
         items={menuItems}
-        tooltip="Adaptable Functions"
+        // tooltip="Adaptable Functions"
         className="ab-DashboardToolbar__Home__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
