@@ -747,15 +747,6 @@ export class Adaptable implements IAdaptable {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
-    let pivotMode = false;
-    // this is wrong as its out of sync!
-    if (this.api.internalApi.isGridInPivotMode()) {
-      pivotMode = true;
-      //  return;
-    }
-
-    console.clear();
-    console.log({ pivotMode });
     //  this is not quite right as it assumes that only the first column can be grouped
     //  but lets do this for now and then refine and refactor later to deal with weirder use cases
     if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
