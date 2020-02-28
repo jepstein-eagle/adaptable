@@ -174,6 +174,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             <SimpleButton
               key={menuItem.Label}
               variant="text"
+              tone="accent"
               className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               icon={menuItem.Icon}
               tooltip={menuItem.Label}
@@ -183,7 +184,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
               style={
                 menuItem.FunctionName === 'SystemStatus'
                   ? UIHelper.getStyleForMessageType(this.props.StatusType as MessageType)
-                  : { color: 'white', fill: 'currentColor' }
+                  : {}
               }
             />
           );
@@ -211,13 +212,12 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     return (
       <DropdownButton
         variant="text"
-        color=""
+        tone="accent"
         items={menuItems}
         tooltip="Adaptable Functions"
         className="ab-DashboardToolbar__Home__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
-        style={{ color: 'white', fill: 'currentColor' }}
       >
         <Icon name={'home'} />
       </DropdownButton>
@@ -229,9 +229,10 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         <SimpleButton
           icon="quick-search"
           variant="text"
+          tone="accent"
           onClick={this.props.onShowQuickSearchPopup}
+          tooltip="Quick Search"
           mr={2}
-          style={{ color: 'white', fill: 'currentColor' }}
         />
         <AdaptableFormControlTextClear
           type="text"

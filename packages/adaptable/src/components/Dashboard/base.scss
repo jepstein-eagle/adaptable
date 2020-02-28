@@ -5,8 +5,8 @@
   &__bar {
     display: flex;
     align-items: stretch;
-    color: var(--ab-color-text-on-secondary);
-    background: var(--ab-color-secondary);
+    color: var(--ab-dashboard__color);
+    background: var(--ab-dashboard__background);
     height: 40px;
     padding: 0 var(--ab-space-2);
   }
@@ -44,14 +44,13 @@
     outline: none;
     cursor: pointer;
     font-size: var(--ab-font-size-3);
-    // font-weight: bold;
     border-radius: var(--ab__border-radius) var(--ab__border-radius) 0 0;
     padding: 8px 12px 12px 12px;
-    color: var(--ab-color-text-on-secondary);
-    background: var(--ab-color-secondary);
+    color: var(--ab-dashboard__color);
+    background: var(--ab-dashboard__background);
 
     &--active {
-      color: var(--ab-color-secondary);
+      color: var(--ab-color-text-on-primary);
       background: var(--ab-color-primary);
     }
   }
@@ -59,7 +58,7 @@
   &__content {
     display: flex;
     align-items: flex-start;
-    background-color: var(--ab-color-primary);
+    background: var(--ab-color-primary);
   }
 
   &__content-inner {
@@ -90,6 +89,6 @@
   }
 
   .ab-Input {
-    border: none;
-  }
+   border: none;
+ }
 }

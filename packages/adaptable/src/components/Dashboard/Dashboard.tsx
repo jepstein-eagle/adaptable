@@ -130,7 +130,7 @@ export function Dashboard(props: DashboardProps) {
           <SimpleButton
             icon={floating ? 'arrow-right' : 'arrow-left'}
             variant="text"
-            style={{ color: 'white', fill: 'currentColor' }}
+            tone="accent"
             onClick={() => setFloating(!floating)}
             ml={2}
           />
