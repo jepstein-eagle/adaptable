@@ -147,9 +147,9 @@ import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableToolPanelContext } from '../Utilities/Interface/AdaptableToolPanelContext';
 import {
   IAdaptableNoCodeWizard,
-  IAdaptableNoCodeWizardOptions,
-  IAdaptableNoCodeWizardInitFn,
-} from '../AdaptableInterfaces/IAdaptableNoCodeWizard';
+  AdaptableNoCodeWizardOptions,
+  AdaptableNoCodeWizardInitFn,
+} from '../AdaptableInterfaces/AdaptableNoCodeWizard';
 import { AdaptablePlugin } from '../AdaptableOptions/AdaptablePlugin';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
@@ -491,6 +491,19 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  isPluginLoaded = (pluginId: string) => {
+    const plugins = this.adaptableOptions.plugins || [];
+    for (let i = 0, len = plugins.length; i < len; i++) {
+      const plugin = plugins[i];
+
+      if (plugin.pluginId === pluginId) {
+        return true;
+      }
+    }
+
+    return false;
+  };
+
   private initStore() {
     this.AdaptableStore = new AdaptableStore(this);
 
@@ -709,10 +722,11 @@ export class Adaptable implements IAdaptable {
       this.hideFilterFormPopup();
     }
   }
-  /*
-  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
+
+  public setNewColumnListOrderNew(VisibleColumnList: Array<AdaptableColumn>): void {
+    // this is wrong as its out of sync!
     if (this.api.internalApi.isGridInPivotMode()) {
-      return;
+      //  return;
     }
     let firstColIndex: number = 0;
 
@@ -738,14 +752,14 @@ export class Adaptable implements IAdaptable {
     });
     this.setColumnIntoStore();
   }
-  */
 
   public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
     let startIndex: number = 0;
 
+    // this is wrong as its out of sync!
     if (this.api.internalApi.isGridInPivotMode()) {
-      return;
+      //  return;
     }
     //  this is not quite right as it assumes that only the first column can be grouped
     //  but lets do this for now and then refine and refactor later to deal with weirder use cases
@@ -3511,19 +3525,16 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 //  Adaptable.init(adaptableOptions);
 
 export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
-  private init: IAdaptableNoCodeWizardInitFn;
+  private init: AdaptableNoCodeWizardInitFn;
 
   private adaptableOptions: AdaptableOptions;
-  private extraOptions: IAdaptableNoCodeWizardOptions;
+  private extraOptions: AdaptableNoCodeWizardOptions;
 
   /**
    * @param adaptableOptions
    */
-  constructor(
-    adaptableOptions: AdaptableOptions,
-    extraOptions: IAdaptableNoCodeWizardOptions = {}
-  ) {
-    const defaultInit: IAdaptableNoCodeWizardInitFn = ({ gridOptions, adaptableOptions }) => {
+  constructor(adaptableOptions: AdaptableOptions, extraOptions: AdaptableNoCodeWizardOptions = {}) {
+    const defaultInit: AdaptableNoCodeWizardInitFn = ({ gridOptions, adaptableOptions }) => {
       adaptableOptions.vendorGrid = gridOptions;
 
       return new Adaptable(adaptableOptions);
@@ -3560,9 +3571,9 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
         adaptableOptions: this.adaptableOptions,
         ...this.extraOptions,
         onInit: (adaptableOptions: AdaptableOptions) => {
-          let adaptable: IAdaptable | void;
+          let adaptable: IAdaptable | null | void;
 
-          container.classList.remove('adaptable--in-wizard');
+          container!.classList.remove('adaptable--in-wizard');
           ReactDOM.unmountComponentAtNode(container!);
 
           adaptable = this.init({

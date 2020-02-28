@@ -85,6 +85,7 @@ export const prepareGridOptions = (dataSourceInfo: WizardDataSourceInfo): GridOp
       type: columnType,
       filter: true,
       sortable: true,
+      enableRowGroup: true,
       resizable: true,
       editable: true,
     };

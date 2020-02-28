@@ -28,7 +28,7 @@ export default () => (
   <AdaptableReactAggrid
     style={{ height: '100vh' }}
     modules={[SideBarModule, MenuModule, RangeSelectionModule]}
-    onAdaptableReady={(api, gridOptions) => {
+    onAdaptableReady={({ adaptableApi: api, vendorGrid: gridOptions }) => {
       console.log('Adaptable ready', api, gridOptions);
 
       api.eventApi.on('SearchChanged', (...args: any[]) => {

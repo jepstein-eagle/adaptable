@@ -1,8 +1,8 @@
 // Base Types
 export {
   IAdaptableNoCodeWizard,
-  IAdaptableNoCodeWizardOptions,
-} from './AdaptableInterfaces/IAdaptableNoCodeWizard';
+  AdaptableNoCodeWizardOptions,
+} from './AdaptableInterfaces/AdaptableNoCodeWizard';
 export { IAdaptable } from './AdaptableInterfaces/IAdaptable';
 export { IAdaptableStore } from './Redux/Store/Interface/IAdaptableStore';
 export { AdaptableApi } from './Api/AdaptableApi';

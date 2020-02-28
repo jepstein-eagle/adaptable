@@ -1,3 +1,7 @@
+## 6.0.14
+
+Fix version displayed in the info popup & update some readme docs
+
 ## 6.0.13
 
 Trying to fix grouping layouts

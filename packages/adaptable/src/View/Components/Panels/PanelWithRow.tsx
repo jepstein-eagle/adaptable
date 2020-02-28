@@ -7,6 +7,7 @@ import Panel, { PanelProps } from '../../../components/Panel';
 export interface PanelWithRowProps extends PanelProps {
   // CellInfo: [string, number][]
   colItems: IColItem[];
+  headerAlign?: string;
 }
 
 // We cannot destructure this.props using the react way in typescript which is a real pain as you
@@ -30,7 +31,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
     ));
 
     const header = (
-      <Flex alignItems="center" style={{ width: '100%' }}>
+      <Flex alignItems={this.props.headerAlign || 'center'} style={{ width: '100%' }}>
         {headerItems}
       </Flex>
     );

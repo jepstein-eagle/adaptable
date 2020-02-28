@@ -11,28 +11,30 @@ import { AdaptableOptions, PredefinedConfig } from '../../../../../../src/types'
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../../../agGrid';
-import nocode from '../../../../../../../plugins/nocode/src';
+import nocode from '../../../../../../../plugins/nocode-aggrid/src';
 import charts from '../../../../../../../plugins/charts/src';
 
 function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Charts Plugin Basic Demo',
+    adaptableId: 'Nocode Plugin Basic Demo',
 
     predefinedConfig: demoConfig,
     plugins: [
       nocode({
-        headerMessage: 'Welcome to Adaptable!',
-        actionMessage: 'D&D an excel or json file',
-        dropActionMessage: 'Drop it while its hot!',
-        loadingMessage: 'Please wait ...',
-        theme: 'dark',
+        // headerMessage: 'Welcome to Adaptable!',
+        // // actionMessage: 'D&D an excel or json file',
+        // dropActionMessage: 'Drop it while its hot!',
+        // theme: 'light',
+        // loadingMessage: 'Please wait ...',
         onInit: adaptableOptions => {
+          console.log(adaptableOptions);
+          adaptableOptions.vendorGrid.suppressFieldDotNotation = true;
           adaptableOptions.vendorGrid.modules = AllEnterpriseModules;
         },
       }),
-      charts(),
+      // charts(),
     ],
   };
 
@@ -41,7 +43,11 @@ function InitAdaptableDemo() {
   });
 }
 
-let demoConfig: PredefinedConfig = {};
+let demoConfig: PredefinedConfig = {
+  Theme: {
+    // CurrentTheme: 'dark',
+  },
+};
 
 export default () => {
   useEffect(() => {
