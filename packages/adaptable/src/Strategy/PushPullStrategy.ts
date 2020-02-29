@@ -20,6 +20,16 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
+  public setStrategyEntitlement(): void {
+    if (!this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+      this.AccessLevel = 'Hidden';
+    } else {
+      this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        this.Id
+      );
+    }
+  }
+
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.IPushPullStrategyId, adaptable);
 

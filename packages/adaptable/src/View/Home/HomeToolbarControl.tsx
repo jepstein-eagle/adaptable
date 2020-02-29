@@ -343,6 +343,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
     onSetToolbarVisibility: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
+    onConfigure: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.DashboardStrategyId,
+          ScreenPopups.DashboardPopup
+        )
+      ),
   };
 }
 

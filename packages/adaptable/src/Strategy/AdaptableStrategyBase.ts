@@ -12,6 +12,7 @@ import {
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
@@ -23,8 +24,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     this.adaptable = adaptable;
   }
 
-  protected isFull: boolean;
-  protected isReadOnly: boolean;
+  public AccessLevel: AccessLevel;
 
   public initializeWithRedux() {
     this.InitState();
@@ -32,9 +32,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   public setStrategyEntitlement(): void {
-    this.isReadOnly = this.adaptable.api.entitlementsApi.isFunctionReadOnlyEntitlement(this.Id);
-    this.isFull =
-      this.adaptable.api.entitlementsApi.isFunctionFullEntitlement(this.Id) || this.isReadOnly;
+    this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+      this.Id
+    );
   }
 
   protected InitState(): void {
@@ -82,8 +82,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       };
     }
     // are we sure that we want to stop readonly strategies appearing?
-    if (this.isFull && !this.isReadOnly) {
-      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, this.isFull, PopupParams);
+    if (this.accessLevel !== 'Hidden') {
+      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }
 
@@ -93,7 +93,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     ClickFunction: () => void
   ): MenuItemDoClickFunction {
-    if (this.isFull && !this.isReadOnly) {
+    if (this.accessLevel !== 'Hidden') {
       return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
     }
   }
@@ -103,7 +103,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     Action: Action
   ): MenuItemDoReduxAction {
-    if (this.isFull && !this.isReadOnly) {
+    if (this.accessLevel !== 'Hidden') {
       return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
     }
   }
@@ -115,7 +115,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
-    if (this.isFull && !this.isReadOnly) {
+    if (this.accessLevel !== 'Hidden') {
       return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }
@@ -132,7 +132,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       | 'quickfilter'
       | 'numeric'
   ): boolean {
-    if (this.isReadOnly) {
+    if (this.accessLevel != 'Full') {
       return false;
     }
     if (StringExtensions.IsNotNullOrEmpty(functionType)) {

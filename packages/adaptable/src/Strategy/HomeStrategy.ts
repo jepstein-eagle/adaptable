@@ -20,8 +20,7 @@ export class HomeStrategy extends AdaptableStrategyBase implements IHomeStrategy
   }
 
   public setStrategyEntitlement(): void {
-    this.isReadOnly = false;
-    this.isFull = true;
+    this.AccessLevel = 'Full';
   }
 
   public addBaseColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] {
