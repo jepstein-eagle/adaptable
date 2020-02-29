@@ -723,19 +723,8 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public setNewColumnListOrderNew(VisibleColumnList: Array<AdaptableColumn>): void {
-    // this is wrong as its out of sync!
-    if (this.api.internalApi.isGridInPivotMode()) {
-      //  return;
-    }
-    let firstColIndex: number = 0;
-
+  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
     const allColumns: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
-    //  this is not quite right as it assumes that only the first column can be grouped
-    //  but lets do this for now and then refine and refactor later to deal with weirder use cases
-    if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
-      firstColIndex++;
-    }
 
     const NewVisibleColumnIds = VisibleColumnList.map(c => c.ColumnId);
     const NewVisibleColumnIdsMap = NewVisibleColumnIds.reduce((acc, id) => {
@@ -743,51 +732,14 @@ export class Adaptable implements IAdaptable {
       return acc;
     }, {} as { [key: string]: boolean });
 
-    this.setColumnOrder(NewVisibleColumnIds, firstColIndex);
-
     allColumns.forEach(col => {
       if (!NewVisibleColumnIdsMap[col.getColId()]) {
         this.setColumnVisible(col, false);
       }
     });
     this.setColumnIntoStore();
-  }
 
-  public setNewColumnListOrder(VisibleColumnList: Array<AdaptableColumn>): void {
-    const allColumns = this.gridOptions.columnApi!.getAllGridColumns();
-    let startIndex: number = 0;
-
-    // this is wrong as its out of sync!
-    if (this.api.internalApi.isGridInPivotMode()) {
-      //  return;
-    }
-    //  this is not quite right as it assumes that only the first column can be grouped
-    //  but lets do this for now and then refine and refactor later to deal with weirder use cases
-    if (ColumnHelper.isSpecialColumn(allColumns[0].getColId())) {
-      startIndex++;
-    }
-
-    VisibleColumnList.forEach((column, index) => {
-      const col = this.gridOptions.columnApi!.getColumn(column.ColumnId);
-      if (!col) {
-        LoggingHelper.LogAdaptableError(`Cannot find vendor column:${column.ColumnId}`);
-      } else {
-        if (!col.isVisible()) {
-          // this.setColumnVisible(this.gridOptions.columnApi, col, true, 'api');
-          this.gridOptions.columnApi.setColumnVisible(col, true);
-        }
-        // this.moveColumn(this.gridOptions.columnApi, col, startIndex + index, 'api');
-        this.gridOptions.columnApi.moveColumn(col, startIndex + index);
-      }
-    });
-    allColumns
-      .filter(x => VisibleColumnList.findIndex(y => y.ColumnId == x.getColId()) < 0)
-      .forEach(col => {
-        // this.setColumnVisible(this.gridOptions.columnApi, col, false, 'api');
-        this.gridOptions.columnApi.setColumnVisible(col, false);
-      });
-    // we need to do this to make sure agGrid and adaptable column collections are in sync
-    this.setColumnIntoStore();
+    requestAnimationFrame(() => this.setColumnOrder(NewVisibleColumnIds));
   }
 
   public setColumnIntoStore() {
@@ -3278,9 +3230,16 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.columnApi!.setColumnVisible(col, isVisible);
   }
 
-  private setColumnOrder(columnIds: string[], index: number) {
+  private setColumnOrder(columnIds: string[]) {
     this.gridOptions.columnApi!.setColumnsVisible(columnIds, true);
-    this.gridOptions.columnApi!.moveColumns(columnIds, index);
+    const specialColumn: Column = this.gridOptions!.columnApi.getAllDisplayedColumns().filter(c =>
+      ColumnHelper.isSpecialColumn(c.getColId())
+    )[0];
+    if (specialColumn) {
+      columnIds = [specialColumn.getColId(), ...columnIds];
+    }
+
+    this.gridOptions.columnApi!.moveColumns(columnIds, 0);
   }
 
   private setColumnState(columnApi: any, columnState: any, columnEventType: string) {
