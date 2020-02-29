@@ -82,7 +82,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       };
     }
     // are we sure that we want to stop readonly strategies appearing?
-    if (this.accessLevel !== 'Hidden') {
+    if (this.AccessLevel !== 'Hidden') {
       return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }
@@ -93,7 +93,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     ClickFunction: () => void
   ): MenuItemDoClickFunction {
-    if (this.accessLevel !== 'Hidden') {
+    if (this.AccessLevel !== 'Hidden') {
       return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
     }
   }
@@ -103,7 +103,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     Action: Action
   ): MenuItemDoReduxAction {
-    if (this.accessLevel !== 'Hidden') {
+    if (this.AccessLevel !== 'Hidden') {
       return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
     }
   }
@@ -115,7 +115,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
-    if (this.accessLevel !== 'Hidden') {
+    if (this.AccessLevel !== 'Hidden') {
       return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
     }
   }
@@ -132,7 +132,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       | 'quickfilter'
       | 'numeric'
   ): boolean {
-    if (this.accessLevel != 'Full') {
+    if (this.AccessLevel != 'Full') {
       return false;
     }
     if (StringExtensions.IsNotNullOrEmpty(functionType)) {

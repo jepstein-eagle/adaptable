@@ -169,7 +169,7 @@ export type AdaptableFunctionName =
   | 'Glue42'
   | 'GradientColumn'
   | 'GridInfo'
-  //  | 'Home'
+  | 'Home'
   | 'IPushPull'
   | 'Layout'
   | 'PercentBar'
