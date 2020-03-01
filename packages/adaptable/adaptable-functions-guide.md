@@ -6,11 +6,13 @@ Most End-User action in AdapTable will be via Functions - either performing an A
 
 ## Functions List
 
-The Functions currently in AdapTable are as follows (see below for a detailed summary of each Function together with relevant links).
+These are the Functions currently in AdapTable together with relevant information
+(see below for a detailed summary of each Function together with relevant links).
 
-| Option  	                                                                                          | Mandatory   | Details                                     	                |
-|----------------	                                                                                    |-----------  |---------------------------------------------	                |
-| [adaptableId](https://www.guardian.co.uk)                | No	        | A unique ID for this instance of AdapTable	                  |
+| Function  	             | Description                                                                                                                      |
+|----------------	         |---------------------------------------------	                                                                                    |
+| Action Column            | 'Special Column' that displays a Button which when clicked fires an event for you to handle.                                     |  
+| Advanced Search          | Saveable cross-column search that uses an Expresssion with multiple possible criteria (e.g. Column Values, Filters, Ranges etc)  |
  
 
 We list here each Function alphabetically.
