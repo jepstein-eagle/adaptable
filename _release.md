@@ -1,3 +1,7 @@
+## 6.0.15
+
+Try to improve loading times for layouts
+
 ## 6.0.14
 
 Fix version displayed in the info popup & update some readme docs
