@@ -145,7 +145,13 @@ export type AdaptableStateKey =
   | 'UserInterface';
 
 export type AdaptableFunctionName =
+  /**
+   * Describe what Action Column does
+   */
   | 'ActionColumn'
+  /**
+   * Stuff on search
+   */
   | 'AdvancedSearch'
   | 'Alert'
   | 'BulkUpdate'
