@@ -2,17 +2,16 @@
 
 AdapTable ships with a number of different Functions (currently about 40) - each of which performs a different discrete action of set of functionality.
 
-Most End-User action will be via Functions - either performing an Action (e.g. Quick Search, Smart Edit, Shortcut) or creating / editing an AdaptableObject for use in Function (e.g. Advanced Search, Layout, ConditionalStyle etc.)
+Most End-User action in AdapTable will be via Functions - either performing an Action (e.g. Quick Search, Smart Edit, Shortcut) or creating / editing an AdaptableObject for use in Function (e.g. Advanced Search, Layout, ConditionalStyle etc.)
 
 ## Functions List
 
-AdapTable ships with 2 themes: *light* (the default) and *dark*
+The Functions currently in AdapTable are as follows (see below for a detailed summary of each Function together with relevant links).
 
-If you wish to use the Dark Theme, specify *dark* as the Current Theme in the Theme section of Predefined Config. Make sure, if using ag-Grid, that you also import the associated vendor theme.
-
-You do not need to provide a VendorGridClassName when using either of the System Themes as this is done for you.
-
-This means that you only need provide themes for AdapTable and / or the Vendor Grid if you are unhappy with the defaults that we provide.
+| Option  	                                                                                          | Mandatory   | Details                                     	                |
+|----------------	                                                                                    |-----------  |---------------------------------------------	                |
+| [adaptableId](https://www.guardian.co.uk)                | No	        | A unique ID for this instance of AdapTable	                  |
+ 
 
 We list here each Function alphabetically.
 
