@@ -22,18 +22,20 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        StrategyConstants.ColumnInfoStrategyFriendlyName,
-        ScreenPopups.ColumnInfoPopup,
-        StrategyConstants.ColumnInfoGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          StrategyConstants.ColumnInfoStrategyFriendlyName,
+          ScreenPopups.ColumnInfoPopup,
+          StrategyConstants.ColumnInfoGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

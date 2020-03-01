@@ -37,7 +37,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       if (column && column.DataType == DataType.Number) {
         let popupParam: StrategyParams = {
@@ -45,12 +45,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
           action: 'New',
           source: 'ColumnMenu',
         };
-        return this.createColumnMenuItemShowPopup(
-          'Create Plus/Minus Rule',
-          ScreenPopups.PlusMinusPopup,
-          StrategyConstants.PlusMinusGlyph,
-          popupParam
-        );
+        return [
+          this.createColumnMenuItemShowPopup(
+            'Create Plus/Minus Rule',
+            ScreenPopups.PlusMinusPopup,
+            StrategyConstants.PlusMinusGlyph,
+            popupParam
+          ),
+        ];
       }
     }
   }

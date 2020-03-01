@@ -18,18 +18,20 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
     super(StrategyConstants.SparklineStrategyId, adaptable);
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        'View as Sparkline',
-        ScreenPopups.ViewAsSparklinesPopup,
-        StrategyConstants.SparklinesGlyph,
-        popUpParams
-      );
+      return t[
+        his.createColumnMenuItemShowPopup(
+          'View as Sparkline',
+          ScreenPopups.ViewAsSparklinesPopup,
+          StrategyConstants.SparklinesGlyph,
+          popUpParams
+        )
+      ];
     }
   }
 

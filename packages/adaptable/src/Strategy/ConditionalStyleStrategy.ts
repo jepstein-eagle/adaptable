@@ -25,19 +25,21 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        'Create ' + StrategyConstants.ConditionalStyleStrategyFriendlyName,
-        ScreenPopups.ConditionalStylePopup,
-        StrategyConstants.ConditionalStyleGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Create ' + StrategyConstants.ConditionalStyleStrategyFriendlyName,
+          ScreenPopups.ConditionalStylePopup,
+          StrategyConstants.ConditionalStyleGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

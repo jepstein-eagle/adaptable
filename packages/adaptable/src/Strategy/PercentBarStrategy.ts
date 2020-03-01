@@ -24,7 +24,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
@@ -38,12 +38,14 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.PercentBarStrategyFriendlyName,
-        ScreenPopups.PercentBarPopup,
-        StrategyConstants.PercentBarGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          label + StrategyConstants.PercentBarStrategyFriendlyName,
+          ScreenPopups.PercentBarPopup,
+          StrategyConstants.PercentBarGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

@@ -21,19 +21,21 @@ export class CellValidationStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'editable')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        'Create Cell Validation Rule',
-        ScreenPopups.CellValidationPopup,
-        StrategyConstants.CellValidationGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Create Cell Validation Rule',
+          ScreenPopups.CellValidationPopup,
+          StrategyConstants.CellValidationGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 }

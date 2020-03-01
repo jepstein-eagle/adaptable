@@ -2,6 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -20,12 +21,38 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    return this.createColumnMenuItemShowPopup(
-      'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
-      ScreenPopups.ColumnChooserPopup,
-      StrategyConstants.ColumnChooserGlyph
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    let baseMenuItems: AdaptableMenuItem[] = [];
+
+    if (this.adaptable.isSelectable()) {
+      if (this.canCreateColumnMenuItem(column, this.adaptable)) {
+        baseMenuItems.push(
+          this.createColumnMenuItemReduxAction(
+            'Select Column',
+            'tab-unselected',
+            GridRedux.GridSelectColumn(column.ColumnId)
+          )
+        );
+      }
+    }
+    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
+      baseMenuItems.push(
+        this.createColumnMenuItemReduxAction(
+          'Hide Column',
+          'hide-column',
+          GridRedux.GridHideColumn(column.ColumnId)
+        )
+      );
+    }
+
+    baseMenuItems.push(
+      this.createColumnMenuItemShowPopup(
+        'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
+        ScreenPopups.ColumnChooserPopup,
+        StrategyConstants.ColumnChooserGlyph
+      )
     );
+    return baseMenuItems;
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

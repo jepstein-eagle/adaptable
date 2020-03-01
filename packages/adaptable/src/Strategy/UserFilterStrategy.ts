@@ -20,7 +20,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'columnfilter')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
@@ -28,12 +28,14 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        'Create User Filter',
-        ScreenPopups.UserFilterPopup,
-        StrategyConstants.UserFilterGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Create User Filter',
+          ScreenPopups.UserFilterPopup,
+          StrategyConstants.UserFilterGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 }

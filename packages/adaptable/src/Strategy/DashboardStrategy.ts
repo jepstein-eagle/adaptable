@@ -83,22 +83,26 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     });
   }
 
-  public addColumnMenuItem(): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(): AdaptableMenuItem[] | undefined {
     // for now just show / hide = lets worry about minimise later..
     if (
       this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility == Visibility.Hidden
     ) {
-      return this.createColumnMenuItemReduxAction(
-        'Show Dashboard',
-        StrategyConstants.DashboardGlyph,
-        DashboardRedux.DashboardSetVisibility(Visibility.Visible)
-      );
+      return [
+        this.createColumnMenuItemReduxAction(
+          'Show Dashboard',
+          StrategyConstants.DashboardGlyph,
+          DashboardRedux.DashboardSetVisibility(Visibility.Visible)
+        ),
+      ];
     } else {
-      return this.createColumnMenuItemReduxAction(
-        'Hide Dashboard',
-        StrategyConstants.DashboardGlyph,
-        DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
-      );
+      return [
+        this.createColumnMenuItemReduxAction(
+          'Hide Dashboard',
+          StrategyConstants.DashboardGlyph,
+          DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
+        ),
+      ];
     }
   }
 

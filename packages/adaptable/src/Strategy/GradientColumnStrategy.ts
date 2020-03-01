@@ -25,7 +25,7 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
       let GradientColumnExists: boolean = ArrayExtensions.ContainsItem(
         this.GradientColumnState.GradientColumns.map(f => f.ColumnId),
@@ -39,12 +39,14 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.GradientColumnStrategyFriendlyName,
-        ScreenPopups.GradientColumnPopup,
-        StrategyConstants.GradientColumnGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          label + StrategyConstants.GradientColumnStrategyFriendlyName,
+          ScreenPopups.GradientColumnPopup,
+          StrategyConstants.GradientColumnGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

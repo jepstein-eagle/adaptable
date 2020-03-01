@@ -25,7 +25,7 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       if (column.DataType == DataType.Number) {
         if (
@@ -37,11 +37,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             .getAllFlashingCell()
             .find(x => x.ColumnId == column.ColumnId);
           if (flashingCell && flashingCell.IsLive) {
-            return this.createColumnMenuItemReduxAction(
-              'Turn Flashing Cell Off',
-              StrategyConstants.FlashingCellGlyph,
-              FlashingCellsRedux.FlashingCellSelect(flashingCell)
-            );
+            return [
+              this.createColumnMenuItemReduxAction(
+                'Turn Flashing Cell Off',
+                StrategyConstants.FlashingCellGlyph,
+                FlashingCellsRedux.FlashingCellSelect(flashingCell)
+              ),
+            ];
           } else {
             if (!flashingCell) {
               let flashingCellState: FlashingCellState = this.adaptable.api.flashingCellApi.getFlashingCellState();
@@ -52,11 +54,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
                 flashingCellState.DefaultDuration
               );
             }
-            return this.createColumnMenuItemReduxAction(
-              'Turn Flashing Cell On',
-              StrategyConstants.FlashingCellGlyph,
-              FlashingCellsRedux.FlashingCellSelect(flashingCell)
-            );
+            return [
+              this.createColumnMenuItemReduxAction(
+                'Turn Flashing Cell On',
+                StrategyConstants.FlashingCellGlyph,
+                FlashingCellsRedux.FlashingCellSelect(flashingCell)
+              ),
+            ];
           }
         }
       }

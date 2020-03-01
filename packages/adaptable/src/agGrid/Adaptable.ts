@@ -2495,16 +2495,11 @@ export class Adaptable implements IAdaptable {
       );
       if (adaptableColumn != null) {
         this.strategies.forEach(s => {
-          let menuItem: AdaptableMenuItem = s.addColumnMenuItem(adaptableColumn);
-          if (menuItem) {
-            adaptableMenuItems.push(menuItem);
+          let menuItems: AdaptableMenuItem[] | undefined = s.addColumnMenuItems(adaptableColumn);
+          if (menuItems) {
+            adaptableMenuItems.push(...menuItems);
           }
         });
-        // add the column menu items from Home Strategy
-        const homeStrategy: IHomeStrategy = this.strategies.get(
-          StrategyConstants.HomeStrategyId
-        ) as IHomeStrategy;
-        adaptableMenuItems.push(...homeStrategy.addBaseColumnMenuItems(adaptableColumn));
       }
 
       let colMenuItems: (string | MenuItemDef)[];

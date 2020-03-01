@@ -30,18 +30,20 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        'Edit Sparkline Column',
-        ScreenPopups.SparklineColumnPopup,
-        StrategyConstants.SparklineColumnGlyph,
-        popUpParams
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Edit Sparkline Column',
+          ScreenPopups.SparklineColumnPopup,
+          StrategyConstants.SparklineColumnGlyph,
+          popUpParams
+        ),
+      ];
     }
   }
 

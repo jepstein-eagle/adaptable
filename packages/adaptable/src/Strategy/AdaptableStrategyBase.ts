@@ -54,7 +54,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     return undefined;
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     // base class implementation which is empty
     return undefined;
   }

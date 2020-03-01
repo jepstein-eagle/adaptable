@@ -31,14 +31,16 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(): AdaptableMenuItem[] | undefined {
     let currentRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
     if (ArrayExtensions.IsNotNullOrEmpty(currentRowInfos)) {
-      return this.createColumnMenuItemReduxAction(
-        'Clear Updated Rows',
-        StrategyConstants.UpdatedRowGlyph,
-        SystemRedux.SystemUpdatedRowDeleteAll(currentRowInfos)
-      );
+      return [
+        this.createColumnMenuItemReduxAction(
+          'Clear Updated Rows',
+          StrategyConstants.UpdatedRowGlyph,
+          SystemRedux.SystemUpdatedRowDeleteAll(currentRowInfos)
+        ),
+      ];
     }
   }
 

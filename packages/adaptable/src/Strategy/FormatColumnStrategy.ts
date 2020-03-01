@@ -22,7 +22,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
@@ -36,12 +36,14 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.FormatColumnStrategyFriendlyName,
-        ScreenPopups.FormatColumnPopup,
-        StrategyConstants.FormatColumnGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          label + StrategyConstants.FormatColumnStrategyFriendlyName,
+          ScreenPopups.FormatColumnPopup,
+          StrategyConstants.FormatColumnGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

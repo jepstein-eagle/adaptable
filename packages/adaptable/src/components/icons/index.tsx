@@ -87,6 +87,7 @@ import Play from './play';
 import Stop from './stop';
 import Pause from './pause';
 import NewPage from './newpage';
+import HideColumn from './hide-column';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -191,6 +192,7 @@ const allIcons = {
   pause: Pause,
   folder: Folder,
   newpage: NewPage, //note_add
+  'hide-column': HideColumn,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

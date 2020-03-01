@@ -2,11 +2,14 @@ import { IColumnFilterStrategy } from './Interface/IColumnFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
+import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(adaptable: IAdaptable) {
@@ -47,18 +50,35 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     return menuItemClickFunction;
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    let baseMenuItems: AdaptableMenuItem[] = [];
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'quickfilter')) {
+      const isFilterActive: boolean = this.adaptable.api.gridApi.getGridState().IsQuickFilterActive;
+      baseMenuItems.push(
+        this.createColumnMenuItemReduxAction(
+          isFilterActive ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
+          isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
+          isFilterActive ? GridRedux.QuickFilterBarHide() : GridRedux.QuickFilterBarShow()
+        )
+      );
+    }
+
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'columnfilter')) {
       let existingColumnFilter = this.adaptable.api.columnFilterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);
       if (existingColumnFilter) {
-        return this.createColumnMenuItemReduxAction(
-          'Clear Column Filter',
-          StrategyConstants.ColumnFilterGlyph,
-          ColumnFilterRedux.ColumnFilterClear(existingColumnFilter)
+        baseMenuItems.push(
+          this.createColumnMenuItemReduxAction(
+            'Clear Column Filter',
+            StrategyConstants.ColumnFilterGlyph,
+            ColumnFilterRedux.ColumnFilterClear(existingColumnFilter)
+          )
         );
       }
+    }
+    if (ArrayExtensions.IsNotNullOrEmpty(baseMenuItems)) {
+      return baseMenuItems;
     }
   }
 }

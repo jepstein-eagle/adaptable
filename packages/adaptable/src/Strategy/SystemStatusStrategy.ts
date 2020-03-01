@@ -76,12 +76,14 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    return this.createColumnMenuItemShowPopup(
-      'Show ' + StrategyConstants.SystemStatusStrategyFriendlyName,
-      ScreenPopups.SystemStatusPopup,
-      StrategyConstants.SystemStatusGlyph
-    );
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    return [
+      this.createColumnMenuItemShowPopup(
+        'Show ' + StrategyConstants.SystemStatusStrategyFriendlyName,
+        ScreenPopups.SystemStatusPopup,
+        StrategyConstants.SystemStatusGlyph
+      ),
+    ];
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

@@ -32,7 +32,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'sort')) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
@@ -43,12 +43,14 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.CustomSortStrategyFriendlyName,
-        ScreenPopups.CustomSortPopup,
-        StrategyConstants.CustomSortGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          label + StrategyConstants.CustomSortStrategyFriendlyName,
+          ScreenPopups.CustomSortPopup,
+          StrategyConstants.CustomSortGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

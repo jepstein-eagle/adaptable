@@ -25,7 +25,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (
       this.canCreateColumnMenuItem(column, this.adaptable) &&
       column.DataType !== DataType.NumberArray
@@ -35,12 +35,14 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        'View as Pie Chart',
-        ScreenPopups.PieChartPopup,
-        StrategyConstants.PieChartGlyph,
-        popUpParams
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'View as Pie Chart',
+          ScreenPopups.PieChartPopup,
+          StrategyConstants.PieChartGlyph,
+          popUpParams
+        ),
+      ];
     }
   }
 

@@ -21,7 +21,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateColumnMenuItem(column, this.adaptable)) {
       if (
         this.adaptable.api.calculatedColumnApi
@@ -34,12 +34,14 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
           source: 'ColumnMenu',
         };
 
-        return this.createColumnMenuItemShowPopup(
-          'Edit ' + StrategyConstants.CalculatedColumnStrategyFriendlyName,
-          ScreenPopups.CalculatedColumnPopup,
-          StrategyConstants.CalculatedColumnGlyph,
-          popupParam
-        );
+        return [
+          this.createColumnMenuItemShowPopup(
+            'Edit ' + StrategyConstants.CalculatedColumnStrategyFriendlyName,
+            ScreenPopups.CalculatedColumnPopup,
+            StrategyConstants.CalculatedColumnGlyph,
+            popupParam
+          ),
+        ];
       }
     }
   }

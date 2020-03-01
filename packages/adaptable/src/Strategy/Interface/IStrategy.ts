@@ -21,7 +21,7 @@ export interface IStrategy {
   Id: AdaptableFunctionName;
   addFunctionMenuItem(): AdaptableMenuItem | undefined;
   initializeWithRedux(): void;
-  addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined;
+  addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;
   setStrategyEntitlement(): void;
   AccessLevel: AccessLevel;
