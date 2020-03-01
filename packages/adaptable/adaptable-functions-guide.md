@@ -2,7 +2,9 @@
 
 AdapTable ships with a number of different Functions (currently about 40) - each of which performs a different discrete action of set of functionality.
 
-### Functions List
+Most End-User action will be via Functions - either performing an Action (e.g. Quick Search, Smart Edit, Shortcut) or creating / editing an AdaptableObject for use in Function (e.g. Advanced Search, Layout, ConditionalStyle etc.)
+
+## Functions List
 
 AdapTable ships with 2 themes: *light* (the default) and *dark*
 
@@ -14,7 +16,7 @@ This means that you only need provide themes for AdapTable and / or the Vendor G
 
 We list here each Function alphabetically.
 
-#### Action Column
+### Action Column
 
 Stuff here about Action Column
 
