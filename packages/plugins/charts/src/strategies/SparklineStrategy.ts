@@ -24,13 +24,13 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
         columnId: column.ColumnId,
         source: 'ColumnMenu',
       };
-      return t[
-        his.createColumnMenuItemShowPopup(
+      return [
+        this.createColumnMenuItemShowPopup(
           'View as Sparkline',
           ScreenPopups.ViewAsSparklinesPopup,
           StrategyConstants.SparklinesGlyph,
           popUpParams
-        )
+        ),
       ];
     }
   }
