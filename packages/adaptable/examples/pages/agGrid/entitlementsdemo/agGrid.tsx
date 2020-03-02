@@ -111,6 +111,10 @@ let demoConfig: PredefinedConfig = {
         AccessLevel: 'ReadOnly',
       },
       {
+        FunctionName: 'BulkUpdate',
+        AccessLevel: 'Hidden',
+      },
+      {
         FunctionName: 'CustomSort',
         AccessLevel: 'Hidden',
       },

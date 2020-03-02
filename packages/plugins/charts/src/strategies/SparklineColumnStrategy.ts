@@ -23,15 +23,17 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SparklineColumnStrategyFriendlyName,
-      ComponentName: ScreenPopups.SparklineColumnPopup,
-      Icon: StrategyConstants.SparklineColumnGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.SparklineColumnStrategyFriendlyName,
+        ComponentName: ScreenPopups.SparklineColumnPopup,
+        Icon: StrategyConstants.SparklineColumnGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'sparkline')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
@@ -48,10 +50,10 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
-    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (
       menuInfo.Column &&
-      this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable, 'sparkline')
+      this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable, 'Full', 'sparkline')
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',

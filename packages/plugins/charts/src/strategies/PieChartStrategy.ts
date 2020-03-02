@@ -18,18 +18,17 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PieChartStrategyFriendlyName,
-      ComponentName: ScreenPopups.PieChartPopup,
-      Icon: StrategyConstants.PieChartGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.PieChartStrategyFriendlyName,
+        ComponentName: ScreenPopups.PieChartPopup,
+        Icon: StrategyConstants.PieChartGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (
-      this.canCreateColumnMenuItem(column, this.adaptable) &&
-      column.DataType !== DataType.NumberArray
-    ) {
+    if (this.canCreateMenuItem('ReadOnly') && column.DataType !== DataType.NumberArray) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',

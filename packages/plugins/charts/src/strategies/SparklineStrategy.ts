@@ -19,7 +19,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'numeric')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
@@ -37,27 +37,29 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
-    if (
-      menuInfo.Column &&
-      menuInfo.IsSelectedCell &&
-      menuInfo.Column.DataType == DataType.Number &&
-      menuInfo.IsSingleSelectedColumn
-    ) {
-      let pkValues: any[] = this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
-        return gc.primaryKeyValue;
-      });
-      let popUpParams: StrategyParams = {
-        columnId: menuInfo.Column.ColumnId,
-        primaryKeyValues: pkValues,
-        source: 'ContextMenu',
-      };
+    if (this.canCreateMenuItem('ReadOnly')) {
+      if (
+        menuInfo.Column &&
+        menuInfo.IsSelectedCell &&
+        menuInfo.Column.DataType == DataType.Number &&
+        menuInfo.IsSingleSelectedColumn
+      ) {
+        let pkValues: any[] = this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
+          return gc.primaryKeyValue;
+        });
+        let popUpParams: StrategyParams = {
+          columnId: menuInfo.Column.ColumnId,
+          primaryKeyValues: pkValues,
+          source: 'ContextMenu',
+        };
 
-      menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'View as Sparkline',
-        ComponentName: ScreenPopups.ViewAsSparklinesPopup,
-        Icon: StrategyConstants.SparklinesGlyph,
-        PopupParams: popUpParams,
-      });
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: 'View as Sparkline',
+          ComponentName: ScreenPopups.ViewAsSparklinesPopup,
+          Icon: StrategyConstants.SparklinesGlyph,
+          PopupParams: popUpParams,
+        });
+      }
     }
     return menuItemShowPopup;
   }
