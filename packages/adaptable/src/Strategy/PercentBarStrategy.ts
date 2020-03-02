@@ -17,15 +17,17 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PercentBarStrategyFriendlyName,
-      ComponentName: ScreenPopups.PercentBarPopup,
-      Icon: StrategyConstants.PercentBarGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.PercentBarStrategyFriendlyName,
+        ComponentName: ScreenPopups.PercentBarPopup,
+        Icon: StrategyConstants.PercentBarGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
         column.ColumnId
@@ -51,20 +53,22 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    let percentBarExists: boolean = ArrayExtensions.ContainsItem(
-      this.PercentBarState.PercentBars.map(f => f.ColumnId),
-      menuInfo.Column.ColumnId
-    );
-    if (menuInfo.Column && percentBarExists) {
-      let popUpParams: StrategyParams = {
-        source: 'ContextMenu',
-      };
-      menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Edit Percent Bar',
-        ComponentName: ScreenPopups.PercentBarPopup,
-        Icon: StrategyConstants.PercentBarGlyph,
-        PopupParams: popUpParams,
-      });
+    if (this.canCreateMenuItem('Full')) {
+      let percentBarExists: boolean = ArrayExtensions.ContainsItem(
+        this.PercentBarState.PercentBars.map(f => f.ColumnId),
+        menuInfo.Column.ColumnId
+      );
+      if (menuInfo.Column && percentBarExists) {
+        let popUpParams: StrategyParams = {
+          source: 'ContextMenu',
+        };
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: 'Edit Percent Bar',
+          ComponentName: ScreenPopups.PercentBarPopup,
+          Icon: StrategyConstants.PercentBarGlyph,
+          PopupParams: popUpParams,
+        });
+      }
     }
     return menuItemShowPopup;
   }

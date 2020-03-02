@@ -13,15 +13,17 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.UserFilterStrategyFriendlyName,
-      ComponentName: ScreenPopups.UserFilterPopup,
-      Icon: StrategyConstants.UserFilterGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.UserFilterStrategyFriendlyName,
+        ComponentName: ScreenPopups.UserFilterPopup,
+        Icon: StrategyConstants.UserFilterGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'columnfilter')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'columnfilter')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

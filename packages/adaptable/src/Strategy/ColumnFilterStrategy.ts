@@ -17,42 +17,45 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnFilterStrategyFriendlyName,
-      ComponentName: ScreenPopups.ColumnFilterPopup,
-      Icon: StrategyConstants.ColumnFilterGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ColumnFilterStrategyFriendlyName,
+        ComponentName: ScreenPopups.ColumnFilterPopup,
+        Icon: StrategyConstants.ColumnFilterGlyph,
+      });
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
+    if (this.canCreateMenuItem('ReadOnly')) {
+      if (menuInfo.Column && menuInfo.GridCell != null) {
+        let isMultiple: boolean = menuInfo.IsSelectedCell && menuInfo.IsSingleSelectedColumn;
 
-    if (menuInfo.Column && menuInfo.GridCell != null) {
-      let isMultiple: boolean = menuInfo.IsSelectedCell && menuInfo.IsSingleSelectedColumn;
-
-      let pkValues: any[] = isMultiple
-        ? this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
-            return gc.primaryKeyValue;
-          })
-        : [menuInfo.GridCell.primaryKeyValue];
-      let clickFunction = () => {
-        this.adaptable.api.columnFilterApi.createColumnFilterForCell(
-          menuInfo.Column.ColumnId,
-          pkValues
+        let pkValues: any[] = isMultiple
+          ? this.adaptable.api.gridApi.getSelectedCellInfo().GridCells.map(gc => {
+              return gc.primaryKeyValue;
+            })
+          : [menuInfo.GridCell.primaryKeyValue];
+        let clickFunction = () => {
+          this.adaptable.api.columnFilterApi.createColumnFilterForCell(
+            menuInfo.Column.ColumnId,
+            pkValues
+          );
+        };
+        menuItemClickFunction = this.createColumnMenuItemClickFunction(
+          isMultiple ? 'Filter on Cell Values' : 'Filter on Cell Value',
+          StrategyConstants.ColumnFilterGlyph,
+          clickFunction
         );
-      };
-      menuItemClickFunction = this.createColumnMenuItemClickFunction(
-        isMultiple ? 'Filter on Cell Values' : 'Filter on Cell Value',
-        StrategyConstants.ColumnFilterGlyph,
-        clickFunction
-      );
+      }
     }
     return menuItemClickFunction;
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     let baseMenuItems: AdaptableMenuItem[] = [];
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'quickfilter')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'quickfilter')) {
       const isFilterActive: boolean = this.adaptable.api.gridApi.getGridState().IsQuickFilterActive;
       baseMenuItems.push(
         this.createColumnMenuItemReduxAction(
@@ -63,7 +66,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
       );
     }
 
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'columnfilter')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'columnfilter')) {
       let existingColumnFilter = this.adaptable.api.columnFilterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);

@@ -25,15 +25,17 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CustomSortStrategyFriendlyName,
-      ComponentName: ScreenPopups.CustomSortPopup,
-      Icon: StrategyConstants.CustomSortGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.CustomSortStrategyFriendlyName,
+        ComponentName: ScreenPopups.CustomSortPopup,
+        Icon: StrategyConstants.CustomSortGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'sort')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'sort')) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
 

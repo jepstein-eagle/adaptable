@@ -15,10 +15,12 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.LayoutStrategyFriendlyName,
-      ComponentName: ScreenPopups.LayoutPopup,
-      Icon: StrategyConstants.LayoutGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.LayoutStrategyFriendlyName,
+        ComponentName: ScreenPopups.LayoutPopup,
+        Icon: StrategyConstants.LayoutGlyph,
+      });
+    }
   }
 }

@@ -101,6 +101,8 @@ export class SearchService implements ISearchService {
         advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
         quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
         columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
+        userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
+        namedFilters: this.adaptable.api.namedFilterApi.getAllNamedFilter(),
       };
 
       const AdaptableSortState: AdaptableSortState = {

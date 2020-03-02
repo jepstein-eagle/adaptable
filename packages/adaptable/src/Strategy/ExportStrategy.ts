@@ -99,11 +99,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ExportStrategyFriendlyName,
-      ComponentName: ScreenPopups.ExportPopup,
-      Icon: StrategyConstants.ExportGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ExportStrategyFriendlyName,
+        ComponentName: ScreenPopups.ExportPopup,
+        Icon: StrategyConstants.ExportGlyph,
+      });
+    }
   }
 
   private sendNewLiveData() {

@@ -69,21 +69,25 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SystemStatusStrategyFriendlyName,
-      ComponentName: ScreenPopups.SystemStatusPopup,
-      Icon: StrategyConstants.SystemStatusGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.SystemStatusStrategyFriendlyName,
+        ComponentName: ScreenPopups.SystemStatusPopup,
+        Icon: StrategyConstants.SystemStatusGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    return [
-      this.createColumnMenuItemShowPopup(
-        'Show ' + StrategyConstants.SystemStatusStrategyFriendlyName,
-        ScreenPopups.SystemStatusPopup,
-        StrategyConstants.SystemStatusGlyph
-      ),
-    ];
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Show ' + StrategyConstants.SystemStatusStrategyFriendlyName,
+          ScreenPopups.SystemStatusPopup,
+          StrategyConstants.SystemStatusGlyph
+        ),
+      ];
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

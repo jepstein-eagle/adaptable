@@ -24,40 +24,46 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.UpdatedRowStrategyFriendlyName,
-      ComponentName: ScreenPopups.UpdatedRowPopup,
-      Icon: StrategyConstants.UpdatedRowGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.UpdatedRowStrategyFriendlyName,
+        ComponentName: ScreenPopups.UpdatedRowPopup,
+        Icon: StrategyConstants.UpdatedRowGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(): AdaptableMenuItem[] | undefined {
-    let currentRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
-    if (ArrayExtensions.IsNotNullOrEmpty(currentRowInfos)) {
-      return [
-        this.createColumnMenuItemReduxAction(
-          'Clear Updated Rows',
-          StrategyConstants.UpdatedRowGlyph,
-          SystemRedux.SystemUpdatedRowDeleteAll(currentRowInfos)
-        ),
-      ];
+    if (this.canCreateMenuItem('ReadOnly')) {
+      let currentRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
+      if (ArrayExtensions.IsNotNullOrEmpty(currentRowInfos)) {
+        return [
+          this.createColumnMenuItemReduxAction(
+            'Clear Updated Rows',
+            StrategyConstants.UpdatedRowGlyph,
+            SystemRedux.SystemUpdatedRowDeleteAll(currentRowInfos)
+          ),
+        ];
+      }
     }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (menuInfo.Column && menuInfo.RowNode) {
-      let updatedRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
-      if (ArrayExtensions.IsNotNullOrEmpty(updatedRowInfos)) {
-        let updatedRowInfo: UpdatedRowInfo = updatedRowInfos.find(
-          a => a.primaryKeyValue == menuInfo.PrimaryKeyValue
-        );
-        if (updatedRowInfo) {
-          menuItemShowPopup = this.createColumnMenuItemReduxAction(
-            'Clear Updated Row',
-            StrategyConstants.UpdatedRowGlyph,
-            SystemRedux.SystemUpdatedRowDelete(updatedRowInfo)
+    if (this.canCreateMenuItem('ReadOnly')) {
+      if (menuInfo.Column && menuInfo.RowNode) {
+        let updatedRowInfos: UpdatedRowInfo[] = this.adaptable.api.internalApi.getUpdatedRowInfos();
+        if (ArrayExtensions.IsNotNullOrEmpty(updatedRowInfos)) {
+          let updatedRowInfo: UpdatedRowInfo = updatedRowInfos.find(
+            a => a.primaryKeyValue == menuInfo.PrimaryKeyValue
           );
+          if (updatedRowInfo) {
+            menuItemShowPopup = this.createColumnMenuItemReduxAction(
+              'Clear Updated Row',
+              StrategyConstants.UpdatedRowGlyph,
+              SystemRedux.SystemUpdatedRowDelete(updatedRowInfo)
+            );
+          }
         }
       }
     }

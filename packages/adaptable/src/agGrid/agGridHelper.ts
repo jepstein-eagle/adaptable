@@ -79,6 +79,8 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
+import { HideColumnStrategy } from '../Strategy/HideColumnStrategy';
+import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -173,6 +175,8 @@ export class agGridHelper {
     strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
+    strategies.set(StrategyConstants.HideColumnStrategyId, new HideColumnStrategy(adaptable));
+    strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(adaptable));
 
     // should probably both be plugins
     strategies.set(StrategyConstants.IPushPullStrategyId, new PushPullStrategy(adaptable));

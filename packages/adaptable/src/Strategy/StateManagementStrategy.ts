@@ -13,10 +13,12 @@ export class StateManagementStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.StateManagementStrategyFriendlyName,
-      ComponentName: ScreenPopups.StateManagementPopup,
-      Icon: StrategyConstants.StateManagementGlyph,
-    });
+    if (this.canCreateMenuItem('Full')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.StateManagementStrategyFriendlyName,
+        ComponentName: ScreenPopups.StateManagementPopup,
+        Icon: StrategyConstants.StateManagementGlyph,
+      });
+    }
   }
 }

@@ -76,33 +76,37 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.DashboardStrategyFriendlyName,
-      ComponentName: ScreenPopups.DashboardPopup,
-      Icon: StrategyConstants.DashboardGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.DashboardStrategyFriendlyName,
+        ComponentName: ScreenPopups.DashboardPopup,
+        Icon: StrategyConstants.DashboardGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(): AdaptableMenuItem[] | undefined {
     // for now just show / hide = lets worry about minimise later..
-    if (
-      this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility == Visibility.Hidden
-    ) {
-      return [
-        this.createColumnMenuItemReduxAction(
-          'Show Dashboard',
-          StrategyConstants.DashboardGlyph,
-          DashboardRedux.DashboardSetVisibility(Visibility.Visible)
-        ),
-      ];
-    } else {
-      return [
-        this.createColumnMenuItemReduxAction(
-          'Hide Dashboard',
-          StrategyConstants.DashboardGlyph,
-          DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
-        ),
-      ];
+    if (this.canCreateMenuItem('ReadOnly')) {
+      if (
+        this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility == Visibility.Hidden
+      ) {
+        return [
+          this.createColumnMenuItemReduxAction(
+            'Show Dashboard',
+            StrategyConstants.DashboardGlyph,
+            DashboardRedux.DashboardSetVisibility(Visibility.Visible)
+          ),
+        ];
+      } else {
+        return [
+          this.createColumnMenuItemReduxAction(
+            'Hide Dashboard',
+            StrategyConstants.DashboardGlyph,
+            DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
+          ),
+        ];
+      }
     }
   }
 

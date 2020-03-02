@@ -18,15 +18,17 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FlashingCellsStrategyFriendlyName,
-      ComponentName: ScreenPopups.FlashingCellsPopup,
-      Icon: StrategyConstants.FlashingCellGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.FlashingCellsStrategyFriendlyName,
+        ComponentName: ScreenPopups.FlashingCellsPopup,
+        Icon: StrategyConstants.FlashingCellGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
+    if (this.canCreateMenuItem('Full')) {
       if (column.DataType == DataType.Number) {
         if (
           this.adaptable.api.calculatedColumnApi

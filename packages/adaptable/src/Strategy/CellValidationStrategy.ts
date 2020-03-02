@@ -14,15 +14,17 @@ export class CellValidationStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CellValidationStrategyFriendlyName,
-      ComponentName: ScreenPopups.CellValidationPopup,
-      Icon: StrategyConstants.CellValidationGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.CellValidationStrategyFriendlyName,
+        ComponentName: ScreenPopups.CellValidationPopup,
+        Icon: StrategyConstants.CellValidationGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'editable')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'editable')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

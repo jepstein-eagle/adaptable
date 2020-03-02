@@ -5,9 +5,11 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ColumnChooserApiImpl extends ApiBase implements ColumnChooserAPI {
   public showColumnChooserPopup(): void {
-    this.adaptable.api.internalApi.showPopupScreen(
-      StrategyConstants.ColumnChooserStrategyId,
-      ScreenPopups.ColumnChooserPopup
-    );
+    if (this.isCorrectlyEntitled('ColumnChooser', 'ReadOnly', 'Open Column Chooser')) {
+      this.adaptable.api.internalApi.showPopupScreen(
+        StrategyConstants.ColumnChooserStrategyId,
+        ScreenPopups.ColumnChooserPopup
+      );
+    }
   }
 }

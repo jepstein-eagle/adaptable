@@ -11,35 +11,125 @@ import {
   AdaptableOptions,
   SearchChangedEventArgs,
   AdaptableApi,
+  PredefinedConfig,
+  MenuInfo,
 } from '../../../../src/types';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
-var adaptableApi: AdaptableApi;
+var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(500);
+  const tradeCount: number = 100;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
     primaryKey: 'tradeId',
-    userName: 'demo user',
-    adaptableId: 'audit demo',
+    userName: 'Demo User',
+    adaptableId: 'Search Changed Demo',
+
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
   };
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  api = Adaptable.init(adaptableOptions);
 
-  adaptableApi.eventApi
-    .onSearchChanged()
-    .Subscribe((sender, searchChangedArgs) => listenToSearchChangedEvent(searchChangedArgs));
+  (globalThis as any).api = api;
+
+  api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
+  });
 }
 
-function listenToSearchChangedEvent(searchChangedArgs: SearchChangedEventArgs) {
-  console.log('search changed event received');
-  console.log(searchChangedArgs);
-}
+let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
+  },
+
+  NamedFilter: {
+    NamedFilters: [
+      {
+        Name: '$ Trades',
+        Scope: {
+          DataType: 'Number',
+          ColumnIds: ['currency'],
+        },
+        FilterPredicate: (_record, _columnId, cellValue) => {
+          return cellValue === 'USD';
+        },
+      },
+      {
+        Name: 'High',
+        Scope: {
+          DataType: 'Number',
+        },
+        FilterPredicate: (_record, _columnId, cellValue) => {
+          let currency: string = _record.data.currency;
+          if (currency === 'USD') {
+            return cellValue > 1000;
+          } else if (currency === 'EUR') {
+            return cellValue > 30;
+          } else {
+            return cellValue > 10;
+          }
+        },
+      },
+      {
+        Name: 'Biz Year',
+        Scope: {
+          DataType: 'Date',
+        },
+        FilterPredicate: (_record, _columnId, cellValue) => {
+          let dateToTest = cellValue as Date;
+          let startBusinesssYear = new Date('2019-04-05');
+          return dateToTest > startBusinesssYear;
+        },
+      },
+    ],
+  },
+  UserFilter: {
+    UserFilters: [
+      {
+        Name: 'Europe',
+        ColumnId: 'country',
+        Expression: {
+          ColumnValueExpressions: [
+            {
+              ColumnDisplayValues: ['France', 'Germany', 'Italy'],
+              ColumnId: 'country',
+            },
+          ],
+        },
+      },
+      {
+        Name: 'Small Notionals',
+        ColumnId: 'notional',
+        Expression: {
+          RangeExpressions: [
+            {
+              ColumnId: 'notional',
+              Ranges: [
+                {
+                  Operand1: '1200',
+                  Operand1Type: 'Value',
+                  Operator: 'LessThan',
+                },
+              ],
+            },
+          ],
+        },
+      },
+    ],
+  },
+};
 
 export default () => {
   useEffect(() => {

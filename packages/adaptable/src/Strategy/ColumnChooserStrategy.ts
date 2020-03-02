@@ -14,45 +14,25 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
-      ComponentName: ScreenPopups.ColumnChooserPopup,
-      Icon: StrategyConstants.ColumnChooserGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
+        ComponentName: ScreenPopups.ColumnChooserPopup,
+        Icon: StrategyConstants.ColumnChooserGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    let baseMenuItems: AdaptableMenuItem[] = [];
-
-    if (this.adaptable.isSelectable()) {
-      if (this.canCreateColumnMenuItem(column, this.adaptable)) {
-        baseMenuItems.push(
-          this.createColumnMenuItemReduxAction(
-            'Select Column',
-            'tab-unselected',
-            GridRedux.GridSelectColumn(column.ColumnId)
-          )
-        );
-      }
+    if (this.canCreateMenuItem('Full')) {
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
+          ScreenPopups.ColumnChooserPopup,
+          StrategyConstants.ColumnChooserGlyph
+        ),
+      ];
     }
-    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
-      baseMenuItems.push(
-        this.createColumnMenuItemReduxAction(
-          'Hide Column',
-          'hide-column',
-          GridRedux.GridHideColumn(column.ColumnId)
-        )
-      );
-    }
-
-    baseMenuItems.push(
-      this.createColumnMenuItemShowPopup(
-        'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
-        ScreenPopups.ColumnChooserPopup,
-        StrategyConstants.ColumnChooserGlyph
-      )
-    );
-    return baseMenuItems;
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

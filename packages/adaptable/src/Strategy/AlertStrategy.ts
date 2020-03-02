@@ -26,31 +26,35 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   public abstract initStyles(): void;
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.AlertStrategyFriendlyName,
-      ComponentName: ScreenPopups.AlertPopup,
-      Icon: StrategyConstants.AlertGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.AlertStrategyFriendlyName,
+        ComponentName: ScreenPopups.AlertPopup,
+        Icon: StrategyConstants.AlertGlyph,
+      });
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (menuInfo.Column && menuInfo.RowNode) {
-      let currentAlerts: AdaptableAlert[] = this.adaptable.api.internalApi
-        .getAdaptableAlerts()
-        .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
-      if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
-        let relevantAlert: AdaptableAlert = currentAlerts.find(
-          a =>
-            a.AlertDefinition.ColumnId == menuInfo.Column.ColumnId &&
-            a.DataChangedInfo.RowNode == menuInfo.RowNode
-        );
-        if (relevantAlert) {
-          menuItemShowPopup = this.createColumnMenuItemReduxAction(
-            'Clear Alert',
-            StrategyConstants.AlertGlyph,
-            SystemRedux.SystemAlertDelete(relevantAlert)
+    if (this.canCreateMenuItem('ReadOnly')) {
+      if (menuInfo.Column && menuInfo.RowNode) {
+        let currentAlerts: AdaptableAlert[] = this.adaptable.api.internalApi
+          .getAdaptableAlerts()
+          .filter(a => a.DataChangedInfo && a.AlertDefinition.AlertProperties.HighlightCell);
+        if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
+          let relevantAlert: AdaptableAlert = currentAlerts.find(
+            a =>
+              a.AlertDefinition.ColumnId == menuInfo.Column.ColumnId &&
+              a.DataChangedInfo.RowNode == menuInfo.RowNode
           );
+          if (relevantAlert) {
+            menuItemShowPopup = this.createColumnMenuItemReduxAction(
+              'Clear Alert',
+              StrategyConstants.AlertGlyph,
+              SystemRedux.SystemAlertDelete(relevantAlert)
+            );
+          }
         }
       }
     }

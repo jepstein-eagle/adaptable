@@ -7,7 +7,6 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import { DataType } from '../PredefinedConfig/Common/Enums';
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
   constructor(adaptable: IAdaptable) {
@@ -15,15 +14,17 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnInfoStrategyFriendlyName,
-      ComponentName: ScreenPopups.ColumnInfoPopup,
-      Icon: StrategyConstants.ColumnInfoGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ColumnInfoStrategyFriendlyName,
+        ComponentName: ScreenPopups.ColumnInfoPopup,
+        Icon: StrategyConstants.ColumnInfoGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
+    if (this.canCreateMenuItem('ReadOnly')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
@@ -41,7 +42,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable)) {
+    if (this.canCreateMenuItem('ReadOnly')) {
       let popupParam: StrategyParams = {
         columnId: menuInfo.Column.ColumnId,
         source: 'ContextMenu',

@@ -18,15 +18,17 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
-      ComponentName: ScreenPopups.ConditionalStylePopup,
-      Icon: StrategyConstants.ConditionalStyleGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
+        ComponentName: ScreenPopups.ConditionalStylePopup,
+        Icon: StrategyConstants.ConditionalStyleGlyph,
+      });
+    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'style')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

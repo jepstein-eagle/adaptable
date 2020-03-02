@@ -81,31 +81,25 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         source: 'FunctionMenu',
       };
     }
-    // are we sure that we want to stop readonly strategies appearing?
-    if (this.AccessLevel !== 'Hidden') {
-      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
-    }
+    return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
   }
 
-  // direct actions called by the column menu - invisible if strategy is hidden or readonly
+  // creates a menu item for the column menu to perform a function
   createColumnMenuItemClickFunction(
     Label: string,
     Icon: string,
     ClickFunction: () => void
   ): MenuItemDoClickFunction {
-    if (this.AccessLevel !== 'Hidden') {
-      return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
-    }
+    return new MenuItemDoClickFunction(Label, this.Id, ClickFunction, Icon, true);
   }
 
+  // creates a menu item for the column menu to enact a Redux action
   createColumnMenuItemReduxAction(
     Label: string,
     Icon: string,
     Action: Action
   ): MenuItemDoReduxAction {
-    if (this.AccessLevel !== 'Hidden') {
-      return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
-    }
+    return new MenuItemDoReduxAction(Label, this.Id, Action, Icon, true);
   }
 
   // popups called by the column menu - invisible if strategy is hidden or readonly
@@ -115,14 +109,23 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string,
     PopupParams?: StrategyParams
   ): MenuItemShowPopup {
-    if (this.AccessLevel !== 'Hidden') {
-      return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
+    return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
+  }
+
+  canCreateMenuItem(minimumAccessLevel: AccessLevel): boolean {
+    if (minimumAccessLevel == 'Full' && this.AccessLevel != 'Full') {
+      return false;
     }
+    if (minimumAccessLevel == 'ReadOnly' && this.AccessLevel == 'Hidden') {
+      return false;
+    }
+    return true;
   }
 
   canCreateColumnMenuItem(
     column: AdaptableColumn,
     adaptable: IAdaptable,
+    minimumAccessLevel: AccessLevel,
     functionType?:
       | 'sort'
       | 'editable'
@@ -132,7 +135,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       | 'quickfilter'
       | 'numeric'
   ): boolean {
-    if (this.AccessLevel != 'Full') {
+    if (!this.canCreateMenuItem(minimumAccessLevel)) {
+      return false;
+    }
+    if (!column) {
       return false;
     }
     if (StringExtensions.IsNotNullOrEmpty(functionType)) {

@@ -26,34 +26,34 @@ export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUp
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.BulkUpdateStrategyFriendlyName,
-      ComponentName: ScreenPopups.BulkUpdatePopup,
-      Icon: StrategyConstants.BulkUpdateGlyph,
-    });
+    if (this.canCreateMenuItem('Full')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.BulkUpdateStrategyFriendlyName,
+        ComponentName: ScreenPopups.BulkUpdatePopup,
+        Icon: StrategyConstants.BulkUpdateGlyph,
+      });
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
-    // not sure if this is right but logic is that
-    // if the context cell is one of a selection taht can have smart edit applied
-    // then open the smart edit screen
-    // perhaps this is faulty logic though?
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (
-      menuInfo.Column &&
-      !menuInfo.Column.ReadOnly &&
-      menuInfo.IsSelectedCell &&
-      menuInfo.IsSingleSelectedColumn
-    ) {
-      let popUpParams: StrategyParams = {
-        source: 'ContextMenu',
-      };
-      menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyFriendlyName,
-        ComponentName: ScreenPopups.BulkUpdatePopup,
-        Icon: StrategyConstants.BulkUpdateGlyph,
-        PopupParams: popUpParams,
-      });
+    if (this.canCreateMenuItem('Full')) {
+      if (
+        menuInfo.Column &&
+        !menuInfo.Column.ReadOnly &&
+        menuInfo.IsSelectedCell &&
+        menuInfo.IsSingleSelectedColumn
+      ) {
+        let popUpParams: StrategyParams = {
+          source: 'ContextMenu',
+        };
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: 'Apply ' + StrategyConstants.BulkUpdateStrategyFriendlyName,
+          ComponentName: ScreenPopups.BulkUpdatePopup,
+          Icon: StrategyConstants.BulkUpdateGlyph,
+          PopupParams: popUpParams,
+        });
+      }
     }
     return menuItemShowPopup;
   }

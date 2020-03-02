@@ -100,7 +100,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.adaptable.api.glue42Api.isGlue42Available()) {
+    if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.Glue42StrategyFriendlyName,
         ComponentName: ScreenPopups.Glue42Popup,
