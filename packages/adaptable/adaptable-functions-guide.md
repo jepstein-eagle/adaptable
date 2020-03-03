@@ -27,7 +27,7 @@ There are a number of different ways in which end-Users will interact with Funct
 
 | Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
 | --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
-| Advanced Search          | Yes       | Yes      | Yes        | No          | No            |
+| Advanced Search          | [x]       | [x]      | [ ]        | No          | No            |
 | Alert                    | Yes       | Yes      | Yes        | No          | Yes           | 
 | Bulk Update              | No        | Yes      | Yes        | No          | Yes           | 
 | Calculated Column        | Yes       | No       | No         | Yes         | No            | 
@@ -35,44 +35,6 @@ There are a number of different ways in which end-Users will interact with Funct
 | Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
 | Cell Validation          | Yes       | No       | No         | Yes         | No            | 
 | Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
-
 
 
 
