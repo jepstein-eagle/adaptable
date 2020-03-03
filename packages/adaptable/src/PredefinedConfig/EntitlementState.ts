@@ -15,7 +15,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  * - **Full** - the function is fully visible and editable
  *
- * - **ReadOnly** - the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created (this is typically used in Functions which can pre-load objects like 'AdavancedSearch', 'Export', 'ConditionalStyle' etc.)
+ * - **ReadOnly** - the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created (this is typically used for Functions which can pre-load objects like 'AdavancedSearch', 'Export', 'ConditionalStyle' etc.)
  *
  * > this is designed for when you want to let users use the reports or layouts you have pre-configured but not to be allowed to create their own.
  *
