@@ -1,8 +1,6 @@
 # AdapTable Functions Guide
 
-AdapTable ships with many **Functions** (currently about 40).
-
-Each Function relates to a discrete 'action' or set of functionality.
+AdapTable ships with 40 **Functions** - each relating to a discrete 'action' or set of functionality.
 
 Most End-User action in AdapTable will be via Functions.
 
@@ -30,25 +28,30 @@ There are a number of different ways in which end-Users will interact with Funct
 
 All Functions are subject to Entitlements.  
 
-This means that end-users will only be able to access them according to their permissions.
+This means that end-users will only be able to access a Function according to their permissions.
 
-Each Function can be given an Entitlement of 'Full', 'ReadOnly' or 'Hidden'. 
+Each Function can be given an Entitlement of *Full*, *ReadOnly* or *Hidden*. 
 
 See Entitlements State in the Developer Documentation for more information.
 
 ### Predefined Config / State
 
-Design-time Users are able to pre-populate AdapTable with Predefined Config - this
+Design-time Users are able to pre-populate AdapTable with Predefined Config - this is the *Adaptable State* that will be available when the application first loads.
 
-These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
+There are a huge number of sections in Predefined Config, the majority of which are Function-related.
+
+Nearly every Function has its own section / property in PredefinedConfig, and it will always have the same name.  
+
+For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort Function through the 'CustomSort' section of Predefined Config.
 
 
-## Functions List
+### Functions List
 
-These are the Functions currently in AdapTable together with relevant information
-(see below for a detailed summary of each Function together with relevant links).
+These are the Functions currently in AdapTable together with relevant UI-related information.
 
-| Function  	             | Description                                                                                                                      |
+Scroll down for a detailed summary of each Function together with relevant links.
+
+| Function  	             | Wizard    | Toolbar         | ToolPanel            | Column Menu      | Context Menu  |
 |----------------	         |---------------------------------------------	                                                                                    |  
 | Advanced Search            | Saveable cross-column search that uses an Expresssion with multiple possible criteria (e.g. Column Values, Filters, Ranges etc)  |
  
