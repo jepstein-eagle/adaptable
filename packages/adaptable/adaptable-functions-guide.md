@@ -25,11 +25,60 @@ There are a number of different ways in which end-Users will interact with Funct
 - Many Functions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
 
 
-| Function  	             | Wizard    | Toolbar         | Tool Panel           | Column Menu      | Context Menu  |
-| --------  	             | ------    | -------         | ---------            | -----------      | ------------  |
-| Advanced Search          | Yes       | Yes.            | Yes                  | Yes              | Yes.          |
- 
- 
+| Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
+| --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
+| Advanced Search          | Yes       | Yes      | Yes        | No          | No            |
+| Alert                    | Yes       | Yes      | Yes        | No          | Yes           | 
+| Bulk Update              | No        | Yes      | Yes        | No          | Yes           | 
+| Calculated Column        | Yes       | No       | No         | Yes         | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
+| Cell Validation          | Yes       | No       | No         | Yes         | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+
+
+
+
+
+
+
 ### Entitlements
 
 All Functions are subject to Entitlements.  
