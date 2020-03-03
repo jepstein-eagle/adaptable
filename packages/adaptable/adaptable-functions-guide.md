@@ -28,7 +28,7 @@ There are a number of different ways in which end-Users will interact with Funct
 | Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
 | --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
 | Advanced Search          | [x]       | [x]      | [ ]        | No          | No            |
-| Alert                    | <ul><li>[x] item1</li>       | <ul><li>[] item1</li>      | Yes        | No          | Yes      | 
+| Alert                    | <ul><li>[x]</li>       | <ul><li>[ ]</li>      | Yes        | No          | Yes      | 
 | Bulk Update              | No        | Yes      | Yes        | No          | Yes           | 
 | Calculated Column        | Yes       | No       | No         | Yes         | No            | 
 | Calendar                 | No        | No       | No         | No          | No            | 
