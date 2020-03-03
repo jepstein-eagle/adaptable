@@ -95,7 +95,7 @@ Nearly every Function has its own section / property in PredefinedConfig, and it
 For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort Function through the 'CustomSort' section of Predefined Config.
 
 
-### Functions List
+## Functions List
 
 These are the Functions currently in AdapTable together with relevant UI-related information.
 
