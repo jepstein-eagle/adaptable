@@ -24,6 +24,12 @@ There are a number of different ways in which end-Users will interact with Funct
 
 - Many Functions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
 
+
+| Function  	             | Wizard    | Toolbar         | Tool Panel           | Column Menu      | Context Menu  |
+| --------  	             | ------    | -------         | ---------            | -----------      | ------------  |
+| Advanced Search          | Yes       | Yes.            | Yes                  | Yes              | Yes.          |
+ 
+ 
 ### Entitlements
 
 All Functions are subject to Entitlements.  
@@ -51,10 +57,6 @@ These are the Functions currently in AdapTable together with relevant UI-related
 
 Scroll down for a detailed summary of each Function together with relevant links.
 
-| Function  	             | Wizard    | Toolbar         | ToolPanel            | Column Menu      | Context Menu  |
-| --------  	             | ------    | -------         | ---------            | -----------      | ------------  |
-| Advanced Search          | Yes.      |Yes.             | Yes.                 | Yes.             | Yes.          |
- 
 
 We list here each Function alphabetically.
 
