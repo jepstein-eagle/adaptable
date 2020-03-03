@@ -61,9 +61,27 @@ interface DashboardComponentState {
 }
 
 class DashboardComponent extends React.Component<DashboardComponentProps, DashboardComponentState> {
+  unbindKeyDown: () => void;
+  quickSearchRef = React.createRef<HTMLInputElement>();
   constructor(props: DashboardComponentProps) {
     super(props);
     this.state = { EditedQuickSearchText: this.props.QuickSearchText };
+  }
+  componentDidMount() {
+    this.unbindKeyDown = this.props.Adaptable._on('KeyDown', event => {
+      if (event.key === 'q' && event.ctrlKey) {
+        this.focusQuickSearch();
+      } else if (event.key === 'w' && event.ctrlKey) {
+        this.cycleDashboardModes();
+      } else if (event.keyCode >= 49 && event.keyCode <= 57 && event.ctrlKey) {
+        this.changeActiveTab(event.keyCode - 49);
+      }
+    });
+  }
+  componentWillUnmount() {
+    if (this.unbindKeyDown) {
+      this.unbindKeyDown();
+    }
   }
   UNSAFE_componentWillReceiveProps(nextProps: DashboardComponentProps, nextContext: any) {
     this.setState({
@@ -77,6 +95,30 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
   onUpdateQuickSearchText(searchText: string) {
     this.setState({ EditedQuickSearchText: searchText });
     this.debouncedRunQuickSearch();
+  }
+  focusQuickSearch() {
+    if (this.quickSearchRef.current) {
+      this.quickSearchRef.current.focus();
+    }
+  }
+  cycleDashboardModes() {
+    if (!this.props.DashboardState.IsCollapsed) {
+      this.props.onSetIsCollapsed(true);
+      return;
+    }
+
+    if (!this.props.DashboardState.IsFloating) {
+      this.props.onSetIsFloating(true);
+      return;
+    }
+
+    this.props.onSetIsCollapsed(false);
+    this.props.onSetIsFloating(false);
+  }
+  changeActiveTab(index: number) {
+    if (this.props.DashboardState.Tabs[index] !== undefined) {
+      this.props.onSetActiveTab(index);
+    }
   }
   renderTab(tab: DashboardTab): React.ReactNode {
     let visibleDashboardControls = tab.Toolbars.filter(
@@ -160,7 +202,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
 
     return visibleDashboardElements;
   }
-  renderShortcuts() {
+  renderFunctionButtons() {
     let shortcutsArray: string[] = this.props.DashboardState.VisibleButtons;
     let shortcuts: any = null;
 
@@ -242,6 +284,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
           OnTextChange={x => this.onUpdateQuickSearchText(x)}
           style={{ width: 'auto', border: 'none' }}
           inputStyle={{ width: '7rem' }}
+          inputRef={this.quickSearchRef}
         />
       </>
     );
@@ -277,7 +320,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         left={this.renderFunctionsDropdown()}
         right={
           <>
-            {this.renderShortcuts()}
+            {this.renderFunctionButtons()}
             {this.renderQuickSearch()}
           </>
         }

@@ -67,6 +67,24 @@ function InitAdaptableDemo() {
     console.log('search changed');
     console.log(searchChangedArgs.data[0].id);
   });
+
+  if (typeof window !== 'undefined') {
+    document.addEventListener('keydown', event => {
+      // ctrl + a ... show advanced search popup
+      if (event.key === 'a' && event.ctrlKey) {
+        api.advancedSearchApi.showAdvancedSearchPopup();
+      }
+
+      // ctrl + t ... toggle light/dark themes
+      if (event.key === 't' && event.ctrlKey) {
+        if (api.themeApi.getCurrentTheme() === 'dark') {
+          api.themeApi.loadLightTheme();
+        } else {
+          api.themeApi.loadDarkTheme();
+        }
+      }
+    });
+  }
 }
 
 let demoConfig: PredefinedConfig = {

@@ -10,6 +10,7 @@ export type AdaptableFormControlTextClearProps = {
   OnTextChange: (textValue: string) => void;
   autoFocus?: boolean;
   inputStyle?: CSSProperties;
+  inputRef?: React.RefObject<HTMLInputElement>;
 } & InputProps;
 
 export class AdaptableFormControlTextClear extends React.Component<
@@ -21,6 +22,7 @@ export class AdaptableFormControlTextClear extends React.Component<
     return (
       <FieldWrap
         className={this.props.className}
+        ref={() => console.log('inner ref')}
         style={{
           background: 'var(--ab-color-defaultbackground)',
           overflow: 'visible',
@@ -29,6 +31,7 @@ export class AdaptableFormControlTextClear extends React.Component<
         }}
       >
         <Input
+          inputRef={this.props.inputRef}
           autoFocus={this.props.autoFocus}
           style={this.props.inputStyle}
           type="text"

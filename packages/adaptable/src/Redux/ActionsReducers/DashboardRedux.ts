@@ -387,8 +387,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
 
     case DASHBOARD_SET_IS_FLOATING: {
       const { IsFloating } = action as DashboardSetIsFloatingAction;
-      console.log('redux', IsFloating);
-
       return { ...state, IsFloating };
     }
 
