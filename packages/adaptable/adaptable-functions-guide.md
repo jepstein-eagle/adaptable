@@ -64,10 +64,14 @@ There are a number of different ways in which end-Users will interact with Funct
 | Updated Row              | No        | No       | No         | Yes         | Yes           |
 | User Filter              | Yes       | No       | No         | Yes         | No            |
 
+#### Chart Functions (plugin)
 
-
-
-
+| Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
+| --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
+| Chart                    | Yes       | Yes      | Yes        | No          | No            |
+| Pie Chart (View As)      | No        | No       | No         | Yes         | Yes           |
+| Sparkline (View As)      | No        | No       | No         | Yes         | Yes           |
+| Sparkline Column         | No        | No       | No         | Yes         | Yes           |
 
 
 ### Entitlements
