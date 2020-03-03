@@ -16,7 +16,9 @@ Many Functions contain an array of Objects that users can create, edit or delete
 
 There are a number of different ways in which end-Users will interact with Functions in the AdapTable UI:
 
-- Most Functions have a dedicated 'popup' screen.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which 
+- Most Functions have a dedicated 'popup' screen.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which perform actions (e.g SmartEdit, BulkUpdate) will enable this.
+
+- Some Functions provide 'Toolbars' which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used Functions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the Dashboard Function.
 
 - are typically managed via 'Wizards' in the AdapTable UI.
 
