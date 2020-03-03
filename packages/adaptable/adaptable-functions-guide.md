@@ -34,7 +34,36 @@ There are a number of different ways in which end-Users will interact with Funct
 | Calendar                 | No        | No       | No         | No          | No            | 
 | Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
 | Cell Validation          | Yes       | No       | No         | Yes         | No            | 
-| Calendar                 | No        | No       | No         | No          | No            | 
+| Column Category          | No        | No       | No         | No          | No            | 
+| Column Chooser           | No        | No       | No         | Yes         | Yes           | 
+| Column Filter            | No        | Yes      | Yes        | Yes         | Yes           | 
+| Column Info              | No        | No       | No         | Yes         | Yes           | 
+| Conditional Style        | Yes       | No       | No         | Yes         | No            | 
+| Custom Sort              | Yes       | No       | No         | Yes         | No            | 
+| Dashboard                | No        | No       | No         | Yes         | No            | 
+| Data Source              | Yes       | Yes      | Yes        | No          | No            | 
+| Export                   | Yes       | Yes      | Yes        | No          | No            | 
+| Flashing Cell            | No        | No       | No         | Yes         | No            | 
+| Format Column            | Yes       | No       | No         | Yes         | No            | 
+| Free Text                | Yes       | No       | No         | Yes         | No            | 
+| Glue42                   | No        | Yes      | Yes        | No          | No            |
+| Gradient Column          | Yes       | No       | No         | Yes         | Yes           |
+| Grid Info                | No        | No       | No         | Yes         | Yes           |
+| Layout                   | Yes       | Yes      | Yes        | No          | No            |
+| Percent Bar              | Yes       | No       | No         | Yes         | Yes           |
+| Plus Minus               | Yes       | No       | No         | Yes         | No            |
+| PushPull                 | No        | Yes      | Yes        | No          | No            |
+| Quick Search             | No        | Yes      | Yes        | No          | No            |
+| Reminder                 | No        | No       | No         | No          | No            |
+| Schedule                 | Yes       | No       | No         | No          | No            |
+| Shortcut                 | Yes       | No       | No         | No          | No            |
+| Smart Edit               | No        | Yes      | Yes        | No          | Yes           |
+| System Status            | No        | Yes      | Yes        | Yes         | Yes           |
+| Team Sharing             | No        | No       | No         | No          | No            |
+| Theme                    | No        | Yes      | Yes        | No          | No            |
+| Updated Row              | No        | No       | No         | Yes         | Yes           |
+| User Filter              | Yes       | No       | No         | Yes         | No            |
+
 
 
 
