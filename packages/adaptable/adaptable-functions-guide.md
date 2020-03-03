@@ -12,9 +12,13 @@ All Functions are subject to Entitlements, meaning that end-users will only be a
 
 Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow).  
 
-## Functions List
+### Functions UI
 
-These are typically managed via 'Wizards' in the AdapTable UI.
+There are a number of different ways in which end-Users will interact with Functions in the AdapTable UI:
+
+- Most Functions have a dedicated 'popup' screen.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which 
+
+- are typically managed via 'Wizards' in the AdapTable UI.
 
 These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
 
