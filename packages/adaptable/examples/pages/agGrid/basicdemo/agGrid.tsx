@@ -42,7 +42,7 @@ function InitAdaptableDemo() {
   };
 
   adaptableOptions.layoutOptions = {
-    autoSizeColumnsInLayout: true,
+    //   autoSizeColumnsInLayout: true,
   };
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
@@ -59,8 +59,7 @@ function InitAdaptableDemo() {
   (globalThis as any).api = api;
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    // to see which is the pinned row then do...
-    //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
+    api.columnChooserApi.showColumnChooserPopup();
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
@@ -93,15 +92,129 @@ let demoConfig: PredefinedConfig = {
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
-    },
-    CustomToolbars: [{ Name: 'Custom1', Title: 'Custom 1' }],
+    }, //
   },
-  // Entitlements: {
-  //   FunctionEntitlements: [
-  //     { FunctionName: 'AdvancedSearch', AccessLevel: 'ReadOnly' },
-  //     { FunctionName: 'QuickSearch', AccessLevel: 'Hidden' },
-  //   ],
-  // },
+  Layout: {
+    CurrentLayout: 'Layout Two',
+    Layouts: [
+      {
+        Columns: ['country', 'currency'],
+        Name: 'Layout One',
+      },
+      {
+        Columns: ['lastUpdated', 'tradeId'],
+        Name: 'Layout Three',
+      },
+      {
+        Columns: [
+          'lastUpdated',
+          'bid',
+          'ask',
+          'notional',
+          'country',
+          'tradeId',
+          'currency',
+          'counterparty',
+        ],
+        Name: 'Layout Two',
+      },
+    ],
+  },
+  Entitlements: {
+    DefaultAccessLevel: 'Full',
+    FunctionEntitlements: [
+      {
+        FunctionName: 'ColumnCategory',
+        AccessLevel: 'Hidden',
+      },
+      {
+        FunctionName: 'ColumnChooser',
+        AccessLevel: 'Hidden',
+      },
+      {
+        FunctionName: 'Export',
+        AccessLevel: 'Hidden',
+      },
+      {
+        FunctionName: 'Layout',
+        AccessLevel: 'Full',
+      },
+      {
+        FunctionName: 'CustomSort',
+        AccessLevel: 'Hidden',
+      },
+    ],
+  },
+  Shortcut: {
+    Shortcuts: [
+      {
+        ColumnType: 'Number',
+        IsDynamic: false,
+        ShortcutKey: 'K',
+        ShortcutOperation: 'Multiply',
+        ShortcutResult: '1000',
+      },
+      {
+        ColumnType: 'Date',
+        IsDynamic: true,
+        ShortcutKey: 'N',
+        ShortcutOperation: 'Replace',
+        ShortcutResult: 'Next Work Day',
+      },
+    ],
+  },
+  PercentBar: {
+    PercentBars: [
+      {
+        ColumnId: 'notional',
+        PositiveValue: 1496,
+        PositiveColor: '#006400',
+        ShowValue: false,
+        ShowToolTip: true,
+      },
+    ],
+  },
+  NamedFilter: {
+    NamedFilters: [
+      {
+        Name: '$ Trades',
+        Scope: {
+          DataType: 'Number',
+          ColumnIds: ['currency'],
+        },
+        FilterPredicate: (_record, _columnId, cellValue) => {
+          return cellValue === 'USD';
+        },
+      },
+      {
+        Name: 'High',
+        Scope: {
+          DataType: 'Number',
+        },
+        FilterPredicate: (_record, _columnId, cellValue) => {
+          let currency: string = _record.data.currency;
+          if (currency === 'USD') {
+            return cellValue > 1000;
+          } else if (currency === 'EUR') {
+            return cellValue > 30;
+          } else {
+            return cellValue > 10;
+          }
+        },
+      },
+      {
+        Name: 'Biz Year',
+        Scope: {
+          DataType: 'Date',
+        },
+        FilterPredicate: (_record, _columnId, cellValue) => {
+          let dateToTest = cellValue as Date;
+          let startBusinesssYear = new Date('2019-04-05');
+          return dateToTest > startBusinesssYear;
+        },
+      },
+    ],
+  },
   UserInterface: {
     ColumnMenuItems: (menuinfo: MenuInfo) => {
       console.log('in the function');
@@ -153,19 +266,6 @@ let demoConfig: PredefinedConfig = {
         },
       },
     ],
-  },
-
-  Layout: {
-    Layouts: [
-      {
-        ColumnSorts: [],
-        Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
-        Name: 'design-time layout',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
-      },
-    ],
-    //   CurrentLayout: 'fixing a bug',
   },
 };
 

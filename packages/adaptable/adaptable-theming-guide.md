@@ -165,6 +165,8 @@ However, you might want to style icons differently - in this case, you can custo
   background-size: cover;
 }
 ```
+(See a [demo](https://demo.adaptabletools.com/theme/aggridcustomicondemo) of this in action)
+
 
 ## Demo
 

@@ -30,28 +30,30 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PlusMinusStrategyFriendlyName,
-      ComponentName: ScreenPopups.PlusMinusPopup,
-      Icon: StrategyConstants.PlusMinusGlyph,
-    });
+    if (this.canCreateMenuItem('Full')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.PlusMinusStrategyFriendlyName,
+        ComponentName: ScreenPopups.PlusMinusPopup,
+        Icon: StrategyConstants.PlusMinusGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
-      if (column && column.DataType == DataType.Number) {
-        let popupParam: StrategyParams = {
-          columnId: column.ColumnId,
-          action: 'New',
-          source: 'ColumnMenu',
-        };
-        return this.createColumnMenuItemShowPopup(
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+      let popupParam: StrategyParams = {
+        columnId: column.ColumnId,
+        action: 'New',
+        source: 'ColumnMenu',
+      };
+      return [
+        this.createColumnMenuItemShowPopup(
           'Create Plus/Minus Rule',
           ScreenPopups.PlusMinusPopup,
           StrategyConstants.PlusMinusGlyph,
           popupParam
-        );
-      }
+        ),
+      ];
     }
   }
 

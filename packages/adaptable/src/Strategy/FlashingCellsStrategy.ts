@@ -18,15 +18,17 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FlashingCellsStrategyFriendlyName,
-      ComponentName: ScreenPopups.FlashingCellsPopup,
-      Icon: StrategyConstants.FlashingCellGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.FlashingCellsStrategyFriendlyName,
+        ComponentName: ScreenPopups.FlashingCellsPopup,
+        Icon: StrategyConstants.FlashingCellGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateMenuItem('Full')) {
       if (column.DataType == DataType.Number) {
         if (
           this.adaptable.api.calculatedColumnApi
@@ -37,11 +39,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
             .getAllFlashingCell()
             .find(x => x.ColumnId == column.ColumnId);
           if (flashingCell && flashingCell.IsLive) {
-            return this.createColumnMenuItemReduxAction(
-              'Turn Flashing Cell Off',
-              StrategyConstants.FlashingCellGlyph,
-              FlashingCellsRedux.FlashingCellSelect(flashingCell)
-            );
+            return [
+              this.createColumnMenuItemReduxAction(
+                'Turn Flashing Cell Off',
+                StrategyConstants.FlashingCellGlyph,
+                FlashingCellsRedux.FlashingCellSelect(flashingCell)
+              ),
+            ];
           } else {
             if (!flashingCell) {
               let flashingCellState: FlashingCellState = this.adaptable.api.flashingCellApi.getFlashingCellState();
@@ -52,11 +56,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
                 flashingCellState.DefaultDuration
               );
             }
-            return this.createColumnMenuItemReduxAction(
-              'Turn Flashing Cell On',
-              StrategyConstants.FlashingCellGlyph,
-              FlashingCellsRedux.FlashingCellSelect(flashingCell)
-            );
+            return [
+              this.createColumnMenuItemReduxAction(
+                'Turn Flashing Cell On',
+                StrategyConstants.FlashingCellGlyph,
+                FlashingCellsRedux.FlashingCellSelect(flashingCell)
+              ),
+            ];
           }
         }
       }

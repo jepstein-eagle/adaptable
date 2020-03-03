@@ -20,6 +20,7 @@ import { ButtonMaximise } from '../Components/Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Components/Buttons/ButtonMinimise';
 import Helper from '../../Utilities/Helpers/Helper';
 import { AdaptablePopover } from '../AdaptablePopover';
+import version from '../../../version';
 
 interface GridInfoPopupProps extends StrategyViewPopupProps<GridInfoPopupComponent> {}
 
@@ -415,7 +416,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       this.createColItem(colItems, 'Vendor Grid', this.props.Adaptable.vendorGridName)
     );
 
-    returnRows.push(this.createColItem(colItems, 'Adaptable Version', React.version));
+    returnRows.push(this.createColItem(colItems, 'Adaptable Version', version));
 
     returnRows.push(
       this.createColItem(

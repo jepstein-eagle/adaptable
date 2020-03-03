@@ -18,26 +18,30 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
-      ComponentName: ScreenPopups.ConditionalStylePopup,
-      Icon: StrategyConstants.ConditionalStyleGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
+        ComponentName: ScreenPopups.ConditionalStylePopup,
+        Icon: StrategyConstants.ConditionalStyleGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'style')) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        'Create ' + StrategyConstants.ConditionalStyleStrategyFriendlyName,
-        ScreenPopups.ConditionalStylePopup,
-        StrategyConstants.ConditionalStyleGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Create ' + StrategyConstants.ConditionalStyleStrategyFriendlyName,
+          ScreenPopups.ConditionalStylePopup,
+          StrategyConstants.ConditionalStyleGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

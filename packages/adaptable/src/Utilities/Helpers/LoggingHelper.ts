@@ -23,30 +23,30 @@ export function LogAlert(
 }
 export function LogAdaptableInfo(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.info('Adaptable Info: ' + message, optionalParams);
+    console.info('AdapTable Info: ' + message, optionalParams);
   } else {
-    console.info('Adaptable Info: ' + message);
+    console.info('AdapTable Info: ' + message);
   }
 }
 export function LogAdaptableSuccess(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.log('Adaptable Success: ' + message, optionalParams);
+    console.log('AdapTable Success: ' + message, optionalParams);
   } else {
-    console.log('Adaptable Success: ' + message);
+    console.log('AdapTable Success: ' + message);
   }
 }
 export function LogAdaptableWarning(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.warn('Adaptable Warning: ' + message, optionalParams);
+    console.warn('AdapTable Warning: ' + message, optionalParams);
   } else {
-    console.warn('Adaptable Warning: ' + message);
+    console.warn('AdapTable Warning: ' + message);
   }
 }
 export function LogAdaptableError(message: string, ...optionalParams: any[]): void {
   if (ArrayExtensions.IsNotNullOrEmpty(optionalParams)) {
-    console.error('Adaptable Error: ' + message, optionalParams);
+    console.error('AdapTable Error: ' + message, optionalParams);
   } else {
-    console.error('Adaptable Error: ' + message);
+    console.error('AdapTable Error: ' + message);
   }
 }
 

@@ -11,10 +11,12 @@ export class GridInfoStrategy extends AdaptableStrategyBase implements IGridInfo
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.GridInfoStrategyFriendlyName,
-      ComponentName: ScreenPopups.GridInfoPopup,
-      Icon: StrategyConstants.GridInfoGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.GridInfoStrategyFriendlyName,
+        ComponentName: ScreenPopups.GridInfoPopup,
+        Icon: StrategyConstants.GridInfoGlyph,
+      });
+    }
   }
 }

@@ -13,10 +13,12 @@ export class ScheduleStrategy extends AdaptableStrategyBase implements ISchedule
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ScheduleStrategyFriendlyName,
-      ComponentName: ScreenPopups.SchedulePopup,
-      Icon: StrategyConstants.ScheduleGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ScheduleStrategyFriendlyName,
+        ComponentName: ScreenPopups.SchedulePopup,
+        Icon: StrategyConstants.ScheduleGlyph,
+      });
+    }
   }
 }

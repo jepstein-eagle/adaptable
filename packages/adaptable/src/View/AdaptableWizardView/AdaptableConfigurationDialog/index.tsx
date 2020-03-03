@@ -90,8 +90,12 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
       </Panel>
       <Panel border="none">
         <FormLayout>
-          <FormRow label="adaptable ID">
-            <Input value={abOptions.adaptableId} onChange={onadaptableIdChange} />
+          <FormRow label="Adaptable Id">
+            <Input
+              value={abOptions.adaptableId}
+              onChange={onadaptableIdChange}
+              style={{ minWidth: '20rem' }}
+            />
           </FormRow>
         </FormLayout>
       </Panel>

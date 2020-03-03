@@ -14,13 +14,12 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../agGrid';
 import { ApplicationDataEntry } from '../../../../src/PredefinedConfig/ApplicationState';
-import { CustomToolbar } from '../../../../src/PredefinedConfig/DashboardState';
 
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -78,7 +77,7 @@ let demoConfig: PredefinedConfig = {
     CustomSorts: [
       {
         ColumnId: 'country',
-        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA: any, nodeB: any) => {
+        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA?: any, nodeB?: any) => {
           if (valueA === 'United Kingdom') {
             return -1;
           }
@@ -91,6 +90,16 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'counterparty',
         SortedValues: ['Citi', 'Nat West'],
+      },
+      {
+        ColumnId: 'status',
+        SortedValues: ['Pending', 'Completed', 'Rejected'],
+        /*
+        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA: any, nodeB: any) => {
+          var requiredOrder = ['Pending', 'Completed', 'Rejected'];
+            return requiredOrder.indexOf(valueA) - requiredOrder.indexOf(valueB);
+        },
+        */
       },
     ],
   },

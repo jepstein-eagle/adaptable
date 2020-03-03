@@ -11,17 +11,25 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(100000);
+  const tradeData: any = examplesHelper.getTrades(1000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    `calculated column demo`
-  );
-  adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Calc Col Demo',
+
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+  };
+
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
@@ -42,7 +50,7 @@ let demoConfig: PredefinedConfig = {
     CurrentLayout: 'with calc cols',
     Layouts: [
       {
-        Columns: ['tradeId', 'country', 'notional', 'Dob Notional'],
+        Columns: ['tradeId', 'country', 'notional', 'Dob Notional', 'currency'],
         GroupedColumns: ['currency'],
         ColumnSorts: [],
         Name: 'with calc cols',

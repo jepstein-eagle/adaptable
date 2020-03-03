@@ -11,6 +11,7 @@ export interface AdaptableObjectCollectionProps
   reducedPanel?: boolean;
   allowOverflow?: boolean;
   style?: React.CSSProperties;
+  headerAlign?: string;
 }
 
 export class AdaptableObjectCollection extends React.Component<AdaptableObjectCollectionProps, {}> {
@@ -19,7 +20,11 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
 
     return (
       <div style={{ ...this.props.style }}>
-        <PanelWithRow border="none" colItems={this.props.colItems} />
+        <PanelWithRow
+          border="none"
+          colItems={this.props.colItems}
+          headerAlign={this.props.headerAlign}
+        />
         <div style={{ overflowY: allowOverflow, boxShadow: 'none' }}>{this.props.items}</div>
       </div>
     );

@@ -85,13 +85,13 @@ jobs:
       run: cd packages/plugins/charts && npm run build-prod-no-cleanup
 
 
-    - name: Executing npm install in plugins/nocode
-      run: npm run install-plugins-nocode
+    - name: Executing npm install in plugins/nocode-aggrid
+      run: npm run install-plugins-nocode-aggrid
       env:
         CI: true
 
-    - name: Building plugins-nocode
-      run: cd packages/plugins/nocode && npm run build-prod-no-cleanup
+    - name: Building plugins-nocode-aggrid
+      run: cd packages/plugins/nocode-aggrid && npm run build-prod-no-cleanup
 
     - name: Executing npm install in plugins/finance
       run: npm run install-plugins-finance

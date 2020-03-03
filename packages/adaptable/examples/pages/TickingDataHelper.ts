@@ -196,6 +196,65 @@ export class TickingDataHelper {
     }
   }
 
+  useTickingDataTreeGrid(gridOptions: any, adaptableApi: AdaptableApi, tickingFrequency: number) {
+    if (gridOptions != null && gridOptions.api != null) {
+      const examplesHelper = new ExamplesHelper();
+      let govIds: number[] = [
+        1,
+        2,
+        3,
+        4,
+        5,
+        7,
+        8,
+        9,
+        10,
+        11,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        23,
+        25,
+        25,
+        27,
+        28,
+        29,
+        30,
+        31,
+        33,
+        34,
+        35,
+        36,
+        37,
+      ];
+      setInterval(() => {
+        let randomId = this.generateRandomInt(0, 29);
+        let govId: number = govIds[randomId];
+
+        const row: any = { ...gridOptions.rowData[govId] };
+        if (!row) {
+          return;
+        }
+
+        const staffToAdd: number = this.generateRandomInt(-5, 5);
+        const staff = this.roundTo4Dp(row['staff'] + staffToAdd);
+        const budgetToAdd: number = this.generateRandomInt(-1000, 2000);
+        const budget = this.roundTo4Dp(row['budget'] + budgetToAdd);
+
+        row['staff'] = staff;
+        row['budget'] = budget;
+
+        gridOptions.api!.updateRowData({ update: [row] });
+      }, tickingFrequency);
+    }
+  }
+
   public getRandomItem(ary: any[], max?: number): any {
     if (max) {
       return ary[this.generateRandomInt(0, Math.min(max, ary.length - 1))];

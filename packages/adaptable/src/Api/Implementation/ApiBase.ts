@@ -4,6 +4,8 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 
 import Helper from '../../Utilities/Helpers/Helper';
+import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
 // Base class for the API - provides checking dispatching methods
 export abstract class ApiBase {
@@ -37,6 +39,39 @@ export abstract class ApiBase {
       return false;
     }
     return true;
+  }
+
+  protected isCorrectlyEntitled(
+    functionName: AdaptableFunctionName,
+    minimumAccessLevel: AccessLevel,
+    actionDescripton?: string
+  ): boolean {
+    const currentAccessLevel: AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+      functionName
+    );
+    if (minimumAccessLevel == 'Full' && currentAccessLevel == 'Full') {
+      return true;
+    }
+
+    if (
+      minimumAccessLevel == 'ReadOnly' &&
+      (currentAccessLevel == 'Full' || currentAccessLevel == 'ReadOnly')
+    ) {
+      return true;
+    }
+    const actionText: string = actionDescripton
+      ? 'action: "' + actionDescripton + '"'
+      : 'api action';
+    LoggingHelper.LogAdaptableWarning(
+      'Cannot perform ' +
+        actionText +
+        ' as user has Entitlement of "' +
+        currentAccessLevel +
+        '" for function: "' +
+        functionName +
+        '"'
+    );
+    return false;
   }
 
   /**

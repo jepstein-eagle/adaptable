@@ -15,12 +15,21 @@ import { IGlue42Strategy } from './Interface/IGlue42Strategy';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { Glue42Report } from '../PredefinedConfig/Glue42State';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 
 export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Strategy {
   private isSendingData: boolean = false;
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
+
+  public setStrategyEntitlement(): void {
+    if (!this.adaptable.api.glue42Api.isGlue42Available()) {
+      this.AccessLevel = 'Hidden';
+    } else {
+      this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        this.Id
+      );
+    }
+  }
 
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.Glue42StrategyId, adaptable);
@@ -91,7 +100,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.adaptable.api.glue42Api.isGlue42Available()) {
+    if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.Glue42StrategyFriendlyName,
         ComponentName: ScreenPopups.Glue42Popup,

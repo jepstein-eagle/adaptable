@@ -1,6 +1,7 @@
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../../PredefinedConfig/Common/Menu';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
 /**
  * This is the interface that all Strategies implement (as well as all deriving from AdaptableStrategyBase).
@@ -20,9 +21,10 @@ export interface IStrategy {
   Id: AdaptableFunctionName;
   addFunctionMenuItem(): AdaptableMenuItem | undefined;
   initializeWithRedux(): void;
-  addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined;
+  addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;
   setStrategyEntitlement(): void;
+  AccessLevel: AccessLevel;
 }
 /**
  * An interface for those strategies which have sytles - e.g. Conditional Style, Format Column, Flashing Cell etc.

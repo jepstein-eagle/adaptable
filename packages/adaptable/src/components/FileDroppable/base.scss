@@ -19,8 +19,11 @@
 
   &, input, button, .ab-SimpleButton {
     transition: $transition;
-    color: var(--ab-cmp-file-droppable__color);
     fill: currentColor;
+  }
+  &, input, button {
+
+    color: var(--ab-cmp-file-droppable__color);
   }
 
   &.ab-FileDroppable--drag-over {
@@ -30,9 +33,9 @@
     background: var(--ab-cmp-file-droppable--drag-over__background);
     color: var(--ab-cmp-file-droppable--drag-over__color);
 
-    input, button, .ab-SimpleButton {
-      color: var(--ab-cmp-file-droppable--drag-over__color);
-    }
+    // input {
+    //   color: var(--ab-cmp-file-droppable--drag-over__color);
+    // }
 
     * {
       pointer-events: none;

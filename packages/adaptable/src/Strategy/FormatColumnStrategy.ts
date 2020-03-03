@@ -15,15 +15,17 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FormatColumnStrategyFriendlyName,
-      ComponentName: ScreenPopups.FormatColumnPopup,
-      Icon: StrategyConstants.FormatColumnGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.FormatColumnStrategyFriendlyName,
+        ComponentName: ScreenPopups.FormatColumnPopup,
+        Icon: StrategyConstants.FormatColumnGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'style')) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'style')) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId
@@ -36,12 +38,14 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.FormatColumnStrategyFriendlyName,
-        ScreenPopups.FormatColumnPopup,
-        StrategyConstants.FormatColumnGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          label + StrategyConstants.FormatColumnStrategyFriendlyName,
+          ScreenPopups.FormatColumnPopup,
+          StrategyConstants.FormatColumnGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 

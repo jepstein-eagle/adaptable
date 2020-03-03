@@ -9,10 +9,10 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -20,15 +20,18 @@ function InitAdaptableDemo() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
     primaryKey: 'tradeId',
     userName: 'demo user',
     adaptableId: 'layout demo',
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
     layoutOptions: {
       includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
-      autoSizeColumnsInLayout: true,
+      //  autoSizeColumnsInLayout: true,
       autoSizeColumnsInPivotLayout: true,
     },
   };
@@ -38,12 +41,17 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout'],
+    VisibleToolbars: ['Layout'],
   },
 
   Layout: {
-    CurrentLayout: 'Simple Layout',
+    CurrentLayout: 'Basic Group Layout',
     Layouts: [
+      {
+        GroupedColumns: ['currency'],
+        Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
+        Name: 'Basic Group Layout',
+      },
       {
         Name: 'Simple Layout',
         Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
@@ -71,7 +79,7 @@ let demoConfig: PredefinedConfig = {
           },
         ],
         GroupedColumns: ['currency', 'country'],
-        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+        Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Grouping Layout',
       },
       {

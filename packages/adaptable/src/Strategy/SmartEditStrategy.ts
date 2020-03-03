@@ -26,11 +26,13 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SmartEditStrategyFriendlyName,
-      ComponentName: ScreenPopups.SmartEditPopup,
-      Icon: StrategyConstants.SmartEditGlyph,
-    });
+    if (this.canCreateMenuItem('Full')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.SmartEditStrategyFriendlyName,
+        ComponentName: ScreenPopups.SmartEditPopup,
+        Icon: StrategyConstants.SmartEditGlyph,
+      });
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
@@ -39,22 +41,24 @@ export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEd
     // then open the smart edit screen
     // perhaps this is faulty logic though?
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (
-      menuInfo.Column &&
-      menuInfo.Column.DataType == DataType.Number &&
-      !menuInfo.Column.ReadOnly &&
-      menuInfo.IsSelectedCell &&
-      menuInfo.IsSingleSelectedColumn
-    ) {
-      let popUpParams: StrategyParams = {
-        source: 'ContextMenu',
-      };
-      menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Apply ' + StrategyConstants.SmartEditStrategyFriendlyName,
-        ComponentName: ScreenPopups.SmartEditPopup,
-        Icon: StrategyConstants.SmartEditGlyph,
-        PopupParams: popUpParams,
-      });
+    if (this.canCreateMenuItem('Full')) {
+      if (
+        menuInfo.Column &&
+        menuInfo.Column.DataType == DataType.Number &&
+        !menuInfo.Column.ReadOnly &&
+        menuInfo.IsSelectedCell &&
+        menuInfo.IsSingleSelectedColumn
+      ) {
+        let popUpParams: StrategyParams = {
+          source: 'ContextMenu',
+        };
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: 'Apply ' + StrategyConstants.SmartEditStrategyFriendlyName,
+          ComponentName: ScreenPopups.SmartEditPopup,
+          Icon: StrategyConstants.SmartEditGlyph,
+          PopupParams: popUpParams,
+        });
+      }
     }
     return menuItemShowPopup;
   }

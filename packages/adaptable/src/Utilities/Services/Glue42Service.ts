@@ -54,7 +54,7 @@ export class Glue42Service implements IGlue42Service {
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       if (!this.glueInstance) {
         let glue42State: Glue42State | undefined = this.adaptable.api.glue42Api.getGlue42State();
-        if (glue42State) {
+        if (glue42State && glue42State.Glue && glue42State.Glue4Office) {
           this.adaptable.api.glue42Api.setGlue42AvailableOn();
           if (
             StringExtensions.IsNotNullOrEmpty(glue42State.Username) &&

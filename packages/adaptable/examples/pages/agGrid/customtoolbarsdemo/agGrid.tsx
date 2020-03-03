@@ -121,7 +121,8 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
+    // AvailableToolbars: ['AdvancedSearch', 'Export'],
+    VisibleToolbars: ['QuickSearch', 'Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
     // make this not persistable
     CustomToolbars: [

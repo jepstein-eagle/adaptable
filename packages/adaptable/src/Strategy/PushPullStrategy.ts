@@ -20,6 +20,16 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
+  public setStrategyEntitlement(): void {
+    if (!this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+      this.AccessLevel = 'Hidden';
+    } else {
+      this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        this.Id
+      );
+    }
+  }
+
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.IPushPullStrategyId, adaptable);
 
@@ -89,7 +99,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.adaptable.api.iPushPullApi.isIPushPullAvailable()) {
+    if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.IPushPullStrategyFriendlyName,
         ComponentName: ScreenPopups.IPushPullPopup,
@@ -116,7 +126,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
       Promise.resolve()
         .then(() => {
           return new Promise<any>((resolve, reject) => {
-            let reportAsArray: any[] = this.ConvertReportToArray(report);
+            let reportAsArray: any[] = this.convertReportToArray(report);
             if (reportAsArray) {
               resolve(reportAsArray);
             } else {
@@ -170,7 +180,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
           iPushPullReport.ReportName
         );
         if (report) {
-          let reportAsArray: any[] = this.ConvertReportToArray(report);
+          let reportAsArray: any[] = this.convertReportToArray(report);
           if (reportAsArray) {
             this.adaptable.PushPullService.pushData(iPushPullReport.Page, reportAsArray);
           }
@@ -192,7 +202,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
   // Should probably use same one as Export
-  private ConvertReportToArray(report: Report): any[] {
+  private convertReportToArray(report: Report): any[] {
     let actionReturnObj = this.adaptable.ReportService.ConvertReportToArray(report);
     if (actionReturnObj.Alert) {
       this.adaptable.api.alertApi.displayMessageAlertPopup(actionReturnObj.Alert);

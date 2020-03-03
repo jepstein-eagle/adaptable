@@ -12,7 +12,7 @@ import './index.css';
 
 import { AdaptableNoCodeWizard } from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
-import { IAdaptableNoCodeWizard } from '../../../../src/AdaptableInterfaces/IAdaptableNoCodeWizard';
+import { IAdaptableNoCodeWizard } from '../../../../src/AdaptableInterfaces/AdaptableNoCodeWizard';
 import { ColDef } from '@ag-grid-community/all-modules';
 
 /*

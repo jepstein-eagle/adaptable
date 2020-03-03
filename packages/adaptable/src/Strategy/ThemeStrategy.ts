@@ -16,11 +16,13 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ThemeStrategyFriendlyName,
-      ComponentName: ScreenPopups.ThemePopup,
-      Icon: StrategyConstants.ThemeGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ThemeStrategyFriendlyName,
+        ComponentName: ScreenPopups.ThemePopup,
+        Icon: StrategyConstants.ThemeGlyph,
+      });
+    }
   }
 
   publishThemeChanged(themeState: ThemeState) {

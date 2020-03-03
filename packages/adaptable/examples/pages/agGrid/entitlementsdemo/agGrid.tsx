@@ -65,7 +65,8 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Entitlements: {
-    DefaultAccessLevel: 'Hidden',
+    DefaultAccessLevel: 'Full',
+    /*
     EntitlementLookUpFunction: (
       functionName: AdaptableFunctionName,
       userName: string,
@@ -87,23 +88,39 @@ let demoConfig: PredefinedConfig = {
           return getMockPermissionServerResult(functionName, userName, adaptableId);
       }
     },
-
+*/
     FunctionEntitlements: [
       {
         FunctionName: 'ColumnCategory',
-        AccessLevel: 'Hidden',
+        AccessLevel: 'Full',
       },
       {
         FunctionName: 'ColumnChooser',
-        AccessLevel: 'Hidden',
+        AccessLevel: 'Full',
       },
       {
         FunctionName: 'Export',
-        AccessLevel: 'Hidden',
+        AccessLevel: 'Full',
+      },
+      {
+        FunctionName: 'ColumnFilter',
+        AccessLevel: 'ReadOnly',
       },
       {
         FunctionName: 'Layout',
         AccessLevel: 'ReadOnly',
+      },
+      {
+        FunctionName: 'SmartEdit',
+        AccessLevel: 'ReadOnly',
+      },
+      {
+        FunctionName: 'Layout',
+        AccessLevel: 'ReadOnly',
+      },
+      {
+        FunctionName: 'BulkUpdate',
+        AccessLevel: 'Hidden',
       },
       {
         FunctionName: 'CustomSort',

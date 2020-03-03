@@ -18,15 +18,17 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.GradientColumnStrategyFriendlyName,
-      ComponentName: ScreenPopups.GradientColumnPopup,
-      Icon: StrategyConstants.GradientColumnGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.GradientColumnStrategyFriendlyName,
+        ComponentName: ScreenPopups.GradientColumnPopup,
+        Icon: StrategyConstants.GradientColumnGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'numeric')) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
       let GradientColumnExists: boolean = ArrayExtensions.ContainsItem(
         this.GradientColumnState.GradientColumns.map(f => f.ColumnId),
         column.ColumnId
@@ -39,31 +41,35 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        label + StrategyConstants.GradientColumnStrategyFriendlyName,
-        ScreenPopups.GradientColumnPopup,
-        StrategyConstants.GradientColumnGlyph,
-        popupParam
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          label + StrategyConstants.GradientColumnStrategyFriendlyName,
+          ScreenPopups.GradientColumnPopup,
+          StrategyConstants.GradientColumnGlyph,
+          popupParam
+        ),
+      ];
     }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    let GradientColumnExists: boolean = ArrayExtensions.ContainsItem(
-      this.GradientColumnState.GradientColumns.map(f => f.ColumnId),
-      menuInfo.Column.ColumnId
-    );
-    if (menuInfo.Column && GradientColumnExists) {
-      let popUpParams: StrategyParams = {
-        source: 'ContextMenu',
-      };
-      menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'Edit Gradient Column',
-        ComponentName: ScreenPopups.GradientColumnPopup,
-        Icon: StrategyConstants.GradientColumnGlyph,
-        PopupParams: popUpParams,
-      });
+    if (this.canCreateMenuItem('Full')) {
+      let GradientColumnExists: boolean = ArrayExtensions.ContainsItem(
+        this.GradientColumnState.GradientColumns.map(f => f.ColumnId),
+        menuInfo.Column.ColumnId
+      );
+      if (menuInfo.Column && GradientColumnExists) {
+        let popUpParams: StrategyParams = {
+          source: 'ContextMenu',
+        };
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: 'Edit Gradient Column',
+          ComponentName: ScreenPopups.GradientColumnPopup,
+          Icon: StrategyConstants.GradientColumnGlyph,
+          PopupParams: popUpParams,
+        });
+      }
     }
     return menuItemShowPopup;
   }

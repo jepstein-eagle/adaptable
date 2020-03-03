@@ -136,7 +136,6 @@ export class StyleService implements IStyleService {
         StrategyConstants.FormatColumnStrategyId,
         formatColumn
       );
-      console.log('adding format column for: ' + formatColumn.ColumnId);
       this.addCSSRule(
         `.${styleName}`,
         `background-color: ${formatColumn.Style.BackColor} !important;color: ${
@@ -206,7 +205,6 @@ export class StyleService implements IStyleService {
           StrategyConstants.ConditionalStyleStrategyId,
           element
         );
-        console.log('adding format column for: ' + element.ColumnId);
         this.addCSSRule(
           `.${styleName}`,
           `background-color: ${element.Style.BackColor} !important;color: ${

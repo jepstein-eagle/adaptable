@@ -18,29 +18,30 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.PieChartStrategyFriendlyName,
-      ComponentName: ScreenPopups.PieChartPopup,
-      Icon: StrategyConstants.PieChartGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.PieChartStrategyFriendlyName,
+        ComponentName: ScreenPopups.PieChartPopup,
+        Icon: StrategyConstants.PieChartGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (
-      this.canCreateColumnMenuItem(column, this.adaptable) &&
-      column.DataType !== DataType.NumberArray
-    ) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateMenuItem('ReadOnly') && column.DataType !== DataType.NumberArray) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
       };
 
-      return this.createColumnMenuItemShowPopup(
-        'View as Pie Chart',
-        ScreenPopups.PieChartPopup,
-        StrategyConstants.PieChartGlyph,
-        popUpParams
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'View as Pie Chart',
+          ScreenPopups.PieChartPopup,
+          StrategyConstants.PieChartGlyph,
+          popUpParams
+        ),
+      ];
     }
   }
 

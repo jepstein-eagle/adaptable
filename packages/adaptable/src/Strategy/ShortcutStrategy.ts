@@ -24,11 +24,13 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ShortcutStrategyFriendlyName,
-      ComponentName: ScreenPopups.ShortcutPopup,
-      Icon: StrategyConstants.ShortcutGlyph,
-    });
+    if (this.canCreateMenuItem('Full')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ShortcutStrategyFriendlyName,
+        ComponentName: ScreenPopups.ShortcutPopup,
+        Icon: StrategyConstants.ShortcutGlyph,
+      });
+    }
   }
 
   private handleKeyDown(keyEvent: KeyboardEvent | any) {
@@ -59,14 +61,14 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
             // Another complication is that the cell might have been edited or not, so we need to work out which method to use...
             if (this.adaptable.gridHasCurrentEditValue()) {
               currentCellValue = this.adaptable.getCurrentCellEditValue();
-              valueToReplace = this.CalculateShortcut(
+              valueToReplace = this.calculateShortcut(
                 currentCellValue,
                 activeShortcut.ShortcutResult,
                 activeShortcut.ShortcutOperation as MathOperation
               );
             } else {
               currentCellValue = activeCell.rawValue;
-              valueToReplace = this.CalculateShortcut(
+              valueToReplace = this.calculateShortcut(
                 currentCellValue,
                 activeShortcut.ShortcutResult,
                 activeShortcut.ShortcutOperation as MathOperation
@@ -103,7 +105,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     }
   }
 
-  private CalculateShortcut(first: any, second: any, shortcutOperation: MathOperation): number {
+  private calculateShortcut(first: any, second: any, shortcutOperation: MathOperation): number {
     let firstNumber: number = Number(first);
     let secondNumber: number = Number(second);
 

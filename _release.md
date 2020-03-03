@@ -1,3 +1,27 @@
+## 6.0.15
+
+Try to improve loading times for layouts
+
+## 6.0.14
+
+Fix version displayed in the info popup & update some readme docs
+
+## 6.0.13
+
+Trying to fix grouping layouts
+
+## 6.0.12
+
+Sorting out AutoSize layouts 
+
+## 6.0.11
+
+Fixing grouping bug
+
+## 6.0.10
+
+Pivot Sort improvements
+
 ## 6.0.9
 
 Fixing alert bug in Object Factory

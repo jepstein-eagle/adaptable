@@ -14,15 +14,17 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.FreeTextColumnStrategyFriendlyName,
-      ComponentName: ScreenPopups.FreeTextColumnPopup,
-      Icon: StrategyConstants.FreeTextColumnGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.FreeTextColumnStrategyFriendlyName,
+        ComponentName: ScreenPopups.FreeTextColumnPopup,
+        Icon: StrategyConstants.FreeTextColumnGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable)) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateMenuItem('Full')) {
       if (
         this.adaptable.api.freeTextColumnApi
           .getAllFreeTextColumn()
@@ -33,12 +35,14 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
           action: 'Edit',
           source: 'ColumnMenu',
         };
-        return this.createColumnMenuItemShowPopup(
-          'Edit ' + StrategyConstants.FreeTextColumnStrategyFriendlyName,
-          ScreenPopups.FreeTextColumnPopup,
-          StrategyConstants.FreeTextColumnGlyph,
-          popupParam
-        );
+        return [
+          this.createColumnMenuItemShowPopup(
+            'Edit ' + StrategyConstants.FreeTextColumnStrategyFriendlyName,
+            ScreenPopups.FreeTextColumnPopup,
+            StrategyConstants.FreeTextColumnGlyph,
+            popupParam
+          ),
+        ];
       }
     }
   }

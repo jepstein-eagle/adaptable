@@ -23,33 +23,37 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.SparklineColumnStrategyFriendlyName,
-      ComponentName: ScreenPopups.SparklineColumnPopup,
-      Icon: StrategyConstants.SparklineColumnGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.SparklineColumnStrategyFriendlyName,
+        ComponentName: ScreenPopups.SparklineColumnPopup,
+        Icon: StrategyConstants.SparklineColumnGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'sparkline')) {
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'sparkline')) {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',
       };
-      return this.createColumnMenuItemShowPopup(
-        'Edit Sparkline Column',
-        ScreenPopups.SparklineColumnPopup,
-        StrategyConstants.SparklineColumnGlyph,
-        popUpParams
-      );
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Edit Sparkline Column',
+          ScreenPopups.SparklineColumnPopup,
+          StrategyConstants.SparklineColumnGlyph,
+          popUpParams
+        ),
+      ];
     }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
-    let menuItemShowPopup: MenuItemShowPopup = undefined;
+    let menuItemShowPopup: MenuItemShowPopup | undefined = undefined;
     if (
       menuInfo.Column &&
-      this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable, 'sparkline')
+      this.canCreateColumnMenuItem(menuInfo.Column, this.adaptable, 'Full', 'sparkline')
     ) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',

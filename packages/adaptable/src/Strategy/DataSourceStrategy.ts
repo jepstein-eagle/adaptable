@@ -11,10 +11,12 @@ export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSo
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.DataSourceStrategyFriendlyName,
-      ComponentName: ScreenPopups.DataSourcePopup,
-      Icon: StrategyConstants.DataSourceGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.DataSourceStrategyFriendlyName,
+        ComponentName: ScreenPopups.DataSourcePopup,
+        Icon: StrategyConstants.DataSourceGlyph,
+      });
+    }
   }
 }

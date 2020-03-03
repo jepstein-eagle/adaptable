@@ -20,25 +20,29 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CellSummaryStrategyFriendlyName,
-      ComponentName: ScreenPopups.CellSummaryPopup,
-      Icon: StrategyConstants.CellSummaryGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.CellSummaryStrategyFriendlyName,
+        ComponentName: ScreenPopups.CellSummaryPopup,
+        Icon: StrategyConstants.CellSummaryGlyph,
+      });
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    let popUpParams: StrategyParams = {
-      source: 'ContextMenu',
-    };
-    if (menuInfo.Column && menuInfo.IsSelectedCell) {
-      menuItemShowPopup = this.createMainMenuItemShowPopup({
-        Label: 'See Cell Summary',
-        ComponentName: ScreenPopups.CellSummaryPopup,
-        Icon: StrategyConstants.CellSummaryGlyph,
-        PopupParams: popUpParams,
-      });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      let popUpParams: StrategyParams = {
+        source: 'ContextMenu',
+      };
+      if (menuInfo.Column && menuInfo.IsSelectedCell) {
+        menuItemShowPopup = this.createMainMenuItemShowPopup({
+          Label: 'See Cell Summary',
+          ComponentName: ScreenPopups.CellSummaryPopup,
+          Icon: StrategyConstants.CellSummaryGlyph,
+          PopupParams: popUpParams,
+        });
+      }
     }
     return menuItemShowPopup;
   }

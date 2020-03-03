@@ -4,6 +4,8 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+import { UserFilter } from '../../PredefinedConfig/UserFilterState';
+import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 
 /**
  * EventArgs sent as part of the on'SearchChanged' Event
@@ -83,9 +85,17 @@ export interface AdaptableSearchState {
    */
   quickSearch: string | undefined;
   /**
-   * Details of any column filters currently applied
+   * Details of any column filters **currently applied**
    */
   columnFilters: ColumnFilter[] | undefined;
+  /**
+   * Details of **all User Filters** in the Adaptable State
+   */
+  userFilters: UserFilter[] | undefined;
+  /**
+   * Details of **all Named Filters** in the Adaptable State
+   */
+  namedFilters: NamedFilter[] | undefined;
 }
 
 /**

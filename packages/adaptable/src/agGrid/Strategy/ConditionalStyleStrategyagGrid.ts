@@ -9,7 +9,8 @@ import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
-import conditionalStyle from '../../components/icons/conditional-style';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
+import { RowNode } from '@ag-grid-community/core';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -74,6 +75,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   public initStyles(): void {
     let columns = this.adaptable.api.gridApi.getColumns();
     let theadaptable = this.adaptable as Adaptable;
+    let shouldRunStyle = this.shouldRunStyle;
     let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
     this.conditionalStyleColumnIds = [];
     this.columnsForConditionalStyles.clear();
@@ -94,12 +96,14 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             : cs.Style.ClassName;
           if (cs.ConditionalStyleScope == 'Column' && cs.ColumnId == column.ColumnId) {
             cellClassRules[styleName] = function(params: any) {
-              return ExpressionHelper.checkForExpressionFromRowNode(
-                cs.Expression,
-                params.node,
-                columns,
-                theadaptable
-              );
+              if (shouldRunStyle(cs, theadaptable, params.node)) {
+                return ExpressionHelper.checkForExpressionFromRowNode(
+                  cs.Expression,
+                  params.node,
+                  columns,
+                  theadaptable
+                );
+              }
             };
           } else if (cs.ConditionalStyleScope == 'ColumnCategory') {
             let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
@@ -108,12 +112,14 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             if (columnCategory) {
               if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                 cellClassRules[styleName] = function(params: any) {
-                  return ExpressionHelper.checkForExpressionFromRowNode(
-                    cs.Expression,
-                    params.node,
-                    columns,
-                    theadaptable
-                  );
+                  if (shouldRunStyle(cs, theadaptable, params.node)) {
+                    return ExpressionHelper.checkForExpressionFromRowNode(
+                      cs.Expression,
+                      params.node,
+                      columns,
+                      theadaptable
+                    );
+                  }
                 };
               }
             }
@@ -136,11 +142,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             */
           } else if (cs.ConditionalStyleScope == 'Row') {
             rowClassRules[styleName] = function(params: any) {
-              let shouldStyleRow: boolean = true;
-              if (cs.ExcludeGroupedRows && theadaptable.isGroupRowNode(params.node)) {
-                shouldStyleRow = false;
-              }
-              if (shouldStyleRow) {
+              if (shouldRunStyle(cs, theadaptable, params.node)) {
                 return ExpressionHelper.checkForExpressionFromRowNode(
                   cs.Expression,
                   params.node,
@@ -168,5 +170,15 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
     // Redraw Adaptableto be on safe side (its rare use case)
     this.adaptable.redraw();
+  }
+  private shouldRunStyle(
+    conditionalStyle: ConditionalStyle,
+    adaptable: IAdaptable,
+    node: RowNode
+  ): boolean {
+    if (conditionalStyle.ExcludeGroupedRows && adaptable.isGroupRowNode(node)) {
+      return false;
+    }
+    return true;
   }
 }

@@ -3,16 +3,16 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 
 import { AdaptableOptions, IAdaptable } from '../types';
 
-export type IAdaptableNoCodeWizardInitFn = ({
+export type AdaptableNoCodeWizardInitFn = ({
   gridOptions,
   adaptableOptions,
 }: {
   gridOptions: GridOptions;
   adaptableOptions: AdaptableOptions;
-}) => IAdaptable | void;
+}) => IAdaptable | null | void;
 
-export interface IAdaptableNoCodeWizardOptions {
-  onInit?: IAdaptableNoCodeWizardInitFn;
+export interface AdaptableNoCodeWizardOptions {
+  onInit?: AdaptableNoCodeWizardInitFn;
   fileAccept?: string;
   defaultActionMessage?: React.ReactNode;
   dragOverActionMessage?: React.ReactNode;

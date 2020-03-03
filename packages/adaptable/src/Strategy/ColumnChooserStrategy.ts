@@ -2,6 +2,7 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -13,19 +14,25 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
-      ComponentName: ScreenPopups.ColumnChooserPopup,
-      Icon: StrategyConstants.ColumnChooserGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
+        ComponentName: ScreenPopups.ColumnChooserPopup,
+        Icon: StrategyConstants.ColumnChooserGlyph,
+      });
+    }
   }
 
-  public addColumnMenuItem(column: AdaptableColumn): AdaptableMenuItem | undefined {
-    return this.createColumnMenuItemShowPopup(
-      'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
-      ScreenPopups.ColumnChooserPopup,
-      StrategyConstants.ColumnChooserGlyph
-    );
+  public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    if (this.canCreateMenuItem('Full')) {
+      return [
+        this.createColumnMenuItemShowPopup(
+          'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
+          ScreenPopups.ColumnChooserPopup,
+          StrategyConstants.ColumnChooserGlyph
+        ),
+      ];
+    }
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

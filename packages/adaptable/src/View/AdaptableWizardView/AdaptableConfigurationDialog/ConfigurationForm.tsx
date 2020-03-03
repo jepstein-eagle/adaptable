@@ -107,7 +107,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
             }}
           />
         </FormRow>
-        {/* 
+        {/*
         <FormRow label="Show Adaptable Tool Panel">
           <CheckBox
             checked={userInterfaceOptions.showAdaptableToolPanel}
@@ -347,34 +347,38 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         </Flex>
       </Flex>
 
-      <HelpBlock>Chart Options</HelpBlock>
-      <FormLayout
-        margin={2}
-        columns={[{ name: 'children' }, { name: 'label', style: { textAlign: 'start' } }]}
-      >
-        <FormRow label="Display Charts On StartUp">
-          <CheckBox
-            checked={chartOptions.displayOnStartUp}
-            onChange={(displayOnStartUp: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.chartOptions = { ...abOptions.chartOptions };
-              abOptions.chartOptions.displayOnStartUp = displayOnStartUp;
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
-        <FormRow label="Show Charts in Popup">
-          <CheckBox
-            checked={chartOptions.showModal}
-            onChange={(showModal: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.chartOptions = { ...abOptions.chartOptions };
-              abOptions.chartOptions.showModal = showModal;
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
-      </FormLayout>
+      {abOptions.plugins && abOptions.plugins.map(p => p.pluginId).indexOf('charts') != -1 ? (
+        <>
+          <HelpBlock>Chart Options</HelpBlock>
+          <FormLayout
+            margin={2}
+            columns={[{ name: 'children' }, { name: 'label', style: { textAlign: 'start' } }]}
+          >
+            <FormRow label="Display Charts On StartUp">
+              <CheckBox
+                checked={chartOptions.displayOnStartUp}
+                onChange={(displayOnStartUp: boolean) => {
+                  abOptions = { ...abOptions };
+                  abOptions.chartOptions = { ...abOptions.chartOptions };
+                  abOptions.chartOptions.displayOnStartUp = displayOnStartUp;
+                  props.onChangeadaptableOptions(abOptions);
+                }}
+              />
+            </FormRow>
+            <FormRow label="Show Charts in Popup">
+              <CheckBox
+                checked={chartOptions.showModal}
+                onChange={(showModal: boolean) => {
+                  abOptions = { ...abOptions };
+                  abOptions.chartOptions = { ...abOptions.chartOptions };
+                  abOptions.chartOptions.showModal = showModal;
+                  props.onChangeadaptableOptions(abOptions);
+                }}
+              />
+            </FormRow>
+          </FormLayout>
+        </>
+      ) : null}
       <Flex flexDirection="row" alignItems="center" margin={2}>
         <Text style={{ flex: 3 }} marginRight={2}>
           Pie Chart Maximum Items

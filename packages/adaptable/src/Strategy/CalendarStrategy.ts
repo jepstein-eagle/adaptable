@@ -11,10 +11,12 @@ export class CalendarStrategy extends AdaptableStrategyBase implements ICalendar
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    return this.createMainMenuItemShowPopup({
-      Label: StrategyConstants.CalendarStrategyFriendlyName,
-      ComponentName: ScreenPopups.CalendarsPopup,
-      Icon: StrategyConstants.CalendarGlyph,
-    });
+    if (this.canCreateMenuItem('ReadOnly')) {
+      return this.createMainMenuItemShowPopup({
+        Label: StrategyConstants.CalendarStrategyFriendlyName,
+        ComponentName: ScreenPopups.CalendarsPopup,
+        Icon: StrategyConstants.CalendarGlyph,
+      });
+    }
   }
 }

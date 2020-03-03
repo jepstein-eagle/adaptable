@@ -66,9 +66,6 @@ export class ConditionalStyleSummaryWizard
   }
 
   private getExcludedGroupedRows(): string {
-    if (this.props.Data.ConditionalStyleScope !== 'Row') {
-      return 'N/A';
-    }
     return this.props.Data.ExcludeGroupedRows != null &&
       this.props.Data.ExcludeGroupedRows != undefined &&
       this.props.Data.ExcludeGroupedRows == true
