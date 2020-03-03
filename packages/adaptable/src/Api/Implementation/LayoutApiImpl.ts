@@ -15,7 +15,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   }
 
   public setLayout(layoutName: string): void {
-    if (this.isCorrectlyEntitled('Layout', 'Hidden', 'Select Layout')) {
+    if (this.isCorrectlyEntitled('Layout', 'ReadOnly', 'Select Layout')) {
       if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
         let layout: Layout = this.getAdaptableState().Layout.Layouts.find(
           l => l.Name == layoutName

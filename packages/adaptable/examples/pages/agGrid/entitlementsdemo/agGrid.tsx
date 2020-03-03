@@ -111,6 +111,14 @@ let demoConfig: PredefinedConfig = {
         AccessLevel: 'ReadOnly',
       },
       {
+        FunctionName: 'SmartEdit',
+        AccessLevel: 'ReadOnly',
+      },
+      {
+        FunctionName: 'Layout',
+        AccessLevel: 'ReadOnly',
+      },
+      {
         FunctionName: 'BulkUpdate',
         AccessLevel: 'Hidden',
       },

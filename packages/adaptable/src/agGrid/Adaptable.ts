@@ -2205,7 +2205,6 @@ export class Adaptable implements IAdaptable {
       // Note: I know it will be triggered as well when cancelling an edit but I don't think it's a prb
       this._currentEditor = undefined;
 
-      console.log(params);
       if (params && params.node) {
         let column = params.column;
         // for numeric columns we want to make sure its a numeric update in case they have aggregation

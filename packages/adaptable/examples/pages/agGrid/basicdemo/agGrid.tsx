@@ -42,7 +42,7 @@ function InitAdaptableDemo() {
   };
 
   adaptableOptions.layoutOptions = {
-    autoSizeColumnsInLayout: true,
+    //   autoSizeColumnsInLayout: true,
   };
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
@@ -77,15 +77,27 @@ let demoConfig: PredefinedConfig = {
     }, //
   },
   Layout: {
-    CurrentLayout: 'Layout One',
+    CurrentLayout: 'Layout Two',
     Layouts: [
       {
-        Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
+        Columns: ['country', 'currency'],
         Name: 'Layout One',
       },
-
       {
-        Columns: ['bid', 'ask', 'notional', 'country', 'tradeId', 'currency', 'counterparty'],
+        Columns: ['lastUpdated', 'tradeId'],
+        Name: 'Layout Three',
+      },
+      {
+        Columns: [
+          'lastUpdated',
+          'bid',
+          'ask',
+          'notional',
+          'country',
+          'tradeId',
+          'currency',
+          'counterparty',
+        ],
         Name: 'Layout Two',
       },
     ],
@@ -107,7 +119,7 @@ let demoConfig: PredefinedConfig = {
       },
       {
         FunctionName: 'Layout',
-        AccessLevel: 'ReadOnly',
+        AccessLevel: 'Full',
       },
       {
         FunctionName: 'CustomSort',
