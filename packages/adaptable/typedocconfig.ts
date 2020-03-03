@@ -1,7 +1,7 @@
 module.exports = {
   src: ['./src/'],
   mode: 'modules',
-  includeDeclarations: false,
+  includeDeclarations: true,
   exclude: [
     './src/agGrid/**/*',
     './src/View/**/*',
