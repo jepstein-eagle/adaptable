@@ -52,8 +52,8 @@ These are the Functions currently in AdapTable together with relevant UI-related
 Scroll down for a detailed summary of each Function together with relevant links.
 
 | Function  	             | Wizard    | Toolbar         | ToolPanel            | Column Menu      | Context Menu  |
-|----------------	         |---------------------------------------------	                                                                                    |  
-| Advanced Search            | Saveable cross-column search that uses an Expresssion with multiple possible criteria (e.g. Column Values, Filters, Ranges etc)  |
+| --------  	             | ------    | -------         | ---------            | -----------      | ------------  |
+| Advanced Search          | Yes.      |Yes.             | Yes.                 | Yes.             | Yes.          |
  
 
 We list here each Function alphabetically.
