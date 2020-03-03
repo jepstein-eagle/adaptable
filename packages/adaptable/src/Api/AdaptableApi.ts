@@ -90,7 +90,6 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [columnCategoryApi](#columncategoryApi)             | Manages putting columns into [Column Categories](_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
  *  |
  */
-
 export interface AdaptableApi {
   /**
    * Provides access to the Action Column functionality, the *ActionColumn* object.
