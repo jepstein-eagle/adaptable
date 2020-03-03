@@ -16,12 +16,23 @@ Many Functions contain an array of Objects that users can create, edit or delete
 
 There are a number of different ways in which end-Users will interact with Functions in the AdapTable UI:
 
-- Most Functions have a dedicated 'popup' screen.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which perform actions (e.g SmartEdit, BulkUpdate) will enable this.
+- Most Functions have a dedicated **popup screen**.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which perform actions (e.g SmartEdit, BulkUpdate) will enable this.
 
-- Some Functions provide 'Toolbars' which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used Functions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the Dashboard Function.
+- Some Functions provide **Toolbars** which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used Functions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the Dashboard Function.
 
-- are typically managed via 'Wizards' in the AdapTable UI.
+- The AdapTable ToolPanel (at the side of the grid) contains a number of **ToolPanels**.  Like toolbars, these provide ready access to common functionality (the same Functions generally provide Toolbars and ToolPanels).
 
+- Functions which offer objects that can be created / edited / deleted do so via **Function Wizards**.  These provide a step-by-step way to edit the sometimes complex objects that can be created.
+
+- Many Functions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
+
+### Entitlements
+
+There are a nu
+
+### Predefined Config / State
+
+There are a nu
 These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
 
 
