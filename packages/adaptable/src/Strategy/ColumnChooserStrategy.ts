@@ -2,7 +2,6 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
-import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
@@ -14,7 +13,7 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
+    if (this.canCreateMenuItem('Full')) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
         ComponentName: ScreenPopups.ColumnChooserPopup,

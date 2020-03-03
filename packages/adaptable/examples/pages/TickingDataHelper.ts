@@ -198,7 +198,6 @@ export class TickingDataHelper {
 
   useTickingDataTreeGrid(gridOptions: any, adaptableApi: AdaptableApi, tickingFrequency: number) {
     if (gridOptions != null && gridOptions.api != null) {
-      const examplesHelper = new ExamplesHelper();
       let govIds: number[] = [
         1,
         2,

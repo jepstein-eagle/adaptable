@@ -15,6 +15,7 @@ import {
   RowNodeTransaction,
   ModelUpdatedEvent,
   IClientSideRowModel,
+  GridApi,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -83,7 +84,7 @@ import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
+import { LoggingHelper, LogAdaptableError } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -901,7 +902,10 @@ export class Adaptable implements IAdaptable {
   }
 
   public getPrimaryKeyValueFromRowNode(rowNode: RowNode): any {
-    return this.gridOptions.api!.getValue(this.adaptableOptions!.primaryKey, rowNode);
+    let gridApi: GridApi = this.getGridOptionsApi();
+    if (gridApi) {
+      return gridApi.getValue(this.adaptableOptions!.primaryKey, rowNode);
+    }
   }
 
   public gridHasCurrentEditValue(): boolean {
@@ -3473,10 +3477,17 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
   private getState(): AdaptableState {
     return this.AdaptableStore.TheStore.getState();
   }
-}
 
-//export const init = (adaptableOptions: AdaptableOptions): AdaptableApi =>
-//  Adaptable.init(adaptableOptions);
+  private getGridOptionsApi(): GridApi {
+    if (!this.gridOptions.api) {
+      LogAdaptableError(
+        'There is a problem with your instance of ag-Grid - it has no gridApi object.  Please contact Support.'
+      );
+      return;
+    }
+    return this.gridOptions.api!;
+  }
+}
 
 export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
   private init: AdaptableNoCodeWizardInitFn;

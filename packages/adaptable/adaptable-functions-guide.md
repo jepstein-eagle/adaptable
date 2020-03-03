@@ -1,8 +1,19 @@
 # AdapTable Functions Guide
 
-AdapTable ships with a number of different Functions (currently about 40) - each of which performs a different discrete action of set of functionality.
+AdapTable ships with many **Functions** (currently about 40) - each of which relatest to a discrete 'action' of set of functionality.
 
-Most End-User action in AdapTable will be via Functions - either performing an Action (e.g. Quick Search, Smart Edit, Shortcut) or creating / editing an AdaptableObject for use in Function (e.g. Advanced Search, Layout, ConditionalStyle etc.)
+Most End-User action in AdapTable will be via Functions.  
+
+Some Functions will perform an action (e.g. Quick Search, Smart Edit).
+
+Other Functions will
+
+All Functions are subject to Entitlements, meaning that end-users will only be able to access them according to their permissions.
+
+Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow).
+
+These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
+
 
 ## Functions List
 
@@ -10,9 +21,8 @@ These are the Functions currently in AdapTable together with relevant informatio
 (see below for a detailed summary of each Function together with relevant links).
 
 | Function  	             | Description                                                                                                                      |
-|----------------	         |---------------------------------------------	                                                                                    |
-| Action Column            | 'Special Column' that displays a Button which when clicked fires an event for you to handle.                                     |  
-| Advanced Search          | Saveable cross-column search that uses an Expresssion with multiple possible criteria (e.g. Column Values, Filters, Ranges etc)  |
+|----------------	         |---------------------------------------------	                                                                                    |  
+| Advanced Search            | Saveable cross-column search that uses an Expresssion with multiple possible criteria (e.g. Column Values, Filters, Ranges etc)  |
  
 
 We list here each Function alphabetically.
