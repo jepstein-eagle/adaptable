@@ -1,33 +1,106 @@
 # AdapTable Functions Guide
 
-AdapTable ships with many **Functions** (currently about 40) - each of which relates to a discrete 'action' or set of functionality.
+AdapTable ships with 40 **Functions** - each relating to a discrete 'action' or set of functionality.
 
-Most End-User action in AdapTable will be via Functions.  
+Most End-User action in AdapTable will be via Functions.
 
 Some Functions will perform an action (e.g. Quick Search, Smart Edit).
 
 Other Functions will
 
-All Functions are subject to Entitlements, meaning that end-users will only be able to access them according to their permissions.
+Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. AdvancedSearch, ConditionalStyle, PercentBars etc.
 
-Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow).  
+### Functions UI
+
+There are a number of different ways in which end-Users will interact with Functions in the AdapTable UI:
+
+- Most Functions have a dedicated **popup screen**.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which perform actions (e.g SmartEdit, BulkUpdate) will enable this.
+
+- Some Functions provide **Toolbars** which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used Functions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the Dashboard Function.
+
+- Functions can also provide **ToolPanels** to be hosted in the AdapTable ToolPanel (at the side of the grid). Like toolbars, these provide ready access to common functionality (the same Functions generally provide both).
+
+- Functions which offer objects that can be created / edited / deleted do so via **Function Wizards**.  These provide a step-by-step way to edit the sometimes complex objects that can be created.
+
+- Many Functions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
+
+
+| Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
+| --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
+| Advanced Search          | Yes       | Yes      | Yes        | No          | No            |
+| Alert                    | Yes       | Yes      | Yes        | No          | Yes           | 
+| Bulk Update              | No        | Yes      | Yes        | No          | Yes           | 
+| Calculated Column        | Yes       | No       | No         | Yes         | No            | 
+| Calendar                 | No        | No       | No         | No          | No            | 
+| Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
+| Cell Validation          | Yes       | No       | No         | Yes         | No            | 
+| Column Category          | No        | No       | No         | No          | No            | 
+| Column Chooser           | No        | No       | No         | Yes         | Yes           | 
+| Column Filter            | No        | Yes      | Yes        | Yes         | Yes           | 
+| Column Info              | No        | No       | No         | Yes         | Yes           | 
+| Conditional Style        | Yes       | No       | No         | Yes         | No            | 
+| Custom Sort              | Yes       | No       | No         | Yes         | No            | 
+| Dashboard                | No        | No       | No         | Yes         | No            | 
+| Data Source              | Yes       | Yes      | Yes        | No          | No            | 
+| Export                   | Yes       | Yes      | Yes        | No          | No            | 
+| Flashing Cell            | No        | No       | No         | Yes         | No            | 
+| Format Column            | Yes       | No       | No         | Yes         | No            | 
+| Free Text                | Yes       | No       | No         | Yes         | No            | 
+| Glue42                   | No        | Yes      | Yes        | No          | No            |
+| Gradient Column          | Yes       | No       | No         | Yes         | Yes           |
+| Grid Info                | No        | No       | No         | Yes         | Yes           |
+| Layout                   | Yes       | Yes      | Yes        | No          | No            |
+| Percent Bar              | Yes       | No       | No         | Yes         | Yes           |
+| Plus Minus               | Yes       | No       | No         | Yes         | No            |
+| PushPull                 | No        | Yes      | Yes        | No          | No            |
+| Quick Search             | No        | Yes      | Yes        | No          | No            |
+| Reminder                 | No        | No       | No         | No          | No            |
+| Schedule                 | Yes       | No       | No         | No          | No            |
+| Shortcut                 | Yes       | No       | No         | No          | No            |
+| Smart Edit               | No        | Yes      | Yes        | No          | Yes           |
+| System Status            | No        | Yes      | Yes        | Yes         | Yes           |
+| Team Sharing             | No        | No       | No         | No          | No            |
+| Theme                    | No        | Yes      | Yes        | No          | No            |
+| Updated Row              | No        | No       | No         | Yes         | Yes           |
+| User Filter              | Yes       | No       | No         | Yes         | No            |
+
+#### Chart Functions (plugin)
+
+| Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
+| --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
+| Chart                    | Yes       | Yes      | Yes        | No          | No            |
+| Pie Chart (View As)      | No        | No       | No         | Yes         | Yes           |
+| Sparkline (View As)      | No        | No       | No         | Yes         | Yes           |
+| Sparkline Column         | No        | No       | No         | Yes         | Yes           |
+
+
+### Entitlements
+
+All Functions are subject to Entitlements.  
+
+This means that end-users will only be able to access a Function according to their permissions.
+
+Each Function can be given an Entitlement of *Full*, *ReadOnly* or *Hidden*. 
+
+See Entitlements State in the Developer Documentation for more information.
+
+### Predefined Config / State
+
+Design-time Users are able to pre-populate AdapTable with Predefined Config - this is the *Adaptable State* that will be available when the application first loads.
+
+There are a huge number of sections in Predefined Config, the majority of which are Function-related.
+
+Nearly every Function has its own section / property in PredefinedConfig, and it will always have the same name.  
+
+For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort Function through the 'CustomSort' section of Predefined Config.
+
 
 ## Functions List
 
-These are typically managed via 'Wizards' in the AdapTable UI.
+These are the Functions currently in AdapTable together with relevant UI-related information.
 
-These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
+Scroll down for a detailed summary of each Function together with relevant links.
 
-
-## Functions List
-
-These are the Functions currently in AdapTable together with relevant information
-(see below for a detailed summary of each Function together with relevant links).
-
-| Function  	             | Description                                                                                                                      |
-|----------------	         |---------------------------------------------	                                                                                    |  
-| Advanced Search            | Saveable cross-column search that uses an Expresssion with multiple possible criteria (e.g. Column Values, Filters, Ranges etc)  |
- 
 
 We list here each Function alphabetically.
 
