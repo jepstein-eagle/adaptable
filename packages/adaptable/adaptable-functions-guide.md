@@ -1,16 +1,16 @@
 # AdapTable Functions Guide
 
-AdapTable ships with many **Functions** (currently about 40) - each of which relates to a discrete 'action' or set of functionality.
+AdapTable ships with many **Functions** (currently about 40).
 
-Most End-User action in AdapTable will be via Functions.  
+Each Function relates to a discrete 'action' or set of functionality.
+
+Most End-User action in AdapTable will be via Functions.
 
 Some Functions will perform an action (e.g. Quick Search, Smart Edit).
 
 Other Functions will
 
-All Functions are subject to Entitlements, meaning that end-users will only be able to access them according to their permissions.
-
-Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow).  
+Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. AdvancedSearch, ConditionalStyle, PercentBars etc.
 
 ### Functions UI
 
@@ -20,7 +20,7 @@ There are a number of different ways in which end-Users will interact with Funct
 
 - Some Functions provide **Toolbars** which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used Functions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the Dashboard Function.
 
-- The AdapTable ToolPanel (at the side of the grid) contains a number of **ToolPanels**.  Like toolbars, these provide ready access to common functionality (the same Functions generally provide Toolbars and ToolPanels).
+- Functions can also provide **ToolPanels** to be hosted in the AdapTable ToolPanel (at the side of the grid). Like toolbars, these provide ready access to common functionality (the same Functions generally provide both).
 
 - Functions which offer objects that can be created / edited / deleted do so via **Function Wizards**.  These provide a step-by-step way to edit the sometimes complex objects that can be created.
 
@@ -28,11 +28,18 @@ There are a number of different ways in which end-Users will interact with Funct
 
 ### Entitlements
 
-There are a nu
+All Functions are subject to Entitlements.  
+
+This means that end-users will only be able to access them according to their permissions.
+
+Each Function can be given an Entitlement of 'Full', 'ReadOnly' or 'Hidden'. 
+
+See Entitlements State in the Developer Documentation for more information.
 
 ### Predefined Config / State
 
-There are a nu
+Design-time Users are able to pre-populate AdapTable with Predefined Config - this
+
 These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
 
 
