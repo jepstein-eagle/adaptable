@@ -1,6 +1,6 @@
 # AdapTable Functions Guide
 
-AdapTable ships with many **Functions** (currently about 40) - each of which relatest to a discrete 'action' of set of functionality.
+AdapTable ships with many **Functions** (currently about 40) - each of which relates to a discrete 'action' or set of functionality.
 
 Most End-User action in AdapTable will be via Functions.  
 
@@ -10,7 +10,11 @@ Other Functions will
 
 All Functions are subject to Entitlements, meaning that end-users will only be able to access them according to their permissions.
 
-Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow).
+Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow).  
+
+## Functions List
+
+These are typically managed via 'Wizards' in the AdapTable UI.
 
 These objects can usually be pre-populated via Predefined Config, and the section will the same as the Function Name (e.g. AdvancedSearch, ConditionalStyle etc.)
 
