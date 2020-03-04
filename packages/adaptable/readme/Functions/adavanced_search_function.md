@@ -9,7 +9,7 @@ Advanced Searches are named and saved and, therefore, available for re-use.
 ### UI Elements
 Advanced Search includes the following UI Elements:
 
-- Popup
+- **Popup** - Shows a list of existing Advanced Searches with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Advanced Search Wizard.
 
 - Bah
 
@@ -18,9 +18,9 @@ Advanced Search supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
 
-- **Hidden**: Everything is available to the User
+- **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: Everything is available to the User
+- **ReadOnly**: The User can run any Advanced Searches provided in Predefined Config but not edit or delete them or add others.
 
 ### Further Information
 Links to other resources
