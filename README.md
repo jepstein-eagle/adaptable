@@ -156,7 +156,7 @@ We have added a few example projects to Github to help you to understand how to 
 These include:
 * [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
  
-* [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+* [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
   
 * [Building Minifed File (with parcel.js) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
    
