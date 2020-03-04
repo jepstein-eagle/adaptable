@@ -1,16 +1,15 @@
 # Advanced Search (AdaptableFunction)
 
-Advanced Search enables you to build searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
+Advanced Search ( [AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): AdvancedSearch) enables you to build complex searches using [*Expressions*](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_expression_.html) (aka Queries)
 
-These searched are named and saved and, therefore, available for re-use.
+These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 
-Advanced Search uses an [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) (aka Queries) for evaluation.
- 
+Advanced Searches are named and saved and, therefore, available for re-use.
 
-#### UI Elements
-Links to other resources
+### UI Elements
+Advanced Search
 
-#### UI Elements
+#### Entitlements
 Links to other resources
 
 #### Links
