@@ -22,12 +22,12 @@ There are a number of different ways in which end-Users will interact with Adapt
 
 This table lists all the AdaptableFunctions and which UI elements they support:
 
-| AdaptableFunction  	     | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
-| --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
-| Advanced Search          | Yes       | Yes      | Yes        | No          | No            |
-| Alert                    | Yes       | Yes      | Yes        | No          | Yes           | 
-| Bulk Update              | No        | Yes      | Yes        | No          | Yes           | 
-| Calculated Column        | Yes       | No       | No         | Yes         | No            | 
+| AdaptableFunction  	                                                | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
+| --------  	                                                        | ------    | -------  | ---------  | ----------- | ------------  |
+| [AdvancedSearch](./Functions/adavanced_search_function.md)            | Yes       | Yes      | Yes        | No          | No            |
+| Alert                                                                 | Yes       | Yes      | Yes        | No          | Yes           | 
+| Bulk Update                                                           | No        | Yes      | Yes        | No          | Yes           | 
+| Calculated Column                                                     | Yes       | No       | No         | Yes         | No            | 
 | Calendar                 | No        | No       | No         | No          | No            | 
 | Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
 | Cell Validation          | Yes       | No       | No         | Yes         | No            | 
@@ -90,24 +90,6 @@ There are a huge number of sections in Predefined Config, the majority of which 
 Nearly every AdaptableFunctions has its own section / property in PredefinedConfig, and it will always have the same name.  
 
 For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort AdaptableFunction through the 'CustomSort' section of Predefined Config.
-
-
-## Functions List
-
-These are the AdaptableFunctions currently available in AdapTable listed alphabetically:
-
-### Advanced Search
-
-Advanced Searches use Expressions blah
-
-#### UI Elements
-Links to other resources
-
-#### UI Elements
-Links to other resources
-
-#### Links
-Links to other resources
 
 
 ## Demo
