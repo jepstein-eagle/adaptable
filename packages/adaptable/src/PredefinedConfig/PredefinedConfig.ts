@@ -68,7 +68,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Most objects in PredefinedConfig implement the [`AdaptableObject`](_src_predefinedconfig_common_adaptableobject_.adaptableobject.html) interface.
  *
- * This has a single `Uuid` [`Uuid`](_src_predefinedconfig_common_adaptableobject_.adaptableobject.html#uuid) property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted..
+ * This has a single [`Uuid`](_src_predefinedconfig_common_adaptableobject_.adaptableobject.html#uuid) property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted..
  *
  * This is included by AdapTable in all base objects and also frequently used objects like Expressions.
  *
