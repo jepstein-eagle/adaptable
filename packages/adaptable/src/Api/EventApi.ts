@@ -12,7 +12,7 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
 /**
  * AdapTable publishes a large number of events to which users can subscribe as required.
  *
- * Note: these are in addition to the [Audit Events](_api_auditeventapi_.auditeventapi.html) which are only published if Audit Log has been enabled.
+ * Note: these are in addition to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) which are only published if Audit Log has been enabled.
  *
  * **AdapTable Events**
  *

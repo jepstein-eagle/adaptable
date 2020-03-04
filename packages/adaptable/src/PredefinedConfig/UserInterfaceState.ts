@@ -32,7 +32,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * - [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo/)
  *
- * - [User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
+ * - [User Interface API](_src_api_userinterfaceapi_.userinterfaceapi.html)
  *
  * - [User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
  **/
@@ -262,7 +262,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * 1. Through a standard 'hard-coded' array:
    *
-   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
+   * 2. Via a function which receives a [`MenuInfo`](_src_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
    *
    * The Signature of the function is:
    *
@@ -342,7 +342,7 @@ export interface UserInterfaceState extends DesignTimeState {
    * } as PredefinedConfig;
    * ```
    *
-   *  If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
+   *  If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
    *
    * **Default Value**:  Empty array
    */
@@ -357,7 +357,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * 1. Through a standard 'hard-coded' array:
    *
-   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
+   * 2. Via a function which receives a [`MenuInfo`](_src_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
    *
    * The Signature of the function is:
    *
@@ -437,7 +437,7 @@ export interface UserInterfaceState extends DesignTimeState {
    * } as PredefinedConfig;
    * ```
    *
-   *  If you want to control which, if any, of the pre-shipped Adaptable Context Menu items are displayed use the [showAdaptableContextMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecontextmenu) property in UserInterfaceOptions.
+   *  If you want to control which, if any, of the pre-shipped Adaptable Context Menu items are displayed use the [showAdaptableContextMenu](_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecontextmenu) property in UserInterfaceOptions.
    *
    * **Default Value**:  Empty array
    */
@@ -495,7 +495,7 @@ export interface EditLookUpColumn {
  */
 export interface RowStyle {
   /**
-   * The `AdaptableStyle` to use for the Row. For more details see the [Style](_predefinedconfig_common_istyle_.istyle.html) object.
+   * The `AdaptableStyle` to use for the Row. For more details see the [Style](_src_predefinedconfig_common_istyle_.istyle.html) object.
    */
   Style: AdaptableStyle;
 

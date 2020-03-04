@@ -3,7 +3,7 @@
  *
  * ConfigServer enables you to save user state **remotely** (the default is to save state in local storage).
  *
- * Note that AdapTable also provides **[state lifecycle management functions](_adaptableoptions_stateoptions_.stateoptions.html)** which provides a superior and more flexible alternative to Config Server.  These allow you full control over managing state hydration, rehydration and persisttence and are now generally preferred by advanced users.
+ * Note that AdapTable also provides **[state lifecycle management functions](_src_adaptableoptions_stateoptions_.stateoptions.html)** which provides a superior and more flexible alternative to Config Server.  These allow you full control over managing state hydration, rehydration and persisttence and are now generally preferred by advanced users.
  *
  * To use ConfigServer you need to set the ​​`enableConfigServer​` property to ​true​ and also provide a value for the ​`configServerUrl`​ property (where your config will be stored).
  *

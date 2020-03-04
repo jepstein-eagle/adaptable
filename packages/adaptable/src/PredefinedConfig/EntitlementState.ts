@@ -9,7 +9,7 @@ import { AdaptableFunctionName } from './Common/Types';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_api_entitlementsapi_.entitlementsapi.html)
+ * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_src_api_entitlementsapi_.entitlementsapi.html)
  *
  *  Entitlements work at the Function Level.  Each Enitlemet has 3 potential `AccessLevel` values:
  *
@@ -122,7 +122,7 @@ export interface EntitlementState extends DesignTimeState {
 }
 
 /**
- * The object used in the [Entitlement](_predefinedconfig_entitlementstate_.entitlementstate.html) section of Predefined Config.
+ * The object used in the [Entitlement](_src_predefinedconfig_entitlementstate_.entitlementstate.html) section of Predefined Config.
  */
 export interface Entitlement {
   /**

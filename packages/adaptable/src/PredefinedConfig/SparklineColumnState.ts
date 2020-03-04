@@ -10,7 +10,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/column/aggridsparklinecolumnsdemo/) | [API](_api_sparklinecolumnapi_.sparklinecolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002449478-Sparkline-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002449498-Sparkline-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/column/aggridsparklinecolumnsdemo/) | [API](_src_api_sparklinecolumnapi_.sparklinecolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002449478-Sparkline-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002449498-Sparkline-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
  * **Sparkline Column Predefined Config Example**
  *

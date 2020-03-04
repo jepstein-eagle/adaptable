@@ -16,7 +16,7 @@ export interface FormatColumn extends AdaptableObject {
   ColumnId: string;
 
   /**
-   * The Style to apply to the Column.  See [Style](_predefinedconfig_common_istyle_.istyle.html) for more details.
+   * The Style to apply to the Column.  See [Style](_src_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
   Style: AdaptableStyle;
 }

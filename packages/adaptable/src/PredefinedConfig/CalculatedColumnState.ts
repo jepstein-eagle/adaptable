@@ -18,7 +18,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo/)
  *
- * [Calculated Column API](_api_calculatedcolumnapi_.calculatedcolumnpi.html)
+ * [Calculated Column API](_src_api_calculatedcolumnapi_.calculatedcolumnpi.html)
  *
  * [Calculated Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078351-Calculated-Column-FAQ)
  *

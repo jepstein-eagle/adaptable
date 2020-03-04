@@ -30,23 +30,23 @@ import { ExportOptions } from './ExportOptions';
  *  | Option  	                                                                                          | Mandatory   | Details                                     	                |
  *  |----------------	                                                                                    |-----------  |---------------------------------------------	                |
  *  | [adaptableId](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableid)                | No	        | A unique ID for this instance of AdapTable	                  |
- *  | [predefinedConfig](_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with AdapTable instance for first use      |
- *  | [primaryKey](_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of a column guaranteed to contain unique contents        |
- *  | [userName](_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current AdapTable user (useful for Audit purposes)      	|
- *  | [vendorGrid](_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. *GridOptions* for ag-Grid)|
- *  | [auditOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|
- *  | [chartOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartoptions)               | No	        | Chart-based options (used when using chart plugin)           	|
- *  | [configServerOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions)| No	        | Options related to Config Server (external state management)  |
- *  | [editOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                | No	        | Editing (and server-editing) related options                  |
- *  | [exportOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)            | No	        | Export and reporting related options                          |
- *  | [filterOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in AdapTable      |
- *  | [generalOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
- *  | [layoutOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
- *  | [queryOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
- *  | [searchOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching)   |
- *  | [stateOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage AdapTable State    |
- *  | [userInterfaceOptions](_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions (e.g. menus, toolbars)       |
- *  | [plugins](_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the AdapTable plugins (e.g. charting, finance)|
+ *  | [predefinedConfig](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with AdapTable instance for first use      |
+ *  | [primaryKey](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of a column guaranteed to contain unique contents        |
+ *  | [userName](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current AdapTable user (useful for Audit purposes)      	|
+ *  | [vendorGrid](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. *GridOptions* for ag-Grid)|
+ *  | [auditOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|
+ *  | [chartOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartoptions)               | No	        | Chart-based options (used when using chart plugin)           	|
+ *  | [configServerOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions)| No	        | Options related to Config Server (external state management)  |
+ *  | [editOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                | No	        | Editing (and server-editing) related options                  |
+ *  | [exportOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)            | No	        | Export and reporting related options                          |
+ *  | [filterOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in AdapTable      |
+ *  | [generalOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
+ *  | [layoutOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
+ *  | [queryOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
+ *  | [searchOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching)   |
+ *  | [stateOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage AdapTable State    |
+ *  | [userInterfaceOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions (e.g. menus, toolbars)       |
+ *  | [plugins](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the AdapTable plugins (e.g. charting, finance)|
  *
  */
 export interface AdaptableOptions {
@@ -72,7 +72,7 @@ export interface AdaptableOptions {
    *
    * Can be either an *PredefinedConfig* object or a url to the file which contains the config.
    *
-   * See full details at [Predefined Configuration](_predefinedconfig_predefinedconfig_.predefinedconfig.html)
+   * See full details at [Predefined Configuration](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html)
    *
    * **Default Value: undefined**
    */
@@ -91,9 +91,9 @@ export interface AdaptableOptions {
    *
    * Note: The column does not need to be visible but it **does need to exist in the grid's data source**.
    *
-   * If the [​`​​showMissingPrimaryKeyWarning`​](_adaptableoptions_generaloptions_.generaloptions.html#showmissingprimarykeywarning) ​​property is true (the default), AdapTable will warn you at start-up if you have provided a value which does ​​not ​​match a column in the grid.
+   * If the [​`​​showMissingPrimaryKeyWarning`​](_src_adaptableoptions_generaloptions_.generaloptions.html#showmissingprimarykeywarning) ​​property is true (the default), AdapTable will warn you at start-up if you have provided a value which does ​​not ​​match a column in the grid.
    *
-   * If the [​`​​preventDuplicatePrimaryKeyValues​​`​](_adaptableoptions_generaloptions_.generaloptions.html#preventduplicateprimarykeyvalues​​) ​​property is true (the default), an error alert is triggered (and displayed) if a user attempts to enter a duplicate value into the Primary Key column.
+   * If the [​`​​preventDuplicatePrimaryKeyValues​​`​](_src_adaptableoptions_generaloptions_.generaloptions.html#preventduplicateprimarykeyvalues​​) ​​property is true (the default), an error alert is triggered (and displayed) if a user attempts to enter a duplicate value into the Primary Key column.
    *
    * **Default Value: N/A**
    */
@@ -156,7 +156,7 @@ export interface AdaptableOptions {
    *
    * - **Alert**: If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
    *
-   * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_api_auditeventapi_.auditeventapi.html)
+   * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_src_api_auditeventapi_.auditeventapi.html)
    *
    */
   auditOptions?: AuditOptions;
