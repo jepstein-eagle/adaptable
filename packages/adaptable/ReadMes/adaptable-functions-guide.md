@@ -96,10 +96,17 @@ For example, you can ship AdapTable with pre-created Custom Sorts for use in the
 
 These are the AdaptableFunctions currently available in AdapTable listed alphabetically:
 
-### Action Column
+### Advanced Search
 
-Stuff here about Action Column
+Advanced Searches use Expressions blah
 
+#### UI Elements
+Links to other resources
+
+#### UI Elements
+Links to other resources
+
+#### Links
 Links to other resources
 
 
