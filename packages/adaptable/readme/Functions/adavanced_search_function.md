@@ -4,7 +4,7 @@ The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools
 
 These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 
-When you apply the Advanced Search AdapTable will only display those rows that match all of the Conditions in the Query. (For more information on creating queries see Queries).
+When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
 
 Advanced Searches are named and saved and, therefore, available for re-use.
 
@@ -13,7 +13,13 @@ Advanced Search includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Advanced Searches with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Advanced Search Wizard.
 
-- Bah
+- **Advanced Search Wizard** - A series of steps facilitating the creation and editing of Advanced Searches.
+
+- **Toolbar** - Provides a list of the available Advanced Searches in a dropdown, together with buttons for adding / adding / deleting.
+
+- **Tool Panel** - Same as Toolbar above.
+
+- **Menu Items** - None.
 
 ### Entitlements
 Advanced Search supports these Entitlement Rules:
@@ -24,29 +30,30 @@ Advanced Search supports these Entitlement Rules:
 
 - **ReadOnly**: The User can run any Advanced Searches provided in Predefined Config but not edit or delete them or add others.
 
-Can we apply searches on the server?
+### Entitlements
+**Can we apply searches on the server?**
 
-Not currently, but this will be possible in the AdapTable Server Edition which is scheduled to be released in late 2020.
+Yes, through setting the [ServerSearchOption](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) in SearchOptions.
 
-Can we ship the application to users with existing searches?
+**Does Advanced Search update if I edit the data in the grid?**
 
-Yes. You can create as many 'predefined' Adaptable Objects as you require, including Advanced Searches.
+Yes, as soon as you make an edit AdapTable will re-evaluate if that row should be visible or not and react accordingly.
 
-Does Advanced Search update if I edit the data in the grid?
+Note that this is the default behaviour. You can change this to Never, or only after a ThrottleDelay by setting the 
+[filterActionOnUserDataChange](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_filteroptions_.filteroptions.html#filteractiononuserdatachange) property in FilterOptions.
 
-Yes it does. As soon as you make an edit AdapTable will re-evaluate if that row should be visible or not and react accordingly.
+**Does Advanced Search update if the underlying data changes?**
 
-Note that this is the default behaviour. You can change this to Never, or only after a ThrottleDelay by setting the filterActionOnUserDataChange property in Adaptable Options. See Filter Options for more information.
+That depends on what you have specified for the  property in Adaptable Options.
+[filterActionOnExternalDataChange](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_filteroptions_.filteroptions.html#filteractiononexternaldatachange) property in FilterOptions.
 
-Does Advanced Search update if the underlying data changes?
-
-That depends on what you have specified for the filterActionOnExternalDataChange property in Adaptable Options.
-
-The default is Never meaning that it wont update as ticking data changes or the underlying data set changes. But you can change this to Always or after a ThrottleDelay. See Layout Options for more information.
+The default is Never meaning that it wont update as ticking data changes or the underlying data set changes. But you can change this to Always or after a ThrottleDelay.
 
 ### Further Information
-Links to other resources
+- [Advanced Search State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)
 
-### Demo
+- [Advanced Search Api](https://api.adaptabletools.com/interfaces/_src_api_advancedsearchapi_.advancedsearchapi.html)
 
-Visit our [Demo Site](https://demo.adaptabletools.com) to see many of the AdaptableFunctions in AdapTable in action.
+- [Search Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html)
+
+- [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo)
