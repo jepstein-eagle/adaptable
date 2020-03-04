@@ -20,14 +20,16 @@ There are a number of different ways in which end-Users will interact with Adapt
 
 - Many AdaptableFunctions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
 
-This table lists all the AdaptableFunctions and which UI elements they support:
+This table lists all the AdaptableFunctions and which UI elements they support.
 
-| AdaptableFunction  	                                                | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
-| --------  	                                                        | ------    | -------  | ---------  | ----------- | ------------  |
-| [AdvancedSearch](./Functions/adavanced_search_function.md)            | Yes       | Yes      | Yes        | No          | No            |
-| Alert                                                                 | Yes       | Yes      | Yes        | No          | Yes           | 
-| Bulk Update                                                           | No        | Yes      | Yes        | No          | Yes           | 
-| Calculated Column                                                     | Yes       | No       | No         | Yes         | No            | 
+Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
+
+| AdaptableFunction  	                                         | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
+| --------  	                                                 | ------ | ------- | ---------  | ----------- | ------------ |
+| [AdvancedSearch](./Functions/adavanced_search_function.md)   | Yes    | Yes     | Yes        | No          | No           |
+| Alert                                                        | Yes    | Yes     | Yes        | No          | Yes          | 
+| Bulk Update                                                  | No     | Yes     | Yes        | No          | Yes          | 
+| Calculated Column                                            | Yes    | No      | No         | Yes         | No           | 
 | Calendar                 | No        | No       | No         | No          | No            | 
 | Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
 | Cell Validation          | Yes       | No       | No         | Yes         | No            | 
