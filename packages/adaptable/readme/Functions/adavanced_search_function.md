@@ -4,7 +4,7 @@ The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools
 
 These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 
-When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
+| When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
 
 Advanced Searches are named and saved and, therefore, available for re-use.
 
@@ -13,7 +13,7 @@ Advanced Search includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Advanced Searches with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Advanced Search Wizard.
 
-- **Advanced Search Wizard** - A series of steps facilitating the creation and editing of Advanced Searches.
+- **Wizard** - A series of steps facilitating the creation and editing of Advanced Searches.
 
 - **Toolbar** - Provides a list of the available Advanced Searches in a dropdown, together with buttons for adding / adding / deleting.
 
@@ -28,9 +28,9 @@ Advanced Search supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: The User can run any Advanced Searches provided in Predefined Config but not edit or delete them or add others.
+- **ReadOnly**: User can run Advanced Searches provided in Predefined Config but not edit or delete them, nor add others.
 
-### Entitlements
+### FAQ
 **Can we apply searches on the server?**
 
 Yes, through setting the [ServerSearchOption](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) in SearchOptions.
@@ -44,10 +44,10 @@ Note that this is the default behaviour. You can change this to Never, or only a
 
 **Does Advanced Search update if the underlying data changes?**
 
-That depends on what you have specified for the  property in Adaptable Options.
+That depends on what you have specified for the
 [filterActionOnExternalDataChange](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_filteroptions_.filteroptions.html#filteractiononexternaldatachange) property in FilterOptions.
 
-The default is Never meaning that it wont update as ticking data changes or the underlying data set changes. But you can change this to Always or after a ThrottleDelay.
+The default is *Never* meaning Advanced Searches won't update as ticking data changes or the underlying data set changes. But you can change this to *Always* or after a *ThrottleDelay*.
 
 ### Further Information
 - [Advanced Search State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)
