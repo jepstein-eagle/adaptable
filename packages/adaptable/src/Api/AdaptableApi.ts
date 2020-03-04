@@ -48,6 +48,7 @@ import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 
 /**
+ *
  * The `AdaptableApi` provides developers with run-time access to AdapTable.
  *
  * It offers ALL the functionality provided by the AdapTable UI through code.
