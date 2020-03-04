@@ -11,7 +11,7 @@ import { ColumnSort } from './Common/ColumnSort';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridlayoutdemo/) | [API](_api_layoutapi_.layoutapi.html) | [Options](_adaptableOptions_layoutoptions_.layoutoptions.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridlayoutdemo/) | [API](_src_api_layoutapi_.layoutapi.html) | [Options](_src_adaptableoptions_layoutoptions_.layoutoptions.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170317-Layouts-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743312-Layout-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Layout Predefined Config Example**
  *
@@ -134,7 +134,7 @@ export interface Layout extends AdaptableObject {
    *
    *  This is state saved automatically by Adaptable for internal use to manage layouts
    *
-   *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_adaptableOptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
+   *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_src_adaptableoptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
    */
   VendorGridInfo?: VendorGridInfo;
   /**

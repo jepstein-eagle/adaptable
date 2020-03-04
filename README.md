@@ -173,7 +173,7 @@ Developers can learn how to access AdapTable programmatically at [AdapTable Deve
 
 Other Read Me docs that will be of interest are:
 
- - [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
+ - [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
 
  - [Adaptable Core](./packages/adaptable/README.md)
 
@@ -181,7 +181,7 @@ Other Read Me docs that will be of interest are:
   
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
  
- - [Adaptable Theming and Styling Guide](./packages/adaptable/adaptable-theming-guide.md)
+ - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/adaptable-theming-guide.md)
  
  - [Plugins](./packages/plugins/README.md)
 

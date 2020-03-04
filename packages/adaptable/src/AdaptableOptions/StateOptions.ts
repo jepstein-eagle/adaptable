@@ -5,7 +5,7 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
  *
  * By default, AdaptableState is persisted in the local storage of the user browser, under the `adaptableId` key.
  *
- * (Or if you are using [Config Server](_adaptableOptions_configserveroptions_.configserveroptions.html) in the location specified by the [configServerUrl Server](_adaptableOptions_configserveroptions_.configserveroptions.html#configserverurl) property).
+ * (Or if you are using [Config Server](_src_adaptableoptions_configserveroptions_.configserveroptions.html) in the location specified by the [configServerUrl Server](_src_adaptableoptions_configserveroptions_.configserveroptions.html#configserverurl) property).
  *
  * The various state-management functions provided here allow you to change this default behaviour, and also to add custom properties in the persisted state.
  *

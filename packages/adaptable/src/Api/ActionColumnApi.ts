@@ -7,7 +7,7 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - [Action Column State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
+ * - [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
  *
  * - [Action Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ)
  *

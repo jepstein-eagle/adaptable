@@ -21,7 +21,7 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  * [Custom Sort Demo](https://demo.adaptabletools.com/gridmanagement/aggridcustomsortdemo/)
  *
- * [Custom Sort API](_api_customsortapi_.customsortapi.html)
+ * [Custom Sort API](_src_api_customsortapi_.customsortapi.html)
  *
  * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170297-Custom-Sort-FAQ)
  *

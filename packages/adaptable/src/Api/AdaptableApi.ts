@@ -48,6 +48,7 @@ import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 
 /**
+ *
  * The `AdaptableApi` provides developers with run-time access to AdapTable.
  *
  * It offers ALL the functionality provided by the AdapTable UI through code.
@@ -64,7 +65,7 @@ import { GradientColumnApi } from './GradientColumnApi';
  *
  * The AdaptableApi is the only object returned by the AdapTable static constructor.
  *
- * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_api_eventapi_.eventapi.html) event.
+ * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_src_api_eventapi_.eventapi.html) event.
  *
  * ### API functions
  *
@@ -76,18 +77,18 @@ import { GradientColumnApi } from './GradientColumnApi';
  *
  *  | API Class  	                                        | Details                                     	                                                                            |
  *  |----------------	                                    |---------------------------------------------	                                                                            |
- *  | [actionColumnApi](#actioncolumnapi)                 | Manages [Action Columns](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain buttons with bespoke click logic	    |
- *  | [advancedSearchApi](#advancedsearchapi)             | Functions relating to the saveable, cross-column [Advanced Searches](_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
- *  | [alertApi](#alertapi)                               | [Adaptable Alerts](_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications and messages                                 |
- *  | [applicationApi](#applicationapi)                   | Use [Application Data Entries](_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state and data |
- *  | [auditEventApi](#auditeventapi)                     | Listen to the [Audit Events](_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
+ *  | [actionColumnApi](#actioncolumnapi)                 | Manages [Action Columns](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain buttons with bespoke click logic	    |
+ *  | [advancedSearchApi](#advancedsearchapi)             | Functions relating to the saveable, cross-column [Advanced Searches](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
+ *  | [alertApi](#alertapi)                               | [Adaptable Alerts](_src_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications and messages                                 |
+ *  | [applicationApi](#applicationapi)                   | Use [Application Data Entries](_src_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state and data |
+ *  | [auditEventApi](#auditeventapi)                     | Listen to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
  *  | [bulkUpdateApi](#bulkupdateapi)                     | Run Bulk Update so mutliple selected cells are given same value  |
- *  | [calculatedColumnApi](#calculatedcolumnapi)         | Manages [Calculated Columns](_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
- *  | [calendarApi](#calendarApi)                         | Allows you to choose which [Calendar](_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
- *  | [cellSummaryApi](#cellsummaryApi)                   | Choose which [Cell Summaries](_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
- *  | [cellValidationApi](#cellvalidationApi)             | Manages the [Cell Validation](_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
- *  | [chartApi](#chartApi)                               | Deals with the [Chart](_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columncategoryApi)             | Manages putting columns into [Column Categories](_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
+ *  | [calculatedColumnApi](#calculatedcolumnapi)         | Manages [Calculated Columns](_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
+ *  | [calendarApi](#calendarapi)                         | Allows you to choose which [Calendar](_src_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
+ *  | [cellSummaryApi](#cellsummaryapi)                   | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
+ *  | [cellValidationApi](#cellvalidationapi)             | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
+ *  | [chartApi](#chartapi)                               | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
+ *  | [columnCategoryApi](#columncategoryapi)             | Manages putting columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
  *  |
  */
 export interface AdaptableApi {
@@ -97,12 +98,12 @@ export interface AdaptableApi {
   actionColumnApi: ActionColumnApi;
 
   /**
-   * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).
+   * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_src_predefinedconfig_runtimestate_advancedsearchstate_.advancedsearchstate.html).
    */
   advancedSearchApi: AdvancedSearchApi;
 
   /**
-   * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_predefinedconfig_runtimestate_alertstate_.alertstate.html).
+   * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_src_predefinedconfig_runtimestate_alertstate_.alertstate.html).
    */
   alertApi: AlertApi;
 
@@ -119,37 +120,37 @@ export interface AdaptableApi {
   auditEventApi: AuditEventApi;
 
   /**
-   * Provides access to the *Bulk Update* function and [Bulk Update State](_predefinedconfig_runtimestate_bulkupdatestate_.bulkupdatestate.html).
+   * Provides access to the *Bulk Update* function and [Bulk Update State](_src_predefinedconfig_runtimestate_bulkupdatestate_.bulkupdatestate.html).
    */
   bulkUpdateApi: BulkUpdateApi;
 
   /**
-   * Provides access to the *Calculated Column* function (enabling the creation of **Calculated Columns**) and [Calculated Column State](_predefinedconfig_runtimestate_calculatedcolumnstate_.calculatedcolumnstate.html).
+   * Provides access to the *Calculated Column* function (enabling the creation of **Calculated Columns**) and [Calculated Column State](_src_predefinedconfig_runtimestate_calculatedcolumnstate_.calculatedcolumnstate.html).
    */
   calculatedColumnApi: CalculatedColumnApi;
 
   /**
-   * Provides access to the *Calendar* function and [Calendar State](_predefinedconfig_runtimestate_calendarstate_.calendarstate.html).
+   * Provides access to the *Calendar* function and [Calendar State](_src_predefinedconfig_runtimestate_calendarstate_.calendarstate.html).
    */
   calendarApi: CalendarApi;
 
   /**
-   * Provides access to the *Cell Summary* function and [Cell Summary State](_predefinedconfig_runtimestate_cellsummarystate_.cellsummarystate.html).
+   * Provides access to the *Cell Summary* function and [Cell Summary State](_src_predefinedconfig_runtimestate_cellsummarystate_.cellsummarystate.html).
    */
   cellSummaryApi: CellSummaryApi;
 
   /**
-   * Provides access to the *Cell Validation* function, the *CellValidation* object and [Cell Validation State](_predefinedconfig_runtimestate_cellvalidationstate_.cellvalidationstate.html).
+   * Provides access to the *Cell Validation* function, the *CellValidation* object and [Cell Validation State](_src_predefinedconfig_runtimestate_cellvalidationstate_.cellvalidationstate.html).
    */
   cellValidationApi: CellValidationApi;
 
   /**
-   * Provides access to the *Chart* function, the various *Chart Definition* objects and [Chart State](_predefinedconfig_runtimestate_chartstate_.chartstate.html).
+   * Provides access to the *Chart* function, the various *Chart Definition* objects and [Chart State](_src_predefinedconfig_runtimestate_chartstate_.chartstate.html).
    */
   chartApi: ChartApi;
 
   /**
-   * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
+   * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_src_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html).
    */
   columnCategoryApi: ColumnCategoryApi;
 
@@ -159,32 +160,32 @@ export interface AdaptableApi {
   columnChooserApi: ColumnChooserAPI;
 
   /**
-   * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_predefinedconfig_runtimestate_columnfilterstate_.columnfilterstate.html).
+   * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_src_predefinedconfig_runtimestate_columnfilterstate_.columnfilterstate.html).
    */
   columnFilterApi: ColumnFilterApi;
 
   /**
-   * Methods that give access to the [Predefined Config](_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html), State and Store.
+   * Methods that give access to the [Predefined Config](_src_predefinedconfig_runtimestate_columncategorystate_.columncategorystate.html), State and Store.
    */
   configApi: ConfigApi;
 
   /**
-   * Provides access to the *Conditional Style* function, the *Conditional Style* object and [Conditional Style State](_predefinedconfig_runtimestate_conditionalstylestate_.conditionalstylestate.html).
+   * Provides access to the *Conditional Style* function, the *Conditional Style* object and [Conditional Style State](_src_predefinedconfig_runtimestate_conditionalstylestate_.conditionalstylestate.html).
    */
   conditionalStyleApi: ConditionalStyleApi;
 
   /**
-   * Provides access to the *Custom Sort* function, the *Custom Sort* object and [Custom Sort State](_predefinedconfig_runtimestate_customsortstate_.customsortstate.html).
+   * Provides access to the *Custom Sort* function, the *Custom Sort* object and [Custom Sort State](_src_predefinedconfig_runtimestate_customsortstate_.customsortstate.html).
    */
   customSortApi: CustomSortApi;
 
   /**
-   * Provides access to the *Dashboard* function, and [Dashboard State](_predefinedconfig_runtimestate_dashboardstate_.dashboardstate.html).
+   * Provides access to the *Dashboard* function, and [Dashboard State](_src_predefinedconfig_runtimestate_dashboardstate_.dashboardstate.html).
    */
   dashboardApi: DashboardApi;
 
   /**
-   * Provides access to the *Data Source* function, the *Data Source* object and [Data Source State](_predefinedconfig_runtimestate_datasourcestate_.datasourcestate.html).
+   * Provides access to the *Data Source* function, the *Data Source* object and [Data Source State](_src_predefinedconfig_runtimestate_datasourcestate_.datasourcestate.html).
    */
   dataSourceApi: DataSourceApi;
 
@@ -199,32 +200,32 @@ export interface AdaptableApi {
   eventApi: EventApi;
 
   /**
-   * Provides access to the *Export* function, the *Report* object and [Export State](_predefinedconfig_runtimestate_exportstate_.exportstate.html).
+   * Provides access to the *Export* function, the *Report* object and [Export State](_src_predefinedconfig_runtimestate_exportstate_.exportstate.html).
    */
   exportApi: ExportApi;
 
   /**
-   * Provides access to the *Flashing Cell* function, the *Flashing Cell* object and [Flashing Cell State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
+   * Provides access to the *Flashing Cell* function, the *Flashing Cell* object and [Flashing Cell State](_src_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
    */
   flashingCellApi: FlashingCellApi;
 
   /**
-   * Provides access to the *Format Column* function, the *Format Column* object and [Format Column State](_predefinedconfig_runtimestate_formatcolumnstate_.formatcolumnstate.html).
+   * Provides access to the *Format Column* function, the *Format Column* object and [Format Column State](_src_predefinedconfig_runtimestate_formatcolumnstate_.formatcolumnstate.html).
    */
   formatColumnApi: FormatColumnApi;
 
   /**
-   * Provides access to the *FreeText Column* function, the *FreeText Column* object and [FreeText Column State](_predefinedconfig_runtimestate_freetextcolumnstate_.freetextcolumnstate.html).
+   * Provides access to the *FreeText Column* function, the *FreeText Column* object and [FreeText Column State](_src_predefinedconfig_runtimestate_freetextcolumnstate_.freetextcolumnstate.html).
    */
   freeTextColumnApi: FreeTextColumnApi;
 
   /**
-   *  Provides access to *Glue42* related functionality, the *Glue42* object and [Glue42 State](_predefinedconfig_glue42state_.glue42.html).
+   *  Provides access to *Glue42* related functionality, the *Glue42* object and [Glue42 State](_src_predefinedconfig_glue42state_.glue42.html).
    */
   glue42Api: Glue42Api;
 
   /**
-   * Provides access to the *Gradient Column* function, the *Gradient Column* object and [Gradient Column State](_predefinedconfig_runtimestate_gradientcolumnstate_.gradientcolumnstate.html).
+   * Provides access to the *Gradient Column* function, the *Gradient Column* object and [Gradient Column State](_src_predefinedconfig_runtimestate_gradientcolumnstate_.gradientcolumnstate.html).
    */
   gradientColumnApi: GradientColumnApi;
 
@@ -234,27 +235,27 @@ export interface AdaptableApi {
   gridApi: GridApi;
 
   /**
-   * Provides access to *ipushpull* related functionality, the *ipushpull* object and [ipushpull State](_predefinedconfig_ipushpullstate_.ipushpullstate.html).
+   * Provides access to *ipushpull* related functionality, the *ipushpull* object and [ipushpull State](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html).
    */
   iPushPullApi: IPushPullApi;
 
   /**
-   * Provides access to the *Layout* function, the *Layout* object and [Layout State](_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
+   * Provides access to the *Layout* function, the *Layout* object and [Layout State](_src_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
    */
   layoutApi: LayoutApi;
 
   /**
-   * Provides access to the *Named Filter* function, the `NamedFilter` object and [NamedFilter State](_predefinedconfig_runtimestate_namedfilterstate_.namedfilterstate.html).
+   * Provides access to the *Named Filter* function, the `NamedFilter` object and [NamedFilter State](_src_predefinedconfig_runtimestate_namedfilterstate_.namedfilterstate.html).
    */
   namedFilterApi: NamedFilterApi;
 
   /**
-   * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_predefinedconfig_runtimestate_percentbarstate_.percentbarstate.html).
+   * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_src_predefinedconfig_runtimestate_percentbarstate_.percentbarstate.html).
    */
   percentBarApi: PercentBarApi;
 
   /**
-   * Provides access to the *Plus Minus* function, the *Plus Minus* object and [Plus Minus State](_predefinedconfig_runtimestate_plusminusstate_.plusminusstate.html).
+   * Provides access to the *Plus Minus* function, the *Plus Minus* object and [Plus Minus State](_src_predefinedconfig_runtimestate_plusminusstate_.plusminusstate.html).
    */
   plusMinusApi: PlusMinusApi;
 
@@ -264,12 +265,12 @@ export interface AdaptableApi {
   pluginsApi: PluginsApi;
 
   /**
-   * Provides access to the *Quick Search* function, the *Quick Search* object and [Quick Search State](_predefinedconfig_runtimestate_quicksearchstate_.quicksearchstate.html).
+   * Provides access to the *Quick Search* function, the *Quick Search* object and [Quick Search State](_src_predefinedconfig_runtimestate_quicksearchstate_.quicksearchstate.html).
    */
   quickSearchApi: QuickSearchApi;
 
   /**
-   * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).
+   * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_src_predefinedconfig_runtimestate_reminderstate_.reminderstate.html).
    */
   reminderApi: ReminderApi;
 
@@ -279,12 +280,12 @@ export interface AdaptableApi {
   scheduleApi: ScheduleApi;
 
   /**
-   * Provides access to the *Shortcut* function, the *Shortcut* object and [Shortcut State](_predefinedconfig_runtimestate_shortcutstate_.shortcutstate.html).
+   * Provides access to the *Shortcut* function, the *Shortcut* object and [Shortcut State](_src_predefinedconfig_runtimestate_shortcutstate_.shortcutstate.html).
    */
   shortcutApi: ShortcutApi;
 
   /**
-   * Provides access to the *Layout* function, the *Layout* object and [Layout State](_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
+   * Provides access to the *Layout* function, the *Layout* object and [Layout State](_src_predefinedconfig_runtimestate_layoutstate_.layoutstate.html).
    */
   smartEditApi: SmartEditApi;
 
@@ -296,7 +297,7 @@ export interface AdaptableApi {
   sparklineColumnApi: SparklineColumnApi;
 
   /**
-   * Provides access to [System Filter State](_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
+   * Provides access to [System Filter State](_src_predefinedconfig_runtimestate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
    */
   systemFilterApi: SystemFilterApi;
 
@@ -306,27 +307,27 @@ export interface AdaptableApi {
   systemStatusApi: SystemStatusApi;
 
   /**
-   * Api methods related to Theme management and [Theme State](_predefinedconfig_runtimestate_themestate_.themestate.html).
+   * Api methods related to Theme management and [Theme State](_src_predefinedconfig_runtimestate_themestate_.themestate.html).
    */
   themeApi: ThemeApi;
 
   /**
-   * Provides access to the *ToolPanel* function, and [ToolPanel State](_predefinedconfig_runtimestate_toolpanelstate_.toolpanelstate.html).
+   * Provides access to the *ToolPanel* function, and [ToolPanel State](_src_predefinedconfig_runtimestate_toolpanelstate_.toolpanelstate.html).
    */
   toolPanelApi: ToolPanelApi;
 
   /**
-   * Provides access to the *Updated Row* function and [Updated Row State](_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
+   * Provides access to the *Updated Row* function and [Updated Row State](_src_predefinedconfig_runtimestate_flashingcellstate_.flashingcellstate.html).
    */
   updatedRowApi: UpdatedRowApi;
 
   /**
-   * Provides access to [User Interface State](_predefinedconfig_runtimestate_userinterfacestate_.userinterfacestate.html) which allows you to set up colours, permitted values etc.
+   * Provides access to [User Interface State](_src_predefinedconfig_runtimestate_userinterfacestate_.userinterfacestate.html) which allows you to set up colours, permitted values etc.
    */
   userInterfaceApi: UserInterfaceApi;
 
   /**
-   * Provides access to the *User Filter* function, the *User Filter* object and [User Filter State](_predefinedconfig_runtimestate_userfilterstate_.userfilterstate.html).
+   * Provides access to the *User Filter* function, the *User Filter* object and [User Filter State](_src_predefinedconfig_runtimestate_userfilterstate_.userfilterstate.html).
    */
   userFilterApi: UserFilterApi;
 
