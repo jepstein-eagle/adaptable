@@ -138,7 +138,7 @@ import AdaptableReactAgGrid from '@adaptabletools/adaptable-react-aggrid';
 
 We have made it easier to create an instance of AdapTable by providing a static constructor. 
 
-This comes with the added bonus that the constructor returns an [Adaptable API](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features and state of AdapTable at runtime.  
+This comes with the added bonus that the constructor returns an [Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features and state of AdapTable at runtime.  
 
 So, instead of:
 
@@ -211,12 +211,12 @@ For example to subscribe to the `ActionColumnClicked` event you will do:
  });
 ```
 
-Find out more - and see the full list of AdapTable events at [Event API Documentation](https://api.adaptabletools.com/interfaces/_api_eventapi_.eventapi.html)
+Find out more - and see the full list of AdapTable events at [Event API Documentation](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)
 
 
 ## New Features
 
-We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptabletools.com/interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
+We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptabletools.com/interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
 
 The result is to give you more complete control over how your instance of AdapTable looks and works. 
 

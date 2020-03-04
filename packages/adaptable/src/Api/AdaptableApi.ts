@@ -65,7 +65,7 @@ import { GradientColumnApi } from './GradientColumnApi';
  *
  * The AdaptableApi is the only object returned by the AdapTable static constructor.
  *
- * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_api_eventapi_.eventapi.html) event.
+ * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_src_api_eventapi_.eventapi.html) event.
  *
  * ### API functions
  *

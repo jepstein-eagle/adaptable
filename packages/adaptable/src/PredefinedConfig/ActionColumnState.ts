@@ -8,7 +8,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * You are able, optionally, to specify for each row, if and how the button will render.
  *
- * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
+ * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *
  * **Further AdapTable Help Resources**
  *
