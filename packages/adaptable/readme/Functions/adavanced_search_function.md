@@ -4,11 +4,11 @@ The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools
 
 These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 
-| When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
+ > When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
 
 Advanced Searches are named and saved and, therefore, available for re-use.
 
-### UI Elements
+## UI Elements
 Advanced Search includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Advanced Searches with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Advanced Search Wizard.
@@ -21,16 +21,16 @@ Advanced Search includes the following UI Elements:
 
 - **Menu Items** - None.
 
-### Entitlements
+## Entitlements
 Advanced Search supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: User can run Advanced Searches provided in Predefined Config but not edit or delete them, nor add others.
+- **ReadOnly**: User can run Advanced Searches in Predefined Config but not edit or delete them, nor add others.
 
-### FAQ
+## FAQ
 **Can we apply searches on the server?**
 
 Yes, through setting the [ServerSearchOption](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) in SearchOptions.
