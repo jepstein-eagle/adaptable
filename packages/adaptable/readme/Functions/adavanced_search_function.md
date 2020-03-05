@@ -21,7 +21,9 @@ Advanced Search includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Menu Items** - None.
+- **Column Menu Item** - None.
+
+- **Context Menu Item** - None.
 
 ## Entitlements
 Advanced Search supports these Entitlement Rules:
