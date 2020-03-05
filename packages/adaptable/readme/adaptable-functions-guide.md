@@ -28,7 +28,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | --------  	                                                 | ------ | ------- | ---------  | ----------- | ------------ |
 | [AdvancedSearch](./Functions/adavanced_search_function.md)     | Yes    | Yes     | Yes        | No          | No           |
 | [Alert](./Functions/alert_function.md)                         | Yes    | Yes     | Yes        | No          | Yes          | 
-| Bulk Update                                                  | No     | Yes     | Yes        | No          | Yes          | 
+| [BulkUpdate](./Functions/bulk_update_function.md)              | No     | Yes     | Yes        | No          | Yes          | 
 | Calculated Column                                            | Yes    | No      | No         | Yes         | No           | 
 | Calendar                 | No        | No       | No         | No          | No            | 
 | Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
