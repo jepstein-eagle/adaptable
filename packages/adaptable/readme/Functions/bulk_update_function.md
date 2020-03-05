@@ -1,8 +1,8 @@
 # Bulk Update (AdaptableFunction)
 
-The Bulk Update ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing multiple cells (in one column) **with the same value** via a single acttion.
+The Bulk Update ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same value**.
 
-The 'replacement' value can either be one that already exists in the Column or entirely new.
+The 'replacement' value can either be one that already exists in the Column or an entirely new one.
 
 ## UI Elements
 Bulk Update includes the following UI Elements:
@@ -13,9 +13,9 @@ Bulk Update includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu Item** - None
+- **Column Menu** - None
 
-- **Context Menu Item** - 'Apply Bulk Update'.  Opens the Bulk Update popup.  Only operates if selected cells are editable.
+- **Context Menu** - `Apply Bulk Update` Menu Item opens Bulk Update popup (only visible if selected cells are editable).
 
 ## Entitlements
 Bulk Update supports these Entitlement Rules:
