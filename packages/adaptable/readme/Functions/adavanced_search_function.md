@@ -1,12 +1,14 @@
 # Advanced Search (AdaptableFunction)
 
-The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): AdvancedSearch) enables you to build complex searches using [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries)
+The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `AdvancedSearch`) enables you to build complex searches using [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries)
 
 These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 
  > When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
 
 Advanced Searches are named and saved and, therefore, available for re-use.
+
+Advanced Searches can be provided at design-time (through [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)) or at run-time through the UI (if Entitlements allow).
 
 ## UI Elements
 Advanced Search includes the following UI Elements:
