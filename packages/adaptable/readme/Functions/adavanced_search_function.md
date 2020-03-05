@@ -8,7 +8,6 @@ These searches can include a very wide variety of *Search Criteria* and run acro
 
 Advanced Searches are named and saved and, therefore, available for re-use.
 
-<!--
 ## UI Elements
 Advanced Search includes the following UI Elements:
 
@@ -58,4 +57,4 @@ The default is *Never* meaning Advanced Searches won't update as ticking data ch
 - [Search Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html)
 
 - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo)
--->
+
