@@ -106,6 +106,8 @@ export default function Grid({}: GridProps) {
     ({ adaptableApi, vendorGrid }: { adaptableApi: AdaptableApi; vendorGrid: any }) => {
       const api = vendorGrid.api;
       api.__id = id;
+      (global as any).grids = (global as any).grids || {};
+      (global as any).grids[id] = adaptableApi;
       setInterval(() => {
         // console.log(vendorGrid?.api === adaptableApi.gridApi.)
         // adaptableApi.gridApi.updateGridData([order]);
@@ -134,7 +136,7 @@ export default function Grid({}: GridProps) {
     <div
       className="ag-theme-balham-dark"
       style={{
-        height: '800px',
+        height: '50vh',
         width: '800px',
         display: 'flex',
         flexDirection: 'column',

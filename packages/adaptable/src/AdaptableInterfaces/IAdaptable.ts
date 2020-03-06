@@ -276,4 +276,9 @@ export interface IAdaptable {
   applyAdaptableTheme(theme: AdaptableTheme | string): void;
   setUpRowStyles(): void; // not sure about this...
   clearRowStyles(): void; // not sure about this...
+
+  /**
+   * called when you want to destroy the instance & cleanup resources
+   */
+  destroy(): void;
 }

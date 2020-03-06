@@ -17,19 +17,27 @@ const StatusCmp = (props: any) => (
 
 import Grid from './Grid';
 export default () => {
-  const [showGrid, setShowGrid] = useState(true);
+  const [showGrid1, setShowGrid1] = useState(true);
+  const [showGrid2, setShowGrid2] = useState(false);
 
   return (
     <div className="container">
       <button
         onClick={() => {
-          setShowGrid(!showGrid);
+          setShowGrid1(!showGrid1);
         }}
       >
-        toggle second grid
+        toggle 1
       </button>
-      <Grid />
-      {showGrid && <Grid />}
+      <button
+        onClick={() => {
+          setShowGrid2(!showGrid2);
+        }}
+      >
+        toggle 2
+      </button>
+      {showGrid1 && <Grid />}
+      {showGrid2 && <Grid />}
     </div>
   );
 };
