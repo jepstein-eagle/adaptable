@@ -1,26 +1,32 @@
 # Alert (AdaptableFunction)
 
-The Alert ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Alert`) provides functionality for you to create Alerts that respond to a wide variety of different events.
+The Alert ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Alert`) Function enables the creation of powerful and flexible Alerts that can respond to a wide variety of different events.
 
-Alerts can be provided at design-time (through `AlertDefinition`s in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)) or at run-time through the UI (if Entitlements allow).
+Alerts can be provided at design-time (through `AlertDefinitions` in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)) or at run-time through the UI (if Entitlements allow).
 
-Alerts are triggered, typically, when data changes through a [QueryRange](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_common_expression_.queryrange.html) that you specify.  A QueryRange can include any type of data change, from all changes for a particular column to a very specific use case (e.g. if the Price Column change > 10%, or Country Column StartsWith 'c').
+Alerts are triggered, typically, when data changes through a [QueryRange](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_common_expression_.queryrange.html) that you specify.  
+
+A QueryRange can include any type of data change, from all changes for a particular column to a very specific use case (e.g. if the Price Column change > 10%, or Country Column StartsWith 'c').
 
 Alerts can, additionally, include [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries) as the trigger (e.g. if the Price Column change > 10% AND Currency Column = 'EUR')
 
-You can create alerts to appear in response to a wide variety of data changes both user edits and in the data source. Choose whether Alerts as popups, in the toolbar, or both.
+> Alerts will trigger both as the result of direct user edits in the Grid and as data ticks in the underlying data source.
 
-### Alert Properties
+## Alert Properties
 
 You can set the `MessageType` of the Alert - this will be one "Success", "Info", "Warning" or "Error" (and the colour will vary accordingly).
 
-Properties
+You can also specify - through the `AlertProperties` prop what happens when an Alert is triggered.
 
-HighlightCell
-JumpToCell
-ShowInDiv
-ShowPopup
+All Alerts will update in the Alert Toolbar and Alert Tool Panel (see below) but additionally they can:
 
+- **Display a Popup** - useful for very important Alerts
+
+- **Colour the Cell** where the data changed that triggered the cell (based on the Alert's `MessageType`)
+
+- **Jump to Cell** so that the Grid will immediately show the row which contains the cell that triggered the Alert
+
+- **Show the Alert details** in a Div (that you specify in Alert State)
 
 
 ## UI Elements
