@@ -4,13 +4,22 @@ The Alert ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_p
 
 Alerts can be provided at design-time (through `AlertDefinition`s in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)) or at run-time through the UI (if Entitlements allow).
 
-Alerts are triggered, typically, when data changes.
-
-This can range from any data change at all for a particular column to a very specific use case (e.g. if the Price Column change > 10%).
+Alerts are triggered, typically, when data changes through a [QueryRange](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_common_expression_.queryrange.html) that you specify.  A QueryRange can include any type of data change, from all changes for a particular column to a very specific use case (e.g. if the Price Column change > 10%, or Country Column StartsWith 'c').
 
 Alerts can, additionally, include [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries) as the trigger (e.g. if the Price Column change > 10% AND Currency Column = 'EUR')
 
 You can create alerts to appear in response to a wide variety of data changes both user edits and in the data source. Choose whether Alerts as popups, in the toolbar, or both.
+
+### Alert Properties
+
+You can set the `MessageType` of the Alert - this will be one "Success", "Info", "Warning" or "Error" (and the colour will vary accordingly).
+
+Properties
+
+HighlightCell
+JumpToCell
+ShowInDiv
+ShowPopup
 
 
 
