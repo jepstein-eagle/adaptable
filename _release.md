@@ -1,3 +1,7 @@
+## 6.0.16
+
+Fix bug that caused data updates to not work correctly when having multiple AdapTable instances in one page.
+
 ## 6.0.15
 
 Try to improve loading times for layouts
