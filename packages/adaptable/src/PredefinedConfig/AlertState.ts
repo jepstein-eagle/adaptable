@@ -77,7 +77,7 @@ export interface AlertState extends RunTimeState {
   MaxAlertsInStore?: number;
 
   /**
-   * The name of a *<div>* in which you want alerts to display.
+   * The name of a *div* in which you want alerts to display.
    *
    * Leave unset if you want them never to show in a <div>.
    *

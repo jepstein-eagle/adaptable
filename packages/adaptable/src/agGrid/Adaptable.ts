@@ -1047,6 +1047,7 @@ export class Adaptable implements IAdaptable {
         const gridRow: GridRow = {
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(node),
           rowData: node.data,
+          rowNode: null,
           rowInfo,
         };
         selectedRows.push(gridRow);
