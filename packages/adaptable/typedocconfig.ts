@@ -1,6 +1,6 @@
 module.exports = {
   src: ['./src/'],
-  mode: 'modules',
+  // mode: 'modules',
   includeDeclarations: false,
   exclude: [
     './src/agGrid/**/*',
@@ -19,6 +19,7 @@ module.exports = {
     './src/PredefinedConfig/AdaptableState.ts',
   ],
   tsconfig: 'tsconfig.json',
+  // theme: './typedoc/theme/default',
   out: './apidoc',
   excludePrivate: true,
   excludeProtected: true,
