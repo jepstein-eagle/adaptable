@@ -53,6 +53,8 @@ export interface ApplicationState extends RunTimeState {
    * That data will then be persisted by Adaptable in its own State.
    */
   ApplicationDataEntries?: ApplicationDataEntry[];
+
+  LastMigrationCount?: number;
 }
 
 /**

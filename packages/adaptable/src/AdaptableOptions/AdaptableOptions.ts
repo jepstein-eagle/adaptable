@@ -76,7 +76,7 @@ export interface AdaptableOptions {
    *
    * **Default Value: undefined**
    */
-  predefinedConfig?: PredefinedConfig | string;
+  predefinedConfig?: PredefinedConfig;
 
   /**
    * **MANDATORY property**

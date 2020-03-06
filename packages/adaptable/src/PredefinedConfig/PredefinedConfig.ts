@@ -38,6 +38,7 @@ import { NamedFilterState } from './NamedFilterState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
+import { AdaptableState } from './AdaptableState';
 
 /**
  * This is the main Predefined Config interface which users will populate at design-time.
@@ -308,7 +309,7 @@ import { GradientColumnState } from './GradientColumnState';
  * In this example we have configured the Dashboard, set the Smart Edit value, configured Quick Search and supplied Export (Reports), Custom Sort, Conditional Style, Layout and Format Column config objects.
  *
  */
-export interface PredefinedConfig {
+export interface PredefinedConfigObject {
   /**
    * Columns that contain buttons which, when clicked, fire an event giving detials of the button and the row in which its placed.
    *
@@ -545,3 +546,10 @@ export interface PredefinedConfig {
    */
   UserInterface?: UserInterfaceState;
 }
+
+type PredefinedConfigMigration = (state: AdaptableState) => AdaptableState;
+
+export type PredefinedConfig =
+  | string
+  | PredefinedConfigObject
+  | (PredefinedConfigObject | PredefinedConfigMigration)[];

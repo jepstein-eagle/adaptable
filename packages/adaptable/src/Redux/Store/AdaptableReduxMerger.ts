@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
+import { PredefinedConfig } from '../../PredefinedConfig/PredefinedConfig';
 
 function customizer(objValue: any, srcValue: any): any {
   if (_.isArray(objValue)) {
@@ -26,8 +27,25 @@ function customizer(objValue: any, srcValue: any): any {
   }
 }
 
+export function MigrateState(config: PredefinedConfig, state: AdaptableState): any {
+  if (_.isString(config)) return state;
+
+  const configArray = _.isArray(config) ? config : [config];
+  const lastCount = state.Application?.LastMigrationCount ?? 1;
+
+  return configArray.slice(lastCount).reduce((state: AdaptableState, configItem) => {
+    const itemResult = _.isFunction(configItem) ? configItem(state) : configItem;
+    const newState = _.merge(state, itemResult);
+
+    newState.Application = newState.Application ?? { LastMigrationCount: lastCount };
+    newState.Application.LastMigrationCount++;
+
+    return newState;
+  }, _.cloneDeep(state));
+}
+
 export function MergeStateFunction(oldState: any, newState: any) {
-  return MergeState(oldState, newState);
+  return MergeState(_.isArray(oldState) ? oldState[0] : oldState, newState);
 }
 
 // main merge function

@@ -4,7 +4,7 @@ import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createEngine as createEngineRemote } from './AdaptableReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableReduxLocalStorageEngine';
-import { mergeReducer } from './AdaptableReduxMerger';
+import { mergeReducer, MigrateState } from './AdaptableReduxMerger';
 
 import * as PopupRedux from '../ActionsReducers/PopupRedux';
 import * as PluginsRedux from '../ActionsReducers/PluginsRedux';
@@ -387,8 +387,14 @@ export class AdaptableStore implements IAdaptableStore {
       .load()
       .then(storedState => {
         if (storedState && this.loadStartOnStartup) {
+          const migratedState = MigrateState(
+            adaptable.adaptableOptions.predefinedConfig,
+            storedState
+          );
+          console.log('migrate', storedState, migratedState);
+
           this.TheStore.dispatch(
-            LoadState(adaptable.adaptableOptions.stateOptions.applyState(storedState))
+            LoadState(adaptable.adaptableOptions.stateOptions.applyState(migratedState))
           );
         }
       })
