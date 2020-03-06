@@ -24,22 +24,17 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 
 We plan in future releases to enable drag and drop so that you can more easily reference other columns when creating a Custom Column Expression.
 
-> If you want to refer to other columns in the Expression you need to reference them as Col("ColumnName"). (e.g. Col("Bid").
-
-You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
+> If you want to refer to other columns in the Expression you need to reference them as Col("ColumnName"). (e.g. Col("Bid").  You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
 
 ## UI Elements
+
 Calculated Column includes the following UI Elements:
 
-- **Popup** - Allows you to perform a Calculated Column operation on selected columns.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
+- **Popup** - Shows a list of existing Calculated Columns with Edit and Delete buttons.  Plus an Add button to start the Calculated Column Wizard.
 
-- **Toolbar** - Enables Calculated Column to be performed - and to provide both an existing column value or a new one.
+- **Wizard** - A series of steps facilitating the creation and editing of Calculated Columns.
 
-- **Tool Panel** - Same as Toolbar above.
-
-- **Column Menu** - None
-
-- **Context Menu** - `Apply Calculated Column` Menu Item opens Calculated Column popup (only visible if selected cells are editable).
+- **Column Menu** - `Edit Calculated Column` Menu Item opens the Calculated Column wizard (only visible if that column is a Calculated Column).
 
 ## Entitlements
 Calculated Column supports these Entitlement Rules:
@@ -48,49 +43,43 @@ Calculated Column supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: N/A
+- **ReadOnly**: User can see the Calculated Columns defined in Predefined Config but not edit or delete them, nor add others.
 
 ## FAQ
 
-Which mathematical operators can we use to build the Expression?
+**Which mathematical operators can we use to build the Expression?**
 
 You can use any of the hundreds available in the math.js library.
 
-Its quite cumbersome to have to write the Expression by hand.  Is there a GUI option?
+**Its quite cumbersome to have to write the Expression by hand.  Is there a GUI option?**
 
 Not at present but it is on the To Do list and will be in a future release.  We anticipate that you will be able to drag and drop the columns and choose the operators from a dropdown.
 
-Can I include more than one operator in an Expression?
+**Can I include more than one operator in an Expression?**
 
 Yes, you can include as many operators as you wish in an Expression. Some users have written Expressions that contain 4 or more operators.
 
-Can I use the Calculated Column in other Queries?
+**Can I use the Calculated Column in other Queries?**
 
 Yes, once the Calculated Column is created, then its treated the same as any other column and can be used in Queries and Adaptable Objects.
 
-Can I edit a Calculated Column directly?
+**Can I edit the value a Calculated Column directly?**
 
 No, a Calculated Column is readonly. You can edit the Expression but cannot edit one of the cells in the column itself.
 
-Can I create a Calculated Column that returns a string?
+**Can I create a Calculated Column that returns a string?**
 
 Yes, your Calculated Column can return a number, string, date or boolean. AdapTable will work out the datatype of the Calculated Column automatically, so that the created Column is treated like any other Column in queries and Expressions.
 
-Can I change the name of a Calculated Column?
+**Can I change the name of a Calculated Column?**
 
-You can and the change will persist.
-
-Warning
-AdapTable will not update any layouts or other objects (e.g. filters) that reference this Calculated Column so be very careful before changing the name of a Calculated Column that is used elsewhere.
-
+You can and the change will persist.  However please note that AdapTable will not update any layouts or other objects (e.g. filters) that reference this Calculated Column so be very careful before changing the name of a Calculated Column that is used elsewhere.
 
 
 ### Further Information
 - [Calculated Column State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html)
 
-- [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_bulkupdateapi_.bulkupdateapi.html)
-
-- [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html)
+- [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_calculatedcolumnapi_.calculatedcolumnapi.html)
 
 - [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo)
 
