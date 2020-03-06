@@ -33,6 +33,9 @@ const withTypescript = (nextConfig = {}) => {
       config.resolve.alias['styled-components'] = path.resolve(
         '../../adaptable/node_modules/styled-components'
       );
+      config.resolve.alias['@ag-grid-community/all-modules'] = path.resolve(
+        '../../adaptable/node_modules/@ag-grid-community/all-modules'
+      );
       config.resolve.alias.redux = path.resolve('../../adaptable/node_modules/redux');
       config.resolve.alias['react-redux'] = path.resolve(
         '../../adaptable/node_modules/react-redux'
