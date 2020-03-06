@@ -1,36 +1,35 @@
 # AdapTable Functions Guide
 
-AdapTable ships with 40 **Functions** - each relating to a discrete 'action' or set of functionality.
+AdapTable ships with 40 **AdaptableFunctions** - each relating to a discrete 'action' or set of functionality.
 
-Most End-User action in AdapTable will be via Functions.
+Most End-User action in AdapTable will be via AdaptableFunctions.
 
-Some Functions will perform an action (e.g. Quick Search, Smart Edit).
-
-Other Functions will
-
-Many Functions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. AdvancedSearch, ConditionalStyle, PercentBars etc.
+Many AdaptableFunctions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. AdvancedSearch, ConditionalStyle, PercentBars etc.
 
 ### Functions UI
 
-There are a number of different ways in which end-Users will interact with Functions in the AdapTable UI:
+There are a number of different ways in which end-Users will interact with AdaptableFunctions in the AdapTable UI:
 
-- Most Functions have a dedicated **popup screen**.  Functions that contain an array of items (e.g. AdvancedSearch) will typically show these in a table in the popup with buttons to add / edit.  Functions which perform actions (e.g SmartEdit, BulkUpdate) will enable this.
+- Most AdaptableFunctions have a dedicated **popup screen**.  AdaptableFunctions that contain an array of items (e.g. AdvancedSearch) will typically display these in a table with buttons to add / edit.  AdaptableFunctions which perform actions (e.g SmartEdit, BulkUpdate) will contain UI controls to allow the AdaptableFunction to be used.
 
-- Some Functions provide **Toolbars** which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used Functions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the Dashboard Function.
+- Some AdaptableFunctions provide **Toolbars** which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used AdaptableFunctions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the *Dashboard* AdaptableFunction.
 
-- Functions can also provide **ToolPanels** to be hosted in the AdapTable ToolPanel (at the side of the grid). Like toolbars, these provide ready access to common functionality (the same Functions generally provide both).
+- AdaptableFunctions can also provide **ToolPanels** to be hosted in the AdapTable ToolPanel (at the side of the grid). Like toolbars, these provide ready access to common functionality (the same AdaptableFunctions generally provide both).
 
-- Functions which offer objects that can be created / edited / deleted do so via **Function Wizards**.  These provide a step-by-step way to edit the sometimes complex objects that can be created.
+- AdaptableFunctions which offer objects that can be created / edited / deleted do so via **AdaptableFunction Wizards**.  These provide a step-by-step way to edit the sometimes complex objects that can be created.
 
-- Many Functions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
+- Many AdaptableFunctions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
 
+This table lists all the AdaptableFunctions and which UI elements they support.
 
-| Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
-| --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
-| Advanced Search          | Yes       | Yes      | Yes        | No          | No            |
-| Alert                    | Yes       | Yes      | Yes        | No          | Yes           | 
-| Bulk Update              | No        | Yes      | Yes        | No          | Yes           | 
-| Calculated Column        | Yes       | No       | No         | Yes         | No            | 
+Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
+
+| AdaptableFunction  	                                         | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
+| --------  	                                                 | ------ | ------- | ---------  | ----------- | ------------ |
+| [AdvancedSearch](./Functions/adavanced_search_function.md)     | Yes    | Yes     | Yes        | No          | No           |
+| [Alert](./Functions/alert_function.md)                         | Yes    | Yes     | Yes        | No          | Yes          | 
+| [BulkUpdate](./Functions/bulk_update_function.md)              | No     | Yes     | Yes        | No          | Yes          | 
+| Calculated Column                                            | Yes    | No      | No         | Yes         | No           | 
 | Calendar                 | No        | No       | No         | No          | No            | 
 | Cell Summary             | No        | Yes      | Yes        | No          | Yes           | 
 | Cell Validation          | Yes       | No       | No         | Yes         | No            | 
@@ -64,9 +63,9 @@ There are a number of different ways in which end-Users will interact with Funct
 | Updated Row              | No        | No       | No         | Yes         | Yes           |
 | User Filter              | Yes       | No       | No         | Yes         | No            |
 
-#### Chart Functions (plugin)
+#### Chart AdaptableFunctions (plugin)
 
-| Function  	             | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
+| AdaptableFunction        | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
 | --------  	             | ------    | -------  | ---------  | ----------- | ------------  |
 | Chart                    | Yes       | Yes      | Yes        | No          | No            |
 | Pie Chart (View As)      | No        | No       | No         | Yes         | Yes           |
@@ -76,11 +75,11 @@ There are a number of different ways in which end-Users will interact with Funct
 
 ### Entitlements
 
-All Functions are subject to Entitlements.  
+All AdaptableFunctions are subject to Entitlements.  
 
-This means that end-users will only be able to access a Function according to their permissions.
+This means that end-users will only be able to access a AdaptableFunction according to their permissions.
 
-Each Function can be given an Entitlement of *Full*, *ReadOnly* or *Hidden*. 
+Each AdaptableFunction can be given an Entitlement of *Full*, *ReadOnly* or *Hidden*. 
 
 See Entitlements State in the Developer Documentation for more information.
 
@@ -88,32 +87,16 @@ See Entitlements State in the Developer Documentation for more information.
 
 Design-time Users are able to pre-populate AdapTable with Predefined Config - this is the *Adaptable State* that will be available when the application first loads.
 
-There are a huge number of sections in Predefined Config, the majority of which are Function-related.
+There are a huge number of sections in Predefined Config, the majority of which are AdaptableFunction-related.
 
-Nearly every Function has its own section / property in PredefinedConfig, and it will always have the same name.  
+Nearly every AdaptableFunctions has its own section / property in PredefinedConfig, and it will always have the same name.  
 
-For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort Function through the 'CustomSort' section of Predefined Config.
-
-
-## Functions List
-
-These are the Functions currently in AdapTable together with relevant UI-related information.
-
-Scroll down for a detailed summary of each Function together with relevant links.
-
-
-We list here each Function alphabetically.
-
-### Action Column
-
-Stuff here about Action Column
-
-Links to other resources
+For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort AdaptableFunction through the 'CustomSort' section of Predefined Config.
 
 
 ## Demo
 
-Visit our [Demo Site](https://demo.adaptabletools.com/theme/aggridcustomthemedemo) to see AdapTable with a custom theme.
+Visit our [Demo Site](https://demo.adaptabletools.com) to see many of the AdaptableFunctions in AdapTable in action.
 
 ## Help
 

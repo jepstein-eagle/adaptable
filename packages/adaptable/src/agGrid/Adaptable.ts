@@ -1047,6 +1047,7 @@ export class Adaptable implements IAdaptable {
         const gridRow: GridRow = {
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(node),
           rowData: node.data,
+          rowNode: null,
           rowInfo,
         };
         selectedRows.push(gridRow);
@@ -1871,6 +1872,10 @@ export class Adaptable implements IAdaptable {
   // need to destroy more than just this...
   // TODO;  manage destruction properly
   destroy() {
+    if (this.gridOptions && this.gridOptions.api) {
+      this.gridOptions.api.destroy();
+    }
+
     const abContainerElement = this.getadaptableContainerElement();
     if (abContainerElement != null) {
       ReactDOM.unmountComponentAtNode(abContainerElement);
@@ -2280,14 +2285,17 @@ export class Adaptable implements IAdaptable {
     });
 
     const rowListeners: { [key: string]: (event: any) => void } = {
-      dataChanged: (event: any) =>
+      dataChanged: (event: any) => {
         this.onRowDataChanged({
           //  myevent: event,
           rowNode: event.node,
           oldData: event.oldData,
           newData: event.newData,
-        }),
+        });
+      },
     };
+
+    const self = this;
 
     /**
      * AgGrid does not expose Events.EVENT_ROW_DATA_CHANGED
@@ -2296,6 +2304,18 @@ export class Adaptable implements IAdaptable {
      *
      */
     RowNodeProto.dispatchLocalEvent = function(event: any) {
+      const node = event.node;
+
+      if (!node) {
+        return;
+      }
+
+      if (node.gridApi !== self.gridOptions.api) {
+        // the event is coming from another aggrid instance
+        // so IGNORE IT
+        return;
+      }
+
       const result = RowNode_dispatchLocalEvent.apply(this, arguments);
       const fn = rowListeners[event.type];
       if (fn) {

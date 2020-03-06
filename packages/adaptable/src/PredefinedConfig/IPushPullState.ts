@@ -12,15 +12,15 @@ import { BaseSchedule } from './Common/Schedule';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [ipushpull API](_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
+ * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [ipushpull API](_src_api_ipushpullapi_.ipushpullapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004099278-iPushPull-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360004003298-iPushPull) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360004256778#UUID-bea0c942-9326-7490-30b2-9a75709ac7d6)
  *
- * If ipushpull state is provided, then AdapTable will set the `IsIPushPullAvailable` property to true (you can get the value of this property through the iPushPullApi [isIPushPullAvailable](_api_ipushpullapi_.ipushpullapi.html#isipushpullavailable) function)
+ * If ipushpull state is provided, then AdapTable will set the `IsIPushPullAvailable` property to true (you can get the value of this property through the iPushPullApi [isIPushPullAvailable](_src_api_ipushpullapi_.ipushpullapi.html#isipushpullavailable) function)
  *
  * When this property is set to true, an ipushpull Toolbar will be for you to use.
  *
  * If you have `AutoLogin` set to true then AdapTable will try to log you in automatically; otherwise the toolbar will display a login button that when clicked will open the Login popup.
  *
- * Once you are logged in another boolean property (`IsIPushPullRunning`) is set to true (you can get the value of this property through the iPushPullApi [isIPushPullRunning](_api_ipushpullapi_.ipushpullapi.html#isipushpullrunning) function)
+ * Once you are logged in another boolean property (`IsIPushPullRunning`) is set to true (you can get the value of this property through the iPushPullApi [isIPushPullRunning](_src_api_ipushpullapi_.ipushpullapi.html#isipushpullrunning) function)
  *
  * Within the ipushpull Toolbar there are options to:
  *
@@ -78,7 +78,7 @@ import { BaseSchedule } from './Common/Schedule';
  * }
  *
  *  ```
- * You are also able to listen to ipushpull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](_api_events_livedatachanged_.livedatachangedinfo.html) ).
+ * You are also able to listen to ipushpull-related changes by subscribing to the `LiveDataChanged` event (learn more [here](_src_api_events_livedatachanged_.livedatachangedinfo.html) ).
  *
  * This event contains a `ReportDestination` property which you can check to see whether it equals 'iPushPull'.
  *

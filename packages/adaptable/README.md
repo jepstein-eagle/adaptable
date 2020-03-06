@@ -9,7 +9,7 @@ and [Angular](../../packages/adaptable-ng-aggrid) Wrappers available for those w
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guide.md)
 
 ## Installation
 
@@ -177,7 +177,7 @@ So your HTML should look like this:
 
 You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) object.
 
-The constructor will return an [Adaptable API](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
+The constructor will return an [Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
 
 ```ts
 const api: AdaptableApi = Adaptable.init(adaptableOptions)

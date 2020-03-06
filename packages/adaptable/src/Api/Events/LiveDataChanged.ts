@@ -8,7 +8,7 @@ import { Report } from '../../PredefinedConfig/ExportState';
  *
  * It is also fired whenever a `Live Report` is started, stopped or updated.
  *
- * The main property is the [`LiveDataChangedInfo`](_api_events_LiveDataChanged_.LiveDataChangedinfo.html)
+ * The main property is the [`LiveDataChangedInfo`](_src_api_events_LiveDataChanged_.LiveDataChangedinfo.html)
  *
  * Adaptable uses [FDC3](https://fdc3.finos.org/) so you access the object using [FDC3 Context Data Specification](https://fdc3.finos.org/docs/1.0/context-spec) (e.g xxx.data[0].id;)
  *

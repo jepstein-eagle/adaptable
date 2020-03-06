@@ -1,7 +1,7 @@
 import { AdaptableApi } from '../AdaptableApi';
 
 /**
- * Object returned by the `on('AdaptableReady')` [event](_api_eventapi_.eventapi.html).
+ * Object returned by the `on('AdaptableReady')` [event](_src_api_eventapi_.eventapi.html).
  *
  * Contains 2 properties
  *

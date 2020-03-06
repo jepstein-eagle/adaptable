@@ -4,15 +4,15 @@ import { AdaptableObject } from './Common/AdaptableObject';
 /**
  * The Predefined Configuration for Action Columns
  *
- * An [Action Column](_predefinedconfig_actioncolumnstate_.actioncolumn.html) is a special column which dynamically displays a button.
+ * An [Action Column](_src_predefinedconfig_actioncolumnstate_.actioncolumn.html) is a special column which dynamically displays a button.
  *
  * You are able, optionally, to specify for each row, if and how the button will render.
  *
- * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
+ * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *
  * **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_api_actioncolumnapi_.actioncolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
  * **Action Column Predefined Config Example**
  *
@@ -62,7 +62,7 @@ export interface ActionColumnState extends DesignTimeState {
 }
 
 /**
- * The `ActionColumn` object used in [Action Column State](_predefinedconfig_actioncolumnstate_.actioncolumnstate.html).
+ * The `ActionColumn` object used in [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html).
  *
  * An Action Column will be dynamically added to your Grid and automatically display a button.
  *
@@ -93,7 +93,7 @@ export interface ActionColumn extends AdaptableObject {
   /**
    * A function that returns a string giving the full render contents of the Button that should display in the cell.
    *
-   * The [`ActionColumnRenderParams`](_predefinedconfig_actioncolumnstate_.actioncolumnrenderparams.html) provides details of the Row, the Row Node and the Column.
+   * The [`ActionColumnRenderParams`](_src_predefinedconfig_actioncolumnstate_.actioncolumnrenderparams.html) provides details of the Row, the Row Node and the Column.
    *
    * If this property is not set, then a regular button will appear in the column with the caption of the `ButtonText` property.
    */
@@ -102,7 +102,7 @@ export interface ActionColumn extends AdaptableObject {
   /**
    * A Predicate function returning a boolean value indicating whether the Action Column should display a button.
    *
-   * The [`ActionColumnRenderParams`](_predefinedconfig_actioncolumnstate_.actioncolumnrenderparams.html) provides details of the Row, the Row Node and the Column.
+   * The [`ActionColumnRenderParams`](_src_predefinedconfig_actioncolumnstate_.actioncolumnrenderparams.html) provides details of the Row, the Row Node and the Column.
    *
    * If the predicate function returns false, then nothing is displayed for that cell in the column.
    *
@@ -112,7 +112,7 @@ export interface ActionColumn extends AdaptableObject {
 }
 
 /**
- * The params used in the `RenderFunction` and `ShouldRenderPredicate` properties of  [`ActionColumn`](_predefinedconfig_actioncolumnstate_.actioncolumn.html).
+ * The params used in the `RenderFunction` and `ShouldRenderPredicate` properties of  [`ActionColumn`](_src_predefinedconfig_actioncolumnstate_.actioncolumn.html).
  *
  * Provides details of the column itself and the row (and row node) that is being rendered.
  */
