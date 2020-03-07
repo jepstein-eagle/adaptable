@@ -4,20 +4,25 @@ We provide a number of ReadMe docs each of which address a different general are
 
 These are to be used in conjunction with the [AdapTable Developer Documentation](https://api.adaptabletools.com).
 
-**General ReadMe Docs**
- - [Version 6 Upgrade Guide](./upgrade-guide.md)
+### Version-Related ReadMe Docs
 
+ 
  - [Adaptable Core](../README.md)
 
- - [React Wrapper](../packages/adaptable-react-aggrid/README.md)
+ - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
   
  - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
  
- - [Adaptable Theming and Styling Guide](./adaptable-theming-guide.md)
- 
- - [Plugins](../packages/plugins/README.md)
+ - [Version 6 Upgrade Guide](./upgrade-guide.md)
 
-**Function ReadMe Docs**
+ 
+ ### General ReadMe Docs
+ 
+ - [Theming and Styling Guide](./adaptable-theming-guide.md)
+ 
+ - [Plugins](../../../packages/plugins/README.md)
+
+### Function ReadMe Docs
 
 ## Demo
 
