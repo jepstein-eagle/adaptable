@@ -22,21 +22,23 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
  - [Plugins](../../../packages/plugins/README.md)
  
 
-## Function ReadMe Docs
+## AdaptableFunction ReadMe Docs
 
-- [AdapTable Functions](./adaptable-functions-guide.md)
+- [AdapableFunction Guide](./adaptable-functions-guide.md)
 
-- [Advanced Search](./Functions/adavanced_search_function.md)
+- [Advanced Search AdapableFunction](./Functions/adavanced_search_function.md)
 
-- [Alert](./Functions/alert_function.md)
+- [Alert AdapableFunction](./Functions/alert_function.md)
 
-- [Bulk Update](./Functions/bulk_update_function.md)
+- [Bulk Update AdapableFunction](./Functions/bulk_update_function.md)
 
-- [Calculated Column](./Functions/calculated_column_function.md)
+- [Calculated Column AdapableFunction](./Functions/calculated_column_function.md)
 
 ## Demo
 
-To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  
+
+Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
 ## Support
 
