@@ -25,6 +25,7 @@ import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { USER_NAME, ADAPTABLE_ID } from '../../Utilities/Constants/GeneralConstants';
+import { grid } from 'styled-system';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
@@ -216,6 +217,10 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       }
     }
     return toolbarTitle;
+  }
+
+  setLastAppliedShortCut(gridCell: GridCell | undefined): void {
+    this.dispatchAction(SystemRedux.SetLastAppliedShortcut(gridCell));
   }
 
   // General way to get to store from inside Adaptable...

@@ -89,6 +89,8 @@ export interface InternalApi {
 
   setToolbarTitle(): string;
 
+  setLastAppliedShortCut(gridCell: GridCell | undefined): void;
+
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;
 }

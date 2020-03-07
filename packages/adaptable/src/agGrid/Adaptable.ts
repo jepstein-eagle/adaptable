@@ -2251,7 +2251,18 @@ export class Adaptable implements IAdaptable {
             this.api.gridApi.getColumns()
           );
           if (abColumn && abColumn.DataType == DataType.Number) {
-            params.node.setDataValue(column.colId, Number(params.value));
+            let shouldUpdateNumberEdit: boolean = true;
+            if (ArrayExtensions.IsNotNullOrEmpty(this.api.shortcutApi.getAllShortcut())) {
+              const lastShortCut: GridCell | undefined = this.api.internalApi.getSystemState()
+                .LastAppliedShortCut;
+              if (lastShortCut) {
+                shouldUpdateNumberEdit = false;
+              }
+            }
+
+            if (shouldUpdateNumberEdit) {
+              params.node.setDataValue(column.colId, Number(params.value));
+            }
           }
         }
         // if they have set to run filter after edit then lets do it
