@@ -11,7 +11,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
  - [React Wrapper](../packages/adaptable-react-aggrid/README.md)
   
- - [Angular Wrapper](../packages/adaptable-ng-aggrid/README.md)
+ - [Angular Wrapper](../../packages/adaptable-ng-aggrid/README.md)
  
  - [Adaptable Theming and Styling Guide](./adaptable-theming-guide.md)
  
