@@ -26,13 +26,13 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 - [AdapableFunction Guide](./adaptable-functions-guide.md)
 
-- [Advanced Search AdapableFunction](./Functions/adavanced_search_function.md)
+- [Advanced Search](./Functions/adavanced_search_function.md)
 
-- [Alert AdapableFunction](./Functions/alert_function.md)
+- [Alert](./Functions/alert_function.md)
 
-- [Bulk Update AdapableFunction](./Functions/bulk_update_function.md)
+- [Bulk Update](./Functions/bulk_update_function.md)
 
-- [Calculated Column AdapableFunction](./Functions/calculated_column_function.md)
+- [Calculated Column](./Functions/calculated_column_function.md)
 
 ## Demo
 
