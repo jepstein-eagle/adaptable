@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useState, useEffect, ReactNode, useMemo } from 'react';
+import { useState, useRef, useEffect, ReactNode, useMemo } from 'react';
 
 import { AdaptableApp } from '@adaptabletools/adaptable/src/View/AdaptableView';
 import Adaptable from '@adaptabletools/adaptable/src/agGrid';
@@ -211,8 +211,21 @@ const AdaptableReact = ({
     </AbsoluteFlexContainer>
   );
 
+  const adaptableRef = useRef<Adaptable | null>(adaptable);
+
+  if (adaptable) {
+    adaptableRef.current = adaptable;
+  }
+
   useEffect(() => {
     setMounted(true);
+
+    return () => {
+      if (adaptableRef.current) {
+        adaptableRef.current.destroy({ unmount: false });
+      }
+      adaptableRef.current = null;
+    };
   }, []);
 
   let children: ReactNode | ReactNode[] = [adaptableNode, gridWrapperNode];

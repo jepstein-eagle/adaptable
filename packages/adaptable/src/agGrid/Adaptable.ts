@@ -116,7 +116,7 @@ import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
-import { TypeUuid } from '../PredefinedConfig/Uuid';
+import { TypeUuid, createUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
@@ -191,6 +191,8 @@ const forEachColumn = (
   });
 };
 
+const adaptableInstances: { [key: string]: Adaptable } = {};
+
 export class Adaptable implements IAdaptable {
   public api: AdaptableApi;
 
@@ -261,6 +263,9 @@ export class Adaptable implements IAdaptable {
   private emitter: Emitter;
 
   private _currentEditor: ICellEditor | undefined;
+  private _id: string;
+
+  private rowListeners: { [key: string]: (event: any) => void };
 
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
@@ -327,6 +332,21 @@ export class Adaptable implements IAdaptable {
     return ab.api;
   }
 
+  private static collectInstance(adaptable: Adaptable) {
+    adaptable._id = adaptable.adaptableOptions.adaptableId || createUuid();
+    adaptableInstances[adaptable._id] = adaptable;
+  }
+
+  private static forEachAdaptable(fn: (adaptable: Adaptable) => void) {
+    Object.keys(adaptableInstances).forEach((key: string) => {
+      fn(adaptableInstances[key]);
+    });
+  }
+
+  private static dismissInstance(adaptable: Adaptable) {
+    delete adaptableInstances[adaptable._id];
+  }
+
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
   constructor(
@@ -348,6 +368,8 @@ export class Adaptable implements IAdaptable {
     this.renderGrid = renderGrid;
     // we create AdaptableOptions by merging the values provided by the user with the defaults (where no value has been set)
     this.adaptableOptions = AdaptableHelper.assignadaptableOptions(adaptableOptions);
+
+    Adaptable.collectInstance(this);
     AdaptableHelper.CheckadaptableOptions(this.adaptableOptions);
     this.runtimeConfig = runtimeConfig;
 
@@ -1869,10 +1891,20 @@ export class Adaptable implements IAdaptable {
     return rowNode;
   }
 
-  // need to destroy more than just this...
-  // TODO;  manage destruction properly
-  destroy() {
+  destroy(config?: { unmount: boolean }) {
+    if (this.gridOptions && this.gridOptions.api) {
+      this.gridOptions.api.destroy();
+    }
+
+    this.rowListeners = null;
+    this.emitter.clearListeners();
+    this.emitter = null;
+    Adaptable.dismissInstance(this);
+
     const abContainerElement = this.getadaptableContainerElement();
+    if (config && !config.unmount) {
+      return;
+    }
     if (abContainerElement != null) {
       ReactDOM.unmountComponentAtNode(abContainerElement);
     }
@@ -2280,15 +2312,18 @@ export class Adaptable implements IAdaptable {
       this.checkColumnsDataTypeSet();
     });
 
-    const rowListeners: { [key: string]: (event: any) => void } = {
-      dataChanged: (event: any) =>
+    this.rowListeners = {
+      dataChanged: (event: any) => {
         this.onRowDataChanged({
           //  myevent: event,
           rowNode: event.node,
           oldData: event.oldData,
           newData: event.newData,
-        }),
+        });
+      },
     };
+
+    const self = this;
 
     /**
      * AgGrid does not expose Events.EVENT_ROW_DATA_CHANGED
@@ -2297,11 +2332,28 @@ export class Adaptable implements IAdaptable {
      *
      */
     RowNodeProto.dispatchLocalEvent = function(event: any) {
+      const node = event.node;
+
       const result = RowNode_dispatchLocalEvent.apply(this, arguments);
-      const fn = rowListeners[event.type];
-      if (fn) {
-        fn(event);
+
+      // we don't know from which instance of aggrid this is coming,
+      // as this fn is shared by all instances
+
+      if (node) {
+        Adaptable.forEachAdaptable(adaptable => {
+          if (node.gridApi !== adaptable.gridOptions.api) {
+            // the event is coming from another aggrid instance
+            // so IGNORE IT
+            return;
+          }
+          // we're on the correct instance, so do this
+          const fn = adaptable.rowListeners ? adaptable.rowListeners[event.type] : null;
+          if (fn) {
+            fn(event);
+          }
+        });
       }
+
       return result;
     };
 
