@@ -4,8 +4,7 @@ We provide a number of ReadMe docs each of which address a different general are
 
 These are to be used in conjunction with the [AdapTable Developer Documentation](https://api.adaptabletools.com).
 
-### Version-Related ReadMe Docs
-
+## Version-Related ReadMe Docs
  
  - [Adaptable Core](../README.md)
 
@@ -16,13 +15,18 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
  - [Version 6 Upgrade Guide](./upgrade-guide.md)
 
  
- ### General ReadMe Docs
+## General ReadMe Docs
  
  - [Theming and Styling Guide](./adaptable-theming-guide.md)
  
  - [Plugins](../../../packages/plugins/README.md)
+ 
 
-### Function ReadMe Docs
+## Function ReadMe Docs
+
+- [AdapTable Functions](./adaptable-functions-guide.md)
+
+- [Advanced Search](./Functions/adavanced_search_function.md)
 
 ## Demo
 
