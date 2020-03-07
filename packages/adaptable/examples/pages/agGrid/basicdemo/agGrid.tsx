@@ -59,12 +59,12 @@ function InitAdaptableDemo() {
   (globalThis as any).api = api;
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    api.columnChooserApi.showColumnChooserPopup();
+    //  api.columnChooserApi.showColumnChooserPopup();
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //  console.log('search changed');
+    //  console.log(searchChangedArgs.data[0].id);
   });
 }
 
@@ -76,8 +76,9 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
+
   Layout: {
-    CurrentLayout: 'Layout Two',
+    // CurrentLayout: 'Layout Two',
     Layouts: [
       {
         Columns: ['country', 'currency'],
@@ -93,15 +94,16 @@ let demoConfig: PredefinedConfig = {
           'bid',
           'ask',
           'notional',
-          'country',
           'tradeId',
           'currency',
           'counterparty',
+          'country',
         ],
         Name: 'Layout Two',
       },
     ],
   },
+
   Entitlements: {
     DefaultAccessLevel: 'Full',
     FunctionEntitlements: [
@@ -111,7 +113,7 @@ let demoConfig: PredefinedConfig = {
       },
       {
         FunctionName: 'ColumnChooser',
-        AccessLevel: 'Hidden',
+        AccessLevel: 'Full',
       },
       {
         FunctionName: 'Export',

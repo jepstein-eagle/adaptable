@@ -1033,6 +1033,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       aggFunc: 'sum',
+      hide: true,
       //   agGroupCellRenderer
       // valueFormatter: notionalFormatter,
       cellClass: 'number-cell',
@@ -1049,6 +1050,7 @@ export class ExamplesHelper {
       field: 'ask',
       columnGroupShow: 'closed',
       filter: true,
+      hide: true,
       resizable: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
