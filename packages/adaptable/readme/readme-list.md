@@ -9,13 +9,13 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
  - [Adaptable Core](../README.md)
 
- - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
+ - [React Wrapper](../packages/adaptable-react-aggrid/README.md)
   
- - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
+ - [Angular Wrapper](../packages/adaptable-ng-aggrid/README.md)
  
- - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/adaptable-theming-guide.md)
+ - [Adaptable Theming and Styling Guide](./adaptable-theming-guide.md)
  
- - [Plugins](./packages/plugins/README.md)
+ - [Plugins](../packages/plugins/README.md)
 
 **Function ReadMe Docs**
 
