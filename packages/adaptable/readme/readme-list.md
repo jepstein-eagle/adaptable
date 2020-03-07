@@ -7,7 +7,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 **General ReadMe Docs**
  - [Version 6 Upgrade Guide](./upgrade-guide.md)
 
- - [Adaptable Core](./README.md)
+ - [Adaptable Core](../../README.md)
 
  - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
   
