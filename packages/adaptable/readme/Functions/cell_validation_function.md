@@ -8,13 +8,13 @@ There are 2 types of cell validation rule:
 
 2. **Disallow Only Edits that break a Cell Validation Rule**: The cell value can be changed so long as it doesn't break a custom validation rule.
 
+> The Cell Validation Rule can be dependent also on other values in the row by using an using an [AdapTable Expression](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Query).  When this is added, the Cell Validation Rule will only be applied if a row has values that match the conditions defined.
+
 And there are 2 outcomes for what happens when a cell validation rule is broken:
 
 1.  **Prevent the Cell Edit**: The change will not be allowed and the cell being edited will maintain its initial pre-edited value.
 
 2.  **Show a Warning**: Users will receive a warning when a proposed data edit will break validation rules. They have the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, they must provide a reason (which is then sent to the Audit Log).
-
-> The Cell Validation Rule can be dependent also on other values in the row by using an using an [AdapTable Expression](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Query).  When this is added, the Cell Validation Rule will only be applied if a row has values that match the conditions defined.  
 
 > One advantage of Cell Validation rules is that they come into effect immediately after that they are created. There is no down-time needed, nor any custom development required, and no systems need to be restarted.
 
