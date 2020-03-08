@@ -1,14 +1,16 @@
 # Cell Summary (AdaptableFunction)
 
-The Cell Summary ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
+The Cell Summary ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellSummary`) Function allows you to see at a glance summary information about the cells (and rows) you have selected in AdapTable.
 
-The Cell Summary function allows you to see at a glance summary information about the cells you have selected in AdapTable.
+Simply select a group of cells and you can see the summary information about those cells in the Cell Summary Toolbar and / or Tool Panel
 
-Simply select a group of cells and you can see the summary information about those cells in the Cell Summary toolbar.
+> AdapTable ships with a large set of common Summary Operations; if you are running the Finance plug-in then extra finance-related Operations are available. Additionally, you can provide your own Summary Operations (and associated functions) through [Cell Summary Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
 
-Note
-AdapTable ships with a set of common Summary Operations; if you are running the Finance plug-in then additional finance-related Operations are available. See the Adaptable Code Documentation for a full list.
+### AdapTable Summary Operations
 
+The following Cell Summary Operations are shipped with AdapTable:
+
+- Blah
 
 
 ## UI Elements
