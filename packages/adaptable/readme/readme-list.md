@@ -34,6 +34,15 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 - [Calculated Column](./Functions/calculated_column_function.md)
 
+- [Cell Summary](./Functions/cell_summary_function.md)          
+
+- [Cell Validation](./Functions/cell_validation_function.md)    
+
+- [Column Category](./Functions/column_category_function.md)   
+
+- [Column Chooser](./Functions/column_chooser_function.md) 
+
+
 ## Demo
 
 To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  

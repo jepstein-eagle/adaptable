@@ -20,7 +20,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
+    if (this.canCreateMenuItem('Full')) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.CellSummaryStrategyFriendlyName,
         ComponentName: ScreenPopups.CellSummaryPopup,
@@ -31,7 +31,7 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
-    if (this.canCreateMenuItem('ReadOnly')) {
+    if (this.canCreateMenuItem('Full')) {
       let popUpParams: StrategyParams = {
         source: 'ContextMenu',
       };
