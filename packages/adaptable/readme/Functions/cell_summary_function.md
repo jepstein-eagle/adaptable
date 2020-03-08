@@ -28,15 +28,15 @@ If using the Finance plugin the additional Cell Summary Operations are available
 ## UI Elements
 Cell Summary includes the following UI Elements:
 
-- **Popup** - Allows you to perform a Cell Summary operation on selected columns.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
+- **Popup** - Shows all the Cell Summary Operation results for the selected cells
 
-- **Toolbar** - Enables Cell Summary to be performed - and to provide both an existing column value or a new one.
+- **Toolbar** - Displays the result of the curently selected Cell Summary Operation (available through a dropdown).  Choose a different item in the dropdown to see a different operation, or click on the 'info' button to see all the Operations.
 
 - **Tool Panel** - Same as Toolbar above.
 
 - **Column Menu** - None
 
-- **Context Menu** - `Apply Cell Summary` Menu Item opens Cell Summary popup (only visible if selected cells are editable).
+- **Context Menu** - `See Cell Summary` Menu Item opens Cell Summary popup (only visible if selected cells are editable).
 
 ## Entitlements
 Cell Summary supports these Entitlement Rules:
@@ -64,8 +64,3 @@ Yes, if you use the AdapTable Finance plug-in.  (See [plugins](https://github.co
 - [Cell Summary Api](https://api.adaptabletools.com/interfaces/_src_api_cellsummaryapi_.cellsummaryapi.html)
 
 - [Cell Summary Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo)
-
-
-
-
-
