@@ -1,12 +1,13 @@
 # Cell Summary (AdaptableFunction)
 
-The Cell Summary ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellSummary`) Function allows you to see at a glance summary information about the cells (and rows) you have selected in AdapTable.
+The Cell Summary ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellSummary`) Function allows you to see - at a glance - summary information about the cells (and rows) you have selected in AdapTable.
 
 Simply select a group of cells and you can see the summary information about those cells in the Cell Summary Toolbar and / or Tool Panel
 
-> AdapTable ships with a large set of common Summary Operations; if you are running the Finance plug-in then extra finance-related Operations are available. Additionally, you can provide your own Summary Operations (and associated functions) through [Cell Summary Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
+> AdapTable ships with a large set of common Summary Operations; if you are running the Finance plug-in then extra finance-related Operations are available. 
+> Additionally, you can provide your own Summary Operations (and associated functions) through [Cell Summary Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
 
-### AdapTable Summary Operations
+## AdapTable Summary Operations
 
 The following Cell Summary Operations are shipped with AdapTable:
 
