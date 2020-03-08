@@ -158,6 +158,7 @@ export interface IAdaptable {
   // cell / column selection
   getActiveCell(): GridCell;
   selectColumn(columnId: string): void;
+  selectColumns(columnIds: string[]): void;
 
   // column related
   setColumnIntoStore(): void;
@@ -206,6 +207,8 @@ export interface IAdaptable {
   forAllRowNodesDo(func: (rowNode: any) => any): void;
   forAllVisibleRowNodesDo(func: (rowNode: any) => any): void;
   isGroupRowNode(rowNode: any): boolean;
+  selectNodes(rowNodes: any[]): void;
+  selectNode(rowNode: any): void;
 
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;

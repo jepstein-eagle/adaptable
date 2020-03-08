@@ -59,7 +59,12 @@ function InitAdaptableDemo() {
   (globalThis as any).api = api;
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    //  api.columnChooserApi.showColumnChooserPopup();
+    setTimeout(() => {
+      let firstNode: any = api.gridApi.getFirstRowNode();
+      api.gridApi.selectNode(firstNode);
+      let pkNode: any = api.gridApi.getRowNodeForPrimaryKey(21);
+      api.gridApi.selectNode(pkNode);
+    }, 500);
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {

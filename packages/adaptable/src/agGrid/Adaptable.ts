@@ -1541,6 +1541,19 @@ export class Adaptable implements IAdaptable {
     });
   }
 
+  public selectNodes(rowNodes: any[]): void {
+    if (ArrayExtensions.IsNotNullOrEmpty(rowNodes)) {
+      rowNodes.forEach(node => this.selectNode(node));
+    }
+  }
+  public selectNode(rowNode: any): void {
+    if (!rowNode) {
+      LoggingHelper.LogAdaptableError('No node to select');
+      return;
+    }
+    rowNode.setSelected(true, true);
+  }
+
   public redraw() {
     this.gridOptions.api!.redrawRows();
     this.gridOptions.api!.refreshHeader();
@@ -3031,6 +3044,10 @@ export class Adaptable implements IAdaptable {
 
   public getVisibleColumnCount(): number {
     return this.gridOptions.columnApi!.getAllColumns().filter(c => c.isVisible()).length;
+  }
+
+  public selectColumns(columnIds: string[]): void {
+    columnIds.forEach(colId => this.selectColumn(colId));
   }
 
   public selectColumn(columnId: string) {
