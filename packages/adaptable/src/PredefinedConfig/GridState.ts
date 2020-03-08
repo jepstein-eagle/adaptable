@@ -16,4 +16,5 @@ export interface GridState extends InternalState {
   MainMenuItems: AdaptableMenuItem[];
   IsLiveReportRunning: boolean;
   IsGridInPivotMode: boolean;
+  IsGridInTreeMode: boolean;
 }

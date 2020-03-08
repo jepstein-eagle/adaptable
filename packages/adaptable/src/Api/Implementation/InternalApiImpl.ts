@@ -131,6 +131,18 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return this.getAdaptableState().Grid.IsGridInPivotMode;
   }
 
+  public setTreeModeOn(): void {
+    this.dispatchAction(GridRedux.SetTreeModeOn());
+  }
+
+  public setTreeModeOff(): void {
+    this.dispatchAction(GridRedux.SetTreeModeOff());
+  }
+
+  public isGridInTreeMode(): boolean {
+    return this.getAdaptableState().Grid.IsGridInTreeMode;
+  }
+
   public addAdaptableColumn(AdaptableColumn: AdaptableColumn): void {
     this.dispatchAction(GridRedux.GridAddColumn(AdaptableColumn));
   }

@@ -3523,6 +3523,10 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.safeSetColDefs(colDefs);
     }
 
+    if (this.gridOptions.treeData && this.gridOptions.treeData == true) {
+      this.api.internalApi.setTreeModeOn();
+    }
+
     // sometimes the header row looks wrong when using quick filter so to be sure...
     if (this.isQuickFilterActive()) {
       this.api.internalApi.showQuickFilterBar();

@@ -69,6 +69,12 @@ export interface InternalApi {
 
   isGridInPivotMode(): boolean;
 
+  setTreeModeOn(): void;
+
+  setTreeModeOff(): void;
+
+  isGridInTreeMode(): boolean;
+
   addAdaptableColumn(AdaptableColumn: AdaptableColumn): void;
 
   setColumnSorts(columnSorts: ColumnSort[]): void;
