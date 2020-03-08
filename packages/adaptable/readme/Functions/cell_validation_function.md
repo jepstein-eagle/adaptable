@@ -2,8 +2,6 @@
 
 The Cell Validation ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellValidation`) Function enables you to validate proposed cell edits through the creation of custom rules.
 
-When you create your cell validation rules, they come into effect immediately. For example, if you need quickly to make a column read-only, you can create a cell validation rule that prevents all changes being made to that column, and the read-only rule is applied immediately. There is no down-time as you do not need to restart your system.
-
 You can choose between 2 types of cell validation rule:
 
 Disallow All Edits: Any attempt to change the values in any cell in the column will break the cell validation rule.
@@ -24,9 +22,7 @@ You are also able to provide Server Validation - where an edit is checked on the
 
 This is provided via Edit Options.
 
-For more information see Demo Site - API - Predefined Config - FAQ - Videos
-
-
+> One advantage of Cell Validation rules is that they come into effect immediately after that they are created. There is no down-time needed, nor any custom development required, and no systems need to be restarted.
 
 
 ## UI Elements
@@ -40,7 +36,7 @@ Cell Validation includes the following UI Elements:
 
 - **Tool Panel** - None.
 
-- **Column Menu** - `Create Cell Validation Rule` Menu Item allows starts the Cell Validation wizard for that column.
+- **Column Menu** - `Create Cell Validation Rule` Menu Item starts the Cell Validation wizard for that column.
 
 - **Context Menu** - None
 
@@ -51,26 +47,30 @@ Cell Validation supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User and **no Cell Validations will be triggered**
 
-- **ReadOnly**: User can see the Calculated Columns defined in Predefined Config but not edit or delete them, nor add others.
+- **ReadOnly**: User can see Cell Validations defined in Predefined Config but not edit or delete them, nor add others.
 
 
 ## FAQ
 
 **Why add validation on the client - surely it should take place on the server?**
 
-You are right, validation should ideally take place on the server and hopefully it does for our users. The Cell Validation function is not designed to replace server validation; instead it specifically deals with 2 common use cases:
+You are right, validation should ideally take place on the server and hopefully it does for our users. 
 
-to add an extra level of validation so that you can prevent or set warnings for edits which are usually permitted, but which in particular scenarios or use cases should be avoided or checked first (e.g. if things are particularly volatile and you want to limit how much a cell can change by)
+The Cell Validation function is not designed to replace Server Validation [which AdapTable also offers](https://demo.adaptabletools.com/edit/aggridservervalidationdemo)
 
-to avoid unnecessary round trips to the server, particularly if this will have other knock-on consequences or effect other users
+Instead Cell Validation specifically deals with 2 common use cases:
+
+- to add an extra level of validation so that you can prevent or set warnings for edits which are usually permitted, but which in particular scenarios or use cases should be avoided or checked first (e.g. if things are particularly volatile and you want to limit how much a cell can change by).
+
+- to avoid unnecessary round trips to the server, particularly if this will have other knock-on consequences or effect other users
 
 **I dont want to stop the edit when a rule is broken but I do want to know; is that possible?**
 
 Yes there are 2 possible actions when a Cell Validation rule is breached:
 
-Prevent - the edit won't happen under any circumstances.
+- Prevent - the edit won't happen under any circumstances.
 
-Warning - the user is shown a warning which he can override (with an accompanying comment).  If this happens then the edit completes.
+- Warning - the user is shown a warning which he can override (with an accompanying comment).  If this happens then the edit completes.
 
 It seems as though the second of these is more appropriate in this use case.
 
@@ -82,4 +82,6 @@ It seems as though the second of these is more appropriate in this use case.
 
 - [Cell Validation Api](https://api.adaptabletools.com/interfaces/_src_api_cellvalidationapi_.cellvalidationapi.html)
 
-- [Cell Validation Demo](https://demo.adaptableblotter.com/edit/aggridcellvalidationdemo)
+- [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html)
+
+- [Cell Validation Demo](https://demo.adaptabletools.com/edit/aggridcellvalidationdemo)
