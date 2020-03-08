@@ -1,8 +1,11 @@
 # Column Category (AdaptableFunction)
 
-The Column Category ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
+The Column Category ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnCategory`) This is a way to manage large groups of columns. A Column Category is simply a name you give to a group of columns that you specify.  The name of this category is stored with your user state.
 
-The 'replacement' value can either be one that already exists in the column or an entirely new one.
+You will most likely create your categories using at design time through Column Category Config but you can also use the Column Category screen too create and edit them at run time too.
+
+Note
+Column Categories are most used within Column Chooser as a way to easily manage large groups of columns, but you can also use them in Conditional Style to colour just the columns in that Category.
 
 ## UI Elements
 Column Category includes the following UI Elements:
@@ -50,13 +53,8 @@ Yes, you can. The selector for Column Category allows you to add your own value 
 
 
 ### Further Information
-- [Column Category State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
+- [Column Category State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columncategorystate_.columncategorystate.html)
 
-- [Column Category Api](https://api.adaptabletools.com/interfaces/_src_api_cellsummaryapi_.cellsummaryapi.html)
+- [Column Category Api](https://api.adaptabletools.com/interfaces/_src_api_columncategoryapi_.columncategoryapi.html)
 
-- [Column Category Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo)
-
-
-
-
-
+- [Column Category Demo](https://demo.adaptabletools.com/column/aggridcolumncategorydemo)
