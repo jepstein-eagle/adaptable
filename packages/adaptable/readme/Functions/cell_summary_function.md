@@ -10,7 +10,19 @@ Simply select a group of cells and you can see the summary information about tho
 
 The following Cell Summary Operations are shipped with AdapTable:
 
-- Blah
+- Sum (Numeric columns only)
+- Average (Numeric columns only)
+- Median (Numeric columns only)
+- Mode (Numeric columns only)
+- Distinct 
+- Max (Numeric columns only)
+- Min (Numeric columns only)
+- Count 
+
+If using the Finance plugin the additional Cell Summary Operations are available:
+
+- Only 
+- VWap 
 
 
 ## UI Elements
@@ -29,9 +41,9 @@ Cell Summary includes the following UI Elements:
 ## Entitlements
 Cell Summary supports these Entitlement Rules:
 
-- **Full**: Everything is available to the User
+- **Full**: All Cell Summary Operations will be displayed (and can be selected)
 
-- **Hidden**: Everything is hidden from the User
+- **Hidden**: All Cell Summaries are hidden from the User
 
 - **ReadOnly**: N/A
 
