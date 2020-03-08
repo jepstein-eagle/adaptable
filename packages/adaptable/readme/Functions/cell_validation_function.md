@@ -2,25 +2,19 @@
 
 The Cell Validation ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellValidation`) Function enables you to validate proposed cell edits through the creation of custom rules.
 
-You can choose between 2 types of cell validation rule:
+There are 2 types of cell validation rule:
 
-Disallow All Edits: Any attempt to change the values in any cell in the column will break the cell validation rule.
+1. **Disallow All Edits**: Any attempt to change the values in any cell in the column will break the cell validation rule.
 
-Disallow Only Edits that break a Cell Validation Rule: The cell value can be changed so long as it doesn't break a custom validation rule.
+2. **Disallow Only Edits that break a Cell Validation Rule**: The cell value can be changed so long as it doesn't break a custom validation rule.
 
-And you can choose between 2 outcomes for what happens when a cell validation is broken:
+And there are 2 outcomes for what happens when a cell validation rule is broken:
 
-Prevent the Cell Edit: The change will not be allowed and the cell being edited will maintain its initial pre-edited value.
+1.  **Prevent the Cell Edit**: The change will not be allowed and the cell being edited will maintain its initial pre-edited value.
 
-Show a Warning. Users will receive a warning when a proposed data edit will break validation rules. They have the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, they must provide a reason (which is then sent to the Audit Log).
+2.  **Show a Warning**: Users will receive a warning when a proposed data edit will break validation rules. They have the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, they must provide a reason (which is then sent to the Audit Log).
 
-Note
-If you want, additionally, to make the Cell Validation only applicable dependent on other values in the row sure the Use Validation Query checkbox is checked. This will open the standard Query screen and the cell validation rule will only be applied if a row has values that match the conditions you define.  For more information on building and editing Queries using multiple Conditions and Criteria see Queries.
-
-Tip
-You are also able to provide Server Validation - where an edit is checked on the server and either the same, a new or no value is returned.
-
-This is provided via Edit Options.
+> The Cell Validation Rule can be dependent also on other values in the row by using an using an [AdapTable Expression](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Query).  When this is added, the Cell Validation Rule will only be applied if a row has values that match the conditions defined.  
 
 > One advantage of Cell Validation rules is that they come into effect immediately after that they are created. There is no down-time needed, nor any custom development required, and no systems need to be restarted.
 
