@@ -2,7 +2,14 @@
 
 The Cell Summary ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
 
-The 'replacement' value can either be one that already exists in the column or an entirely new one.
+The Cell Summary function allows you to see at a glance summary information about the cells you have selected in AdapTable.
+
+Simply select a group of cells and you can see the summary information about those cells in the Cell Summary toolbar.
+
+Note
+AdapTable ships with a set of common Summary Operations; if you are running the Finance plug-in then additional finance-related Operations are available. See the Adaptable Code Documentation for a full list.
+
+
 
 ## UI Elements
 Cell Summary includes the following UI Elements:
@@ -28,25 +35,13 @@ Cell Summary supports these Entitlement Rules:
 
 ## FAQ
 
-**Can I performa a Cell Summary on any column?**
+**Can we add our own Summary Operations?**
 
-Yes. Unlike Smart Edit which is restricted to numeric columns, Cell Summary can be performed on text (string), numeric and date columns.
+Yes, you need to provide a [CellSummaryOperationDefinition](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html#cellsummaryoperationdefinitions) in your Cell Summary Predefined Config.
 
-**With Smart Edit you remember the last saved value but not with Cell Summary. Why not?**
+**Can we see Financial Operations?**
 
-It doesnt make sense to store a previous Cell Summary value as by its nature its usually a one-off operation.
-
-**Can I perform Cell Summary on a readonly column?**
-
-No, Cell Summary only applies on editable columns.
-
-**Can I perform a Cell Summary across more than one column?**
-
-No, like Smart Edit, Cell Summary works on only one column at a time.
-
-**Can I choose to enter a value that is not currently in the column?**
-
-Yes, you can. The selector for Cell Summary allows you to add your own value which is not currently contained in the column. Simply enter the new value you wish to set, and then click the selector to confirm.
+Yes, if you use the AdapTable Finance plug-in.  (See [plugins](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/README.md) for more info)
 
 
 ### Further Information
