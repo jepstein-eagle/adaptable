@@ -1,12 +1,10 @@
 import * as React from 'react';
-
 import { Flex } from 'rebass';
 import { useState } from 'react';
 import Dialog from '../../../components/Dialog';
 import { AdaptableOptions } from '../../../types';
 import Panel from '../../../components/Panel';
 import SimpleButton from '../../../components/SimpleButton';
-
 import ColumnsList from './ColumnsList';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Input from '../../../components/Input';
@@ -48,7 +46,6 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
   const onFinish = () => {
     const newABOptions = { ...abOptions };
     newABOptions.vendorGrid = { ...abOptions.vendorGrid };
-    // do the auto size??
 
     newABOptions.vendorGrid.columnDefs = columnsHandle.current!.getColumns().map(c => {
       const col = {
@@ -73,13 +70,24 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
   const stepOne = (
     <>
       <Panel
-        header={'Configure adaptable'}
+        header={'Configure AdapTable'}
         border="none"
         bodyScroll
         bodyProps={{ padding: 0 }}
         borderRadius="none"
-        style={{ flex: 1, overflow: 'auto' }}
+        style={{ fontSize: 16, flex: 1, overflow: 'auto' }}
       >
+        <Panel border="none">
+          <FormLayout>
+            <FormRow label="AdaptableId">
+              <Input
+                value={abOptions.adaptableId}
+                onChange={onadaptableIdChange}
+                style={{ minWidth: '20rem' }}
+              />
+            </FormRow>
+          </FormLayout>
+        </Panel>
         <ColumnsList
           handle={columnsHandle}
           onValidityChange={valid => {
@@ -88,23 +96,12 @@ const ConfigurationDialog = (props: ConfigurationDialogProps) => {
           columns={abOptions.vendorGrid.columnDefs}
         />
       </Panel>
-      <Panel border="none">
-        <FormLayout>
-          <FormRow label="Adaptable Id">
-            <Input
-              value={abOptions.adaptableId}
-              onChange={onadaptableIdChange}
-              style={{ minWidth: '20rem' }}
-            />
-          </FormRow>
-        </FormLayout>
-      </Panel>
     </>
   );
 
   const stepTwo = (
     <>
-      <Panel header={'Configure adaptable'} border="none" style={{ flex: 1, overflow: 'auto' }}>
+      <Panel header={'Configure AdapTable'} border="none" style={{ flex: 1, overflow: 'auto' }}>
         <ConfigurationForm
           adaptableOptions={abOptions}
           onChangeadaptableOptions={abOptions => {
