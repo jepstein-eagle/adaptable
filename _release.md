@@ -1,3 +1,7 @@
+## 6.0.18
+
+Fix nocode plugin imports failures
+
 ## 6.0.17
 
 Fix bug where default layout was still showing columns which had been marked as hidden in GridOptions
