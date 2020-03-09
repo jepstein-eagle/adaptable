@@ -184,6 +184,8 @@ Other Read Me docs that will be of interest are:
  - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/adaptable-theming-guide.md)
  
  - [Plugins](./packages/plugins/README.md)
+ 
+ Read the [full list of the AdapTable ReadMe docs](./packages/adaptable/readme/readme-list.md).
 
 ## Support
 

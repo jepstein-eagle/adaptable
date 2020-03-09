@@ -63,7 +63,7 @@ const FileDroppable = (props: FileDroppableProps) => {
     onDropSuccess,
     message,
     fileAccept = '.json',
-    helpText = 'Adaptable No Code Version',
+    helpText = 'AdapTable No Code Version',
     defaultText = 'Click here to select a JSON file to load or drag it here',
     dragOverText = 'Drop file here to start Adaptable Wizard',
     icon = <Icon name="attach-file" size={48} />,
@@ -193,7 +193,9 @@ const FileDroppable = (props: FileDroppableProps) => {
         <Flex flexDirection="column">
           {helpText ? (
             <Flex flexDirection="column" alignItems="center" margin={2}>
-              <HelpBlock>{helpText}</HelpBlock>
+              <HelpBlock>
+                <b>{helpText}</b>
+              </HelpBlock>
             </Flex>
           ) : null}
           {icon ? (

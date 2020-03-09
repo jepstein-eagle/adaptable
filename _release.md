@@ -1,3 +1,13 @@
+## 6.0.17
+
+Fix bug where default layout was still showing columns which had been marked as hidden in GridOptions
+
+Fix bug where Shortucts were not being applied when a numeric cell was directly edited
+
+## 6.0.16
+
+Fix bug that caused data updates to not work correctly when having multiple AdapTable instances in one page
+
 ## 6.0.15
 
 Try to improve loading times for layouts

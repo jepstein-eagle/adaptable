@@ -25,6 +25,7 @@ import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { USER_NAME, ADAPTABLE_ID } from '../../Utilities/Constants/GeneralConstants';
+import { grid } from 'styled-system';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
@@ -130,6 +131,18 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return this.getAdaptableState().Grid.IsGridInPivotMode;
   }
 
+  public setTreeModeOn(): void {
+    this.dispatchAction(GridRedux.SetTreeModeOn());
+  }
+
+  public setTreeModeOff(): void {
+    this.dispatchAction(GridRedux.SetTreeModeOff());
+  }
+
+  public isGridInTreeMode(): boolean {
+    return this.getAdaptableState().Grid.IsGridInTreeMode;
+  }
+
   public addAdaptableColumn(AdaptableColumn: AdaptableColumn): void {
     this.dispatchAction(GridRedux.GridAddColumn(AdaptableColumn));
   }
@@ -216,6 +229,10 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       }
     }
     return toolbarTitle;
+  }
+
+  setLastAppliedShortCut(gridCell: GridCell | undefined): void {
+    this.dispatchAction(SystemRedux.SetLastAppliedShortcut(gridCell));
   }
 
   // General way to get to store from inside Adaptable...

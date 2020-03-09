@@ -1541,6 +1541,19 @@ export class Adaptable implements IAdaptable {
     });
   }
 
+  public selectNodes(rowNodes: any[]): void {
+    if (ArrayExtensions.IsNotNullOrEmpty(rowNodes)) {
+      rowNodes.forEach(node => this.selectNode(node));
+    }
+  }
+  public selectNode(rowNode: any): void {
+    if (!rowNode) {
+      LoggingHelper.LogAdaptableError('No node to select');
+      return;
+    }
+    rowNode.setSelected(true, true);
+  }
+
   public redraw() {
     this.gridOptions.api!.redrawRows();
     this.gridOptions.api!.refreshHeader();
@@ -2251,7 +2264,18 @@ export class Adaptable implements IAdaptable {
             this.api.gridApi.getColumns()
           );
           if (abColumn && abColumn.DataType == DataType.Number) {
-            params.node.setDataValue(column.colId, Number(params.value));
+            let shouldUpdateNumberEdit: boolean = true;
+            if (ArrayExtensions.IsNotNullOrEmpty(this.api.shortcutApi.getAllShortcut())) {
+              const lastShortCut: GridCell | undefined = this.api.internalApi.getSystemState()
+                .LastAppliedShortCut;
+              if (lastShortCut) {
+                shouldUpdateNumberEdit = false;
+              }
+            }
+
+            if (shouldUpdateNumberEdit) {
+              params.node.setDataValue(column.colId, Number(params.value));
+            }
           }
         }
         // if they have set to run filter after edit then lets do it
@@ -3022,6 +3046,10 @@ export class Adaptable implements IAdaptable {
     return this.gridOptions.columnApi!.getAllColumns().filter(c => c.isVisible()).length;
   }
 
+  public selectColumns(columnIds: string[]): void {
+    columnIds.forEach(colId => this.selectColumn(colId));
+  }
+
   public selectColumn(columnId: string) {
     this.gridOptions.api!.clearRangeSelection();
     const cellRangeParams: CellRangeParams = {
@@ -3493,6 +3521,10 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       });
 
       this.safeSetColDefs(colDefs);
+    }
+
+    if (this.gridOptions.treeData && this.gridOptions.treeData == true) {
+      this.api.internalApi.setTreeModeOn();
     }
 
     // sometimes the header row looks wrong when using quick filter so to be sure...

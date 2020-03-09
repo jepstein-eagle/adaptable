@@ -31,6 +31,8 @@ export const SET_LIVE_REPORT_RUNNING_ON = 'SET_LIVE_REPORT_RUNNING_ON';
 export const SET_LIVE_REPORT_RUNNING_OFF = 'SET_LIVE_REPORT_RUNNING_OFF';
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
+export const SET_TREE_MODE_ON = 'SET_TREE_MODE_ON';
+export const SET_TREE_MODE_OFF = 'SET_TREE_MODE_OFF';
 
 export interface GridSetColumnsAction extends Redux.Action {
   Columns: AdaptableColumn[];
@@ -101,6 +103,10 @@ export interface SetLiveReportRunningOffAction extends Redux.Action {}
 export interface SetPivotModeOnAction extends Redux.Action {}
 
 export interface SetPivotModeOffAction extends Redux.Action {}
+
+export interface SetTreeModeOnAction extends Redux.Action {}
+
+export interface SetTreeModeOffAction extends Redux.Action {}
 
 export const GridSetColumns = (Columns: AdaptableColumn[]): GridSetColumnsAction => ({
   type: GRID_SET_COLUMNS,
@@ -203,6 +209,14 @@ export const SetPivotModeOff = (): SetPivotModeOffAction => ({
   type: SET_PIVOT_MODE_OFF,
 });
 
+export const SetTreeModeOn = (): SetTreeModeOnAction => ({
+  type: SET_TREE_MODE_ON,
+});
+
+export const SetTreeModeOff = (): SetTreeModeOffAction => ({
+  type: SET_TREE_MODE_OFF,
+});
+
 export const SetMainMenuItems = (MenuItems: AdaptableMenuItem[]): SetMainMenuItemsAction => ({
   type: SET_MAIN_MENUITEMS,
   MenuItems,
@@ -216,9 +230,9 @@ const initialGridState: GridState = {
   CellSummary: null,
   IsQuickFilterActive: false,
   MainMenuItems: EMPTY_ARRAY,
-
   IsLiveReportRunning: false,
   IsGridInPivotMode: false,
+  IsGridInTreeMode: false,
 };
 
 export const GridReducer: Redux.Reducer<GridState> = (
@@ -278,6 +292,10 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsGridInPivotMode: true });
     case SET_PIVOT_MODE_OFF:
       return Object.assign({}, state, { IsGridInPivotMode: false });
+    case SET_TREE_MODE_ON:
+      return Object.assign({}, state, { IsGridInTreeMode: true });
+    case SET_TREE_MODE_OFF:
+      return Object.assign({}, state, { IsGridInTreeMode: false });
     default:
       return state;
   }
