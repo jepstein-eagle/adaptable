@@ -1,6 +1,6 @@
 ## 6.0.18
 
-Fix nocode plugin imports failures.
+Fix nocode plugin imports failures
 
 ## 6.0.17
 
