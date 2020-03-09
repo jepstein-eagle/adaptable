@@ -82,8 +82,3 @@ You can and the change will persist.  However please note that AdapTable will no
 - [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_calculatedcolumnapi_.calculatedcolumnapi.html)
 
 - [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo)
-
-
-
-
-

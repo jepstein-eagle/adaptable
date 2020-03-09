@@ -55,8 +55,3 @@ Yes, you can. The selector for Column Filter allows you to add your own value wh
 - [Column Filter Api](https://api.adaptabletools.com/interfaces/_src_api_cellsummaryapi_.cellsummaryapi.html)
 
 - [Column Filter Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo)
-
-
-
-
-

@@ -13,8 +13,6 @@ Column Chooser includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu** - None
-
 - **Context Menu** - `Apply Column Chooser` Menu Item opens Column Chooser popup (only visible if selected cells are editable).
 
 ## Entitlements
@@ -55,8 +53,3 @@ Yes, you can. The selector for Column Chooser allows you to add your own value w
 - [Column Chooser Api](https://api.adaptabletools.com/interfaces/_src_api_cellsummaryapi_.cellsummaryapi.html)
 
 - [Column Chooser Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo)
-
-
-
-
-

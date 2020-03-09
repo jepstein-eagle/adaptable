@@ -13,8 +13,6 @@ Bulk Update includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu** - None
-
 - **Context Menu** - `Apply Bulk Update` Menu Item opens Bulk Update popup (only visible if selected cells are editable).
 
 ## Entitlements
@@ -57,8 +55,3 @@ Yes, you can. The selector for Bulk Update allows you to add your own value whic
 - [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html)
 
 - [Bulk Update Demo](https://demo.adaptabletools.com/edit/aggridbulkupdatedemo)
-
-
-
-
-
