@@ -1743,12 +1743,13 @@ export class Adaptable implements IAdaptable {
       headerName: calculatedColumn.ColumnId,
       colId: calculatedColumn.ColumnId,
       hide: true,
-      enableValue: true, // makes the column 'summable'
+      enableValue: dataType == DataType.Number, // makes the column 'summable'
       editable: false,
       filter: true,
       resizable: true,
-      enableRowGroup: true, // makes the column 'groupable'
+      enableRowGroup: dataType == DataType.Number, // makes the column 'groupable'
       sortable: true,
+      enablePivot: dataType == DataType.String,
       type: agGridDataType,
       valueGetter: (params: ValueGetterParams) =>
         Helper.RoundValueIfNumeric(

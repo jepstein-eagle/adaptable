@@ -51,7 +51,7 @@ function InitAdaptableDemo() {
     clearFiltersOnStartUp: true,
   };
   adaptableOptions.searchOptions = {
-    clearSearchesOnStartUp: true,
+    //   clearSearchesOnStartUp: true,
   };
 
   api = Adaptable.init(adaptableOptions);
@@ -81,7 +81,9 @@ let demoConfig: PredefinedConfig = {
       Tone: 'success',
     }, //
   },
-
+  QuickSearch: {
+    QuickSearchText: 'a',
+  },
   Layout: {
     // CurrentLayout: 'Layout Two',
     Layouts: [
