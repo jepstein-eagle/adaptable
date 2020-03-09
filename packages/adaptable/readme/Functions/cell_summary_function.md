@@ -35,8 +35,6 @@ Cell Summary includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu** - None
-
 - **Context Menu** - `See Cell Summary` Menu Item opens Cell Summary popup (only visible if selected cells are editable).
 
 ## Entitlements

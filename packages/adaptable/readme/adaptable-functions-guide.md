@@ -33,7 +33,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | Calendar                                                       | No     | No      | No         | No          | No           | 
 | [CellSummary](./Functions/cell_summary_function.md)            | No     | Yes     | Yes        | No          | Yes          | 
 | [CellValidation](./Functions/cell_validation_function.md)      | Yes    | No      | No         | Yes         | No           | 
-| [ColumnCategory](./Functions/column_category_function.md)      | No     | No      | No         | No          | No           | 
+| [ColumnCategory](./Functions/column_category_function.md)      | Yes    | No      | No         | No          | No           | 
 | [ColumnChooser](./Functions/column_chooser_function.md)        | No     | No      | No         | Yes         | Yes          | 
 | Column Filter            | No        | Yes      | Yes        | Yes         | Yes           | 
 | Column Info              | No        | No       | No         | Yes         | Yes           | 

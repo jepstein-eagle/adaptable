@@ -40,8 +40,6 @@ Alerts includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu Item** - None.
-
 - **Context Menu Item** - `Clear Alert` Menu Item opens clears a Cell if it has been coloured by an Alert (only visible if selected cell if one which has triggered a Live Alert and has been coloured by it).
 
 ## Entitlements
@@ -73,4 +71,3 @@ Yes, when you create an Alert Definition you can stipulate, among other things, 
 - [Alert Fired Event](https://api.adaptabletools.com/interfaces/_src_api_events_alertfired_.alertfiredeventargs.html)
 
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
-

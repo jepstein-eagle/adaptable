@@ -21,10 +21,6 @@ Advanced Search includes the following UI Elements:
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu Item** - None.
-
-- **Context Menu Item** - None.
-
 ## Entitlements
 Advanced Search supports these Entitlement Rules:
 
@@ -61,4 +57,3 @@ The default is *Never* meaning Advanced Searches won't update as ticking data ch
 - [Search Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html)
 
 - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo)
-

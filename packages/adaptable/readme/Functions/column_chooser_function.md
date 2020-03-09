@@ -1,21 +1,22 @@
 # Column Chooser (AdaptableFunction)
 
-The Column Chooser ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
+The Column Chooser ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnChooser`) Function provides a Popup that enables you easily to order columns and also show and hide them.
+Use the Column Chooser to select which columns are visible in your grid and in which order.
 
-The 'replacement' value can either be one that already exists in the column or an entirely new one.
+If a Layout is being used, then any changes made to the column order will become part of the Layout (and will 'AutoSave' if that option has been set to true).
+
+> Column Chooser is designed for managing **column visiblity**.  To control **row visibility**, use one of the many Search Functions instead.
+
 
 ## UI Elements
 Column Chooser includes the following UI Elements:
 
-- **Popup** - Allows you to perform a Column Chooser operation on selected columns.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
+- **Popup** - Allows you to sort column order and also to hide / show columns as required.
 
-- **Toolbar** - Enables Column Chooser to be performed - and to provide both an existing column value or a new one.
+- **Column Menu** - `Show Column Chooser` Menu Item opens Column Chooser popup.
 
-- **Tool Panel** - Same as Toolbar above.
+- **Context Menu** - `Show Column Chooser` Menu Item opens Column Chooser popup.
 
-- **Column Menu** - None
-
-- **Context Menu** - `Apply Column Chooser` Menu Item opens Column Chooser popup (only visible if selected cells are editable).
 
 ## Entitlements
 Column Chooser supports these Entitlement Rules:
@@ -26,37 +27,15 @@ Column Chooser supports these Entitlement Rules:
 
 - **ReadOnly**: N/A
 
+
 ## FAQ
 
-**Can I performa a Column Chooser on any column?**
+**Can I set information about a column in the Column Chooser?**
 
-Yes. Unlike Smart Edit which is restricted to numeric columns, Column Chooser can be performed on text (string), numeric and date columns.
+No, the Column Chooser is designed simply for the management of Column order and visilibity.  
 
-**With Smart Edit you remember the last saved value but not with Column Chooser. Why not?**
-
-It doesnt make sense to store a previous Column Chooser value as by its nature its usually a one-off operation.
-
-**Can I perform Column Chooser on a readonly column?**
-
-No, Column Chooser only applies on editable columns.
-
-**Can I perform a Column Chooser across more than one column?**
-
-No, like Smart Edit, Column Chooser works on only one column at a time.
-
-**Can I choose to enter a value that is not currently in the column?**
-
-Yes, you can. The selector for Column Chooser allows you to add your own value which is not currently contained in the column. Simply enter the new value you wish to set, and then click the selector to confirm.
+Use the Column Info function to add / edit AdapTable objects for columns.
 
 
 ### Further Information
-- [Column Chooser State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
-
-- [Column Chooser Api](https://api.adaptabletools.com/interfaces/_src_api_cellsummaryapi_.cellsummaryapi.html)
-
-- [Column Chooser Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo)
-
-
-
-
-
+- [Column Chooser Api](https://api.adaptabletools.com/interfaces/_src_api_columnchooserapi_.columnchooserapi.html)

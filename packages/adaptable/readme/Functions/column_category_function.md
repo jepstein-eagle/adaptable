@@ -1,24 +1,19 @@
 # Column Category (AdaptableFunction)
 
-The Column Category ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnCategory`) This is a way to manage large groups of columns. A Column Category is simply a name you give to a group of columns that you specify.  The name of this category is stored with your user state.
+The Column Category ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnCategory`) Function provides a way to manage large groups of columns. 
 
-You will most likely create your categories using at design time through Column Category Config but you can also use the Column Category screen too create and edit them at run time too.
+A Column Category is simply a name given a specific group of columns that you specify.
 
-Note
-Column Categories are most used within Column Chooser as a way to easily manage large groups of columns, but you can also use them in Conditional Style to colour just the columns in that Category.
+A Column Category can be created through the UI or via [Column Category State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columncategorystate_.columncategorystate.html).
+
+> Column Categories are most commonly used within Column Chooser as a way to easily manage large groups of columns.  But they can be used in other functions (e.g. Conditional Style to colour just the columns in that Category).
 
 ## UI Elements
 Column Category includes the following UI Elements:
 
-- **Popup** - Allows you to perform a Column Category operation on selected columns.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
+- **Popup** - Shows a list of existing Column Categories with Edit and Delete buttons, plus an Add button to start the Column Category Wizard.
 
-- **Toolbar** - Enables Column Category to be performed - and to provide both an existing column value or a new one.
-
-- **Tool Panel** - Same as Toolbar above.
-
-- **Column Menu** - None
-
-- **Context Menu** - `Apply Column Category` Menu Item opens Column Category popup (only visible if selected cells are editable).
+- **Wizard** - A series of steps facilitating the creation and editing of Column Categoriess.
 
 ## Entitlements
 Column Category supports these Entitlement Rules:
@@ -27,29 +22,13 @@ Column Category supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: N/A
+- **ReadOnly**: User can access Column Categories defined in Predefined Config but not add, edit or delete them.
 
 ## FAQ
 
-**Can I performa a Column Category on any column?**
+**Can a column be in more than one Column Category?**
 
-Yes. Unlike Smart Edit which is restricted to numeric columns, Column Category can be performed on text (string), numeric and date columns.
-
-**With Smart Edit you remember the last saved value but not with Column Category. Why not?**
-
-It doesnt make sense to store a previous Column Category value as by its nature its usually a one-off operation.
-
-**Can I perform Column Category on a readonly column?**
-
-No, Column Category only applies on editable columns.
-
-**Can I perform a Column Category across more than one column?**
-
-No, like Smart Edit, Column Category works on only one column at a time.
-
-**Can I choose to enter a value that is not currently in the column?**
-
-Yes, you can. The selector for Column Category allows you to add your own value which is not currently contained in the column. Simply enter the new value you wish to set, and then click the selector to confirm.
+No. Each column can only be in one (or no) Column Category.
 
 
 ### Further Information

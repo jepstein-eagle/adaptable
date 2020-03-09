@@ -26,13 +26,8 @@ Cell Validation includes the following UI Elements:
 
 - **Wizard** - A series of steps facilitating the creation and editing of Cell Validations.
 
-- **Toolbar** - None.
-
-- **Tool Panel** - None.
-
 - **Column Menu** - `Create Cell Validation Rule` Menu Item starts the Cell Validation wizard for that column.
 
-- **Context Menu** - None
 
 ## Entitlements
 Cell Validation supports these Entitlement Rules:
