@@ -22,7 +22,7 @@ Column Category supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: User can access Column Categories defined in Predefined Config but not edit or delete them, nor add others.
+- **ReadOnly**: User can access Column Categories defined in Predefined Config but not add, edit or delete them.
 
 ## FAQ
 
