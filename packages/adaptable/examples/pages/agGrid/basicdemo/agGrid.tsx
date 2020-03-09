@@ -46,6 +46,12 @@ function InitAdaptableDemo() {
   };
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
+    // hotKeys: [
+    //   {
+    //     key: 'ctrl + f',
+    //     command: api => api.dashboardApi.focusQuickSearch(),
+    //   },
+    // ],
   };
   adaptableOptions.filterOptions = {
     clearFiltersOnStartUp: true,
@@ -53,8 +59,7 @@ function InitAdaptableDemo() {
   adaptableOptions.searchOptions = {
     clearSearchesOnStartUp: true,
   };
-
-  api = Adaptable.init(adaptableOptions);
+  adaptableOptions.api = Adaptable.init(adaptableOptions);
 
   (globalThis as any).api = api;
 
@@ -67,19 +72,19 @@ function InitAdaptableDemo() {
     console.log(searchChangedArgs.data[0].id);
   });
 
-  if (typeof window !== 'undefined') {
+  if (typeof document !== 'undefined') {
     document.addEventListener('keydown', event => {
       // ctrl + a ... show advanced search popup
       if (event.key === 'a' && event.ctrlKey) {
-        api.advancedSearchApi.showAdvancedSearchPopup();
+        api.columnChooserApi.showColumnChooserPopup();
       }
 
       // ctrl + t ... toggle light/dark themes
       if (event.key === 't' && event.ctrlKey) {
         if (api.themeApi.getCurrentTheme() === 'dark') {
-          api.themeApi.loadLightTheme();
+          api.themeApi.loadTheme('light');
         } else {
-          api.themeApi.loadDarkTheme();
+          api.themeApi.loadTheme('dark');
         }
       }
     });

@@ -215,7 +215,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
           return (
             <SimpleButton
               key={menuItem.Label}
-              variant="text"
+              variant={menuItem.FunctionName === 'SystemStatus' ? 'outlined' : 'text'}
               tone="accent"
               className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               icon={menuItem.Icon}
