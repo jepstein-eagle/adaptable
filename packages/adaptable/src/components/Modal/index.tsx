@@ -6,9 +6,10 @@ import { RemoveScroll } from 'react-remove-scroll';
 import { FlexProps, Flex } from 'rebass';
 
 import { baseClassName, default as Backdrop } from './Backdrop';
+import { createUuid } from '../utils/uuid';
 
-const uuidv4 = require('uuid/v4');
-const createUuid = (): string => uuidv4();
+// const uuidv4 = require('uuid/v4');
+// const createUuid = (): string => uuidv4();
 
 const globalObject = typeof globalThis !== 'undefined' ? globalThis : window;
 let portalElement: HTMLElement;

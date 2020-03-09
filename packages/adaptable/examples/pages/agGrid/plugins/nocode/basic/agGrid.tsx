@@ -45,7 +45,7 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Theme: {
-    // CurrentTheme: 'dark',
+    CurrentTheme: 'dark',
   },
 };
 

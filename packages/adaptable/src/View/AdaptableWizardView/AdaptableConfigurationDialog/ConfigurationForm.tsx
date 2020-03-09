@@ -379,6 +379,10 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
           </FormLayout>
         </>
       ) : null}
+
+      {/*
+      // Taking this out for now until we add proper chart options
+     
       <Flex flexDirection="row" alignItems="center" margin={2}>
         <Text style={{ flex: 3 }} marginRight={2}>
           Pie Chart Maximum Items
@@ -402,6 +406,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
           />
         </Flex>
       </Flex>
+ */}
 
       <HelpBlock>Config Server Options</HelpBlock>
       <FormLayout
