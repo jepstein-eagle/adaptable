@@ -110,9 +110,14 @@ class AdaptableToolPanelComponent extends React.Component<
     });
 
     // Build the Tool Panels
-    let visibleToolPanels = this.props.VisibleToolsPanels.filter(vt =>
-      this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(vt)
+    console.log('this.props.VisibleToolsPanels');
+    console.log(this.props.VisibleToolsPanels);
+
+    let visibleToolPanels = this.props.VisibleToolsPanels.filter(
+      vt => !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(vt)
     );
+    console.log('visibleToolPanels');
+    console.log(visibleToolPanels);
     let visibleToolPanelControls = visibleToolPanels.map((control, idx) => {
       let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
         control
