@@ -33,13 +33,33 @@ The key thing to note is that columns are referenced in the Expression as Col("C
 
 > You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
 
-You can use the usual range of mathematical operators in writing the Expression.  
+You can use the usual range of mathematical operators in writing the Expression. 
 
-To create an Expression which doubled another column would be:
+#### Examples
+
+To create an Expression which referenced another column and a mathematical operator: 
 
 ```
 ColumnExpression: Col("Notional") * 2
  ```      
+
+To create an Expression which references 2 columns:
+
+```
+ColumnExpression: Col("ItemCost") / Col("ItemCount")
+ ```      
+
+To create an Expression which references 3 columns:
+
+```
+ColumnExpression: Col("InvoicedCost") - ( Col("OrderCost") + Col("PackageCost"))
+ ```      
+
+To create an Expression which outputs a string:
+
+```
+ColumnExpression: Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
+ ```
 
 ## UI Elements
 
