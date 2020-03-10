@@ -14,28 +14,20 @@ There are numerous potential uses for Calculated Columns including showing Histo
 
 Calculated Columns include an **Expression** that users provide. 
 
-An Expression typically include a mathematical operator and will reference other columns. 
+An Expression typically includes a mathematical operator and will reference other columns. 
 
-There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the [Math.JS](https://mathjs.org/) library to evaluate the Expression).
-
-> An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
+> There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the [Math.JS](https://mathjs.org/) library to evaluate the Expression).  An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
 
 Note: The Expression in the Calculated Column updates in real time as values in the columns which form part of that expression change.
 
-We plan in future releases to enable drag and drop so that you can more easily reference other columns when creating a Custom Column Expression.
-
-### Writing a Calculated Column Expression
+## Calculated Column Expression Examples
 There is not currently a GUI to help you write Calculated Column Expressions - though one will be released soon.  
 
 So for the time being they need to be written by hand.
 
 The key thing to note is that columns are referenced in the Expression as Col("ColumnName"), e.g. Col("Bid").  
 
-> You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
-
-You can use the usual range of mathematical operators in writing the Expression. 
-
-#### Examples
+> You can use either the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. Col("orderId"); or you can use the Column's Friendly Name, i.e. the Caption displayed in the Header row - e.g. Col("Order ID").
 
 To create an Expression which references another column and a mathematical operator: 
 
