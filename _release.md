@@ -1,3 +1,7 @@
+## 6.0.23
+
+ToolPanel update
+
 ## 6.0.22
 
 More boolean filter updates
