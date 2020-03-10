@@ -1,3 +1,7 @@
+## 6.0.24
+
+FilterForm tidy up
+
 ## 6.0.23
 
 ToolPanel update
