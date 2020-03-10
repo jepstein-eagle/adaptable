@@ -1,3 +1,7 @@
+## 6.0.20
+
+Fixing bug with custom sort functions in predefined config
+
 ## 6.0.19
 
 Prevent layouts in Tree Grid View from having Grouped or Pivoted columns 
