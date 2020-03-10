@@ -1,3 +1,7 @@
+## 6.0.22
+
+More boolean filter updates
+
 ## 6.0.21
 
 Adding boolean column support in filter dropdown
