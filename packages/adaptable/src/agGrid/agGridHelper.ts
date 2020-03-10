@@ -758,9 +758,10 @@ export class agGridHelper {
           const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
           groupCustomSort.ColumnId = colId;
           groupCustomSort.SortedValues = customSort.SortedValues;
-
           const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
-            ? customSort.CustomSortComparerFunction
+            ? this.adaptable.adaptableOptions.userFunctions.customSortFunctions[
+                customSort.CustomSortComparerFunction
+              ]
             : customSortStrategy.getComparerFunction(groupCustomSort);
           this.adaptable.setCustomSort(colId, customSortComparerFunction);
         }

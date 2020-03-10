@@ -33,6 +33,19 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: {
+      customSortFunctions: {
+        customCountrySorter: (valueA: any, valueB: any, nodeA?: any, nodeB?: any) => {
+          if (valueA === 'United Kingdom') {
+            return -1;
+          }
+          if (valueB === 'United Kingdom') {
+            return 1;
+          }
+          return nodeA.data.notional > nodeB.data.notional ? 1 : -1;
+        },
+      },
+    },
   };
 
   api = Adaptable.init(adaptableOptions);
@@ -52,18 +65,6 @@ function InitAdaptableDemo() {
       api.applicationApi.addApplicationDataEntry(applicationDataEntry);
     }
   });
-  /*
-  api.eventApi.on('AdaptableReady', () => {
-    let statusMessage: string | undefined = api.systemStatusApi.getSystemStatusState()
-      .StatusMessage;
-    if (statusMessage === 'No issues') {
-      console.log('nothing to do as we have the right message so we cleared config already');
-    } else {
-      alert('dont have the message so need to set it and then clear config');
-      api.configApi.configDeleteLocalStorage();
-      api.systemStatusApi.setInfoSystemStatus('No issues');
-    }
-  }); */
 }
 
 let demoConfig: PredefinedConfig = {
@@ -77,15 +78,7 @@ let demoConfig: PredefinedConfig = {
     CustomSorts: [
       {
         ColumnId: 'country',
-        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA?: any, nodeB?: any) => {
-          if (valueA === 'United Kingdom') {
-            return -1;
-          }
-          if (valueB === 'United Kingdom') {
-            return 1;
-          }
-          return nodeA.data.notional > nodeB.data.notional ? 1 : -1;
-        },
+        CustomSortComparerFunction: 'customCountrySorter',
       },
       {
         ColumnId: 'counterparty',
