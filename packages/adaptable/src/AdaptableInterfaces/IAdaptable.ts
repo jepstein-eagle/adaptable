@@ -23,7 +23,6 @@ import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
-
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
@@ -270,6 +269,8 @@ export interface IAdaptable {
 
   // vendor grid related
   isSelectable(): boolean;
+  isGroupable(): boolean;
+  isPivotable(): boolean;
 
   // quick filter
   showQuickFilter(): void;

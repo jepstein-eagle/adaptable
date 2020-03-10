@@ -31,39 +31,46 @@ export class LayoutSetPivotingWizard
   render(): any {
     return (
       <WizardPanel>
-        <HelpBlock marginBottom={2}>
-          Check the box to create a <b>Pivoted Layout</b> (one which uses Aggregation).
-        </HelpBlock>
-        <Flex flexDirection="row" alignItems="center">
-          <Checkbox
-            marginLeft={2}
-            marginRight={2}
-            onChange={(checked: boolean) => this.onCreatePivotLayoutChanged(checked)}
-            checked={this.state.IsPivotLayout}
-          >
-            Create Pivot Layout
-          </Checkbox>{' '}
-        </Flex>
-        {this.state.IsPivotLayout && (
-          <HelpBlock marginTop={2}>
-            There are 2 sets of columns that make up a Pivot Layout: <br />
-            <ul>
-              <li>
-                <b>Pivot Columns</b>: These are the colums which will form the pivot header.
-                <br /> <br />
-              </li>
-              <li>
-                <b>Aggregation Columns</b>: These are (typically numeric) columns which will be
-                aggregated in the pivot.
-                <br /> <br />
-              </li>
-            </ul>
-            These 2 column sets can be created in the next wizard steps.
-            <br />
-            <br />
-            At least one of these column sets must be provided for the Layout to open in Pivot View.
-            <br />
-          </HelpBlock>
+        {this.props.Adaptable.isPivotable() ? (
+          <div>
+            <HelpBlock marginBottom={2}>
+              Check the box to create a <b>Pivoted Layout</b> (one which uses Aggregation).
+            </HelpBlock>
+            <Flex flexDirection="row" alignItems="center">
+              <Checkbox
+                marginLeft={2}
+                marginRight={2}
+                onChange={(checked: boolean) => this.onCreatePivotLayoutChanged(checked)}
+                checked={this.state.IsPivotLayout}
+              >
+                Create Pivot Layout
+              </Checkbox>{' '}
+            </Flex>
+            {this.state.IsPivotLayout && (
+              <HelpBlock marginTop={2}>
+                There are 2 sets of columns that make up a Pivot Layout: <br />
+                <ul>
+                  <li>
+                    <b>Pivot Columns</b>: These are the colums which will form the pivot header.
+                    <br /> <br />
+                  </li>
+                  <li>
+                    <b>Aggregation Columns</b>: These are (typically numeric) columns which will be
+                    aggregated in the pivot.
+                    <br /> <br />
+                  </li>
+                </ul>
+                These 2 column sets can be created in the next wizard steps.
+                <br />
+                <br />
+                At least one of these column sets must be provided for the Layout to open in Pivot
+                View.
+                <br />
+              </HelpBlock>
+            )}
+          </div>
+        ) : (
+          <HelpBlock marginBottom={2}>Pivoting is not available for this Grid.</HelpBlock>
         )}
       </WizardPanel>
     );

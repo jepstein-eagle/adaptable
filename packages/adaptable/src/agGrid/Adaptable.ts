@@ -3341,6 +3341,16 @@ export class Adaptable implements IAdaptable {
     return false;
   }
 
+  public isGroupable(): boolean {
+    const isTreeLayout: boolean = this.api.internalApi.isGridInTreeMode();
+    return !isTreeLayout;
+  }
+
+  public isPivotable(): boolean {
+    const isTreeLayout: boolean = this.api.internalApi.isGridInTreeMode();
+    return !isTreeLayout;
+  }
+
   private isQuickFilterActive(): boolean {
     return (
       this.gridOptions.floatingFilter === true &&
