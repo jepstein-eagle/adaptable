@@ -16,9 +16,11 @@ Calculated Columns include an **Expression** that users provide.
 
 An Expression typically includes a mathematical operator and will reference other columns. 
 
-> There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the [Math.JS](https://mathjs.org/) library to evaluate the Expression).  An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
+> There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the [Math.JS](https://mathjs.org/) library to evaluate the Expression).  
 
-Note: The Expression in the Calculated Column updates in real time as values in the columns which form part of that expression change.
+> An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
+
+Note: The Expression in the Calculated Column updates in real time as values in the columns to which it refers change.
 
 ## Calculated Column Expression Examples
 There is not currently a GUI to help you write Calculated Column Expressions - though one will be released soon.  
@@ -70,13 +72,13 @@ Calculated Column supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: User can see the Calculated Columns defined in Predefined Config but not edit or delete them, nor add others.
+- **ReadOnly**: User can see Calculated Columns defined in Predefined Config but not add, edit or delete them.
 
 ## FAQ
 
 **Which mathematical operators can we use to build the Expression?**
 
-You can use any of the hundreds available in the math.js library.
+You can use any of the hundreds available in the [Math.JS](https://mathjs.org/) library.
 
 **Its quite cumbersome to have to write the Expression by hand.  Is there a GUI option?**
 
