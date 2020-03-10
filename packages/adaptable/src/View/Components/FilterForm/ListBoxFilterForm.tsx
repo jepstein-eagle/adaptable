@@ -240,7 +240,7 @@ export class ListBoxFilterForm extends React.Component<
           this.props.useVendorStyle ? `ab-ListBoxFilterForm--vendor-style` : null
         )}
       >
-        {rangeForm}
+        {this.props.DataType != 'Boolean' && { rangeForm }}
         <Box mx={this.props.useVendorStyle ? 0 : '2px'} marginBottom={2}>
           {textClear}
         </Box>

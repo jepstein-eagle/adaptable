@@ -7,7 +7,6 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
@@ -125,7 +124,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
     return this.props.CurrentColumn &&
       this.props.CurrentColumn.Filterable &&
-      this.props.CurrentColumn.DataType != DataType.Boolean ? (
+      this.props.CurrentColumn.DataType != DataType.Unknown ? (
       <Input
         style={{
           width: this.props.ColumnWidth,
