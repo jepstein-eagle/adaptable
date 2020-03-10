@@ -1,3 +1,7 @@
+## 6.0.21
+
+Adding boolean column support in filter dropdown
+
 ## 6.0.20
 
 Fixing bug with custom sort functions in predefined config
