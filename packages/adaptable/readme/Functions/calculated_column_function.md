@@ -16,7 +16,7 @@ Calculated Columns include an **Expression** that users provide.
 
 An Expression typically include a mathematical operator and will reference other columns. 
 
-There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the Math.JS library to evaluate the Expression(.
+There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the [Math.JS](https://mathjs.org/) library to evaluate the Expression).
 
 > An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
 
@@ -25,15 +25,21 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 We plan in future releases to enable drag and drop so that you can more easily reference other columns when creating a Custom Column Expression.
 
 ### Writing a Calculated Column Expression
-There is not currently a GUI to help you write Calculated Column Expressions - though we do have one very soon.  
+There is not currently a GUI to help you write Calculated Column Expressions - though one will be released soon.  
 
 So for the time being they need to be written by hand.
 
-The key thing to remember is that the way to refer to other columns in the Expression is as Col("ColumnName"). (e.g. Col("Bid").  
+The key thing to note is that columns are referenced in the Expression as Col("ColumnName"), e.g. Col("Bid").  
 
 > You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
 
+You can use the usual range of mathematical operators in writing the Expression.  
 
+To create an Expression which doubled another column would be:
+
+```
+ColumnExpression: Col("Notional") * 2
+ ```      
 
 ## UI Elements
 
