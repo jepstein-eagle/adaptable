@@ -45,27 +45,20 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
   adaptableOptions.filterOptions = {
-    clearFiltersOnStartUp: true,
+    // clearFiltersOnStartUp: true,
   };
   adaptableOptions.searchOptions = {
-    clearSearchesOnStartUp: true,
+    // clearSearchesOnStartUp: true,
   };
 
   api = Adaptable.init(adaptableOptions);
 }
 
-let demoConfig: PredefinedConfig = [
-  {
-    QuickSearch: {
-      QuickSearchText: '',
-    },
+let demoConfig: PredefinedConfig = {
+  QuickSearch: {
+    QuickSearchText: 'a',
   },
-  {
-    QuickSearch: {
-      QuickSearchText: 'test',
-    },
-  },
-];
+};
 
 export default () => {
   useEffect(() => {

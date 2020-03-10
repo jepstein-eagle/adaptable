@@ -387,14 +387,14 @@ export class AdaptableStore implements IAdaptableStore {
       .load()
       .then(storedState => {
         if (storedState && this.loadStartOnStartup) {
-          const migratedState = MigrateState(
-            adaptable.adaptableOptions.predefinedConfig,
-            storedState
-          );
-          console.log('migrate', storedState, migratedState);
+          // const migratedState = MigrateState(
+          //   adaptable.adaptableOptions.predefinedConfig,
+          //   storedState
+          // );
+          // console.log('migrate', storedState, migratedState);
 
           this.TheStore.dispatch(
-            LoadState(adaptable.adaptableOptions.stateOptions.applyState(migratedState))
+            LoadState(adaptable.adaptableOptions.stateOptions.applyState(storedState))
           );
         }
       })
