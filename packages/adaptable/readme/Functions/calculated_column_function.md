@@ -37,7 +37,7 @@ You can use the usual range of mathematical operators in writing the Expression.
 
 #### Examples
 
-To create an Expression which referenced another column and a mathematical operator: 
+To create an Expression which references another column and a mathematical operator: 
 
 ```
 ColumnExpression: Col("Notional") * 2
