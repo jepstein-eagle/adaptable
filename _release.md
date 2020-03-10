@@ -1,3 +1,7 @@
+## 6.0.19
+
+Prevent layouts in Tree Grid View from having Grouped or Pivoted columns 
+
 ## 6.0.18
 
 Fix nocode plugin imports failures
