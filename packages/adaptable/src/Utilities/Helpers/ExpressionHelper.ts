@@ -531,7 +531,7 @@ export function GetOperatorsForDataType(
 ): LeafExpressionOperator[] {
   switch (dataType) {
     case DataType.Boolean:
-      return null;
+      return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
     case DataType.Number:
     case DataType.Date:
       return [

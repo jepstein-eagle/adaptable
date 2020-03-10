@@ -1229,7 +1229,9 @@ export class ExamplesHelper {
       headerName: 'Live',
       field: 'isLive',
       editable: false,
-      cellRenderer: (params: any) => `<input type='checkbox' ${params.value ? 'checked' : ''} />`,
+      filter: true,
+      cellRenderer: (params: any) =>
+        `<input disabled type='checkbox' ${params.value ? 'checked' : ''} />`,
       type: 'abColDefBoolean',
     });
     schema.push({
