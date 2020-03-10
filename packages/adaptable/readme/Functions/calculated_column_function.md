@@ -25,7 +25,15 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 We plan in future releases to enable drag and drop so that you can more easily reference other columns when creating a Custom Column Expression.
 
 ### Writing a Calculated Column Expression
-> If you want to refer to other columns in the Expression you need to reference them as Col("ColumnName"). (e.g. Col("Bid").  You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
+There is not currently a GUI to help you write Calculated Column Expressions - though we do have one very soon.  
+
+So for the time being they need to be written by hand.
+
+The key thing to remember is that the way to refer to other columns in the Expression is as Col("ColumnName"). (e.g. Col("Bid").  
+
+> You can use either the column's field name (the private identifier for the column used by the underlying grid - e.g. Col("orderId") ) or its Friendly Name (the Caption displayed for the Column in the Header row - e.g. Col("Order ID") ).
+
+
 
 ## UI Elements
 
