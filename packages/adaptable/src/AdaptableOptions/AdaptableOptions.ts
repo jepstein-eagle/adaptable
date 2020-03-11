@@ -263,5 +263,17 @@ export interface AdaptableOptions {
    */
   plugins?: AdaptablePlugin[];
 
+  /**
+   * The actual implementations of functions that users reference in Predefined Config.
+   *
+   * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations.
+   *
+   * Accordingly, the pattern is as follows:
+   *
+   * 1. The section in Predefined Config (e.g. CellSummary / OperationFunction) provides the **name** of the function
+   *
+   * 2. This `userFunctions` section of AdaptableOptions provides the actual implementation.
+   *
+   */
   userFunctions?: UserFunctions;
 }
