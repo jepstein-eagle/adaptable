@@ -22,33 +22,52 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * We also provide our own `RenderFunction` implementation which renders the column differently for rows where the currency is 'USD'.
  *
- * ```ts
+ * * ```ts
+ *
+ * // Predefined Config
  * export default {
  * ActionColumn: {
  *  ActionColumns: [
  *   {
- *      ColumnId: 'Delete Trade',
- *      ShouldRenderPredicate: (params: ActionColumnRenderParams) => {
- *          return params.rowData.tradeDate < Date.now();
- *        },
- *      RenderFunction: (params: ActionColumnRenderParams) => {
- *          return params.rowData.currency === 'USD'
- *            ? '<button style="color:blue; font-weight:bold">Delete Trade</button>'
- *            : '<button style="color:red; font-weight:bold">Delete Trade</button>';
- *        },
- *   },
- *  ],
+ *     {
+ *        ColumnId: 'Action',
+ *        ButtonText: 'Click',
+ *        ShouldRenderPredicate: 'action',
+ *        RenderFunction: 'action',
+ *      },
+ *   ]
  *  },
  * } as PredefinedConfig;
+ *
+ * const adaptableOptions: AdaptableOptions = {
+ * ......
+ *  userFunctions: [
+ *     {
+ *       type: 'ActionColumn.RenderFunction',
+ *        name: 'action',
+ *        handler(params) {
+ *          let data: number = params.rowData.notional;
+ *          return data > 50
+ *            ? '<button class="doublebutton">Double</button>'
+ *            : '<button class="treblebutton">Treble</button>';
+ *       },
+ *     },
+ *     {
+ *        type: 'ActionColumn.ShouldRenderPredicate',
+ *        name: 'action',
+ *        handler(params) {
+ *          return params.rowData.counterparty != 'BAML';
+ *        },
+ *      },
+ *     ],
+ * ```
  *
  *  --------------
  *
  * // we listen to the ActionColumnClicked event (via the eventAPI in Adaptable API) and
  * // delete the row using the deleteGridData method in gridAPI (also in Adaptable API)
  *  api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
- *    const actionColumnClickedInfo: ActionColumnClickedInfo = args.data[0].id;
- *    const rowData: any = actionColumnClickedInfo.rowData;
- *    api.gridApi.deleteGridData([rowData]);
+ *    // do stuff...
  * });
  *
  *  --------------

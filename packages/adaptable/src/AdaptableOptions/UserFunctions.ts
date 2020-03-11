@@ -46,56 +46,14 @@ import { ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState'
  *
  */
 export type UserFunction =
-  | {
-      type: 'CustomSort.ComparerFunction';
-      name: string;
-      handler: AdaptableComparerFunction;
-    }
-  | {
-      type: 'CellSummary.OperationFunction';
-      name: string;
-      handler: (operationParam: {
-        selectedCellInfo: SelectedCellInfo;
-        allValues: any[];
-        numericColumns: string[];
-        numericValues: number[];
-        distinctCount: number;
-      }) => any;
-    }
-  | {
-      type: 'ActionColumn.RenderFunction';
-      name: string;
-      handler: (params: ActionColumnRenderParams) => string;
-    }
-  | {
-      type: 'ActionColumn.ShouldRenderPredicate';
-      name: string;
-      handler: (params: ActionColumnRenderParams) => boolean;
-    }
-  | {
-      type: 'Entitlement.LookUpFunction';
-      name: string;
-      handler: (
-        functionName: AdaptableFunctionName,
-        userName: string,
-        adaptableId: string
-      ) => AccessLevel | undefined;
-    }
-  | {
-      type: 'NamedFilter.FilterPredicate';
-      name: string;
-      handler: (record: any, columnId: string, cellValue: any) => boolean;
-    }
-  | {
-      type: 'UserInterface.ContextMenuItemClickedFunction';
-      name: string;
-      handler: (menuInfo: MenuInfo) => void;
-    }
-  | {
-      type: 'UserInterface.ColumnMenuItemClickedFunction';
-      name: string;
-      handler: (menuInfo: MenuInfo) => void;
-    }
+  | CustomSortCompareFunction
+  | CellSummaryOperationFunction
+  | ActionColumnRenderFunction
+  | ActionColumnShouldRenderPredicate
+  | EntitlementLookUpFunction
+  | NamedFilterFilterPredicate
+  | UserInterfaceContextMenuItemClickedFunction
+  | UserInterfaceColumnMenuItemClickedFunction
   | {
       type: 'UserInterface.ContextMenuItemShowPredicate';
       name: string;
@@ -112,3 +70,81 @@ export type UserFunction =
  *
  */
 export type UserFunctions = UserFunction[];
+
+export interface CustomSortCompareFunction extends BaseUserFunction {
+  type: 'CustomSort.ComparerFunction';
+  name: string;
+  handler: AdaptableComparerFunction;
+}
+
+export interface CellSummaryOperationFunction extends BaseUserFunction {
+  type: 'CellSummary.OperationFunction';
+  name: string;
+  handler: (operationParam: {
+    selectedCellInfo: SelectedCellInfo;
+    allValues: any[];
+    numericColumns: string[];
+    numericValues: number[];
+    distinctCount: number;
+  }) => any;
+}
+export interface ActionColumnRenderFunction extends BaseUserFunction {
+  type: 'ActionColumn.RenderFunction';
+  name: string;
+  handler: (params: ActionColumnRenderParams) => string;
+}
+export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
+  type: 'ActionColumn.ShouldRenderPredicate';
+  name: string;
+  handler: (params: ActionColumnRenderParams) => boolean;
+}
+export interface EntitlementLookUpFunction extends BaseUserFunction {
+  type: 'Entitlement.LookUpFunction';
+  name: string;
+  handler: (
+    functionName: AdaptableFunctionName,
+    userName: string,
+    adaptableId: string
+  ) => AccessLevel | undefined;
+}
+export interface NamedFilterFilterPredicate extends BaseUserFunction {
+  type: 'NamedFilter.FilterPredicate';
+  name: string;
+  handler: (record: any, columnId: string, cellValue: any) => boolean;
+}
+export interface UserInterfaceContextMenuItemClickedFunction extends BaseUserFunction {
+  type: 'UserInterface.ContextMenuItemClickedFunction';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
+}
+export interface UserInterfaceColumnMenuItemClickedFunction extends BaseUserFunction {
+  type: 'UserInterface.ColumnMenuItemClickedFunction';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
+}
+export interface UserInterfaceContextMenuItemShowPredicate extends BaseUserFunction {
+  type: 'UserInterface.ContextMenuItemShowPredicate';
+  name: string;
+  handler: (menuInfo: MenuInfo) => boolean;
+}
+export interface UserInterfaceColumnMenuItemShowPredicate extends BaseUserFunction {
+  type: 'UserInterface.ColumnMenuItemShowPredicate';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
+}
+
+export interface BaseUserFunction {
+  type:
+    | 'CustomSort.ComparerFunction'
+    | 'CellSummary.OperationFunction'
+    | 'ActionColumn.RenderFunction'
+    | 'ActionColumn.ShouldRenderPredicate'
+    | 'Entitlement.LookUpFunction'
+    | 'NamedFilter.FilterPredicate'
+    | 'UserInterface.ContextMenuItemClickedFunction'
+    | 'UserInterface.ColumnMenuItemClickedFunction'
+    | 'UserInterface.ContextMenuItemShowPredicate'
+    | 'UserInterface.ColumnMenuItemShowPredicate';
+  name: string;
+  handler: any;
+}

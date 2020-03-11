@@ -1,6 +1,5 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
-import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
 
 /**
  * The Predefined Configuration for the Custom Sort function
@@ -82,6 +81,7 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *      },
  *      ],
  * ```
+ *
  * In this example we have created 3 Custom Sorts:
  *
  * - One on the Rating Column - which will use the list (and order) we have provided
