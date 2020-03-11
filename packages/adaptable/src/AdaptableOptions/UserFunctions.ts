@@ -15,11 +15,34 @@ import { ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState'
  *
  * All of these implementations are of type `UserFunction` which contains 3 properties:
  *
- * - the type of the function: this allows AdapTable to know which function is being provided; this is strongly typed for user convenience
+ * 1.  the **type** of the function: this allows AdapTable to know which function is being provided; this is strongly typed for user convenience
  *
- * - the name of the function: this must be the same as the name of the function provided in Predefined Config
+ * 2.  the **name** of the function: must be the same as the function name provided in Predefined Config
  *
- * - handler: the actual function implementation itself; this, of course, varies based on the type of the function.
+ * 3.  the function **handler**: the actual function implementation itself; this varies based on the type of the function.
+ *
+ * The types supported are:
+ *
+ * - `CustomSort.ComparerFunction`
+ *
+ * - `CellSummary.OperationFunction`
+ *
+ * - `ActionColumn.RenderFunction`
+ *
+ * - `ActionColumn.ShouldRenderPredicate`
+ *
+ * - `Entitlement.LookUpFunction`
+ *
+ * - `NamedFilter.FilterPredicate`
+ *
+ * - `UserInterface.ContextMenuItemClickedFunction`
+ *
+ * - `UserInterface.ColumnMenuItemClickedFunction`
+ *
+ * - `UserInterface.ContextMenuItemShowPredicate`
+ *
+ * - `UserInterface.ColumnMenuItemShowPredicate`
+ *
  *
  */
 export type UserFunction =

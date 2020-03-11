@@ -27,9 +27,11 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  * [Custom Sort Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
- * **Custom Sort Predefined Config Example**
+ * **Custom Sort Example**
  *
  * ```ts
+ *
+ * // Predefined Config
  * export default {
  * CustomSort: {
  *   CustomSorts: [
@@ -39,26 +41,52 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *     },
  *     {
  *        ColumnId: 'Country',
- *        CustomSortComparerFunction:
- *          (valueA: any, valueB: any, nodeA: any, nodeB: any) => {
- *            if (valueA === 'United Kingdom') {
- *              return -1;
- *            }
- *            if (valueB === 'United Kingdom') {
- *              return 1;
- *            }
- *            return nodeA.data.notional > nodeB.data.notional ? 1 : -1;
- *          },
+ *        CustomSortComparerFunction: 'country',
+ *      },
+ *     {
+ *        ColumnId: 'currency',
+ *        CustomSortComparerFunction: 'currency',
  *      },
  *   ],
  * },
  * } as PredefinedConfig;
+ *
+ * const adaptableOptions: AdaptableOptions = {
+ * ......
+ *  userFunctions: [
+ *     {
+ *        name: 'country',
+ *        type: 'CustomSort.ComparerFunction',
+ *        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+ *         if (valueA === 'United Kingdom') {
+ *            return -1;
+ *          }
+ *          if (valueB === 'United Kingdom') {
+ *            return 1;
+ *          }
+ *          return 0;
+ *        },
+ *      },
+ *      {
+ *        name: 'currency',
+ *       type: 'CustomSort.ComparerFunction',
+ *        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+ *          if (valueA === 'USD') {
+ *            return -1;
+ *          }
+ *          if (valueB === 'USD') {
+ *            return 1;
+ *          }
+ *          return 0;
+ *        },
+ *      },
+ *      ],
  * ```
- * In this example we have created 2 Custom Sorts:
+ * In this example we have created 3 Custom Sorts:
  *
  * - One on the Rating Column - which will use the list (and order) we have provided
  *
- * - One on the Country Column - which will use a function that will sort as follows: first it will show cells with the value of 'United Kingdom', and the remaining cells in the column will sort according to the value in Notional column for that row.
+ * - One on the Country and Currency Columns - which will use functions that we name in Predefined Config and define in userOptions.
  *
  */
 

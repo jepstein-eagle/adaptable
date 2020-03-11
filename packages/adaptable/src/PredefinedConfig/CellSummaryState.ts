@@ -42,7 +42,7 @@ export interface CellSummaryState extends RunTimeState {
   /**
    * Array of `CellSummaryOperationDefinition` - to be provided by at Design Time
    *
-   * Each CellSummaryOperationDefinition contains a name and an `OperationFunction` which is run when selected cells need to be summarised
+   * Each CellSummaryOperationDefinition contains a name and a refrence to the `OperationFunction` which is run when selected cells need to be summarised
    */
   CellSummaryOperationDefinitions?: CellSummaryOperationDefinition[];
 }
