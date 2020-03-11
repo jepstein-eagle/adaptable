@@ -1,5 +1,6 @@
 import { DesignTimeState } from './DesignTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  * The Predefined Configuration for Action Columns
@@ -22,7 +23,8 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * We also provide our own `RenderFunction` implementation which renders the column differently for rows where the currency is 'USD'.
  *
- * * ```ts
+ *
+ *  ```ts
  *
  * // Predefined Config
  * export default {
@@ -128,6 +130,17 @@ export interface ActionColumn extends AdaptableObject {
    * If this property is not set, or if the function returns true, then the cell **will render** (using either the `ButtonText` or `RenderFuntion` value).
    */
   ShouldRenderPredicate?: string;
+}
+
+export interface ActionColumnRenderFunction extends BaseUserFunction {
+  type: 'ActionColumn.RenderFunction';
+  name: string;
+  handler: (params: ActionColumnRenderParams) => string;
+}
+export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
+  type: 'ActionColumn.ShouldRenderPredicate';
+  name: string;
+  handler: (params: ActionColumnRenderParams) => boolean;
 }
 
 /**

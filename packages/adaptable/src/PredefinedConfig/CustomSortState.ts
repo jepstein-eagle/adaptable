@@ -50,6 +50,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * },
  * } as PredefinedConfig;
  *
+ * // Adaptable Options
  * const adaptableOptions: AdaptableOptions = {
  * ......
  *  userFunctions: [

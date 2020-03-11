@@ -1,6 +1,10 @@
 import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { SelectedCellInfo, AdaptableFunctionName, AccessLevel, MenuInfo } from '../types';
-import { ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
+import {
+  ActionColumnRenderParams,
+  ActionColumnRenderFunction,
+  ActionColumnShouldRenderPredicate,
+} from '../PredefinedConfig/ActionColumnState';
 
 /**
  * Header to text hopefully to appear at the top...
@@ -88,16 +92,7 @@ export interface CellSummaryOperationFunction extends BaseUserFunction {
     distinctCount: number;
   }) => any;
 }
-export interface ActionColumnRenderFunction extends BaseUserFunction {
-  type: 'ActionColumn.RenderFunction';
-  name: string;
-  handler: (params: ActionColumnRenderParams) => string;
-}
-export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
-  type: 'ActionColumn.ShouldRenderPredicate';
-  name: string;
-  handler: (params: ActionColumnRenderParams) => boolean;
-}
+
 export interface EntitlementLookUpFunction extends BaseUserFunction {
   type: 'Entitlement.LookUpFunction';
   name: string;
@@ -133,6 +128,9 @@ export interface UserInterfaceColumnMenuItemShowPredicate extends BaseUserFuncti
   handler: (menuInfo: MenuInfo) => void;
 }
 
+/**
+ * The Base User Function that all User Functions extend
+ */
 export interface BaseUserFunction {
   type:
     | 'CustomSort.ComparerFunction'
