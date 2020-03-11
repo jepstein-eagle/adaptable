@@ -45,6 +45,7 @@ export interface QuickFilterFormState {
   numberOperatorPairs: KeyValuePair[];
   stringOperatorPairs: KeyValuePair[];
   dateOperatorPairs: KeyValuePair[];
+  booleanOperatorPairs: KeyValuePair[];
   placeholder: string;
 }
 
@@ -57,6 +58,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       numberOperatorPairs: RangeHelper.GetNumberOperatorPairs(),
       stringOperatorPairs: RangeHelper.GetStringOperatorPairs(),
       dateOperatorPairs: RangeHelper.GetDateOperatorPairs(),
+      booleanOperatorPairs: RangeHelper.GetBooleanOperatorPairs(),
       placeholder: '',
     };
   }
@@ -145,9 +147,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     ) : null;
   }
 
-  // debouncedRunQuickSearch = _.debounce((searchText: string) => this.runTextchanged(searchText), 250);
-  // debouncedSetFilter = _.debounce((columnFilter: ColumnFilter) => this.props.onAddEditColumnFilter(columnFilter), 1000);
-
   OnTextChange(searchText: string) {
     // as soon as anything changes clear existing column filter
     if (searchText.trim() != this.state.quickFilterFormText.trim()) {
@@ -201,8 +200,26 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
   createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
     if (searchText.trim() == operatorKVP.Key) {
-      // its operator only so do nothing (but set placeholder to ensure not wiped)
-      this.clearExpressionState(searchText);
+      if (RangeHelper.IsStandaloneOperator(operatorKVP.Value)) {
+        console.log('standalone operator');
+        console.log(operatorKVP);
+        let range: QueryRange = RangeHelper.CreateValueRange(
+          operatorKVP.Value,
+          undefined,
+          undefined
+        );
+        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+          this.props.CurrentColumn.ColumnId,
+          [],
+          [],
+          [],
+          [range]
+        );
+        this.createColumnFilter(expression, searchText);
+      } else {
+        // its operator only so do nothing (but set placeholder to ensure not wiped)
+        this.clearExpressionState(searchText);
+      }
     } else {
       let operand1 = searchText.replace(operatorKVP.Key, '');
       let operand2 = null;
@@ -241,6 +258,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         break;
       case DataType.Date:
         operators = this.state.dateOperatorPairs;
+        break;
+      case DataType.Boolean:
+        operators = this.state.booleanOperatorPairs;
         break;
       default:
         operators = [];

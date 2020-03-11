@@ -1105,6 +1105,15 @@ export class ExamplesHelper {
     });
 
     schema.push({
+      headerName: 'Live',
+      field: 'isLive',
+      editable: false,
+      filter: true,
+      cellRenderer: (params: any) =>
+        `<input disabled type='checkbox' ${params.value ? 'checked' : ''} />`,
+      type: 'abColDefBoolean',
+    });
+    schema.push({
       headerName: 'Amount',
       field: 'amount',
       editable: true,
@@ -1225,15 +1234,6 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
     });
 
-    schema.push({
-      headerName: 'Live',
-      field: 'isLive',
-      editable: false,
-      filter: true,
-      cellRenderer: (params: any) =>
-        `<input disabled type='checkbox' ${params.value ? 'checked' : ''} />`,
-      type: 'abColDefBoolean',
-    });
     schema.push({
       headerName: 'Moodys',
       field: 'moodysRating',
