@@ -2,6 +2,22 @@ import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableC
 import { SelectedCellInfo, AdaptableFunctionName, AccessLevel, MenuInfo } from '../types';
 import { ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
 
+/**
+ * The actual implementations of functions that users reference in Predefined Config.
+ *
+ * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations (as they cannot be serialised).
+ *
+ * So, instead, in Predefined the **name** of the function is provided and the **code implementation** is in functionOptions in AdaptableOptions.
+ *
+ * All of these implementations are of type `UserFunction` which contains 3 properties:
+ *
+ * - the type of the function: this allows AdapTable to know which function is being provided; this is strongly typed for user convenience
+ *
+ * - the name of the function: this must be the same as the name of the function provided in Predefined Config
+ *
+ * - handler: the actual function implementation itself; this, of course, varies based on the type of the function.
+ *
+ */
 export type UserFunction =
   | {
       type: 'CustomSort.ComparerFunction';
@@ -64,4 +80,8 @@ export type UserFunction =
       handler: (menuInfo: MenuInfo) => boolean;
     };
 
+/**
+ * Type which wraps an array of `UserFunction`
+ *
+ */
 export type UserFunctions = UserFunction[];

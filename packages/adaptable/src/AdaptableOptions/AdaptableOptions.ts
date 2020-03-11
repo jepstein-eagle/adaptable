@@ -266,13 +266,13 @@ export interface AdaptableOptions {
   /**
    * The actual implementations of functions that users reference in Predefined Config.
    *
-   * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations.
+   * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations (as they cannot be serialised).
    *
-   * Accordingly, the pattern is as follows:
+   * Accordingly, the pattern we use in such cases is as follows:
    *
    * 1. The section in Predefined Config (e.g. CellSummary / OperationFunction) provides the **name** of the function
    *
-   * 2. This `userFunctions` section of AdaptableOptions provides the actual implementation.
+   * 2. This `userFunctions` section of [AdaptableOptions](../modules/_src_adaptableoptions_userfunctions_.html#userfunctions) contains the **implementation code** itself.
    *
    */
   userFunctions?: UserFunctions;
