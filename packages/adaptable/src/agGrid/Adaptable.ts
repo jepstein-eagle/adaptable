@@ -2547,18 +2547,23 @@ export class Adaptable implements IAdaptable {
       }
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
 
-      if (typeof userColumnMenuItems === 'function') {
-        userColumnMenuItems = userColumnMenuItems(menuInfo);
-      }
-
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-        userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
-          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-            userMenuItem,
-            menuInfo
-          );
-          colMenuItems.push(menuItem);
-        });
+        userColumnMenuItems
+          .filter((userMenuItem: UserMenuItem) => {
+            return userMenuItem.UserMenuItemShowPredicate
+              ? this.adaptableOptions.userFunctions.UserInterface.columnMenuItemShowPredicates[
+                  userMenuItem.UserMenuItemShowPredicate
+                ](menuInfo)
+              : true;
+          })
+          .forEach((userMenuItem: UserMenuItem) => {
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+              userMenuItem,
+              menuInfo,
+              'columnMenu'
+            );
+            colMenuItems.push(menuItem);
+          });
       }
 
       return colMenuItems;
@@ -2630,19 +2635,25 @@ export class Adaptable implements IAdaptable {
           let state: any = this.api.userInterfaceApi.getUserInterfaceState();
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
-          if (typeof userContextMenuItems === 'function') {
-            userContextMenuItems = userContextMenuItems(menuInfo);
-          }
 
           if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
             contextMenuItems.push('separator');
-            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
-              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                userMenuItem,
-                menuInfo
-              );
-              contextMenuItems.push(menuItem);
-            });
+            userContextMenuItems
+              .filter((userMenuItem: UserMenuItem) => {
+                return userMenuItem.UserMenuItemShowPredicate
+                  ? this.adaptableOptions.userFunctions.UserInterface.contextMenuItemShowPredicates[
+                      userMenuItem.UserMenuItemShowPredicate
+                    ](menuInfo)
+                  : true;
+              })
+              .forEach((userMenuItem: UserMenuItem) => {
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                  userMenuItem,
+                  menuInfo,
+                  'contextMenu'
+                );
+                contextMenuItems.push(menuItem);
+              });
           }
         }
       }

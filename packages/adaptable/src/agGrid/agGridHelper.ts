@@ -553,15 +553,25 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromUsereMenu(x: UserMenuItem, menuInfo: MenuInfo): MenuItemDef {
+  public createAgGridMenuDefFromUsereMenu(
+    x: UserMenuItem,
+    menuInfo: MenuInfo,
+    type: 'contextMenu' | 'columnMenu'
+  ): MenuItemDef {
+    const fn =
+      type === 'columnMenu'
+        ? this.adaptable.adaptableOptions.userFunctions.UserInterface
+            .columnMenuItemClickedFunctions[x.UserMenuItemClickedFunction]
+        : this.adaptable.adaptableOptions.userFunctions.UserInterface
+            .contextMenuItemClickedFunctions[x.UserMenuItemClickedFunction];
     return {
       name: x.Label,
-      action: () => x.UserMenuItemClickedFunction(menuInfo),
+      action: () => fn(menuInfo),
       icon: x.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
         ? undefined
         : x.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo);
+            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo, type);
           }),
     };
   }
@@ -759,7 +769,7 @@ export class agGridHelper {
           groupCustomSort.ColumnId = colId;
           groupCustomSort.SortedValues = customSort.SortedValues;
           const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
-            ? this.adaptable.adaptableOptions.userFunctions.customSortFunctions[
+            ? this.adaptable.adaptableOptions.userFunctions.CustomSort.comparerFunctions[
                 customSort.CustomSortComparerFunction
               ]
             : customSortStrategy.getComparerFunction(groupCustomSort);

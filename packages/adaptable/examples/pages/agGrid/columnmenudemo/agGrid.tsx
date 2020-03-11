@@ -40,6 +40,32 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: {
+      UserInterface: {
+        columnMenuItemClickedFunctions: {
+          minimizeDashboard() {
+            adaptableApi.dashboardApi.minimise();
+          },
+          setError() {
+            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+          },
+          setWarning() {
+            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+          },
+          setSuccess() {
+            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+          },
+          setInfo() {
+            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+          },
+        },
+        columnMenuItemShowPredicates: {
+          isSortable(menuInfo) {
+            return menuInfo.Column.Sortable;
+          },
+        },
+      },
+    },
   };
   adaptableOptions.userInterfaceOptions = {
     // showAdaptableColumnMenu: true,
@@ -69,65 +95,37 @@ let demoConfig: PredefinedConfig = {
 
   UserInterface: {
     // the hardcoded way
-    /*
     ColumnMenuItems: [
       {
         Label: 'Mimise Dashboard',
-        UserMenuItemClickedFunction: () => {
-          adaptableApi.dashboardApi.minimise();
-        },
+        UserMenuItemClickedFunction: 'minimizeDashboard',
       },
       {
         Label: 'Set System Status',
         SubMenuItems: [
           {
             Label: 'Set Error',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
-            },
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setError',
           },
           {
             Label: 'Set Warning',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
-            },
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setWarning',
           },
           {
             Label: 'Set Success',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
-            },
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setSuccess',
           },
           {
             Label: 'Set Info',
-            UserMenuItemClickedFunction: () => {
-              adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
-            },
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setInfo',
           },
         ],
       },
     ],
-    */
-    // the function way
-
-    ColumnMenuItems: (menuinfo: MenuInfo) => {
-      return menuinfo.Column.Sortable
-        ? [
-            {
-              Label: 'Sort Column',
-              Icon:
-                '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-              UserMenuItemClickedFunction: () => {
-                let customSort: ColumnSort = {
-                  Column: menuinfo.Column.ColumnId,
-                  SortOrder: 'Ascending',
-                };
-                adaptableApi.gridApi.sortAdaptable([customSort]);
-              },
-            },
-          ]
-        : [];
-    },
   },
 };
 

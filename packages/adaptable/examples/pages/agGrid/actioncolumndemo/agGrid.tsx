@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import '../../../../src/index.scss';
 
@@ -22,20 +23,39 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(300);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
-  const adaptableadaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
+  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
-    userName: 'demo user',
-    adaptableId: 'action column demo',
+    userName: 'Demo User',
+    adaptableId: 'Action Column Demo',
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+    userFunctions: {
+      ActionColumn: {
+        renderFunctions: {
+          action(params) {
+            let data: number = params.rowData.notional;
+            return data > 50
+              ? '<button class="doublebutton">Double</button>'
+              : '<button class="treblebutton">Treble</button>';
+          },
+        },
+        shouldRenderPredicates: {
+          action(params) {
+            return params.rowData.counterparty != 'BAML';
+          },
+        },
+      },
+    },
   };
-  adaptableadaptableOptions.predefinedConfig = demoConfig;
-  adaptableadaptableOptions.layoutOptions = {
+
+  adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
 
-  // userFunctions
-
-  adaptableApi = Adaptable.init(adaptableadaptableOptions);
+  adaptableApi = Adaptable.init(adaptableOptions);
   adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
@@ -47,11 +67,14 @@ function InitAdaptableDemo() {
 function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {
   console.log('alert fired event received');
   console.log(actionColumnEventArgs.data[0].id.actionColumn.FriendlyName);
+  console.log(actionColumnEventArgs.data[0].id.actionColumn.ButtonText);
 
   let rowData = actionColumnEventArgs.data[0].id.rowData;
   let multiplier: number = rowData.notional > 100 ? 2 : 3;
   let newNotional = rowData.notional * multiplier;
-  adaptableApi.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional, false);
+  console.log('newNotional', newNotional);
+
+  // adaptableApi.gridApi.setCellValue(rowData.tradeId, 'notional', newNotional, false);
 }
 
 let demoConfig: PredefinedConfig = {
@@ -63,15 +86,8 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'Action',
         ButtonText: 'Click',
-        ShouldRenderPredicate: params => {
-          return params.rowData.counterparty != 'BNP';
-        },
-        RenderFunction: params => {
-          let data: number = params.rowData.notional;
-          return data > 50
-            ? '<button class="doublebutton">Double</button>'
-            : '<button class="treblebutton">Treble</button>';
-        },
+        ShouldRenderPredicate: 'action',
+        RenderFunction: 'action',
       },
       {
         ColumnId: 'Plus',

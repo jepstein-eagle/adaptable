@@ -34,7 +34,10 @@ export class EntitlementsApiImpl extends ApiBase implements EntitlementsApi {
     // first see if there is a function - and if so then run it;
     let entitlementLookUpFunction = this.getEntitlementState().EntitlementLookUpFunction;
     if (entitlementLookUpFunction) {
-      let accessLevel: AccessLevel = entitlementLookUpFunction(
+      const fn = this.adaptable.adaptableOptions.userFunctions.Entitlement.lookUpFunctions[
+        entitlementLookUpFunction
+      ];
+      let accessLevel: AccessLevel = fn(
         adaptableFunctionName,
         this.adaptable.adaptableOptions.userName,
         this.adaptable.adaptableOptions.adaptableId

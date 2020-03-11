@@ -96,7 +96,10 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
 
       operationDefinitions.forEach((operation: CellSummaryOperationDefinition) => {
         if (operation.OperationFunction) {
-          selectedCellSummary[operation.OperationName] = operation.OperationFunction({
+          const fn = this.adaptable.adaptableOptions.userFunctions.CellSummary.operationFunctions[
+            operation.OperationFunction
+          ];
+          selectedCellSummary[operation.OperationName] = fn({
             selectedCellInfo,
             distinctCount,
             allValues,

@@ -8,10 +8,10 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -19,16 +19,39 @@ function InitAdaptableDemo() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   //gridOptions.singleClickEdit = true;
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'named filters demo'
-  );
-  adaptableOptions.predefinedConfig = demoConfig;
-  adaptableOptions.layoutOptions = {
-    autoSizeColumnsInLayout: true,
-  };
-  adaptableOptions.filterOptions = {
-    clearFiltersOnStartUp: true,
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Named Filters Demo',
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+    userFunctions: {
+      NamedFilter: {
+        filterPredicates: {
+          usdTrades(_record, _columnId, cellValue) {
+            return cellValue === 'USD';
+          },
+          high(_record, _columnId, cellValue) {
+            let currency: string = _record.data.currency;
+            if (currency === 'USD') {
+              return cellValue > 1000;
+            } else if (currency === 'EUR') {
+              return cellValue > 30;
+            } else {
+              return cellValue > 10;
+            }
+          },
+          bizYear(_record, _columnId, cellValue) {
+            let dateToTest = cellValue as Date;
+            let startBusinesssYear = new Date('2019-04-05');
+            return dateToTest > startBusinesssYear;
+          },
+        },
+      },
+    },
   };
 
   const adaptableApi = Adaptable.init(adaptableOptions);
@@ -40,39 +63,23 @@ let demoConfig: PredefinedConfig = {
       {
         Name: '$ Trades',
         Scope: {
-          DataType: 'Number',
           ColumnIds: ['currency'],
         },
-        FilterPredicate: (_record, _columnId, cellValue) => {
-          return cellValue === 'USD';
-        },
+        FilterPredicate: 'usdTrades',
       },
       {
         Name: 'High',
         Scope: {
           DataType: 'Number',
         },
-        FilterPredicate: (_record, _columnId, cellValue) => {
-          let currency: string = _record.data.currency;
-          if (currency === 'USD') {
-            return cellValue > 1000;
-          } else if (currency === 'EUR') {
-            return cellValue > 30;
-          } else {
-            return cellValue > 10;
-          }
-        },
+        FilterPredicate: 'high',
       },
       {
         Name: 'Biz Year',
         Scope: {
           DataType: 'Date',
         },
-        FilterPredicate: (_record, _columnId, cellValue) => {
-          let dateToTest = cellValue as Date;
-          let startBusinesssYear = new Date('2019-04-05');
-          return dateToTest > startBusinesssYear;
-        },
+        FilterPredicate: 'bizYear',
       },
     ],
   },

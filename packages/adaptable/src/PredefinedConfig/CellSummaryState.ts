@@ -69,11 +69,5 @@ export interface CellSummaryOperationDefinition {
    *
    * The function receives all the currently selected values, the numeric columns, the numeric values and much else and is expected to return a single value to be displayed in the dropdown.
    */
-  OperationFunction: (operationParam: {
-    selectedCellInfo: SelectedCellInfo;
-    allValues: any[];
-    numericColumns: string[];
-    numericValues: number[];
-    distinctCount: number;
-  }) => any;
+  OperationFunction: string;
 }

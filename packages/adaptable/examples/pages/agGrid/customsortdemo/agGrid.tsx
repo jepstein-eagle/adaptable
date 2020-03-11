@@ -34,15 +34,26 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: demoConfig,
     userFunctions: {
-      customSortFunctions: {
-        customCountrySorter: (valueA: any, valueB: any, nodeA?: any, nodeB?: any) => {
-          if (valueA === 'United Kingdom') {
-            return -1;
-          }
-          if (valueB === 'United Kingdom') {
-            return 1;
-          }
-          return nodeA.data.notional > nodeB.data.notional ? 1 : -1;
+      CustomSort: {
+        comparerFunctions: {
+          country(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+            if (valueA === 'United Kingdom') {
+              return -1;
+            }
+            if (valueB === 'United Kingdom') {
+              return 1;
+            }
+            return 0;
+          },
+          currency(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+            if (valueA === 'USD') {
+              return -1;
+            }
+            if (valueB === 'USD') {
+              return 1;
+            }
+            return 0;
+          },
         },
       },
     },
@@ -78,7 +89,11 @@ let demoConfig: PredefinedConfig = {
     CustomSorts: [
       {
         ColumnId: 'country',
-        CustomSortComparerFunction: 'customCountrySorter',
+        CustomSortComparerFunction: 'country',
+      },
+      {
+        ColumnId: 'currency',
+        CustomSortComparerFunction: 'currency',
       },
       {
         ColumnId: 'counterparty',

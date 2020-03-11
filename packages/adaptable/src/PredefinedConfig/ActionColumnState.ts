@@ -97,7 +97,7 @@ export interface ActionColumn extends AdaptableObject {
    *
    * If this property is not set, then a regular button will appear in the column with the caption of the `ButtonText` property.
    */
-  RenderFunction?: (params: ActionColumnRenderParams) => string;
+  RenderFunction?: string;
 
   /**
    * A Predicate function returning a boolean value indicating whether the Action Column should display a button.
@@ -108,7 +108,7 @@ export interface ActionColumn extends AdaptableObject {
    *
    * If this property is not set, or if the function returns true, then the cell **will render** (using either the `ButtonText` or `RenderFuntion` value).
    */
-  ShouldRenderPredicate?: (params: ActionColumnRenderParams) => boolean;
+  ShouldRenderPredicate?: string;
 }
 
 /**
