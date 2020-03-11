@@ -201,8 +201,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
     if (searchText.trim() == operatorKVP.Key) {
       if (RangeHelper.IsStandaloneOperator(operatorKVP.Value)) {
-        console.log('standalone operator');
-        console.log(operatorKVP);
         let range: QueryRange = RangeHelper.CreateValueRange(
           operatorKVP.Value,
           undefined,

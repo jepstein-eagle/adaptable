@@ -69,9 +69,6 @@ export function ConvertExpressionToString(
   columns: Array<AdaptableColumn>,
   includeColumnName: boolean = true
 ): string {
-  console.log('Im called');
-  console.log(Expression);
-
   let returnValue = '';
   if (IsNullOrEmptyExpression(Expression)) {
     return 'Any';
@@ -404,8 +401,6 @@ function RangesToString(
       }
     }
   }
-  console.log('**** return value ****');
-  console.log(returnValue);
   return returnValue;
 }
 
