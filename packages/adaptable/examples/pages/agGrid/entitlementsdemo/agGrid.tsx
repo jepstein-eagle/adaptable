@@ -32,6 +32,29 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: [
+      {
+        type: 'Entitlement.LookUpFunction',
+        name: 'serverLookUp',
+        handler(functionName: AdaptableFunctionName, userName: string, adaptableId: string) {
+          switch (functionName) {
+            // We want a readonly grid so lets hide all editing functions
+            case 'BulkUpdate':
+            case 'CellValidation':
+            case 'PlusMinus':
+            case 'SmartEdit':
+            case 'Shortcut':
+              return 'ReadOnly';
+            case 'AdvancedSearch':
+            case 'ColumnFilter':
+            case 'UserFilter':
+            case 'DataSource':
+            case 'QuickSearch':
+              return getMockPermissionServerResult(functionName, userName, adaptableId);
+          }
+        },
+      },
+    ],
   };
 
   adaptableOptions.filterOptions = {
@@ -65,68 +88,46 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Entitlements: {
-    DefaultAccessLevel: 'Full',
-    /*
-    EntitlementLookUpFunction: (
-      functionName: AdaptableFunctionName,
-      userName: string,
-      adaptableId: string
-    ) => {
-      switch (functionName) {
-        // We want a readonly grid so lets hide all editing functions
-        case 'BulkUpdate':
-        case 'CellValidation':
-        case 'PlusMinus':
-        case 'SmartEdit':
-        case 'Shortcut':
-          return 'ReadOnly';
-        case 'AdvancedSearch':
-        case 'ColumnFilter':
-        case 'UserFilter':
-        case 'DataSource':
-        case 'QuickSearch':
-          return getMockPermissionServerResult(functionName, userName, adaptableId);
-      }
-    },
-*/
-    FunctionEntitlements: [
-      {
-        FunctionName: 'ColumnCategory',
-        AccessLevel: 'Full',
-      },
-      {
-        FunctionName: 'ColumnChooser',
-        AccessLevel: 'Full',
-      },
-      {
-        FunctionName: 'Export',
-        AccessLevel: 'Full',
-      },
-      {
-        FunctionName: 'ColumnFilter',
-        AccessLevel: 'ReadOnly',
-      },
-      {
-        FunctionName: 'Layout',
-        AccessLevel: 'ReadOnly',
-      },
-      {
-        FunctionName: 'SmartEdit',
-        AccessLevel: 'ReadOnly',
-      },
-      {
-        FunctionName: 'Layout',
-        AccessLevel: 'ReadOnly',
-      },
-      {
-        FunctionName: 'BulkUpdate',
-        AccessLevel: 'Hidden',
-      },
-      {
-        FunctionName: 'CustomSort',
-        AccessLevel: 'Hidden',
-      },
-    ],
+    DefaultAccessLevel: 'Hidden',
+    EntitlementLookUpFunction: 'serverLookUp',
+    // FunctionEntitlements: [
+    //   {
+    //     FunctionName: 'ColumnCategory',
+    //     AccessLevel: 'Full',
+    //   },
+    //   {
+    //     FunctionName: 'ColumnChooser',
+    //     AccessLevel: 'Full',
+    //   },
+    //   {
+    //     FunctionName: 'Export',
+    //     AccessLevel: 'Full',
+    //   },
+    //   {
+    //     FunctionName: 'ColumnFilter',
+    //     AccessLevel: 'ReadOnly',
+    //   },
+    //   {
+    //     FunctionName: 'Layout',
+    //     AccessLevel: 'ReadOnly',
+    //   },
+    //   {
+    //     FunctionName: 'SmartEdit',
+    //     AccessLevel: 'ReadOnly',
+    //   },
+    //   {
+    //     FunctionName: 'Layout',
+    //     AccessLevel: 'ReadOnly',
+    //   },
+    //   {
+    //     FunctionName: 'BulkUpdate',
+    //     AccessLevel: 'Hidden',
+    //   },
+    //   {
+    //     FunctionName: 'CustomSort',
+    //     AccessLevel: 'Hidden',
+    //   },
+    // ],
   },
   Export: {
     Reports: [

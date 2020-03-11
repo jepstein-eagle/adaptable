@@ -126,18 +126,19 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     this.dispatchAction(UserInterfaceRedux.ContextMenuItemAdd(contextMenuItem));
   }
 
-  public createContextMenuItem(
-    label: string,
-    userMenuItemClickedFunction?: () => void,
-    icon?: string,
-    subMenuItems?: UserMenuItem[]
-  ): void {
-    let contextMenuItem: UserMenuItem = {
-      Label: label,
-      UserMenuItemClickedFunction: userMenuItemClickedFunction,
-      Icon: icon,
-      SubMenuItems: subMenuItems,
-    };
-    this.addContextMenuItem(contextMenuItem);
-  }
+  // TODO
+  // public createContextMenuItem(
+  //   label: string,
+  //   userMenuItemClickedFunction?: () => void,
+  //   icon?: string,
+  //   subMenuItems?: UserMenuItem[]
+  // ): void {
+  //   let contextMenuItem: UserMenuItem = {
+  //     Label: label,
+  //     UserMenuItemClickedFunction: userMenuItemClickedFunction,
+  //     Icon: icon,
+  //     SubMenuItems: subMenuItems,
+  //   };
+  //   this.addContextMenuItem(contextMenuItem);
+  // }
 }

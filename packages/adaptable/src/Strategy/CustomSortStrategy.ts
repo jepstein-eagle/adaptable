@@ -67,7 +67,10 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
   applyCustomSorts() {
     this.CustomSorts.forEach(customSort => {
       const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
-        ? customSort.CustomSortComparerFunction
+        ? this.adaptable.getUserFunctionHandler(
+            'CustomSort.ComparerFunction',
+            customSort.CustomSortComparerFunction
+          )
         : this.getComparerFunction(customSort);
       this.adaptable.setCustomSort(customSort.ColumnId, customSortComparerFunction);
     });

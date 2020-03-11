@@ -32,6 +32,7 @@ import { IStrategyService } from '../Utilities/Services/StrategyService';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
+import { UserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  *  The only interface for Adaptable
@@ -280,6 +281,9 @@ export interface IAdaptable {
   applyAdaptableTheme(theme: AdaptableTheme | string): void;
   setUpRowStyles(): void; // not sure about this...
   clearRowStyles(): void; // not sure about this...
+
+  // User Functions
+  getUserFunctionHandler: any;
 
   /**
    * called when you want to destroy the instance & cleanup resources

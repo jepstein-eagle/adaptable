@@ -93,10 +93,10 @@ export interface UserInterfaceApi {
    * @param icon an image to show for the menu item
    * @param subMenuItems any submenu items to add to the menu
    */
-  createContextMenuItem(
-    label: string,
-    userMenuItemClickedFunction?: () => void,
-    icon?: string,
-    subMenuItems?: UserMenuItem[]
-  ): void;
+  // createContextMenuItem(
+  //   label: string,
+  //   userMenuItemClickedFunction?: () => void,
+  //   icon?: string,
+  //   subMenuItems?: UserMenuItem[]
+  // ): void;
 }

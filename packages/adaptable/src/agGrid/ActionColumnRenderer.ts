@@ -32,7 +32,11 @@ export class ActionColumnRenderer implements ICellRendererComp {
       };
 
       // if there is a shouldRender function then run it and if returns false then do nothing
-      let shouldRenderPredicate: any = actionCol.ShouldRenderPredicate;
+      let shouldRenderPredicate = adaptable.getUserFunctionHandler(
+        'ActionColumn.ShouldRenderPredicate',
+        actionCol.ShouldRenderPredicate
+      );
+
       if (shouldRenderPredicate) {
         if (!shouldRenderPredicate(actionColumnRenderParams)) {
           this.eGui.innerHTML = '';
@@ -41,7 +45,10 @@ export class ActionColumnRenderer implements ICellRendererComp {
       }
 
       // If we have a render Func then we use that, otherwise we use the name of the Button Text
-      let renderFunc: any = actionCol.RenderFunction;
+      let renderFunc = adaptable.getUserFunctionHandler(
+        'ActionColumn.RenderFunction',
+        actionCol.RenderFunction
+      );
       if (renderFunc) {
         this.eGui.innerHTML = renderFunc(actionColumnRenderParams);
       } else {

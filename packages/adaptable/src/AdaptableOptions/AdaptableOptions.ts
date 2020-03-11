@@ -13,6 +13,7 @@ import { UserInterfaceOptions } from './UserInterfaceOptions';
 import { AdaptablePlugin } from './AdaptablePlugin';
 import { SearchOptions } from './SearchOptions';
 import { ExportOptions } from './ExportOptions';
+import { UserFunctions } from './UserFunctions';
 
 /**
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
@@ -261,4 +262,6 @@ export interface AdaptableOptions {
    *
    */
   plugins?: AdaptablePlugin[];
+
+  userFunctions?: UserFunctions;
 }

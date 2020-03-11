@@ -93,5 +93,5 @@ export interface CustomSort extends AdaptableObject {
    *
    * Each time it runs it is given 2 cell values to compare (as well as both rows to allow you to look up other values in the row if necessary)
    */
-  CustomSortComparerFunction?: AdaptableComparerFunction;
+  CustomSortComparerFunction?: string;
 }

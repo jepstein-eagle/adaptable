@@ -346,7 +346,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * **Default Value**:  Empty array
    */
-  ColumnMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
+  ColumnMenuItems?: UserMenuItem[];
 
   /**
    * A collection of `UserMenuItem` objects to be added to the Context Menu (the one that appears when you right-click a cell in the Grid).
@@ -441,7 +441,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * **Default Value**:  Empty array
    */
-  ContextMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
+  ContextMenuItems?: UserMenuItem[];
 }
 
 /**
@@ -530,7 +530,9 @@ export interface UserMenuItem {
    *
    * The `MenuInfo` class provides full information of the column / cell where the menu is being run
    */
-  UserMenuItemClickedFunction?: (menuInfo: MenuInfo) => void;
+  UserMenuItemClickedFunction?: string;
+
+  UserMenuItemShowPredicate?: string;
 
   /**
    * An optional icon to show in the Menu Item

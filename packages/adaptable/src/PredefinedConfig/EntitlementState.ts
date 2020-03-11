@@ -105,11 +105,7 @@ export interface EntitlementState extends DesignTimeState {
    *
    * Allows you to call a Permission Service externally
    */
-  EntitlementLookUpFunction?: (
-    functionName: AdaptableFunctionName,
-    userName: string,
-    adaptableId: string
-  ) => AccessLevel | undefined;
+  EntitlementLookUpFunction?: string;
 
   /**
    * The AccessLevel to use for any Entitlement when its not explicitly set.

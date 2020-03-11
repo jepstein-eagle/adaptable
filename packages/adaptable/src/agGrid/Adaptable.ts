@@ -11,9 +11,7 @@ import {
   ICellRendererFunc,
   SideBarDef,
   Events,
-  Module,
   RowNodeTransaction,
-  ModelUpdatedEvent,
   IClientSideRowModel,
   GridApi,
 } from '@ag-grid-community/all-modules';
@@ -72,9 +70,7 @@ import {
   DisplayAction,
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
-  LeafExpressionOperator,
 } from '../PredefinedConfig/Common/Enums';
-import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -122,7 +118,6 @@ import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { GridRow, RowInfo } from '../PredefinedConfig/Selection/GridRow';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
-import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import AdaptableWizardView from '../View/AdaptableWizardView';
@@ -156,6 +151,7 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
+import { UserFunction } from '../AdaptableOptions/UserFunctions';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -991,7 +987,7 @@ export class Adaptable implements IAdaptable {
 
     if (selected) {
       // we iterate for each ranges
-      selected.forEach((rangeSelection, index) => {
+      selected.forEach(rangeSelection => {
         let shouldIncludeRange: boolean = true;
         let isStartRowPin: boolean = rangeSelection.startRow.rowPinned != null;
         let isEndRowPin: boolean = rangeSelection.endRow.rowPinned != null;
@@ -1585,10 +1581,6 @@ export class Adaptable implements IAdaptable {
     this.jumpToRow(rowNode);
     this.jumpToColumn(columnId);
   }
-
-  private forEachColumn = (fn: (columnDef: ColDef) => any) => {
-    forEachColumn(this.getColumnDefs(), fn);
-  };
 
   /**
    * This creates a clone of the current column definitions. If config.removeEmpty is true, will also remove empty column groups
@@ -2348,8 +2340,6 @@ export class Adaptable implements IAdaptable {
       },
     };
 
-    const self = this;
-
     /**
      * AgGrid does not expose Events.EVENT_ROW_DATA_CHANGED
      * so we have to override `dispatchLocalEvent`
@@ -2625,18 +2615,24 @@ export class Adaptable implements IAdaptable {
       }
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
 
-      if (typeof userColumnMenuItems === 'function') {
-        userColumnMenuItems = userColumnMenuItems(menuInfo);
-      }
-
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-        userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
-          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-            userMenuItem,
-            menuInfo
-          );
-          colMenuItems.push(menuItem);
-        });
+        userColumnMenuItems
+          .filter((userMenuItem: UserMenuItem) => {
+            return userMenuItem.UserMenuItemShowPredicate
+              ? this.getUserFunctionHandler(
+                  'UserInterface.ColumnMenuItemShowPredicate',
+                  userMenuItem.UserMenuItemShowPredicate
+                )(menuInfo)
+              : true;
+          })
+          .forEach((userMenuItem: UserMenuItem) => {
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+              userMenuItem,
+              menuInfo,
+              'columnMenu'
+            );
+            colMenuItems.push(menuItem);
+          });
       }
 
       return colMenuItems;
@@ -2704,23 +2700,28 @@ export class Adaptable implements IAdaptable {
             }
           }
 
-          // here we add any User defined Context Menu Items
-          let state: any = this.api.userInterfaceApi.getUserInterfaceState();
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
-          if (typeof userContextMenuItems === 'function') {
-            userContextMenuItems = userContextMenuItems(menuInfo);
-          }
 
           if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
             contextMenuItems.push('separator');
-            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
-              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                userMenuItem,
-                menuInfo
-              );
-              contextMenuItems.push(menuItem);
-            });
+            userContextMenuItems
+              .filter((userMenuItem: UserMenuItem) => {
+                return userMenuItem.UserMenuItemShowPredicate
+                  ? this.getUserFunctionHandler(
+                      'UserInterface.ContextMenuItemShowPredicate',
+                      userMenuItem.UserMenuItemShowPredicate
+                    )(menuInfo)
+                  : true;
+              })
+              .forEach((userMenuItem: UserMenuItem) => {
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                  userMenuItem,
+                  menuInfo,
+                  'contextMenu'
+                );
+                contextMenuItems.push(menuItem);
+              });
           }
         }
       }
@@ -3582,6 +3583,18 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       return;
     }
     return this.gridOptions.api!;
+  }
+
+  getUserFunctionHandler<T extends UserFunction['type']>(
+    type: T,
+    name: string
+  ): Extract<UserFunction, { type: T }>['handler'] | null {
+    for (let uf of this.adaptableOptions.userFunctions) {
+      if (uf.type === type && uf.name === name) {
+        return uf.handler as any;
+      }
+    }
+    return null;
   }
 }
 

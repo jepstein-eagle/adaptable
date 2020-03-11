@@ -33,6 +33,34 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: [
+      {
+        name: 'country',
+        type: 'CustomSort.ComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'United Kingdom') {
+            return -1;
+          }
+          if (valueB === 'United Kingdom') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
+        name: 'currency',
+        type: 'CustomSort.ComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'USD') {
+            return -1;
+          }
+          if (valueB === 'USD') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+    ],
   };
 
   api = Adaptable.init(adaptableOptions);
@@ -77,15 +105,11 @@ let demoConfig: PredefinedConfig = {
     CustomSorts: [
       {
         ColumnId: 'country',
-        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA?: any, nodeB?: any) => {
-          if (valueA === 'United Kingdom') {
-            return -1;
-          }
-          if (valueB === 'United Kingdom') {
-            return 1;
-          }
-          return nodeA.data.notional > nodeB.data.notional ? 1 : -1;
-        },
+        CustomSortComparerFunction: 'country',
+      },
+      {
+        ColumnId: 'currency',
+        CustomSortComparerFunction: 'currency',
       },
       {
         ColumnId: 'counterparty',
@@ -94,12 +118,6 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'status',
         SortedValues: ['Pending', 'Completed', 'Rejected'],
-        /*
-        CustomSortComparerFunction: (valueA: any, valueB: any, nodeA: any, nodeB: any) => {
-          var requiredOrder = ['Pending', 'Completed', 'Rejected'];
-            return requiredOrder.indexOf(valueA) - requiredOrder.indexOf(valueB);
-        },
-        */
       },
     ],
   },
