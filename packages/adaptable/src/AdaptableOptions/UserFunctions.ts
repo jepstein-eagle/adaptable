@@ -3,11 +3,15 @@ import { SelectedCellInfo, AdaptableFunctionName, AccessLevel, MenuInfo } from '
 import { ActionColumnRenderParams } from '../PredefinedConfig/ActionColumnState';
 
 /**
+ * Header to text hopefully to appear at the top...
+ */
+
+/**
  * The actual implementations of functions that users reference in Predefined Config.
  *
  * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations (as they cannot be serialised).
  *
- * So, instead, in Predefined the **name** of the function is provided and the **code implementation** is in functionOptions in AdaptableOptions.
+ * So, instead, in Predefined Config the **name** of the function is provided and the **code implementation** is in functionOptions in AdaptableOptions.
  *
  * All of these implementations are of type `UserFunction` which contains 3 properties:
  *

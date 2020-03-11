@@ -272,7 +272,7 @@ export interface AdaptableOptions {
    *
    * 1. The section in Predefined Config (e.g. CellSummary / OperationFunction) provides the **name** of the function
    *
-   * 2. This `userFunctions` section of [AdaptableOptions](../modules/_src_adaptableoptions_userfunctions_.html#userfunctions) contains the **implementation code** itself.
+   * 2. This `userFunctions` section of [AdaptableOptions](../modules/_src_adaptableoptions_userfunctions_.html#userfunction) contains the **implementation code** itself.
    *
    */
   userFunctions?: UserFunctions;
