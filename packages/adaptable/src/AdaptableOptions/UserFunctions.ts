@@ -4,6 +4,9 @@ import {
   ActionColumnRenderFunction,
   ActionColumnShouldRenderPredicate,
 } from '../PredefinedConfig/ActionColumnState';
+import { CustomSortCompareFunction } from '../PredefinedConfig/CustomSortState';
+import { CellSummaryOperationFunction } from '../PredefinedConfig/CellSummaryState';
+import { EntitlementLookUpFunction } from '../PredefinedConfig/EntitlementState';
 
 /**
  * The actual implementations of functions that users reference in Predefined Config.
