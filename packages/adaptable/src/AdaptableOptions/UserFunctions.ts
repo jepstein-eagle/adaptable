@@ -7,6 +7,7 @@ import {
 import { CustomSortCompareFunction } from '../PredefinedConfig/CustomSortState';
 import { CellSummaryOperationFunction } from '../PredefinedConfig/CellSummaryState';
 import { EntitlementLookUpFunction } from '../PredefinedConfig/EntitlementState';
+import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
 
 /**
  * The actual implementations of functions that users reference in Predefined Config.
@@ -65,11 +66,6 @@ export type UserFunction =
  */
 export type UserFunctions = UserFunction[];
 
-export interface NamedFilterPredicate extends BaseUserFunction {
-  type: 'NamedFilterPredicate';
-  name: string;
-  handler: (record: any, columnId: string, cellValue: any) => boolean;
-}
 export interface ContextMenuItemClickedFunction extends BaseUserFunction {
   type: 'ContextMenuItemClickedFunction';
   name: string;

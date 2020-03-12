@@ -1,6 +1,7 @@
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Scope } from './Common/Scope';
 import { DesignTimeState } from './DesignTimeState';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  * Named Filters are filters provided at run-time together with a Predicate Function that will be evaluated each time the Filter runs.
@@ -11,40 +12,78 @@ import { DesignTimeState } from './DesignTimeState';
  *
  * b. *columnId* - the column which contains the Named Filter
  *
- * c.  *cellValue* - the value being tested
+ * c. *cellValue* - the value being tested
  *
- * **Named Filter Predefined Config Example**
+ * **Named Filter Example**
  *
  * ```ts
  *
+ * // Predefined Config
  * export default {
- *  NamedFilter: {
+ * NamedFilter: {
  *   NamedFilters: [
  *     {
- *       Name: '$ Trades',
- *       Scope: {
- *         DataType: 'Number',
- *         ColumnIds: ['currency'],
- *       },
- *       FilterPredicate: (_record, _columnId, cellValue) => {
- *         return cellValue === 'USD';
- *       },
+ *        Name: '$ Trades',
+ *          Scope: {
+ *            ColumnIds: ['currency'],
+ *          },
+ *       FilterPredicate: 'usdTrades',
  *     },
  *     {
- *       Name: 'Biz Year',
- *       Scope: {
- *         DataType: 'Date',
- *       },
- *       FilterPredicate: (_record, _columnId, cellValue) => {
- *         let dateToTest = cellValue as Date;
- *         let startBusinesssYear = new Date('2019-04-05');
- *         return dateToTest > startBusinesssYear;
- *       },
+ *        Name: 'High',
+ *          Scope: {
+ *            DataType: 'Number',
+ *          },
+ *        FilterPredicate: 'high',
+ *      },
+ *     {
+ *         Name: 'Biz Year',
+ *          Scope: {
+ *            DataType: 'Date',
+ *          },
+ *        FilterPredicate: 'bizYear',
  *      },
  *   ],
  * },
  * } as PredefinedConfig;
+ *
+ * // Adaptable Options
+ * const adaptableOptions: AdaptableOptions = {
+ * ......
+ *  userFunctions: [
+ *     {
+ *        name: 'usdTrades',
+ *        type: 'NamedFilterPredicate',
+ *        handler(_record, _columnId, cellValue) {
+ *         return cellValue === 'USD';
+ *        },
+ *      },
+ *     {
+ *        name: 'high',
+ *        type: 'NamedFilterPredicate',
+ *        handler(_record, _columnId, cellValue) {
+ *         let currency: string = _record.data.currency;
+ *          if (currency === 'USD') {
+ *            return cellValue > 1000;
+ *          } else if (currency === 'EUR') {
+ *            return cellValue > 30;
+ *          } else {
+ *            return cellValue > 10;
+ *          }
+ *        },
+ *      },
+ *     {
+ *        name: 'bizYear',
+ *        type: 'NamedFilterPredicate',
+ *        handler(_record, _columnId, cellValue) {
+ *         let dateToTest = cellValue as Date;
+ *          let startBusinesssYear = new Date('2019-04-05');
+ *          return dateToTest > startBusinesssYear;
+ *        },
+ *      },
+ *    ],
  * ```
+ *
  */
 export interface NamedFilterState extends DesignTimeState {
   /**
@@ -79,4 +118,10 @@ export interface NamedFilter extends AdaptableObject {
    * The name of the Predicate Function that will be run each time the Named Filter is applied.
    */
   FilterPredicate?: string;
+}
+
+export interface NamedFilterPredicate extends BaseUserFunction {
+  type: 'NamedFilterPredicate';
+  name: string;
+  handler: (record: any, columnId: string, cellValue: any) => boolean;
 }
