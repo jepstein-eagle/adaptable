@@ -15,6 +15,8 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
  *
+ *  --------------
+ *
  * **Action Column Predefined Config Example**
  *
  * In this example we create a column called 'Delete Trade'.
@@ -62,17 +64,12 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *        },
  *      },
  *     ],
- * ```
  *
- *  --------------
+ *  // we listen to the `ActionColumnClicked` event (via the eventAPI in Adaptable API) and then act accordingly
+ *    api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+ *      // do stuff...
+ *  });
  *
- * // we listen to the ActionColumnClicked event (via the eventAPI in Adaptable API) and
- * // delete the row using the deleteGridData method in gridAPI (also in Adaptable API)
- *  api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
- *    // do stuff...
- * });
- *
- *  --------------
  * ```
  */
 export interface ActionColumnState extends DesignTimeState {
