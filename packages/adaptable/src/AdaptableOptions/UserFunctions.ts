@@ -62,27 +62,6 @@ export type UserFunction =
  */
 export type UserFunctions = UserFunction[];
 
-export interface CellSummaryOperationFunction extends BaseUserFunction {
-  type: 'CellSummaryOperationFunction';
-  name: string;
-  handler: (operationParam: {
-    selectedCellInfo: SelectedCellInfo;
-    allValues: any[];
-    numericColumns: string[];
-    numericValues: number[];
-    distinctCount: number;
-  }) => any;
-}
-
-export interface EntitlementLookUpFunction extends BaseUserFunction {
-  type: 'EntitlementLookUpFunction';
-  name: string;
-  handler: (
-    functionName: AdaptableFunctionName,
-    userName: string,
-    adaptableId: string
-  ) => AccessLevel | undefined;
-}
 export interface NamedFilterPredicate extends BaseUserFunction {
   type: 'NamedFilterPredicate';
   name: string;

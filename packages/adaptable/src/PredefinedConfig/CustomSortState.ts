@@ -82,7 +82,7 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *          return 0;
  *        },
  *      },
- *      ],
+ *    ],
  * ```
  *
  * In this example we have created 3 Custom Sorts:
