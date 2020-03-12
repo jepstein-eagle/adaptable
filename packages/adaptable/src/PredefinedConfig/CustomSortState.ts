@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
@@ -93,7 +93,7 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  */
 
-export interface CustomSortState extends RunTimeState {
+export interface CustomSortState extends ConfigState {
   /**
    * A collection of Custom Sort objects.
    *

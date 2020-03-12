@@ -1,6 +1,6 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
-export interface CalendarState extends RunTimeState {
+export interface CalendarState extends ConfigState {
   CurrentCalendar?: string;
 }
 

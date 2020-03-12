@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 
 /**
  * The Predefined Configuration for the Updated Row function
@@ -25,7 +25,7 @@ import { RunTimeState } from './RunTimeState';
  * } as PredefinedConfig;
  * ```
  */
-export interface UpdatedRowState extends RunTimeState {
+export interface UpdatedRowState extends ConfigState {
   /**
    * Whether to enable the Updated Row function so that updated rows are highlighted.
    *

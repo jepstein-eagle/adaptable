@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 
@@ -10,7 +10,7 @@ import { Expression } from './Common/Expression';
  * Adaptable has 4 different types of configuration filters - ColumnFilters, UserFilters and SystemFilters.
 
  */
-export interface UserFilterState extends RunTimeState {
+export interface UserFilterState extends ConfigState {
   UserFilters?: UserFilter[];
 }
 

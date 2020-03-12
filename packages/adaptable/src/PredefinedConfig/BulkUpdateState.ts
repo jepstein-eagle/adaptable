@@ -1,4 +1,4 @@
-import { RunTimeState } from './/RunTimeState';
+import { ConfigState } from './/ConfigState';
 /**
  * The Predefined Configuration for the Bulk Update function
  *
@@ -17,7 +17,7 @@ import { RunTimeState } from './/RunTimeState';
  * [Bulk Update Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002754698-Edit-Functions)
  *
  **/
-export interface BulkUpdateState extends RunTimeState {
+export interface BulkUpdateState extends ConfigState {
   /**
    * What the initial value in the Bulk Update toolbar will be when the application starts.
    *

@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 
 /**
  * The Predefined Configuration for System Filters
@@ -51,7 +51,7 @@ import { DesignTimeState } from './DesignTimeState';
  *
  */
 
-export interface SystemFilterState extends DesignTimeState {
+export interface SystemFilterState extends ConfigState {
   /**
    * Which of the system's SystemFilters you wish to make available.
    *

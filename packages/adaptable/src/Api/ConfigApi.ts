@@ -20,7 +20,7 @@ import { CalculatedColumnState } from '../PredefinedConfig/CalculatedColumnState
 import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../PredefinedConfig/AlertState';
 import { AdvancedSearchState } from '../PredefinedConfig/AdvancedSearchState';
-import { RunTimeState } from '../PredefinedConfig/RunTimeState';
+import { ConfigState } from '../PredefinedConfig/ConfigState';
 import { PlusMinusState } from '../PredefinedConfig/PlusMinusState';
 import { ActionColumnState } from '../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../PredefinedConfig/ApplicationState';
@@ -64,19 +64,19 @@ export interface ConfigApi {
    *
    * @param state
    */
-  configloadUserState(state: { [s: string]: RunTimeState }): void;
+  configloadUserState(state: { [s: string]: ConfigState }): void;
 
   /**
    * Some of the state retrieved by this function will be internal state that is required by the System but not relevant to users so be careful - it is preferable to use the configGetAllUserState method which will only retrieve run-time state that can be amended by users (and is persisted into local storage or remote config).
    */
   configGetAllState(): AdaptableState;
 
-  configGetAllUserState(): RunTimeState[];
+  configGetAllUserState(): ConfigState[];
 
   configGetUserStateByStateKey(
     stateKey: AdaptableStateKey,
     returnJson: boolean
-  ): RunTimeState | string;
+  ): ConfigState | string;
 
   configGetActionColumnState(returnJson: boolean): ActionColumnState;
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;

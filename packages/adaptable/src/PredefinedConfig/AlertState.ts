@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression, QueryRange } from './Common/Expression';
 
@@ -60,7 +60,7 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * - On the *ItemCount* column which will show **info** alert (but not show a popup) if the new value is more than double (i.e. has percent change > 100).
  */
-export interface AlertState extends RunTimeState {
+export interface AlertState extends ConfigState {
   /**
    * A collection of Alert Definitions - which will trigger Alerts when their condition is met
    *

@@ -1,8 +1,8 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 
-export interface ColumnFilterState extends RunTimeState {
+export interface ColumnFilterState extends ConfigState {
   ColumnFilters?: ColumnFilter[];
 }
 

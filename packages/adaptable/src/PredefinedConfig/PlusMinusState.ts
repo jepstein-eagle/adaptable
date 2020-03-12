@@ -1,8 +1,8 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 
-export interface PlusMinusState extends RunTimeState {
+export interface PlusMinusState extends ConfigState {
   PlusMinusRules?: PlusMinusRule[];
 }
 

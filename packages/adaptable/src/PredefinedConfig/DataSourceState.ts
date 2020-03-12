@@ -1,7 +1,7 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { DataType } from './Common/Enums';
-export interface DataSourceState extends RunTimeState {
+export interface DataSourceState extends ConfigState {
   DataSources?: DataSource[];
   CurrentDataSource?: string;
 }

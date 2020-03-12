@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableFunctionName } from './Common/Types';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
@@ -117,7 +117,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * --------------
  */
-export interface EntitlementState extends DesignTimeState {
+export interface EntitlementState extends ConfigState {
   /**
    * A collection of `Entitlement` objects.
    */

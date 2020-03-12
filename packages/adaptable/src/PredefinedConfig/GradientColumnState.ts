@@ -1,7 +1,7 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
-export interface GradientColumnState extends RunTimeState {
+export interface GradientColumnState extends ConfigState {
   GradientColumns?: GradientColumn[];
 }
 

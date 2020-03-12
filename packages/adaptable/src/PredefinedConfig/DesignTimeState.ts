@@ -5,4 +5,4 @@ import { ConfigState } from './ConfigState';
  *
  * Objects that implement this Interface are never created nor modified by Users at Run Time in Adaptable.
  */
-export interface DesignTimeState extends ConfigState {}
+//export interface ConfigState extends ConfigState {}

@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 import { AdaptableStyle } from './Common/AdaptableStyle';
@@ -87,7 +87,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  * } as PredefinedConfig;
  * ```
  **/
-export interface ConditionalStyleState extends RunTimeState {
+export interface ConditionalStyleState extends ConfigState {
   ConditionalStyles?: ConditionalStyle[];
   ExcludeGroupedRows?: boolean;
 }

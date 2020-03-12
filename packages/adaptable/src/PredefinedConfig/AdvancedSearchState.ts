@@ -1,4 +1,4 @@
-import { RunTimeState } from './/RunTimeState';
+import { ConfigState } from './/ConfigState';
 import { Expression } from './Common/Expression';
 import { AdaptableObject } from './Common/AdaptableObject';
 
@@ -74,7 +74,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - 'Big Dollar Notionals' (which uses both ColumnValues and **Ranges**) and is also set to be the Current Advanced Search.
  */
-export interface AdvancedSearchState extends RunTimeState {
+export interface AdvancedSearchState extends ConfigState {
   /**
    * A collection of AdvancedSearch objects - which will appear in the Advanced Search toolbar dropdown.
    *

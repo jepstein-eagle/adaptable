@@ -1,6 +1,6 @@
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Scope } from './Common/Scope';
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
@@ -85,7 +85,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * ```
  *
  */
-export interface NamedFilterState extends DesignTimeState {
+export interface NamedFilterState extends ConfigState {
   /**
    * A collection of Named Filters
    */

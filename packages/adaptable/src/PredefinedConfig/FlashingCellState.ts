@@ -1,11 +1,11 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The Predefined Configuration for the Flashing Cell function
  *
  */
-export interface FlashingCellState extends RunTimeState {
+export interface FlashingCellState extends ConfigState {
   /**
    * Collection of Flashing Cell objects which define how a single cell will flash when it is changed.
    *

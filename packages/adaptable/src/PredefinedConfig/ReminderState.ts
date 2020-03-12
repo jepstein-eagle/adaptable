@@ -1,8 +1,8 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { BaseSchedule } from './Common/Schedule';
 
-export interface ReminderState extends RunTimeState {
+export interface ReminderState extends ConfigState {
   Reminders?: ReminderSchedule[];
 }
 

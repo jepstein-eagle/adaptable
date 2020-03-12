@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
@@ -75,7 +75,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * ```
  */
-export interface ActionColumnState extends DesignTimeState {
+export interface ActionColumnState extends ConfigState {
   /**
    * An array of `ActionColumn` which Adaptable will dynamically render.
    */

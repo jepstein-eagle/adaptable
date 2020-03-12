@@ -1,6 +1,6 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
-export interface PercentBarState extends RunTimeState {
+export interface PercentBarState extends ConfigState {
   PercentBars?: PercentBar[];
 }
 

@@ -1,6 +1,6 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
-export interface ShortcutState extends RunTimeState {
+export interface ShortcutState extends ConfigState {
   Shortcuts?: Shortcut[];
 }
 

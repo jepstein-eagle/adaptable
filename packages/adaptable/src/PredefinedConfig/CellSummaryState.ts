@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { CellSummaryOperation } from './Common/Enums';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 import { SelectedCellInfo } from '../types';
@@ -35,7 +35,7 @@ import { SelectedCellInfo } from '../types';
  *
  *
  */
-export interface CellSummaryState extends RunTimeState {
+export interface CellSummaryState extends ConfigState {
   /**
    * The Current Summary Operation being used
    */

@@ -1,6 +1,6 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
-export interface ColumnCategoryState extends RunTimeState {
+export interface ColumnCategoryState extends ConfigState {
   ColumnCategories?: ColumnCategory[];
 }
 

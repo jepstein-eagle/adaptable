@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
@@ -37,7 +37,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - [User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
  **/
-export interface UserInterfaceState extends DesignTimeState {
+export interface UserInterfaceState extends ConfigState {
   /**
    *  An optional list of colours that will be displayed in the Colour Picker in place of the default set that ships with Adaptable.
    *
