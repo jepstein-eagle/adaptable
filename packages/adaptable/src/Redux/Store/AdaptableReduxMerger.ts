@@ -27,7 +27,32 @@ function customizer(objValue: any, srcValue: any): any {
 }
 
 export function MergeStateFunction(oldState: any, newState: any) {
-  return MergeState(oldState, newState);
+  // return MergeState(oldState, newState);
+  const config = oldState;
+  const state = newState;
+
+  // any strategy in config that doesn't exist in state will be added
+  for (const configStrategyName in config) {
+    if (state[configStrategyName] === undefined) {
+      state[configStrategyName] = config[configStrategyName];
+    }
+  }
+
+  // any strategy in state that has an older revision then the config will be replaced
+  for (const stateStrategyName in state) {
+    if (config[stateStrategyName] !== undefined) {
+      const stateRevision =
+        state[stateStrategyName].Revision !== undefined ? state[stateStrategyName].Revision : 0;
+      const configRevision =
+        config[stateStrategyName].Revision !== undefined ? config[stateStrategyName].Revision : 0;
+
+      if (configRevision > stateRevision) {
+        state[stateStrategyName] = config[stateStrategyName];
+      }
+    }
+  }
+
+  return state;
 }
 
 // main merge function

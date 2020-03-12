@@ -287,7 +287,7 @@ export function IsSatisfied(
           for (let namedFilter of filteredNamedFilters) {
             // see if there is a predicate function in the object itself - the new way
             let satisfyFunction = adaptable.getUserFunctionHandler(
-              'NamedFilter.FilterPredicate',
+              'NamedFilterPredicate',
               namedFilter.FilterPredicate
             );
             if (satisfyFunction) {

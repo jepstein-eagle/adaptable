@@ -769,7 +769,7 @@ export class agGridHelper {
 
           const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
             ? this.adaptable.getUserFunctionHandler(
-                'CustomSort.ComparerFunction',
+                'CustomSortComparerFunction',
                 customSort.CustomSortComparerFunction
               )
             : customSortStrategy.getComparerFunction(groupCustomSort);

@@ -283,13 +283,13 @@ export interface IAdaptable {
   clearRowStyles(): void; // not sure about this...
 
   // User Functions
+  // there is a bug in Typescript
+  // duplicating the definition fixes the issue for now
+  // https://github.com/Microsoft/TypeScript/issues/30071
   getUserFunctionHandler<T extends UserFunction['type']>(
     type: T,
     name: string
   ): Extract<UserFunction, { type: T }>['handler'] | null;
-  // there is a bug in Typescript
-  // duplicating the definition fixes the issue for now
-  // https://github.com/Microsoft/TypeScript/issues/30071
   getUserFunctionHandler<T extends UserFunction['type']>(
     type: T,
     name: string

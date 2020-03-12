@@ -62,17 +62,7 @@ export type UserFunctions = UserFunction[];
  * The Base User Function that all User Functions extend
  */
 export interface BaseUserFunction {
-  type:
-    | 'CustomSortComparerFunction'
-    | 'CellSummaryOperationFunction'
-    | 'ActionColumnRenderFunction'
-    | 'ActionColumnShouldRenderPredicate'
-    | 'EntitlementLookUpFunction'
-    | 'NamedFilterPredicate'
-    | 'UserMenuItemClickedFunction'
-    | 'UserMenuItemClickedFunction'
-    | 'UserMenuItemShowPredicate'
-    | 'UserMenuItemShowPredicate';
+  type: string;
   name: string;
   handler: any;
 }
