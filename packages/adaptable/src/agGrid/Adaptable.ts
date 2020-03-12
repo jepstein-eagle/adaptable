@@ -2620,7 +2620,7 @@ export class Adaptable implements IAdaptable {
           .filter((userMenuItem: UserMenuItem) => {
             return userMenuItem.UserMenuItemShowPredicate
               ? this.getUserFunctionHandler(
-                  'UserInterface.ColumnMenuItemShowPredicate',
+                  'UserMenuItemShowPredicate',
                   userMenuItem.UserMenuItemShowPredicate
                 )(menuInfo)
               : true;
@@ -2709,7 +2709,7 @@ export class Adaptable implements IAdaptable {
               .filter((userMenuItem: UserMenuItem) => {
                 return userMenuItem.UserMenuItemShowPredicate
                   ? this.getUserFunctionHandler(
-                      'UserInterface.ContextMenuItemShowPredicate',
+                      'UserMenuItemShowPredicate',
                       userMenuItem.UserMenuItemShowPredicate
                     )(menuInfo)
                   : true;

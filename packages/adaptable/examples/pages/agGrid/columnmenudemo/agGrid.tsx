@@ -12,15 +12,12 @@ import {
   AdaptableOptions,
   PredefinedConfig,
   AdaptableApi,
-  SearchChangedEventArgs,
   MenuInfo,
   AdaptableMenuItem,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
-import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var adaptableApi: AdaptableApi;
 
@@ -42,42 +39,42 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'minimizeDashboard',
         handler() {
           adaptableApi.dashboardApi.minimise();
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setError',
         handler() {
           adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setWarning',
         handler() {
           adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setSuccess',
         handler() {
           adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setInfo',
         handler() {
           adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemShowPredicate',
+        type: 'UserMenuItemShowPredicate',
         name: 'isSortable',
         handler(menuInfo) {
           return menuInfo.Column.Sortable;
@@ -112,7 +109,6 @@ let demoConfig: PredefinedConfig = {
   },
 
   UserInterface: {
-    // the hardcoded way
     ColumnMenuItems: [
       {
         Label: 'Mimise Dashboard',

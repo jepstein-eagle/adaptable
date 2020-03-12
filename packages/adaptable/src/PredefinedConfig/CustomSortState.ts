@@ -1,5 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
+import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
 
 /**
  * The Predefined Configuration for the Custom Sort function
@@ -56,7 +58,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *  userFunctions: [
  *     {
  *        name: 'country',
- *        type: 'CustomSort.ComparerFunction',
+ *        type: 'CustomSortComparerFunction',
  *        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
  *         if (valueA === 'United Kingdom') {
  *            return -1;
@@ -69,7 +71,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *      },
  *      {
  *        name: 'currency',
- *       type: 'CustomSort.ComparerFunction',
+ *       type: 'CustomSortComparerFunction',
  *        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
  *          if (valueA === 'USD') {
  *            return -1;
@@ -80,7 +82,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *          return 0;
  *        },
  *      },
- *      ],
+ *    ],
  * ```
  *
  * In this example we have created 3 Custom Sorts:
@@ -123,4 +125,19 @@ export interface CustomSort extends AdaptableObject {
    * Each time it runs it is given 2 cell values to compare (as well as both rows to allow you to look up other values in the row if necessary)
    */
   CustomSortComparerFunction?: string;
+}
+
+/**
+ * A Compare Function that allows users to provide their own Custom Sort implementation.
+ *
+ * It is a pretty standard 'comparer' type function which will evaluate the items and return -1, 0, 1 to set the sort order.
+ *
+ * Each time it runs it is given 2 cell values to compare (as well as both rows to allow you to look up other values in the row if necessary)
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `CustomSort` section of Predefined Config.
+ */
+export interface CustomSortCompareFunction extends BaseUserFunction {
+  type: 'CustomSortComparerFunction';
+  name: string;
+  handler: AdaptableComparerFunction;
 }

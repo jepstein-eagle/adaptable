@@ -1,5 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
+import { SelectedCellInfo } from '../types';
 
 /**
  * The Predefined Configuration for the Cell Summary function
@@ -63,7 +65,26 @@ export interface CellSummaryOperationDefinition {
    *
    * The function receives all the currently selected values, the numeric columns, the numeric values and much else and is expected to return a single value to be displayed in the dropdown.
    *
-   * Note:  Here you just provide the **name of the function**.  The actual implementation of the function is in UserOptions.
+   * Note:  Here you just provide the **name of the function**.  The actual implementation of the function will be injected into UserOptions.
    */
   OperationFunction: string;
+}
+
+/**
+ * A Function that allows users to provide their own Cell Summary operations.
+ *
+ * Each time it runs it is given full information about all cells that are selected (with totals)
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `CellSummary` section of Predefined Config.
+ */
+export interface CellSummaryOperationFunction extends BaseUserFunction {
+  type: 'CellSummaryOperationFunction';
+  name: string;
+  handler: (operationParam: {
+    selectedCellInfo: SelectedCellInfo;
+    allValues: any[];
+    numericColumns: string[];
+    numericValues: number[];
+    distinctCount: number;
+  }) => any;
 }

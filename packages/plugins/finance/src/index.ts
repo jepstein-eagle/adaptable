@@ -89,13 +89,13 @@ class FinancePlugin extends AdaptablePlugin {
     };
 
     adaptable.adaptableOptions.userFunctions.push({
-      type: 'CellSummary.OperationFunction',
+      type: 'CellSummaryOperationFunction',
       name: 'calculateVwap',
       handler: calculateVwap,
     });
 
     adaptable.adaptableOptions.userFunctions.push({
-      type: 'CellSummary.OperationFunction',
+      type: 'CellSummaryOperationFunction',
       name: 'calculateOnly',
       handler: calculateOnly,
     });

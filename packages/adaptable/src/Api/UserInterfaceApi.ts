@@ -89,13 +89,13 @@ export interface UserInterfaceApi {
    * **note: this will NOT get persisted to the State at the end of the session**
    *
    * @param label the text of the menu item
-   * @param userMenuItemClickedFunction the function to call when the menu item is clicked
+   * @param userUserMenuItemClickedFunction the function to call when the menu item is clicked
    * @param icon an image to show for the menu item
    * @param subMenuItems any submenu items to add to the menu
    */
   // createContextMenuItem(
   //   label: string,
-  //   userMenuItemClickedFunction?: () => void,
+  //   userUserMenuItemClickedFunction?: () => void,
   //   icon?: string,
   //   subMenuItems?: UserMenuItem[]
   // ): void;

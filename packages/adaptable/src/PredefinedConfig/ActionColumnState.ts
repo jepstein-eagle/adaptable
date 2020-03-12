@@ -11,9 +11,13 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *
+ *  --------------
+ *
  * **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ *
+ *  --------------
  *
  * **Action Column Predefined Config Example**
  *
@@ -41,11 +45,12 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *  },
  * } as PredefinedConfig;
  *
+ *  // Adaptable Options
  * const adaptableOptions: AdaptableOptions = {
  * ......
  *  userFunctions: [
  *     {
- *       type: 'ActionColumn.RenderFunction',
+ *       type: 'ActionColumnRenderFunction',
  *        name: 'action',
  *        handler(params) {
  *          let data: number = params.rowData.notional;
@@ -55,24 +60,19 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *       },
  *     },
  *     {
- *        type: 'ActionColumn.ShouldRenderPredicate',
+ *        type: 'ActionColumnShouldRenderPredicate',
  *        name: 'action',
  *        handler(params) {
  *          return params.rowData.counterparty != 'BAML';
  *        },
  *      },
  *     ],
- * ```
  *
- *  --------------
+ *  // we listen to the `ActionColumnClicked` event (via the eventAPI in Adaptable API) and then act accordingly
+ *    api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
+ *      // do stuff...
+ *  });
  *
- * // we listen to the ActionColumnClicked event (via the eventAPI in Adaptable API) and
- * // delete the row using the deleteGridData method in gridAPI (also in Adaptable API)
- *  api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
- *    // do stuff...
- * });
- *
- *  --------------
  * ```
  */
 export interface ActionColumnState extends DesignTimeState {
@@ -133,12 +133,12 @@ export interface ActionColumn extends AdaptableObject {
 }
 
 export interface ActionColumnRenderFunction extends BaseUserFunction {
-  type: 'ActionColumn.RenderFunction';
+  type: 'ActionColumnRenderFunction';
   name: string;
   handler: (params: ActionColumnRenderParams) => string;
 }
 export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
-  type: 'ActionColumn.ShouldRenderPredicate';
+  type: 'ActionColumnShouldRenderPredicate';
   name: string;
   handler: (params: ActionColumnRenderParams) => boolean;
 }

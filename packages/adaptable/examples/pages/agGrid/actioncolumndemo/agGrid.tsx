@@ -34,7 +34,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'ActionColumn.RenderFunction',
+        type: 'ActionColumnRenderFunction',
         name: 'action',
         handler(params) {
           let data: number = params.rowData.notional;
@@ -44,7 +44,7 @@ function InitAdaptableDemo() {
         },
       },
       {
-        type: 'ActionColumn.ShouldRenderPredicate',
+        type: 'ActionColumnShouldRenderPredicate',
         name: 'action',
         handler(params) {
           return params.rowData.counterparty != 'BAML';

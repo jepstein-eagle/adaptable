@@ -34,7 +34,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'Entitlement.LookUpFunction',
+        type: 'EntitlementLookUpFunction',
         name: 'serverLookUp',
         handler(functionName: AdaptableFunctionName, userName: string, adaptableId: string) {
           switch (functionName) {
