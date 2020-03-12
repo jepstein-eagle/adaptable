@@ -7,10 +7,10 @@ import { CellSummaryOperationFunction } from '../PredefinedConfig/CellSummarySta
 import { EntitlementLookUpFunction } from '../PredefinedConfig/EntitlementState';
 import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
 import {
-  ContextMenuItemClickedFunction,
-  ColumnMenuItemClickedFunction,
-  ContextMenuItemShowPredicate,
-  ColumnMenuItemShowPredicate,
+  UserMenuItemClickedFunction,
+  UserMenuItemClickedFunction,
+  UserMenuItemShowPredicate,
+  UserMenuItemShowPredicate,
 } from '../PredefinedConfig/UserInterfaceState';
 
 /**
@@ -40,10 +40,8 @@ import {
  *  | `ActionColumnShouldRenderPredicate` | Whether to render an Acton Column	                   |
  *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	 |
  *  | `NamedFilterPredicate`              | Runs each time a Named Filter is applied          	 |
- *  | `ContextMenuItemClickedFunction`    | Action to run when Context Menu item is clicked    	 |
- *  | `ColumnMenuItemClickedFunction`     | Action to run when Column Menu item is clicked    	 |
- *  | `ContextMenuItemShowPredicate`      | Whether to show the Context Menu item             	 |
- *  | `ColumnMenuItemShowPredicate`       | Whether to show the Column Menu item              	 |
+ *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	 |
+ *  | `UserMenuItemShowPredicate`         | Whether to show the User Menu item                 	 |
  *
  */
 export type UserFunction =
@@ -53,10 +51,8 @@ export type UserFunction =
   | ActionColumnShouldRenderPredicate
   | EntitlementLookUpFunction
   | NamedFilterPredicate
-  | ContextMenuItemClickedFunction
-  | ColumnMenuItemClickedFunction
-  | ContextMenuItemShowPredicate
-  | ColumnMenuItemShowPredicate;
+  | UserMenuItemClickedFunction
+  | UserMenuItemShowPredicate;
 
 /**
  * Type which wraps an array of `UserFunction`
@@ -75,10 +71,10 @@ export interface BaseUserFunction {
     | 'ActionColumnShouldRenderPredicate'
     | 'EntitlementLookUpFunction'
     | 'NamedFilterPredicate'
-    | 'ContextMenuItemClickedFunction'
-    | 'ColumnMenuItemClickedFunction'
-    | 'ContextMenuItemShowPredicate'
-    | 'ColumnMenuItemShowPredicate';
+    | 'UserMenuItemClickedFunction'
+    | 'UserMenuItemClickedFunction'
+    | 'UserMenuItemShowPredicate'
+    | 'UserMenuItemShowPredicate';
   name: string;
   handler: any;
 }

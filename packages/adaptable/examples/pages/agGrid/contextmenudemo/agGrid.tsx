@@ -42,7 +42,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'ContextMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'sortColumn',
         handler(menuInfo) {
           let customSort: ColumnSort = {
@@ -53,21 +53,21 @@ function InitAdaptableDemo() {
         },
       },
       {
-        type: 'ContextMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'announceGrouping',
         handler() {
           alert('this is a grouped row');
         },
       },
       {
-        type: 'ContextMenuItemShowPredicate',
+        type: 'UserMenuItemShowPredicate',
         name: 'isSortable',
         handler(menuInfo) {
           return menuInfo.Column.Sortable;
         },
       },
       {
-        type: 'ContextMenuItemShowPredicate',
+        type: 'UserMenuItemShowPredicate',
         name: 'isGrouped',
         handler(menuInfo) {
           return menuInfo.IsGroupedNode;
@@ -104,13 +104,13 @@ let demoConfig: PredefinedConfig = {
         Label: 'Sort Column',
         Icon:
           '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-        UserMenuItemClickedFunction: 'sortColumn',
-        UserMenuItemShowPredicate: 'isSortable',
+        UserUserMenuItemClickedFunction: 'sortColumn',
+        UserUserMenuItemShowPredicate: 'isSortable',
       },
       {
         Label: 'Announce Grouping',
-        UserMenuItemClickedFunction: 'announceGrouping',
-        UserMenuItemShowPredicate: 'isGrouped',
+        UserUserMenuItemClickedFunction: 'announceGrouping',
+        UserUserMenuItemShowPredicate: 'isGrouped',
       },
     ],
   },

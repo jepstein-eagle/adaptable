@@ -261,15 +261,15 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    * A `UserMenuItem` contains the following properties:
    *
-   *  **Label** The text that will appear in the Menu Item
+   *  - **Label** The text that will appear in the Menu Item
    *
-   *  **UserMenuItemClickedFunction** The function which runs when a menu item is clicked
+   *  - **UserUserMenuItemClickedFunction** The function which runs when a menu item is clicked
    *
-   *  **UserMenuItemShowPredicate** A function which will run that will decide whether to display the menu item
+   *  - **UserUserMenuItemShowPredicate** A function which return whether to display the menu item
    *
-   *  **Icon** An icon for the menu item
+   *  - **Icon** An icon for the menu item
    *
-   *  **SubMenuItems** an array of sub UserMenuItems
+   *  - **SubMenuItems** an array of `UserMenuItem`
    *
    *  --------------
    *
@@ -283,30 +283,30 @@ export interface UserInterfaceState extends DesignTimeState {
    *    ColumnMenuItems: [
    *    {
    *        Label: 'Mimise Dashboard',
-   *        UserMenuItemClickedFunction: 'minimizeDashboard',
+   *        UserUserMenuItemClickedFunction: 'minimizeDashboard',
    *      },
    *      {
    *        Label: 'Set System Status',
    *        SubMenuItems: [
    *          {
    *            Label: 'Set Error',
-   *            UserMenuItemShowPredicate: 'isSortable',
-   *            UserMenuItemClickedFunction: 'setError',
+   *            UserUserMenuItemShowPredicate: 'isSortable',
+   *            UserUserMenuItemClickedFunction: 'setError',
    *          },
    *          {
    *            Label: 'Set Warning',
-   *            UserMenuItemShowPredicate: 'isSortable',
-   *            UserMenuItemClickedFunction: 'setWarning',
+   *            UserUserMenuItemShowPredicate: 'isSortable',
+   *            UserUserMenuItemClickedFunction: 'setWarning',
    *          },
    *          {
    *            Label: 'Set Success',
-   *            UserMenuItemShowPredicate: 'isSortable',
-   *            UserMenuItemClickedFunction: 'setSuccess',
+   *            UserUserMenuItemShowPredicate: 'isSortable',
+   *            UserUserMenuItemClickedFunction: 'setSuccess',
    *          },
    *          {
    *            Label: 'Set Info',
-   *            UserMenuItemShowPredicate: 'isSortable',
-   *            UserMenuItemClickedFunction: 'setInfo',
+   *            UserUserMenuItemShowPredicate: 'isSortable',
+   *            UserUserMenuItemClickedFunction: 'setInfo',
    *          },
    *        ],
    *      },
@@ -320,42 +320,42 @@ export interface UserInterfaceState extends DesignTimeState {
    * ......
    *  userFunctions: [
    *       {
-   *      type: 'ColumnMenuItemClickedFunction',
+   *      type: 'UserMenuItemClickedFunction',
    *       name: 'minimizeDashboard',
    *       handler() {
    *          adaptableApi.dashboardApi.minimise();
    *        },
    *      },
    *      {
-   *        type: 'ColumnMenuItemClickedFunction',
+   *        type: 'UserMenuItemClickedFunction',
    *        name: 'setError',
    *        handler() {
    *          adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
    *        },
    *      },
    *      {
-   *        type: 'ColumnMenuItemClickedFunction',
+   *        type: 'UserMenuItemClickedFunction',
    *        name: 'setWarning',
    *        handler() {
    *          adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
    *        },
    *      },
    *      {
-   *        type: 'ColumnMenuItemClickedFunction',
+   *        type: 'UserMenuItemClickedFunction',
    *        name: 'setSuccess',
    *        handler() {
    *          adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
    *        },
    *      },
    *      {
-   *        type: 'ColumnMenuItemClickedFunction',
+   *        type: 'UserMenuItemClickedFunction',
    *        name: 'setInfo',
    *        handler() {
    *          adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
    *        },
    *      },
    *      {
-   *        type: 'ColumnMenuItemShowPredicate',
+   *        type: 'UserMenuItemShowPredicate',
    *        name: 'isSortable',
    *        handler(menuInfo) {
    *          return menuInfo.Column.Sortable;
@@ -395,7 +395,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *     ContextMenuItems: [
    *     {
    *        Label: 'Mimise Dashboard',
-   *        UserMenuItemClickedFunction: () => {
+   *        UserUserMenuItemClickedFunction: () => {
    *            adaptableApi.dashboardApi.minimise();
    *        },
    *     },
@@ -404,25 +404,25 @@ export interface UserInterfaceState extends DesignTimeState {
    *        SubMenuItems: [
    *        {
    *          Label: 'Set Error',
-   *          UserMenuItemClickedFunction: () => {
+   *          UserUserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
    *          },
    *        },
    *        {
    *          Label: 'Set Warning',
-   *          UserMenuItemClickedFunction: () => {
+   *          UserUserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
    *          },
    *        },
    *        {
    *          Label: 'Set Success',
-   *          UserMenuItemClickedFunction: () => {
+   *          UserUserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
    *        },
    *        },
    *        {
    *          Label: 'Set Info',
-   *          UserMenuItemClickedFunction: () => {
+   *          UserUserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
    *        },
    *      },
@@ -445,7 +445,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *          {
    *            Label: 'Sort Column',
    *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-   *            UserMenuItemClickedFunction: () => {
+   *            UserUserMenuItemClickedFunction: () => {
    *              let customSort: ColumnSort = {
    *                Column: menuinfo.Column.ColumnId,
    *                SortOrder: 'Ascending',
@@ -538,7 +538,7 @@ export interface RowStyle {
  *
  * Each Menu Item contains a label and optional glyph.
  *
- * You can also provide an implementation for the `UserMenuItemClickedFunction` for when the menu item is clicked.
+ * You can also provide an implementation for the `UserUserMenuItemClickedFunction` for when the menu item is clicked.
  *
  * Each Menu Item can contain an array of Menu Items to allow you to create sub menus.
  */
@@ -547,19 +547,36 @@ export interface UserMenuItem {
    * The text that will appear in the Menu Item
    */
   Label: string;
+
   /**
-   * Function to run when the Menu Item is selected by the User
+   * Function that will run when the Menu Item is selected by the User
    *
-   * The `MenuInfo` class provides full information of the column / cell where the menu is being run
-   *  * The Signature of the function is:
+   * The **name** of the function is provided here and then an implementation with the same name should be included in UserFunctions section of AdaptableOptions.
+   *
+   * The function itself contains a `MenuInfo` class which provides full information of the column / cell where the menu is being run.
+   *
+   * The Signature of the function is:
    *
    * ```ts
    * ((menuInfo: MenuInfo) => UserMenuItem[])
    *  ```
    */
-  UserMenuItemClickedFunction?: string;
+  UserUserMenuItemClickedFunction?: string;
 
-  UserMenuItemShowPredicate?: string;
+  /**
+   * Function that can run before a Menu Item is displayed to ascertain whether it should show or not.
+   *
+   * The **name** of the function is provided here and then an implementation with the same name should be included in UserFunctions section of AdaptableOptions.
+   *
+   * The actual predicate itself contains a `MenuInfo` class which provides full information of the column / cell where the menu is being run.
+   *
+   * The Signature of the function is:
+   *
+   * ```ts
+   * ((menuInfo: MenuInfo) => UserMenuItem[])
+   *  ```
+   */
+  UserUserMenuItemShowPredicate?: string;
 
   /**
    * An optional icon to show in the Menu Item
@@ -574,23 +591,32 @@ export interface UserMenuItem {
   SubMenuItems?: UserMenuItem[];
 }
 
-export interface ContextMenuItemClickedFunction extends BaseUserFunction {
-  type: 'ContextMenuItemClickedFunction';
+/**
+ * A Function which will run each time a User Menu Item is clicked.
+ *
+ * This is for both Column Menus and Context Menus.
+ *
+ * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
+ */
+export interface UserMenuItemClickedFunction extends BaseUserFunction {
+  type: 'UserMenuItemClickedFunction';
   name: string;
   handler: (menuInfo: MenuInfo) => void;
 }
-export interface ColumnMenuItemClickedFunction extends BaseUserFunction {
-  type: 'ColumnMenuItemClickedFunction';
-  name: string;
-  handler: (menuInfo: MenuInfo) => void;
-}
-export interface ContextMenuItemShowPredicate extends BaseUserFunction {
-  type: 'ContextMenuItemShowPredicate';
+
+/**
+ * A Predicate Function which will run each time a menu is opened to decide whether a User Menu Item should be displayed.
+ *
+ * This is for both Column Menus and Context Menus.
+ *
+ * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
+ */
+export interface UserMenuItemShowPredicate extends BaseUserFunction {
+  type: 'UserMenuItemShowPredicate';
   name: string;
   handler: (menuInfo: MenuInfo) => boolean;
-}
-export interface ColumnMenuItemShowPredicate extends BaseUserFunction {
-  type: 'ColumnMenuItemShowPredicate';
-  name: string;
-  handler: (menuInfo: MenuInfo) => void;
 }

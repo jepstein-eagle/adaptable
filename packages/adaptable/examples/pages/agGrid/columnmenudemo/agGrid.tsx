@@ -39,42 +39,42 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'minimizeDashboard',
         handler() {
           adaptableApi.dashboardApi.minimise();
         },
       },
       {
-        type: 'ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setError',
         handler() {
           adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
         },
       },
       {
-        type: 'ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setWarning',
         handler() {
           adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
         },
       },
       {
-        type: 'ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setSuccess',
         handler() {
           adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
         },
       },
       {
-        type: 'ColumnMenuItemClickedFunction',
+        type: 'UserMenuItemClickedFunction',
         name: 'setInfo',
         handler() {
           adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
         },
       },
       {
-        type: 'ColumnMenuItemShowPredicate',
+        type: 'UserMenuItemShowPredicate',
         name: 'isSortable',
         handler(menuInfo) {
           return menuInfo.Column.Sortable;
@@ -112,30 +112,30 @@ let demoConfig: PredefinedConfig = {
     ColumnMenuItems: [
       {
         Label: 'Mimise Dashboard',
-        UserMenuItemClickedFunction: 'minimizeDashboard',
+        UserUserMenuItemClickedFunction: 'minimizeDashboard',
       },
       {
         Label: 'Set System Status',
         SubMenuItems: [
           {
             Label: 'Set Error',
-            UserMenuItemShowPredicate: 'isSortable',
-            UserMenuItemClickedFunction: 'setError',
+            UserUserMenuItemShowPredicate: 'isSortable',
+            UserUserMenuItemClickedFunction: 'setError',
           },
           {
             Label: 'Set Warning',
-            UserMenuItemShowPredicate: 'isSortable',
-            UserMenuItemClickedFunction: 'setWarning',
+            UserUserMenuItemShowPredicate: 'isSortable',
+            UserUserMenuItemClickedFunction: 'setWarning',
           },
           {
             Label: 'Set Success',
-            UserMenuItemShowPredicate: 'isSortable',
-            UserMenuItemClickedFunction: 'setSuccess',
+            UserUserMenuItemShowPredicate: 'isSortable',
+            UserUserMenuItemClickedFunction: 'setSuccess',
           },
           {
             Label: 'Set Info',
-            UserMenuItemShowPredicate: 'isSortable',
-            UserMenuItemClickedFunction: 'setInfo',
+            UserUserMenuItemShowPredicate: 'isSortable',
+            UserUserMenuItemClickedFunction: 'setInfo',
           },
         ],
       },

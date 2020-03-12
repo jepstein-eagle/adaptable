@@ -559,8 +559,8 @@ export class agGridHelper {
     type: 'contextMenu' | 'columnMenu'
   ): MenuItemDef {
     const fn = this.adaptable.getUserFunctionHandler(
-      type === 'contextMenu' ? 'ContextMenuItemClickedFunction' : 'ColumnMenuItemClickedFunction',
-      x.UserMenuItemClickedFunction
+      type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
+      x.UserUserMenuItemClickedFunction
     );
     return {
       name: x.Label,

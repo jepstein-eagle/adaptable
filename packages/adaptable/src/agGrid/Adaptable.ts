@@ -2618,10 +2618,10 @@ export class Adaptable implements IAdaptable {
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
         userColumnMenuItems
           .filter((userMenuItem: UserMenuItem) => {
-            return userMenuItem.UserMenuItemShowPredicate
+            return userMenuItem.UserUserMenuItemShowPredicate
               ? this.getUserFunctionHandler(
-                  'ColumnMenuItemShowPredicate',
-                  userMenuItem.UserMenuItemShowPredicate
+                  'UserMenuItemShowPredicate',
+                  userMenuItem.UserUserMenuItemShowPredicate
                 )(menuInfo)
               : true;
           })
@@ -2707,10 +2707,10 @@ export class Adaptable implements IAdaptable {
             contextMenuItems.push('separator');
             userContextMenuItems
               .filter((userMenuItem: UserMenuItem) => {
-                return userMenuItem.UserMenuItemShowPredicate
+                return userMenuItem.UserUserMenuItemShowPredicate
                   ? this.getUserFunctionHandler(
-                      'ContextMenuItemShowPredicate',
-                      userMenuItem.UserMenuItemShowPredicate
+                      'UserMenuItemShowPredicate',
+                      userMenuItem.UserUserMenuItemShowPredicate
                     )(menuInfo)
                   : true;
               })
