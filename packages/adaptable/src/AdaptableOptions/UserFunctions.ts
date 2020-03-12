@@ -1,5 +1,3 @@
-import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
-import { SelectedCellInfo, AdaptableFunctionName, AccessLevel, MenuInfo } from '../types';
 import {
   ActionColumnRenderFunction,
   ActionColumnShouldRenderPredicate,
@@ -8,6 +6,12 @@ import { CustomSortCompareFunction } from '../PredefinedConfig/CustomSortState';
 import { CellSummaryOperationFunction } from '../PredefinedConfig/CellSummaryState';
 import { EntitlementLookUpFunction } from '../PredefinedConfig/EntitlementState';
 import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
+import {
+  ContextMenuItemClickedFunction,
+  ColumnMenuItemClickedFunction,
+  ContextMenuItemShowPredicate,
+  ColumnMenuItemShowPredicate,
+} from '../PredefinedConfig/UserInterfaceState';
 
 /**
  * The actual implementations of functions that users reference in Predefined Config.
@@ -26,17 +30,17 @@ import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
  *
  * The types supported are:
  *
- * - `CustomSort.ComparerFunction`
+ * - `CustomSortComparerFunction`
  *
  * - `CellSummaryOperationFunction`
  *
- * - `ActionColumn.RenderFunction`
+ * - `ActionColumnRenderFunction`
  *
- * - `ActionColumn.ShouldRenderPredicate`
+ * - `ActionColumnShouldRenderPredicate`
  *
  * - `EntitlementLookUpFunction`
  *
- * - `NamedFilter.FilterPredicate`
+ * - `NamedFilterPredicate`
  *
  * - `ContextMenuItemClickedFunction`
  *
@@ -45,7 +49,6 @@ import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
  * - `ContextMenuItemShowPredicate`
  *
  * - `ColumnMenuItemShowPredicate`
- *
  *
  */
 export type UserFunction =
@@ -65,27 +68,6 @@ export type UserFunction =
  *
  */
 export type UserFunctions = UserFunction[];
-
-export interface ContextMenuItemClickedFunction extends BaseUserFunction {
-  type: 'ContextMenuItemClickedFunction';
-  name: string;
-  handler: (menuInfo: MenuInfo) => void;
-}
-export interface ColumnMenuItemClickedFunction extends BaseUserFunction {
-  type: 'ColumnMenuItemClickedFunction';
-  name: string;
-  handler: (menuInfo: MenuInfo) => void;
-}
-export interface ContextMenuItemShowPredicate extends BaseUserFunction {
-  type: 'ContextMenuItemShowPredicate';
-  name: string;
-  handler: (menuInfo: MenuInfo) => boolean;
-}
-export interface ColumnMenuItemShowPredicate extends BaseUserFunction {
-  type: 'ColumnMenuItemShowPredicate';
-  name: string;
-  handler: (menuInfo: MenuInfo) => void;
-}
 
 /**
  * The Base User Function that all User Functions extend

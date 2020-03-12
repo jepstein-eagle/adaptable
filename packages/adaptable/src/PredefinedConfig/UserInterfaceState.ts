@@ -2,6 +2,7 @@ import { DesignTimeState } from './DesignTimeState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  * The **User Interface section** of Predefined Configuration
@@ -545,4 +546,25 @@ export interface UserMenuItem {
    * You can create sub menus as many levels deep as you require.
    */
   SubMenuItems?: UserMenuItem[];
+}
+
+export interface ContextMenuItemClickedFunction extends BaseUserFunction {
+  type: 'ContextMenuItemClickedFunction';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
+}
+export interface ColumnMenuItemClickedFunction extends BaseUserFunction {
+  type: 'ColumnMenuItemClickedFunction';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
+}
+export interface ContextMenuItemShowPredicate extends BaseUserFunction {
+  type: 'ContextMenuItemShowPredicate';
+  name: string;
+  handler: (menuInfo: MenuInfo) => boolean;
+}
+export interface ColumnMenuItemShowPredicate extends BaseUserFunction {
+  type: 'ColumnMenuItemShowPredicate';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
 }
