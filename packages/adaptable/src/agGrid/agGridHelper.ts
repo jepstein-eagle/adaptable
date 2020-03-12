@@ -560,7 +560,7 @@ export class agGridHelper {
   ): MenuItemDef {
     const fn = this.adaptable.getUserFunctionHandler(
       type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
-      x.UserUserMenuItemClickedFunction
+      x.UserMenuItemClickedFunction
     );
     return {
       name: x.Label,

@@ -112,30 +112,30 @@ let demoConfig: PredefinedConfig = {
     ColumnMenuItems: [
       {
         Label: 'Mimise Dashboard',
-        UserUserMenuItemClickedFunction: 'minimizeDashboard',
+        UserMenuItemClickedFunction: 'minimizeDashboard',
       },
       {
         Label: 'Set System Status',
         SubMenuItems: [
           {
             Label: 'Set Error',
-            UserUserMenuItemShowPredicate: 'isSortable',
-            UserUserMenuItemClickedFunction: 'setError',
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setError',
           },
           {
             Label: 'Set Warning',
-            UserUserMenuItemShowPredicate: 'isSortable',
-            UserUserMenuItemClickedFunction: 'setWarning',
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setWarning',
           },
           {
             Label: 'Set Success',
-            UserUserMenuItemShowPredicate: 'isSortable',
-            UserUserMenuItemClickedFunction: 'setSuccess',
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setSuccess',
           },
           {
             Label: 'Set Info',
-            UserUserMenuItemShowPredicate: 'isSortable',
-            UserUserMenuItemClickedFunction: 'setInfo',
+            UserMenuItemShowPredicate: 'isSortable',
+            UserMenuItemClickedFunction: 'setInfo',
           },
         ],
       },

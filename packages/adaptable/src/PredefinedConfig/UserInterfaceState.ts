@@ -263,9 +263,9 @@ export interface UserInterfaceState extends DesignTimeState {
    *
    *  - **Label** The text that will appear in the Menu Item
    *
-   *  - **UserUserMenuItemClickedFunction** The function which runs when a menu item is clicked
+   *  - **UserMenuItemClickedFunction** The function which runs when a menu item is clicked
    *
-   *  - **UserUserMenuItemShowPredicate** A function which return whether to display the menu item
+   *  - **UserMenuItemShowPredicate** A function which return whether to display the menu item
    *
    *  - **Icon** An icon for the menu item
    *
@@ -283,30 +283,30 @@ export interface UserInterfaceState extends DesignTimeState {
    *    ColumnMenuItems: [
    *    {
    *        Label: 'Mimise Dashboard',
-   *        UserUserMenuItemClickedFunction: 'minimizeDashboard',
+   *        UserMenuItemClickedFunction: 'minimizeDashboard',
    *      },
    *      {
    *        Label: 'Set System Status',
    *        SubMenuItems: [
    *          {
    *            Label: 'Set Error',
-   *            UserUserMenuItemShowPredicate: 'isSortable',
-   *            UserUserMenuItemClickedFunction: 'setError',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setError',
    *          },
    *          {
    *            Label: 'Set Warning',
-   *            UserUserMenuItemShowPredicate: 'isSortable',
-   *            UserUserMenuItemClickedFunction: 'setWarning',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setWarning',
    *          },
    *          {
    *            Label: 'Set Success',
-   *            UserUserMenuItemShowPredicate: 'isSortable',
-   *            UserUserMenuItemClickedFunction: 'setSuccess',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setSuccess',
    *          },
    *          {
    *            Label: 'Set Info',
-   *            UserUserMenuItemShowPredicate: 'isSortable',
-   *            UserUserMenuItemClickedFunction: 'setInfo',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setInfo',
    *          },
    *        ],
    *      },
@@ -395,7 +395,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *     ContextMenuItems: [
    *     {
    *        Label: 'Mimise Dashboard',
-   *        UserUserMenuItemClickedFunction: () => {
+   *        UserMenuItemClickedFunction: () => {
    *            adaptableApi.dashboardApi.minimise();
    *        },
    *     },
@@ -404,25 +404,25 @@ export interface UserInterfaceState extends DesignTimeState {
    *        SubMenuItems: [
    *        {
    *          Label: 'Set Error',
-   *          UserUserMenuItemClickedFunction: () => {
+   *          UserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
    *          },
    *        },
    *        {
    *          Label: 'Set Warning',
-   *          UserUserMenuItemClickedFunction: () => {
+   *          UserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
    *          },
    *        },
    *        {
    *          Label: 'Set Success',
-   *          UserUserMenuItemClickedFunction: () => {
+   *          UserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
    *        },
    *        },
    *        {
    *          Label: 'Set Info',
-   *          UserUserMenuItemClickedFunction: () => {
+   *          UserMenuItemClickedFunction: () => {
    *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
    *        },
    *      },
@@ -445,7 +445,7 @@ export interface UserInterfaceState extends DesignTimeState {
    *          {
    *            Label: 'Sort Column',
    *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-   *            UserUserMenuItemClickedFunction: () => {
+   *            UserMenuItemClickedFunction: () => {
    *              let customSort: ColumnSort = {
    *                Column: menuinfo.Column.ColumnId,
    *                SortOrder: 'Ascending',
@@ -538,7 +538,7 @@ export interface RowStyle {
  *
  * Each Menu Item contains a label and optional glyph.
  *
- * You can also provide an implementation for the `UserUserMenuItemClickedFunction` for when the menu item is clicked.
+ * You can also provide an implementation for the `UserMenuItemClickedFunction` for when the menu item is clicked.
  *
  * Each Menu Item can contain an array of Menu Items to allow you to create sub menus.
  */
@@ -561,7 +561,7 @@ export interface UserMenuItem {
    * ((menuInfo: MenuInfo) => UserMenuItem[])
    *  ```
    */
-  UserUserMenuItemClickedFunction?: string;
+  UserMenuItemClickedFunction?: string;
 
   /**
    * Function that can run before a Menu Item is displayed to ascertain whether it should show or not.
@@ -576,7 +576,7 @@ export interface UserMenuItem {
    * ((menuInfo: MenuInfo) => UserMenuItem[])
    *  ```
    */
-  UserUserMenuItemShowPredicate?: string;
+  UserMenuItemShowPredicate?: string;
 
   /**
    * An optional icon to show in the Menu Item
