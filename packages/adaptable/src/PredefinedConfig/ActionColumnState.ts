@@ -47,7 +47,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * ......
  *  userFunctions: [
  *     {
- *       type: 'ActionColumn.RenderFunction',
+ *       type: 'ActionColumnRenderFunction',
  *        name: 'action',
  *        handler(params) {
  *          let data: number = params.rowData.notional;
@@ -57,7 +57,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *       },
  *     },
  *     {
- *        type: 'ActionColumn.ShouldRenderPredicate',
+ *        type: 'ActionColumnShouldRenderPredicate',
  *        name: 'action',
  *        handler(params) {
  *          return params.rowData.counterparty != 'BAML';
@@ -130,12 +130,12 @@ export interface ActionColumn extends AdaptableObject {
 }
 
 export interface ActionColumnRenderFunction extends BaseUserFunction {
-  type: 'ActionColumn.RenderFunction';
+  type: 'ActionColumnRenderFunction';
   name: string;
   handler: (params: ActionColumnRenderParams) => string;
 }
 export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
-  type: 'ActionColumn.ShouldRenderPredicate';
+  type: 'ActionColumnShouldRenderPredicate';
   name: string;
   handler: (params: ActionColumnRenderParams) => boolean;
 }

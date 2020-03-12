@@ -76,8 +76,8 @@ export interface BaseUserFunction {
   type:
     | 'CustomSortComparerFunction'
     | 'CellSummaryOperationFunction'
-    | 'ActionColumn.RenderFunction'
-    | 'ActionColumn.ShouldRenderPredicate'
+    | 'ActionColumnRenderFunction'
+    | 'ActionColumnShouldRenderPredicate'
     | 'EntitlementLookUpFunction'
     | 'NamedFilterPredicate'
     | 'ContextMenuItemClickedFunction'
