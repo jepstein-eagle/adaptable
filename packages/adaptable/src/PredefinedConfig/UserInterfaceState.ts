@@ -257,90 +257,111 @@ export interface UserInterfaceState extends DesignTimeState {
   /**
    * A collection of `UserMenuItem` objects to be added to the Column Header Menu (the one that appears as a dropdown in each Column Header).
    *
-   * You can add as many `UserMenuItem` as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
+   * You can add as many `UserMenuItem` as you wish.
    *
-   * The property allows you to provide the `UserMenuItem` array in 2 ways:
+   * A `UserMenuItem` contains the following properties:
    *
-   * 1. Through a standard 'hard-coded' array:
+   *  **Label** The text that will appear in the Menu Item
    *
-   * 2. Via a function which receives a [`MenuInfo`](_src_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
+   *  **UserMenuItemClickedFunction** The function which runs when a menu item is clicked
    *
-   * The Signature of the function is:
+   *  **UserMenuItemShowPredicate** A function which will run that will decide whether to display the menu item
+   *
+   *  **Icon** An icon for the menu item
+   *
+   *  **SubMenuItems** an array of sub UserMenuItems
+   *
+   *  --------------
+   *
+   * **Column Menu Item Example**
    *
    * ```ts
-   * ((menuInfo: MenuInfo) => UserMenuItem[])
-   *  ```
    *
-   * **Column Menu Item Example (using Array)**
-   *
-   * ```ts
+   * // Predefined Config
    * export default {
    *  UserInterface: {
-   *     ColumnMenuItems: [
-   *     {
+   *    ColumnMenuItems: [
+   *    {
    *        Label: 'Mimise Dashboard',
-   *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.minimise();
-   *        },
-   *     },
-   *     {
+   *        UserMenuItemClickedFunction: 'minimizeDashboard',
+   *      },
+   *      {
    *        Label: 'Set System Status',
    *        SubMenuItems: [
-   *        {
-   *          Label: 'Set Error',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *          {
+   *            Label: 'Set Error',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setError',
    *          },
-   *        },
-   *        {
-   *          Label: 'Set Warning',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *          {
+   *            Label: 'Set Warning',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setWarning',
    *          },
-   *        },
-   *        {
-   *          Label: 'Set Success',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
-   *        },
-   *        },
-   *        {
-   *          Label: 'Set Info',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
-   *        },
+   *          {
+   *            Label: 'Set Success',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setSuccess',
+   *          },
+   *          {
+   *            Label: 'Set Info',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setInfo',
+   *          },
+   *        ],
    *      },
    *    ],
    *  },
-   *  ],
-   * },
    * } as PredefinedConfig;
    *
-   * ```
    *
-   * **Column Menu Item Example (using Function)**
-   *
-   * ```ts
-   * export default {
-   *  UserInterface: {
-   * ColumnMenuItems: (menuinfo: MenuInfo) => {
-   *    return menuinfo.Column.Sortable
-   *      ? [
-   *          {
-   *            Label: 'Sort Column',
-   *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-   *            UserMenuItemClickedFunction: () => {
-   *              let customSort: ColumnSort = {
-   *                Column: menuinfo.Column.ColumnId,
-   *                SortOrder: 'Ascending',
-   *              };
-   *              adaptableApi.gridApi.sortAdaptable([customSort]);
-   *            },
-   *          },
-   *        ]
-   *     : [];
-   * },
-   * } as PredefinedConfig;
+   * // Adaptable Options
+   * const adaptableOptions: AdaptableOptions = {
+   * ......
+   *  userFunctions: [
+   *       {
+   *      type: 'ColumnMenuItemClickedFunction',
+   *       name: 'minimizeDashboard',
+   *       handler() {
+   *          adaptableApi.dashboardApi.minimise();
+   *        },
+   *      },
+   *      {
+   *        type: 'ColumnMenuItemClickedFunction',
+   *        name: 'setError',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *        },
+   *      },
+   *      {
+   *        type: 'ColumnMenuItemClickedFunction',
+   *        name: 'setWarning',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *        },
+   *      },
+   *      {
+   *        type: 'ColumnMenuItemClickedFunction',
+   *        name: 'setSuccess',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+   *        },
+   *      },
+   *      {
+   *        type: 'ColumnMenuItemClickedFunction',
+   *        name: 'setInfo',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+   *        },
+   *      },
+   *      {
+   *        type: 'ColumnMenuItemShowPredicate',
+   *        name: 'isSortable',
+   *        handler(menuInfo) {
+   *          return menuInfo.Column.Sortable;
+   *        },
+   *      },
+   *    ],
    * ```
    *
    *  If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
@@ -530,6 +551,11 @@ export interface UserMenuItem {
    * Function to run when the Menu Item is selected by the User
    *
    * The `MenuInfo` class provides full information of the column / cell where the menu is being run
+   *  * The Signature of the function is:
+   *
+   * ```ts
+   * ((menuInfo: MenuInfo) => UserMenuItem[])
+   *  ```
    */
   UserMenuItemClickedFunction?: string;
 

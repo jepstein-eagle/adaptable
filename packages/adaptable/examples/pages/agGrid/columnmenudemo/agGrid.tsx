@@ -12,15 +12,12 @@ import {
   AdaptableOptions,
   PredefinedConfig,
   AdaptableApi,
-  SearchChangedEventArgs,
   MenuInfo,
   AdaptableMenuItem,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
-import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var adaptableApi: AdaptableApi;
 
@@ -112,7 +109,6 @@ let demoConfig: PredefinedConfig = {
   },
 
   UserInterface: {
-    // the hardcoded way
     ColumnMenuItems: [
       {
         Label: 'Mimise Dashboard',

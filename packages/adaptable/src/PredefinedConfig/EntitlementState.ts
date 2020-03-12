@@ -32,6 +32,8 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * This funtion will be called each time an Entitlement is checked, provided via the `EntitlementLookUpFunction` property
  *
+ *  --------------
+ *
  * **Entitlements Predefined Config Example using `FunctionEntitlements` property**
  *
  * ```ts
@@ -63,6 +65,8 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
  *
  * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
+ *
+ * --------------
  *
  * **Entitlements Predefined Config Example using `EntitlementLookUpFunction` property**
  *
@@ -110,6 +114,8 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * - The Searching-related AdaptableFunctions to be permissioned based on the results from an Entitlements Server we call.
  *
  * - All other AdaptableFunctions to be 'Full' (as we have not set the `DefaultAccessLevel` property)
+ *
+ * --------------
  */
 export interface EntitlementState extends DesignTimeState {
   /**

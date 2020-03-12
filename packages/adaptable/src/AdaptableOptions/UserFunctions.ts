@@ -32,18 +32,18 @@ import {
  *
  * The types supported are:
  *
- *  | User Function | Description                                                              |
- *  |---------      |-------------------	                                                     |
- *  | CustomSortComparerFunction        | A Comparer function of bespoke Custom Sorts          |
- *  | CellSummaryOperationFunction      | Bespoke Cell Summaries 	                             |
- *  | ActionColumnRenderFunction        | Render an Action Column in a non-standard way        |
- *  | ActionColumnShouldRenderPredicate | Whether to render an Acton Column	                   |
- *  | EntitlementLookUpFunction         | Enables external look ups for Entitlements        	 |
- *  | NamedFilterPredicate              | Runs each time a Named Filter is applied          	 |
- *  | ContextMenuItemClickedFunction    | Action to run when Context Menu item is clicked    	 |
- *  | ColumnMenuItemClickedFunction     | Action to run when Column Menu item is clicked    	 |
- *  | ContextMenuItemShowPredicate      | Whether to show the Context Menu item             	 |
- *  | ColumnMenuItemShowPredicate       | Whether to show the Column Menu item              	 |
+ *  | User Function                       | Description                                          |
+ *  |---------                            |-------------------	                                 |
+ *  | `CustomSortComparerFunction`        | A Comparer function for running bespoke Custom Sorts |
+ *  | `CellSummaryOperationFunction`      | Bespoke Cell Summaries 	                             |
+ *  | `ActionColumnRenderFunction`        | Render an Action Column in a non-standard way        |
+ *  | `ActionColumnShouldRenderPredicate` | Whether to render an Acton Column	                   |
+ *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	 |
+ *  | `NamedFilterPredicate`              | Runs each time a Named Filter is applied          	 |
+ *  | `ContextMenuItemClickedFunction`    | Action to run when Context Menu item is clicked    	 |
+ *  | `ColumnMenuItemClickedFunction`     | Action to run when Column Menu item is clicked    	 |
+ *  | `ContextMenuItemShowPredicate`      | Whether to show the Context Menu item             	 |
+ *  | `ColumnMenuItemShowPredicate`       | Whether to show the Column Menu item              	 |
  *
  */
 export type UserFunction =
