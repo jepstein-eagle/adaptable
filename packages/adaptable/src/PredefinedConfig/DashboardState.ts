@@ -14,7 +14,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/dashboard/aggriddashboardtoolbarsdemo/) | [API](_api_dashboardapi_.dashboardapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/dashboard/aggriddashboardtoolbarsdemo/) | [API](_src_api_dashboardapi_.dashboardapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
  *
  * **Dashboard Predefined Config Example**
  *
@@ -54,7 +54,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - a div which will **display any buttons that you provide** via the *ToolbarButtons* property of the Application state (see below).
  *
- * See [Custom Toolbar](_predefinedconfig_dashboardstate_.customtoolbar.html) for full documentation and code examples.
+ * See [Custom Toolbar](_src_predefinedconfig_dashboardstate_.customtoolbar.html) for full documentation and code examples.
  *
  */
 export interface DashboardState extends RunTimeState {
@@ -196,7 +196,7 @@ export interface DashboardState extends RunTimeState {
  *
  * **Rendering Bespoke Content**
  *
- * Adaptable provides the [dashboardAPI](_api_dashboardapi_.dasbhoardapi.html) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
+ * Adaptable provides the [dashboardAPI](_src_api_dashboardapi_.dasbhoardapi.html) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
  *
  * You can listen to the **ToolbarVisibilityChanged** event published by Adaptable which provides the name of relevant toolbar and its new visibility.
  *

@@ -553,15 +553,23 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromUsereMenu(x: UserMenuItem, menuInfo: MenuInfo): MenuItemDef {
+  public createAgGridMenuDefFromUsereMenu(
+    x: UserMenuItem,
+    menuInfo: MenuInfo,
+    type: 'contextMenu' | 'columnMenu'
+  ): MenuItemDef {
+    const fn = this.adaptable.getUserFunctionHandler(
+      type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
+      x.UserMenuItemClickedFunction
+    );
     return {
       name: x.Label,
-      action: () => x.UserMenuItemClickedFunction(menuInfo),
+      action: () => fn(menuInfo),
       icon: x.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
         ? undefined
         : x.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo);
+            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo, type);
           }),
     };
   }
@@ -760,7 +768,10 @@ export class agGridHelper {
           groupCustomSort.SortedValues = customSort.SortedValues;
 
           const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
-            ? customSort.CustomSortComparerFunction
+            ? this.adaptable.getUserFunctionHandler(
+                'CustomSortComparerFunction',
+                customSort.CustomSortComparerFunction
+              )
             : customSortStrategy.getComparerFunction(groupCustomSort);
           this.adaptable.setCustomSort(colId, customSortComparerFunction);
         }

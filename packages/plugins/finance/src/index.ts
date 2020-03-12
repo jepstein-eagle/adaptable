@@ -79,14 +79,26 @@ class FinancePlugin extends AdaptablePlugin {
       OptionalSummaryOperations: [
         {
           OperationName: 'VWAP',
-          OperationFunction: calculateVwap,
+          OperationFunction: 'calculateVwap',
         },
         {
           OperationName: 'Only',
-          OperationFunction: calculateOnly,
+          OperationFunction: 'calculateOnly',
         },
       ] as CellSummaryOperationDefinition[],
     };
+
+    adaptable.adaptableOptions.userFunctions.push({
+      type: 'CellSummaryOperationFunction',
+      name: 'calculateVwap',
+      handler: calculateVwap,
+    });
+
+    adaptable.adaptableOptions.userFunctions.push({
+      type: 'CellSummaryOperationFunction',
+      name: 'calculateOnly',
+      handler: calculateOnly,
+    });
 
     adaptable.api!.pluginsApi.registerPlugin(this.pluginId, pluginData);
 

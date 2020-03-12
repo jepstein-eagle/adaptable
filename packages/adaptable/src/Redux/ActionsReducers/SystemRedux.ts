@@ -19,6 +19,7 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 
 import { LiveReport } from '../../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
+import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -70,6 +71,9 @@ export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS =
 
 // Columns
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
+
+// Shortcut
+export const SET_LAST_APPLIED_SHORTCUT = 'SET_LAST_APPLIED_SHORTCUT';
 
 export interface SystemAlertAddAction extends Redux.Action {
   Alert: AdaptableAlert;
@@ -159,6 +163,10 @@ export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Ac
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: Array<AdaptableColumn>;
+}
+
+export interface SetLastAppliedShortcutAction extends Redux.Action {
+  gridCell: GridCell | undefined;
 }
 
 export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
@@ -308,6 +316,13 @@ export const SetNewColumnListOrder = (
   VisibleColumnList,
 });
 
+export const SetLastAppliedShortcut = (
+  gridCell: GridCell | undefined
+): SetLastAppliedShortcutAction => ({
+  type: SET_LAST_APPLIED_SHORTCUT,
+  gridCell,
+});
+
 const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
@@ -324,6 +339,7 @@ const initialSystemState: SystemState = {
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
   QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
+  LastAppliedShortCut: null,
 };
 
 export const SystemReducer: Redux.Reducer<SystemState> = (
@@ -458,6 +474,12 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS: {
       return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: EMPTY_ARRAY });
+    }
+
+    case SET_LAST_APPLIED_SHORTCUT: {
+      return Object.assign({}, state, {
+        LastAppliedShortCut: (action as SetLastAppliedShortcutAction).gridCell,
+      });
     }
 
     default:

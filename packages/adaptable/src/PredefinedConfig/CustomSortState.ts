@@ -1,5 +1,6 @@
 import { RunTimeState } from './RunTimeState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
 
 /**
@@ -21,15 +22,17 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  * [Custom Sort Demo](https://demo.adaptabletools.com/gridmanagement/aggridcustomsortdemo/)
  *
- * [Custom Sort API](_api_customsortapi_.customsortapi.html)
+ * [Custom Sort API](_src_api_customsortapi_.customsortapi.html)
  *
  * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170297-Custom-Sort-FAQ)
  *
  * [Custom Sort Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
- * **Custom Sort Predefined Config Example**
+ * **Custom Sort Example**
  *
  * ```ts
+ *
+ * // Predefined Config
  * export default {
  * CustomSort: {
  *   CustomSorts: [
@@ -39,26 +42,54 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *     },
  *     {
  *        ColumnId: 'Country',
- *        CustomSortComparerFunction:
- *          (valueA: any, valueB: any, nodeA: any, nodeB: any) => {
- *            if (valueA === 'United Kingdom') {
- *              return -1;
- *            }
- *            if (valueB === 'United Kingdom') {
- *              return 1;
- *            }
- *            return nodeA.data.notional > nodeB.data.notional ? 1 : -1;
- *          },
+ *        CustomSortComparerFunction: 'country',
+ *      },
+ *     {
+ *        ColumnId: 'currency',
+ *        CustomSortComparerFunction: 'currency',
  *      },
  *   ],
  * },
  * } as PredefinedConfig;
+ *
+ * // Adaptable Options
+ * const adaptableOptions: AdaptableOptions = {
+ * ......
+ *  userFunctions: [
+ *     {
+ *        name: 'country',
+ *        type: 'CustomSortComparerFunction',
+ *        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+ *         if (valueA === 'United Kingdom') {
+ *            return -1;
+ *          }
+ *          if (valueB === 'United Kingdom') {
+ *            return 1;
+ *          }
+ *          return 0;
+ *        },
+ *      },
+ *      {
+ *        name: 'currency',
+ *       type: 'CustomSortComparerFunction',
+ *        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+ *          if (valueA === 'USD') {
+ *            return -1;
+ *          }
+ *          if (valueB === 'USD') {
+ *            return 1;
+ *          }
+ *          return 0;
+ *        },
+ *      },
+ *    ],
  * ```
- * In this example we have created 2 Custom Sorts:
+ *
+ * In this example we have created 3 Custom Sorts:
  *
  * - One on the Rating Column - which will use the list (and order) we have provided
  *
- * - One on the Country Column - which will use a function that will sort as follows: first it will show cells with the value of 'United Kingdom', and the remaining cells in the column will sort according to the value in Notional column for that row.
+ * - One on the Country and Currency Columns - which will use functions that we name in Predefined Config and define in userOptions.
  *
  */
 
@@ -93,5 +124,20 @@ export interface CustomSort extends AdaptableObject {
    *
    * Each time it runs it is given 2 cell values to compare (as well as both rows to allow you to look up other values in the row if necessary)
    */
-  CustomSortComparerFunction?: AdaptableComparerFunction;
+  CustomSortComparerFunction?: string;
+}
+
+/**
+ * A Compare Function that allows users to provide their own Custom Sort implementation.
+ *
+ * It is a pretty standard 'comparer' type function which will evaluate the items and return -1, 0, 1 to set the sort order.
+ *
+ * Each time it runs it is given 2 cell values to compare (as well as both rows to allow you to look up other values in the row if necessary)
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `CustomSort` section of Predefined Config.
+ */
+export interface CustomSortCompareFunction extends BaseUserFunction {
+  type: 'CustomSortComparerFunction';
+  name: string;
+  handler: AdaptableComparerFunction;
 }

@@ -44,6 +44,16 @@ export function GetStringOperatorPairs(): KeyValuePair[] {
 export function GetDateOperatorPairs(): KeyValuePair[] {
   return [];
 }
+export function GetBooleanOperatorPairs(): KeyValuePair[] {
+  return [
+    { Key: '1', Value: LeafExpressionOperator.IsTrue },
+    { Key: '0', Value: LeafExpressionOperator.IsFalse },
+    { Key: 'y', Value: LeafExpressionOperator.IsTrue },
+    { Key: 'n', Value: LeafExpressionOperator.IsFalse },
+    { Key: 'y', Value: LeafExpressionOperator.IsTrue },
+    { Key: 'n', Value: LeafExpressionOperator.IsFalse },
+  ];
+}
 
 export function CreateValueRangeFromOperand(rangeText: string): QueryRange {
   // if its empty then return null
@@ -101,6 +111,49 @@ function getSingleOperatorFromOperandText(operandText: string): string {
   return returnOperand;
 }
 
+function IsStandaloneOperator(
+  operator:
+    | 'None'
+    | 'GreaterThan'
+    | 'LessThan'
+    | 'Equals'
+    | 'NotEquals'
+    | 'GreaterThanOrEqual'
+    | 'LessThanOrEqual'
+    | 'Between'
+    | 'Contains'
+    | 'NotContains'
+    | 'StartsWith'
+    | 'EndsWith'
+    | 'Regex'
+    | 'AnyChange'
+    | 'ValueChange'
+    | 'PercentChange'
+    | 'NotBetween'
+    | 'IsPositive'
+    | 'IsNegative'
+    | 'IsNotNumber'
+    | 'IsTrue'
+    | 'IsFalse'
+    | 'NoDuplicateValues'
+    | 'ExistingValuesOnly'
+    | 'PrimaryKeyDuplicate'
+): boolean {
+  switch (operator) {
+    case LeafExpressionOperator.AnyChange:
+    case LeafExpressionOperator.ExistingValuesOnly:
+    case LeafExpressionOperator.IsFalse:
+    case LeafExpressionOperator.IsNegative:
+    case LeafExpressionOperator.IsNotNumber:
+    case LeafExpressionOperator.IsPositive:
+    case LeafExpressionOperator.IsTrue:
+    case LeafExpressionOperator.PrimaryKeyDuplicate:
+      return true;
+    default:
+      return false;
+  }
+}
+
 export function IsColumnAppropriateForRange(range: QueryRange, column: AdaptableColumn): boolean {
   if (!range) {
     return true;
@@ -129,6 +182,13 @@ export function IsColumnAppropriateForRange(range: QueryRange, column: Adaptable
     if (ArrayExtensions.ContainsItem(tet, range.Operator)) {
       return true;
     }
+  } else if (column.DataType == DataType.Boolean) {
+    let tet: LeafExpressionOperator[] = GetBooleanOperatorPairs().map(kvp => {
+      return kvp.Value;
+    });
+    if (ArrayExtensions.ContainsItem(tet, range.Operator)) {
+      return true;
+    }
   }
   return false;
 }
@@ -137,7 +197,9 @@ export const RangeHelper = {
   GetNumberOperatorPairs,
   GetStringOperatorPairs,
   GetDateOperatorPairs,
+  GetBooleanOperatorPairs,
   CreateValueRangeFromOperand,
   IsColumnAppropriateForRange,
+  IsStandaloneOperator,
 };
 export default RangeHelper;

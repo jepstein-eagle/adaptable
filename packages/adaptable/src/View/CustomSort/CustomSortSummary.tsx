@@ -74,7 +74,7 @@ export class CustomSortSummaryComponent extends React.Component<
         <StrategyDetail
           key={StrategyConstants.CustomSortStrategyFriendlyName}
           Item1={<StrategyProfile FunctionName={StrategyConstants.CustomSortStrategyId} />}
-          Item2={customSort.SortedValues.join(', ')}
+          Item2={this.getCustomSortedValues(customSort)}
           ConfigEnity={customSort}
           EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
           onEdit={() => this.onEdit(customSort)}
@@ -157,6 +157,14 @@ export class CustomSortSummaryComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)
     );
+  }
+
+  private getCustomSortedValues(customSort: CustomSort): any {
+    if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
+      return customSort.SortedValues.join(', ');
+    } else {
+      return 'Custom Sort uses a bespoke function';
+    }
   }
 }
 

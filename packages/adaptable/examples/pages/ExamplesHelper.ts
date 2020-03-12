@@ -1033,6 +1033,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       aggFunc: 'sum',
+      hide: true,
       //   agGroupCellRenderer
       // valueFormatter: notionalFormatter,
       cellClass: 'number-cell',
@@ -1049,6 +1050,7 @@ export class ExamplesHelper {
       field: 'ask',
       columnGroupShow: 'closed',
       filter: true,
+      hide: true,
       resizable: true,
       cellClass: 'number-cell',
       type: 'abColDefNumber',
@@ -1102,6 +1104,15 @@ export class ExamplesHelper {
       //  cellEditor: 'agLargeTextCellEditor',
     });
 
+    schema.push({
+      headerName: 'Live',
+      field: 'isLive',
+      editable: false,
+      filter: true,
+      cellRenderer: (params: any) =>
+        `<input disabled type='checkbox' ${params.value ? 'checked' : ''} />`,
+      type: 'abColDefBoolean',
+    });
     schema.push({
       headerName: 'Amount',
       field: 'amount',
@@ -1223,13 +1234,6 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
     });
 
-    schema.push({
-      headerName: 'Live',
-      field: 'isLive',
-      editable: false,
-      cellRenderer: (params: any) => `<input type='checkbox' ${params.value ? 'checked' : ''} />`,
-      type: 'abColDefBoolean',
-    });
     schema.push({
       headerName: 'Moodys',
       field: 'moodysRating',

@@ -1,6 +1,7 @@
 import { RunTimeState } from './RunTimeState';
 import { CellSummaryOperation } from './Common/Enums';
-import { SelectedCellInfo } from './Selection/SelectedCellInfo';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
+import { SelectedCellInfo } from '../types';
 
 /**
  * The Predefined Configuration for the Cell Summary function
@@ -11,7 +12,7 @@ import { SelectedCellInfo } from './Selection/SelectedCellInfo';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_src_api_cellsummaryapi_.cellsummaryapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360004550458-Cell-Summary-FAQ) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  *  *Cell Summary Operations*
  *
@@ -43,16 +44,13 @@ export interface CellSummaryState extends RunTimeState {
   /**
    * Array of `CellSummaryOperationDefinition` - to be provided by at Design Time
    *
-   * Each CellSummaryOperationDefinition contains a name and an `OperationFunction` which is run when selected cells need to be summarised
+   * Each CellSummaryOperationDefinition contains a name and a refrence to the `OperationFunction` which is run when selected cells need to be summarised
    */
   CellSummaryOperationDefinitions?: CellSummaryOperationDefinition[];
 }
 
 /**
- * **[Non-Persisted AdapTable State]**
- *
  * Additional Cell Summary Operations that can be provided by Users at Design Time
- *
  */
 export interface CellSummaryOperationDefinition {
   /**
@@ -63,13 +61,26 @@ export interface CellSummaryOperationDefinition {
   OperationName: string;
 
   /**
-   * ### [Non-Persisted AdapTable State]
-   *
-   * The fucnction that will be run each time the summary result is required.
+   * The function that will be run each time the summary result is required.
    *
    * The function receives all the currently selected values, the numeric columns, the numeric values and much else and is expected to return a single value to be displayed in the dropdown.
+   *
+   * Note:  Here you just provide the **name of the function**.  The actual implementation of the function will be injected into UserOptions.
    */
-  OperationFunction: (operationParam: {
+  OperationFunction: string;
+}
+
+/**
+ * A Function that allows users to provide their own Cell Summary operations.
+ *
+ * Each time it runs it is given full information about all cells that are selected (with totals)
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `CellSummary` section of Predefined Config.
+ */
+export interface CellSummaryOperationFunction extends BaseUserFunction {
+  type: 'CellSummaryOperationFunction';
+  name: string;
+  handler: (operationParam: {
     selectedCellInfo: SelectedCellInfo;
     allValues: any[];
     numericColumns: string[];

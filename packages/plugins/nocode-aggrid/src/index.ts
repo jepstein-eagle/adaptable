@@ -1,4 +1,4 @@
-import XLSX from 'xlsx';
+import { read as XLSXRead, utils as XLSXUtils } from 'xlsx';
 import { AdaptableNoCodeWizard } from '@adaptabletools/adaptable/agGrid';
 import { AdaptablePlugin, AdaptableOptions } from '@adaptabletools/adaptable/types';
 
@@ -41,12 +41,12 @@ export const readExcelFile = (file: File): Promise<any> => {
 
   return new Promise((resolve, reject) => {
     reader.onload = (e: any) => {
-      const wb = XLSX.read(e.target.result, { type: asBinary ? 'binary' : 'array' });
+      const wb = XLSXRead(e.target.result, { type: asBinary ? 'binary' : 'array' });
       // Get first worksheet
       const wsname = wb.SheetNames[0];
       const ws = wb.Sheets[wsname];
       // Convert array of arrays
-      const data = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      const data = XLSXUtils.sheet_to_json(ws, { header: 1 });
 
       resolve(data);
     };

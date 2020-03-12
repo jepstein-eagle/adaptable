@@ -44,6 +44,41 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: [
+      {
+        type: 'CellSummaryOperationFunction',
+        name: 'oldest',
+        handler(operationParam) {
+          let dateValues: Date[] = [];
+          operationParam.selectedCellInfo.Columns.filter(c => c.DataType === DataType.Date).forEach(
+            dc => {
+              let gridCells = operationParam.selectedCellInfo.GridCells.filter(
+                gc => gc.columnId == dc.ColumnId
+              ).map(gc => gc.rawValue);
+              dateValues.push(...gridCells);
+            }
+          );
+          if (dateValues.length > 0) {
+            return dateValues
+              .sort((a, b) => {
+                return a.getTime() - b.getTime();
+              })[0]
+              .toLocaleDateString();
+          }
+        },
+      },
+      {
+        type: 'CellSummaryOperationFunction',
+        name: 'fiveBiggest',
+        handler(operationParam) {
+          if (operationParam.numericValues.length >= 5) {
+            return Helper.sumNumberArray(
+              operationParam.numericValues.sort((a, b) => b - a).slice(0, 5)
+            );
+          }
+        },
+      },
+    ],
   };
 
   adaptableOptions.layoutOptions = {
@@ -86,46 +121,11 @@ let demoConfig: PredefinedConfig = {
     CellSummaryOperationDefinitions: [
       {
         OperationName: 'Oldest',
-        OperationFunction: (operationParam: {
-          selectedCellInfo: SelectedCellInfo;
-          allValues: any[];
-          numericColumns: string[];
-          numericValues: number[];
-          distinctCount: number;
-        }) => {
-          let dateValues: Date[] = [];
-          operationParam.selectedCellInfo.Columns.filter(c => c.DataType === DataType.Date).forEach(
-            dc => {
-              let gridCells = operationParam.selectedCellInfo.GridCells.filter(
-                gc => gc.columnId == dc.ColumnId
-              ).map(gc => gc.rawValue);
-              dateValues.push(...gridCells);
-            }
-          );
-          if (dateValues.length > 0) {
-            return dateValues
-              .sort((a, b) => {
-                return a.getTime() - b.getTime();
-              })[0]
-              .toLocaleDateString();
-          }
-        },
+        OperationFunction: 'oldest',
       },
       {
         OperationName: '5 Biggest',
-        OperationFunction: (operationParam: {
-          selectedCellInfo: SelectedCellInfo;
-          allValues: any[];
-          numericColumns: string[];
-          numericValues: number[];
-          distinctCount: number;
-        }) => {
-          if (operationParam.numericValues.length >= 5) {
-            return Helper.sumNumberArray(
-              operationParam.numericValues.sort((a, b) => b - a).slice(0, 5)
-            );
-          }
-        },
+        OperationFunction: 'fiveBiggest',
       },
     ],
     SummaryOperation: 'Min',

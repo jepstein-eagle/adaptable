@@ -40,6 +40,40 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: [
+      {
+        type: 'UserMenuItemClickedFunction',
+        name: 'sortColumn',
+        handler(menuInfo) {
+          let customSort: ColumnSort = {
+            Column: menuInfo.Column.ColumnId,
+            SortOrder: 'Ascending',
+          };
+          adaptableApi.gridApi.sortAdaptable([customSort]);
+        },
+      },
+      {
+        type: 'UserMenuItemClickedFunction',
+        name: 'announceGrouping',
+        handler() {
+          alert('this is a grouped row');
+        },
+      },
+      {
+        type: 'UserMenuItemShowPredicate',
+        name: 'isSortable',
+        handler(menuInfo) {
+          return menuInfo.Column.Sortable;
+        },
+      },
+      {
+        type: 'UserMenuItemShowPredicate',
+        name: 'isGrouped',
+        handler(menuInfo) {
+          return menuInfo.IsGroupedNode;
+        },
+      },
+    ],
   };
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
@@ -65,36 +99,20 @@ let demoConfig: PredefinedConfig = {
     ShowAlert: false,
   },
   UserInterface: {
-    ContextMenuItems: (menuinfo: MenuInfo) => {
-      let menuItems: UserMenuItem[] = [];
-
-      if (menuinfo.Column.Sortable) {
-        let sortMenuItem = {
-          Label: 'Sort Column',
-          Icon:
-            '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-          UserMenuItemClickedFunction: () => {
-            let customSort: ColumnSort = {
-              Column: menuinfo.Column.ColumnId,
-              SortOrder: 'Ascending',
-            };
-            adaptableApi.gridApi.sortAdaptable([customSort]);
-          },
-        };
-        menuItems.push(sortMenuItem);
-      }
-      if (menuinfo.IsGroupedNode) {
-        let groupMenuItem = {
-          Label: 'Announce Grouping',
-
-          UserMenuItemClickedFunction: () => {
-            alert('this is a grouped row');
-          },
-        };
-        menuItems.push(groupMenuItem);
-      }
-      return menuItems;
-    },
+    ContextMenuItems: [
+      {
+        Label: 'Sort Column',
+        Icon:
+          '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+        UserMenuItemClickedFunction: 'sortColumn',
+        UserMenuItemShowPredicate: 'isSortable',
+      },
+      {
+        Label: 'Announce Grouping',
+        UserMenuItemClickedFunction: 'announceGrouping',
+        UserMenuItemShowPredicate: 'isGrouped',
+      },
+    ],
   },
 };
 

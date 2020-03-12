@@ -478,22 +478,23 @@ export function CreateEmptyLayout(): Layout {
   };
 }
 
-export function CreateLayout(
+export function CreateDefaultLayout(
   columns: AdaptableColumn[],
   columnSorts: ColumnSort[],
   vendorGridInfo: VendorGridInfo,
   name: string
 ): Layout {
+  let columnIds: string[] = columns ? columns.filter(x => x.Visible).map(x => x.ColumnId) : [];
   return {
     Uuid: createUuid(),
-    Columns: columns ? columns.map(x => x.ColumnId) : [],
+    Columns: columnIds,
     ColumnSorts: columnSorts,
     GroupedColumns: null,
     PivotDetails: null,
     Name: name,
     VendorGridInfo: vendorGridInfo,
     AdaptableGridInfo: {
-      CurrentColumns: columns ? columns.map(x => x.ColumnId) : [],
+      CurrentColumns: columnIds,
       CurrentColumnSorts: columnSorts,
     },
   };
@@ -677,7 +678,7 @@ export const ObjectFactory = {
   CreateEmptyFormatColumn,
   CreateEmptyFreeTextColumn,
   CreateEmptyLayout,
-  CreateLayout,
+  CreateDefaultLayout,
   CreateEmptyPivotDetails,
   CreateColumnFilter,
   CreateUserFilterFromColumnFilter,

@@ -33,6 +33,7 @@ import HelpBlock from '../../components/HelpBlock';
 import ListGroup from '../../components/List/ListGroup';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
@@ -113,7 +114,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
             <Flex flex={4}>
               {ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}
             </Flex>
-            <Flex flex={8}>{customSort.SortedValues.join(', ')}</Flex>
+            <Flex flex={8}>{this.getCustomSortedValues(customSort)}</Flex>
           </Flex>
         );
       }
@@ -255,6 +256,13 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
       }
       default:
         return 'NOT IMPLEMENTED';
+    }
+  }
+  private getCustomSortedValues(customSort: CustomSort): any {
+    if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
+      return customSort.SortedValues.join(', ');
+    } else {
+      return 'Custom Sort uses a bespoke function';
     }
   }
 }

@@ -1,3 +1,41 @@
+## 6.0.24
+
+FilterForm tidy up
+
+## 6.0.23
+
+ToolPanel update
+
+## 6.0.22
+
+More boolean filter updates
+
+## 6.0.21
+
+Adding boolean column support in filter dropdown
+
+## 6.0.20
+
+Fixing bug with custom sort functions in predefined config
+
+## 6.0.19
+
+Prevent layouts in Tree Grid View from having Grouped or Pivoted columns 
+
+## 6.0.18
+
+Fix nocode plugin imports failures
+
+## 6.0.17
+
+Fix bug where default layout was still showing columns which had been marked as hidden in GridOptions
+
+Fix bug where Shortucts were not being applied when a numeric cell was directly edited
+
+## 6.0.16
+
+Fix bug that caused data updates to not work correctly when having multiple AdapTable instances in one page
+
 ## 6.0.15
 
 Try to improve loading times for layouts

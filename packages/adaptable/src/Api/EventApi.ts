@@ -12,7 +12,7 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
 /**
  * AdapTable publishes a large number of events to which users can subscribe as required.
  *
- * Note: these are in addition to the [Audit Events](_api_auditeventapi_.auditeventapi.html) which are only published if Audit Log has been enabled.
+ * Note: these are in addition to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) which are only published if Audit Log has been enabled.
  *
  * **AdapTable Events**
  *
@@ -36,7 +36,7 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
  *
  * - **AdaptableReady** - fired whenever Adaptable is initialised and ready for use (has no Args class)
  *
- * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
+ * *Note: The previous **onStateChanged** event has been removed as that is now accessible by the more comprehensive onAuditStateChanged event* - see [AuditStateChanged](/interfaces/_src_api_auditeventapi_.auditeventapi.html#onauditstatechanged).
  *
  * **Subscribing to an AdapTable Event**
  *
@@ -44,7 +44,7 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
  *
  * Each event contains an *[EventName]EventArgs* object that wraps relevant information for the event as *[EventName]Info* and that object packages the actual data relevant to the event.
  *
- * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptabletools.com/interfaces/_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptabletools.com/interfaces/_api_events_alertfired_.alertfiredinfo.html) object.
+ * So, for example, the `AlertFired` event contains an [AlertFiredEventArgs object](https://api.adaptabletools.com/interfaces/_src_api_events_alertfired_.alertfiredeventargs.html) which itself contains an [AlertFiredInfo object](https://api.adaptabletools.com/interfaces/_src_api_events_alertfired_.alertfiredinfo.html) object.
  *
  * And that `AlertFiredInfo` object will contain the actual `AdaptableAlert` that was triggered.
  *

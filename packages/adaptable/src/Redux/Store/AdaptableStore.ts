@@ -3037,7 +3037,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
             //create the default layout (if not there) so we can revert to it if needed
             let currentLayout = DEFAULT_LAYOUT;
-            let defaultLayout: Layout = ObjectFactory.CreateLayout(
+            let defaultLayout: Layout = ObjectFactory.CreateDefaultLayout(
               gridState.Columns,
               [],
               adaptable.getVendorGridDefaultLayoutInfo(),

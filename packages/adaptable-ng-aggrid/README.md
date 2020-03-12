@@ -176,7 +176,7 @@ See [Developer Documentation](https://api.adaptabletools.com/interfaces/_adaptab
 An Adaptable event giving you access to the *AdaptableApi* object.  
 The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
 Also gives access to the underlying ag-Grid instance object. 
-See [Developer Documentation](https://api.adaptabletools.com/interfaces/_api_adaptableapi_.adaptableapi) for more details.
+See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) for more details.
 
 - **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
 

@@ -155,4 +155,14 @@ export interface GridApi {
   clearGridFiltering(): void;
 
   sortAdaptable(columnSorts: ColumnSort[]): void;
+
+  selectNodes(rowNodes: any[]): void;
+  selectNode(rowNode: any): void;
+
+  selectColumn(columnId: string): void;
+  selectColumns(columnIds: string[]): void;
+
+  getFirstRowNode(): any;
+  getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
+  getRowNodeForPrimaryKey(primaryKeyValue: any): any;
 }

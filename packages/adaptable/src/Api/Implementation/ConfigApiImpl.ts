@@ -129,7 +129,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetUserStateByStateKey(
     stateKey: AdaptableStateKey,
     returnJson: boolean = false
-  ): RunTimeState {
+  ): RunTimeState | string {
     switch (stateKey) {
       case 'ActionColumn':
         return returnJson

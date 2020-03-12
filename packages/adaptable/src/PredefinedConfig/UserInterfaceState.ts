@@ -2,6 +2,7 @@ import { DesignTimeState } from './DesignTimeState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  * The **User Interface section** of Predefined Configuration
@@ -32,7 +33,7 @@ import { AdaptableColumn } from './Common/AdaptableColumn';
  *
  * - [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo/)
  *
- * - [User Interface API](_api_userinterfaceapi_.userinterfaceapi.html)
+ * - [User Interface API](_src_api_userinterfaceapi_.userinterfaceapi.html)
  *
  * - [User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
  **/
@@ -256,192 +257,234 @@ export interface UserInterfaceState extends DesignTimeState {
   /**
    * A collection of `UserMenuItem` objects to be added to the Column Header Menu (the one that appears as a dropdown in each Column Header).
    *
-   * You can add as many `UserMenuItem` as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
+   * You can add as many `UserMenuItem` as you wish.
    *
-   * The property allows you to provide the `UserMenuItem` array in 2 ways:
+   * A `UserMenuItem` contains the following properties:
    *
-   * 1. Through a standard 'hard-coded' array:
+   *  - **Label** The text that will appear in the Menu Item
    *
-   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
+   *  - **UserMenuItemClickedFunction** The function which runs when a menu item is clicked
    *
-   * The Signature of the function is:
+   *  - **UserMenuItemShowPredicate** A function which return whether to display the menu item
+   *
+   *  - **Icon** An icon for the menu item
+   *
+   *  - **SubMenuItems** an array of `UserMenuItem`
+   *
+   *  --------------
+   *
+   * **Column Menu Item Example**
    *
    * ```ts
-   * ((menuInfo: MenuInfo) => UserMenuItem[])
-   *  ```
    *
-   * **Column Menu Item Example (using Array)**
-   *
-   * ```ts
+   * // Predefined Config
    * export default {
    *  UserInterface: {
-   *     ColumnMenuItems: [
-   *     {
+   *    ColumnMenuItems: [
+   *    {
    *        Label: 'Mimise Dashboard',
-   *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.minimise();
-   *        },
-   *     },
-   *     {
+   *        UserMenuItemClickedFunction: 'minimizeDashboard',
+   *      },
+   *      {
    *        Label: 'Set System Status',
    *        SubMenuItems: [
-   *        {
-   *          Label: 'Set Error',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *          {
+   *            Label: 'Set Error',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setError',
    *          },
-   *        },
-   *        {
-   *          Label: 'Set Warning',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *          {
+   *            Label: 'Set Warning',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setWarning',
    *          },
-   *        },
-   *        {
-   *          Label: 'Set Success',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
-   *        },
-   *        },
-   *        {
-   *          Label: 'Set Info',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
-   *        },
+   *          {
+   *            Label: 'Set Success',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setSuccess',
+   *          },
+   *          {
+   *            Label: 'Set Info',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setInfo',
+   *          },
+   *        ],
    *      },
    *    ],
    *  },
-   *  ],
-   * },
    * } as PredefinedConfig;
    *
+   *
+   * // Adaptable Options
+   * const adaptableOptions: AdaptableOptions = {
+   * ......
+   *  userFunctions: [
+   *       {
+   *      type: 'UserMenuItemClickedFunction',
+   *       name: 'minimizeDashboard',
+   *       handler() {
+   *          adaptableApi.dashboardApi.minimise();
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setError',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setWarning',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setSuccess',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setInfo',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemShowPredicate',
+   *        name: 'isSortable',
+   *        handler(menuInfo) {
+   *          return menuInfo.Column.Sortable;
+   *        },
+   *      },
+   *    ],
    * ```
    *
-   * **Column Menu Item Example (using Function)**
-   *
-   * ```ts
-   * export default {
-   *  UserInterface: {
-   * ColumnMenuItems: (menuinfo: MenuInfo) => {
-   *    return menuinfo.Column.Sortable
-   *      ? [
-   *          {
-   *            Label: 'Sort Column',
-   *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-   *            UserMenuItemClickedFunction: () => {
-   *              let customSort: ColumnSort = {
-   *                Column: menuinfo.Column.ColumnId,
-   *                SortOrder: 'Ascending',
-   *              };
-   *              adaptableApi.gridApi.sortAdaptable([customSort]);
-   *            },
-   *          },
-   *        ]
-   *     : [];
-   * },
-   * } as PredefinedConfig;
-   * ```
-   *
-   *  If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
+   *  If you want to control which, if any, of the pre-shipped Adaptable Column Menu items are displayed use the [showAdaptableColumnMenu](_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecolumnmenu) property in UserInterfaceOptions.
    *
    * **Default Value**:  Empty array
    */
-  ColumnMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
+  ColumnMenuItems?: UserMenuItem[];
 
   /**
-   * A collection of `UserMenuItem` objects to be added to the Context Menu (the one that appears when you right-click a cell in the Grid).
+   * A collection of `UserMenuItem` objects to be added to the Context Menu (the one that appears when you right-click on a cell, or cells, in the Grid).
    *
-   * You can add as many `UserMenuItem` as you wish.  And each UserMenuItem can itself include an array of sub UserMenuItems.
+   * You can add as many `UserMenuItem` as you wish.
    *
-   * The property allows you to provide the `UserMenuItem` array in 2 ways:
+   * A `UserMenuItem` contains the following properties:
    *
-   * 1. Through a standard 'hard-coded' array:
+   *  - **Label** The text that will appear in the Menu Item
    *
-   * 2. Via a function which receives a [`MenuInfo`](_predefinedconfig_common_menu_.menuinfo.html) object and returns an array of `UserMenuItem`.
+   *  - **UserMenuItemClickedFunction** The function which runs when a menu item is clicked
    *
-   * The Signature of the function is:
+   *  - **UserMenuItemShowPredicate** A function which return whether to display the menu item
+   *
+   *  - **Icon** An icon for the menu item
+   *
+   *  - **SubMenuItems** an array of `UserMenuItem`
+   *
+   *  --------------
+   *
+   * **Context Menu Item Example**
    *
    * ```ts
-   * ((menuInfo: MenuInfo) => UserMenuItem[])
-   *  ```
    *
-   * **Context Menu Item Example (using Array)**
-   *
-   * ```ts
+   * // Predefined Config
    * export default {
    *  UserInterface: {
-   *     ContextMenuItems: [
-   *     {
+   *    ContextMenuItems: [
+   *    {
    *        Label: 'Mimise Dashboard',
-   *        UserMenuItemClickedFunction: () => {
-   *            adaptableApi.dashboardApi.minimise();
-   *        },
-   *     },
-   *     {
+   *        UserMenuItemClickedFunction: 'minimizeDashboard',
+   *      },
+   *      {
    *        Label: 'Set System Status',
    *        SubMenuItems: [
-   *        {
-   *          Label: 'Set Error',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *          {
+   *            Label: 'Set Error',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setError',
    *          },
-   *        },
-   *        {
-   *          Label: 'Set Warning',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *          {
+   *            Label: 'Set Warning',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setWarning',
    *          },
-   *        },
-   *        {
-   *          Label: 'Set Success',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
-   *        },
-   *        },
-   *        {
-   *          Label: 'Set Info',
-   *          UserMenuItemClickedFunction: () => {
-   *            adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
-   *        },
+   *          {
+   *            Label: 'Set Success',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setSuccess',
+   *          },
+   *          {
+   *            Label: 'Set Info',
+   *            UserMenuItemShowPredicate: 'isSortable',
+   *            UserMenuItemClickedFunction: 'setInfo',
+   *          },
+   *        ],
    *      },
    *    ],
    *  },
-   *  ],
-   * },
    * } as PredefinedConfig;
    *
+   *
+   * // Adaptable Options
+   * const adaptableOptions: AdaptableOptions = {
+   * ......
+   *  userFunctions: [
+   *       {
+   *      type: 'UserMenuItemClickedFunction',
+   *       name: 'minimizeDashboard',
+   *       handler() {
+   *          adaptableApi.dashboardApi.minimise();
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setError',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setWarning',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setSuccess',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemClickedFunction',
+   *        name: 'setInfo',
+   *        handler() {
+   *          adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
+   *        },
+   *      },
+   *      {
+   *        type: 'UserMenuItemShowPredicate',
+   *        name: 'isSortable',
+   *        handler(menuInfo) {
+   *          return menuInfo.Column.Sortable;
+   *        },
+   *      },
+   *    ],
    * ```
    *
-   * **Context Menu Item Example (using Function)**
-   *
-   * ```ts
-   * export default {
-   *  UserInterface: {
-   * ContextItems: (menuinfo: MenuInfo) => {
-   *    return menuinfo.Column.Sortable
-   *      ? [
-   *          {
-   *            Label: 'Sort Column',
-   *            Icon: '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
-   *            UserMenuItemClickedFunction: () => {
-   *              let customSort: ColumnSort = {
-   *                Column: menuinfo.Column.ColumnId,
-   *                SortOrder: 'Ascending',
-   *              };
-   *              adaptableApi.gridApi.sortAdaptable([customSort]);
-   *            },
-   *          },
-   *        ]
-   *     : [];
-   * },
-   * } as PredefinedConfig;
-   * ```
-   *
-   *  If you want to control which, if any, of the pre-shipped Adaptable Context Menu items are displayed use the [showAdaptableContextMenu](_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptablecontextmenu) property in UserInterfaceOptions.
+   *  If you want to control which, if any, of the pre-shipped Adaptable Context Menu items are displayed use the [showAdaptableContextMenu](_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html#showadaptableContextMenu) property in UserInterfaceOptions.
    *
    * **Default Value**:  Empty array
    */
-  ContextMenuItems?: UserMenuItem[] | ((menuInfo: MenuInfo) => UserMenuItem[]);
+  ContextMenuItems?: UserMenuItem[];
 }
 
 /**
@@ -495,7 +538,7 @@ export interface EditLookUpColumn {
  */
 export interface RowStyle {
   /**
-   * The `AdaptableStyle` to use for the Row. For more details see the [Style](_predefinedconfig_common_istyle_.istyle.html) object.
+   * The `AdaptableStyle` to use for the Row. For more details see the [Style](_src_predefinedconfig_common_istyle_.istyle.html) object.
    */
   Style: AdaptableStyle;
 
@@ -525,12 +568,36 @@ export interface UserMenuItem {
    * The text that will appear in the Menu Item
    */
   Label: string;
+
   /**
-   * Function to run when the Menu Item is selected by the User
+   * Function that will run when the Menu Item is selected by the User
    *
-   * The `MenuInfo` class provides full information of the column / cell where the menu is being run
+   * The **name** of the function is provided here and then an implementation with the same name should be included in UserFunctions section of AdaptableOptions.
+   *
+   * The function itself contains a `MenuInfo` class which provides full information of the column / cell where the menu is being run.
+   *
+   * The Signature of the function is:
+   *
+   * ```ts
+   * ((menuInfo: MenuInfo) => UserMenuItem[])
+   *  ```
    */
-  UserMenuItemClickedFunction?: (menuInfo: MenuInfo) => void;
+  UserMenuItemClickedFunction?: string;
+
+  /**
+   * Function that can run before a Menu Item is displayed to ascertain whether it should show or not.
+   *
+   * The **name** of the function is provided here and then an implementation with the same name should be included in UserFunctions section of AdaptableOptions.
+   *
+   * The actual predicate itself contains a `MenuInfo` class which provides full information of the column / cell where the menu is being run.
+   *
+   * The Signature of the function is:
+   *
+   * ```ts
+   * ((menuInfo: MenuInfo) => UserMenuItem[])
+   *  ```
+   */
+  UserMenuItemShowPredicate?: string;
 
   /**
    * An optional icon to show in the Menu Item
@@ -543,4 +610,34 @@ export interface UserMenuItem {
    * You can create sub menus as many levels deep as you require.
    */
   SubMenuItems?: UserMenuItem[];
+}
+
+/**
+ * A Function which will run each time a User Menu Item is clicked.
+ *
+ * This is for both Column Menus and Context Menus.
+ *
+ * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
+ */
+export interface UserMenuItemClickedFunction extends BaseUserFunction {
+  type: 'UserMenuItemClickedFunction';
+  name: string;
+  handler: (menuInfo: MenuInfo) => void;
+}
+
+/**
+ * A Predicate Function which will run each time a menu is opened to decide whether a User Menu Item should be displayed.
+ *
+ * This is for both Column Menus and Context Menus.
+ *
+ * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
+ */
+export interface UserMenuItemShowPredicate extends BaseUserFunction {
+  type: 'UserMenuItemShowPredicate';
+  name: string;
+  handler: (menuInfo: MenuInfo) => boolean;
 }

@@ -34,21 +34,28 @@ export class LayoutGroupedColumnWizard
   render(): any {
     return (
       <WizardPanel>
-        <HelpBlock marginBottom={2}>
-          Select which Columns, if any, should be <b>Grouped</b> in the Layout.
-        </HelpBlock>
-        <DualListBoxEditor
-          style={{ flex: 1, overflow: 'hidden' }}
-          AvailableValues={this.props.GroupableColumns.map(x => x.FriendlyName)}
-          SelectedValues={this.state.SelectedColumns}
-          HeaderAvailable="Groupable Columns"
-          HeaderSelected="Grouped Columns in Layout"
-          onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
-          DisplaySize={DisplaySize.Small}
-        />
+        {this.props.Adaptable.isGroupable() ? (
+          <div>
+            <HelpBlock marginBottom={2}>
+              Select which Columns, if any, should be <b>Grouped</b> in the Layout.
+            </HelpBlock>
+            <DualListBoxEditor
+              style={{ flex: 1, overflow: 'hidden' }}
+              AvailableValues={this.props.GroupableColumns.map(x => x.FriendlyName)}
+              SelectedValues={this.state.SelectedColumns}
+              HeaderAvailable="Groupable Columns"
+              HeaderSelected="Grouped Columns in Layout"
+              onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
+              DisplaySize={DisplaySize.Small}
+            />
+          </div>
+        ) : (
+          <HelpBlock marginBottom={2}>Row Grouping is not available for this Grid.</HelpBlock>
+        )}
       </WizardPanel>
     );
   }
+
   OnSelectedValuesChange(newValues: Array<string>) {
     this.setState({ SelectedColumns: newValues } as LayoutGroupedColumnWizardState, () =>
       this.props.UpdateGoBackState()

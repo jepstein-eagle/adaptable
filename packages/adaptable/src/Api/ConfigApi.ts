@@ -73,7 +73,10 @@ export interface ConfigApi {
 
   configGetAllUserState(): RunTimeState[];
 
-  configGetUserStateByStateKey(stateKey: AdaptableStateKey, returnJson: boolean): RunTimeState;
+  configGetUserStateByStateKey(
+    stateKey: AdaptableStateKey,
+    returnJson: boolean
+  ): RunTimeState | string;
 
   configGetActionColumnState(returnJson: boolean): ActionColumnState;
   configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;

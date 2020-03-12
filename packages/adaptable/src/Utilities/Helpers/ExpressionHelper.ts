@@ -23,6 +23,7 @@ import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import Helper from './Helper';
+import RangeHelper from './RangeHelper';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -141,6 +142,9 @@ export function ConvertExpressionToString(
 
 // Converts a QueryRange to a readable string
 export function ConvertRangeToString(range: QueryRange, columns: AdaptableColumn[]): string {
+  if (RangeHelper.IsStandaloneOperator(range.Operator)) {
+    return range.Operator;
+  }
   let returnValue: string = range.Operator + ' ' + range.Operand1;
   if (StringExtensions.IsNotNullOrEmpty(range.Operand2)) {
     returnValue += range.Operand2;
@@ -282,7 +286,10 @@ export function IsSatisfied(
           );
           for (let namedFilter of filteredNamedFilters) {
             // see if there is a predicate function in the object itself - the new way
-            let satisfyFunction = namedFilter.FilterPredicate;
+            let satisfyFunction = adaptable.getUserFunctionHandler(
+              'NamedFilterPredicate',
+              namedFilter.FilterPredicate
+            );
             if (satisfyFunction) {
               isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
               if (isColumnSatisfied) {
@@ -373,24 +380,28 @@ function RangesToString(
       returnValue += ' OR ';
     }
     let operator = range.Operator as LeafExpressionOperator;
-    if (operator == LeafExpressionOperator.Between) {
-      if (includeColumnName) {
-        returnValue += '[' + columnFriendlyName + '] ';
-      }
-      returnValue +=
-        OperatorToShortFriendlyString(operator) +
-        ' ' +
-        getOperandValue(range.Operand1Type, range.Operand1, columns) +
-        ' AND ' +
-        getOperandValue(range.Operand2Type, range.Operand2, columns);
+    if (RangeHelper.IsStandaloneOperator(range.Operator)) {
+      returnValue = OperatorToShortFriendlyString(operator);
     } else {
-      if (includeColumnName) {
-        returnValue += '[' + columnFriendlyName + '] ';
+      if (operator == LeafExpressionOperator.Between) {
+        if (includeColumnName) {
+          returnValue += '[' + columnFriendlyName + '] ';
+        }
+        returnValue +=
+          OperatorToShortFriendlyString(operator) +
+          ' ' +
+          getOperandValue(range.Operand1Type, range.Operand1, columns) +
+          ' AND ' +
+          getOperandValue(range.Operand2Type, range.Operand2, columns);
+      } else {
+        if (includeColumnName) {
+          returnValue += '[' + columnFriendlyName + '] ';
+        }
+        returnValue +=
+          OperatorToShortFriendlyString(operator) +
+          ' ' +
+          getOperandValue(range.Operand1Type, range.Operand1, columns);
       }
-      returnValue +=
-        OperatorToShortFriendlyString(operator) +
-        ' ' +
-        getOperandValue(range.Operand1Type, range.Operand1, columns);
     }
   }
   return returnValue;
@@ -451,6 +462,10 @@ export function OperatorToShortFriendlyString(operator: LeafExpressionOperator):
       return 'Ends With';
     case LeafExpressionOperator.Regex:
       return 'Regex';
+    case LeafExpressionOperator.IsTrue:
+      return 'True';
+    case LeafExpressionOperator.IsFalse:
+      return 'False';
   }
 }
 
@@ -531,7 +546,7 @@ export function GetOperatorsForDataType(
 ): LeafExpressionOperator[] {
   switch (dataType) {
     case DataType.Boolean:
-      return null;
+      return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
     case DataType.Number:
     case DataType.Date:
       return [

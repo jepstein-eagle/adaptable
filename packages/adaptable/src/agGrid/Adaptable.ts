@@ -11,10 +11,9 @@ import {
   ICellRendererFunc,
   SideBarDef,
   Events,
-  Module,
   RowNodeTransaction,
-  ModelUpdatedEvent,
   IClientSideRowModel,
+  GridApi,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -71,9 +70,7 @@ import {
   DisplayAction,
   DistinctCriteriaPairValue,
   FilterOnDataChangeOptions,
-  LeafExpressionOperator,
 } from '../PredefinedConfig/Common/Enums';
-import { ObjectFactory } from '../Utilities/ObjectFactory';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -83,7 +80,7 @@ import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
-import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
+import { LoggingHelper, LogAdaptableError } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
@@ -115,13 +112,12 @@ import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
-import { TypeUuid } from '../PredefinedConfig/Uuid';
+import { TypeUuid, createUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { GridRow, RowInfo } from '../PredefinedConfig/Selection/GridRow';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
-import { IHomeStrategy } from '../Strategy/Interface/IHomeStrategy';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import AdaptableWizardView from '../View/AdaptableWizardView';
@@ -155,6 +151,7 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modules';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
+import { UserFunction } from '../AdaptableOptions/UserFunctions';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -189,6 +186,8 @@ const forEachColumn = (
     }
   });
 };
+
+const adaptableInstances: { [key: string]: Adaptable } = {};
 
 export class Adaptable implements IAdaptable {
   public api: AdaptableApi;
@@ -260,6 +259,9 @@ export class Adaptable implements IAdaptable {
   private emitter: Emitter;
 
   private _currentEditor: ICellEditor | undefined;
+  private _id: string;
+
+  private rowListeners: { [key: string]: (event: any) => void };
 
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
@@ -326,6 +328,21 @@ export class Adaptable implements IAdaptable {
     return ab.api;
   }
 
+  private static collectInstance(adaptable: Adaptable) {
+    adaptable._id = adaptable.adaptableOptions.adaptableId || createUuid();
+    adaptableInstances[adaptable._id] = adaptable;
+  }
+
+  private static forEachAdaptable(fn: (adaptable: Adaptable) => void) {
+    Object.keys(adaptableInstances).forEach((key: string) => {
+      fn(adaptableInstances[key]);
+    });
+  }
+
+  private static dismissInstance(adaptable: Adaptable) {
+    delete adaptableInstances[adaptable._id];
+  }
+
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
   constructor(
@@ -347,6 +364,8 @@ export class Adaptable implements IAdaptable {
     this.renderGrid = renderGrid;
     // we create AdaptableOptions by merging the values provided by the user with the defaults (where no value has been set)
     this.adaptableOptions = AdaptableHelper.assignadaptableOptions(adaptableOptions);
+
+    Adaptable.collectInstance(this);
     AdaptableHelper.CheckadaptableOptions(this.adaptableOptions);
     this.runtimeConfig = runtimeConfig;
 
@@ -901,7 +920,10 @@ export class Adaptable implements IAdaptable {
   }
 
   public getPrimaryKeyValueFromRowNode(rowNode: RowNode): any {
-    return this.gridOptions.api!.getValue(this.adaptableOptions!.primaryKey, rowNode);
+    let gridApi: GridApi = this.getGridOptionsApi();
+    if (gridApi) {
+      return gridApi.getValue(this.adaptableOptions!.primaryKey, rowNode);
+    }
   }
 
   public gridHasCurrentEditValue(): boolean {
@@ -965,7 +987,7 @@ export class Adaptable implements IAdaptable {
 
     if (selected) {
       // we iterate for each ranges
-      selected.forEach((rangeSelection, index) => {
+      selected.forEach(rangeSelection => {
         let shouldIncludeRange: boolean = true;
         let isStartRowPin: boolean = rangeSelection.startRow.rowPinned != null;
         let isEndRowPin: boolean = rangeSelection.endRow.rowPinned != null;
@@ -1043,6 +1065,7 @@ export class Adaptable implements IAdaptable {
         const gridRow: GridRow = {
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(node),
           rowData: node.data,
+          rowNode: null,
           rowInfo,
         };
         selectedRows.push(gridRow);
@@ -1514,6 +1537,19 @@ export class Adaptable implements IAdaptable {
     });
   }
 
+  public selectNodes(rowNodes: any[]): void {
+    if (ArrayExtensions.IsNotNullOrEmpty(rowNodes)) {
+      rowNodes.forEach(node => this.selectNode(node));
+    }
+  }
+  public selectNode(rowNode: any): void {
+    if (!rowNode) {
+      LoggingHelper.LogAdaptableError('No node to select');
+      return;
+    }
+    rowNode.setSelected(true, true);
+  }
+
   public redraw() {
     this.gridOptions.api!.redrawRows();
     this.gridOptions.api!.refreshHeader();
@@ -1545,10 +1581,6 @@ export class Adaptable implements IAdaptable {
     this.jumpToRow(rowNode);
     this.jumpToColumn(columnId);
   }
-
-  private forEachColumn = (fn: (columnDef: ColDef) => any) => {
-    forEachColumn(this.getColumnDefs(), fn);
-  };
 
   /**
    * This creates a clone of the current column definitions. If config.removeEmpty is true, will also remove empty column groups
@@ -1703,12 +1735,13 @@ export class Adaptable implements IAdaptable {
       headerName: calculatedColumn.ColumnId,
       colId: calculatedColumn.ColumnId,
       hide: true,
-      enableValue: true, // makes the column 'summable'
+      enableValue: dataType == DataType.Number, // makes the column 'summable'
       editable: false,
       filter: true,
       resizable: true,
-      enableRowGroup: true, // makes the column 'groupable'
+      enableRowGroup: dataType == DataType.Number, // makes the column 'groupable'
       sortable: true,
+      enablePivot: dataType == DataType.String,
       type: agGridDataType,
       valueGetter: (params: ValueGetterParams) =>
         Helper.RoundValueIfNumeric(
@@ -1864,10 +1897,20 @@ export class Adaptable implements IAdaptable {
     return rowNode;
   }
 
-  // need to destroy more than just this...
-  // TODO;  manage destruction properly
-  destroy() {
+  destroy(config?: { unmount: boolean }) {
+    if (this.gridOptions && this.gridOptions.api) {
+      this.gridOptions.api.destroy();
+    }
+
+    this.rowListeners = null;
+    this.emitter.clearListeners();
+    this.emitter = null;
+    Adaptable.dismissInstance(this);
+
     const abContainerElement = this.getadaptableContainerElement();
+    if (config && !config.unmount) {
+      return;
+    }
     if (abContainerElement != null) {
       ReactDOM.unmountComponentAtNode(abContainerElement);
     }
@@ -2214,7 +2257,18 @@ export class Adaptable implements IAdaptable {
             this.api.gridApi.getColumns()
           );
           if (abColumn && abColumn.DataType == DataType.Number) {
-            params.node.setDataValue(column.colId, Number(params.value));
+            let shouldUpdateNumberEdit: boolean = true;
+            if (ArrayExtensions.IsNotNullOrEmpty(this.api.shortcutApi.getAllShortcut())) {
+              const lastShortCut: GridCell | undefined = this.api.internalApi.getSystemState()
+                .LastAppliedShortCut;
+              if (lastShortCut) {
+                shouldUpdateNumberEdit = false;
+              }
+            }
+
+            if (shouldUpdateNumberEdit) {
+              params.node.setDataValue(column.colId, Number(params.value));
+            }
           }
         }
         // if they have set to run filter after edit then lets do it
@@ -2275,14 +2329,15 @@ export class Adaptable implements IAdaptable {
       this.checkColumnsDataTypeSet();
     });
 
-    const rowListeners: { [key: string]: (event: any) => void } = {
-      dataChanged: (event: any) =>
+    this.rowListeners = {
+      dataChanged: (event: any) => {
         this.onRowDataChanged({
           //  myevent: event,
           rowNode: event.node,
           oldData: event.oldData,
           newData: event.newData,
-        }),
+        });
+      },
     };
 
     /**
@@ -2292,11 +2347,28 @@ export class Adaptable implements IAdaptable {
      *
      */
     RowNodeProto.dispatchLocalEvent = function(event: any) {
+      const node = event.node;
+
       const result = RowNode_dispatchLocalEvent.apply(this, arguments);
-      const fn = rowListeners[event.type];
-      if (fn) {
-        fn(event);
+
+      // we don't know from which instance of aggrid this is coming,
+      // as this fn is shared by all instances
+
+      if (node) {
+        Adaptable.forEachAdaptable(adaptable => {
+          if (node.gridApi !== adaptable.gridOptions.api) {
+            // the event is coming from another aggrid instance
+            // so IGNORE IT
+            return;
+          }
+          // we're on the correct instance, so do this
+          const fn = adaptable.rowListeners ? adaptable.rowListeners[event.type] : null;
+          if (fn) {
+            fn(event);
+          }
+        });
       }
+
       return result;
     };
 
@@ -2543,18 +2615,24 @@ export class Adaptable implements IAdaptable {
       }
       let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
 
-      if (typeof userColumnMenuItems === 'function') {
-        userColumnMenuItems = userColumnMenuItems(menuInfo);
-      }
-
       if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-        userColumnMenuItems.forEach((userMenuItem: UserMenuItem) => {
-          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-            userMenuItem,
-            menuInfo
-          );
-          colMenuItems.push(menuItem);
-        });
+        userColumnMenuItems
+          .filter((userMenuItem: UserMenuItem) => {
+            return userMenuItem.UserMenuItemShowPredicate
+              ? this.getUserFunctionHandler(
+                  'UserMenuItemShowPredicate',
+                  userMenuItem.UserMenuItemShowPredicate
+                )(menuInfo)
+              : true;
+          })
+          .forEach((userMenuItem: UserMenuItem) => {
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+              userMenuItem,
+              menuInfo,
+              'columnMenu'
+            );
+            colMenuItems.push(menuItem);
+          });
       }
 
       return colMenuItems;
@@ -2622,23 +2700,28 @@ export class Adaptable implements IAdaptable {
             }
           }
 
-          // here we add any User defined Context Menu Items
-          let state: any = this.api.userInterfaceApi.getUserInterfaceState();
           let userContextMenuItems = this.api.userInterfaceApi.getUserInterfaceState()
             .ContextMenuItems;
-          if (typeof userContextMenuItems === 'function') {
-            userContextMenuItems = userContextMenuItems(menuInfo);
-          }
 
           if (ArrayExtensions.IsNotNullOrEmpty(userContextMenuItems)) {
             contextMenuItems.push('separator');
-            userContextMenuItems!.forEach((userMenuItem: UserMenuItem) => {
-              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-                userMenuItem,
-                menuInfo
-              );
-              contextMenuItems.push(menuItem);
-            });
+            userContextMenuItems
+              .filter((userMenuItem: UserMenuItem) => {
+                return userMenuItem.UserMenuItemShowPredicate
+                  ? this.getUserFunctionHandler(
+                      'UserMenuItemShowPredicate',
+                      userMenuItem.UserMenuItemShowPredicate
+                    )(menuInfo)
+                  : true;
+              })
+              .forEach((userMenuItem: UserMenuItem) => {
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                  userMenuItem,
+                  menuInfo,
+                  'contextMenu'
+                );
+                contextMenuItems.push(menuItem);
+              });
           }
         }
       }
@@ -2965,6 +3048,10 @@ export class Adaptable implements IAdaptable {
     return this.gridOptions.columnApi!.getAllColumns().filter(c => c.isVisible()).length;
   }
 
+  public selectColumns(columnIds: string[]): void {
+    columnIds.forEach(colId => this.selectColumn(colId));
+  }
+
   public selectColumn(columnId: string) {
     this.gridOptions.api!.clearRangeSelection();
     const cellRangeParams: CellRangeParams = {
@@ -3255,6 +3342,16 @@ export class Adaptable implements IAdaptable {
     return false;
   }
 
+  public isGroupable(): boolean {
+    const isTreeLayout: boolean = this.api.internalApi.isGridInTreeMode();
+    return !isTreeLayout;
+  }
+
+  public isPivotable(): boolean {
+    const isTreeLayout: boolean = this.api.internalApi.isGridInTreeMode();
+    return !isTreeLayout;
+  }
+
   private isQuickFilterActive(): boolean {
     return (
       this.gridOptions.floatingFilter === true &&
@@ -3438,6 +3535,10 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.safeSetColDefs(colDefs);
     }
 
+    if (this.gridOptions.treeData && this.gridOptions.treeData == true) {
+      this.api.internalApi.setTreeModeOn();
+    }
+
     // sometimes the header row looks wrong when using quick filter so to be sure...
     if (this.isQuickFilterActive()) {
       this.api.internalApi.showQuickFilterBar();
@@ -3473,10 +3574,29 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
   private getState(): AdaptableState {
     return this.AdaptableStore.TheStore.getState();
   }
-}
 
-//export const init = (adaptableOptions: AdaptableOptions): AdaptableApi =>
-//  Adaptable.init(adaptableOptions);
+  private getGridOptionsApi(): GridApi {
+    if (!this.gridOptions.api) {
+      LogAdaptableError(
+        'There is a problem with your instance of ag-Grid - it has no gridApi object.  Please contact Support.'
+      );
+      return;
+    }
+    return this.gridOptions.api!;
+  }
+
+  getUserFunctionHandler<T extends UserFunction['type']>(
+    type: T,
+    name: string
+  ): Extract<UserFunction, { type: T }>['handler'] | null {
+    for (let uf of this.adaptableOptions.userFunctions) {
+      if (uf.type === type && uf.name === name) {
+        return uf.handler as any;
+      }
+    }
+    return null;
+  }
+}
 
 export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
   private init: AdaptableNoCodeWizardInitFn;

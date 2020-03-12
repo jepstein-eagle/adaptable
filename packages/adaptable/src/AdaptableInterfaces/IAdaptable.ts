@@ -23,7 +23,6 @@ import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
-
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
@@ -33,6 +32,7 @@ import { IStrategyService } from '../Utilities/Services/StrategyService';
 import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
+import { UserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  *  The only interface for Adaptable
@@ -158,6 +158,7 @@ export interface IAdaptable {
   // cell / column selection
   getActiveCell(): GridCell;
   selectColumn(columnId: string): void;
+  selectColumns(columnIds: string[]): void;
 
   // column related
   setColumnIntoStore(): void;
@@ -206,6 +207,8 @@ export interface IAdaptable {
   forAllRowNodesDo(func: (rowNode: any) => any): void;
   forAllVisibleRowNodesDo(func: (rowNode: any) => any): void;
   isGroupRowNode(rowNode: any): boolean;
+  selectNodes(rowNodes: any[]): void;
+  selectNode(rowNode: any): void;
 
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
@@ -267,6 +270,8 @@ export interface IAdaptable {
 
   // vendor grid related
   isSelectable(): boolean;
+  isGroupable(): boolean;
+  isPivotable(): boolean;
 
   // quick filter
   showQuickFilter(): void;
@@ -276,4 +281,22 @@ export interface IAdaptable {
   applyAdaptableTheme(theme: AdaptableTheme | string): void;
   setUpRowStyles(): void; // not sure about this...
   clearRowStyles(): void; // not sure about this...
+
+  // User Functions
+  // there is a bug in Typescript
+  // duplicating the definition fixes the issue for now
+  // https://github.com/Microsoft/TypeScript/issues/30071
+  getUserFunctionHandler<T extends UserFunction['type']>(
+    type: T,
+    name: string
+  ): Extract<UserFunction, { type: T }>['handler'] | null;
+  getUserFunctionHandler<T extends UserFunction['type']>(
+    type: T,
+    name: string
+  ): Extract<UserFunction, { type: T }>['handler'] | null;
+
+  /**
+   * called when you want to destroy the instance & cleanup resources
+   */
+  destroy(): void;
 }

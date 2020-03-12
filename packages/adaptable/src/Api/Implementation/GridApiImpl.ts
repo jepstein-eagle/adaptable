@@ -6,7 +6,6 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableOptions } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
@@ -136,5 +135,32 @@ export class GridApiImpl extends ApiBase implements GridApi {
   public sortAdaptable(columnSorts: ColumnSort[]): void {
     this.adaptable.setColumnSort(columnSorts);
     this.adaptable.api.internalApi.setColumnSorts(columnSorts);
+  }
+
+  public selectNodes(rowNodes: any[]): void {
+    this.adaptable.selectNodes(rowNodes);
+  }
+
+  public selectNode(rowNode: any): void {
+    this.adaptable.selectNode(rowNode);
+  }
+
+  public selectColumn(columnId: string): void {
+    this.adaptable.selectColumn(columnId);
+  }
+
+  public selectColumns(columnIds: string[]): void {
+    this.adaptable.selectColumns(columnIds);
+  }
+
+  public getFirstRowNode(): any {
+    return this.adaptable.getFirstRowNode();
+  }
+
+  public getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[] {
+    return this.adaptable.getRowNodesForPrimaryKeys(primaryKeyValues);
+  }
+  public getRowNodeForPrimaryKey(primaryKeyValue: any): any {
+    return this.adaptable.getRowNodeForPrimaryKey(primaryKeyValue);
   }
 }
