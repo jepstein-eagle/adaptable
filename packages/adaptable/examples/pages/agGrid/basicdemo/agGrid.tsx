@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
-
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-
 import { GridOptions } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
@@ -39,31 +37,17 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: {
+      Dashboard: {
+        VisibleToolbars: ['AdvancedSearch', 'CellSummary'],
+        Revision: 3,
+      },
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],
       },
       QuickSearch: {
-        Revision: 11,
-        QuickSearchText: 'b',
-      },
-      Entitlements: {
-        Revision: 2,
-        DefaultAccessLevel: 'Hidden',
-        FunctionEntitlements: [
-          {
-            FunctionName: 'QuickSearch',
-            AccessLevel: 'Full',
-          },
-          {
-            FunctionName: 'AdvancedSearch',
-            AccessLevel: 'Full',
-          },
-          {
-            FunctionName: 'Layout',
-            AccessLevel: 'ReadOnly',
-          },
-        ],
+        Revision: 14,
+        //  QuickSearchText: '',
       },
     },
   };

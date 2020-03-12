@@ -102,7 +102,7 @@ class NoCodePlugin extends AdaptablePlugin {
         helpText: this.options.headerMessage,
         defaultActionMessage:
           this.options.actionMessage ||
-          'Click here to select an Excel or JSON file to load — or drag it here',
+          'Click to select an Excel or JSON file to load — or drag it here',
         dragOverActionMessage: this.options.dropActionMessage,
         loadingMessage: this.options.loadingMessage,
         readFile: (file: File): Promise<any> => {
