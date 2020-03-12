@@ -8,8 +8,6 @@ import { EntitlementLookUpFunction } from '../PredefinedConfig/EntitlementState'
 import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
 import {
   UserMenuItemClickedFunction,
-  UserMenuItemClickedFunction,
-  UserMenuItemShowPredicate,
   UserMenuItemShowPredicate,
 } from '../PredefinedConfig/UserInterfaceState';
 
