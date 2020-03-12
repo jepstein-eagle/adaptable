@@ -35,11 +35,11 @@ import {
  *  | `CustomSortComparerFunction`        | A Comparer function for running bespoke Custom Sorts |
  *  | `CellSummaryOperationFunction`      | Bespoke Cell Summaries 	                             |
  *  | `ActionColumnRenderFunction`        | Render an Action Column in a non-standard way        |
- *  | `ActionColumnShouldRenderPredicate` | Whether to render an Acton Column	                   |
+ *  | `ActionColumnShouldRenderPredicate` | Whether or not to render an Acton Column	                   |
  *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	 |
  *  | `NamedFilterPredicate`              | Runs each time a Named Filter is applied          	 |
  *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	 |
- *  | `UserMenuItemShowPredicate`         | Whether to show the User Menu item                 	 |
+ *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item                 	 |
  *
  */
 export type UserFunction =
