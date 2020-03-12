@@ -42,42 +42,42 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'ColumnMenuItemClickedFunction',
         name: 'minimizeDashboard',
         handler() {
           adaptableApi.dashboardApi.minimise();
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'ColumnMenuItemClickedFunction',
         name: 'setError',
         handler() {
           adaptableApi.systemStatusApi.setErrorSystemStatus('System Down');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'ColumnMenuItemClickedFunction',
         name: 'setWarning',
         handler() {
           adaptableApi.systemStatusApi.setWarningSystemStatus('System Slow');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'ColumnMenuItemClickedFunction',
         name: 'setSuccess',
         handler() {
           adaptableApi.systemStatusApi.setSuccessSystemStatus('System Fine');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemClickedFunction',
+        type: 'ColumnMenuItemClickedFunction',
         name: 'setInfo',
         handler() {
           adaptableApi.systemStatusApi.setInfoSystemStatus('Demos working fine');
         },
       },
       {
-        type: 'UserInterface.ColumnMenuItemShowPredicate',
+        type: 'ColumnMenuItemShowPredicate',
         name: 'isSortable',
         handler(menuInfo) {
           return menuInfo.Column.Sortable;

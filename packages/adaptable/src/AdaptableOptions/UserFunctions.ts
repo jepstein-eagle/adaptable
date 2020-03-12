@@ -1,14 +1,9 @@
 import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { SelectedCellInfo, AdaptableFunctionName, AccessLevel, MenuInfo } from '../types';
 import {
-  ActionColumnRenderParams,
   ActionColumnRenderFunction,
   ActionColumnShouldRenderPredicate,
 } from '../PredefinedConfig/ActionColumnState';
-
-/**
- * Header to text hopefully to appear at the top...
- */
 
 /**
  * The actual implementations of functions that users reference in Predefined Config.
@@ -29,23 +24,23 @@ import {
  *
  * - `CustomSort.ComparerFunction`
  *
- * - `CellSummary.OperationFunction`
+ * - `CellSummaryOperationFunction`
  *
  * - `ActionColumn.RenderFunction`
  *
  * - `ActionColumn.ShouldRenderPredicate`
  *
- * - `Entitlement.LookUpFunction`
+ * - `EntitlementLookUpFunction`
  *
  * - `NamedFilter.FilterPredicate`
  *
- * - `UserInterface.ContextMenuItemClickedFunction`
+ * - `ContextMenuItemClickedFunction`
  *
- * - `UserInterface.ColumnMenuItemClickedFunction`
+ * - `ColumnMenuItemClickedFunction`
  *
- * - `UserInterface.ContextMenuItemShowPredicate`
+ * - `ContextMenuItemShowPredicate`
  *
- * - `UserInterface.ColumnMenuItemShowPredicate`
+ * - `ColumnMenuItemShowPredicate`
  *
  *
  */
@@ -55,19 +50,11 @@ export type UserFunction =
   | ActionColumnRenderFunction
   | ActionColumnShouldRenderPredicate
   | EntitlementLookUpFunction
-  | NamedFilterFilterPredicate
-  | UserInterfaceContextMenuItemClickedFunction
-  | UserInterfaceColumnMenuItemClickedFunction
-  | {
-      type: 'UserInterface.ContextMenuItemShowPredicate';
-      name: string;
-      handler: (menuInfo: MenuInfo) => boolean;
-    }
-  | {
-      type: 'UserInterface.ColumnMenuItemShowPredicate';
-      name: string;
-      handler: (menuInfo: MenuInfo) => boolean;
-    };
+  | NamedFilterPredicate
+  | ContextMenuItemClickedFunction
+  | ColumnMenuItemClickedFunction
+  | ContextMenuItemShowPredicate
+  | ColumnMenuItemShowPredicate;
 
 /**
  * Type which wraps an array of `UserFunction`
@@ -75,14 +62,8 @@ export type UserFunction =
  */
 export type UserFunctions = UserFunction[];
 
-export interface CustomSortCompareFunction extends BaseUserFunction {
-  type: 'CustomSort.ComparerFunction';
-  name: string;
-  handler: AdaptableComparerFunction;
-}
-
 export interface CellSummaryOperationFunction extends BaseUserFunction {
-  type: 'CellSummary.OperationFunction';
+  type: 'CellSummaryOperationFunction';
   name: string;
   handler: (operationParam: {
     selectedCellInfo: SelectedCellInfo;
@@ -94,7 +75,7 @@ export interface CellSummaryOperationFunction extends BaseUserFunction {
 }
 
 export interface EntitlementLookUpFunction extends BaseUserFunction {
-  type: 'Entitlement.LookUpFunction';
+  type: 'EntitlementLookUpFunction';
   name: string;
   handler: (
     functionName: AdaptableFunctionName,
@@ -102,28 +83,28 @@ export interface EntitlementLookUpFunction extends BaseUserFunction {
     adaptableId: string
   ) => AccessLevel | undefined;
 }
-export interface NamedFilterFilterPredicate extends BaseUserFunction {
-  type: 'NamedFilter.FilterPredicate';
+export interface NamedFilterPredicate extends BaseUserFunction {
+  type: 'NamedFilterPredicate';
   name: string;
   handler: (record: any, columnId: string, cellValue: any) => boolean;
 }
-export interface UserInterfaceContextMenuItemClickedFunction extends BaseUserFunction {
-  type: 'UserInterface.ContextMenuItemClickedFunction';
+export interface ContextMenuItemClickedFunction extends BaseUserFunction {
+  type: 'ContextMenuItemClickedFunction';
   name: string;
   handler: (menuInfo: MenuInfo) => void;
 }
-export interface UserInterfaceColumnMenuItemClickedFunction extends BaseUserFunction {
-  type: 'UserInterface.ColumnMenuItemClickedFunction';
+export interface ColumnMenuItemClickedFunction extends BaseUserFunction {
+  type: 'ColumnMenuItemClickedFunction';
   name: string;
   handler: (menuInfo: MenuInfo) => void;
 }
-export interface UserInterfaceContextMenuItemShowPredicate extends BaseUserFunction {
-  type: 'UserInterface.ContextMenuItemShowPredicate';
+export interface ContextMenuItemShowPredicate extends BaseUserFunction {
+  type: 'ContextMenuItemShowPredicate';
   name: string;
   handler: (menuInfo: MenuInfo) => boolean;
 }
-export interface UserInterfaceColumnMenuItemShowPredicate extends BaseUserFunction {
-  type: 'UserInterface.ColumnMenuItemShowPredicate';
+export interface ColumnMenuItemShowPredicate extends BaseUserFunction {
+  type: 'ColumnMenuItemShowPredicate';
   name: string;
   handler: (menuInfo: MenuInfo) => void;
 }
@@ -133,16 +114,16 @@ export interface UserInterfaceColumnMenuItemShowPredicate extends BaseUserFuncti
  */
 export interface BaseUserFunction {
   type:
-    | 'CustomSort.ComparerFunction'
-    | 'CellSummary.OperationFunction'
+    | 'CustomSortComparerFunction'
+    | 'CellSummaryOperationFunction'
     | 'ActionColumn.RenderFunction'
     | 'ActionColumn.ShouldRenderPredicate'
-    | 'Entitlement.LookUpFunction'
-    | 'NamedFilter.FilterPredicate'
-    | 'UserInterface.ContextMenuItemClickedFunction'
-    | 'UserInterface.ColumnMenuItemClickedFunction'
-    | 'UserInterface.ContextMenuItemShowPredicate'
-    | 'UserInterface.ColumnMenuItemShowPredicate';
+    | 'EntitlementLookUpFunction'
+    | 'NamedFilterPredicate'
+    | 'ContextMenuItemClickedFunction'
+    | 'ColumnMenuItemClickedFunction'
+    | 'ContextMenuItemShowPredicate'
+    | 'ColumnMenuItemShowPredicate';
   name: string;
   handler: any;
 }

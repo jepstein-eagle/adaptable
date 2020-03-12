@@ -35,7 +35,7 @@ export class EntitlementsApiImpl extends ApiBase implements EntitlementsApi {
     let entitlementLookUpFunction = this.getEntitlementState().EntitlementLookUpFunction;
     if (entitlementLookUpFunction) {
       const fn = this.adaptable.getUserFunctionHandler(
-        'Entitlement.LookUpFunction',
+        'EntitlementLookUpFunction',
         entitlementLookUpFunction
       );
       let accessLevel: AccessLevel = fn(

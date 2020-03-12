@@ -11,7 +11,6 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
-
 import Adaptable from '../../../../agGrid';
 import { ApplicationDataEntry } from '../../../../src/PredefinedConfig/ApplicationState';
 
@@ -36,7 +35,7 @@ function InitAdaptableDemo() {
     userFunctions: [
       {
         name: 'country',
-        type: 'CustomSort.ComparerFunction',
+        type: 'CustomSortComparerFunction',
         handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
           if (valueA === 'United Kingdom') {
             return -1;
@@ -49,7 +48,7 @@ function InitAdaptableDemo() {
       },
       {
         name: 'currency',
-        type: 'CustomSort.ComparerFunction',
+        type: 'CustomSortComparerFunction',
         handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
           if (valueA === 'USD') {
             return -1;

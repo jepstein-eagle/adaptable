@@ -30,14 +30,14 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'NamedFilter.FilterPredicate',
+        type: 'NamedFilterPredicate',
         name: 'usdTrades',
         handler(_record, _columnId, cellValue) {
           return cellValue === 'USD';
         },
       },
       {
-        type: 'NamedFilter.FilterPredicate',
+        type: 'NamedFilterPredicate',
         name: 'high',
         handler(_record, _columnId, cellValue) {
           let currency: string = _record.data.currency;
@@ -51,7 +51,7 @@ function InitAdaptableDemo() {
         },
       },
       {
-        type: 'NamedFilter.FilterPredicate',
+        type: 'NamedFilterPredicate',
         name: 'bizYear',
         handler(_record, _columnId, cellValue) {
           let dateToTest = cellValue as Date;

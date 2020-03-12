@@ -46,7 +46,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'CellSummary.OperationFunction',
+        type: 'CellSummaryOperationFunction',
         name: 'oldest',
         handler(operationParam) {
           let dateValues: Date[] = [];
@@ -68,7 +68,7 @@ function InitAdaptableDemo() {
         },
       },
       {
-        type: 'CellSummary.OperationFunction',
+        type: 'CellSummaryOperationFunction',
         name: 'fiveBiggest',
         handler(operationParam) {
           if (operationParam.numericValues.length >= 5) {

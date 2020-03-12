@@ -42,7 +42,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
-        type: 'UserInterface.ContextMenuItemClickedFunction',
+        type: 'ContextMenuItemClickedFunction',
         name: 'sortColumn',
         handler(menuInfo) {
           let customSort: ColumnSort = {
@@ -53,21 +53,21 @@ function InitAdaptableDemo() {
         },
       },
       {
-        type: 'UserInterface.ContextMenuItemClickedFunction',
+        type: 'ContextMenuItemClickedFunction',
         name: 'announceGrouping',
         handler() {
           alert('this is a grouped row');
         },
       },
       {
-        type: 'UserInterface.ContextMenuItemShowPredicate',
+        type: 'ContextMenuItemShowPredicate',
         name: 'isSortable',
         handler(menuInfo) {
           return menuInfo.Column.Sortable;
         },
       },
       {
-        type: 'UserInterface.ContextMenuItemShowPredicate',
+        type: 'ContextMenuItemShowPredicate',
         name: 'isGrouped',
         handler(menuInfo) {
           return menuInfo.IsGroupedNode;
