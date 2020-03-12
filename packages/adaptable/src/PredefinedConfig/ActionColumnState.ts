@@ -11,6 +11,8 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *
+ *  --------------
+ *
  * **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
@@ -43,6 +45,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *  },
  * } as PredefinedConfig;
  *
+ *  // Adaptable Options
  * const adaptableOptions: AdaptableOptions = {
  * ......
  *  userFunctions: [
