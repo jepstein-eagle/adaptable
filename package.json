@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptable-monorepo",
-  "version": "6.0.24",
+  "version": "6.0.25",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
