@@ -11,11 +11,10 @@ export type InputProps = HTMLProps<HTMLInputElement> & {
   type?: string;
   disabled?: boolean;
   list?: any;
-  inputRef?: React.RefObject<HTMLInputElement>;
 } & BoxProps;
 
 const Input = (props: InputProps) => {
-  const { disabled, className, inputRef, ...inputProps } = props;
+  const { disabled, className, ...inputProps } = props;
 
   let type = 'text';
 
@@ -31,7 +30,6 @@ const Input = (props: InputProps) => {
     <Box
       as="input"
       {...inputProps}
-      ref={inputRef}
       type={type}
       disabled={disabled}
       className={join(
