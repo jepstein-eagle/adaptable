@@ -251,6 +251,7 @@ const initialDashboardState: DashboardState = {
     'CellSummary',
     'Chart',
     'ColumnFilter',
+    'DataSource',
     'Export',
     'Glue42',
     'IPushPull',

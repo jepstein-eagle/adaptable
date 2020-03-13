@@ -30,8 +30,10 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Basic Demo',
-
+    adaptableId: 'Basic Demo New',
+    userInterfaceOptions: {
+      showAdaptableToolPanel: true,
+    },
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

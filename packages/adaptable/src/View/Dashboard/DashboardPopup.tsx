@@ -22,25 +22,6 @@ import {
 } from '../../PredefinedConfig/Common/Types';
 import DashboardManagerUI from '../../components/Dashboard/DashboardManager';
 
-export const SystemToolbars: AdaptableFunctionName[] = [
-  'AdvancedSearch',
-  'Alert',
-  'BulkUpdate',
-  'CellSummary',
-  'Chart',
-  'ColumnFilter',
-  'Dashboard',
-  'DataSource',
-  'Export',
-  'Glue42',
-  'IPushPull',
-  'Layout',
-  'QuickSearch',
-  'SmartEdit',
-  'SystemStatus',
-  'Theme',
-];
-
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
   GridState: GridState;
@@ -92,7 +73,9 @@ class DashboardPopupComponent extends React.Component<
       }
     });
 
-    let systemToolbars = SystemToolbars.filter(at => this.isNotHiddenStrategy(at)).map(at => ({
+    let systemToolbars = this.props.DashboardState.AvailableToolbars.filter(at =>
+      this.isNotHiddenStrategy(at)
+    ).map(at => ({
       Id: at,
       Title: StrategyConstants.getFriendlyNameForStrategyId(at),
     }));

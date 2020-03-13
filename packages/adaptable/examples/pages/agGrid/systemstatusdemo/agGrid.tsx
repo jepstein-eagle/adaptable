@@ -112,8 +112,8 @@ let demoConfig: PredefinedConfig = {
   },
   SystemStatus: {
     ShowAlert: false,
-    //   DefaultStatusMessage: 'Server is running fine.',
-    //   DefaultStatusType: 'Info',
+    DefaultStatusMessage: 'Server is running fine.',
+    DefaultStatusType: 'Info',
     StatusMessage: 'Please check you have sent End of Day report.',
     StatusType: 'Warning',
   },
