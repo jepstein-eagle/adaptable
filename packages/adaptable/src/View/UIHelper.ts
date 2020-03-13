@@ -320,11 +320,10 @@ export function getStyleForStatusColour(statusColour: StatusColour): CSSProperti
 
 export function getStyleForMessageType(messageType: MessageType): CSSProperties {
   let result: any;
-
   switch (messageType) {
     case MessageType.Info:
       result = {
-        fill: 'inherit',
+        fill: 'var(--ab-color-info)',
       };
       break;
     case MessageType.Success:

@@ -12,6 +12,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -22,7 +23,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'System Status Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 
@@ -108,8 +112,8 @@ let demoConfig: PredefinedConfig = {
   },
   SystemStatus: {
     ShowAlert: false,
-    DefaultStatusMessage: 'Server is running fine.',
-    DefaultStatusType: 'Info',
+    //   DefaultStatusMessage: 'Server is running fine.',
+    //   DefaultStatusType: 'Info',
     StatusMessage: 'Please check you have sent End of Day report.',
     StatusType: 'Warning',
   },
