@@ -41,6 +41,7 @@ const DASHBOARD_SET_IS_COLLAPSED = 'DASHBOARD_SET_IS_COLLAPSED';
 const DASHBOARD_SET_IS_FLOATING = 'DASHBOARD_SET_IS_FLOATING';
 const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
 const DASHBOARD_SET_TABS = 'DASHBOARD_SET_TABS';
+const DASHBOARD_CREATE_DEFAULT_TAB = 'DASHBOARD_CREATE_DEFAULT_TAB';
 
 export interface DashboardSetAvailableToolbarsAction extends Redux.Action {
   toolbars: AdaptableDashboardToolbars;
@@ -113,6 +114,8 @@ export interface DashboardSetFloatingPositionAction extends Redux.Action {
 export interface DashboardSetTabsAction extends Redux.Action {
   Tabs: DashboardTab[];
 }
+
+export interface DashboardCreateDefaultTabAction extends Redux.Action {}
 
 export const DashboardSetAvailableToolbars = (
   toolbars: AdaptableDashboardToolbars
@@ -236,6 +239,10 @@ export const DashboardSetTabs = (Tabs: DashboardTab[]): DashboardSetTabsAction =
   Tabs,
 });
 
+export const DashboardCreateDefaultTab = (): DashboardCreateDefaultTabAction => ({
+  type: DASHBOARD_CREATE_DEFAULT_TAB,
+});
+
 const initialDashboardState: DashboardState = {
   AvailableToolbars: [
     'AdvancedSearch',
@@ -254,10 +261,7 @@ const initialDashboardState: DashboardState = {
     'Theme',
   ],
   VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
-  Tabs: [
-    { Name: 'Edit', Toolbars: ['BulkUpdate', 'SmartEdit'] },
-    { Name: 'Search', Toolbars: ['QuickSearch', 'AdvancedSearch', 'ColumnFilter', 'DataSource'] },
-  ],
+  Tabs: [],
   ActiveTab: 0,
   IsCollapsed: false,
   IsFloating: false,
@@ -398,6 +402,13 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_TABS: {
       const { Tabs } = action as DashboardSetTabsAction;
       return { ...state, Tabs };
+    }
+
+    case DASHBOARD_CREATE_DEFAULT_TAB: {
+      return {
+        ...state,
+        Tabs: [{ Name: 'Toolbars', Toolbars: state.VisibleToolbars }],
+      };
     }
 
     default:

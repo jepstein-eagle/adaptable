@@ -216,7 +216,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             <SimpleButton
               key={menuItem.Label}
               variant={menuItem.FunctionName === 'SystemStatus' ? 'outlined' : 'text'}
-              tone="accent"
+              tone={menuItem.FunctionName === 'SystemStatus' ? 'neutral' : 'accent'}
               className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               icon={menuItem.Icon}
               tooltip={menuItem.Label}
@@ -225,7 +225,10 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
               AccessLevel={'Full'}
               style={
                 menuItem.FunctionName === 'SystemStatus'
-                  ? UIHelper.getStyleForMessageType(this.props.StatusType as MessageType)
+                  ? {
+                      ...UIHelper.getStyleForMessageType(this.props.StatusType as MessageType),
+                      border: 0,
+                    }
                   : {}
               }
             />

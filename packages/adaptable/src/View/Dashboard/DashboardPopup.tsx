@@ -99,7 +99,7 @@ class DashboardPopupComponent extends React.Component<
 
     let customToolbars = this.props.DashboardState.CustomToolbars.map(ct => ({
       Id: ct.Name,
-      Title: ct.Title ?? ct.Name,
+      Title: ct.Title ? ct.Title : ct.Name,
     }));
 
     const tabs = this.props.DashboardState.Tabs.map(tab => {

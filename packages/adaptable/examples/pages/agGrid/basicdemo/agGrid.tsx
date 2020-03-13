@@ -39,6 +39,10 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: {
+      Dashboard: {
+        Revision: 2,
+        VisibleToolbars: ['QuickSearch'],
+      },
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],

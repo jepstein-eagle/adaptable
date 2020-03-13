@@ -75,9 +75,9 @@ function TabItem({
           style={{
             ...provided.draggableProps.style,
             boxSizing: 'border-box',
-            border: '1px solid #ccc',
-            borderRadius: 4,
-            marginRight: 6,
+            border: '1px solid var(--ab-color-primarydark)',
+            borderRadius: 'var(--ab__border-radius)',
+            marginRight: 'var(--ab-space-2)',
             width: 160,
             display: 'flex',
             flexDirection: 'column',
@@ -88,8 +88,8 @@ function TabItem({
             style={{
               display: 'flex',
               alignItems: 'center',
-              padding: 4,
-              borderBottom: '1px solid #ccc',
+              padding: 'var(--ab-space-1)',
+              borderBottom: '1px solid var(--ab-color-primarydark)',
             }}
           >
             <div {...provided.dragHandleProps} style={{}}>
@@ -99,7 +99,14 @@ function TabItem({
             <input
               type="text"
               value={tab.Name}
-              style={{ flex: 1, width: '100%', border: 'none', marginLeft: 4, marginRight: 4 }}
+              style={{
+                flex: 1,
+                width: '100%',
+                border: 'none',
+                marginLeft: 'var(--ab-space-1)',
+                marginRight: 'var(--ab-space-1)',
+                alignSelf: 'stretch',
+              }}
               onChange={event => {
                 onChangeTabName(event.target.value);
               }}
@@ -177,9 +184,10 @@ function ToolbarItem({
             ...provided.draggableProps.style,
             display: 'flex',
             alignItems: 'center',
-            backgroundColor: snapshot.isDragging ? 'lightgreen' : '#ddd',
-            paddingLeft: 4,
-            marginBottom: 4,
+            border: '1px solid var(--ab-color-primary)',
+            backgroundColor: snapshot.isDragging ? 'lightgreen' : 'var(--ab-color-primarylight)',
+            paddingLeft: 'var(--ab-space-1)',
+            marginBottom: 'var(--ab-space-1)',
           }}
         >
           <div style={{ flex: 1 }}>{getToolbarTitle(availableToolbars, toolbar)}</div>
@@ -194,10 +202,10 @@ function UnusedPanel({ toolbars }: { toolbars: string[] }) {
   return (
     <div
       style={{
-        border: '1px solid #ccc',
-        borderRadius: 4,
-        marginBottom: 6,
-        backgroundColor: 'white',
+        border: '1px solid var(--ab-color-primarydark)',
+        borderRadius: 'var(--ab__border-radius)',
+        marginBottom: 'var(--ab-space-2)',
+        backgroundColor: 'var(--ab-color-defaultbackground)',
       }}
     >
       <div style={{ padding: 6 }}>Unused Toolbars</div>
@@ -217,8 +225,8 @@ function UnusedToolbarList({ toolbars }: { toolbars: string[] }) {
             display: 'flex',
             flexDirection: 'row',
             flexWrap: 'wrap',
-            paddingLeft: 6,
-            paddingRight: 6,
+            paddingLeft: 'var(--ab-space-2)',
+            paddingRight: 'var(--ab-space-2)',
           }}
         >
           {toolbars.map((toolbar, toolbarIndex) => (
@@ -242,10 +250,11 @@ function UnusedToolbarItem({ toolbar, toolbarIndex }: { toolbar: string; toolbar
           {...provided.dragHandleProps}
           style={{
             ...provided.draggableProps.style,
-            backgroundColor: snapshot.isDragging ? 'lightgreen' : '#ddd',
-            padding: 4,
-            marginRight: 4,
-            marginBottom: 4,
+            border: '1px solid var(--ab-color-primary)',
+            backgroundColor: snapshot.isDragging ? 'lightgreen' : 'var(--ab-color-primarylight)',
+            padding: 'var(--ab-space-1) var(--ab-space-2)',
+            marginRight: 'var(--ab-space-1)',
+            marginBottom: 'var(--ab-space-1)',
           }}
         >
           {getToolbarTitle(availableToolbars, toolbar)}
@@ -350,17 +359,19 @@ function DashboardManager({
       }}
     >
       <DashboardManagerContext.Provider value={contextValue}>
-        <UnusedPanel toolbars={unusedToolbars} />
-        <div style={{ display: 'flex', flex: 1 }}>
-          <TabList
-            tabs={tabs}
-            onRemoveTab={handleRemoveTab}
-            onRemoveToolbar={handleRemoveToolbar}
-            onChangeTabName={handleChangeTabName}
-          />
-          <SimpleButton onClick={handleTabAdd} px={3}>
-            Add Tab
-          </SimpleButton>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <UnusedPanel toolbars={unusedToolbars} />
+          <div style={{ display: 'flex', flex: 1 }}>
+            <TabList
+              tabs={tabs}
+              onRemoveTab={handleRemoveTab}
+              onRemoveToolbar={handleRemoveToolbar}
+              onChangeTabName={handleChangeTabName}
+            />
+            <SimpleButton onClick={handleTabAdd} px={3}>
+              Add Tab
+            </SimpleButton>
+          </div>
         </div>
       </DashboardManagerContext.Provider>
     </DragDropContext>

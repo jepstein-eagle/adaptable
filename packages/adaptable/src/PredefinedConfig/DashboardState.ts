@@ -1,6 +1,10 @@
 import { RunTimeState } from './RunTimeState';
 import { ButtonStyle, ToolbarButton } from './Common/ToolbarButton';
-import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/Types';
+import {
+  AdaptableDashboardToolbars,
+  AdaptableFunctionButtons,
+  AdaptableDashboardToolbar,
+} from './Common/Types';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**

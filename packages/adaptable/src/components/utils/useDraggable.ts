@@ -7,7 +7,7 @@ function clamp(num: number, min: number, max: number) {
 export default function useDraggable({
   onMove,
   onDrop,
-  getBoundingRect = () => document.body.getBoundingClientRect(),
+  getBoundingRect = () => document.body.getBoundingClientRect() as DOMRect,
 }: {
   onMove?: (event: MouseEvent) => void;
   onDrop?: (dx: number, dy: number) => void;
@@ -68,7 +68,7 @@ export default function useDraggable({
     document.addEventListener('mouseup', handleMouseUp);
     document.addEventListener('mousemove', handleMouseMove);
 
-    const targetRect = targetRef.current.getBoundingClientRect();
+    const targetRect = targetRef.current.getBoundingClientRect() as DOMRect;
     const boundingRect = getBoundingRect();
 
     startRef.current = {
@@ -101,7 +101,7 @@ export default function useDraggable({
   const boundInitialPosition = () => {
     if (!targetRef.current) return;
 
-    const targetRect = targetRef.current.getBoundingClientRect();
+    const targetRect = targetRef.current.getBoundingClientRect() as DOMRect;
     const boundingRect = getBoundingRect();
 
     const bounds = getTranslationBounds(targetRect, boundingRect);
