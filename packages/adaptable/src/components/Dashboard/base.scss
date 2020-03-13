@@ -59,11 +59,25 @@
     display: flex;
     align-items: flex-start;
     background: var(--ab-color-primary);
+    color: var(--ab-color-text-on-primary);
   }
 
   &__content-inner {
     display: flex;
     flex: 1;
+    overflow-x: auto;
+  }
+
+  &__content-inner > * {
+    flex-shrink: 0;
+  }
+
+  &__content-buttons {
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    padding: var(--ab-space-2);
+    border-left: 1px solid var(--ab-color-primarydark);
   }
 
   &__toolbar {

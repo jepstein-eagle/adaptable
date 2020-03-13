@@ -262,7 +262,7 @@ const initialDashboardState: DashboardState = {
     'Theme',
   ],
   VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
-  Tabs: [],
+  Tabs: null,
   ActiveTab: 0,
   IsCollapsed: false,
   IsFloating: false,

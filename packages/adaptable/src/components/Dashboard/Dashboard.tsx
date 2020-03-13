@@ -12,6 +12,7 @@ import SimpleButton from '../SimpleButton';
 import { DashboardTabProps } from './DashboardTab';
 import join from '../utils/join';
 import useProperty from '../utils/useProperty';
+import { Box } from 'rebass';
 
 export type DashboardPosition = {
   x: number;
@@ -23,6 +24,7 @@ export type DashboardProps = {
   children: ReactElement<DashboardTabProps>[];
   left: ReactNode;
   right: ReactNode;
+  onShowDashboardPopup?: () => void;
   // activeTab
   activeTab?: number;
   defaultActiveTab?: number;
@@ -42,7 +44,7 @@ export type DashboardProps = {
 };
 
 export function Dashboard(props: DashboardProps) {
-  const { title, children, left, right } = props;
+  const { title, children, left, right, onShowDashboardPopup } = props;
 
   const [activeTab, setActiveTab] = useProperty(props, 'activeTab', 0);
   const [collapsed, setCollapsed] = useProperty(props, 'collapsed', false);
@@ -65,25 +67,26 @@ export function Dashboard(props: DashboardProps) {
 
   const renderTabs = () => (
     <div className="ab-Dashboard__tabs">
-      {React.Children.map(children, (child, index) => (
-        <button
-          className={join(
-            'ab-Dashboard__tab',
-            !collapsed && activeTab === index ? 'ab-Dashboard__tab--active' : ''
-          )}
-          key={index}
-          onClick={() => {
-            if (activeTab === index) {
-              setCollapsed(!collapsed);
-            } else {
-              setActiveTab(index);
-              setCollapsed(false);
-            }
-          }}
-        >
-          {child.props.title}
-        </button>
-      ))}
+      {children &&
+        React.Children.map(children, (child, index) => (
+          <button
+            className={join(
+              'ab-Dashboard__tab',
+              !collapsed && activeTab === index ? 'ab-Dashboard__tab--active' : ''
+            )}
+            key={index}
+            onClick={() => {
+              if (activeTab === index) {
+                setCollapsed(!collapsed);
+              } else {
+                setActiveTab(index);
+                setCollapsed(false);
+              }
+            }}
+          >
+            {child.props.title}
+          </button>
+        ))}
     </div>
   );
 
@@ -136,17 +139,28 @@ export function Dashboard(props: DashboardProps) {
           />
         </div>
       </div>
-      {children.length && !floating && !collapsed ? (
+      {children && children.length && !floating && !collapsed ? (
         <div className="ab-Dashboard__content">
           <div className="ab-Dashboard__content-inner">
             {children[activeTab] ? children[activeTab].props.children : null}
           </div>
-          <SimpleButton
-            icon="triangle-up"
-            variant="text"
-            onClick={() => setCollapsed(true)}
-            m={2}
-          />
+          <div className="ab-Dashboard__content-buttons">
+            <SimpleButton
+              icon="clear"
+              variant="text"
+              onClick={() => setCollapsed(true)}
+              tooltip="Collapse"
+              mb={1}
+            />
+            {onShowDashboardPopup && (
+              <SimpleButton
+                icon="dashboard"
+                variant="text"
+                onClick={() => onShowDashboardPopup()}
+                tooltip="Configure"
+              />
+            )}
+          </div>
         </div>
       ) : null}
     </div>

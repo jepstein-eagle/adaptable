@@ -81,7 +81,7 @@ function TabItem({
             width: 160,
             display: 'flex',
             flexDirection: 'column',
-            backgroundColor: 'white',
+            // background: 'var(--ab-color-primary)',
           }}
         >
           <div
@@ -106,6 +106,8 @@ function TabItem({
                 marginLeft: 'var(--ab-space-1)',
                 marginRight: 'var(--ab-space-1)',
                 alignSelf: 'stretch',
+                background: 'transparent',
+                color: 'var(--ab-color-text-on-primary)',
               }}
               onChange={event => {
                 onChangeTabName(event.target.value);
@@ -205,10 +207,11 @@ function UnusedPanel({ toolbars }: { toolbars: string[] }) {
         border: '1px solid var(--ab-color-primarydark)',
         borderRadius: 'var(--ab__border-radius)',
         marginBottom: 'var(--ab-space-2)',
+        paddingBottom: 'var(--ab-space-1)',
         backgroundColor: 'var(--ab-color-defaultbackground)',
       }}
     >
-      <div style={{ padding: 6 }}>Unused Toolbars</div>
+      <div style={{ padding: 'var(--ab-space-2)' }}>Unused Toolbars</div>
       <UnusedToolbarList toolbars={toolbars} />
     </div>
   );

@@ -54,6 +54,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
   ) => DashboardRedux.DashboardSetFloatingPositionAction;
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
+  onShowDashboardPopup: () => PopupRedux.PopupShowScreenAction;
 }
 
 interface DashboardComponentState {
@@ -305,12 +306,14 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             {this.renderQuickSearch()}
           </>
         }
+        onShowDashboardPopup={this.props.onShowDashboardPopup}
       >
-        {this.props.DashboardState.Tabs.map((tab, index) => (
-          <DashboardTabUI key={index} title={tab.Name}>
-            {this.renderTab(tab)}
-          </DashboardTabUI>
-        ))}
+        {this.props.DashboardState.Tabs &&
+          this.props.DashboardState.Tabs.map((tab, index) => (
+            <DashboardTabUI key={index} title={tab.Name}>
+              {this.renderTab(tab)}
+            </DashboardTabUI>
+          ))}
       </DashboardUI>
     );
   }
@@ -352,6 +355,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
         PopupRedux.PopupShowScreen(
           StrategyConstants.QuickSearchStrategyId,
           ScreenPopups.QuickSearchPopup
+        )
+      ),
+    onShowDashboardPopup: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.DashboardStrategyId,
+          ScreenPopups.DashboardPopup
         )
       ),
   };
