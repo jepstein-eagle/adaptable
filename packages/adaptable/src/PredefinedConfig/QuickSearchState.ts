@@ -1,7 +1,7 @@
 import { AdaptableStyle } from './Common/AdaptableStyle';
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 
-export interface QuickSearchState extends RunTimeState {
+export interface QuickSearchState extends ConfigState {
   QuickSearchText?: string;
   DisplayAction?: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
   Style?: AdaptableStyle;

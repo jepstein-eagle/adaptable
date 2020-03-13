@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { MathOperation } from './Common/Enums';
 
 /**
@@ -14,7 +14,7 @@ import { MathOperation } from './Common/Enums';
  * } as PredefinedConfig;
  * ```
  */
-export interface SmartEditState extends RunTimeState {
+export interface SmartEditState extends ConfigState {
   /**
    * Which value will be used to create the Smart Edit (used in conjunction with the MathOperation and the cell's current value).
    *

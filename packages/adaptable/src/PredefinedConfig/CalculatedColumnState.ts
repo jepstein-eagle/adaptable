@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
@@ -25,7 +25,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * [Calculated Column Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113212-Calculated-Columns)
  *
  **/
-export interface CalculatedColumnState extends RunTimeState {
+export interface CalculatedColumnState extends ConfigState {
   /**
    * A collection of Calculated Columns, i.e. columns that show a value which is derived from other values in the row, and which is stored with the user's state.
    *

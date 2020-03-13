@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
@@ -25,7 +25,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * } as PredefinedConfig;
  * ```
  */
-export interface ThemeState extends RunTimeState {
+export interface ThemeState extends ConfigState {
   /**
    * The name of the currently applied theme or the theme to set at startup.
    *

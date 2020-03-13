@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import {
   ChartType,
@@ -16,7 +16,7 @@ import {
 } from './Common/ChartEnums';
 import { Expression } from './Common/Expression';
 
-export interface ChartState extends RunTimeState {
+export interface ChartState extends ConfigState {
   ChartDefinitions?: ChartDefinition[];
   CurrentChartName?: string;
   RefreshRate?: number;

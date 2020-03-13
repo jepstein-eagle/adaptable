@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
@@ -40,7 +40,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * - 'Values' - which sets a min and max value, makes the Sparkline type 'Line' and shows the tooltip
  *
  */
-export interface SparklineColumnState extends DesignTimeState {
+export interface SparklineColumnState extends ConfigState {
   /**
    * The list of columns you want to represent as `SparklineColumn`
    *

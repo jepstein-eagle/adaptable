@@ -21,7 +21,7 @@ import { CalculatedColumnState } from '../../PredefinedConfig/CalculatedColumnSt
 import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
 import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState';
-import { RunTimeState } from '../../PredefinedConfig/RunTimeState';
+import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableStore';
 import { ApiBase } from './ApiBase';
@@ -111,13 +111,13 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     ];
   }
 
-  public configGetAllUserState(): RunTimeState[] {
+  public configGetAllUserState(): ConfigState[] {
     const userStateKeys = this.getUserStateKeys();
     const allState = this.configGetAllState();
     return userStateKeys.map(k => allState[k]);
   }
 
-  public configloadUserState(state: { [s: string]: RunTimeState }): void {
+  public configloadUserState(state: { [s: string]: ConfigState }): void {
     const userStateKeys = this.getUserStateKeys();
     const userState = Object.keys(state).reduce(
       (xs, x) => (userStateKeys.indexOf(x) !== -1 ? { ...xs, [x]: state[x] } : xs),
@@ -129,7 +129,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetUserStateByStateKey(
     stateKey: AdaptableStateKey,
     returnJson: boolean = false
-  ): RunTimeState | string {
+  ): ConfigState | string {
     switch (stateKey) {
       case 'ActionColumn':
         return returnJson

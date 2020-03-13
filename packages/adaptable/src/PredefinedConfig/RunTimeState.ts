@@ -5,4 +5,4 @@ import { ConfigState } from './ConfigState';
  *
  * Objects that implement this interface will either be created naturally during Application use (e.g. when the User runs a Quick Search) or can be provided at Design Time through Predefined Config
  */
-export interface RunTimeState extends ConfigState {}
+//export interface ConfigState extends ConfigState {}

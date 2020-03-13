@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { ButtonStyle, ToolbarButton } from './Common/ToolbarButton';
 import {
   AdaptableDashboardToolbars,
@@ -61,7 +61,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * See [Custom Toolbar](_src_predefinedconfig_dashboardstate_.customtoolbar.html) for full documentation and code examples.
  *
  */
-export interface DashboardState extends RunTimeState {
+export interface DashboardState extends ConfigState {
   /**
    * Which toolbars should be available for the user to select to see.
    *

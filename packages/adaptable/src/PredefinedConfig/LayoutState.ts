@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { ColumnSort } from './Common/ColumnSort';
 
@@ -66,7 +66,7 @@ import { ColumnSort } from './Common/ColumnSort';
  *
  * - *Pivoted Layout* - a Layout that includes Pivot details (so that the grid will be pivoted when the Layout is selected)
  */
-export interface LayoutState extends RunTimeState {
+export interface LayoutState extends ConfigState {
   /**
    * The name of the Layout which will be loaded AdapTable starts.
    *

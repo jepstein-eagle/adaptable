@@ -1,8 +1,8 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { BaseSchedule } from './Common/Schedule';
 
-export interface Glue42State extends DesignTimeState {
+export interface Glue42State extends ConfigState {
   Username?: string;
   Password?: string;
   GatewayURL?: string;

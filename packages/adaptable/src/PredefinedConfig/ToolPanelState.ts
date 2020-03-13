@@ -1,7 +1,7 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableToolPanels, AdaptableFunctionButtons } from './Common/Types';
 
-export interface ToolPanelState extends RunTimeState {
+export interface ToolPanelState extends ConfigState {
   /**
    * Which of the ToolPanels should be available to the User to choose to select.
    *

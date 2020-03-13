@@ -1,3 +1,7 @@
+## 6.0.25
+
+UserFunctions refactoring
+
 ## 6.0.24
 
 FilterForm tidy up

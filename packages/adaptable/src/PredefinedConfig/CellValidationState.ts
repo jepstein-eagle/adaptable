@@ -1,7 +1,7 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression, QueryRange } from './Common/Expression';
-export interface CellValidationState extends RunTimeState {
+export interface CellValidationState extends ConfigState {
   CellValidations?: CellValidationRule[];
 }
 

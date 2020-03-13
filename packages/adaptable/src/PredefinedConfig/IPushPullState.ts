@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 import { Report } from './ExportState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { BaseSchedule } from './Common/Schedule';
@@ -102,7 +102,7 @@ import { BaseSchedule } from './Common/Schedule';
  * ```
  *
  */
-export interface IPushPullState extends DesignTimeState {
+export interface IPushPullState extends ConfigState {
   /**
    *  The ipushpull object - this is injected by the user from 'ipushpull-js' and set with standard configuration.
    */

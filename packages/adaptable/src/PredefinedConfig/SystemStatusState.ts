@@ -1,4 +1,4 @@
-import { DesignTimeState } from './DesignTimeState';
+import { ConfigState } from './ConfigState';
 
 /**
  * The Predefined Configuration for the System Status function.
@@ -51,7 +51,7 @@ import { DesignTimeState } from './DesignTimeState';
  * In this example we have set an initial Message and Type (of Warning) and also provided a Default Message and Type to be used when the message is cleared / or there is no explicit System Status message.
  *
  */
-export interface SystemStatusState extends DesignTimeState {
+export interface SystemStatusState extends ConfigState {
   /**
    * A default status message to show.
    *

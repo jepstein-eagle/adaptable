@@ -1,8 +1,8 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 
-export interface FormatColumnState extends RunTimeState {
+export interface FormatColumnState extends ConfigState {
   FormatColumns?: FormatColumn[];
 }
 

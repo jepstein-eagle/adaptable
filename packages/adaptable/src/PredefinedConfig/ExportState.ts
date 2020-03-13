@@ -1,4 +1,4 @@
-import { RunTimeState } from './RunTimeState';
+import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 import { Schedule, BaseSchedule } from './Common/Schedule';
@@ -42,7 +42,7 @@ import { Schedule, BaseSchedule } from './Common/Schedule';
  * ```
  *
  */
-export interface ExportState extends RunTimeState {
+export interface ExportState extends ConfigState {
   /**
    * The Report that is currently selected in the Export dropdown..
    */
