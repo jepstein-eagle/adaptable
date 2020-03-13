@@ -24,7 +24,7 @@ export default ({ children, size = DEFAULT_SIZE, name, ...props }: IconProps) =>
       viewBox="0 0 24 24"
       {...props}
       className={join((props as any).className, `ab-Icon ab-Icon--${name}`)}
-      style={{ verticalAlign: 'middle', ...props.style }}
+      style={{ verticalAlign: 'middle', fill: 'currentColor', ...props.style }}
     >
       {children}
     </svg>

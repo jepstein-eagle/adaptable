@@ -5,6 +5,7 @@ export default function Layout() {
     <>
       <NavLink href="/" text="Home" />
       <NavLink href="/dashboard" text="Dashboard" />
+      <NavLink href="/dashboard-management" text="Dashboard Management" />
     </>
   )
 }

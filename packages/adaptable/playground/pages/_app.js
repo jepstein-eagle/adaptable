@@ -2,6 +2,7 @@ import { ThemeProvider } from "styled-components"
 import theme from "../../src/theme"
 import "../../src/index.scss"
 import Navigation from "../components/navigation"
+import "./style.scss"
 
 const NAV_WIDTH = 240
 const PADDING = 10
@@ -24,7 +25,16 @@ export default function App({ Component, pageProps }) {
       >
         <Navigation />
       </div>
-      <div style={{ padding: PADDING, paddingLeft: NAV_WIDTH + PADDING }}>
+      <div
+        style={{
+          padding: PADDING,
+          paddingLeft: NAV_WIDTH + PADDING,
+          minHeight: "100vh",
+          boxSizing: "border-box",
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
         <Component {...pageProps} />
       </div>
     </ThemeProvider>

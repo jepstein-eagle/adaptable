@@ -14,12 +14,32 @@ import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Box, Flex, Text } from 'rebass';
 import { GridState } from '../../PredefinedConfig/GridState';
 import HelpBlock from '../../components/HelpBlock';
-import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar, DashboardTab } from '../../PredefinedConfig/DashboardState';
 import {
   AdaptableFunctionButtons,
   AdaptableDashboardToolbars,
   AdaptableFunctionName,
 } from '../../PredefinedConfig/Common/Types';
+import DashboardManagerUI from '../../components/Dashboard/DashboardManager';
+
+export const SystemToolbars: AdaptableFunctionName[] = [
+  'AdvancedSearch',
+  'Alert',
+  'BulkUpdate',
+  'CellSummary',
+  'Chart',
+  'ColumnFilter',
+  'Dashboard',
+  'DataSource',
+  'Export',
+  'Glue42',
+  'IPushPull',
+  'Layout',
+  'QuickSearch',
+  'SmartEdit',
+  'SystemStatus',
+  'Theme',
+];
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
@@ -39,12 +59,13 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardSetToolbars: (
     StrategyConstants: string[]
   ) => DashboardRedux.DashboardSetToolbarsAction;
+
+  onDashboardSetTabs: (Tabs: DashboardTab[]) => DashboardRedux.DashboardSetTabsAction;
 }
 
 export enum DashboardConfigView {
-  General = 'General',
-  Buttons = 'Buttons',
   Toolbars = 'Toolbars',
+  Buttons = 'Buttons',
 }
 
 export interface DashboardPopupState {
@@ -58,7 +79,7 @@ class DashboardPopupComponent extends React.Component<
   constructor(props: DashboardPopupComponentProps) {
     super(props);
     this.state = {
-      DashboardConfigView: DashboardConfigView.General,
+      DashboardConfigView: DashboardConfigView.Toolbars,
     };
   }
 
@@ -71,60 +92,30 @@ class DashboardPopupComponent extends React.Component<
       }
     });
 
-    let availableToolbarNames: string[] = this.props.DashboardState.AvailableToolbars.filter(at =>
-      this.isVisibleStrategy(at)
-    ).map(at => {
-      return StrategyConstants.getFriendlyNameForStrategyId(at);
-    });
+    let systemToolbars = SystemToolbars.filter(at => this.isNotHiddenStrategy(at)).map(at => ({
+      Id: at,
+      Title: StrategyConstants.getFriendlyNameForStrategyId(at),
+    }));
 
-    let customToolbarNames: string[] = this.props.DashboardState.CustomToolbars.map(ct => {
-      return ct.Name;
-    });
+    let customToolbars = this.props.DashboardState.CustomToolbars.map(ct => ({
+      Id: ct.Name,
+      Title: ct.Title ? ct.Title : ct.Name,
+    }));
 
-    availableToolbarNames.push(...customToolbarNames);
-    let visibleToolbarNames: string[] = this.props.DashboardState.VisibleToolbars.filter(
-      at => at
-    ).map(vt => {
-      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
-        ct => ct.Name == vt
-      );
-      if (customToolbar) {
-        return vt;
-      } else {
-        let vtFunctionName = vt as AdaptableFunctionName;
-        if (this.isVisibleStrategy(vtFunctionName)) {
-          return StrategyConstants.getFriendlyNameForStrategyId(vtFunctionName);
-        }
-      }
+    const tabs = this.props.DashboardState.Tabs.map(tab => {
+      const Toolbars = tab.Toolbars.filter(vt => {
+        let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
+          ct => ct.Name === vt
+        );
+        return customToolbar ? true : this.isNotHiddenStrategy(vt as AdaptableFunctionName);
+      });
+
+      return { ...tab, Toolbars };
     });
 
     let availableValues = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && selectedValues.indexOf(x.Label) == -1
     ).map(x => x.Label);
-
-    let individualHomeToolbarOptions = (
-      <Flex margin={2} flexDirection="column">
-        <HelpBlock>{'Select which items should be visible in the Home Toolbar.'}</HelpBlock>
-        <Checkbox
-          onChange={checked => this.onShowFunctionsDropdownChanged(checked)}
-          checked={this.props.DashboardState.ShowFunctionsDropdown}
-        >
-          Functions Dropdown
-        </Checkbox>
-        <Checkbox
-          onChange={checked => this.onShowColumnsDropdownChanged(checked)}
-          checked={this.props.DashboardState.ShowColumnsDropdown}
-        >
-          Columns Dropdown
-        </Checkbox>
-        <Checkbox
-          onChange={checked => this.onShowToolbarsDropdownChanged(checked)}
-          checked={this.props.DashboardState.ShowToolbarsDropdown}
-        >
-          Toolbars Dropdown
-        </Checkbox>
-      </Flex>
-    );
 
     return (
       <PanelWithButton
@@ -138,11 +129,12 @@ class DashboardPopupComponent extends React.Component<
           style={{ borderBottom: '1px solid var(--ab-color-primary)' }}
         >
           <Radio
-            value={DashboardConfigView.General}
-            checked={this.state.DashboardConfigView == DashboardConfigView.General}
+            marginLeft={3}
+            value={DashboardConfigView.Toolbars}
+            checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
             onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
           >
-            General Options
+            Function Toolbars
           </Radio>
           <Radio
             marginLeft={3}
@@ -152,19 +144,16 @@ class DashboardPopupComponent extends React.Component<
           >
             Function Buttons
           </Radio>
-          <Radio
-            marginLeft={3}
-            value={DashboardConfigView.Toolbars}
-            checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
-            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
-          >
-            Function Toolbars
-          </Radio>
         </Flex>
 
-        <Box style={{ overflow: 'auto', flex: 1, display: 'flex' }} padding={2}>
-          {this.state.DashboardConfigView == DashboardConfigView.General &&
-            individualHomeToolbarOptions}
+        <Box style={{ overflow: 'auto', flex: 1 }} padding={2}>
+          {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
+            <DashboardManagerUI
+              availableToolbars={[...systemToolbars, ...customToolbars]}
+              tabs={tabs}
+              onTabsChange={this.props.onDashboardSetTabs}
+            />
+          )}
           {this.state.DashboardConfigView == DashboardConfigView.Buttons && (
             <DualListBoxEditor
               AvailableValues={availableValues}
@@ -173,16 +162,6 @@ class DashboardPopupComponent extends React.Component<
               HeaderSelected="Visible Function Buttons"
               onChange={SelectedValues => this.onDashboardButtonsChanged(SelectedValues)}
               DisplaySize={DisplaySize.Large}
-            />
-          )}
-          {this.state.DashboardConfigView == DashboardConfigView.Toolbars && (
-            <DualListBoxEditor
-              AvailableValues={availableToolbarNames}
-              SelectedValues={visibleToolbarNames}
-              HeaderAvailable="Available Toolbars"
-              HeaderSelected="Visible Toolbars"
-              onChange={SelectedValues => this.onDashboardToolbarsChanged(SelectedValues)}
-              DisplaySize={DisplaySize.Small}
             />
           )}
         </Box>
@@ -240,6 +219,10 @@ class DashboardPopupComponent extends React.Component<
   isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
     return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
+
+  isNotHiddenStrategy(functionName: AdaptableFunctionName): boolean {
+    return !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(functionName);
+  }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any) {
@@ -263,6 +246,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
     onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
+    onDashboardSetTabs: (Tabs: DashboardTab[]) => dispatch(DashboardRedux.DashboardSetTabs(Tabs)),
   };
 }
 

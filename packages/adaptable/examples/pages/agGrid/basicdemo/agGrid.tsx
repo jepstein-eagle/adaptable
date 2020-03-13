@@ -38,16 +38,20 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        VisibleToolbars: ['AdvancedSearch', 'CellSummary'],
-        Revision: 3,
+        Revision: 2,
+        VisibleToolbars: ['QuickSearch'],
       },
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],
       },
       QuickSearch: {
-        Revision: 14,
-        //  QuickSearchText: '',
+        Revision: 11,
+        QuickSearchText: 'b',
+      },
+      Entitlements: {
+        Revision: 2,
+        DefaultAccessLevel: 'Full',
       },
     },
   };

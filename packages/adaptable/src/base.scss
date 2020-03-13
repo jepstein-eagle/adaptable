@@ -33,9 +33,9 @@
   --ab-color-errorlight: #ffd3d2;
   --ab-color-warn: #eb9316;
   --ab-color-info: #17a2b8;
-  --ab-color-success: #419641;// var(--ab-color-green);
+  --ab-color-success: #419641; // var(--ab-color-green);
   --ab-color-accent: #07c;
-  --ab-color-accentlight: #dbf0ff;  // is this used?
+  --ab-color-accentlight: #dbf0ff; // is this used?
 
 
   --ab-color-text-on-success: white;
@@ -63,7 +63,8 @@
   --ab-color-focus: var(--ab-color-accent);
   --ab-focus__box-shadow: 0 0 5px 1px var(--ab-color-accent);
   --ab-focus__outline: none;
-  --ab-dashboard__background:  var(--ab-color-defaultbackground);
+  --ab-dashboard__background: var(--ab-color-secondary);
+  --ab-dashboard__color: var(--ab-color-text-on-secondary);
 
   --ab-loaded: 777; // dont remove - required for checking styles have been loaded
 
@@ -99,6 +100,7 @@
 @import './components/Textarea/style.scss';
 @import './components/Tooltip/style.scss';
 @import './components/FileDroppable/style.scss';
+@import './components/Dashboard/style.scss';
 @import './View/Components/AdaptableObjectCollection/style.scss';
 @import './View/Components/AdaptableObjectRow/style.scss';
 @import './View/AdaptableWizardView/style.scss';
@@ -106,7 +108,7 @@
 @import './View/Components/Panels/PanelDashboard/style.scss';
 @import './View/Components/ListBox/SingleListBox/style.scss';
 @import './View/AdaptablePopover/style.scss';
-@import './View/Dashboard/style.scss';
+// @import './View/Dashboard/style.scss';
 
 @import './components/Radio/base.scss';
 @import './components/Table/base.scss';
@@ -130,6 +132,7 @@
 @import './components/FileDroppable/base.scss';
 @import './components/ChartContainer/base.scss';
 @import './components/WizardPanel/base.scss';
+@import './components/Dashboard/base.scss';
 @import './View/Components/AdaptableObjectCollection/base.scss';
 @import './View/Components/AdaptableObjectRow/base.scss';
 @import './View/Components/FilterForm/ListBoxFilterForm/base.scss';
@@ -140,19 +143,22 @@
 @import './View/Components/Buttons/ButtonBase/base.scss';
 @import './View/Components/Panels/PanelDashboard/base.scss';
 @import './View/Components/Panels/FilterFormPanel/base.scss';
-@import './View/Dashboard/base.scss';
+// @import './View/Dashboard/base.scss';
 
 
 .ab-alert--error {
   background: var(--ab-color-error);
 }
+
 .ab-alert--success {
   background: var(--ab-color-success);
 }
+
 .ab-alert--warn,
 .ab-alert--warning {
   background: var(--ab-color-warn);
 }
+
 .ab-alert--info {
   background: var(--ab-color-info);
 }

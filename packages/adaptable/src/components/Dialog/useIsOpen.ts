@@ -5,13 +5,11 @@ export default (props: {
   defaultIsOpen?: boolean;
   onDismiss?: () => void | Function;
 }) => {
-  const [isOpen, setIsOpen] = useProperty(props, 'isOpen', true, {
+  return useProperty(props, 'isOpen', true, {
     onChange: isOpen => {
       if (!isOpen && props.onDismiss) {
         props.onDismiss();
       }
     },
   });
-
-  return [isOpen, setIsOpen];
 };

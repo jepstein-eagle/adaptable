@@ -324,7 +324,7 @@ export function getStyleForMessageType(messageType: MessageType): CSSProperties 
   switch (messageType) {
     case MessageType.Info:
       result = {
-        fill: 'var(--ab-color-info)',
+        fill: 'inherit',
       };
       break;
     case MessageType.Success:

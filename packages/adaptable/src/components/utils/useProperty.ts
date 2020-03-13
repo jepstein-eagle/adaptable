@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, SetStateAction, useRef } from 'react';
 
 const toUpperFirst = (str: string): string => `${str.charAt(0).toUpperCase()}${str.substring(1)}`;
 
@@ -27,9 +27,9 @@ const emptyFn = (): void => {};
 const useProperty = <TS>(
   props: any,
   propName: string,
-  defaultValue?: any | undefined,
+  defaultValue?: TS | undefined,
   config?: { onChange?: (value: TS, ...args: any[]) => void }
-): [TS, (...args: any[]) => any] => {
+): [TS, (value: TS | ((v: TS) => TS), ...args: any[]) => void] => {
   const PropName = toUpperFirst(propName);
 
   const defaultValueFromProps = props[`default${PropName}`];
@@ -43,7 +43,10 @@ const useProperty = <TS>(
 
   const onChange =
     config && config.onChange ? config.onChange : props[`on${PropName}Change`] || emptyFn;
-  const setter = (value: TS, ...args: any[]): void => {
+  const setter = (value: TS | ((v: TS) => TS), ...args: any[]): void => {
+    if (value instanceof Function) {
+      value = value(valueRef.current);
+    }
     if (!controlled) {
       setStateProperty(value);
     }
@@ -53,6 +56,8 @@ const useProperty = <TS>(
   if (!controlled) {
     value = stateValue;
   }
+  const valueRef = useRef<TS>(value);
+  valueRef.current = value;
 
   return [value, setter];
 };

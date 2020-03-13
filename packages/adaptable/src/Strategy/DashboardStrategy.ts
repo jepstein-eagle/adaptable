@@ -73,6 +73,14 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         );
       }
     }
+
+    if (
+      this.adaptable.api.dashboardApi.getDashboardState().Tabs.length === 0 &&
+      this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars.length !== 0
+      // && this.adaptable.api.dashboardApi.getDashboardState().Revision === undefined
+    ) {
+      this.adaptable.AdaptableStore.TheStore.dispatch(DashboardRedux.DashboardCreateDefaultTab());
+    }
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

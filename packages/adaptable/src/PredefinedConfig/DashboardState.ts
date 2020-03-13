@@ -1,6 +1,10 @@
 import { ConfigState } from './ConfigState';
 import { ButtonStyle, ToolbarButton } from './Common/ToolbarButton';
-import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/Types';
+import {
+  AdaptableDashboardToolbars,
+  AdaptableFunctionButtons,
+  AdaptableDashboardToolbar,
+} from './Common/Types';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
@@ -77,6 +81,13 @@ export interface DashboardState extends ConfigState {
    * **Default Value**: 'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
    */
   VisibleToolbars?: AdaptableDashboardToolbars | string[];
+
+  Tabs?: DashboardTab[];
+
+  ActiveTab?: number;
+  IsCollapsed?: boolean;
+  IsFloating?: boolean;
+  FloatingPosition?: DashboardFloatingPosition;
 
   /**
    * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
@@ -324,7 +335,7 @@ export interface CustomToolbar extends AdaptableObject {
   /**
    * The title which will appear in the Toolbar when its displayed
    */
-  Title: string;
+  Title?: string;
 
   /**
    * An (optional) Glyph to display in the Custom Toolbar
@@ -337,4 +348,14 @@ export interface CustomToolbar extends AdaptableObject {
    * When one of these buttons is clicked the on('ToolbarButtonClicked') event is fired.
    */
   ToolbarButtons?: ToolbarButton[];
+}
+
+export interface DashboardTab extends AdaptableObject {
+  Name: string;
+  Toolbars: (AdaptableDashboardToolbar | string)[];
+}
+
+export interface DashboardFloatingPosition extends AdaptableObject {
+  x: number;
+  y: number;
 }
