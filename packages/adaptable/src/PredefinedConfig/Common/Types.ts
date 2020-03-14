@@ -169,7 +169,6 @@ export type AdaptableFunctionName =
   | 'GradientColumn'
   | 'GridInfo'
   | 'HideColumn'
-  | 'Home'
   | 'IPushPull'
   | 'Layout'
   | 'PercentBar'

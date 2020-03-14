@@ -35,7 +35,6 @@ import { ExportStrategy } from '../Strategy/ExportStrategy';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
 import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
-import { HomeStrategy } from '../Strategy/HomeStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
 import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
@@ -150,7 +149,6 @@ export class agGridHelper {
       StrategyConstants.GradientColumnStrategyId,
       new GradientColumnStrategy(adaptable)
     );
-    strategies.set(StrategyConstants.HomeStrategyId, new HomeStrategy(adaptable));
     strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(adaptable));
     strategies.set(
       StrategyConstants.ColumnCategoryStrategyId,
