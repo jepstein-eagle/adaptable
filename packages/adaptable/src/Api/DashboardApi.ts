@@ -26,20 +26,6 @@ export interface DashboardApi {
   getCustomToolbars(): CustomToolbar[] | undefined;
 
   /**
-   * Makes the given toolbar visible
-   *
-   * @param visibleToolbar toolbar to show
-   */
-  showToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
-
-  /**
-   * Hides the given toolbar
-   *
-   * @param visibleToolbar toolbar to hide
-   */
-  hideToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
-
-  /**
    * Sets which Function Buttons are visible
    *
    * @param functionButtons buttons to show

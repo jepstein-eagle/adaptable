@@ -252,7 +252,6 @@ class IPushPullToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__IPushPull"
         headerText={StrategyConstants.IPushPullStrategyFriendlyName}
         glyphicon={StrategyConstants.IPushPullGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.IPushPullStrategyId)}
         showConfigureButton={false} // later : isIPushPullRunning
         onConfigure={() => this.props.onConfigure()}
       >
@@ -375,9 +374,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           }
         )
       ),
-
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
 
     onConfigure: () =>
       dispatch(

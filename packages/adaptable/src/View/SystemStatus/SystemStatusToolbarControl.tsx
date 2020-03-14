@@ -92,7 +92,6 @@ class SystemStatusToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__SystemStatus"
         headerText={StrategyConstants.SystemStatusStrategyFriendlyName}
         glyphicon={StrategyConstants.SystemStatusGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.SystemStatusStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -113,8 +112,6 @@ function mapStateToProps(state: AdaptableState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

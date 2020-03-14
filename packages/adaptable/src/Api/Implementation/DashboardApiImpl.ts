@@ -23,20 +23,6 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     return this.getDashboardState().CustomToolbars;
   }
 
-  public setVisibleToolbars(visibleToolbars: AdaptableDashboardToolbars): void {
-    visibleToolbars.forEach((vt: AdaptableDashboardToolbar) => {
-      this.showToolbar(vt);
-    });
-  }
-
-  public showToolbar(visibleToolbar: AdaptableDashboardToolbar): void {
-    this.dispatchAction(DashboardRedux.DashboardShowToolbar(visibleToolbar));
-  }
-
-  public hideToolbar(visibleToolbar: AdaptableDashboardToolbar): void {
-    this.dispatchAction(DashboardRedux.DashboardHideToolbar(visibleToolbar));
-  }
-
   public setVisibleButtons(functionButtons: AdaptableFunctionButtons): void {
     this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons));
   }

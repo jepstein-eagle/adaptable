@@ -197,7 +197,6 @@ class Glue42ToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Glue42"
         headerText={StrategyConstants.Glue42StrategyFriendlyName}
         glyphicon={StrategyConstants.Glue42Glyph}
-        onClose={() => this.props.onClose(StrategyConstants.Glue42StrategyId)}
         showConfigureButton={false} // later : isGlue42Running
         onConfigure={() => this.props.onConfigure()}
       >
@@ -280,10 +279,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           }
         )
       ),
-
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
-
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.Glue42StrategyId, ScreenPopups.Glue42Popup)

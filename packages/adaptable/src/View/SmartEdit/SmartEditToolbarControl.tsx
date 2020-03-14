@@ -167,7 +167,6 @@ class SmartEditToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__SmartEdit"
         headerText={StrategyConstants.SmartEditStrategyFriendlyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.SmartEditStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -237,8 +236,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onApplySmartEdit: () => dispatch(SmartEditRedux.SmartEditApply(false)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

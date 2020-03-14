@@ -227,7 +227,6 @@ class ExportToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Export"
         headerText={StrategyConstants.ExportStrategyFriendlyName}
         glyphicon={StrategyConstants.ExportGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.ExportStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -292,9 +291,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           }
         )
       ),
-
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup)

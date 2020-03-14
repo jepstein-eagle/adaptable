@@ -38,7 +38,6 @@ class CustomToolbarControlComponent extends React.Component<
         showConfigureButton={false}
         showGlyphIcon={showGlyphicon}
         glyphicon={this.props.CustomToolbar.Glyph}
-        onClose={() => this.props.onClose(this.props.CustomToolbar.Name)}
       >
         <div
           id={contentsDivId}
@@ -89,10 +88,7 @@ function mapStateToProps() {
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
-  return {
-    onClose: (customToolbarName: string) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(customToolbarName)),
-  };
+  return {};
 }
 
 export const CustomToolbarControl = connect(

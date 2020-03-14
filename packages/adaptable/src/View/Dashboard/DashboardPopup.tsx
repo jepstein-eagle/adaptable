@@ -30,16 +30,6 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardSetFunctionButtons: (
     StrategyConstants: string[]
   ) => DashboardRedux.DashboardSetFunctionButtonsAction;
-  onDashboardShowFunctionsDropdown: () => DashboardRedux.DashboardShowFunctionsDropdownAction;
-  onDashboardHideFunctionsDropdown: () => DashboardRedux.DashboardHideFunctionsDropdownAction;
-  onDashboardShowColumnsDropdown: () => DashboardRedux.DashboardShowColumnsDropdownAction;
-  onDashboardHideColumnsDropdown: () => DashboardRedux.DashboardHideColumnsDropdownAction;
-  onDashboardShowToolbarsDropdown: () => DashboardRedux.DashboardShowToolbarsDropdownAction;
-  onDashboardHideToolbarsDropdown: () => DashboardRedux.DashboardHideToolbarsDropdownAction;
-
-  onDashboardSetToolbars: (
-    StrategyConstants: string[]
-  ) => DashboardRedux.DashboardSetToolbarsAction;
 
   onDashboardSetTabs: (Tabs: DashboardTab[]) => DashboardRedux.DashboardSetTabsAction;
 }
@@ -136,7 +126,7 @@ class DashboardPopupComponent extends React.Component<
             marginLeft={3}
             value={DashboardConfigView.Toolbars}
             checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
-            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            onChange={(_, e) => this.onDashboardConfigViewChanged(e)}
           >
             Function Toolbars
           </Radio>
@@ -144,7 +134,7 @@ class DashboardPopupComponent extends React.Component<
             marginLeft={3}
             value={DashboardConfigView.Buttons}
             checked={this.state.DashboardConfigView == DashboardConfigView.Buttons}
-            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            onChange={(_, e) => this.onDashboardConfigViewChanged(e)}
           >
             Function Buttons
           </Radio>
@@ -173,34 +163,10 @@ class DashboardPopupComponent extends React.Component<
     );
   }
 
-  onShowGridPropertiesChanged(event: React.FormEvent<any>) {
+  onDashboardConfigViewChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let dashboardConfigView: DashboardConfigView = e.value as DashboardConfigView;
     this.setState({ DashboardConfigView: dashboardConfigView } as DashboardPopupState);
-  }
-
-  onShowFunctionsDropdownChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowFunctionsDropdown();
-    } else {
-      this.props.onDashboardHideFunctionsDropdown();
-    }
-  }
-
-  onShowColumnsDropdownChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowColumnsDropdown();
-    } else {
-      this.props.onDashboardHideColumnsDropdown();
-    }
-  }
-
-  onShowToolbarsDropdownChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowToolbarsDropdown();
-    } else {
-      this.props.onDashboardHideToolbarsDropdown();
-    }
   }
 
   onDashboardButtonsChanged(selectedValues: string[]) {
@@ -208,20 +174,6 @@ class DashboardPopupComponent extends React.Component<
       StrategyConstants.getIdForStrategyFriendlyName(sv)
     );
     this.props.onDashboardSetFunctionButtons(selectedFunctions);
-  }
-
-  onDashboardToolbarsChanged(selectedValues: string[]) {
-    let selectedToolbars: string[] = selectedValues.map(sv => {
-      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
-        ct => ct.Name == sv
-      );
-      return customToolbar ? sv : StrategyConstants.getIdForStrategyFriendlyName(sv);
-    });
-    this.props.onDashboardSetToolbars(selectedToolbars);
-  }
-
-  isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
-    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 
@@ -236,9 +188,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onDashboardSetFunctionButtons: (functionButtons: AdaptableFunctionButtons) =>
       dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),
-
-    onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
-      dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
     onDashboardSetTabs: (Tabs: DashboardTab[]) => dispatch(DashboardRedux.DashboardSetTabs(Tabs)),
   };
 }
