@@ -15,26 +15,22 @@ import {
 } from '../../PredefinedConfig/DashboardState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 
-const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
+//const DASHBOARD_SET_AVAILABLE_TOOLBARS = 'DASHBOARD_SET_AVAILABLE_TOOLBARS';
 export const DASHBOARD_SET_TOOLBARS = 'DASHBOARD_SET_TOOLBARS';
 const DASHBOARD_SHOW_TOOLBAR = 'DASHBOARD_SHOW_TOOLBAR';
 const DASHBOARD_HIDE_TOOLBAR = 'DASHBOARD_HIDE_TOOLBAR';
 const DASHBOARD_MOVE_ITEM = 'DASHBOARD_MOVE_ITEM';
 const DASHBOARD_SET_FUNCTION_BUTTONS = 'DASHBOARD_SET_FUNCTION_BUTTONS';
-const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
-const DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON = 'DASHBOARD_SHOW_SYSTEM_STATUS_BUTTON';
-const DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON = 'DASHBOARD_HIDE_SYSTEM_STATUS_BUTTON';
-const DASHBOARD_SHOW_GRID_INFO_BUTTON = 'DASHBOARD_SHOW_GRID_INFO_BUTTON';
-const DASHBOARD_HIDE_GRID_INFO_BUTTON = 'DASHBOARD_HIDE_GRID_INFO_BUTTON';
-const DASHBOARD_SHOW_FUNCTIONS_DROPDOWN = 'DASHBOARD_SHOW_FUNCTIONS_DROPDOWN';
-const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
-const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
-const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
-const DASHBOARD_SHOW_TOOLBARS_DROPDOWN = 'DASHBOARD_SHOW_TOOLBARS_DROPDOWN';
-const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
+//const DASHBOARD_SET_VISIBILITY = 'DASHBOARD_SET_VISIBILITY';
+//const DASHBOARD_SHOW_FUNCTIONS_DROPDOWN = 'DASHBOARD_SHOW_FUNCTIONS_DROPDOWN';
+//const DASHBOARD_HIDE_FUNCTIONS_DROPDOWN = 'DASHBOARD_HIDE_FUNCTIONS_DROPDOWN';
+//const DASHBOARD_SHOW_COLUMNS_DROPDOWN = 'DASHBOARD_SHOW_COLUMNS_DROPDOWN';
+//const DASHBOARD_HIDE_COLUMNS_DROPDOWN = 'DASHBOARD_HIDE_COLUMNS_DROPDOWN';
+//const DASHBOARD_SHOW_TOOLBARS_DROPDOWN = 'DASHBOARD_SHOW_TOOLBARS_DROPDOWN';
+//const DASHBOARD_HIDE_TOOLBARS_DROPDOWN = 'DASHBOARD_HIDE_TOOLBARS_DROPDOWN';
 const DASHBOARD_SET_HOME_TOOLBAR_TITLE = 'DASHBOARD_SET_HOME_TOOLBAR_TITLE';
-const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
-  'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
+//const DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE =
+//  'DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE';
 const DASHBOARD_CUSTOM_TOOLBAR_EDIT = 'DASHBOARD_CUSTOM_TOOLBAR_EDIT';
 const DASHBOARD_SET_ACTIVE_TAB = 'DASHBOARD_SET_ACTIVE_TAB';
 const DASHBOARD_SET_IS_COLLAPSED = 'DASHBOARD_SET_IS_COLLAPSED';
@@ -117,13 +113,6 @@ export interface DashboardSetTabsAction extends Redux.Action {
 
 export interface DashboardCreateDefaultTabAction extends Redux.Action {}
 
-export const DashboardSetAvailableToolbars = (
-  toolbars: AdaptableDashboardToolbars
-): DashboardSetAvailableToolbarsAction => ({
-  type: DASHBOARD_SET_AVAILABLE_TOOLBARS,
-  toolbars,
-});
-
 export const DashboardSetToolbars = (
   toolbars: AdaptableDashboardToolbar[] | string[]
 ): DashboardSetToolbarsAction => ({
@@ -162,47 +151,11 @@ export const DashboardSetFunctionButtons = (
   functionButtons,
 });
 
-export const DashboardSetVisibility = (Visibility: Visibility): DashboardSetVisibilityAction => ({
-  type: DASHBOARD_SET_VISIBILITY,
-  Visibility,
-});
-
-export const DashboardShowFunctionsDropdown = (): DashboardShowFunctionsDropdownAction => ({
-  type: DASHBOARD_SHOW_FUNCTIONS_DROPDOWN,
-});
-
-export const DashboardHideFunctionsDropdown = (): DashboardHideFunctionsDropdownAction => ({
-  type: DASHBOARD_HIDE_FUNCTIONS_DROPDOWN,
-});
-
-export const DashboardShowColumnsDropdown = (): DashboardShowColumnsDropdownAction => ({
-  type: DASHBOARD_SHOW_COLUMNS_DROPDOWN,
-});
-
-export const DashboardHideColumnsDropdown = (): DashboardHideColumnsDropdownAction => ({
-  type: DASHBOARD_HIDE_COLUMNS_DROPDOWN,
-});
-
-export const DashboardShowToolbarsDropdown = (): DashboardShowToolbarsDropdownAction => ({
-  type: DASHBOARD_SHOW_TOOLBARS_DROPDOWN,
-});
-
-export const DashboardHideToolbarsDropdown = (): DashboardHideToolbarsDropdownAction => ({
-  type: DASHBOARD_HIDE_TOOLBARS_DROPDOWN,
-});
-
 export const DashboardSetHomeToolbarTitle = (
   Title: string
 ): DashboardSetHomeToolbarTitleAction => ({
   type: DASHBOARD_SET_HOME_TOOLBAR_TITLE,
   Title,
-});
-
-export const DashboardSetMinimisedHomeToolbarButtonStyle = (
-  ButtonStyle: ButtonStyle
-): DashboardSetMinimisedHomeToolbarButtonStyleAction => ({
-  type: DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE,
-  ButtonStyle,
 });
 
 export const DashboardCustomToolbarEdit = (
@@ -244,40 +197,23 @@ export const DashboardCreateDefaultTab = (): DashboardCreateDefaultTabAction => 
 });
 
 const initialDashboardState: DashboardState = {
-  AvailableToolbars: [
-    'AdvancedSearch',
-    'Alert',
-    'BulkUpdate',
-    'CellSummary',
-    'Chart',
-    'ColumnFilter',
-    'DataSource',
-    'Export',
-    'Glue42',
-    'IPushPull',
-    'Layout',
-    'SmartEdit',
-    'QuickSearch',
-    'SystemStatus',
-    'Theme',
-  ],
-  VisibleToolbars: ['QuickSearch', 'Layout', 'Export', 'ColumnFilter'],
+  VisibleToolbars: EMPTY_ARRAY,
   Tabs: null,
   ActiveTab: 0,
   IsCollapsed: false,
   IsFloating: false,
   FloatingPosition: { x: 100, y: 100 },
-  VisibleButtons: ['SystemStatus', 'GridInfo', 'Dashboard', 'ColumnChooser', 'ConditionalStyle'],
+  VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
   CustomToolbars: EMPTY_ARRAY,
-  DashboardVisibility: Visibility.Visible,
   ShowFunctionsDropdown: true,
-  ShowColumnsDropdown: true,
-  ShowToolbarsDropdown: true,
   HomeToolbarTitle: '',
-  MinimisedHomeToolbarButtonStyle: {
-    Variant: 'outlined',
-    Tone: 'neutral',
-  },
+
+  // deprecated properties
+  AvailableToolbars: null,
+  DashboardVisibility: null,
+  ShowColumnsDropdown: null,
+  ShowToolbarsDropdown: null,
+  MinimisedHomeToolbarButtonStyle: null,
 };
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (
@@ -295,10 +231,6 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
   };
 
   switch (action.type) {
-    case DASHBOARD_SET_AVAILABLE_TOOLBARS:
-      return Object.assign({}, state, {
-        AvailableToolbars: (action as DashboardSetAvailableToolbarsAction).toolbars,
-      });
     case DASHBOARD_SET_TOOLBARS: {
       const actionTyped = action as DashboardSetToolbarsAction;
       const dashboardToolbars = actionTyped.toolbars;
@@ -330,43 +262,10 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
       const dashboardFunctionButtons = actionTyped.functionButtons;
       return Object.assign({}, state, { VisibleButtons: dashboardFunctionButtons });
     }
-    case DASHBOARD_SET_VISIBILITY: {
-      const actionTyped = action as DashboardSetVisibilityAction;
-      return Object.assign({}, state, { DashboardVisibility: actionTyped.Visibility });
-    }
-
-    case DASHBOARD_SHOW_FUNCTIONS_DROPDOWN: {
-      return Object.assign({}, state, { ShowFunctionsDropdown: true });
-    }
-    case DASHBOARD_HIDE_FUNCTIONS_DROPDOWN: {
-      return Object.assign({}, state, { ShowFunctionsDropdown: false });
-    }
-
-    case DASHBOARD_SHOW_COLUMNS_DROPDOWN: {
-      return Object.assign({}, state, { ShowColumnsDropdown: true });
-    }
-    case DASHBOARD_HIDE_COLUMNS_DROPDOWN: {
-      return Object.assign({}, state, { ShowColumnsDropdown: false });
-    }
-
-    case DASHBOARD_SHOW_TOOLBARS_DROPDOWN: {
-      return Object.assign({}, state, { ShowToolbarsDropdown: true });
-    }
-
-    case DASHBOARD_HIDE_TOOLBARS_DROPDOWN: {
-      return Object.assign({}, state, { ShowToolbarsDropdown: false });
-    }
 
     case DASHBOARD_SET_HOME_TOOLBAR_TITLE: {
       const actionTyped = action as DashboardSetHomeToolbarTitleAction;
       return Object.assign({}, state, { HomeToolbarTitle: actionTyped.Title });
-    }
-
-    case DASHBOARD_SET_MINIMISED_HOME_TOOLBAR_BUTTON_STYLE: {
-      const actionTyped = action as DashboardSetMinimisedHomeToolbarButtonStyleAction;
-      return Object.assign({}, state, {
-        MinimisedHomeToolbarButtonStyle: actionTyped.ButtonStyle,
-      });
     }
 
     case DASHBOARD_CUSTOM_TOOLBAR_EDIT: {

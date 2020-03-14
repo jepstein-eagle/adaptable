@@ -149,7 +149,7 @@ export function Dashboard(props: DashboardProps) {
               icon="clear"
               variant="text"
               onClick={() => setCollapsed(true)}
-              tooltip="Collapse"
+              tooltip="Collapse Dashboard"
               mb={1}
             />
             {onShowDashboardPopup && (
@@ -157,7 +157,7 @@ export function Dashboard(props: DashboardProps) {
                 icon="dashboard"
                 variant="text"
                 onClick={() => onShowDashboardPopup()}
-                tooltip="Configure"
+                tooltip="Configure Dashboard"
               />
             )}
           </div>

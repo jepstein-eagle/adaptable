@@ -182,9 +182,9 @@ class Glue42ToolbarControlComponent extends React.Component<
     ) : (
       <ButtonLogin
         marginLeft={1}
-        className="ab-DashboardToolbar__IPushPull__login"
+        className="ab-DashboardToolbar__Glue42__login"
         onClick={() => this.props.onShowGlue42Login()}
-        tooltip="Login to ipushpull"
+        tooltip="Login to Glue42"
         AccessLevel={this.props.AccessLevel}
       >
         {' '}

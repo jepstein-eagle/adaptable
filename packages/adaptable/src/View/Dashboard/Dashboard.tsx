@@ -10,10 +10,7 @@ import {
   DashboardFloatingPosition,
 } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
-import {
-  AdaptableDashboardFactory,
-  AdaptableDashboardPermanentToolbarFactory,
-} from '../AdaptableViewFactory';
+import { AdaptableDashboardFactory } from '../AdaptableViewFactory';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -45,7 +42,6 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
   StatusType: SystemStatusState['StatusType'];
   QuickSearchText: string;
   dispatch: (action: Redux.Action) => Redux.Action;
-  onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetActiveTab: (ActiveTab: number | null) => DashboardRedux.DashboardSetActiveTabAction;
   onSetIsCollapsed: (IsCollapsed: boolean) => DashboardRedux.DashboardSetIsCollapsedAction;
   onSetIsFloating: (IsFloating: boolean) => DashboardRedux.DashboardSetIsFloatingAction;
@@ -95,6 +91,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     this.props.onSetIsCollapsed(false);
     this.props.onSetIsFloating(false);
   }
+
   changeActiveTab(index: number) {
     if (this.props.DashboardState.Tabs[index] !== undefined) {
       this.props.onSetActiveTab(index);
@@ -227,7 +224,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     // function menu items
     let menuItems = allowedMenuItems.map(menuItem => {
       return {
-        disabled: this.props.AccessLevel == 'ReadOnly',
+        disabled: this.props.AccessLevel == 'Hidden',
         onClick: () => this.props.dispatch(menuItem.ReduxAction),
         icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
@@ -299,7 +296,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             this.props.onSetFloatingPosition(FloatingPositionCallback);
           }
         }}
-        left={this.renderFunctionsDropdown()}
+        left={this.props.DashboardState.ShowFunctionsDropdown && this.renderFunctionsDropdown()}
         right={
           <>
             {this.renderFunctionButtons()}
@@ -346,8 +343,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetIsFloating(IsFloating)),
     onSetFloatingPosition: (FloatingPosition: DashboardFloatingPosition) =>
       dispatch(DashboardRedux.DashboardSetFloatingPosition(FloatingPosition)),
-    onSetDashboardVisibility: (visibility: Visibility) =>
-      dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
     onShowQuickSearchPopup: () =>

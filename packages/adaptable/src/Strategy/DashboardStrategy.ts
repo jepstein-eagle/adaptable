@@ -96,25 +96,26 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   public addColumnMenuItems(): AdaptableMenuItem[] | undefined {
     // for now just show / hide = lets worry about minimise later..
     if (this.canCreateMenuItem('ReadOnly')) {
-      if (
-        this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility == Visibility.Hidden
-      ) {
-        return [
+      let menuItems: AdaptableMenuItem[] = [];
+      if (this.adaptable.api.dashboardApi.getDashboardState().IsCollapsed) {
+        menuItems.push(
           this.createColumnMenuItemReduxAction(
-            'Show Dashboard',
+            'UnCollapse Dashboard',
             StrategyConstants.DashboardGlyph,
-            DashboardRedux.DashboardSetVisibility(Visibility.Visible)
-          ),
-        ];
+            DashboardRedux.DashboardSetIsCollapsed(false)
+          )
+        );
       } else {
-        return [
+        menuItems.push(
           this.createColumnMenuItemReduxAction(
-            'Hide Dashboard',
+            'Collapse Dashboard',
             StrategyConstants.DashboardGlyph,
-            DashboardRedux.DashboardSetVisibility(Visibility.Hidden)
-          ),
-        ];
+            DashboardRedux.DashboardSetIsCollapsed(true)
+          )
+        );
       }
+
+      return menuItems;
     }
   }
 

@@ -24,6 +24,7 @@ export interface IStrategy {
   addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;
   setStrategyEntitlement(): void;
+  isStrategyAvailable(): boolean;
   AccessLevel: AccessLevel;
 }
 /**

@@ -27,12 +27,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * Dashboard: {
  *   VisibleToolbars: ['Theme', 'Export', 'Layout', 'Chart'],
  *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
- *   ShowToolbarsDropdown: false,
- *   DashboardVisibility: 'Minimised',
- *   MinimisedHomeToolbarButtonStyle: {
- *     Variant: 'raised',
- *     Tone: 'accent',
- *   },
  *  }
  * } as PredefinedConfig;
  * ```
@@ -63,17 +57,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  */
 export interface DashboardState extends ConfigState {
   /**
-   * Which toolbars should be available for the user to select to see.
-   *
-   * Only those toolbars listed here will be selectable at run-time
-   *
-   * If you don't provide any value for this property, then ALL Adaptable toolbars will be available.
-   *
-   * **Default Value**: Empty array
-   */
-  AvailableToolbars?: AdaptableDashboardToolbars;
-
-  /**
    * Which toolbars should be visible in the Dasbhoard when your application first loads.
    *
    * Note: If the `AvailableToolbars` property has been set, then the visible toolbars listed here must also be included there.
@@ -90,27 +73,25 @@ export interface DashboardState extends ConfigState {
   FloatingPosition?: DashboardFloatingPosition;
 
   /**
-   * Which Function Buttons should be visible in the Home Toolbar Dasbhoard when the application loads.
+   * Toolbars provided by the User
+   *
+   * Each Custom toolbar contains a Name (to identify it) and a Title.
+   *
+   * It can optionally also contain a Glyph and an array of `ToolbarButton`.
+   */
+  CustomToolbars?: CustomToolbar[];
+
+  /**
+   * Which Function Buttons should be visible in the Dasbhoard when the application loads.
    *
    * Each button is connected to a Function in Adaptable and opens the relevant popup screen.
    *
-   * **Default Value**: 'SystemStatus', 'GridInfo', 'Dashboard', 'ColumnChooser', 'ConditionalStyle'
+   * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
 
   /**
-   * How the Dashboard will appear.
-   *
-   * You can Show / Minimise the Dashboard through the carat button in the top corner of the Home Dashboard.
-   *
-   * If you want to hide the Dashboard altogether then select 'Hide Dashboard' from the Column Header menu (or 'Show Dashboard' to put it back).
-   *
-   * **Default Value**: 'Visible'
-   */
-  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
-
-  /**
-   * Whether to show the Functions dropdown in the Home Toolbar.
+   * Whether to show the Functions dropdown in the Dashboard.
    *
    * If 'true' then the dropdown will be visible as the first item (with a 'house' icon).
    *
@@ -123,33 +104,9 @@ export interface DashboardState extends ConfigState {
   ShowFunctionsDropdown?: boolean;
 
   /**
-   * Whether to show the Columns dropdown in the Home Toolbar.
+   * The title of the Dashboard
    *
-   * If 'true' then the dropdown will be visible as the penultimate item in the Home Toolbar.
-   *
-   * Clicking the button will open a Dropdown listing all the Columns in your grid.  You can click the checkbox to show / hide the column.
-   *
-   * Note: if you want to move Columns in your Grid then you need to use the `Column Chooser` Function.
-   *
-   * **Default Value**:  true
-   */
-  ShowColumnsDropdown?: boolean;
-
-  /**
-   * Whether to show the Toolbars dropdown in the Home Toolbar.
-   *
-   * If 'true' then the dropdown will be visible as the last item in the Home Toolbar.
-   *
-   * Clicking the button will open a Dropdown listing all the Toolbars available (see the `AvailableToolbars` property).  You can click the checkbox to show / hide the toolbar.
-   *
-   * Note: if you want to move / reposition the Toolbars in the Dashboard then you need to open the Dashboard Configuration popup.
-   *
-   * **Default Value**:  true
-   */
-  ShowToolbarsDropdown?: boolean;
-
-  /**
-   * The title of the Home Toolbar - the first toolbar visible.
+   * It is called `HomeToolbarTitle` for backward compatibiility
    *
    * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Adaptable Options
    *
@@ -158,32 +115,37 @@ export interface DashboardState extends ConfigState {
   HomeToolbarTitle?: string;
 
   /**
-   * How the Home Toolbar will appear (as a button) when Miminised
-   *
-   * **Default Value**: `Variant`: 'outlined', `Tone`: 'neutral',
+   * This is now deprecated; instead any toolbar for an 'entitled' Function is available
+   */
+  AvailableToolbars?: AdaptableDashboardToolbars;
+
+  /**
+   * This is now deprecated; instead select columns through the Column Chooser
+   */
+  ShowColumnsDropdown?: boolean;
+
+  /**
+   * This is now deprecated; instead select toolbars and tabs through configuring the Dashboard
+   */
+  ShowToolbarsDropdown?: boolean;
+
+  /**
+   * This is now deprecated and no longer used
    */
   MinimisedHomeToolbarButtonStyle?: ButtonStyle;
 
   /**
-   * Toolbars provided by the User
-   *
-   * Each Custom toolbar contains a Name (to identify it) and a Title.
-   *
-   * It can optionally also contain a Glyph and an array of `ToolbarButton`.
+   * This is now deprecated; instead use the `IsCollapsed` and `IsFloating` properties
    */
-  CustomToolbars?: CustomToolbar[];
+  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
 
   /**
-   * This is now deprecated and no longer used
-   *
-   * Instead please make sure that 'SystemStatus' is included in the Visible Buttons collection
+   * This is now deprecated and no longer used; instead please make sure that 'SystemStatus' is included in the Visible Buttons collection
    */
   ShowSystemStatusButton?: boolean;
 
   /**
-   * This is now deprecated and no longer used
-   *
-   * Instead please make sure that 'GridInfo' is included in Visible Buttons collection
+   * This is now deprecated and no longer used; instead please make sure that 'GridInfo' is included in Visible Buttons collection
    */
   ShowGridInfoButton?: boolean;
 }

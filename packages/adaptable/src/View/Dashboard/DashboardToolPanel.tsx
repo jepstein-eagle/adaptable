@@ -10,15 +10,15 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { Visibility } from '../../PredefinedConfig/Common/Enums';
-import EnumExtensions from '../../Utilities/Extensions/EnumExtensions';
-import Dropdown from '../../components/Dropdown';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
+import CheckBox from '../../components/CheckBox';
 
 interface DashboardToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<DashboardToolPanelComponentProps> {
-  DashboardVisibility: Visibility;
-  onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
+  IsCollapsed: boolean;
+  IsFloating: boolean;
+  onSetDashboardCollapsed: (isCollapsed: boolean) => DashboardRedux.DashboardSetIsCollapsedAction;
+  onSetDashboardFloating: (isFloating: boolean) => DashboardRedux.DashboardSetIsFloatingAction;
 }
 
 interface DashboardToolPanelComponentState {
@@ -35,13 +35,6 @@ class DashboardToolPanelComponent extends React.Component<
   }
 
   render() {
-    let visibilityOptions = EnumExtensions.getNames(Visibility).map(type => {
-      return {
-        value: type,
-        label: type,
-      };
-    });
-
     return (
       <PanelToolPanel
         className="ab-ToolPanel__Dashboard"
@@ -52,16 +45,34 @@ class DashboardToolPanelComponent extends React.Component<
         onClose={() => this.props.onClose('Dashboard')}
       >
         {!this.state.IsMinimised && (
-          <Dropdown
-            key={'dashboardvisibility'}
-            style={{ minWidth: 170 }}
-            placeholder="select"
-            showEmptyItem={false}
-            showClearButton={false}
-            value={this.props.DashboardVisibility}
-            onChange={(value: any) => this.props.onSetDashboardVisibility(value)}
-            options={visibilityOptions}
-          ></Dropdown>
+          <div>
+            {' '}
+            <CheckBox
+              className="ab-ToolPanel__Dashboard__collapsed-check"
+              disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+              marginLeft={1}
+              marginTop={0}
+              fontSize={2}
+              padding={1}
+              checked={this.props.IsCollapsed}
+              onChange={(checked: boolean) => this.props.onSetDashboardCollapsed(checked)}
+            >
+              Collapse
+            </CheckBox>
+            {''}
+            <CheckBox
+              className="ab-ToolPanel__Dashboard__collapsed-check"
+              disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+              marginLeft={1}
+              marginTop={0}
+              fontSize={2}
+              padding={1}
+              checked={this.props.IsFloating}
+              onChange={(checked: boolean) => this.props.onSetDashboardFloating(checked)}
+            >
+              Float
+            </CheckBox>
+          </div>
         )}
       </PanelToolPanel>
     );
@@ -70,14 +81,17 @@ class DashboardToolPanelComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState, ownProps: any) {
   return {
-    DashboardVisibility: state.Dashboard.DashboardVisibility,
+    IsCollapsed: state.Dashboard.IsCollapsed,
+    IsFloating: state.Dashboard.IsFloating,
   };
 }
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onSetDashboardVisibility: (visibility: Visibility) =>
-      dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
+    onSetDashboardCollapsed: (isCollapsed: boolean) =>
+      dispatch(DashboardRedux.DashboardSetIsCollapsed(isCollapsed)),
+    onSetDashboardFloating: (isFloating: boolean) =>
+      dispatch(DashboardRedux.DashboardSetIsFloating(isFloating)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

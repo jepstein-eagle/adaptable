@@ -40,9 +40,12 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        Revision: 2,
+        Revision: 17,
         VisibleToolbars: ['QuickSearch'],
+        ShowFunctionsDropdown: true,
+        HomeToolbarTitle: 'Hello world',
       },
+
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],
@@ -54,6 +57,12 @@ function InitAdaptableDemo() {
       Entitlements: {
         Revision: 2,
         DefaultAccessLevel: 'Full',
+        FunctionEntitlements: [
+          {
+            FunctionName: 'AdvancedSearch',
+            AccessLevel: 'Hidden',
+          },
+        ],
       },
     },
   };

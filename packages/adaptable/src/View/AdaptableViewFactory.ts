@@ -33,7 +33,7 @@ import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
 import { Glue42LoginPopup } from './Glue42/Glue42LoginPopup';
 import { IPushPullLoginPopup } from './IPushPull/IPushPullLoginPopup';
 import { IPushPullAddPagePopup } from './IPushPull/IPushPullAddPagePopup';
-import { HomeToolbarControl } from './Home/HomeToolbarControl';
+//import { HomeToolbarControl } from './Home/HomeToolbarControl';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
@@ -155,11 +155,6 @@ export const AdaptableToolPanelFactory = new Map<
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolPanel],
   [StrategyConstants.ThemeStrategyId, ThemeToolPanel],
 ]);
-
-export const AdaptableDashboardPermanentToolbarFactory = new Map<
-  string,
-  ConnectedComponent<any, any>
->([[StrategyConstants.HomeStrategyId, HomeToolbarControl]]);
 
 export interface IAdaptableViewFactory {
   [key: string]: any;

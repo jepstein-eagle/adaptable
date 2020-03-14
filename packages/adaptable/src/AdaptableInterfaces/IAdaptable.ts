@@ -137,7 +137,6 @@ export interface IAdaptable {
   //emit(eventName: string, data?: any): Promise<any>;
 
   // General
-  createFunctionMenu(): void;
   reloadGrid(): void;
   redraw(): void;
   redrawRow(rowNode: any): void;

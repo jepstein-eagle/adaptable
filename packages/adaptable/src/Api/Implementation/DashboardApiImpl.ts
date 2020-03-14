@@ -23,10 +23,6 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     return this.getDashboardState().CustomToolbars;
   }
 
-  public setAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void {
-    this.dispatchAction(DashboardRedux.DashboardSetAvailableToolbars(availableToolbars));
-  }
-
   public setVisibleToolbars(visibleToolbars: AdaptableDashboardToolbars): void {
     visibleToolbars.forEach((vt: AdaptableDashboardToolbar) => {
       this.showToolbar(vt);
@@ -43,46 +39,6 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
 
   public setVisibleButtons(functionButtons: AdaptableFunctionButtons): void {
     this.dispatchAction(DashboardRedux.DashboardSetFunctionButtons(functionButtons));
-  }
-
-  public setVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void {
-    this.dispatchAction(DashboardRedux.DashboardSetVisibility(dashboardVisibility as Visibility));
-  }
-
-  public show(): void {
-    this.setVisibility(Visibility.Visible);
-  }
-
-  public hide(): void {
-    this.setVisibility(Visibility.Hidden);
-  }
-
-  public minimise(): void {
-    this.setVisibility(Visibility.Minimised);
-  }
-
-  public showFunctionsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowFunctionsDropdown());
-  }
-
-  public hideFunctionsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideFunctionsDropdown());
-  }
-
-  public showColumnsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowColumnsDropdown());
-  }
-
-  public hideColumnsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideColumnsDropdown());
-  }
-
-  public showToolbarsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardShowToolbarsDropdown());
-  }
-
-  public hideToolbarsDropdown(): void {
-    this.dispatchAction(DashboardRedux.DashboardHideToolbarsDropdown());
   }
 
   public setHomeToolbarTitle(title: string): void {

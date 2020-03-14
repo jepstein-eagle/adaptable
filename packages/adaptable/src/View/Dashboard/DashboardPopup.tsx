@@ -65,6 +65,25 @@ class DashboardPopupComponent extends React.Component<
   }
 
   render() {
+    // this should be elswhere but we shouldnt use state as the property is deprecated but still could be used.
+    const availableToolbars: any[] = [
+      'AdvancedSearch',
+      'Alert',
+      'BulkUpdate',
+      'CellSummary',
+      'Chart',
+      'ColumnFilter',
+      'DataSource',
+      'Export',
+      'Glue42',
+      'IPushPull',
+      'Layout',
+      'SmartEdit',
+      'QuickSearch',
+      'SystemStatus',
+      'Theme',
+    ];
+
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
       let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
@@ -73,12 +92,12 @@ class DashboardPopupComponent extends React.Component<
       }
     });
 
-    let systemToolbars = this.props.DashboardState.AvailableToolbars.filter(at =>
-      this.isNotHiddenStrategy(at)
-    ).map(at => ({
-      Id: at,
-      Title: StrategyConstants.getFriendlyNameForStrategyId(at),
-    }));
+    let systemToolbars = availableToolbars
+      .filter(at => this.props.Adaptable.StrategyService.isStrategyAvailable(at))
+      .map(at => ({
+        Id: at,
+        Title: StrategyConstants.getFriendlyNameForStrategyId(at),
+      }));
 
     let customToolbars = this.props.DashboardState.CustomToolbars.map(ct => ({
       Id: ct.Name,
@@ -90,7 +109,9 @@ class DashboardPopupComponent extends React.Component<
         let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
           ct => ct.Name === vt
         );
-        return customToolbar ? true : this.isNotHiddenStrategy(vt as AdaptableFunctionName);
+        return customToolbar
+          ? true
+          : this.props.Adaptable.StrategyService.isStrategyAvailable(vt as AdaptableFunctionName);
       });
 
       return { ...tab, Toolbars };
@@ -202,10 +223,6 @@ class DashboardPopupComponent extends React.Component<
   isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
     return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
-
-  isNotHiddenStrategy(functionName: AdaptableFunctionName): boolean {
-    return !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(functionName);
-  }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any) {
@@ -219,14 +236,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onDashboardSetFunctionButtons: (functionButtons: AdaptableFunctionButtons) =>
       dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),
-    onDashboardShowFunctionsDropdown: () =>
-      dispatch(DashboardRedux.DashboardShowFunctionsDropdown()),
-    onDashboardHideFunctionsDropdown: () =>
-      dispatch(DashboardRedux.DashboardHideFunctionsDropdown()),
-    onDashboardShowColumnsDropdown: () => dispatch(DashboardRedux.DashboardShowColumnsDropdown()),
-    onDashboardHideColumnsDropdown: () => dispatch(DashboardRedux.DashboardHideColumnsDropdown()),
-    onDashboardShowToolbarsDropdown: () => dispatch(DashboardRedux.DashboardShowToolbarsDropdown()),
-    onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
+
     onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
       dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
     onDashboardSetTabs: (Tabs: DashboardTab[]) => dispatch(DashboardRedux.DashboardSetTabs(Tabs)),
