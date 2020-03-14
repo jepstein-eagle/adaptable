@@ -1,4 +1,5 @@
 import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 
 /**
  * Event Args used as part of the **on('ToolbarVisibilityChanged)** event.
@@ -14,6 +15,8 @@ export interface ToolbarVisibilityChangedEventData extends AdaptableEventData {
 }
 
 export interface ToolbarVisibilityChangedInfo {
+  tab: DashboardTab;
   toolbar: string;
-  visibility: 'Visible' | 'Hidden';
+  // this is now deprecated and we no longer fire when a toolbar is hidden - only when rendered
+  visibility?: 'Visible' | 'Hidden';
 }

@@ -38,6 +38,8 @@ function InitAdaptableDemo() {
   api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
     let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo =
       toolbarVisibilityChangedEventArgs.data[0].id;
+    console.log('toolbarVisibilityChangedInfo');
+    console.log(toolbarVisibilityChangedInfo);
     if (toolbarVisibilityChangedInfo.visibility === 'Visible') {
       if (toolbarVisibilityChangedInfo.toolbar === 'Toolbar1') {
         let toolbarContents: any = (

@@ -3,83 +3,47 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
-import { Visibility } from '../PredefinedConfig/Common/Enums';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { arrayToKeyMap } from '../Utilities/Helpers/Helper';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import {
   ToolbarVisibilityChangedEventArgs,
   ToolbarVisibilityChangedInfo,
 } from '../Api/Events/ToolbarVisibilityChanged';
-import { AdaptableDashboardToolbar } from '../PredefinedConfig/Common/Types';
+import { DashboardTab } from '../PredefinedConfig/DashboardState';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
-  private visibleToolbars: AdaptableDashboardToolbar[] | string[] | undefined;
-  private dashboardVisibility: Visibility;
-
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.DashboardStrategyId, adaptable);
+
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
+      if (
+        this.adaptable.api.dashboardApi.getDashboardState().Tabs === null &&
+        this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars.length !== 0
+        // && this.adaptable.api.dashboardApi.getDashboardState().Revision === undefined
+      ) {
+        this.adaptable.AdaptableStore.TheStore.dispatch(DashboardRedux.DashboardCreateDefaultTab());
+      }
+      this.prepareToolbarVisibilityChangedEvent();
+    });
+
+    adaptable.AdaptableStore.onAny((eventName: string) => {
+      if (
+        eventName == DashboardRedux.DASHBOARD_SET_ACTIVE_TAB ||
+        eventName == DashboardRedux.DASHBOARD_SET_TABS
+      ) {
+        this.prepareToolbarVisibilityChangedEvent();
+      }
+    });
   }
 
-  protected InitState() {
-    if (
-      this.visibleToolbars != this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars
-    ) {
-      const oldVisibleToolbars = arrayToKeyMap(this.visibleToolbars);
-      const newVisibleToolbars = arrayToKeyMap(
-        this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars
-      );
-
-      [...(this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars || [])].forEach(
-        (toolbar: string) => {
-          if (!oldVisibleToolbars[toolbar]) {
-            if (
-              this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility ==
-              Visibility.Visible
-            ) {
-              this.fireToolbarVisibilityChangedEvent(toolbar, 'Visible');
-            }
-          }
-        }
-      );
-
-      [...(this.visibleToolbars || [])].forEach((toolbar: AdaptableDashboardToolbar | string) => {
-        if (!newVisibleToolbars[toolbar]) {
-          this.fireToolbarVisibilityChangedEvent(toolbar, 'Hidden');
-        }
+  private prepareToolbarVisibilityChangedEvent(): void {
+    let activeTab = this.adaptable.api.dashboardApi.getDashboardState().ActiveTab;
+    let tab: DashboardTab = this.adaptable.api.dashboardApi.getDashboardState().Tabs[activeTab];
+    if (tab) {
+      tab.Toolbars.forEach(toolbar => {
+        this.fireToolbarVisibilityChangedEvent(tab, toolbar);
       });
-
-      this.visibleToolbars = this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars;
-    }
-
-    if (
-      this.dashboardVisibility !=
-      this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility
-    ) {
-      this.dashboardVisibility = this.adaptable.api.dashboardApi.getDashboardState()
-        .DashboardVisibility as Visibility;
-
-      if (this.dashboardVisibility == Visibility.Visible) {
-        [...(this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars || [])].forEach(
-          (toolbar: string) => {
-            if (
-              this.adaptable.api.dashboardApi.getDashboardState().DashboardVisibility ==
-              Visibility.Visible
-            ) {
-              this.fireToolbarVisibilityChangedEvent(toolbar, 'Visible');
-            }
-          }
-        );
-      }
-    }
-
-    if (
-      this.adaptable.api.dashboardApi.getDashboardState().Tabs === null &&
-      this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars.length !== 0
-      // && this.adaptable.api.dashboardApi.getDashboardState().Revision === undefined
-    ) {
-      this.adaptable.AdaptableStore.TheStore.dispatch(DashboardRedux.DashboardCreateDefaultTab());
     }
   }
 
@@ -119,13 +83,11 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     }
   }
 
-  private fireToolbarVisibilityChangedEvent(
-    toolbar: string,
-    visibility: 'Visible' | 'Hidden'
-  ): void {
+  private fireToolbarVisibilityChangedEvent(tab: DashboardTab, toolbar: string): void {
     let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo = {
+      tab: tab,
       toolbar: toolbar,
-      visibility: visibility,
+      visibility: 'Visible',
     };
     const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Toolbar Visibility Changed Args',
