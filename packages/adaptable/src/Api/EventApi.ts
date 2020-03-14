@@ -215,7 +215,7 @@ export interface EventApi {
    *
    * @param eventName ToolbarVisibilityChanged - use as: adaptableApi.eventApi.on('ToolbarVisibilityChanged', (args: ToolbarVisibilityChangedEventArgs) => { .....[do stuff]...})
    *
-   * @param callback ToolbarVisibilityChangedEventArgs which includes just the name of the toolbar that has become visible.
+   * @param callback ToolbarVisibilityChangedEventArgs which includes the name of the toolbar (and the parent Tab) that has become visible.
    */
   on(
     eventName: 'ToolbarVisibilityChanged',

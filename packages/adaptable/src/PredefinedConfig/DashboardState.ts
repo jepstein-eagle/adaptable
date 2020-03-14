@@ -164,7 +164,7 @@ export interface DashboardState extends ConfigState {
  *
  * Adaptable provides the [dashboardAPI](_src_api_dashboardapi_.dasbhoardapi.html) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
  *
- * You can listen to the **ToolbarVisibilityChanged** event published by Adaptable which provides the name of relevant toolbar and its new visibility.
+ * You can listen to the **ToolbarVisibilityChanged** event published by Adaptable which provides the name of relevant toolbar (and the Tab in which it is contained).
  *
  * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
  *
@@ -174,8 +174,7 @@ export interface DashboardState extends ConfigState {
  * adaptableApi.eventApi.on('ToolbarVisibilityChanged',
  *  (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => {
  * if (
- *   toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'myToolbar' &&
- *   toolbarVisibilityChangedEventArgs.data[0].id.visibility == 'Visible'
+ *   toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'myToolbar'
  * ) {
  *  let toolbarContents: any = (
  *      <div style={{ display: 'flex' }}>
