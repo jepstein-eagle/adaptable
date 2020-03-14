@@ -89,6 +89,7 @@ import Pause from './pause';
 import NewPage from './newpage';
 import Drag from './drag';
 import HideColumn from './hide-column';
+import Settings from './settings';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -195,6 +196,7 @@ const allIcons = {
   newpage: NewPage, //note_add
   drag: Drag,
   'hide-column': HideColumn,
+  settings: Settings,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

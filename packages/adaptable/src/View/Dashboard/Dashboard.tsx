@@ -258,7 +258,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         />
         <AdaptableFormControlTextClear
           type="text"
-          placeholder="Search Text"
+          placeholder="Search"
           className="ab-DashboardToolbar__QuickSearch__text"
           value={this.state.EditedQuickSearchText}
           OnTextChange={x => this.onUpdateQuickSearchText(x)}

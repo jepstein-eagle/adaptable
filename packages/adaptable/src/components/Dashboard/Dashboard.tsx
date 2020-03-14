@@ -129,13 +129,21 @@ export function Dashboard(props: DashboardProps) {
           </div>
         )}
         <div className="ab-Dashboard__bar-right">
-          {right}
+          {right}{' '}
+          {onShowDashboardPopup && (
+            <SimpleButton
+              icon="settings"
+              variant="text"
+              onClick={() => onShowDashboardPopup()}
+              tooltip="Configure Dashboard"
+              ml={2}
+            />
+          )}
           <SimpleButton
             icon={floating ? 'arrow-right' : 'arrow-left'}
             variant="text"
             tone="accent"
             onClick={() => setFloating(!floating)}
-            ml={2}
           />
         </div>
       </div>
@@ -154,7 +162,7 @@ export function Dashboard(props: DashboardProps) {
             />
             {onShowDashboardPopup && (
               <SimpleButton
-                icon="dashboard"
+                icon="settings"
                 variant="text"
                 onClick={() => onShowDashboardPopup()}
                 tooltip="Configure Dashboard"
