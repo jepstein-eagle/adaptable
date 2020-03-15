@@ -27,13 +27,15 @@ function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeWithSparkline(tradeData);
 
-  gridOptions.modules = AllEnterpriseModules;
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Charts Plugin Basic Demo',
 
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
     plugins: [charts()],
   };
@@ -63,14 +65,17 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
+    Revision: 2,
+    Tabs: [
+      {
+        Name: 'Charting',
+        Toolbars: ['Chart', 'AdvancedSearch'],
+      },
+    ],
   },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+    Revision: 2,
+    VisibleToolPanels: ['Export', 'AdvancedSearch', 'Layout', 'Chart', 'ColumnFilter'],
   },
   SystemStatus: {
     // ShowAlert: false,
