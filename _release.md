@@ -1,3 +1,7 @@
+## 6.0.26
+
+Introduction of Dasbhoard Tabs
+
 ## 6.0.25
 
 UserFunctions refactoring
