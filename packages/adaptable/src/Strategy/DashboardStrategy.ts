@@ -11,6 +11,7 @@ import {
   ToolbarVisibilityChangedInfo,
 } from '../Api/Events/ToolbarVisibilityChanged';
 import { DashboardTab } from '../PredefinedConfig/DashboardState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   constructor(adaptable: IAdaptable) {
@@ -40,12 +41,17 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
   }
 
   private prepareToolbarVisibilityChangedEvent(): void {
-    let activeTab = this.adaptable.api.dashboardApi.getDashboardState().ActiveTab;
-    let tab: DashboardTab = this.adaptable.api.dashboardApi.getDashboardState().Tabs[activeTab];
-    if (tab) {
-      tab.Toolbars.forEach(toolbar => {
-        this.fireToolbarVisibilityChangedEvent(tab, toolbar);
-      });
+    let currentTabs: DashboardTab[] = this.adaptable.api.dashboardApi.getDashboardState().Tabs;
+    if (ArrayExtensions.IsNotNullOrEmpty(currentTabs)) {
+      let activeTab = this.adaptable.api.dashboardApi.getDashboardState().ActiveTab;
+      if (activeTab > -1) {
+        let tab: DashboardTab = this.adaptable.api.dashboardApi.getDashboardState().Tabs[activeTab];
+        if (tab) {
+          tab.Toolbars.forEach(toolbar => {
+            this.fireToolbarVisibilityChangedEvent(tab, toolbar);
+          });
+        }
+      }
     }
   }
 
