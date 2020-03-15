@@ -4,6 +4,8 @@ import SimpleButton from '../SimpleButton';
 import { Icon } from '../icons';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import { Flex } from 'rebass';
+import { PanelWithButton } from '../../View/Components/Panels/PanelWithButton';
 
 export interface DashboardToolbar {
   Id: AdaptableDashboardToolbar | string;
@@ -211,7 +213,9 @@ function UnusedPanel({ toolbars }: { toolbars: string[] }) {
         backgroundColor: 'var(--ab-color-defaultbackground)',
       }}
     >
-      <div style={{ padding: 'var(--ab-space-2)' }}>Unused Toolbars</div>
+      <div style={{ padding: 'var(--ab-space-2)' }}>
+        <b>Available Toolbars</b> (drag into a Tab below)
+      </div>
       <UnusedToolbarList toolbars={toolbars} />
     </div>
   );
@@ -364,17 +368,21 @@ function DashboardManager({
       <DashboardManagerContext.Provider value={contextValue}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <UnusedPanel toolbars={unusedToolbars} />
-          <div style={{ display: 'flex', flex: 1 }}>
-            <TabList
-              tabs={tabs}
-              onRemoveTab={handleRemoveTab}
-              onRemoveToolbar={handleRemoveToolbar}
-              onChangeTabName={handleChangeTabName}
-            />
-            <SimpleButton onClick={handleTabAdd} px={3}>
-              Add Tab
-            </SimpleButton>
-          </div>
+          <PanelWithButton
+            headerText={'Dashboard Tabs'}
+            variant="default"
+            button={<SimpleButton onClick={handleTabAdd}>Add Tab</SimpleButton>}
+            bodyProps={{ padding: 1 }}
+          >
+            <div style={{ display: 'flex', flex: 1 }}>
+              <TabList
+                tabs={tabs}
+                onRemoveTab={handleRemoveTab}
+                onRemoveToolbar={handleRemoveToolbar}
+                onChangeTabName={handleChangeTabName}
+              />
+            </div>
+          </PanelWithButton>
         </div>
       </DashboardManagerContext.Provider>
     </DragDropContext>

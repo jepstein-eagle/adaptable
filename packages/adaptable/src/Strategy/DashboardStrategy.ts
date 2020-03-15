@@ -30,6 +30,8 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     adaptable.AdaptableStore.onAny((eventName: string) => {
       if (
         eventName == DashboardRedux.DASHBOARD_SET_ACTIVE_TAB ||
+        eventName == DashboardRedux.DASHBOARD_SET_IS_COLLAPSED ||
+        eventName == DashboardRedux.DASHBOARD_SET_IS_FLOATING ||
         eventName == DashboardRedux.DASHBOARD_SET_TABS
       ) {
         this.prepareToolbarVisibilityChangedEvent();

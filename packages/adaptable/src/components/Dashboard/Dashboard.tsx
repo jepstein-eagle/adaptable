@@ -134,6 +134,7 @@ export function Dashboard(props: DashboardProps) {
             <SimpleButton
               icon="settings"
               variant="text"
+              tone="accent"
               onClick={() => onShowDashboardPopup()}
               tooltip="Configure Dashboard"
               ml={2}
