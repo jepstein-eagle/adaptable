@@ -291,7 +291,7 @@ function DashboardManager({
     () =>
       availableToolbars
         .map(t => t.Id)
-        .filter(toolbar => {
+        .filter((toolbar: any) => {
           return !tabs.some(tab => tab.Toolbars.includes(toolbar));
         }),
     [tabs, availableToolbars]
