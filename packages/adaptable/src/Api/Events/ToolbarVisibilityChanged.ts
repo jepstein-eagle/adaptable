@@ -15,8 +15,18 @@ export interface ToolbarVisibilityChangedEventData extends AdaptableEventData {
 }
 
 export interface ToolbarVisibilityChangedInfo {
+  /***
+   * The Dashboard Tab which 'hosts' the Toolbar that has become visible
+   */
   tab: DashboardTab;
+
+  /**
+   * The name of the Toolbar which has become visible
+   */
   toolbar: string;
-  // this property is now deprecated as we no longer fire when a toolbar is hidden - only when it becomes visible
+
+  /**
+   * This property is now deprecated as the event only fires when a toolbar becomes visible
+   */
   visibility?: 'Visible' | 'Hidden';
 }

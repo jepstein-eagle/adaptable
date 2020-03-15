@@ -6,7 +6,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
 /**
  * The Predefined Configuration for the Dashboard function
  *
- * The Dashboard is the area above the grid which contains buttons, toolbars and dropdowns.
+ * The Dashboard is the area above the grid which contains buttons, tabs, toolbars and Quick Search.
  *
  * **Note**: In v.6.1 (March 2020) the Dashboard has been signficantly updated and improved with some previous properties now deprecated.
  *
@@ -15,8 +15,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * - **Dashboard Header**: contains the Functions Dropdown, Function Buttons and Quick Search
  *
  * - **Dashboard Tabs**: named groups of Toolbars
- *
- *  --------------
  *
  * You use Dashboard State to set these Tabs and Function Toolbars.
  *
@@ -27,6 +25,8 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *  **Further AdapTable Help Resources**
  *
  * [Demo Site](https://demo.adaptabletools.com/dashboard/aggriddashboardtoolbarsdemo/) | [API](_src_api_dashboardapi_.dashboardapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ *
+ *  --------------
  *
  * **Dashboard Predefined Config Example**
  *
@@ -66,9 +66,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - set 6 Function Buttons to be visible
  *
+ *  --------------
+ *
  * **Custom Toolbars**
  *
- * Dashboard State can be supplied with custom toolbars that users can leverage in order populate with their own content.
+ * Dashboard State can be supplied with custom toolbars that users can leverage in order to populate them with their own content.
  *
  * Each Custom Toolbar contains 2 divs (to cater for 2 different scenarios):
  *
