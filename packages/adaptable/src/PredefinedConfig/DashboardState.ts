@@ -1,10 +1,6 @@
 import { ConfigState } from './ConfigState';
 import { ButtonStyle, ToolbarButton } from './Common/ToolbarButton';
-import {
-  AdaptableDashboardToolbars,
-  AdaptableFunctionButtons,
-  AdaptableDashboardToolbar,
-} from './Common/Types';
+import { AdaptableDashboardToolbars, AdaptableFunctionButtons } from './Common/Types';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
@@ -12,9 +8,21 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * The Dashboard is the area above the grid which contains buttons, toolbars and dropdowns.
  *
- * It comprises the 'Home Toolbar' (which hosts Function buttons and various dropdowns) and a range of Function Toolbars.
+ * **Note**: In v.6.1 (March 2020) the Dashboard has been signficantly updated and improved with some previous properties now deprecated.
  *
- * You use the Dashboard State to set which elements are availalbe (and visible) in the Home Toolbar and to select which Function Toolbars are available (and visible).
+ * The Dashboard comprises 2 sections:
+ *
+ * - **Dashboard Header**: contains the Functions Dropdown, Function Buttons and Quick Search
+ *
+ * - **Dashboard Tabs**: named groups of Toolbars
+ *
+ *  --------------
+ *
+ * You use Dashboard State to set these Tabs and Function Toolbars.
+ *
+ * You also use Dashboard State to define Custom Toolbars that you can then include in your Dashboard Tabs.
+ *
+ *  --------------
  *
  *  **Further AdapTable Help Resources**
  *
@@ -52,7 +60,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * ```
  * In this example we have:
  *
- * - created 3 Tabs ('Search', 'Edit' and 'Grid') each with their own Toolbars
+ * - created 3 Dashboard Tabs ('Search', 'Edit' and 'Grid') each with their own Toolbars
  *
  * - created a Custom Toolbar ('appToolbar') and put it in the 'Grid' Tab
  *
@@ -72,12 +80,41 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  */
 export interface DashboardState extends ConfigState {
+  /**
+   * A tab is a named group of Toolbars.
+   *
+   * You can create as many tabs as you want, but please ensure that each Toolbar is only in one tab.
+   */
   Tabs?: DashboardTab[];
 
+  /**
+   * The index of the Active Tab (in the Tabs collection)
+   *
+   */
   ActiveTab?: number;
+
+  /**
+   * Whether or not the Dashboard is collapsed.
+   *
+   * If the Dashboard is collapsed then only the header is visible but not the contents of any tabs.
+   */
   IsCollapsed?: boolean;
+
+  /**
+   * Whether or not the Dashboard is floating.
+   *
+   * If the Dashboard is floating then it will appear anywhere you drag it to (in minmised form).
+   *
+   * Double-click the Dashboard header to revert it to its default position above the grid.
+   */
   IsFloating?: boolean;
-  FloatingPosition?: DashboardFloatingPosition;
+
+  /**
+   * The position of the Dashboard when in 'floating mode'.
+   *
+   * This property is set by AdapTable and stored so the Dashboard will be in the same position when the grid next starts.
+   */
+  FloatingPosition?: AdaptableCoordinate;
 
   /**
    * Toolbars provided by the User
@@ -89,22 +126,22 @@ export interface DashboardState extends ConfigState {
   CustomToolbars?: CustomToolbar[];
 
   /**
-   * Which Function Buttons should be visible in the Dasbhoard when the application loads.
+   * Which Function Buttons should be visible in the Dasbhoard Header when the application loads.
    *
-   * Each button is connected to a Function in Adaptable and opens the relevant popup screen.
+   * Each button is connected to a Function in AdapTable and opens the relevant popup screen.
    *
    * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
 
   /**
-   * Whether to show the Functions dropdown in the Dashboard.
+   * Whether to show the Functions dropdown in the Dashboard Header.
    *
-   * If 'true' then the dropdown will be visible as the first item (with a 'house' icon).
+   * If 'true' (the default) then the dropdown will be visible as the first item (with a 'house' icon).
    *
    * Clicking the button will open a dropdown listing all the Functions that your `Entitlements` allows.
    *
-   * Selecting a menu item in the dropdown will open the popup for that Function.
+   * Selecting a menu item in the dropdown will open the associated popup for that Function.
    *
    * **Default Value**: true
    */
@@ -113,53 +150,53 @@ export interface DashboardState extends ConfigState {
   /**
    * The title of the Dashboard
    *
-   * It is called `HomeToolbarTitle` for backward compatibiility
-   *
    * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Adaptable Options
+   *
+   * Note: It is called `HomeToolbarTitle` for backward compatibiility
    *
    * **Default Value**: the `adaptableId` property in Adaptable Options
    */
   HomeToolbarTitle?: string;
 
   /**
-   * This is now deprecated; instead create Tabs which include a `Toolbars` property
+   * *Depracated Property; instead create Tabs which include a `Toolbars` property*
    *
    * Note: in 6.1 any VisibleToolbars will be automatically added to a new Tab (which can then be edited by you)
    */
   VisibleToolbars?: AdaptableDashboardToolbars | string[];
 
   /**
-   * This is now deprecated; instead any toolbar for an 'entitled' Function is available
+   * *Depracated Property; instead any toolbar for an 'entitled' Function is available*
    */
   AvailableToolbars?: AdaptableDashboardToolbars;
 
   /**
-   * This is now deprecated; instead select columns through the Column Chooser
+   * *Depracated Property; instead select columns through the Column Chooser*
    */
   ShowColumnsDropdown?: boolean;
 
   /**
-   * This is now deprecated; instead select toolbars and tabs through configuring the Dashboard
+   * *Depracated Property; instead select toolbars and tabs through configuring the Dashboard*
    */
   ShowToolbarsDropdown?: boolean;
 
   /**
-   * This is now deprecated and no longer used
+   * *Depracated Property*
    */
   MinimisedHomeToolbarButtonStyle?: ButtonStyle;
 
   /**
-   * This is now deprecated; instead use the `IsCollapsed` and `IsFloating` properties
+   * *Depracated Property; instead use the `IsCollapsed` and `IsFloating` properties*
    */
   DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
 
   /**
-   * This is now deprecated and no longer used; instead please make sure that 'SystemStatus' is included in the Visible Buttons collection
+   * *Depracated Property; instead please make sure that 'SystemStatus' is included in the Visible Buttons collection*
    */
   ShowSystemStatusButton?: boolean;
 
   /**
-   * This is now deprecated and no longer used; instead please make sure that 'GridInfo' is included in Visible Buttons collection
+   * *Depracated Property; instead please make sure that 'GridInfo' is included in Visible Buttons collection*
    */
   ShowGridInfoButton?: boolean;
 }
@@ -331,7 +368,7 @@ export interface DashboardTab extends AdaptableObject {
   /// Toolbars: (AdaptableDashboardToolbar | string)[];
 }
 
-export interface DashboardFloatingPosition extends AdaptableObject {
+export interface AdaptableCoordinate extends AdaptableObject {
   x: number;
   y: number;
 }

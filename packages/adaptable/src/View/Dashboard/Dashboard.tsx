@@ -7,7 +7,7 @@ import {
   DashboardState,
   CustomToolbar,
   DashboardTab,
-  DashboardFloatingPosition,
+  AdaptableCoordinate,
 } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { AdaptableDashboardFactory } from '../AdaptableViewFactory';
@@ -46,7 +46,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
   onSetIsCollapsed: (IsCollapsed: boolean) => DashboardRedux.DashboardSetIsCollapsedAction;
   onSetIsFloating: (IsFloating: boolean) => DashboardRedux.DashboardSetIsFloatingAction;
   onSetFloatingPosition: (
-    FloatingPosition: DashboardFloatingPosition
+    FloatingPosition: AdaptableCoordinate
   ) => DashboardRedux.DashboardSetFloatingPositionAction;
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
@@ -341,7 +341,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetIsCollapsed(IsCollapsed)),
     onSetIsFloating: (IsFloating: boolean) =>
       dispatch(DashboardRedux.DashboardSetIsFloating(IsFloating)),
-    onSetFloatingPosition: (FloatingPosition: DashboardFloatingPosition) =>
+    onSetFloatingPosition: (FloatingPosition: AdaptableCoordinate) =>
       dispatch(DashboardRedux.DashboardSetFloatingPosition(FloatingPosition)),
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),

@@ -8,7 +8,7 @@ import {
 import {
   DashboardState,
   CustomToolbar,
-  DashboardFloatingPosition,
+  AdaptableCoordinate,
   DashboardTab,
 } from '../../PredefinedConfig/DashboardState';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -73,7 +73,7 @@ export interface DashboardSetIsFloatingAction extends Redux.Action {
 }
 
 export interface DashboardSetFloatingPositionAction extends Redux.Action {
-  FloatingPosition: DashboardFloatingPosition;
+  FloatingPosition: AdaptableCoordinate;
 }
 
 export interface DashboardSetTabsAction extends Redux.Action {
@@ -119,7 +119,7 @@ export const DashboardSetIsFloating = (IsFloating: boolean): DashboardSetIsFloat
 });
 
 export const DashboardSetFloatingPosition = (
-  FloatingPosition: DashboardFloatingPosition
+  FloatingPosition: AdaptableCoordinate
 ): DashboardSetFloatingPositionAction => ({
   type: DASHBOARD_SET_FLOATING_POSITION,
   FloatingPosition,
