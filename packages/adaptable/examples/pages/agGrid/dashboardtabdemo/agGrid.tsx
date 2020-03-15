@@ -42,11 +42,20 @@ function InitAdaptableDemo() {
       Dashboard: {
         // Revision: 17,
         // VisibleToolbars: ['QuickSearch'],
+        //  VisibleToolbars:['']
+
+        // this is empty for now but i can confirm that it works !
+        CustomToolbars: [
+          {
+            Name: 'Toolbar1',
+            Title: 'First Toolbar',
+          },
+        ],
         ShowFunctionsDropdown: true,
         Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'], // shouldnt see last one cos of entitlements
+            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'Toolbar1'], //shouldnt see last one cos of entitlements
           },
         ],
       },
