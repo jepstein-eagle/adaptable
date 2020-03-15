@@ -42,15 +42,23 @@ function InitAdaptableDemo() {
       Dashboard: {
         CustomToolbars: [
           {
-            Name: 'Toolbar1',
-            Title: 'First Toolbar',
+            Name: 'CustomToolbar',
+            Title: 'Custom Toolbar',
           },
         ],
         ShowFunctionsDropdown: true,
         Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'Toolbar1'], //shouldnt see last one cos of entitlements
+            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'CustomToolbar'], //shouldnt see last one cos of entitlements
+          },
+          {
+            Name: 'Edit',
+            Toolbars: ['BulkUpdate', 'SmartEdit'],
+          },
+          {
+            Name: 'Grid',
+            Toolbars: ['Layout', 'CellSummary', 'SystemStatus'],
           },
         ],
       },

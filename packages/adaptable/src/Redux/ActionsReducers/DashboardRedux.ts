@@ -1,9 +1,7 @@
 import * as Redux from 'redux';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Visibility } from '../../PredefinedConfig/Common/Enums';
-import { ButtonStyle, ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
+import { ButtonStyle } from '../../PredefinedConfig/Common/ToolbarButton';
 import {
-  AdaptableDashboardToolbars,
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
 } from '../../PredefinedConfig/Common/Types';
@@ -50,13 +48,6 @@ export interface DashboardShowFunctionsDropdownAction extends Redux.Action {}
 
 export interface DashboardHideFunctionsDropdownAction extends Redux.Action {}
 
-export interface DashboardShowColumnsDropdownAction extends Redux.Action {}
-
-export interface DashboardHideColumnsDropdownAction extends Redux.Action {}
-
-export interface DashboardShowToolbarsDropdownAction extends Redux.Action {}
-
-export interface DashboardHideToolbarsDropdownAction extends Redux.Action {}
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
   Title: string;
 }

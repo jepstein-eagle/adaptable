@@ -5,7 +5,7 @@ This page includes frequently used typed - particularly helpful for State and AP
 /**
  * Adaptable Toolbar collection
  *
- * When setting the `AvailableToolbars` or `VisibleToolbars` properties in Dashboard state, only the Toolbars listed here can be included.
+ * When setting the `Toolbars` property in `DashboardTab` in Dashboard state, only the Toolbars listed here can be included.
  */
 export type AdaptableDashboardToolbars = AdaptableDashboardToolbar[];
 

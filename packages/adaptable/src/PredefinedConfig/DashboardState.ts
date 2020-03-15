@@ -25,22 +25,38 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * ```ts
  * export default {
  * Dashboard: {
- *   VisibleToolbars: ['Theme', 'Export', 'Layout', 'Chart'],
  *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+ *   CustomToolbars: [
+ *          {
+ *            Name: 'appToolbar',
+ *            Title: 'Trades',
+ *          },
+ *        ],
+ *   Tabs: [
+ *          {
+ *            Name: 'Search',
+ *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *          },
+ *          {
+ *            Name: 'Edit',
+ *            Toolbars: ['BulkUpdate','SmartEdit'],
+ *          },
+ *          {
+ *            Name: 'Grid',
+ *            Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
+ *          },
+ *        ],
  *  }
  * } as PredefinedConfig;
+ *
  * ```
  * In this example we have:
  *
- * - set 5 Toolbars to be visible
+ * - created 3 Tabs ('Search', 'Edit' and 'Grid') each with their own Toolbars
  *
- * - set 4 Function Buttons to be visible
+ * - created a Custom Toolbar ('appToolbar') and put it in the 'Grid' Tab
  *
- * - hidden the Toolbars dropdown
- *
- * - set the Dashboard to be minimised at start-up
- *
- * - set how the Home Toolbar minimised button will render
+ * - set 6 Function Buttons to be visible
  *
  * **Custom Toolbars**
  *
@@ -56,15 +72,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  */
 export interface DashboardState extends ConfigState {
-  /**
-   * Which toolbars should be visible in the Dasbhoard when your application first loads.
-   *
-   * Note: If the `AvailableToolbars` property has been set, then the visible toolbars listed here must also be included there.
-   *
-   * **Default Value**: 'QuickSearch', 'Layout', 'Export', 'ColumnFilter'
-   */
-  VisibleToolbars?: AdaptableDashboardToolbars | string[];
-
   Tabs?: DashboardTab[];
 
   ActiveTab?: number;
@@ -113,6 +120,13 @@ export interface DashboardState extends ConfigState {
    * **Default Value**: the `adaptableId` property in Adaptable Options
    */
   HomeToolbarTitle?: string;
+
+  /**
+   * This is now deprecated; instead create Tabs which include a `Toolbars` property
+   *
+   * Note: in 6.1 any VisibleToolbars will be automatically added to a new Tab (which can then be edited by you)
+   */
+  VisibleToolbars?: AdaptableDashboardToolbars | string[];
 
   /**
    * This is now deprecated; instead any toolbar for an 'entitled' Function is available
@@ -219,7 +233,6 @@ export interface DashboardState extends ConfigState {
  *  ```ts
  * export default {
  * Dashboard: {
- *   VisibleToolbars: ['Toolbar1', 'Layout', 'Toolbar2', 'Export'],
  *   VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
  *   CustomToolbars: [
  *     {

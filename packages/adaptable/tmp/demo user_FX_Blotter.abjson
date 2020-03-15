@@ -123,25 +123,7 @@
 		]
 	},
 	"Dashboard": {
-		"AvailableToolbars": [
-			"AdvancedSearch",
-			"QuickSearch",
-			"Layout",
-			"Export",
-			"ColumnFilter",
-			"DataSource",
-			"BulkUpdate",
-			"SmartEdit",
-			"SelectedCells",
-			"Application"
-		],
-		"VisibleToolbars": [
-			"AdvancedSearch",
-			"QuickSearch",
-			"Layout",
-			"Export",
-			"ColumnFilter"
-		],
+		
 		"VisibleButtons": [
 			"About",
 			"Dashboard",
