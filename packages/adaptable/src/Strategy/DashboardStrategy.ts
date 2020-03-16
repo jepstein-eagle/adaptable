@@ -18,13 +18,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     super(StrategyConstants.DashboardStrategyId, adaptable);
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      if (
-        this.adaptable.api.dashboardApi.getDashboardState().Tabs === null &&
-        this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars.length !== 0
-        // && this.adaptable.api.dashboardApi.getDashboardState().Revision === undefined
-      ) {
-        this.adaptable.AdaptableStore.TheStore.dispatch(DashboardRedux.DashboardCreateDefaultTab());
-      }
       this.prepareToolbarVisibilityChangedEvent();
     });
 

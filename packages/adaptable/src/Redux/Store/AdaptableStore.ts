@@ -3074,6 +3074,8 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             adaptable.StrategyService.setStrategiesEntitlements();
             // create the functions menu (for use in the dashboard and the toolpanel)
             adaptable.StrategyService.createStrategyFunctionMenu();
+            // create the default Dashboard tab - this is for jump from 6 to 6.1
+            adaptable.api.internalApi.setDefaultDashboardTab();
 
             return returnAction;
           }
