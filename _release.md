@@ -1,3 +1,7 @@
+## 6.0.29
+
+Adding default Visible toolbars
+
 ## 6.0.28
 
 Fix mismatching React imports
