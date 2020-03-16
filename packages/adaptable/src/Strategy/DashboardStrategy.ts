@@ -18,6 +18,8 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     super(StrategyConstants.DashboardStrategyId, adaptable);
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
+      // create the default Dashboard tab - this is for jump from 6 to 6.1
+      this.adaptable.api.internalApi.setDefaultDashboardTab();
       this.prepareToolbarVisibilityChangedEvent();
     });
 

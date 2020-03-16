@@ -240,9 +240,12 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
 
   setDefaultDashboardTab(): void {
-    const dashboardTabs: DashboardTab[] = this.adaptable.api.dashboardApi.getDashboardState().Tabs;
-    const toolbars: string[] = this.adaptable.api.dashboardApi.getDashboardState().VisibleToolbars;
-    if (ArrayExtensions.IsNull(dashboardTabs) && ArrayExtensions.IsNotNullOrEmpty(toolbars)) {
+    const dashboardTabs:
+      | DashboardTab[]
+      | undefined = this.adaptable.api.dashboardApi.getDashboardState().Tabs;
+    const toolbars: string[] | undefined = this.adaptable.api.dashboardApi.getDashboardState()
+      .VisibleToolbars;
+    if (ArrayExtensions.IsNull(dashboardTabs) && ArrayExtensions.IsNotNull(toolbars)) {
       LoggingHelper.LogAdaptableInfo(
         'Creating a default Dashboard tab with Toolbars: ' + toolbars.join(', ')
       );

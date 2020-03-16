@@ -135,7 +135,7 @@ export const DashboardCreateDefaultTab = (): DashboardCreateDefaultTabAction => 
 });
 
 const initialDashboardState: DashboardState = {
-  Tabs: null,
+  Tabs: undefined,
   ActiveTab: 0,
   IsCollapsed: false,
   IsFloating: false,
@@ -146,12 +146,12 @@ const initialDashboardState: DashboardState = {
   HomeToolbarTitle: '',
 
   // deprecated properties
-  VisibleToolbars: EMPTY_ARRAY,
-  AvailableToolbars: null,
-  DashboardVisibility: null,
-  ShowColumnsDropdown: null,
-  ShowToolbarsDropdown: null,
-  MinimisedHomeToolbarButtonStyle: null,
+  VisibleToolbars: ['Layout', 'Export', 'ColumnFilter'],
+  AvailableToolbars: undefined,
+  DashboardVisibility: undefined,
+  ShowColumnsDropdown: undefined,
+  ShowToolbarsDropdown: undefined,
+  MinimisedHomeToolbarButtonStyle: undefined,
 };
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (

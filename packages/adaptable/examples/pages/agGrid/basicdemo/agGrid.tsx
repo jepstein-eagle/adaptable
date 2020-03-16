@@ -31,6 +31,7 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: {
+      /*
       Dashboard: {
         Revision: 17,
         VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
@@ -38,7 +39,7 @@ function InitAdaptableDemo() {
         ShowFunctionsDropdown: true,
         HomeToolbarTitle: 'Hello world',
       },
-
+*/
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],
@@ -48,12 +49,16 @@ function InitAdaptableDemo() {
         QuickSearchText: 'b',
       },
       Entitlements: {
-        Revision: 2,
-        DefaultAccessLevel: 'Full',
+        Revision: 3,
+        DefaultAccessLevel: 'Hidden',
         FunctionEntitlements: [
           {
-            FunctionName: 'AdvancedSearch',
-            AccessLevel: 'Hidden',
+            FunctionName: 'Layout',
+            AccessLevel: 'Full',
+          },
+          {
+            FunctionName: 'Dashboard',
+            AccessLevel: 'Full',
           },
         ],
       },
