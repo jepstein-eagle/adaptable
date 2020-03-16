@@ -26,15 +26,15 @@ The Dashboard is made up of 2 areas:
 
     > This dropdown can be hidden via the `ShowFunctionsDropdown` property of Dashboard State.
 
-  - **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
+- **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
   
     > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the `VisibleButtons`collection curently in State; if there is none, then it will use the default set.
     
-  - **Function Buttons** - a group of 'shortcut' Function buttons which open the popup associated with that Function.
+- **Function Buttons** - a group of 'shortcut' Function buttons which open the popup associated with that Function.
   
   > This list can be set via the `VisibleButtons` property of Dashboard State.
 
-  - **Quick Search** - a textbox that runs a simple text search across all visible columns (using the Quick Search) function
+- **Quick Search** - a textbox that runs a simple text search across all visible columns (using the Quick Search) function
   
   > This can be hidden via the `ShowQuickSearchInHeader` property of Dashboard State.
 
