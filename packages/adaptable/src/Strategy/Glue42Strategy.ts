@@ -31,6 +31,13 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     }
   }
 
+  public isStrategyAvailable(): boolean {
+    if (this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id)) {
+      return false;
+    }
+    return this.adaptable.api.glue42Api.isGlue42Available();
+  }
+
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.Glue42StrategyId, adaptable);
 

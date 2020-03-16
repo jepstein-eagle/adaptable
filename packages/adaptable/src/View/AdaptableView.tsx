@@ -47,8 +47,9 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
   render() {
     return (
       <div>
-        <Dashboard Adaptable={this.props.Adaptable} />
-
+        {this.props.Adaptable.StrategyService.isStrategyAvailable('Dashboard') && (
+          <Dashboard Adaptable={this.props.Adaptable} />
+        )}
         {/* The chart widget - it will decide where it will display
                 Either modally (if we set ShowModal in our Predefiend Config for Chart State)
                 Or in a div otherwise (if a div then the Chart screen will work out WHICH div...) */}

@@ -37,6 +37,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     );
   }
 
+  public isStrategyAvailable(): boolean {
+    return !this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id);
+  }
+
   protected InitState(): void {
     /**
      *  derived in each strategy that needs to manage state

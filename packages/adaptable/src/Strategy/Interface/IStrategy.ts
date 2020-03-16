@@ -14,7 +14,6 @@ import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
  * StateManagement
  * Piechart
  * TeamSharing
- * Plus there is one 'special' strategy that the user cannot hide called the HomeStrategy which has important functions that need to be called (e.g. creates Team Sharing and other menu items)
  */
 
 export interface IStrategy {
@@ -24,6 +23,7 @@ export interface IStrategy {
   addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;
   setStrategyEntitlement(): void;
+  isStrategyAvailable(): boolean;
   AccessLevel: AccessLevel;
 }
 /**

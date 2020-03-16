@@ -7,13 +7,10 @@ import {
   DashboardState,
   CustomToolbar,
   DashboardTab,
-  DashboardFloatingPosition,
+  AdaptableCoordinate,
 } from '../../PredefinedConfig/DashboardState';
 import { GridState } from '../../PredefinedConfig/GridState';
-import {
-  AdaptableDashboardFactory,
-  AdaptableDashboardPermanentToolbarFactory,
-} from '../AdaptableViewFactory';
+import { AdaptableDashboardFactory } from '../AdaptableViewFactory';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
@@ -45,15 +42,15 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
   StatusType: SystemStatusState['StatusType'];
   QuickSearchText: string;
   dispatch: (action: Redux.Action) => Redux.Action;
-  onSetDashboardVisibility: (visibility: Visibility) => DashboardRedux.DashboardSetVisibilityAction;
   onSetActiveTab: (ActiveTab: number | null) => DashboardRedux.DashboardSetActiveTabAction;
   onSetIsCollapsed: (IsCollapsed: boolean) => DashboardRedux.DashboardSetIsCollapsedAction;
   onSetIsFloating: (IsFloating: boolean) => DashboardRedux.DashboardSetIsFloatingAction;
   onSetFloatingPosition: (
-    FloatingPosition: DashboardFloatingPosition
+    FloatingPosition: AdaptableCoordinate
   ) => DashboardRedux.DashboardSetFloatingPositionAction;
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   onShowQuickSearchPopup: () => PopupRedux.PopupShowScreenAction;
+  onShowDashboardPopup: () => PopupRedux.PopupShowScreenAction;
 }
 
 interface DashboardComponentState {
@@ -94,19 +91,15 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     this.props.onSetIsCollapsed(false);
     this.props.onSetIsFloating(false);
   }
+
   changeActiveTab(index: number) {
     if (this.props.DashboardState.Tabs[index] !== undefined) {
       this.props.onSetActiveTab(index);
     }
   }
   renderTab(tab: DashboardTab): React.ReactNode {
-    let visibleDashboardControls = tab.Toolbars.filter(
-      vt =>
-        // will this break for custom toolbars????
-        !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(
-          vt as AdaptableFunctionName
-        )
-    );
+    // JW: dont understand why we need this line but we do...
+    let visibleDashboardControls = tab.Toolbars.filter(vt => vt);
 
     let visibleDashboardElements = visibleDashboardControls.map(control => {
       let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
@@ -148,32 +141,34 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         }
       } else {
         let shippedToolbar = control as AdaptableFunctionName;
-        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
-          shippedToolbar
-        );
+        if (this.props.Adaptable.StrategyService.isStrategyAvailable(shippedToolbar)) {
+          let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+            shippedToolbar
+          );
 
-        if (accessLevel != 'Hidden') {
-          let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
-          if (dashboardControl) {
-            let dashboardElememt = React.createElement(dashboardControl, {
-              Adaptable: this.props.Adaptable,
-              Columns: this.props.Columns,
-              UserFilters: this.props.UserFilters,
-              SystemFilters: this.props.SystemFilters,
-              ColorPalette: this.props.ColorPalette,
-              ColumnSorts: this.props.ColumnSorts,
-              AccessLevel: accessLevel,
-            });
-            return (
-              <Box
-                key={control}
-                className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
-              >
-                {dashboardElememt}
-              </Box>
-            );
-          } else {
-            LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
+          if (accessLevel != 'Hidden') {
+            let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
+            if (dashboardControl) {
+              let dashboardElememt = React.createElement(dashboardControl, {
+                Adaptable: this.props.Adaptable,
+                Columns: this.props.Columns,
+                UserFilters: this.props.UserFilters,
+                SystemFilters: this.props.SystemFilters,
+                ColorPalette: this.props.ColorPalette,
+                ColumnSorts: this.props.ColumnSorts,
+                AccessLevel: accessLevel,
+              });
+              return (
+                <Box
+                  key={control}
+                  className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
+                >
+                  {dashboardElememt}
+                </Box>
+              );
+            } else {
+              LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
+            }
           }
         }
       }
@@ -226,7 +221,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     // function menu items
     let menuItems = allowedMenuItems.map(menuItem => {
       return {
-        disabled: this.props.AccessLevel == 'ReadOnly',
+        disabled: this.props.AccessLevel == 'Hidden',
         onClick: () => this.props.dispatch(menuItem.ReduxAction),
         icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
@@ -260,7 +255,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         />
         <AdaptableFormControlTextClear
           type="text"
-          placeholder="Search Text"
+          placeholder="Search"
           className="ab-DashboardToolbar__QuickSearch__text"
           value={this.state.EditedQuickSearchText}
           OnTextChange={x => this.onUpdateQuickSearchText(x)}
@@ -298,19 +293,21 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             this.props.onSetFloatingPosition(FloatingPositionCallback);
           }
         }}
-        left={this.renderFunctionsDropdown()}
+        left={this.props.DashboardState.ShowFunctionsDropdown && this.renderFunctionsDropdown()}
         right={
           <>
             {this.renderFunctionButtons()}
             {this.renderQuickSearch()}
           </>
         }
+        onShowDashboardPopup={this.props.onShowDashboardPopup}
       >
-        {this.props.DashboardState.Tabs.map((tab, index) => (
-          <DashboardTabUI key={index} title={tab.Name}>
-            {this.renderTab(tab)}
-          </DashboardTabUI>
-        ))}
+        {this.props.DashboardState.Tabs &&
+          this.props.DashboardState.Tabs.map((tab, index) => (
+            <DashboardTabUI key={index} title={tab.Name}>
+              {this.renderTab(tab)}
+            </DashboardTabUI>
+          ))}
       </DashboardUI>
     );
   }
@@ -341,10 +338,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetIsCollapsed(IsCollapsed)),
     onSetIsFloating: (IsFloating: boolean) =>
       dispatch(DashboardRedux.DashboardSetIsFloating(IsFloating)),
-    onSetFloatingPosition: (FloatingPosition: DashboardFloatingPosition) =>
+    onSetFloatingPosition: (FloatingPosition: AdaptableCoordinate) =>
       dispatch(DashboardRedux.DashboardSetFloatingPosition(FloatingPosition)),
-    onSetDashboardVisibility: (visibility: Visibility) =>
-      dispatch(DashboardRedux.DashboardSetVisibility(visibility)),
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),
     onShowQuickSearchPopup: () =>
@@ -352,6 +347,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
         PopupRedux.PopupShowScreen(
           StrategyConstants.QuickSearchStrategyId,
           ScreenPopups.QuickSearchPopup
+        )
+      ),
+    onShowDashboardPopup: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(
+          StrategyConstants.DashboardStrategyId,
+          ScreenPopups.DashboardPopup
         )
       ),
   };

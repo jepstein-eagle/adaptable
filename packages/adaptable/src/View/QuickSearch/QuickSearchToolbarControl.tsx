@@ -53,7 +53,6 @@ class QuickSearchToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyFriendlyName}
         glyphicon={StrategyConstants.QuickSearchGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.QuickSearchStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         <AdaptableFormControlTextClear
@@ -92,8 +91,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           ScreenPopups.QuickSearchPopup
         )
       ),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

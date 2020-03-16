@@ -26,102 +26,11 @@ export interface DashboardApi {
   getCustomToolbars(): CustomToolbar[] | undefined;
 
   /**
-   * Sets which toolbars should be available in Adaptable
-   *
-   * @param availableToolbars toolbars to make available
-   */
-  setAvailableToolbars(availableToolbars: AdaptableDashboardToolbars): void;
-  /**
-   * Sets which toolbars should be visibile in Adaptable
-   *
-   * @param visibleToolbars toolbars to show
-   */
-  setVisibleToolbars(visibleToolbars: AdaptableDashboardToolbars): void;
-
-  /**
-   * Makes the given toolbar visible
-   *
-   * @param visibleToolbar toolbar to show
-   */
-  showToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
-
-  /**
-   * Hides the given toolbar
-   *
-   * @param visibleToolbar toolbar to hide
-   */
-  hideToolbar(visibleToolbar: AdaptableDashboardToolbar): void;
-
-  /**
    * Sets which Function Buttons are visible
    *
    * @param functionButtons buttons to show
    */
   setVisibleButtons(functionButtons: AdaptableFunctionButtons): void;
-
-  /**
-   * Sets whether the Dashboard is Visible, Hiden or Minimised
-   *
-   * @param dashboardVisibility visibility option to set
-   */
-  setVisibility(dashboardVisibility: 'Minimised' | 'Visible' | 'Hidden'): void;
-
-  /**
-   * Shows the Dashboard (ie. sets Visibility to 'Visible')
-   */
-  show(): void;
-
-  /**
-   * Hides the Dashboard (ie. sets Visibility to 'Hidden')
-   */
-  hide(): void;
-
-  /**
-   * Minimises the Dashboard (ie. sets Visibility to 'Minimised' so that only a button is visibile)
-   */
-  minimise(): void;
-
-  /**
-   * Shows the Functions Dropdown.
-   *
-   * The Functions dropdown appears on the left of the Home Toolbar and lists all the functions available to the user.
-   */
-  showFunctionsDropdown(): void;
-
-  /**
-   * Hides the Functions Dropdown.
-   *
-   * The Functions dropdown appears on the left of the Home Toolbar and lists all the functions available to the user.
-   */
-  hideFunctionsDropdown(): void;
-
-  /**
-   * Shows the Columns Dropdown.
-   *
-   * The Columns dropdown appears on the right of the Home Toolbar and lists all the columns in the grid.
-   */
-  showColumnsDropdown(): void;
-
-  /**
-   * Hides the Columns Dropdown.
-   *
-   * The Columns dropdown appears on the right of the Home Toolbar and lists all the columns in the grid.
-   */
-  hideColumnsDropdown(): void;
-
-  /**
-   * Shows the Toolbars Dropdown.
-   *
-   * The Toolbars dropdown appears on the right of the Home Toolbar and lists all the available Toolbars.
-   */
-  showToolbarsDropdown(): void;
-
-  /**
-   * Hides the Toolbars Dropdown.
-   *
-   * The Toolbars dropdown appears on the right of the Home Toolbar and lists all the available Toolbars.
-   */
-  hideToolbarsDropdown(): void;
 
   /**
    * Sets the title of the Home Toolbar - the one on the left of the Dashboard

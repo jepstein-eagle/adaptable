@@ -6,10 +6,18 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { AdaptableOptions, AdaptableApi } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  SearchChangedEventArgs,
+  MenuInfo,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
+import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var api: AdaptableApi;
 
@@ -22,7 +30,7 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Basic Demo New',
+    adaptableId: 'Dashboard None Demo',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
     },
@@ -32,27 +40,33 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        Revision: 17,
-        VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
-        VisibleButtons: ['CellSummary'],
+        CustomToolbars: [
+          {
+            Name: 'CustomToolbar',
+            Title: 'Custom Toolbar',
+          },
+        ],
         ShowFunctionsDropdown: true,
-        HomeToolbarTitle: 'Hello world',
+        Tabs: [
+          {
+            Name: 'Search',
+            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'CustomToolbar'], //shouldnt see last one cos of entitlements
+          },
+          {
+            Name: 'Edit',
+            Toolbars: ['BulkUpdate', 'SmartEdit'],
+          },
+          {
+            Name: 'Grid',
+            Toolbars: ['Layout', 'CellSummary', 'SystemStatus'],
+          },
+        ],
       },
 
-      AdvancedSearch: {
-        Revision: 4,
-        AdvancedSearches: [],
-      },
-      QuickSearch: {
-        Revision: 11,
-        QuickSearchText: 'b',
-      },
       Entitlements: {
-        Revision: 2,
-        DefaultAccessLevel: 'Full',
         FunctionEntitlements: [
           {
-            FunctionName: 'AdvancedSearch',
+            FunctionName: 'Dashboard',
             AccessLevel: 'Hidden',
           },
         ],

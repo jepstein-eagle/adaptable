@@ -140,7 +140,6 @@ class LayoutToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Layout"
         headerText={StrategyConstants.LayoutStrategyFriendlyName}
         glyphicon={StrategyConstants.LayoutGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.LayoutStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -208,8 +207,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           source: 'Toolbar',
         })
       ),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup)

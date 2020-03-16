@@ -131,7 +131,6 @@ import { GradientColumnState } from './GradientColumnState';
  * ```ts
  * export default {
  *  Dashboard: {
- *    VisibleToolbars: ['SmartEdit', 'Export', 'Layout', 'QuickSearch'],
  *    VisibleButtons: ['Dashboard', 'ColumnChooser', 'AdvancedSearch'],
  * },
  *  SmartEdit: {

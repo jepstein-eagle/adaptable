@@ -235,9 +235,7 @@ const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Act
       state.ConditionalStyle = undefined;
       state.Chart = undefined;
       state.CustomSort = undefined;
-      state.Dashboard.AvailableToolbars = [];
       state.Dashboard.VisibleButtons = [];
-      state.Dashboard.VisibleToolbars = [];
       state.Dashboard = undefined;
       state.DataSource = undefined;
       state.Entitlements = undefined;
@@ -3072,8 +3070,12 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
             }
 
-            // create the functions menu (for use in the home toolbar and the toolpanel)
-            adaptable.createFunctionMenu();
+            // do this now so it sets strategy entitlements
+            adaptable.StrategyService.setStrategiesEntitlements();
+            // create the functions menu (for use in the dashboard and the toolpanel)
+            adaptable.StrategyService.createStrategyFunctionMenu();
+            // create the default Dashboard tab - this is for jump from 6 to 6.1
+            adaptable.api.internalApi.setDefaultDashboardTab();
 
             return returnAction;
           }

@@ -1,15 +1,23 @@
 import { useEffect } from 'react';
-import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import './node_modules/@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { AdaptableOptions, AdaptableApi } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  SearchChangedEventArgs,
+  MenuInfo,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
+import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var api: AdaptableApi;
 
@@ -33,8 +41,7 @@ function InitAdaptableDemo() {
     predefinedConfig: {
       Dashboard: {
         Revision: 17,
-        VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
-        VisibleButtons: ['CellSummary'],
+        VisibleToolbars: ['QuickSearch'],
         ShowFunctionsDropdown: true,
         HomeToolbarTitle: 'Hello world',
       },

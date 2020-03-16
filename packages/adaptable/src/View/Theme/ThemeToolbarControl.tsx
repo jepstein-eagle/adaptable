@@ -72,7 +72,6 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
         className="ab-DashboardToolbar__Theme"
         headerText={StrategyConstants.ThemeStrategyFriendlyName}
         glyphicon={StrategyConstants.ThemeGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.ThemeStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -96,8 +95,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onSelectTheme: (theme: string) => dispatch(ThemeRedux.ThemeSelect(theme)),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ThemeStrategyId, ScreenPopups.ThemePopup)

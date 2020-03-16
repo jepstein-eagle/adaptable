@@ -30,16 +30,6 @@ interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardP
   onDashboardSetFunctionButtons: (
     StrategyConstants: string[]
   ) => DashboardRedux.DashboardSetFunctionButtonsAction;
-  onDashboardShowFunctionsDropdown: () => DashboardRedux.DashboardShowFunctionsDropdownAction;
-  onDashboardHideFunctionsDropdown: () => DashboardRedux.DashboardHideFunctionsDropdownAction;
-  onDashboardShowColumnsDropdown: () => DashboardRedux.DashboardShowColumnsDropdownAction;
-  onDashboardHideColumnsDropdown: () => DashboardRedux.DashboardHideColumnsDropdownAction;
-  onDashboardShowToolbarsDropdown: () => DashboardRedux.DashboardShowToolbarsDropdownAction;
-  onDashboardHideToolbarsDropdown: () => DashboardRedux.DashboardHideToolbarsDropdownAction;
-
-  onDashboardSetToolbars: (
-    StrategyConstants: string[]
-  ) => DashboardRedux.DashboardSetToolbarsAction;
 
   onDashboardSetTabs: (Tabs: DashboardTab[]) => DashboardRedux.DashboardSetTabsAction;
 }
@@ -65,6 +55,25 @@ class DashboardPopupComponent extends React.Component<
   }
 
   render() {
+    // this should be elswhere but we shouldnt use state as the property is deprecated but still could be used.
+    const availableToolbars: any[] = [
+      'AdvancedSearch',
+      'Alert',
+      'BulkUpdate',
+      'CellSummary',
+      'Chart',
+      'ColumnFilter',
+      'DataSource',
+      'Export',
+      'Glue42',
+      'IPushPull',
+      'Layout',
+      'SmartEdit',
+      'QuickSearch',
+      'SystemStatus',
+      'Theme',
+    ];
+
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
       let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
@@ -73,12 +82,12 @@ class DashboardPopupComponent extends React.Component<
       }
     });
 
-    let systemToolbars = this.props.DashboardState.AvailableToolbars.filter(at =>
-      this.isNotHiddenStrategy(at)
-    ).map(at => ({
-      Id: at,
-      Title: StrategyConstants.getFriendlyNameForStrategyId(at),
-    }));
+    let systemToolbars = availableToolbars
+      .filter(at => this.props.Adaptable.StrategyService.isStrategyAvailable(at))
+      .map(at => ({
+        Id: at,
+        Title: StrategyConstants.getFriendlyNameForStrategyId(at),
+      }));
 
     let customToolbars = this.props.DashboardState.CustomToolbars.map(ct => ({
       Id: ct.Name,
@@ -90,7 +99,9 @@ class DashboardPopupComponent extends React.Component<
         let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
           ct => ct.Name === vt
         );
-        return customToolbar ? true : this.isNotHiddenStrategy(vt as AdaptableFunctionName);
+        return customToolbar
+          ? true
+          : this.props.Adaptable.StrategyService.isStrategyAvailable(vt as AdaptableFunctionName);
       });
 
       return { ...tab, Toolbars };
@@ -115,7 +126,7 @@ class DashboardPopupComponent extends React.Component<
             marginLeft={3}
             value={DashboardConfigView.Toolbars}
             checked={this.state.DashboardConfigView == DashboardConfigView.Toolbars}
-            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            onChange={(_, e) => this.onDashboardConfigViewChanged(e)}
           >
             Function Toolbars
           </Radio>
@@ -123,7 +134,7 @@ class DashboardPopupComponent extends React.Component<
             marginLeft={3}
             value={DashboardConfigView.Buttons}
             checked={this.state.DashboardConfigView == DashboardConfigView.Buttons}
-            onChange={(_, e) => this.onShowGridPropertiesChanged(e)}
+            onChange={(_, e) => this.onDashboardConfigViewChanged(e)}
           >
             Function Buttons
           </Radio>
@@ -152,34 +163,10 @@ class DashboardPopupComponent extends React.Component<
     );
   }
 
-  onShowGridPropertiesChanged(event: React.FormEvent<any>) {
+  onDashboardConfigViewChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let dashboardConfigView: DashboardConfigView = e.value as DashboardConfigView;
     this.setState({ DashboardConfigView: dashboardConfigView } as DashboardPopupState);
-  }
-
-  onShowFunctionsDropdownChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowFunctionsDropdown();
-    } else {
-      this.props.onDashboardHideFunctionsDropdown();
-    }
-  }
-
-  onShowColumnsDropdownChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowColumnsDropdown();
-    } else {
-      this.props.onDashboardHideColumnsDropdown();
-    }
-  }
-
-  onShowToolbarsDropdownChanged(checked: boolean): void {
-    if (checked) {
-      this.props.onDashboardShowToolbarsDropdown();
-    } else {
-      this.props.onDashboardHideToolbarsDropdown();
-    }
   }
 
   onDashboardButtonsChanged(selectedValues: string[]) {
@@ -187,24 +174,6 @@ class DashboardPopupComponent extends React.Component<
       StrategyConstants.getIdForStrategyFriendlyName(sv)
     );
     this.props.onDashboardSetFunctionButtons(selectedFunctions);
-  }
-
-  onDashboardToolbarsChanged(selectedValues: string[]) {
-    let selectedToolbars: string[] = selectedValues.map(sv => {
-      let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
-        ct => ct.Name == sv
-      );
-      return customToolbar ? sv : StrategyConstants.getIdForStrategyFriendlyName(sv);
-    });
-    this.props.onDashboardSetToolbars(selectedToolbars);
-  }
-
-  isVisibleStrategy(functionName: AdaptableFunctionName): boolean {
-    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
-  }
-
-  isNotHiddenStrategy(functionName: AdaptableFunctionName): boolean {
-    return !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(functionName);
   }
 }
 
@@ -219,16 +188,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onDashboardSetFunctionButtons: (functionButtons: AdaptableFunctionButtons) =>
       dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),
-    onDashboardShowFunctionsDropdown: () =>
-      dispatch(DashboardRedux.DashboardShowFunctionsDropdown()),
-    onDashboardHideFunctionsDropdown: () =>
-      dispatch(DashboardRedux.DashboardHideFunctionsDropdown()),
-    onDashboardShowColumnsDropdown: () => dispatch(DashboardRedux.DashboardShowColumnsDropdown()),
-    onDashboardHideColumnsDropdown: () => dispatch(DashboardRedux.DashboardHideColumnsDropdown()),
-    onDashboardShowToolbarsDropdown: () => dispatch(DashboardRedux.DashboardShowToolbarsDropdown()),
-    onDashboardHideToolbarsDropdown: () => dispatch(DashboardRedux.DashboardHideToolbarsDropdown()),
-    onDashboardSetToolbars: (toolbars: AdaptableDashboardToolbars) =>
-      dispatch(DashboardRedux.DashboardSetToolbars(toolbars)),
     onDashboardSetTabs: (Tabs: DashboardTab[]) => dispatch(DashboardRedux.DashboardSetTabs(Tabs)),
   };
 }

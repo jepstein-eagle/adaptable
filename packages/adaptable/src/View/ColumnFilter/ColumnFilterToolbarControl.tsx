@@ -101,7 +101,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__ColumnFilter"
         headerText={StrategyConstants.ColumnFilterStrategyFriendlyName}
         glyphicon={StrategyConstants.ColumnFilterGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.ColumnFilterStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -145,8 +144,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
     onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

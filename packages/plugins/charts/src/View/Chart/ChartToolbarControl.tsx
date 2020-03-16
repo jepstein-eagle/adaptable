@@ -176,7 +176,6 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         className="ab-DashboardToolbar__Chart"
         headerText={StrategyConstants.ChartStrategyFriendlyName}
         glyphicon={StrategyConstants.ChartGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.ChartStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -223,8 +222,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
         )
       ),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup)

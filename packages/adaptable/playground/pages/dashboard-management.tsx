@@ -331,6 +331,9 @@ function DashboardManager({
       }}
     >
       <UnusedPanel toolbars={unusedToolbars} />
+      <SimpleButton onClick={handleTabAdd} px={3}>
+        Add Tab here
+      </SimpleButton>
       <div style={{ display: "flex", flex: 1 }}>
         <TabList
           tabs={tabs}
@@ -338,9 +341,6 @@ function DashboardManager({
           onRemoveToolbar={handleRemoveToolbar}
           onChangeTabName={handleChangeTabName}
         />
-        <SimpleButton onClick={handleTabAdd} px={3}>
-          Add Tab
-        </SimpleButton>
       </div>
     </DragDropContext>
   )

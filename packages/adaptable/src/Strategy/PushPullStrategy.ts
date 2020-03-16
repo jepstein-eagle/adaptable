@@ -30,6 +30,13 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     }
   }
 
+  public isStrategyAvailable(): boolean {
+    if (this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id)) {
+      return false;
+    }
+    return this.adaptable.api.iPushPullApi.isIPushPullAvailable();
+  }
+
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.IPushPullStrategyId, adaptable);
 

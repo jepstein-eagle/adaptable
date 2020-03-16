@@ -115,7 +115,6 @@ class DataSourceToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__DataSource"
         headerText={StrategyConstants.DataSourceStrategyFriendlyName}
         glyphicon={StrategyConstants.DataSourceGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.DataSourceStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -163,8 +162,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onSelectDataSource: (DataSourceName: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(DataSourceName)),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

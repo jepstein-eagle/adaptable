@@ -24,7 +24,6 @@ interface AlertToolbarControlProps
   extends ToolbarStrategyViewPopupProps<AlertToolbarControlComponent> {
   AlertDefinitions: AlertDefinition[];
   AdaptableAlerts: AdaptableAlert[];
-
   onDeleteAlert: (alert: AdaptableAlert) => SystemRedux.SystemAlertDeleteAction;
   onDeleteAllAlert: (alerts: AdaptableAlert[]) => SystemRedux.SystemAlertDeleteAllAction;
 }
@@ -124,7 +123,6 @@ class AlertToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Alert"
         headerText={StrategyConstants.AlertStrategyFriendlyName}
         glyphicon={StrategyConstants.AlertGlyph}
-        onClose={() => this.props.onClose(StrategyConstants.AlertStrategyId)}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -145,8 +143,6 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>
       dispatch(SystemRedux.SystemAlertDeleteAll(alerts)),
-    onClose: (toolbar: AdaptableDashboardToolbar) =>
-      dispatch(DashboardRedux.DashboardHideToolbar(toolbar)),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId, ScreenPopups.AlertPopup)

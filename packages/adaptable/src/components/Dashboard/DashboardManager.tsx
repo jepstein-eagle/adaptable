@@ -5,6 +5,8 @@ import SimpleButton from '../SimpleButton';
 import { Icon } from '../icons';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import { Flex } from 'rebass';
+import { PanelWithButton } from '../../View/Components/Panels/PanelWithButton';
 
 export interface DashboardToolbar {
   Id: AdaptableDashboardToolbar | string;
@@ -82,7 +84,7 @@ function TabItem({
             width: 160,
             display: 'flex',
             flexDirection: 'column',
-            backgroundColor: 'white',
+            // background: 'var(--ab-color-primary)',
           }}
         >
           <div
@@ -107,6 +109,8 @@ function TabItem({
                 marginLeft: 'var(--ab-space-1)',
                 marginRight: 'var(--ab-space-1)',
                 alignSelf: 'stretch',
+                background: 'transparent',
+                color: 'var(--ab-color-text-on-primary)',
               }}
               onChange={event => {
                 onChangeTabName(event.target.value);
@@ -206,10 +210,13 @@ function UnusedPanel({ toolbars }: { toolbars: string[] }) {
         border: '1px solid var(--ab-color-primarydark)',
         borderRadius: 'var(--ab__border-radius)',
         marginBottom: 'var(--ab-space-2)',
+        paddingBottom: 'var(--ab-space-1)',
         backgroundColor: 'var(--ab-color-defaultbackground)',
       }}
     >
-      <div style={{ padding: 6 }}>Unused Toolbars</div>
+      <div style={{ padding: 'var(--ab-space-2)' }}>
+        <b>Available Toolbars</b> (drag into a Tab below)
+      </div>
       <UnusedToolbarList toolbars={toolbars} />
     </div>
   );
@@ -285,7 +292,7 @@ function DashboardManager({
     () =>
       availableToolbars
         .map(t => t.Id)
-        .filter(toolbar => {
+        .filter((toolbar: any) => {
           return !tabs.some(tab => tab.Toolbars.includes(toolbar));
         }),
     [tabs, availableToolbars]
@@ -362,17 +369,21 @@ function DashboardManager({
       <DashboardManagerContext.Provider value={contextValue}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <UnusedPanel toolbars={unusedToolbars} />
-          <div style={{ display: 'flex', flex: 1 }}>
-            <TabList
-              tabs={tabs}
-              onRemoveTab={handleRemoveTab}
-              onRemoveToolbar={handleRemoveToolbar}
-              onChangeTabName={handleChangeTabName}
-            />
-            <SimpleButton onClick={handleTabAdd} px={3}>
-              Add Tab
-            </SimpleButton>
-          </div>
+          <PanelWithButton
+            headerText={'Dashboard Tabs'}
+            variant="default"
+            button={<SimpleButton onClick={handleTabAdd}>Add Tab</SimpleButton>}
+            bodyProps={{ padding: 1 }}
+          >
+            <div style={{ display: 'flex', flex: 1 }}>
+              <TabList
+                tabs={tabs}
+                onRemoveTab={handleRemoveTab}
+                onRemoveToolbar={handleRemoveToolbar}
+                onChangeTabName={handleChangeTabName}
+              />
+            </div>
+          </PanelWithButton>
         </div>
       </DashboardManagerContext.Provider>
     </DragDropContext>

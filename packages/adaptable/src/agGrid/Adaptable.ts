@@ -904,21 +904,6 @@ export class Adaptable implements IAdaptable {
     this.setCellClassRules(cellClassRules, col.ColumnId, 'QuickSearch');
   }
 
-  public createFunctionMenu() {
-    const menuItems: AdaptableMenuItem[] = [];
-    this.strategies.forEach((strat: IStrategy) => {
-      strat.setStrategyEntitlement();
-      const menuItem: AdaptableMenuItem | undefined = strat.addFunctionMenuItem();
-      if (Helper.objectExists(menuItem)) {
-        if (menuItems.findIndex(m => m.FunctionName == menuItem.FunctionName) == -1) {
-          menuItems.push(menuItem);
-        }
-      }
-    });
-    // store the main menu as we will re-use (and it never changes)
-    this.api.internalApi.setMainMenuItems(menuItems);
-  }
-
   public getPrimaryKeyValueFromRowNode(rowNode: RowNode): any {
     let gridApi: GridApi = this.getGridOptionsApi();
     if (gridApi) {
