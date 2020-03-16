@@ -1,3 +1,7 @@
+## 6.0.31
+
+Adding a ShowQuickSearchInHeader property to Dashboard state
+
 ## 6.0.30
 
 Adding some dashboard api methods
