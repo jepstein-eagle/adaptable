@@ -142,6 +142,7 @@ const initialDashboardState: DashboardState = {
   FloatingPosition: { x: 100, y: 100 },
   VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
   CustomToolbars: EMPTY_ARRAY,
+  ShowQuickSearchInHeader: true,
   ShowFunctionsDropdown: true,
   HomeToolbarTitle: '',
 

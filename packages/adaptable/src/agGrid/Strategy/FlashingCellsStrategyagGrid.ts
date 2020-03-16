@@ -25,6 +25,9 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
       let cellClassRules: any = {};
       if (fc) {
         cellClassRules[StyleConstants.FLASH_CELL_UP_STYLE + '-' + fc.Uuid] = function(params: any) {
+          if (theadaptable.api.internalApi.isGridInPivotMode()) {
+            return false;
+          }
           let primaryKey = theadaptable.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'up';
           let currentFlashTimer = currentFlashing.get(key);
@@ -56,6 +59,9 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
         cellClassRules[StyleConstants.FLASH_CELL_DOWN_STYLE + '-' + fc.Uuid] = function(
           params: any
         ) {
+          if (theadaptable.api.internalApi.isGridInPivotMode()) {
+            return false;
+          }
           let primaryKey = theadaptable.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'down';
           let currentFlashTimer = currentFlashing.get(key);

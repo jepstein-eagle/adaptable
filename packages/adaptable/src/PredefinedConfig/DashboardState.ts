@@ -150,9 +150,18 @@ export interface DashboardState extends ConfigState {
   ShowFunctionsDropdown?: boolean;
 
   /**
-   * The title of the Dashboard
+   * Whether to show the Quick Search textbox in the Dashboard Header.
    *
-   * If no value is provided then the Home Toolbar will show the 'adaptableId' property in Adaptable Options
+   * If 'true' (the default) then the textbox will be visible.
+   *
+   * **Default Value**: true
+   */
+  ShowQuickSearchInHeader?: boolean;
+
+  /**
+   * The 'title' to display in the the Dashboard Header
+   *
+   * If no value is provided then it will display the value of the 'adaptableId' property in Adaptable Options
    *
    * Note: It is called `HomeToolbarTitle` for backward compatibiility
    *

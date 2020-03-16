@@ -10,11 +10,12 @@ import { AdaptableOptions, AdaptableApi, AdaptableReadyInfo } from '../../../../
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
-
+import { TickingDataHelper } from '../../TickingDataHelper';
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
+  const tickingDataHelper = new TickingDataHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -67,7 +68,10 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
+  // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
+
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    /*
     setTimeout(() => {
       api.dashboardApi.floatDashboard();
     }, 2000);
@@ -79,7 +83,7 @@ function InitAdaptableDemo() {
     }, 6000);
     setTimeout(() => {
       api.dashboardApi.unCollapseDashboard();
-    }, 8000);
+    }, 8000); */
   });
 }
 

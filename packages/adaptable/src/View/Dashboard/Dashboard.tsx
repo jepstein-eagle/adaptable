@@ -297,7 +297,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         right={
           <>
             {this.renderFunctionButtons()}
-            {this.renderQuickSearch()}
+
+            {this.props.DashboardState.ShowQuickSearchInHeader && this.renderQuickSearch()}
           </>
         }
         onShowDashboardPopup={this.props.onShowDashboardPopup}
