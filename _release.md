@@ -1,3 +1,7 @@
+## 6.0.28
+
+Fix mismatching React imports
+
 ## 6.0.27
 
 Creating a default Dasbhoard Tab
