@@ -18,11 +18,9 @@ There are 3 visibility modes for the Dashboard:
   > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
 
 ## Dashboard Elements
-The Dashboard is made up of 2 areas:
+The Dashboard contains the following elements:
 
-1. **Dashboard Header** - This is the part of the Dashboard that is always visible, irrespective of mode.  It contains:
-
-- **Functions Dropdown** - a dropdown on the left hand side that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
+- **Functions Dropdown** - a dropdown on the left hand side of the Dashboard Header that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
 
     > This dropdown can be hidden via the `ShowFunctionsDropdown` property of Dashboard State.
 
@@ -34,19 +32,20 @@ The Dashboard is made up of 2 areas:
   
   > This list can be set via the `VisibleButtons` property of Dashboard State.
 
-- **Quick Search** - a textbox that runs a simple text search across all visible columns (using the Quick Search) function
+- **Quick Search** - a simple text search across all visible columns (using the Quick Search Function)
   
   > This can be hidden via the `ShowQuickSearchInHeader` property of Dashboard State.
 
-2. **Dashboard Header** - T
+- **Configure Dashboard Button** - button on the right hand side of the Dashboard Header which opens the Dashboard popup, facilitating the management of Tabs and Visible Buttons.
+  
 
 ## Toolbars
-Blah
+bsss
 
 ## UI Elements
 Dasbhoard includes the following UI Elements:
 
-- **Popup** - Allows you to perform a Dasbhoard operation on selected columns.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
+- **Popup** - Enables 
 
 - **Toolbar** - Enables Dasbhoard to be performed - and to provide both an existing column value or a new one.
 
@@ -59,34 +58,33 @@ Dasbhoard includes the following UI Elements:
 ## Entitlements
 Dasbhoard supports these Entitlement Rules:
 
-- **Full**: Everything is available to the User
+- **Full**: Everything in the Dashboard is visible to the User
 
-- **Hidden**: Everything is hidden from the User
+- **Hidden**: The Dashboard is completely hidden
 
 - **ReadOnly**: N/A
 
 ## FAQ
 
-**Can I performa a Dasbhoard on any column?**
+Is there a limit to the amount of function buttons that I can show?
 
-Yes. Unlike Smart Edit which is restricted to numeric columns, Dasbhoard can be performed on text (string), numeric and date columns.
+No, you can choose to show as many as you want?
 
-**With Smart Edit you remember the last saved value but not with Dasbhoard. Why not?**
+Can I hide the Functions or Columns dropdown?
 
-It doesnt make sense to store a previous Dasbhoard value as by its nature its usually a one-off operation.
+Yes, you have the ability through in the UI (Dashboard function) or through Dashboard Config to show / hide all the elements in the Home Toolbar (the Toolbar on the left side).
 
-**Can I perform Dasbhoard on a readonly column?**
+Can I hide or minimise the Dashboard?
 
-No, Dasbhoard only applies on editable columns.
+Yes, you can do both.  To minimise the dashboard click the small arrow in the top left of the first toolbar (and click again to maximise).  To hide altogether choose the appropriate option from the column header menu.
 
-**Can I perform a Dasbhoard across more than one column?**
+Can I add my own content to the Dashboard?
 
-No, like Smart Edit, Dasbhoard works on only one column at a time.
+Yes, Dashboard state includes a 'Custom Toolbars' collection precisely for this purpose. You can fill each Custom Toolbar in 2 ways:
 
-**Can I choose to enter a value that is not currently in the column?**
+with ToolbarButtons
 
-Yes, you can. The selector for Dasbhoard allows you to add your own value which is not currently contained in the column. Simply enter the new value you wish to set, and then click the selector to confirm.
-
+render it however you want (through listening to the ToolbarVisibilityChanged event to know when the toolbar has been made visible)
 
 ### Further Information
 - [Dasbhoard State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
