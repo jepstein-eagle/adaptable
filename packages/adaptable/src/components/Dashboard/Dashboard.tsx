@@ -1,11 +1,5 @@
-import React, {
-  ReactElement,
-  ReactNode,
-  Dispatch,
-  SetStateAction,
-  CSSProperties,
-  useRef,
-} from 'react';
+import { ReactElement, ReactNode, Dispatch, SetStateAction, CSSProperties, useRef } from 'react';
+import * as React from 'react';
 import usePropState from '../utils/usePropState';
 import useDraggable from '../utils/useDraggable';
 import SimpleButton from '../SimpleButton';
