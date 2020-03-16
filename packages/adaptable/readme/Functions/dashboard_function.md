@@ -1,8 +1,14 @@
 # Dashboard (AdaptableFunction)
 
-The Dasbhoard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
+The Dasbhoard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dasbhoard`) is the area above the Grid that contains tabs, toolbars and frequently used buttons.
 
-The 'replacement' value can either be one that already exists in the column or an entirely new one.
+The Dashboard can be heavily customised so that it fits your needs. 
+
+It is made up of 2 areas:
+
+- **Toolbar** - blah
+
+- **Toolbar** - blah
 
 ## UI Elements
 Dasbhoard includes the following UI Elements:
