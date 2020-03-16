@@ -1,9 +1,5 @@
 import { DashboardState, CustomToolbar } from '../PredefinedConfig/DashboardState';
-import {
-  AdaptableDashboardToolbars,
-  AdaptableDashboardToolbar,
-  AdaptableFunctionButtons,
-} from '../PredefinedConfig/Common/Types';
+import { AdaptableFunctionButtons } from '../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
 
 /**
@@ -70,6 +66,14 @@ export interface DashboardApi {
    * @param customToolbarName the name of the Custom Toolbar
    */
   clearCustomToolbarButtons(customToolbarName: string): void;
+
+  collapseDashboard(): void;
+
+  unCollapseDashboard(): void;
+
+  floatDashboard(): void;
+
+  unFloatDashboard(): void;
 
   /**
    * Opens the Dashboard popup screen

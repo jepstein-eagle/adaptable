@@ -80,6 +80,22 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     }
   }
 
+  public collapseDashboard(): void {
+    this.dispatchAction(DashboardRedux.DashboardSetIsCollapsed(true));
+  }
+
+  public unCollapseDashboard(): void {
+    this.dispatchAction(DashboardRedux.DashboardSetIsCollapsed(false));
+  }
+
+  public floatDashboard(): void {
+    this.dispatchAction(DashboardRedux.DashboardSetIsFloating(true));
+  }
+
+  public unFloatDashboard(): void {
+    this.dispatchAction(DashboardRedux.DashboardSetIsFloating(false));
+  }
+
   public showDashboardPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.DashboardStrategyId,

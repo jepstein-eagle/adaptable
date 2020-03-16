@@ -6,7 +6,7 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { AdaptableOptions, AdaptableApi } from '../../../../src/types';
+import { AdaptableOptions, AdaptableApi, AdaptableReadyInfo } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
@@ -50,7 +50,7 @@ function InitAdaptableDemo() {
       },
       Entitlements: {
         Revision: 3,
-        DefaultAccessLevel: 'Hidden',
+        DefaultAccessLevel: 'Full',
         FunctionEntitlements: [
           {
             FunctionName: 'Layout',
@@ -66,6 +66,21 @@ function InitAdaptableDemo() {
   };
 
   api = Adaptable.init(adaptableOptions);
+
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    setTimeout(() => {
+      api.dashboardApi.floatDashboard();
+    }, 2000);
+    setTimeout(() => {
+      api.dashboardApi.unFloatDashboard();
+    }, 4000);
+    setTimeout(() => {
+      api.dashboardApi.collapseDashboard();
+    }, 6000);
+    setTimeout(() => {
+      api.dashboardApi.unCollapseDashboard();
+    }, 8000);
+  });
 }
 
 export default () => {
