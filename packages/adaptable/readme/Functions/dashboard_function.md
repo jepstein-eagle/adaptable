@@ -4,7 +4,8 @@ The Dashboard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_s
 
 The Dashboard can be heavily customised so that it fits your needs.
 
-There are 3 modes for the Dashboard:
+## Dashboard Visiblity Modes
+There are 3 visibility modes for the Dashboard:
 
 - **Full** - This shows everything in the Dashboard opened up with one tab open.
 
@@ -16,6 +17,7 @@ There are 3 modes for the Dashboard:
 
   > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
 
+## Dashboard Elements
 The Dashboard is made up of 2 areas:
 
 1. **Dashboard Header** - This is the part of the Dashboard that is always visible, irrespective of mode.  It contains:
