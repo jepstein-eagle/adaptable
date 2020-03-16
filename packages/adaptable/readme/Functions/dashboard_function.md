@@ -1,6 +1,6 @@
 # Dashboard (AdaptableFunction)
 
-The Dasbhoard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dasbhoard`) is the area above the Grid that contains tabs, toolbars and frequently used buttons.
+The Dashboard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dashboard`) is the area above the Grid that contains tabs, toolbars and frequently used buttons.
 
 The Dashboard can be heavily customised so that it fits your needs.
 
@@ -10,7 +10,7 @@ There are 3 modes for the Dashboard:
 
 - **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
-> To collapse / uncollapse the Dashboard click on a Dashboard tab.
+  > To collapse / uncollapse the Dashboard click on a Dashboard tab.
 
 - **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
