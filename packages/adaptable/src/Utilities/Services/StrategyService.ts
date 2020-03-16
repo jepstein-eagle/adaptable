@@ -114,7 +114,7 @@ export class StrategyService implements IStrategyService {
   }
 
   public isStrategyAvailable(adaptableFunctionName: AdaptableFunctionName): boolean {
-    let strategy: IStrategy = this.adaptable.strategies.get(adaptableFunctionName);
+    let strategy: IStrategy | undefined = this.adaptable.strategies.get(adaptableFunctionName);
     if (!strategy) {
       return false;
     }
