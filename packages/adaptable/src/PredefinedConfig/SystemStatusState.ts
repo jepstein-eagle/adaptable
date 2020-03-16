@@ -25,7 +25,7 @@ import { ConfigState } from './ConfigState';
  *
  * - As an Alert (which will popup and also appear in the Alert Toolbar and ToolPanel)
  *
- * - Via the SystemStatus Button in the Home Toolbar which will show an appropriate icon - when the Button is clicked the System Status Popup will display showing the message and any further information.  Set visibility via the `ShowSystemStatusButton` in [Dashboard State](_src_predefinedconfig_dashboardstate_.dashboardstate.html#showsystemstatusbutton).
+ * - Via the SystemStatus Button in the Dasbhoard which will show an appropriate icon - when the Button is clicked the System Status Popup will display showing the message and any further information.  Set visibility via the `ShowSystemStatusButton` in [Dashboard State](_src_predefinedconfig_dashboardstate_.dashboardstate.html#showsystemstatusbutton).
  *
  * - In the System Status Toolbar
  *

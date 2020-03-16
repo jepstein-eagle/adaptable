@@ -35,7 +35,7 @@ export interface SystemStatusApi {
    *
    * This will appear in the System Status toolbar, tool panel (and popup).
    *
-   * Additionally it will colour, as appropriate, the *SystemStatus* button (which is an option to display in the Home Toolbar)
+   * Additionally it will colour, as appropriate, the *SystemStatus* button (which is an option to display in the Dashboard)
    *
    * The (optional) `statusFurtherInformation` param allows further details to be provided if required.
    */

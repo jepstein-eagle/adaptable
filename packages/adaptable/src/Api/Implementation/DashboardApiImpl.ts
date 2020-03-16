@@ -96,6 +96,14 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetIsFloating(false));
   }
 
+  public getActiveTab(): number | undefined {
+    return this.getDashboardState().ActiveTab;
+  }
+
+  public setActiveTab(tabIndex: number): void {
+    this.dispatchAction(DashboardRedux.DashboardSetActiveTab(tabIndex));
+  }
+
   public showDashboardPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.DashboardStrategyId,
