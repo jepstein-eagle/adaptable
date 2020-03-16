@@ -1,4 +1,5 @@
-import React, { useMemo, useContext, createContext } from 'react';
+import { useMemo, useContext, createContext } from 'react';
+import * as React from 'react';
 import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
 import SimpleButton from '../SimpleButton';
 import { Icon } from '../icons';
