@@ -1,3 +1,7 @@
+## 6.0.27
+
+Creating a default Dasbhoard Tab
+
 ## 6.0.26
 
 Introduction of Dasbhoard Tabs
