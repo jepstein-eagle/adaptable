@@ -62,6 +62,8 @@ See [Custom Toolbars Developer Documentation](https://api.adaptabletools.com/int
 ## UI Elements
 Dasbhoard includes the following UI Elements:
 
+- **Dashboard** - Area above the Grid with Tabs, Function Buttons and Quick Search textbox.
+
 - **Popup** - Enables the creation and editing of Tabs and Toolbars and the management of Function Buttons.
 
 - **Tool Panel** - Facilitates changing the Dashboard Visibility Mode
