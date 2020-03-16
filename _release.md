@@ -1,3 +1,7 @@
+## 6.0.30
+
+Adding some dashboard api methods
+
 ## 6.0.29
 
 Adding default Visible toolbars
