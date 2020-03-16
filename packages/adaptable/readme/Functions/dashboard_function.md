@@ -2,13 +2,26 @@
 
 The Dasbhoard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dasbhoard`) is the area above the Grid that contains tabs, toolbars and frequently used buttons.
 
-The Dashboard can be heavily customised so that it fits your needs. 
+The Dashboard can be heavily customised so that it fits your needs.
+
+There are 3 modes for the Dashboard:
+- **Toolbar** - blah
+
+- **Toolbar** - blah
+
+- **Toolbar** - blah
+
+> To hide the Dashboard altogether set it to 'Hidden' in the Entitlements section of Predefined Config.
 
 It is made up of 2 areas:
 
+1. **Dashboard Header** - This is the part of the Dashboard that is always visible.  It contains:
+
 - **Toolbar** - blah
 
 - **Toolbar** - blah
+
+2. **Dashboard Header** - T
 
 ## UI Elements
 Dasbhoard includes the following UI Elements:
