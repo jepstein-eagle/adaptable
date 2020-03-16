@@ -39,7 +39,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | Column Info              | No        | No       | No         | Yes         | Yes           | 
 | Conditional Style        | Yes       | No       | No         | Yes         | No            | 
 | Custom Sort              | Yes       | No       | No         | Yes         | No            | 
-| [Dashboard](./Functions/dashboard.md)                          | No     | No      | Yes        | Yes         | No            | 
+| [Dashboard](./Functions/dashboard_function.md)                 | No     | No      | Yes        | Yes         | No            | 
 | Data Source              | Yes       | Yes      | Yes        | No          | No            | 
 | Export                   | Yes       | Yes      | Yes        | No          | No            | 
 | Flashing Cell            | No        | No       | No         | Yes         | No            | 
