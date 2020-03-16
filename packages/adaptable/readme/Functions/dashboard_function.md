@@ -11,11 +11,11 @@ There are 3 visibility modes for the Dashboard:
 
 2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
-  > To collapse / uncollapse the Dashboard click on a Dashboard tab.
+    > To collapse / uncollapse the Dashboard click on a Dashboard tab.
 
 3. **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
-  > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
+    > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
 
 ## Dashboard Elements
 The Dashboard contains the following elements:
@@ -47,11 +47,11 @@ These are essentially collections of controls which provide easy and quick acces
 Toolbars are grouped into Tabs to give users full control over which Toolbars are visible.
 
 ### Custom Toolbars
-In addition to the Toolbars shipped by AdapTable, users can create their own Toolbars at Design-Time.  
+In addition to the Toolbars shipped by AdapTable, users can create their own Custom Toolbars at Design-Time.  
 
-Once created, they are treated as full toolbars and can be placed in any Tab as requested.
+Once created, they are treated as full toolbars and can be placed in any Tab as required.
 
-Custom Toolbars contain 2 sections, either of both which can be populated:
+Custom Toolbars contain 2 sections, either of which can be populated:
   
 - a div where users can render any content that they want; typically they will listen to the 'ToolbarVisibilityChanged' event and then render their content as required.
 
@@ -60,7 +60,7 @@ Custom Toolbars contain 2 sections, either of both which can be populated:
 See [Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
 
 ## UI Elements
-Dasbhoard includes the following UI Elements:
+The Dasbhoard Function includes the following UI Elements:
 
 - **Dashboard** - Area above the Grid with Tabs, Function Buttons and Quick Search textbox.
 
