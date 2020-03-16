@@ -14,15 +14,21 @@ There are 3 modes for the Dashboard:
 
 - **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
-> To float / unfloat the Dashboard altogether double-click on the Name in the Header or click the 'carat' at the left hand side of the Header.
+> To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
 
 The Dashboard is made up of 2 areas:
 
-1. **Dashboard Header** - This is the part of the Dashboard that is always visible.  It contains:
+1. **Dashboard Header** - This is the part of the Dashboard that is always visible, irrespective of mode.  It contains:
 
-- **Functions Dropdown** - blah
+- **Functions Dropdown** - a dropdown on the left hand side that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
 
-- **Toolbar** - blah
+> This dropdown can be hidden via the `ShowFunctionsDropdown` property of Dashboard State.
+
+- **Tabs** - blah
+
+- **Function Buttons** - blah
+
+- **Quick Search** - blah
 
 2. **Dashboard Header** - T
 
