@@ -20,7 +20,7 @@ The Dashboard is made up of 2 areas:
 
 1. **Dashboard Header** - This is the part of the Dashboard that is always visible, irrespective of mode.  It contains:
 
-  - **Functions Dropdown** - a dropdown on the left hand side that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
+    - **Functions Dropdown** - a dropdown on the left hand side that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
 
     > This dropdown can be hidden via the `ShowFunctionsDropdown` property of Dashboard State.
 
