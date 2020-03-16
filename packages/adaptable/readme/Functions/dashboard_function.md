@@ -5,19 +5,22 @@ The Dasbhoard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_s
 The Dashboard can be heavily customised so that it fits your needs.
 
 There are 3 modes for the Dashboard:
-- **Toolbar** - blah
 
-- **Toolbar** - blah
+- **Full** - This shows everything in the Dashboard opened up with one tab open.
 
-- **Toolbar** - blah
+- **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
-> To hide the Dashboard altogether set it to 'Hidden' in the Entitlements section of Predefined Config.
+> To collapse / uncollapse the Dashboard click on a Dashboard tab.
 
-It is made up of 2 areas:
+- **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
+
+> To float / unfloat the Dashboard altogether double-click on the Name in the Header or click the 'carat' at the left hand side of the Header.
+
+The Dashboard is made up of 2 areas:
 
 1. **Dashboard Header** - This is the part of the Dashboard that is always visible.  It contains:
 
-- **Toolbar** - blah
+- **Functions Dropdown** - blah
 
 - **Toolbar** - blah
 
