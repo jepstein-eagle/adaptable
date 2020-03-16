@@ -13,7 +13,7 @@ import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/dashboard) | [State](_src_predefinedconfig_dashboardstate_.dashboardstate.html)  | [ReadMe](https://github.com/AdaptableTools/adaptable/edit/master/packages/adaptable/readme/Functions/dashboard_function.md)
+ * [Demo Site](https://demo.adaptabletools.com/dashboard) | [State](_src_predefinedconfig_dashboardstate_.dashboardstate.html)  | [ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/dashboard_function.md)
  *
  *  --------------
  *
