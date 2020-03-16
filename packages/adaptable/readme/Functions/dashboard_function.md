@@ -40,7 +40,11 @@ The Dashboard contains the following elements:
   
 
 ## Toolbars
-bsss
+AdapTable ships with a number of Function Toolbars.
+
+These are essentially collections of controls which provide easy and quick access a single Function (e.g. the 'Advanced Search' Toolbar contains a dropdown showing all Advanced Searches together with buttons to add / edit / delete them).
+
+Toolbars are grouped into Tabs to give users full control over which Toolbars are visible.
 
 ### Custom Toolbars
 In addition to the Toolbars shipped by AdapTable, users can create their own Toolbars at Design-Time.  
@@ -97,8 +101,8 @@ Yes, Dashboard state includes a 'Custom Toolbars' collection precisely for this 
 
 
 ### Further Information
-- [Dasbhoard State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
+- [Dashboard State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.dashboardstate.html)
 
-- [Dasbhoard Api](https://api.adaptabletools.com/interfaces/_src_api_cellsummaryapi_.cellsummaryapi.html)
+- [Dashboard Api](https://api.adaptabletools.com/interfaces/_src_api_dashboardapi_.dashboardapi.html)
 
-- [Dasbhoard Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo)
+- [Dashboard Demos](https://demo.adaptabletools.com/dashboard)
