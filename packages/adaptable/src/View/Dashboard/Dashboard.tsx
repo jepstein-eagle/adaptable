@@ -98,13 +98,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     }
   }
   renderTab(tab: DashboardTab): React.ReactNode {
-    let visibleDashboardControls = tab.Toolbars.filter(
-      vt =>
-        // will this break for custom toolbars????
-        !this.props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(
-          vt as AdaptableFunctionName
-        )
-    );
+    // JW: dont understand why we need this line but we do...
+    let visibleDashboardControls = tab.Toolbars.filter(vt => vt);
 
     let visibleDashboardElements = visibleDashboardControls.map(control => {
       let customToolbar: CustomToolbar = this.props.DashboardState.CustomToolbars.find(
@@ -146,32 +141,34 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         }
       } else {
         let shippedToolbar = control as AdaptableFunctionName;
-        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
-          shippedToolbar
-        );
+        if (this.props.Adaptable.StrategyService.isStrategyAvailable(shippedToolbar)) {
+          let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+            shippedToolbar
+          );
 
-        if (accessLevel != 'Hidden') {
-          let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
-          if (dashboardControl) {
-            let dashboardElememt = React.createElement(dashboardControl, {
-              Adaptable: this.props.Adaptable,
-              Columns: this.props.Columns,
-              UserFilters: this.props.UserFilters,
-              SystemFilters: this.props.SystemFilters,
-              ColorPalette: this.props.ColorPalette,
-              ColumnSorts: this.props.ColumnSorts,
-              AccessLevel: accessLevel,
-            });
-            return (
-              <Box
-                key={control}
-                className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
-              >
-                {dashboardElememt}
-              </Box>
-            );
-          } else {
-            LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
+          if (accessLevel != 'Hidden') {
+            let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
+            if (dashboardControl) {
+              let dashboardElememt = React.createElement(dashboardControl, {
+                Adaptable: this.props.Adaptable,
+                Columns: this.props.Columns,
+                UserFilters: this.props.UserFilters,
+                SystemFilters: this.props.SystemFilters,
+                ColorPalette: this.props.ColorPalette,
+                ColumnSorts: this.props.ColumnSorts,
+                AccessLevel: accessLevel,
+              });
+              return (
+                <Box
+                  key={control}
+                  className={`ab-Dashboard__container ab-Dashboard__container--${control}`}
+                >
+                  {dashboardElememt}
+                </Box>
+              );
+            } else {
+              LoggingHelper.LogAdaptableError('Cannot find Dashboard Control for ' + control);
+            }
           }
         }
       }

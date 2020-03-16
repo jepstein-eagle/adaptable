@@ -124,7 +124,15 @@ function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     // AvailableToolbars: ['AdvancedSearch', 'Export'],
-    VisibleToolbars: ['QuickSearch', 'Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
+    VisibleToolbars: [
+      'QuickSearch',
+      'Glue42',
+      'Alert',
+      'Toolbar1',
+      'Toolbar2',
+      'Toolbar3',
+      'Toolbar4',
+    ],
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
     // make this not persistable
     CustomToolbars: [
@@ -194,6 +202,31 @@ let demoConfig: PredefinedConfig = {
             },
           },
         ],
+      },
+    ],
+  },
+  Entitlements: {
+    DefaultAccessLevel: 'Hidden',
+    FunctionEntitlements: [
+      {
+        FunctionName: 'Dashboard',
+        AccessLevel: 'Full',
+      },
+      {
+        FunctionName: 'QuickSearch',
+        AccessLevel: 'Full',
+      },
+      {
+        FunctionName: 'BulkUpdate',
+        AccessLevel: 'Full',
+      },
+      {
+        FunctionName: 'ConditionalStyle',
+        AccessLevel: 'Full',
+      },
+      {
+        FunctionName: 'Glue42',
+        AccessLevel: 'Full',
       },
     ],
   },
