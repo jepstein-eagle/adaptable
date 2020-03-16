@@ -7,13 +7,13 @@ The Dashboard can be heavily customised so that it fits your needs.
 ## Dashboard Visiblity Modes
 There are 3 visibility modes for the Dashboard:
 
-- **Full** - This shows everything in the Dashboard opened up with one tab open.
+1. **Full** - This shows everything in the Dashboard opened up with one tab open.
 
-- **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
+2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
   > To collapse / uncollapse the Dashboard click on a Dashboard tab.
 
-- **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
+3. **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
   > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
 
@@ -42,6 +42,19 @@ The Dashboard contains the following elements:
 ## Toolbars
 bsss
 
+### Custom Toolbars
+In addition to the Toolbars shipped by AdapTable, users can create their own Toolbars at Design-Time.  
+
+Once created, they are treated as full toolbars and can be placed in any Tab as requested.
+
+Custom Toolbars contain 2 sections, either of both which can be populated:
+  
+- a div where users can render any content that they want; typically they will listen to the 'ToolbarVisibilityChanged' event and then render their content as required.
+
+- a div which will display any buttons that users provide via the ToolbarButtons property
+  
+See ([Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
+
 ## UI Elements
 Dasbhoard includes the following UI Elements:
 
@@ -66,25 +79,22 @@ Dasbhoard supports these Entitlement Rules:
 
 ## FAQ
 
-Is there a limit to the amount of function buttons that I can show?
+**Is there a limit to the amount of function buttons that I can show?**
 
 No, you can choose to show as many as you want?
 
-Can I hide the Functions or Columns dropdown?
+**Can I hide the Functions or Columns dropdown?**
 
 Yes, you have the ability through in the UI (Dashboard function) or through Dashboard Config to show / hide all the elements in the Home Toolbar (the Toolbar on the left side).
 
-Can I hide or minimise the Dashboard?
+**Can I hide or minimise the Dashboard?**
 
 Yes, you can do both.  To minimise the dashboard click the small arrow in the top left of the first toolbar (and click again to maximise).  To hide altogether choose the appropriate option from the column header menu.
 
-Can I add my own content to the Dashboard?
+**Can I add my own content to the Dashboard?**
 
-Yes, Dashboard state includes a 'Custom Toolbars' collection precisely for this purpose. You can fill each Custom Toolbar in 2 ways:
+Yes, Dashboard state includes a 'Custom Toolbars' collection precisely for this purpose. 
 
-with ToolbarButtons
-
-render it however you want (through listening to the ToolbarVisibilityChanged event to know when the toolbar has been made visible)
 
 ### Further Information
 - [Dasbhoard State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)
