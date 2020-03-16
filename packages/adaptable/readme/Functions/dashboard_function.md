@@ -28,7 +28,7 @@ The Dashboard contains the following elements:
   
     > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the `VisibleButtons`collection curently in State; if there is none, then it will use the default set.
     
-- **Function Buttons** - a group of 'shortcut' Function buttons which open the popup associated with that Function.
+- **Function Buttons** - a group of 'shortcut' buttons which each open the popup associated with that Function.
   
   > This list can be set via the `VisibleButtons` property of Dashboard State.
 
@@ -57,20 +57,17 @@ Custom Toolbars contain 2 sections, either of both which can be populated:
 
 - a div which will display any buttons that users provide via the ToolbarButtons property
   
-See ([Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
+See [Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
 
 ## UI Elements
 Dasbhoard includes the following UI Elements:
 
-- **Popup** - Enables 
+- **Popup** - Enables the creation and editing of Tabs and Toolbars and the management of Function Buttons.
 
-- **Toolbar** - Enables Dasbhoard to be performed - and to provide both an existing column value or a new one.
+- **Tool Panel** - Facilitates changing the Dashboard Visibility Mode
 
-- **Tool Panel** - Same as Toolbar above.
+- **Column Menu** - Facilitates changing the Dashboard Visibility Mode
 
-- **Column Menu** - None
-
-- **Context Menu** - `Apply Dasbhoard` Menu Item opens Dasbhoard popup (only visible if selected cells are editable).
 
 ## Entitlements
 Dasbhoard supports these Entitlement Rules:
@@ -87,17 +84,13 @@ Dasbhoard supports these Entitlement Rules:
 
 No, you can choose to show as many as you want?
 
-**Can I hide the Functions or Columns dropdown?**
+**Can I hide the Functions dropdown?**
 
-Yes, you have the ability through in the UI (Dashboard function) or through Dashboard Config to show / hide all the elements in the Home Toolbar (the Toolbar on the left side).
-
-**Can I hide or minimise the Dashboard?**
-
-Yes, you can do both.  To minimise the dashboard click the small arrow in the top left of the first toolbar (and click again to maximise).  To hide altogether choose the appropriate option from the column header menu.
+Yes, via the `ShowFunctionsDropdown` property of Dashboard State
 
 **Can I add my own content to the Dashboard?**
 
-Yes, Dashboard state includes a 'Custom Toolbars' collection precisely for this purpose. 
+Yes, Dashboard state includes the 'Custom Toolbars' collection precisely for this purpose. 
 
 
 ### Further Information
