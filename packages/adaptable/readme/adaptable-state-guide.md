@@ -63,7 +63,9 @@ Simply put: if you increment (or provide from new) the revision number in a sect
 export default {
  .....
    CustomSort: {
-     Revision: 2, // This section will replace the Custom Sort section in User State if the Revision Number is greater than the one currently in User State
+     // This section will replace the Custom Sort section in User State 
+     // if the Revision Number is greater than the one currently in User State
+     Revision: 2, 
      CustomSorts: [
      {
        ColumnId: 'Rating',
