@@ -70,9 +70,9 @@ The charts on offer include:
 
 > We have made it a plugin so that those users who don't need charting, or have their own charting libraries, can avoid having to download a package that they will not use.
 
-### No Code Plugin
+### No-Code Plugin
 
-The No Code plugin enables the creation of AdapTable instances purely for drag n drop of JSON or Excel files.
+The No-Code plugin enables the creation of AdapTable instances purely for drag n drop of JSON or Excel files.
 
 An Adaptable wizard will work out the column names and types - and allow you to set filtering, sorting, and editability as required.
 
