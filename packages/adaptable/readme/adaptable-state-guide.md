@@ -1,12 +1,20 @@
 # AdapTable State Guide
 
-A theme is essentially a collection of css variables that AdapTable exposes, and you can customise. 
+Managing User State is perhaps the most important and valued set of functionality that AdapTable provides.
 
-You can have more css theme files imported in the app without them overriding each-other.
+Conceptually Adaptable State comprises 2 distinct elements (which this doc will discuss in turn):
 
-### System Themes
+- **Predefined Config** - State created at **design-time** and given to AdapTable so that at first-time use of the application, the user has everything he or she needs to get started.
 
-AdapTable ships with 2 themes: *light* (the default) and *dark*
+- **State Management** - Ensuring that all changes made by the user at **run-time** are saved and persisted to an appropriate location so they are available the next time the system runs.
+
+## Predefined Config
+
+To Do
+
+## State Management
+
+To Do
 
 ## Demos
 
