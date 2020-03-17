@@ -1,13 +1,17 @@
 # Dashboard (AdaptableFunction)
 
-The Dashboard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dashboard`) is the area above the Grid that contains tabs, toolbars and frequently used buttons.
+The Dashboard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dashboard`) is the area above the Grid that contains tabs, toolbars, frequently used buttons and search box.
 
-The Dashboard can be heavily customised so that it fits your needs.
+The Dashboard can be heavily customised so that it fits your needs both in terms of contents and visibility.
+
+**Note**: In v.6.1 (March 2020) the Dashboard was signficantly updated and improved with some previous properties now deprecated.  
+
+>To facilitate this upgrade for existing users, a default Tab is created when AdapTable first loads after the upgrade, containing the Visible toolbars in the Adaptable State.
 
 ## Dashboard Visiblity Modes
 There are 3 visibility modes for the Dashboard:
 
-1. **Full** - This shows everything in the Dashboard opened up with one tab open.
+1. **Full** - This shows everything in the Dashboard - situated above the Grid - with one tab open.
 
 2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
@@ -17,7 +21,7 @@ There are 3 visibility modes for the Dashboard:
 
     > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
 
-## Dashboard Elements
+## Dashboard Contents
 The Dashboard contains the following elements:
 
 - **Functions Dropdown** - a dropdown on the left hand side of the Dashboard Header that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
@@ -93,6 +97,12 @@ Yes, via the `ShowFunctionsDropdown` property of Dashboard State
 **Can I add my own content to the Dashboard?**
 
 Yes, Dashboard state includes the 'Custom Toolbars' collection precisely for this purpose. 
+
+**Why do I see a tab called 'Toolbars'?**
+
+This is added automatically by AdapTable when you first upgrade to v6.1 (released March 2020).  It creates a new Tab which contains whatever Toolbars are currently visible in State. 
+
+This Tab can be later replaced either in the UI, or in Predefined Config by setting a Revision Number.
 
 
 ### Further Information
