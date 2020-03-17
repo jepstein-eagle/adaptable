@@ -71,7 +71,7 @@ This should display the username you received as the current login on the privat
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-There are currently two plugins:
+There are currently 3 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
@@ -80,6 +80,10 @@ There are currently two plugins:
 - **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
 > adds additional functionality of benefit only to advanced financial users.
+
+- **NoCode** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
+
+> enables the creation of dynamic AdapTable instances by dragging and droppping JSON or Excel files.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
