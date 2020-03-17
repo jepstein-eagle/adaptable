@@ -35,8 +35,6 @@ When AdapTable is first loaded, any Predefined Config is read into memory and th
 
 Subsequently, each time the application is launched, that User State is retrieved and the particular AdapTable instance is pre-populated with it. 
 
-In other words, Predefined Config is read once and merged into the user's Adaptable State, and then any run-time changes which users make will form part of their State and be continually updated.
-
 > Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
 
 ### Creating Functions
@@ -89,15 +87,13 @@ export default {
 
 Most objects in Predefined Config implement the `AdaptableObject` interface.
 
-This has a single `Uuid` property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted..
+This has a single `Uuid` property which is used for easy identification of objects and to make it easy for AdapTable instances to share state and inform each other when an item has been created / edited / deleted.  It is included by AdapTable in all base objects and also frequently used objects like Expressions.
 
-This is included by AdapTable in all base objects and also frequently used objects like Expressions.
-
-> Do not set this property when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the config is first read
+> Do not set this property when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the Predefined Config is first read
 
 ### Bespoke State
 
-The [Application State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_applicationstate_.applicationstate.html) property of Predefined Config contains an ApplicationDataEntries array.
+The [Application State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_applicationstate_.applicationstate.html) property of Predefined Config contains an `ApplicationDataEntries` array.
 
 This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
 
@@ -141,33 +137,29 @@ The 4 functions you can provide your own implementations for are:
 See more at [State Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html).
 
 ### Accessing Adaptable State
-The recommended way to access the Store is via the Adaptable Api which provides you with full programmatic read / write access to all our objects in a clean way.
+Developers have run-time access to the Adaptable State Store is via the [Adaptable Api](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html).  This provides full, programmatic, read / write access to all Adaptable State objects in a 'clean' and safe way.
 
 > The Adaptable Api is actually a simple wrapper around our Redux store with basic read / write access and some additional error handling, logging and other features.
 
-We strongly recommend that you use the Adaptable API to access the Store (both for reading and writing).
-
-Listening to State Changes
-The recommended way to listen to changes in the Store is by subscribing to the AuditStateChanged audit event in the AuditEventsAPI section of the Adaptable API.
-
-This event can be set to fire through the Audit Log - which gives you the option of listening to User State changes, Internal State changes or both. There is an option to set whether this Audit Message is fired as an event.
+### Listening to State Changes
+The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventAPI](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html)  https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html section of the Adaptable API. 
 
 
 ## FAQs
 
-Where is configuration stored?
+**Where is configuration stored?**
 
 By default its stored in the local browser cache. However if the enableConfigServer property is set to true during installation you can choose to store in a different location which is more convenient for you.
 
-Do you provide data adapters to fetch / save configuration?
+**Do you provide data adapters to fetch / save configuration?**
 
 No we don't, you will need to provide the mechanism to store configuration in a remote location.
 
-Can I preconfigure my AdapTable instance?
+**Can I preconfigure my AdapTable instance?**
 
 Yes you can. You are able to build your own Adaptable Objects which are stored as Predefined Config. You are able to provide this configuration as a JSON object or as a URL (to a .JSON file).
 
-Can I provide different configuration per user?
+**Can I provide different configuration per user?**
 
 Yes, that is possible and expected.  AdapTable allows you provide highly configurable and personalised instances.
 
