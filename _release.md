@@ -1,3 +1,7 @@
+## 6.0.32
+
+Updating style for Tabs in Dark theme
+
 ## 6.0.31
 
 Adding a ShowQuickSearchInHeader property to Dashboard state
