@@ -117,7 +117,9 @@ There are 2 modes of storage available in AdapTable:
 
   > If using Local Storage, all user state will be lost each time the user clear's the browser cache and will not be available when switching computer.
 
-- **Remote Storage** - user state is stored remotely (via ConfigServer) at a configured location. All user state is automatically sent to the location specified in ConfigServer and then persisted there.
+- **Remote Storage** - Adaptable state is automatically persisted (and retrieved from) a specificed, remote, location
+  
+  > In previous versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.htmlm) ; however the recommended best practice now is to use the more powerful, and flexible, User State functions (see below).
 
 Important
 Remote Storage is enabled by setting the enableConfigServer property to true when AdapTable is integrated with the host application.  (If this is set to false, then Local Storage will be used.)
