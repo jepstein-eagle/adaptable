@@ -173,7 +173,7 @@ Further information about AdapTable is available at our [Website](http://www.ada
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
 
-## Other Read Mes
+## Other Read Me Docs
 
 Other Read Me docs that will be of interest are:
 
@@ -186,6 +186,8 @@ Other Read Me docs that will be of interest are:
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
  
  - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/adaptable-theming-guide.md)
+ 
+  - [Adaptable State Guide](./packages/adaptable/readme/adaptable-state-guide.md)
  
  - [Plugins](./packages/plugins/README.md)
  
