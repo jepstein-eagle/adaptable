@@ -88,7 +88,8 @@ html.ab--theme-dark {
   /* color for text displayed over the primary color */
   --ab-color-text-on-primary: #f7f7f7;
 
-  /* a color not so often used - mostly used for making things stand out - used for example, in wizard dialog headers + a light and dark variation */
+  /* a color not so often used - mostly used for making things stand out 
+  these are NOT used in the dark theme but you might want to override in your themes e.g. to change the Dashboard Header colour */
   --ab-color-secondary: #f7f7f7;
   --ab-color-secondarylight: #07456d;
   --ab-color-secondarydark: #f7f7f7;
