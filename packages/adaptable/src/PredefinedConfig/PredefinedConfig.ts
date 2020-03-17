@@ -44,6 +44,8 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Typically you will want to "pre-populate" your deployed application with predefined config - the initial state that AdapTable will use when it first loads up.
  *
+ * This means that Users wont see an empty grid but one full of reports, searches, conditional styles etc that allow them to be productive immediately.
+ *
  * Predefined Config consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
  * > Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
@@ -58,12 +60,25 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfig, then set the [Entitlement](_src_predefinedconfig_entitlementstate_.entitlementstate.html) for that function to be `ReadOnly`.
  *
- * Any property in RunTime state that is not persisted is marked in the docs and comments with: ### [Non-Persisted AdapTable State].
- *
  * This object when populated forms the [predefinedConfig](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig) property in *adaptableOptions*.  It can be passed in either as pure JSON or as a url to a file which contains the JSON.
  *
  * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
  *
+ * --------------
+ *
+ * ### Functions
+ *
+ * Many objects in AdapTable (e.g. Custom Sorts, User Menus, Action Columns etc.) include 'functions' that developers can provide when it makes sense to use a custom implementation rather than one provided by AdapTable.
+ *
+ * But this provides a problem for Predefined Config which is stored as JSON so can only contain elements which can be 'stringified' (which excludes functions).
+ *
+ * The solution is that Predefined Config contains a **named reference** to the function but the actual implementation is elsewhere (in the [`UserFunctions`](../../modules/_src_adaptableoptions_userfunctions_.html) section of AdaptableOptions).
+ *
+ * --------------
+ *
+ * ### Revision Property
+ *
+ * Most objects in Predefi
  * --------------
  *
  * ### AdaptableObject
@@ -83,6 +98,8 @@ import { GradientColumnState } from './GradientColumnState';
  * The Application State property of Predefined Config contains an [ApplicationDataEntries](_src_predefinedconfig_applicationstate_.applicationstate.html) array.
  *
  * This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
+ *
+ * --------------
  *
  *  ## Predefined Config Contents
  *
