@@ -59,7 +59,7 @@ Simply put: if you increment (or provide from new) the revision number in a sect
 
 > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.  But you can, for example, provide a new CustomSort section in Predefined Config which will replace the user's Custom Sorts in State while keeping their Layouts and other state elements untouched (see example below).
 
-```json
+```yaml
 export default {
  .....
    CustomSort: {
