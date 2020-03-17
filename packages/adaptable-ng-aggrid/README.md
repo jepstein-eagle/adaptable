@@ -223,7 +223,17 @@ import "@adaptabletools/adaptable-angular-aggrid/index.css" // always needed
 import "@adaptabletools/adaptable-angular-aggrid/themes/dark.css"
 ```
 
-To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
+To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/adaptable-theming-guide.md)
+
+## Adaptable State
+
+AdapTable will manage the persistence of all Adaptable (ie. User) State.  This takes 2 forms:  
+
+- **Predefined Config** - State created at design-time and given to AdapTable so that at first-time use of the application, the user has everything he or she needs to get started.
+
+- **State Management** - Ensuring that all changes made by the user at run-time are saved and persisted to an appropriate location so they are available the next time the system runs.
+
+For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/adaptable-state-guide.md)
 
 ## Demo
 
