@@ -5,9 +5,17 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
  *
  * By default, AdaptableState is persisted in the local storage of the user browser, under the `adaptableId` key.
  *
- * (Or if you are using [Config Server](_src_adaptableoptions_configserveroptions_.configserveroptions.html) in the location specified by the [configServerUrl Server](_src_adaptableoptions_configserveroptions_.configserveroptions.html#configserverurl) property).
- *
  * The various state-management functions provided here allow you to change this default behaviour, and also to add custom properties in the persisted state.
+ *
+ * Note: this is the recommended way to manage remote storage in preference to [Config Server](_src_adaptableoptions_configserveroptions_.configserveroptions.html) as it provides far more flexibility and control.
+ *
+ * --------------
+ *
+ *  **Further AdapTable Help Resources**
+ *
+ * [Demo Site](https://demo.adaptabletools.com/adaptablestate/aggridstatefunctionsdemo) | [Adaptable State ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/adaptable-state-guide.md)
+ *
+ *  --------------
  *
  * The 4 functions you can provide your own implementations for are:
  *
