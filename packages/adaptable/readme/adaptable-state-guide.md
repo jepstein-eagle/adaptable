@@ -119,27 +119,26 @@ There are 2 modes of storage available in AdapTable:
 
 - **Remote Storage** - Adaptable state is automatically persisted (and retrieved from) a specificed, remote, location
   
-  > In previous versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.htmlm) ; however the recommended best practice now is to use the more powerful, and flexible, User State functions (see below).
+  > In previous versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.htmlm) ; however the recommended best practice now is to use the more powerful, and flexible, State Options (see below).
 
-Important
-Remote Storage is enabled by setting the enableConfigServer property to true when AdapTable is integrated with the host application.  (If this is set to false, then Local Storage will be used.)
+### State Options
+AdapTable provides 4 function hooks to enable users to provide their own implementations / functionality when state is being managed.
 
-You will, additionally, need to provide the location where you want the configuration to be stored.  This is done via the configServerUrl property.
-
-Note
-When using Remote Storage, all user configuration is still available even after switching computers.
-
-For more information, see Config Server.
-
-
-Tip
-Additionally AdapTable provides 4 function hooks to enable advanced users to provide their own implementations / functionality when state is being managed.
+> This functionality is superior to that offered in Config Server and is recommmended best practice for remote state management.
 
 This allows you to provide your own hydration or rehydration functionality or to enrich the State when its being loaded with your own items (e.g. entitlements).
 
-There are 4 functions available: loadState, applyState, saveState and persistState.
+The 4 functions you can provide your own implementations for are:
 
-See more at State Options.
+- **[loadState](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html#loadstate)**: Allows the customization of state loading.
+
+- **[applyState](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html#applyState)**: Allows hooking into AdaptableState hydration
+
+- **[saveState](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html#saveState)**: Allows the customization of the state that is going to be persisted
+
+- **[persistState](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html#persistState)**: Allows the customization of state persistence
+
+See more at [State Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html).
 
 ### Accessing Adaptable State
 The recommended way to access the Store is via the Adaptable Api which provides you with full programmatic read / write access to all our objects in a clean way.
