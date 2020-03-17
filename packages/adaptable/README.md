@@ -176,6 +176,15 @@ So your HTML should look like this:
 </body>
 
 ```
+## Adaptable State
+
+AdapTable will manage the persistence of all Adaptable (ie. User) State.  This takes 2 forms:  
+
+- **Predefined Config** - State created at design-time and given to AdapTable so that at first-time use of the application, the user has everything he or she needs to get started.
+
+- **State Management** - Ensuring that all changes made by the user at run-time are saved and persisted to an appropriate location so they are available the next time the system runs.
+
+For more information please read the [Adaptable State Guide](../../packages/adaptable/adaptable-state-guide.md)
 
 ## Instantiation
 
