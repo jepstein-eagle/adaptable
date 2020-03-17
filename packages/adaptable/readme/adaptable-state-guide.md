@@ -120,7 +120,7 @@ There are 2 modes of storage available in AdapTable:
 ### State Options
 AdapTable provides 4 function hooks to enable users to provide their own implementations / functionality when state is being managed.
 
-> This functionality is superior to that offered in Config Server and is recommmended best practice for remote state management.
+> This functionality is superior to Config Server and is best practice for remote state management.
 
 This allows you to provide your own hydration or rehydration functionality or to enrich the State when its being loaded with your own items (e.g. entitlements).
 
@@ -134,15 +134,17 @@ The 4 functions you can provide your own implementations for are:
 
 - **[persistState](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html#persistState)**: Allows the customization of state persistence
 
-See more at [State Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html).
+See more at [State Options Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html).
 
 ### Accessing Adaptable State
-Developers have run-time access to the Adaptable State Store is via the [Adaptable Api](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html).  This provides full, programmatic, read / write access to all Adaptable State objects in a 'clean' and safe way.
+Developers have full, run-time access to the Adaptable State Store is via the [Adaptable Api](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html).  
 
-> The Adaptable Api is actually a simple wrapper around our Redux store with basic read / write access and some additional error handling, logging and other features.
+Among many other advantages, the Adaptable Api provides full, programmatic, read / write access to all Adaptable State objects in a 'clean' and safe way.
+
+> The Adaptable Api is actually a simple wrapper around our Redux store with some additional error handling, logging and other features.
 
 ### Listening to State Changes
-The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventAPI](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html)  https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html section of the Adaptable API. 
+The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventAPI](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html) section of Adaptable API. 
 
 
 ## FAQs
