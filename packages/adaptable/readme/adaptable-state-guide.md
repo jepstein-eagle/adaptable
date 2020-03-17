@@ -357,8 +357,50 @@ Yes, that is possible and expected.  AdapTable allows you provide highly configu
  *
  } as PredefinedConfig;
  ```
+ ## State Functions example
+(Taken from our [State Functions demo](https://demo.adaptabletools.com/adaptablestate/aggridstatefunctionsdemo))
 
+ ```yaml
+ const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'OrderId',
+    userName: 'Demo User',
+    adaptableId: 'State Functions Demo',
+    stateOptions: {
+      /**
+       * The loadState function is used to load the predefined config
+       * from a remote source - namely firebase in this example
+       *
+       * It returns a promise which is resolved when the Predefined Config is retrieved from firebase.
+       */
+      loadState: () => {
+        return firebase
+          .database()
+          .ref(`predefinedconfig/${id}`)
+          .once('value')
+          .then(function(snapshot) {
+            const str = snapshot.val();
+            return str ? JSON.parse(str) : {};
+          });
+      },
 
+      /**
+       * The persistState function is called with the state that needs to be persisted.
+       * By default, state is persisted in localStorage, but this example
+       * illustrates how you can persist it to a remote datastore (Firebase, etc)
+       */
+      persistState: (state: Partial<AdaptableState>) => {
+        return firebase
+          .database()
+          .ref(`predefinedconfig/${id}`)
+          .set(JSON.stringify(state))
+          .then(() => Promise.resolve(true));
+      },
+    },
+    predefinedConfig: demoConfig,
+    vendorGrid: { ...gridOptions, modules: AllEnterpriseModules },
+  };
+ ```
+ 
 ## Demos
 
 Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/adaptablestate) to see a number of state-related demos
