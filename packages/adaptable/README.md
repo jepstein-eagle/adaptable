@@ -154,7 +154,7 @@ import "@adaptabletools/adaptable/index.css" // always needed
 import "@adaptabletools/adaptable/themes/dark.css"
 ```
 
-To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/adaptable-theming-guide.md)
+To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/adaptable-theming-guide.md)
 
 ## HTML Rendering
 
