@@ -17,25 +17,30 @@ Typically you will want to "pre-populate" your deployed application with Predefi
 This ensures that users wont see an empty AdapTable instance but, rather, one full of reports, searches, conditional styles etc that allow them to be productive immediately.
 
 
-#### Predefined Config Contents
+### Predefined Config Contents
 
-Predefined Config consists of a series of (nullable) properties that themselves each implement Config State.
+Predefined Config consists of a series of (nullable) properties that themselves each implement Config State (e.g. `AdvancedSearch`, `Layouts` etc.
 
-Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
+Users only need to provide config for those properties which they want intial state; within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
 
-The State items in Predefined Config can be conceptually be put into 2 categories:
+> To prevent users from editing the Adaptable Objects shipped in PredefinedConfig, set the Entitlement for that function to `ReadOnly`.
 
-Design-Time: Cannot be overriden & saved by users (e.g. Menus, Entitlements etc.)
+### How Predefined Config Works
+Predefined Config is written at design-time in JSON format.  
 
-Run-Time: Can be overriden & saved by user's actions (and persisted through State Management)
+It is passed into AdapTable via `predefinedConfig` property in adaptableOptions. 
 
-If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfig, then set the Entitlement for that function to be ReadOnly.
+It can be passed in either as pure JSON or as a url to a file which contains the JSON.
 
-This object when populated forms the predefinedConfig property in adaptableOptions. It can be passed in either as pure JSON or as a url to a file which contains the JSON.
+When AdapTable is first loaded, any predefined config (see below) is read into memory and then stored (either locally or remotely - depending on your settings) together with any user state that is created during that session.
 
-Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
+Subsequently, each time the application is launched, that User State is retrieved (either from local storage or remote storage) and the particular AdapTable instance is pre-populated with it. 
 
-Functions
+It is read once and merged into the user's Adaptable State, and then any run-time changes which users make will form part of their State and be continually updated.
+
+> Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
+
+### Creating Functions
 
 Many objects in AdapTable (e.g. Custom Sorts, User Menus, Action Columns etc.) include 'functions' that developers can provide when it makes sense to use a custom implementation rather than one provided by AdapTable.
 
@@ -43,11 +48,10 @@ But this provides a problem for Predefined Config, because it is stored as JSON 
 
 The solution is that Predefined Config contains a named reference to the function but the actual implementation is elsewhere (in the UserFunctions section of AdaptableOptions).
 
-Revision Property
+### Revision Property
 
-The concept behind Predefined Config is that it provides - at design-time - the objects, entitlements and theme for initial use of the Application.
+The concept behind Predefined Config is that it provides - at design-time - the objects, entitlements and theme for initial use of the Application.  
 
-It is read once and merged into the user's Adaptable State, and then any run-time changes which users make will form part of their State and be continually updated.
 
 But sometimes developers might want to update a section in Predefined Config while ensuring that the rest of the user's State remains untouched.
 
