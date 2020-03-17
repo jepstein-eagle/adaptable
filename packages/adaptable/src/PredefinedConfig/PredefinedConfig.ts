@@ -40,11 +40,11 @@ import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
 
 /**
- * This is the main Predefined Config interface which users will populate at design-time.
+ * This is the main Predefined Config interface which developers will populate at design-time.
  *
  * Typically you will want to "pre-populate" your deployed application with predefined config - the initial state that AdapTable will use when it first loads up.
  *
- * This means that Users wont see an empty grid but one full of reports, searches, conditional styles etc that allow them to be productive immediately.
+ * This ensures that users wont see an empty AdapTable instance but, rather, one full of reports, searches, conditional styles etc that allow them to be productive immediately.
  *
  * Predefined Config consists of a series of (nullable) properties that themselves each implement *ConfigState*.
  *
@@ -56,13 +56,11 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * - **Run-Time**: Can be overriden & saved by user's actions (and persisted through State Management)
  *
- * Note: some objects are designed as 'Run-Time' but have properties which are **not** persisted (e.g. if its a function to be run - as functions cannot be 'stringified').
- *
  * If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfig, then set the [Entitlement](_src_predefinedconfig_entitlementstate_.entitlementstate.html) for that function to be `ReadOnly`.
  *
  * This object when populated forms the [predefinedConfig](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig) property in *adaptableOptions*.  It can be passed in either as pure JSON or as a url to a file which contains the JSON.
  *
- * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
+ * > Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
  *
  * --------------
  *
@@ -70,9 +68,9 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Many objects in AdapTable (e.g. Custom Sorts, User Menus, Action Columns etc.) include 'functions' that developers can provide when it makes sense to use a custom implementation rather than one provided by AdapTable.
  *
- * But this provides a problem for Predefined Config which is stored as JSON so can only contain elements which can be 'stringified' (which excludes functions).
+ * But this provides a problem for Predefined Config, because it is stored as JSON which means it can only contain elements which can be 'stringified' (and that excludes functions).
  *
- * The solution is that Predefined Config contains a **named reference** to the function but the actual implementation is elsewhere (in the [`UserFunctions`](../../modules/_src_adaptableoptions_userfunctions_.html) section of AdaptableOptions).
+ * The solution is that Predefined Config contains a **named reference** to the function but the **actual implementation is elsewhere** (in the [`UserFunctions`](../../modules/_src_adaptableoptions_userfunctions_.html) section of AdaptableOptions).
  *
  * --------------
  *
@@ -146,7 +144,7 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
- *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)           | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
+ *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
  *  | [QuickSearch](_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Shortcut](_src_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
