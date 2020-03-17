@@ -86,7 +86,25 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Simply put: if you increment (or provide from new) the revision number in a section of Predefined Config, AdapTable will replace that section in the user's State with the new Config.
  *
- * > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.  But you can, for example, provide a new `AdvancedSearch` section in Predefined Config which will replace the user's Advanced Searches in State while keeping their Layouts and other state elements untouched.
+ * > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.  But you can, for example, provide a new `CustomSort` section in Predefined Config which will replace the user's Custom Sorts in State while keeping their Layouts and other state elements untouched.
+ *
+ * ```ts
+ * export default {
+ *   CustomSort: {
+ *     Revision: 2, // This section will replace the Custom Sort section in User State if the Revision Number is greater than the one in State
+ *     Customsorts: [
+ *       {
+ *         ColumnId: 'Employee',
+ *         SortedValues: [
+ *           'Margaret Peacock',
+ *           'Steven Buchanan',
+ *           'Janet Leverling',
+ *         ],
+ *       },
+ *     ],
+ *   },
+ * } as PredefinedConfig;
+ * ```
  *
  * --------------
  *
