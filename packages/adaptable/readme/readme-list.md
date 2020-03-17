@@ -18,6 +18,8 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 ## General ReadMe Docs
  
  - [Theming and Styling Guide](./adaptable-theming-guide.md)
+
+ - [Adaptable State Guide](./adaptable-state-guide.md)
  
  - [Plugins](../../../packages/plugins/README.md)
  
@@ -41,6 +43,10 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Column Category](./Functions/column_category_function.md)   
 
 - [Column Chooser](./Functions/column_chooser_function.md) 
+
+- [Column Filter](./Functions/column_filter_function.md) 
+
+- [Dashboard](./Functions/dashboard_function.md) 
 
 
 ## Demo
