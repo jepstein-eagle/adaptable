@@ -1,6 +1,6 @@
 # AdapTable State Guide
 
-Managing User State is one of the most valued set of functionality that AdapTable provides.
+Managing User State is one of the most valued pieces of functionality that AdapTable provides.
 
 > This ReadMe provides an **overview** of the core concepts, and objects, involved in Adaptable State management.  For more detailed information follow the links to the Developer Documentation.
 
@@ -53,13 +53,35 @@ The concept behind Predefined Config is that it provides - at design-time - the 
 
 But sometimes developers might want to update a section in Predefined Config while ensuring that the rest of the user's Adaptable State remains untouched.
 
-This can be accomplished through the `Revision` property in [ConfigState](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_configstate_.configstate.html#revision) (the base interface for all User State sections).
+This can be accomplished through the `Revision` property in [ConfigState](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_configstate_.configstate.html#revision) (the base interface for all Adaptable State sections).
 
 Simply put: if you increment (or provide from new) the revision number in a section of Predefined Config, AdapTable will replace that section (but only that section) in the user's State with the new Config.
 
-> This is, currently, replace only, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.
+> This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.  But you can, for example, provide a new CustomSort section in Predefined Config which will replace the user's Custom Sorts in State while keeping their Layouts and other state elements untouched (see example below).
 
-> But you can, for example, provide a new CustomSort section in Predefined Config which will replace the user's Custom Sorts in State while keeping their Layouts and other state elements untouched (see example below).
+```ts
+export default {
+ .....
+   CustomSort: {
+     Revision: 2, // This section will replace the Custom Sort section in User State if the Revision Number is greater than the one currently in User State
+     CustomSorts: [
+     {
+       ColumnId: 'Rating',
+       SortedValues: ['AAA', 'AA+', 'AA', 'AA-'], // etc.
+     },
+     {
+        ColumnId: 'Country',
+        CustomSortComparerFunction: 'country',
+      },
+     {
+        ColumnId: 'currency',
+        CustomSortComparerFunction: 'currency',
+      },
+   ],
+   },
+  .....
+ } as PredefinedConfig;
+```
 
 ### AdaptableObject
 
