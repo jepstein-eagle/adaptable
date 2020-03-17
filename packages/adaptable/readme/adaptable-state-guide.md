@@ -103,36 +103,21 @@ This is essentially a set of key / value pairs that you can populate with any da
 
 ## State Management
 
-AdapTable makes it easy for you, via configuration, to store user state, in a location most suitable to your requirements (ie. locally or remotely).  User state can be created at run-time (through user action) or provided at design-time (through predefined config).
+AdapTable makes it easy for you, via configuration, to store Adaptable State, in a location most suitable to your requirements (ie. locally or remotely).  
 
-Note
-Internally AdapTable uses Redux to manage its state - this provides a unidirectional store for all the objects used in the grid.
+User state can be created at run-time (through user action e.g. selecting a Layout, creating a Column Filter etc.) or provided at design-time (through Predefined Config).
 
-If you are also using Redux in your own application then you should continue to use your own Store and not merge the 2 Stores.  This is the Best Practice advice.
+> Internally AdapTable uses Redux to manage its state - this provides a unidirectional store for all the objects used in the grid.  If you are also using Redux in your own application then you should continue to use your own Store and not merge the 2 Stores. 
 
-User State includes both properties (e.g. the current Advanced Search, which layout is loaded, what colour palette to use etc.) and Adaptable Objects (e.g. Advanced Searches, Layouts, Shortcuts, Conditional Styles etc.).
-
-User state can be created in 2 ways:
-
-Run-Time - while AdapTable is running, users can create as many Adaptable Objects as their permissions allow. Additionally AdapTable will automatically save other relevant information (e.g. current Advanced Search or Layout, visible Function Toolbars etc.).
-
-Design-Time - administrators and / or developers can ship an application with predefined config: either Adaptable Objects (e.g. a predefined Search called "Today's Trades" or Shortcut where 'M' multiples numeric cells by 1,000,000) or properties (e.g. which shortcut buttons or function toolbars to show in the Dashboard when first launching the application).
-
-Tip
-Depending on the Entitlements you provide, objects in the predefined config can be made read-only for the user and not editable at run-time.  
-
-User State Storage Options
+ 
+### Adaptable State Storage Options
 There are 2 modes of storage available in AdapTable:
 
-Local Storage - by default, user state is stored in the browser's local storage using the unique adaptableId property that you provide in AdaptableOptions.
+- **Local Storage** - by default, Adaptable State is stored in the browser's local storage using the unique `adaptableId` property that you provide in AdaptableOptions.
 
-Warning
-If using Local Storage, all user state will be lost each time the user clear's the browser cache and will not be available when switching computer.
+  > If using Local Storage, all user state will be lost each time the user clear's the browser cache and will not be available when switching computer.
 
-Note
-Local Storage is turned on by default; if you want to store settings somewhere more useful, you will need to enable ConfigServer.
-
-Remote Storage - user state is stored remotely (via ConfigServer) at a configured location. All user state is automatically sent to the location specified in ConfigServer and then persisted there.
+- **Remote Storage** - user state is stored remotely (via ConfigServer) at a configured location. All user state is automatically sent to the location specified in ConfigServer and then persisted there.
 
 Important
 Remote Storage is enabled by setting the enableConfigServer property to true when AdapTable is integrated with the host application.  (If this is set to false, then Local Storage will be used.)
@@ -144,10 +129,6 @@ When using Remote Storage, all user configuration is still available even after 
 
 For more information, see Config Server.
 
-Loading and Saving State
-When AdapTable is first loaded, any predefined config (see below) is read into memory and then stored (either locally or remotely - depending on your settings) together with any user state that is created during that session.
-
-Subsequently, each time the application is launched, that User State is retrieved (either from local storage or remote storage) and the particular AdapTable instance is pre-populated with it. 
 
 Tip
 Additionally AdapTable provides 4 function hooks to enable advanced users to provide their own implementations / functionality when state is being managed.
@@ -158,11 +139,10 @@ There are 4 functions available: loadState, applyState, saveState and persistSta
 
 See more at State Options.
 
-Accessing the State
-The recommended way to access the Store is via the Adaptable API which provides you with full programmatic read / write access to all our objects in a clean way.
+### Accessing Adaptable State
+The recommended way to access the Store is via the Adaptable Api which provides you with full programmatic read / write access to all our objects in a clean way.
 
-Warning
-The Adaptable API is actually a simple wrapper around our Redux store with basic read / write access and some additional error handling, logging and other features.
+> The Adaptable Api is actually a simple wrapper around our Redux store with basic read / write access and some additional error handling, logging and other features.
 
 We strongly recommend that you use the Adaptable API to access the Store (both for reading and writing).
 
@@ -171,17 +151,6 @@ The recommended way to listen to changes in the Store is by subscribing to the A
 
 This event can be set to fire through the Audit Log - which gives you the option of listening to User State changes, Internal State changes or both. There is an option to set whether this Audit Message is fired as an event.
 
-Predefined Config
-Predefined Config is User State that is provided at design time and effectively shipped with that AdapTable instance.  It includes all the settings and objects you want AdapTable to have at start-up.
-
-Note
-You can use Predefined Config for both local and remote storage - AdapTable will take care of the details.   
-
-You don't have to supply any Predefined Config - in which case the defaults will be used.
-
-The predefined config is specified in the predefinedConfig property of the Adaptable Objects.  This property can either be the JSON itself or the location of a .json file (see Integration for more details). 
-
-There is a large number of different configuration sections, each with various properties, lists or objects which you can specify.
 
 ## FAQs
 
