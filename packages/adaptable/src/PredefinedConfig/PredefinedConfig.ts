@@ -46,7 +46,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * This ensures that users wont see an empty AdapTable instance but, rather, one full of reports, searches, conditional styles etc that allow them to be productive immediately.
  *
- * Predefined Config consists of a series of (nullable) properties that themselves each implement *ConfigState*.
+ * Predefined Config consists of a series of (nullable) properties that themselves each implement [*Config State*](_src_predefinedconfig_configstate_.configstate.html).
  *
  * > Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
  *
@@ -86,10 +86,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Simply put: if you increment (or provide from new) the revision number in a section of Predefined Config, AdapTable will replace that section in the user's State with the new Config.
  *
- * **Note**: this is, currently, replace only, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.
- *
- * But you can, for example, provide a new `AdvancedSearch` section in Predefined Config which will replace the user's Advanced Searches in State while keeping their Layouts and other state elements untouched.
- *
+ * > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.  But you can, for example, provide a new `AdvancedSearch` section in Predefined Config which will replace the user's Advanced Searches in State while keeping their Layouts and other state elements untouched.
  *
  * --------------
  *
@@ -113,7 +110,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * --------------
  *
- *  ## Predefined Config Contents
+ *  ### Predefined Config Contents
  *
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
@@ -158,8 +155,9 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [UserFilter](_src_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
  *  | [UserInterface](_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
  *
+ * --------------
  *
- * ## Predefined Config example
+ * ### Predefined Config example
  *
  * ```ts
  * export default {
