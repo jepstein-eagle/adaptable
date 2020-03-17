@@ -64,7 +64,9 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
  *
- * #### AdaptableObject
+ * --------------
+ *
+ * ### AdaptableObject
  *
  * Most objects in PredefinedConfig implement the [`AdaptableObject`](_src_predefinedconfig_common_adaptableobject_.adaptableobject.html) interface.
  *
@@ -74,13 +76,15 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * **Do not set this property** when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the config is first read
  *
- * #### Bepspoke State
+ * --------------
+ *
+ * ### Bespoke State
  *
  * The Application State property of Predefined Config contains an [ApplicationDataEntries](_src_predefinedconfig_applicationstate_.applicationstate.html) array.
  *
  * This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
  *
- *  ## Predefined Config contents
+ *  ## Predefined Config Contents
  *
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
@@ -131,7 +135,20 @@ import { GradientColumnState } from './GradientColumnState';
  * ```ts
  * export default {
  *  Dashboard: {
- *    VisibleButtons: ['Dashboard', 'ColumnChooser', 'AdvancedSearch'],
+ *    Tabs: [
+ *          {
+ *            Name: 'Search',
+ *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *          },
+ *          {
+ *            Name: 'Edit',
+ *            Toolbars: ['BulkUpdate','SmartEdit'],
+ *          },
+ *          {
+ *            Name: 'Grid',
+ *            Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
+ *          },
+ *     ],
  * },
  *  SmartEdit: {
  *    SmartEditValue: 10,
