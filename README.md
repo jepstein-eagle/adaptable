@@ -123,7 +123,7 @@ npm install @adaptabletools/adaptable-plugin-charts
 ## Plugins
 AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-There are currently two plugins:
+There are currently 3 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
@@ -132,6 +132,10 @@ There are currently two plugins:
 - **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
 > Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
+
+- **No Code** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
+
+> Enables the creation of instances of AdapTable on the fly (using ag-Grid as the underlying vendor grid) by dragging and dropping any Excel or JSON file
 
 Further information is availalbe in the [Plugins ReadMe](./packages/plugins/README.md)
 
