@@ -91,7 +91,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
             checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
           }}
         >
-          Visible
+          Show Quick Filter
         </CheckBox>
       </Flex>
     );

@@ -67,7 +67,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       if (this.adaptable.api.dashboardApi.getDashboardState().IsCollapsed) {
         menuItems.push(
           this.createColumnMenuItemReduxAction(
-            'UnCollapse Dashboard',
+            'Open Dashboard',
             StrategyConstants.DashboardGlyph,
             DashboardRedux.DashboardSetIsCollapsed(false)
           )

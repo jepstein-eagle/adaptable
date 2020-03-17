@@ -58,7 +58,7 @@ export interface AdaptableOptions {
    *
    * **Note** it cannot contain a '.' (as this value is used to name styles which raises issues if it contains a full stop).
    *
-   * The value provided here is also that used to name the *Home Toolbar* (the toolbar that appears on the left of the Dashboard).
+   * The value provided here is also that used in the Dashboard Header.
    *
    * **Default Value: adaptable_id**
    */

@@ -302,7 +302,7 @@ export interface AdaptableApi {
   systemFilterApi: SystemFilterApi;
 
   /**
-   * Api methods related to the System Status button (shown in the Home Toolbar) that displays information about the health of the application.
+   * Api methods related to the System Status function which displays information about the health of the application.
    */
   systemStatusApi: SystemStatusApi;
 

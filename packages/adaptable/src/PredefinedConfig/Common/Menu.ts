@@ -31,7 +31,7 @@ Like with the Column Menu,the Context menu is created EACH TIME that it is opene
  *
  * It is used in 3 places:
  *
- * - **Function Menu**: the menu at the left of the Home Toolbar (with a home icon) and at the top of Adaptable Tool Panel that shows all the available functions.  Clicking a menu item will open the popup for that Function.
+ * - **Function Menu**: the menu at the left of the Dashboard Header (with a home icon) and at the top of Adaptable Tool Panel that shows all the available functions.  Clicking a menu item will open the popup for that Function.
  *
  * - **Column Header Menu**: the menu that appears in the Column Header.  We add our menu items after those provided by the vendor grid.
  *

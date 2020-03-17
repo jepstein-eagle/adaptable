@@ -40,11 +40,22 @@ import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
 
 /**
- * This is the main Predefined Config interface which users will populate at design-time.
+ * This is the main Predefined Config interface which developers will populate at design-time.
  *
  * Typically you will want to "pre-populate" your deployed application with predefined config - the initial state that AdapTable will use when it first loads up.
  *
- * Predefined Config consists of a series of (nullable) properties that themselves each implement *ConfigState*.
+ * This ensures that users wont see an empty AdapTable instance but, rather, one full of reports, searches, conditional styles etc that allow them to be productive immediately.
+ *
+ * --------------
+ *
+ *  **Further AdapTable Help Resources**
+ *
+ * [Demo Site](https://demo.adaptabletools.com/adaptablestate)
+ *
+ *  --------------
+ *
+ *
+ * Predefined Config consists of a series of (nullable) properties that themselves each implement [*Config State*](_src_predefinedconfig_configstate_.configstate.html).
  *
  * > Users only need to provide config for those properties which they want intial state, and within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
  *
@@ -54,17 +65,67 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * - **Run-Time**: Can be overriden & saved by user's actions (and persisted through State Management)
  *
- * Note: some objects are designed as 'Run-Time' but have properties which are **not** persisted (e.g. if its a function to be run - as functions cannot be 'stringified').
- *
  * If you don't want your users to edit the Adaptable Objects that you ship in PredefinedConfig, then set the [Entitlement](_src_predefinedconfig_entitlementstate_.entitlementstate.html) for that function to be `ReadOnly`.
- *
- * Any property in RunTime state that is not persisted is marked in the docs and comments with: ### [Non-Persisted AdapTable State].
  *
  * This object when populated forms the [predefinedConfig](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig) property in *adaptableOptions*.  It can be passed in either as pure JSON or as a url to a file which contains the JSON.
  *
- * Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
+ * > Although you can construct all your config by hand, its often easier when building more "complex" items like Queries to create them in the GUI at design time and then copy and paste the resulting state into your config file.
  *
- * #### AdaptableObject
+ * --------------
+ *
+ * ### Functions
+ *
+ * Many objects in AdapTable (e.g. Custom Sorts, User Menus, Action Columns etc.) include 'functions' that developers can provide when it makes sense to use a custom implementation rather than one provided by AdapTable.
+ *
+ * But this provides a problem for Predefined Config, because it is stored as JSON which means it can only contain elements which can be 'stringified' (and that excludes functions).
+ *
+ * The solution is that Predefined Config contains a **named reference** to the function but the **actual implementation is elsewhere** (in the [`UserFunctions`](../../modules/_src_adaptableoptions_userfunctions_.html) section of AdaptableOptions).
+ *
+ * --------------
+ *
+ * ### Revision Property
+ *
+ * The concept behind Predefined Config is that it provides - at design-time - the objects, entitlements and theme for initial use of the Application.
+ *
+ * It is read once and merged into the user's Adaptable State, and then any run-time changes which users make will form part of their State and be continually updated.
+ *
+ * But sometimes developers might want to update a section in Predefined Config while ensuring that the rest of the user's State remains untouched.
+ *
+ * This can be accomplished through the [`Revision`](_src_predefinedconfig_configstate_.configstate.html#revision) property in [Config State](_src_predefinedconfig_configstate_.configstate.html) (the base interface for all User State sections).
+ *
+ * Simply put: if you increment (or provide from new) the revision number in a section of Predefined Config, AdapTable will replace that section (but only that section) in the user's State with the new Config.
+ *
+ * > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.
+ *
+ * > But you can, for example, provide a new `CustomSort` section in Predefined Config which will replace the user's Custom Sorts in State while keeping their Layouts and other state elements untouched (see example below).
+ *
+ * ```ts
+ * export default {
+ *  .....
+ *   CustomSort: {
+ *     Revision: 2, // This section will replace the Custom Sort section in User State if the Revision Number is greater than the one currently in User State
+ *     CustomSorts: [
+ *     {
+ *       ColumnId: 'Rating',
+ *       SortedValues: ['AAA', 'AA+', 'AA', 'AA-'], // etc.
+ *     },
+ *     {
+ *        ColumnId: 'Country',
+ *        CustomSortComparerFunction: 'country',
+ *      },
+ *     {
+ *        ColumnId: 'currency',
+ *        CustomSortComparerFunction: 'currency',
+ *      },
+ *   ],
+ *   },
+ *  .....
+ * } as PredefinedConfig;
+ * ```
+ *
+ * --------------
+ *
+ * ### AdaptableObject
  *
  * Most objects in PredefinedConfig implement the [`AdaptableObject`](_src_predefinedconfig_common_adaptableobject_.adaptableobject.html) interface.
  *
@@ -74,13 +135,17 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * **Do not set this property** when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the config is first read
  *
- * #### Bepspoke State
+ * --------------
+ *
+ * ### Bespoke State
  *
  * The Application State property of Predefined Config contains an [ApplicationDataEntries](_src_predefinedconfig_applicationstate_.applicationstate.html) array.
  *
  * This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
  *
- *  ## Predefined Config contents
+ * --------------
+ *
+ *  ### Predefined Config Contents
  *
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
@@ -111,7 +176,7 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
- *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)           | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
+ *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
  *  | [QuickSearch](_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Shortcut](_src_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
@@ -125,13 +190,27 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [UserFilter](_src_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
  *  | [UserInterface](_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
  *
+ * --------------
  *
- * ## Predefined Config example
+ * ### Predefined Config example
  *
  * ```ts
  * export default {
  *  Dashboard: {
- *    VisibleButtons: ['Dashboard', 'ColumnChooser', 'AdvancedSearch'],
+ *    Tabs: [
+ *          {
+ *            Name: 'Search',
+ *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *          },
+ *          {
+ *            Name: 'Edit',
+ *            Toolbars: ['BulkUpdate','SmartEdit'],
+ *          },
+ *          {
+ *            Name: 'Grid',
+ *            Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
+ *          },
+ *     ],
  * },
  *  SmartEdit: {
  *    SmartEditValue: 10,

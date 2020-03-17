@@ -3,11 +3,19 @@ import { AdaptableFunctionButtons } from '../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
 
 /**
- * Provides access to the Dashboard state
+ * Functions relating to the AdapTable Dashboard.
+ *
+ * The Dashboard is the area above the grid which contains buttons, tabs, toolbars and Quick Search.
+ *
+ * **Note**: In v.6.1 (March 2020) the Dashboard has been signficantly updated and improved with some previous properties now deprecated.
+ *
+ * --------------
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/dashboard/aggriddashboardtoolbarsdemo/) | [State](_src_predefinedconfig_dashboardstate_.dashboardstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029743092-Dashboard-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030944511-Dashboard-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/dashboard) | [State](_src_predefinedconfig_dashboardstate_.dashboardstate.html)  | [ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/dashboard_function.md)
+ *
+ *  --------------
  *
  */
 export interface DashboardApi {
@@ -29,9 +37,11 @@ export interface DashboardApi {
   setVisibleButtons(functionButtons: AdaptableFunctionButtons): void;
 
   /**
-   * Sets the title of the Home Toolbar - the one on the left of the Dashboard
+   * Sets the title of the Dashboard Header
    *
-   * If no value is set, the title of the Home Toolbar will be AdaptableId property in AdaptableOptions
+   * Note: This is the bit which can be double-clicked to put the Dashboard into floating mode
+   *
+   * If no value is set this property, the Dashboard will display the value of the `AdaptableId` property in AdaptableOptions
    */
   setHomeToolbarTitle(title: string): void;
 
@@ -67,13 +77,37 @@ export interface DashboardApi {
    */
   clearCustomToolbarButtons(customToolbarName: string): void;
 
+  /***
+   * Collapses the Dashboard so only the Dashboard Header is visible - and not the contents of any Toolbars
+   */
   collapseDashboard(): void;
 
+  /***
+   * Uncollapses the Dashboard so that Toolbars in the Active Tab are fully visible
+   */
   unCollapseDashboard(): void;
 
+  /***
+   * Floats the Dashboard so only the Dashboard Header is visible (in reduced size) - and it can be dragged to a new location
+   */
   floatDashboard(): void;
 
+  /***
+   * Unfloats the Dashboard so that it 'snaps back' into its customary position above the grid.
+   */
   unFloatDashboard(): void;
+
+  /**
+   * Returns the current Active Tab (if there is one)
+   */
+  getActiveTab(): number | undefined;
+
+  /**
+   * Sets the Active Tab in the Dashboard Header
+   *
+   * @param tabIndex the tab index to set
+   */
+  setActiveTab(tabIndex: number): void;
 
   /**
    * Opens the Dashboard popup screen
