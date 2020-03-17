@@ -360,7 +360,7 @@ Yes, that is possible and expected.  AdapTable allows you provide highly configu
  ## State Functions example
 (Taken from our [State Functions demo](https://demo.adaptabletools.com/adaptablestate/aggridstatefunctionsdemo))
 
- ```yaml
+ ```ts
  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'OrderId',
     userName: 'Demo User',
