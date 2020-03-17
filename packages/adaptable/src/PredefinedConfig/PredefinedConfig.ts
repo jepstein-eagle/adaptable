@@ -87,13 +87,13 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * The concept behind Predefined Config is that it provides - at design-time - the objects, entitlements and theme for initial use of the Application.
  *
- * And then any changes which users make at run-time will form part of their State and continually updated.
+ * It is read once and merged into the user's Adaptable State, and then any run-time changes which users make will form part of their State and be continually updated.
  *
  * But sometimes developers might want to update a section in Predefined Config while ensuring that the rest of the user's State remains untouched.
  *
  * This can be accomplished through the [`Revision`](_src_predefinedconfig_configstate_.configstate.html#revision) property in [Config State](_src_predefinedconfig_configstate_.configstate.html) (the base interface for all User State sections).
  *
- * Simply put: if you increment (or provide from new) the revision number in a section of Predefined Config, AdapTable will replace that section in the user's State with the new Config.
+ * Simply put: if you increment (or provide from new) the revision number in a section of Predefined Config, AdapTable will replace that section (but only that section) in the user's State with the new Config.
  *
  * > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.
  *
