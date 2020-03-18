@@ -4,6 +4,8 @@ We provide a number of ReadMe docs each of which address a different general are
 
 These are to be used in conjunction with the [AdapTable Developer Documentation](https://api.adaptabletools.com).
 
+> The main source of AdapTable Help used to be our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these Read Me docs and the Developer Documentation that is automatically produced.
+
 ## Version-Related ReadMe Docs
  
  - [Adaptable Core](../README.md)
