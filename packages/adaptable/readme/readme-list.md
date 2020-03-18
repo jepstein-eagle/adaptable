@@ -22,6 +22,8 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
  - [Theming and Styling Guide](./adaptable-theming-guide.md)
 
  - [Adaptable State Guide](./adaptable-state-guide.md)
+
+ - [Run Time Access Guide](./adaptable-runtime-access-guide.md)
  
  - [Plugins](../../../packages/plugins/README.md)
  

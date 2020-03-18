@@ -1,28 +1,20 @@
-# AdapTable Key Concepts Guide
+# AdapTable Run-Time Access Guide
 
-This guide is designed to help new users get up and running quickly with the key concepts and objects in AdapTable.
+Most of the work required by developers in regard to AdapTable is, obviously, done at Design-Time.
 
-## Adaptable State / Predefined Config
+This list typically includes downloading and installing AdapTable, integrating it into your code, setting up AdapTableOptions and writing any Predefined Config you want so your instance is 'pre-loaded' with the correct objecs.
 
-to do
+However there are a number of ways that developers can access and leverage AdapTable for the benefit of users.  These include:
 
-## Adaptable Options
-
-to do
-
-## Adaptable API
-
-to do
-
-## How It Fits Together
-
-to do
-
+- the Adaptable Api: blah
+- the Adaptable Api: blah
+- the Adaptable Api: blah
+- the Adaptable Api: blah
 
  
-## Demo
+## Demos
 
-To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/adaptablestate) to see a number of state-related demos
 
 ## Help
 
@@ -39,4 +31,3 @@ General information about Adaptable Tools is available at our [Website](http://w
 ## Support
 
 For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
-
