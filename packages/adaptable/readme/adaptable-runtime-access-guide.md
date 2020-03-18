@@ -32,7 +32,7 @@ Full details of the Audit Log events can be found in the [Audit Event Section of
 ## Notifications & Alerts
 End Users can be immediately informed when something important happens through Message Alerts.
 
-These are normally triggered as the result of data changes (e.g. if Column X change > 10%) but the AdapTable Api can be used to send them at other times too.
+These are normally triggered as the result of data changes (e.g. if Column X change > 10%) but the [Alert Api](https://api.adaptableblotter.com/interfaces/_src_api_alertapi_.alertapi.html) can be used to send them at other times too.
 
 There are 4 types of Alerts that can be sent:
 
@@ -44,31 +44,21 @@ There are 4 types of Alerts that can be sent:
 
 - Error
 
-> Send an alert via the [Alert Api](https://api.adaptableblotter.com/interfaces/_src_api_alertapi_.alertapi.html).
-
 There are a number of different [Alert properties](https://api.adaptableblotter.com/interfaces/_src_predefinedconfig_alertstate_.alertproperties.html) available - allowing you to show Alerts as popups, or in the Alerts toolbar and tool panel, to colour or jumpt to cells that triggered the Alert etc.  See [Alert State](https://api.adaptableblotter.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html) for full details.
 
 > To find out when an alert has been triggered, subscribe to AdapTable's [AlertFired event](https://api.adaptableblotter.com/interfaces/_src_api_eventapi_.eventapi.html).
 
-Note
-Users are able to create their own alert definitions using the Alerts unction, which will trigger alerts whenever the rule is met.
+End Users can create their own Alert definitions at run-time using the [Alerts function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/alert_function.md), which will trigger alerts whenever the rule they create is met.
 
-Additionally, users can also create their own Reminders which are similar to Alerts but the message is hard-coded and they are sent not when something changes but according to a Schedule set by the User when creating the Reminder. (This schedule can be one-time only or a recurring date).
+> Additionally, End Users can also create their own Reminders which are similar to Alerts but the message is hard-coded and they are sent not when something changes but according to a Schedule set by the User when creating the Reminder. (This schedule can be one-time only or a recurring date).
 
 
- 
 ## System Status
-AdapTable provides 2 ways that, at runtime, you can keep your users updated with vital information about the system.
+AdapTable provides they [System Status function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/system_status_function.md) function to help keep End Users updated with vital information about the system.
 
-AdapTable offers you the ability to set a 'System Status message' that you can use to provide information about the state of the application.  
+This includes a 'System Status Message' and colour-coded 'System Status Type' used to provide urgent information about the state and health of the application and sent via the [System Status Api](https://api.adaptableblotter.com/interfaces/_src_api_systemstatusapi_.systemstatusapi.html).  
 
 The System Status message can be viewed in the System Status toobar, System Status tool panel or via the System Status button in the Home Toolbar (the first button by default).
-
-When activated, it has 4 states each represented by an associated colour: "Blue" (info), "Red" (info), "Amber" (warning) and "Green" (success).  
-
-Clicking on the button will show an alert that will display the custom message that you send.
-
-You can set the messages through the System Status section of Predefined Config, and you can change the Status at any time through the System Status API section of the Adaptable API.
  
 ## Demos
 

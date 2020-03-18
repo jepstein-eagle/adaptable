@@ -71,3 +71,6 @@ Yes, when you create an Alert Definition you can stipulate, among other things, 
 - [Alert Fired Event](https://api.adaptabletools.com/interfaces/_src_api_events_alertfired_.alertfiredeventargs.html)
 
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
+
+- [Run-Time Access Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/adaptable-runtime-access-guide.md)
+

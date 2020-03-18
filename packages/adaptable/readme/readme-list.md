@@ -31,26 +31,17 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 ## AdaptableFunction ReadMe Docs
 
 - [AdapableFunction Guide](./adaptable-functions-guide.md)
-
 - [Advanced Search](./Functions/adavanced_search_function.md)
-
 - [Alert](./Functions/alert_function.md)
-
 - [Bulk Update](./Functions/bulk_update_function.md)
-
 - [Calculated Column](./Functions/calculated_column_function.md)
-
 - [Cell Summary](./Functions/cell_summary_function.md)          
-
 - [Cell Validation](./Functions/cell_validation_function.md)    
-
 - [Column Category](./Functions/column_category_function.md)   
-
 - [Column Chooser](./Functions/column_chooser_function.md) 
-
 - [Column Filter](./Functions/column_filter_function.md) 
-
 - [Dashboard](./Functions/dashboard_function.md) 
+- [System Status](./Functions/system_status_function.md) 
 
 
 ## Demo

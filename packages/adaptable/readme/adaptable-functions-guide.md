@@ -57,7 +57,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | Schedule                 | Yes       | No       | No         | No          | No            |
 | Shortcut                 | Yes       | No       | No         | No          | No            |
 | Smart Edit               | No        | Yes      | Yes        | No          | Yes           |
-| System Status            | No        | Yes      | Yes        | Yes         | Yes           |
+| [System Status](./Functions/system_status_function.md)         | No        | Yes      | Yes        | Yes         | Yes           |
 | Team Sharing             | No        | No       | No         | No          | No            |
 | Theme                    | No        | Yes      | Yes        | No          | No            |
 | Updated Row              | No        | No       | No         | Yes         | Yes           |
