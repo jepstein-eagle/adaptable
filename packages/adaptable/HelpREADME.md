@@ -8,7 +8,7 @@ There are 3 primary ways that developers / users 'interact' with the code in Ada
 
 - [Predefined Configuration](/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html): **Pre-populate** your AdapTable instance with the objects required at startup 
 
-- [AdapTable API](/interfaces/_src_api_adaptableapi_.adaptableapi.html): **Access all functionality and state** in AdapTable through code (at runtime) 
+- [AdapTable Api](/interfaces/_src_api_adaptableapi_.adaptableapi.html): **Access all functionality and state** in AdapTable through code (at runtime) 
 
 These 3 objects are linked as follows: 
 
