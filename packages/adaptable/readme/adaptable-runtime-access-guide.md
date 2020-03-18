@@ -21,34 +21,34 @@ There are hundreds of methods you can use - which are detailed in our the [Api D
 ## Adaptable Events
 AdapTable fires a number of events that will keep you informed of everything that is happening inside your grid to which you can subscribe and respond as appropriate via the Adaptable Api.
 
-There is a full list in the [Api Developer Documentation](https://api.adaptableblotter.com/interfaces/_src_api_eventapi_.eventapi.html).
+There is a full list in the [Event Section of Api Developer Documentation](https://api.adaptableblotter.com/interfaces/_src_api_eventapi_.eventapi.html).
 
 These events include `AdaptableReady` which fires when the Grid is fully loaded and ready to be used.
 
-In addition the Audit Log fires events whenever User State or underlying data changes. You can listen to these events by setting up Audit Log.
+In addition the [Audit Log](https://api.adaptableblotter.com/interfaces/_src_adaptableoptions_auditoptions_.auditoptions.html) can be configured to fire an event whenever User State or underlying data changes. 
 
-Full details of the Audit Log events can be found in the AuditEventAPI.
+Full details of the Audit Log events can be found in the [Audit Event Section of Api Developer Documentation](https://api.adaptableblotter.com/interfaces/_src_api_auditeventapi_.auditeventapi.html).
  
 ## Notifications & Alerts
-Another way of informing the user of something important is via Message Alerts.  There are 4 types of Alerts that you can send:
+End Users can be immediately informed when something important happens through Message Alerts.
 
-Info
+These are normally triggered as the result of data changes (e.g. if Column X change > 10%) but the AdapTable Api can be used to send them at other times too.
 
-Success
+There are 4 types of Alerts that can be sent:
 
-Warning
+- Info
 
-Error
+- Success
 
-Tip
-To send an alert, use the Alert API section of the Adaptable API.
+- Warning
 
-Depending on which method (or params) you use, a different alert will be shown.
+- Error
 
-By default alerts are shown as popups (and in the Alerts toolbar) but you can choose to put them elsewhere.
+> Send an alert via the [Alert Api](https://api.adaptableblotter.com/interfaces/_src_api_alertapi_.alertapi.html).
 
-Tip
-If you want to find out when an alert has been triggered, you can subscribe to AdapTable's AlertFired event, which is published whenever an event is fired (see Event API).
+There are a number of different [Alert properties](https://api.adaptableblotter.com/interfaces/_src_predefinedconfig_alertstate_.alertproperties.html) available - allowing you to show Alerts as popups, or in the Alerts toolbar and tool panel, to colour or jumpt to cells that triggered the Alert etc.  See [Alert State](https://api.adaptableblotter.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html) for full details.
+
+> To find out when an alert has been triggered, subscribe to AdapTable's [AlertFired event](https://api.adaptableblotter.com/interfaces/_src_api_eventapi_.eventapi.html).
 
 Note
 Users are able to create their own alert definitions using the Alerts unction, which will trigger alerts whenever the rule is met.
