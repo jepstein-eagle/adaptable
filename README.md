@@ -90,35 +90,35 @@ If you are using yarn then it will be:
 
 6.  Install the relevant AdapTable package you need.
 
-  For core it will be:
+    For core it will be:
 
-  ```
-  npm i @adaptabletools/adaptable
-  ```
+    ```
+    npm i @adaptabletools/adaptable
+    ```
 
-  For the ag-Grid React Wrapper it will be:
+    For the ag-Grid React Wrapper it will be:
 
-  ```
-  npm i @adaptabletools/adaptable-react-aggrid
-  ```
+    ```
+    npm i @adaptabletools/adaptable-react-aggrid
+    ```
 
-  For the ag-Grid Angular Wrapper it will be:
+    For the ag-Grid Angular Wrapper it will be:
 
-  ```
-  npm i @adaptabletools/adaptable-angular-aggrid
-  ```
+    ```
+    npm i @adaptabletools/adaptable-angular-aggrid
+    ```
 
 7.  Install any Adaptable Plugins as required (see section below for more details).
 
-  e.g. to install the charts plugin it will be:
+    e.g. to install the charts plugin it will be:
 
-  ```
-  npm install @adaptabletools/adaptable-plugin-charts
-  ```
+    ```
+    npm install @adaptabletools/adaptable-plugin-charts
+    ```
 
-  >  This downloaded contains everything required to run AdapTable and no other downloads are necessary.
-  >  AdapTable, once running, **does not make any external internet calls nor store any of your data**.
-  >  Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
+    >  This downloaded contains everything required to run AdapTable and no other downloads are necessary.
+    >  AdapTable, once running, **does not make any external internet calls nor store any of your data**.
+    >  Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
 
 ## Plugins
 AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
