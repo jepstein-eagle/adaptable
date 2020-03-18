@@ -191,7 +191,7 @@ These include:
  
  - [Plugins](./packages/plugins/README.md)
  
-> Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these Read Me docs and the Developer Documentation that is automatically produced and therefore always up to date.
+> Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
  
 ## More Information
 
