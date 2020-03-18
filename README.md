@@ -171,13 +171,11 @@ These include:
  
 ## Help
 
-Further information about AdapTable is available at our [Website](http://www.adaptabletools.com) and our [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
-
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
 
-## Other Read Me Docs
+The other source for Help is our collection of 'Read Me' Docs ([full list here](./packages/adaptable/readme/readme-list.md)).
 
-Other Read Me docs that will be of interest are:
+These include:
 
  - [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
 
@@ -193,7 +191,11 @@ Other Read Me docs that will be of interest are:
  
  - [Plugins](./packages/plugins/README.md)
  
- Read the [full list of the AdapTable ReadMe docs](./packages/adaptable/readme/readme-list.md).
+> Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these Read Me docs and the Developer Documentation that is automatically produced and therefore always up to date.
+ 
+## More Information
+
+General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
 
 ## Support
 
