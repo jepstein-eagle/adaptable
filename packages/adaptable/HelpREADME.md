@@ -1,6 +1,6 @@
 # Accessing AdapTable through code
 
-**[This documentation targets AdapTable Version 6 - released in January 2020]**
+> These pages provide auto-generated Help for AdapTable and are very 'code-related'.  For general overviews on AdapTable and the key concepts see the [Read Me Docs](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/readme-list.md).
 
 There are 3 primary ways that developers / users 'interact' with the code in AdapTable:
 
@@ -51,6 +51,6 @@ AdapTable's `api` provides full safe, run-time access to all the functionality a
 You can find further information about AdapTable at these sites:
 
 - [Demo Site](https://demo.adaptabletools.com)
-- [Help Site](https://adaptabletools.zendesk.com/hc/en-us)
+- [Read Me Docs](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/readme-list.md)
 - [Web Site](http://www.adaptabletools.com)
 

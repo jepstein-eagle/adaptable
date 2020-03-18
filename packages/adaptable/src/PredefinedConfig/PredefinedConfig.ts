@@ -50,7 +50,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/adaptablestate)
+ * [Demo Site](https://demo.adaptabletools.com/adaptablestate) | [Adaptable State ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/adaptable-state-guide.md)
  *
  *  --------------
  *
