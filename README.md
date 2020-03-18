@@ -57,20 +57,22 @@ To gain access to this registry please follow these steps:
 
 2. Point your npm client to the correct registry for packages under the '@adaptabletools' scope.
 
-  ```sh
-  npm config set @adaptabletools:registry https://registry.adaptabletools.com
+    ```sh
+    npm config set @adaptabletools:registry https://registry.adaptabletools.com
 
-  ```
-If you are using yarn then it will be:
-  ```sh
-  yarn config set @adaptabletools:registry https://registry.adaptabletools.com
-  ```
+    ```
+    
+    If you are using yarn then it will be:
+      
+    ```sh
+    yarn config set @adaptabletools:registry https://registry.adaptabletools.com
+    ```
 
 3. Login to the Adaptable private registry:
 
-  ```sh
-  npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
-  ```
+    ```sh
+    npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+    ```
 
 4. Enter the credentials that were provided to you by the AdapTable support team:
 
@@ -80,13 +82,13 @@ If you are using yarn then it will be:
 
 5. Confirm that you are logged in correctly by using whoami:
 
-  ```
-  npm whoami --registry=https://registry.adaptabletools.com
-  ```
+    ```
+    npm whoami --registry=https://registry.adaptabletools.com
+    ```
 
-  This should display the username you received from use as the current login on the private registry
+    This should display the username you received from use as the current login on the private registry
 
-  > note: this does not affect your username/login session on the public npm registry
+    > note: this does not affect your username/login session on the public npm registry
 
 6.  Install the relevant AdapTable package you need.
 
@@ -127,15 +129,15 @@ There are currently 3 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
-> Courtesy of [Infragistics](https://www.infragistics.com/products/ignite-ui-react) - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+    > Courtesy of [Infragistics](https://www.infragistics.com/products/ignite-ui-react) - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
 - **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
-> Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
+    > Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
 
 - **No Code** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
-> Enables the creation of instances of AdapTable on the fly (using ag-Grid as the underlying vendor grid) by dragging and dropping any Excel or JSON file
+    > Enables the creation of instances of AdapTable on the fly (using ag-Grid as the underlying vendor grid) by dragging and dropping any Excel or JSON file
 
 Further information is availalbe in the [Plugins ReadMe](./packages/plugins/README.md)
 
