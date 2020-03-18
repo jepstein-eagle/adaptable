@@ -27,23 +27,23 @@ For more information please see the [Version 6 Upgrade Guide](./packages/adaptab
 
 AdapTable comes in 3 variants:
  
-  * **'core'** (vanilla) javascript version
+  * **'core'** (vanilla) JavaScript version
   
-  To use this install `@adaptabletools/adaptable` 
+    To use this install `@adaptabletools/adaptable` 
   
-  > For more info, see the [Adaptable Core readme](./packages/adaptable/README.md)
+    > For more info, see the [Adaptable Core readme](./packages/adaptable/README.md)
   
   * **React Wrapper**
   
-  To use this install `@adaptabletools/adaptable-react-aggrid`
+    To use this install `@adaptabletools/adaptable-react-aggrid`
   
-  > For more info, see the [React Wrapper readme](./packages/adaptable-react-aggrid/README.md)
+    > For more info, see the [React Wrapper readme](./packages/adaptable-react-aggrid/README.md)
   
   * **Angular Wrapper**
   
-  To use this, install `@adaptabletools/adaptable-angular-aggrid`
+    To use this, install `@adaptabletools/adaptable-angular-aggrid`
   
-  > For more info, see the [Angular Wrapper readme](./packages/adaptable-ng-aggrid/README.md)
+    > For more info, see the [Angular Wrapper readme](./packages/adaptable-ng-aggrid/README.md)
   
   Each of these packages has its own initialisation requirements so please read the appropriate documentation
 
@@ -57,68 +57,68 @@ To gain access to this registry please follow these steps:
 
 2. Point your npm client to the correct registry for packages under the '@adaptabletools' scope.
 
-```sh
-npm config set @adaptabletools:registry https://registry.adaptabletools.com
+  ```sh
+  npm config set @adaptabletools:registry https://registry.adaptabletools.com
 
-```
+  ```
 If you are using yarn then it will be:
-```sh
-yarn config set @adaptabletools:registry https://registry.adaptabletools.com
-```
+  ```sh
+  yarn config set @adaptabletools:registry https://registry.adaptabletools.com
+  ```
 
 3. Login to the Adaptable private registry:
 
-```sh
-npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
-```
+  ```sh
+  npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+  ```
 
 4. Enter the credentials that were provided to you by the AdapTable support team:
 
-  * login name
-  * email
-  * password
+    * login name
+    * email
+    * password
 
 5. Confirm that you are logged in correctly by using whoami:
 
-```
-npm whoami --registry=https://registry.adaptabletools.com
-```
+  ```
+  npm whoami --registry=https://registry.adaptabletools.com
+  ```
 
-This should display the username you received from use as the current login on the private registry
+  This should display the username you received from use as the current login on the private registry
 
-> note: this does not affect your username/login session on the public npm registry
+  > note: this does not affect your username/login session on the public npm registry
 
 6.  Install the relevant AdapTable package you need.
 
-For core it will be:
+  For core it will be:
 
-```
-npm i @adaptabletools/adaptable
-```
+  ```
+  npm i @adaptabletools/adaptable
+  ```
 
-For the ag-Grid React Wrapper it will be:
+  For the ag-Grid React Wrapper it will be:
 
-```
-npm i @adaptabletools/adaptable-react-aggrid
-```
+  ```
+  npm i @adaptabletools/adaptable-react-aggrid
+  ```
 
-For the ag-Grid Angular Wrapper it will be:
+  For the ag-Grid Angular Wrapper it will be:
 
-```
-npm i @adaptabletools/adaptable-angular-aggrid
-```
+  ```
+  npm i @adaptabletools/adaptable-angular-aggrid
+  ```
 
 7.  Install any Adaptable Plugins as required (see section below for more details).
 
-e.g. to install the charts plugin it will be:
+  e.g. to install the charts plugin it will be:
 
-```
-npm install @adaptabletools/adaptable-plugin-charts
-```
+  ```
+  npm install @adaptabletools/adaptable-plugin-charts
+  ```
 
->  This downloaded contains everything required to run AdapTable and no other downloads are necessary.
->  AdapTable, once running, **does not make any external internet calls nor store any of your data**.
->  Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
+  >  This downloaded contains everything required to run AdapTable and no other downloads are necessary.
+  >  AdapTable, once running, **does not make any external internet calls nor store any of your data**.
+  >  Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
 
 ## Plugins
 AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
