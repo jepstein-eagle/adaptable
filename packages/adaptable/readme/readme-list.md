@@ -40,7 +40,11 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Column Category](./Functions/column_category_function.md)   
 - [Column Chooser](./Functions/column_chooser_function.md) 
 - [Column Filter](./Functions/column_filter_function.md) 
+- [ColumnInfo](./Functions/column_info_function.md)             
+- [ConditionalStyle](./Functions/conditional_style_function.md)  
+- [CustomSort](./Functions/custom_sort_function.md)              
 - [Dashboard](./Functions/dashboard_function.md) 
+- [DataSource](./Functions/data_source_function.md)  
 - [System Status](./Functions/system_status_function.md) 
 
 
