@@ -2,11 +2,11 @@
 
 Many of the functions in AdapTable are powered by an `Expression`.
 
-This is essentially a very powerful multi-column query that will evaluate on a row by row basis whether that row 'passes'.
+This is essentially a powerful multi-column query that evaluates on a row by row basis whether that row 'passes'.
 
 ## Terminology
 
-An **Expression** is essentially an instruction that tells AdapTable to find data that matches specific search criteria.
+Strictly speakng an **Expression** is an instruction that tells AdapTable to find data that matches specific search criteria.
 
 An Expression contains one or more **Conditions**: a condition is a set of rules that apply to a single Column. 
 
@@ -17,7 +17,8 @@ Each Condition contains one or more **Criteria**:  these are the values that mus
 
 There are 3 types of Criteria in a Condition:
 
-- **Column Values**. This lists all the column values available to you.
+- **Column Values**
+  This lists all the values in the chosen Column .
 
   By default AdapTable will populate the listbox with all the distinct values for that column currently in the grid.
 
@@ -27,50 +28,52 @@ There are 3 types of Criteria in a Condition:
 
   You  can find out more about the 3 different options available at Column Values.
 
-- **Filters**.. This will list all System Filters (for the column's datatype) and any User Filters or Named Filters that you have previously created for that column (which are displayed in italics).
+- **Filters**
+  This will list all System Filters (for the column's datatype) and any User Filters or Named Filters that you have previously created for that column (which are displayed in italics).
 
-The filter options visible will differ depending on the datatype of the column. 
+  The filter options visible will differ depending on the datatype of the column. 
 
-See the Filter ReadMe for more information.
+  See the [Filter ReadMe](./adaptable-filtering-guide.md) for more information.
 
 - **Ranges**. These are small expressions that you create via the Add Range button. Each Range consists of an Operator and an Operand. An Operand can be either a value (e.g. > 32) or another Column (> 'Bid'). 
 
- > You can use multiple ranges in your query. When you have defined one range, click the Add Range Entry button to add another.
+  > You can use multiple ranges in your query. When you have defined one range, click the Add Range Entry button to add another.
 
-The available Operators are:
+  The available Operators are:
 
-| Operator  	              | Description                                  | Columns           |
-| --------  	              | ------                                       | -------           | 
-|>                          | Greater Than                                 | Number, Date      | 
-|>=                         | Greater Than or Equal To                     | Number, Date      | 
-|<                          | Less Than                                    | Number, Date      | 
-|<=                         | Less Than or Equal To                        | Number, Date      | 
-|=                          | Equal To                                     | Number, Date, Text| 
-|< >                        | NotEqual To                                  | Number, Date, Text| 
-|Between                    | In range between two values                  | Number, Date      | 
-|Contains                   | Query value appears anywhere in Cell         | Text              | 
-|Starts With                | Query value appears at beginning of Cell     | Text              | 
-|Ends With                  | Query value appears at end of Cell           | Text              | 
-|Regex                      | Query can be defined as a Regular Expression | Text              | 
+  | Operator  	              | Description                                  | Columns           |
+  | --------  	              | ------                                       | -------           | 
+  |>                          | Greater Than                                 | Number, Date      | 
+  |>=                         | Greater Than or Equal To                     | Number, Date      | 
+  |<                          | Less Than                                    | Number, Date      | 
+  |<=                         | Less Than or Equal To                        | Number, Date      | 
+  |=                          | Equal To                                     | Number, Date, Text| 
+  |< >                        | NotEqual To                                  | Number, Date, Text| 
+  |Between                    | In range between two values                  | Number, Date      | 
+  |Contains                   | Query value appears anywhere in Cell         | Text              | 
+  |Starts With                | Query value appears at beginning of Cell     | Text              | 
+  |Ends With                  | Query value appears at end of Cell           | Text              | 
+  |Regex                      | Query can be defined as a Regular Expression | Text              | 
 
 
+### Preview Panel
 AdapTable displays all the Conditions that are in place for the query in the Preview panel. 
 
 The Preview Panel also allows for Criteria in each Condition to be edited and deleted.
 
-## Functions using Expression
+## Functions using Expressions
 
 These are the following AdapTable Functions that use Expressions - together with a description of what the Expression does when its run:
 
-| Function  	      | Result                                                                                                |
-| --------  	      | ------                                                                                                | 
-| Advanced Search   | AdapTable displays only those rows that match the Advanced Search's Conditions and Criteria           | 
-| Alerts 	          | The Alert is only triggered if the data change matches the Expression's Critieria.                    | 
-| Cell Validation	  | Cell Validation Rule will be applied if Cell being edited matches the Expression's Critieria          | 
-| Conditional Style | Conditional Style is only applied to Cells and Rows in Grid that that match the Expression's Critieria| 
-| Export 	          | Only rows which match the query are included in the data range that is exported.                      | 
-| Plus / Minus 	    | The Plus/Minus settings for a column are used if the Row being 'nudged' matches the query.            | 
-| User Filter 	    | Applies to a single column only - only those values which match the filter criteria are returned true | 
+| Function  	      | Result                                                                                       |
+| --------  	      | ------                                                                                       | 
+| Advanced Search   | AdapTable displays only those rows that match the Advanced Search's Conditions and Criteria  | 
+| Alerts 	          | The Alert is only triggered if the data change matches the Expression's Critieria.           | 
+| Cell Validation	  | Cell Validation Rule will be applied if Cell being edited matches the Expression's Critieria | 
+| Conditional Style | Style is only applied to Cells and Rows in Grid that that match the Expression's Critieria   | 
+| Export 	          | Only rows which match the query are included in the data range that is exported              | 
+| Plus / Minus 	    | The Plus/Minus settings for a column are used if the Row being 'nudged' matches query        | 
+| User Filter 	    | Applies to single column only - only values which match filter criteria return true          | 
 
 
 ## Demos
