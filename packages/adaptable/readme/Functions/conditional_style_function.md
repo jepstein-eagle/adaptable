@@ -4,21 +4,26 @@ The Conditional Style ([AdaptableFunctionName](https://api.adaptabletools.com/mo
 
 ## Conditional Style Rules
 
-A Conditional Style *Rule* is written using and Adaptable Expression (Query).
+A Conditional Style *Rule* is written using a standard Adaptable Expression (Query).
 
 When create a Conditional Style you will select the:
 
-- **Scope**: whether the style is applied for a single column or an entire row
-
- >  If you are using Column Categories then you can also apply a style just to the columns in a single category
+- **Scope**: where the style is applied.  Options are:
+  - a single column 
+  
+  - an entire row
+  
+   - a Column Category (if thee are any defined)
+   
+> There is an option to exclude grouped rows from having the style applied.
 
 - **Colours and Font Properties**: used to create the style that suits your needs by selecting the fore and back colours and font elements that you require. Just select those elements that you wish to change from the default setting.
 
- > If you don't want to create the style yourself then there is an option to select the name of a pre-existing CSS style instead.
+  > If you don't want to create the style yourself then there is an option to select the name of a pre-existing CSS style instead.
 
-- **Query**: determines when the style will be applied. For more information on building and editing Queries using multiple Conditions and Criteria see Queries
+- **Query**: determines **where** the style will be applied. 
 
- > The conditional styles you create will be applied to your grid when a row's values **match all the criteria you have set**. If a row's values do not match the criteria, the default styles will be used instead.
+  > The conditional styles you create will be applied to your grid when a row's values **match all the criteria you have set**. If a row's values do not match the criteria, the default styles will be used instead.
 
 
 ## UI Elements
@@ -48,11 +53,13 @@ This is not possible unfortunately because each underlying grid needs then to im
 
 C**an we provide the name of a css style instead of building it?**
 
-Yes, you can do that. When you create a predefined Conditional Style there is a StyleName property which you can use to provide the name of the css style. If you do that, then its your responsibility to ensure that style is available in your css. Additionally, you can provide a list of styles in UserInterface config adn then they will be available in a dropdown in the Conditional Styles wizard.
+Yes, you can do that. When you create a predefined Conditional Style there is a StyleName property which you can use to provide the name of the css style. If you do that, then its your responsibility to ensure that style is available in your css. 
+
+Additionally, you can provide a list of styles in UserInterface config and then they will be available in a dropdown in the Conditional Styles wizard.
 
 **Can we add gradient style to a Conditional Style so the colour transparency changes depending on the value?**
 
-Not currently but we plan to add this in a future release. We do have the Percent Bar that does something similar for all cells in a column.
+Not currently but we plan to add this in a future release. We do have the Percent Bar and Gradient Column functions that both dosomething similar but for **all** cells in a column.
 
 **Can we add a style that is always applied, i.e. is not based on a condition?**
 
