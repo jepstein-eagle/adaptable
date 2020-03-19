@@ -42,7 +42,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Dashboard](./Functions/dashboard-function.md)                 | No     | No      | Yes        | Yes         | No           | 
 | [DataSource](./Functions/data-source-function.md)              | Yes    | Yes     | Yes        | No          | No           | 
 | [Export](./Functions/export-function.md)                       | Yes    | Yes     | Yes        | No          | No           | 
-| Flashing Cell            | No        | No       | No         | Yes         | No            | 
+| [FlashingCell](./Functions/flashing-cell.md)            | No        | No       | No         | Yes         | No            | 
 | Format Column            | Yes       | No       | No         | Yes         | No            | 
 | Free Text                | Yes       | No       | No         | Yes         | No            | 
 | Glue42                   | No        | Yes      | Yes        | No          | No            |
