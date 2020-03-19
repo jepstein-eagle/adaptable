@@ -1,8 +1,8 @@
 # AdapTable Expressions Guide
 
-Many of the functions in AdapTable are powered by an Expression (a.k.a. a query).
+Many of the functions in AdapTable are powered by an `Expression`.
 
- 
+This is essentially a very powerful multi-column query that will evaluate on a row by row basis whether that row 'passes'.
 
 ## Terminology
 
