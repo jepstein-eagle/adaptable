@@ -149,7 +149,7 @@ const initialDashboardState: DashboardState = {
   ActiveTab: 0,
   IsCollapsed: false,
   IsFloating: false,
-  IsInline: true,
+  IsInline: false,
   FloatingPosition: { x: 100, y: 100 },
   VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
   CustomToolbars: EMPTY_ARRAY,

@@ -99,6 +99,8 @@ export interface DashboardState extends ConfigState {
    * Whether or not the Dashboard is collapsed.
    *
    * If the Dashboard is collapsed then only the header is visible but not the contents of any tabs.
+   *
+   *  **Default Value: False**
    */
   IsCollapsed?: boolean;
 
@@ -108,9 +110,18 @@ export interface DashboardState extends ConfigState {
    * If the Dashboard is floating then it will appear anywhere you drag it to (in minmised form).
    *
    * Double-click the Dashboard header to revert it to its default position above the grid.
+   *
+   *  **Default Value: False**
    */
   IsFloating?: boolean;
 
+  /**
+   * An alternative way of showing the Dashboard in 'Expanded' view.
+   *
+   * Instead of a Header and Body it has the headers section to the left of the Toolbars. (Similar to how it was pre Version 6.1)
+   *
+   * **Default Value: False**
+   */
   IsInline?: boolean;
 
   /**

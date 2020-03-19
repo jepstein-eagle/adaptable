@@ -33,12 +33,13 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        Revision: 19,
+        Revision: 23,
         VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
         VisibleButtons: ['CellSummary'],
         ShowFunctionsDropdown: true,
-        HomeToolbarTitle: 'Hello world',
+        HomeToolbarTitle: 'He1lo world',
         ShowQuickSearchInHeader: true,
+        IsInline: true, // making it false in Redux so we dont forget but true here for testing purposes
       },
 
       AdvancedSearch: {
