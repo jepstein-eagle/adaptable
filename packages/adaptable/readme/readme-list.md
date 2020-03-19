@@ -7,24 +7,18 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 > The main source of AdapTable Help used to be our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
 ## Version-Related ReadMe Docs
- 
  - [Adaptable Core](../README.md)
-
  - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
-  
  - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
- 
  - [Version 6 Upgrade Guide](./upgrade-guide.md)
 
  
 ## General ReadMe Docs
- 
  - [Theming and Styling Guide](./adaptable-theming-guide.md)
-
  - [Adaptable State Guide](./adaptable-state-guide.md)
-
+ - [Adaptable Filtering Guide](./adaptable-filter-guide.md)
+ - [Adaptable Expression Guide](./adaptable-expression-guide.md)
  - [Run Time Access Guide](./adaptable-runtime-access-guide.md)
- 
  - [Plugins](../../../packages/plugins/README.md)
  
 

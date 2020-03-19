@@ -161,15 +161,10 @@ We have added a few example projects to Github to help you to understand how to 
 
 These include:
 * [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
- 
 * [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
-
 * [No Code (ag-Grid) Example](https://github.com/AdaptableTools/example-adaptable-nocode-aggrid)
-  
 * [Building Minifed File (with parcel.js) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
-   
 * [ipushpull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
- 
  
 ## Help
 
@@ -178,19 +173,14 @@ Developers can learn how to access AdapTable programmatically at [AdapTable Deve
 The other source for Help is our collection of 'Read Me' Docs ([full list here](./packages/adaptable/readme/readme-list.md)).
 
 These include:
-
  - [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
-
  - [Adaptable Core](./packages/adaptable/README.md)
-
  - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
-  
- - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
- 
+ - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md) 
  - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/adaptable-theming-guide.md)
- 
  - [Adaptable State Guide](./packages/adaptable/readme/adaptable-state-guide.md)
- 
+ - [Adaptable Filtering Guide](./packages/adaptable/readme/adaptable-filtering-guide.md)
+ - [Adaptable Expression Guide](./packages/adaptable/readme/adaptable-expression-guide.md)
  - [Plugins](./packages/plugins/README.md)
  
 > Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
