@@ -6,25 +6,28 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 > The main source of AdapTable Help used to be our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
-## Version-Related ReadMe Docs
+## Version-Related
  - [Adaptable Core](../README.md)
  - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
  - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
+ - [Plugins](../../../packages/plugins/README.md)
  - [Version 6 Upgrade Guide](./upgrade-guide.md)
 
  
-## General ReadMe Docs
- - [Theming and Styling Guide](./adaptable-theming-guide.md)
- - [Adaptable State Guide](./adaptable-state-guide.md)
- - [Adaptable Filtering Guide](./adaptable-filtering-guide.md)
- - [Adaptable Expression Guide](./adaptable-expression-guide.md)
- - [Run Time Access Guide](./adaptable-runtime-access-guide.md)
- - [Plugins](../../../packages/plugins/README.md)
- 
+## Guides
+ - [Theming and Styling Guide](./Guides/adaptable-theming-guide.md)
+ - [Adaptable State Guide](./Guides/adaptable-state-guide.md)
+ - [Adaptable Filtering Guide](./Guides/adaptable-filtering-guide.md)
+ - [Adaptable Expression Guide](./Guides/adaptable-expression-guide.md)
+ - [Run Time Access Guide](./Guides/adaptable-runtime-access-guide.md)
+ - [AdapableFunction Guide](./Guides/adaptable-functions-guide.md)
 
-## AdaptableFunction ReadMe Docs
+ ## FAQs
+ - [Column Values FAQ](./FAQs/adaptable-column-values-faq.md)
 
-- [AdapableFunction Guide](./adaptable-functions-guide.md)
+## Adaptable Functions
+
+- [AdapableFunction Guide](./Guides/adaptable-functions-guide.md)
 - [Advanced Search](./Functions/adavanced_search_function.md)
 - [Alert](./Functions/alert_function.md)
 - [Bulk Update](./Functions/bulk_update_function.md)
