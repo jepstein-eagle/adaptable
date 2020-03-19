@@ -45,6 +45,7 @@ interface DashboardComponentProps extends StrategyViewPopupProps<DashboardCompon
   onSetActiveTab: (ActiveTab: number | null) => DashboardRedux.DashboardSetActiveTabAction;
   onSetIsCollapsed: (IsCollapsed: boolean) => DashboardRedux.DashboardSetIsCollapsedAction;
   onSetIsFloating: (IsFloating: boolean) => DashboardRedux.DashboardSetIsFloatingAction;
+  onSetIsInline: (IsInline: boolean) => DashboardRedux.DashboardSetIsInlineAction;
   onSetFloatingPosition: (
     FloatingPosition: AdaptableCoordinate
   ) => DashboardRedux.DashboardSetFloatingPositionAction;
@@ -228,6 +229,41 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
       };
     });
 
+    menuItems.unshift(
+      {
+        disabled: false,
+        onClick: () => this.props.onShowDashboardPopup(),
+        icon: null,
+        label: 'Settings',
+      },
+      this.props.DashboardState.IsCollapsed
+        ? {
+            disabled: false,
+            onClick: () => this.props.onSetIsCollapsed(false),
+            icon: null,
+            label: 'Uncollapse',
+          }
+        : {
+            disabled: false,
+            onClick: () => this.props.onSetIsCollapsed(true),
+            icon: null,
+            label: 'Collapse',
+          },
+      this.props.DashboardState.IsFloating
+        ? {
+            disabled: false,
+            onClick: () => this.props.onSetIsFloating(false),
+            icon: null,
+            label: 'Unfloat',
+          }
+        : {
+            disabled: false,
+            onClick: () => this.props.onSetIsFloating(true),
+            icon: null,
+            label: 'Float',
+          }
+    );
+
     return (
       <DropdownButton
         variant="text"
@@ -281,6 +317,10 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         floating={this.props.DashboardState.IsFloating}
         onFloatingChange={IsFloating => {
           this.props.onSetIsFloating(IsFloating as boolean);
+        }}
+        inline={this.props.DashboardState.IsInline}
+        onInlineChange={IsInline => {
+          this.props.onSetIsInline(IsInline as boolean);
         }}
         position={this.props.DashboardState.FloatingPosition}
         onPositionChange={FloatingPositionCallback => {
@@ -339,6 +379,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DashboardRedux.DashboardSetIsCollapsed(IsCollapsed)),
     onSetIsFloating: (IsFloating: boolean) =>
       dispatch(DashboardRedux.DashboardSetIsFloating(IsFloating)),
+    onSetIsInline: (IsInline: boolean) => dispatch(DashboardRedux.DashboardSetIsInline(IsInline)),
     onSetFloatingPosition: (FloatingPosition: AdaptableCoordinate) =>
       dispatch(DashboardRedux.DashboardSetFloatingPosition(FloatingPosition)),
     onRunQuickSearch: (newQuickSearchText: string) =>

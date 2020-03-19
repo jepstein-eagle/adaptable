@@ -1,6 +1,11 @@
 .ab-Dashboard {
   z-index: 1000;
   user-select: none;
+  background: var(--ab-color-primary);
+
+  &--inline:not(&--collapsed) {
+    display: flex;
+  }
 
   &__bar {
     display: flex;
@@ -9,6 +14,12 @@
     background: var(--ab-dashboard__background);
     height: 40px;
     padding: 0 var(--ab-space-2);
+  }
+
+  &__home-toolbar {
+    border: none !important;
+    color: var(--ab-dashboard__color) !important;
+    background: var(--ab-dashboard__background) !important;
   }
 
   &__bar-left,
@@ -68,7 +79,7 @@
     overflow-x: auto;
   }
 
-  &__content-inner > * {
+  &__content-inner>* {
     flex-shrink: 0;
   }
 
@@ -86,10 +97,12 @@
     justify-content: space-between;
     height: 100%;
     border-right: 1px solid var(--ab-dashboard__border);
+    color: var(--ab-color-text-on-primary);
   }
 
   &__toolbar-content {
     padding: var(--ab-space-2);
+    display: flex;
   }
 
   &__toolbar-title {
@@ -97,12 +110,11 @@
     align-items: center;
     justify-content: center;
     font-size: var(--ab-font-size-2);
-    color: var(--ab-color-text-on-primary);
     padding: 0 var(--ab-space-1) var(--ab-space-1) var(--ab-space-2);
     opacity: 0.7;
   }
 
   .ab-Input {
-   border: none;
- }
+    border: none;
+  }
 }

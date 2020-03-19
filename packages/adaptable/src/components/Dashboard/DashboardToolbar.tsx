@@ -1,8 +1,10 @@
 import { ReactNode } from 'react';
 import * as React from 'react';
 import SimpleButton from '../SimpleButton';
+import join from '../utils/join';
 
 export type DashboardToolbarProps = {
+  className?: string;
   title: string;
   onConfigure?: () => void;
   children: ReactNode;
@@ -10,7 +12,7 @@ export type DashboardToolbarProps = {
 
 export function DashboardToolbar(props: DashboardToolbarProps) {
   return (
-    <div className="ab-Dashboard__toolbar">
+    <div className={join('ab-Dashboard__toolbar', props.className)}>
       <div className="ab-Dashboard__toolbar-content">{props.children}</div>
       <div className="ab-Dashboard__toolbar-title">
         <span>{props.title}</span>

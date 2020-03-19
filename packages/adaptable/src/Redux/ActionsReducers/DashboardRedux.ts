@@ -19,6 +19,7 @@ const DASHBOARD_CUSTOM_TOOLBAR_EDIT = 'DASHBOARD_CUSTOM_TOOLBAR_EDIT';
 export const DASHBOARD_SET_ACTIVE_TAB = 'DASHBOARD_SET_ACTIVE_TAB';
 export const DASHBOARD_SET_IS_COLLAPSED = 'DASHBOARD_SET_IS_COLLAPSED';
 export const DASHBOARD_SET_IS_FLOATING = 'DASHBOARD_SET_IS_FLOATING';
+export const DASHBOARD_SET_IS_INLINE = 'DASHBOARD_SET_IS_INLINE';
 const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
 export const DASHBOARD_SET_TABS = 'DASHBOARD_SET_TABS';
 const DASHBOARD_CREATE_DEFAULT_TAB = 'DASHBOARD_CREATE_DEFAULT_TAB';
@@ -72,6 +73,10 @@ export interface DashboardSetIsFloatingAction extends Redux.Action {
   IsFloating: boolean;
 }
 
+export interface DashboardSetIsInlineAction extends Redux.Action {
+  IsInline: boolean;
+}
+
 export interface DashboardSetFloatingPositionAction extends Redux.Action {
   FloatingPosition: AdaptableCoordinate;
 }
@@ -118,6 +123,11 @@ export const DashboardSetIsFloating = (IsFloating: boolean): DashboardSetIsFloat
   IsFloating,
 });
 
+export const DashboardSetIsInline = (IsInline: boolean): DashboardSetIsInlineAction => ({
+  type: DASHBOARD_SET_IS_INLINE,
+  IsInline,
+});
+
 export const DashboardSetFloatingPosition = (
   FloatingPosition: AdaptableCoordinate
 ): DashboardSetFloatingPositionAction => ({
@@ -139,6 +149,7 @@ const initialDashboardState: DashboardState = {
   ActiveTab: 0,
   IsCollapsed: false,
   IsFloating: false,
+  IsInline: true,
   FloatingPosition: { x: 100, y: 100 },
   VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
   CustomToolbars: EMPTY_ARRAY,
@@ -195,6 +206,11 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_SET_IS_FLOATING: {
       const { IsFloating } = action as DashboardSetIsFloatingAction;
       return { ...state, IsFloating };
+    }
+
+    case DASHBOARD_SET_IS_INLINE: {
+      const { IsInline } = action as DashboardSetIsInlineAction;
+      return { ...state, IsInline };
     }
 
     case DASHBOARD_SET_FLOATING_POSITION: {

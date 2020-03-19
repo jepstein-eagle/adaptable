@@ -7,6 +7,8 @@ import { DashboardTabProps } from './DashboardTab';
 import join from '../utils/join';
 import useProperty from '../utils/useProperty';
 import { Box } from 'rebass';
+import { DashboardToolbar } from './DashboardToolbar';
+import Dropdown from '../Dropdown';
 
 export type DashboardPosition = {
   x: number;
@@ -31,6 +33,10 @@ export type DashboardProps = {
   floating?: boolean;
   defaultFloating?: boolean;
   onFloatingChange?: Dispatch<SetStateAction<boolean>>;
+  // inline
+  inline?: boolean;
+  defaultInline?: boolean;
+  onInlineChange?: Dispatch<SetStateAction<boolean>>;
   // position
   position?: DashboardPosition;
   defaultPosition?: DashboardPosition;
@@ -43,6 +49,7 @@ export function Dashboard(props: DashboardProps) {
   const [activeTab, setActiveTab] = useProperty(props, 'activeTab', 0);
   const [collapsed, setCollapsed] = useProperty(props, 'collapsed', false);
   const [floating, setFloating] = useProperty(props, 'floating', false);
+  const [inline, setInline] = useProperty(props, 'inline', false);
   const [position, setPosition] = useProperty(props, 'position', { x: 0, y: 0 });
 
   const { handleRef, targetRef } = useDraggable({
@@ -84,6 +91,71 @@ export function Dashboard(props: DashboardProps) {
     </div>
   );
 
+  const renderTabsDropdown = () => (
+    <Dropdown
+      style={{
+        border: 'none',
+        marginLeft: 4,
+      }}
+      value={String(activeTab)}
+      onChange={tab => setActiveTab(Number(tab))}
+      showEmptyItem={false}
+      options={
+        children
+          ? React.Children.map(children, (child, index) => ({
+              value: String(index),
+              label: child.props.title,
+            }))
+          : []
+      }
+      showClearButton={false}
+    />
+  );
+
+  const renderBar = () => (
+    <div
+      className="ab-Dashboard__bar"
+      onDoubleClick={event => {
+        const target = event.target as HTMLElement;
+        // ignore double clicks on buttons, inputs and their children
+        if (target.closest('button, input')) return;
+        setFloating(!floating);
+      }}
+    >
+      <div className="ab-Dashboard__bar-left">
+        {left}
+        {!floating && renderTabs()}
+      </div>
+      {floating ? (
+        <div
+          className="ab-Dashboard__title"
+          ref={handleRef}
+          key="title-drag"
+          style={{ cursor: 'move' }}
+        >
+          {title}
+        </div>
+      ) : (
+        <div className="ab-Dashboard__title" key="title">
+          {title}
+        </div>
+      )}
+      <div className="ab-Dashboard__bar-right">{right}</div>
+    </div>
+  );
+
+  const renderHomeToolbar = () => (
+    <DashboardToolbar
+      className="ab-Dashboard__home-toolbar"
+      title={title}
+      onConfigure={onShowDashboardPopup}
+    >
+      {left}
+      {right}
+      {renderTabsDropdown()}
+    </DashboardToolbar>
+  );
+
   return (
     <div
       // @ts-ignore
@@ -91,79 +163,15 @@ export function Dashboard(props: DashboardProps) {
       className={join(
         'ab-Dashboard',
         collapsed ? 'ab-Dashboard--collapsed' : '',
-        floating ? 'ab-Dashboard--floating' : ''
+        floating ? 'ab-Dashboard--floating' : '',
+        inline ? 'ab-Dashboard--inline' : ''
       )}
       style={floating ? floatingStyle : undefined}
     >
-      <div
-        className="ab-Dashboard__bar"
-        onDoubleClick={event => {
-          const target = event.target as HTMLElement;
-          // ignore double clicks on buttons, inputs and their children
-          if (target.closest('button, input')) return;
-          setFloating(!floating);
-        }}
-      >
-        <div className="ab-Dashboard__bar-left">
-          {left}
-          {!floating && renderTabs()}
-        </div>
-        {floating ? (
-          <div
-            className="ab-Dashboard__title"
-            ref={handleRef}
-            key="title-drag"
-            style={{ cursor: 'move' }}
-          >
-            {title}
-          </div>
-        ) : (
-          <div className="ab-Dashboard__title" key="title">
-            {title}
-          </div>
-        )}
-        <div className="ab-Dashboard__bar-right">
-          {right}{' '}
-          {onShowDashboardPopup && (
-            <SimpleButton
-              icon="settings"
-              variant="text"
-              tone="accent"
-              onClick={() => onShowDashboardPopup()}
-              tooltip="Configure Dashboard"
-              ml={2}
-            />
-          )}
-          <SimpleButton
-            icon={floating ? 'arrow-right' : 'arrow-left'}
-            variant="text"
-            tone="accent"
-            onClick={() => setFloating(!floating)}
-          />
-        </div>
-      </div>
+      {inline && !floating && !collapsed ? renderHomeToolbar() : renderBar()}
       {children && children.length && !floating && !collapsed ? (
         <div className="ab-Dashboard__content">
-          <div className="ab-Dashboard__content-inner">
-            {children[activeTab] ? children[activeTab].props.children : null}
-          </div>
-          <div className="ab-Dashboard__content-buttons">
-            <SimpleButton
-              icon="clear"
-              variant="text"
-              onClick={() => setCollapsed(true)}
-              tooltip="Collapse Dashboard"
-              mb={1}
-            />
-            {onShowDashboardPopup && (
-              <SimpleButton
-                icon="settings"
-                variant="text"
-                onClick={() => onShowDashboardPopup()}
-                tooltip="Configure Dashboard"
-              />
-            )}
-          </div>
+          {children[activeTab] ? children[activeTab].props.children : null}
         </div>
       ) : null}
     </div>

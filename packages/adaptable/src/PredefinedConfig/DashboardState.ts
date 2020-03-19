@@ -111,6 +111,8 @@ export interface DashboardState extends ConfigState {
    */
   IsFloating?: boolean;
 
+  IsInline?: boolean;
+
   /**
    * The position of the Dashboard when in 'floating mode'.
    *

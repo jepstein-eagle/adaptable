@@ -32,15 +32,15 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: {
-      /*
       Dashboard: {
-        Revision: 17,
+        Revision: 18,
         VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
         VisibleButtons: ['CellSummary'],
         ShowFunctionsDropdown: true,
         HomeToolbarTitle: 'Hello world',
+        ShowQuickSearchInHeader: false,
       },
-*/
+
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],
