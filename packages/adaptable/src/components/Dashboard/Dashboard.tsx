@@ -9,6 +9,7 @@ import useProperty from '../utils/useProperty';
 import { Box } from 'rebass';
 import { DashboardToolbar } from './DashboardToolbar';
 import Dropdown from '../Dropdown';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export type DashboardPosition = {
   x: number;
@@ -97,6 +98,7 @@ export function Dashboard(props: DashboardProps) {
         border: 'none',
         marginLeft: 4,
       }}
+      disabled={children && children.length == 1}
       value={String(activeTab)}
       onChange={tab => setActiveTab(Number(tab))}
       showEmptyItem={false}

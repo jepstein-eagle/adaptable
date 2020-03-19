@@ -67,7 +67,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       if (this.adaptable.api.dashboardApi.getDashboardState().IsCollapsed) {
         menuItems.push(
           this.createColumnMenuItemReduxAction(
-            'Open Dashboard',
+            'Expand Dashboard',
             StrategyConstants.DashboardGlyph,
             DashboardRedux.DashboardSetIsCollapsed(false)
           )
@@ -78,6 +78,23 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             'Collapse Dashboard',
             StrategyConstants.DashboardGlyph,
             DashboardRedux.DashboardSetIsCollapsed(true)
+          )
+        );
+      }
+      if (this.adaptable.api.dashboardApi.getDashboardState().IsFloating) {
+        menuItems.push(
+          this.createColumnMenuItemReduxAction(
+            'Dock Dashboard',
+            StrategyConstants.DashboardGlyph,
+            DashboardRedux.DashboardSetIsFloating(false)
+          )
+        );
+      } else {
+        menuItems.push(
+          this.createColumnMenuItemReduxAction(
+            'Float Dashboard',
+            StrategyConstants.DashboardGlyph,
+            DashboardRedux.DashboardSetIsFloating(true)
           )
         );
       }

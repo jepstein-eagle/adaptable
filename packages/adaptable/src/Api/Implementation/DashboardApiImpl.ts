@@ -84,7 +84,7 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetIsCollapsed(true));
   }
 
-  public unCollapseDashboard(): void {
+  public expandDashboard(): void {
     this.dispatchAction(DashboardRedux.DashboardSetIsCollapsed(false));
   }
 
@@ -92,7 +92,7 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetIsFloating(true));
   }
 
-  public unFloatDashboard(): void {
+  public dockDashboard(): void {
     this.dispatchAction(DashboardRedux.DashboardSetIsFloating(false));
   }
 

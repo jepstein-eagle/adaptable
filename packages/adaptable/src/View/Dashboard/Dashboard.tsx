@@ -241,7 +241,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             disabled: false,
             onClick: () => this.props.onSetIsCollapsed(false),
             icon: null,
-            label: 'Uncollapse',
+            label: 'Expand',
           }
         : {
             disabled: false,
@@ -254,7 +254,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             disabled: false,
             onClick: () => this.props.onSetIsFloating(false),
             icon: null,
-            label: 'Unfloat',
+            label: 'Dock',
           }
         : {
             disabled: false,

@@ -15,7 +15,7 @@ There are 3 visibility modes for the Dashboard:
 
 2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
-    > To collapse / uncollapse the Dashboard click on a Dashboard tab.
+    > To collapse / expand the Dashboard click on a Dashboard tab.
 
 3. **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 

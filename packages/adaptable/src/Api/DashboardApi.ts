@@ -83,9 +83,9 @@ export interface DashboardApi {
   collapseDashboard(): void;
 
   /***
-   * Uncollapses the Dashboard so that Toolbars in the Active Tab are fully visible
+   * Expands the Dashboard so that Toolbars in the Active Tab are fully visible
    */
-  unCollapseDashboard(): void;
+  expandDashboard(): void;
 
   /***
    * Floats the Dashboard so only the Dashboard Header is visible (in reduced size) - and it can be dragged to a new location
@@ -93,9 +93,9 @@ export interface DashboardApi {
   floatDashboard(): void;
 
   /***
-   * Unfloats the Dashboard so that it 'snaps back' into its customary position above the grid.
+   * Docks the Dashboard so that it 'snaps back' into its customary position above the grid.
    */
-  unFloatDashboard(): void;
+  dockDashboard(): void;
 
   /**
    * Returns the current Active Tab (if there is one)

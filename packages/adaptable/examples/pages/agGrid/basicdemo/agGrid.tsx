@@ -33,12 +33,12 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        Revision: 18,
+        Revision: 19,
         VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
         VisibleButtons: ['CellSummary'],
         ShowFunctionsDropdown: true,
         HomeToolbarTitle: 'Hello world',
-        ShowQuickSearchInHeader: false,
+        ShowQuickSearchInHeader: true,
       },
 
       AdvancedSearch: {
