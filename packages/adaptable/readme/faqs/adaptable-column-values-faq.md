@@ -1,8 +1,10 @@
 # Showing Distinct Column Values FAQ
 
-### Where does AdapTable show a list of column values? 
+### Where does AdapTable need show a list of column values? 
 
-There are a number of use cases in which AdapTable needs to display the distinct values associated with a particular column.  These include:
+There are a number of use cases in which AdapTable needs to display the distinct values associated with a given column.  
+
+These include:
 
 - Column Values tab of the Query Builder
 
@@ -12,10 +14,15 @@ There are a number of use cases in which AdapTable needs to display the distinct
 
 There are 3 different ways in which we fetch these values depending on your preferences.
 
-**What is the default option?**
+### What is the default option?
 
 By default AdapTable will dynamically retrieve all the distinct values for the column currently in the grid.  
+
 > The method to get this data has been refactored many times to ensure it is very performant.
+
+### What happens if I have thousands of potential values for that Column/
+
+By default AdapTabl
 
 Permitted Column Values
 
