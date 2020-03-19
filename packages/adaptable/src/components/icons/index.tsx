@@ -90,6 +90,9 @@ import NewPage from './newpage';
 import Drag from './drag';
 import HideColumn from './hide-column';
 import Settings from './settings';
+import Dock from './dock';
+import Collapse from './collapse';
+import Expand from './expand';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -197,6 +200,9 @@ const allIcons = {
   drag: Drag,
   'hide-column': HideColumn,
   settings: Settings,
+  dock: Dock,
+  collapse: Collapse,
+  expand: Expand,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

@@ -52,6 +52,7 @@ export function Dashboard(props: DashboardProps) {
   const [floating, setFloating] = useProperty(props, 'floating', false);
   const [inline, setInline] = useProperty(props, 'inline', false);
   const [position, setPosition] = useProperty(props, 'position', { x: 0, y: 0 });
+  const expanded = !floating && !collapsed;
 
   const { handleRef, targetRef } = useDraggable({
     onDrop(dx: number, dy: number) {
@@ -92,27 +93,20 @@ export function Dashboard(props: DashboardProps) {
     </div>
   );
 
-  const renderTabsDropdown = () => (
-    <Dropdown
-      style={{
-        border: 'none',
-        marginLeft: 4,
-      }}
-      disabled={children && children.length == 1}
-      value={String(activeTab)}
-      onChange={tab => setActiveTab(Number(tab))}
-      showEmptyItem={false}
-      options={
-        children
-          ? React.Children.map(children, (child, index) => ({
-              value: String(index),
-              label: child.props.title,
-            }))
-          : []
-      }
-      showClearButton={false}
-    />
-  );
+  const renderTabsDropdown = () =>
+    children && children.length > 1 ? (
+      <Dropdown
+        ml={1}
+        value={String(activeTab)}
+        onChange={tab => setActiveTab(Number(tab))}
+        showEmptyItem={false}
+        options={React.Children.map(children, (child, index) => ({
+          value: String(index),
+          label: child.props.title,
+        }))}
+        showClearButton={false}
+      />
+    ) : null;
 
   const renderBar = () => (
     <div
@@ -147,15 +141,25 @@ export function Dashboard(props: DashboardProps) {
   );
 
   const renderHomeToolbar = () => (
-    <DashboardToolbar
-      className="ab-Dashboard__home-toolbar"
-      title={title}
-      onConfigure={onShowDashboardPopup}
-    >
-      {left}
-      {right}
-      {renderTabsDropdown()}
-    </DashboardToolbar>
+    <div className="ab-Dashboard__toolbar ab-Dashboard__home-toolbar">
+      <div className="ab-Dashboard__toolbar-content">
+        {left}
+        {right}
+        {renderTabsDropdown()}
+      </div>
+      <div className="ab-Dashboard__toolbar-title">
+        <span>{title}</span>
+        <SimpleButton
+          icon="build"
+          tone="accent"
+          variant="text"
+          iconSize={16}
+          marginLeft={1}
+          tooltip="Configure Dashboard"
+          onClick={onShowDashboardPopup}
+        />
+      </div>
+    </div>
   );
 
   return (
@@ -170,8 +174,8 @@ export function Dashboard(props: DashboardProps) {
       )}
       style={floating ? floatingStyle : undefined}
     >
-      {inline && !floating && !collapsed ? renderHomeToolbar() : renderBar()}
-      {children && children.length && !floating && !collapsed ? (
+      {expanded && inline ? renderHomeToolbar() : renderBar()}
+      {expanded && children && children.length ? (
         <div className="ab-Dashboard__content">
           {children[activeTab] ? children[activeTab].props.children : null}
         </div>

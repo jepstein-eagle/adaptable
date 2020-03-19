@@ -122,6 +122,7 @@ export class ColumnValueSelector extends React.Component<
           tone="neutral"
           columns={['label']}
           style={{
+            boxShadow: 'none',
             color: 'var(--ab-cmp-dashboardpanel__fill)',
             background: 'var(--ab-color-defaultbackground)',
           }}

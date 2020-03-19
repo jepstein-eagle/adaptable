@@ -35,6 +35,7 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { Icon } from '../../components/icons';
 import DropdownButton from '../../components/DropdownButton';
 import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
+import DropdownButtonItem from '../../components/DropdownButton/DropdownButtonItem';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -220,7 +221,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
     // function menu items
-    let menuItems = allowedMenuItems.map(menuItem => {
+    let menuItems: DropdownButtonItem[] = allowedMenuItems.map(menuItem => {
       return {
         disabled: this.props.AccessLevel == 'Hidden',
         onClick: () => this.props.dispatch(menuItem.ReduxAction),
@@ -231,37 +232,35 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
 
     menuItems.unshift(
       {
-        disabled: false,
         onClick: () => this.props.onShowDashboardPopup(),
-        icon: null,
+        icon: <Icon name="settings" />,
         label: 'Settings',
       },
       this.props.DashboardState.IsCollapsed
         ? {
-            disabled: false,
             onClick: () => this.props.onSetIsCollapsed(false),
-            icon: null,
+            icon: <Icon name="expand" />,
             label: 'Expand',
           }
         : {
-            disabled: false,
             onClick: () => this.props.onSetIsCollapsed(true),
-            icon: null,
+            icon: <Icon name="collapse" />,
             label: 'Collapse',
           },
       this.props.DashboardState.IsFloating
         ? {
-            disabled: false,
             onClick: () => this.props.onSetIsFloating(false),
-            icon: null,
+            icon: <Icon name="dock" />,
             label: 'Dock',
           }
         : {
-            disabled: false,
             onClick: () => this.props.onSetIsFloating(true),
-            icon: null,
+            icon: <Icon name="dock" />,
             label: 'Float',
-          }
+          },
+      {
+        separator: true,
+      }
     );
 
     return (
@@ -269,7 +268,6 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         variant="text"
         tone="accent"
         items={menuItems}
-        // tooltip="Adaptable Functions"
         className="ab-DashboardToolbar__Home__functions"
         key={'dropdown-functions'}
         id={'dropdown-functions'}
@@ -295,7 +293,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
           className="ab-DashboardToolbar__QuickSearch__text"
           value={this.state.EditedQuickSearchText}
           OnTextChange={x => this.onUpdateQuickSearchText(x)}
-          style={{ width: 'auto', border: 'none' }}
+          style={{ width: 'auto' }}
           inputStyle={{ width: '7rem' }}
         />
       </>

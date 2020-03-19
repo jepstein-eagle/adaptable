@@ -7,5 +7,6 @@ type DropdownButtonItem = {
   clickable?: boolean;
   label?: ReactNode;
   icon?: ReactNode;
+  separator?: boolean;
 };
 export default DropdownButtonItem;
