@@ -9,21 +9,21 @@ A Conditional Style *Rule* is written using a standard Adaptable Expression (Que
 When create a Conditional Style you will select the:
 
 - **Scope**: where the style is applied.  Options are:
-  - a single column 
+  - a single **Column** 
   
-  - an entire row
+  - an entire **Row**
   
-   - a Column Category (if thee are any defined)
+   - a **Column Category** (if are any defined)
    
-> There is an option to exclude grouped rows from having the style applied.
+  > There is an option to exclude grouped rows from having the style applied.
 
-- **Colours and Font Properties**: used to create the style that suits your needs by selecting the fore and back colours and font elements that you require. Just select those elements that you wish to change from the default setting.
+- **Colours and Font Properties**: used to create the style required; fore and back colours and font elements can be selected. Only those elements which differ from the default setting need to be set.
 
-  > If you don't want to create the style yourself then there is an option to select the name of a pre-existing CSS style instead.
+  > There is an option to select the name of a pre-existing CSS style instead of creating the style individually - if the css style has been referenced in User Interface Predefined Config.
 
-- **Query**: determines **where** the style will be applied. 
+- **Query**: a standard Adaptable Expression which determines **where** the style will be applied. 
 
-  > The conditional styles you create will be applied to your grid when a row's values **match all the criteria you have set**. If a row's values do not match the criteria, the default styles will be used instead.
+  > Conditional Styles will on be applied to when cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
 
 
 ## UI Elements
@@ -34,7 +34,7 @@ Conditional Style includes the following UI Elements:
 
 - **Wizard** - A series of steps facilitating the creation and editing of Conditional Styles.
 
-- **Column Menu** - `Conditional Style` Menu Item opens the Conditional Style wizard (andjumps to page 2 so that it sets the Scope to be that Column automatically).
+- **Column Menu** - `Conditional Style` Menu Item opens the Conditional Style wizard (and jumps to Step 2 setting the Scope to be that Column automatically).
 
 ## Entitlements
 Conditional Style supports these Entitlement Rules:
@@ -55,7 +55,7 @@ C**an we provide the name of a css style instead of building it?**
 
 Yes, you can do that. When you create a predefined Conditional Style there is a StyleName property which you can use to provide the name of the css style. If you do that, then its your responsibility to ensure that style is available in your css. 
 
-Additionally, you can provide a list of styles in UserInterface config and then they will be available in a dropdown in the Conditional Styles wizard.
+Additionally, you can provide a list of styles in `User Interface Predefined Config` and then they will be available in a dropdown in the Conditional Styles wizard.
 
 **Can we add gradient style to a Conditional Style so the colour transparency changes depending on the value?**
 
