@@ -41,7 +41,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [CustomSort](./Functions/custom_sort_function.md)              | Yes    | No      | No         | Yes         | No           | 
 | [Dashboard](./Functions/dashboard_function.md)                 | No     | No      | Yes        | Yes         | No           | 
 | [DataSource](./Functions/data_source_function.md)              | Yes    | Yes     | Yes        | No          | No           | 
-| Export                   | Yes       | Yes      | Yes        | No          | No            | 
+| [Export](./Functions/export_function.md)                       | Yes    | Yes     | Yes        | No          | No           | 
 | Flashing Cell            | No        | No       | No         | Yes         | No            | 
 | Format Column            | Yes       | No       | No         | Yes         | No            | 
 | Free Text                | Yes       | No       | No         | Yes         | No            | 

@@ -16,7 +16,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 ## General ReadMe Docs
  - [Theming and Styling Guide](./adaptable-theming-guide.md)
  - [Adaptable State Guide](./adaptable-state-guide.md)
- - [Adaptable Filtering Guide](./adaptable-filter-guide.md)
+ - [Adaptable Filtering Guide](./adaptable-filtering-guide.md)
  - [Adaptable Expression Guide](./adaptable-expression-guide.md)
  - [Run Time Access Guide](./adaptable-runtime-access-guide.md)
  - [Plugins](../../../packages/plugins/README.md)
@@ -39,6 +39,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Custom Sort](./Functions/custom_sort_function.md)              
 - [Dashboard](./Functions/dashboard_function.md) 
 - [Data Source](./Functions/data_source_function.md)  
+- [Export](./Functions/export_function.md)  
 - [System Status](./Functions/system_status_function.md) 
 
 
