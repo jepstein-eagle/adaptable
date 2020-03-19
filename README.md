@@ -21,7 +21,7 @@ AdapTable is written in TypeScript.  All the necessary definition files are incl
 
 Version 6 of AdapTable has introduced many new functionality changes and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/guides/upgrade-guide.md)
 
 ## Using AdapTable
 
