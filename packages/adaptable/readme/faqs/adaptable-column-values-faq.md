@@ -1,6 +1,6 @@
 # Showing Distinct Column Values FAQ
 
-**Where does AdapTable show a list of column values?** 
+### Where does AdapTable show a list of column values? 
 
 There are a number of use cases in which AdapTable needs to display the distinct values associated with a particular column.  These include:
 
