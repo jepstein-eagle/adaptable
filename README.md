@@ -177,10 +177,10 @@ These include:
  - [Adaptable Core](./packages/adaptable/README.md)
  - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md) 
- - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/Guides/adaptable-theming-guide.md)
- - [Adaptable State Guide](./packages/adaptable/readme/Guides/adaptable-state-guide.md)
- - [Adaptable Filtering Guide](./packages/adaptable/readme/Guides/adaptable-filtering-guide.md)
- - [Adaptable Expression Guide](./packages/adaptable/readme/Guides/adaptable-expression-guide.md)
+ - [Adaptable Theming and Styling Guide](./packages/adaptable/readme/guides/adaptable-theming-guide.md)
+ - [Adaptable State Guide](./packages/adaptable/readme/guides/adaptable-state-guide.md)
+ - [Adaptable Filtering Guide](./packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ - [Adaptable Expression Guide](./packages/adaptable/readme/guides/adaptable-expression-guide.md)
  - [Plugins](./packages/plugins/README.md)
  
 > Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
