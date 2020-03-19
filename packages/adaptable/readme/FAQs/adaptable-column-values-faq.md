@@ -1,4 +1,4 @@
-# AdapTable Column Values Guide
+# AdapTable Column Values FAQ
 
  By default AdapTable will populate the listbox with all the distinct values for that column currently in the grid.
 

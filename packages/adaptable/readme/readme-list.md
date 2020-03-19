@@ -15,19 +15,19 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
  
 ## Guides
- - [Theming and Styling Guide](./Guides/adaptable-theming-guide.md)
- - [Adaptable State Guide](./Guides/adaptable-state-guide.md)
- - [Adaptable Filtering Guide](./Guides/adaptable-filtering-guide.md)
- - [Adaptable Expression Guide](./Guides/adaptable-expression-guide.md)
- - [Run Time Access Guide](./Guides/adaptable-runtime-access-guide.md)
- - [AdapableFunction Guide](./Guides/adaptable-functions-guide.md)
+ - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
+ - [Adaptable State Guide](./guides/adaptable-state-guide.md)
+ - [Adaptable Filtering Guide](./guides/adaptable-filtering-guide.md)
+ - [Adaptable Expression Guide](./guides/adaptable-expression-guide.md)
+ - [Run Time Access Guide](./guides/adaptable-runtime-access-guide.md)
+ - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 
  ## FAQs
- - [Column Values FAQ](./FAQs/adaptable-column-values-faq.md)
+ - [Column Values FAQ](./faqs/adaptable-column-values-faq.md)
 
 ## Adaptable Functions
 
-- [AdapableFunction Guide](./Guides/adaptable-functions-guide.md)
+- [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 - [Advanced Search](./Functions/adavanced-search-function.md)
 - [Alert](./Functions/alert-function.md)
 - [Bulk Update](./Functions/bulk-update-function.md)
