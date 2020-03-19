@@ -23,7 +23,7 @@ When create a Conditional Style you will select the:
 
 - **Query**: a standard Adaptable Expression which determines **where** the style will be applied. 
 
-  > Conditional Styles will on be applied to when cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
+  > Conditional Styles will only be applied when the cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
 
 
 ## UI Elements
@@ -34,7 +34,7 @@ Conditional Style includes the following UI Elements:
 
 - **Wizard** - A series of steps facilitating the creation and editing of Conditional Styles.
 
-- **Column Menu** - `Conditional Style` Menu Item opens the Conditional Style wizard (and jumps to Step 2 setting the Scope to be that Column automatically).
+- **Column Menu** - `Add Conditional Style` Menu Item opens the Conditional Style wizard (and jumps to Step 2 setting the Scope to be that Column automatically).
 
 ## Entitlements
 Conditional Style supports these Entitlement Rules:
