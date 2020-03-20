@@ -40,7 +40,6 @@ export class AdaptableFormControlTextClear extends React.Component<
         <SimpleButton
           variant="text"
           icon="clear"
-          tone="none"
           tooltip={closeButtonTooltip} // jw commenting out as tooltip stayed in place when it was cleared
           px={0}
           py={0}

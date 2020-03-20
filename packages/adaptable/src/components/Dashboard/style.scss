@@ -1,3 +1,7 @@
 :root {
-
+  --ab-dashboard__background: var(--ab-color-primary);
+  --ab-dashboard__color: var(--ab-color-text-on-primary);
+  --ab-dashboard__border: var(--ab-color-primarydark);
+  --ab-dashboard-header__background: var(--ab-color-secondary);
+  --ab-dashboard-header__color: var(--ab-color-text-on-secondary);
 }

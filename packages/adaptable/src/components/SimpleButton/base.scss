@@ -30,6 +30,10 @@
     color: var(--ab-color-text-on-primary);
   }
 
+  &--tone-none {
+    color: inherit;
+  }
+
   &--tone-success {
     color: var(--ab-color-success);
   }

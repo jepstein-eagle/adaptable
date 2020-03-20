@@ -6,6 +6,7 @@ import join from '../utils/join';
 export type DashboardToolbarProps = {
   className?: string;
   title: string;
+  tooltip?: string;
   onConfigure?: () => void;
   children: ReactNode;
 };
@@ -21,7 +22,7 @@ export function DashboardToolbar(props: DashboardToolbarProps) {
           variant="text"
           iconSize={16}
           marginLeft={1}
-          tooltip={'Configure ' + props.title}
+          tooltip={props.tooltip || `Configure ${props.title}`}
           onClick={() => props.onConfigure()}
         />
       </div>
