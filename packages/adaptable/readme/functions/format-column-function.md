@@ -20,7 +20,13 @@ You can only create one Format Column for a column.
 To Do
 
 ## Entitlements
-To Do
+Format Column supports these Entitlement Rules:
+
+- **Full**: Everything is available to the User
+
+- **Hidden**: Everything is hidden from the User
+
+- **ReadOnly**: User can see Format Column styles defined in Predefined Config but not add, edit or delete them.
 
 ## FAQ
 

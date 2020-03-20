@@ -15,7 +15,13 @@ These columns are particularly useful if you wish to create a 'Comments' column 
 To Do
 
 ## Entitlements
-To Do
+FreeText Column supports these Entitlement Rules:
+
+- **Full**: Everything is available to the User
+
+- **Hidden**: Everything is hidden from the User
+
+- **ReadOnly**: N/A
 
 ## FAQ
 Where is the data stored for Free Text Columns?

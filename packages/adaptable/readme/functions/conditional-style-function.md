@@ -43,7 +43,7 @@ Conditional Style supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: User can see Conditional Styles defined in Predefined Config but not add, edit or delete them.
+- **ReadOnly**: User can see Conditional Styles created as a result of Rules defined in Predefined Config but not add, edit or delete them.
 
 ## FAQ
 
