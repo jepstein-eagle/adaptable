@@ -1,3 +1,7 @@
+## 6.1.1
+
+Fixing some issues in Dashboard inline view
+
 ## 6.1.0
 
 Adding 'IsInline' option to Dashboard State to offer an altnernative expanded view
