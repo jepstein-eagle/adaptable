@@ -110,7 +110,7 @@ export function Dashboard(props: DashboardProps) {
 
   const renderBar = () => (
     <div
-      className="ab-Dashboard__bar"
+      className="ab-Dashboard__header"
       onDoubleClick={event => {
         const target = event.target as HTMLElement;
         // ignore double clicks on buttons, inputs and their children
@@ -118,7 +118,7 @@ export function Dashboard(props: DashboardProps) {
         setFloating(!floating);
       }}
     >
-      <div className="ab-Dashboard__bar-left">
+      <div className="ab-Dashboard__header-left">
         {left}
         {!floating && renderTabs()}
       </div>
@@ -136,30 +136,21 @@ export function Dashboard(props: DashboardProps) {
           {title}
         </div>
       )}
-      <div className="ab-Dashboard__bar-right">{right}</div>
+      <div className="ab-Dashboard__header-right">{right}</div>
     </div>
   );
 
   const renderHomeToolbar = () => (
-    <div className="ab-Dashboard__toolbar ab-Dashboard__home-toolbar">
-      <div className="ab-Dashboard__toolbar-content">
-        {left}
-        {right}
-        {renderTabsDropdown()}
-      </div>
-      <div className="ab-Dashboard__toolbar-title">
-        <span>{title}</span>
-        <SimpleButton
-          icon="build"
-          tone="accent"
-          variant="text"
-          iconSize={16}
-          marginLeft={1}
-          tooltip="Configure Dashboard"
-          onClick={onShowDashboardPopup}
-        />
-      </div>
-    </div>
+    <DashboardToolbar
+      onConfigure={onShowDashboardPopup}
+      className="ab-Dashboard__home-toolbar"
+      title={title}
+      tooltip={`Configure Dashboard`}
+    >
+      {left}
+      {right}
+      {renderTabsDropdown()}
+    </DashboardToolbar>
   );
 
   return (
@@ -167,7 +158,7 @@ export function Dashboard(props: DashboardProps) {
       // @ts-ignore
       ref={targetRef}
       className={join(
-        'ab-Dashboard',
+        `ab-Dashboard`,
         collapsed ? 'ab-Dashboard--collapsed' : '',
         floating ? 'ab-Dashboard--floating' : '',
         inline ? 'ab-Dashboard--inline' : ''

@@ -192,7 +192,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             <SimpleButton
               key={menuItem.Label}
               variant={menuItem.FunctionName === 'SystemStatus' ? 'outlined' : 'text'}
-              tone={menuItem.FunctionName === 'SystemStatus' ? 'neutral' : 'accent'}
+              tone={menuItem.FunctionName === 'SystemStatus' ? 'neutral' : 'none'}
               className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               icon={menuItem.Icon}
               tooltip={menuItem.Label}
@@ -234,39 +234,44 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
       {
         onClick: () => this.props.onShowDashboardPopup(),
         icon: <Icon name="settings" />,
-        label: 'Settings',
+        label: 'Configure Dashboard',
       },
-      this.props.DashboardState.IsCollapsed
+      this.props.DashboardState.IsFloating
+        ? null
+        : this.props.DashboardState.IsCollapsed
         ? {
             onClick: () => this.props.onSetIsCollapsed(false),
             icon: <Icon name="expand" />,
-            label: 'Expand',
+
+            label: 'Expand Dashboard',
           }
         : {
             onClick: () => this.props.onSetIsCollapsed(true),
             icon: <Icon name="collapse" />,
-            label: 'Collapse',
+
+            label: 'Collapse Dashboard',
           },
       this.props.DashboardState.IsFloating
         ? {
             onClick: () => this.props.onSetIsFloating(false),
             icon: <Icon name="dock" />,
-            label: 'Dock',
+            label: 'Dock Dashboard',
           }
         : {
             onClick: () => this.props.onSetIsFloating(true),
             icon: <Icon name="dock" />,
-            label: 'Float',
+            label: 'Float Dashboard',
           },
       {
         separator: true,
       }
     );
+    menuItems = menuItems.filter(x => !!x);
 
     return (
       <DropdownButton
         variant="text"
-        tone="accent"
+        tone="none"
         items={menuItems}
         className="ab-DashboardToolbar__Home__functions"
         key={'dropdown-functions'}
@@ -282,7 +287,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         <SimpleButton
           icon="quick-search"
           variant="text"
-          tone="accent"
+          tone="none"
           onClick={this.props.onShowQuickSearchPopup}
           tooltip="Quick Search"
           mr={2}
