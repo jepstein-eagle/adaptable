@@ -105,6 +105,7 @@ export class agGridHelper {
   public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {
     const strategies = new Map<AdaptableFunctionName, IStrategy>();
     const adaptable = this.adaptable as Adaptable;
+    strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(adaptable));
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(adaptable));
     strategies.set(
       StrategyConstants.AdvancedSearchStrategyId,
@@ -129,7 +130,6 @@ export class agGridHelper {
       new ConditionalStyleStrategyagGrid(adaptable)
     );
     strategies.set(StrategyConstants.CustomSortStrategyId, new CustomSortStrategy(adaptable));
-    strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(adaptable));
     strategies.set(StrategyConstants.DataSourceStrategyId, new DataSourceStrategy(adaptable));
     strategies.set(StrategyConstants.ExportStrategyId, new ExportStrategy(adaptable));
     strategies.set(

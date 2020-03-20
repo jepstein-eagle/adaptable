@@ -68,7 +68,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         menuItems.push(
           this.createColumnMenuItemReduxAction(
             'Expand Dashboard',
-            StrategyConstants.DashboardGlyph,
+            'expand',
             DashboardRedux.DashboardSetIsCollapsed(false)
           )
         );
@@ -76,7 +76,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         menuItems.push(
           this.createColumnMenuItemReduxAction(
             'Collapse Dashboard',
-            StrategyConstants.DashboardGlyph,
+            'collapse',
             DashboardRedux.DashboardSetIsCollapsed(true)
           )
         );
@@ -85,7 +85,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         menuItems.push(
           this.createColumnMenuItemReduxAction(
             'Dock Dashboard',
-            StrategyConstants.DashboardGlyph,
+            'dock',
             DashboardRedux.DashboardSetIsFloating(false)
           )
         );
@@ -93,7 +93,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         menuItems.push(
           this.createColumnMenuItemReduxAction(
             'Float Dashboard',
-            StrategyConstants.DashboardGlyph,
+            'dock',
             DashboardRedux.DashboardSetIsFloating(true)
           )
         );
