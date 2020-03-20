@@ -1,6 +1,6 @@
 ## 6.1.1
 
-Fixing some issues in Dashboard inline view
+Fixing some issues in Dashboard inline view and adding icons
 
 ## 6.1.0
 
