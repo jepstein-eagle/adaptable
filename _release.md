@@ -1,5 +1,9 @@
 ## 6.1.0
 
+Adding 'IsInline' option to Dashboard State to offer an altnernative expanded view
+
+## 6.1.0
+
 Minor release with No Code version, Dashboard Tabs and improvements to State Management 
 
 ## 6.0.32
