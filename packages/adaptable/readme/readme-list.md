@@ -43,7 +43,27 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Dashboard](./functions/dashboard-function.md) 
 - [Data Source](./functions/data-source-function.md)  
 - [Export](./functions/export-function.md)  
-- [System Status](./functions/system-status-function.md) 
+- [Flashing Cell](../functions/flashing-cell-function.md)          
+- [Format Column](../functions/format-column-function.md)        
+- [FreeText Column](../functions/free-text-column-function.md)    
+- Glue42                                                        
+- [Gradient Column](../functions/gradient-column-function.md)     
+- [Grid Info](../functions/grid-info-function.md)                 
+- [Layout](../functions/layout-function.md)                       
+- [Percent Bar ](../functions/percent-bar-function.md)           
+- [Plus Minus](../functions/plus-minus-function.md)               
+- PushPull                                                       
+- [Quick Search](../functions/quick-search-function.md)          
+- [Reminder](../functions/reminder-function.md)                   
+- [Schedule](../functions/schedule-function.md)                   
+- [Shortcut](../functions/shortcut-function.md)                   
+- [Smart Edit](../functions/smart-edit-function.md)               
+- [System Status](./functions/system-status-function.md)          
+- Team Sharing                                                    
+- [Theme](../functions/theme-function.md)                         
+- [Updated Row](../functions/updated-row-function.md)             
+- [User Filter](../functions/user-filter-function.md)   
+
 
 
 ## Demo
