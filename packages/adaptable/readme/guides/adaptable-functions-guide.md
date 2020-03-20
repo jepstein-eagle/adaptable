@@ -26,25 +26,25 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 
 | AdaptableFunction  	                                          | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
 | --------  	                                                  | ------ | ------- | ---------  | ----------- | ------------ |
-| [Advanced Search](./functions/adavanced-search-function.md)     | Yes    | Yes     | Yes        | No          | No           |
-| [Alert](./functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          | 
-| [Bulk Update](./functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          | 
-| [Calculated Column](./functions/calculated-column-function.md)  | Yes    | No      | No         | Yes         | No           | 
+| [Advanced Search](../functions/adavanced-search-function.md)     | Yes    | Yes     | Yes        | No          | No           |
+| [Alert](../functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          | 
+| [Bulk Update](../functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          | 
+| [Calculated Column](../functions/calculated-column-function.md)  | Yes    | No      | No         | Yes         | No           | 
 | Calendar                                                        | No     | No      | No         | No          | No           | 
-| [Cell Summary](./functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          | 
-| [Cell Validation](./functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           | 
-| [Column Category](./functions/column-category-function.md)      | Yes    | No      | No         | No          | No           | 
-| [Column Chooser](./functions/column-chooser-function.md)        | No     | No      | No         | Yes         | Yes          | 
-| [Column Filter](./functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          | 
-| [Column Info](./functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          | 
-| [Conditional Style](./functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           | 
-| [Custom Sort](./functions/custom-sort-function.md)              | Yes    | No      | No         | Yes         | No           | 
-| [Dashboard](./functions/dashboard-function.md)                  | No     | No      | Yes        | Yes         | No           | 
-| [Data Source](./functions/data-source-function.md)              | Yes    | Yes     | Yes        | No          | No           | 
-| [Export](./functions/export-function.md)                        | Yes    | Yes     | Yes        | No          | No           | 
-| [Flashing Cell](./functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           | 
-| [Format Column](./functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           | 
-| [FreeText Column](./functions/free-text-column-function.md)     | Yes    | No      | No         | Yes         | No           | 
+| [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          | 
+| [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           | 
+| [Column Category](../functions/column-category-function.md)      | Yes    | No      | No         | No          | No           | 
+| [Column Chooser](../functions/column-chooser-function.md)        | No     | No      | No         | Yes         | Yes          | 
+| [Column Filter](../functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          | 
+| [Column Info](../functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          | 
+| [Conditional Style](../functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           | 
+| [Custom Sort](../functions/custom-sort-function.md)              | Yes    | No      | No         | Yes         | No           | 
+| [Dashboard](../functions/dashboard-function.md)                  | No     | No      | Yes        | Yes         | No           | 
+| [Data Source](../functions/data-source-function.md)              | Yes    | Yes     | Yes        | No          | No           | 
+| [Export](../functions/export-function.md)                        | Yes    | Yes     | Yes        | No          | No           | 
+| [Flashing Cell](../functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           | 
+| [Format Column](../functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           | 
+| [FreeText Column](../functions/free-text-column-function.md)     | Yes    | No      | No         | Yes         | No           | 
 | Glue42                   | No        | Yes      | Yes        | No          | No            |
 | Gradient Column          | Yes       | No       | No         | Yes         | Yes           |
 | Grid Info                | No        | No       | No         | Yes         | Yes           |
@@ -57,7 +57,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | Schedule                 | Yes       | No       | No         | No          | No            |
 | Shortcut                 | Yes       | No       | No         | No          | No            |
 | Smart Edit               | No        | Yes      | Yes        | No          | Yes           |
-| [System Status](./functions/system-status-function.md)         | No        | Yes      | Yes        | Yes         | Yes           |
+| [System Status](../functions/system-status-function.md)         | No        | Yes      | Yes        | Yes         | Yes           |
 | Team Sharing             | No        | No       | No         | No          | No            |
 | Theme                    | No        | Yes      | Yes        | No          | No            |
 | Updated Row              | No        | No       | No         | Yes         | Yes           |
