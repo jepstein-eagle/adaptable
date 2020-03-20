@@ -1,4 +1,4 @@
-## 6.1.3
+## 6.1.2
 
 Fixing some issues in inline view and adding icons
 
