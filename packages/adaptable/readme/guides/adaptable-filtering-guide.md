@@ -4,52 +4,62 @@ Filtering is one of the most common - and powerful - functionalities offered by 
 
 It is designeed to be intuitive and easy to use, but there is actualy a lot of different types of filters and options on offer for filtering. 
 
-There are 2 places where filtering can take place:
+There are 2 places where filtering can take place in AdapTable:
 
 - **Column Filters**:  The dropdown that appears when you click the filter icon in the Column Header (or in the Tab of the Column Header Menu)
+
 - **Quick Filter Bar**:  The textbox that appears in the row between the Column Header and the first data row in the grid.
 
 ## Column Filters
 
-Each column in the grid has a filter dropdown which allows for quick filter selection.
+Each column in Adaptable - which is marked as filterable - has a filter dropdown which allows for quick filter selection.
 
 Users can select as many filter items as they want and the grid will automatically update so that it only shows rows that match the filters set for the column.
 
 There are 2 types of filter that you can apply:
 
-- **Range Filters**: This allows you to create your own filter using an 'Operator' (e.g. Greater Than, Starts With etc) and a value that you specify. The Operators will vary depending on the data type of the column.
+- **Range Filters**: A range uses an 'Operator' (e.g. Greater Than, Starts With etc) and an Operand (ie. value) that you specify. 
 
-> When creating a Range Filter, you can choose between entering a value (e.g. > 50) or referencing another column (e.g. > 'Bid')
+    They are similar to the Ranges used in Expressions (Queries).
 
-  
+    The Operators will vary depending on the data type of the column - see the Appendix below for a full list.
 
-- **Value Filters**: This provides a list of values from which you can select as many as you wish. There are 3 groups of Filters in the dropdown list:
+    > Most Range Operands will be a value (e.g. > 50) but they can referece another column (e.g. > 'Bid')
 
-Built-in system filters provided by AdapTable
+- **Value Filters**: A list of actual values to filter against.  
+    
+    There are, actually, up to 4 groups of Filters that can appear in the dropdown list:
 
-Any user filters or named filters that you have created, either at design time (through predefined config) or at run-time
+    1. **System Filters**: filters shipped by AdapTable ships and for which it provides an evaluation for (e.g. `Tomorrow` for Date columns or `Positive` for number columns).  
 
-All distinct values for that column.
+    See the Appendix for the full list of System Filters and their associated column types.
+    
+    > You can choose (through System Filter Config which, if any, System Filters you want available and can rely on AdapTable to match rows.
 
-Tip
-To remove all the filters for a column click the 'Clear' button.
+    
+    2. **User Filters**: filters created by Users (either at design-time or run-time). 
 
+        See User Filter Function Read Me for more information on how to create User Filters.
 
+    3. **Named Filters**: filters creatde by developers design-time and provided through Predefined Config.
 
+        See Named Filter Function Read Me for more information on how to create Named Filters.
 
+    4. **Column Values**: the distinct column values for that Column.  
 
+        > See xxx for how we get column values
 
-
-
-
-Tip
-If you can't find the information you are looking for in your grid, use the Column Filter Function to check if any filters are applied. Click the 'Clear' button to remove all filters for these columns.
+    > to remove all the filters for a column click the 'Clear' button.
+    
+    > System, User and Named Filters all appear italicised in the Filter dropdown
+    
+> If you can't find the information you are looking for in your grid, use the Column Filter Function to check if any filters are applied. Click the 'Clear' button to remove all filters for these columns.
 
 You should also check to see if any columns have been hidden, as it is possible that a hidden column has a filter applied (the filter will affect your grid, even though the column is not shown).
 
 We also allow you to mark a column that is filtered
 
-Re-Using Column Filters
+#### Re-Using Column Filters
 
 Any active column filters when the system closes are immediately re-applied on startup.
 
