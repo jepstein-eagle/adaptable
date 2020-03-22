@@ -17,12 +17,18 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 ## Guides
  - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
  - [Adaptable State Guide](./guides/adaptable-state-guide.md)
- - [Adaptable Filtering Guide](./guides/adaptable-filtering-guide.md)
+ - [Filtering Guide](./guides/adaptable-filtering-guide.md)
  - [Adaptable Expression Guide](./guides/adaptable-expression-guide.md)
  - [Run Time Access Guide](./guides/adaptable-runtime-access-guide.md)
  - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
+ - [Audit Log Guide](./guides/audit-log-guide.md)
 
  ## FAQs
+ - [General FAQ](./faqs/general-faq.md)
+ - [Licences FAQ](./faqs/licences-faq.md)
+ - [Look & Feel FAQ](./faqs/look-and-feel-faq.md)
+ - [Technical FAQ](./faqs/technical-faq.md)
+ - [Troubleshooting FAQ](./faqs/troubleshooting-faq.md)
  - [Column Values FAQ](./faqs/adaptable-column-values-faq.md)
 
 ## Adaptable Functions

@@ -1,10 +1,12 @@
 # AdapTable Audit Log Guide
 
+The Audit Log - if enabled - streams messages about AdapTable activity to an HTTP Channel for you to listen to (see Audit Log for more information).
+
+
 To Do!
 
 ## FAQ
 
-The Audit Log - if enabled - streams messages about AdapTable activity to an HTTP Channel for you to listen to (see Audit Log for more information).
 
 Can we filter which audit messages are sent via Audit Log?
 

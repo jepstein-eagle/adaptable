@@ -50,80 +50,74 @@ No we have no storage mechanism. Any data that is used in AdapTable is not acces
 
 Anyone who has to manage large data sets and would benefit from the searching, styling, editing, exporting and other functions that we offer. Although we have initially targeted financial services in our marketing and sales efforts, AdapTable can be - and is being - used across all industries.
 
-
-
-
-Do I still have access to the underlying grid control if I use AdapTable?
+**Do I still have access to the underlying grid control if I use AdapTable?**
 
 Yes AdapTable doesn't hide the underlying grid. So you still have full access to the full API and can code against it just as if AdapTable was not being used.
 
-Do you include licences for the underlying grid?
+**Do you include licences for the underlying grid?**
 
 No, we don't. If the underlying grid requires a commercial licence then you must pay for that separately. AdapTable will not check if the licence is present. 
 
-Which grid version do you support?
+### Grids
+
+**Which grid version do you support?**
 
 We support the most recent major version of each underlying grid. 
 
-Which underlying grids are currently supported?
+**Which underlying grids are currently supported?**
 
 We currently support:
 
-ag-Grid (from ag-Grid)
+- ag-Grid (from ag-Grid)
 
-HyperGrid (from OpenFin)
+- HyperGrid (from OpenFin)
 
-Kendo Grid (from Telerik)
+- Kendo Grid (from Telerik)
 
 We are adding more grids all the time so please watch this space.
 
-Additionally, we plan to release in 2020 our own Adaptable Grid designed to work closely with AdapTable.
+> Additionally, we plan to release in 2020 our own Adaptable Grid designed to work closely with AdapTable.
 
-Which grids do you plan to add next?
+**Which grids do you plan to add next?**
 
 We are planning to add implementations for ng-Grid, SlickGrid and FancyGrid. But if you have urgent requirements for a different grid, please get in touch.
 
-How easy is it to add a new grid? How long does it take?
+**How easy is it to add a new grid? How long does it take?**
 
 Each use case is different but it usually takes a couple of months for us to implement a new grid. Most of our functions are implemented very quickly, but there is always one that requires a lot of bespoke work and effort. 
 
-Can we add a grid implementation?
+**Can we add a grid implementation?**
 
 Yes, you can. We would be delighted if others contributed to our current grid implementations. Please get in touch.
 
-Do you support all the functionality in the underlying grid e.g. grouping?
+**Do you support all the functionality in the underlying grid e.g. grouping?**
 
 Yes, if the underlying grid has grouping then AdapTable will support it fully and all our functions will work while grouping is applied. For example, see the ag-Grid grouping demo on our demo site.
 
-The Hypergrid doesn't have grouping, will you provide it?
 
-Yes. As a general rule we don't add missing features to an underlying grid; our proposition is that we will support any features that the underlying grid offers, and offer our own additional features on top to be used by all implementations. However grouping is such a common request and vital piece of functionality, and the Hypergrid is so popular with our clients that we are making an exception in this case and will shortly be adding grouping for Hypergrid users.
+### Libraries and Frameworks
 
-Libraries and Frameworks FAQ
-
-What JavaScript libraries or framework do you use?
+**What JavaScript libraries or framework do you use?**
 
 We use React to build our own screens, and Redux to maintain our internal state.
 
-Should I use your Redux store or my own?
+**Should I use your Redux store or my own?**
 
 It is best that you use your own Redux store. Although generally the advice is that one store per application is preferred, the best practice when you are using an external component (like AdapTable) is to have separate stores. You do of course have access to our store to listen, and react, to changes in our state.
 
-Can we listen to state changes in your Redux store?
+**Can we listen to state changes in your Redux store?**
 
 Yes, you can subscribe to our Redux store, and react to changes as appropriate.
 
-Warning
-While the above option is valid we would strongly advise you to listen to the Adaptable API Events and Audit Events which will give you the same information - and more - in a more structured and safe way.
+> While the above option is valid we would strongly advise you to listen to the Adaptable API Events and Audit Events which will give you the same information - and more - in a more structured and safe way.
 
-Which JavaScript frameworks are you compatible with?
+**Which JavaScript frameworks are you compatible with?**
 
 AdapTable is compatible with any library or framework. Although it uses React and Redux internally to build its own screens, it works with any other library. We have users who use Angular, Ember, JQuery and many other libraries in the 'hosting' application.
 
-Do you offer framework-friendly wrappers?
+**Do you offer framework-friendly wrappers?**
 
 Yes we do.  We currently offer React and Angular wrappers (both for ag-Grid only) to be followed soon by Vue, Ember and others.
-
 
 
 ## Demos
