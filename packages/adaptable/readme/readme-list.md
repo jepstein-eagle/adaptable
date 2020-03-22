@@ -57,6 +57,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Gradient Column](./functions/gradient-column-function.md)     
 - [Grid Info](./functions/grid-info-function.md)                 
 - [Layout](./functions/layout-function.md)                       
+- [Nmed Filter](./functions/named-filter-function.md)                       
 - [Percent Bar ](./functions/percent-bar-function.md)           
 - [Plus Minus](./functions/plus-minus-function.md)               
 - [ipushpull](./functions/ipushpull-function.md)                  

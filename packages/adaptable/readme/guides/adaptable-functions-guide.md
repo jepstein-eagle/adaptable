@@ -49,6 +49,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Gradient Column](../functions/gradient-column-function.md)      | Yes    | No      | No         | Yes         | Yes          |
 | [Grid Info](../functions/grid-info-function.md)                  | No     | No      | No         | Yes         | Yes          |
 | [Layout](../functions/layout-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
+| [Named Filter](../functions/named-filter-function.md)            | No     | No      | No         | No          | No           |
 | [Percent Bar ](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
 | [Plus Minus](../functions/plus-minus-function.md)                | Yes    | No      | No         | Yes         | No           |
 | [ipuspull](../functions/ipuspull-function.md)                    | No     | Yes     | Yes        | No          | No           |
