@@ -4,6 +4,19 @@ The Bulk Update ([AdaptableFunctionName](https://api.adaptabletools.com/modules/
 
 The 'replacement' value can either be one that already exists in the column or an entirely new one.
 
+Bulk update allows you to update multiple cells in a column to a new value with a single action.
+
+Unlike Smart Edit which updates the cell based on its current contents, Bulk Updates replaces the existing cell value with a new value that you specify.
+
+Note
+You can do a bulk update on text, numeric and date columns. The input will change depending on the datatype of the column.
+
+If updating a date column you are provided with a calendar when entering the new value.
+
+You are able to choose between selecting an existing column value or providing your own.
+
+If the proposed Bulk Update breaks a Cell Validation Rule then it will be prevented or display a warning as appropriate.
+
 ## UI Elements
 Bulk Update includes the following UI Elements:
 

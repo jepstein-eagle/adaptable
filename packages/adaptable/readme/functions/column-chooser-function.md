@@ -7,6 +7,12 @@ If a Layout is being used, then any changes made to the column order will become
 
 > Column Chooser is designed for managing **column visiblity**.  To control **row visibility**, use one of the many Search Functions instead.
 
+Use the Column Chooser to select which columns are visible in your grid and in which order.
+
+Tip
+The Column Chooser is for showing/hiding the columns in your grid.
+
+If you wish to control which rows are visible, use one of the Search Functions instead.
 
 ## UI Elements
 Column Chooser includes the following UI Elements:

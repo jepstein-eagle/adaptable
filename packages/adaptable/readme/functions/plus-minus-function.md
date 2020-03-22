@@ -2,6 +2,19 @@
 
 The Plus / Minus([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `PlusMinus`) Function enables the creation of 'Nudge Rules' which react to the '+' or '-' keys being pressed in numeric cells.
 
+AdapTable allows you to use the + and - keys on the keyboard to increment or decrement the value of numerical cells in those columns which you have identified as having a nudge value.
+
+Using the Plus/Minus Function, you can for each column either:
+
+Set a Default Nudge Value for the column. 
+
+Create Custom Plus / Minus Rules so that Nudge Value amount for each cell will vary, depending on the values in other cells in the row using a Query. For more information on building and editing Queries using multiple Conditions and Criteria see Queries.
+
+Note
+A custom Nudge value has precedence over a default Nudge Value for a column, so any bespoke Nudge Values will get used first.
+
+Warning
+You can only have one Default Nudge Value for a column. If you attempt to add a second, you will be given a warning together with the option to override the existing Default Nudge Value. 
 
 ## UI Elements
 To Do

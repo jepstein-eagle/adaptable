@@ -26,6 +26,26 @@ When create a Conditional Style you will select the:
   > Conditional Styles will only be applied when the cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
 
 
+Conditional Styles allow you to set the look and feel of your rows and / or columns based on a set of rules that you specify (using a Query).
+
+When create a Conditional Style you will select the:
+
+Scope: whether the style is applied for a single column or an entire row
+
+Tip
+If you are using Column Categories then you can also apply a style just to the columns in a single category
+
+Colours and Font Properties: used to create the style that suits your needs by selecting the fore and back colours and font elements that you require. Just select those elements that you wish to change from the default setting.
+
+Tip
+If you don't want to create the style yourself then there is an option to select the name of a pre-existing CSS style instead.  Note: this is not available for all underlying grids.. See User Interface Config for more details.
+
+Query: determines when the style will be applied. For more information on building and editing Queries using multiple Conditions and Criteria see Queries
+
+Note
+The conditional styles you create will be applied to your grid when a row's values match ALL the criteria you have set. If a row's values do not match the criteria, the default styles will be used instead.
+
+
 ## UI Elements
 
 Conditional Style includes the following UI Elements:

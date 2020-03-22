@@ -2,6 +2,14 @@
 
 The Updated Row([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `UpdatedRow`) Function provides a way to provide an entirely new Data Set to AdapTable based on user selection.
 
+The Updated Rows Function allows you to specify how rows will appear visually if / when the contents of one of the cells in the row changes.
+
+You are able to use the defaults (Up: Green, Down: Red, Neutral: Gray) or select your own colours.
+
+You can also choose whether the Grid will 'jump' to the selected row.
+
+Warning
+At present there is no 'flashing' for updated rows, meaning that changed rows will remain with their Updated Row colours until they are explicitly cleared. This can be done either through the Context Menu (for a single row) or via the Column Menu (for all rows).
 
 ## UI Elements
 To Do

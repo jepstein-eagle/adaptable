@@ -2,6 +2,15 @@
 
 The Theme([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Theme`) Function allows you to select between one of AdapTable's shipped Themes ('Light' and 'Dark') or to create your own.
 
+The colours and font settings that AdapTable uses are set using a Theme which acts as a 'skin'.
+
+User the Theme Picker to choose which of the available themes you wish to see. (See Themes for more details).
+
+Note
+AdapTable ships with 2 themes - "Light Theme" and "Dark Theme", but you can easily add your own using CSS Variables.
+
+Tip
+Make sure to include the name of your Theme in Theme Config as part of Predefined Config.
 
 ## UI Elements
 To Do

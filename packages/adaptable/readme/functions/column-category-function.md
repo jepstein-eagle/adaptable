@@ -8,6 +8,15 @@ A Column Category can be created through the UI or via [Column Category State](h
 
 > Column Categories are most commonly used within Column Chooser as a way to easily manage large groups of columns.  But they can be used in other functions (e.g. Conditional Style to colour just the columns in that Category).
 
+This is a way to manage large groups of columns. A Column Category is simply a name you give to a group of columns that you specify.  The name of this category is stored with your user state.
+
+You will most likely create your categories using at design time through Column Category Config but you can also use the Column Category screen too create and edit them at run time too.
+
+Note
+Column Categories are most used within Column Chooser as a way to easily manage large groups of columns, but you can also use them in Conditional Style to colour just the columns in that Category.
+
+
+
 ## UI Elements
 Column Category includes the following UI Elements:
 

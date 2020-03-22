@@ -19,6 +19,33 @@ And there are 2 outcomes for what happens when a cell validation rule is broken:
 > One advantage of Cell Validation rules is that they come into effect immediately after that they are created. There is no down-time needed, nor any custom development required, and no systems need to be restarted.
 
 
+Cell Validation allows you to manage the validation of proposed cell edits through the creation of custom rules.
+
+Tip
+When you create your cell validation rules, they come into effect immediately. For example, if you need quickly to make a column read-only, you can create a cell validation rule that prevents all changes being made to that column, and the read-only rule is applied immediately. There is no down-time as you do not need to restart your system.
+
+You can choose between 2 types of cell validation rule:
+
+Disallow All Edits: Any attempt to change the values in any cell in the column will break the cell validation rule.
+
+Disallow Only Edits that break a Cell Validation Rule: The cell value can be changed so long as it doesn't break a custom validation rule.
+
+And you can choose between 2 outcomes for what happens when a cell validation is broken:
+
+Prevent the Cell Edit: The change will not be allowed and the cell being edited will maintain its initial pre-edited value.
+
+Show a Warning. Users will receive a warning when a proposed data edit will break validation rules. They have the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, they must provide a reason (which is then sent to the Audit Log).
+
+Note
+If you want, additionally, to make the Cell Validation only applicable dependent on other values in the row sure the Use Validation Query checkbox is checked. This will open the standard Query screen and the cell validation rule will only be applied if a row has values that match the conditions you define.  For more information on building and editing Queries using multiple Conditions and Criteria see Queries.
+
+Tip
+You are also able to provide Server Validation - where an edit is checked on the server and either the same, a new or no value is returned.
+
+This is provided via Edit Options.
+
+
+
 ## UI Elements
 Cell Validation includes the following UI Elements:
 

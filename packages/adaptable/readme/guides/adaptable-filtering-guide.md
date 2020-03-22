@@ -79,6 +79,26 @@ Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Co
 
 If the Quick Filter is visible then AdapTable will provide additional functionality such as wildcards.
 
+The Quick Filter bar allows you to use free text to find the data you want for a column.
+
+Note
+By default, the filter uses 'Contains' when searching - so any cell which contains the inputted text will be included in the filter results.
+
+You can change this behaviour by using one of the wildcards (e.g. 'Starts With') that are listed below.
+
+AdapTable has special characters or wildcards that you can use to find text more easily. e.g. '5 : 15' will find all rows where the value for that column is between 5 and 15. See Appendix at foot of page for more details.
+
+Tip
+You can show / hide the Quick Filter Bar any time you want by selecting the 'Show / Hide Quick Filter' menu option from any Column menu, or by clicking the Show/Hide button in the Column Filter Function Toolbar.
+
+Note: The Quick Filter bar is not available on all grids - only those where the underlying vendor grid supports it.
+
+Note
+If you are using ag-Grid then you will need to set the floatingFilter property in GridOptions to true.
+
+Tip
+If you want to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable then set the useAdaptableQuickFilter property to false.
+
  
 ## Demos
 
@@ -129,6 +149,110 @@ The System Filters shipped by AdapTable are:
 | Next Working Day        | Date                 | 
 | Previous Working Day    | Date                 | 
 | Today                   | Date                 | 
+
+
+
+Quick Filter Wildcards
+
+Table 1. Quick Filter Bar Special Characters
+
+Symbol
+
+Value
+
+Column Type
+
+Example
+
+%
+
+Contains (the default)
+
+Text, Number
+
+S
+
+=
+
+Equals
+
+Text, Number
+
+=15
+
+<>
+
+Not Equals
+
+Number
+
+<> 23
+
+>=
+
+Greater Than or Equals
+
+Number
+
+>= 49
+
+<=
+
+Less Than or Equals
+
+Number
+
+<= 18
+
+>
+
+Greater Than
+
+Number
+
+> 5
+
+< 
+
+Less Than
+
+Number
+
+< 20
+
+:
+
+Between
+
+Number
+
+5 : 100
+
+*
+
+Starts With
+
+Text, Number
+
+d*
+
+!
+
+Doesn't Contain
+
+Text, Number
+
+!str
+
+:
+
+In
+
+Number
+
+15; 22
+
+
 
 ## Help
 

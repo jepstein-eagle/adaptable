@@ -2,6 +2,18 @@
 
 The Shortcut([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Shortcut`) Function helps to avoid fat finger issues and to speed up data entry for numeric and date columns.
 
+You can use keyboard shortcuts to quickly apply calculations or enter dates and avoid fat finger or mathematical errors as you do so.
+
+Tip
+To apply a shortcut you simply press the relevant Shortcut Key.
+
+You can apply shortcuts on 2 types of Columns:
+
+Date Columns: A new date always replaces the current value. If the Date Type is Custom enter a date in the date picker. If the Date Type is Dynamic then select an entry from the dropdown.  The value you pick will replace the current contents of the cell when the shortcut key is pressed.
+
+Number Columns: The shortcut is a calculation (you can choose between Add, Subtract, Multiply, or Divide) is applied to the new cell based on the cell's current contents and the Shortcut Key (e.g. if you create a 'M' Multiply by a Million shortcut and the cell contains 5 and you then click 'M', the new cell value will become 5,000,000).
+
+
 
 ## UI Elements
 To Do

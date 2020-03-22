@@ -4,6 +4,10 @@ The Column Info ([AdaptableFunctionName](https://api.adaptabletools.com/modules/
 
 It also contains a summary of all Functions associated with that Column, together with buttons to add / edit and delete related items.
 
+The Column Information function allows you to see at a glance everything relevant to a particular column.
+
+Additionally you can use the popup to add new AdapTable objects for that column (as appropriate to its data type).
+
 ## UI Elements
 To Do
 

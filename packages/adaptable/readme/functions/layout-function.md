@@ -2,6 +2,24 @@
 
 The Layout([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Layout`) Function facilities creating Layouts (a.k.a. Views) - sets of column visibility and order. Layouts can also include column sorting, grouping and pivoting information and can save automatially when changed.
 
+Layouts allow you easily to switch between different 'views' of your grid, which are named and saved for easy access. Each layout contains a set of column visibility, order, sort information and Vendor Layout Information (e.g. column groups, column widths).
+
+Tip
+Vendor Layout Information is not available for all underlying grids.
+
+To activate this feature, set the includeVendorStateInLayouts property to true.
+
+When creating a Layout, the wizard will give you a choice between building it from scratch (selecting your own column visibility, order and sorting) or duplicating what is currently in the grid.
+
+Note
+There is an option to have layouts save automatically when changes are made in the grid - ensure that the property autoSaveLayoutsis set to true.
+
+Warning
+Do not create a Layout called Default Layout or AB_Default_Layout as these are used to map your start-up column configuration and can cause problems.
+
+The Default Layout will not auto-save; if you want your Layout to update on changes, then you must create a new Layout.
+
+
 
 ## UI Elements
 To Do
