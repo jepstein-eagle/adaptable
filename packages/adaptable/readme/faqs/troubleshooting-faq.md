@@ -48,7 +48,9 @@ schema.push({
     type: 'abColDefString', });
 ....
 
+**Why is my grid slowing down?**
 
+Check that you are not re-filtering too often on ticking data. By default AdapTable will only re-filter on user edits (or column changes) but you might have set this to also update when data ticks. (See Filter Options for more details.)
 
 ## Demos
 
