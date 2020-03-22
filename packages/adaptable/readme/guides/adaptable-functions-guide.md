@@ -67,7 +67,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 
 | AdaptableFunction                                                      | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
 | --------  	                                                         | ------    | -------  | ---------  | ----------- | ------------  |
-| [Chart](../functions/charts/chart-function.md)                         | Yes       | Yes      | Yes        | No          | No            |
+| [Chart](../functions/charts/charts-function.md)                         | Yes       | Yes      | Yes        | No          | No            |
 | [Pie Chart (View As)](../functions/charts/piechart-function.md)        | No        | No       | No         | Yes         | Yes           |
 | [Sparkline (View As)](../functions/charts/sparkline-function.md)       | No        | No       | No         | Yes         | Yes           |
 | [Sparkline Column](../functions/charts/sparkline-column-function.md)   | No        | No       | No         | Yes         | Yes           |
