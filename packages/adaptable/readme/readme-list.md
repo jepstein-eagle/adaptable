@@ -32,6 +32,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Alert](./functions/alert-function.md)
 - [Bulk Update](./functions/bulk-update-function.md)
 - [Calculated Column](./functions/calculated-column-function.md)
+- [Calendar](./functions/calendar-function.md)
 - [Cell Summary](./functions/cell-summary-function.md)          
 - [Cell Validation](./functions/cell-validation-function.md)    
 - [Column Category](./functions/column-category-function.md)   
@@ -46,13 +47,13 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Flashing Cell](./functions/flashing-cell-function.md)          
 - [Format Column](./functions/format-column-function.md)        
 - [FreeText Column](./functions/free-text-column-function.md)    
-- Glue42                                                        
+- [Glue42](./functions/glue42-function.md)    
 - [Gradient Column](./functions/gradient-column-function.md)     
 - [Grid Info](./functions/grid-info-function.md)                 
 - [Layout](./functions/layout-function.md)                       
 - [Percent Bar ](./functions/percent-bar-function.md)           
 - [Plus Minus](./functions/plus-minus-function.md)               
-- PushPull                                                       
+- [ipushpull](./functions/ipushpull-function.md)                  
 - [Quick Search](./functions/quick-search-function.md)          
 - [Reminder](./functions/reminder-function.md)                   
 - [Schedule](./functions/schedule-function.md)                   

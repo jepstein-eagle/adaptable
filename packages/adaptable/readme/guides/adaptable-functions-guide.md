@@ -30,7 +30,7 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Alert](../functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          | 
 | [Bulk Update](../functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          | 
 | [Calculated Column](../functions/calculated-column-function.md)  | Yes    | No      | No         | Yes         | No           | 
-| Calendar                                                         | No     | No      | No         | No          | No           | 
+| [Calendar](../functions/calendar-function.md)                    | No     | No      | No         | No          | No           | 
 | [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          | 
 | [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           | 
 | [Column Category](../functions/column-category-function.md)      | Yes    | No      | No         | No          | No           | 
@@ -45,13 +45,13 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Flashing Cell](../functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           | 
 | [Format Column](../functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           | 
 | [FreeText Column](../functions/free-text-column-function.md)     | Yes    | No      | No         | Yes         | No           | 
-| Glue42                                                           | No     | Yes     | Yes        | No          | No           |
+| [Glue42](../functions/glue42-function.md)                        | No     | Yes     | Yes        | No          | No           |
 | [Gradient Column](../functions/gradient-column-function.md)      | Yes    | No      | No         | Yes         | Yes          |
 | [Grid Info](../functions/grid-info-function.md)                  | No     | No      | No         | Yes         | Yes          |
 | [Layout](../functions/layout-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
 | [Percent Bar ](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
 | [Plus Minus](../functions/plus-minus-function.md)                | Yes    | No      | No         | Yes         | No           |
-| PushPull                                                         | No     | Yes     | Yes        | No          | No           |
+| [ipuspull](../functions/ipuspull-function.md)                    | No     | Yes     | Yes        | No          | No           |
 | [Quick Search](../functions/quick-search-function.md)            | No     | Yes     | Yes        | No          | No           |
 | [Reminder](../functions/reminder-function.md)                    | No     | No      | No         | No          | No           |
 | [Schedule](../functions/schedule-function.md)                    | Yes    | No      | No         | No          | No           |

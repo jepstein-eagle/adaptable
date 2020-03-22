@@ -11,7 +11,17 @@ To Do
 
 ## FAQ
 
-To Do
+How do I clear an Updated Row?
+
+You can do it in 2 ways:
+
+Clear a single Updated Row by clicking 'Clear Updated Row' in the Context Menu
+
+Clear all Updated Rows by clicking 'Clear Updated Rows' in the Column Header Menu
+
+Is there a way to make Updated Rows disappear automatically?
+
+Not at the moment but that will change in a forthcoming version.
 
 ### Further Information
 
