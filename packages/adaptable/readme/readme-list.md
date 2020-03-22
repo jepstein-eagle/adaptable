@@ -66,8 +66,8 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 #### Charting Functions
 
-- [Chart](../functions/charts/charts-function.md)  
-- [Pie Chart (View As)](../functions/charts/piechart-function.md)     
+- [Chart](./functions/charts/charts-function.md)  
+- [Pie Chart (View As)](./functions/charts/piechart-function.md)     
 - [Sparkline (View As)](./functions/charts/sparkline-function.md) 
 - [Sparkline Column](./functions/charts/sparkline-column-function.md) 
 
