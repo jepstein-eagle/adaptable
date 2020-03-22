@@ -64,7 +64,12 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Updated Row](./functions/updated-row-function.md)             
 - [User Filter](./functions/user-filter-function.md)   
 
+#### Charting Functions
 
+- [Chart](../functions/charts/chart-function.md)  
+- [Pie Chart (View As)](../functions/charts/piechart-function.md)     
+- [Sparkline (View As)](./functions/charts/sparkline-function.md) 
+- [Sparkline Column](./functions/charts/sparkline-column-function.md) 
 
 ## Demo
 
