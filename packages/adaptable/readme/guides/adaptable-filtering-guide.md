@@ -16,6 +16,8 @@ Each column in Adaptable - which is marked as filterable - has a filter dropdown
 
 Users can select as many filter items as they want and the grid will automatically update so that it only shows rows that match the filters set for the column.
 
+See the [Column Filter Function Read Me](../functions/column-filter-function.md) for more information on Column Filters.
+
 There are 2 types of filter that you can apply:
 
 1. **Range Filters**: A range uses an 'Operator' (e.g. Greater Than, Starts With etc) and an Operand (ie. value) that you specify. 
@@ -30,41 +32,45 @@ There are 2 types of filter that you can apply:
     
     There are, actually, up to 4 groups of Filters that can appear in the dropdown list:
 
-    - **System Filters**: filters shipped by AdapTable ships and for which it provides an evaluation for (e.g. `Tomorrow` for Date columns or `Positive` for number columns).  
+    - **System Filters**: filters shipped by AdapTable and for which it provides an evaluation (e.g. `Tomorrow` for Date columns or `Positive` for number columns).  
 
         See the Appendix for the full list of System Filters and their associated column types.
     
-        > You can choose (through System Filter Config which, if any, System Filters you want available and can rely on AdapTable to match rows.
+        > You can choose - through System Filter Config - which, if any, System Filters you want available
 
     - **User Filters**: filters created by Users (either at design-time or run-time). 
 
-        See User Filter Function Read Me for more information on how to create User Filters.
+        These are essentially named Column Filters (allowing for recursion) e.g. 'This Business Year' could be a filter for 'Between 1/05/20 and 31/04/21'
 
-    - **Named Filters**: filters creatde by developers design-time and provided through Predefined Config.
+        See the [User Filter Function Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
+
+    - **Named Filters**: filters created by developers at design-time and provided through Predefined Config.
+    
+        Named Filtes contain a Predicate function that will be run each time the filter is evaluated.
 
         See Named Filter Function Read Me for more information on how to create Named Filters.
 
     - **Column Values**: the distinct column values for that Column.  
 
-        > See xxx for how we get column values
+        > Read [Showing Distinct Column Values FAQ](../faqs/adaptable-column-values-faq.md) to learn how AdapTable retrieves column values
 
-#### Managing Column Filters
+    > System, User and Named Filters all appear italicised in the Filter dropdown
 
-To remove all the filters for a column click the 'Clear' button.
-    
-System, User and Named Filters all appear italicised in the Filter dropdown
-    
-> If you can't find the information you are looking for in your grid, use the Column Filter Function to check if any filters are applied. Click the 'Clear' button to remove all filters for these columns.
+### Managing Column Filters
 
-You should also check to see if any columns have been hidden, as it is possible that a hidden column has a filter applied (the filter will affect your grid, even though the column is not shown).
+To remove all the filters for a column click the 'Clear' button in the Filter Dropdown or in the Column Filter Toolbar.
 
-We also allow you to mark a column that is filtered
+The caption (in the Column Header) is bold and italicised for any columns that are filtered.
 
-#### Re-Using Column Filters
+Auto-apply filter is available.
+
+### Saving Re-Using Column Filters
 
 Any active column filters when the system closes are immediately re-applied on startup.
 
-If you want to save and re-use Column Filters in other functions (e.g. Advanced Search), click the save button in the top of the Filter Form and that will allow you to convert the Column Filter into a named - and re-usable User Filter.
+If you don't want this then you can set it.
+
+> If you want to save and re-use Column Filters in other functions (e.g. Advanced Search), click the save button in the top of the Filter Form and that will allow you to convert the Column Filter into a named - and re-usable [User Filter](../functions/user-filter-function.md).
 
 
 ## Quick Filter Bar
