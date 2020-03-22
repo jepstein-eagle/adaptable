@@ -4,9 +4,11 @@ The Percent Bar([AdaptableFunctionName](https://api.adaptabletools.com/modules/_
 
 In other words, the width of the bar is proportional to the value in the column.
 
+### Percent Bar Options
+
 When a Percent Bar is created AdapTable will, by default, work out the width of the bar by using the current minimum and maximum values in the column respectively. 
 
-However, these can be set by the User - at both design-time or run-time, so that a different set of minimum and maximum values are used.
+However, these can be set by the User - at both design-time or run-time - so that a different set of minimum and maximum values are used.
 
 Other options when creating a Percent Bar include: 
 
@@ -18,7 +20,7 @@ Other options when creating a Percent Bar include:
 
 - showing the cell value as Tooltip
 
-> Percent Bars work for both positive and negative values and can be edited (if editable) and filtered like any other column.
+> Percent Bars work for both positive and negative values and can be edited (if editable) and filtered (if filterable) like any other column.
 
 
 ## UI Elements
@@ -29,6 +31,8 @@ Percent Bar includes the following UI Elements:
 - **Wizard** - A series of steps facilitating the creation and editing of Percent Bars.
 
 - **Column Menu** - The `Create Percent Bar` (or for existing columns `Edit Percent Bar`) Menu Item opens the Percent Bar wizard for that column on the second step.
+
+- **Context Menu** - `Edit Percent Bar` Menu Item opens the Percent Bar wizard for that column on the second step.
 
 ## Entitlements
 Percent Bar supports these Entitlement Rules:
