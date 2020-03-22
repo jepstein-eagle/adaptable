@@ -39,6 +39,9 @@ There are 3 types of Criteria in a Condition:
 
   > You can use multiple ranges in your query. When you have defined one range, click the Add Range Entry button to add another.
 
+  > When creating a Range Filter, you can choose between entering a value (e.g. > 50) or referencing another column (e.g. > 'Bid')
+
+
   The available Operators are:
 
   | Operator  	              | Description                                  | Columns           |
@@ -77,33 +80,33 @@ These are the following AdapTable Functions that use Expressions - together with
 
 ## FAQ
 
-Can a user include column values in a Query that are not present in the grid when the Query is created?
+**Can a user include column values in a Query that are not present in the grid when the Query is created?**
 
 Yes.  The easiest way to do this is via Permitted Values.  You can set the permitted vales for each column, and can include any values you want.  (See Column Values for more information).
 
 Additionally, if the Query is built at design time and shipped with the product then it can include any Column Values that the developers want to include - they don't need to be present in the grid at the time of creation.
 
-Can we add our own list of items for the Column Values listbox in the Query Builder?
+**Can we add our own list of items for the Column Values listbox in the Query Builder?**
 
 Yes.  The AdaptableOptions object has a getColumnValues property; this property is a function called each time column values are required.  It returns a Promise of a string array.
 
-Can we re-use the same query in different Functions - e.g. create a Query in Plus / Minus and use it also in Advanced Search?
+**Can we re-use the same query in different Functions - e.g. create a Query in Plus / Minus and use it also in Advanced Search?**
 
 At present no. Each Query is tied to a single Adaptable Object and Function. We might in the future allow you to re-use Queries, but experience form Adaptable Blotter.NET shows that this easily leads to complications if not well managed. You can create User Filters and re-use them in Queries but you cannot re-use Queries themselves.
 
-I want to show details of a Search in my own control. How can I do that?
+**I want to show details of a Search in my own control. How can I do that?**
 
 You can access the Advanced Search Adaptable Object from our store and have full visibility over its contents including the Query that it contains.
 
-Can we add our own filters to the list shown in a query?
+**Can we add our own filters to the list shown in a query?**
 
 Yes you can - but per-column only. This is achieved by using User Filters.
 
-Can a Range reference other columns e.g. Trade Date > Effective Date?
+**Can a Range reference other columns e.g. Trade Date > Effective Date?**
 
 Yes, this feature was introduced in 1.6. When creating a range you have the choice of comparing to an absolute value or that in another column.
 
-Can a Range reference other columns and absolute values e.g. 'Bid' > ('Ask' +5)?
+**Can a Range reference other columns and absolute values e.g. 'Bid' > ('Ask' +5)?**
 
 Not at the moment. But we might add this functionality in future releases.
 

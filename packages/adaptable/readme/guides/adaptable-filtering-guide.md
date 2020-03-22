@@ -11,23 +11,36 @@ There are 2 places where filtering can take place:
 
 ## Column Filters
 
+Each column in the grid has a filter dropdown which allows for quick filter selection.
 
-## Quick Filter Bar
-
-
-
-Each column in the grid has a filter dropdown. This allows you to filter any column quickly and easily.
-
-You can select as many filter items as you want. When you have made your choice, the grid updates so that it only shows rows that match the filters you have set for the column.
+Users can select as many filter items as they want and the grid will automatically update so that it only shows rows that match the filters set for the column.
 
 There are 2 types of filter that you can apply:
 
-Range Filters. This allows you to create your own filter using an 'Operator' (e.g. Greater Than, Starts With etc) and a value that you specify. The Operators will vary depending on the data type of the column.
+- **Range Filters**: This allows you to create your own filter using an 'Operator' (e.g. Greater Than, Starts With etc) and a value that you specify. The Operators will vary depending on the data type of the column.
 
-Note
-When creating a Range Filter, you can choose between entering a value (e.g. > 50) or referencing another column (e.g. > 'Bid')
+> When creating a Range Filter, you can choose between entering a value (e.g. > 50) or referencing another column (e.g. > 'Bid')
 
-Value Filters. This provides a list of values from which you can select as many as you wish. There are 3 groups of Filters in the dropdown list:
+  | Operator                | Columns            |
+  | ------                  | -------            | 
+  | Greater Than            | Number             | 
+  | Greater Than or Equals  | Number             | 
+  | Less Than               | Number             | 
+  | Less Than or Equals     | Number             | 
+  | After                   | Dat                | 
+  | After or On             | Date               | 
+  | Before                  | Date               | 
+  | Before or On            | Date               | 
+  | Equals                  | Number, Date, Text | 
+  | NotEquals               | Number, Date, Text | 
+  | Between                 | Number, Date       | 
+  | Contains                | Text               | 
+  | Not Contains            | Text               | 
+  | Starts With             | Text               | 
+  | Ends With               | Text               | 
+  | Matches Expression      | Text               | 
+
+- **Value Filters**: This provides a list of values from which you can select as many as you wish. There are 3 groups of Filters in the dropdown list:
 
 Built-in system filters provided by AdapTable
 
@@ -38,114 +51,40 @@ All distinct values for that column.
 Tip
 To remove all the filters for a column click the 'Clear' button.
 
-The full list of potential value filters are:
 
-Search Filter
+The System Filters are:
 
-Rows Returned
 
-Columns
 
-Blanks
+| System Filter   	      | Columns              |
+| --------  	          | ------               | 
+| Blanks                  | Number, Date, Text   | 
+| Non Blanks              | Number, Date, Text   | 
+| Positive                | Number               | 
+| Negative                | Number               | 
+| Zero                    | Number               | 
+| True                    | Boolean              | 
+| False                   | Boolean              | 
+| Today                   | Date                 | 
+| In Past                 | Date                 | 
+| In Future               | Date                 | 
+| Yesterday               | Date                 | 
+| Tomorrow                | Date                 | 
+| Next Working Day        | Date                 | 
+| Previous Working Day    | Date                 | 
+| Today                   | Date                 | 
 
-Where the cell value is empty.
 
-Text, Date, Number
 
-Non Blanks
 
-Where the cell value is not empty.
 
-Text, Date, Number
-
-Positive
-
-Where the cell value is positive.
-
-Number
-
-Negative
-
-Where the cell value is negative.
-
-Number
-
-Zero
-
-Where the cell value is zero.
-
-Number
-
-True
-
-Where the cell value is true.
-
-True/False
-
-False
-
-Where the cell value is false.
-
-True/False
-
-Today
-
-Where the cell value is current date.
-
-Date
-
-In Past
-
-Where the cell value is before current date. 
-
-Date
-
-In Future
-
-Where the cell value is after current date.
-
-Date
-
-Yesterday
-
-Where the cell value is yesterday's date.
-
-Date
-
-Tomorrow
-
-Where the cell value is tomorrow's date.
-
-Date
-
-Next Working Day
-
-Where the cell value is the next working day.
-
-Date
-
-Previous Working Day
-
-Where the cell value is the previous working day.
-
-Date
-
-<distinct cell value>
-
-Where cell value matches the <distinct cell value>
-
-All
-
-<user filter>
-
-Where cell value matches the <user filter>
-
-All
 
 Tip
 If you can't find the information you are looking for in your grid, use the Column Filter Function to check if any filters are applied. Click the 'Clear' button to remove all filters for these columns.
 
 You should also check to see if any columns have been hidden, as it is possible that a hidden column has a filter applied (the filter will affect your grid, even though the column is not shown).
+
+We also allow you to mark a column that is filtered
 
 Re-Using Column Filters
 
@@ -153,7 +92,8 @@ Any active column filters when the system closes are immediately re-applied on s
 
 If you want to save and re-use Column Filters in other functions (e.g. Advanced Search), click the save button in the top of the Filter Form and that will allow you to convert the Column Filter into a named - and re-usable User Filter.
 
-Quick Filter
+
+## Quick Filter Bar
 
 Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
 
