@@ -165,6 +165,16 @@ Yes you can. You are able to build your own Adaptable Objects which are stored a
 
 Yes, that is possible and expected.  AdapTable allows you provide highly configurable and personalised instances.
 
+**Can we store our own data in the AdapTable State / Predefined Config**
+
+Yes you can. Use the AdaptableEntries property of Application State.
+
+This provides an array of key / value pairs which you can use to store your own bespoke data and AdapTable will persist it with the rest of the state.
+
+**Is there a restriction on what we can store in AdapTable Entries?**
+
+Yes, it needs to be something that can be JSON stringified so it cannot be a function.
+
 
  ## Predefined Config example
 

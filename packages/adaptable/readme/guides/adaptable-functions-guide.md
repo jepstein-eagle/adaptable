@@ -93,6 +93,17 @@ Nearly every AdaptableFunctions has its own section / property in PredefinedConf
 
 For example, you can ship AdapTable with pre-created Custom Sorts for use in the Custom Sort AdaptableFunction through the 'CustomSort' section of Predefined Config.
 
+## FAQ
+
+Can we hide particular Functions from our users as they are not relevant (i.e. we are a readonly grid so don't require Smart Edit or Shortcuts Functions)?
+
+Yes, you can use the Entitlements property in Predefined Config to state which Functions are available to your users.
+
+Additionally you can set for each user (or role) which properties in the Function are visible, editable or readonly.
+
+Do you plan to add more Functions?
+
+Yes, we continue to add more Functions all the time, primarily in response to suggestions and ideas submitted by our Users.
 
 ## Demo
 
