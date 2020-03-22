@@ -1,5 +1,21 @@
 # AdapTable Filtering Guide
 
+Filtering is one of the most common - and powerful - functionalities offered by AdapTable.
+
+It is designeed to be intuitive and easy to use, but there is actualy a lot of different types of filters and options on offer for filtering. 
+
+There are 2 places where filtering can take place:
+
+- **Column Filters**:  The dropdown that appears when you click the filter icon in the Column Header (or in the Tab of the Column Header Menu)
+- **Quick Filter Bar**:  The textbox that appears in the row between the Column Header and the first data row in the grid.
+
+## Column Filters
+
+
+## Quick Filter Bar
+
+
+
 Each column in the grid has a filter dropdown. This allows you to filter any column quickly and easily.
 
 You can select as many filter items as you want. When you have made your choice, the grid updates so that it only shows rows that match the filters you have set for the column.
