@@ -18,7 +18,7 @@ Users can select as many filter items as they want and the grid will automatical
 
 There are 2 types of filter that you can apply:
 
-- **Range Filters**: A range uses an 'Operator' (e.g. Greater Than, Starts With etc) and an Operand (ie. value) that you specify. 
+1. **Range Filters**: A range uses an 'Operator' (e.g. Greater Than, Starts With etc) and an Operand (ie. value) that you specify. 
 
     They are similar to the Ranges used in Expressions (Queries).
 
@@ -26,32 +26,33 @@ There are 2 types of filter that you can apply:
 
     > Most Range Operands will be a value (e.g. > 50) but they can referece another column (e.g. > 'Bid')
 
-- **Value Filters**: A list of actual values to filter against.  
+2. **Value Filters**: A list of actual values to filter against.  
     
     There are, actually, up to 4 groups of Filters that can appear in the dropdown list:
 
-    1. **System Filters**: filters shipped by AdapTable ships and for which it provides an evaluation for (e.g. `Tomorrow` for Date columns or `Positive` for number columns).  
+    - **System Filters**: filters shipped by AdapTable ships and for which it provides an evaluation for (e.g. `Tomorrow` for Date columns or `Positive` for number columns).  
 
-    See the Appendix for the full list of System Filters and their associated column types.
+        See the Appendix for the full list of System Filters and their associated column types.
     
-    > You can choose (through System Filter Config which, if any, System Filters you want available and can rely on AdapTable to match rows.
+        > You can choose (through System Filter Config which, if any, System Filters you want available and can rely on AdapTable to match rows.
 
-    
-    2. **User Filters**: filters created by Users (either at design-time or run-time). 
+    - **User Filters**: filters created by Users (either at design-time or run-time). 
 
         See User Filter Function Read Me for more information on how to create User Filters.
 
-    3. **Named Filters**: filters creatde by developers design-time and provided through Predefined Config.
+    - **Named Filters**: filters creatde by developers design-time and provided through Predefined Config.
 
         See Named Filter Function Read Me for more information on how to create Named Filters.
 
-    4. **Column Values**: the distinct column values for that Column.  
+    - **Column Values**: the distinct column values for that Column.  
 
         > See xxx for how we get column values
 
-    > to remove all the filters for a column click the 'Clear' button.
+#### Managing Column Filters
+
+To remove all the filters for a column click the 'Clear' button.
     
-    > System, User and Named Filters all appear italicised in the Filter dropdown
+System, User and Named Filters all appear italicised in the Filter dropdown
     
 > If you can't find the information you are looking for in your grid, use the Column Filter Function to check if any filters are applied. Click the 'Clear' button to remove all filters for these columns.
 
