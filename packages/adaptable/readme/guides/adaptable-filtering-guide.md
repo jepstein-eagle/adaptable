@@ -21,24 +21,7 @@ There are 2 types of filter that you can apply:
 
 > When creating a Range Filter, you can choose between entering a value (e.g. > 50) or referencing another column (e.g. > 'Bid')
 
-  | Operator                | Columns            |
-  | ------                  | -------            | 
-  | Greater Than            | Number             | 
-  | Greater Than or Equals  | Number             | 
-  | Less Than               | Number             | 
-  | Less Than or Equals     | Number             | 
-  | After                   | Dat                | 
-  | After or On             | Date               | 
-  | Before                  | Date               | 
-  | Before or On            | Date               | 
-  | Equals                  | Number, Date, Text | 
-  | NotEquals               | Number, Date, Text | 
-  | Between                 | Number, Date       | 
-  | Contains                | Text               | 
-  | Not Contains            | Text               | 
-  | Starts With             | Text               | 
-  | Ends With               | Text               | 
-  | Matches Expression      | Text               | 
+  
 
 - **Value Filters**: This provides a list of values from which you can select as many as you wish. There are 3 groups of Filters in the dropdown list:
 
@@ -52,27 +35,7 @@ Tip
 To remove all the filters for a column click the 'Clear' button.
 
 
-The System Filters are:
 
-
-
-| System Filter   	      | Columns              |
-| --------  	          | ------               | 
-| Blanks                  | Number, Date, Text   | 
-| Non Blanks              | Number, Date, Text   | 
-| Positive                | Number               | 
-| Negative                | Number               | 
-| Zero                    | Number               | 
-| True                    | Boolean              | 
-| False                   | Boolean              | 
-| Today                   | Date                 | 
-| In Past                 | Date                 | 
-| In Future               | Date                 | 
-| Yesterday               | Date                 | 
-| Tomorrow                | Date                 | 
-| Next Working Day        | Date                 | 
-| Previous Working Day    | Date                 | 
-| Today                   | Date                 | 
 
 
 
@@ -135,6 +98,52 @@ So, as a result, you provide the function with your Adaptable Options, and AdapT
 ## Demos
 
 Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/filters) to see a number of filtering-related demos
+
+## Appendices
+
+### Column Range Filters
+
+| Operator                | Columns            |
+| ------                  | -------            | 
+| Greater Than            | Number             | 
+| Greater Than or Equals  | Number             | 
+| Less Than               | Number             | 
+| Less Than or Equals     | Number             | 
+| After                   | Dat                | 
+| After or On             | Date               | 
+| Before                  | Date               | 
+| Before or On            | Date               | 
+| Equals                  | Number, Date, Text | 
+| NotEquals               | Number, Date, Text | 
+| Between                 | Number, Date       | 
+| Contains                | Text               | 
+| Not Contains            | Text               | 
+| Starts With             | Text               | 
+| Ends With               | Text               | 
+| Matches Expression      | Text               | 
+
+
+### System Filters
+
+The System Filters shipped by AdapTable are:
+
+| System Filter   	      | Columns              |
+| --------  	          | ------               | 
+| Blanks                  | Number, Date, Text   | 
+| Non Blanks              | Number, Date, Text   | 
+| Positive                | Number               | 
+| Negative                | Number               | 
+| Zero                    | Number               | 
+| True                    | Boolean              | 
+| False                   | Boolean              | 
+| Today                   | Date                 | 
+| In Past                 | Date                 | 
+| In Future               | Date                 | 
+| Yesterday               | Date                 | 
+| Tomorrow                | Date                 | 
+| Next Working Day        | Date                 | 
+| Previous Working Day    | Date                 | 
+| Today                   | Date                 | 
 
 ## Help
 
