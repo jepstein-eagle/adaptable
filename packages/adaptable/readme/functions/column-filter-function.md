@@ -32,7 +32,7 @@ Column Filters cannot be saved for re-use.  In order to save - and then re-use -
 
 Column Filters can be cleared either by using the Column Filter Popup, Toolbar or ToolPanel. 
 
-#### Quick Filter Bar
+### Quick Filter Bar
 
 Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
 
