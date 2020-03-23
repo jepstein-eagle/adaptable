@@ -602,15 +602,40 @@ export class Adaptable implements IAdaptable {
   }
 
   // debounced methods
-  debouncedSetColumnIntoStore = _.debounce(() => this.setColumnIntoStore(), HALF_SECOND);
+  debouncedSetColumnIntoStore = _.debounce(() => {
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.setColumnIntoStore();
+  }, HALF_SECOND);
 
-  debouncedSaveGridLayout = _.debounce(() => this.saveGridLayout(), HALF_SECOND);
+  debouncedSaveGridLayout = _.debounce(() => {
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.saveGridLayout();
+  }, HALF_SECOND);
 
-  debouncedSetSelectedCells = _.debounce(() => this.setSelectedCells(), 250);
+  debouncedSetSelectedCells = _.debounce(() => {
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.setSelectedCells();
+  }, 250);
 
-  debouncedSetSelectedRows = _.debounce(() => this.setSelectedRows(), HALF_SECOND);
+  debouncedSetSelectedRows = _.debounce(() => {
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.setSelectedRows();
+  }, HALF_SECOND);
 
-  debouncedFilterGrid = _.debounce(() => this.applyGridFiltering(), HALF_SECOND);
+  debouncedFilterGrid = _.debounce(() => {
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.applyGridFiltering();
+  }, HALF_SECOND);
 
   private filterOnUserDataChange(rowNodes: RowNode[]): void {
     if (
@@ -669,6 +694,9 @@ export class Adaptable implements IAdaptable {
   }
 
   private applyDataChange(rowNodes: RowNode[]) {
+    if (!this.gridOptions.api) {
+      return;
+    }
     let itemsToUpdate: any[] = rowNodes
       .filter((node: RowNode) => !this.isGroupRowNode(node))
       .filter((rowNode: RowNode) => this.isDataInModel(rowNode))

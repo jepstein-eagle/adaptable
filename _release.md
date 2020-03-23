@@ -1,10 +1,10 @@
 ## 6.1.2
 
-Fixing some issues in inline view and adding icons
+Fixing some issues in inline view and adding icons. Also fix throttled and debounced methods to check for existing api object
 
 ## 6.1.1
 
-Adding 'IsInline' option to Dashboard State to offer an altnernative expanded view
+Adding 'IsInline' option to Dashboard State to offer an alternative expanded view
 
 ## 6.1.0
 
