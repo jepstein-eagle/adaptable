@@ -1,3 +1,8 @@
+## 6.1.3
+
+Inline dashboard minor fix
+Fixes for AdapTable unmount
+
 ## 6.1.2
 
 Fixing some issues in inline view and adding icons. Also fix throttled and debounced methods to check for existing api object
