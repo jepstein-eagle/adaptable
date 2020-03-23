@@ -133,9 +133,9 @@ The System Filters shipped by AdapTable are:
 
 
 
-### Quick Filter Wildcards
+### Quick Filter Bar Wildcards
 
-| Symbol 	 | Value                    | Column Type   | Example      |
+| Symbol 	 | Value                    | Columns   | Example      |
 | --------   | ------                   | ------        | ------       | 
 | % 	     | Contains (the default)   | Text, Number  | 'S' or 'S%'  | 
 | = 	     | Equals                   | Text, Number  | '=15'        | 
@@ -147,6 +147,12 @@ The System Filters shipped by AdapTable are:
 |: 	         | Between                  | Number        | '5 : 100'    | 
 |*	         | Starts With              | Text, Number  | 'd*'         | 
 |!	         | Doesn't Contain          | Text, Number  | '!he'        | 
+|1	         | True                     | Boolean       | '1'          | 
+|t	         | True                     | Boolean       | 't'          | 
+|y	         | True                     | Boolean       | 'y'          | 
+|0	         | False                    | Boolean       | '0'          | 
+|f	         | False                    | Boolean       | 'f'          | 
+|n	         | False                    | Boolean       | 'n'          | 
 
 
 

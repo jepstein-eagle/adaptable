@@ -50,8 +50,8 @@ export function GetBooleanOperatorPairs(): KeyValuePair[] {
     { Key: '0', Value: LeafExpressionOperator.IsFalse },
     { Key: 'y', Value: LeafExpressionOperator.IsTrue },
     { Key: 'n', Value: LeafExpressionOperator.IsFalse },
-    { Key: 'y', Value: LeafExpressionOperator.IsTrue },
-    { Key: 'n', Value: LeafExpressionOperator.IsFalse },
+    //  { Key: 't', Value: LeafExpressionOperator.IsTrue },
+    //  { Key: 'f', Value: LeafExpressionOperator.IsFalse },
   ];
 }
 
