@@ -11,7 +11,9 @@ The Dashboard can be heavily customised so that it fits your needs both in terms
 ## Dashboard Visiblity Modes
 There are 3 visibility modes for the Dashboard:
 
-1. **Full** - This shows everything in the Dashboard - situated above the Grid - with one tab open.
+1. **Expanded** - This shows everything in the Dashboard - situated above the Grid - with one tab open.
+
+    > There is an alternative 'inline' Expanded view available.
 
 2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
