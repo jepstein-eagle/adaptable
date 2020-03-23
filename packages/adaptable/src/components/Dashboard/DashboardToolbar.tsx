@@ -20,6 +20,7 @@ export function DashboardToolbar(props: DashboardToolbarProps) {
         <SimpleButton
           icon="build"
           variant="text"
+          tone="none"
           iconSize={16}
           marginLeft={1}
           tooltip={props.tooltip || `Configure ${props.title}`}

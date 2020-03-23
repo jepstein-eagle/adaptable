@@ -42,10 +42,12 @@ function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Layout'],
+    IsInline: true,
+    Revision: 455,
   },
 
   Layout: {
-    CurrentLayout: 'Basic Group Layout',
+    CurrentLayout: 'Sorting Layout',
     Layouts: [
       {
         GroupedColumns: ['currency'],
@@ -59,17 +61,17 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'Sorting Layout',
         ColumnSorts: [
-          {
-            Column: 'counterparty',
-            SortOrder: 'Descending',
-          },
+          // {
+          //   Column: 'counterparty',
+          //   SortOrder: 'Descending',
+          // },
           {
             Column: 'currency',
             SortOrder: 'Descending',
           },
         ],
         Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
-        GroupedColumns: [],
+        GroupedColumns: ['currency'],
       },
       {
         ColumnSorts: [
