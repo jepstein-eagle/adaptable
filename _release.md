@@ -1,6 +1,6 @@
-## 6.1.0
+## 6.1.1
 
-Adding 'IsInline' option to Dashboard State to offer an altnernative expanded view
+Adding 'IsInline' option to Dashboard State to offer an alternative expanded view
 
 ## 6.1.0
 
