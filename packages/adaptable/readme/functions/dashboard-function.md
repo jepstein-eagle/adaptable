@@ -21,7 +21,7 @@ There are 3 visibility modes for the Dashboard:
 
 3. **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
-    > To float / unfloat the Dashboard double-click on the Name in the Dashboard Header (or click the 'carat' at the right hand side).
+    > To float / dock the Dashboard double-click on the Name in the Dashboard Header (or click the item in the Home Menu)
 
 ## Dashboard Contents
 The Dashboard contains the following elements:
