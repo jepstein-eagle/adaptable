@@ -133,105 +133,21 @@ The System Filters shipped by AdapTable are:
 
 
 
-Quick Filter Wildcards
+### Quick Filter Wildcards
 
-Table 1. Quick Filter Bar Special Characters
+| Symbol 	 | Value                    | Column Type   | Example      |
+| --------   | ------                   | ------        | ------       | 
+| % 	     | Contains (the default)   | Text, Number  | 'S' or 'S%'  | 
+| = 	     | Equals                   | Text, Number  | '=15'        | 
+|<> 	     | Not Equals               | Number        | '<> 23'      | 
+|>= 	     | Greater Than or Equals   | Number        | '>= 49'      | 
+|> 	         | Greater Than             | Number        | '> 5'        | 
+|<= 	     | Less Than or Equals      | Number        | '<= 49'      | 
+|< 	         | Less Than                | Number        | '<5'         | 
+|: 	         | Between                  | Number        | '5 : 100'    | 
+|*	         | Starts With              | Text, Number  | 'd*'         | 
+|!	         | Doesn't Contain          | Text, Number  | '!he'        | 
 
-Symbol
-
-Value
-
-Column Type
-
-Example
-
-%
-
-Contains (the default)
-
-Text, Number
-
-S
-
-=
-
-Equals
-
-Text, Number
-
-=15
-
-<>
-
-Not Equals
-
-Number
-
-<> 23
-
->=
-
-Greater Than or Equals
-
-Number
-
->= 49
-
-<=
-
-Less Than or Equals
-
-Number
-
-<= 18
-
->
-
-Greater Than
-
-Number
-
-> 5
-
-< 
-
-Less Than
-
-Number
-
-< 20
-
-:
-
-Between
-
-Number
-
-5 : 100
-
-*
-
-Starts With
-
-Text, Number
-
-d*
-
-!
-
-Doesn't Contain
-
-Text, Number
-
-!str
-
-:
-
-In
-
-Number
-
-15; 22
 
 
 
