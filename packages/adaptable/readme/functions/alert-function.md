@@ -72,5 +72,5 @@ Yes, when you create an Alert Definition you can stipulate, among other things, 
 
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
 
-- [Run-Time Access Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/adaptable-runtime-access-guide.md)
+- [Run-Time Access Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-runtime-access-guide.md)
 

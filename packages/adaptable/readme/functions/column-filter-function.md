@@ -16,17 +16,40 @@ You can either use the Column Filter popup or the Column Filter Function Toolbar
 Tip
 If you dont want to use AdapTable's Filter Form and prefer to use that provided by the underlying vendor grid, then set the useAdaptableFilterForm property to false in Filter Options.
 
-Quick Filter
+#### Quick Filter Bar
 
 Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
 
-If the Quick Filter is visible then AdapTable will provide additional functionality such as wildcards.
+When this is used, AdapTable will create a Column Filter behind the scenes that can be used in the same way as a Column Filter created via the Dropdown.
+
+See the [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-runtime-access-guide.md) for more details.
 
 ## UI Elements
-To Do
+Column Filters includes the following UI Elements:
+
+- **Popup** - Shows a list of existing Column Filters with *Save as User Filter* and *Delete* buttons.  
+
+- **Toolbar** - When any Column Filters are applied, it shows an Info icon which, when clicked, provides details of the Filters, with ability to delete or save them as User Filters.  
+
+In grid whih support a Quick Filter Bar, the toolbar additionally contains a Check Box to enable the Quick Filter Bar to shown / hidden.
+
+- **Tool Panel** - Same as Toolbar above.
+
+- **Column Menu Item** - `Clear Column Filter` Menu Item opens enables all Column Filters to be cleared (only visible if Column Filters are currently applied).  
+
+`Show / Hide Quick Filter Bar` Menu Item enables the Quick Filter Bar to be easily made visible or invisible (only available when a Quick Filter Bar is active).
+
+- **Context Menu Item** - `Filter on Cell Value(s)` Menu Item opens enables a cell or cells to be selected (from a single column) and a Column Filter to be immediately created on those values.
 
 ## Entitlements
-To Do
+Column Filters supports these Entitlement Rules:
+
+- **Full**: Everything is available to the User
+
+- **Hidden**: The Column Filter related Column and Context Menu items are hidden but the Column Filter itself is still available - this can never be hidden.
+
+- **ReadOnly**: N/A
+
 
 ## FAQ
 
@@ -36,5 +59,13 @@ Yes, but as a User Filter.  Column Filters are designed to be transient.  If you
 
 ### Further Information
 
-To Do
+- [Column Filters State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)
+
+- [Column Filters Api](https://api.adaptabletools.com/interfaces/_src_api_columnfilterapi_.columnfilterapi.html)
+
+- [Column Filters Demo](https://demo.adaptabletools.com/filters/aggridcolumnfiltersdemo)
+
+- [Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-runtime-access-guide.md)
+
+
 
