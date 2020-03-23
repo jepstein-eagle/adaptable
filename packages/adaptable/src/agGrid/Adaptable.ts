@@ -2176,6 +2176,9 @@ export class Adaptable implements IAdaptable {
     });
 
     this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_RESIZED, (params: any) => {
+      if (!this.gridOptions.api) {
+        return;
+      }
       // if a column is resized there are a couple of things we need to do once its finished
       if (params.type == 'columnResized' && params.finished == true) {
         // refresh the header if you have quick filter bar to ensure its full length
@@ -2190,7 +2193,7 @@ export class Adaptable implements IAdaptable {
 
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
-      // TODO: Jo: This is a workaround as we are accessing private members of agGrid.
+      // TODO: This is a workaround as we are accessing private members of agGrid.
       // I still wonder if we can do this nicer by using :   this.gridOptions.api!.getEditingCells();
       // must be a good reason why we don't use it
 
@@ -3326,6 +3329,9 @@ export class Adaptable implements IAdaptable {
   }
 
   private setColumnOrder(columnIds: string[]) {
+    if (!this.gridOptions || !this.gridOptions.columnApi) {
+      return;
+    }
     this.gridOptions.columnApi!.setColumnsVisible(columnIds, true);
     const specialColumn: Column = this.gridOptions!.columnApi.getAllDisplayedColumns().filter(c =>
       ColumnHelper.isSpecialColumn(c.getColId())
