@@ -14,9 +14,11 @@ There are 2 places where filtering can take place in AdapTable:
 
 Each column in Adaptable - which is marked as filterable - has a filter dropdown which allows for quick filter selection.
 
-Users can select as many filter items as they want and the grid will automatically update so that it only shows rows that match the filters set for the column.
+Users can create as many Column Filters as required and the grid will automatically update so that it only shows rows that match the filters set for the column.
 
-See the [Column Filter Function Read Me](../functions/column-filter-function.md) for more information on Column Filters.
+Any active Column Filters when the system closes are immediately re-applied on startup. But Column Filters cannot be saved and re-used elsewhere. However they can be easily converted into named - and re-usable [User Filters](../functions/user-filter-function.md) for this very purpose.
+
+See the [Column Filter Function Read Me](../functions/column-filter-function.md) for more information on Column Filters and creating User Filters.
 
 There are 2 types of filter that you can apply:
 
@@ -56,23 +58,6 @@ There are 2 types of filter that you can apply:
 
     > System, User and Named Filters all appear italicised in the Filter dropdown
 
-    ### Managing Column Filters
-
-    To remove all the filters for a column click the 'Clear' button in the Filter Dropdown or in the Column Filter Toolbar.
-
-    The caption (in the Column Header) is bold and italicised for any columns that are filtered.
-
-    Auto-apply filter is available.
-
-    ### Saving Re-Using Column Filters
-
-    Any active column filters when the system closes are immediately re-applied on startup.
-
-    If you don't want this then you can set it.
-
-    > If you want to save and re-use Column Filters in other functions (e.g. Advanced Search), click the save button in the top of the Filter Form and that will allow you to convert the Column Filter into a named - and re-usable [User Filter](../functions/user-filter-function.md).
-
-
 ## Quick Filter Bar
 
 Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
@@ -81,22 +66,18 @@ If the Quick Filter is visible then AdapTable will provide additional functional
 
 The Quick Filter bar allows you to use free text to find the data you want for a column.
 
-Note
-By default, the filter uses 'Contains' when searching - so any cell which contains the inputted text will be included in the filter results.
+> By default, the filter uses 'Contains' when searching - so any cell which contains the inputted text will be included in the filter results.
 
 You can change this behaviour by using one of the wildcards (e.g. 'Starts With') that are listed below.
 
 AdapTable has special characters or wildcards that you can use to find text more easily. e.g. '5 : 15' will find all rows where the value for that column is between 5 and 15. See Appendix at foot of page for more details.
 
-Tip
-You can show / hide the Quick Filter Bar any time you want by selecting the 'Show / Hide Quick Filter' menu option from any Column menu, or by clicking the Show/Hide button in the Column Filter Function Toolbar.
+> You can show / hide the Quick Filter Bar any time you want by selecting the 'Show / Hide Quick Filter' menu option from any Column menu, or by clicking the Show/Hide button in the Column Filter Function Toolbar.
 
-Note: The Quick Filter bar is not available on all grids - only those where the underlying vendor grid supports it.
+The Quick Filter bar is not available on all grids - only those where the underlying vendor grid supports it.
 
-Note
-If you are using ag-Grid then you will need to set the floatingFilter property in GridOptions to true.
+> If you are using ag-Grid then you will need to set the floatingFilter property in GridOptions to true.
 
-Tip
 If you want to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable then set the useAdaptableQuickFilter property to false.
 
  
