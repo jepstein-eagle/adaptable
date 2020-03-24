@@ -55,6 +55,12 @@ To create an Expression which outputs a string:
 ColumnExpression: Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
  ```
 
+To create an Expression which returns the highest of 4 Columns in the row (great for things like MiFID):
+
+```
+ColumnExpression: max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
+ ```
+ 
 ## UI Elements
 
 Calculated Column includes the following UI Elements:
