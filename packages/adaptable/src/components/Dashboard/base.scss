@@ -52,12 +52,11 @@
     font-size: var(--ab-font-size-3);
     border-radius: var(--ab__border-radius) var(--ab__border-radius) 0 0;
     padding: 8px 12px 12px 12px;
-    color: var(--ab-dashboard__color);
-    background: var(--ab-dashboard__background);
-
+    color: var(--ab-dashboard-header__color);
+    background: var(--ab-dashboard-header__background);
     &--active {
-      color: var(--ab-color-text-on-primary);
-      background: var(--ab-color-primary);
+      color: var(--ab-dashboard__color);
+    background: var(--ab-dashboard__background);
     }
   }
 
