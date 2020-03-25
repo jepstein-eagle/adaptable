@@ -77,7 +77,54 @@ return {};
  ```
 
 ## Lookup Functions
-To Do
+AdapTable provides rich and advanced state-management functionality which persists and fetches user settings.  
+
+One element of this 'Adaptable State' is **Predefined Config** which enables users to pre-populate their grids with items they need (e.g. searches, reports, styles, charts etc.).
+
+Most Predefined Config is simple JSON properties or objects that is easy to write and which stores easily as a string.  
+
+But AdapTable also allows for functions to be provided by developers at design-time; these will then be evaluated by AdapTable at run-time at the appropriate moments. 
+
+> Because of the limitation of only being able to store string in state, Predefined Config just contains the **name** of the function, and the actual **implementation** is provided in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
+
+The items in Adaptable State that contain functions include:
+
+- Action Columns
+- Cell Summary
+- Custom Sort
+- Column and Context Menus
+- Named Filters
+- Entitlements
+
+One consequence of this is that AdapTable, therefore, also enables developers to write functions that 'hand off' implementation to the server. 
+
+For instance instead of providing a 'hard-coded' list of Function Entitlements in Predefined Config (which is possible), a function can also be supplied:
+
+```ts
+// Predefined Config
+export default {
+ Entitlements: {
+   DefaultAccessLevel: 'Full',
+   EntitlementLookUpFunction: 'serverLookUp',
+  },
+ },
+} as PredefinedConfig;
+
+
+// Adaptable Options
+const adaptableOptions: AdaptableOptions = {
+......
+ userFunctions: [
+    {
+       name: 'EntitlementLookUpFunction',
+       type: 'serverLookUp',
+       handler(functionName: AdaptableFunctionName, userName: string, adaptableId: string) {
+         // do server look up here
+         }
+     },
+   ],
+ ```
+
 
 ## Server Searching & Filtering
 By default all filtering and searching in AdapTable takes place on the client.
