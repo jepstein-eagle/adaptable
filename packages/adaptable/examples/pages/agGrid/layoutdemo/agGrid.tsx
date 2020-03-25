@@ -45,7 +45,14 @@ let demoConfig: PredefinedConfig = {
     IsInline: true,
     Revision: 455,
   },
-
+  CustomSort: {
+    CustomSorts: [
+      {
+        ColumnId: 'currency',
+        SortedValues: ['EUR', 'CHF'],
+      },
+    ],
+  },
   Layout: {
     CurrentLayout: 'Sorting Layout',
     Layouts: [

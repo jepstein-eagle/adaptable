@@ -1171,16 +1171,13 @@ export class Adaptable implements IAdaptable {
   ): (columnId: string) => any {
     if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
       let testreturnvalue: any = (columnId: string) =>
-        this.gridOptions.api ? this.gridOptions.api.getValue(columnId, rowwNode) : null;
+        this.gridOptions.api!.getValue(columnId, rowwNode);
       return testreturnvalue;
     }
     return (columnId: string) => this.getDisplayValueFromRowNode(rowwNode, columnId);
   }
 
   public setCustomSort(columnId: string, comparer: AdaptableComparerFunction): void {
-    if (!this.gridOptions.api) {
-      return;
-    }
     const sortModel = this.gridOptions.api!.getSortModel();
     const columnDef = this.gridOptions.api!.getColumnDef(columnId);
 
@@ -1192,10 +1189,6 @@ export class Adaptable implements IAdaptable {
   }
 
   public removeCustomSort(columnId: string): void {
-    if (!this.gridOptions.api) {
-      return;
-    }
-
     const sortModel = this.gridOptions.api!.getSortModel();
     const columnDef = this.gridOptions.api!.getColumnDef(columnId);
 
@@ -1211,10 +1204,6 @@ export class Adaptable implements IAdaptable {
     visibleRowsOnly: boolean
   ): Array<IRawValueDisplayValuePair> {
     const returnMap = new Map<string, IRawValueDisplayValuePair>();
-
-    if (!this.gridOptions.api) {
-      return [];
-    }
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
@@ -1250,9 +1239,6 @@ export class Adaptable implements IAdaptable {
     onlyIncludeIds?: { [key: string]: boolean }
   ): Array<IRawValueDisplayValuePair> {
     const returnArray: IRawValueDisplayValuePair[] = [];
-    if (!this.gridOptions.api) {
-      return returnArray;
-    }
 
     let permittedMap = new Map<string, IRawValueDisplayValuePair>();
 
@@ -1308,9 +1294,6 @@ export class Adaptable implements IAdaptable {
     distinctCriteria: DistinctCriteriaPairValue,
     returnMap: Map<string, IRawValueDisplayValuePair>
   ): void {
-    if (!this.gridOptions.api) {
-      return;
-    }
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
 
@@ -1331,9 +1314,7 @@ export class Adaptable implements IAdaptable {
 
   private useRawValueForColumn(columnId: string): boolean {
     // we need to return false if the column has a cell rendeerer i think...
-    const colDef: ColDef = this.gridOptions.api
-      ? this.gridOptions.api!.getColumnDef(columnId)
-      : null;
+    const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
       if (colDef.cellRenderer != null) {
         return true;
@@ -1354,10 +1335,6 @@ export class Adaptable implements IAdaptable {
   public getDisplayValue(id: any, columnId: string): string {
     let returnValue: string;
 
-    if (!this.gridOptions.api) {
-      return '';
-    }
-
     if (this.useRowNodeLookUp) {
       const rowNode: RowNode = this.gridOptions.api!.getRowNode(id);
       returnValue = this.getDisplayValueFromRowNode(rowNode, columnId);
@@ -1374,7 +1351,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public getDisplayValueFromRowNode(row: RowNode, columnId: string): string {
-    if (row == null || !this.gridOptions.api) {
+    if (row == null) {
       return '';
     }
     const rawValue = this.gridOptions.api!.getValue(columnId, row);
@@ -1385,9 +1362,6 @@ export class Adaptable implements IAdaptable {
   }
 
   public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
-    if (!this.gridOptions.api) {
-      return '';
-    }
     const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
       if (colDef.valueFormatter) {
@@ -1427,10 +1401,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public getRawValueFromRowNode(rowNode: RowNode, columnId: string): any {
-    if (!this.gridOptions.api) {
-      return '';
-    }
-    return this.gridOptions.api.getValue(columnId, rowNode);
+    return this.gridOptions.api!.getValue(columnId, rowNode);
   }
 
   public getDataRowFromRowNode(rowNode: RowNode): any {
@@ -2337,6 +2308,17 @@ export class Adaptable implements IAdaptable {
       //      this.debouncedSetSelectedRows();
     });
 
+    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
+      // if (this.gridOptions.autoGroupColumnDef) {
+      // console.log(this.gridOptions.autoGroupColumnDef);
+      //  }
+      //   if (params && params.column && params.column.sort) {
+      // if(params.columms[0])
+      //  console.log('need to sort');
+      //  console.log(params);
+      //  }
+    });
+
     this.gridOptions.api!.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
       //     this.debouncedSetSelectedRows();
     });
@@ -3058,7 +3040,6 @@ export class Adaptable implements IAdaptable {
 
   private onSortChanged(): void {
     const sortModel: { colId: string; sort: string }[] = this.gridOptions.api!.getSortModel();
-
     const columnSorts: ColumnSort[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(sortModel)) {
       sortModel.forEach(sm => {
