@@ -1,3 +1,7 @@
+## 6.1.4
+
+css dashboard issue fixed when multiple tabs
+
 ## 6.1.3
 
 Inline dashboard minor fix
