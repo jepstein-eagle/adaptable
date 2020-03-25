@@ -4,6 +4,8 @@ Many of the functions in AdapTable are powered by an `Expression`.
 
 This is essentially a powerful multi-column query that evaluates on a row by row basis whether that row 'passes'.
 
+> The Expression object and its constituent properties is described from a code perspective in the [Adaptable Developer Documentation](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) 
+
 ## Terminology
 
 Strictly speakng an **Expression** is an instruction that tells AdapTable to find data that matches specific search criteria.
