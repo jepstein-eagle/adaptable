@@ -23,7 +23,7 @@ AdapTable provides a powerful [Cell Validation](../functions/cell-validation-fun
 
 But sometimes users require more sophisticated rules that run on the Server that contain complicated calculated or external lookups.
 
-To facilitate this aaa offers Server Validation functionality that works as follows:
+To facilitate this AdapTable offers Server Validation functionality that works as follows:
 
 In the [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html) of Adaptable Options developers supply a function that  will run each time a cell is edited.  The function returns a Promise containing a `ValidationResult`. 
 
@@ -79,7 +79,29 @@ return {};
 
 ## Server Searching & Filtering
 
+
 ## Getting Distinct Column Values
+There are many places where AdapTable requires a list of distinct column values e.g. when opening a Column Filter or when creating an Expression.
+
+By default AdapTable will loop through values in the grid for that column retrieiving distinct items.
+
+However there is an option to allow developers dynamically to get the list of values for a column externally each time it is required.
+
+The `getColumnValues` property in the [Query Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_queryoptions_.queryoptions.html#getcolumnvalues) section of AdaptableOptions defines this callback function:
+
+```ts
+ getColumnValues?: (column: string) => Promise<IServerColumnValues>;
+ ```
+ In other words, it takes the name of the column in question as the only parameter and returns a Promise of type `IServerColumnValues` that contains the list of column values to display and whether to show display or raw values:
+
+```ts
+export interface IServerColumnValues {
+    DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
+    ColumnValues: string[];
+}
+```
+
+Read more about the various options available in getting distinct column values in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
 
 ## Getting Data (infinite scrolling)
 
