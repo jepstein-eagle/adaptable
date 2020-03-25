@@ -4,6 +4,8 @@ Many of the functions in AdapTable are powered by an `Expression`.
 
 This is essentially a powerful multi-column query that evaluates on a row by row basis whether that row 'passes'.
 
+> The Expression object and its constituent properties is described from a code perspective in the [Adaptable Developer Documentation](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) 
+
 ## Terminology
 
 Strictly speakng an **Expression** is an instruction that tells AdapTable to find data that matches specific search criteria.
@@ -26,7 +28,8 @@ There are 3 types of Criteria in a Condition:
 
   A third alternative is to use the getColumnValues property of Query Options which provides a callback function to be called by AdapTable whenever column values are required.  The implementation for this callback is provided by  each user and allows them to react dynamically each time a filter is opened or a Query is built.
 
-  You  can find out more about the 3 different options available at Column Values.
+  You  can find out more about the 3 different options available in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
+  
 
 - **Filters**
   This will list all System Filters (for the column's datatype) and any User Filters or Named Filters that you have previously created for that column (which are displayed in italics).
