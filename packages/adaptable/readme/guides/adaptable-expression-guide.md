@@ -28,7 +28,8 @@ There are 3 types of Criteria in a Condition:
 
   A third alternative is to use the getColumnValues property of Query Options which provides a callback function to be called by AdapTable whenever column values are required.  The implementation for this callback is provided by  each user and allows them to react dynamically each time a filter is opened or a Query is built.
 
-  You  can find out more about the 3 different options available at Column Values.
+  You  can find out more about the 3 different options available in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
+  
 
 - **Filters**
   This will list all System Filters (for the column's datatype) and any User Filters or Named Filters that you have previously created for that column (which are displayed in italics).
