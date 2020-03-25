@@ -76,6 +76,8 @@ return {};
 
  ```
 
+## Lookup Functions
+To Do
 
 ## Server Searching & Filtering
 By default all filtering and searching in AdapTable takes place on the client.
@@ -109,17 +111,17 @@ The event includes a [`SearchChangedInfo`](https://api.adaptabletools.com/interf
 
 - [`SearchChangedTrigger`](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedinfo.html#searchchangedtrigger) which says which AdapTable Function was responsible for the change in Search state.
 
-#### JSON Translation
+### JSON Translation
 All the objects in the Search State are JSON.
 
 This means that in order to perform searching and filtering on the server this JSON will need to be 'translated' into something that the particular server can understand.
 
-Obviously each server is different so AdapTable cannot provide an out of the box implemenation, but we do work with a number of partners who have performed this for clients and we have a Grid Gurus consultancy service that can advise you in a bespoke manner.
+Obviously each server is different so AdapTable cannot provide an out of the box implemenation, but we do work with a number of partners who have performed this for clients and we have a [Grid Gurus consultancy service](https://adaptabletools.com/grid-gurus) that can advise you in a bespoke manner.
 
-#### Returning Search Results
+### Returning Search Results
 Once the AdapTable JSON has been parsed into a query format that matches the particular server setup and the search has been run, then the data needs to be returned to AdapTable and displayed accordingly.
 
-There are a number of different Adaptable API methods you can use but the most common is perhaps [setGridData`](https://api.adaptabletools.com/interfaces/_src_api_gridapi_.gridapi.html#setgriddata) in GridApi.
+There are a number of different Adaptable API methods you can use but the most common is perhaps [`setGridData`](https://api.adaptabletools.com/interfaces/_src_api_gridapi_.gridapi.html#setgriddata) in GridApi.
 
 >  Once the data is sent back, AdapTable will automatically make any changes to your sorting, styles etc as required.
 
@@ -146,8 +148,8 @@ export interface IServerColumnValues {
 
 Read more about the various options available in getting distinct column values in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
 
-## Getting Data (infinite scrolling)
-
+## Getting Data From the Server (infinite scrolling)
+To Do
 
 ## FAQ
 To do
