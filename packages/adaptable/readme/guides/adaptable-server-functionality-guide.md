@@ -25,7 +25,7 @@ But sometimes users require more sophisticated rules that run on the Server that
 
 To facilitate this AdapTable offers Server Validation functionality that works as follows:
 
-In the [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html) of Adaptable Options developers supply a function that  will run each time a cell is edited.  The function returns a Promise containing a `ValidationResult`. 
+In the [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html) section of Adaptable Options developers supply a function that  will run each time a cell is edited.  The function returns a Promise containing a `ValidationResult`. 
 
 This includes a return value which can be:
 
@@ -78,9 +78,52 @@ return {};
 
 
 ## Server Searching & Filtering
+By default all filtering and searching in AdapTable takes place on the client.
 
+However you can choose to run some or all filtering and searching on the Server instead.
 
-## Getting Distinct Column Values
+>  Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 100,000 records that you need filtering.
+
+This is done through the `serverSearchOption` in the [SearchOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) section of Adaptable Options
+
+The property can take one of 4 values:
+
+- **None** - the default; all searching and filtering will take place on the client.
+
+- **AdvancedSearch** - runs just the [`AdvancedSearch` Function](../functions/adavanced-search-function.md) on the server but all other search (e.g. Quick Search) and filter (e.g. Column Filters) related Functions on the client. (This is a popular option).
+
+- **AllSearch** - runs all search and filtering functions on the server (i.e. Advanced Search, Quick Search, Column Filters etc)
+
+- **AllSearchandSort** - runs all search and filtering functions on the server and will also run all sorting on the server.
+
+> If a search function has been selected to be run on the Server then AdapTable will not do any relevant searching or filtering when the function runs.
+
+### SearchChanged Event
+Whenever the search criteria in AdapTable change (e.g. a new Advanced Search has been selected, or a Column Filter has been applied) the [SearchChanged](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedeventargs.html) event is fired.
+
+The event includes a [`SearchChangedInfo`](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedinfo.html) property which contains 3 important properties:
+
+- [`AdaptableSearchState`](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.adaptablesearchstate.html) which provides full and comprehensive details of the state of all the search and filter related functions in Adaptable
+
+- [`AdaptableSortState`](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.adaptablesortstate.html) which lists what sorts are currently applied in the Grid
+
+- [`SearchChangedTrigger`](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedinfo.html#searchchangedtrigger) which says which AdapTable Function was responsible for the change in Search state.
+
+#### JSON Translation
+All the objects in the Search State are JSON.
+
+This means that in order to perform searching and filtering on the server this JSON will need to be 'translated' into something that the particular server can understand.
+
+Obviously each server is different so AdapTable cannot provide an out of the box implemenation, but we do work with a number of partners who have performed this for clients and we have a Grid Gurus consultancy service that can advise you in a bespoke manner.
+
+#### Returning Search Results
+Once the AdapTable JSON has been parsed into a query format that matches the particular server setup and the search has been run, then the data needs to be returned to AdapTable and displayed accordingly.
+
+There are a number of different Adaptable API methods you can use but the most common is perhaps [setGridData`](https://api.adaptabletools.com/interfaces/_src_api_gridapi_.gridapi.html#setgriddata) in GridApi.
+
+>  Once the data is sent back, AdapTable will automatically make any changes to your sorting, styles etc as required.
+
+## Getting Distinct Column Values From Server
 There are many places where AdapTable requires a list of distinct column values e.g. when opening a Column Filter or when creating an Expression.
 
 By default AdapTable will loop through values in the grid for that column retrieiving distinct items.
