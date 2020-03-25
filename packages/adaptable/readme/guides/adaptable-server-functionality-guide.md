@@ -19,7 +19,7 @@ However there are frequent cases where our users want to perform some actions on
 What AdapTable can do for each of these use cases is detailed below in turn.
 
 ## Server Validation
-AdapTable provides a powerful Cell Validation function which allows for the creation of Validation Rules that run each time a propsosed edit is made and disallow those which break a rule.
+AdapTable provides a powerful [Cell Validation](../functions/cell-validation-function.md) function which allows for the creation of Validation Rules that run each time a propsosed edit is made and disallow those which break a rule.
 
 But sometimes users require more sophisticated rules that run on the Server that contain complicated calculated or external lookups.
 
@@ -29,9 +29,9 @@ In the [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableop
 
 This includes a return value which can be:
 
-    - nothing (either the edit works - or you want to 'swallow' it)
-    - the old value (validation failed) 
-    - a differnt value altogether (in advanced scenarios). 
+- nothing (either the edit works - or you want to 'swallow' it)
+- the old value (validation failed) 
+- a differnt value altogether (in advanced scenarios). 
     
 The Promise can additionally include an optional Validation Message which, if present, will be displayed to the user.
 
@@ -91,8 +91,8 @@ To do
 
 The following demos all relate to the use cases in this Read Me:
 
-- [Server Lookups](https://demo.adaptabletools.com/lookups/aggridserverlookupsdemo)
 - [Server Validation](https://demo.adaptabletools.com/edit/aggridservervalidationdemo)
+- [Server Lookups](https://demo.adaptabletools.com/lookups/aggridserverlookupsdemo)
 
 
 ## Help

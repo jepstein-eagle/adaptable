@@ -10,6 +10,11 @@ import { createUuid, TypeUuid } from '../Uuid';
  * - Filters: can be a mix of *Column Filters* (created by the user at run-time), *System Filters* (filters which are shipped by Adaptable) and *User Filters* (special filters which the user creates and names and can then re-use as required).
  *
  * - Ranges: an evaluation (e.g. 'GreaterThan 15', 'LessThan [Bid]' etc.)
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Expression Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-expression-guide.md) | [Filtering Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
  */
 export class Expression {
   /**
