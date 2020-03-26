@@ -44,9 +44,6 @@ For more details see User State.
 
 By listening to the AuditStateChanged event (via the Audit Event api) which provides full details of which function has triggered the change and what the new state is for that function. 
 
-## Demos
-
-To Do
 
 ## Help
 
