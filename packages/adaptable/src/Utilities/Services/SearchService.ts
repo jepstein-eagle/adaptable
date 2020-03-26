@@ -90,30 +90,13 @@ export class SearchService implements ISearchService {
    */
   publishSearchChanged(searchChangedTrigger: SearchChangedTrigger): void {
     if (this.adaptable.isInitialised) {
-      const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
-      const currentAdvancedSearch:
-        | AdvancedSearch
-        | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
-
-      // lets get the searchstate
-      const AdaptableSearchState: AdaptableSearchState = {
-        dataSource: currentDataSource == null ? undefined : currentDataSource,
-        advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
-        quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
-        columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
-        userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
-        namedFilters: this.adaptable.api.namedFilterApi.getAllNamedFilter(),
-      };
-
-      const AdaptableSortState: AdaptableSortState = {
-        columnSorts: this.adaptable.api.gridApi.getColumnSorts(),
-        customSorts: this.adaptable.api.customSortApi.getAllCustomSort(),
-      };
+      const adaptableSearchState = this.adaptable.api.configApi.configGetAdaptableSearchState();
+      const adaptableSortState = this.adaptable.api.configApi.configGetAdaptableSortState();
 
       const searchChangedInfo: SearchChangedInfo = {
         searchChangedTrigger,
-        AdaptableSearchState,
-        AdaptableSortState,
+        AdaptableSearchState: adaptableSearchState,
+        AdaptableSortState: adaptableSortState,
         searchAsAtDate: new Date(),
       };
 

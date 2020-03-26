@@ -9,7 +9,7 @@ import { LayoutState } from '../../PredefinedConfig/LayoutState';
 import { FormatColumnState } from '../../PredefinedConfig/FormatColumnState';
 import { FlashingCellState } from '../../PredefinedConfig/FlashingCellState';
 import { ExportState } from '../../PredefinedConfig/ExportState';
-import { DataSourceState } from '../../PredefinedConfig/DataSourceState';
+import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceState';
 import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import { CustomSortState } from '../../PredefinedConfig/CustomSortState';
 import { ConditionalStyleState } from '../../PredefinedConfig/ConditionalStyleState';
@@ -20,7 +20,7 @@ import { CalendarState } from '../../PredefinedConfig/CalendarState';
 import { CalculatedColumnState } from '../../PredefinedConfig/CalculatedColumnState';
 import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
-import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState';
+import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableStore';
@@ -44,6 +44,8 @@ import { ConfigApi } from '../ConfigApi';
 import { AdaptableStateKey } from '../../PredefinedConfig/Common/Types';
 import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
 import { Glue42State } from '../../PredefinedConfig/Glue42State';
+import { AdaptableSearchState } from '../../types';
+import { AdaptableSortState } from '../Events/SearchChanged';
 
 export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configInit(): void {
@@ -374,5 +376,31 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
   public configGetUserInterfaceState(returnJson: boolean = false): UserInterfaceState {
     return this.configGetUserStateByStateKey('UserInterface', returnJson) as UserInterfaceState;
+  }
+
+  public configGetAdaptableSearchState(): AdaptableSearchState {
+    const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
+    const currentAdvancedSearch:
+      | AdvancedSearch
+      | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
+
+    // lets get the searchstate
+    const adaptableSearchState: AdaptableSearchState = {
+      dataSource: currentDataSource == null ? undefined : currentDataSource,
+      advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
+      quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
+      columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
+      userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
+      namedFilters: this.adaptable.api.namedFilterApi.getAllNamedFilter(),
+    };
+    return adaptableSearchState;
+  }
+
+  public configGetAdaptableSortState(): AdaptableSortState {
+    const adaptableSortState: AdaptableSortState = {
+      columnSorts: this.adaptable.api.gridApi.getColumnSorts(),
+      customSorts: this.adaptable.api.customSortApi.getAllCustomSort(),
+    };
+    return adaptableSortState;
   }
 }

@@ -41,6 +41,8 @@ import { UserInterfaceState } from '../PredefinedConfig/UserInterfaceState';
 import { AdaptableStateKey } from '../PredefinedConfig/Common/Types';
 import { IPushPullState } from '../PredefinedConfig/IPushPullState';
 import { Glue42State } from '../PredefinedConfig/Glue42State';
+import { AdaptableSearchState } from '../types';
+import { AdaptableSortState } from './Events/SearchChanged';
 
 export interface ConfigApi {
   configInit(): void;
@@ -117,4 +119,7 @@ export interface ConfigApi {
   configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;
   configGetUserFilterState(returnJson: boolean): UserFilterState;
   configGetUserInterfaceState(returnJson: boolean): UserInterfaceState;
+
+  configGetAdaptableSearchState(): AdaptableSearchState;
+  configGetAdaptableSortState(): AdaptableSortState;
 }
