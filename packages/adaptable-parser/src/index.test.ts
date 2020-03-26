@@ -1,6 +1,6 @@
-import parser from '../src';
+import { parser, AST } from '.';
 
-const t = (name: string, input: string | string[], output: any) => {
+const t = (name: string, input: string | string[], output: AST) => {
   test(name, () => {
     const inputs = Array.isArray(input) ? input : [input];
     inputs.forEach(i => {
@@ -38,6 +38,7 @@ describe('literal', () => {
   t('FALSE', 'FALSE', [false]);
   t('NUMBER', '1', [1]);
   t('STRING', '"A"', ['A']);
+  t('ARRAY', '[1, "A"]', [[1, 'A']]);
 });
 
 describe('function', () => {
@@ -69,6 +70,12 @@ describe('smart', () => {
         'BIG',
         { type: 'DAY', args: [{ type: 'COL', args: ['B'] }] },
       ],
+    },
+  ]);
+  t('column values', 'IN(COL("A"), ["X", "Y", "Z"])', [
+    {
+      type: 'IN',
+      args: [{ type: 'COL', args: ['A'] }, ['X', 'Y', 'Z']],
     },
   ]);
 });

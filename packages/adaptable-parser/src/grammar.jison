@@ -23,6 +23,8 @@
 "^"                   return '^'
 "("                   return '('
 ")"                   return ')'
+"["                   return '['
+"]"                   return ']'
 ","                   return ','
 "?"                   return '?'
 ":"                   return ':'
@@ -90,6 +92,7 @@ e
   | e '?' e ':' e           {$$ = { type: 'IF', args: [$1, $3, $5] };}
   | '-' e %prec UMINUS      {$$ = -$2;}
   | '(' e ')'               {$$ = $2;}
+  | '[' args ']'            {$$ = $2;}
   | TRUE                    {$$ = true;}
   | FALSE                   {$$ = false;}
   | NUMBER                  {$$ = Number($NUMBER);}
