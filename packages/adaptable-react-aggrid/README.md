@@ -75,15 +75,15 @@ There are currently 3 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
-> courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
+  > courtesy of Infragistics - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
 - **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
-> adds additional functionality of benefit only to advanced financial users.
+  > adds additional functionality of benefit only to advanced financial users.
 
 - **NoCode** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
-> enables the creation of dynamic AdapTable instances by dragging and droppping JSON or Excel files.
+  > enables the creation of dynamic AdapTable instances by dragging and droppping JSON or Excel files.
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
@@ -175,7 +175,7 @@ See [Developer Documentation](https://api.adaptabletools.com/interfaces/_adaptab
 
 - **modules** 
 
-Any ag-Grid Enterprise modules that you wish to include (see above)
+  Any ag-Grid Enterprise modules that you wish to include (see above)
 
 ## Styling and Theming
 
