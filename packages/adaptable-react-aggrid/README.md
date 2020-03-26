@@ -148,30 +148,30 @@ export default () => <AdaptableReactAgGrid
 
 - **gridOptions**: 
 
-The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+  The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
-note: Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop of the component.
+  > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop of the component.
 
 - **adaptableOptions**: 
 
-The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+  The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
 See [Developer Documentation](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
 
-note: Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
+  > Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
 
 ### Optional:
 
 - **onAdaptableReady: ({ adaptableApi: AdaptableApi, vendorGrid: GridOptions })** 
 
-An event that fires as soon as AdapTable is ready - the callback function is called with an object with `{adaptableApi, vendorGrid}` which provides access to 2 important objects:
-1. The *AdaptableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) for more details.)
+  An event that fires as soon as AdapTable is ready - the callback function is called with an object with `{adaptableApi, vendorGrid}` which provides access to 2 important objects:
+  1. The *AdaptableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) for more details.)
 
-2. The underlying VendorGrid instance being used - in this case GridOptions. This is because AdapTable enriches the 'gridOptions' it receives with modules and other properties, so if you want access to the underlying grid then you should use this object.
+  2. The underlying VendorGrid instance being used - in this case GridOptions. This is because AdapTable enriches the 'gridOptions' it receives with modules and other properties, so if you want access to the underlying grid then you should use this object.
 
 - **render|children: ({ grid, adaptable}) => ReactNode**  
 
-Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
+  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
 
 - **modules** 
 
