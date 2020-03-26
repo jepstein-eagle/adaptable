@@ -98,10 +98,6 @@ If it is set, the maxColumnValueItemsDisplayed property will be used irrespectiv
   to do
 
 
-## Demos
-
-To Do
-
 ## Help
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 

@@ -75,10 +75,6 @@ Yes, set the modalContainer property in AdaptableOptions to Grid.
 if you are using a trackpad then make sure that the allowContextMenuWithControlKey is set to true.
 
 
-## Demos
-
-To Do
-
 ## Help
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 

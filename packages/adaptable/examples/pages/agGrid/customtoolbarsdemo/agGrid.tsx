@@ -133,6 +133,7 @@ let demoConfig: PredefinedConfig = {
       'Toolbar3',
       'Toolbar4',
     ],
+    IsInline: true,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
     // make this not persistable
     CustomToolbars: [

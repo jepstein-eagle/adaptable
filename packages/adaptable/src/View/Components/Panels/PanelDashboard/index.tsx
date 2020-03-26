@@ -46,7 +46,11 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
     } = this.props;
 
     return (
-      <DashboardToolbarUI title={headerText} onConfigure={onConfigure}>
+      <DashboardToolbarUI
+        title={headerText}
+        onConfigure={onConfigure}
+        showConfigure={showConfigureButton}
+      >
         {children}
       </DashboardToolbarUI>
     );

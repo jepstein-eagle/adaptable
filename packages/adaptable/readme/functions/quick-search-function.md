@@ -1,23 +1,28 @@
 # QuickSearch (AdaptableFunction)
 
-The QuickSearch([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `QuickSearch`) Function  enables users to quickly find matching text across all visible columns.
+The QuickSearch([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `QuickSearch`) Function  enables users to quickly find all instances of a specific value across all visible columns in the Grid.
 
-Quick Search makes it easy to find all instances of a specific value or term in a grid. You simply enter the value/term you want to search for, and AdapTable will find it.
+### Quick Search Settings
+There are 3 main settings:
 
-Depending on the Quick Search settings you have in place, AdapTable will highlight the matching cells, will filter the grid so that it only shows those rows that have matching cells, or do both.
+- highlight any matching cells
+- filter the grid so that it only shows those rows that have matching cells
+- filter the grid so that it only shows those rows that have matching cells and highlight those cells
 
-Tip
-You should use Quick Search when you want to search in all columns and all rows of a grid.
+> Quick Search is a 'constant operation' - so, like with Advanced Search or Column Filters, it will run both when a new Quick Search is applied but also when data ticks or the visible columns change.
 
-Warning
-Quick Search is a constant operation . So, like with Advanced Search or Column Filters, it will highlight / filter the cells at the time that the Search is applied and also when data updates or the columns change.
+### Highlight Style
+The Quick Search UI allows users to set the Back Colour and Fore (i.e. font) colour of a matched cell.  
 
-You can use the same wildcards as the Floating Filter to refine your quick search.  For example, '> 500' will return any cell that has a number greater than 500.  Or 't*' will return any cell that starts with t.  The 'Between' and 'In' Floating Filter wildcards are not available in Quick Search.
+An alternative to setting the properties individually, is to set a css style classname for Quick Search (make sure to include the css style being referenced in your application code).
+
+### Wildcards
+You can use many of the same wildcards as in the Quick Filter Bar to refine your quick search.  
+
+For example, '> 500' will return any cell that has a number greater than 500.  Or 't*' will return any cell that starts with t.  
 
 See the Appendix at the bottom for more information on using wildcards.
 
-Note
-You can set the Fore Colour and Back Colour for Highlighted Cells in the Quick Search settings page; you are also able to set a css style classname for Quick Search instead of setting the properties individually.
 
 ## UI Elements
 To Do
@@ -26,30 +31,50 @@ To Do
 To Do
 
 ## FAQ
-
-Is it possible only to display rows that have cells that contain the search text?
+**Is it possible only to display rows that have cells that contain the search text?**
 
 Yes. There are options to highlight matching cells, just return matching rows, or both.
 
-Is it possible to do free style quick search (e.g. '> 50')
+**Is it possible to do free style quick search (e.g. '> 50')**
 
 Yes, you can use a number of shortcuts in the Quick Search. These are similar to the ones that you can use in the Floating Filter.
 
-Can we limit Quick Search to particular columns or column data types?
+**Can we limit Quick Search to particular columns or column data types?**
 
 Yes, you can. By default Quick Search works across ALL columns in AdapTable.
 
-However if you want to exclude a column then use the excludecolumnfromquicksearch function in SearchOptions.
+However if you want to exclude a column then provide an implementation for the [excludecolumnfromquicksearch](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch) function in the SearchOptions section of AdaptableOptions.
 
-Does Quick Search include hidden columns?
+**Does Quick Search include hidden columns?**
 
 No, Quick Search only operates on visible columns and it gets re-applied if the column visibility changes. However if you have a large number of columns so that some are not visible in the current scrolling position, Quick Search will still operate on them.
 
-Does Quick Search update in real time as the data changes
+**Does Quick Search update in real time as the data changes**
 
 Yes it does. Like Advanced Search and Filters, Quick Search is reapplied as data changes.
 
+
+### Quick Search Wildcards
+
+| Symbol 	 | Value                    | Columns   | Example      |
+| --------   | ------                   | ------        | ------       | 
+| % 	     | Contains (the default)   | Text, Number  | 'S' or 'S%'  | 
+| = 	     | Equals                   | Text, Number  | '=15'        | 
+|<> 	     | Not Equals               | Number        | '<> 23'      | 
+|>= 	     | Greater Than or Equals   | Number        | '>= 49'      | 
+|> 	         | Greater Than             | Number        | '> 5'        | 
+|<= 	     | Less Than or Equals      | Number        | '<= 49'      | 
+|< 	         | Less Than                | Number        | '<5'         | 
+|*	         | Starts With              | Text, Number  | 'd*'         | 
+|!	         | Doesn't Contain          | Text, Number  | '!he'        | 
+
+
 ### Further Information
 
-To Do
+
+- [Quick Search State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)
+
+- [Quick Search Api](https://api.adaptabletools.com/interfaces/_src_api_quicksearchapi_.quicksearchapi.html)
+
+- [Quick Search Demo](https://demo.adaptabletools.com/search/aggridquicksearchdemo)
 

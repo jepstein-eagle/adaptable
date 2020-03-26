@@ -146,6 +146,7 @@ export function Dashboard(props: DashboardProps) {
       className="ab-Dashboard__home-toolbar"
       title={title}
       tooltip={`Configure Dashboard`}
+      showConfigure={true}
     >
       {left}
       {right}

@@ -120,10 +120,6 @@ AdapTable is compatible with any library or framework. Although it uses React an
 Yes we do.  We currently offer React and Angular wrappers (both for ag-Grid only) to be followed soon by Vue, Ember and others.
 
 
-## Demos
-
-To Do
-
 ## Help
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 

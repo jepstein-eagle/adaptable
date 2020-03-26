@@ -9,6 +9,7 @@ export type DashboardToolbarProps = {
   tooltip?: string;
   onConfigure?: () => void;
   children: ReactNode;
+  showConfigure: boolean;
 };
 
 export function DashboardToolbar(props: DashboardToolbarProps) {
@@ -17,15 +18,17 @@ export function DashboardToolbar(props: DashboardToolbarProps) {
       <div className="ab-Dashboard__toolbar-content">{props.children}</div>
       <div className="ab-Dashboard__toolbar-title">
         <span>{props.title}</span>
-        <SimpleButton
-          icon="build"
-          variant="text"
-          tone="none"
-          iconSize={16}
-          marginLeft={1}
-          tooltip={props.tooltip || `Configure ${props.title}`}
-          onClick={() => props.onConfigure()}
-        />
+        {props.showConfigure && (
+          <SimpleButton
+            icon="build"
+            variant="text"
+            tone="none"
+            iconSize={16}
+            marginLeft={1}
+            tooltip={props.tooltip || `Configure ${props.title}`}
+            onClick={() => props.onConfigure()}
+          />
+        )}
       </div>
     </div>
   );
