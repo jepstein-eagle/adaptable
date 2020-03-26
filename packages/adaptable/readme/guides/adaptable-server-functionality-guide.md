@@ -196,7 +196,7 @@ export interface IServerColumnValues {
 Read more about the various options available in getting distinct column values in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
 
 ## Getting Data From the Server (infinite scrolling)
-To Do
+https://www.ag-grid.com/javascript-grid-server-side-model/
 
 ## FAQ
 To do
