@@ -49,16 +49,28 @@ To create an Expression which references 3 columns:
 ColumnExpression: Col("InvoicedCost") - ( Col("OrderCost") + Col("PackageCost"))
  ```      
 
-To create an Expression which outputs a string:
+To create an Expression which multiplies many columns:
+
+```
+multiply(Col("OrderCost") , Col("ItemCost"), Col("PackageCost"))
+ ```
+ 
+To create an Expression which uses ternary (if) logic (and outputs a string):
 
 ```
 Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
- ```
+ ``` 
 
 To create an Expression which returns the highest of 4 Columns in the row (great for things like MiFID):
 
 ```
 max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
+ ```
+
+To create an Expression which mixes strings and numbers and formats the result (here to 2 decimal places):
+
+```
+print("(20% VAT): $tax", {tax: (Col("OrderCost")*0.2).toFixed(2)} ),
  ```
  
 ## UI Elements
