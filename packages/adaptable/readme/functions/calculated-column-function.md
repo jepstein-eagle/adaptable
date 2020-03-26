@@ -34,13 +34,13 @@ The key thing to note is that columns are referenced in the Expression as Col("C
 To create an Expression which references another column and a mathematical operator: 
 
 ```
-ColumnExpression: Col("Notional") * 2
+Col("Notional") * 2
  ```      
 
 To create an Expression which references 2 columns:
 
 ```
-ColumnExpression: Col("ItemCost") / Col("ItemCount")
+Col("ItemCost") / Col("ItemCount")
  ```      
 
 To create an Expression which references 3 columns:
@@ -52,13 +52,13 @@ ColumnExpression: Col("InvoicedCost") - ( Col("OrderCost") + Col("PackageCost"))
 To create an Expression which outputs a string:
 
 ```
-ColumnExpression: Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
+Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
  ```
 
 To create an Expression which returns the highest of 4 Columns in the row (great for things like MiFID):
 
 ```
-ColumnExpression: max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
+max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
  ```
  
 ## UI Elements
