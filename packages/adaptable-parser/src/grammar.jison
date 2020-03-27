@@ -1,6 +1,7 @@
 /* lexical grammar */
 
 %lex
+%options ranges
 
 %{
 
@@ -8,8 +9,7 @@ yy.node = function(type, args, location) {
   return {
     type,
     args,
-    start: [location.first_line, location.first_column],
-    end: [location.last_line, location.last_column]
+    range: location.range
   }
 }
 
