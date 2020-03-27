@@ -4,7 +4,7 @@ const t = (name: string, input: string | string[], output: AST) => {
   test(name, () => {
     const inputs = Array.isArray(input) ? input : [input];
     inputs.forEach(i => {
-      expect(parser.parse(i)).toEqual(output);
+      expect(parser.parse(i)).toMatchObject(output);
     });
   });
 };
@@ -76,6 +76,14 @@ describe('smart', () => {
     {
       type: 'IN',
       args: [{ type: 'COL', args: ['A'] }, ['X', 'Y', 'Z']],
+    },
+  ]);
+  t('location tracking', '1 + COL("A")', [
+    {
+      type: 'ADD',
+      args: [1, { type: 'COL', args: ['A'], start: [1, 4], end: [1, 12] }],
+      start: [1, 0],
+      end: [1, 12],
     },
   ]);
 });
