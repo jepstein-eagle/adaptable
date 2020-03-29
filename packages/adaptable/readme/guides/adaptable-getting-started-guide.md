@@ -7,26 +7,40 @@ This guide is designed to help new users get up and running quickly with the key
 One of the key functionalities offered by AdapTable is User State Management. This takes 2 forms:
 
 - **Predefined Config**: State created by Developers at Design Time and shipped with Adaptable for first-time use.
-Typically you will ship your AdapTable instance with Predefined Configuration so that your users open their application at first use and see it pre-loaded with Searches, Styles, Edit Rules, Reports etc that match their needs.
 
-Additionally Predefined Configuration will include 'Entitlements' - stipulating which AdapTable functions they are allowed to access.
+    Typically developers will ship an AdapTable instance with Predefined Configuration so that when their users open the application, they will see it pre-loaded with Searches, Styles, Edit Rules, Reports etc that match their needs.
 
-- **Saving State**:  managing changes made to state at Run Time and storing it for future use
+    Additionally Predefined Configuration can include 'Entitlements' - stipulating which AdapTable functions users are allowed to access.
 
-AdapTable automatically saves User State as it changes - meaning that the next time the Application is reloaded, the user sees the same state as on the previous visit.
+- **Saving State**:  Managing changes made to user state at Run Time and storing it for future use
 
-By default User State gets saved to Local Storage which is how most of the demos on this site work.
+    AdapTable automatically saves User State as it changes - meaning that the next time the Application is reloaded, the user sees the same state as on the previous visit.
 
-However we provide State Options Functions which allow developers to store User State in any location of their choosing.
-You can provide AdapTable at start-up with Predefined Configuration which ensures that when AdapTable first loads it contains all the bespoke objects that your users will need. This includes Entitlements.
+    Adaptable State can either be saved to Local Storage or to a remote location - via the State Options Functions which allow developers to store User State in any location of their choosing.
+
+See the [AdapTable State Guide](./adaptable-state-guide.md) and [Predefined Config Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) for more information.
 
 ## Adaptable Options
 
-You use AdaptableOptions to set up AdapTable at design time so that it fits your requirements. There are 2 mandatory properties (primaryKey and vendorGrid) and a host of optional ones (including Predefined Config - see below). Where a property is not provided, AdapTable provides a default. The developer documentation lists all the available properties and their default values.
+AdaptableOptions is a large group of property options designed to help developers set up AdapTable at design time so that it fits their requirements. 
 
-## Adaptable API
+There are 2 mandatory properties (primaryKey and vendorGrid) and a host of optional ones (including Predefined Config - see below). 
 
-AdapTable's api provides full safe, run-time access to all the functionality and state inside AdapTable. This allows you to create, save and delete AdapTable objects in your our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
+Most properties are grouped in a series of conceptual sets (e.g. Layout Options, Search Options, Edit Options etc.)
+
+Where a property is not provided, AdapTable provides a default. 
+
+See the [AdaptableOptions Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) for more information.
+
+## Adaptable Api
+
+AdapTable's rich, powerful api provides full safe, run-time access to all the functionality and state inside AdapTable. 
+
+This allows users to create, save and delete AdapTable objects in their our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
+
+Everything that can be done in AdapTable through the UI can also be done through code via the Adaptable Api.
+
+See the [AdaptableApi Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more information.
 
 ### How It Fits Together
 
