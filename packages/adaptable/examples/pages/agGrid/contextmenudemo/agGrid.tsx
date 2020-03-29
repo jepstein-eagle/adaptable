@@ -49,7 +49,7 @@ function InitAdaptableDemo() {
             Column: menuInfo.Column.ColumnId,
             SortOrder: 'Ascending',
           };
-          adaptableApi.gridApi.sortAdaptable([customSort]);
+          menuInfo.AdaptableApi.gridApi.sortAdaptable([customSort]);
         },
       },
       {

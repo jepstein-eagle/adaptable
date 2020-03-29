@@ -80,6 +80,7 @@ import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { HideColumnStrategy } from '../Strategy/HideColumnStrategy';
 import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
+import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -491,6 +492,7 @@ export class agGridHelper {
     let selectionChangedInfo: SelectionChangedInfo = {
       selectedCellInfo: this.adaptable.api.gridApi.getGridState().SelectedCellInfo,
       selectedRowInfo: this.adaptable.api.gridApi.getGridState().SelectedRowInfo,
+      adaptableApi: this.adaptable.api,
     };
     const selectionChangedArgs: SelectionChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Selection Changed Args',
@@ -525,6 +527,7 @@ export class agGridHelper {
         isSingleSelectedColumn = ArrayExtensions.CorrectLength(selectedCellInfo.Columns, 1);
       }
     }
+    let selectedRowInfo: SelectedRowInfo = this.adaptable.api.gridApi.getSelectedRowInfo();
 
     return {
       IsSelectedCell: isSelectedCell,
@@ -534,6 +537,11 @@ export class agGridHelper {
       IsGroupedNode: params.node ? params.node.group : false,
       IsSingleSelectedColumn: isSingleSelectedColumn,
       PrimaryKeyValue: primaryKeyValue,
+      AdaptableApi: this.adaptable.api,
+
+      SelectedCellInfo: selectedCellInfo,
+
+      SelectedRowInfo: selectedRowInfo,
     };
   }
 

@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 
 export interface ToolbarButtonClickedEventArgs extends AdaptableEventArgs {
@@ -9,6 +9,6 @@ export interface ToolbarButtonClickedEventData extends AdaptableEventData {
   id: ToolbarButtonClickedInfo;
 }
 
-export interface ToolbarButtonClickedInfo {
+export interface ToolbarButtonClickedInfo extends AdaptableEventInfo {
   toolbarButton: ToolbarButton;
 }

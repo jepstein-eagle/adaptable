@@ -6,18 +6,10 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
-import {
-  AdaptableOptions,
-  PredefinedConfig,
-  AdaptableApi,
-  SearchChangedEventArgs,
-  MenuInfo,
-} from '../../../../src/types';
+import { AdaptableOptions, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
-import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
 
 var api: AdaptableApi;
 

@@ -2,6 +2,9 @@ import * as Redux from 'redux';
 import { GridCell } from '../Selection/GridCell';
 import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableFunctionName } from './Types';
+import { AdaptableApi } from '../../Api/AdaptableApi';
+import { SelectedCellInfo } from '../Selection/SelectedCellInfo';
+import { SelectedRowInfo } from '../Selection/SelectedRowInfo';
 
 /*
 Note for devs:  Adaptable provides 3 menus:
@@ -96,4 +99,19 @@ export interface MenuInfo {
    * The value of the primary key column in the current row
    */
   PrimaryKeyValue: any;
+
+  /**
+   * The main Adaptable Api object - included here as a convenience to make any api calls
+   */
+  AdaptableApi: AdaptableApi;
+
+  /**
+   * The currently selected cells in the grid
+   */
+  SelectedCellInfo: SelectedCellInfo;
+
+  /**
+   * The currently selected rows in the grid
+   */
+  SelectedRowInfo: SelectedRowInfo;
 }

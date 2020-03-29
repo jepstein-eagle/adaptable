@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { Report } from '../../PredefinedConfig/ExportState';
 
 /**
@@ -49,7 +49,7 @@ export interface LiveDataChangedEventData extends AdaptableEventData {
  * - The `LiveReport` property provides details of the Report that has just been stopped / started / updated.
  *
  */
-export interface LiveDataChangedInfo {
+export interface LiveDataChangedInfo extends AdaptableEventInfo {
   /**
    * Which of Adaptable partners is being used as the export destination to which to send live data.
    */

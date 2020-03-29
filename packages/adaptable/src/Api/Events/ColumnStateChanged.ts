@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 
 /**
  * Event Args used as part of the **on('ColumnStateChanged')** event.
@@ -13,6 +13,6 @@ export interface ColumnStateChangedEventData extends AdaptableEventData {
   id: ColumnStateChangedInfo;
 }
 
-export interface ColumnStateChangedInfo {
+export interface ColumnStateChangedInfo extends AdaptableEventInfo {
   currentLayout: string;
 }

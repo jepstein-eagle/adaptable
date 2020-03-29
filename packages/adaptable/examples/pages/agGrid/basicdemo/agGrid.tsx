@@ -94,6 +94,7 @@ function InitAdaptableDemo() {
     setTimeout(() => {
       api.dashboardApi.unCollapseDashboard();
     }, 8000); */
+    info.adaptableApi.flashingCellApi.showFlashingCellPopup();
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {

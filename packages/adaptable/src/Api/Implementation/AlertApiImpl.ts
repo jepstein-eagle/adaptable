@@ -35,6 +35,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
 
     let alertFiredInfo: AlertFiredInfo = {
       alert: alertToShow,
+      adaptableApi: this.adaptable.api,
     };
     const alertFiredArgs: AlertFiredEventArgs = AdaptableHelper.createFDC3Message(
       'Alert Fired Args',

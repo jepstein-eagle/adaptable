@@ -49,6 +49,7 @@ class CustomToolbarControlComponent extends React.Component<
             this.props.CustomToolbar.ToolbarButtons.map((button: ToolbarButton, index: number) => {
               let toolbarButtonClickedInfo: ToolbarButtonClickedInfo = {
                 toolbarButton: button,
+                adaptableApi: this.props.Adaptable.api,
               };
               const toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
                 'Toolbar Button Clicked Args',

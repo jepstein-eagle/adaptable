@@ -108,6 +108,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       tab: tab,
       toolbar: toolbar,
       visibility: 'Visible',
+      adaptableApi: this.adaptable.api,
     };
     const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Toolbar Visibility Changed Args',

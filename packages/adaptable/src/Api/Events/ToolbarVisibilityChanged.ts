@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 
 /**
@@ -14,7 +14,7 @@ export interface ToolbarVisibilityChangedEventData extends AdaptableEventData {
   id: ToolbarVisibilityChangedInfo;
 }
 
-export interface ToolbarVisibilityChangedInfo {
+export interface ToolbarVisibilityChangedInfo extends AdaptableEventInfo {
   /***
    * The Dashboard Tab which 'hosts' the Toolbar that has become visible
    */

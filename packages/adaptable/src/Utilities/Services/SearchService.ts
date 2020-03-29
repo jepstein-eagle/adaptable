@@ -10,14 +10,8 @@ import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Comm
 import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
-import {
-  AdaptableSearchState,
-  AdaptableSortState,
-  SearchChangedInfo,
-} from '../../Api/Events/SearchChanged';
+import { SearchChangedInfo } from '../../Api/Events/SearchChanged';
 import { SearchChangedEventArgs } from '../../types';
-import { DataSource } from '../../PredefinedConfig/DataSourceState';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 export class SearchService implements ISearchService {
   private adaptable: IAdaptable;
@@ -95,9 +89,10 @@ export class SearchService implements ISearchService {
 
       const searchChangedInfo: SearchChangedInfo = {
         searchChangedTrigger,
-        AdaptableSearchState: adaptableSearchState,
-        AdaptableSortState: adaptableSortState,
+        adaptableSearchState: adaptableSearchState,
+        adaptableSortState: adaptableSortState,
         searchAsAtDate: new Date(),
+        adaptableApi: this.adaptable.api,
       };
 
       const searchChangedArgs: SearchChangedEventArgs = AdaptableHelper.createFDC3Message(

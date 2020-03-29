@@ -80,6 +80,7 @@ export class LayoutService implements ILayoutService {
 
       let columnStateChangedInfo: ColumnStateChangedInfo = {
         currentLayout: currentLayoutName,
+        adaptableApi: this.adaptable.api,
       };
       const columnStateChangedEventArgs: ColumnStateChangedEventArgs = AdaptableHelper.createFDC3Message(
         'Column State Changed Args',

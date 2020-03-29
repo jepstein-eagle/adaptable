@@ -2619,6 +2619,9 @@ export class Adaptable implements IAdaptable {
         IsGroupedNode: false,
         RowNode: undefined,
         PrimaryKeyValue: undefined,
+        SelectedCellInfo: this.api.gridApi.getSelectedCellInfo(),
+        SelectedRowInfo: this.api.gridApi.getSelectedRowInfo(),
+        AdaptableApi: this.api,
       };
 
       let showAdaptableColumnMenu = this.adaptableOptions.userInterfaceOptions!

@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 
@@ -15,6 +15,6 @@ export interface AlertFiredEventData extends AdaptableEventData {
   id: AlertFiredInfo;
 }
 
-export interface AlertFiredInfo {
+export interface AlertFiredInfo extends AdaptableEventInfo {
   alert: AdaptableAlert;
 }

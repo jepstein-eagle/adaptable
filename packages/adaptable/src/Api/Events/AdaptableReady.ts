@@ -1,4 +1,5 @@
 import { AdaptableApi } from '../AdaptableApi';
+import { AdaptableEventInfo } from './AdaptableEvents';
 
 /**
  * Object returned by the `on('AdaptableReady')` [event](_src_api_eventapi_.eventapi.html).
@@ -11,7 +12,6 @@ import { AdaptableApi } from '../AdaptableApi';
  *
  * note: vendorGrid is returned here particularly for 'core' (i.e. vanilla) AdapTable users as the vendorGrid object they set in options is updated by the AdapTable constructor.
  */
-export interface AdaptableReadyInfo {
-  adaptableApi: AdaptableApi;
+export interface AdaptableReadyInfo extends AdaptableEventInfo {
   vendorGrid: any;
 }

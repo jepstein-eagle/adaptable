@@ -64,6 +64,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
           actionColumn: actionCol as ActionColumn,
           primaryKeyValue: adaptable.getPrimaryKeyValueFromRowNode(params.node),
           rowData: params.data,
+          adaptableApi: adaptable.api,
         };
         const actionColumnClickedEventArgs: ActionColumnClickedEventArgs = AdaptableHelper.createFDC3Message(
           'Action Column Clicked Args',

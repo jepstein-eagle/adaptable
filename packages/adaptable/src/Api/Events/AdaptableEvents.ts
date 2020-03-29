@@ -1,3 +1,5 @@
+import { AdaptableApi } from '../AdaptableApi';
+
 /**
  * The main object used when publishing events.
  *
@@ -17,4 +19,8 @@ export interface AdaptableEventData {
   name: string;
   type: string;
   id: any;
+}
+
+export interface AdaptableEventInfo {
+  adaptableApi: AdaptableApi;
 }

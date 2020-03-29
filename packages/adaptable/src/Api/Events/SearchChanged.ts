@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
@@ -29,7 +29,7 @@ export interface SearchEventData extends AdaptableEventData {
  *
  * Provides full details of the Search (and Sort) state in Adaptable together with details of what triggered the event.
  */
-export interface SearchChangedInfo {
+export interface SearchChangedInfo extends AdaptableEventInfo {
   /**
    * Which Function in Adaptable caused the Search state to change
    *
@@ -53,13 +53,13 @@ export interface SearchChangedInfo {
    *
    * (You can set in System Filter state which and how many of these System Filters are available in Adaptable).
    */
-  AdaptableSearchState: AdaptableSearchState;
+  adaptableSearchState: AdaptableSearchState;
   /**
    * The current sort state in the Grid
    *
    * Adaptable lists **all custom sorts** in this object even if they are not currently being applied.
    */
-  AdaptableSortState: AdaptableSortState;
+  adaptableSortState: AdaptableSortState;
   /**
    * Date the search should use - defaults to now
    *

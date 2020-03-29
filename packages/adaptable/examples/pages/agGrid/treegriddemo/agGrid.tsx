@@ -36,7 +36,7 @@ function InitAdaptableDemo() {
   const api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    tickingDataHelper.useTickingDataTreeGrid(info.vendorGrid, api, 10);
+    tickingDataHelper.useTickingDataTreeGrid(info.vendorGrid, info.adaptableApi, 10);
   });
 }
 

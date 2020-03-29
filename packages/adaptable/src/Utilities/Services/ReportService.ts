@@ -355,6 +355,7 @@ export class ReportService implements IReportService {
       ReportDestination: reportDestination,
       LiveDataTrigger: liveDataTrigger,
       LiveReport: liveReport,
+      adaptableApi: this.adaptable.api,
     };
     const liveDataChangedEventArgs: LiveDataChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Live Data Changed Args',

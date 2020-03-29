@@ -37,6 +37,38 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: [
+      {
+        type: 'NamedFilterPredicate',
+        name: 'usdTrades',
+        handler(_record, _columnId, cellValue) {
+          return cellValue === 'USD';
+        },
+      },
+      {
+        type: 'NamedFilterPredicate',
+        name: 'high',
+        handler(_record, _columnId, cellValue) {
+          let currency: string = _record.data.currency;
+          if (currency === 'USD') {
+            return cellValue > 1000;
+          } else if (currency === 'EUR') {
+            return cellValue > 30;
+          } else {
+            return cellValue > 10;
+          }
+        },
+      },
+      {
+        type: 'NamedFilterPredicate',
+        name: 'bizYear',
+        handler(_record, _columnId, cellValue) {
+          let dateToTest = cellValue as Date;
+          let startBusinesssYear = new Date('2019-04-05');
+          return dateToTest > startBusinesssYear;
+        },
+      },
+    ],
   };
 
   api = Adaptable.init(adaptableOptions);
@@ -46,6 +78,7 @@ function InitAdaptableDemo() {
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     console.log('search changed');
     console.log(searchChangedArgs.data[0].id);
+    console.log(searchChangedArgs.data[0].id.adaptableApi);
   });
 }
 
@@ -59,42 +92,27 @@ let demoConfig: PredefinedConfig = {
       {
         Name: '$ Trades',
         Scope: {
-          DataType: 'Number',
           ColumnIds: ['currency'],
         },
-        FilterPredicate: (_record, _columnId, cellValue) => {
-          return cellValue === 'USD';
-        },
+        FilterPredicate: 'usdTrades',
       },
       {
         Name: 'High',
         Scope: {
           DataType: 'Number',
         },
-        FilterPredicate: (_record, _columnId, cellValue) => {
-          let currency: string = _record.data.currency;
-          if (currency === 'USD') {
-            return cellValue > 1000;
-          } else if (currency === 'EUR') {
-            return cellValue > 30;
-          } else {
-            return cellValue > 10;
-          }
-        },
+        FilterPredicate: 'high',
       },
       {
         Name: 'Biz Year',
         Scope: {
           DataType: 'Date',
         },
-        FilterPredicate: (_record, _columnId, cellValue) => {
-          let dateToTest = cellValue as Date;
-          let startBusinesssYear = new Date('2019-04-05');
-          return dateToTest > startBusinesssYear;
-        },
+        FilterPredicate: 'bizYear',
       },
     ],
   },
+
   UserFilter: {
     UserFilters: [
       {

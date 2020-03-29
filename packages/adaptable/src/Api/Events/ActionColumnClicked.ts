@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 /**
@@ -14,7 +14,7 @@ export interface ActionColumnClickedEventData extends AdaptableEventData {
   id: ActionColumnClickedInfo;
 }
 
-export interface ActionColumnClickedInfo {
+export interface ActionColumnClickedInfo extends AdaptableEventInfo {
   actionColumn: ActionColumn;
   primaryKeyValue: any;
   rowData: any;

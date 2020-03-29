@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 
@@ -17,7 +17,7 @@ export interface SelectionChangedEventData extends AdaptableEventData {
   id: SelectionChangedInfo;
 }
 
-export interface SelectionChangedInfo {
+export interface SelectionChangedInfo extends AdaptableEventInfo {
   selectedCellInfo: SelectedCellInfo;
   selectedRowInfo: SelectedRowInfo;
 }

@@ -30,6 +30,7 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
 
     let themeChangedInfo: ThemeChangedInfo = {
       themeName: themeState.CurrentTheme,
+      adaptableApi: this.adaptable.api,
     };
     const themeChangedEventArgs: ThemeChangedEventArgs = AdaptableHelper.createFDC3Message(
       'Theme Changed Args',

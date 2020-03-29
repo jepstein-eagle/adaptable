@@ -1,4 +1,4 @@
-import { AdaptableEventArgs, AdaptableEventData } from './AdaptableEvents';
+import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 
 /**
  * Event Args used as part of the **on('ThemeChanged')** event.
@@ -13,6 +13,6 @@ export interface ThemeChangedEventData extends AdaptableEventData {
   id: ThemeChangedInfo;
 }
 
-export interface ThemeChangedInfo {
+export interface ThemeChangedInfo extends AdaptableEventInfo {
   themeName: string;
 }

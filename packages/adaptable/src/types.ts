@@ -52,6 +52,7 @@ export { EventApi } from './Api/EventApi';
 export {
   SearchChangedInfo,
   AdaptableSearchState,
+  AdaptableSortState,
   SearchChangedEventArgs,
 } from './Api/Events/SearchChanged';
 export { AlertFiredEventArgs, AlertFiredInfo } from './Api/Events/AlertFired';
