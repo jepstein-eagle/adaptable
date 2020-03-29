@@ -18,15 +18,11 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  * **Further AdapTable Help Resources**
  *
- * [Custom Sort Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078431-Custom-Sort-Videos)
+ * [Custom Sort Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/custom-sort-function.md)
  *
  * [Custom Sort Demo](https://demo.adaptabletools.com/gridmanagement/aggridcustomsortdemo/)
  *
  * [Custom Sort API](_src_api_customsortapi_.customsortapi.html)
- *
- * [Custom Sort FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002170297-Custom-Sort-FAQ)
- *
- * [Custom Sort Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
  *
  * **Custom Sort Example**
  *
