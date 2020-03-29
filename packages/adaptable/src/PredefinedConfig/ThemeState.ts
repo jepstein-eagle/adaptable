@@ -57,7 +57,6 @@ export interface ThemeState extends ConfigState {
    *
    * * the **css class name for the Vendor Grid** that should be applied when the theme runs
    *
-   * To learn how to create a Custom Theme please refer to the [Online Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360025111951-Themes).
    */
   UserThemes?: AdaptableTheme[];
 }

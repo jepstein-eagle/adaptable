@@ -12,15 +12,11 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  *
  * **Further AdapTable Help Resources**
  *
- * [Conditional Style Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360030602892-Conditional-Style-Videos)
- *
  * [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo/)
  *
  * [Conditional Style API](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
  *
- * [Conditional Style FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029742932-Conditional-Styles-FAQ)
- *
- * [Conditional Style Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755177-Styling-Functions)
+ * [Conditional Style Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/conditional-style-function.md)
  *
  * **Conditional Style Predefined Config Example**
  *

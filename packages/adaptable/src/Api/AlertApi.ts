@@ -7,7 +7,7 @@ import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
  *
  * **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo/) | [State](_src_predefinedconfig_alertstate_.alertstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895931-Alert-Functions-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360029895731-Alerts-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360002755197-Grid-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo/) | [State](_src_predefinedconfig_alertstate_.alertstate.html) | [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
  *
  */
 export interface AlertApi {

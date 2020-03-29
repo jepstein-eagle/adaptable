@@ -9,7 +9,7 @@ import { ConfigState } from './ConfigState';
  *
  *  **Further AdapTable Help Resources**
  *
- * [API](_src_api_applicationapi_.applicationapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-Blotter-State-FAQ)
+ * [API](_src_api_applicationapi_.applicationapi.html) | [AdapTable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
  *
  * **Application Data Entries**
  *

@@ -4,7 +4,7 @@ import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/Appl
  *
  *  **Further AdapTable Help Resources**
  *
- * [State](_src_predefinedconfig_applicationstate_.applicationstate.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360008819192-Adaptable-State-FAQ)
+ * [State](_src_predefinedconfig_applicationstate_.applicationstate.html) | [AdapTable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
  *
  */
 export interface ApplicationApi {

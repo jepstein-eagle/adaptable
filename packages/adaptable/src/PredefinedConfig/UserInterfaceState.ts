@@ -35,7 +35,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - [User Interface API](_src_api_userinterfaceapi_.userinterfaceapi.html)
  *
- * - [User Interface FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360009004751-Look-and-Feel-FAQ)
+ * - [Getting Started Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-getting-started-guide.md)
  **/
 export interface UserInterfaceState extends ConfigState {
   /**

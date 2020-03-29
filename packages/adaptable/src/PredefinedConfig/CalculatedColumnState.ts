@@ -14,15 +14,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * **Further AdapTable Help Resources**
  *
- * [Calculated Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
- *
  * [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo/)
  *
  * [Calculated Column API](_src_api_calculatedcolumnapi_.calculatedcolumnpi.html)
  *
- * [Calculated Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360030078351-Calculated-Column-FAQ)
- *
- * [Calculated Column Help](https://adaptabletools.zendesk.com/hc/en-us/articles/360005113212-Calculated-Columns)
+ * [Calculated Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
  *
  **/
 export interface CalculatedColumnState extends ConfigState {
