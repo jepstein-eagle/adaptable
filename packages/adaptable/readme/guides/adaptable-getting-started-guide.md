@@ -18,7 +18,11 @@ One of the key functionalities offered by AdapTable is User State Management. Th
 
     Adaptable State can either be saved to Local Storage or to a remote location - via the State Options Functions which allow developers to store User State in any location of their choosing.
 
-See the [AdapTable State Guide](./adaptable-state-guide.md) and [Predefined Config Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) for more information.
+### More Information
+
+- [AdapTable State Guide](./adaptable-state-guide.md) 
+- [Predefined Config Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) 
+- [AdapTable State Demos](https://demo.adaptabletools.com/adaptablestate) 
 
 ## Adaptable Options
 
@@ -30,7 +34,10 @@ Most properties are grouped in a series of conceptual sets (e.g. Layout Options,
 
 Where a property is not provided, AdapTable provides a default. 
 
-See the [AdaptableOptions Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) for more information.
+### More Information
+
+- [AdaptableOptions Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) 
+- [AdapTable Options Demos](https://demo.adaptabletools.com/adaptableoptions) 
 
 ## Adaptable Api
 
@@ -40,7 +47,10 @@ This allows users to create, save and delete AdapTable objects in their our scre
 
 Everything that can be done in AdapTable through the UI can also be done through code via the Adaptable Api.
 
-See the [AdaptableApi Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more information.
+### More Information
+
+- [AdaptableApi Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html)
+- [AdapTable Api Demo](https://demo.adaptabletools.com/admin/aggridblotterapidemo) 
 
 ### How It Fits Together
 
@@ -74,17 +84,11 @@ It is fully configurable both at Design-Time (through Predefined Config) and at 
 
 The Dashboard contains 2 main elements:
 
-1. **Tabs**: These contain Toolbars - small controls containing buttons and dropdown relevant to a single Function, often avoiding the need to access the Function popup directly.
-
-Each toolbar contains a Config button which gives access the main popup for that Function. 
-
-The Dashboard can also include Custom Toolbars
+1. **Tabs**: These contain Toolbars - small controls containing buttons and dropdown relevant to a single Function, often avoiding the need to access the Function popup directly.  The Dashboard can also include Custom Toolbars
 
 2. **Shortcut Buttons**: a group of Buttons that provide ready access to frequently used functions.
 
 The Dashboard can be viewed in collapsed / expanded / floating state as required.
-
-See the [Dashboard Function Read Me](../functions/dashboard-function.md) for more information.
 
 
 ### Tool Panel
@@ -95,55 +99,58 @@ This is the area to the right of the Grid.
 
 The AdapTable Tool Panel has many of the same features as the Dashboard (except for Custom Toolbars) and is ideal for when screen estate is at a premium.
 
-Menus
+### Menus
 
-AdapTable provides both a Column Header Menu and a Context Menu that provides menu entries appropriate to the current column or cell.
+AdapTable provides 2 menus each of which provides menu entries appropriate to the current column or cell:
 
-Note
-The options in the menu will vary depending on the data type of column and the current state of that column. For example, only numeric columns have a Flashing Cell menu item, and if the column is already set to display flashing cells, the Turn Flashing Cell On option is replaced by Turn Flashing Cell Off.
+- **Column Header Menu**: accessed by clicking on the image in the right corner of a column header
 
-Tip
-Access the Column Header menu by clicking on the image in the right corner of a column header.
+    > The options in the menu vary depending on the data type of column and the current state of that column. For example, only numeric columns have a Flashing Cell menu item, and if the column is already set to display flashing cells, the Turn Flashing Cell On option is replaced by Turn Flashing Cell Off.
 
-As ag-Grid contains its own column header menu, the AdapTable menu items are inserted into that menu.  For other grids, the column menu appears in its own tab.
+    Note: If you are using a trackpad you might not be able to access the ag-Grid context menu (which AdapTable uses when ag-Grid is the vendor grid); if that is the case then set allowContextMenuWithControlKey to true in gridOptions.
 
-Warning
-If you are using a trackpad you might not be able to access the ag-Grid context menu (which AdapTable uses when ag-Grid is the vendor grid); if that is the case then set allowContextMenuWithControlKey to true in gridOptions.
+- **Context Menu**: accessed by right-clicking in any cell inside the Grid.
 
-You can add your own items to the Column and Context Menus through User Interface Predefined Config.
+    The context menu options will vary according to what other cells are selected.
 
-Additionally, you can choose not to display some (or all) of the shipped Column and Context Menu items through the showAdaptableColumnMenu and showAdaptableContextMenu properties / functions.
+Developers can add their own items to the Column and Context Menus through [User Interface Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
 
-Wizards
+Additionally, they can choose not to display some (or all) of the shipped Column and Context Menu items through the `showAdaptableColumnMenu` and `showAdaptableContextMenu` properties / functions. 
 
-Many of the forms to create Adaptable Objects have wizards. These make it easy to create and edit items step by step by clicking the Forward, Back or Finish buttons as appropriate.
 
-Tip
-Wizards also contain a legend that tells you where you are positioned in the Wizard at one time.
+### Wizards
 
-If you are editing an existing object the links in the legend are activated to make it easy to jump forward to a later wizard stage.
+Many of the forms to create Adaptable Objects have wizards. 
 
-Note
-Many, but not all, wizards include a step to build a query. This step is quite complex and itself can involve numerous iterations (if required). For more see Queries.
+These make it easy to create and edit Adaptable Objects step by step by clicking the Forward, Back or Finish buttons as appropriate.
 
-Selection Tool
+> Wizards also contain a legend that tells you where you are positioned in the Wizard at one time; if editing an existing object, the links in the legend are activated to make it easy to jump forward to a later wizard stage.
 
-Many functions (e.g. Column Chooser or Custom Sort) in AdapTable use the Selection Tool. This allows you easily to manage both order and visibility.
+Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Expression Guide](./adaptable-expression-guide)).
+
+### Selection Tool
+
+Many functions (e.g. Column Chooser or Custom Sort) in AdapTable use the Selection Tool. 
+
+This allows users easily to manage both order and visibility of items in a collection.
 
 All Selection Tools have the source list in the left hand side listbox and the result list (showing ordered, visible values) in the right hand side listbox.
 
-Tip
-You can use the buttons to move items between lists and within the result list, or you can use Drag and Drop.
+> Users can  use the buttons to move items between lists and within the result list, or they can use Drag and Drop.
 
-Calendars
+### Help
 
-AdapTable has some date-related functionality that is based on a Calendar. For example, you can filter a date column so that it only shows the Last Working Day, and AdapTable uses the current calendar to figure out when the last working day was.
+Many of the screens in AdapTable have context-sensitive help, where appropriate, displaying an information icon. 
 
-There are different Calendars available to use - each pre-set with the appropriate national holidays - or you can upload your own.
+When the cursor hovers over the icon, the help information appears in a pop-up dialog.
 
-Help
 
-Many of the screens in AdapTable have context-sensitive help, where appropriate, displaying an information icon. If you hover the cursor over the icon, the help information appears in a pop-up dialog.
+### More Information
+
+- [Dashboard Function Read Me](../functions/dashboard-function.md)
+- [Dashboard Demos](https://demo.adaptabletools.com/dashboard)
+- [User Interface State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
+- [User Interface Demos](https://demo.adaptabletools.com/userinterface)
 
 
 ## Demo
@@ -165,4 +172,3 @@ General information about Adaptable Tools is available at our [Website](http://w
 ## Support
 
 For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
-

@@ -72,8 +72,7 @@ Yes, set the modalContainer property in AdaptableOptions to Grid.
 
 **Why can I not see the Context Menu in AdapTable (using ag-Grid)?**
 
-if you are using a trackpad then make sure that the allowContextMenuWithControlKey is set to true.
-
+If you are using a trackpad then make sure that the `allowContextMenuWithControlKey` is set to true.
 
 ## Help
 
