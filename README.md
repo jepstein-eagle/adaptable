@@ -177,6 +177,7 @@ These include:
  - [Adaptable Core](./packages/adaptable/README.md)
  - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md) 
+ - [AdapTable Getting Started Guide](./packages/adaptable/readme/guides/adaptable-getting-started-guide.md)
  - [AdapTable Theming and Styling Guide](./packages/adaptable/readme/guides/adaptable-theming-guide.md)
  - [AdapTable State Guide](./packages/adaptable/readme/guides/adaptable-state-guide.md)
  - [AdapTable Filtering Guide](./packages/adaptable/readme/guides/adaptable-filtering-guide.md)

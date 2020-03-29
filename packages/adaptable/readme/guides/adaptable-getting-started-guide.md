@@ -4,33 +4,76 @@ This guide is designed to help new users get up and running quickly with the key
 
 ## Adaptable State / Predefined Config
 
-to do
+One of the key functionalities offered by AdapTable is User State Management. This takes 2 forms:
+
+- **Predefined Config**: State created by Developers at Design Time and shipped with Adaptable for first-time use.
+Typically you will ship your AdapTable instance with Predefined Configuration so that your users open their application at first use and see it pre-loaded with Searches, Styles, Edit Rules, Reports etc that match their needs.
+
+Additionally Predefined Configuration will include 'Entitlements' - stipulating which AdapTable functions they are allowed to access.
+
+- **Saving State**:  managing changes made to state at Run Time and storing it for future use
+
+AdapTable automatically saves User State as it changes - meaning that the next time the Application is reloaded, the user sees the same state as on the previous visit.
+
+By default User State gets saved to Local Storage which is how most of the demos on this site work.
+
+However we provide State Options Functions which allow developers to store User State in any location of their choosing.
+You can provide AdapTable at start-up with Predefined Configuration which ensures that when AdapTable first loads it contains all the bespoke objects that your users will need. This includes Entitlements.
 
 ## Adaptable Options
 
-to do
+You use AdaptableOptions to set up AdapTable at design time so that it fits your requirements. There are 2 mandatory properties (primaryKey and vendorGrid) and a host of optional ones (including Predefined Config - see below). Where a property is not provided, AdapTable provides a default. The developer documentation lists all the available properties and their default values.
 
 ## Adaptable API
 
-to do
+AdapTable's api provides full safe, run-time access to all the functionality and state inside AdapTable. This allows you to create, save and delete AdapTable objects in your our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
+
+### How It Fits Together
+
+These 3 objects are linked as follows:
+
+**Predefined Configuration** is a property of **AdaptableOptions** .  This is the only object which the AdapTable static constructor requires to initialise everything and it then returns the **AdaptableApi**
+
+```ts
+
+// Create an AdaptableOptions object to pass in to the constructor
+ const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId', // a unique column
+    vendorGrid: gridOptions, // the underlying vendor DataGrid
+    predefinedConfig: applicationJSON, // the predefined config we created
+  };
+
+// The AdapTable constructor returns an API object that we can use
+ const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+ ```
+
 
 ## UI Elements
 
 There are a number of key UI elements in AdapTable:
 
-Dashboard
+### Dashboard
 
-The Dashboard is the area at the top of AdapTable interface designed to give you quick access to commonly used Functions. It contains 2 main elements:
+The Dashboard is the area at the top of AdapTable interface designed to give you quick access to commonly used Functions.
 
-A group of Function Toolbars - these are small controls containing buttons and dropdown relevant to a single Function, often avoiding the need to access the Function popup directly.  Each toolbar contains a Config button which gives access the main popup for that Function. You are also able to include your own Custom Toolbars See Custom Toolbars for more information.
+It is fully configurable both at Design-Time (through Predefined Config) and at run-time through config screens.
 
-A group of Shortcut Buttons - these provide ready access to frequently used functions.
+The Dashboard contains 2 main elements:
 
-You are able to minimise, maximise, move and hide the Dashboard as required.
+1. **Tabs**: These contain Toolbars - small controls containing buttons and dropdown relevant to a single Function, often avoiding the need to access the Function popup directly.
 
-See the Dashboard section of Predefined Config for more information.
+Each toolbar contains a Config button which gives access the main popup for that Function. 
 
-Tool Panel
+The Dashboard can also include Custom Toolbars
+
+2. **Shortcut Buttons**: a group of Buttons that provide ready access to frequently used functions.
+
+The Dashboard can be viewed in collapsed / expanded / floating state as required.
+
+See the [Dashboard Function Read Me](../functions/dashboard-function.md) for more information.
+
+
+### Tool Panel
 
 An alternative to using the Dashboard for ag-Grid users is the AdapTable Tool Panel.
 
@@ -88,142 +131,7 @@ Help
 
 Many of the screens in AdapTable have context-sensitive help, where appropriate, displaying an information icon. If you hover the cursor over the icon, the help information appears in a pop-up dialog.
 
-Appendix
 
-Column Header Menu Options
-
-Option
-
-Columns
-
-Description
-
-Create Cell Validation Rule
-
-All
-
-Opens Cell Validation wizard
-
-Create Conditional Style
-
-All
-
-Opens Conditional Style wizard
-
-Create User Filter
-
-All
-
-Opens User Filter wizard
-
-Create [or Edit] Custom Sort
-
-All
-
-Opens Custom Sort wizard
-
-Create Plus/Minus Nudge Rule
-
-Number
-
-Opens Plus/Minus wizard
-
-Create [or Edit] Percent Bar
-
-Number
-
-Opens Percent Bar wizard
-
-Select Column
-
-All
-
-Selects all the values in the Column.
-
-Hide Column
-
-All
-
-Hides the column from the grid.
-
-Turn Flashing Cells On / Off
-
-Number
-
-Turns Flashing Cell On or Off for that Column.
-
-Edit Calculated Column
-
-Calculated Column
-
-Opens Calculated Column wizard
-
-Edit FreeText Column
-
-FreeText Column
-
-Opens Free Text Column wizard
-
-Show Column Information
-
-All
-
-Opens Column Information popup
-
-Create [or Edit] Format Column
-
-All
-
-Opens Format Column wizard
-
-Hide [or Show] Dashboard
-
-All
-
-Hides / Shows the Dashboard above the grid.
-
-Clear Column Filter
-
-All
-
-Clears the Filter on a column (if one exists)
-
-Hide [or Show] Quick Filter
-
-All (if filterable)
-
-Hides / Shows Quick Filter bar.
-
-Clear Updated Rows
-
-All
-
-Clears rows that have been styled via Updated Rows function.
-
-Context Menu Options
-
-Option
-
-When Shown
-
-Clear Alerts
-
-If the cell is currently highlighted as the result of an Alert
-
-Show Column Chooser
-
-Always
-
-Clear Updated Row
-
-If the cell is in a row which has been highlighted a different colour after update (via the Updated Rows function).
-
-## How It Fits Together
-
-to do
-
-
- 
 ## Demo
 
 To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).

@@ -34,6 +34,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 ## Adaptable Functions
 
+- [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
 - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 - [Advanced Search](./functions/adavanced-search-function.md)
 - [Alert](./functions/alert-function.md)

@@ -125,7 +125,6 @@ const adaptableOptions: AdaptableOptions = {
    ],
  ```
 
-
 ## Server Searching & Filtering
 By default all filtering and searching in AdapTable takes place on the client.
 
