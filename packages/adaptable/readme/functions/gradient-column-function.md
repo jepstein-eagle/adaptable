@@ -22,7 +22,9 @@ Gradient Column includes the following UI Elements:
 
 - **Wizard** - A series of steps facilitating the creation and editing of Gradient Columne.
 
-- **Column Menu** - Numeric columns have a `Create Gradient Column` Menu Item which starts the Gradient Column wizard (for columns already displaying as a Gradient Column it says 'Edit Gradient Column')
+- **Column Menu** - Numeric columns have a `Create Gradient Column` Menu Item which starts the Gradient Column wizard; for columns already displaying as a Gradient Column it says `Edit Gradient Column`.
+
+- **Context Menu** - Existing Gradient Columns have a `Edit Gradient Column` Menu Item which opens the Gradient Column wizard.
 
 ## Entitlements
 Gradient Column supports these Entitlement Rules:
