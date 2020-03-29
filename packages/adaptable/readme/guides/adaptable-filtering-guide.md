@@ -129,7 +129,7 @@ The System Filters shipped by AdapTable are:
 | Tomorrow                | Date                 | 
 | Next Working Day        | Date                 | 
 | Previous Working Day    | Date                 | 
-| Today                   | Date                 | 
+| This Year               | Date                 | 
 
 
 
