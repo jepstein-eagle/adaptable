@@ -9,11 +9,7 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  * - [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
  *
- * - [Action Column FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ)
- *
- * - [Action Column Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos)
- *
- * - [Adaptable User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
  */
 export interface ActionColumnApi {

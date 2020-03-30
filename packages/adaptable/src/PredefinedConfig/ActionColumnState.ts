@@ -15,7 +15,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [FAQ](https://adaptabletools.zendesk.com/hc/en-us/articles/360002209498-Action-Column-FAQ) | [Videos](https://adaptabletools.zendesk.com/hc/en-us/articles/360002204277-Action-Column-Videos) | [User Guide](https://adaptabletools.zendesk.com/hc/en-us/articles/360003213038-Special-Column-Functions)
+ * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
  *  --------------
  *
