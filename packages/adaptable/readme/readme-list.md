@@ -4,7 +4,7 @@ We provide a number of ReadMe docs each of which address a different general are
 
 These are to be used in conjunction with the [AdapTable Developer Documentation](https://api.adaptabletools.com).
 
-> The main source of AdapTable Help used to be our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
+> The main source of AdapTable Help used to be our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
 ## Version-Related
  - [Adaptable Core](../README.md)
@@ -15,7 +15,9 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
  
 ## Guides
+ - [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
  - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
+ - [Entitlements Guide](./guides/adaptable-entitlements-guide.md)
  - [Adaptable State Guide](./guides/adaptable-state-guide.md)
  - [Filtering Guide](./guides/adaptable-filtering-guide.md)
  - [Adaptable Expression Guide](./guides/adaptable-expression-guide.md)
@@ -34,7 +36,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 ## Adaptable Functions
 
-- [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
+
 - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 - [Advanced Search](./functions/adavanced-search-function.md)
 - [Alert](./functions/alert-function.md)
@@ -89,4 +91,4 @@ Here you can see a large number of AdapTable demos each showing a different feat
 
 ## Support
 
-For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
+For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a Support Ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).

@@ -8,7 +8,7 @@ One of the key functionalities offered by AdapTable is User State Management. Th
 
 - **Predefined Config**: State created by Developers at Design Time and shipped with Adaptable for first-time use.
 
-    Typically developers will ship an AdapTable instance with Predefined Configuration so that when their users open the application, they will see it pre-loaded with Searches, Styles, Edit Rules, Reports etc that match their needs.
+    Typically developers will create a new AdapTable instance filled with [Predefined Configuration](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig).  This means that when new users open the application, they will see AdapTable pre-loaded with multiple Searches, Styles, Edit Rules, Reports etc that match their needs.
 
     Additionally Predefined Configuration can include 'Entitlements' - stipulating which AdapTable functions users are allowed to access.
 
@@ -163,7 +163,7 @@ Developers can learn how to access AdapTable programmatically at [AdapTable Deve
 
 The other source for Help is our collection of 'Read Me' Docs ([full list here](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/readme-list.md)).
 
-> Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
+> Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
 
 ## More Information
 
@@ -171,4 +171,4 @@ General information about Adaptable Tools is available at our [Website](http://w
 
 ## Support
 
-For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
+For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a Support Ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
