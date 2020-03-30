@@ -6,33 +6,38 @@ This is done through the `Entitlements` section of Predefined Config (in [Adapta
 
 ## How Entitlements Work
 
-Entitlements operate at the `AdaptableFunction Level`.  
+Entitlements operate at the **AdaptableFunction Level**.  
 
 Each Entitlement has 3 potential `AccessLevel` values:
 
--*Full** - the AdaptableFunction is fully visible and editable
+-**Full** - the AdaptableFunction is fully visible and editable
 
--*Hidden** - the function is completely hidden from the user - it does not appear in any menus, toolbars, tool panels etc.
+-**Hidden** - the function is completely hidden from the user - it does not appear in any menus, toolbars, tool panels etc.
 
--*ReadOnly** - the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created.
+-**ReadOnly** - the function is visible and preconfigured items can be used but they cannot be edited, nor new ones created.
 
->ReadOnly* is designed for when you want to let users use the reports or layouts you have pre-configured but not to be allowed to create their own.  As a result it is typically used for AdaptableFunctions which can pre-load objects like 'AdavancedSearch', 'Export', 'ConditionalStyle' etc.)
+>ReadOnly is designed for when developers want to let users access the reports or layouts they have pre-configured but not to be allowed to create their own.  As a result it is typically used for AdaptableFunctions which can pre-load objects like 'AdavancedSearch', 'Export', 'ConditionalStyle' etc.
 
-Note:  By default every AdaptableFunction has the Entitlement of **Full**.  However this behaviour can be changed through setting the `DefaultAccessLevel` property.  e.g. it can be set to 'Hidden' and then only AdaptableFunctions explicity permissioned in Entitlements will be available.
+## Default Access Level
+By default every AdaptableFunction has the Entitlement of **Full**.  
+
+However this behaviour can be changed through setting the `DefaultAccessLevel` property.  
+
+For instance, it can be set to 'Hidden' and then only AdaptableFunctions explicity permissioned in Entitlements will be available.
 
 
 ## Setting Entitlements
 
-There are 2 ways to provide Entitlements:
+There are 2 ways to provide Entitlements in Predefined Config:
 
-1. a 'hard-coded' list provided via the `FunctionEntitlements` property
+1. **a 'hard-coded' list** provided in the `FunctionEntitlements` property
 
-2. via a function which you reference in Predefined Config and provide the implementation in userOptions section of Adaptable Options.
+2. **a function** the name of the function is referenced in Predefined Config and the implementation is provided in the [UserFunctions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of AdaptableOptions).
 
-  > This funtion will be called each time an Entitlement is checked, provided via the `EntitlementLookUpFunction` property
+  > This function will be called each time an Entitlement is checked allowing developers to store entitlements on a remote permission server that can update in real time.
 
 
-### Example: Setting Entitlements via `FunctionEntitlements` property
+### Example: Setting Entitlements via FunctionEntitlements property
 
  ```ts
  export default {
@@ -60,13 +65,13 @@ There are 2 ways to provide Entitlements:
  ```
  In this example we have set:
 
- - 2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
+ - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
 
- - 2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
+ - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
 
  --------------
 
-### Example: Setting Entitlements via `EntitlementLookUpFunction` property
+### Example: Setting Entitlements via EntitlementLookUpFunction property
 
 ```ts
 // Predefined Config

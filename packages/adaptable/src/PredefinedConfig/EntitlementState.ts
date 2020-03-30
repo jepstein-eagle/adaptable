@@ -64,7 +64,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
  *
- * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associcated toolbars and tool panel elements.
+ * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated toolbars and tool panel elements.
  *
  * --------------
  *

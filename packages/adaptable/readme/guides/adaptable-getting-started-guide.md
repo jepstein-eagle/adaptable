@@ -10,7 +10,7 @@ One of the key functionalities offered by AdapTable is User State Management. Th
 
     Typically developers will create a new AdapTable instance filled with [Predefined Configuration](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig).  This means that when new users open the application, they will see AdapTable pre-loaded with multiple Searches, Styles, Edit Rules, Reports etc that match their needs.
 
-    Additionally Predefined Configuration can include 'Entitlements' - stipulating which AdapTable functions users are allowed to access.
+    Additionally Predefined Configuration can include 'Entitlements' - stipulating which AdapTable functions users are allowed to access (See [Entitlements Guide](./adaptable-entitlements-guide.md) for more information)
 
 - **Saving State**:  Managing changes made to user state at Run Time and storing it for future use
 
@@ -23,6 +23,7 @@ One of the key functionalities offered by AdapTable is User State Management. Th
 - [AdapTable State Guide](./adaptable-state-guide.md) 
 - [Predefined Config Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) 
 - [AdapTable State Demos](https://demo.adaptabletools.com/adaptablestate) 
+- [AdapTable Entitlements Guide](./adaptable-entitlements-guide.md)
 
 ## Adaptable Options
 
@@ -32,11 +33,11 @@ There are 2 mandatory properties (primaryKey and vendorGrid) and a host of optio
 
 Most properties are grouped in a series of conceptual sets (e.g. Layout Options, Search Options, Edit Options etc.)
 
-Where a property is not provided, AdapTable provides a default. 
+Where a property is not provided, AdapTable provides a sensible default, so developers only need to set Options where they wish to provide a different value.
 
 ### More Information
 
-- [AdaptableOptions Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) 
+- [Adaptable Options Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) 
 - [AdapTable Options Demos](https://demo.adaptabletools.com/adaptableoptions) 
 
 ## Adaptable Api
@@ -49,14 +50,14 @@ Everything that can be done in AdapTable through the UI can also be done through
 
 ### More Information
 
-- [AdaptableApi Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html)
+- [Adaptable Api Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html)
 - [AdapTable Api Demo](https://demo.adaptabletools.com/admin/aggridblotterapidemo) 
 
 ### How It Fits Together
 
 These 3 objects are linked as follows:
 
-**Predefined Configuration** is a property of **AdaptableOptions** .  This is the only object which the AdapTable static constructor requires to initialise everything and it then returns the **AdaptableApi**
+**Predefined Configuration** is a property of **AdaptableOptions** .  This is the only object which the *AdapTable static constructor* requires in order to initialise everything and build the grid.  The constructor returns the **AdaptableApi** object so it is available for future reference.
 
 ```ts
 
@@ -78,7 +79,7 @@ There are a number of key UI elements in AdapTable:
 
 ### Dashboard
 
-The Dashboard is the area at the top of AdapTable interface designed to give you quick access to commonly used Functions.
+The Dashboard is the area above the Grid designed to give quick access to commonly used AdapTable Functions.
 
 It is fully configurable both at Design-Time (through Predefined Config) and at run-time through config screens.
 
@@ -95,23 +96,23 @@ The Dashboard can be viewed in collapsed / expanded / floating state as required
 
 An alternative to using the Dashboard for ag-Grid users is the AdapTable Tool Panel.
 
-This is the area to the right of the Grid.
+This is the collapsible area to the right of the Grid.
 
 The AdapTable Tool Panel has many of the same features as the Dashboard (except for Custom Toolbars) and is ideal for when screen estate is at a premium.
 
 ### Menus
 
-AdapTable provides 2 menus each of which provides menu entries appropriate to the current column or cell:
+AdapTable provides 2 menus each of which contains menu entries appropriate to the current column or cell:
 
 - **Column Header Menu**: accessed by clicking on the image in the right corner of a column header
 
     > The options in the menu vary depending on the data type of column and the current state of that column. For example, only numeric columns have a Flashing Cell menu item, and if the column is already set to display flashing cells, the Turn Flashing Cell On option is replaced by Turn Flashing Cell Off.
 
-    Note: If you are using a trackpad you might not be able to access the ag-Grid context menu (which AdapTable uses when ag-Grid is the vendor grid); if that is the case then set allowContextMenuWithControlKey to true in gridOptions.
-
 - **Context Menu**: accessed by right-clicking in any cell inside the Grid.
 
     The context menu options will vary according to what other cells are selected.
+
+    > If you are using a trackpad you might not be able to access the ag-Grid context menu (which AdapTable uses when ag-Grid is the vendor grid); if that is the case then set allowContextMenuWithControlKey to true in gridOptions.
 
 Developers can add their own items to the Column and Context Menus through [User Interface Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
 
@@ -126,7 +127,7 @@ These make it easy to create and edit Adaptable Objects step by step by clicking
 
 > Wizards also contain a legend that tells you where you are positioned in the Wizard at one time; if editing an existing object, the links in the legend are activated to make it easy to jump forward to a later wizard stage.
 
-Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Expression Guide](./adaptable-expression-guide)).
+Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Adaptable Expression Guide](./adaptable-expression-guide)).
 
 ### Selection Tool
 
