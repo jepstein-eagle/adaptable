@@ -36,6 +36,7 @@ There are 2 ways to provide Entitlements in Predefined Config:
 
   > This function will be called each time an Entitlement is checked allowing developers to store entitlements on a remote permission server that can update in real time.
 
+--------------
 
 ### Example: Setting Entitlements via FunctionEntitlements property
 
