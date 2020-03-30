@@ -8,14 +8,23 @@ This provides admins and support with complete oversight over everything that ev
 
 For instance they can set up an alert to be informed whenever a value changes in a particular column, or if the new value exceeds set limits; or you can run reports showing a particular user's activity, or how data has changed over any time period.
 
-> AdapTable has **no knowledge of the messages Audit Log sends, nor where they are sent**.  Information sent to Audit Log lives entirely within users' systems at a internal destination specified by them.
+## Audit Log Scope
 
-> Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
+It is important to note that AdapTable has **no knowledge of the messages Audit Log sends, nor where they are sent**.  
+
+All Information sent to Audit Log lives entirely within users' systems at a internal destination specified by them.
+
+Likewise, AdapTable has no ability to access Audit Log messages: they are only visible to, and accessible by, our users.​​
+
+## How Audit Log Works
 
 Audit Log is set up via the [Audit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_auditoptions_.auditoptions.html) section of Adaptable Options.
 
-## How It Works
-Each Audit Log message is essentially a combination of an `AuditMessage` and an `AuditTrigger` - packaged as a simple JSON object - and sent to a specified `AuditDestination` (or destinations).
+Each Audit Log message is essentially a combination of 3 things, packaged as a simple JSON object:
+
+- an `AuditMessage` - a description of the actual Audit Event
+- an `AuditTrigger` - what caused the Audit Event to happen
+- an `AuditDestination` - the location(s) to which an Audit Message can be dispatched
 
 There are 5 AuditTriggers and 4 AuditDestinations.
 
@@ -96,7 +105,7 @@ Yes, the Audit Options section of Adaptable Options allows you to specify which 
 
 In addition, most reporting software will allow you to filter the messages that you receive so that you only report and save the ones in which you are interested.
 
-**Where do you store the Audit Log messages? **
+**Where do you store the Audit Log messages?**
 
 We don't store them anywhere - AdapTable simply streams all Audit Log messages. Its your responsibility to listen to this stream and persist the messages where most appropriate.
 
@@ -108,12 +117,14 @@ That depends on the type of message. All messages have some common properties bu
 
 **Can we turn off Audit Log if we don't need it?**
 
-Yes that is straightforward to do and indeed its turned off by default. If none of the 4 AuditOptions in Audit Options are set to true (auditCellEdits, auditFunctionEvents, auditUserStateChanges, auditInternalStateChanges) then Audit will not be enabled.
+Yes that is straightforward to do and indeed its turned off by default. 
+
+If none of the 4 AuditOptions in Audit Options are set to true then Audit will not be enabled.
 
 
 ## Demos
 
-Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/adaptablestate) to see a number of state-related demos
+Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/auditlog) to see a number of Audit Log demos
 
 ## Help
 
