@@ -34,6 +34,7 @@ yy.node = function(type, args, location) {
 "/"                   return '/'
 "-"                   return '-'
 "+"                   return '+'
+"%"                   return '%'
 "^"                   return '^'
 "("                   return '('
 ")"                   return ')'
@@ -56,7 +57,7 @@ yy.node = function(type, args, location) {
 %left '=' '!=' '<' '<=' '>' '>='
 %left '&' '|'
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 %left '^'
 %left '!'
 %left UMINUS
@@ -95,6 +96,7 @@ e
   | e '-' e                 { $$ = yy.node('SUB', [$1, $3], @$); }
   | e '*' e                 { $$ = yy.node('MUL', [$1, $3], @$); }
   | e '/' e                 { $$ = yy.node('DIV', [$1, $3], @$); }
+  | e '%' e                 { $$ = yy.node('MOD', [$1, $3], @$); }
   | e '^' e                 { $$ = yy.node('POW', [$1, $3], @$); }
   /* logic */
   | e '|' e                 { $$ = yy.node('OR', [$1, $3], @$); }

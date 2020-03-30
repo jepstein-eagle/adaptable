@@ -28,6 +28,7 @@ describe('math', () => {
   t('MUL', '1 * 2', [{ type: 'MUL', args: [1, 2] }]);
   t('DIV', '1 / 2', [{ type: 'DIV', args: [1, 2] }]);
   t('POW', '1 ^ 2', [{ type: 'POW', args: [1, 2] }]);
+  t('MOD', '1 % 2', [{ type: 'MOD', args: [1, 2] }]);
 });
 
 describe('logic', () => {
