@@ -232,7 +232,7 @@ AdapTable will manage the persistence of all Adaptable (ie. User) State.  This t
 
 - **State Management** - Ensuring that all changes made by the user at run-time are saved and persisted to an appropriate location so they are available the next time the system runs.
 
-For more information please read the [Adaptable State Guide](../../packages/adaptable/guides/readme/adaptable-state-guide.md)
+For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/guides/adaptable-state-guide.md)
 
 ## Demo
 
