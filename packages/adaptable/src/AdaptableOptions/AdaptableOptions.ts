@@ -26,29 +26,31 @@ import { UserFunctions } from './UserFunctions';
  *
  * Any property that is not supplied by the user when populating the object, will use the default value (which is listed here for each property).
  *
- * The contents of `AdaptableOptions` are:
+ * All properties are optional with the exception of `primaryKey` and `vendorGrid`
  *
- *  | Option  	                                                                                          | Mandatory   | Details                                     	                |
- *  |----------------	                                                                                    |-----------  |---------------------------------------------	                |
- *  | [adaptableId](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableid)                | No	        | A unique ID for this instance of AdapTable	                  |
- *  | [predefinedConfig](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)      | No	        | User State shipped with AdapTable instance for first use      |
- *  | [primaryKey](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                  | Yes	        | Name of a column guaranteed to contain unique contents        |
- *  | [userName](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                      | No	        | The current AdapTable user (useful for Audit purposes)      	|
- *  | [vendorGrid](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Yes	        | Underlying vendor grid object (e.g. *GridOptions* for ag-Grid)|
- *  | [auditOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)              | No	        | Audit Log related options                                   	|
- *  | [chartOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartoptions)               | No	        | Chart-based options (used when using chart plugin)           	|
- *  | [configServerOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions)| No	        | Options related to Config Server (external state management)  |
- *  | [editOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                | No	        | Editing (and server-editing) related options                  |
- *  | [exportOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)            | No	        | Export and reporting related options                          |
- *  | [filterOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)            | No	        | Options relating to filtering functionality in AdapTable      |
- *  | [generalOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)          | No	        | General set of Options (e.g. for managing Primary Keys        |
- *  | [layoutOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)            | No	        | Layout (Views) related Options                                |
- *  | [queryOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
- *  | [searchOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching)   |
- *  | [stateOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage AdapTable State    |
- *  | [userFunctions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userfunctions)            | No	        | Implementations of User Functions which are referenced in Config |
- *  | [userInterfaceOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions (e.g. menus, toolbars)       |
- *  | [plugins](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the AdapTable plugins (e.g. charting, finance)|
+ * The current contents of `AdaptableOptions` are:
+ *
+ *  | Option  	                                                                                          | Details                                     	                |
+ *  |----------------	                                                                                    |---------------------------------------------	                |
+ *  | [adaptableId](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#adaptableid)                 | A unique ID for this instance of AdapTable	                  |
+ *  | [predefinedConfig](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig)       | User State shipped with AdapTable instance for first use      |
+ *  | [primaryKey](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey)                 | Name of a column guaranteed to contain unique contents        |
+ *  | [userName](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#username)                       | The current AdapTable user (useful for Audit purposes)      	|
+ *  | [vendorGrid](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Underlying vendor grid object (e.g. *GridOptions* for ag-Grid)|
+ *  | [auditOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)               | Audit Log related options                                   	|
+ *  | [chartOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartoptions)                | Chart-based options (used when using chart plugin)           	|
+ *  | [configServerOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions) | Options related to Config Server (external state management)  |
+ *  | [editOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                 | Editing (and server-editing) related options                  |
+ *  | [exportOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)             | Export and reporting related options                          |
+ *  | [filterOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)             | Options relating to filtering functionality in AdapTable      |
+ *  | [generalOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#generaloptions)           | General set of Options (e.g. for managing Primary Keys        |
+ *  | [layoutOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#layoutoptions)             | Layout (Views) related Options                                |
+ *  | [queryOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)               | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
+ *  | [searchOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)             | Search-related options (e.g. for managing Server searching)   |
+ *  | [stateOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)               | Series of functions to allow you to manage AdapTable State    |
+ *  | [userFunctions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userfunctions)             | Implementations of User Functions which are referenced in Config |
+ *  | [userInterfaceOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| User Interface related functions (e.g. menus, toolbars)       |
+ *  | [plugins](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                         | Options used by the AdapTable plugins (e.g. charting, finance)|
  *
  */
 export interface AdaptableOptions {
