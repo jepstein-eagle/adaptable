@@ -4,11 +4,9 @@ The Reminder([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src
 
 A Reminder is an Alert that runs according to a Schedule. So, unlike Alerts, it is not trigged by a data (or other) changes, but according to a date schedule set by you.
 
-Tip
-The Schedule can be either a one-off date, or it can be a Recurring event (e.g. every Monday at 8am, or every day at 17:00).
+> The Schedule can be either a one-off date, or it can be a Recurring event (e.g. every Monday at 8am, or every day at 17:00).
 
-Note
-AdapTable publishes an event each time an alert is fired and this will include if it was triggered by a Reminder.
+AdapTable fires an event each time an alert is triggered and this will include if it was triggered by a Reminder.
 
 ## UI Elements
 To Do
@@ -22,5 +20,8 @@ To Do
 
 ### Further Information
 
-To Do
+- [Reminder State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_reminderstate_.reminderstate.html)
 
+- [Reminder Api](https://api.adaptabletools.com/interfaces/_src_api_reminderapi_.reminderapi.html)
+
+- [Reminder Demo](https://demo.adaptabletools.com/alertsmessages/aggridreminderdemo)
