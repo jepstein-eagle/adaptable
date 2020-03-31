@@ -216,23 +216,23 @@ Find out more - and see the full list of AdapTable events at [Event API Document
 
 ## New Features
 
-We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptabletools.com/interfaces/_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
+We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
 
 The result is to give you more complete control over how your instance of AdapTable looks and works. 
 
 There are far too many new features to list here but some of the headlines are:
 
-* [Options to manage state hydration/dehydration](https://api.adaptabletools.com/interfaces/_adaptableoptions_stateoptions_.stateoptions.html)
-* [Application Data Entries to store custom state](https://api.adaptabletools.com/interfaces/_predefinedconfig_applicationstate_.applicationstate.html)
-* [Adaptable Tool Panel](https://api.adaptabletools.com/interfaces/_predefinedconfig_toolpanelstate_.toolpanelstate.html)
-* [Server Validation](https://api.adaptabletools.com/interfaces/_adaptableoptions_editoptions_.editoptions.html)  
-* [Updated Rows](https://api.adaptabletools.com/interfaces/_predefinedconfig_updatedrowstate_.updatedrowstate.html)
-* [Saveable Pivot and Grouped Layouts](https://api.adaptabletools.com/interfaces/_predefinedconfig_layoutstate_.pivotdetails.html)   
-* [Custom Dashboard Toolbars](https://api.adaptabletools.com/interfaces/_predefinedconfig_dashboardstate_.customtoolbar.html)
-* [Column Menu bespoke items](https://api.adaptabletools.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
-* [Context Menu bespoke items](https://api.adaptabletools.com/interfaces/_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
-* [Quick Search exclude columns](https://api.adaptabletools.com/interfaces/_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
-* [ipushpull improvements](https://api.adaptabletools.com/interfaces/_predefinedconfig_ipushpullstate_.ipushpullstate.html)
+* [Options to manage state hydration/dehydration](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html)
+* [Application Data Entries to store custom state](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_applicationstate_.applicationdataentry.html)
+* [Adaptable Tool Panel](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_toolpanelstate_.toolpanelstate.html)
+* [Server Validation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html)  
+* [Updated Rows](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_updatedrowstate_.updatedrowstate.html)
+* [Saveable Pivot and Grouped Layouts](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.pivotdetails.html)   
+* [Custom Dashboard Toolbars](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.dashboardstate.html#customtoolbars)
+* [Column Menu bespoke items](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
+* [Context Menu bespoke items](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
+* [Quick Search exclude columns](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
+* [ipushpull improvements](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_ipushpullstate_.ipushpullstate.html)
 
 
 ## Basic Installation Example
