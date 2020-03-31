@@ -5,7 +5,7 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-blue.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import Adaptable from '../../../../src/agGrid';
 import '../../../../src/index.scss';
-//import '../../../../src/themes/light.scss';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import '../../../../src/themes/dark.scss';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
@@ -20,17 +20,30 @@ function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(10);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'theme demo'
-  );
-  adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Theme Demo',
+    userInterfaceOptions: {
+      showAdaptableToolPanel: true,
+    },
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+  };
   const adaptableApi = Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout', 'CellSummary'],
+    Tabs: [
+      {
+        Name: 'Demo',
+        Toolbars: ['Theme', 'Export', 'Layout', 'CellSummary'],
+      },
+    ],
   },
   Theme: {
     CurrentTheme: 'dark',
