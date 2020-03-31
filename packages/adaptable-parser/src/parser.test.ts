@@ -57,6 +57,7 @@ describe('literal', () => {
 
 describe('function', () => {
   t('FUNCTION', 'COL(1, "A")', [{ type: 'COL', args: [1, 'A'] }]);
+  t('FUNCTION', 'col(1, "A")', [{ type: 'COL', args: [1, 'A'] }]);
 });
 
 describe('smart', () => {

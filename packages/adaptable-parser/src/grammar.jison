@@ -45,7 +45,7 @@ yy.node = function(type, args, location) {
 ":"                   return ':'
 "TRUE"                return 'TRUE'
 "FALSE"               return 'FALSE'
-[A-Z_]+               return 'FUNCTION'
+[a-zA-Z_]+            return 'FUNCTION'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -111,7 +111,7 @@ e
   | e '>' e                 { $$ = yy.node('GT', [$1, $3], @$); }
   | e '>=' e                { $$ = yy.node('GTE', [$1, $3], @$); }
   /* other */
-  | FUNCTION '(' args ')'   { $$ = yy.node($FUNCTION, $args, @$); }
+  | FUNCTION '(' args ')'   { $$ = yy.node($FUNCTION.toUpperCase(), $args, @$); }
   | '-' e %prec UMINUS      { $$ = -$2; }
   | '(' e ')'               { $$ = $2; }
   ;
