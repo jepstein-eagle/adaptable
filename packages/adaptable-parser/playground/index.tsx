@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 // @ts-ignore
-import { parse } from '../src/parser';
+import { parser } from '../src/parser';
 import { evalNode } from '../src/evaluator';
+import { tokenize } from '../src/tokenizer';
 import {
   ThemeProvider,
   ColorModeProvider,
@@ -39,10 +40,11 @@ function App() {
       2
     )
   );
-  let ast, result, error;
+  let tokens, ast, result, error;
 
   try {
-    ast = parse(expr);
+    tokens = tokenize(parser, expr);
+    ast = parser.parse(expr);
     result = evalNode(ast, { row: JSON.parse(columns) });
   } catch (e) {
     error = e;
@@ -54,7 +56,7 @@ function App() {
         Adaptable Parser
       </Text>
       <Stack direction="row" spacing={6}>
-        <Panel flex={1} title="Expression">
+        <Panel flex={2} title="Expression">
           <Textarea
             flex={1}
             value={expr}
@@ -82,20 +84,21 @@ function App() {
         </Alert>
       )}
       <Stack direction="row" spacing={6}>
-        {result && (
-          <Panel flex={1} title="Evaluator Output">
-            <Code display="block" px={4} py={2} fontSize="sm">
-              <pre>{JSON.stringify(result, null, 2)}</pre>
-            </Code>
-          </Panel>
-        )}
-        {ast && (
-          <Panel flex={1} title="Parser Output">
-            <Code display="block" px={4} py={2} fontSize="sm">
-              <pre>{JSON.stringify(ast, null, 2)}</pre>
-            </Code>
-          </Panel>
-        )}
+        <Panel flex={1} title="Evaluator Output">
+          <Code display="block" px={4} py={2} fontSize="sm">
+            <pre>{result && JSON.stringify(result, null, 2)}</pre>
+          </Code>
+        </Panel>
+        <Panel flex={1} title="Parser Output">
+          <Code display="block" px={4} py={2} fontSize="sm">
+            <pre>{ast && JSON.stringify(ast, null, 2)}</pre>
+          </Code>
+        </Panel>
+        <Panel flex={1} title="Tokenizer Output">
+          <Code display="block" px={4} py={2} fontSize="sm">
+            <pre>{tokens && JSON.stringify(tokens, null, 2)}</pre>
+          </Code>
+        </Panel>
       </Stack>
     </Stack>
   );
