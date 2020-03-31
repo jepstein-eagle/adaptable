@@ -154,7 +154,7 @@ import "@adaptabletools/adaptable/index.css" // always needed
 import "@adaptabletools/adaptable/themes/dark.css"
 ```
 
-To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/adaptable-theming-guide.md)
+To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/guides/adaptable-theming-guide.md)
 
 ## HTML Rendering
 
@@ -184,11 +184,11 @@ AdapTable will manage the persistence of all Adaptable (ie. User) State.  This t
 
 - **State Management** - Ensuring that all changes made by the user at run-time are saved and persisted to an appropriate location so they are available the next time the system runs.
 
-For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/adaptable-state-guide.md)
+For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/guides/adaptable-state-guide.md)
 
 ## Instantiation
 
-You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) object.
+You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) object.
 
 The constructor will return an [Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
 
