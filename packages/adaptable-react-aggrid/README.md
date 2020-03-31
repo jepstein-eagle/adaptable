@@ -154,7 +154,7 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 - **adaptableOptions**: 
 
   The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
-See [Developer Documentation](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) for more details.
+See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) for more details.
 
   > Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
 
