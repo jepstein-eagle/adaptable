@@ -6,7 +6,7 @@ Repository for the **AdapTable React ag-Grid Wrapper** which allows you to insta
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guide.md)
 
 ## Installation
 
@@ -164,7 +164,7 @@ See [Developer Documentation](https://api.adaptabletools.com/interfaces/_adaptab
 - **onAdaptableReady: ({ adaptableApi: AdaptableApi, vendorGrid: GridOptions })** 
 
   An event that fires as soon as AdapTable is ready - the callback function is called with an object with `{adaptableApi, vendorGrid}` which provides access to 2 important objects:
-  1. The *AdaptableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) for more details.)
+  1. The *AdaptableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more details.)
 
   2. The underlying VendorGrid instance being used - in this case GridOptions. This is because AdapTable enriches the 'gridOptions' it receives with modules and other properties, so if you want access to the underlying grid then you should use this object.
 
@@ -193,7 +193,7 @@ import "@adaptabletools/adaptable-react-aggrid/index.css" // always needed
 import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 ```
 
-To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/adaptable-theming-guide.md)
+To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/guides/adaptable-theming-guide.md)
 
 ## Adaptable State
 
@@ -203,7 +203,7 @@ AdapTable will manage the persistence of all Adaptable (ie. User) State.  This t
 
 - **State Management** - Ensuring that all changes made by the user at run-time are saved and persisted to an appropriate location so they are available the next time the system runs.
 
-For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/adaptable-state-guide.md)
+For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/guides/adaptable-state-guide.md)
 
 ## Demo
 
