@@ -46,6 +46,7 @@ import { UserFunctions } from './UserFunctions';
  *  | [queryOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)              | No	        | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
  *  | [searchOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)            | No	        | Search-related options (e.g. for managing Server searching)   |
  *  | [stateOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)              | No	        | Series of functions to allow you to manage AdapTable State    |
+ *  | [userFunctions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userfunctions)            | No	        | Implementations of User Functions which are referenced in Config |
  *  | [userInterfaceOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| No	      | User Interface related functions (e.g. menus, toolbars)       |
  *  | [plugins](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                        | No	        | Options used by the AdapTable plugins (e.g. charting, finance)|
  *
@@ -264,15 +265,15 @@ export interface AdaptableOptions {
   plugins?: AdaptablePlugin[];
 
   /**
-   * The actual implementations of functions that users reference in Predefined Config.
+   * The actual implementations of User Functions that users reference in Predefined Config.
    *
-   * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations (as they cannot be serialised).
+   * Predefined Config is stored as JSON - and often remotely - which means that it is not possible to store function implementations (as they are code and not strings, so cannot be serialised).
    *
    * Accordingly, the pattern we use in such cases is as follows:
    *
    * 1. The section in Predefined Config (e.g. CellSummary / OperationFunction) provides the **name** of the function
    *
-   * 2. This `userFunctions` section of [AdaptableOptions](../modules/_src_adaptableoptions_userfunctions_.html#userfunction) contains the **implementation code** itself.
+   * 2. The `userFunctions` section of [AdaptableOptions](../modules/_src_adaptableoptions_userfunctions_.html#userfunction) contains the **implementation code** itself.
    *
    */
   userFunctions?: UserFunctions;
