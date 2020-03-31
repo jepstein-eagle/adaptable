@@ -51,13 +51,16 @@ describe('literal', () => {
   t('TRUE', 'TRUE', [true]);
   t('FALSE', 'FALSE', [false]);
   t('NUMBER', '1', [1]);
-  t('STRING', '"A"', ['A']);
+  t('STRING', ['"A"', "'A'"], ['A']);
   t('ARRAY', '[1, "A"]', [[1, 'A']]);
 });
 
 describe('function', () => {
-  t('FUNCTION', 'COL(1, "A")', [{ type: 'COL', args: [1, 'A'] }]);
-  t('FUNCTION', 'col(1, "A")', [{ type: 'COL', args: [1, 'A'] }]);
+  t(
+    'FUNCTION',
+    ['COL(1, "A")', 'col(1, "A")'],
+    [{ type: 'COL', args: [1, 'A'] }]
+  );
 });
 
 describe('smart', () => {

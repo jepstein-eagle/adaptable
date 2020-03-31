@@ -20,7 +20,7 @@ yy.node = function(type, args, location) {
 (\r?\n)+\s*           return 'NEWLINE';
 [^\S\r?\n]+            /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"[^"]+\"             return 'STRING'
+\"[^"]+\"|\'[^']+\'   return 'STRING'
 "&"|"AND"             return '&'
 "!="                  return '!='
 ">="                  return '>='
