@@ -108,7 +108,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     adaptableToolPanelTitle: GeneralConstants.ADAPTABLE,
   },
   exportOptions: {
-    exportColumnRawValue: null,
+    exportColumnRawValue: undefined,
   },
   stateOptions: {
     applyState: state => state,

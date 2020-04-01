@@ -27,8 +27,8 @@ import Dropdown from '../../components/Dropdown';
 
 interface SmartEditToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<SmartEditToolPanelComponent> {
-  SmartEditValue: number | string;
-  MathOperation: MathOperation;
+  SmartEditValue: number | undefined;
+  MathOperation: MathOperation | undefined;
   IsValidSelection: boolean;
   PreviewInfo: IPreviewInfo;
 

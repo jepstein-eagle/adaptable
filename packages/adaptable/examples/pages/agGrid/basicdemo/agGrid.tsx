@@ -38,9 +38,13 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        Revision: 29 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1 + 1,
-        VisibleToolbars: ['QuickSearch', 'AdvancedSearch', 'Layout'],
-        VisibleButtons: ['CellSummary'],
+        Tabs: [
+          {
+            Name: 'General',
+            Toolbars: ['SmartEdit', 'CellSummary'],
+          },
+        ],
+        VisibleButtons: ['CellSummary', 'ColumnChooser'],
         ShowFunctionsDropdown: true,
         //  HomeToolbarTitle: 'Hello world',
         ShowQuickSearchInHeader: true,
@@ -94,7 +98,7 @@ function InitAdaptableDemo() {
     setTimeout(() => {
       api.dashboardApi.unCollapseDashboard();
     }, 8000); */
-    info.adaptableApi.flashingCellApi.showFlashingCellPopup();
+    //  info.adaptableApi.flashingCellApi.showFlashingCellPopup();
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {

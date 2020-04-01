@@ -12,7 +12,14 @@ These columns are particularly useful if you wish to create a 'Comments' column 
 
 
 ## UI Elements
-To Do
+FreeText Column includes the following UI Elements:
+
+- **Popup** - Shows a list of existing FreeText Columns with *Edit* and *Delete* buttons.  Plus an *Add* button to start the FreeText Column Wizard.  Each row in the popup is fully editable. 
+
+- **Wizard** - A series of steps facilitating the creation and editing of FreeText Columne.
+
+- **Column Menu** - Numeric columns have a `Create Format Column` Menu Item which starts the Format Column wizard; for columns already displaying as a Format Column it says `Edit Format Column`.
+
 
 ## Entitlements
 FreeText Column supports these Entitlement Rules:

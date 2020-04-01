@@ -19,7 +19,13 @@ Number Columns: The shortcut is a calculation (you can choose between Add, Subtr
 To Do
 
 ## Entitlements
-To Do
+Shortcut supports these Entitlement Rules:
+
+- **Full**: Everything is available to the User
+
+- **Hidden**: Everything is hidden from the User
+
+- **ReadOnly**: N/A
 
 ## FAQ
 
@@ -37,5 +43,11 @@ Numeric shortcuts perform a calculation based on existing values in the cell (e.
 
 ### Further Information
 
-To Do
+- [Shortcut State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)
+
+- [Shortcut Api](https://api.adaptabletools.com/interfaces/_src_api_freetextcolumnapi_.freetextcolumnapi.html)
+
+- [Shortcut Demo](https://demo.adaptabletools.com/column/aggridfreetextcolumndemo)
+
+
 

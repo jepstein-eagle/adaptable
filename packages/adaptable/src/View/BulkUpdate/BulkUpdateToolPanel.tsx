@@ -28,7 +28,7 @@ import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdate
 
 interface BulkUpdateToolPanelControlComponentProps
   extends ToolPanelStrategyViewPopupProps<BulkUpdateToolPanelControlComponent> {
-  BulkUpdateValue: string;
+  BulkUpdateValue: string | undefined;
   BulkUpdateValidationResult: BulkUpdateValidationResult;
   PreviewInfo: IPreviewInfo;
 
@@ -67,7 +67,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
   render() {
     let statusColour: StatusColour = this.getStatusColour();
 
-    let selectedColumn: AdaptableColumn = this.props.BulkUpdateValidationResult.Column;
+    let selectedColumn: AdaptableColumn | undefined = this.props.BulkUpdateValidationResult.Column;
 
     let previewPanel = (
       <PreviewResultsPanel
