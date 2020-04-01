@@ -25,6 +25,7 @@ However this behaviour can be changed through setting the `DefaultAccessLevel` p
 
 For instance, it can be set to 'Hidden' and then only AdaptableFunctions explicity permissioned in Entitlements will be available.
 
+> If you set the `DefaultAccessLevel` to 'Hidden' then make sure to enable the Dashboard if you want access to the Toolbars and the Home Dropdow.
 
 ## Setting Entitlements
 
