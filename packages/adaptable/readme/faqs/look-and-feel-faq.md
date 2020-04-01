@@ -12,7 +12,7 @@ Yes, if the underlying grid supports it. For instance, ag-Grid has Column Groups
 
 **Can we open Function popups via a keyboard shortcut?**
 
-Not at present, though we may add this in a future version. You can currently access Functions either from the Functions Dropdown, or from a Function Bookmark - both in the Dashboard. Some Functions additionally have a toolbar to provide easy access to the functionality and avoid needing to use the popup altogether.
+Not at present, though we may add this in a future version. You can currently access Functions either from the Home Dropdown, or from a Function Bookmark - both in the Dashboard. Some Functions additionally have a toolbar to provide easy access to the functionality and avoid needing to use the popup altogether.
 
 ### Grid Columns
 

@@ -48,7 +48,7 @@ export interface ToolPanelState extends ConfigState {
   VisibleButtons?: AdaptableFunctionButtons;
 
   /**
-   * Whether to show the Functions dropdown in the Adaptable ToolPanel.
+   * Whether to show the Home dropdown in the Adaptable ToolPanel.
    *
    * If 'true' then the dropdown will be visible as the first item (with a 'house' icon).
    *

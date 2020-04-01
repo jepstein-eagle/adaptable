@@ -12,7 +12,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * The Dashboard comprises 2 sections:
  *
- * - **Dashboard Header**: contains the Functions Dropdown, Function Buttons and Quick Search
+ * - **Dashboard Header**: contains the Home Dropdown, Function Buttons and Quick Search
  *
  * - **Dashboard Tabs**: named groups of Toolbars
  *
@@ -150,7 +150,7 @@ export interface DashboardState extends ConfigState {
   VisibleButtons?: AdaptableFunctionButtons;
 
   /**
-   * Whether to show the Functions dropdown in the Dashboard Header.
+   * Whether to show the Home dropdown in the Dashboard Header.
    *
    * If 'true' (the default) then the dropdown will be visible as the first item (with a 'house' icon).
    *

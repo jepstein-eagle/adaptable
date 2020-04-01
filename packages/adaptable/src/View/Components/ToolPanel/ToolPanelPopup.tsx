@@ -97,7 +97,7 @@ class ToolPanelPopupComponent extends React.Component<
           onChange={checked => this.onShowFunctionsDropdownChanged(checked)}
           checked={this.props.ToolPanelState.ShowFunctionsDropdown}
         >
-          Functions Dropdown
+          Home Dropdown
         </Checkbox>
         <Checkbox
           onChange={checked => this.onShowToolPanelsDropdownChanged(checked)}

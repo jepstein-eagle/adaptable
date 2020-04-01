@@ -30,7 +30,7 @@ There are 3 visibility modes for the Dashboard:
 ## Dashboard Contents
 The Dashboard contains the following elements:
 
-- **Functions Dropdown** - a dropdown on the left hand side of the Dashboard Header that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
+- **Home Dropdown** - a dropdown on the left hand side of the Dashboard Header that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
 
     > This dropdown can be hidden via the `ShowFunctionsDropdown` property of Dashboard State.
 
@@ -128,7 +128,7 @@ Dashboard supports these Entitlement Rules:
 
 No, you can choose to show as many as you want?
 
-**Can I hide the Functions dropdown?**
+**Can I hide the Home dropdown?**
 
 Yes, via the `ShowFunctionsDropdown` property of Dashboard State
 
