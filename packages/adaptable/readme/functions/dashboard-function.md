@@ -11,9 +11,13 @@ The Dashboard can be heavily customised so that it fits your needs both in terms
 ## Dashboard Visiblity Modes
 There are 3 visibility modes for the Dashboard:
 
-1. **Expanded** - This shows everything in the Dashboard - situated above the Grid - with one tab open.
-
-    > There is an alternative 'inline' Expanded view available.
+1. **Expanded** - This is the Dashboard default and displays all the Toolbars in the currently selected Tab.
+  
+  It has 2 options:
+  
+  - *Default*: Tab names are shown in a line across the Header which appears horizontally across the top
+  
+  - *Inline*: The header collapses to become the first Toolbar
 
 2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
@@ -21,7 +25,7 @@ There are 3 visibility modes for the Dashboard:
 
 3. **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
-    > To float / dock the Dashboard double-click on the Name in the Dashboard Header (or click the item in the Home Menu)
+    > To float / dock the Dashboard double-click the Name in the Dashboard Header (or select item in Home Menu)
 
 ## Dashboard Contents
 The Dashboard contains the following elements:
