@@ -13,11 +13,11 @@ There are 3 visibility modes for the Dashboard:
 
 1. **Expanded** - This is the Dashboard default and displays all the Toolbars in the currently selected Tab.
   
-  It has 2 options:
+    It has 2 options:
   
-  - *Default*: Tab names are shown in a line across the Header which appears horizontally across the top
+   - *Default*: Tab names are shown in a line across the Header which appears horizontally across the top
   
-  - *Inline*: The header collapses to become the first Toolbar
+   - *Inline*: The header collapses to become the first Toolbar
 
 2. **Collapsed** - This shows just the Dashboard Header - situated above the Grid.
 
@@ -36,7 +36,7 @@ The Dashboard contains the following elements:
 
 - **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
   
-    > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the `VisibleButtons`collection curently in State; if there is none, then it will use the default set.
+    > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the (now deprecated) `VisibleToolbars`collection curently in Dashboard State; if there is none, then it will use the default set.
     
 - **Function Buttons** - a group of 'shortcut' buttons which each open the popup associated with that Function.
   
@@ -46,7 +46,6 @@ The Dashboard contains the following elements:
   
   > This can be hidden via the `ShowQuickSearchInHeader` property of Dashboard State.
 
-- **Configure Dashboard Button** - button on the right hand side of the Dashboard Header which opens the Dashboard popup, facilitating the management of Tabs and Visible Buttons.
   
 
 ## Toolbars
@@ -69,8 +68,41 @@ Custom Toolbars contain 2 sections, either of which can be populated:
   
 See [Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
 
+
+### Dashboard Example
+
+```ts
+export default {
+Dashboard: {
+  IsInline: true,
+  VisibleButtons: ['GridInfo', 'SystemStatus', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+  CustomToolbars: [
+    {
+      Name: 'appToolbar',
+      Title: 'Trades',
+    },
+  ],
+  Tabs: [
+    {
+      Name: 'Search',
+      Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+    },
+    {
+      Name: 'Edit',
+      Toolbars: ['BulkUpdate','SmartEdit'],
+    },
+    {
+      Name: 'Grid',
+      Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
+    },
+  ],
+ }    
+} as PredefinedConfig;
+
+```
+
 ## UI Elements
-The Dasbhoard Function includes the following UI Elements:
+The Dashboard Function includes the following UI Elements:
 
 - **Dashboard** - Area above the Grid with Tabs, Function Buttons and Quick Search textbox.
 
@@ -82,7 +114,7 @@ The Dasbhoard Function includes the following UI Elements:
 
 
 ## Entitlements
-Dasbhoard supports these Entitlement Rules:
+Dashboard supports these Entitlement Rules:
 
 - **Full**: Everything in the Dashboard is visible to the User
 
@@ -117,3 +149,5 @@ This Tab can be later replaced either in the UI, or in Predefined Config by sett
 - [Dashboard Api](https://api.adaptabletools.com/interfaces/_src_api_dashboardapi_.dashboardapi.html)
 
 - [Dashboard Demos](https://demo.adaptabletools.com/dashboard)
+
+- [Dashboard Video](https://youtu.be/KrahnLFYHjs)
