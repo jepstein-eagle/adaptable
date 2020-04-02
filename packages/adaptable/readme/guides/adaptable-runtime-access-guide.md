@@ -48,13 +48,13 @@ There are a number of different [Alert properties](https://api.adaptableblotter.
 
 > To find out when an alert has been triggered, subscribe to AdapTable's [AlertFired event](https://api.adaptableblotter.com/interfaces/_src_api_eventapi_.eventapi.html).
 
-End Users can create their own Alert definitions at run-time using the [Alerts function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/alert_function.md), which will trigger alerts whenever the rule they create is met.
+End Users can create their own Alert definitions at run-time using the [Alerts function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert_function.md), which will trigger alerts whenever the rule they create is met.
 
 > Additionally, End Users can also create their own Reminders which are similar to Alerts but the message is hard-coded and they are sent not when something changes but according to a Schedule set by the User when creating the Reminder. (This schedule can be one-time only or a recurring date).
 
 
 ## System Status
-AdapTable provides they [System Status function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/system_status_function.md) function to help keep End Users updated with vital information about the system.
+AdapTable provides they [System Status function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/system_status_function.md) function to help keep End Users updated with vital information about the system.
 
 This includes a 'System Status Message' and colour-coded 'System Status Type' used to provide urgent information about the state and health of the application and sent via the [System Status Api](https://api.adaptableblotter.com/interfaces/_src_api_systemstatusapi_.systemstatusapi.html).  
 
