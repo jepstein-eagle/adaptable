@@ -115,7 +115,7 @@ There are 2 modes of storage available in AdapTable:
 
 - **Remote Storage** - Adaptable state is automatically persisted (and retrieved from) a specificed, remote, location
   
-  > In older versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.html); however we strongly recommend using the more powerful, and flexible, State Options (see below) as they provide everything in Config Server and a lot mor and will be actively developed going forward.
+  > In older versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.html); however we strongly recommend using the more powerful, and flexible, State Options (see below) as they include and advance all the functionality of Config Server, and will be actively developed going forward.
 
 ### State Options
 AdapTable provides 4 function hooks to enable users to provide their own implementations / functionality when state is being managed.
