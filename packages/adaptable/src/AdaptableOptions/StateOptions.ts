@@ -13,7 +13,7 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/adaptablestate/aggridstatefunctionsdemo) | [Adaptable State ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/adaptable-state-guide.md)
+ * [Demo Site](https://demo.adaptabletools.com/adaptablestate/aggridstatefunctionsdemo) | [Adaptable State ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
  *
  *  --------------
  *

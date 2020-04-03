@@ -1,6 +1,7 @@
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 // Strategy Ids used in Config so have made it a type of AdaptableFunctionName
+export const ActionColumnStrategyId: AdaptableFunctionName = 'ActionColumn';
 export const AdvancedSearchStrategyId: AdaptableFunctionName = 'AdvancedSearch';
 export const AlertStrategyId: AdaptableFunctionName = 'Alert';
 export const BulkUpdateStrategyId: AdaptableFunctionName = 'BulkUpdate';
@@ -47,6 +48,7 @@ export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
 
 // Strategy Names - only used internally
+export const ActionColumnStrategyFriendlyName: string = 'Action Column';
 export const AdvancedSearchStrategyFriendlyName: string = 'Advanced Search';
 export const AlertStrategyFriendlyName: string = 'Alert';
 export const BulkUpdateStrategyFriendlyName: string = 'Bulk Update';
@@ -93,6 +95,7 @@ export const ToolPanelStrategyFriendlyName: string = 'Tool Panel';
 export const UserFilterStrategyFriendlyName: string = 'User Filter';
 
 // Strategy Glyphs
+export const ActionColumnGlyph: string = 'advanced-search';
 export const AdvancedSearchGlyph: string = 'advanced-search';
 export const AlertGlyph: string = 'alert';
 export const BulkUpdateGlyph: string = 'bulk-update';
@@ -140,6 +143,8 @@ export const UserFilterGlyph: string = 'user-filter';
 
 export function getIdForStrategyFriendlyName(functionName: string): AdaptableFunctionName {
   switch (functionName) {
+    case ActionColumnStrategyFriendlyName:
+      return ActionColumnStrategyId;
     case AdvancedSearchStrategyFriendlyName:
       return AdvancedSearchStrategyId;
     case AlertStrategyFriendlyName:
@@ -231,6 +236,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
 
 export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName): string {
   switch (functionName) {
+    case ActionColumnStrategyId:
+      return ActionColumnStrategyFriendlyName;
     case AdvancedSearchStrategyId:
       return AdvancedSearchStrategyFriendlyName;
     case AlertStrategyId:
@@ -324,6 +331,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
 
 export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): string {
   switch (functionName) {
+    case ActionColumnStrategyId:
+      return ActionColumnGlyph;
     case AdvancedSearchStrategyId:
       return AdvancedSearchGlyph;
     case AlertStrategyId:
