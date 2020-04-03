@@ -20,8 +20,6 @@
  *
  * - provide a value for the ​`configServerUrl`​ property (where your config will be stored).
  *
- * ### Config Server example
- *
  * ```ts
  * configServerOptions = {
  *  enableConfigServer: true,
