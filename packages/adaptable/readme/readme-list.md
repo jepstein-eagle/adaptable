@@ -70,8 +70,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 - [Schedule](./functions/schedule-function.md)                   
 - [Shortcut](./functions/shortcut-function.md)                   
 - [Smart Edit](./functions/smart-edit-function.md)               
-- [System Status](./functions/system-status-function.md)          
-- Team Sharing                                                    
+- [System Status](./functions/system-status-function.md)            
 - [Theme](./functions/theme-function.md)                         
 - [Updated Row](./functions/updated-row-function.md)             
 - [User Filter](./functions/user-filter-function.md)   
