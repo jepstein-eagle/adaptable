@@ -3,7 +3,6 @@
  *
  * ConfigServer enables Adaptable State to be saved **remotely** (the default is in local storage).
  *
- *```
  * ### State Options
  *
  * Note: Since v.6 AdapTable provides **[state lifecycle management functions](_src_adaptableoptions_stateoptions_.stateoptions.html)**.
@@ -11,7 +10,7 @@
  * These **State Options offer a superior and more flexible alternative to Config Server and are recommended best practice**.
  *
  * State Options allow full control over managing state hydration, rehydration and persisttence and are more suitable for all users and will be actively managed going forward.
- *```
+ *
  *
  *  ### Using Config Server
  *
