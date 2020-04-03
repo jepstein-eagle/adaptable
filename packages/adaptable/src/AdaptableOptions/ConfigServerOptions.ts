@@ -5,17 +5,22 @@
  *
  * ### State Options
  *
- * Since v.6 AdapTable provides **[state lifecycle management functions](_src_adaptableoptions_stateoptions_.stateoptions.html)**.
+ * Note: Since v.6 AdapTable provides **[state lifecycle management functions](_src_adaptableoptions_stateoptions_.stateoptions.html)**.
  *
  * These **State Options offer a superior and more flexible alternative to Config Server and are recommended best practice**.
  *
  * State Options allow full control over managing state hydration, rehydration and persisttence and are more suitable for all users and will be actively managed going forward.
  *
- * To use ConfigServer you need to set the ​​`enableConfigServer​` property to ​true​ and also provide a value for the ​`configServerUrl`​ property (where your config will be stored).
  *
  *  ### Using Config Server
  *
- *  ### Config Server example
+ *  To use ConfigServer you need to do the following:
+ *
+ * - set the ​​`enableConfigServer​` property to ​true​
+ *
+ * - provide a value for the ​`configServerUrl`​ property (where your config will be stored).
+ *
+ * ### Config Server example
  *
  * ```ts
  * configServerOptions = {
