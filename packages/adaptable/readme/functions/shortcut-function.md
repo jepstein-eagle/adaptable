@@ -17,7 +17,11 @@ To apply a shortcut is straightforward.  Simply enter the Keystroke in the colum
 >  If the Column is a date column there is no need to enter Edit Mode as the Shortcut will work so long as there is just one column selected.
 
 ## UI Elements
-To Do
+Shortcut includes the following UI Elements:
+
+- **Popup** - Shows a list of existing Shortcuts with a *Delete* button.  Plus an *Add* button to start the Shortcut Wizard.
+
+- **Wizard** - A series of steps facilitating the creation and editing of Shortcuts.
 
 ## Entitlements
 Shortcut supports these Entitlement Rules:

@@ -4,29 +4,26 @@ The Bulk Update ([AdaptableFunctionName](https://api.adaptabletools.com/modules/
 
 The 'replacement' value can either be one that already exists in the column or an entirely new one.
 
-Bulk update allows you to update multiple cells in a column to a new value with a single action.
+> Unlike Smart Edit which updates the cell based on its current contents, Bulk Updates replaces the existing cell value with a new value provided by the User.
 
-Unlike Smart Edit which updates the cell based on its current contents, Bulk Updates replaces the existing cell value with a new value that you specify.
+Bulk Update can bre applied on text, numeric and date columns. The input will change depending on the datatype of the column.
 
-Note
-You can do a bulk update on text, numeric and date columns. The input will change depending on the datatype of the column.
+> If updating a date column you are provided with a calendar when entering the new value.
 
-If updating a date column you are provided with a calendar when entering the new value.
+Users are able to choose between selecting an existing column value or providing their own.
 
-You are able to choose between selecting an existing column value or providing your own.
-
-If the proposed Bulk Update breaks a Cell Validation Rule then it will be prevented or display a warning as appropriate.
+If the proposed Bulk Update breaks a [Cell Validation Rule](./cell-validation-function.md) then the edit will be prevented (or a warning is displayed).
 
 ## UI Elements
 Bulk Update includes the following UI Elements:
 
-- **Popup** - Allows you to perform a Bulk Update operation on selected columns.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
+- **Popup** - Allows you to perform a Bulk Update operation on selected cells.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
 
 - **Toolbar** - Enables Bulk Update to be performed - and to provide both an existing column value or a new one.
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Context Menu** - `Apply Bulk Update` Menu Item opens Bulk Update popup (only visible if selected cells are editable).
+- **Context Menu** - `Apply Bulk Update` Menu Item opens Bulk Update popup (only visible if selected cells are editable and from a single column).
 
 ## Entitlements
 Bulk Update supports these Entitlement Rules:
