@@ -83,6 +83,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
           AdaptableGridInfo: {
             CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
             CurrentColumnSorts: columnSorts,
+            ExpandedRowGroupKeys: this.adaptable.api.gridApi.getExpandRowGroupsKeys(),
           },
         };
 

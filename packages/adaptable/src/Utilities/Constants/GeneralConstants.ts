@@ -29,8 +29,7 @@ export const EMPTY_ARRAY: any[] = [];
 
 export const HALF_SECOND: number = 500;
 
-export const YEAR_ADD: number = 1985;
-export const MONTH_ADD: number = 47;
+export const AG_GRID_GROUPED_COLUMN: string = 'ag-Grid-AutoColumn';
 
 /*
 Redux / State Defaults

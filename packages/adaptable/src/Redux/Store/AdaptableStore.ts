@@ -2211,11 +2211,14 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             let returnAction = next(action);
             let layoutState = middlewareAPI.getState().Layout;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
+
             if (currentLayout) {
-              if (currentLayout.AdaptableGridInfo == null) {
+              const isNewLayout: boolean = currentLayout.AdaptableGridInfo == null;
+              if (isNewLayout) {
                 currentLayout.AdaptableGridInfo = {
                   CurrentColumns: currentLayout.Columns,
-                  CurrentColumnSorts: currentLayout.ColumnSorts,
+                  CurrentColumnSorts: adaptable.LayoutService.getSortsForLayout(currentLayout),
+                  ExpandedRowGroupKeys: adaptable.api.gridApi.getExpandRowGroupsKeys(),
                 };
               }
 
@@ -2287,6 +2290,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               layout.AdaptableGridInfo = {
                 CurrentColumns: layout.Columns,
                 CurrentColumnSorts: layout.ColumnSorts,
+                ExpandedRowGroupKeys: adaptable.api.gridApi.getExpandRowGroupsKeys(),
               };
             }
             if (layout.VendorGridInfo == null) {

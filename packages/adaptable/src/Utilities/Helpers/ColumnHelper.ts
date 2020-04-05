@@ -5,11 +5,12 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
+import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstants';
 
 // Single place for all column mapping functions so can be dealt with consistetly re error handling
 
 export function isSpecialColumn(columnId: string): boolean {
-  return columnId == 'ag-Grid-AutoColumn';
+  return columnId == AG_GRID_GROUPED_COLUMN;
 }
 
 export function isNumericColumn(column: AdaptableColumn): boolean {

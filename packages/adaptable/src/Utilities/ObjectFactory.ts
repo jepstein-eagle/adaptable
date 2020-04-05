@@ -496,6 +496,7 @@ export function CreateDefaultLayout(
     AdaptableGridInfo: {
       CurrentColumns: columnIds,
       CurrentColumnSorts: columnSorts,
+      ExpandedRowGroupKeys: undefined,
     },
   };
 }

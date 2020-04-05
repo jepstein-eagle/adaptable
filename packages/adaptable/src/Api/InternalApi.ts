@@ -77,8 +77,6 @@ export interface InternalApi {
 
   addAdaptableColumn(AdaptableColumn: AdaptableColumn): void;
 
-  setColumnSorts(columnSorts: ColumnSort[]): void;
-
   getUpdatedRowInfos(): any[];
 
   isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;

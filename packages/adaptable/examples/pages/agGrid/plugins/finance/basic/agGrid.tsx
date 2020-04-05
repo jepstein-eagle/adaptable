@@ -18,6 +18,8 @@ import { ExamplesHelper } from '../../../../ExamplesHelper';
 import Adaptable from '../../../../../../agGrid';
 import finance from '../../../../../../../plugins/finance/src';
 
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
@@ -31,7 +33,10 @@ function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Basic Demo',
 
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
     plugins: [finance()],
   };

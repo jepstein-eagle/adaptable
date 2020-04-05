@@ -8,4 +8,5 @@ export interface ILayoutService {
   autoSaveLayout(): void;
   isPivotedLayout(pivotDetails: PivotDetails): boolean;
   isLayoutModified(layoutEntity: Layout): boolean;
+  getSortsForLayout(layout: Layout): ColumnSort[];
 }

@@ -22,6 +22,8 @@ export interface LayoutOptions {
    */
   includeVendorStateInLayouts?: boolean;
 
+  includeOpenedRowGroups?: boolean;
+
   /**
    * Whether layouts should save whenever the Grid's column order or sort information changes.
    *

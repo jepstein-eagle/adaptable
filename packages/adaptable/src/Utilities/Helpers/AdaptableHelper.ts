@@ -11,7 +11,12 @@ import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/AdaptableEvents';
-import { AdaptableComparerFunction } from '../../PredefinedConfig/Common/AdaptableComparerFunction';
+import {
+  AdaptableComparerFunction,
+  AdaptableNodeComparerFunction,
+} from '../../PredefinedConfig/Common/AdaptableComparerFunction';
+import { CustomSort } from '../../PredefinedConfig/CustomSortState';
+import { GridOptions, Column } from '@ag-grid-community/core';
 
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
@@ -165,7 +170,7 @@ export function createFDC3Message(type: string, id: any): AdaptableEventArgs {
   };
 }
 
-export function runAdaptableComparerFunctiontestGetFunction(
+export function runAdaptableComparerFunction(
   columnId: string,
   columnValues: any[],
   adaptable: IAdaptable
@@ -216,6 +221,6 @@ export const AdaptableHelper = {
   AdaptableObjectExistsInState,
   CheckadaptableOptions,
   createFDC3Message,
-  runAdaptableComparerFunctiontestGetFunction,
+  runAdaptableComparerFunction,
 };
 export default AdaptableHelper;

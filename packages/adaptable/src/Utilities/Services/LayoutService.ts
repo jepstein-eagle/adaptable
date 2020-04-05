@@ -13,6 +13,7 @@ import {
   ColumnStateChangedInfo,
 } from '../../Api/Events/ColumnStateChanged';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+import { AG_GRID_GROUPED_COLUMN } from '../Constants/GeneralConstants';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
@@ -25,6 +26,10 @@ export class LayoutService implements ILayoutService {
     returnString += '\n';
     returnString += ' Sort: ' + this.getColumnSort(layout.ColumnSorts, columns);
     return returnString;
+  }
+
+  public getSortsForLayout(layout: Layout): ColumnSort[] {
+    return layout.ColumnSorts;
   }
 
   public getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
@@ -72,6 +77,7 @@ export class LayoutService implements ILayoutService {
             AdaptableGridInfo: {
               CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
               CurrentColumnSorts: this.adaptable.api.gridApi.getColumnSorts(),
+              ExpandedRowGroupKeys: this.adaptable.api.gridApi.getExpandRowGroupsKeys(),
             },
           };
           this.adaptable.api.layoutApi.saveLayout(layoutToSave);
@@ -107,7 +113,6 @@ export class LayoutService implements ILayoutService {
 
       if (layoutEntity.AdaptableGridInfo) {
         if (
-          layoutEntity.AdaptableGridInfo &&
           ArrayExtensions.IsNotNull(layoutEntity.Columns) &&
           ArrayExtensions.IsNotNull(layoutEntity.AdaptableGridInfo.CurrentColumns) &&
           !ArrayExtensions.areArraysEqualWithOrder(
@@ -119,7 +124,6 @@ export class LayoutService implements ILayoutService {
         }
 
         if (
-          layoutEntity.AdaptableGridInfo &&
           ArrayExtensions.IsNotNull(layoutEntity.ColumnSorts) &&
           ArrayExtensions.IsNotNull(layoutEntity.AdaptableGridInfo.CurrentColumnSorts) &&
           !ArrayExtensions.areArraysEqualWithOrderandProperties(
@@ -129,6 +133,8 @@ export class LayoutService implements ILayoutService {
         ) {
           return true;
         }
+
+        // do ExpandedRowGroupKeys?
       }
     }
     return true;

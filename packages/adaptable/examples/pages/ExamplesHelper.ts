@@ -602,7 +602,7 @@ export class ExamplesHelper {
       //  'Canada',
       // '',
 
-      (undefined as unknown) as string,
+      //  (undefined as unknown) as string,
       //  null,
       //   "Lloyds TSB",
       //   "MUFJ",
@@ -789,6 +789,9 @@ export class ExamplesHelper {
       rowHeight: 30,
       sideBar: true,
       rowSelection: 'multiple',
+      autoGroupColumnDef: {
+        sortable: true,
+      },
       columnTypes: {
         abColDefNumber: {},
         abColDefString: {},

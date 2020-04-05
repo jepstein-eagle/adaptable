@@ -21,9 +21,6 @@ function InitAdaptableDemo() {
   const tradeCount: number = 500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  gridOptions.autoGroupColumnDef = {
-    sortable: true,
-  };
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',

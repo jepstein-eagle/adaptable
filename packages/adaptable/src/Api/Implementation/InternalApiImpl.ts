@@ -151,10 +151,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.GridAddColumn(AdaptableColumn));
   }
 
-  public setColumnSorts(columnSorts: ColumnSort[]): void {
-    this.dispatchAction(GridRedux.GridSetSort(columnSorts));
-  }
-
   public getUpdatedRowInfos(): any[] {
     return this.getSystemState().UpdatedRowInfos;
   }

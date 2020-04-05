@@ -11,3 +11,5 @@ export type AdaptableComparerFunction = (
   nodeA: any,
   nodeB: any
 ) => number;
+
+export type AdaptableNodeComparerFunction = (nodeA: any, nodeB: any) => number;

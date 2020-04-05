@@ -78,7 +78,7 @@ import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 // Helpers
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
+import { ColumnHelper, getColumnsFromFriendlyNames } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper, LogAdaptableError } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
@@ -97,6 +97,7 @@ import {
   HALF_SECOND,
   LIGHT_THEME,
   DARK_THEME,
+  AG_GRID_GROUPED_COLUMN,
 } from '../Utilities/Constants/GeneralConstants';
 import { agGridHelper } from './agGridHelper';
 import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
@@ -152,6 +153,9 @@ import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modu
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
+import { hasMagic } from 'glob';
+import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
+import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2119,7 +2123,7 @@ export class Adaptable implements IAdaptable {
         this.debouncedFilterGrid();
       }
     });
-    // dealing with scenario where the data is providee to adaptable after grid has been setup
+    // dealing with scenario where the data is provided to adaptable after grid has been setup
     this.gridOptions.api!.addEventListener(Events.EVENT_FIRST_DATA_RENDERED, () => {
       this.debouncedSetColumnIntoStore();
     });
@@ -2168,9 +2172,17 @@ export class Adaptable implements IAdaptable {
       Events.EVENT_COLUMN_PIVOT_MODE_CHANGED,
       Events.EVENT_DISPLAYED_COLUMNS_CHANGED,
       Events.EVENT_SORT_CHANGED,
+      Events.EVENT_COLUMN_ROW_GROUP_CHANGED,
     ];
     this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersAutoLayoutSave.indexOf(type) > -1) {
+        this.debouncedSaveGridLayout();
+      }
+    });
+
+    // doing this seperately as wont always be wanted
+    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_GROUP_OPENED, (params: any) => {
+      if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
         this.debouncedSaveGridLayout();
       }
     });
@@ -2293,112 +2305,6 @@ export class Adaptable implements IAdaptable {
       }
     });
 
-    const columnEventsThatTriggerSetRowSelection = [
-      Events.EVENT_ROW_GROUP_OPENED,
-      Events.EVENT_SELECTION_CHANGED,
-      Events.EVENT_ROW_SELECTED,
-    ];
-    this.gridOptions.api!.addGlobalListener((type: string) => {
-      if (ArrayExtensions.ContainsItem(columnEventsThatTriggerSetRowSelection, type)) {
-        this.debouncedSetSelectedRows();
-      }
-    });
-
-    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_GROUP_OPENED, () => {
-      //      this.debouncedSetSelectedRows();
-    });
-
-    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
-      // if (this.gridOptions.autoGroupColumnDef) {
-      // console.log(this.gridOptions.autoGroupColumnDef);
-      //  }
-      //   if (params && params.column && params.column.sort) {
-      // if(params.columms[0])
-      //  console.log('need to sort');
-      //  console.log(params);
-      //  }
-    });
-
-    this.gridOptions.api!.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
-      //     this.debouncedSetSelectedRows();
-    });
-
-    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_SELECTED, () => {
-      //     this.debouncedSetSelectedRows();
-    });
-    this.gridOptions.api!.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
-      this.debouncedSetSelectedCells();
-    });
-
-    // this.gridOptions.api!.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
-    // });
-
-    //  this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
-    // });
-    this.gridOptions.api!.addEventListener(Events.EVENT_SORT_CHANGED, () => {
-      this.onSortChanged();
-      this.debouncedSetSelectedCells();
-    });
-
-    this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
-      if (this.adaptableOptions.generalOptions.showGroupingTotalsAsHeader) {
-        if (params && params.api) {
-          const pinnedData = params.api.getPinnedTopRow(0);
-          const model = params.api.getModel() as IClientSideRowModel;
-          const rootNode = model.getRootNode();
-          if (!pinnedData) {
-            params.api.setPinnedTopRowData([rootNode.aggData]);
-          } else {
-            pinnedData.updateData(rootNode.aggData);
-          }
-        }
-      }
-      this.checkColumnsDataTypeSet();
-    });
-
-    this.rowListeners = {
-      dataChanged: (event: any) => {
-        this.onRowDataChanged({
-          //  myevent: event,
-          rowNode: event.node,
-          oldData: event.oldData,
-          newData: event.newData,
-        });
-      },
-    };
-
-    /**
-     * AgGrid does not expose Events.EVENT_ROW_DATA_CHANGED
-     * so we have to override `dispatchLocalEvent`
-     * and hook our own functionality into it
-     *
-     */
-    RowNodeProto.dispatchLocalEvent = function(event: any) {
-      const node = event.node;
-
-      const result = RowNode_dispatchLocalEvent.apply(this, arguments);
-
-      // we don't know from which instance of aggrid this is coming,
-      // as this fn is shared by all instances
-
-      if (node) {
-        Adaptable.forEachAdaptable(adaptable => {
-          if (node.gridApi !== adaptable.gridOptions.api) {
-            // the event is coming from another aggrid instance
-            // so IGNORE IT
-            return;
-          }
-          // we're on the correct instance, so do this
-          const fn = adaptable.rowListeners ? adaptable.rowListeners[event.type] : null;
-          if (fn) {
-            fn(event);
-          }
-        });
-      }
-
-      return result;
-    };
-
     // this handles ticking data
     // except it doesnt handle when data has been added to ag-Grid using updateRowData
     this.gridOptions.api!.addEventListener(
@@ -2463,6 +2369,108 @@ export class Adaptable implements IAdaptable {
         }
       }
     );
+
+    const columnEventsThatTriggerSetRowSelection = [
+      Events.EVENT_ROW_GROUP_OPENED,
+      Events.EVENT_SELECTION_CHANGED,
+      Events.EVENT_ROW_SELECTED,
+    ];
+    this.gridOptions.api!.addGlobalListener((type: string) => {
+      if (ArrayExtensions.ContainsItem(columnEventsThatTriggerSetRowSelection, type)) {
+        this.debouncedSetSelectedRows();
+      }
+    });
+
+    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
+      // to do?
+    });
+
+    this.gridOptions.api!.addEventListener(Events.EVENT_SELECTION_CHANGED, () => {
+      //     this.debouncedSetSelectedRows();
+    });
+
+    this.gridOptions.api!.addEventListener(Events.EVENT_ROW_SELECTED, () => {
+      //     this.debouncedSetSelectedRows();
+    });
+    this.gridOptions.api!.addEventListener(Events.EVENT_RANGE_SELECTION_CHANGED, () => {
+      this.debouncedSetSelectedCells();
+    });
+
+    // this.gridOptions.api!.addEventListener(Events.EVENT_TOOL_PANEL_VISIBLE_CHANGED, () => {
+    // });
+
+    //  this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_ROW_GROUP_CHANGED, (params: any) => {
+    // });
+
+    const columnEventsThatTriggerSortChanged = [
+      Events.EVENT_SORT_CHANGED,
+      //  Events.EVENT_COLUMN_ROW_GROUP_CHANGED,
+    ];
+    this.gridOptions.api!.addGlobalListener((type: string) => {
+      if (ArrayExtensions.ContainsItem(columnEventsThatTriggerSortChanged, type)) {
+        this.onSortChanged();
+        this.debouncedSetSelectedCells();
+      }
+    });
+
+    this.gridOptions.api!.addEventListener(Events.EVENT_MODEL_UPDATED, (params: any) => {
+      if (this.adaptableOptions.generalOptions.showGroupingTotalsAsHeader) {
+        if (params && params.api) {
+          const pinnedData = params.api.getPinnedTopRow(0);
+          const model = params.api.getModel() as IClientSideRowModel;
+          const rootNode = model.getRootNode();
+          if (!pinnedData) {
+            params.api.setPinnedTopRowData([rootNode.aggData]);
+          } else {
+            pinnedData.updateData(rootNode.aggData);
+          }
+        }
+      }
+      this.checkColumnsDataTypeSet();
+    });
+
+    this.rowListeners = {
+      dataChanged: (event: any) => {
+        this.onRowDataChanged({
+          //  myevent: event,
+          rowNode: event.node,
+          oldData: event.oldData,
+          newData: event.newData,
+        });
+      },
+    };
+
+    /**
+     * AgGrid does not expose Events.EVENT_ROW_DATA_CHANGED
+     * so we have to override `dispatchLocalEvent`
+     * and hook our own functionality into it
+     *
+     */
+    RowNodeProto.dispatchLocalEvent = function(event: any) {
+      const node = event.node;
+
+      const result = RowNode_dispatchLocalEvent.apply(this, arguments);
+
+      // we don't know from which instance of aggrid this is coming,
+      // as this fn is shared by all instances
+
+      if (node) {
+        Adaptable.forEachAdaptable(adaptable => {
+          if (node.gridApi !== adaptable.gridOptions.api) {
+            // the event is coming from another aggrid instance
+            // so IGNORE IT
+            return;
+          }
+          // we're on the correct instance, so do this
+          const fn = adaptable.rowListeners ? adaptable.rowListeners[event.type] : null;
+          if (fn) {
+            fn(event);
+          }
+        });
+      }
+
+      return result;
+    };
 
     // We plug our filter mechanism and if there is already something like external widgets... we save ref to the function
     const originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
@@ -3043,20 +3051,63 @@ export class Adaptable implements IAdaptable {
 
   private onSortChanged(): void {
     const sortModel: { colId: string; sort: string }[] = this.gridOptions.api!.getSortModel();
-    const columnSorts: ColumnSort[] = [];
+    const newColumnSorts: ColumnSort[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(sortModel)) {
       sortModel.forEach(sm => {
         if (ColumnHelper.isSpecialColumn(sm.colId)) {
-          this.agGridHelper.createGroupedColumnCustomSort(sm.colId);
+          this.agGridHelper.createGroupedColumnCustomSort();
         }
         const columnSort: ColumnSort = {
           Column: sm.colId,
           SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
         };
-        columnSorts.push(columnSort);
+        newColumnSorts.push(columnSort);
       });
     }
-    this.api.internalApi.setColumnSorts(columnSorts);
+    this.api.gridApi.setColumnSorts(newColumnSorts);
+  }
+
+  public expandAllRowGroups(): void {
+    this.gridOptions.api.forEachNode((node: any) => {
+      if (node.group) {
+        node.expanded = true;
+      }
+    });
+    this.gridOptions.api.onGroupExpandedOrCollapsed();
+  }
+
+  public closeAllRowGroups(): void {
+    this.gridOptions.api.forEachNode((node: any) => {
+      if (node.group) {
+        node.expanded = false;
+      }
+    });
+    this.gridOptions.api.onGroupExpandedOrCollapsed();
+  }
+
+  public expandRowGroupsForValues(columnValues: any[]): void {
+    if (ArrayExtensions.IsNotNullOrEmpty(columnValues)) {
+      this.gridOptions.api.forEachNode((node: RowNode) => {
+        if (node.group && !node.expanded) {
+          if (ArrayExtensions.ContainsItem(columnValues, node.key)) {
+            node.setExpanded(true);
+          }
+        }
+      });
+      this.gridOptions.api.onGroupExpandedOrCollapsed();
+    }
+  }
+
+  public getExpandRowGroupsKeys(): any[] {
+    let returnValues: any[] = [];
+    if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
+      this.gridOptions.api.forEachNode((node: RowNode) => {
+        if (node.group && node.expanded) {
+          returnValues.push(node.key);
+        }
+      });
+    }
+    return returnValues;
   }
 
   public getRowCount(): number {
@@ -3168,6 +3219,14 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
+    }
+  }
+
+  public getFirstGroupedColumn(): AdaptableColumn | undefined {
+    let groupedColumns: Column[] = this.gridOptions.columnApi.getRowGroupColumns();
+    if (ArrayExtensions.IsNotNullOrEmpty(groupedColumns)) {
+      let groupedColumn: Column = groupedColumns[0];
+      return ColumnHelper.getColumnFromId(groupedColumn.getColId(), this.api.gridApi.getColumns());
     }
   }
 
@@ -3333,6 +3392,16 @@ export class Adaptable implements IAdaptable {
         this.gridOptions.columnApi!.autoSizeAllColumns();
       }
     }
+
+    // set any expanded group rows
+    if (ArrayExtensions.IsNotNullOrEmpty(layout.AdaptableGridInfo.ExpandedRowGroupKeys)) {
+      this.expandRowGroupsForValues(layout.AdaptableGridInfo.ExpandedRowGroupKeys);
+    }
+
+    let layoutSorts: ColumnSort[] = layout.AdaptableGridInfo.CurrentColumnSorts;
+    setTimeout(() => {
+      this.setColumnSort(layoutSorts);
+    }, 1000);
   }
 
   // these 3 methods are strange as we shouldnt need to have to set a columnEventType but it seems agGrid forces us to
@@ -3531,7 +3600,9 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
   // where we apply our stuff but also any ag-Grid props that we control
   private applyFinalRendering(): void {
     // Apply row styles here?  weird that it cannot find the method in Helper.
-    this.setUpRowStyles();
+
+    // Build the default group sort comparator - will get custom sort values (but not functions) in real time
+    this.gridOptions.defaultGroupSortComparator = this.agGridHelper.runAdaptableNodeComparerFunction();
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??

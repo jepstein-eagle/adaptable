@@ -22,6 +22,7 @@ import { MenuModule } from '@ag-grid-enterprise/menu';
 import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+//import finance from '@adaptabletools/adaptable-plugin-finance';
 
 import Adaptable from '../../../../agGrid';
 import { DataType } from '../../../../src/PredefinedConfig/Common/Enums';
@@ -38,7 +39,7 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Cell Summary Demo',
-    //  plugins: [finance()],
+    // plugins: [finance()],
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

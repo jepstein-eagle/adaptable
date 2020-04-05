@@ -117,6 +117,8 @@ export interface GridApi {
    */
   getColumnSorts(): ColumnSort[];
 
+  setColumnSorts(columnSorts: ColumnSort[]): void;
+
   /**
    * Returns all the current Selected Ceslls in Adaptable
    */
@@ -165,4 +167,9 @@ export interface GridApi {
   getFirstRowNode(): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
+
+  expandAllRowGroups(): void;
+  closeAllRowGroups(): void;
+  getExpandRowGroupsKeys(): any[];
+  expandRowGroupsForValues(columnValues: any[]): void;
 }

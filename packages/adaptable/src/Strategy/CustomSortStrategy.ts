@@ -4,7 +4,10 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
-import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
+import {
+  AdaptableComparerFunction,
+  AdaptableNodeComparerFunction,
+} from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
@@ -77,7 +80,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
   }
 
   public getComparerFunction(customSort: CustomSort): AdaptableComparerFunction {
-    return AdaptableHelper.runAdaptableComparerFunctiontestGetFunction(
+    return AdaptableHelper.runAdaptableComparerFunction(
       customSort.ColumnId,
       customSort.SortedValues,
       this.adaptable

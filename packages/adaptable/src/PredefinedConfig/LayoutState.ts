@@ -112,7 +112,7 @@ export interface Layout extends AdaptableObject {
   ColumnSorts?: ColumnSort[];
 
   /**
-   * Which columns should be grouped when the Layout is applied.
+   * Which columns should be row-grouped when the Layout is applied.
    *
    * Make sure that the column names supplied are groupable according to the vendor grid you are using (e.g. `enableRowGroup` in ag-Grid)
    */
@@ -167,6 +167,7 @@ export interface VendorGridInfo {
 export interface AdaptableGridInfo {
   CurrentColumns?: string[];
   CurrentColumnSorts?: ColumnSort[];
+  ExpandedRowGroupKeys?: any[];
 }
 
 /**

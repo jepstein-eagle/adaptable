@@ -172,6 +172,7 @@ class LayoutToolbarControlComponent extends React.Component<
         AdaptableGridInfo: {
           CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
           CurrentColumnSorts: this.props.ColumnSorts,
+          ExpandedRowGroupKeys: this.props.Adaptable.api.gridApi.getExpandRowGroupsKeys(),
         },
       };
       this.props.onSaveLayout(layoutToSave);

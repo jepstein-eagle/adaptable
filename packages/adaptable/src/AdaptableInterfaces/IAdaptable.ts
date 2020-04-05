@@ -208,11 +208,13 @@ export interface IAdaptable {
   isGroupRowNode(rowNode: any): boolean;
   selectNodes(rowNodes: any[]): void;
   selectNode(rowNode: any): void;
+  getFirstGroupedColumn(): AdaptableColumn | undefined;
 
   //  Sort
   setCustomSort(columnId: string, comparer: Function): void;
   removeCustomSort(columnId: string): void;
   setColumnSort(columnSorts: ColumnSort[]): void;
+  //sortLayout(layout: Layout):void;
 
   // FreeTextColumn
   addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
@@ -298,4 +300,9 @@ export interface IAdaptable {
    * called when you want to destroy the instance & cleanup resources
    */
   destroy(): void;
+
+  expandAllRowGroups(): void;
+  closeAllRowGroups(): void;
+  expandRowGroupsForValues(columnValues: any[]): void;
+  getExpandRowGroupsKeys(): any[];
 }
