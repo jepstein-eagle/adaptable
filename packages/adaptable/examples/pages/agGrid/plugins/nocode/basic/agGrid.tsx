@@ -13,6 +13,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../../../agGrid';
 import nocode from '../../../../../../../plugins/nocode-aggrid/src';
 import charts from '../../../../../../../plugins/charts/src';
+import finance from '../../../../../../../plugins/finance/src';
 
 function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
@@ -34,7 +35,8 @@ function InitAdaptableDemo() {
           adaptableOptions.vendorGrid.modules = AllEnterpriseModules;
         },
       }),
-      // charts(),
+      charts(),
+      finance(),
     ],
   };
 
