@@ -833,7 +833,6 @@ export class agGridHelper {
           if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
             columnValues = customSort.SortedValues;
           } else {
-            console.log(' we have a function and need to call it');
             const customSortComparerFunction: AdaptableComparerFunction = adaptable.getUserFunctionHandler(
               'CustomSortComparerFunction',
               customSort.CustomSortComparerFunction
