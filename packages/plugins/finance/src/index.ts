@@ -88,6 +88,7 @@ class FinancePlugin extends AdaptablePlugin {
       ] as CellSummaryOperationDefinition[],
     };
 
+    adaptable.adaptableOptions.userFunctions = adaptable.adaptableOptions.userFunctions || [];
     adaptable.adaptableOptions.userFunctions.push({
       type: 'CellSummaryOperationFunction',
       name: 'calculateVwap',
