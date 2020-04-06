@@ -72,6 +72,7 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { PushPullStrategy } from '../Strategy/PushPullStrategy';
 import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
+import { ActionColumnStrategy } from '../Strategy/ActionColumnStrategy';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
 import {
   AdaptableComparerFunction,
@@ -112,6 +113,7 @@ export class agGridHelper {
     const adaptable = this.adaptable as Adaptable;
     strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(adaptable));
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(adaptable));
+    strategies.set(StrategyConstants.ActionColumnStrategyId, new ActionColumnStrategy(adaptable));
     strategies.set(
       StrategyConstants.AdvancedSearchStrategyId,
       new AdvancedSearchStrategy(adaptable)

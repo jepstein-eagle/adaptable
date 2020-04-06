@@ -83,6 +83,14 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Theme', 'Layout'],
   },
+  Entitlements: {
+    FunctionEntitlements: [
+      {
+        FunctionName: 'ActionColumn',
+        AccessLevel: 'Hidden',
+      },
+    ],
+  },
   ActionColumn: {
     ActionColumns: [
       {

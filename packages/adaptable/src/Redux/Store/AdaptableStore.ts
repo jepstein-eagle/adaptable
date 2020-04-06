@@ -3072,10 +3072,8 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 adaptable.addFreeTextColumnToGrid(ftc);
               });
 
-            //Create all action columns before we load the layout
-            middlewareAPI.getState().ActionColumn.ActionColumns.forEach((ac: ActionColumn) => {
-              adaptable.addActionColumnToGrid(ac);
-            });
+            //Create any action columns before we load the layout
+            adaptable.api.internalApi.displayActionColumns();
 
             //load the default layout if its current
             if (currentLayout == DEFAULT_LAYOUT) {

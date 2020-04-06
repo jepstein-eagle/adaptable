@@ -8,8 +8,7 @@ export class ActionColumnApiImpl extends ApiBase implements ActionColumnApi {
   }
 
   public getAllActionColumn(): ActionColumn[] {
-    let actionColumns: ActionColumn[] | undefined = this.getAdaptableState().ActionColumn
-      .ActionColumns;
+    let actionColumns: ActionColumn[] | undefined = this.getActionColumnState().ActionColumns;
     if (actionColumns == undefined) {
       actionColumns = [];
     }

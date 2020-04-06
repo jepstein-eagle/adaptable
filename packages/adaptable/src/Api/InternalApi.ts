@@ -97,6 +97,8 @@ export interface InternalApi {
 
   setDefaultDashboardTab(): void;
 
+  displayActionColumns(): void;
+
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;
 }

@@ -30,6 +30,8 @@ import { grid } from 'styled-system';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { THIS_YEAR_SYSTEM_FILTER } from '../../Utilities/Services/FilterService';
+import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public startLiveReport(
@@ -205,6 +207,14 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       : onServerValidationCompleted;
 
     mimicPromise();
+  }
+
+  public displayActionColumns(): void {
+    if (this.isCorrectlyEntitled('ActionColumn', 'ReadOnly')) {
+      this.adaptable.api.actionColumnApi.getAllActionColumn().forEach((ac: ActionColumn) => {
+        this.adaptable.addActionColumnToGrid(ac);
+      });
+    }
   }
 
   private createDataChangedInfoFromGridCell(gridCell: GridCell): DataChangedInfo {
