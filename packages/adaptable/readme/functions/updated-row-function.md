@@ -4,7 +4,7 @@ The Updated Row[AdaptableFunctionName](https://api.adaptabletools.com/modules/_s
 
 > The function is designed for those use cases when the grid wil update fairly irregularly so that users have the opportunity see the update.  For faster updates use the [Flashing Cell](./flashing-cell-function.md) Function.
 
-Updated Rows do not flash, meaning that changed rows will remain with their Updated Row colours until they are explicitly cleared. 
+Updated Rows do not flash; the changed rows will remain with their Updated Row colours until they are explicitly cleared. 
 
 Clearing Updated Rows can be done either through the Context Menu (for a single row) or via the Column Menu (for all rows).
 
@@ -12,11 +12,11 @@ Clearing Updated Rows can be done either through the Context Menu (for a single 
 
 There are 3 colour settings that Updated Row will show (all can be edited at both design-time in Predefined Config or run-time by the User).  These are:
 
-- Up - defaults to Green
+- *Up* - defaults to Green
 
-- Down - defaults to Red
+- *Down* - defaults to Red
 
-- Neutral - defaults to Gray
+- *Neutral* - defaults to Gray
 
 Another available property option is to set the Grid to 'jump' to the selected row.
 
@@ -44,9 +44,9 @@ Updated Rows supports these Entitlement Rules:
 
 You can do it in 2 ways:
 
-- Clear a single Updated Row by clicking 'Clear Updated Row' in the Context Menu
+- Clear a single Updated Row by clicking `Clear Updated Row` in the Context Menu
 
-- Clear all Updated Rows by clicking 'Clear Updated Rows' in the Column Header Menu
+- Clear all Updated Rows by clicking `Clear Updated Rows` in the Column Header Menu
 
 **Is there a way to make Updated Rows disappear automatically?**
 
