@@ -74,6 +74,9 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         }
       });
 
+      // copying so that we keep the order - needed for others
+      const newNumericValues: number[] = [...numericValues];
+
       let hasNumericColumns: boolean = numericValues.length > 0;
       let distinctCount: number = ArrayExtensions.RetrieveDistinct(allValues).length;
       selectedCellSummary = {
@@ -92,6 +95,8 @@ export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellS
         Min: hasNumericColumns ? Helper.RoundNumberTo4dp(Math.min(...numericValues)) : '',
         Count: allValues.length,
       };
+      numericValues = [...newNumericValues];
+
       const operationDefinitions = this.adaptable.api.cellSummaryApi.getCellSummaryOperationDefinitions();
 
       operationDefinitions.forEach((operation: CellSummaryOperationDefinition) => {

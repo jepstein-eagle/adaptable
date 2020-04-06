@@ -1,8 +1,6 @@
-import { AdaptablePlugin, IAdaptable, IAdaptableStore } from '@adaptabletools/adaptable/types';
-
+import { AdaptablePlugin, IAdaptable } from '@adaptabletools/adaptable/types';
 import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/CellSummaryState';
-
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
 
@@ -63,6 +61,35 @@ const calculateVwap = ({
   return result;
 };
 
+const calculateWeightedAverage = ({
+  numericValues,
+  numericColumns,
+}: {
+  numericValues: number[];
+  numericColumns: string[];
+}): any => {
+  if (numericColumns.length != 2 || numericValues.length % 2 != 0) {
+    return '';
+  }
+
+  // assumption is that the first col is the Amount and the second col is the Weight
+  let mainValues: number[] = [];
+  let multiplierValues: number[] = [];
+  let weightedValues: number[] = [];
+  let halfWay: number = numericValues.length / 2;
+
+  for (var i = 0; i < halfWay; i++) {
+    const mainValue: number = numericValues[i];
+    mainValues.push(mainValue);
+    const multiplierValue = numericValues[i + halfWay];
+    multiplierValues.push(multiplierValue);
+    weightedValues.push(mainValue * multiplierValue);
+  }
+  const sumMainValues = sumNumberArray(mainValues);
+  const sumWeightedValues = sumNumberArray(weightedValues);
+  return sumWeightedValues / sumMainValues;
+};
+
 const defaultOptions = {};
 interface FinancePluginOptions {}
 class FinancePlugin extends AdaptablePlugin {
@@ -85,6 +112,10 @@ class FinancePlugin extends AdaptablePlugin {
           OperationName: 'Only',
           OperationFunction: 'calculateOnly',
         },
+        {
+          OperationName: 'Weighted Avg',
+          OperationFunction: 'calculateWeightedAverage',
+        },
       ] as CellSummaryOperationDefinition[],
     };
 
@@ -99,6 +130,12 @@ class FinancePlugin extends AdaptablePlugin {
       type: 'CellSummaryOperationFunction',
       name: 'calculateOnly',
       handler: calculateOnly,
+    });
+
+    adaptable.adaptableOptions.userFunctions.push({
+      type: 'CellSummaryOperationFunction',
+      name: 'calculateWeightedAverage',
+      handler: calculateWeightedAverage,
     });
 
     adaptable.api!.pluginsApi.registerPlugin(this.pluginId, pluginData);

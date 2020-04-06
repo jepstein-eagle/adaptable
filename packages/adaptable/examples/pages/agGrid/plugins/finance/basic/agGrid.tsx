@@ -58,7 +58,7 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
+    VisibleToolbars: ['Layout', 'CellSummary', 'Export', 'SystemStatus'],
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
       Tone: 'success',
@@ -85,7 +85,7 @@ let demoConfig: PredefinedConfig = {
         GroupedColumns: [],
       },
     ],
-    CurrentLayout: 'fixing a bug',
+    //  CurrentLayout: 'fixing a bug',
   },
 };
 
