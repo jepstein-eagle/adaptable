@@ -230,6 +230,14 @@ class ExportToolbarControlComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
+        <button
+          onClick={() => {
+            const { Adaptable } = this.props;
+            Adaptable.exportToExcel();
+          }}
+        >
+          Test
+        </button>
       </PanelDashboard>
     );
   }

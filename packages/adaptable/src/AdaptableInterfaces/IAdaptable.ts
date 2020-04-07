@@ -296,6 +296,8 @@ export interface IAdaptable {
     name: string
   ): Extract<UserFunction, { type: T }>['handler'] | null;
 
+  exportToExcel(): void;
+
   /**
    * called when you want to destroy the instance & cleanup resources
    */

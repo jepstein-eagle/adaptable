@@ -3699,6 +3699,55 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     }
     return null;
   }
+
+  exportToExcel() {
+    const div = document.createElement('div');
+
+    const gridOptions: GridOptions = {
+      columnDefs: [
+        { headerName: 'Make', field: 'make', cellClass: 'redFont' },
+        { headerName: 'Model', field: 'model' },
+        { headerName: 'Price', field: 'price' },
+        { headerName: 'Release Date', field: 'releaseDate', cellClass: 'date' },
+      ],
+      rowData: [
+        { make: 'Toyota', model: 'Celica', price: 35000, releaseDate: '2009-04-20T00:00:00.000' },
+        { make: 'Ford', model: 'Mondeo', price: 32000, releaseDate: '2009-04-20T00:00:00.000' },
+        { make: 'Porsche', model: 'Boxter', price: 72000, releaseDate: '2009-04-20T00:00:00.000' },
+      ],
+      excelStyles: [
+        {
+          id: 'redFont',
+          interior: {
+            color: '#FF0000',
+            pattern: 'Solid',
+          },
+        },
+        {
+          id: 'date',
+          dataType: 'dateTime',
+        },
+      ],
+    };
+
+    const grid = new Grid(div, gridOptions);
+
+    gridOptions.api.exportDataAsExcel({
+      sheetName: 'Testing',
+      // allColumns: true,
+      // columnKeys: [],
+      // columnGroups: true,
+      // onlySelected: true,
+      processCellCallback(params) {
+        if (params.column.getColId() === 'model') {
+          return params.value + '!';
+        }
+        return params.value;
+      },
+    });
+
+    grid.destroy();
+  }
 }
 
 export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
