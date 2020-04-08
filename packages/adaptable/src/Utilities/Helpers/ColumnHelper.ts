@@ -97,6 +97,19 @@ export function getColumnsFromFriendlyNames(
   return friendlyNames.map(friendlyName => columns.find(x => x.FriendlyName == friendlyName));
 }
 
+export function getColumnsFromIds(
+  columnIds: string[],
+  columns: AdaptableColumn[],
+  logWarning = true
+): AdaptableColumn[] {
+  let returnCols: AdaptableColumn[] = [];
+  columnIds.forEach(c => {
+    returnCols.push(getColumnFromId(c, columns, logWarning));
+  });
+
+  return returnCols;
+}
+
 export function getColumnFromId(
   columnId: string,
   columns: AdaptableColumn[],
@@ -224,6 +237,7 @@ export const ColumnHelper = {
   getFriendlyNamesFromColumnIds,
   getColumnsFromFriendlyNames,
   getColumnFromId,
+  getColumnsFromIds,
   getColumnFromFriendlyName,
   getColumnsOfType,
   getNumericColumns,

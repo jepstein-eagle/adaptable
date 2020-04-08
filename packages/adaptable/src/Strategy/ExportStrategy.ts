@@ -18,6 +18,7 @@ import {
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
+import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   private isSendingData: boolean = false;
@@ -207,6 +208,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.CSV:
         this.convertReportToCsv(report);
         break;
+      case ExportDestination.Excel:
+        this.convertReportToExcel(report);
+        break;
       case ExportDestination.JSON:
         this.convertReportToJSON(report);
         break;
@@ -243,6 +247,19 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       let csvFileName: string = report.Name + '.csv';
       Helper.createDownloadedFile(csvContent, csvFileName, 'text/csv;encoding:utf-8');
     }
+  }
+
+  private convertReportToExcel(report: Report): void {
+    let reportAsArray: any[] = this.ConvertReportToArray(report);
+
+    let reportCols = reportAsArray.shift();
+
+    let cols: AdaptableColumn[] = ColumnHelper.getColumnsFromFriendlyNames(
+      reportCols,
+      this.adaptable.api.gridApi.getColumns()
+    );
+
+    this.adaptable.exportToExcel(report, cols, reportAsArray);
   }
 
   private copyToClipboard(report: Report) {

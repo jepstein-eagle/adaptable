@@ -156,6 +156,7 @@ import { UserFunction } from '../AdaptableOptions/UserFunctions';
 import { hasMagic } from 'glob';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
+import { Report } from '../PredefinedConfig/ExportState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -3700,21 +3701,46 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     return null;
   }
 
-  exportToExcel() {
+  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
     const div = document.createElement('div');
+    let columnDefs: ColDef[] = [];
+
+    // first go into agGrid to get the current coldef for that file....
+
+    columns.forEach((col: AdaptableColumn) => {
+      let colDef: ColDef = {
+        field: col.ColumnId,
+        headerName: col.FriendlyName,
+        cellClass: 'redFont',
+      };
+      columnDefs.push(colDef);
+    });
+
+    console.log(columnDefs);
+    console.log(data);
+    const rowData: [] = [];
+    data.forEach((d: any) => {
+      // console.log('data point');
+      // console.log(d);
+    });
 
     const gridOptions: GridOptions = {
+      columnDefs: columnDefs,
+      /*
       columnDefs: [
         { headerName: 'Make', field: 'make', cellClass: 'redFont' },
         { headerName: 'Model', field: 'model' },
         { headerName: 'Price', field: 'price' },
         { headerName: 'Release Date', field: 'releaseDate', cellClass: 'date' },
       ],
+ */
       rowData: [
-        { make: 'Toyota', model: 'Celica', price: 35000, releaseDate: '2009-04-20T00:00:00.000' },
-        { make: 'Ford', model: 'Mondeo', price: 32000, releaseDate: '2009-04-20T00:00:00.000' },
-        { make: 'Porsche', model: 'Boxter', price: 72000, releaseDate: '2009-04-20T00:00:00.000' },
+        { counterparty: 'hello', country: 'world' },
+        // { make: 'Ford', model: 'Mondeo', price: 32000, releaseDate: '2009-04-20T00:00:00.000' },
+        // { make: 'Porsche', model: 'Boxter', price: 72000, releaseDate: '2009-04-20T00:00:00.000' },
       ],
+
+      //   rowData: data,
       excelStyles: [
         {
           id: 'redFont',
@@ -3733,7 +3759,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     const grid = new Grid(div, gridOptions);
 
     gridOptions.api.exportDataAsExcel({
-      sheetName: 'Testing',
+      sheetName: 'Sheet1',
+      fileName: report.Name,
       // allColumns: true,
       // columnKeys: [],
       // columnGroups: true,

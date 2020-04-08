@@ -7,7 +7,7 @@ You can use AdapTable to export data dynamically from your grid into other forma
 Tip
 You don't need to first filter the grid before you export; if you have for example, an End of Day report, you need to define it only once and it will evaluate automatically each time you run it. irrespective of how the Grid is currently filtered.
 
-You can export data from AdapTable to a number of locations including CSV, Clipboard, JSON, to iPushPull, Excel (via Glue42 or OpenFin).
+You can export data from AdapTable to a number of locations including Excel, CSV, Clipboard, JSON, to iPushPull, and live Excel (via Glue42 or OpenFin).
 
 You can specify for each report / column combination whether to export the DisplayValue or RawValue of the column.
 

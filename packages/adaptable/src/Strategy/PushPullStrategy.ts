@@ -14,6 +14,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
 import { IPushPullReport } from '../PredefinedConfig/IPushPullState';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
+import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;
