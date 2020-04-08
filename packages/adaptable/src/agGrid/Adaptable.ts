@@ -3703,74 +3703,24 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
   exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
     const div = document.createElement('div');
-    let columnDefs: ColDef[] = [];
 
-    // first go into agGrid to get the current coldef for that file....
+    const columnIds = columns.map(col => col.ColumnId);
+    const columnDefs: ColDef[] = columns.map(col => ({
+      field: col.ColumnId,
+      headerName: col.FriendlyName,
+    }));
 
-    columns.forEach((col: AdaptableColumn) => {
-      let colDef: ColDef = {
-        field: col.ColumnId,
-        headerName: col.FriendlyName,
-        cellClass: 'redFont',
-      };
-      columnDefs.push(colDef);
-    });
-
-    console.log(columnDefs);
-    console.log(data);
-    const rowData: [] = [];
-    data.forEach((d: any) => {
-      // console.log('data point');
-      // console.log(d);
-    });
+    const rowData: any[] = data.map(row => _.zipObject(columnIds, row));
 
     const gridOptions: GridOptions = {
-      columnDefs: columnDefs,
-      /*
-      columnDefs: [
-        { headerName: 'Make', field: 'make', cellClass: 'redFont' },
-        { headerName: 'Model', field: 'model' },
-        { headerName: 'Price', field: 'price' },
-        { headerName: 'Release Date', field: 'releaseDate', cellClass: 'date' },
-      ],
- */
-      rowData: [
-        { counterparty: 'hello', country: 'world' },
-        // { make: 'Ford', model: 'Mondeo', price: 32000, releaseDate: '2009-04-20T00:00:00.000' },
-        // { make: 'Porsche', model: 'Boxter', price: 72000, releaseDate: '2009-04-20T00:00:00.000' },
-      ],
-
-      //   rowData: data,
-      excelStyles: [
-        {
-          id: 'redFont',
-          interior: {
-            color: '#FF0000',
-            pattern: 'Solid',
-          },
-        },
-        {
-          id: 'date',
-          dataType: 'dateTime',
-        },
-      ],
+      columnDefs,
+      rowData,
     };
 
     const grid = new Grid(div, gridOptions);
 
     gridOptions.api.exportDataAsExcel({
-      sheetName: 'Sheet1',
       fileName: report.Name,
-      // allColumns: true,
-      // columnKeys: [],
-      // columnGroups: true,
-      // onlySelected: true,
-      processCellCallback(params) {
-        if (params.column.getColId() === 'model') {
-          return params.value + '!';
-        }
-        return params.value;
-      },
     });
 
     grid.destroy();
