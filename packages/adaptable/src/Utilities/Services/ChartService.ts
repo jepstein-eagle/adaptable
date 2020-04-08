@@ -19,6 +19,9 @@ import {
   PieChartDefinition,
   PieChartDataItem,
   SparklinesChartDefinition,
+  FinancialChartDataItem,
+  FinancialChartDataSource,
+  FinancialChartDefinition,
 } from '../../PredefinedConfig/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 
@@ -79,6 +82,51 @@ export class ChartService implements IChartService {
       Data: returnData,
       ErrorMessage: null,
     };
+    return chartData;
+  }
+
+  public BuildFinancialChartData(chartDefinition: FinancialChartDefinition): ChartData {
+    const chartDataSources: FinancialChartDataItem[][] = [];
+
+    const dataSources = chartDefinition.DataSources;
+    chartDataSources;
+
+    const forEach = (row: any) => {
+      dataSources.forEach((dataSource: FinancialChartDataSource, i: number) => {
+        chartDataSources[i] = chartDataSources[i] || [];
+
+        let time = this.adaptable.getRawValueFromRowNode(row, dataSource.XAxisDateColumnId);
+
+        if (typeof time === 'number') {
+          time = new Date(time);
+        }
+        const valuePoint: FinancialChartDataItem = {
+          time,
+          high: this.adaptable.getRawValueFromRowNode(row, dataSource.YAxisNumericHighColumnId),
+          low: this.adaptable.getRawValueFromRowNode(row, dataSource.YAxisNumericLowColumnId),
+          open: this.adaptable.getRawValueFromRowNode(row, dataSource.YAxisNumericOpenColumnId),
+          close: this.adaptable.getRawValueFromRowNode(row, dataSource.YAxisNumericCloseColumnId),
+          volume: this.adaptable.getRawValueFromRowNode(row, dataSource.YAxisNumericVolumeColumnId),
+        };
+        chartDataSources[i].push(valuePoint);
+      });
+    };
+
+    if (chartDefinition.VisibleRowsOnly) {
+      this.adaptable.forAllVisibleRowNodesDo(forEach);
+    } else {
+      this.adaptable.forAllRowNodesDo(forEach);
+    }
+
+    dataSources.forEach((dataSource: FinancialChartDataSource, i: number) => {
+      ((chartDataSources[i] as unknown) as any).title = dataSource.Name;
+    });
+
+    const chartData: ChartData = {
+      Data: chartDataSources,
+      ErrorMessage: null,
+    };
+
     return chartData;
   }
 
