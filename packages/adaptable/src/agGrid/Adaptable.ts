@@ -3702,8 +3702,6 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
   }
 
   exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
-    const div = document.createElement('div');
-
     const columnIds = columns.map(col => col.ColumnId);
     const columnDefs: ColDef[] = columns.map(col => ({
       field: col.ColumnId,
@@ -3717,13 +3715,32 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       rowData,
     };
 
-    const grid = new Grid(div, gridOptions);
+    const grid = new Grid(document.createElement('div'), gridOptions);
 
     gridOptions.api.exportDataAsExcel({
+      sheetName: 'Sheet 1',
       fileName: report.Name,
     });
 
     grid.destroy();
+  }
+
+  exportVisibleToClipboard(report: Report) {
+    this.gridOptions.api.selectAllFiltered();
+    this.gridOptions.api.copySelectedRowsToClipboard(true);
+    this.gridOptions.api.deselectAll();
+  }
+
+  exportVisibleToExcel(report: Report) {
+    this.gridOptions.api.exportDataAsExcel({
+      sheetName: 'Sheet 1',
+      fileName: report.Name,
+    });
+  }
+  exportVisibleToCsv(report: Report) {
+    this.gridOptions.api.exportDataAsCsv({
+      fileName: report.Name,
+    });
   }
 }
 

@@ -253,6 +253,9 @@ export interface IAdaptable {
 
   // Reports
   exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]): void;
+  exportVisibleToClipboard(report: Report): void;
+  exportVisibleToExcel(report: Report): void;
+  exportVisibleToCsv(report: Report): void;
 
   // TEMPORARY : JO
   getCurrentIPPStyle(): IPPStyle;

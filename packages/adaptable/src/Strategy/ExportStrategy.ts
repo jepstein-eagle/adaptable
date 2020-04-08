@@ -14,6 +14,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import {
   SELECTED_CELLS_REPORT,
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
+  VISIBLE_DATA_REPORT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { LiveReport } from '../Api/Events/LiveDataChanged';
@@ -201,6 +202,24 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public export(report: Report, exportDestination: ExportDestination): void {
+    if (report.Name === VISIBLE_DATA_REPORT) {
+      switch (exportDestination) {
+        case ExportDestination.Clipboard:
+          this.adaptable.exportVisibleToClipboard(report);
+          break;
+        case ExportDestination.CSV:
+          this.adaptable.exportVisibleToCsv(report);
+          break;
+        case ExportDestination.Excel:
+          this.adaptable.exportVisibleToExcel(report);
+          break;
+        case ExportDestination.JSON:
+          this.convertReportToJSON(report);
+          break;
+      }
+      return;
+    }
+
     switch (exportDestination) {
       case ExportDestination.Clipboard:
         this.copyToClipboard(report);

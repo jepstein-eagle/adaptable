@@ -22,11 +22,12 @@ import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
 import { LiveDataChangedEventArgs } from '../../types';
-
-export const ALL_DATA_REPORT = 'All Data';
-export const VISIBLE_DATA_REPORT = 'Visible Data';
-export const SELECTED_CELLS_REPORT = 'Selected Cells';
-export const SELECTED_ROWS_REPORT = 'Selected Rows';
+import {
+  ALL_DATA_REPORT,
+  VISIBLE_DATA_REPORT,
+  SELECTED_CELLS_REPORT,
+  SELECTED_ROWS_REPORT,
+} from '../Constants/GeneralConstants';
 
 export class ReportService implements IReportService {
   constructor(private adaptable: IAdaptable) {
