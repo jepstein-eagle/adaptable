@@ -47,6 +47,30 @@ export interface PieChartDefinition extends ChartDefinition {
   PrimaryKeyValues?: any[];
 }
 
+export interface FinancialChartDataSource {
+  Name: string;
+  XAxisDateColumnId: string;
+
+  YAxisNumericOpenColumnId: string;
+  YAxisNumericCloseColumnId: string;
+  YAxisNumericHighColumnId: string;
+  YAxisNumericLowColumnId: string;
+  YAxisNumericVolumeColumnId?: string;
+}
+
+export interface FinancialChartDataItem {
+  time: Date;
+  open?: number;
+  high?: number;
+  low?: number;
+  close?: number;
+  volume?: number;
+}
+
+export interface FinancialChartDefinition extends ChartDefinition {
+  DataSources: FinancialChartDataSource[];
+}
+
 export interface SparklinesChartDefinition extends ChartDefinition {
   ColumnId: string;
   Expression?: Expression;

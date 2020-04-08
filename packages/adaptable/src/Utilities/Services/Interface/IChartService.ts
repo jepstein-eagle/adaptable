@@ -3,6 +3,7 @@ import {
   ChartData,
   PieChartDefinition,
   SparklinesChartDefinition,
+  FinancialChartDefinition,
 } from '../../../PredefinedConfig/ChartState';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 
@@ -13,6 +14,7 @@ export interface IChartService {
   ): ChartData;
 
   BuildPieChartData(chartDefinition: PieChartDefinition): ChartData;
+  BuildFinancialChartData(chartDefinition: FinancialChartDefinition): ChartData;
 
   BuildSparklinesChartData(
     chartDefinition: SparklinesChartDefinition,

@@ -130,6 +130,7 @@ export interface IAdaptable {
   _on(eventName: 'GridRefreshed', callback: () => void): () => void;
   _on(eventName: 'GridFiltered', callback: () => void): () => void;
   _on(eventName: 'GridReloaded', callback: () => void): () => void;
+  _on(eventName: 'SortChanged', callback: (columnSorts: ColumnSort[]) => void): () => void;
   _on(eventName: 'SpecialColumnAdded', callback: () => void): () => void;
   _on(eventName: 'ColumnResized', callback: (colId: string) => void): () => void;
   _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;

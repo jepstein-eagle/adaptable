@@ -11,6 +11,7 @@ import {
   PieChartDefinition,
   ChartData,
   SparklinesChartDefinition,
+  FinancialChartDefinition,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 
 import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
@@ -42,6 +43,10 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     this.adaptable._on('SearchApplied', () => {
       this.handleSearchChanged();
+    });
+
+    this.adaptable._on('SortChanged', () => {
+      this.handleSortChanged();
     });
 
     let refreshRate: number = this.GetChartState().RefreshRate * 1000;
@@ -159,6 +164,12 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         cd2 as SparklinesChartDefinition
       );
     }
+    if (cd1.ChartType == ChartType.FinancialChart) {
+      return this.doFinancialChartDefinitionChangesRequireDataUpdate(
+        cd1 as FinancialChartDefinition,
+        cd2 as FinancialChartDefinition
+      );
+    }
   }
 
   private doCategoryChartDefinitionChangesRequireDataUpdate(
@@ -209,11 +220,40 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
     return false;
   }
+  private doFinancialChartDefinitionChangesRequireDataUpdate(
+    cd1: FinancialChartDefinition,
+    cd2: FinancialChartDefinition
+  ): boolean {
+    if (!cd1.DataSources || !cd2.DataSources) {
+      return true;
+    }
+    if (cd1.DataSources.length != cd2.DataSources.length) {
+      return true;
+    }
+    const dataSources1 = cd1.DataSources;
+    const dataSources2 = cd2.DataSources;
+
+    for (let i = 0, len = dataSources1.length; i < len; i++) {
+      const dataSource1 = dataSources1[i];
+      const dataSource2 = dataSources2[i];
+      if (
+        dataSource1.XAxisDateColumnId !== dataSource2.XAxisDateColumnId ||
+        dataSource1.YAxisNumericCloseColumnId !== dataSource2.YAxisNumericCloseColumnId ||
+        dataSource1.YAxisNumericOpenColumnId !== dataSource2.YAxisNumericOpenColumnId ||
+        dataSource1.YAxisNumericHighColumnId !== dataSource2.YAxisNumericHighColumnId ||
+        dataSource1.YAxisNumericLowColumnId !== dataSource2.YAxisNumericLowColumnId ||
+        dataSource1.YAxisNumericVolumeColumnId !== dataSource2.YAxisNumericVolumeColumnId
+      ) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   protected handleSearchChanged(): void {
-    // weÎ always redraw a chart if its visible when a search has been applied as its relatively rare...
+    // we always redraw a chart if its visible when a search has been applied as its relatively rare...
     // might need to rethink if that is too OTT
-    if (this.isCurrentChartVisibiilityMaximised()) {
+    if (this.isCurrentChartVisibilityMaximised()) {
       let currentChartDefinition: ChartDefinition = this.GetCurrentChartDefinition();
       if (currentChartDefinition != null && currentChartDefinition.VisibleRowsOnly) {
         this.throttleSetChartData();
@@ -221,8 +261,17 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
   }
 
+  protected handleSortChanged(): void {
+    if (this.isCurrentChartVisibilityMaximised()) {
+      let currentChartDefinition: ChartDefinition = this.GetCurrentChartDefinition();
+      if (currentChartDefinition && currentChartDefinition.ChartType === ChartType.FinancialChart) {
+        this.throttleSetChartData();
+      }
+    }
+  }
+
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
-    if (this.isCurrentChartVisibiilityMaximised()) {
+    if (this.isCurrentChartVisibilityMaximised()) {
       let columnChangedId: string = dataChangedInfo.ColumnId;
       if (StringExtensions.IsNotNullOrEmpty(columnChangedId)) {
         let currentChartDefinition: ChartDefinition = this.GetCurrentChartDefinition();
@@ -233,7 +282,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     }
   }
 
-  private isCurrentChartVisibiilityMaximised(): boolean {
+  private isCurrentChartVisibilityMaximised(): boolean {
     return (
       this.adaptable.isInitialised &&
       this.SystemState != null &&
@@ -267,6 +316,25 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
       case ChartType.SparklinesChart:
         let sparklinesChartDefinition: SparklinesChartDefinition = currentChartDefinition as SparklinesChartDefinition;
         return sparklinesChartDefinition.ColumnId == columnChangedId;
+      case ChartType.FinancialChart: {
+        let financialChartDefinition: FinancialChartDefinition = currentChartDefinition as FinancialChartDefinition;
+        const dataSources = financialChartDefinition.DataSources;
+
+        for (let i = 0, len = dataSources.length; i < len; i++) {
+          const dataSource = dataSources[i];
+          if (
+            columnChangedId === dataSource.XAxisDateColumnId ||
+            columnChangedId === dataSource.YAxisNumericOpenColumnId ||
+            columnChangedId === dataSource.YAxisNumericCloseColumnId ||
+            columnChangedId === dataSource.YAxisNumericHighColumnId ||
+            columnChangedId === dataSource.YAxisNumericLowColumnId ||
+            columnChangedId === dataSource.YAxisNumericVolumeColumnId
+          ) {
+            return true;
+          }
+        }
+        return false;
+      }
     }
   }
 
@@ -287,6 +355,10 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
         chartData = this.adaptable.ChartService.BuildSparklinesChartData(
           chartDefinition as SparklinesChartDefinition,
           this.GetColumnState()
+        );
+      } else if (chartDefinition.ChartType == ChartType.FinancialChart) {
+        chartData = this.adaptable.ChartService.BuildFinancialChartData(
+          chartDefinition as FinancialChartDefinition
         );
       }
       this.adaptable.api.internalApi.setChartData(chartData);

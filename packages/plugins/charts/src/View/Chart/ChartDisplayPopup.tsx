@@ -9,6 +9,7 @@ import {
   PieChartDefinition,
   ChartData,
   SparklinesChartDefinition,
+  FinancialChartDefinition,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import {
   ChartVisibility,
@@ -29,6 +30,7 @@ import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Cons
 import { CategoryChartComponent } from './CategoryChart/CategoryChartComponent';
 import { PieChartComponent } from './PieChart/PieChartComponent';
 import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
+import { FinancialChartComponent } from './FinancialChart/FinancialChartComponent';
 import { SparklinesChartComponent } from './SparklinesChart/SparklinesChartComponent';
 import { SparklinesChartWizard } from './SparklinesChart/Wizard/SparklinesChartWizard';
 
@@ -89,7 +91,8 @@ class ChartDisplayPopupComponent extends React.Component<
     );
 
     let editButton =
-      this.props.ChartVisibility == ChartVisibility.Minimised ? null : (
+      this.props.ChartVisibility == ChartVisibility.Minimised ||
+      currentChartType == ChartType.FinancialChart ? null : (
         <ButtonEdit
           style={{ color: 'var(--ab-color-defaultbackground)' }}
           onClick={() => this.onEditChart()}
@@ -159,6 +162,15 @@ class ChartDisplayPopupComponent extends React.Component<
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
+                />
+              ) : null}
+
+              {currentChartType == ChartType.FinancialChart ? (
+                <FinancialChartComponent
+                  CurrentChartDefinition={
+                    this.props.CurrentChartDefinition as FinancialChartDefinition
+                  }
+                  ChartData={this.props.ChartData}
                 />
               ) : null}
             </div>

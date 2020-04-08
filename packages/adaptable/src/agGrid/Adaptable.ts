@@ -3066,6 +3066,7 @@ export class Adaptable implements IAdaptable {
       });
     }
     this.api.gridApi.setColumnSorts(newColumnSorts);
+    this._emit('SortChanged', newColumnSorts);
   }
 
   public expandAllRowGroups(): void {
