@@ -33,6 +33,7 @@ import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
+import { Report } from '../PredefinedConfig/ExportState';
 
 /**
  *  The only interface for Adaptable
@@ -250,6 +251,9 @@ export interface IAdaptable {
   applyGridFiltering(): void;
   clearGridFiltering(): void;
   clearColumnFiltering(columnIds: string[]): void;
+
+  // Reports
+  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]): void;
 
   // TEMPORARY : JO
   getCurrentIPPStyle(): IPPStyle;

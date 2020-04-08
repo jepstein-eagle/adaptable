@@ -30,6 +30,10 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       onClick: () => this.props.onExport(ExportDestination.CSV),
       label: 'CSV',
     };
+    let excelMenuItem: any = {
+      onClick: () => this.props.onExport(ExportDestination.Excel),
+      label: 'Excel',
+    };
     let jsonMenuItem: any = {
       onClick: () => this.props.onExport(ExportDestination.JSON),
       label: 'JSON',
@@ -72,6 +76,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     );
 
     const exportItems = [
+      excelMenuItem,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,

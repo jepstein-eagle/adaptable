@@ -106,6 +106,10 @@ class ExportToolbarControlComponent extends React.Component<
       onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV, false),
       label: 'CSV',
     };
+    let excelMenuItem = {
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Excel, false),
+      label: 'Excel',
+    };
 
     let jsonMenuItem = {
       onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON, false),
@@ -141,6 +145,7 @@ class ExportToolbarControlComponent extends React.Component<
     }
 
     const exportItems = [
+      excelMenuItem,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,

@@ -86,6 +86,7 @@ export enum ReportRowScope {
 }
 
 export enum ExportDestination {
+  Excel = 'Excel',
   CSV = 'CSV',
   Clipboard = 'Clipboard',
   JSON = 'JSON',

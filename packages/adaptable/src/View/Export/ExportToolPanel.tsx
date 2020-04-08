@@ -110,6 +110,10 @@ class ExportToolPanelComponent extends React.Component<
       onClick: () => this.props.onApplyExport(currentReport, ExportDestination.CSV),
       label: 'CSV',
     };
+    let excelMenuItem = {
+      onClick: () => this.props.onApplyExport(currentReport, ExportDestination.Excel),
+      label: 'Excel',
+    };
 
     let jsonMenuItem = {
       onClick: () => this.props.onApplyExport(currentReport, ExportDestination.JSON),
@@ -146,6 +150,7 @@ class ExportToolPanelComponent extends React.Component<
     }
 
     const exportItems = [
+      excelMenuItem,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,

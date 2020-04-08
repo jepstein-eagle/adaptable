@@ -12,7 +12,13 @@ AdapTable ships with 2 themes - "Light Theme" and "Dark Theme", but developers c
 Full details of how to create a Custom Theme can be found in the [Theming and Styling Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-theming-guide.md).
 
 ## UI Elements
-To Do
+The Theme Function includes the following UI Elements:
+
+- **Popup** - Allows the User to select a Theme from those available.
+
+- **Toolbar** - Contains a Theme dropdown enabling the User to select a Theme from those available.
+
+- **Tool Panel** - Same as Toolbar above.
 
 ## Entitlements
 Theme supports these Entitlement Rules:
@@ -47,13 +53,15 @@ You will need to do that yourself .
 
 **How do I upload my own theme?**
 
-You can do that through configuration. 
-
-The Themes section has a 'UserThemes' collection, each of which specifies a Name and Description. 
+You can do that through configuration. The Themes section has a 'UserThemes' collection, each of which specifies a Name and Description. 
 
 These themes will appear in the themes dropdown like the system themes and get resolved when they are selected. 
 
 The Description is the value that will appear in the dropdown and the Name is the name of the css file that you have to provide.
+
+**Do Themes include the underlying Vendor Grid?**
+
+No, only the 2 shipped themes do that.  Its your responsibility when providing a custom theme to style the underlying vendor grid as appropriate.
 
 ### Further Information
 
@@ -66,4 +74,3 @@ The Description is the value that will appear in the dropdown and the Name is th
 - [Custom Theme Demo](https://demo.adaptabletools.com/theme/aggridcustomthemedemo)
 
 - [Theming and Styling Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-theming-guide.md)
-

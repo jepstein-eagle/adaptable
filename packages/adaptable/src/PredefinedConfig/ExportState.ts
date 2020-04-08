@@ -125,5 +125,5 @@ export interface Report extends AdaptableObject {
  */
 export interface ReportSchedule extends BaseSchedule {
   ReportName: string;
-  ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
+  ExportDestination: 'Excel' | 'CSV' | 'Clipboard' | 'JSON';
 }

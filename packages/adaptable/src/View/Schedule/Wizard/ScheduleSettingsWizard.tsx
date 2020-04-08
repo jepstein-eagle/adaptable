@@ -38,7 +38,7 @@ export interface ScheduleSettingsWizardState {
 
   // Report related Settings
   ReportName: string;
-  ExportDestination: 'CSV' | 'Clipboard' | 'JSON';
+  ExportDestination: 'Excel' | 'CSV' | 'Clipboard' | 'JSON';
 
   // ipushpull Related Settings
   IPushPullReportName: string; // not different name to avod a conflict...
@@ -145,7 +145,7 @@ export class ScheduleSettingsWizard
       };
     });
 
-    let destinations = ['CSV', 'Clipboard', 'JSON'].map(type => {
+    let destinations = ['Excel', 'CSV', 'Clipboard', 'JSON'].map(type => {
       return {
         label: type,
         value: type,

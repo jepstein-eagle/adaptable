@@ -90,6 +90,7 @@ export class ReportService implements IReportService {
 
   public IsReportDestinationActive(exportDestination: ExportDestination): boolean {
     switch (exportDestination) {
+      case ExportDestination.Excel:
       case ExportDestination.CSV:
       case ExportDestination.Clipboard:
       case ExportDestination.JSON:
@@ -152,7 +153,7 @@ export class ReportService implements IReportService {
     switch (report.ReportRowScope) {
       case ReportRowScope.AllRows:
         this.adaptable.forAllRowNodesDo(row => {
-          let newRow = this.getRowValues(row, reportColumns, report);
+          let newRow: any[] = this.getRowValues(row, reportColumns, report);
           dataToExport.push(newRow);
         });
         break;
@@ -318,6 +319,8 @@ export class ReportService implements IReportService {
       if (exportColumnRawValue) {
         useRawValue = exportColumnRawValue(col, report);
       }
+
+      //  useRawValue = true;
       if (useRawValue) {
         columnValue = this.adaptable.getRawValueFromRowNode(rowNode, col.ColumnId);
       } else {

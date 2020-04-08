@@ -8,11 +8,9 @@ It also contains a summary of all Functions associated with that Column - and an
 ## UI Elements
 Column Info includes the following UI Elements:
 
-- **Popup** - A screen showing a table providing all the relevant information for a given Column.  
+- **Popup** - A screen showing a table providing all the relevant information for a given Column.  For instance, whether there are Column Filters or Conditional Styles applied or it has a Custom Sort or Plus / Minus info etc.   
 
-    For instance, whether there are Column Filters or Conditional Styles applied or it has a Custom Sort or Plus / Minus info etc.   
-
-    Additionally there are buttons in each row enabling existing Adaptable Objects to be edited or deleted and new ones created.
+    There are buttons in each row enabling existing Adaptable Objects to be edited or deleted and new ones created.
 
 - **Column Menu** - The `Column Information` Menu Item opens the Column Info Popup.
 

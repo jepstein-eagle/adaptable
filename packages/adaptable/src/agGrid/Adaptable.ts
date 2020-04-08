@@ -156,6 +156,7 @@ import { UserFunction } from '../AdaptableOptions/UserFunctions';
 import { hasMagic } from 'glob';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
+import { Report } from '../PredefinedConfig/ExportState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -3699,6 +3700,31 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       }
     }
     return null;
+  }
+
+  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
+    const div = document.createElement('div');
+
+    const columnIds = columns.map(col => col.ColumnId);
+    const columnDefs: ColDef[] = columns.map(col => ({
+      field: col.ColumnId,
+      headerName: col.FriendlyName,
+    }));
+
+    const rowData: any[] = data.map(row => _.zipObject(columnIds, row));
+
+    const gridOptions: GridOptions = {
+      columnDefs,
+      rowData,
+    };
+
+    const grid = new Grid(div, gridOptions);
+
+    gridOptions.api.exportDataAsExcel({
+      fileName: report.Name,
+    });
+
+    grid.destroy();
   }
 }
 
