@@ -1223,7 +1223,7 @@ export class ExamplesHelper {
       enableValue: true,
       cellClass: 'number-cell',
       // enableRowGroup: true,
-      valueFormatter: this.fourDecimalPlaceFormatter,
+      valueFormatter: this.currencyPlaceFormatter,
       filter: 'agNumberColumnFilter',
       type: 'abColDefNumber',
     });
@@ -1885,6 +1885,10 @@ export class ExamplesHelper {
   };
   private twoDecimalPlaceFormatter = (params: any) => {
     return params.value ? this.roundTo2Dp(params.value) : null;
+  };
+
+  private currencyPlaceFormatter = (params: any) => {
+    return params.value ? '£' + this.twoDecimalPlaceFormatter(params) : null;
   };
 
   private raduFormatter = (params: any) => {
