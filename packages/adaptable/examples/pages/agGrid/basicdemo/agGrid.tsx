@@ -16,6 +16,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { Layout } from '../../../../src/PredefinedConfig/LayoutState';
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
@@ -41,7 +42,7 @@ function InitAdaptableDemo() {
         Tabs: [
           {
             Name: 'General',
-            Toolbars: ['SmartEdit', 'CellSummary'],
+            Toolbars: ['SmartEdit', 'CellSummary', 'Layout'],
           },
         ],
         VisibleButtons: ['CellSummary', 'ColumnChooser'],
@@ -85,6 +86,14 @@ function InitAdaptableDemo() {
   // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    let newLayout: Layout = {
+      Name: 'test',
+      Columns: ['bid', 'currency', 'counterparty'],
+      GroupedColumns: ['country'],
+    };
+    info.adaptableApi.layoutApi.createAndSetLayout(newLayout);
+    // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
+
     /*
     setTimeout(() => {
       api.dashboardApi.floatDashboard();
@@ -102,8 +111,8 @@ function InitAdaptableDemo() {
   });
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //  console.log('search changed');
+    //  console.log(searchChangedArgs.data[0].id);
   });
 }
 

@@ -49,6 +49,17 @@ export interface LayoutApi {
    */
   saveLayout(layoutToSave: Layout): void;
   /**
+   * Creates the given layout
+   */
+  createLayout(layoutToCreate: Layout): void;
+  /**
+   * Creates the given layout and then loads it
+   */
+  createAndSetLayout(layoutToCreate: Layout): void;
+
+  doesLayoutExist(layoutName: string): boolean;
+
+  /**
    * Restores the given layout
    *
    * Reloads it according to initial definition with all vendor grid state removed.

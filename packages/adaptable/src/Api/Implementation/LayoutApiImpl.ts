@@ -8,6 +8,9 @@ import { LayoutApi } from '../LayoutApi';
 import { LayoutState, Layout } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+import ObjectFactory from '../../Utilities/ObjectFactory';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutState(): LayoutState {
@@ -89,6 +92,45 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
 
         this.saveLayout(layoutToSave);
       }
+    }
+  }
+
+  public doesLayoutExist(layoutName: string): boolean {
+    let existingLayout = this.getAllLayout().find(l => l.Name == layoutName);
+    if (existingLayout) {
+      LoggingHelper.LogAdaptableError(
+        "Cannot create layout with the Name: '" + layoutName + "' as it already exists"
+      );
+      return true;
+    }
+    return false;
+  }
+
+  public createAndSetLayout(layoutToCreate: Layout): void {
+    if (!this.doesLayoutExist(layoutToCreate.Name)) {
+      this.createLayout(layoutToCreate);
+      setTimeout(() => {
+        this.setLayout(layoutToCreate.Name);
+      }, 500);
+    }
+  }
+
+  public createLayout(layoutToCreate: Layout): void {
+    if (!this.doesLayoutExist(layoutToCreate.Name)) {
+      let newLayout: Layout = ObjectFactory.CreateEmptyLayout();
+      newLayout.Name = layoutToCreate.Name;
+      newLayout.Columns = layoutToCreate.Columns;
+      newLayout.ColumnSorts = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.ColumnSorts)
+        ? layoutToCreate.ColumnSorts
+        : [];
+      newLayout.GroupedColumns = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.GroupedColumns)
+        ? layoutToCreate.GroupedColumns
+        : [];
+      newLayout.PivotDetails = layoutToCreate.PivotDetails;
+      // make sure that the objects we need are null and have NOT been pre-loaded...
+      newLayout.VendorGridInfo = null;
+      newLayout.AdaptableGridInfo = null;
+      this.dispatchAction(LayoutRedux.LayoutSave(newLayout));
     }
   }
 
