@@ -69,7 +69,7 @@ import { GradientColumnApi } from './GradientColumnApi';
  *
  * ### API functions
  *
- * `AdaptableApi` consists of over 40 sets of properties.
+ * `AdaptableApi` consists of over 50 sets of properties.
  *
  * Each of these properties is a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. `AuditEventApi`)
  *
@@ -88,7 +88,7 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [cellSummaryApi](#cellsummaryapi)               | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columncategoryapi)         | Manages putting columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
+ *  | [columnCategoryApi](#columncategoryapi)         | Puts columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) for dealing with many columns |
  *  | [columnChooserApi](#columnchooserapi)         | |
  *  | [columnFilterApi](#columnfilterapi)         | |
  *  | [conditionalStyleApi](#conditionalstyleapi)         | |
@@ -106,7 +106,7 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [gridApi](#gridapi)         | |
  *  | [ipushpullApi](#ipushpullapi)         | |
  *  | [internalapi](#internalapi)         | Used for **internal purposes only** - not designed for external use |
- *  | [layoutApi](#layoutapi)         | |
+ *  | [layoutApi](#layoutapi)         | Manages [Layouts](_src_predefinedconfig_configstate_layoutstate_.layoutstate.html) - sets of column order and visibility|
  *  | [namedFilterApi](#namedfilterapi)         | |
  *  | [percentBarApi](#percentbarapi)         | |
  *  | [pluginsApi](#pluginsapi)         | |
