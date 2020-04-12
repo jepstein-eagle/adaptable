@@ -84,3 +84,19 @@ export { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
 // Audit Events
 export { AuditEventApi, AuditEventName } from './Api/AuditEventApi';
 export * from './Api/Events/AuditEvents';
+
+// Chart related objects
+export {
+  ChartDefinition,
+  CategoryChartDefinition,
+  PieChartDefinition,
+  FinancialChartDefinition,
+  SparklinesChartDefinition,
+  FinancialChartDataSource,
+  FinancialChartDataItem,
+  ChartProperties,
+  CategoryChartProperties,
+  PieChartProperties,
+  SparklineChartProperties,
+  PieChartDataItem,
+} from './PredefinedConfig/ChartState';

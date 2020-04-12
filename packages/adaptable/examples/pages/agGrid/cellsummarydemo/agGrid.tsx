@@ -39,7 +39,7 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Cell Summary Demo',
-    // plugins: [finance()],
+    //  plugins: [finance()],
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,
