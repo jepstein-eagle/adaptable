@@ -1,7 +1,9 @@
 import { LayoutState, Layout } from '../PredefinedConfig/LayoutState';
 
 /**
- * Provides full and comprehensive run-time access to the Layout function and associated Layout state (from Predefined Config).
+ * Provides full and comprehensive run-time access to the Layout function and associated [Layout State](_src_predefinedconfig_layoutstate_.layoutstate.html).
+ *
+ * Includes functions to retrieve, create, save, set and clone Layouts.
  *
  */
 export interface LayoutApi {
