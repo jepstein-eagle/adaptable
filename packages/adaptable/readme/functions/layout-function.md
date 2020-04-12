@@ -40,7 +40,9 @@ If the `autoSaveLayouts` property is set to false, then a Save button will be av
 Layout Toolbar and ToolPanel also include a *Restore* button which allows Users to revert the Layout back to its initial definition.
 
 ### Auto-Sizing Layout Columns
-AdapTable enables layout columns to be auto-sized by default - this is very popular with users where horizontal space is at a premium.  There are 3 options:
+AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
+
+There are 3 properties (all available in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html)):
 
 - `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened** (*Default: false*) 
 
