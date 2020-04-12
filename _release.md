@@ -1,3 +1,7 @@
+## 6.1.6
+
+updating layout docs
+
 ## 6.1.5
 
 new layout api methods
