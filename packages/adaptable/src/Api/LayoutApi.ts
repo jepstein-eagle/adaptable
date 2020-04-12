@@ -9,65 +9,85 @@ export interface LayoutApi {
    * Retrieves the Layout section from Adaptable State
    */
   getLayoutState(): LayoutState;
+
   /**
-   * Selects the layout
-   * @param layoutName has to be an existing layout
+   * Sets (i.e. selects) the Layout
+   * @param layoutName the Layout to set (has to be the name an existing Layout)
    */
   setLayout(layoutName: string): void;
+
   /**
-   * Clears the currently selected layout
+   * Clears the currently selected Layout
    *
-   * This will make the initial 'default' layout appear.
+   * This will make the initial 'default' Layout appear.
    */
   clearLayout(): void;
+
   /**
-   * Retrieves current Layout
+   * Retrieves the current Layout
    */
   getCurrentLayout(): Layout;
+
   /**
-   * Retrieves current Layout name
+   * Retrieves the name of the current Layout
    */
   getCurrentLayoutName(): string;
+
   /**
-   * Returns true if the current layout is the default layout
+   * Returns true if the current Layout is the default Layout
    */
   isDefaultLayout(): boolean;
+
   /**
-   * Retrieves the layout with the inputted name
+   * Retrieves the Layout with the inputted name
    */
   getLayoutByName(layoutName: string): Layout;
+
   /**
-   * Retrieves all Layouts in State
+   * Retrieves all the Layouts in Adaptable State
    */
   getAllLayout(): Layout[];
+
   /**
-   * Saves the current layout - using the column order and grid sort info currently in the grid
+   * Saves the current Layout - using the column order, visibility and grid sort info currently being displayed in the grid
    */
   saveCurrentLayout(): void;
+
   /**
-   * Saves the given layout
+   * Saves the given Layout into Adaptable State
+   * @param layoutToSave the Layout to save (the Layout needs already to exist)
    */
   saveLayout(layoutToSave: Layout): void;
+
   /**
-   * Creates the given layout
+   * Creates the a new Layout in the state
+   * @param layoutToCreate the Layout to create (the Api will create the identiifer automatically)
    */
   createLayout(layoutToCreate: Layout): void;
+
   /**
-   * Creates the given layout and then loads it
+   * Creates the given Layout and then loads it into the Grid
+   * @param layoutToCreate the Layout to create (the Api will create the identiifer automatically)
    */
   createAndSetLayout(layoutToCreate: Layout): void;
+
   /**
-   * Clones the given layout
+   * Clones the given Layout by creating a new one with the same properties but with a new name (using the one provided)
+   * @param layoutToClone the Layout to clone
+   * @param layoutName the name to use the new Layout
    */
   cloneLayout(layoutToClone: Layout, layoutName: string): void;
+
   /**
-   * Clones the given layout and then loads it
+   * Clones the given Layout by creating a new one with the same properties but with a new name (using the one provided), and then loads it into the Grid
+   * @param layoutToClone the Layout to clone
+   * @param layoutName the name to use the new Layout
    */
   cloneAndSetLayout(layoutToClone: Layout, layoutName: string): void;
 
   /**
-   * Checks whether this layout exists in the Adaptable State (by comparing the Uuid property value)
-   * @param layout the layout to check
+   * Checks whether this Layout exists in the Adaptable State (by comparing the Uuid property value)
+   * @param layout the Layout to check
    */
   doesLayoutExist(layout: Layout): boolean;
 
@@ -75,8 +95,9 @@ export interface LayoutApi {
    * Restores the given layout
    *
    * Reloads it according to initial definition with all vendor grid state removed.
+   * @param layoutToRestore the Layout to restore (the Layout needs already to exist)
    */
-  restorelayout(layoutToSave: Layout): void;
+  restorelayout(layoutToRestore: Layout): void;
 
   /**
    * Opens the Layout popup screen

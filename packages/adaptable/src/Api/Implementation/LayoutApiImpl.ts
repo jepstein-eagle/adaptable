@@ -170,8 +170,8 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
   }
 
-  public restorelayout(layoutToSave: Layout): void {
-    this.dispatchAction(LayoutRedux.LayoutRestore(layoutToSave));
+  public restorelayout(layoutToRestore: Layout): void {
+    this.dispatchAction(LayoutRedux.LayoutRestore(layoutToRestore));
   }
 
   public showLayoutPopup(): void {
