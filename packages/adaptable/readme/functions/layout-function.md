@@ -8,8 +8,9 @@ Layouts can also include column sorting, grouping and pivoting information and c
 ### Layout Contents
 Layouts are primarily sets of column visibility and order; they **do not include styling functions** (e.g. Conditional Styles) **nor do they include searching or filtering functions**.
 
-However Layouts can, optionally, also include column sorting, grouping and pivoting information in their definitions which will be included in the Layout.
+However Layouts can, optionally, also include column sorting, grouping and pivoting information in their definitions which will be included in the [Layout](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layout.html).
 
+#### Vendor Grid Info
 Layouts can also include underlying information about the Grid which will be automatically re-applied when the Layout loads.  
 
 This is done by setting the  `includeVendorStateInLayouts` property to true in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
@@ -20,7 +21,7 @@ This is done by setting the  `includeVendorStateInLayouts` property to true in [
 ### Creating Layouts
 When creating a Layout in the UI, the Layout Wizard provides 2 choices:
 
-- building the Layout from scratch (selecting bespoke column visibility, order and sorting) or duplicating what is currently in the grid.
+- building the Layout from scratch (selecting bespoke column visibility, order and sorting)
 
 - copying the currently selected Layout - this will include the Layout's current column visilbity and order but not any vendor information (e.g. column widths, grouping, pinned rows etc.)
 
@@ -34,25 +35,27 @@ There is an option to have layouts save automatically when changes are made in t
 
 > At present there is not an 'Auto-Save' option per Layout; it applies for **all Layouts**.
 
-If this is not set then a Save button will be available in the toolbar.
+If the `autoSaveLayouts` property is set to false, then a Save button will be available in the toolbar.
 
-The Layout toolbar and tool panels also include a Restore button which allows Users to revert the Layout back to its initial definition.
+Layout Toolbar and ToolPanel also include a *Restore* button which allows Users to revert the Layout back to its initial definition.
 
 ### Auto-Sizing Layout Columns
 AdapTable enables layout columns to be auto-sized by default - this is very popular with users where horizontal space is at a premium.  There are 3 options:
 
-- autoSizeColumnsInLayout - whether all Layouts should automatically autosize columns when **first opened** (*Default: false*)
-- autoSizeColumnsInDefaultLayout - whether the Default Layout should automatically autosize columns (*Default: true*)
-- autoSizeColumnsInPivotLayout - whether a pivot-based Layout should automatically autosize columns when **first opened** (*Default: false*)
+- `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened** (*Default: false*) 
+
+- `autoSizeColumnsInDefaultLayout` - whether the Default Layout should automatically autosize columns (*Default: true*)
+
+- `autoSizeColumnsInPivotLayout` - whether a pivot-based Layout should automatically autosize columns when **first opened** (*Default: false*)
 
 ### Default Layout
 AdapTable provides a 'Default Layout' at start-up based on the inital column definitions provided to the grid.  
 
-When a Layout is unselected / cleared, AdapTable will revert to the Default Layout.
+Whenever a Layout is unselected or cleared, AdapTable will revert to displaying the Default Layout.
 
-**Note: the Default Layout is never updated or saved at runtime** so any changes made to it will be lost; users who wish to persist column changes must create a bespoke Layout.
+**Note: the Default Layout is never updated or saved at runtime**.  This means that any changes made to Column sorting, visibilty or order will not be persisted; users who wish to persist column changes must create a bespoke Layout.
 
-> Do not create a Layout called 'Default Layout' or 'AB_Default_Layout' as these are used refer to the Default Layout and can cause problems.
+> Do not create a Layout called 'Default Layout' or 'AB_Default_Layout' as these are used internally to refer to the Default Layout and can cause problems.
 
 
 ## UI Elements
@@ -101,10 +104,6 @@ Yes. If the underlying grid supports multiple sorts, then the layout will as wel
 
 Yes - if the `includeVendorStateInLayouts` property is set to true in LayoutOptions in AdaptableOptions.  
 
-**Can a layout include vendor specific information - e.g. some ag-Grid properties?**
-
-No. We provide this functionality in the Adaptable Blotter.NET product so it is possible to do but we haven't yet introduced it to AdaptableBlotter.JS. We plan to do so shortly.
-
 **Can I copy what is currently in my grid as a layout?**
 
 Yes, in version 1.10 there is an option to copy the current grid setup as your new layout. You can then subsequently make changes to either the new or the original layout without affecting the other.
@@ -113,11 +112,9 @@ Yes, in version 1.10 there is an option to copy the current grid setup as your n
 
 This is a Layout that we create on start-up based on the column definitions you provide AdapTable at start-up. Unlike other Layouts, the Default Layout is not editable or saveable.
 
-> Do not create a Layout called Default Layout or AB_Default_Layout as these are used to map your start-up column configuration and can cause problems.
-
 **Is every layout editable and deletable?**
 
-Yes, other than the Default Layout (assuming that your permissions allow you to edit / delete predefined Adaptable Objects).
+Yes, other than the Default Layout (assuming that your [Entitlements](./guides/adaptable-entitlements-guide.md) allow you to edit / delete predefined Adaptable Objects).
 
 ### Further Information
 - [Layout State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html)
@@ -126,5 +123,5 @@ Yes, other than the Default Layout (assuming that your permissions allow you to 
 
 - [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html)
 
-- [Layout Demo](https://demo.adaptabletools.com/layout)
+- [Layout Demos](https://demo.adaptabletools.com/layout)
 
