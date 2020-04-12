@@ -56,7 +56,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   layoutOptions: {
     includeVendorStateInLayouts: true,
-    includeOpenedRowGroups: true,
+    includeOpenedRowGroups: false,
     autoSaveLayouts: true,
     autoSizeColumnsInLayout: false,
     autoSizeColumnsInDefaultLayout: true,
