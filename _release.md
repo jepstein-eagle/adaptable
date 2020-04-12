@@ -1,3 +1,7 @@
+## 6.1.5
+
+new layout api methods
+
 ## 6.1.4
 
 css dashboard issue fixed when multiple tabs
