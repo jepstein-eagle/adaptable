@@ -82,6 +82,3 @@ Yes you can - by creating a [User Filter](./user-filter-function.md).  Column Fi
 - [Column Filters Demo](https://demo.adaptabletools.com/filters/aggridcolumnfiltersdemo)
 
 - [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
-
-
-
