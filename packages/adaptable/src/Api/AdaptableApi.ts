@@ -89,6 +89,40 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
  *  | [columnCategoryApi](#columncategoryapi)         | Manages putting columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) for when dealing with many columns |
+ *  | [columnChooserApi](#columnchooserapi)         | |
+ *  | [columnFilterApi](#columnfilterapi)         | |
+ *  | [conditionalStyleApi](#conditionalstyleapi)         | |
+ *  | [configApi](#configapi)         | |
+ *  | [customSortApi](#customsortapi)         | |
+ *  | [dashboardApi](#dashboardapi)         | |
+ *  | [dataSourceApi](#datasourceapi)         | |
+ *  | [entitlementsApi](#entitlementsapi)         | |
+ *  | [eventApi](#eventapi)         | |
+ *  | [exportApi](#exportapi)         | |
+ *  | [flashingCellApi](#flashingcellapi)         | |
+ *  | [freeTextColumnApi](#freetextcolumnapi)         | |
+ *  | [glue42Api](#glue42api)         | |
+ *  | [gradientColumnApi](#gradientcolumnapi)         | |
+ *  | [gridApi](#gridapi)         | |
+ *  | [ipushpullApi](#ipushpullapi)         | |
+ *  | [internalapi](#internalapi)         | Used for **internal purposes only** - not designed for external use |
+ *  | [layoutApi](#layoutapi)         | |
+ *  | [namedFilterApi](#namedfilterapi)         | |
+ *  | [percentBarApi](#percentbarapi)         | |
+ *  | [pluginsApi](#pluginsapi)         | |
+ *  | [quickSearchApi](#quicksearchapi)         | |
+ *  | [reminderApi](#reminderapi)         | |
+ *  | [scheduleApi](#scheduleapi)         | |
+ *  | [shortcutApi](#shortcutapi)         | |
+ *  | [smartEditApi](#smarteditapi)         | |
+ *  | [sparklineColumnApi](#sparklinecolumnapi)         | |
+ *  | [systemFilterApi](#systemfilterapi)         | |
+ *  | [systemStatusApi](#systemstatusapi)         | |
+ *  | [themeApi](#themeapi)         | |
+ *  | [toolPanelApi](#toolpanelapi)         | |
+ *  | [updatedRowApi](#updatedrowapi)         | |
+ *  | [userFilterApi](#userfilterapi)         | |
+ *  | [userInterfaceApi](#userinterfaceapiapi)         | |
  *  |
  */
 export interface AdaptableApi {
