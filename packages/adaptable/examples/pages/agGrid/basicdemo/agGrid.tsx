@@ -11,12 +11,14 @@ import {
   AdaptableApi,
   AdaptableReadyInfo,
   SearchChangedEventArgs,
+  ToolbarButtonClickedInfo,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
 import { Layout } from '../../../../src/PredefinedConfig/LayoutState';
+import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
 var api: AdaptableApi;
 
 function InitAdaptableDemo() {
@@ -42,10 +44,27 @@ function InitAdaptableDemo() {
         Tabs: [
           {
             Name: 'General',
-            Toolbars: ['SmartEdit', 'CellSummary', 'Layout'],
+            Toolbars: ['Toolbar1', 'SmartEdit', 'CellSummary', 'Layout'],
           },
         ],
         VisibleButtons: ['CellSummary', 'ColumnChooser'],
+        CustomToolbars: [
+          {
+            Name: 'Toolbar1',
+            Title: 'Demo Toolbar',
+            Glyph: 'advanced-search',
+            ToolbarButtons: [
+              {
+                Name: 'btnNewLayout',
+                Caption: 'New Layout',
+              },
+              {
+                Name: 'btnCopyLayout',
+                Caption: 'Copy Layout',
+              },
+            ],
+          },
+        ],
         ShowFunctionsDropdown: true,
         //  HomeToolbarTitle: 'Hello world',
         ShowQuickSearchInHeader: true,
@@ -83,17 +102,28 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
 
+  api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
+    let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;
+    let toolbarButton = eventInfo.toolbarButton;
+
+    if (toolbarButton.Name == 'btnNewLayout') {
+      let newLayout: Layout = {
+        Name: 'test',
+        Columns: ['bid', 'currency', 'counterparty'],
+        GroupedColumns: ['country'],
+      };
+      api.layoutApi.createAndSetLayout(newLayout);
+    } else if (toolbarButton.Name == 'btnCopyLayout') {
+      let testLayout: Layout = api.layoutApi.getLayoutByName('test');
+
+      api.layoutApi.cloneAndSetLayout(testLayout, 'Hello World');
+    }
+  });
+
   // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    let newLayout: Layout = {
-      Name: 'test',
-      Columns: ['bid', 'currency', 'counterparty'],
-      GroupedColumns: ['country'],
-    };
-    info.adaptableApi.layoutApi.createAndSetLayout(newLayout);
     // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
-
     /*
     setTimeout(() => {
       api.dashboardApi.floatDashboard();

@@ -56,8 +56,20 @@ export interface LayoutApi {
    * Creates the given layout and then loads it
    */
   createAndSetLayout(layoutToCreate: Layout): void;
+  /**
+   * Clones the given layout
+   */
+  cloneLayout(layoutToClone: Layout, layoutName: string): void;
+  /**
+   * Clones the given layout and then loads it
+   */
+  cloneAndSetLayout(layoutToClone: Layout, layoutName: string): void;
 
-  doesLayoutExist(layoutName: string): boolean;
+  /**
+   * Checks whether this layout exists in the Adaptable State (by comparing the Uuid property value)
+   * @param layout the layout to check
+   */
+  doesLayoutExist(layout: Layout): boolean;
 
   /**
    * Restores the given layout

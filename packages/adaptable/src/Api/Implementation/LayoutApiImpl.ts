@@ -11,6 +11,8 @@ import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
+import Helper from '../../Utilities/Helpers/Helper';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutState(): LayoutState {
@@ -95,43 +97,73 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     }
   }
 
-  public doesLayoutExist(layoutName: string): boolean {
-    let existingLayout = this.getAllLayout().find(l => l.Name == layoutName);
-    if (existingLayout) {
-      LoggingHelper.LogAdaptableError(
-        "Cannot create layout with the Name: '" + layoutName + "' as it already exists"
-      );
-      return true;
+  public doesLayoutExist(layout: Layout): boolean {
+    if (layout == null) {
+      return false;
     }
-    return false;
+    let existingLayout = this.getAllLayout().find(l => l.Uuid == layout.Uuid);
+    return existingLayout != null;
   }
 
   public createAndSetLayout(layoutToCreate: Layout): void {
-    if (!this.doesLayoutExist(layoutToCreate.Name)) {
-      this.createLayout(layoutToCreate);
-      setTimeout(() => {
-        this.setLayout(layoutToCreate.Name);
-      }, 500);
+    if (this.doesLayoutExist(layoutToCreate)) {
+      LoggingHelper.LogAdaptableError(
+        "Cannot create layout with the Name: '" + layoutToCreate.Name + "' as it already exists"
+      );
+      return;
     }
+    this.createLayout(layoutToCreate);
+    setTimeout(() => {
+      this.setLayout(layoutToCreate.Name);
+    }, 200);
   }
 
   public createLayout(layoutToCreate: Layout): void {
-    if (!this.doesLayoutExist(layoutToCreate.Name)) {
-      let newLayout: Layout = ObjectFactory.CreateEmptyLayout();
-      newLayout.Name = layoutToCreate.Name;
-      newLayout.Columns = layoutToCreate.Columns;
-      newLayout.ColumnSorts = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.ColumnSorts)
-        ? layoutToCreate.ColumnSorts
-        : [];
-      newLayout.GroupedColumns = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.GroupedColumns)
-        ? layoutToCreate.GroupedColumns
-        : [];
-      newLayout.PivotDetails = layoutToCreate.PivotDetails;
-      // make sure that the objects we need are null and have NOT been pre-loaded...
-      newLayout.VendorGridInfo = null;
-      newLayout.AdaptableGridInfo = null;
-      this.dispatchAction(LayoutRedux.LayoutSave(newLayout));
+    if (this.doesLayoutExist(layoutToCreate)) {
+      LoggingHelper.LogAdaptableError(
+        "Cannot create layout with the Name: '" + layoutToCreate.Name + "' as it already exists"
+      );
+      return;
     }
+    let newLayout: Layout = ObjectFactory.CreateEmptyLayout();
+    newLayout.Name = layoutToCreate.Name;
+    newLayout.Columns = layoutToCreate.Columns;
+    newLayout.ColumnSorts = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.ColumnSorts)
+      ? layoutToCreate.ColumnSorts
+      : [];
+    newLayout.GroupedColumns = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.GroupedColumns)
+      ? layoutToCreate.GroupedColumns
+      : [];
+    newLayout.PivotDetails = layoutToCreate.PivotDetails;
+    // make sure that the objects we need are null and have NOT been pre-loaded...
+    newLayout.VendorGridInfo = null;
+    newLayout.AdaptableGridInfo = null;
+    this.dispatchAction(LayoutRedux.LayoutSave(newLayout));
+  }
+
+  public cloneAndSetLayout(layoutToClone: Layout, layoutName: string): void {
+    if (!this.doesLayoutExist(layoutToClone)) {
+      LoggingHelper.LogAdaptableError(
+        "Cannot clone layout with Name: '" + layoutName + "' as other Layout does not exist"
+      );
+      return;
+    }
+    this.cloneLayout(layoutToClone, layoutName);
+    setTimeout(() => {
+      this.setLayout(layoutName);
+    }, 200);
+  }
+
+  public cloneLayout(layoutToClone: Layout, layoutName: string): void {
+    if (!this.doesLayoutExist(layoutToClone)) {
+      LoggingHelper.LogAdaptableError(
+        "Cannot clone layout with Name: '" + layoutName + "' as other Layout does not exist"
+      );
+      return;
+    }
+    let newLayout: Layout = Helper.cloneObject(layoutToClone);
+    (newLayout.Uuid = createUuid()), (newLayout.Name = layoutName);
+    this.dispatchAction(LayoutRedux.LayoutSave(newLayout));
   }
 
   public saveLayout(layoutToSave: Layout): void {
