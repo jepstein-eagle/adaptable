@@ -1,22 +1,20 @@
 {
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
+  "main": "src/parser.js",
+  "typings": "src/parser.d.ts",
   "files": [
-    "dist",
     "src"
   ],
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
+    "start": "tsdx test --watch",
     "test": "tsdx test",
-    "test:watch": "tsdx test --watch",
     "lint": "tsdx lint",
-    "prepare": "tsdx build"
+    "build": "node ./src/generate.js",
+    "prepare": "npm run build"
   },
   "peerDependencies": {},
   "husky": {

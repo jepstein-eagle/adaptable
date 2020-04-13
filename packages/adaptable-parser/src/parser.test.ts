@@ -1,19 +1,33 @@
-import parser from '../src';
+import fs from 'fs';
+import path from 'path';
+// @ts-ignore
+import { Parser } from 'jison';
 
-const t = (name: string, input: string | string[], output: any) => {
+let parser: Parser;
+
+beforeAll(() => {
+  const file = path.join(__dirname, './grammar.jison');
+  const grammar = fs.readFileSync(file, 'utf8');
+  parser = new Parser(grammar);
+});
+
+const t = (name: string, input: string | string[], output: AST) => {
   test(name, () => {
     const inputs = Array.isArray(input) ? input : [input];
-    inputs.forEach(i => {
-      expect(parser.parse(i)).toEqual(output);
+    inputs.forEach(input => {
+      expect(parser.parse(input)).toMatchObject(output);
     });
   });
 };
+
+// tests
 
 describe('math', () => {
   t('ADD', '1 + 2', [{ type: 'ADD', args: [1, 2] }]);
   t('SUB', '1 - 2', [{ type: 'SUB', args: [1, 2] }]);
   t('MUL', '1 * 2', [{ type: 'MUL', args: [1, 2] }]);
   t('DIV', '1 / 2', [{ type: 'DIV', args: [1, 2] }]);
+  t('MOD', '1 % 2', [{ type: 'MOD', args: [1, 2] }]);
   t('POW', '1 ^ 2', [{ type: 'POW', args: [1, 2] }]);
 });
 
@@ -37,11 +51,18 @@ describe('literal', () => {
   t('TRUE', 'TRUE', [true]);
   t('FALSE', 'FALSE', [false]);
   t('NUMBER', '1', [1]);
-  t('STRING', '"A"', ['A']);
+  t('STRING', ['"A"', "'A'"], ['A']);
+  t('ARRAY', '[1, "A"]', [[1, 'A']]);
+  t('EMPTY ARRAY', '[]', [[]]);
 });
 
 describe('function', () => {
-  t('FUNCTION', 'COL(1, "A")', [{ type: 'COL', args: [1, 'A'] }]);
+  t(
+    'FUNCTION',
+    ['COL(1, "A")', 'col(1, "A")'],
+    [{ type: 'COL', args: [1, 'A'] }]
+  );
+  t('FUNCTION NO ARGS', ['COL()', 'col()'], [{ type: 'COL', args: [] }]);
 });
 
 describe('smart', () => {
@@ -69,6 +90,19 @@ describe('smart', () => {
         'BIG',
         { type: 'DAY', args: [{ type: 'COL', args: ['B'] }] },
       ],
+    },
+  ]);
+  t('column values', 'IN(COL("A"), ["X", "Y", "Z"])', [
+    {
+      type: 'IN',
+      args: [{ type: 'COL', args: ['A'] }, ['X', 'Y', 'Z']],
+    },
+  ]);
+  t('location tracking', '1 + COL("A")', [
+    {
+      type: 'ADD',
+      args: [1, { type: 'COL', args: ['A'], range: [4, 12] }],
+      range: [0, 12],
     },
   ]);
 });

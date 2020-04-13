@@ -2,5 +2,6 @@
 
 ```
 npm i
-npm run test:watch
+npm start
+npm build
 ```

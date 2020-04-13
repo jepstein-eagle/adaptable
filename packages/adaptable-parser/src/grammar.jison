@@ -1,12 +1,26 @@
 /* lexical grammar */
 
 %lex
+%options ranges
+
+%{
+
+yy.node = function(type, args, location) {
+  return {
+    type,
+    args,
+    range: location.range
+  }
+}
+
+%}
+
 %%
 
 (\r?\n)+\s*           return 'NEWLINE';
-[^\S\r\n]+            /* skip whitespace */
+[^\S\r?\n]+            /* skip whitespace */
 [0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"[^"]+\"             return 'STRING'
+\"[^"]+\"|\'[^']+\'   return 'STRING'
 "&"|"AND"             return '&'
 "!="                  return '!='
 ">="                  return '>='
@@ -20,15 +34,18 @@
 "/"                   return '/'
 "-"                   return '-'
 "+"                   return '+'
+"%"                   return '%'
 "^"                   return '^'
 "("                   return '('
 ")"                   return ')'
+"["                   return '['
+"]"                   return ']'
 ","                   return ','
 "?"                   return '?'
 ":"                   return ':'
 "TRUE"                return 'TRUE'
 "FALSE"               return 'FALSE'
-[A-Z_]+               return 'FUNCTION'
+[a-zA-Z_]+            return 'FUNCTION'
 <<EOF>>               return 'EOF'
 .                     return 'INVALID'
 
@@ -40,7 +57,7 @@
 %left '=' '!=' '<' '<=' '>' '>='
 %left '&' '|'
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 %left '^'
 %left '!'
 %left UMINUS
@@ -52,47 +69,50 @@
 %%
 
 program
-    : EOF
-        { return []; }
-    | expressions EOF
-        { return $1; }
-    ;
+  : EOF                     { return []; }
+  | expressions EOF         { return $1; }
+  ;
 
 expressions
-    : e
-        { $$ = [$1]; }
-    | expressions NEWLINE
-        { $$ = $1; }
-    | expressions NEWLINE e
-        { $$ = $1.concat([$3]); }
-    ;
+  : e { $$ = [$1]; }
+  | expressions NEWLINE     { $$ = $1; }
+  | expressions NEWLINE e   { $$ = $1.concat([$3]); }
+  ;
 
 args
-  : args ',' e { $$ = $1.concat([$3]); }
-  | e { $$ = [$1]; }
+  : /* empty */             { $$ = []; }
+  | e                       { $$ = [$1]; }
+  | args ',' e              { $$ = $1.concat([$3]); }
   ;
 
 e
-  : e '+' e                 {$$ = { type: 'ADD', args: [$1, $3] };}
-  | e '-' e                 {$$ = { type: 'SUB', args: [$1, $3] };}
-  | e '*' e                 {$$ = { type: 'MUL', args: [$1, $3] };}
-  | e '/' e                 {$$ = { type: 'DIV', args: [$1, $3] };}
-  | e '^' e                 {$$ = { type: 'POW', args: [$1, $3] };}
-  | e '|' e                 {$$ = { type: 'OR', args: [$1, $3] };}
-  | '!' e                   {$$ = { type: 'NOT', args: [$2] };}
-  | e '&' e                 {$$ = { type: 'AND', args: [$1, $3] };}
-  | e '=' e                 {$$ = { type: 'EQ', args: [$1, $3] };}
-  | e '!=' e                {$$ = { type: 'NEQ', args: [$1, $3] };}
-  | e '<' e                 {$$ = { type: 'LT', args: [$1, $3] };}
-  | e '<=' e                {$$ = { type: 'LTE', args: [$1, $3] };}
-  | e '>' e                 {$$ = { type: 'GT', args: [$1, $3] };}
-  | e '>=' e                {$$ = { type: 'GTE', args: [$1, $3] };}
-  | e '?' e ':' e           {$$ = { type: 'IF', args: [$1, $3, $5] };}
-  | '-' e %prec UMINUS      {$$ = -$2;}
-  | '(' e ')'               {$$ = $2;}
-  | TRUE                    {$$ = true;}
-  | FALSE                   {$$ = false;}
-  | NUMBER                  {$$ = Number($NUMBER);}
-  | STRING                  {$$ = $STRING.slice(1, -1);}
-  | FUNCTION '(' args ')'   {$$ = { type: $FUNCTION, args: $args };}
+  /* literal */
+  : TRUE                    { $$ = true; }
+  | FALSE                   { $$ = false; }
+  | NUMBER                  { $$ = Number($NUMBER); }
+  | STRING                  { $$ = $STRING.slice(1, -1); }
+  | '[' args ']'            { $$ = $2; }
+  /* math */
+  | e '+' e                 { $$ = yy.node('ADD', [$1, $3], @$); }
+  | e '-' e                 { $$ = yy.node('SUB', [$1, $3], @$); }
+  | e '*' e                 { $$ = yy.node('MUL', [$1, $3], @$); }
+  | e '/' e                 { $$ = yy.node('DIV', [$1, $3], @$); }
+  | e '%' e                 { $$ = yy.node('MOD', [$1, $3], @$); }
+  | e '^' e                 { $$ = yy.node('POW', [$1, $3], @$); }
+  /* logic */
+  | e '|' e                 { $$ = yy.node('OR', [$1, $3], @$); }
+  | e '&' e                 { $$ = yy.node('AND', [$1, $3], @$); }
+  | '!' e                   { $$ = yy.node('NOT', [$2], @$); }
+  | e '?' e ':' e           { $$ = yy.node('IF', [$1, $3, $5], @$); }
+  /* compare */
+  | e '=' e                 { $$ = yy.node('EQ', [$1, $3], @$); }
+  | e '!=' e                { $$ = yy.node('NEQ', [$1, $3], @$); }
+  | e '<' e                 { $$ = yy.node('LT', [$1, $3], @$); }
+  | e '<=' e                { $$ = yy.node('LTE', [$1, $3], @$); }
+  | e '>' e                 { $$ = yy.node('GT', [$1, $3], @$); }
+  | e '>=' e                { $$ = yy.node('GTE', [$1, $3], @$); }
+  /* other */
+  | FUNCTION '(' args ')'   { $$ = yy.node($FUNCTION.toUpperCase(), $args, @$); }
+  | '-' e %prec UMINUS      { $$ = -$2; }
+  | '(' e ')'               { $$ = $2; }
   ;
