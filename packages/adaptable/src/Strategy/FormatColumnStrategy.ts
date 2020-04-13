@@ -21,7 +21,6 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         eventName == FormatColumnRedux.FORMAT_COLUMN_EDIT ||
         eventName == FormatColumnRedux.FORMAT_COLUMN_DELETE
       ) {
-        alert('im called');
         this.adaptable.addFormatColumnFormats();
         this.adaptable.redraw();
       }
