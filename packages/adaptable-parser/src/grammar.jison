@@ -80,7 +80,8 @@ expressions
   ;
 
 args
-  : e                       { $$ = [$1]; }
+  : /* empty */             { $$ = []; }
+  | e                       { $$ = [$1]; }
   | args ',' e              { $$ = $1.concat([$3]); }
   ;
 

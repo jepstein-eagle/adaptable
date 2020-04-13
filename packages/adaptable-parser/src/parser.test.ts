@@ -53,6 +53,7 @@ describe('literal', () => {
   t('NUMBER', '1', [1]);
   t('STRING', ['"A"', "'A'"], ['A']);
   t('ARRAY', '[1, "A"]', [[1, 'A']]);
+  t('EMPTY ARRAY', '[]', [[]]);
 });
 
 describe('function', () => {
@@ -61,6 +62,7 @@ describe('function', () => {
     ['COL(1, "A")', 'col(1, "A")'],
     [{ type: 'COL', args: [1, 'A'] }]
   );
+  t('FUNCTION NO ARGS', ['COL()', 'col()'], [{ type: 'COL', args: [] }]);
 });
 
 describe('smart', () => {

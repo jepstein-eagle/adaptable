@@ -12,3 +12,9 @@ type AST_Function = {
   args: AST_Expression[];
   range?: [number, number];
 };
+
+type Token = {
+  type: string;
+  value: string;
+  range: [number, number];
+}

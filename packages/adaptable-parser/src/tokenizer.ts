@@ -1,5 +1,5 @@
 export function tokenize(parser: any, input: string) {
-  const tokens = [];
+  const tokens: Token[] = [];
   const lexer = parser.lexer;
 
   lexer.setInput(input);
