@@ -200,9 +200,12 @@ class FormatColumnPopupComponent extends React.Component<
       return false;
     }
 
-    // dont think it matters if its an empty style - so what?
-    if (formatColumn.Style != undefined && UIHelper.IsEmptyStyle(formatColumn.Style)) {
-      // return false;
+    // cannot complete if its an empty style and no format
+    if (
+      UIHelper.IsEmptyStyle(formatColumn.Style) &&
+      StringExtensions.IsNullOrEmpty(formatColumn.Format)
+    ) {
+      return false;
     }
 
     return true;

@@ -2778,7 +2778,7 @@ export class Adaptable implements IAdaptable {
   }
 
   addFormatColumnFormats(): void {
-    // not sure if this is right as we always set whenever anything changes but lets see...
+    // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
     const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithColumnFormat();
 
     const cols = this.gridOptions.columnApi.getAllColumns();

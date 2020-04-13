@@ -10,6 +10,7 @@ import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { UIHelper } from '../UIHelper';
 
 export class FormatColumnEntityRow extends React.Component<
   SharedEntityExpressionRowProps<FormatColumnEntityRow>,
@@ -27,7 +28,13 @@ export class FormatColumnEntityRow extends React.Component<
     colItems[0].Content = <EntityRowItem Content={adaptableColumn.FriendlyName} />;
     colItems[1].Content = (
       <EntityRowItem
-        Content={formatColumn.Style ? <StyleVisualItem Style={formatColumn.Style} /> : 'None'}
+        Content={
+          formatColumn.Style == null || UIHelper.IsEmptyStyle(formatColumn.Style) ? (
+            '[None]'
+          ) : (
+            <StyleVisualItem Style={formatColumn.Style} />
+          )
+        }
       />
     );
     colItems[2].Content = (

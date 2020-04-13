@@ -10,6 +10,7 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
+import UIHelper from '../../UIHelper';
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}>
@@ -36,7 +37,12 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
 
       {
         Key: 'Style',
-        Value: this.props.Data.Style ? <StyleVisualItem Style={this.props.Data.Style} /> : 'None',
+        Value:
+          this.props.Data.Style == null || UIHelper.IsEmptyStyle(this.props.Data.Style) ? (
+            '[None]'
+          ) : (
+            <StyleVisualItem Style={this.props.Data.Style} />
+          ),
       },
       {
         Key: 'Format',
