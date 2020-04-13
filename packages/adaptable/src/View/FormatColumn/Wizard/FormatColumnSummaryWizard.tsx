@@ -20,6 +20,11 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
 
   render() {
+    let adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+      this.props.Data.ColumnId,
+      this.props.Columns
+    );
+
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
@@ -28,7 +33,15 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
           this.props.Columns
         ),
       },
-      { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
+
+      {
+        Key: 'Style',
+        Value: this.props.Data.Style ? <StyleVisualItem Style={this.props.Data.Style} /> : 'None',
+      },
+      {
+        Key: 'Format',
+        Value: this.showFormatExample(this.props.Data, adaptableColumn),
+      },
     ];
 
     let summaryPage = (
@@ -58,5 +71,15 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
   public GetIndexStepDecrement() {
     return 1;
+  }
+
+  private showFormatExample(
+    formatColumn: FormatColumn,
+    adaptableColumn: AdaptableColumn
+  ): string | undefined {
+    if (!formatColumn.Format) {
+      return undefined;
+    }
+    return formatColumn.Format;
   }
 }

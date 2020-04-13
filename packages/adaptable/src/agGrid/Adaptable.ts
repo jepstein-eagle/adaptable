@@ -159,6 +159,7 @@ import { hasMagic } from 'glob';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 import { Report } from '../PredefinedConfig/ExportState';
+import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -269,6 +270,8 @@ export class Adaptable implements IAdaptable {
   private _id: string;
 
   private rowListeners: { [key: string]: (event: any) => void };
+
+  private originalColDefValueFormatters: { [key: string]: any } = {};
 
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
@@ -1798,6 +1801,8 @@ export class Adaptable implements IAdaptable {
 
   public getColumnDefs = (): (ColDef | ColGroupDef)[] => {
     return (this.gridOptions.columnApi as any).columnController.columnDefs || [];
+    // we think this is better... but need to test a lot!!!
+    // return this.gridOptions.columnApi.getAllColumns().map(c => c.getColDef());
   };
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
@@ -2591,7 +2596,7 @@ export class Adaptable implements IAdaptable {
     // add any special renderers
     this.addSpecialRendereredColumns();
 
-    this.addValueFormatters();
+    this.addFormatColumnFormats();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -2772,19 +2777,26 @@ export class Adaptable implements IAdaptable {
     };
   }
 
-  addValueFormatters() {
-    const { FormatColumns } = this.getState().FormatColumn;
+  addFormatColumnFormats(): void {
+    // not sure if this is right as we always set whenever anything changes but lets see...
+    const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithColumnFormat();
 
-    const newColDefs = this.mapColumnDefs((colDef: ColDef) => {
-      const formatColumn = FormatColumns.find(
-        FormatColumn => FormatColumn.ColumnId === colDef.field
-      );
+    const cols = this.gridOptions.columnApi.getAllColumns();
+
+    cols.forEach((column: Column) => {
+      const colDef = column.getColDef();
+      if (this.originalColDefValueFormatters[colDef.field] === undefined) {
+        this.originalColDefValueFormatters[colDef.field] = colDef.valueFormatter || null;
+      }
+
+      colDef.valueFormatter = this.originalColDefValueFormatters[colDef.field];
+
+      const formatColumn = formatColumns.find(fc => fc.ColumnId === colDef.field);
 
       // stop if not found
-      if (!formatColumn) return colDef;
-
-      // stop if it has a valueFormatter already
-      if (colDef.valueFormatter) return colDef;
+      if (!formatColumn) {
+        return;
+      }
 
       const adaptableColumn = this.api.gridApi
         .getColumns()
@@ -2799,11 +2811,7 @@ export class Adaptable implements IAdaptable {
         // TODO extract as utility
         colDef.valueFormatter = params => format(params.value, formatColumn.Format);
       }
-
-      return colDef;
     });
-
-    this.safeSetColDefs(newColDefs);
   }
 
   private postSpecialColumnEditDelete(doReload: boolean) {

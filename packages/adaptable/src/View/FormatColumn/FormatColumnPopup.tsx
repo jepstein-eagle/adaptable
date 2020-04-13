@@ -77,8 +77,9 @@ class FormatColumnPopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Column', Size: 4 },
-      { Content: 'Format Style', Size: 6 },
+      { Content: 'Column', Size: 3 },
+      { Content: 'Style', Size: 4 },
+      { Content: 'Format', Size: 3 },
       { Content: '', Size: 2 },
     ];
     let FormatColumns = this.props.FormatColumns.map((formatColumn: FormatColumn, index) => {
@@ -195,10 +196,16 @@ class FormatColumnPopupComponent extends React.Component<
   }
   canFinishWizard() {
     let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
-    return (
-      StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
-      UIHelper.IsNotEmptyStyle(formatColumn.Style)
-    );
+    if (StringExtensions.IsNullOrEmpty(formatColumn.ColumnId)) {
+      return false;
+    }
+
+    // dont think it matters if its an empty style - so what?
+    if (formatColumn.Style != undefined && UIHelper.IsEmptyStyle(formatColumn.Style)) {
+      // return false;
+    }
+
+    return true;
   }
 }
 

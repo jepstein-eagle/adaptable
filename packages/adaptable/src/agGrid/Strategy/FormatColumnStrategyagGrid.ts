@@ -21,7 +21,7 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
       for (let column of columns) {
         let cellClassRules: any = {};
         formatColumns.forEach((fc, index) => {
-          if (fc.ColumnId == column.ColumnId) {
+          if (fc.ColumnId == column.ColumnId && fc.Style) {
             let styleName: string = StringExtensions.IsNullOrEmpty(fc.Style.ClassName)
               ? theadaptable.StyleService.CreateUniqueStyleName(
                   StrategyConstants.FormatColumnStrategyId,

@@ -9,6 +9,7 @@ import { IColItem } from '../UIInterfaces';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class FormatColumnEntityRow extends React.Component<
   SharedEntityExpressionRowProps<FormatColumnEntityRow>,
@@ -18,19 +19,21 @@ export class FormatColumnEntityRow extends React.Component<
     let formatColumn = this.props.AdaptableObject as FormatColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
+    let adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+      formatColumn.ColumnId,
+      this.props.Columns
+    );
 
-    colItems[0].Content = (
+    colItems[0].Content = <EntityRowItem Content={adaptableColumn.FriendlyName} />;
+    colItems[1].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumnId(
-          formatColumn.ColumnId,
-          this.props.Columns
-        )}
+        Content={formatColumn.Style ? <StyleVisualItem Style={formatColumn.Style} /> : 'None'}
       />
     );
-    colItems[1].Content = (
-      <EntityRowItem Content={<StyleVisualItem Style={formatColumn.Style} />} />
-    );
     colItems[2].Content = (
+      <EntityRowItem Content={this.showFormatExample(formatColumn, adaptableColumn)} />
+    );
+    colItems[3].Content = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(formatColumn)}
         showShare={this.props.TeamSharingActivated}
@@ -42,5 +45,15 @@ export class FormatColumnEntityRow extends React.Component<
     );
 
     return <AdaptableObjectRow colItems={colItems} />;
+  }
+
+  private showFormatExample(
+    formatColumn: FormatColumn,
+    adaptableColumn: AdaptableColumn
+  ): string | undefined {
+    if (!formatColumn.Format) {
+      return undefined;
+    }
+    return formatColumn.Format;
   }
 }
