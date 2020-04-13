@@ -5,7 +5,7 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-import { GridOptions } from '@ag-grid-community/all-modules';
+import { GridOptions, Column } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
   AdaptableApi,
@@ -94,6 +94,21 @@ function InitAdaptableDemo() {
           {
             FunctionName: 'Dashboard',
             AccessLevel: 'Full',
+          },
+        ],
+      },
+      FormatColumn: {
+        Revision: 2,
+        FormatColumns: [
+          {
+            ColumnId: 'amount',
+            Style: {},
+            Format: '0a',
+          },
+          {
+            ColumnId: 'tradeDate',
+            Style: {},
+            Format: 'yyyy',
           },
         ],
       },

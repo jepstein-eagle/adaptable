@@ -19,6 +19,8 @@ import {
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import * as _ from 'lodash';
+import numeral from 'numeral';
+import format from 'date-fns/format';
 
 import {
   NewValueParams,
@@ -2589,6 +2591,8 @@ export class Adaptable implements IAdaptable {
     // add any special renderers
     this.addSpecialRendereredColumns();
 
+    this.addValueFormatters();
+
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
     this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
@@ -2766,6 +2770,40 @@ export class Adaptable implements IAdaptable {
       }
       return contextMenuItems;
     };
+  }
+
+  addValueFormatters() {
+    const { FormatColumns } = this.getState().FormatColumn;
+
+    const newColDefs = this.mapColumnDefs((colDef: ColDef) => {
+      const formatColumn = FormatColumns.find(
+        FormatColumn => FormatColumn.ColumnId === colDef.field
+      );
+
+      // stop if not found
+      if (!formatColumn) return colDef;
+
+      // stop if it has a valueFormatter already
+      if (colDef.valueFormatter) return colDef;
+
+      const adaptableColumn = this.api.gridApi
+        .getColumns()
+        .find(column => column.ColumnId === formatColumn.ColumnId);
+
+      if (adaptableColumn.DataType === 'Number') {
+        // TODO extract as utility
+        colDef.valueFormatter = params => numeral(params.value).format(formatColumn.Format);
+      }
+
+      if (adaptableColumn.DataType === 'Date') {
+        // TODO extract as utility
+        colDef.valueFormatter = params => format(params.value, formatColumn.Format);
+      }
+
+      return colDef;
+    });
+
+    this.safeSetColDefs(newColDefs);
   }
 
   private postSpecialColumnEditDelete(doReload: boolean) {

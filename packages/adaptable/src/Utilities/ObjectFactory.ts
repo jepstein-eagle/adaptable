@@ -70,6 +70,7 @@ import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPul
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
+import { AdaptableFormat } from '../PredefinedConfig/Common/AdaptableFormat';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -453,6 +454,7 @@ export function CreateEmptyFormatColumn(): FormatColumn {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     Style: CreateEmptyStyle(),
+    Format: undefined,
   };
 }
 
