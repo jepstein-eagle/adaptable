@@ -1,15 +1,13 @@
 # FreeText Column (AdaptableFunction)
 
-The FreeText Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FreeTextColumn`) Function provides a way to provide an entirely new Data Set to AdapTable based on user selection.
+The FreeText Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FreeTextColumn`) Function enables the creation of 'special columns' for users to save comments and other text that is not part of the main data source.
 
-Free Text Columns are special columns which you create to save comments and other text that you want to save.
+FreeText columns are similar to calculated columns in that they are not part of the Grid's datasource but are created by Users and stored with the Adaptable State for that user.
 
-Warning
-Any text stored in a Free Text Column is saved as part of the user state and not with the actual data source.
+The difference is that a FreeText column is designed to be editable (not derived) - the purpose is for users to store whatever values they want for each row (typically comments but can be additional calculations or contact details).
 
-These columns are particularly useful if you wish to create a 'Comments' column or something pertinent only to you.
-
-
+### Default value
+FreeText Columns have an optional default value; if this is set then the cell will hold that value unless explicitly overriden by the User.
 
 ## UI Elements
 FreeText Column includes the following UI Elements:
@@ -18,7 +16,7 @@ FreeText Column includes the following UI Elements:
 
 - **Wizard** - A series of steps facilitating the creation and editing of FreeText Columne.
 
-- **Column Menu** - Numeric columns have a `Create Format Column` Menu Item which starts the Format Column wizard; for columns already displaying as a Format Column it says `Edit Format Column`.
+- **Column Menu** - Existing FreeText columns have a `Edit Free Text Column` Menu Item which opens the Format Column wizard for that Column.
 
 
 ## Entitlements
@@ -31,9 +29,9 @@ FreeText Column supports these Entitlement Rules:
 - **ReadOnly**: N/A
 
 ## FAQ
-Where is the data stored for Free Text Columns?
+**Where is the data stored for Free Text Columns?**
 
-With your state, wherever you choose to store that. Free Text Column is not stored with the dataset of the underlying grid.
+With the User's state, wherever that is stored. Free Text Column data is not stored with the dataset of the underlying grid.
 
 ### Further Information
 
@@ -42,4 +40,3 @@ With your state, wherever you choose to store that. Free Text Column is not stor
 - [FreeText Column Api](https://api.adaptabletools.com/interfaces/_src_api_freetextcolumnapi_.freetextcolumnapi.html)
 
 - [FreeText Column Demo](https://demo.adaptabletools.com/column/aggridfreetextcolumndemo)
-
