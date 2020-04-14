@@ -7,7 +7,7 @@ FreeText columns are similar to calculated columns in that they are not part of 
 The difference is that a FreeText column is designed to be editable (not derived) - the purpose is for users to store whatever values they want for each row (typically comments but can be additional calculations or contact details).
 
 ### Default value
-FreeText Columns have an optional default value; if this is set then the cell will hold that value unless explicitly overriden by the User.
+FreeText Columns have an optional default value; if set, the cell will hold that value unless explicitly overriden by the User.
 
 ## UI Elements
 FreeText Column includes the following UI Elements:
