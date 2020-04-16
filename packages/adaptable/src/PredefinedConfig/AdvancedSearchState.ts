@@ -11,7 +11,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [Advanced Search API](_src_api_advancedsearchapi_.advancedsearchapi.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/adavanced-search-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [Advanced Search API](_src_api_advancedsearchapi_.advancedsearchapi.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
  *
  * **Advanced Search Predefined Config Example**
  *

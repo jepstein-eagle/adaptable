@@ -6,7 +6,7 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/adavanced-search-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
  *
  */
 export interface AdvancedSearchApi {

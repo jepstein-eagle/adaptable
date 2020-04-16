@@ -26,7 +26,8 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 
 | AdaptableFunction  	                                           | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
 | --------  	                                                   | ------ | ------- | ---------  | ----------- | ------------ |
-| [Advanced Search](../functions/adavanced-search-function.md)     | Yes    | Yes     | Yes        | No          | No           |
+| [Action Column](../functions/action-column-function.md)          | No     | No      | No         | No          | No           |
+| [Advanced Search](../functions/advanced-search-function.md)      | Yes    | Yes     | Yes        | No          | No           |
 | [Alert](../functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          | 
 | [Bulk Update](../functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          | 
 | [Calculated Column](../functions/calculated-column-function.md)  | Yes    | No      | No         | Yes         | No           | 

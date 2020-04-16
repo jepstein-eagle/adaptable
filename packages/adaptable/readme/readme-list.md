@@ -38,7 +38,8 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
 
 
 - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
-- [Advanced Search](./functions/adavanced-search-function.md)
+- [Action Column](./functions/action-column-function.md)
+- [Advanced Search](./functions/advanced-search-function.md)
 - [Alert](./functions/alert-function.md)
 - [Bulk Update](./functions/bulk-update-function.md)
 - [Calculated Column](./functions/calculated-column-function.md)
