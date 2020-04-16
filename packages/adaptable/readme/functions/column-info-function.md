@@ -2,7 +2,7 @@
 
 The Column Info ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnInfo`) Function provides an at-a-glance overview of a given column in AdapTable.  
 
-It also contains a summary of all Functions associated with that Column - and any associated Adaptable Objects that have been created - together with buttons to add / edit and delete related items.
+It also contains a summary of all Functions associated with that Column - and any associated Adaptable Objects that have been created - together with buttons to add, edit and delete related items.
 
 
 ## UI Elements
@@ -28,10 +28,14 @@ Column Info supports these Entitlement Rules:
 Note: Column Info is aware of all Entitlements so it will only show Functions to which the User is appropriately entitled.
 
 ## FAQ
+
 **Can I change the Column's Data Source?**
 
 No, that is not possible.
 
+**Can I use Column Info to make a readonly column editable?**
+
+No, that is not possible.
 
 ### Further Information
 - [Column Info Demo](https://demo.adaptabletools.com/column/aggridcolumninfodemo)

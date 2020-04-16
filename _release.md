@@ -1,3 +1,7 @@
+## 6.2.0
+
+Minor release with improvements to Layouts and export to Excel
+
 ## 6.1.6
 
 updating layout docs
