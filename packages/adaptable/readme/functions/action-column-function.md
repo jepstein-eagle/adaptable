@@ -13,10 +13,13 @@ There are 3 elements to providing an Action Column definition:
     
     Developers can subscribe to this event and perform any additional logic or functionality that is required.
 
+    The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options
 
-2.  A predicate function to decide if to show the Action Column
+2.  **Render Function**: The `RenderFunction` returns a string giving the full render contents of the Button that should display in the cell.
 
-3.  A function to allow you to provide your own display for the button.
+    > If this property is not set, then a regular button will appear in the column with the caption of the ButtonText property. A predicate function to decide if to show the Action Column
+
+3.  **Should Render Predicate**: The `ShouldRenderPredicate` function returns a boolean value indicating whether the Action Column should display a button.
 
 ## UI Elements
 None at present - it is provided only at design-time in Adaptable State
@@ -32,7 +35,9 @@ Action Column supports these Entitlement Rules:
 
 ## FAQ
 
-To Do
+**Can we create Action Columns at Run-Time**
+
+No, they are a Design-Time only Function; they can be accessed at Run-Time but not created or edited.
 
 ### Further Information
 
