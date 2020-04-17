@@ -61,6 +61,6 @@ export class FormatColumnEntityRow extends React.Component<
     if (!formatColumn.Format) {
       return undefined;
     }
-    return formatColumn.Format;
+    return 'formatColumn.Format';
   }
 }

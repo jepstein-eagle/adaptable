@@ -86,6 +86,6 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
     if (!formatColumn.Format) {
       return undefined;
     }
-    return formatColumn.Format;
+    return 'formatColumn.Format';
   }
 }

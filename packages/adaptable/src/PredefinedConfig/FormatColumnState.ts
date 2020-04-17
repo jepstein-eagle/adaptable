@@ -1,6 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { AdaptableStyle } from './Common/AdaptableStyle';
+import { AdaptableFormat } from './Common/AdaptableFormat';
 
 export interface FormatColumnState extends ConfigState {
   FormatColumns?: FormatColumn[];
@@ -23,5 +24,5 @@ export interface FormatColumn extends AdaptableObject {
   /**
    * Any format to apply to the Column.
    */
-  Format?: string;
+  Format?: AdaptableFormat;
 }

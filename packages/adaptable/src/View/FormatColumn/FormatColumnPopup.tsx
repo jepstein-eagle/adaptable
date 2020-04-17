@@ -201,12 +201,12 @@ class FormatColumnPopupComponent extends React.Component<
     }
 
     // cannot complete if its an empty style and no format
-    if (
-      UIHelper.IsEmptyStyle(formatColumn.Style) &&
-      StringExtensions.IsNullOrEmpty(formatColumn.Format)
-    ) {
-      return false;
-    }
+    // if (
+    //   UIHelper.IsEmptyStyle(formatColumn.Style) &&
+    //   StringExtensions.IsNullOrEmpty(formatColumn.Format)
+    // ) {
+    //   return false;
+    // }
 
     return true;
   }

@@ -19,8 +19,6 @@ import {
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import * as _ from 'lodash';
-import numeral from 'numeral';
-import format from 'date-fns/format';
 
 import {
   NewValueParams,
@@ -160,6 +158,7 @@ import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 import { Report } from '../PredefinedConfig/ExportState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
+import FormatHelper, { FormatNumber } from '../Utilities/Helpers/FormatHelper';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2798,18 +2797,14 @@ export class Adaptable implements IAdaptable {
         return;
       }
 
-      const adaptableColumn = this.api.gridApi
-        .getColumns()
-        .find(column => column.ColumnId === formatColumn.ColumnId);
-
-      if (adaptableColumn.DataType === 'Number') {
-        // TODO extract as utility
-        colDef.valueFormatter = params => numeral(params.value).format(formatColumn.Format);
+      if (formatColumn.Format.Type === 'number-v1') {
+        const options = formatColumn.Format.Options;
+        colDef.valueFormatter = params => FormatHelper.FormatNumber(params.value, options);
       }
 
-      if (adaptableColumn.DataType === 'Date') {
-        // TODO extract as utility
-        colDef.valueFormatter = params => format(params.value, formatColumn.Format);
+      if (formatColumn.Format.Type === 'date-v1') {
+        const options = formatColumn.Format.Options;
+        colDef.valueFormatter = params => FormatHelper.FormatDate(params.value, options);
       }
     });
   }

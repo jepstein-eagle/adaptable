@@ -75,12 +75,13 @@ let demoConfig: PredefinedConfig = {
   FormatColumn: {
     FormatColumns: [
       {
-        ColumnId: 'amount',
-        Format: '0a',
-      },
-      {
         ColumnId: 'tradeDate',
-        Format: 'yyyy',
+        Format: {
+          Type: 'date-v1',
+          Options: {
+            Pattern: 'yyyy',
+          },
+        },
       },
       {
         ColumnId: 'notional',
@@ -90,7 +91,13 @@ let demoConfig: PredefinedConfig = {
           FontStyle: 'Italic',
           ClassName: '',
         },
-        Format: '0a',
+        Format: {
+          Type: 'number-v1',
+          Options: {
+            Parentheses: true,
+            IntegerDigits: 10,
+          },
+        },
       },
       {
         ColumnId: 'country',
