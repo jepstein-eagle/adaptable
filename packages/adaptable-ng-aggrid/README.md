@@ -19,18 +19,18 @@ To gain access to this registry please follow these steps:
 
 2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
-  ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
+    ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
 
-  if you're using yarn
+    if you're using yarn
 
-  ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
+    ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
 3. Login to the Adaptable private registry:
 
-  ```sh
-  npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
-  ```
+    ```sh
+    npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+    ```
 
 4. Enter your credentials that was provided to you by the AdapTable support team:
 
