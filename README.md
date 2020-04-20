@@ -14,7 +14,6 @@ AdapTable is fully data agnostic and can work with any data set you provide it w
 
 AdapTable is written in TypeScript.  All the necessary definition files are included in the package to enable easy design-time access to all internal classes.
 
-
 ![AdapTable image](./images/adaptable.png)
 
 ## Upgrade Guide
@@ -148,6 +147,8 @@ A licence for AdapTable provides access to all product features as well as quart
 Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
 
 We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
+
+**Note: AdapTable licence does not include the underlying grid's licence, so if you are using AdapTable with a Grid that requires a commercial licence, you must pay for this yourself**
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
 
