@@ -8,7 +8,7 @@ We currently offer 3 plugins (though more will be added in the coming months):
 
 - [Finance Plugin](./finance)
 
-- [Charting Plugin](./charting)
+- [Charting Plugin](./charts)
 
 - [No Code Plugin](./nocode-aggrid)
 
@@ -63,6 +63,8 @@ The charts on offer include:
 - Category Charts
 
 - Pie Charts
+
+- Financial Charts
 
 - Sparkline Charts
 
