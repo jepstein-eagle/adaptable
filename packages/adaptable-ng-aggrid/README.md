@@ -34,38 +34,38 @@ To gain access to this registry please follow these steps:
 
 4. Enter your credentials that was provided to you by the AdapTable support team:
 
-  * login name
-  * email
-  * password
+    * login name
+    * email
+    * password
   
 5. Check you are logged-in correctly by using whoami:
 
-  ```
-  npm whoami --registry=https://registry.adaptabletools.com
-  ```
+    ```
+    npm whoami --registry=https://registry.adaptabletools.com
+    ```
 
-  This should display the username you received as the current login on the private registry
+    This should display the username you received as the current login on the private registry
 
-  > this does not affect your username/login session on the public npm registry
+    > this does not affect your username/login session on the public npm registry
 
 6. Install the AdapTable Angular Wrapper
 
-  ```npm i @adaptabletools/adaptable-angular-aggrid```
+    ```npm i @adaptabletools/adaptable-angular-aggrid```
 
-  > you do not need to install the core AdapTable package also
+    > you do not need to install the core AdapTable package also
 
 7. Make sure that all the Peer Dependencies are installed. These are currently:
 
-  ```
-  "peerDependencies": {
-      "@ag-grid-community/all-modules": "^22.1.1",
-      "@ag-grid-community/angular": "^22.1.1",
-      "mathjs": "^5.1.1",
-      "@angular/common": ">=7.0.0",
-      "@angular/core": ">=7.0.0",
-  }
-  ```
-  > you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages
+    ```
+    "peerDependencies": {
+        "@ag-grid-community/all-modules": "^22.1.1",
+        "@ag-grid-community/angular": "^22.1.1",
+        "mathjs": "^5.1.1",
+        "@angular/common": ">=7.0.0",
+        "@angular/core": ">=7.0.0",
+    }
+    ```
+    > you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages
 
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
@@ -89,24 +89,23 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
 
 1. Install the plugin as a separate package:
 
-  ```npm i @adaptabletools/adaptable-plugin-charts```
+    ```npm i @adaptabletools/adaptable-plugin-charts```
 
 2. Import it into your code:
 
-  ```import charts from '@adaptable/adaptable-plugins-charts'```
+    ```import charts from '@adaptable/adaptable-plugins-charts'```
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
 
-  ```
-  const adaptableOptions: AdaptableOptions = {
-    primaryKey: 'tradeId',
-    adaptableId: 'Adaptable demo',
-    ....
-    plugins: [charts()]
-  };
+    ```
+    const adaptableOptions: AdaptableOptions = {
+      primaryKey: 'tradeId',
+      adaptableId: 'Adaptable demo',
+      ....
+      plugins: [charts()]
+    };
 
-  ```
-
+    ```
 
 ## agGrid Enterprise Modules
 AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
