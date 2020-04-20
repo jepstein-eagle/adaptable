@@ -117,41 +117,41 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 1. Install the modules in npm:
 
-  ```
-  npm i @ag-grid-enterprise/menu
-  npm i @ag-grid-enterprise/range-selection
-  ```
+    ```
+    npm i @ag-grid-enterprise/menu
+    npm i @ag-grid-enterprise/range-selection
+    ```
 
 2. Import them into your code:
 
-  ```
-  import { MenuModule } from '@ag-grid-enterprise/menu';
-  import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-  ```
+    ```
+    import { MenuModule } from '@ag-grid-enterprise/menu';
+    import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+    ```
 
 3. Add them to the **modules** prop of the Adaptable Angular Component:
 
-  ```
-  @Component({
-    selector: 'adaptable-root',
-    template: `
-      <adaptable-angular-aggrid
-        style="width: 100vw; height: 100vh;"
-        [adaptableOptions]="adaptableOptions"
-        [gridOptions]="gridOptions"
-        [modules]="agGridModules"
-      >
-      </adaptable-angular-aggrid>
-    `
-  })
+    ```
+    @Component({
+      selector: 'adaptable-root',
+      template: `
+        <adaptable-angular-aggrid
+          style="width: 100vw; height: 100vh;"
+          [adaptableOptions]="adaptableOptions"
+          [gridOptions]="gridOptions"
+          [modules]="agGridModules"
+        >
+        </adaptable-angular-aggrid>
+      `
+    })
 
-  export class AppComponent {
-    public gridApi: GridApi;
-    public agGridModules: Module[] = [MenuModule, RangeSelectionModule];
-    ....
-  }
+    export class AppComponent {
+      public gridApi: GridApi;
+      public agGridModules: Module[] = [MenuModule, RangeSelectionModule];
+      ....
+    }
 
-  ```
+    ```
 
 ## Angular Attributes
 
