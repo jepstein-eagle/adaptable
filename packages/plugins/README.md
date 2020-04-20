@@ -6,7 +6,7 @@ Plugins are additional groupings of functionality relevant to a particular set o
 
 We currently offer 3 plugins (though more will be added in the coming months):
 
-- Finance Plugin
+- [Finance Plugin](./nocode-aggrid)
 
 - Charting Plugin
 
