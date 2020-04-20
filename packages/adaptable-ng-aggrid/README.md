@@ -52,7 +52,7 @@ To gain access to this registry please follow these steps:
 
   ```npm i @adaptabletools/adaptable-angular-aggrid```
 
-> you do not need to install the core AdapTable package also
+  > you do not need to install the core AdapTable package also
 
 7. Make sure that all the Peer Dependencies are installed. These are currently:
 
