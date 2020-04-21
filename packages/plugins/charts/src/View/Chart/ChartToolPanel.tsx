@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';

@@ -104,6 +104,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   userInterfaceOptions: {
     useDefaultVendorGridThemes: true,
+    useCustomMacLikeScrollbars: false,
     showAdaptableToolPanel: false,
     showAdaptableContextMenu: true,
     adaptableToolPanelTitle: GeneralConstants.ADAPTABLE,

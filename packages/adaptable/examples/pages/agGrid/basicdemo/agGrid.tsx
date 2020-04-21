@@ -34,6 +34,7 @@ function InitAdaptableDemo() {
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
+      useCustomMacLikeScrollbars: true,
     },
     vendorGrid: {
       ...gridOptions,
