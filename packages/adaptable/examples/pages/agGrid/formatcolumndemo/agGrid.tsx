@@ -77,7 +77,7 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'tradeDate',
         Format: {
-          Type: 'date-v1',
+          Formatter: 'DateFormatter',
           Options: {
             Pattern: 'yyyy',
           },
@@ -92,7 +92,7 @@ let demoConfig: PredefinedConfig = {
           ClassName: '',
         },
         Format: {
-          Type: 'number-v1',
+          Formatter: 'NumberFormatter',
           Options: {
             Parentheses: true,
             IntegerDigits: 10,

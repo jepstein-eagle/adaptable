@@ -11,6 +11,7 @@ import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import UIHelper from '../../UIHelper';
+import FormatHelper from '../../../Utilities/Helpers/FormatHelper';
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}>
@@ -86,6 +87,11 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
     if (!formatColumn.Format) {
       return undefined;
     }
-    return 'formatColumn.Format';
+    if (formatColumn.Format.Formatter === 'DateFormatter') {
+      return FormatHelper.DateFormatter(new Date(), formatColumn.Format.Options);
+    }
+    if (formatColumn.Format.Formatter === 'NumberFormatter') {
+      return FormatHelper.NumberFormatter(12345.6789, formatColumn.Format.Options);
+    }
   }
 }

@@ -11,6 +11,7 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { UIHelper } from '../UIHelper';
+import FormatHelper from '../../Utilities/Helpers/FormatHelper';
 
 export class FormatColumnEntityRow extends React.Component<
   SharedEntityExpressionRowProps<FormatColumnEntityRow>,
@@ -61,6 +62,11 @@ export class FormatColumnEntityRow extends React.Component<
     if (!formatColumn.Format) {
       return undefined;
     }
-    return 'formatColumn.Format';
+    if (formatColumn.Format.Formatter === 'DateFormatter') {
+      return FormatHelper.DateFormatter(new Date(), formatColumn.Format.Options);
+    }
+    if (formatColumn.Format.Formatter === 'NumberFormatter') {
+      return FormatHelper.NumberFormatter(12345.6789, formatColumn.Format.Options);
+    }
   }
 }

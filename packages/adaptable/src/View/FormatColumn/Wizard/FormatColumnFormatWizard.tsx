@@ -14,6 +14,8 @@ import { AdaptableFormat } from '../../../PredefinedConfig/Common/AdaptableForma
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import CheckBox from '../../../components/CheckBox';
 import FormatHelper from '../../../Utilities/Helpers/FormatHelper';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
+import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
 
 export interface FormatColumnFormatWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
@@ -30,136 +32,220 @@ export class FormatColumnFormatWizard
     const column = this.props.Columns.find(column => column.ColumnId === this.props.Data.ColumnId);
     this.state = { Format: this.props.Data.Format };
 
-    if (this.state.Format === undefined) {
-      if (column.DataType === 'Number') {
-        this.state = { Format: { Type: 'number-v1', Options: {} } };
-      } else if (column.DataType === 'Date') {
-        this.state = { Format: { Type: 'date-v1', Options: {} } };
-      }
+    if (this.state.Format === undefined && column.DataType === 'Number') {
+      this.state = {
+        Format: {
+          Formatter: 'NumberFormatter',
+          Options: {
+            FractionDigits: 2,
+            FractionSeparator: '.',
+            IntegerDigits: 0,
+            IntegerSeparator: ',',
+            Prefix: '',
+            Suffix: '',
+            Multiplier: 1,
+            Parentheses: false,
+          },
+        },
+      };
+    }
+
+    if (this.state.Format === undefined && column.DataType === 'Date') {
+      this.state = {
+        Format: {
+          Formatter: 'DateFormatter',
+          Options: {
+            Pattern: 'MM/dd/yyyy',
+          },
+        },
+      };
     }
   }
 
   render() {
-    const Type = this.state.Format && this.state.Format.Type;
-    return (
-      <Panel header="Format" margin={2}>
-        {Type === 'number-v1'
-          ? this.renderNumberFormat()
-          : Type === 'date-v1'
-          ? this.renderDateFormat()
-          : 'No Options'}
-      </Panel>
-    );
+    const Type = this.state.Format && this.state.Format.Formatter;
+    if (Type === 'NumberFormatter') return this.renderNumberFormat();
+    if (Type === 'DateFormatter') return this.renderDateFormat();
+    return 'No formatter available';
   }
 
   renderNumberFormat() {
-    if (this.state.Format.Type !== 'number-v1') return null;
+    if (this.state.Format.Formatter !== 'NumberFormatter') return null;
     return (
-      <div>
-        <div>
-          Fraction Digits
-          <Input
-            type="number"
-            value={this.state.Format.Options.FractionDigits}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('FractionDigits', Number(e.currentTarget.value))
-            }
+      <>
+        <Panel header="Format" margin={2}>
+          <Flex flexDirection="row">
+            <FormLayout mr={3}>
+              <FormRow label="Fraction Separator">
+                <Input
+                  value={this.state.Format.Options.FractionSeparator}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('FractionSeparator', e.currentTarget.value)
+                  }
+                />
+              </FormRow>
+              <FormRow label="Integer Separator">
+                <Input
+                  value={this.state.Format.Options.IntegerSeparator}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('IntegerSeparator', e.currentTarget.value)
+                  }
+                />
+              </FormRow>
+              <FormRow label="Prefix">
+                <Input
+                  value={this.state.Format.Options.Prefix}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('Prefix', e.currentTarget.value)
+                  }
+                />
+              </FormRow>
+              <FormRow label="Suffix">
+                <Input
+                  value={this.state.Format.Options.Suffix}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('Suffix', e.currentTarget.value)
+                  }
+                />
+              </FormRow>
+            </FormLayout>
+            <FormLayout>
+              <FormRow label="Fraction Digits">
+                <Input
+                  type="number"
+                  min="0"
+                  value={this.state.Format.Options.FractionDigits}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('FractionDigits', Number(e.currentTarget.value))
+                  }
+                />
+              </FormRow>
+              <FormRow label="Integer Digits">
+                <Input
+                  type="number"
+                  min="0"
+                  value={this.state.Format.Options.IntegerDigits}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('IntegerDigits', Number(e.currentTarget.value))
+                  }
+                />
+              </FormRow>
+              <FormRow label="Multiplier">
+                <Input
+                  type="number"
+                  value={this.state.Format.Options.Multiplier}
+                  onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                    this.setFormatOption('Multiplier', Number(e.currentTarget.value))
+                  }
+                />
+              </FormRow>
+              <FormRow label="Parentheses">
+                <CheckBox
+                  checked={this.state.Format.Options.Parentheses}
+                  onChange={checked => this.setFormatOption('Parentheses', checked)}
+                />
+              </FormRow>
+            </FormLayout>
+          </Flex>
+        </Panel>
+        <Panel header="Examples" margin={2}>
+          <AdaptableObjectRow
+            style={{ fontWeight: 'bold' }}
+            colItems={[
+              { Content: 'Raw Number', Size: 1 },
+              { Content: 'Formatted Number', Size: 1 },
+            ]}
           />
-        </div>
-        <div>
-          Fraction Separator
-          <Input
-            value={this.state.Format.Options.FractionSeparator}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('FractionSeparator', e.currentTarget.value)
-            }
+          <AdaptableObjectRow
+            colItems={[
+              { Content: '12345.6789', Size: 1 },
+              {
+                Content: FormatHelper.NumberFormatter(12345.6789, this.state.Format.Options),
+                Size: 1,
+              },
+            ]}
           />
-        </div>
-        <div>
-          Integer Digits
-          <Input
-            type="number"
-            value={this.state.Format.Options.IntegerDigits}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('IntegerDigits', Number(e.currentTarget.value))
-            }
+          <AdaptableObjectRow
+            colItems={[
+              { Content: '-12345.6789', Size: 1 },
+              {
+                Content: FormatHelper.NumberFormatter(-12345.6789, this.state.Format.Options),
+                Size: 1,
+              },
+            ]}
           />
-        </div>
-        <div>
-          Integer Separator
-          <Input
-            value={this.state.Format.Options.IntegerSeparator}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('IntegerSeparator', e.currentTarget.value)
-            }
+          <AdaptableObjectRow
+            colItems={[
+              { Content: '0.123', Size: 1 },
+              { Content: FormatHelper.NumberFormatter(0.123, this.state.Format.Options), Size: 1 },
+            ]}
           />
-        </div>
-        <div>
-          Prefix
-          <Input
-            value={this.state.Format.Options.Prefix}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('Prefix', e.currentTarget.value)
-            }
-          />
-        </div>
-        <div>
-          Suffix
-          <Input
-            value={this.state.Format.Options.Suffix}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('Suffix', e.currentTarget.value)
-            }
-          />
-        </div>
-        <div>
-          Multiplier
-          <Input
-            type="number"
-            value={this.state.Format.Options.Multiplier}
-            onChange={(e: React.FormEvent<HTMLInputElement>) =>
-              this.setFormatOption('Multiplier', Number(e.currentTarget.value))
-            }
-          />
-        </div>
-        <div>
-          Parentheses
-          <CheckBox
-            checked={this.state.Format.Options.Parentheses}
-            onChange={checked => this.setFormatOption('Parentheses', checked)}
-          />
-        </div>
-        <pre>
-          {' 12345.6789 =>'} {FormatHelper.FormatNumber(12345.6789, this.state.Format.Options)}
-        </pre>
-        <pre>
-          {'-12345.6789 =>'} {FormatHelper.FormatNumber(-12345.6789, this.state.Format.Options)}
-        </pre>
-        <pre>
-          {'0.123       =>'} {FormatHelper.FormatNumber(0.123, this.state.Format.Options)}
-        </pre>
-      </div>
+        </Panel>
+      </>
     );
   }
 
   renderDateFormat() {
-    if (this.state.Format.Type !== 'date-v1') return null;
+    if (this.state.Format.Formatter !== 'DateFormatter') return null;
     return (
-      <div>
-        <Input
-          value={this.state.Format.Options.Pattern}
-          onChange={(e: React.FormEvent<HTMLInputElement>) =>
-            this.setFormatOption('Pattern', e.currentTarget.value)
-          }
-        />
-        <SimpleButton onClick={() => this.setFormatOption('Pattern', 'MM/dd/yyyy')}>
-          Default 1
-        </SimpleButton>
-        <SimpleButton onClick={() => this.setFormatOption('Pattern', "EEE, MMM d, ''yy")}>
-          Default 2
-        </SimpleButton>
-        <pre>{FormatHelper.FormatDate(new Date(), this.state.Format.Options)}</pre>
-      </div>
+      <>
+        <Panel header="Format" margin={2}>
+          <FormLayout>
+            <FormRow label="Pattern">
+              <Input
+                value={this.state.Format.Options.Pattern}
+                onChange={(e: React.FormEvent<HTMLInputElement>) =>
+                  this.setFormatOption('Pattern', e.currentTarget.value)
+                }
+              />
+            </FormRow>
+          </FormLayout>
+        </Panel>
+        <Panel header="Examples" margin={2}>
+          <AdaptableObjectRow
+            style={{ fontWeight: 'bold' }}
+            colItems={[
+              { Content: 'Pattern', Size: 1 },
+              { Content: 'Formatted Date', Size: 1 },
+              { Content: '', Size: 1 },
+            ]}
+          />
+          <AdaptableObjectRow
+            colItems={[
+              { Content: 'MM/dd/yyyy', Size: 1 },
+              {
+                Content: FormatHelper.DateFormatter(new Date(), { Pattern: 'MM/dd/yyyy' }),
+                Size: 1,
+              },
+              {
+                Content: (
+                  <SimpleButton onClick={() => this.setFormatOption('Pattern', 'MM/dd/yyyy')}>
+                    Apply
+                  </SimpleButton>
+                ),
+                Size: 1,
+              },
+            ]}
+          />
+          <AdaptableObjectRow
+            colItems={[
+              { Content: "EEE, MMM d, ''yy", Size: 1 },
+              {
+                Content: FormatHelper.DateFormatter(new Date(), { Pattern: "EEE, MMM d, ''yy" }),
+                Size: 1,
+              },
+              {
+                Content: (
+                  <SimpleButton onClick={() => this.setFormatOption('Pattern', "EEE, MMM d, ''yy")}>
+                    Apply
+                  </SimpleButton>
+                ),
+                Size: 1,
+              },
+            ]}
+          />
+        </Panel>
+      </>
     );
   }
 

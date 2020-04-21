@@ -158,7 +158,7 @@ import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 import { Report } from '../PredefinedConfig/ExportState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
-import FormatHelper, { FormatNumber } from '../Utilities/Helpers/FormatHelper';
+import FormatHelper, { NumberFormatter } from '../Utilities/Helpers/FormatHelper';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2797,14 +2797,14 @@ export class Adaptable implements IAdaptable {
         return;
       }
 
-      if (formatColumn.Format.Type === 'number-v1') {
+      if (formatColumn.Format.Formatter === 'NumberFormatter') {
         const options = formatColumn.Format.Options;
-        colDef.valueFormatter = params => FormatHelper.FormatNumber(params.value, options);
+        colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
       }
 
-      if (formatColumn.Format.Type === 'date-v1') {
+      if (formatColumn.Format.Formatter === 'DateFormatter') {
         const options = formatColumn.Format.Options;
-        colDef.valueFormatter = params => FormatHelper.FormatDate(params.value, options);
+        colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
       }
     });
   }

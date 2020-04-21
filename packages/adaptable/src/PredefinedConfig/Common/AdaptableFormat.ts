@@ -1,8 +1,8 @@
 export type AdaptableFormat =
-  | { Type: 'number-v1'; Options: NumberFormatOptions }
-  | { Type: 'date-v1'; Options: DateFormatOptions };
+  | { Formatter: 'NumberFormatter'; Options: NumberFormatterOptions }
+  | { Formatter: 'DateFormatter'; Options: DateFormatterOptions };
 
-export type NumberFormatOptions = {
+export type NumberFormatterOptions = {
   FractionDigits?: number;
   FractionSeparator?: string;
   IntegerDigits?: number;
@@ -13,6 +13,6 @@ export type NumberFormatOptions = {
   Parentheses?: boolean;
 };
 
-export type DateFormatOptions = {
+export type DateFormatterOptions = {
   Pattern?: string;
 };

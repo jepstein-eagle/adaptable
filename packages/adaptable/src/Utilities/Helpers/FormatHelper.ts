@@ -1,10 +1,17 @@
 import {
-  NumberFormatOptions,
-  DateFormatOptions,
+  NumberFormatterOptions,
+  DateFormatterOptions,
+  AdaptableFormat,
 } from '../../PredefinedConfig/Common/AdaptableFormat';
 import dateFnsFormat from 'date-fns/format';
 
-export function FormatNumber(input: number, options: NumberFormatOptions = {}) {
+export function Format(input: any, format: AdaptableFormat) {
+  if (format.Formatter === 'NumberFormatter') return NumberFormatter(input, format.Options);
+  if (format.Formatter === 'DateFormatter') return DateFormatter(input, format.Options);
+  throw new Error('Unknown formatter');
+}
+
+export function NumberFormatter(input: number, options: NumberFormatterOptions = {}) {
   let n: number = input;
 
   if (options.Multiplier !== undefined) {
@@ -38,7 +45,7 @@ export function FormatNumber(input: number, options: NumberFormatOptions = {}) {
   return s;
 }
 
-export function FormatDate(input: number | Date, options: DateFormatOptions) {
+export function DateFormatter(input: number | Date, options: DateFormatterOptions) {
   try {
     return dateFnsFormat(input, options.Pattern || '');
   } catch (error) {
@@ -46,4 +53,4 @@ export function FormatDate(input: number | Date, options: DateFormatOptions) {
   }
 }
 
-export default { FormatNumber, FormatDate };
+export default { NumberFormatter, DateFormatter };
