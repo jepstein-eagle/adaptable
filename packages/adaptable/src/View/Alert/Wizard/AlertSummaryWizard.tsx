@@ -59,13 +59,12 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.AlertStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

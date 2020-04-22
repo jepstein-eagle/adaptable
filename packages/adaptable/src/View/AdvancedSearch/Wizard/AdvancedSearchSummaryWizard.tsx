@@ -33,13 +33,12 @@ export class AdvancedSearchSummaryWizard
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.AdvancedSearchStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

@@ -1,38 +1,36 @@
 import * as React from 'react';
-import { IColItem } from '../UIInterfaces';
-import { WizardSummaryRow } from './WizardSummaryRow';
-import { AdaptableObjectCollection } from './AdaptableObjectCollection';
 import { KeyValuePair } from '../../Utilities/Interface/KeyValuePair';
 import WizardPanel from '../../components/WizardPanel';
 
-export interface WizardSummaryPageProps extends React.ClassAttributes<WizardSummaryPage> {
+import { DataSource, GridFactory } from '@adaptabletools/grid';
+
+export interface WizardSummaryPageProps {
   KeyValuePairs: KeyValuePair[];
-  header: string;
+  header?: string;
 }
 
-export class WizardSummaryPage extends React.Component<WizardSummaryPageProps, {}> {
-  render(): any {
-    let colItems: IColItem[] = [
-      { Content: 'Property', Size: 3 },
-      { Content: 'Value', Size: 9 },
-    ];
+const Grid = GridFactory<KeyValuePair>();
 
-    let summaryRows: any[] = [];
-    this.props.KeyValuePairs.forEach((kvp, index) => {
-      summaryRows.push(
-        <WizardSummaryRow
-          key={index}
-          colItems={colItems}
-          propertyName={kvp.Key}
-          propertyValue={kvp.Value}
-        />
-      );
-    });
-
-    return (
-      <WizardPanel bodyProps={{ padding: 0 }}>
-        <AdaptableObjectCollection colItems={colItems} items={summaryRows} />
-      </WizardPanel>
-    );
-  }
-}
+export const WizardSummaryPage = (props: WizardSummaryPageProps) => {
+  return (
+    <WizardPanel bodyProps={{ padding: 0 }}>
+      <DataSource<KeyValuePair>
+        data={props.KeyValuePairs}
+        fields={['Key', 'Value']}
+        primaryKey="Key"
+      >
+        <Grid
+          domProps={{
+            style: {
+              height: '100%',
+            },
+          }}
+          columns={[
+            { field: 'Key', header: 'Property', flex: 1 },
+            { field: 'Value', header: 'Value', flex: 3 },
+          ]}
+        ></Grid>
+      </DataSource>
+    </WizardPanel>
+  );
+};

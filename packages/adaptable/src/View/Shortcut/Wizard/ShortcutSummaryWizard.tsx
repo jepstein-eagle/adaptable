@@ -24,13 +24,12 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
       { Key: 'Columns', Value: this.props.Data.ColumnType },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ShortcutStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

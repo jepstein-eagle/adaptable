@@ -81,7 +81,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
-        style={{ flex: '1 1 100%', overflow: 'initial' }}
+        style={{ flex: '1 1 100%', overflow: 'initial', height: '100%' }}
         PreviewInfo={this.props.PreviewInfo}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
@@ -106,6 +106,10 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     return (
       <PanelWithImage
         variant="primary"
+        style={{ height: '100%' }}
+        bodyProps={{
+          style: { display: 'flex', flexFlow: 'column' },
+        }}
         header={StrategyConstants.SmartEditStrategyFriendlyName}
         glyphicon={StrategyConstants.SmartEditGlyph}
         infoBody={infoBody}

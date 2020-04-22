@@ -84,13 +84,12 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
       ];
     }
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.PercentBarStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

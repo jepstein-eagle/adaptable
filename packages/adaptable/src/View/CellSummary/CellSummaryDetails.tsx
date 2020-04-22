@@ -6,47 +6,59 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import EmptyContent from '../../components/EmptyContent';
 
+import { DataSource, GridFactory } from '@adaptabletools/grid';
+
 interface CellSummaryDetailsProps extends React.ClassAttributes<CellSummaryDetails> {
   CellSummary: CellSummmary;
 }
 
+type OperationAndValue = {
+  Operation: string;
+  Value: any;
+};
+
+const Grid = GridFactory<OperationAndValue>();
+
 export class CellSummaryDetails extends React.Component<CellSummaryDetailsProps, {}> {
   render() {
-    let colItems: IColItem[] = [
-      { Content: 'Operation', Size: 5 },
-      { Content: 'Value', Size: 7 },
-    ];
-
-    let rowElements: any[] = [];
+    let data: OperationAndValue[] = [];
     if (this.props.CellSummary != null) {
-      Object.keys(this.props.CellSummary).forEach((operationName: string) => {
-        rowElements.push(
-          this.createRow(colItems, operationName, this.props.CellSummary[operationName])
-        );
+      data = Object.keys(this.props.CellSummary).map((operationName: string) => {
+        return {
+          Operation: operationName,
+          Value: this.props.CellSummary[operationName],
+        };
       });
     }
 
     return (
-      <div>
-        <PanelWithRow colItems={colItems} />
+      <>
         {this.props.CellSummary != null ? (
-          <div>{rowElements}</div>
+          <DataSource<OperationAndValue>
+            data={data}
+            fields={['Operation', 'Value']}
+            primaryKey="Operation"
+          >
+            <Grid
+              domProps={{
+                style: {
+                  height: '100%',
+                  minWidth: '15rem',
+                  minHeight: '20rem',
+                },
+              }}
+              columns={[
+                { field: 'Operation', flex: 1 },
+                { field: 'Value', flex: 1 },
+              ]}
+            ></Grid>
+          </DataSource>
         ) : (
           <EmptyContent>
             <p>No cells are selected - please select some cells.</p>
           </EmptyContent>
         )}
-      </div>
+      </>
     );
-  }
-
-  private createRow(colItems: IColItem[], key: any, value: any): any {
-    let rowColItems: IColItem[] = Helper.cloneObject(colItems);
-    rowColItems[0].Content = key;
-    rowColItems[1].Content = value;
-    let rowElement = (
-      <AdaptableObjectRow style={{ minWidth: 185 }} key={key} colItems={rowColItems} />
-    );
-    return rowElement;
   }
 }

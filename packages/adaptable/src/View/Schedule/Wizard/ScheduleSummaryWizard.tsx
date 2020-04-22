@@ -87,13 +87,12 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
       Value: UIHelper.getScheduleDescription(this.props.Data.Schedule),
     });
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ReminderStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

@@ -1,4 +1,6 @@
-﻿/**********************************
+﻿@import '@adaptabletools/Grid/index.css';
+
+/**********************************
  ** ADAPTABLE BASE STYLES **
  **********************************/
 
@@ -68,6 +70,13 @@
 
   --ab-color-blue: #07c; // not sure we need or use this?
   --ab-custom-scrollbar-size: 10px;
+
+  --at-grid__background: var(--ab-color-defaultbackground);
+  --at-gridheader__background: var(--ab-color-primary);
+  --at-gridheader__color: var(--ab-color-text-on-primary);
+  --at-gridrow__background: var(--at-grid__background, transparent);
+  --at-gridrow--odd__background: var(--ab-color-primarylight);
+  --at-gridrow__color: var(--ab-color-text-on-primary);
 }
 
 .ab-style__list-group-item:nth-child(2n+1) {

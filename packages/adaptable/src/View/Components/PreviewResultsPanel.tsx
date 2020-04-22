@@ -7,11 +7,22 @@ import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 
+import { DataSource, GridFactory } from '@adaptabletools/grid';
+
 import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
 import UIHelper from '../UIHelper';
 import Panel from '../../components/Panel';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
+
+type PreviewDataItem = {
+  Id: number;
+  InitialValue: number;
+  ComputedValue: number;
+  ValidInfo: React.ReactNode;
+};
+
+const Grid = GridFactory<PreviewDataItem>();
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   PreviewInfo: IPreviewInfo;
@@ -34,14 +45,15 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
 
     let successColor = UIHelper.getColorByMessageType(MessageType.Success);
 
-    var previewItems = this.props.PreviewInfo.PreviewResults.map(
-      (previewResult: IPreviewResult, index: number) => {
-        return (
-          <tr key={index}>
-            <td>{previewResult.InitialValue}</td>
-            <td>{previewResult.ComputedValue}</td>
-            {previewResult.ValidationRules.length > 0 ? (
-              <td style={{ textAlign: 'center' }}>
+    const dataSource: PreviewDataItem[] = this.props.PreviewInfo.PreviewResults.map(
+      (previewResult, index) => {
+        return {
+          Id: index,
+          InitialValue: previewResult.InitialValue,
+          ComputedValue: previewResult.ComputedValue,
+          ValidInfo:
+            previewResult.ValidationRules.length > 0 ? (
+              <>
                 {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true && (
                   <AdaptablePopover
                     showEvent="mouseenter"
@@ -70,39 +82,51 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                     MessageType={MessageType.Warning}
                   />
                 )}
-              </td>
+              </>
             ) : (
-              <td style={{ textAlign: 'center' }}>
+              <>
                 {' '}
                 <CheckIcon style={{ color: successColor, fill: 'currentColor' }} />
-              </td>
-            )}
-          </tr>
-        );
+              </>
+            ),
+        };
       }
     );
-    var header = (
-      <thead>
-        <tr>
-          <th>Old</th>
-          <th>New</th>
-          <th style={{ width: '10%' }}>Valid</th>
-        </tr>
-      </thead>
-    );
 
-    return (
-      <div style={{ flex: 1, overflow: 'auto', ...this.props.style }}>
-        {this.props.ShowPanel && (
-          <Panel header={previewHeader} bodyScroll>
-            <Table style={{ width: '100%' }}>
-              {header}
-              <tbody style={{ minWidth: 500 }}>{previewItems}</tbody>
-            </Table>
-          </Panel>
-        )}
-      </div>
-    );
+    return this.props.ShowPanel ? (
+      <Panel
+        header={previewHeader}
+        style={{ flex: 1 }}
+        bodyProps={{
+          style: {
+            padding: 0,
+            display: 'flex',
+            flexFlow: 'column',
+            minWidth: '15rem',
+            minHeight: '20rem',
+          },
+        }}
+      >
+        <DataSource<PreviewDataItem>
+          data={dataSource}
+          primaryKey="Id"
+          fields={['ComputedValue', 'InitialValue', 'ValidInfo', 'Id']}
+        >
+          <Grid
+            sortable={false}
+            domProps={{
+              style: { flex: 1 },
+            }}
+            rowHeight={35}
+            columns={[
+              { field: 'InitialValue', flex: 1, header: 'Current', align: 'center' },
+              { field: 'ComputedValue', flex: 1, header: 'New', align: 'center' },
+              { field: 'ValidInfo', width: 60, header: 'Valid', align: 'center' },
+            ]}
+          ></Grid>
+        </DataSource>
+      </Panel>
+    ) : null;
   }
 
   private getValidationErrorMessage(

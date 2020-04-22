@@ -39,13 +39,12 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.UserFilterStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

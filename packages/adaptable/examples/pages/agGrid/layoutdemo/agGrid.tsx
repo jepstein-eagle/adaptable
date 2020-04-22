@@ -14,7 +14,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(50);
+  const tradeData: any = examplesHelper.getTrades(50000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   gridOptions.rowGroupPanelShow = 'always';
 

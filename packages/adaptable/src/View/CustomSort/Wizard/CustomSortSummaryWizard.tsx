@@ -29,13 +29,12 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
       { Key: 'Values', Value: this.props.Data.SortedValues.join(', ') },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.CustomSortStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {
