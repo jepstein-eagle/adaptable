@@ -16,11 +16,11 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
 
-    - run: echo "@adaptabletools:registry=https://registry.adaptabletools.com
-    //registry.adaptabletools.com/:_authToken=${PRIVATE_REGISTRY_TOKEN}
-    package-lock=false" > .npmrc
+    - run: echo "@adaptabletools:registry=https://registry.adaptabletools.com" > .npmrc
+    - run: echo "//registry.adaptabletools.com/:_authToken=${PRIVATE_REGISTRY_TOKEN}" >> .npmrc
       env:
         PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+    - run: echo "package-lock=false" >> .npmrc
 
     - run: cp .npmrc packages/adaptable
 
