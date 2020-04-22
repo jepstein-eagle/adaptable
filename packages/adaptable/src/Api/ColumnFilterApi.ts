@@ -7,7 +7,7 @@ export interface ColumnFilterApi {
   getColumnFilterState(): ColumnFilterState;
 
   /**
-   * Sets Column Filters
+   * Sets Column Filters - will replace filters for existing column and leave other column filters in place
    *
    * @param columnFilters the Column Filters to set
    */
@@ -38,6 +38,13 @@ export interface ColumnFilterApi {
    * Clears all Column Filters in the State
    */
   clearAllColumnFilter(): void;
+
+  /**
+   * Clears all existing Column Filters and then sets the new ones
+   *
+   * @param columnFilters the Column Filters to set
+   */
+  clearAndSetColumnFilter(columnFilters: ColumnFilter[]): void;
 
   /**
    * Retrieves all the Column Filters in the Column Filter State (of Predefined Config)
