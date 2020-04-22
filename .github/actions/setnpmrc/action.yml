@@ -1,0 +1,5 @@
+name: 'Setup npmrc';
+description: 'Setup npmrc to point to private registry';
+runs:
+  using: "node12"
+  main: "out/index.js"
