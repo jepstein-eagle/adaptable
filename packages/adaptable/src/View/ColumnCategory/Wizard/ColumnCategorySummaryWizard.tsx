@@ -25,13 +25,12 @@ export class ColumnCategorySummaryWizard
       { Key: 'Columns', Value: this.getColumnNames() },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ColumnCategoryStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
   public canNext(): boolean {
     return true;

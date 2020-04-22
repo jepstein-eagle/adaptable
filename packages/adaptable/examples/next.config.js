@@ -1,10 +1,11 @@
+// @ts-nocheck
 const path = require('path');
 const Dotenv = require('dotenv-webpack');
 
 // make the app accept sources from everywhere in the monorepo
 const SRC_PATH = path.resolve('../../');
 
-const TS_PRESET = '@babel/preset-typescript';
+// const TS_PRESET = '@babel/preset-typescript';
 
 const withTypescript = (nextConfig = {}) => {
   if (!nextConfig.pageExtensions) {
@@ -21,35 +22,12 @@ const withTypescript = (nextConfig = {}) => {
 
   return Object.assign({}, nextConfig, {
     webpack(config, options) {
-      const { dir, defaultLoaders, dev, isServer } = options;
-
-      config.resolve.extensions.push('.ts', '.tsx');
-
-      config.module.rules.push({
-        test: /\.(ts|tsx)$/,
-        include: [dir],
-        exclude: /node_modules/,
-        use: defaultLoaders.babel,
-      });
-
       config.module.rules.forEach(rule => {
         if (Array.isArray(rule.include)) {
           // accept files from anywhere in the monorepo
           rule.include.push(SRC_PATH);
         }
       });
-
-      if (defaultLoaders.babel.options) {
-        if (
-          !defaultLoaders.babel.options.presets ||
-          defaultLoaders.babel.options.presets.indexOf(TS_PRESET) === -1
-        ) {
-          defaultLoaders.babel.options.presets = defaultLoaders.babel.options.presets || [];
-
-          // enforce the TS preset
-          defaultLoaders.babel.options.presets.push(TS_PRESET);
-        }
-      }
 
       config.plugins = config.plugins || [];
 

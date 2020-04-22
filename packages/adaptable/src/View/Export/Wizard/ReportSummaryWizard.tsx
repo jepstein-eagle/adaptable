@@ -38,13 +38,12 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
       //  { Key: 'Schedule', Value: scheduleDescription },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ExportStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

@@ -39,13 +39,12 @@ export class ConditionalStyleSummaryWizard
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ConditionalStyleStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   private getScope(): string {

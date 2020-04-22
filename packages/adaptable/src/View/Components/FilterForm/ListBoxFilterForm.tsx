@@ -22,6 +22,7 @@ import CheckBox, { CheckBoxProps } from '../../../components/CheckBox';
 import join from '../../../components/utils/join';
 import { QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { AdaptableFormControlTextClear } from '../Forms/AdaptableFormControlTextClear';
+import GridList from '../../../components/List/GridList';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
   CurrentColumn: AdaptableColumn;
@@ -244,10 +245,10 @@ export class ListBoxFilterForm extends React.Component<
         <Box mx={this.props.useVendorStyle ? 0 : '2px'} marginBottom={2}>
           {textClear}
         </Box>
-        <ListGroup>
+        <GridList>
           {userFiltersItemsElements}
           {columnValuesItemsElements}
-        </ListGroup>
+        </GridList>
       </div>
     );
   }

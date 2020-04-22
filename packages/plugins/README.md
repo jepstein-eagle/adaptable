@@ -24,7 +24,7 @@ npm install @adaptabletools/adaptable-plugin-finance
 npm install @adaptabletools/adaptable-plugin-nocode-aggrid
 ```
 
-> You must install the same version of the plugin as you use for the 'core' AdapTable package.  AdapTable will send a warning message to the console if these are different.
+> You must install the same version of the plugin as you use for the 'core' AdapTable package.  AdapTable will send a warning message to the console if these are different
 
 2.  Import the plugin(s) in your code when instantiating AdapTable:
 

@@ -43,13 +43,12 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
       },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.PlusMinusStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

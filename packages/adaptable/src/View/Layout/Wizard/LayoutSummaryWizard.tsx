@@ -45,13 +45,12 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
       ];
     }
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={[...keyValuePairs, ...pivotKeyValuePairs]}
         header={StrategyConstants.LayoutStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
   public canNext(): boolean {
     return true;

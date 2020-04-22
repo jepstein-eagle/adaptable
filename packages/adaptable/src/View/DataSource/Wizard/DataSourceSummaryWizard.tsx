@@ -22,13 +22,12 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
       { Key: 'Description', Value: this.props.Data.Description },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.DataSourceStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

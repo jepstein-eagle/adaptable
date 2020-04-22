@@ -24,6 +24,16 @@ export interface UserInterfaceOptions {
   useDefaultVendorGridThemes?: boolean;
 
   /**
+   * Will show custom Mac-like scrollbars in
+   * browsers that support scrollbar-theming.
+   *
+   * Scrollbar size configurable via CSS variable `--ab-custom-scrollbar-size` - defaults to `10px`
+   *
+   * NOTE: on mac, when the OS scrollbar is not always visible, it will not be applied, since it detects scrollbars with a size of zero
+   */
+  useCustomMacLikeScrollbars?: boolean;
+
+  /**
    * Whether or not to show an Adaptable Tool Panel on the right hand side (ag-Grid only).
    *
    * Note - the toolpanel is not yet operational and will be released in v.6 (January 2020).

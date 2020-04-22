@@ -157,6 +157,7 @@ import { hasMagic } from 'glob';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 import { Report } from '../PredefinedConfig/ExportState';
+import getScrollbarSize from '../Utilities/getScrollbarSize';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -3508,6 +3509,16 @@ export class Adaptable implements IAdaptable {
     });
 
     themeNamesToRemove.forEach(cssClassName => el.classList.remove(cssClassName));
+
+    if (
+      this.adaptableOptions.userInterfaceOptions &&
+      this.adaptableOptions.userInterfaceOptions.useCustomMacLikeScrollbars &&
+      getScrollbarSize() > 0
+    ) {
+      el.classList.add('ab--custom-mac-like-scrollbars');
+    } else {
+      el.classList.remove('ab--custom-mac-like-scrollbars');
+    }
 
     const newTheme: AdaptableTheme = allThemesMap[themeName];
     const newThemeClassName: string = StyleConstants.THEME_STYLE + themeName;

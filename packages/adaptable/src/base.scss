@@ -1,4 +1,6 @@
-﻿/**********************************
+﻿@import '@adaptabletools/Grid/index.css';
+
+/**********************************
  ** ADAPTABLE BASE STYLES **
  **********************************/
 
@@ -67,6 +69,14 @@
   --ab-loaded: 777; // dont remove - required for checking styles have been loaded
 
   --ab-color-blue: #07c; // not sure we need or use this?
+  --ab-custom-scrollbar-size: 10px;
+
+  --at-grid__background: var(--ab-color-defaultbackground);
+  --at-gridheader__background: var(--ab-color-primary);
+  --at-gridheader__color: var(--ab-color-text-on-primary);
+  --at-gridrow__background: var(--at-grid__background, transparent);
+  --at-gridrow--odd__background: var(--ab-color-primarylight);
+  --at-gridrow__color: var(--ab-color-text-on-primary);
 }
 
 .ab-style__list-group-item:nth-child(2n+1) {
@@ -189,4 +199,51 @@ Can I put them somewhere else?
   display: inline-block;
   height: 100%;
   width: 100%;
+}
+
+
+
+// custom scrollbars
+
+.ab--custom-mac-like-scrollbars {
+  .ab-Grid *,
+  .ag-root *,
+  .ab-Dashboard, .ab-Dashboard *,
+  .ab-Panel, .ab-Panel *,
+  .ab-Modal, .ab-Modal * {
+
+    ::-webkit-scrollbar {
+      background-color: rgba(0,0,0,0);
+      border-radius: 100px;
+    }
+    ::-webkit-scrollbar:vertical {
+      width: var(--ab-custom-scrollbar-size);
+    }
+    ::-webkit-scrollbar:horizontal {
+      height: var(--ab-custom-scrollbar-size);
+    }
+
+    ::-webkit-scrollbar:hover {
+      background-color: rgba(0, 0, 0, 0.09);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.5);
+      border-radius: 100px;
+      background-clip: padding-box;
+      border: 2px solid rgba(0, 0, 0, 0);
+
+    }
+    ::-webkit-scrollbar-thumb:vertical {
+      min-height: var(--ab-custom-scrollbar-size);
+    }
+    ::-webkit-scrollbar-thumb:horizontal {
+      min-width: var(--ab-custom-scrollbar-size);
+    }
+    ::-webkit-scrollbar-thumb:active {
+      background: rgba(0,0,0,0.61);
+      border-radius: 100px;
+    }
+  }
+
 }

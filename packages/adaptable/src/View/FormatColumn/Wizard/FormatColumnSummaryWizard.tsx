@@ -31,13 +31,12 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.FormatColumnStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {
