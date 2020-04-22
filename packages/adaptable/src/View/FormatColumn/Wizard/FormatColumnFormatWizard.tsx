@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
-import { Flex } from 'rebass';
+import { Flex, Box } from 'rebass';
 import Radio from '../../../components/Radio';
 import Panel from '../../../components/Panel';
 import HelpBlock from '../../../components/HelpBlock';
@@ -22,6 +22,14 @@ export interface FormatColumnFormatWizardProps extends AdaptableWizardStepProps<
 export interface FormatColumnFormatWizardState {
   Format: AdaptableFormat;
 }
+
+const DateFormatPresets = [
+  'MM/dd/yyyy',
+  'dd-MM-yyyy',
+  'MMMM do yyyy, h:mm:ss a',
+  'EEEE',
+  'MMM do yy',
+];
 
 export class FormatColumnFormatWizard
   extends React.Component<FormatColumnFormatWizardProps, FormatColumnFormatWizardState>
@@ -190,6 +198,17 @@ export class FormatColumnFormatWizard
     return (
       <>
         <Panel header="Format" margin={2}>
+          <HelpBlock mb={2}>
+            Either create your own or select one of the preset date formats. Checkout available
+            symbols{' '}
+            <a
+              href="https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table"
+              target="_blank"
+            >
+              here
+            </a>
+            .
+          </HelpBlock>
           <FormLayout>
             <FormRow label="Pattern">
               <Input
@@ -197,11 +216,13 @@ export class FormatColumnFormatWizard
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   this.setFormatOption('Pattern', e.currentTarget.value)
                 }
+                mr={2}
               />
+              <span>{FormatHelper.DateFormatter(new Date(), this.state.Format.Options)}</span>
             </FormRow>
           </FormLayout>
         </Panel>
-        <Panel header="Examples" margin={2}>
+        <Panel header="Presets" margin={2}>
           <AdaptableObjectRow
             style={{ fontWeight: 'bold' }}
             colItems={[
@@ -210,40 +231,26 @@ export class FormatColumnFormatWizard
               { Content: '', Size: 1 },
             ]}
           />
-          <AdaptableObjectRow
-            colItems={[
-              { Content: 'MM/dd/yyyy', Size: 1 },
-              {
-                Content: FormatHelper.DateFormatter(new Date(), { Pattern: 'MM/dd/yyyy' }),
-                Size: 1,
-              },
-              {
-                Content: (
-                  <SimpleButton onClick={() => this.setFormatOption('Pattern', 'MM/dd/yyyy')}>
-                    Apply
-                  </SimpleButton>
-                ),
-                Size: 1,
-              },
-            ]}
-          />
-          <AdaptableObjectRow
-            colItems={[
-              { Content: "EEE, MMM d, ''yy", Size: 1 },
-              {
-                Content: FormatHelper.DateFormatter(new Date(), { Pattern: "EEE, MMM d, ''yy" }),
-                Size: 1,
-              },
-              {
-                Content: (
-                  <SimpleButton onClick={() => this.setFormatOption('Pattern', "EEE, MMM d, ''yy")}>
-                    Apply
-                  </SimpleButton>
-                ),
-                Size: 1,
-              },
-            ]}
-          />
+          {DateFormatPresets.map((Pattern, index) => (
+            <AdaptableObjectRow
+              key={index}
+              colItems={[
+                { Content: Pattern, Size: 1 },
+                {
+                  Content: FormatHelper.DateFormatter(new Date(), { Pattern }),
+                  Size: 1,
+                },
+                {
+                  Content: (
+                    <SimpleButton onClick={() => this.setFormatOption('Pattern', Pattern)}>
+                      Apply
+                    </SimpleButton>
+                  ),
+                  Size: 1,
+                },
+              ]}
+            />
+          ))}
         </Panel>
       </>
     );
