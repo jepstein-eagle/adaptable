@@ -26,7 +26,7 @@ const GridList = (props: GridListProps) => {
   return (
     <DataSource<GridListItem> data={data} primaryKey="id" fields={['item', 'id']}>
       <Grid
-        rowHeight={props.rowHeight ?? 30}
+        rowHeight={props.rowHeight || 30}
         domProps={{ className: baseClassName, style: { minHeight: '15rem' } }}
         columns={[{ field: 'item', header: null, flex: 1 }]}
       ></Grid>
