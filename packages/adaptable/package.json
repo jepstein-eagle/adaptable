@@ -17,7 +17,6 @@
     "lodash": "^4.17.10",
     "mathjs": "^5.1.1",
     "normalize.css": "^8.0.1",
-    "numeral": "^2.0.6",
     "openfin-notifications": "^0.10.1",
     "prop-types": "^15.6.2",
     "react": "^16.9.0",
