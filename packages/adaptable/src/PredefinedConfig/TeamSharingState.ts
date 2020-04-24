@@ -24,3 +24,9 @@ export interface SharedEntity extends AdaptableObject {
   UserName: string;
   Description: string;
 }
+
+export interface TeamSharingImportInfo<T extends AdaptableObject> {
+  FunctionEntities: T[];
+  AddAction: (entity: T) => any;
+  EditAction: (entity: T) => any;
+}

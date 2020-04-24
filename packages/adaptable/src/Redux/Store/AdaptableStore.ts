@@ -131,7 +131,7 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
-import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
+import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
@@ -2793,29 +2793,31 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             let importAction: Redux.Action;
             let overwriteConfirmation = false;
 
-            const state = middlewareAPI.getState();
-
             const runCase = <T extends AdaptableObject>(
-              FunctionEntities: T[],
-              AddAction: (entity: T) => any,
-              EditAction: (entity: T) => any
+              teamSharingImportInfo: TeamSharingImportInfo<AdaptableObject>
             ) => {
-              if (FunctionEntities.some(x => x.Uuid === Entity.Uuid)) {
+              if (teamSharingImportInfo.FunctionEntities.some(x => x.Uuid === Entity.Uuid)) {
                 overwriteConfirmation = true;
-                importAction = EditAction(Entity as T);
+                importAction = teamSharingImportInfo.EditAction(Entity as T);
               } else {
-                importAction = AddAction(Entity as T);
+                importAction = teamSharingImportInfo.AddAction(Entity as T);
               }
             };
 
+            let teamSharingAction = adaptable.StrategyService.getTeamSharingAction(FunctionName);
+            if (teamSharingAction != undefined) {
+              runCase(teamSharingAction);
+            }
+            /*
             switch (FunctionName) {
-              case StrategyConstants.CellValidationStrategyId:
+              case StrategyConstants.AdvancedSearchStrategyId: {
                 runCase(
-                  state.CellValidation.CellValidations,
-                  CellValidationRedux.CellValidationAdd,
-                  CellValidationRedux.CellValidationEdit
+                  state.AdvancedSearch.AdvancedSearches,
+                  AdvancedSearchRedux.AdvancedSearchAdd,
+                  AdvancedSearchRedux.AdvancedSearchEdit
                 );
                 break;
+              }
               case StrategyConstants.CalculatedColumnStrategyId: {
                 runCase(
                   state.CalculatedColumn.CalculatedColumns,
@@ -2824,6 +2826,14 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 );
                 break;
               }
+              case StrategyConstants.CellValidationStrategyId:
+                runCase(
+                  state.CellValidation.CellValidations,
+                  CellValidationRedux.CellValidationAdd,
+                  CellValidationRedux.CellValidationEdit
+                );
+                break;
+
               case StrategyConstants.ConditionalStyleStrategyId:
                 runCase(
                   state.ConditionalStyle.ConditionalStyles,
@@ -2839,11 +2849,28 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 );
                 break;
               }
+
+              case StrategyConstants.ExportStrategyId: {
+                runCase(state.Export.Reports, ExportRedux.ReportAdd, ExportRedux.ReportEdit);
+                break;
+              }
               case StrategyConstants.FormatColumnStrategyId: {
                 runCase(
                   state.FormatColumn.FormatColumns,
                   FormatColumnRedux.FormatColumnAdd,
                   FormatColumnRedux.FormatColumnEdit
+                );
+                break;
+              }
+              case StrategyConstants.LayoutStrategyId: {
+                runCase(state.Layout.Layouts, LayoutRedux.LayoutAdd, LayoutRedux.LayoutEdit);
+                break;
+              }
+              case StrategyConstants.PercentBarStrategyId: {
+                runCase(
+                  state.PercentBar.PercentBars,
+                  PercentBarRedux.PercentBarAdd,
+                  PercentBarRedux.PercentBarEdit
                 );
                 break;
               }
@@ -2874,23 +2901,8 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 );
                 break;
               }
-              case StrategyConstants.AdvancedSearchStrategyId: {
-                runCase(
-                  state.AdvancedSearch.AdvancedSearches,
-                  AdvancedSearchRedux.AdvancedSearchAdd,
-                  AdvancedSearchRedux.AdvancedSearchEdit
-                );
-                break;
-              }
-              case StrategyConstants.LayoutStrategyId: {
-                runCase(state.Layout.Layouts, LayoutRedux.LayoutAdd, LayoutRedux.LayoutEdit);
-                break;
-              }
-              case StrategyConstants.ExportStrategyId: {
-                runCase(state.Export.Reports, ExportRedux.ReportAdd, ExportRedux.ReportEdit);
-                break;
-              }
-            }
+              
+            }*/
             if (overwriteConfirmation) {
               let confirmation: IUIConfirmation = {
                 CancelButtonText: 'Cancel Import',

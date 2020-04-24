@@ -5,6 +5,10 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
+import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
+
 export class AdvancedSearchStrategy extends AdaptableStrategyBase
   implements IAdvancedSearchStrategy {
   constructor(adaptable: IAdaptable) {
@@ -19,5 +23,13 @@ export class AdvancedSearchStrategy extends AdaptableStrategyBase
         Icon: StrategyConstants.AdvancedSearchGlyph,
       });
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<AdvancedSearch> {
+    return {
+      FunctionEntities: this.adaptable.api.advancedSearchApi.getAllAdvancedSearch(),
+      AddAction: AdvancedSearchRedux.AdvancedSearchAdd,
+      EditAction: AdvancedSearchRedux.AdvancedSearchEdit,
+    };
   }
 }
