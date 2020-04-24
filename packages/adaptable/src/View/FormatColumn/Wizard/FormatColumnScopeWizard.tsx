@@ -56,6 +56,7 @@ export class FormatColumnScopeWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
+    this.props.Data.Format = undefined;
   }
 
   public Back(): void {

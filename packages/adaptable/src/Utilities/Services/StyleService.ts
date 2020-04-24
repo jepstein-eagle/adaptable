@@ -131,7 +131,7 @@ export class StyleService implements IStyleService {
     this.clearCSSRules();
 
     // Format Column
-    this.adaptable.api.formatColumnApi.getAllFormatColumn().forEach(formatColumn => {
+    this.adaptable.api.formatColumnApi.getAllFormatColumnWithStyle().forEach(formatColumn => {
       const styleName = this.CreateUniqueStyleName(
         StrategyConstants.FormatColumnStrategyId,
         formatColumn
