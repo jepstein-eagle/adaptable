@@ -1,8 +1,8 @@
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
+import { SharedEntity } from '../PredefinedConfig/TeamSharingState';
 
 export interface TeamSharingOptions {
-  // TODO change any
-  shareEntity?: (entity: any) => Promise<void>;
-
-  loadEntities?: () => Promise<any>;
+  enableTeamSharing: boolean;
+  getSharedEntities: (adaptableId: string) => Promise<SharedEntity[]>;
+  setSharedEntities: (adaptableId: string, sharedEntities: SharedEntity[]) => Promise<void>;
 }

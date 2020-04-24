@@ -21,6 +21,10 @@ import { Layout } from '../../../../src/PredefinedConfig/LayoutState';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
 var api: AdaptableApi;
 
+function getSharedEntities(adaptableId: string) {
+  return JSON.parse(localStorage.getItem('TEAM_SHARING') || '[]');
+}
+
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
@@ -37,22 +41,20 @@ function InitAdaptableDemo() {
       useCustomMacLikeScrollbars: true,
     },
     teamSharingOptions: {
-      async shareEntity(entity) {
-        const entities: any[] = JSON.parse(localStorage.getItem('TEAM_SHARING') || '[]');
-        entities.push(entity);
-        localStorage.setItem('TEAM_SHARING', JSON.stringify(entities));
+      enableTeamSharing: true,
+      async getSharedEntities(adaptableId) {
+        return new Promise(resolve => {
+          const sharedEntities = JSON.parse(
+            localStorage.getItem(`TEAM_SHARING:${adaptableId}`) || '[]'
+          );
+          setTimeout(() => resolve(sharedEntities), 1000);
+        });
       },
-      async loadEntities() {
-        const entities: any[] = JSON.parse(
-          localStorage.getItem('TEAM_SHARING') || '[]',
-          (key, value) => {
-            if (key == 'timestamp') {
-              return new Date(value);
-            }
-            return value;
-          }
-        );
-        return entities;
+      async setSharedEntities(adaptableId, sharedEntities) {
+        return new Promise(resolve => {
+          localStorage.setItem(`TEAM_SHARING:${adaptableId}`, JSON.stringify(sharedEntities));
+          setTimeout(() => resolve(), 1000);
+        });
       },
     },
     vendorGrid: {

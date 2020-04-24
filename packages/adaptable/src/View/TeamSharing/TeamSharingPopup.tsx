@@ -37,16 +37,17 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
-  onGetSharedItems: () => TeamSharingRedux.TeamSharingShareAction;
+  onTeamSharingFetch: () => TeamSharingRedux.TeamSharingShareAction;
   onImportItem: (
-    entity: AdaptableObject,
+    Entity: AdaptableObject,
     strategy: AdaptableFunctionName
   ) => TeamSharingRedux.TeamSharingImportItemAction;
+  onRemoveItem: (Uuid: string) => TeamSharingRedux.TeamSharingRemoveItemAction;
 }
 
 class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {}> {
   componentDidMount() {
-    this.props.onGetSharedItems();
+    this.props.onTeamSharingFetch();
   }
 
   render() {
@@ -54,38 +55,45 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
     let colItems: IColItem[] = [
       { Content: 'Function', Size: 2 },
+      { Content: 'Description', Size: 2 },
       { Content: 'Audit', Size: 3 },
       { Content: 'Details', Size: 6 },
       { Content: '', Size: 1 },
     ];
     let sharedItems = this.props.Entities.sort((a, b) => {
-      return a.functionName < b.functionName ? -1 : 1;
+      return a.FunctionName < b.FunctionName ? -1 : 1;
     }).map((x, index) => {
       return (
-        <li className="list-group-item" key={index}>
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={2}>
-              <StrategyProfile FunctionName={x.functionName} />
-            </Flex>
-            <Flex flex={3}>
-              {x.user}
-              {<br />}
-              {x.timestamp.toLocaleString()}
-            </Flex>
-            <Flex flex={6} style={{ fontSize: 'small' }}>
-              <Panel variant="primary">{this.getSharedItemDetails(x)}</Panel>
-            </Flex>
-            <Flex flex={1}>
-              <SimpleButton
-                variant="text"
-                tooltip="import"
-                onClick={() => this.props.onImportItem(x.entity, x.functionName)}
-              >
-                <Icon name="import-export" />
-              </SimpleButton>
-            </Flex>
+        <Flex flexDirection="row" alignItems="center" key={index}>
+          <Flex flex={2}>
+            <StrategyProfile FunctionName={x.FunctionName} />
           </Flex>
-        </li>
+          <Flex flex={2}>{x.Description}</Flex>
+          <Flex flex={3}>
+            {x.UserName}
+            {<br />}
+            {new Date(x.Timestamp).toLocaleString()}
+          </Flex>
+          <Flex flex={6} style={{ fontSize: 'small' }}>
+            <Panel variant="primary">{this.getSharedItemDetails(x)}</Panel>
+          </Flex>
+          <Flex flex={1}>
+            <SimpleButton
+              variant="text"
+              tooltip="import"
+              onClick={() => this.props.onImportItem(x.Entity, x.FunctionName)}
+            >
+              <Icon name="import-export" />
+            </SimpleButton>
+            <SimpleButton
+              variant="text"
+              tooltip="remove"
+              onClick={() => this.props.onRemoveItem(x.Uuid)}
+            >
+              <Icon name="delete" />
+            </SimpleButton>
+          </Flex>
+        </Flex>
       );
     });
 
@@ -100,15 +108,15 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         ) : (
           <PanelWithRow colItems={colItems} />
         )}
-        <ListGroup>{sharedItems}</ListGroup>
+        {sharedItems}
       </PanelWithImage>
     );
   }
 
   getSharedItemDetails(sharedEntity: SharedEntity) {
-    switch (sharedEntity.functionName) {
+    switch (sharedEntity.FunctionName) {
       case StrategyConstants.CustomSortStrategyId: {
-        let customSort = sharedEntity.entity as CustomSort;
+        let customSort = sharedEntity.Entity as CustomSort;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>
@@ -119,7 +127,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.CalculatedColumnStrategyId: {
-        let calcCol = sharedEntity.entity as CalculatedColumn;
+        let calcCol = sharedEntity.Entity as CalculatedColumn;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>{calcCol.ColumnId}</Flex>
@@ -128,7 +136,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.CellValidationStrategyId: {
-        let cellVal = sharedEntity.entity as CellValidationRule;
+        let cellVal = sharedEntity.Entity as CellValidationRule;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>
@@ -149,7 +157,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.ConditionalStyleStrategyId: {
-        let cs = sharedEntity.entity as ConditionalStyle;
+        let cs = sharedEntity.Entity as ConditionalStyle;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>
@@ -167,7 +175,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.PlusMinusStrategyId: {
-        let plusMinus = sharedEntity.entity as PlusMinusRule;
+        let plusMinus = sharedEntity.Entity as PlusMinusRule;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>
@@ -181,7 +189,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.ShortcutStrategyId: {
-        let shortcut = sharedEntity.entity as Shortcut;
+        let shortcut = sharedEntity.Entity as Shortcut;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>{shortcut.ColumnType}</Flex>
@@ -191,7 +199,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.UserFilterStrategyId: {
-        let filter = sharedEntity.entity as UserFilter;
+        let filter = sharedEntity.Entity as UserFilter;
         let expressionString = ExpressionHelper.ConvertExpressionToString(
           filter.Expression,
           this.props.Columns
@@ -204,7 +212,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.AdvancedSearchStrategyId: {
-        let search = sharedEntity.entity as AdvancedSearch;
+        let search = sharedEntity.Entity as AdvancedSearch;
         let expressionString = ExpressionHelper.ConvertExpressionToString(
           search.Expression,
           this.props.Columns
@@ -217,7 +225,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.LayoutStrategyId: {
-        let layout = sharedEntity.entity as Layout;
+        let layout = sharedEntity.Entity as Layout;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>{layout.Name}</Flex>
@@ -226,7 +234,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.FormatColumnStrategyId: {
-        let fc = sharedEntity.entity as FormatColumn;
+        let fc = sharedEntity.Entity as FormatColumn;
         return (
           <Flex flexDirection="row" alignItems="center">
             <Flex flex={4}>
@@ -239,7 +247,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         );
       }
       case StrategyConstants.ExportStrategyId: {
-        let range = sharedEntity.entity as Report;
+        let range = sharedEntity.Entity as Report;
         let expressionString = ExpressionHelper.ConvertExpressionToString(
           range.Expression,
           this.props.Columns
@@ -275,9 +283,10 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
 
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
-    onGetSharedItems: () => dispatch(TeamSharingRedux.TeamSharingGet()),
+    onTeamSharingFetch: () => dispatch(TeamSharingRedux.TeamSharingFetch()),
     onImportItem: (entity: AdaptableObject, strategy: AdaptableFunctionName) =>
       dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy)),
+    onRemoveItem: (Uuid: string) => dispatch(TeamSharingRedux.TeamSharingRemoveItem(Uuid)),
   };
 }
 

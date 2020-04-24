@@ -14,14 +14,13 @@ import { AdaptableFunctionName } from '../types';
  * **Note**: Team Sharing is only available if the Configuration Storage mode is Remote Storage; If the mode is set to Local Storage, Team Sharing is disabled.
  */
 export interface TeamSharingState extends InternalState {
-  Activated: boolean;
   SharedEntities: SharedEntity[];
 }
 
-export interface SharedEntity {
-  entity: AdaptableObject;
-  functionName: AdaptableFunctionName;
-  timestamp: Date;
-  user: string;
-  adaptableId: string;
+export interface SharedEntity extends AdaptableObject {
+  Entity: AdaptableObject;
+  FunctionName: AdaptableFunctionName;
+  Timestamp: number;
+  UserName: string;
+  Description: string;
 }

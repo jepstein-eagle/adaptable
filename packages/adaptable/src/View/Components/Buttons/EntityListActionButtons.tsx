@@ -96,8 +96,16 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         )}
         {this.props.showShare && (
           <ButtonShare
+            style={{
+              marginLeft: '1px',
+              marginTop: '2px',
+              marginBottom: '2px',
+              marginRight: '1px',
+              color: 'var(--ab-color-text-on-warn)',
+              fill: 'var(--ab-color-text-on-warn)',
+              background: 'var(--ab-color-warn)',
+            }}
             onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
-            style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
             disabled={this.props.overrideDisableShare || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}

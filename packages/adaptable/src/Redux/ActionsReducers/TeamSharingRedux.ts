@@ -3,11 +3,13 @@ import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
-export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
+export const TEAMSHARING_FETCH = 'TEAMSHARING_FETCH';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';
+export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 export const TEAMSHARING_IMPORT_ITEM = 'TEAMSHARING_IMPORT_ITEM';
-export const TEAMSHARING_GET = 'TEAMSHARING_GET';
+export const TEAMSHARING_REMOVE_ITEM = 'TEAMSHARING_REMOVE_ITEM';
 
 export interface TeamSharingShareAction extends Redux.Action {
   Entity: AdaptableObject;
@@ -21,6 +23,10 @@ export interface TeamSharingSetAction extends Redux.Action {
 export interface TeamSharingImportItemAction extends Redux.Action {
   Entity: AdaptableObject;
   FunctionName: AdaptableFunctionName;
+}
+
+export interface TeamSharingRemoveItemAction extends Redux.Action {
+  Uuid: string;
 }
 
 export interface TeamSharingGetAction extends Redux.Action {}
@@ -48,12 +54,16 @@ export const TeamSharingImportItem = (
   FunctionName,
 });
 
-export const TeamSharingGet = (): TeamSharingGetAction => ({
-  type: TEAMSHARING_GET,
+export const TeamSharingRemoveItem = (Uuid: string): TeamSharingRemoveItemAction => ({
+  type: TEAMSHARING_REMOVE_ITEM,
+  Uuid,
+});
+
+export const TeamSharingFetch = (): TeamSharingGetAction => ({
+  type: TEAMSHARING_FETCH,
 });
 
 const initialTeamSharingState: TeamSharingState = {
-  Activated: false,
   SharedEntities: EMPTY_ARRAY,
 };
 

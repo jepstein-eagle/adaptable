@@ -132,6 +132,8 @@ import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionR
 import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
 import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -2679,18 +2681,42 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
            * TEAM SHARING ACTIONS
            *******************/
 
-          // Use case - an item needs to be shared between teams
+          case TeamSharingRedux.TEAMSHARING_FETCH: {
+            let returnAction = next(action);
+
+            const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+
+            teamSharingOptions
+              .getSharedEntities(adaptableId)
+              .then(sharedEntities => {
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(sharedEntities));
+              })
+              .catch(error => {
+                LoggingHelper.LogAdaptableError('TeamSharing get error : ' + error.message);
+              });
+
+            return returnAction;
+          }
           case TeamSharingRedux.TEAMSHARING_SHARE: {
             const actionTyped = action as TeamSharingRedux.TeamSharingShareAction;
             let returnAction = next(action);
 
-            adaptable.adaptableOptions.teamSharingOptions
-              .shareEntity({
-                entity: actionTyped.Entity,
-                user: adaptable.adaptableOptions.userName,
-                adaptableId: adaptable.adaptableOptions.adaptableId,
-                functionName: actionTyped.FunctionName,
-                timestamp: new Date(),
+            const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+            const Description = prompt('Description', 'No Description');
+
+            teamSharingOptions
+              .getSharedEntities(adaptableId)
+              .then(sharedEntities => {
+                sharedEntities.push({
+                  Uuid: createUuid(),
+                  Entity: actionTyped.Entity,
+                  FunctionName: actionTyped.FunctionName,
+                  UserName: adaptable.adaptableOptions.userName,
+                  Timestamp: new Date().getTime(),
+                  Description,
+                });
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(sharedEntities));
+                return teamSharingOptions.setSharedEntities(adaptableId, sharedEntities);
               })
               .then(() => {
                 middlewareAPI.dispatch(
@@ -2721,16 +2747,41 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
             return returnAction;
           }
-          case TeamSharingRedux.TEAMSHARING_GET: {
+          case TeamSharingRedux.TEAMSHARING_REMOVE_ITEM: {
             let returnAction = next(action);
+            const actionTyped = action as TeamSharingRedux.TeamSharingRemoveItemAction;
 
-            adaptable.adaptableOptions.teamSharingOptions
-              .loadEntities()
-              .then(entities => {
-                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(entities));
+            const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+
+            teamSharingOptions
+              .getSharedEntities(adaptableId)
+              .then(sharedEntities => {
+                const newSharedEntities = sharedEntities.filter(s => s.Uuid !== actionTyped.Uuid);
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(newSharedEntities));
+                return teamSharingOptions.setSharedEntities(adaptableId, newSharedEntities);
+              })
+              .then(() => {
+                // middlewareAPI.dispatch(
+                //   PopupRedux.PopupShowAlert({
+                //     Header: 'Team Sharing',
+                //     Msg: 'Item Removed Successfully',
+                //     AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                //       MessageType.Info
+                //     ),
+                //   })
+                // );
               })
               .catch(error => {
-                LoggingHelper.LogAdaptableError('TeamSharing get error : ' + error.message);
+                LoggingHelper.LogAdaptableError('TeamSharing remove error : ' + error.message);
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowAlert({
+                    Header: 'Team Sharing Error',
+                    Msg: "Couldn't remove item: " + error.message,
+                    AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                      MessageType.Error
+                    ),
+                  })
+                );
               });
 
             return returnAction;
@@ -2738,124 +2789,105 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {
             let returnAction = next(action);
             const actionTyped = action as TeamSharingRedux.TeamSharingImportItemAction;
+            const { FunctionName, Entity } = actionTyped;
             let importAction: Redux.Action;
             let overwriteConfirmation = false;
-            switch (actionTyped.FunctionName) {
+
+            const state = middlewareAPI.getState();
+
+            const runCase = <T extends AdaptableObject>(
+              FunctionEntities: T[],
+              AddAction: (entity: T) => any,
+              EditAction: (entity: T) => any
+            ) => {
+              if (FunctionEntities.some(x => x.Uuid === Entity.Uuid)) {
+                overwriteConfirmation = true;
+                importAction = EditAction(Entity as T);
+              } else {
+                importAction = AddAction(Entity as T);
+              }
+            };
+
+            switch (FunctionName) {
               case StrategyConstants.CellValidationStrategyId:
-                importAction = CellValidationRedux.CellValidationAdd(
-                  actionTyped.Entity as CellValidationRule
+                runCase(
+                  state.CellValidation.CellValidations,
+                  CellValidationRedux.CellValidationAdd,
+                  CellValidationRedux.CellValidationEdit
                 );
                 break;
               case StrategyConstants.CalculatedColumnStrategyId: {
-                let calcCol = actionTyped.Entity as CalculatedColumn;
-                let idx = middlewareAPI
-                  .getState()
-                  .CalculatedColumn.CalculatedColumns.findIndex(
-                    x => x.ColumnId == calcCol.ColumnId
-                  );
-                if (idx > -1) {
-                  overwriteConfirmation = true;
-                  importAction = CalculatedColumnRedux.CalculatedColumnEdit(calcCol);
-                } else {
-                  importAction = CalculatedColumnRedux.CalculatedColumnAdd(calcCol);
-                }
+                runCase(
+                  state.CalculatedColumn.CalculatedColumns,
+                  CalculatedColumnRedux.CalculatedColumnAdd,
+                  CalculatedColumnRedux.CalculatedColumnEdit
+                );
                 break;
               }
               case StrategyConstants.ConditionalStyleStrategyId:
-                importAction = ConditionalStyleRedux.ConditionalStyleAdd(
-                  actionTyped.Entity as ConditionalStyle
+                runCase(
+                  state.ConditionalStyle.ConditionalStyles,
+                  ConditionalStyleRedux.ConditionalStyleAdd,
+                  ConditionalStyleRedux.ConditionalStyleEdit
                 );
                 break;
               case StrategyConstants.CustomSortStrategyId: {
-                let customSort = actionTyped.Entity as CustomSort;
-                if (
-                  middlewareAPI
-                    .getState()
-                    .CustomSort.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)
-                ) {
-                  overwriteConfirmation = true;
-                  importAction = CustomSortRedux.CustomSortEdit(customSort);
-                } else {
-                  importAction = CustomSortRedux.CustomSortAdd(customSort);
-                }
+                runCase(
+                  state.CustomSort.CustomSorts,
+                  CustomSortRedux.CustomSortAdd,
+                  CustomSortRedux.CustomSortEdit
+                );
                 break;
               }
               case StrategyConstants.FormatColumnStrategyId: {
-                let formatColumn = actionTyped.Entity as FormatColumn;
-                if (
-                  middlewareAPI
-                    .getState()
-                    .FormatColumn.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)
-                ) {
-                  overwriteConfirmation = true;
-                  importAction = FormatColumnRedux.FormatColumnEdit(formatColumn);
-                } else {
-                  importAction = FormatColumnRedux.FormatColumnAdd(formatColumn);
-                }
+                runCase(
+                  state.FormatColumn.FormatColumns,
+                  FormatColumnRedux.FormatColumnAdd,
+                  FormatColumnRedux.FormatColumnEdit
+                );
                 break;
               }
               case StrategyConstants.PlusMinusStrategyId: {
-                let plusMinus = actionTyped.Entity as PlusMinusRule;
-                importAction = PlusMinusRedux.PlusMinusRuleAdd(plusMinus);
+                runCase(
+                  state.PlusMinus.PlusMinusRules,
+                  PlusMinusRedux.PlusMinusRuleAdd,
+                  PlusMinusRedux.PlusMinusRuleEdit
+                );
                 break;
               }
               case StrategyConstants.ShortcutStrategyId: {
-                let shortcut = actionTyped.Entity as Shortcut;
-                let shortcuts: Shortcut[];
-                shortcuts = middlewareAPI.getState().Shortcut.Shortcuts;
-                if (shortcuts) {
-                  if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
-                    middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut));
-                  }
-                  importAction = ShortcutRedux.ShortcutAdd(shortcut);
-                }
-                break;
-              }
-              case StrategyConstants.UserFilterStrategyId: {
-                let filter = actionTyped.Entity as UserFilter;
-                //For now not too worry about that but I think we'll need to check ofr filter that have same name
-                //currently the reducer checks for UID
-                if (
-                  middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Name == filter.Name)
-                ) {
-                  overwriteConfirmation = true;
-                }
-                importAction = UserFilterRedux.UserFilterAdd(filter);
+                runCase(
+                  state.Shortcut.Shortcuts,
+                  ShortcutRedux.ShortcutAdd,
+                  ShortcutRedux.ShortcutEdit
+                );
+                // if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
+                //   middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut));
                 // }
                 break;
               }
+              case StrategyConstants.UserFilterStrategyId: {
+                runCase(
+                  state.UserFilter.UserFilters,
+                  UserFilterRedux.UserFilterAdd,
+                  UserFilterRedux.UserFilterEdit
+                );
+                break;
+              }
               case StrategyConstants.AdvancedSearchStrategyId: {
-                let search = actionTyped.Entity as AdvancedSearch;
-                if (
-                  middlewareAPI
-                    .getState()
-                    .AdvancedSearch.AdvancedSearches.find(x => x.Name == search.Name)
-                ) {
-                  overwriteConfirmation = true;
-                }
-                importAction = AdvancedSearchRedux.AdvancedSearchAdd(search);
+                runCase(
+                  state.AdvancedSearch.AdvancedSearches,
+                  AdvancedSearchRedux.AdvancedSearchAdd,
+                  AdvancedSearchRedux.AdvancedSearchEdit
+                );
                 break;
               }
               case StrategyConstants.LayoutStrategyId: {
-                let layout = actionTyped.Entity as Layout;
-                let layoutIndex: number = middlewareAPI
-                  .getState()
-                  .Layout.Layouts.findIndex(x => x.Name == layout.Name);
-                if (layoutIndex != -1) {
-                  overwriteConfirmation = true;
-                }
-                importAction = LayoutRedux.LayoutSave(layout);
+                runCase(state.Layout.Layouts, LayoutRedux.LayoutAdd, LayoutRedux.LayoutEdit);
                 break;
               }
               case StrategyConstants.ExportStrategyId: {
-                let report = actionTyped.Entity as Report;
-                let idx = middlewareAPI
-                  .getState()
-                  .Export.Reports.findIndex(x => x.Name == report.Name);
-                if (idx > -1) {
-                  overwriteConfirmation = true;
-                }
-                importAction = ExportRedux.ReportAdd(report);
+                runCase(state.Export.Reports, ExportRedux.ReportAdd, ExportRedux.ReportEdit);
                 break;
               }
             }

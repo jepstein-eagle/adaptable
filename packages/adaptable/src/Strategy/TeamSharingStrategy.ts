@@ -12,14 +12,14 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    // if (AdaptableHelper.isConfigServerEnabled(this.adaptable.adaptableOptions)) {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.TeamSharingStrategyFriendlyName,
-        ComponentName: ScreenPopups.TeamSharingPopup,
-        Icon: StrategyConstants.TeamSharingGlyph,
-      });
+    if (AdaptableHelper.isTeamSharingEnabled(this.adaptable.adaptableOptions)) {
+      if (this.canCreateMenuItem('ReadOnly')) {
+        return this.createMainMenuItemShowPopup({
+          Label: StrategyConstants.TeamSharingStrategyFriendlyName,
+          ComponentName: ScreenPopups.TeamSharingPopup,
+          Icon: StrategyConstants.TeamSharingGlyph,
+        });
+      }
     }
-    // }
   }
 }

@@ -4,7 +4,13 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 export class ButtonShare extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <SimpleButton tooltip="Share" variant="text" icon="share" iconSize={20} {...this.props} />
+      <SimpleButton
+        tooltip="Share"
+        variant="text"
+        icon="team-share"
+        iconSize={20}
+        {...this.props}
+      />
     );
   }
 }
