@@ -21,10 +21,6 @@ import { Layout } from '../../../../src/PredefinedConfig/LayoutState';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
 var api: AdaptableApi;
 
-function getSharedEntities(adaptableId: string) {
-  return JSON.parse(localStorage.getItem('TEAM_SHARING') || '[]');
-}
-
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
