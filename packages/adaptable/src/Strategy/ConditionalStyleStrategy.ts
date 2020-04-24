@@ -7,6 +7,9 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import * as ConditionalStyleRedux from '../Redux/ActionsReducers/ConditionalStyleRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
@@ -43,6 +46,14 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
         ),
       ];
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<ConditionalStyle> {
+    return {
+      FunctionEntities: this.adaptable.api.conditionalStyleApi.getAllConditionalStyle(),
+      AddAction: ConditionalStyleRedux.ConditionalStyleAdd,
+      EditAction: ConditionalStyleRedux.ConditionalStyleEdit,
+    };
   }
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit

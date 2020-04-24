@@ -2804,20 +2804,16 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
               }
             };
 
+            // JW - changed this to put responsibility on each strategy to return what it needs
+            // think will be more likely to remember when we create a new strategy!
+            // so far just done Advanced Search, conditional style, and Percent Bar but will add more
             let teamSharingAction = adaptable.StrategyService.getTeamSharingAction(FunctionName);
             if (teamSharingAction != undefined) {
               runCase(teamSharingAction);
             }
             /*
             switch (FunctionName) {
-              case StrategyConstants.AdvancedSearchStrategyId: {
-                runCase(
-                  state.AdvancedSearch.AdvancedSearches,
-                  AdvancedSearchRedux.AdvancedSearchAdd,
-                  AdvancedSearchRedux.AdvancedSearchEdit
-                );
-                break;
-              }
+              
               case StrategyConstants.CalculatedColumnStrategyId: {
                 runCase(
                   state.CalculatedColumn.CalculatedColumns,
@@ -2834,13 +2830,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                 );
                 break;
 
-              case StrategyConstants.ConditionalStyleStrategyId:
-                runCase(
-                  state.ConditionalStyle.ConditionalStyles,
-                  ConditionalStyleRedux.ConditionalStyleAdd,
-                  ConditionalStyleRedux.ConditionalStyleEdit
-                );
-                break;
+             
               case StrategyConstants.CustomSortStrategyId: {
                 runCase(
                   state.CustomSort.CustomSorts,
