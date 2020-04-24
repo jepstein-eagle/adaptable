@@ -36,6 +36,25 @@ function InitAdaptableDemo() {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
     },
+    teamSharingOptions: {
+      async shareEntity(entity) {
+        const entities: any[] = JSON.parse(localStorage.getItem('TEAM_SHARING') || '[]');
+        entities.push(entity);
+        localStorage.setItem('TEAM_SHARING', JSON.stringify(entities));
+      },
+      async loadEntities() {
+        const entities: any[] = JSON.parse(
+          localStorage.getItem('TEAM_SHARING') || '[]',
+          (key, value) => {
+            if (key == 'timestamp') {
+              return new Date(value);
+            }
+            return value;
+          }
+        );
+        return entities;
+      },
+    },
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

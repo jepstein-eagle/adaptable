@@ -2683,84 +2683,56 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
           case TeamSharingRedux.TEAMSHARING_SHARE: {
             const actionTyped = action as TeamSharingRedux.TeamSharingShareAction;
             let returnAction = next(action);
-            let xhr = new XMLHttpRequest();
-            xhr.onerror = (ev: any) =>
-              LoggingHelper.LogAdaptableError(
-                'TeamSharing share error :' + ev.message,
-                actionTyped.Entity
-              );
-            xhr.ontimeout = () =>
-              LoggingHelper.LogAdaptableWarning('TeamSharing share timeout', actionTyped.Entity);
-            xhr.onload = () => {
-              if (xhr.readyState == 4) {
-                if (xhr.status != 200) {
-                  LoggingHelper.LogAdaptableError(
-                    'TeamSharing share error : ' + xhr.statusText,
-                    actionTyped.Entity
-                  );
-                  middlewareAPI.dispatch(
-                    PopupRedux.PopupShowAlert({
-                      Header: 'Team Sharing Error',
-                      Msg: "Couldn't share item: " + xhr.statusText,
-                      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-                        MessageType.Error
-                      ),
-                    })
-                  );
-                } else {
-                  middlewareAPI.dispatch(
-                    PopupRedux.PopupShowAlert({
-                      Header: 'Team Sharing',
-                      Msg: 'Item Shared Successfully',
-                      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-                        MessageType.Info
-                      ),
-                    })
-                  );
-                }
-              }
-            };
-            //we make the request async
-            xhr.open('POST', configServerTeamSharingUrl, true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            let obj: SharedEntity = {
-              entity: actionTyped.Entity,
-              user: adaptable.adaptableOptions.userName,
-              adaptableId: adaptable.adaptableOptions.adaptableId,
-              functionName: actionTyped.FunctionName,
-              timestamp: new Date(),
-            };
-            xhr.send(JSON.stringify(obj));
+
+            adaptable.adaptableOptions.teamSharingOptions
+              .shareEntity({
+                entity: actionTyped.Entity,
+                user: adaptable.adaptableOptions.userName,
+                adaptableId: adaptable.adaptableOptions.adaptableId,
+                functionName: actionTyped.FunctionName,
+                timestamp: new Date(),
+              })
+              .then(() => {
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowAlert({
+                    Header: 'Team Sharing',
+                    Msg: 'Item Shared Successfully',
+                    AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                      MessageType.Info
+                    ),
+                  })
+                );
+              })
+              .catch(error => {
+                LoggingHelper.LogAdaptableError(
+                  'TeamSharing share error : ' + error.message,
+                  actionTyped.Entity
+                );
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowAlert({
+                    Header: 'Team Sharing Error',
+                    Msg: "Couldn't share item: " + error.message,
+                    AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                      MessageType.Error
+                    ),
+                  })
+                );
+              });
+
             return returnAction;
           }
           case TeamSharingRedux.TEAMSHARING_GET: {
             let returnAction = next(action);
-            let xhr = new XMLHttpRequest();
-            xhr.onerror = (ev: any) =>
-              LoggingHelper.LogAdaptableError('TeamSharing get error :' + ev.message);
-            xhr.ontimeout = () => LoggingHelper.LogAdaptableWarning('TeamSharing get timeout');
-            xhr.onload = () => {
-              if (xhr.readyState == 4) {
-                if (xhr.status != 200) {
-                  LoggingHelper.LogAdaptableError('TeamSharing get error : ' + xhr.statusText);
-                } else {
-                  middlewareAPI.dispatch(
-                    TeamSharingRedux.TeamSharingSet(
-                      JSON.parse(xhr.responseText, (key, value) => {
-                        if (key == 'timestamp') {
-                          return new Date(value);
-                        }
-                        return value;
-                      })
-                    )
-                  );
-                }
-              }
-            };
-            //we make the request async
-            xhr.open('GET', configServerTeamSharingUrl, true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.send();
+
+            adaptable.adaptableOptions.teamSharingOptions
+              .loadEntities()
+              .then(entities => {
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(entities));
+              })
+              .catch(error => {
+                LoggingHelper.LogAdaptableError('TeamSharing get error : ' + error.message);
+              });
+
             return returnAction;
           }
           case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {

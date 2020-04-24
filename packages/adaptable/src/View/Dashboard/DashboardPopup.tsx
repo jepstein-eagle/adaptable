@@ -107,6 +107,8 @@ class DashboardPopupComponent extends React.Component<
       return { ...tab, Toolbars };
     });
 
+    console.log(this.props.GridState.MainMenuItems);
+
     let availableValues = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && selectedValues.indexOf(x.Label) == -1
     ).map(x => x.Label);

@@ -14,6 +14,7 @@ import { AdaptablePlugin } from './AdaptablePlugin';
 import { SearchOptions } from './SearchOptions';
 import { ExportOptions } from './ExportOptions';
 import { UserFunctions } from './UserFunctions';
+import { TeamSharingOptions } from './TeamSharingOptions';
 
 /**
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.
@@ -251,6 +252,8 @@ export interface AdaptableOptions {
    * Includes options for themes, menus, tool panels etc.
    */
   userInterfaceOptions?: UserInterfaceOptions;
+
+  teamSharingOptions?: TeamSharingOptions;
 
   /**
    * Used for managing the AdapTable Plugins.
