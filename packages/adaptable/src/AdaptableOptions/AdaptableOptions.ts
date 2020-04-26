@@ -49,6 +49,7 @@ import { TeamSharingOptions } from './TeamSharingOptions';
  *  | [queryOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#queryoptions)               | Options when running a Query ( [Expression](https://api.adaptabletools.com/modules/_predefinedconfig_common_expression_.html) ) in AdapTable |
  *  | [searchOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#searchoptions)             | Search-related options (e.g. for managing Server searching)   |
  *  | [stateOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#stateoptions)               | Series of functions to allow you to manage AdapTable State    |
+ *  | [teamSharingOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#teamsharingoptions)   | Enables 'Team Sharing' of AdapTable objects among colleagues |
  *  | [userFunctions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userfunctions)             | Implementations of User Functions which are referenced in Config |
  *  | [userInterfaceOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| User Interface related functions (e.g. menus, toolbars)       |
  *  | [plugins](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                         | Options used by the AdapTable plugins (e.g. charting, finance)|
@@ -254,7 +255,15 @@ export interface AdaptableOptions {
   userInterfaceOptions?: UserInterfaceOptions;
 
   /**
-   * Options for managing 'Team Sharing' - allows users to create Adaptable Objects and share with colleagues
+   * Options for managing 'Team Sharing'
+   *
+   * This allows users to create Adaptable Objects and share with colleagues
+   *
+   * Includes 2 functions:
+   *
+   * - *getSharedEntities*: retrieves any available Shared Entities for the user to download
+   *
+   * - *setSharedEntities*: saves (essentially uploads) Shared Entities so they can be re-used by other members of the team
    *
    */
   teamSharingOptions?: TeamSharingOptions;
