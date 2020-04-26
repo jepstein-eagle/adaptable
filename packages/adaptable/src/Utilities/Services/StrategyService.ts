@@ -13,7 +13,7 @@ import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, AdaptableMenuItem } from '../../types';
 import { IStrategyCollection, IStrategy } from '../../Strategy/Interface/IStrategy';
 import Helper from '../Helpers/Helper';
-import { TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
+import { TeamSharingImportInfo, SharedEntity } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 export interface IStrategyService {

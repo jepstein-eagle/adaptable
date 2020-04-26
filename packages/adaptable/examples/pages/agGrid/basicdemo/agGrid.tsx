@@ -36,23 +36,6 @@ function InitAdaptableDemo() {
       showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
     },
-    teamSharingOptions: {
-      enableTeamSharing: true,
-      async getSharedEntities(adaptableId) {
-        return new Promise(resolve => {
-          const sharedEntities = JSON.parse(
-            localStorage.getItem(`TEAM_SHARING:${adaptableId}`) || '[]'
-          );
-          setTimeout(() => resolve(sharedEntities), 1000);
-        });
-      },
-      async setSharedEntities(adaptableId, sharedEntities) {
-        return new Promise(resolve => {
-          localStorage.setItem(`TEAM_SHARING:${adaptableId}`, JSON.stringify(sharedEntities));
-          setTimeout(() => resolve(), 1000);
-        });
-      },
-    },
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

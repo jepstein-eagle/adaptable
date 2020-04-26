@@ -1,4 +1,3 @@
-import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { SharedEntity } from '../PredefinedConfig/TeamSharingState';
 
 export interface TeamSharingOptions {

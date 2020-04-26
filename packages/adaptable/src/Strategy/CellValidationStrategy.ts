@@ -6,6 +6,9 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import * as CellValidationRedux from '../Redux/ActionsReducers/CellValidationRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 
 export class CellValidationStrategy extends AdaptableStrategyBase
   implements ICellValidationStrategy {
@@ -39,5 +42,13 @@ export class CellValidationStrategy extends AdaptableStrategyBase
         ),
       ];
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<CellValidationRule> {
+    return {
+      FunctionEntities: this.adaptable.api.cellValidationApi.getAllCellValidation(),
+      AddAction: CellValidationRedux.CellValidationAdd,
+      EditAction: CellValidationRedux.CellValidationEdit,
+    };
   }
 }

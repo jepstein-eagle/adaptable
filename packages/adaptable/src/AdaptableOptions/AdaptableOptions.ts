@@ -253,6 +253,10 @@ export interface AdaptableOptions {
    */
   userInterfaceOptions?: UserInterfaceOptions;
 
+  /**
+   * Options for managing 'Team Sharing' - allows users to create Adaptable Objects and share with colleagues
+   *
+   */
   teamSharingOptions?: TeamSharingOptions;
 
   /**

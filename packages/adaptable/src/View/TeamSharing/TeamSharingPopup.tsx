@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
@@ -9,31 +8,26 @@ import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyProfile } from '../Components/StrategyProfile';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IColItem } from '../UIInterfaces';
-import { CustomSort } from '../../PredefinedConfig/CustomSortState';
-import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { StyleVisualItem } from '../Components/StyleVisualItem';
-import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { Shortcut } from '../../PredefinedConfig/ShortcutState';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
-import { Layout } from '../../PredefinedConfig/LayoutState';
-import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
-import { Report } from '../../PredefinedConfig/ExportState';
 import { Icon } from '../../components/icons';
 import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
-import ListGroup from '../../components/List/ListGroup';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { CustomSortSharedEntity } from '../CustomSort/CustomSortSharedEntity';
+import { CalculatedColumnSharedEntity } from '../CalculatedColumn/CalculatedColumnSharedEntity';
+import { CellValidationSharedEntity } from '../CellValidation/CellValidationSharedEntity';
+import { AdvancedSearchSharedEntity } from '../AdvancedSearch/AdvancedSearchSharedEntity';
+import { ExportSharedEntity } from '../Export/ExportSharedEntity';
+import { ConditionalStyleSharedEntity } from '../ConditionalStyle/ConditionalStyleSharedEntity';
+import { FormatColumnSharedEntity } from '../FormatColumn/FormatColumnSharedEntity';
+import { LayoutSharedEntity } from '../Layout/LayoutSharedEntity';
+import { PlusMinusSharedEntity } from '../PlusMinus/PlusMinusSharedEntity';
+import { ShortcutSharedEntity } from '../Shortcut/ShortcutSharedEntity';
+import { UserFilterSharedEntity } from '../UserFilter/UserFilterSharedEntity';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
@@ -104,7 +98,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         glyphicon={StrategyConstants.TeamSharingGlyph}
       >
         {this.props.Entities.length == 0 ? (
-          <HelpBlock>Shared Items will appear here when available.</HelpBlock>
+          <HelpBlock margin={3}>Shared Items will appear here when available.</HelpBlock>
         ) : (
           <PanelWithRow colItems={colItems} />
         )}
@@ -115,162 +109,65 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
   getSharedItemDetails(sharedEntity: SharedEntity) {
     switch (sharedEntity.FunctionName) {
-      case StrategyConstants.CustomSortStrategyId: {
-        let customSort = sharedEntity.Entity as CustomSort;
+      case StrategyConstants.AdvancedSearchStrategyId: {
         return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>
-              {ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}
-            </Flex>
-            <Flex flex={8}>{this.getCustomSortedValues(customSort)}</Flex>
-          </Flex>
+          <AdvancedSearchSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
         );
       }
       case StrategyConstants.CalculatedColumnStrategyId: {
-        let calcCol = sharedEntity.Entity as CalculatedColumn;
         return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>{calcCol.ColumnId}</Flex>
-            <Flex flex={8}>{calcCol.ColumnExpression}</Flex>
-          </Flex>
+          <CalculatedColumnSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
         );
       }
+      case StrategyConstants.CustomSortStrategyId: {
+        return <CustomSortSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+      }
+
       case StrategyConstants.CellValidationStrategyId: {
-        let cellVal = sharedEntity.Entity as CellValidationRule;
         return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>
-              {ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
-            </Flex>
-            <Flex flex={4}>
-              {this.props.Adaptable.ValidationService.createCellValidationDescription(
-                cellVal,
-                this.props.Columns
-              )}
-            </Flex>
-            <Flex flex={4}>
-              {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)
-                ? ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns)
-                : 'No Expression'}
-            </Flex>
-          </Flex>
+          <CellValidationSharedEntity
+            Entity={sharedEntity.Entity}
+            Columns={this.props.Columns}
+            ValidationService={this.props.Adaptable.ValidationService}
+          />
         );
       }
+
       case StrategyConstants.ConditionalStyleStrategyId: {
-        let cs = sharedEntity.Entity as ConditionalStyle;
         return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>
-              {cs.ConditionalStyleScope == 'Column'
-                ? ColumnHelper.getFriendlyNameFromColumnId(cs.ColumnId, this.props.Columns)
-                : 'Whole Row'}
-            </Flex>
-            <Flex flex={3}>
-              <StyleVisualItem Style={cs.Style} />
-            </Flex>
-            <Flex flex={5}>
-              {ExpressionHelper.ConvertExpressionToString(cs.Expression, this.props.Columns)}
-            </Flex>
-          </Flex>
+          <ConditionalStyleSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
         );
       }
-      case StrategyConstants.PlusMinusStrategyId: {
-        let plusMinus = sharedEntity.Entity as PlusMinusRule;
+
+      case StrategyConstants.ExportStrategyId: {
+        return <ExportSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+      }
+
+      case StrategyConstants.FormatColumnStrategyId: {
         return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>
-              {ColumnHelper.getFriendlyNameFromColumnId(plusMinus.ColumnId, this.props.Columns)}
-            </Flex>
-            <Flex flex={3}>{plusMinus.NudgeValue.toString()}</Flex>
-            <Flex flex={5}>
-              {ExpressionHelper.ConvertExpressionToString(plusMinus.Expression, this.props.Columns)}
-            </Flex>
-          </Flex>
+          <FormatColumnSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
         );
+      }
+
+      case StrategyConstants.LayoutStrategyId: {
+        return <LayoutSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+      }
+
+      case StrategyConstants.PlusMinusStrategyId: {
+        return <PlusMinusSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
       }
       case StrategyConstants.ShortcutStrategyId: {
-        let shortcut = sharedEntity.Entity as Shortcut;
-        return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>{shortcut.ColumnType}</Flex>
-            <Flex flex={4}>{shortcut.ShortcutKey}</Flex>
-            <Flex flex={4}>{shortcut.ShortcutResult}</Flex>
-          </Flex>
-        );
+        return <ShortcutSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
       }
       case StrategyConstants.UserFilterStrategyId: {
-        let filter = sharedEntity.Entity as UserFilter;
-        let expressionString = ExpressionHelper.ConvertExpressionToString(
-          filter.Expression,
-          this.props.Columns
-        );
-        return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>{filter.Name}</Flex>
-            <Flex flex={8}>{expressionString}</Flex>
-          </Flex>
-        );
+        return <UserFilterSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
       }
-      case StrategyConstants.AdvancedSearchStrategyId: {
-        let search = sharedEntity.Entity as AdvancedSearch;
-        let expressionString = ExpressionHelper.ConvertExpressionToString(
-          search.Expression,
-          this.props.Columns
-        );
-        return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>{search.Name}</Flex>
-            <Flex flex={8}>{expressionString}</Flex>
-          </Flex>
-        );
-      }
-      case StrategyConstants.LayoutStrategyId: {
-        let layout = sharedEntity.Entity as Layout;
-        return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>{layout.Name}</Flex>
-            <Flex flex={8}>{layout.Columns.join(', ')}</Flex>
-          </Flex>
-        );
-      }
-      case StrategyConstants.FormatColumnStrategyId: {
-        let fc = sharedEntity.Entity as FormatColumn;
-        return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>
-              {ColumnHelper.getFriendlyNameFromColumnId(fc.ColumnId, this.props.Columns)}
-            </Flex>
-            <Flex flex={8}>
-              <StyleVisualItem Style={fc.Style} />
-            </Flex>
-          </Flex>
-        );
-      }
-      case StrategyConstants.ExportStrategyId: {
-        let range = sharedEntity.Entity as Report;
-        let expressionString = ExpressionHelper.ConvertExpressionToString(
-          range.Expression,
-          this.props.Columns
-        );
-        return (
-          <Flex flexDirection="row" alignItems="center">
-            <Flex flex={4}>{range.Name}</Flex>
-            <Flex flex={8}>{expressionString}</Flex>
-          </Flex>
-        );
-      }
+
       case StrategyConstants.ColumnFilterStrategyId: {
         return 'NEED TO DO  COLUMN FILTER'; // not sure actually
       }
       default:
         return 'NOT IMPLEMENTED';
-    }
-  }
-  private getCustomSortedValues(customSort: CustomSort): any {
-    if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
-      return customSort.SortedValues.join(', ');
-    } else {
-      return 'Custom Sort uses a bespoke function';
     }
   }
 }

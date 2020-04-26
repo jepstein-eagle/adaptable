@@ -10,8 +10,6 @@ import { AdaptableFunctionName } from '../types';
  * As soon as new Adaptable Objects are created, they can be instantly shared with team members.
  *
  * To share an item click the share button that appears at the end of the row and this will put the Adaptable Object into a storage location where it can then be downloaded by other team members via the Team Sharing popup.
- *
- * **Note**: Team Sharing is only available if the Configuration Storage mode is Remote Storage; If the mode is set to Local Storage, Team Sharing is disabled.
  */
 export interface TeamSharingState extends InternalState {
   SharedEntities: SharedEntity[];

@@ -5,18 +5,11 @@ import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/AdaptableEvents';
-import {
-  AdaptableComparerFunction,
-  AdaptableNodeComparerFunction,
-} from '../../PredefinedConfig/Common/AdaptableComparerFunction';
-import { CustomSort } from '../../PredefinedConfig/CustomSortState';
-import { GridOptions, Column } from '@ag-grid-community/core';
+import { AdaptableComparerFunction } from '../../PredefinedConfig/Common/AdaptableComparerFunction';
 
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
@@ -85,6 +78,11 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
     {},
     DefaultAdaptableOptions.exportOptions,
     adaptableOptions.exportOptions
+  );
+  returnadaptableOptions.teamSharingOptions = Object.assign(
+    {},
+    DefaultAdaptableOptions.teamSharingOptions,
+    adaptableOptions.teamSharingOptions
   );
 
   const { predefinedConfig } = returnadaptableOptions;

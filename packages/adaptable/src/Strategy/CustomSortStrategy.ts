@@ -8,6 +8,8 @@ import {
   AdaptableComparerFunction,
   AdaptableNodeComparerFunction,
 } from '../PredefinedConfig/Common/AdaptableComparerFunction';
+import * as CustomSortRedux from '../Redux/ActionsReducers/CustomSortRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { ICustomSortStrategy } from './Interface/ICustomSortStrategy';
@@ -85,5 +87,13 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
       customSort.SortedValues,
       this.adaptable
     );
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<CustomSort> {
+    return {
+      FunctionEntities: this.adaptable.api.customSortApi.getAllCustomSort(),
+      AddAction: CustomSortRedux.CustomSortAdd,
+      EditAction: CustomSortRedux.CustomSortEdit,
+    };
   }
 }

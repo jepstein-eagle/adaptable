@@ -103,7 +103,12 @@ import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
-import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
+import {
+  IUIConfirmation,
+  InputAction,
+  AdaptableAlert,
+  IUIPrompt,
+} from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
@@ -1932,7 +1937,18 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
-
+          case LayoutRedux.LAYOUT_SELECT: {
+            const actionTyped = action as LayoutRedux.LayoutSelectAction;
+            let dataSource = state.Layout.Layouts!.find(l => l.Name == actionTyped.LayoutName);
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              action: action.type,
+              info: actionTyped.LayoutName,
+              data: dataSource,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
           default: {
             // not one of the functions we log so nothing to do
             return next(action);
@@ -2702,6 +2718,15 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             let returnAction = next(action);
 
             const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+
+            // Andrei to use this but in a way where we can get the value straight back and then use it...
+            let uiPrompt: IUIPrompt = {
+              Header: 'Provide description for Shared Entity',
+              Msg: '',
+              ConfirmAction: null,
+            };
+            //  middlewareAPI.dispatch(PopupRedux.PopupShowPrompt(uiPrompt));
+
             const Description = prompt('Description', 'No Description');
 
             teamSharingOptions
@@ -2806,93 +2831,11 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
             // JW - changed this to put responsibility on each strategy to return what it needs
             // think will be more likely to remember when we create a new strategy!
-            // so far just done Advanced Search, conditional style, and Percent Bar but will add more
             let teamSharingAction = adaptable.StrategyService.getTeamSharingAction(FunctionName);
             if (teamSharingAction != undefined) {
               runCase(teamSharingAction);
             }
-            /*
-            switch (FunctionName) {
-              
-              case StrategyConstants.CalculatedColumnStrategyId: {
-                runCase(
-                  state.CalculatedColumn.CalculatedColumns,
-                  CalculatedColumnRedux.CalculatedColumnAdd,
-                  CalculatedColumnRedux.CalculatedColumnEdit
-                );
-                break;
-              }
-              case StrategyConstants.CellValidationStrategyId:
-                runCase(
-                  state.CellValidation.CellValidations,
-                  CellValidationRedux.CellValidationAdd,
-                  CellValidationRedux.CellValidationEdit
-                );
-                break;
 
-             
-              case StrategyConstants.CustomSortStrategyId: {
-                runCase(
-                  state.CustomSort.CustomSorts,
-                  CustomSortRedux.CustomSortAdd,
-                  CustomSortRedux.CustomSortEdit
-                );
-                break;
-              }
-
-              case StrategyConstants.ExportStrategyId: {
-                runCase(state.Export.Reports, ExportRedux.ReportAdd, ExportRedux.ReportEdit);
-                break;
-              }
-              case StrategyConstants.FormatColumnStrategyId: {
-                runCase(
-                  state.FormatColumn.FormatColumns,
-                  FormatColumnRedux.FormatColumnAdd,
-                  FormatColumnRedux.FormatColumnEdit
-                );
-                break;
-              }
-              case StrategyConstants.LayoutStrategyId: {
-                runCase(state.Layout.Layouts, LayoutRedux.LayoutAdd, LayoutRedux.LayoutEdit);
-                break;
-              }
-              case StrategyConstants.PercentBarStrategyId: {
-                runCase(
-                  state.PercentBar.PercentBars,
-                  PercentBarRedux.PercentBarAdd,
-                  PercentBarRedux.PercentBarEdit
-                );
-                break;
-              }
-              case StrategyConstants.PlusMinusStrategyId: {
-                runCase(
-                  state.PlusMinus.PlusMinusRules,
-                  PlusMinusRedux.PlusMinusRuleAdd,
-                  PlusMinusRedux.PlusMinusRuleEdit
-                );
-                break;
-              }
-              case StrategyConstants.ShortcutStrategyId: {
-                runCase(
-                  state.Shortcut.Shortcuts,
-                  ShortcutRedux.ShortcutAdd,
-                  ShortcutRedux.ShortcutEdit
-                );
-                // if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
-                //   middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut));
-                // }
-                break;
-              }
-              case StrategyConstants.UserFilterStrategyId: {
-                runCase(
-                  state.UserFilter.UserFilters,
-                  UserFilterRedux.UserFilterAdd,
-                  UserFilterRedux.UserFilterEdit
-                );
-                break;
-              }
-              
-            }*/
             if (overwriteConfirmation) {
               let confirmation: IUIConfirmation = {
                 CancelButtonText: 'Cancel Import',

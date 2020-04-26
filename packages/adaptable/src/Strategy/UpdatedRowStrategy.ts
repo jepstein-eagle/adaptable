@@ -12,6 +12,7 @@ import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { DataType } from '../PredefinedConfig/Common/Enums';
+import * as UpdatedRowRedux from '../Redux/ActionsReducers/UpdatedRowRedux';
 
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {

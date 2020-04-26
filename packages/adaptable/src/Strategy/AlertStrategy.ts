@@ -5,6 +5,8 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
+import * as AlertRedux from '../Redux/ActionsReducers/AlertRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
@@ -142,5 +144,13 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       null
     );
     return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<AlertDefinition> {
+    return {
+      FunctionEntities: this.adaptable.api.alertApi.getAlertDefinitions(),
+      AddAction: AlertRedux.AlertDefinitionAdd,
+      EditAction: AlertRedux.AlertDefinitionEdit,
+    };
   }
 }

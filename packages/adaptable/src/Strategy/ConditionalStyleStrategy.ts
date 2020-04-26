@@ -10,6 +10,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import * as ConditionalStyleRedux from '../Redux/ActionsReducers/ConditionalStyleRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
+import { ConditionalStyleSharedEntity } from '../View/ConditionalStyle/ConditionalStyleSharedEntity';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {

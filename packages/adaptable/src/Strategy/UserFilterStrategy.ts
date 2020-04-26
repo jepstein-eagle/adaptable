@@ -6,6 +6,9 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { UserFilter } from '../PredefinedConfig/UserFilterState';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
   constructor(adaptable: IAdaptable) {
@@ -39,5 +42,13 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
         ),
       ];
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<UserFilter> {
+    return {
+      FunctionEntities: this.adaptable.api.userFilterApi.getAllUserFilter(),
+      AddAction: UserFilterRedux.UserFilterAdd,
+      EditAction: UserFilterRedux.UserFilterEdit,
+    };
   }
 }

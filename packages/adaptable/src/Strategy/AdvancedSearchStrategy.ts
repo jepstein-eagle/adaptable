@@ -4,7 +4,6 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-
 import * as AdvancedSearchRedux from '../Redux/ActionsReducers/AdvancedSearchRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
