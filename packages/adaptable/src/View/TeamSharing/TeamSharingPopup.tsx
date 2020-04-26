@@ -28,6 +28,7 @@ import { LayoutSharedEntity } from '../Layout/LayoutSharedEntity';
 import { PlusMinusSharedEntity } from '../PlusMinus/PlusMinusSharedEntity';
 import { ShortcutSharedEntity } from '../Shortcut/ShortcutSharedEntity';
 import { UserFilterSharedEntity } from '../UserFilter/UserFilterSharedEntity';
+import { PercentBarSharedEntity } from '../PercentBar/PercentBarSharedEntity';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
@@ -153,6 +154,9 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         return <LayoutSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
       }
 
+      case StrategyConstants.PercentBarStrategyId: {
+        return <PercentBarSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+      }
       case StrategyConstants.PlusMinusStrategyId: {
         return <PlusMinusSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
       }
