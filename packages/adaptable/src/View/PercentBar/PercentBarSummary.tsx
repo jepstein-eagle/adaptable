@@ -29,7 +29,10 @@ export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarS
   StyleClassNames: string[];
   onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
   onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PercentBarSummaryComponent extends React.Component<
@@ -70,7 +73,7 @@ export class PercentBarSummaryComponent extends React.Component<
           showShare={this.props.TeamSharingActivated}
           EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
           onEdit={() => this.onEdit(percentBar)}
-          onShare={() => this.props.onShare(percentBar)}
+          onShare={description => this.props.onShare(percentBar, description)}
           onDelete={PercentBarRedux.PercentBarDelete(percentBar)}
           showBold={true}
         />
@@ -172,8 +175,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
     onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PercentBarStrategyId,
+          description
+        )
+      ),
   };
 }
 

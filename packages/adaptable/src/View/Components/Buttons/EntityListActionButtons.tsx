@@ -11,7 +11,7 @@ import { IAdaptable } from '../../../types';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
-  Adaptable: IAdaptable;
+  // Adaptable: IAdaptable;
   editClick?: () => void;
   shareClick?: (description: string) => void;
   showEdit?: boolean;
@@ -39,7 +39,7 @@ const stopPropagation = (e: React.SyntheticEvent) => {
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
   public static defaultProps: EntityListActionButtonsProps = {
-    Adaptable: null,
+    // Adaptable: null,
     showEdit: true,
     showDelete: true,
     showShare: false,
@@ -99,7 +99,6 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         )}
         {this.props.showShare && (
           <ButtonShare
-            Adaptable={this.props.Adaptable}
             style={{
               marginLeft: '1px',
               marginTop: '2px',
@@ -112,6 +111,8 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
             onShare={(description: string) =>
               this.props.shareClick ? this.props.shareClick(description) : null
             }
+            Header={'Please provide a Description for the Shared Item'}
+            Message={undefined}
             disabled={this.props.overrideDisableShare || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}

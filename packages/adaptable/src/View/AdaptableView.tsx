@@ -85,7 +85,6 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
           onClose={this.props.onClosePromptPopup}
           onConfirm={this.props.onConfirmPromptPopup}
           ShowPopup={this.props.PopupState.PromptPopup.ShowPromptPopup}
-          Adaptable={this.props.Adaptable}
         />
 
         <AdaptablePopupConfirmation

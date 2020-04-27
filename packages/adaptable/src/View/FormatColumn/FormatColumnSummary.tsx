@@ -32,7 +32,10 @@ export interface FormatColumnSummaryProps
   StyleClassNames: string[];
   onAddFormatColumn: (FormatColumn: FormatColumn) => FormatColumnRedux.FormatColumnAddAction;
   onEditFormatColumn: (FormatColumn: FormatColumn) => FormatColumnRedux.FormatColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class FormatColumnSummaryComponent extends React.Component<
@@ -73,7 +76,7 @@ export class FormatColumnSummaryComponent extends React.Component<
           showShare={this.props.TeamSharingActivated}
           EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(formatColumn)}
-          onShare={() => this.props.onShare(formatColumn)}
+          onShare={description => this.props.onShare(formatColumn, description)}
           onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}
           showBold={true}
         />
@@ -171,8 +174,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),
     onEditFormatColumn: (FormatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(FormatColumn)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
+
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FormatColumnStrategyId,
+          description
+        )
+      ),
   };
 }
 

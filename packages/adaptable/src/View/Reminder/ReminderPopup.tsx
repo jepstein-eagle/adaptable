@@ -30,7 +30,10 @@ interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupCompone
   Reminders: ReminderSchedule[];
   onAddReminder: (reminder: ReminderSchedule) => ReminderRedux.ReminderScheduleAddAction;
   onEditReminder: (reminder: ReminderSchedule) => ReminderRedux.ReminderScheduleEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ReminderPopupComponent extends React.Component<
@@ -61,7 +64,7 @@ class ReminderPopupComponent extends React.Component<
           AdaptableObject={reminder}
           colItems={colItems}
           key={'CS' + index}
-          onShare={() => this.props.onShare(reminder)}
+          onShare={description => this.props.onShare(reminder, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
@@ -190,8 +193,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ReminderRedux.ReminderScheduleAdd(reminder)),
     onEditReminder: (reminder: ReminderSchedule) =>
       dispatch(ReminderRedux.ReminderScheduleEdit(reminder)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId, description)
+      ),
   };
 }
 

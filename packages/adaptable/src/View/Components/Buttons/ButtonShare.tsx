@@ -4,8 +4,10 @@ import { AdaptablePopupPrompt } from '../Popups/AdaptablePopupPrompt';
 import { IAdaptable } from '../../../types';
 
 interface ButtonShareProps extends SimpleButtonProps {
-  Adaptable: IAdaptable;
+  // Adaptable: IAdaptable;
   onShare: (description: string) => void;
+  Header: string;
+  Message: string;
 }
 
 interface ButtonShareState {
@@ -18,7 +20,7 @@ export class ButtonShare extends React.Component<ButtonShareProps, ButtonShareSt
     this.state = { open: false };
   }
   render() {
-    const { Adaptable, onShare, ...buttonProps } = this.props;
+    const { onShare, Header, Message, ...buttonProps } = this.props;
     return (
       <>
         <SimpleButton
@@ -30,9 +32,9 @@ export class ButtonShare extends React.Component<ButtonShareProps, ButtonShareSt
           {...buttonProps}
         />
         <AdaptablePopupPrompt
-          Adaptable={Adaptable}
-          Msg={'Msg'}
-          Header={'Header'}
+          // Adaptable={Adaptable}
+          Msg={Message}
+          Header={Header}
           onClose={() => this.setState({ open: false })}
           onConfirm={(description: string) => {
             this.setState({ open: false });

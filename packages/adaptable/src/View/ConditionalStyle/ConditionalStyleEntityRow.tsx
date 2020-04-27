@@ -40,7 +40,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     );
     let buttons: any = (
       <EntityListActionButtons
-        Adaptable={this.props.Adaptable}
+        //   Adaptable={this.props.Adaptable}
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}

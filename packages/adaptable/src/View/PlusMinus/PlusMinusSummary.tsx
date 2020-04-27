@@ -27,7 +27,10 @@ export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSum
   PlusMinusRules: PlusMinusRule[];
   onAddPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
   onEditPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PlusMinusSummaryComponent extends React.Component<
@@ -74,7 +77,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             showShare={this.props.TeamSharingActivated}
             EntityType={StrategyConstants.PlusMinusStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
-            onShare={() => this.props.onShare(item)}
+            onShare={description => this.props.onShare(item, description)}
             onDelete={PlusMinusRedux.PlusMinusRuleDelete(item)}
           />
         );
@@ -181,8 +184,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditPlusMinusRule: (PlusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(PlusMinusRule)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PlusMinusStrategyId,
+          description
+        )
+      ),
   };
 }
 

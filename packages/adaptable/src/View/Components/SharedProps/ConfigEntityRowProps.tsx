@@ -10,7 +10,6 @@ import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 
 // base props
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {
-  Adaptable: IAdaptable;
   colItems: IColItem[];
 }
 

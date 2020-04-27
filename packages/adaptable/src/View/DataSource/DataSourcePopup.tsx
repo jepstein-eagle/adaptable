@@ -33,7 +33,10 @@ interface DataSourcePopupProps extends StrategyViewPopupProps<DataSourcePopupCom
   onSelectDataSource: (SelectedDataSource: string) => DataSourceRedux.DataSourceSelectAction;
   DataSources: Array<DataSource>;
   CurrentDataSource: string;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class DataSourcePopupComponent extends React.Component<
@@ -63,7 +66,7 @@ class DataSourcePopupComponent extends React.Component<
           key={'ns' + index}
           onEdit={() => this.onEdit(dataSource)}
           colItems={colItems}
-          onShare={() => this.props.onShare(dataSource)}
+          onShare={description => this.props.onShare(dataSource, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={DataSourceRedux.DataSourceDelete(dataSource)}
           onChangeName={(dataSource, name) => this.onChangeName(dataSource, name)}
@@ -205,8 +208,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(DataSourceRedux.DataSourceEdit(DataSource)),
     onSelectDataSource: (SelectedDataSource: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(SelectedDataSource)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.DataSourceStrategyId)),
+
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.DataSourceStrategyId,
+          description
+        )
+      ),
   };
 }
 

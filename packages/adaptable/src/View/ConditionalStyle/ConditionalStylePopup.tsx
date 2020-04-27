@@ -93,7 +93,6 @@ class ConditionalStylePopupComponent extends React.Component<
       (conditionalStyle: ConditionalStyle, index) => {
         return (
           <ConditionalStyleEntityRow
-            Adaptable={this.props.Adaptable}
             AdaptableObject={conditionalStyle}
             colItems={colItems}
             key={'CS' + (conditionalStyle.Uuid || index)}

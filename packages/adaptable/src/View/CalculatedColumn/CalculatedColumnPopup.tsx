@@ -41,7 +41,10 @@ interface CalculatedColumnPopupProps
   CalculatedColumns: Array<CalculatedColumn>;
   CalculatedColumnErrorMessage: string;
   IsExpressionValid: (expression: string) => SystemRedux.CalculatedColumnIsExpressionValidAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CalculatedColumnPopupComponent extends React.Component<
@@ -94,7 +97,7 @@ class CalculatedColumnPopupComponent extends React.Component<
           <CalculatedColumnEntityRow
             colItems={colItems}
             Columns={this.props.Columns}
-            onShare={() => this.props.onShare(calculatedColumn)}
+            onShare={description => this.props.onShare(calculatedColumn, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             AdaptableObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
@@ -224,9 +227,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),
     IsExpressionValid: (expression: string) =>
       dispatch(SystemRedux.CalculatedColumnIsExpressionValid(expression)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CalculatedColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CalculatedColumnStrategyId,
+          description
+        )
       ),
   };
 }

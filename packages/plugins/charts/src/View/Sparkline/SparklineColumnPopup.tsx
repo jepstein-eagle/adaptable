@@ -37,7 +37,10 @@ interface SparklineColumnPopupProps extends StrategyViewPopupProps<SparklineColu
   onEditSparklineColumn: (
     sparklineColumn: SparklineColumn
   ) => SparklineColumnRedux.SparklineColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class SparklineColumnPopupComponent extends React.Component<
@@ -92,7 +95,7 @@ class SparklineColumnPopupComponent extends React.Component<
           UserFilters={this.props.UserFilters}
           ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(sparklineColumn)}
-          onShare={() => this.props.onShare(sparklineColumn)}
+          onShare={description => this.props.onShare(sparklineColumn, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={SparklineColumnRedux.SparklineColumnsDelete(sparklineColumn)}
           onMinimumValueChanged={(sparklineColumn, minimumValue) =>
@@ -246,8 +249,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(SparklineColumnRedux.SparklineColumnsAdd(sparklineColumn)),
     onEditSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsEdit(sparklineColumn)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.SparklineStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.SparklineColumnStrategyId,
+          description
+        )
+      ),
   };
 }
 
