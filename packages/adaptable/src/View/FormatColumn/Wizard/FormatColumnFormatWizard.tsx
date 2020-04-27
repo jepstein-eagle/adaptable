@@ -28,7 +28,8 @@ const DateFormatPresets = [
   'dd-MM-yyyy',
   'MMMM do yyyy, h:mm:ss a',
   'EEEE',
-  'MMM do yy',
+  'MMM do yyyy',
+  'yyyyMMdd',
 ];
 
 export class FormatColumnFormatWizard
