@@ -6,6 +6,7 @@ import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObjec
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
+import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 
 // base props
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {
@@ -20,7 +21,7 @@ export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
 
 // shared props
 export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
-  onShare: () => void;
+  onShare: (description: string) => void;
   TeamSharingActivated: boolean;
   AccessLevel: AccessLevel;
 }
@@ -35,4 +36,9 @@ export interface ExpressionEntityRowProps<View> extends BaseEntityRowProps<View>
 export interface SharedEntityExpressionRowProps<View> extends SharedEntityRowProps<View> {
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
+}
+
+export interface SharedEntityComponent<View> extends React.ClassAttributes<View> {
+  Entity: AdaptableObject;
+  Columns: AdaptableColumn[];
 }

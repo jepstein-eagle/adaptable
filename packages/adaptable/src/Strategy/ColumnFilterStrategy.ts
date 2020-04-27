@@ -3,13 +3,15 @@ import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
-import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(adaptable: IAdaptable) {
@@ -83,5 +85,13 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     if (ArrayExtensions.IsNotNullOrEmpty(baseMenuItems)) {
       return baseMenuItems;
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<ColumnFilter> {
+    return {
+      FunctionEntities: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
+      AddAction: ColumnFilterRedux.ColumnFilterAdd,
+      EditAction: ColumnFilterRedux.ColumnFilterEdit,
+    };
   }
 }

@@ -34,7 +34,10 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
   CurrentLayoutName: string;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableConfigEntityState> {
@@ -82,7 +85,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             onEdit={() => this.onEdit(x)}
-            onShare={() => this.props.onShare(x)}
+            onShare={description => this.props.onShare(x, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
             onSelect={() => this.props.onSelectLayout(x.Name)}
@@ -227,8 +230,11 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId)),
+
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.LayoutStrategyId, description)
+      ),
   };
 }
 

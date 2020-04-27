@@ -40,7 +40,10 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class PlusMinusPopupComponent extends React.Component<
@@ -100,7 +103,7 @@ class PlusMinusPopupComponent extends React.Component<
           Columns={this.props.Columns}
           onEdit={() => this.onEdit(x)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onShare={() => this.props.onShare(x)}
+          onShare={description => this.props.onShare(x, description)}
           onDeleteConfirm={PlusMinusRedux.PlusMinusRuleDelete(x)}
           Column={column}
           onColumnDefaultNudgeValueChange={(plusMinusRule, event) =>
@@ -278,8 +281,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PlusMinusStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PlusMinusStrategyId,
+          description
+        )
+      ),
   };
 }
 

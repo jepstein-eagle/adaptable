@@ -49,7 +49,10 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
     report: Report,
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
   ) => SystemRedux.ReportStopLiveAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
@@ -103,7 +106,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             LiveReports={this.props.LiveReports}
-            onShare={() => this.props.onShare(report)}
+            onShare={description => this.props.onShare(report, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
             onReportStopLive={exportDestination =>
@@ -257,8 +260,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       report: Report,
       exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
     ) => dispatch(SystemRedux.ReportStopLive(report, exportDestination)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId, description)
+      ),
   };
 }
 

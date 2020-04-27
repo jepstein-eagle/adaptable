@@ -34,7 +34,10 @@ interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfigEntityState> {
@@ -83,7 +86,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(alertDefinition)}
-          onShare={() => this.props.onShare(alertDefinition)}
+          onShare={description => this.props.onShare(alertDefinition, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={AlertRedux.AlertDefinitionDelete(alertDefinition)}
           onChangeMessageType={(alertDef, messageType) =>
@@ -206,8 +209,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId, description)
+      ),
   };
 }
 

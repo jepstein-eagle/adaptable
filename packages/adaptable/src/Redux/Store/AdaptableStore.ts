@@ -103,7 +103,12 @@ import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
-import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
+import {
+  IUIConfirmation,
+  InputAction,
+  AdaptableAlert,
+  IUIPrompt,
+} from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
@@ -131,7 +136,9 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
 import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
-import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
+import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -1930,7 +1937,18 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
-
+          case LayoutRedux.LAYOUT_SELECT: {
+            const actionTyped = action as LayoutRedux.LayoutSelectAction;
+            let dataSource = state.Layout.Layouts!.find(l => l.Name == actionTyped.LayoutName);
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.LayoutStrategyId,
+              action: action.type,
+              info: actionTyped.LayoutName,
+              data: dataSource,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
           default: {
             // not one of the functions we log so nothing to do
             return next(action);
@@ -2679,214 +2697,137 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
            * TEAM SHARING ACTIONS
            *******************/
 
-          // Use case - an item needs to be shared between teams
+          case TeamSharingRedux.TEAMSHARING_FETCH: {
+            let returnAction = next(action);
+
+            const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+
+            teamSharingOptions
+              .getSharedEntities(adaptableId)
+              .then(sharedEntities => {
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(sharedEntities));
+              })
+              .catch(error => {
+                LoggingHelper.LogAdaptableError('TeamSharing get error : ' + error.message);
+              });
+
+            return returnAction;
+          }
           case TeamSharingRedux.TEAMSHARING_SHARE: {
             const actionTyped = action as TeamSharingRedux.TeamSharingShareAction;
             let returnAction = next(action);
-            let xhr = new XMLHttpRequest();
-            xhr.onerror = (ev: any) =>
-              LoggingHelper.LogAdaptableError(
-                'TeamSharing share error :' + ev.message,
-                actionTyped.Entity
-              );
-            xhr.ontimeout = () =>
-              LoggingHelper.LogAdaptableWarning('TeamSharing share timeout', actionTyped.Entity);
-            xhr.onload = () => {
-              if (xhr.readyState == 4) {
-                if (xhr.status != 200) {
-                  LoggingHelper.LogAdaptableError(
-                    'TeamSharing share error : ' + xhr.statusText,
-                    actionTyped.Entity
-                  );
-                  middlewareAPI.dispatch(
-                    PopupRedux.PopupShowAlert({
-                      Header: 'Team Sharing Error',
-                      Msg: "Couldn't share item: " + xhr.statusText,
-                      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-                        MessageType.Error
-                      ),
-                    })
-                  );
-                } else {
-                  middlewareAPI.dispatch(
-                    PopupRedux.PopupShowAlert({
-                      Header: 'Team Sharing',
-                      Msg: 'Item Shared Successfully',
-                      AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
-                        MessageType.Info
-                      ),
-                    })
-                  );
-                }
-              }
-            };
-            //we make the request async
-            xhr.open('POST', configServerTeamSharingUrl, true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            let obj: SharedEntity = {
-              entity: actionTyped.Entity,
-              user: adaptable.adaptableOptions.userName,
-              adaptableId: adaptable.adaptableOptions.adaptableId,
-              functionName: actionTyped.FunctionName,
-              timestamp: new Date(),
-            };
-            xhr.send(JSON.stringify(obj));
+
+            const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+
+            // const Description = prompt('Description', 'No Description');
+
+            teamSharingOptions
+              .getSharedEntities(adaptableId)
+              .then(sharedEntities => {
+                sharedEntities.push({
+                  Uuid: createUuid(),
+                  Entity: actionTyped.Entity,
+                  FunctionName: actionTyped.FunctionName,
+                  Description: actionTyped.Description,
+                  UserName: adaptable.adaptableOptions.userName,
+                  Timestamp: new Date().getTime(),
+                });
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(sharedEntities));
+                return teamSharingOptions.setSharedEntities(adaptableId, sharedEntities);
+              })
+              .then(() => {
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowAlert({
+                    Header: 'Team Sharing',
+                    Msg: 'Item Shared Successfully',
+                    AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                      MessageType.Info
+                    ),
+                  })
+                );
+              })
+              .catch(error => {
+                LoggingHelper.LogAdaptableError(
+                  'TeamSharing share error : ' + error.message,
+                  actionTyped.Entity
+                );
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowAlert({
+                    Header: 'Team Sharing Error',
+                    Msg: "Couldn't share item: " + error.message,
+                    AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                      MessageType.Error
+                    ),
+                  })
+                );
+              });
+
             return returnAction;
           }
-          case TeamSharingRedux.TEAMSHARING_GET: {
+          case TeamSharingRedux.TEAMSHARING_REMOVE_ITEM: {
             let returnAction = next(action);
-            let xhr = new XMLHttpRequest();
-            xhr.onerror = (ev: any) =>
-              LoggingHelper.LogAdaptableError('TeamSharing get error :' + ev.message);
-            xhr.ontimeout = () => LoggingHelper.LogAdaptableWarning('TeamSharing get timeout');
-            xhr.onload = () => {
-              if (xhr.readyState == 4) {
-                if (xhr.status != 200) {
-                  LoggingHelper.LogAdaptableError('TeamSharing get error : ' + xhr.statusText);
-                } else {
-                  middlewareAPI.dispatch(
-                    TeamSharingRedux.TeamSharingSet(
-                      JSON.parse(xhr.responseText, (key, value) => {
-                        if (key == 'timestamp') {
-                          return new Date(value);
-                        }
-                        return value;
-                      })
-                    )
-                  );
-                }
-              }
-            };
-            //we make the request async
-            xhr.open('GET', configServerTeamSharingUrl, true);
-            xhr.setRequestHeader('Content-type', 'application/json');
-            xhr.send();
+            const actionTyped = action as TeamSharingRedux.TeamSharingRemoveItemAction;
+
+            const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
+
+            teamSharingOptions
+              .getSharedEntities(adaptableId)
+              .then(sharedEntities => {
+                const newSharedEntities = sharedEntities.filter(s => s.Uuid !== actionTyped.Uuid);
+                middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(newSharedEntities));
+                return teamSharingOptions.setSharedEntities(adaptableId, newSharedEntities);
+              })
+              .then(() => {
+                // middlewareAPI.dispatch(
+                //   PopupRedux.PopupShowAlert({
+                //     Header: 'Team Sharing',
+                //     Msg: 'Item Removed Successfully',
+                //     AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                //       MessageType.Info
+                //     ),
+                //   })
+                // );
+              })
+              .catch(error => {
+                LoggingHelper.LogAdaptableError('TeamSharing remove error : ' + error.message);
+                middlewareAPI.dispatch(
+                  PopupRedux.PopupShowAlert({
+                    Header: 'Team Sharing Error',
+                    Msg: "Couldn't remove item: " + error.message,
+                    AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
+                      MessageType.Error
+                    ),
+                  })
+                );
+              });
+
             return returnAction;
           }
           case TeamSharingRedux.TEAMSHARING_IMPORT_ITEM: {
             let returnAction = next(action);
             const actionTyped = action as TeamSharingRedux.TeamSharingImportItemAction;
+            const { FunctionName, Entity } = actionTyped;
             let importAction: Redux.Action;
             let overwriteConfirmation = false;
-            switch (actionTyped.FunctionName) {
-              case StrategyConstants.CellValidationStrategyId:
-                importAction = CellValidationRedux.CellValidationAdd(
-                  actionTyped.Entity as CellValidationRule
-                );
-                break;
-              case StrategyConstants.CalculatedColumnStrategyId: {
-                let calcCol = actionTyped.Entity as CalculatedColumn;
-                let idx = middlewareAPI
-                  .getState()
-                  .CalculatedColumn.CalculatedColumns.findIndex(
-                    x => x.ColumnId == calcCol.ColumnId
-                  );
-                if (idx > -1) {
-                  overwriteConfirmation = true;
-                  importAction = CalculatedColumnRedux.CalculatedColumnEdit(calcCol);
-                } else {
-                  importAction = CalculatedColumnRedux.CalculatedColumnAdd(calcCol);
-                }
-                break;
+
+            const runCase = <T extends AdaptableObject>(
+              teamSharingImportInfo: TeamSharingImportInfo<AdaptableObject>
+            ) => {
+              if (teamSharingImportInfo.FunctionEntities.some(x => x.Uuid === Entity.Uuid)) {
+                overwriteConfirmation = true;
+                importAction = teamSharingImportInfo.EditAction(Entity as T);
+              } else {
+                importAction = teamSharingImportInfo.AddAction(Entity as T);
               }
-              case StrategyConstants.ConditionalStyleStrategyId:
-                importAction = ConditionalStyleRedux.ConditionalStyleAdd(
-                  actionTyped.Entity as ConditionalStyle
-                );
-                break;
-              case StrategyConstants.CustomSortStrategyId: {
-                let customSort = actionTyped.Entity as CustomSort;
-                if (
-                  middlewareAPI
-                    .getState()
-                    .CustomSort.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)
-                ) {
-                  overwriteConfirmation = true;
-                  importAction = CustomSortRedux.CustomSortEdit(customSort);
-                } else {
-                  importAction = CustomSortRedux.CustomSortAdd(customSort);
-                }
-                break;
-              }
-              case StrategyConstants.FormatColumnStrategyId: {
-                let formatColumn = actionTyped.Entity as FormatColumn;
-                if (
-                  middlewareAPI
-                    .getState()
-                    .FormatColumn.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)
-                ) {
-                  overwriteConfirmation = true;
-                  importAction = FormatColumnRedux.FormatColumnEdit(formatColumn);
-                } else {
-                  importAction = FormatColumnRedux.FormatColumnAdd(formatColumn);
-                }
-                break;
-              }
-              case StrategyConstants.PlusMinusStrategyId: {
-                let plusMinus = actionTyped.Entity as PlusMinusRule;
-                importAction = PlusMinusRedux.PlusMinusRuleAdd(plusMinus);
-                break;
-              }
-              case StrategyConstants.ShortcutStrategyId: {
-                let shortcut = actionTyped.Entity as Shortcut;
-                let shortcuts: Shortcut[];
-                shortcuts = middlewareAPI.getState().Shortcut.Shortcuts;
-                if (shortcuts) {
-                  if (shortcuts.find(x => x.ShortcutKey == shortcut.ShortcutKey)) {
-                    middlewareAPI.dispatch(ShortcutRedux.ShortcutDelete(shortcut));
-                  }
-                  importAction = ShortcutRedux.ShortcutAdd(shortcut);
-                }
-                break;
-              }
-              case StrategyConstants.UserFilterStrategyId: {
-                let filter = actionTyped.Entity as UserFilter;
-                //For now not too worry about that but I think we'll need to check ofr filter that have same name
-                //currently the reducer checks for UID
-                if (
-                  middlewareAPI.getState().UserFilter.UserFilters.find(x => x.Name == filter.Name)
-                ) {
-                  overwriteConfirmation = true;
-                }
-                importAction = UserFilterRedux.UserFilterAdd(filter);
-                // }
-                break;
-              }
-              case StrategyConstants.AdvancedSearchStrategyId: {
-                let search = actionTyped.Entity as AdvancedSearch;
-                if (
-                  middlewareAPI
-                    .getState()
-                    .AdvancedSearch.AdvancedSearches.find(x => x.Name == search.Name)
-                ) {
-                  overwriteConfirmation = true;
-                }
-                importAction = AdvancedSearchRedux.AdvancedSearchAdd(search);
-                break;
-              }
-              case StrategyConstants.LayoutStrategyId: {
-                let layout = actionTyped.Entity as Layout;
-                let layoutIndex: number = middlewareAPI
-                  .getState()
-                  .Layout.Layouts.findIndex(x => x.Name == layout.Name);
-                if (layoutIndex != -1) {
-                  overwriteConfirmation = true;
-                }
-                importAction = LayoutRedux.LayoutSave(layout);
-                break;
-              }
-              case StrategyConstants.ExportStrategyId: {
-                let report = actionTyped.Entity as Report;
-                let idx = middlewareAPI
-                  .getState()
-                  .Export.Reports.findIndex(x => x.Name == report.Name);
-                if (idx > -1) {
-                  overwriteConfirmation = true;
-                }
-                importAction = ExportRedux.ReportAdd(report);
-                break;
-              }
+            };
+
+            // JW - changed this to put responsibility on each strategy to return what it needs
+            // think will be more likely to remember when we create a new strategy!
+            let teamSharingAction = adaptable.StrategyService.getTeamSharingAction(FunctionName);
+            if (teamSharingAction != undefined) {
+              runCase(teamSharingAction);
             }
+
             if (overwriteConfirmation) {
               let confirmation: IUIConfirmation = {
                 CancelButtonText: 'Cancel Import',

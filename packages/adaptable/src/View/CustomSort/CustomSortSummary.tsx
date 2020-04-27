@@ -78,7 +78,7 @@ export class CustomSortSummaryComponent extends React.Component<
           ConfigEnity={customSort}
           EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
           onEdit={() => this.onEdit(customSort)}
-          onShare={() => this.props.onShare(customSort)}
+          onShare={description => this.props.onShare(customSort, description)}
           showShare={this.props.TeamSharingActivated}
           onDelete={CustomSortRedux.CustomSortDelete(customSort)}
           showBold={true}
@@ -181,8 +181,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(CustomSortRedux.CustomSortAdd(customSort)),
     onEditCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CustomSortStrategyId,
+          description
+        )
+      ),
   };
 }
 

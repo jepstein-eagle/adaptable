@@ -13,6 +13,7 @@ import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(adaptable: IAdaptable) {
@@ -155,5 +156,13 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
       },
     };
     this.adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<Shortcut> {
+    return {
+      FunctionEntities: this.adaptable.api.shortcutApi.getAllShortcut(),
+      AddAction: ShortcutRedux.ShortcutAdd,
+      EditAction: ShortcutRedux.ShortcutEdit,
+    };
   }
 }

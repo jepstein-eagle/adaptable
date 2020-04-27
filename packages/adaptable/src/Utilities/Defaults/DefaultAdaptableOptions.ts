@@ -116,4 +116,9 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     applyState: state => state,
     saveState: state => state,
   },
+  teamSharingOptions: {
+    enableTeamSharing: false,
+    setSharedEntities: undefined,
+    getSharedEntities: undefined,
+  },
 };
