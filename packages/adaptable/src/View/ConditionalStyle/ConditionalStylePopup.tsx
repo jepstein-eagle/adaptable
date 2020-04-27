@@ -39,7 +39,10 @@ interface ConditionalStylePopupProps
   onEditConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ConditionalStylePopupComponent extends React.Component<
@@ -90,10 +93,11 @@ class ConditionalStylePopupComponent extends React.Component<
       (conditionalStyle: ConditionalStyle, index) => {
         return (
           <ConditionalStyleEntityRow
+            Adaptable={this.props.Adaptable}
             AdaptableObject={conditionalStyle}
             colItems={colItems}
             key={'CS' + (conditionalStyle.Uuid || index)}
-            onShare={() => this.props.onShare(conditionalStyle)}
+            onShare={description => this.props.onShare(conditionalStyle, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             UserFilters={this.props.UserFilters}
             Columns={this.props.Columns}
@@ -235,9 +239,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ConditionalStyleStrategyId,
+          description
+        )
       ),
   };
 }

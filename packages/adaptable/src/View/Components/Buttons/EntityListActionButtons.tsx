@@ -7,11 +7,13 @@ import { ButtonDelete } from './ButtonDelete';
 import { Flex } from 'rebass';
 import { ButtonShare } from './ButtonShare';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
+import { IAdaptable } from '../../../types';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
+  Adaptable: IAdaptable;
   editClick?: () => void;
-  shareClick?: () => void;
+  shareClick?: (description: string) => void;
   showEdit?: boolean;
   showDelete?: boolean;
   showShare?: boolean;
@@ -37,6 +39,7 @@ const stopPropagation = (e: React.SyntheticEvent) => {
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
   public static defaultProps: EntityListActionButtonsProps = {
+    Adaptable: null,
     showEdit: true,
     showDelete: true,
     showShare: false,
@@ -96,6 +99,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         )}
         {this.props.showShare && (
           <ButtonShare
+            Adaptable={this.props.Adaptable}
             style={{
               marginLeft: '1px',
               marginTop: '2px',
@@ -105,7 +109,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               fill: 'var(--ab-color-text-on-warn)',
               background: 'var(--ab-color-warn)',
             }}
-            onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
+            onShare={(description: string) =>
+              this.props.shareClick ? this.props.shareClick(description) : null
+            }
             disabled={this.props.overrideDisableShare || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}

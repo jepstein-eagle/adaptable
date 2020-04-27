@@ -14,6 +14,7 @@ export const TEAMSHARING_REMOVE_ITEM = 'TEAMSHARING_REMOVE_ITEM';
 export interface TeamSharingShareAction extends Redux.Action {
   Entity: AdaptableObject;
   FunctionName: AdaptableFunctionName;
+  Description: string;
 }
 
 export interface TeamSharingSetAction extends Redux.Action {
@@ -33,11 +34,13 @@ export interface TeamSharingGetAction extends Redux.Action {}
 
 export const TeamSharingShare = (
   Entity: AdaptableObject,
-  FunctionName: AdaptableFunctionName
+  FunctionName: AdaptableFunctionName,
+  Description: string
 ): TeamSharingShareAction => ({
   type: TEAMSHARING_SHARE,
   Entity,
   FunctionName,
+  Description,
 });
 
 export const TeamSharingSet = (Entities: SharedEntity[]): TeamSharingSetAction => ({

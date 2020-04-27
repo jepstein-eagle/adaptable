@@ -40,8 +40,9 @@ export class ConditionalStyleEntityRow extends React.Component<
     );
     let buttons: any = (
       <EntityListActionButtons
+        Adaptable={this.props.Adaptable}
         editClick={() => this.props.onEdit(conditionalStyle)}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={!column && conditionalStyle.ConditionalStyleScope == 'Column'}
         ConfirmDeleteAction={this.props.onDeleteConfirm}

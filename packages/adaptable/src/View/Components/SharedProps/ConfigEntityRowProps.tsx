@@ -10,6 +10,7 @@ import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 
 // base props
 export interface BaseRowProps<View> extends React.ClassAttributes<View> {
+  Adaptable: IAdaptable;
   colItems: IColItem[];
 }
 
@@ -21,7 +22,7 @@ export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
 
 // shared props
 export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
-  onShare: () => void;
+  onShare: (description: string) => void;
   TeamSharingActivated: boolean;
   AccessLevel: AccessLevel;
 }

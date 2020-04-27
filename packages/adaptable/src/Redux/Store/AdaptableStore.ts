@@ -2719,15 +2719,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
 
             const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
 
-            // Andrei to use this but in a way where we can get the value straight back and then use it...
-            let uiPrompt: IUIPrompt = {
-              Header: 'Provide description for Shared Entity',
-              Msg: '',
-              ConfirmAction: null,
-            };
-            //  middlewareAPI.dispatch(PopupRedux.PopupShowPrompt(uiPrompt));
-
-            const Description = prompt('Description', 'No Description');
+            // const Description = prompt('Description', 'No Description');
 
             teamSharingOptions
               .getSharedEntities(adaptableId)
@@ -2736,9 +2728,9 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
                   Uuid: createUuid(),
                   Entity: actionTyped.Entity,
                   FunctionName: actionTyped.FunctionName,
+                  Description: actionTyped.Description,
                   UserName: adaptable.adaptableOptions.userName,
                   Timestamp: new Date().getTime(),
-                  Description,
                 });
                 middlewareAPI.dispatch(TeamSharingRedux.TeamSharingSet(sharedEntities));
                 return teamSharingOptions.setSharedEntities(adaptableId, sharedEntities);
