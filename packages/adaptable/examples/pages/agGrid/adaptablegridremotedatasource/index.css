@@ -1,0 +1,14 @@
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+html {
+  font-family: “Helvetica Neue”, Helvetica, Arial, sans-serif;
+}
+
+
+.number-cell {
+  text-align: right;
+}
