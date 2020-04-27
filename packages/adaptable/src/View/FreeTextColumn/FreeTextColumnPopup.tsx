@@ -33,7 +33,10 @@ interface FreeTextColumnPopupProps extends StrategyViewPopupProps<FreeTextColumn
   onEditFreeTextColumn: (
     FreeTextColumn: FreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class FreeTextColumnPopupComponent extends React.Component<
@@ -87,7 +90,7 @@ class FreeTextColumnPopupComponent extends React.Component<
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             onEdit={() => this.onEdit(FreeTextColumn)}
-            onShare={() => this.props.onShare(FreeTextColumn)}
+            onShare={description => this.props.onShare(FreeTextColumn, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn)}
             AccessLevel={this.props.AccessLevel}
@@ -199,9 +202,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),
     onEditFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnEdit(FreeTextColumn)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FreeTextColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FreeTextColumnStrategyId,
+          description
+        )
       ),
   };
 }

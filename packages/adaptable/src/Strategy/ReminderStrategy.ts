@@ -4,6 +4,9 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import * as ReminderRedux from '../Redux/ActionsReducers/ReminderRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   constructor(adaptable: IAdaptable) {
@@ -18,5 +21,13 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
         Icon: StrategyConstants.ReminderGlyph,
       });
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<ReminderSchedule> {
+    return {
+      FunctionEntities: this.adaptable.api.reminderApi.getAllReminder(),
+      AddAction: ReminderRedux.ReminderScheduleAdd,
+      EditAction: ReminderRedux.ReminderScheduleEdit,
+    };
   }
 }

@@ -158,6 +158,8 @@ import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
+import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
+import FormatHelper from '../Utilities/Helpers/FormatHelper';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -268,6 +270,8 @@ export class Adaptable implements IAdaptable {
   private _id: string;
 
   private rowListeners: { [key: string]: (event: any) => void };
+
+  private originalColDefValueFormatters: { [key: string]: any } = {};
 
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
@@ -1797,6 +1801,8 @@ export class Adaptable implements IAdaptable {
 
   public getColumnDefs = (): (ColDef | ColGroupDef)[] => {
     return (this.gridOptions.columnApi as any).columnController.columnDefs || [];
+    // we think this is better... but need to test a lot!!!
+    // return this.gridOptions.columnApi.getAllColumns().map(c => c.getColDef());
   };
 
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn) {
@@ -2590,6 +2596,8 @@ export class Adaptable implements IAdaptable {
     // add any special renderers
     this.addSpecialRendereredColumns();
 
+    this.addFormatColumnFormats();
+
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
     this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
@@ -2767,6 +2775,39 @@ export class Adaptable implements IAdaptable {
       }
       return contextMenuItems;
     };
+  }
+
+  addFormatColumnFormats(): void {
+    // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
+    const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithColumnFormat();
+
+    const cols = this.gridOptions.columnApi.getAllColumns();
+
+    cols.forEach((column: Column) => {
+      const colDef = column.getColDef();
+      if (this.originalColDefValueFormatters[colDef.field] === undefined) {
+        this.originalColDefValueFormatters[colDef.field] = colDef.valueFormatter || null;
+      }
+
+      colDef.valueFormatter = this.originalColDefValueFormatters[colDef.field];
+
+      const formatColumn = formatColumns.find(fc => fc.ColumnId === colDef.field);
+
+      // stop if not found
+      if (!formatColumn) {
+        return;
+      }
+
+      if (formatColumn.Format.Formatter === 'NumberFormatter') {
+        const options = formatColumn.Format.Options;
+        colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+      }
+
+      if (formatColumn.Format.Formatter === 'DateFormatter') {
+        const options = formatColumn.Format.Options;
+        colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+      }
+    });
   }
 
   private postSpecialColumnEditDelete(doReload: boolean) {

@@ -44,7 +44,7 @@ function InitAdaptableDemo() {
   };
 
   adaptableOptions.layoutOptions = {
-    autoSizeColumnsInLayout: true,
+    //  autoSizeColumnsInLayout: true,
   };
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
@@ -54,10 +54,9 @@ function InitAdaptableDemo() {
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     // to set a pinned row (in this case the 5th row in our data source)
-    let gridOptions: GridOptions = info.vendorGrid as GridOptions;
-    let tradeRow = tradeData[5];
-    gridOptions.api!.setPinnedTopRowData([tradeRow]);
-
+    //   let gridOptions: GridOptions = info.vendorGrid as GridOptions;
+    //   let tradeRow = tradeData[5];
+    //  gridOptions.api!.setPinnedTopRowData([tradeRow]);
     // to see which is the pinned row then do...
     //  let pinnedRowNode: RowNode = gridOptions.api!.getPinnedTopRow(0);
   });
@@ -65,7 +64,7 @@ function InitAdaptableDemo() {
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     //  console.log('search changed');
     //  console.log(searchChangedArgs.data[0].id);
-    searchChangedArgs.data[0].id.adaptableApi;
+    //  searchChangedArgs.data[0].id.adaptableApi;
   });
 }
 
@@ -76,12 +75,28 @@ let demoConfig: PredefinedConfig = {
   FormatColumn: {
     FormatColumns: [
       {
-        ColumnId: 'counterparty',
+        ColumnId: 'tradeDate',
+        Format: {
+          Formatter: 'DateFormatter',
+          Options: {
+            Pattern: 'yyyy',
+          },
+        },
+      },
+      {
+        ColumnId: 'notional',
         Style: {
           FontWeight: 'Bold',
           FontSize: 'XSmall',
           FontStyle: 'Italic',
           ClassName: '',
+        },
+        Format: {
+          Formatter: 'NumberFormatter',
+          Options: {
+            Parentheses: true,
+            IntegerDigits: 10,
+          },
         },
       },
       {

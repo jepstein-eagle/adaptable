@@ -14,7 +14,6 @@ export interface AdaptablePopupPromptProps extends React.ClassAttributes<Adaptab
   Msg: string;
   onClose: () => void;
   onConfirm: Function;
-  Adaptable: IAdaptable;
 }
 
 export interface AdaptablePopupPromptState {
@@ -31,11 +30,6 @@ export class AdaptablePopupPrompt extends React.Component<
   }
 
   render() {
-    let modalContainer: HTMLElement = UIHelper.getModalContainer(
-      this.props.Adaptable.adaptableOptions,
-      document
-    );
-
     return (
       this.props.ShowPopup && (
         <Dialog
@@ -49,17 +43,21 @@ export class AdaptablePopupPrompt extends React.Component<
             <Box marginTop={3} mx={2}>
               {this.props.Header}
             </Box>
+
             {StringExtensions.IsNotNullOrEmpty(this.props.Msg) && (
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                {this.props.Msg.split('\n').map(function(item, index) {
-                  return (
-                    <span key={index}>
-                      {item}
-                      <br />
-                    </span>
-                  );
-                })}
-              </div>
+              <Box marginTop={3} mx={2}>
+                {' '}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  {this.props.Msg.split('\n').map(function(item, index) {
+                    return (
+                      <span key={index}>
+                        {item}
+                        <br />
+                      </span>
+                    );
+                  })}
+                </div>
+              </Box>
             )}
 
             <Input

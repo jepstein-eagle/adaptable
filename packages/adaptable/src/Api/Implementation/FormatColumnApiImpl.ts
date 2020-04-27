@@ -5,6 +5,7 @@ import { FormatColumnApi } from '../FormatColumnApi';
 import { FormatColumnState, FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
   public getFormatColumnState(): FormatColumnState {
@@ -13,6 +14,14 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
 
   public getAllFormatColumn(): FormatColumn[] {
     return this.getAdaptableState().FormatColumn.FormatColumns;
+  }
+
+  public getAllFormatColumnWithStyle(): FormatColumn[] {
+    return this.getAdaptableState().FormatColumn.FormatColumns.filter(fc => fc.Style != null);
+  }
+
+  public getAllFormatColumnWithColumnFormat(): FormatColumn[] {
+    return this.getAdaptableState().FormatColumn.FormatColumns.filter(fc => fc.Format != null);
   }
 
   public addFormatColumn(column: string, style: AdaptableStyle): void {

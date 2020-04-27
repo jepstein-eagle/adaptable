@@ -21,7 +21,10 @@ export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {
   ColumnFilters: ColumnFilter[];
   onClearFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
   Entitlements: Entitlement[];
 }
 
@@ -82,8 +85,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onClearFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnFilterStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnFilterStrategyId,
+          description
+        )
+      ),
   };
 }
 

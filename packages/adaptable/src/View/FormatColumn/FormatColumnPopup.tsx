@@ -31,7 +31,10 @@ interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopu
   StyleClassNames: string[];
   onAddFormatColumn: (formatColumn: FormatColumn) => FormatColumnRedux.FormatColumnAddAction;
   onEditFormatColumn: (formatColumn: FormatColumn) => FormatColumnRedux.FormatColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class FormatColumnPopupComponent extends React.Component<
@@ -77,8 +80,9 @@ class FormatColumnPopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Column', Size: 4 },
-      { Content: 'Format Style', Size: 6 },
+      { Content: 'Column', Size: 3 },
+      { Content: 'Style', Size: 4 },
+      { Content: 'Format', Size: 3 },
       { Content: '', Size: 2 },
     ];
     let FormatColumns = this.props.FormatColumns.map((formatColumn: FormatColumn, index) => {
@@ -90,7 +94,7 @@ class FormatColumnPopupComponent extends React.Component<
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(formatColumn)}
-          onShare={() => this.props.onShare(formatColumn)}
+          onShare={description => this.props.onShare(formatColumn, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)}
           AccessLevel={this.props.AccessLevel}
@@ -195,10 +199,20 @@ class FormatColumnPopupComponent extends React.Component<
   }
   canFinishWizard() {
     let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
-    return (
-      StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
-      UIHelper.IsNotEmptyStyle(formatColumn.Style)
-    );
+    if (StringExtensions.IsNullOrEmpty(formatColumn.ColumnId)) {
+      return false;
+    }
+
+    // cannot complete if its an empty style and no format
+    if (
+      formatColumn.Style &&
+      UIHelper.IsEmptyStyle(formatColumn.Style) &&
+      formatColumn.Format === undefined
+    ) {
+      return false;
+    }
+
+    return true;
   }
 }
 
@@ -215,8 +229,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
     onEditFormatColumn: (formatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FormatColumnStrategyId,
+          description
+        )
+      ),
   };
 }
 

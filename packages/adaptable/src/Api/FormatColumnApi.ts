@@ -17,6 +17,10 @@ export interface FormatColumnApi {
    */
   getAllFormatColumn(): FormatColumn[];
 
+  getAllFormatColumnWithStyle(): FormatColumn[];
+
+  getAllFormatColumnWithColumnFormat(): FormatColumn[];
+
   /**
    * Adds a new Format Column
    * @param column The column to apply the Style to

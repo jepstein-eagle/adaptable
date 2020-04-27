@@ -1,17 +1,14 @@
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import * as React from 'react';
-
 import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyViewPopupProps';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
 import { AdaptableHelper } from '../../../Utilities/Helpers/AdaptableHelper';
 import { UIHelper } from '../../UIHelper';
-
 import SimpleButton from '../../../components/SimpleButton';
 import { Flex } from 'rebass';
 import { PopupWithFooter } from '../../../components/PopupWithFooter';
-
 import PopupContext from './PopupContext';
 import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
@@ -54,7 +51,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
             this.props.onHide();
           }
         },
-        TeamSharingActivated: AdaptableHelper.isConfigServerEnabled(
+        TeamSharingActivated: AdaptableHelper.isTeamSharingEnabled(
           this.props.Adaptable.adaptableOptions
         ),
         Columns: this.props.Adaptable.api.gridApi.getColumns(),

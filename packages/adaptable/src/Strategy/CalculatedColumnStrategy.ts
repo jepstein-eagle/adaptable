@@ -6,6 +6,9 @@ import { ICalculatedColumnStrategy } from './Interface/ICalculatedColumnStrategy
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import * as CalculatedColumnRedux from '../Redux/ActionsReducers/CalculatedColumnRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 
 export class CalculatedColumnStrategy extends AdaptableStrategyBase
   implements ICalculatedColumnStrategy {
@@ -46,5 +49,13 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
         ];
       }
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<CalculatedColumn> {
+    return {
+      FunctionEntities: this.adaptable.api.calculatedColumnApi.getAllCalculatedColumn(),
+      AddAction: CalculatedColumnRedux.CalculatedColumnAdd,
+      EditAction: CalculatedColumnRedux.CalculatedColumnEdit,
+    };
   }
 }

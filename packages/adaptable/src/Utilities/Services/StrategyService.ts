@@ -13,6 +13,8 @@ import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, AdaptableMenuItem } from '../../types';
 import { IStrategyCollection, IStrategy } from '../../Strategy/Interface/IStrategy';
 import Helper from '../Helpers/Helper';
+import { TeamSharingImportInfo, SharedEntity } from '../../PredefinedConfig/TeamSharingState';
+import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 export interface IStrategyService {
   createAlertDescription(alertDefinition: AlertDefinition, columns: AdaptableColumn[]): string;
@@ -24,6 +26,10 @@ export interface IStrategyService {
   setStrategiesEntitlements(): void;
 
   createStrategyFunctionMenu(): void;
+
+  getTeamSharingAction(
+    adaptableFunctionName: AdaptableFunctionName
+  ): TeamSharingImportInfo<AdaptableObject> | undefined;
 }
 
 export class StrategyService implements IStrategyService {
@@ -119,5 +125,15 @@ export class StrategyService implements IStrategyService {
       return false;
     }
     return strategy.isStrategyAvailable();
+  }
+
+  public getTeamSharingAction(
+    adaptableFunctionName: AdaptableFunctionName
+  ): TeamSharingImportInfo<AdaptableObject> | undefined {
+    let strategy: IStrategy | undefined = this.adaptable.strategies.get(adaptableFunctionName);
+    if (!strategy) {
+      return undefined;
+    }
+    return strategy.getTeamSharingAction();
   }
 }

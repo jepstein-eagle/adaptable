@@ -65,7 +65,7 @@ export class ScheduleEntityRow extends React.Component<
     let buttons: any = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(baseSchedule)}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ScheduleStrategyFriendlyName}

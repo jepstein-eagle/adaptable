@@ -36,7 +36,7 @@ export class UserFilterEntityRow extends React.Component<
     colItems[3].Content = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(userFilter)}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={false}
         ConfirmDeleteAction={this.props.onDeleteConfirm}

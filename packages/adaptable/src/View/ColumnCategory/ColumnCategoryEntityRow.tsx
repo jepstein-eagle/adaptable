@@ -31,7 +31,7 @@ export class ColumnCategoryEntityRow extends React.Component<
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
         editClick={() => this.props.onEdit(ColumnCategory)}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={false}
         EntityType={StrategyConstants.ColumnCategoryStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}

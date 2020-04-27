@@ -8,6 +8,8 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { OpenfinHelper } from '../Utilities/Helpers/OpenfinHelper';
 import * as _ from 'lodash';
 import { Report } from '../PredefinedConfig/ExportState';
+import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -328,5 +330,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       return this.adaptable.api.internalApi.getLiveReports()[0];
     }
     return undefined;
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<Report> {
+    return {
+      FunctionEntities: this.adaptable.api.exportApi.getAllReports(),
+      AddAction: ExportRedux.ReportAdd,
+      EditAction: ExportRedux.ReportEdit,
+    };
   }
 }

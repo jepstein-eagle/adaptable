@@ -10,6 +10,8 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
+import UIHelper from '../../UIHelper';
+import FormatHelper from '../../../Utilities/Helpers/FormatHelper';
 
 export interface FormatColumnSummaryWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 export class FormatColumnSummaryWizard extends React.Component<FormatColumnSummaryWizardProps, {}>
@@ -20,6 +22,11 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
 
   render() {
+    let adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
+      this.props.Data.ColumnId,
+      this.props.Columns
+    );
+
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
@@ -28,7 +35,20 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
           this.props.Columns
         ),
       },
-      { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
+
+      {
+        Key: 'Style',
+        Value:
+          this.props.Data.Style == null || UIHelper.IsEmptyStyle(this.props.Data.Style) ? (
+            '[None]'
+          ) : (
+            <StyleVisualItem Style={this.props.Data.Style} />
+          ),
+      },
+      {
+        Key: 'Format',
+        Value: this.showFormatExample(this.props.Data, adaptableColumn),
+      },
     ];
 
     return (
@@ -57,5 +77,20 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
   public GetIndexStepDecrement() {
     return 1;
+  }
+
+  private showFormatExample(
+    formatColumn: FormatColumn,
+    adaptableColumn: AdaptableColumn
+  ): string | undefined {
+    if (!formatColumn.Format) {
+      return undefined;
+    }
+    if (formatColumn.Format.Formatter === 'DateFormatter') {
+      return FormatHelper.DateFormatter(new Date(), formatColumn.Format.Options);
+    }
+    if (formatColumn.Format.Formatter === 'NumberFormatter') {
+      return FormatHelper.NumberFormatter(12345.6789, formatColumn.Format.Options);
+    }
   }
 }

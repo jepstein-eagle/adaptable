@@ -3,12 +3,14 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
-import { PercentBarState } from '../PredefinedConfig/PercentBarState';
+import { PercentBarState, PercentBar } from '../PredefinedConfig/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
   protected PercentBarState: PercentBarState;
@@ -92,5 +94,13 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
 
   protected GetPercentBarState(): PercentBarState {
     return this.adaptable.api.percentBarApi.getPercentBarState();
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<PercentBar> {
+    return {
+      FunctionEntities: this.GetPercentBarState().PercentBars,
+      AddAction: PercentBarRedux.PercentBarAdd,
+      EditAction: PercentBarRedux.PercentBarEdit,
+    };
   }
 }

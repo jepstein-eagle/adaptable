@@ -42,7 +42,7 @@ export class FreeTextColumnEntityRow extends React.Component<
       <EntityListActionButtons
         editClick={() => this.props.onEdit(FreeTextColumn)}
         showShare={this.props.TeamSharingActivated}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}

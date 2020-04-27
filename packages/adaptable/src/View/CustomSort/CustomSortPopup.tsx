@@ -35,7 +35,10 @@ interface CustomSortPopupProps extends StrategyViewPopupProps<CustomSortPopupCom
   onAddCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortAddAction;
   onEditCustomSort: (customSort: CustomSort) => CustomSortRedux.CustomSortEditAction;
   CustomSorts: Array<CustomSort>;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class CustomSortPopupComponent extends React.Component<
@@ -93,7 +96,7 @@ class CustomSortPopupComponent extends React.Component<
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onShare={() => this.props.onShare(customSort)}
+          onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
           ColumnLabel={ColumnHelper.getFriendlyNameFromColumnId(
             customSort.ColumnId,
@@ -226,8 +229,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
     onEditCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortEdit(customSort)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.CustomSortStrategyId)),
+
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.CustomSortStrategyId,
+          description
+        )
+      ),
   };
 }
 

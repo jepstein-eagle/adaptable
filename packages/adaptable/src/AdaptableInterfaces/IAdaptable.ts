@@ -34,6 +34,7 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
 import { Report } from '../PredefinedConfig/ExportState';
+import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 
 /**
  *  The only interface for Adaptable
@@ -230,6 +231,9 @@ export interface IAdaptable {
 
   // actionColumn
   addActionColumnToGrid(actionColumn: ActionColumn): void;
+
+  // formatolumn
+  addFormatColumnFormats(): void;
 
   // Percent Bar
   removePercentBar(percentBar: PercentBar): void;

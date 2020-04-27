@@ -27,7 +27,10 @@ export interface ColumnCategorySummaryProps
   extends StrategySummaryProps<ColumnCategorySummaryComponent> {
   ColumnCategorys: ColumnCategory[];
   // onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => ColumnCategoryRedux.ColumnCategoryAddUpdateConditionAction
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class ColumnCategorySummaryComponent extends React.Component<
@@ -66,7 +69,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
           showShare={this.props.TeamSharingActivated}
           EntityType={StrategyConstants.ColumnCategoryStrategyFriendlyName}
           onEdit={() => this.onEdit(ColumnCategory)}
-          onShare={() => this.props.onShare(ColumnCategory)}
+          onShare={description => this.props.onShare(ColumnCategory, description)}
           onDelete={ColumnCategoryRedux.ColumnCategoryDelete(ColumnCategory)}
           showBold={true}
         />
@@ -151,9 +154,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     //   onAddUpdateColumnCategory: (index: number, ColumnCategory: ColumnCategory) => dispatch(ColumnCategoryRedux.ColumnCategoryAddUpdateCondition(index, ColumnCategory)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnCategoryStrategyId,
+          description
+        )
       ),
   };
 }

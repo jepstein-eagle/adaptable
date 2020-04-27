@@ -44,7 +44,10 @@ interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onShowChart: () => SystemRedux.ChartSetChartVisibiityAction;
   ChartDefinitions: Array<ChartDefinition>;
   CurrentChartDefinition: ChartDefinition;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfigEntityState> {
@@ -90,7 +93,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           key={Chart.Name}
           onEdit={() => this.onEdit(Chart as ChartDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          onShare={() => this.props.onShare(Chart)}
+          onShare={description => this.props.onShare(Chart, description)}
           onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
           onShowChart={chartName => this.onShowChart(chartName)}
           AccessLevel={this.props.AccessLevel}
@@ -319,8 +322,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),
     onShowChart: () => dispatch(SystemRedux.ChartSetChartVisibility(ChartVisibility.Maximised)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId, description)
+      ),
   };
 }
 

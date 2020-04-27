@@ -5,5 +5,8 @@ import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObjec
 
 export interface StrategySummaryProps<View> extends StrategyViewPopupProps<View> {
   SummarisedColumn: AdaptableColumn;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }

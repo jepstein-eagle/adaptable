@@ -4,6 +4,7 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { FormatColumnScopeWizard } from './FormatColumnScopeWizard';
 import { FormatColumnStyleWizard } from './FormatColumnStyleWizard';
 import { FormatColumnSummaryWizard } from './FormatColumnSummaryWizard';
+import { FormatColumnFormatWizard } from './FormatColumnFormatWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
@@ -39,8 +40,13 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
               ),
             },
             {
-              StepName: 'Summary',
+              StepName: 'Format',
               Index: 2,
+              Element: <FormatColumnFormatWizard />,
+            },
+            {
+              StepName: 'Summary',
+              Index: 3,
               Element: <FormatColumnSummaryWizard />,
             },
           ]}

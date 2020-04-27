@@ -25,7 +25,10 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
   onAddUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
   onEditUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class UserFilterSummaryComponent extends React.Component<
@@ -67,7 +70,7 @@ export class UserFilterSummaryComponent extends React.Component<
             showEdit={this.isFilterable()}
             EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
-            onShare={() => this.props.onShare(item)}
+            onShare={description => this.props.onShare(item, description)}
             onDelete={UserFilterRedux.UserFilterDelete(item)}
           />
         );
@@ -199,8 +202,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),
     onEditUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterEdit(UserFilter)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.UserFilterStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.UserFilterStrategyId,
+          description
+        )
+      ),
   };
 }
 

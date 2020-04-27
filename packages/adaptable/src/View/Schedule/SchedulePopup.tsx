@@ -55,7 +55,10 @@ interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupCompone
   ) => IPushPullRedux.IPushPullScheduleEditAction;
   onAddGlue42Schedule: (glue42Schedule: Glue42Schedule) => Glue42Redux.Glue42ScheduleAddAction;
   onEditGlue42Schedule: (glue42Schedule: Glue42Schedule) => Glue42Redux.Glue42ScheduleEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class SchedulePopupComponent extends React.Component<
@@ -130,7 +133,7 @@ class SchedulePopupComponent extends React.Component<
           AdaptableObject={baseSchedule}
           colItems={colItems}
           key={'CS' + index}
-          onShare={() => this.props.onShare(baseSchedule)}
+          onShare={description => this.props.onShare(baseSchedule, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
@@ -365,9 +368,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(Glue42Redux.Glue42ScheduleAdd(glue42Schedule)),
     onEditGlue42Schedule: (glue42Schedule: Glue42Schedule) =>
       dispatch(Glue42Redux.Glue42ScheduleEdit(glue42Schedule)),
-
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ScheduleStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ScheduleStrategyId, description)
+      ),
   };
 }
 
