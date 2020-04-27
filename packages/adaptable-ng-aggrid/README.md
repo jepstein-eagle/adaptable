@@ -19,53 +19,53 @@ To gain access to this registry please follow these steps:
 
 2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
-  ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
+    ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
 
-  if you're using yarn
+    if you're using yarn
 
-  ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
+    ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 
 3. Login to the Adaptable private registry:
 
-  ```sh
-  npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
-  ```
+    ```sh
+    npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+    ```
 
 4. Enter your credentials that was provided to you by the AdapTable support team:
 
-  * login name
-  * email
-  * password
+    * login name
+    * email
+    * password
   
 5. Check you are logged-in correctly by using whoami:
 
-  ```
-  npm whoami --registry=https://registry.adaptabletools.com
-  ```
+    ```
+    npm whoami --registry=https://registry.adaptabletools.com
+    ```
 
-  This should display the username you received as the current login on the private registry
+    This should display the username you received as the current login on the private registry
 
-  > this does not affect your username/login session on the public npm registry
+    > this does not affect your username/login session on the public npm registry
 
 6. Install the AdapTable Angular Wrapper
 
-  ```npm i @adaptabletools/adaptable-angular-aggrid```
+    ```npm i @adaptabletools/adaptable-angular-aggrid```
 
-> you do not need to install the core AdapTable package also
+    > you do not need to install the core AdapTable package also
 
 7. Make sure that all the Peer Dependencies are installed. These are currently:
 
-  ```
-  "peerDependencies": {
-      "@ag-grid-community/all-modules": "^22.1.1",
-      "@ag-grid-community/angular": "^22.1.1",
-      "mathjs": "^5.1.1",
-      "@angular/common": ">=7.0.0",
-      "@angular/core": ">=7.0.0",
-  }
-  ```
-  > you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages
+    ```
+    "peerDependencies": {
+        "@ag-grid-community/all-modules": "^22.1.1",
+        "@ag-grid-community/angular": "^22.1.1",
+        "mathjs": "^5.1.1",
+        "@angular/common": ">=7.0.0",
+        "@angular/core": ">=7.0.0",
+    }
+    ```
+    > you must install *@ag-grid-community/all-modules* and *@ag-grid-community/angular* packages
 
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
@@ -89,24 +89,23 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
 
 1. Install the plugin as a separate package:
 
-  ```npm i @adaptabletools/adaptable-plugin-charts```
+    ```npm i @adaptabletools/adaptable-plugin-charts```
 
 2. Import it into your code:
 
-  ```import charts from '@adaptable/adaptable-plugins-charts'```
+    ```import charts from '@adaptable/adaptable-plugins-charts'```
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
 
-  ```
-  const adaptableOptions: AdaptableOptions = {
-    primaryKey: 'tradeId',
-    adaptableId: 'Adaptable demo',
-    ....
-    plugins: [charts()]
-  };
+    ```
+    const adaptableOptions: AdaptableOptions = {
+      primaryKey: 'tradeId',
+      adaptableId: 'Adaptable demo',
+      ....
+      plugins: [charts()]
+    };
 
-  ```
-
+    ```
 
 ## agGrid Enterprise Modules
 AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
@@ -118,41 +117,41 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 1. Install the modules in npm:
 
-  ```
-  npm i @ag-grid-enterprise/menu
-  npm i @ag-grid-enterprise/range-selection
-  ```
+    ```
+    npm i @ag-grid-enterprise/menu
+    npm i @ag-grid-enterprise/range-selection
+    ```
 
 2. Import them into your code:
 
-  ```
-  import { MenuModule } from '@ag-grid-enterprise/menu';
-  import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-  ```
+    ```
+    import { MenuModule } from '@ag-grid-enterprise/menu';
+    import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+    ```
 
 3. Add them to the **modules** prop of the Adaptable Angular Component:
 
-  ```
-  @Component({
-    selector: 'adaptable-root',
-    template: `
-      <adaptable-angular-aggrid
-        style="width: 100vw; height: 100vh;"
-        [adaptableOptions]="adaptableOptions"
-        [gridOptions]="gridOptions"
-        [modules]="agGridModules"
-      >
-      </adaptable-angular-aggrid>
-    `
-  })
+    ```
+    @Component({
+      selector: 'adaptable-root',
+      template: `
+        <adaptable-angular-aggrid
+          style="width: 100vw; height: 100vh;"
+          [adaptableOptions]="adaptableOptions"
+          [gridOptions]="gridOptions"
+          [modules]="agGridModules"
+        >
+        </adaptable-angular-aggrid>
+      `
+    })
 
-  export class AppComponent {
-    public gridApi: GridApi;
-    public agGridModules: Module[] = [MenuModule, RangeSelectionModule];
-    ....
-  }
+    export class AppComponent {
+      public gridApi: GridApi;
+      public agGridModules: Module[] = [MenuModule, RangeSelectionModule];
+      ....
+    }
 
-  ```
+    ```
 
 ## Angular Attributes
 
@@ -248,9 +247,10 @@ Licences can be purchased individually, for a team (minimum 30 end-users), for a
 
 We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
 
+**Note: The AdapTable licence does not include the underlying grid's licence, so if you plan to use AdapTable with a Grid that requires a commercial licence, you must pay for that separately**
+
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
  
-
 ## Help
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 

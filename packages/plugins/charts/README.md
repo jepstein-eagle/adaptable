@@ -1,4 +1,4 @@
-# AdapTable Finance Plugin Read Me
+# AdapTable Charts Plugin Read Me
 
 
 To Do...
