@@ -79,7 +79,7 @@ let demoConfig: PredefinedConfig = {
         Format: {
           Formatter: 'DateFormatter',
           Options: {
-            Pattern: 'yyyy',
+            Pattern: 'yyyyMMdd',
           },
         },
       },

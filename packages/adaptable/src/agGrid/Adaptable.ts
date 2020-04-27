@@ -2807,6 +2807,8 @@ export class Adaptable implements IAdaptable {
         const options = formatColumn.Format.Options;
         colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
       }
+
+      this.gridOptions.columnApi.autoSizeColumn(colDef.field);
     });
   }
 
