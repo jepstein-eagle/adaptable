@@ -11,7 +11,7 @@ The first step will read the file and list the available columns it contains, to
 
 The second (optional) step allows Users to set up many of the [Adaptable Options](https://api.adaptabletools.com/modules/_src_adaptableoptions_adaptableoptions_.html) that would normally be configured at design-time, in order to ensure that the AdapTable instance suits their precise requirements.
          
-**Note**: The source data must have one column that contains *unique values* which will be set as the [Primary Key column](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey) (by convention this is the first column).
+> The source data must have one column that contains **unique values** which will be set as the [Primary Key column](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey) (by convention this is the first column).
 
 ## Demo
 Visit the [No Code Demo](https://demo.adaptabletools.com/admin/aggridnocodedemo) to see AdapTable running the No Code plugin.
