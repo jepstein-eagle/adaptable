@@ -99,9 +99,10 @@
   "scripts": {
     "build-apidoc": "typedoc --options ./typedocconfig.ts",
     "pretty": "prettier --write \"**/*.{js,jsx,ts,tsx,json}\"",
-    "registry-publish": "npm run build-package-json && npm publish dist",
-    "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
+    "registry-publish": "npm run build-package-json && npm publish dist && npm run prepare-type-dist && npm publish type-dist",
+    "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist && npm run prepare-type-dist && npm publish --tag canary type-dist",
     "rmdist": "rimraf ./dist",
+    "prepare-type-dist": "rimraf type-dist && cp -R dist type-dist && node ../../scripts/cli/prepare-type-dist --module=packages/adaptable",
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i && npm run rm-native-types",
     "rm-native-types": "rimraf node_modules/@types/react-native",

@@ -25,15 +25,19 @@ jobs:
         node-version: ${{ matrix.node-version }}
 
     - uses: "./.github/actions/will-release-check"
+
+    - run: echo "@adaptabletools:registry=https://registry.adaptabletools.com" > .npmrc
+    - run: echo "//registry.adaptabletools.com/:_authToken=${PRIVATE_NPM_REGISTRY_TOKEN}" >> .npmrc
+    - run: echo "//registry.npmjs.org/:_authToken=${PUBLIC_NPM_REGISTRY_TOKEN} >> .npmrc
       env:
-        PRIVATE_REGISTRY_TOKEN: ${{ secrets.NPM_REGISTRY_TOKEN }}
+        PRIVATE_NPM_REGISTRY_TOKEN: ${{ secrets.PRIVATE_NPM_REGISTRY_TOKEN }}
+        PUBLIC_NPM_REGISTRY_TOKEN: ${{ secrets.PUBLIC_NPM_REGISTRY_TOKEN }}
+    - run: echo "package-lock=false" >> .npmrc
 
-    # - name: check if release needed
-    #   run: |
-    #     [ -z "${WILL_RELEASE_CMD}" ] && { echo 'Not proceeding, since no release commit message found'; exit 78; };
-
-    - name: Echo whoami
+    - name: Echo whoami for private registry
       run: npm whoami --registry=https://registry.adaptabletools.com
+    - name: Echo whoami for public registry
+    - run: npm whoami
 
     - name: Echo publish cmd
       run: echo $WILL_RELEASE_CMD
