@@ -55,7 +55,7 @@ jobs:
       run: npm i
 
     - name: Executing npm install in core
-      run: npm run install-core
+      run: cp .npmrc packages/adaptable && npm run install-core
       env:
         CI: true
 
