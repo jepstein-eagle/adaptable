@@ -73,13 +73,21 @@ export class FormatColumnFormatWizard
 
   render() {
     const Type = this.state.Format && this.state.Format.Formatter;
-    if (Type === 'NumberFormatter') return this.renderNumberFormat();
-    if (Type === 'DateFormatter') return this.renderDateFormat();
-    return 'No formatter available';
+    if (Type === 'NumberFormatter') {
+      return this.renderNumberFormat();
+    }
+    if (Type === 'DateFormatter') {
+      return this.renderDateFormat();
+    }
+    return (
+      <HelpBlock margin={3}>Formatting is only available on Numeric and Date columns</HelpBlock>
+    );
   }
 
   renderNumberFormat() {
-    if (this.state.Format.Formatter !== 'NumberFormatter') return null;
+    if (this.state.Format.Formatter !== 'NumberFormatter') {
+      return null;
+    }
     return (
       <>
         <Panel header="Format" margin={2}>

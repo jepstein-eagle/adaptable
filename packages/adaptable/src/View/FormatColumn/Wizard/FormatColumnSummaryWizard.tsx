@@ -84,7 +84,7 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
     adaptableColumn: AdaptableColumn
   ): string | undefined {
     if (!formatColumn.Format) {
-      return undefined;
+      return '[None]';
     }
     if (formatColumn.Format.Formatter === 'DateFormatter') {
       return FormatHelper.DateFormatter(new Date(), formatColumn.Format.Options);
