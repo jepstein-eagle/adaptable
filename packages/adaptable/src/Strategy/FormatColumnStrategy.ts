@@ -7,8 +7,9 @@ import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import * as FormatColumnRedux from '../Redux/ActionsReducers/FormatColumnRedux';
+import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
@@ -60,6 +61,14 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         ),
       ];
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<FormatColumn> {
+    return {
+      FunctionEntities: this.adaptable.api.formatColumnApi.getAllFormatColumn(),
+      AddAction: FormatColumnRedux.FormatColumnAdd,
+      EditAction: FormatColumnRedux.FormatColumnEdit,
+    };
   }
 
   public abstract initStyles(): void;

@@ -3,12 +3,14 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IGradientColumnStrategy } from './Interface/IGradientColumnStrategy';
-import { GradientColumnState } from '../PredefinedConfig/GradientColumnState';
+import { GradientColumnState, GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import * as GradientColumnRedux from '../Redux/ActionsReducers/GradientColumnRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 
 export class GradientColumnStrategy extends AdaptableStrategyBase
   implements IGradientColumnStrategy {
@@ -93,5 +95,13 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
 
   protected GetGradientColumnState(): GradientColumnState {
     return this.adaptable.api.gradientColumnApi.getGradientColumnState();
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<GradientColumn> {
+    return {
+      FunctionEntities: this.adaptable.api.gradientColumnApi.getAllGradientColumn(),
+      AddAction: GradientColumnRedux.GradientColumnAdd,
+      EditAction: GradientColumnRedux.GradientColumnEdit,
+    };
   }
 }

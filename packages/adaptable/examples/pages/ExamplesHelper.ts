@@ -1020,6 +1020,8 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
+      //    lockPosition: true,
+      //    lockVisible: true,
       editable: true,
       type: ['hello', 'abColDefNumberx'],
       sortable: true,
@@ -1150,6 +1152,7 @@ export class ExamplesHelper {
       headerName: 'Trade Date',
       field: 'tradeDate',
       editable: true,
+
       enableRowGroup: true,
       //rowGroup: true,
       cellEditorParams: {

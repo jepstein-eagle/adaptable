@@ -34,7 +34,10 @@ export interface GradientColumnSummaryProps
   onEditGradientColumn: (
     GradientColumn: GradientColumn
   ) => GradientColumnRedux.GradientColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class GradientColumnSummaryComponent extends React.Component<
@@ -75,7 +78,7 @@ export class GradientColumnSummaryComponent extends React.Component<
           showShare={this.props.TeamSharingActivated}
           EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(GradientColumn)}
-          onShare={() => this.props.onShare(GradientColumn)}
+          onShare={description => this.props.onShare(GradientColumn, description)}
           onDelete={GradientColumnRedux.GradientColumnDelete(GradientColumn)}
           showBold={true}
         />
@@ -177,9 +180,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(GradientColumnRedux.GradientColumnAdd(GradientColumn)),
     onEditGradientColumn: (GradientColumn: GradientColumn) =>
       dispatch(GradientColumnRedux.GradientColumnEdit(GradientColumn)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.GradientColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.GradientColumnStrategyId,
+          description
+        )
       ),
   };
 }

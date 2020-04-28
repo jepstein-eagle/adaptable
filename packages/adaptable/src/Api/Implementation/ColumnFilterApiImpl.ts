@@ -19,6 +19,17 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
     });
   }
 
+  public clearAndSetColumnFilter(columnFilters: ColumnFilter[]): void {
+    this.clearAllColumnFilter();
+    columnFilters.forEach(columnFilter => {
+      if (this.getAllColumnFilter().find(cf => cf.ColumnId == columnFilter.ColumnId)) {
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterEdit(columnFilter));
+      } else {
+        this.dispatchAction(ColumnFilterRedux.ColumnFilterAdd(columnFilter));
+      }
+    });
+  }
+
   public clearColumnFilter(columnFilter: ColumnFilter): void {
     this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(columnFilter));
   }

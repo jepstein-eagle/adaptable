@@ -52,7 +52,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(plusMinusRule)}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
         overrideDisableEdit={false}
         EntityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}

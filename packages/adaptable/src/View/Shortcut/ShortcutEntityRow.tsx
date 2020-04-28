@@ -90,7 +90,7 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
     colItems[4].Content = (
       <EntityListActionButtons
         showEdit={false}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ShortcutStrategyFriendlyName}

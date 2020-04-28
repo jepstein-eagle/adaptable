@@ -83,7 +83,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
             onEdit={() => this.onEdit(item)}
-            onShare={() => this.props.onShare(item)}
+            onShare={description => this.props.onShare(item, description)}
             onDelete={ConditionalStyleRedux.ConditionalStyleDelete(item)}
           />
         );
@@ -189,9 +189,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ConditionalStyleStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ConditionalStyleStrategyId,
+          description
+        )
       ),
   };
 }

@@ -31,7 +31,10 @@ interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopu
   StyleClassNames: string[];
   onAddFormatColumn: (formatColumn: FormatColumn) => FormatColumnRedux.FormatColumnAddAction;
   onEditFormatColumn: (formatColumn: FormatColumn) => FormatColumnRedux.FormatColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class FormatColumnPopupComponent extends React.Component<
@@ -91,7 +94,7 @@ class FormatColumnPopupComponent extends React.Component<
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(formatColumn)}
-          onShare={() => this.props.onShare(formatColumn)}
+          onShare={description => this.props.onShare(formatColumn, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)}
           AccessLevel={this.props.AccessLevel}
@@ -226,8 +229,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(FormatColumnRedux.FormatColumnAdd(formatColumn)),
     onEditFormatColumn: (formatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnEdit(formatColumn)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FormatColumnStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.FormatColumnStrategyId,
+          description
+        )
+      ),
   };
 }
 

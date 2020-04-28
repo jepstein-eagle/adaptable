@@ -32,7 +32,10 @@ interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupCom
   PercentBars: PercentBar[];
   onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
   onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class PercentBarPopupComponent extends React.Component<
@@ -108,7 +111,7 @@ class PercentBarPopupComponent extends React.Component<
           UserFilters={this.props.UserFilters}
           ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(percentBar)}
-          onShare={() => this.props.onShare(percentBar)}
+          onShare={description => this.props.onShare(percentBar, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={PercentBarRedux.PercentBarDelete(percentBar)}
           onMinimumValueChanged={(percentBar, minimumValue) =>
@@ -281,8 +284,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),
     onEditPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarEdit(percentBar)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.PercentBarStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.PercentBarStrategyId,
+          description
+        )
+      ),
   };
 }
 

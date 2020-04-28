@@ -19,6 +19,7 @@ import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(adaptable: IAdaptable) {
@@ -236,5 +237,13 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
       this.adaptable.api.internalApi.showPopupConfirmation(confirmation);
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<PlusMinusRule> {
+    return {
+      FunctionEntities: this.adaptable.api.plusMinusApi.getAllPlusMinus(),
+      AddAction: PlusMinusRedux.PlusMinusRuleAdd,
+      EditAction: PlusMinusRedux.PlusMinusRuleEdit,
+    };
   }
 }

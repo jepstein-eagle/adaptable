@@ -7,11 +7,13 @@ import { ButtonDelete } from './ButtonDelete';
 import { Flex } from 'rebass';
 import { ButtonShare } from './ButtonShare';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
+import { IAdaptable } from '../../../types';
 
 export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
+  // Adaptable: IAdaptable;
   editClick?: () => void;
-  shareClick?: () => void;
+  shareClick?: (description: string) => void;
   showEdit?: boolean;
   showDelete?: boolean;
   showShare?: boolean;
@@ -37,6 +39,7 @@ const stopPropagation = (e: React.SyntheticEvent) => {
 
 export class EntityListActionButtons extends React.Component<EntityListActionButtonsProps, {}> {
   public static defaultProps: EntityListActionButtonsProps = {
+    // Adaptable: null,
     showEdit: true,
     showDelete: true,
     showShare: false,
@@ -96,8 +99,20 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         )}
         {this.props.showShare && (
           <ButtonShare
-            onClick={() => (this.props.shareClick ? this.props.shareClick() : null)}
-            style={{ marginLeft: '2px', marginTop: '2px', marginBottom: '2px', marginRight: '0px' }}
+            style={{
+              marginLeft: '1px',
+              marginTop: '2px',
+              marginBottom: '2px',
+              marginRight: '1px',
+              color: 'var(--ab-color-text-on-warn)',
+              fill: 'var(--ab-color-text-on-warn)',
+              background: 'var(--ab-color-warn)',
+            }}
+            onShare={(description: string) =>
+              this.props.shareClick ? this.props.shareClick(description) : null
+            }
+            Header={'Please provide a Description for the Shared Item'}
+            Message={undefined}
             disabled={this.props.overrideDisableShare || this.props.AccessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipShare}
             AccessLevel={this.props.AccessLevel}

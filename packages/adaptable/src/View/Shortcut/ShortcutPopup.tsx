@@ -33,7 +33,10 @@ interface ShortcutPopupProps extends StrategyViewPopupProps<ShortcutPopupCompone
   onAddShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutAddAction;
   onEditShortcut: (shortcut: Shortcut) => ShortcutRedux.ShortcutEditAction;
   Shortcuts: Array<Shortcut>;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ShortcutPopupComponent extends React.Component<
@@ -80,7 +83,7 @@ class ShortcutPopupComponent extends React.Component<
           colItems={colItems}
           AvailableActions={shortcutOperationList}
           AvailableKeys={this.getAvailableKeys(shortcut)}
-          onShare={() => this.props.onShare(shortcut)}
+          onShare={description => this.props.onShare(shortcut, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
           onChangeKey={(shortcut, newKey) => this.onChangeKeyShortcut(shortcut, newKey)}
@@ -262,8 +265,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onAddShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutAdd(shortcut)),
     onEditShortcut: (shortcut: Shortcut) => dispatch(ShortcutRedux.ShortcutEdit(shortcut)),
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ShortcutStrategyId, description)
+      ),
   };
 }
 

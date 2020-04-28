@@ -12,7 +12,7 @@ export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetai
   ConfigEnity: AdaptableObject;
   EntityType: string;
   onEdit: () => void;
-  onShare: () => void;
+  onShare: (description: string) => void;
   onDelete: Redux.Action;
   showBold?: boolean;
   showEdit?: boolean;
@@ -33,7 +33,7 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
         ConfirmDeleteAction={this.props.onDelete}
         showEdit={this.props.showEdit}
         editClick={() => this.props.onEdit()}
-        shareClick={() => this.props.onShare()}
+        shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.showShare}
         EntityType={this.props.EntityType}
       />

@@ -39,7 +39,10 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
   onSelectAdvancedSearch: (
     SelectedSearchName: string
   ) => AdvancedSearchRedux.AdvancedSearchSelectAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class AdvancedSearchPopupComponent extends React.Component<
@@ -103,7 +106,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
             onEdit={advancedSearch => this.onEdit(advancedSearch as AdvancedSearch)}
-            onShare={() => this.props.onShare(advancedSearch)}
+            onShare={description => this.props.onShare(advancedSearch, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}
             onSelect={() => this.props.onSelectAdvancedSearch(advancedSearch.Name)}
@@ -256,9 +259,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch)),
     onSelectAdvancedSearch: (selectedSearchName: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AdvancedSearchStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.AdvancedSearchStrategyId,
+          description
+        )
       ),
   };
 }

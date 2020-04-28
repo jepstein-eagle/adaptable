@@ -30,7 +30,7 @@ function InitAdaptableDemo() {
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-
+  //gridOptions.sideBar = 'false';
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
@@ -79,7 +79,7 @@ let demoConfig: PredefinedConfig = {
         Format: {
           Formatter: 'DateFormatter',
           Options: {
-            Pattern: 'yyyy',
+            Pattern: 'yyyyMMdd',
           },
         },
       },

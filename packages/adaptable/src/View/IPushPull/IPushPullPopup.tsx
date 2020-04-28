@@ -18,7 +18,10 @@ interface IPushPullPopupProps extends StrategyViewPopupProps<IPushPullPopupCompo
     iPushPulleport: IPushPullReport
   ) => IPushPullRedux.IPushPullSendSnapshotAction;
   onIPushPullStopLiveData: () => IPushPullRedux.IPushPullStopLiveDataAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class IPushPullPopupComponent extends React.Component<
@@ -72,13 +75,15 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(IPushPullRedux.IPushPullSendSnapshot(report)),
 
     onIPushPullStopLiveData: () => dispatch(IPushPullRedux.IPushPullStopLiveData()),
-
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.IPushPullStrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.IPushPullStrategyId,
+          description
+        )
+      ),
   };
 }
 
-export let IPushPullPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(IPushPullPopupComponent);
+export let IPushPullPopup = connect(mapStateToProps, mapDispatchToProps)(IPushPullPopupComponent);

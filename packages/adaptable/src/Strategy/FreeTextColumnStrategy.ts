@@ -6,6 +6,9 @@ import { IFreeTextColumnStrategy } from './Interface/IFreeTextColumnStrategy';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import * as FreeTextColumnRedux from '../Redux/ActionsReducers/FreeTextColumnRedux';
+import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 
 export class FreeTextColumnStrategy extends AdaptableStrategyBase
   implements IFreeTextColumnStrategy {
@@ -45,5 +48,13 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
         ];
       }
     }
+  }
+
+  public getTeamSharingAction(): TeamSharingImportInfo<FreeTextColumn> {
+    return {
+      FunctionEntities: this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn(),
+      AddAction: FreeTextColumnRedux.FreeTextColumnAdd,
+      EditAction: FreeTextColumnRedux.FreeTextColumnEdit,
+    };
   }
 }

@@ -35,7 +35,10 @@ interface ColumnCategoryPopupProps extends StrategyViewPopupProps<ColumnCategory
   onEditColumnCategory: (
     columnCategory: ColumnCategory
   ) => ColumnCategoryRedux.ColumnCategoryEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class ColumnCategoryPopupComponent extends React.Component<
@@ -80,7 +83,7 @@ class ColumnCategoryPopupComponent extends React.Component<
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(item)}
-          onShare={() => this.props.onShare(item)}
+          onShare={description => this.props.onShare(item, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={ColumnCategoryRedux.ColumnCategoryDelete(item)}
           AccessLevel={this.props.AccessLevel}
@@ -200,9 +203,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),
     onEditColumnCategory: (columnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryEdit(columnCategory)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ColumnCategoryStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.ColumnCategoryStrategyId,
+          description
+        )
       ),
   };
 }

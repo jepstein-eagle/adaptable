@@ -16,7 +16,10 @@ interface Glue42PopupProps extends StrategyViewPopupProps<Glue42PopupComponent> 
   //  SelectedGlue42ReportName: string | undefined;
   onGlue42SendSnapshot: (Glue42eport: Glue42Report) => Glue42Redux.Glue42SendSnapshotAction;
   // onGlue42StopLiveData: () => Glue42Redux.Glue42StopLiveDataAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class Glue42PopupComponent extends React.Component<Glue42PopupProps, EditableConfigEntityState> {
@@ -65,11 +68,10 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   return {
     onGlue42SendSnapshot: (report: Glue42Report) =>
       dispatch(Glue42Redux.Glue42SendSnapshot(report)),
-
-    //    onGlue42StopLiveData: () => dispatch(Glue42Redux.Glue42StopLiveData()),
-
-    onShare: (entity: AdaptableObject) =>
-      dispatch(TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.Glue42StrategyId)),
+    onShare: (entity: AdaptableObject, description: string) =>
+      dispatch(
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.Glue42StrategyId, description)
+      ),
   };
 }
 

@@ -115,9 +115,10 @@ function InitAdaptableDemo() {
       };
       api.layoutApi.createAndSetLayout(newLayout);
     } else if (toolbarButton.Name == 'btnCopyLayout') {
-      let testLayout: Layout = api.layoutApi.getLayoutByName('test');
+      let currentLayout = api.layoutApi.getCurrentLayout();
+      //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 
-      api.layoutApi.cloneAndSetLayout(testLayout, 'Hello World');
+      api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
     }
   });
 

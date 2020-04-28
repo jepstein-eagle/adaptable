@@ -33,7 +33,10 @@ interface GradientColumnPopupProps extends StrategyViewPopupProps<GradientColumn
   onEditGradientColumn: (
     GradientColumn: GradientColumn
   ) => GradientColumnRedux.GradientColumnEditAction;
-  onShare: (entity: AdaptableObject) => TeamSharingRedux.TeamSharingShareAction;
+  onShare: (
+    entity: AdaptableObject,
+    description: string
+  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 class GradientColumnPopupComponent extends React.Component<
@@ -118,7 +121,7 @@ class GradientColumnPopupComponent extends React.Component<
             UserFilters={this.props.UserFilters}
             ColorPalette={this.props.ColorPalette}
             onEdit={() => this.onEdit(gradientColumn)}
-            onShare={() => this.props.onShare(gradientColumn)}
+            onShare={description => this.props.onShare(gradientColumn, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={GradientColumnRedux.GradientColumnDelete(gradientColumn)}
             onNegativeValueChanged={(gradientColumn, minimumValue) =>
@@ -323,9 +326,13 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
       dispatch(GradientColumnRedux.GradientColumnAdd(GradientColumn)),
     onEditGradientColumn: (GradientColumn: GradientColumn) =>
       dispatch(GradientColumnRedux.GradientColumnEdit(GradientColumn)),
-    onShare: (entity: AdaptableObject) =>
+    onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.GradientColumnStrategyId)
+        TeamSharingRedux.TeamSharingShare(
+          entity,
+          StrategyConstants.GradientColumnStrategyId,
+          description
+        )
       ),
   };
 }
