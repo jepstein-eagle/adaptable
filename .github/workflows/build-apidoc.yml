@@ -66,6 +66,16 @@ jobs:
     - name: move apidocs to apidocs-dist
       run: rm -fr ./apidocs-dist/apidoc && mv ./apidocs/packages/adaptable/apidoc ./apidocs-dist
 
+    - name: git log
+      run: git log
+      working-directory: apidocs-dist
+
+    - name: Set git config
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "SHIP IT"
+      working-directory: apidocs-dist
+
     - uses: './apidocs/.github/actions/git-push-action'
       name: Push changes
       with:
@@ -74,3 +84,7 @@ jobs:
         directory: apidocs-dist
         repository: AdaptableTools/adaptable-api-dist
         commit_message: ${COMMIT_MESSAGE}
+
+    - name: git log
+      run: git log
+      working-directory: apidocs-dist
