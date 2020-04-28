@@ -60,7 +60,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
-        repository: adaptable-api-dist
+        repository: AdaptableTools/adaptable-api-dist
         path: apidocs-dist
 
     - name: move apidocs to apidocs-dist
@@ -72,5 +72,5 @@ jobs:
         github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
         branch: master
         directory: apidocs-dist
-        repository: adaptable-api-dist
+        repository: AdaptableTools/adaptable-api-dist
         commit_message: ${COMMIT_MESSAGE}
