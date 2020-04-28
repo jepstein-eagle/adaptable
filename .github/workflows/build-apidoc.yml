@@ -1,0 +1,76 @@
+name: Build API doc
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x]
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          path: apidocs
+
+    - name: set env var COMMIT_MESSAGE
+      uses: './apidocs/.github/actions/env-commit-message'
+
+    - name: echo COMMIT_MESSAGE
+      run: echo ${COMMIT_MESSAGE}
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - run: echo "@adaptabletools:registry=https://registry.adaptabletools.com" > .npmrc
+    - run: echo "//registry.adaptabletools.com/:_authToken=${PRIVATE_NPM_REGISTRY_TOKEN}" >> .npmrc
+      env:
+        PRIVATE_NPM_REGISTRY_TOKEN: ${{ secrets.PRIVATE_NPM_REGISTRY_TOKEN }}
+    - run: echo "//registry.npmjs.org/:_authToken=${PUBLIC_NPM_REGISTRY_TOKEN}" >> .npmrc
+      env:
+        PUBLIC_NPM_REGISTRY_TOKEN: ${{ secrets.PUBLIC_NPM_REGISTRY_TOKEN }}
+    - run: echo "package-lock=false" >> .npmrc
+
+    - name: Echo whoami for private registry
+      run: npm whoami --registry=https://registry.adaptabletools.com
+    - name: Echo whoami for public registry
+      run: npm whoami
+
+    - run: cp .npmrc apidocs
+    - run: cp .npmrc apidocs/packages/adaptable
+
+    - name: Executing npm install in core
+      run: npm install --prefix packages/adaptable && npm run --prefix packages/adaptable rm-native-types
+      working-directory: apidocs
+      env:
+        CI: true
+
+    - name: tsc-core
+      run: npm run --prefix packages/adaptable tsc
+      working-directory: apidocs
+
+    - name: build-apidoc
+      run: npm run --prefix packages/adaptable build-apidoc
+      working-directory: apidocs
+
+    - name: checkout adaptable-api-dist repo
+      uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
+        repository: AdaptableTools/adaptable-api-dist
+        path: apidocs-dist
+
+    - name: move apidocs to apidocs-dist
+      run: rm -fr ./apidocs-dist/apidoc && mv ./apidocs/packages/adaptable/apidoc ./apidocs-dist
+
+    - uses: './apidocs/.github/actions/git-push-action'
+      name: Push changes
+      with:
+        github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
+        branch: master
+        directory: apidocs-dist
+        repository: AdaptableTools/adaptable-api-dist
+        commit_message: ${COMMIT_MESSAGE}
