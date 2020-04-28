@@ -37,7 +37,7 @@ jobs:
     - name: Echo whoami for private registry
       run: npm whoami --registry=https://registry.adaptabletools.com
     - name: Echo whoami for public registry
-    - run: npm whoami
+      run: npm whoami
 
     - name: Echo publish cmd
       run: echo $WILL_RELEASE_CMD
@@ -116,13 +116,13 @@ jobs:
     - name: Push changes
       uses: "./.github/actions/git-push-action"
       with:
-          branch: master
-          github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
+        branch: master
+        github_token: ${{ secrets.AB_DEPLOY_GITHUB_TOKEN }}
 
     - name: Send version to slack
       uses: "./.github/actions/send-version-to-slack"
       with:
-          slack_webhook_notify: ${{ secrets.SLACK_WEBHOOK_NOTIFY }}
+        slack_webhook_notify: ${{ secrets.SLACK_WEBHOOK_NOTIFY }}
 
 
 
