@@ -20,7 +20,7 @@ import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
 export interface FormatColumnFormatWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
 export interface FormatColumnFormatWizardState {
-  Format: AdaptableFormat;
+  DisplayFormat: AdaptableFormat;
 }
 
 const DateFormatPresets = [
@@ -40,11 +40,11 @@ export class FormatColumnFormatWizard
   constructor(props: FormatColumnFormatWizardProps) {
     super(props);
     const column = this.props.Columns.find(column => column.ColumnId === this.props.Data.ColumnId);
-    this.state = { Format: this.props.Data.Format };
+    this.state = { DisplayFormat: this.props.Data.DisplayFormat };
 
-    if (this.state.Format === undefined && column.DataType === 'Number') {
+    if (this.state.DisplayFormat === undefined && column.DataType === 'Number') {
       this.state = {
-        Format: {
+        DisplayFormat: {
           Formatter: 'NumberFormatter',
           Options: {
             FractionDigits: 2,
@@ -60,9 +60,9 @@ export class FormatColumnFormatWizard
       };
     }
 
-    if (this.state.Format === undefined && column.DataType === 'Date') {
+    if (this.state.DisplayFormat === undefined && column.DataType === 'Date') {
       this.state = {
-        Format: {
+        DisplayFormat: {
           Formatter: 'DateFormatter',
           Options: {
             Pattern: 'MM/dd/yyyy',
@@ -73,7 +73,7 @@ export class FormatColumnFormatWizard
   }
 
   render() {
-    const Type = this.state.Format && this.state.Format.Formatter;
+    const Type = this.state.DisplayFormat && this.state.DisplayFormat.Formatter;
     if (Type === 'NumberFormatter') {
       return this.renderNumberFormat();
     }
@@ -86,7 +86,7 @@ export class FormatColumnFormatWizard
   }
 
   renderNumberFormat() {
-    if (this.state.Format.Formatter !== 'NumberFormatter') {
+    if (this.state.DisplayFormat.Formatter !== 'NumberFormatter') {
       return null;
     }
     return (
@@ -96,7 +96,7 @@ export class FormatColumnFormatWizard
             <FormLayout mr={3}>
               <FormRow label="Fraction Separator">
                 <Input
-                  value={this.state.Format.Options.FractionSeparator}
+                  value={this.state.DisplayFormat.Options.FractionSeparator}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('FractionSeparator', e.currentTarget.value)
                   }
@@ -104,7 +104,7 @@ export class FormatColumnFormatWizard
               </FormRow>
               <FormRow label="Integer Separator">
                 <Input
-                  value={this.state.Format.Options.IntegerSeparator}
+                  value={this.state.DisplayFormat.Options.IntegerSeparator}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('IntegerSeparator', e.currentTarget.value)
                   }
@@ -112,7 +112,7 @@ export class FormatColumnFormatWizard
               </FormRow>
               <FormRow label="Prefix">
                 <Input
-                  value={this.state.Format.Options.Prefix}
+                  value={this.state.DisplayFormat.Options.Prefix}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('Prefix', e.currentTarget.value)
                   }
@@ -120,7 +120,7 @@ export class FormatColumnFormatWizard
               </FormRow>
               <FormRow label="Suffix">
                 <Input
-                  value={this.state.Format.Options.Suffix}
+                  value={this.state.DisplayFormat.Options.Suffix}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('Suffix', e.currentTarget.value)
                   }
@@ -132,7 +132,7 @@ export class FormatColumnFormatWizard
                 <Input
                   type="number"
                   min="0"
-                  value={this.state.Format.Options.FractionDigits}
+                  value={this.state.DisplayFormat.Options.FractionDigits}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('FractionDigits', Number(e.currentTarget.value))
                   }
@@ -142,7 +142,7 @@ export class FormatColumnFormatWizard
                 <Input
                   type="number"
                   min="0"
-                  value={this.state.Format.Options.IntegerDigits}
+                  value={this.state.DisplayFormat.Options.IntegerDigits}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('IntegerDigits', Number(e.currentTarget.value))
                   }
@@ -151,7 +151,7 @@ export class FormatColumnFormatWizard
               <FormRow label="Multiplier">
                 <Input
                   type="number"
-                  value={this.state.Format.Options.Multiplier}
+                  value={this.state.DisplayFormat.Options.Multiplier}
                   onChange={(e: React.FormEvent<HTMLInputElement>) =>
                     this.setFormatOption('Multiplier', Number(e.currentTarget.value))
                   }
@@ -159,7 +159,7 @@ export class FormatColumnFormatWizard
               </FormRow>
               <FormRow label="Parentheses">
                 <CheckBox
-                  checked={this.state.Format.Options.Parentheses}
+                  checked={this.state.DisplayFormat.Options.Parentheses}
                   onChange={checked => this.setFormatOption('Parentheses', checked)}
                 />
               </FormRow>
@@ -178,7 +178,7 @@ export class FormatColumnFormatWizard
             colItems={[
               { Content: '12345.6789', Size: 1 },
               {
-                Content: FormatHelper.NumberFormatter(12345.6789, this.state.Format.Options),
+                Content: FormatHelper.NumberFormatter(12345.6789, this.state.DisplayFormat.Options),
                 Size: 1,
               },
             ]}
@@ -187,7 +187,10 @@ export class FormatColumnFormatWizard
             colItems={[
               { Content: '-12345.6789', Size: 1 },
               {
-                Content: FormatHelper.NumberFormatter(-12345.6789, this.state.Format.Options),
+                Content: FormatHelper.NumberFormatter(
+                  -12345.6789,
+                  this.state.DisplayFormat.Options
+                ),
                 Size: 1,
               },
             ]}
@@ -195,7 +198,10 @@ export class FormatColumnFormatWizard
           <AdaptableObjectRow
             colItems={[
               { Content: '0.123', Size: 1 },
-              { Content: FormatHelper.NumberFormatter(0.123, this.state.Format.Options), Size: 1 },
+              {
+                Content: FormatHelper.NumberFormatter(0.123, this.state.DisplayFormat.Options),
+                Size: 1,
+              },
             ]}
           />
         </Panel>
@@ -204,7 +210,7 @@ export class FormatColumnFormatWizard
   }
 
   renderDateFormat() {
-    if (this.state.Format.Formatter !== 'DateFormatter') return null;
+    if (this.state.DisplayFormat.Formatter !== 'DateFormatter') return null;
     return (
       <>
         <Panel header="Format" margin={2}>
@@ -222,13 +228,15 @@ export class FormatColumnFormatWizard
           <FormLayout>
             <FormRow label="Pattern">
               <Input
-                value={this.state.Format.Options.Pattern}
+                value={this.state.DisplayFormat.Options.Pattern}
                 onChange={(e: React.FormEvent<HTMLInputElement>) =>
                   this.setFormatOption('Pattern', e.currentTarget.value)
                 }
                 mr={2}
               />
-              <span>{FormatHelper.DateFormatter(new Date(), this.state.Format.Options)}</span>
+              <span>
+                {FormatHelper.DateFormatter(new Date(), this.state.DisplayFormat.Options)}
+              </span>
             </FormRow>
           </FormLayout>
         </Panel>
@@ -267,10 +275,10 @@ export class FormatColumnFormatWizard
   }
 
   setFormatOption(key: string, value: any) {
-    const { Format } = this.state;
+    const { DisplayFormat } = this.state;
     // @ts-ignore
     Format.Options[key] = value;
-    this.setState({ Format });
+    this.setState({ DisplayFormat });
   }
 
   public canNext(): boolean {
@@ -280,7 +288,7 @@ export class FormatColumnFormatWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.Format = this.state.Format;
+    this.props.Data.DisplayFormat = this.state.DisplayFormat;
   }
   public Back(): void {
     // todo

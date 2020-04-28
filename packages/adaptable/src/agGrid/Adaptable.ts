@@ -2798,13 +2798,13 @@ export class Adaptable implements IAdaptable {
         return;
       }
 
-      if (formatColumn.Format.Formatter === 'NumberFormatter') {
-        const options = formatColumn.Format.Options;
+      if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
+        const options = formatColumn.DisplayFormat.Options;
         colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
       }
 
-      if (formatColumn.Format.Formatter === 'DateFormatter') {
-        const options = formatColumn.Format.Options;
+      if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
+        const options = formatColumn.DisplayFormat.Options;
         colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
       }
 

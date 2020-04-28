@@ -83,14 +83,14 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
     formatColumn: FormatColumn,
     adaptableColumn: AdaptableColumn
   ): string | undefined {
-    if (!formatColumn.Format) {
+    if (!formatColumn.DisplayFormat) {
       return '[None]';
     }
-    if (formatColumn.Format.Formatter === 'DateFormatter') {
-      return FormatHelper.DateFormatter(new Date(), formatColumn.Format.Options);
+    if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
+      return FormatHelper.DateFormatter(new Date(), formatColumn.DisplayFormat.Options);
     }
-    if (formatColumn.Format.Formatter === 'NumberFormatter') {
-      return FormatHelper.NumberFormatter(12345.6789, formatColumn.Format.Options);
+    if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
+      return FormatHelper.NumberFormatter(12345.6789, formatColumn.DisplayFormat.Options);
     }
   }
 }

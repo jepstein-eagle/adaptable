@@ -207,7 +207,7 @@ class FormatColumnPopupComponent extends React.Component<
     if (
       formatColumn.Style &&
       UIHelper.IsEmptyStyle(formatColumn.Style) &&
-      formatColumn.Format === undefined
+      formatColumn.DisplayFormat === undefined
     ) {
       return false;
     }

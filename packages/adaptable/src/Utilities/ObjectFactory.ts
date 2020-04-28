@@ -453,7 +453,7 @@ export function CreateEmptyFormatColumn(): FormatColumn {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     Style: CreateEmptyStyle(),
-    Format: undefined,
+    DisplayFormat: undefined,
   };
 }
 

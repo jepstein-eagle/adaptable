@@ -17,12 +17,16 @@ export interface FormatColumn extends AdaptableObject {
   ColumnId: string;
 
   /**
-   * The Style to apply to the Column.  See [Style](_src_predefinedconfig_common_istyle_.istyle.html) for more details.
+   * The Style to apply to the Column.
+   *
+   * See [Style](_src_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
   Style?: AdaptableStyle;
 
   /**
-   * Any format to apply to the Column.
+   * Any Display Format to apply to the Column.
+   *
+   * Only available for Numeric and Date columns.
    */
-  Format?: AdaptableFormat;
+  DisplayFormat?: AdaptableFormat;
 }

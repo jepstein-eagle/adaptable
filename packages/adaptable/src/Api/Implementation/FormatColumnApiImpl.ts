@@ -21,7 +21,9 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
   }
 
   public getAllFormatColumnWithColumnFormat(): FormatColumn[] {
-    return this.getAdaptableState().FormatColumn.FormatColumns.filter(fc => fc.Format != null);
+    return this.getAdaptableState().FormatColumn.FormatColumns.filter(
+      fc => fc.DisplayFormat != null
+    );
   }
 
   public addFormatColumn(column: string, style: AdaptableStyle): void {
