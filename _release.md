@@ -1,3 +1,7 @@
+## 6.2.0-canary1
+
+Canary release testing changes to formatting and team sharing
+
 ## 6.2.0
 
 Minor release with improvements to Layouts and export to Excel
