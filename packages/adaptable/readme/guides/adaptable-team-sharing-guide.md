@@ -1,21 +1,21 @@
 # AdapTable Team Sharing Guide
 Team Sharing allows users to share - at run-time - Adaptable Objects between colleagues.
 
-It is designed for use cases where the same, newly-created Adaptable Object (e.g. a Layout, Conditional Style, Advanced Search, Report etc.) will be used by multiple users.
+It is designed for use cases where the same, newly-created Adaptable Object (e.g. a Layout, Conditional Style, Advanced Search, Report etc.) will be required by multiple users.
 
 ## How It Works
 The workflow is simple (based on a pull operation):
 
 1. A User creates a new Layout
 
-2. In the Layouts Popup an orange *Team Share* button will appear at the end of the row for each Layout (if Team Sharing has been [enabled](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html))
+2. In the Layouts Popup an orange *Team Share* button will appear in the row for the Layout (if Team Sharing is [enabled](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html))
 
-3. When the User clicks this button the Layout will appear in the Team Sharing collection available for download by colleagues
+3. After this button is clicked, the Layout will be in the Team Sharing collection (available for download by colleagues)
 
 4. Any colleague can now open the Team Sharing Popup (which lists all available Adaptable Objects that have been shared) and click to download the Layout created in Step 1.
 
 ## Team Sharing Functions
-Setting up Team Sharing requires the provision at design-time of 2 functions (both of which return Promises both of which are supplied through [Team Sharing Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html)):
+Setting up Team Sharing requires the provision at design-time of 2 functions (both of which return Promises, and both of which are supplied through [Team Sharing Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html)):
 
  - **[getSharedEntities](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html#getsharedentities)**: retrieves any available Shared Entities that the user is able to download (and which AdapTable will then merge automatically with his Adaptable State)
 
