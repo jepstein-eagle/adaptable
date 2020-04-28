@@ -24,6 +24,7 @@ These are to be used in conjunction with the [AdapTable Developer Documentation]
  - [Run Time Access Guide](./guides/adaptable-runtime-access-guide.md)
  - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
  - [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
+ - [Team Sharing Guide](./guides/adaptable-team-sharing-guide.md)
  - [Server Functionality Guide](./guides/adaptable-server-functionality-guide.md)
 
  ## FAQs
