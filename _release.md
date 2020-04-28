@@ -1,4 +1,8 @@
-## 6.2.0-canary1
+## 6.2.1-canary1
+
+Small updates to Format Column function (2 extra date presets)
+
+## 6.2.1-canary0
 
 Canary release testing changes to formatting and team sharing
 
