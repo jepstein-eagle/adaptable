@@ -70,10 +70,12 @@ jobs:
       run: git log
       working-directory: apidocs-dist
 
-    - name: Set git config
+    - name: Commit
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "SHIP IT"
+        git add -A
+        git commit -m "${COMMIT_MESSAGE}"
       working-directory: apidocs-dist
 
     - uses: './apidocs/.github/actions/git-push-action'
@@ -83,7 +85,6 @@ jobs:
         branch: master
         directory: apidocs-dist
         repository: AdaptableTools/adaptable-api-dist
-        commit_message: ${COMMIT_MESSAGE}
 
     - name: git log
       run: git log
