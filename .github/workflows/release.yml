@@ -123,24 +123,3 @@ jobs:
       uses: "./.github/actions/send-version-to-slack"
       with:
         slack_webhook_notify: ${{ secrets.SLACK_WEBHOOK_NOTIFY }}
-
-
-
-
-
-
-    #node scripts/registry-publish.js
-
-#     - name: Executing npm install in react
-#       run: npm install --prefix packages/adaptable-react-aggrid
-#       env:
-#         CI: true
-#     - name: tsc-react
-#       run: npm run --prefix packages/adaptable-react-aggrid tsc
-#     - name: Executing npm install in angular
-#       run: npm install --prefix packages/adaptable-ng-aggrid
-#       env:
-#         CI: true
-#     - name: tsc-angular
-#       run: npm run --prefix packages/adaptable-ng-aggrid link-core && npm run --prefix packages/adaptable-ng-aggrid tsc
-
