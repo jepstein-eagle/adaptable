@@ -33,6 +33,7 @@ jobs:
         PUBLIC_NPM_REGISTRY_TOKEN: ${{ secrets.PUBLIC_NPM_REGISTRY_TOKEN }}
     - run: echo "package-lock=false" >> .npmrc
 
+    - run: cp .npmrc apidocs
     - run: cp .npmrc apidocs/packages/adaptable
 
     - name: Executing npm install in core
