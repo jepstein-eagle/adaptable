@@ -8,12 +8,12 @@ Users can set the style for the Column by simply selecting the fore and back col
 
 > Format Column differs from the [Conditional Styles Function](./conditional-style-function.md) because the latter only applies the style when a particular condition is met.  However Format Column will always style the column irrespective of the data contained in the cell.
 
-The style has the last level of style-application preference, so any quick searches or conditional styles will be applied ahead of it.
+The style in a Format Column has lowest last level of style-application preference, so any Flashing Cells, Quick Search highlights or Conditional Styles will be applied ahead of it.
 
 
 ### Display Format
 
-The Display Format sets how value in the column will be formmatted, so that it matches the precise requirements of the users.  
+The Display Format sets how the value in the column will be formatted, so that it matches the precise requirements of the users.  
 
 > Setting a Display Format does NOT change the underlying cell value.
 
@@ -59,13 +59,15 @@ The Conditional Style will take preference over a Format Column Style.  The orde
 
 - Conditional Style
 
+- Updated Row
+
 - Format Column
 
 **Can I apply more than one Format to a column?**
 
 No. A column can only have one Format Column
 
-**Can we show a currency?**
+**Can we show a currency in the Display Format?**
 
 Yes. Create a prefix (or suffix) as appropriate
 
@@ -75,7 +77,7 @@ Yes. Check the *Parentheses* checkbox in the Display Format stage of the wizard.
 
 **Can we see just the time portion of a Date?**
 
-Yes. Simply set the Display Format to be the time portion only (e.g. see the 'HH:mm:ss' preset which shows the time using a 24 hour clock)
+Yes. Set the Display Format to show the time portion only (e.g. see the 'HH:mm:ss' preset which displays the time using a 24 hour clock)
 
 
 ### Further Information
