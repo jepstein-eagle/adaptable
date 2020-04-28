@@ -32,6 +32,7 @@ jobs:
         PRIVATE_NPM_REGISTRY_TOKEN: ${{ secrets.PRIVATE_NPM_REGISTRY_TOKEN }}
         PUBLIC_NPM_REGISTRY_TOKEN: ${{ secrets.PUBLIC_NPM_REGISTRY_TOKEN }}
     - run: echo "package-lock=false" >> .npmrc
+    - run: cat .npmrc
 
     - run: cp .npmrc apidocs
     - run: cp .npmrc apidocs/packages/adaptable
