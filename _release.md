@@ -1,6 +1,6 @@
 ## 6.2.0-canary1
 
-Canary release testing changes to formatting and team sharing
+Canary release testing changes to formatting and team sharing.
 
 ## 6.2.0
 
