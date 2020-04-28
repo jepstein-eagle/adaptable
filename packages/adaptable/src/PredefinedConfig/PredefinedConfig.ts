@@ -75,7 +75,7 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * ### Functions
  *
- * Many objects in AdapTable (e.g. Custom Sorts, User Menus, Action Columns etc.) include 'functions' that developers can provide when it makes sense to use a custom implementation rather than one provided by AdapTable.
+ * Many objects in AdapTable (e.g Custom Sorts, User Menus, Action Columns etc.) include 'functions' that developers can provide when it makes sense to use a custom implementation rather than one provided by AdapTable.
  *
  * But this provides a problem for Predefined Config, because it is stored as JSON which means it can only contain elements which can be 'stringified' (and that excludes functions).
  *
