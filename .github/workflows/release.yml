@@ -27,7 +27,7 @@ jobs:
     - uses: "./.github/actions/will-release-check"
 
     - run: echo "@adaptabletools:registry=https://registry.adaptabletools.com" > .npmrc
-    - run: echo "//registry.adaptabletools.com/:_authToken=${PRIVATE_NPM_REGISTRY_TOKEN}" >> .npmrc
+    - run: echo "//registry.adaptabletools.com/:_authToken=${PRIVATE_NPM_REGISTRY_TOKEN} >> .npmrc
     - run: echo "//registry.npmjs.org/:_authToken=${PUBLIC_NPM_REGISTRY_TOKEN} >> .npmrc
       env:
         PRIVATE_NPM_REGISTRY_TOKEN: ${{ secrets.PRIVATE_NPM_REGISTRY_TOKEN }}
