@@ -1,4 +1,5 @@
 name: 'env-commit-message';
 description: 'Sets the COMMIT_MESSAGE env';
-runs: using: 'node12';
+runs: 
+  using: 'node12';
 main: 'out/index.js';
