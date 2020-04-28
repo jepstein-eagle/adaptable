@@ -91,6 +91,8 @@ This has a single `Uuid` property which is used for easy identification of objec
 
 > Do not set this property when writing objects in your Predefined Config as it will be set by AdapTable at run-tine when the Predefined Config is first read
 
+If [Team Sharing](./adaptable-team-sharing-guide.md) is enabled, then any Adaptable Object can easily be shared - at run-time - between colleagues.
+
 ### Bespoke State
 
 The [Application State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_applicationstate_.applicationstate.html) property of Predefined Config contains an `ApplicationDataEntries` array.
