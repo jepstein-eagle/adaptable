@@ -40,7 +40,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
               ),
             },
             {
-              StepName: 'Format',
+              StepName: 'Display Format',
               Index: 2,
               Element: <FormatColumnFormatWizard />,
             },

@@ -1,12 +1,27 @@
 # Format Column (AdaptableFunction)
 
-The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given a particular style (i.e. colours, font size etc) which **all cells** in the Column will display.
+The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given a particular style (i.e. colours, font size etc) and / or Display Format which **all cells** in the Column will display.
 
-Users need simply to select the column and choose the fore and back colours and font properties as appropriate.
+### Style
+
+Users can set the style for the Column by simply selecting the fore and back colours and any font properties as appropriate.
 
 > Format Column differs from the [Conditional Styles Function](./conditional-style-function.md) because the latter only applies the style when a particular condition is met.  However Format Column will always style the column irrespective of the data contained in the cell.
 
 The style has the last level of style-application preference, so any quick searches or conditional styles will be applied ahead of it.
+
+
+### Display Format
+
+The Display Format sets how value in the column will be formmatted, so that it matches the precise requirements of the users.  
+
+> Setting a Display Format does NOT change the underlying cell value.
+
+Display Formats can be set for:
+
+- **Numeric Columns**:  users can set values for Prefix, Suffix, Fraction Separator, Integer Separator, Fraction Digits, Integer Digits, Multiplier and Negative Parentheses.
+
+- **Date Columns**: users can set their own date pattern or select from one of the presets.  The full list of the available patterns is [here](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
 
 
 ## UI Elements
@@ -14,7 +29,7 @@ Format Column includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Format Columns with *Edit* and *Delete* buttons.  Plus an *Add* button to start the Format Column Wizard.  Each row in the popup is fully editable. 
 
-- **Wizard** - A series of steps facilitating the creation and editing of Format Columne.
+- **Wizard** - A series of steps facilitating the creation and editing of Format Columns.
 
 - **Column Menu** - Numeric columns have a `Create Format Column` Menu Item which starts the Format Column wizard; for columns already displaying as a Format Column it says `Edit Format Column`.
 
@@ -49,6 +64,18 @@ The Conditional Style will take preference over a Format Column Style.  The orde
 **Can I apply more than one Format to a column?**
 
 No. A column can only have one Format Column
+
+**Can we show a currency?**
+
+Yes. Create a prefix (or suffix) as appropriate
+
+**Can we set negative numbers to appear in parentheses?**
+
+Yes. Check the *Parentheses* checkbox in the Display Format stage of the wizard.
+
+**Can we see just the time portion of a Date?**
+
+Yes. Simply set the Display Format to be the time portion only (e.g. see the 'HH:mm:ss' preset which shows the time using a 24 hour clock)
 
 
 ### Further Information
