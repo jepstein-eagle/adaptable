@@ -280,8 +280,11 @@ export class Adaptable implements IAdaptable {
   private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
-  // new static constructor which takes an Adaptable adaptable object and returns the api object
-  // going forward this should be the only way that we instantiate and use Adaptable and everything should be accessible via the API
+  /**
+   * Static constructor for Adaptable
+   * Receives an AdaptableOptions object and returns the api object to enable run-time access to AdapTable's properties and functions
+   * @param adaptableOptions an instance of AdaptableOptions
+   */
   public static init(adaptableOptions: AdaptableOptions): AdaptableApi {
     const extraOptions = {
       renderGrid: undefined as boolean,
@@ -310,6 +313,12 @@ export class Adaptable implements IAdaptable {
     return ab.api;
   }
 
+  /**
+   * Lazy static constructor for Adaptable
+   * Receives an AdaptableOptions object
+   * Returns a Promise containing the api object in order to enable run-time access to AdapTable's properties and functions
+   * @param adaptableOptions an instance of AdaptableOptions
+   */
   public static async initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
     const extraOptions = {
       renderGrid: undefined as boolean,
