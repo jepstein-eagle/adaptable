@@ -124,7 +124,7 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 3. Add them to the **vendorGrid** propety in *AdaptableOptions* using the **modules** property
 
-    ```
+    ```jsx
       const adaptableOptions: AdaptableOptions = {
         primaryKey: 'tradeId',
         adaptableId: 'Modules Demo',
