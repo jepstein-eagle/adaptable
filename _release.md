@@ -1,3 +1,7 @@
+## 6.2.1-canary2
+
+Fix to Formatting to allow for nulls (e.g. for grouped rows)
+
 ## 6.2.1-canary1
 
 Small updates to Format Column function (2 extra date presets)
