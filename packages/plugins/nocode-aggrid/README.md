@@ -13,6 +13,38 @@ The second (optional) step allows Users to set up many of the [Adaptable Options
          
 > The source data must have one column that contains **unique values** which will be set as the [Primary Key column](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey) (by convention this is the first column).
 
+## Code Required
+There is minimum code required to set up the No Code plugin. 
+
+A full example would be as follows:
+
+```jsx
+import "@adaptabletools/adaptable/index.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-grid.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+import nocode from "@adaptabletools/adaptable-plugin-nocode-aggrid";
+import { AdaptableOptions} from "@adaptabletools/adaptable/types";
+import { AllEnterpriseModules } from "@ag-grid-enterprise/all-modules";
+import Adaptable from "@adaptabletools/adaptable/agGrid";
+
+const adaptableOptions: AdaptableOptions = {
+  primaryKey: "",
+  userName: "Demo User",
+  adaptableId: "Nocode Plugin Demo",
+  plugins: [
+    nocode({
+      onInit: adaptableOptions => {
+        adaptableOptions.vendorGrid.modules = AllEnterpriseModules;
+      }
+    })
+  ]
+};
+
+Adaptable.initLazy(adaptableOptions).then(api => {
+  // do stuff at run-time with the AdapTable api object
+});
+```
+
 ## Example Project
 Visit the [No Code Example Project](https://github.com/AdaptableTools/example-adaptable-nocode-aggrid) to see a basic example of how to set up the No Code plugin.
 
