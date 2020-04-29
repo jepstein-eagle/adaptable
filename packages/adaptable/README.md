@@ -91,7 +91,7 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
 
-    ```jsx
+    ```tsx
     const adaptableOptions: AdaptableOptions = {
       primaryKey: 'tradeId',
       adaptableId: 'Adaptable demo',
@@ -124,7 +124,7 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 3. Add them to the **vendorGrid** propety in *AdaptableOptions* using the **modules** property
 
-    ```jsx
+    ```tsx
       const adaptableOptions: AdaptableOptions = {
         primaryKey: 'tradeId',
         adaptableId: 'Modules Demo',
@@ -207,7 +207,7 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions)
 </body>
 ```
 
-```jsx
+```tsx
 
 // import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
