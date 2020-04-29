@@ -26,6 +26,8 @@ export function walker(node: any, callback: (node: any) => void): any {
 export function findPathTo(node: any, offset: number) {
   const path: any[] = [];
 
+  if (offset === null) return path;
+
   walker(node, node => {
     if (node.range[0] <= offset && node.range[1] >= offset) {
       path.push(node);
