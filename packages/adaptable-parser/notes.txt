@@ -1,4 +1,5 @@
-[ ] improve selection
+[x] improve selection (global event listener)
+[x] drag and drop to insert text
 [ ] improve text insert (maybe create a formater/stringifier)
 [x] single quotes
 [x] lowercase functions
