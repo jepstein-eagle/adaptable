@@ -7,9 +7,11 @@ It will dynamically instantiate a fully functional AdapTable including advanced 
 ### No Code Wizard
 Once a JSON or Excel file has been selected (or dragged and droppped), the AdapTable No Code Wizard will appear.
 
-The first step will read the file and list the available columns it contains, together with options for each column to change the DataType, and set editing, filtering, sorting, grouping and other properties.
+It has 2 steps:
 
-The second (optional) step allows Users to set up many of the [Adaptable Options](https://api.adaptabletools.com/modules/_src_adaptableoptions_adaptableoptions_.html) that would normally be configured at design-time, in order to ensure that the AdapTable instance suits their precise requirements.
+1.  The Wizard will read the input file / JSON and list the available columns it contains, together with options for each column to change the DataType, and set editing, filtering, sorting, grouping and other properties.
+
+2. A second (optional) step allows Users to set up many of the [Adaptable Options](https://api.adaptabletools.com/modules/_src_adaptableoptions_adaptableoptions_.html) that would normally be configured at design-time, in order to ensure that the AdapTable instance suits their precise requirements.
          
 > The source data must have one column that contains **unique values** which will be set as the [Primary Key column](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey) (by convention this is the first column).
 
