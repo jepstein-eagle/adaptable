@@ -277,7 +277,7 @@ export class FormatColumnFormatWizard
   setFormatOption(key: string, value: any) {
     const { DisplayFormat } = this.state;
     // @ts-ignore
-    Format.Options[key] = value;
+    DisplayFormat.Options[key] = value;
     this.setState({ DisplayFormat });
   }
 

@@ -6,12 +6,19 @@ import {
 import dateFnsFormat from 'date-fns/format';
 
 export function Format(input: any, format: AdaptableFormat) {
-  if (format.Formatter === 'NumberFormatter') return NumberFormatter(input, format.Options);
-  if (format.Formatter === 'DateFormatter') return DateFormatter(input, format.Options);
+  if (format.Formatter === 'NumberFormatter') {
+    return NumberFormatter(input, format.Options);
+  }
+  if (format.Formatter === 'DateFormatter') {
+    return DateFormatter(input, format.Options);
+  }
   throw new Error('Unknown formatter');
 }
 
 export function NumberFormatter(input: number, options: NumberFormatterOptions = {}) {
+  if (input == null || input == undefined) {
+    return undefined;
+  }
   let n: number = input;
 
   if (options.Multiplier !== undefined) {
@@ -46,10 +53,13 @@ export function NumberFormatter(input: number, options: NumberFormatterOptions =
 }
 
 export function DateFormatter(input: number | Date, options: DateFormatterOptions) {
+  if (input == null || input == undefined) {
+    return undefined;
+  }
   try {
     return dateFnsFormat(input, options.Pattern || '');
   } catch (error) {
-    return '???';
+    return undefined;
   }
 }
 
