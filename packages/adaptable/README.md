@@ -21,17 +21,17 @@ To gain access to this registry please follow these steps:
 
 2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
-  ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
+    ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
 
-  if you're using yarn
+    if you're using yarn
 
-  ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
+    ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
 
 3. Login to the AdapTable private registry:
 
-  ```sh
-  npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
-  ```
+    ```sh
+    npm login --registry=https://registry.adaptabletools.com --scope=@adaptabletools
+    ```
 
 4. Enter the credentials that were provided to you by the AdapTable support team:
 
@@ -41,25 +41,26 @@ To gain access to this registry please follow these steps:
   
 5. Check you are logged-in correctly by using whoami:
 
-  ```
-  npm whoami --registry=https://registry.adaptabletools.com
-  ```
+    ```
+    npm whoami --registry=https://registry.adaptabletools.com
+    ```
 
-  This should display the username you received as the current login on the private registry
+    This should display the username you received as the current login on the private registry
 
-  **note: this does not affect your username/login session on the public npm registry**
+    **note: this does not affect your username/login session on the public npm registry**
 
 6. Install AdapTable
 
-  ```npm i @adaptabletools/adaptable```
+    ```npm i @adaptabletools/adaptable```
 
 7. Make sure that all the Peer Dependencies are installed. These is currently just **@ag-grid-community/all-modules**:
 
-  ```
-  "peerDependencies": {
-      "@ag-grid-community/all-modules": "^22.1.1",
-  }
-  ```
+    ```
+    "peerDependencies": {
+        "@ag-grid-community/all-modules": "^22.1.1",
+    }
+    ```
+    
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
@@ -82,23 +83,22 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
 
 1. Install the plugin as a separate package:
 
-  ```npm i @adaptabletools/adaptable-plugin-charts```
+    ```npm i @adaptabletools/adaptable-plugin-charts```
 
 2. Import it into your code:
 
-  ```import charts from '@adaptable/adaptable-plugins-charts'```
+    ```import charts from '@adaptable/adaptable-plugins-charts'```
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
 
-  ```
-  const adaptableOptions: AdaptableOptions = {
-    primaryKey: 'tradeId',
-    adaptableId: 'Adaptable demo',
-    ....
-    plugins: [charts()]
-  };
-
-  ```
+    ```tsx
+    const adaptableOptions: AdaptableOptions = {
+      primaryKey: 'tradeId',
+      adaptableId: 'Adaptable demo',
+      ....
+      plugins: [charts()]
+    };
+    ```
 
 ## agGrid Enterprise Modules
 AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
@@ -110,32 +110,31 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 1. Install the modules in npm:
 
-  ```
-  npm i @ag-grid-enterprise/menu
-  npm i @ag-grid-enterprise/range-selection
-  ```
+    ```
+    npm i @ag-grid-enterprise/menu
+    npm i @ag-grid-enterprise/range-selection
+    ```
 
 2. Import them into your code:
 
-  ```
-  import { MenuModule } from '@ag-grid-enterprise/menu';
-  import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-  ```
+    ```
+    import { MenuModule } from '@ag-grid-enterprise/menu';
+    import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+    ```
 
 3. Add them to the **vendorGrid** propety in *AdaptableOptions* using the **modules** property
 
-  ```
-    const adaptableOptions: AdaptableOptions = {
-      primaryKey: 'tradeId',
-      adaptableId: 'Modules Demo',
-      vendorGrid: {
-        ...gridOptions,
-        modules: [MenuModule, RangeSelectionModule],
-      },
-      ....
-    };
-
-  ```
+    ```tsx
+      const adaptableOptions: AdaptableOptions = {
+        primaryKey: 'tradeId',
+        adaptableId: 'Modules Demo',
+        vendorGrid: {
+          ...gridOptions,
+          modules: [MenuModule, RangeSelectionModule],
+        },
+        ....
+      };
+    ```
 
 ## Styling and Theming
 
@@ -208,7 +207,7 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions)
 </body>
 ```
 
-```jsx
+```tsx
 
 // import Adaptable
 import Adaptable from "@adaptabletools/adaptable/agGrid";
@@ -285,7 +284,6 @@ const gridOptions: GridOptions=  {
   });
   
 ```
-
 
 ## Licences
 A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
