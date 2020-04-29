@@ -6,9 +6,24 @@ You can have more css theme files imported in the app without them overriding ea
 
 ### System Themes
 
-AdapTable ships with 2 themes: *light* (the default) and *dark*
+AdapTable ships with 2 themes: **light** (the default) and **dark**.
 
-If you wish to use the Dark Theme, specify *dark* as the Current Theme in the Theme section of Predefined Config. Make sure, if using ag-Grid, that you also import the associated vendor theme.
+If you wish to use the Dark Theme, specify *dark* as the Current Theme in the Theme section of Predefined Config. 
+Make sure to import the Adptable dark.css file and, if using ag-Grid, also to import the associated dark vendor theme.
+
+ ```ts
+import '@adaptabletools/adaptable/index.css';
+import '@adaptabletools/adaptable/themes/dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+----
+export default {
+  Theme: {
+    CurrentTheme: 'dark',
+  },
+} as PredefinedConfig;
+  ```
 
 You do not need to provide a VendorGridClassName when using either of the System Themes as this is done for you.
 
