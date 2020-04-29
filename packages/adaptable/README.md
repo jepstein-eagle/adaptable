@@ -91,7 +91,7 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
 
 3. Add it to the `plugins` property of *AdaptableOptions*:
 
-    ```
+    ```jsx
     const adaptableOptions: AdaptableOptions = {
       primaryKey: 'tradeId',
       adaptableId: 'Adaptable demo',
