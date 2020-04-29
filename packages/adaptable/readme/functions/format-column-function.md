@@ -1,6 +1,6 @@
 # Format Column (AdaptableFunction)
 
-The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given a particular style (i.e. colours, font size etc) and / or Display Format which **all cells** in the Column will display.
+The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given a particular **Style** (i.e. colours, font size etc) and / or **Display Format** which **all cells** in the Column will display.
 
 ### Style
 
