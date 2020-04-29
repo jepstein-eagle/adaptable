@@ -57,7 +57,9 @@ Everything that can be done in AdapTable through the UI can also be done through
 
 These 3 objects are linked as follows:
 
-**Predefined Configuration** is a property of **AdaptableOptions** .  This is the only object which the *AdapTable static constructor* requires in order to initialise everything and build the grid.  The constructor returns the **AdaptableApi** object so it is available for future reference.
+**Predefined Configuration** is a property of **AdaptableOptions**.  
+This is the only object which the *AdapTable static constructor* requires in order to initialise everything and build the grid.
+The constructor returns the **AdaptableApi** object so it is available for future reference.
 
 ```ts
 
@@ -71,7 +73,14 @@ These 3 objects are linked as follows:
 // The AdapTable constructor returns an API object that we can use
  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
  ```
+ 
+There is also a static `initLazy` constructor which receives an AdaptableOptions object and returns a Promise that contains the `api` object.  It is utilised by the [No Code Version](https://github.com/AdaptableTools/adaptable/tree/master/packages/plugins/nocode-aggrid) and is used as follows: 
 
+```ts
+  Adaptable.initLazy(adaptableOptions).then((api: AdaptableApi) => {
+    // do run-time stuff with the api
+  });
+ ```
 
 ## UI Elements
 
