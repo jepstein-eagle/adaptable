@@ -51,11 +51,9 @@ export interface StateOptions {
   /**
    * Allows the customization of state loading.
    *
-   * By default, it reads the state that was persisted from localStorage (at the `adaptableId` key) and returns it.
+   * By default, AdapTable will read the state that was persisted from localStorage (at the `adaptableId` key) and returns it.
    *
-   * (If Remote Config Server has been set up, then the default implementation fetches the config server url and returns the resulting object).
-   *
-   * If defined, most likely it is used in conjunction with `stateOptions.persistState`, which is the other side of the persistence mechanism.
+   * If this function is defined, most likely it will be used in conjunction with `stateOptions.persistState`, which is the other side of the persistence mechanism.
    *
    * For example, `loadState` could be used to load adaptable state from the browser window object or from a remote location altogether.
    *

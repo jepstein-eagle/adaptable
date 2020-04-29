@@ -36,7 +36,7 @@ AdaptableBlotter.NET Objects are stored as XML, while in AdaptableBlotter.JS / A
 
 **Are we only able to save Adaptable Objects we create to the local browser cache?**
 
-No. If you have enabled Remote Storage in Config Options section of Adaptable Options, then you can store your Adaptable Objects anywhere that you like by using Config Server.
+No. You can use the State Options section of Adaptable Options to persist your Adaptable Objects remotely.
 
 For more details see User State.
 

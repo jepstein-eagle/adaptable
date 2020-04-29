@@ -407,47 +407,6 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         </Flex>
       </Flex>
  */}
-
-      <HelpBlock>Config Server Options</HelpBlock>
-      <FormLayout
-        margin={2}
-        columns={[{ name: 'children' }, { name: 'label', style: { textAlign: 'start' } }]}
-      >
-        <FormRow label="Enable Config Server">
-          <CheckBox
-            checked={configServerOptions.enableConfigServer}
-            onChange={(enableConfigServer: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.configServerOptions = { ...abOptions.configServerOptions };
-              abOptions.configServerOptions.enableConfigServer = enableConfigServer;
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
-      </FormLayout>
-      <Flex flexDirection="row" alignItems="center" margin={2}>
-        <Text style={{ flex: 3 }} marginRight={2}>
-          Config Server Url
-        </Text>
-
-        <Flex flex={7} flexDirection="row" alignItems="center">
-          <Input
-            style={{ flex: 1 }}
-            type="text"
-            placeholder="Enter Text"
-            onChange={(event: React.FormEvent<any>) => {
-              let e = event.target as HTMLInputElement;
-              let configServerUrl: string = e.value;
-              abOptions = { ...abOptions };
-              abOptions.configServerOptions = { ...abOptions.configServerOptions };
-              abOptions.configServerOptions.configServerUrl = configServerUrl;
-              props.onChangeadaptableOptions(abOptions);
-            }}
-            value={configServerOptions.configServerUrl}
-            marginRight={3}
-          />
-        </Flex>
-      </Flex>
     </>
   );
 };

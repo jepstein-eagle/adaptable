@@ -40,7 +40,7 @@ import { TeamSharingOptions } from './TeamSharingOptions';
  *  | [vendorGrid](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Underlying vendor grid object (e.g. *GridOptions* for ag-Grid)|
  *  | [auditOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)               | Audit Log related options                                   	|
  *  | [chartOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartoptions)                | Chart-based options (used when using chart plugin)           	|
- *  | [configServerOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions) | Options related to Config Server (external state management)  |
+ *  | [configServerOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions) | Options related to (the now deprecated) Config Server   |
  *  | [editOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                 | Editing (and server-editing) related options                  |
  *  | [exportOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)             | Export and reporting related options                          |
  *  | [filterOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)             | Options relating to filtering functionality in AdapTable      |
@@ -73,8 +73,6 @@ export interface AdaptableOptions {
    * User State (a.ka. `predefinedConfig`) set at design-time and shipped with AdapTable for first use.
    *
    * Contains a mixture of objects and properties.
-   *
-   * Only used when Config Server is not enabled.
    *
    * Can be either an *PredefinedConfig* object or a url to the file which contains the config.
    *
