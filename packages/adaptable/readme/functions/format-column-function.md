@@ -13,7 +13,7 @@ The style in a Format Column has lowest last level of style-application preferen
 
 ### Display Format
 
-The Display Format sets how the value in the column will be formatted, so that it matches the precise requirements of the users.  
+The Display Format sets how the value in the column will be formatted, so it matches the precise requirements of users.  
 
 > Setting a Display Format does NOT change the underlying cell value.
 
