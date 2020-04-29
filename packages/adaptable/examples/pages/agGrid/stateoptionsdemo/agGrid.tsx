@@ -11,7 +11,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 var adaptableApi: AdaptableApi;
 
 function InitAdaptableDemo() {
@@ -24,16 +24,20 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Basic Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
     stateOptions: {
       saveState: state => {
         console.log('in save state');
         return {
           ...state,
-          name: 'Jonny',
+          //  name: 'Jonny',  // wow this is weird!!!  it looks like we no longer allow this... ? :(  // should we be using ApplicationDateentries here?
         };
       },
+
       applyState: state => {
         const { name, ...rest } = state;
         console.log('in apply state name is:', name);
