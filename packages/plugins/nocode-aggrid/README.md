@@ -4,7 +4,7 @@ The No Code Plugin allows end users to create an AdapTable instance at runtime f
  
 It will dynamically instantiate a fully functional AdapTable including advanced features like state management and audit log, enabling Users to attach to the same source daily or multiple different sources.
  
-### No Code Wizard
+## No Code Wizard
 Once a JSON or Excel file has been selected (or dragged and droppped), the AdapTable No Code Wizard will appear.
 
 It has 2 steps:
