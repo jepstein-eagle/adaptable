@@ -286,7 +286,6 @@ const gridOptions: GridOptions=  {
   
 ```
 
-
 ## Licences
 A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
 
