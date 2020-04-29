@@ -13,6 +13,9 @@ The second (optional) step allows Users to set up many of the [Adaptable Options
          
 > The source data must have one column that contains **unique values** which will be set as the [Primary Key column](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#primarykey) (by convention this is the first column).
 
+## Example Project
+Visit the [No Code Example Project](https://github.com/AdaptableTools/example-adaptable-nocode-aggrid) to see a basic example of how to set up the No Code plugin.
+
 ## Demo
 Visit the [No Code Demo](https://demo.adaptabletools.com/admin/aggridnocodedemo) to see AdapTable running the No Code plugin.
 
