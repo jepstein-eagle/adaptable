@@ -57,6 +57,14 @@ function InitAdaptableDemo() {
         ],
         VisibleButtons: ['ConditionalStyle', 'TeamSharing'],
       },
+      Entitlements: {
+        FunctionEntitlements: [
+          {
+            FunctionName: 'ColumnChooser',
+            AccessLevel: 'Hidden',
+          },
+        ],
+      },
     },
   };
 

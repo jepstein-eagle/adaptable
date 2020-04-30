@@ -38,11 +38,13 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
     let popUpParams: StrategyParams = {
       source: 'ContextMenu',
     };
-    return this.createMainMenuItemShowPopup({
-      Label: 'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
-      ComponentName: ScreenPopups.ColumnChooserPopup,
-      Icon: StrategyConstants.ColumnChooserGlyph,
-      PopupParams: popUpParams,
-    });
+    if (this.canCreateMenuItem('Full')) {
+      return this.createMainMenuItemShowPopup({
+        Label: 'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
+        ComponentName: ScreenPopups.ColumnChooserPopup,
+        Icon: StrategyConstants.ColumnChooserGlyph,
+        PopupParams: popUpParams,
+      });
+    }
   }
 }
