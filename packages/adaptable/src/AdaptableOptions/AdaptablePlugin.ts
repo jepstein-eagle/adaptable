@@ -44,7 +44,6 @@ export abstract class AdaptablePlugin {
     }
   ): void {}
 
-  afterInitStore(adaptable: IAdaptable, adaptableStore: IAdaptableStore): void {}
   afterInitOptions(adaptable: IAdaptable, adaptableOptions: AdaptableOptions): void {}
   afterInitApi(adaptable: IAdaptable, api: AdaptableApi) {}
   afterInitServices(adaptable: IAdaptable) {}
