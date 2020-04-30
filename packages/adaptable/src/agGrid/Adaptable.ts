@@ -545,8 +545,6 @@ export class Adaptable implements IAdaptable {
   private initStore() {
     this.AdaptableStore = new AdaptableStore(this);
 
-    this.forPlugins(plugin => plugin.afterInitStore(this, this.AdaptableStore));
-
     this.AdaptableStore.onAny((eventName: string, data: any) => {
       this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
 
