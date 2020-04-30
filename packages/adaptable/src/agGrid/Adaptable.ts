@@ -2800,9 +2800,10 @@ export class Adaptable implements IAdaptable {
 
       colDef.valueFormatter = this.originalColDefValueFormatters[colDef.field];
 
-      const formatColumn = formatColumns.find(fc => fc.ColumnId === colDef.field);
+      const formatColumn = formatColumns.find(
+        fc => fc.ColumnId === colDef.field || fc.ColumnId === colDef.colId
+      );
 
-      // stop if not found
       if (!formatColumn) {
         return;
       }
