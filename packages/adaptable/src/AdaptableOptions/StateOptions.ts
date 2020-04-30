@@ -101,7 +101,7 @@ export interface StateOptions {
    *
    * **Default implementation: (state) => state**
    */
-  saveState?: (state: AdaptableState) => Partial<AdaptableState>;
+  saveState?: (state: AdaptableState) => any;
 
   /**
    * Allows hooking into AdaptableState hydration - useful when `saveState` was specified and added new custom properties, which will again be accessible into the `applyState` function.
@@ -147,7 +147,7 @@ export interface StateOptions {
  */
 export interface AdaptablePersistStateFunction {
   (
-    state: Partial<AdaptableState>,
+    state: any,
     { adaptableId, userName, url }: { adaptableId: string; userName: string; url?: string }
   ): Promise<any>;
 }

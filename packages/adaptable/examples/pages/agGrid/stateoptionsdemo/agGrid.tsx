@@ -34,7 +34,7 @@ function InitAdaptableDemo() {
         console.log('in save state');
         return {
           ...state,
-          //  name: 'Jonny',  // wow this is weird!!!  it looks like we no longer allow this... ? :(  // should we be using ApplicationDateentries here?
+          name: 'Jonny', // wow this is weird!!!  it looks like we no longer allow this... ? :(  // should we be using ApplicationDateentries here?
         };
       },
 
