@@ -31,25 +31,28 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     stateOptions: {
       saveState: state => {
-        console.log('in save state');
         return {
           ...state,
-          name: 'Jonny', // wow this is weird!!!  it looks like we no longer allow this... ? :(  // should we be using ApplicationDateentries here?
+          name: 'Jonny',
         };
       },
 
       applyState: state => {
         const { name, ...rest } = state;
-        console.log('in apply state name is:', name);
+
         return rest;
       },
       loadState: () => {
-        let state = localStorage.getItem('TestingState');
-        if (state != null) {
-          state = JSON.parse(state);
-        }
-        console.log('in load state:', state);
-        return Promise.resolve(state);
+        return new Promise(resolve => {
+          setTimeout(() => {
+            let state = localStorage.getItem('TestingState');
+            if (state != null) {
+              state = JSON.parse(state);
+            }
+            console.log('in load state:', state);
+            resolve(state);
+          }, 1000);
+        });
       },
       persistState: state => {
         localStorage.setItem('TestingState', JSON.stringify(state));

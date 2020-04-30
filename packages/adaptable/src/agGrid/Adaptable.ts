@@ -3714,14 +3714,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.gridOptions.api!.refreshHeader();
     }
 
-    // if user layout and a percent bar sometimes the first few cells are pre-rendered so we frig it like this
     const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();
-    if (
-      currentlayout != DEFAULT_LAYOUT &&
-      ArrayExtensions.IsNotNullOrEmpty(this.api.percentBarApi.getAllPercentBar())
-    ) {
-      this.api.layoutApi.setLayout(DEFAULT_LAYOUT);
-    }
 
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
 
