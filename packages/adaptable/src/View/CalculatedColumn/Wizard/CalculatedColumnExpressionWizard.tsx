@@ -13,6 +13,7 @@ import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import Input from '../../../components/Input';
 import { Box } from 'rebass';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
+import CheckBox from '../../../components/CheckBox';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -52,12 +53,21 @@ export class CalculatedColumnExpressionWizard
           style={{ width: '100%', height: '100px' }}
         ></Textarea>
         {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
-        <FormLayout columns={[1, 2, 3]} sizes={[1, 1, 1]}>
+        <FormLayout>
           {this.props.Columns.map(Column => (
-            <FormRow key={Column.ColumnId}>
-              <span>{Column.ColumnId}</span>
-              <span>{Column.FriendlyName}</span>
-              <Input defaultValue={JSON.stringify(firstRow[Column.ColumnId])} />
+            <FormRow key={Column.ColumnId} label={Column.FriendlyName}>
+              {Column.DataType === 'Number' ? (
+                <Input type="number" defaultValue={firstRow[Column.ColumnId]} />
+              ) : Column.DataType === 'String' ? (
+                <Input type="text" defaultValue={firstRow[Column.ColumnId]} />
+              ) : Column.DataType === 'Date' ? (
+                <Input
+                  type="date"
+                  defaultValue={firstRow[Column.ColumnId].toISOString().substr(0, 10)}
+                />
+              ) : Column.DataType === 'Boolean' ? (
+                <CheckBox defaultChecked={firstRow[Column.ColumnId]} />
+              ) : null}
             </FormRow>
           ))}
         </FormLayout>
