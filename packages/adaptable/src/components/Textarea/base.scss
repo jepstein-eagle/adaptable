@@ -2,9 +2,16 @@
   padding: var(--ab-cmp-textarea__padding);
   border-radius: var(--ab-cmp-textarea__border-radius);
   border: var(--ab-cmp-textarea__border);
+  color: var(--ab-cmp-textarea__color);
 
   font-family: var(--ab-cmp-textarea__font-family);
   font-size: var(--ab-cmp-textarea__font-size);
+
+  background: var(--ab-cmp-textarea__background);
+
+  &[disabled] {
+    background: var(--ab-cmp-textarea--disabled__background);
+  }
 
   &:focus {
     box-shadow: var(--ab-focus__box-shadow);

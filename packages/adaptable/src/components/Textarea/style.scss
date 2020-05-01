@@ -1,8 +1,12 @@
 :root {
-  --ab-cmp-textarea__padding: var(--ab-space-1) var(--ab-space-2); 
+  --ab-cmp-textarea__padding: var(--ab-space-1) var(--ab-space-2);
   --ab-cmp-textarea__border-radius: var(--ab__border-radius);
   --ab-cmp-textarea__border: 1px solid var(--ab-color-inputborder);
+  --ab-cmp-textarea__color: var(--ab-cmp-input__color);
 
   --ab-cmp-textarea__font-size: var(--ab-font-size-3);
   --ab-cmp-textarea__font-family: var(--ab__font-family);
+
+  --ab-cmp-textarea__background: var(--ab-cmp-input__background);
+  --ab-cmp-textarea--disabled__background: var(--ab-cmp-input--disabled__background);
 }
