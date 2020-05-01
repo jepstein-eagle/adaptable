@@ -174,7 +174,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     let clonedObject = Helper.cloneObject(calculatedColumn);
     this.setState({
       EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
+      WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
   }

@@ -9,6 +9,10 @@ import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnStat
 import ErrorBox from '../../../components/ErrorBox';
 import Textarea from '../../../components/Textarea';
 import WizardPanel from '../../../components/WizardPanel';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
+import Input from '../../../components/Input';
+import { Box } from 'rebass';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -36,18 +40,28 @@ export class CalculatedColumnExpressionWizard
       ? null
       : 'error';
 
+    const firstRow = this.props.Adaptable.getFirstRowNode().data;
+
     return (
-      <WizardPanel borderRadius="none" border="none">
+      <Box p={2}>
         <Textarea
           value={this.state.ColumnExpression}
           placeholder="Enter expression"
           autoFocus
           onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-          style={{ width: '100%', height: '75%' }}
+          style={{ width: '100%', height: '100px' }}
         ></Textarea>
-
         {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
-      </WizardPanel>
+        <FormLayout columns={[1, 2, 3]} sizes={[1, 1, 1]}>
+          {this.props.Columns.map(Column => (
+            <FormRow key={Column.ColumnId}>
+              <span>{Column.ColumnId}</span>
+              <span>{Column.FriendlyName}</span>
+              <Input defaultValue={JSON.stringify(firstRow[Column.ColumnId])} />
+            </FormRow>
+          ))}
+        </FormLayout>
+      </Box>
     );
   }
 
@@ -68,6 +82,7 @@ export class CalculatedColumnExpressionWizard
   }
   public Next(): void {
     this.props.Data.ColumnExpression = this.state.ColumnExpression;
+    this.props.Data.ColumnType = this.props.Data.ColumnType ?? DataType.Number; // hard coded for now
   }
   public Back(): void {
     //todo
