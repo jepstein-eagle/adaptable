@@ -25,9 +25,17 @@ export class CellSummaryApiImpl extends ApiBase implements CellSummaryApi {
   public addCellSummaryOperationDefinitions(
     cellSummaryOperationDefinitions: CellSummaryOperationDefinition[]
   ) {
+    const currentDefinitions = this.getCellSummaryOperationDefinitions();
+    const currentDefinitionsMap = currentDefinitions.reduce((acc, definition) => {
+      acc[definition.OperationName] = definition;
+      return acc;
+    }, {} as { [key: string]: CellSummaryOperationDefinition });
+
     const operationDefinitions = [
-      ...this.getCellSummaryOperationDefinitions(),
-      ...cellSummaryOperationDefinitions,
+      ...currentDefinitions,
+      ...cellSummaryOperationDefinitions.filter(definition => {
+        return !currentDefinitionsMap[definition.OperationName];
+      }),
     ];
     this.dispatchAction(CellSummaryRedux.CellSummaryOperationDefinitionsSet(operationDefinitions));
   }

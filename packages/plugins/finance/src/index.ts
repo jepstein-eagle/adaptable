@@ -101,7 +101,7 @@ class FinancePlugin extends AdaptablePlugin {
     this.options = { ...defaultOptions, ...options };
   }
 
-  afterInitStore(adaptable: IAdaptable) {
+  onAdaptableReady(adaptable: IAdaptable) {
     const pluginData = {
       OptionalSummaryOperations: [
         {
