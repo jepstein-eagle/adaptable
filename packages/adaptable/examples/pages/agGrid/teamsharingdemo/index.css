@@ -15,3 +15,7 @@ html {
 :root {
   /* --ab-color-defaultbackground: red; */
 }
+
+.number-cell {
+  text-align: right;
+}

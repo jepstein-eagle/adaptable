@@ -150,6 +150,7 @@ export interface IAdaptable {
 
   // DataSource Management
   setDataSource(dataSource: any): void;
+  loadDataSource(dataSource: any): void;
   updateRows(
     dataRows: any[],
     config?: { batchUpdate?: boolean; callback?: (res: any) => void }
@@ -233,7 +234,7 @@ export interface IAdaptable {
   addActionColumnToGrid(actionColumn: ActionColumn): void;
 
   // formatolumn
-  addFormatColumnFormats(): void;
+  applyFormatColumnFormats(): void;
 
   // Percent Bar
   removePercentBar(percentBar: PercentBar): void;

@@ -46,6 +46,8 @@ export interface FormatColumnApi {
    */
   deleteAllFormatColumn(): void;
 
+  applyFormatColumnFormats(): void;
+
   /**
    * Opens the Format Column popup screen
    */

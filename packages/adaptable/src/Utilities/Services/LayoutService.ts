@@ -77,7 +77,10 @@ export class LayoutService implements ILayoutService {
             AdaptableGridInfo: {
               CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
               CurrentColumnSorts: this.adaptable.api.gridApi.getColumnSorts(),
-              ExpandedRowGroupKeys: this.adaptable.api.gridApi.getExpandRowGroupsKeys(),
+              ExpandedRowGroupKeys:
+                layout.AdaptableGridInfo == null || this.adaptable.getRowCount() > 0
+                  ? this.adaptable.api.gridApi.getExpandRowGroupsKeys()
+                  : layout.AdaptableGridInfo!.ExpandedRowGroupKeys,
             },
           };
           this.adaptable.api.layoutApi.saveLayout(layoutToSave);

@@ -25,6 +25,15 @@ export interface GridApi {
   setGridData(data: any): void;
 
   /**
+   * Loads the grid; designed for first time use
+   *
+   * Identical to setGridData other than that Adaptable will then reload any Layout after it is called - useful if you have opened row groups
+   *
+   * @param data can be any data from any datasource that is suitable for the underlying grid.
+   */
+  loadGridData(data: any): void;
+
+  /**
    * Updates Adaptable (and underlying grid) with rows that have changed.
    *
    * Note: this method simply updates the data set; **it does not take edit validation into account** - for that you should use *setCellVallue* or *setGriddCell*
