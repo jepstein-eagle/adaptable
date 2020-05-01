@@ -1,3 +1,7 @@
+## 6.2.1-canary3
+
+Fix Percent Bars bug
+
 ## 6.2.1-canary2
 
 Fix to Formatting to allow for nulls (e.g. for grouped rows)

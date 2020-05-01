@@ -46,6 +46,10 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     });
   }
 
+  public applyFormatColumnFormats(): void {
+    this.adaptable.applyFormatColumnFormats();
+  }
+
   public showFormatColumnPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.FormatColumnStrategyId,

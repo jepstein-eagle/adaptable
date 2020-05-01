@@ -545,8 +545,6 @@ export class Adaptable implements IAdaptable {
   private initStore() {
     this.AdaptableStore = new AdaptableStore(this);
 
-    this.forPlugins(plugin => plugin.afterInitStore(this, this.AdaptableStore));
-
     this.AdaptableStore.onAny((eventName: string, data: any) => {
       this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
 
@@ -2605,7 +2603,7 @@ export class Adaptable implements IAdaptable {
     // add any special renderers
     this.addSpecialRendereredColumns();
 
-    this.addFormatColumnFormats();
+    this.applyFormatColumnFormats();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -2786,7 +2784,7 @@ export class Adaptable implements IAdaptable {
     };
   }
 
-  addFormatColumnFormats(): void {
+  public applyFormatColumnFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
     const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithColumnFormat();
 
@@ -3216,6 +3214,14 @@ export class Adaptable implements IAdaptable {
 
   public setDataSource(dataSource: any) {
     this.gridOptions.api!.setRowData(dataSource);
+  }
+
+  public loadDataSource(dataSource: any) {
+    this.setDataSource(dataSource);
+    let currentLayout = this.api.layoutApi.getCurrentLayout();
+    if (ArrayExtensions.IsNotNullOrEmpty(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys)) {
+      this.expandRowGroupsForValues(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys);
+    }
   }
 
   public updateRows(

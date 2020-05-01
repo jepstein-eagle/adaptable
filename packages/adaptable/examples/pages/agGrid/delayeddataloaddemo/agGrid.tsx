@@ -16,12 +16,13 @@ import {
   AdaptableApi,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 5000;
+  const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
 
@@ -30,7 +31,10 @@ function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Delayed Data Load Demo',
 
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 
@@ -40,12 +44,13 @@ function InitAdaptableDemo() {
 
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
+    includeOpenedRowGroups: true,
   };
 
   adaptableApi = Adaptable.init(adaptableOptions);
 
   setTimeout(() => {
-    gridOptions.api!.setRowData(tradeData);
+    adaptableApi.gridApi.loadGridData(tradeData);
   }, 5000);
 }
 

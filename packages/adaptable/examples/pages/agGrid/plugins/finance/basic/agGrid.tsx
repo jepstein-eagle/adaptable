@@ -39,6 +39,27 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: demoConfig,
     plugins: [finance()],
+    userFunctions: [
+      {
+        type: 'CellSummaryOperationFunction',
+        name: 'OldestOperatioFunction',
+        handler(operationParam) {
+          let dateValues: Date[] = [];
+          operationParam.selectedCellInfo.Columns.filter(c => c.DataType === 'Date').forEach(dc => {
+            let gridCells = operationParam.selectedCellInfo.GridCells.filter(
+              gc => gc.columnId == dc.ColumnId
+            ).map(gc => gc.rawValue);
+            dateValues.push(...gridCells);
+          });
+          if (dateValues.length > 0) {
+            const sortedDates = dateValues.sort((a, b) => {
+              return new Date(a).getTime() - new Date(b).getTime();
+            });
+            return new Date(sortedDates[0]).toLocaleDateString();
+          }
+        },
+      },
+    ],
   };
 
   adaptableOptions.layoutOptions = {
@@ -63,6 +84,17 @@ let demoConfig: PredefinedConfig = {
       Variant: 'text',
       Tone: 'success',
     }, //
+  },
+  CellSummary: {
+    Revision: 3,
+    CellSummaryOperationDefinitions: [
+      {
+        OperationName: 'TheOldest',
+        OperationFunction: 'OldestOperatioFunction',
+      },
+    ],
+
+    SummaryOperation: 'Min',
   },
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],

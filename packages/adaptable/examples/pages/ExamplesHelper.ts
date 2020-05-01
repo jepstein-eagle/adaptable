@@ -1067,6 +1067,7 @@ export class ExamplesHelper {
       headerName: 'Bid',
       field: 'bid',
       columnGroupShow: 'closed',
+      resizable: true,
       editable: true,
       filter: true,
       cellClass: 'number-cell',
@@ -1145,6 +1146,8 @@ export class ExamplesHelper {
       editable: true,
       type: 'abColDefNumber',
       sortable: true,
+      resizable: true,
+      cellClass: 'number-cell',
       //  tooltipField: 'changeOnYear',
       //  tooltipComponent: 'percentBarTooltip',
     });

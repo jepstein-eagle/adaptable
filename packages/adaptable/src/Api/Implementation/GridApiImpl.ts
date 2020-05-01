@@ -19,6 +19,10 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.setDataSource(dataSource);
   }
 
+  public loadGridData(dataSource: any): void {
+    this.adaptable.loadDataSource(dataSource);
+  }
+
   public updateGridData(
     dataRows: any[],
     config?: { batchUpdate?: boolean; callback?: (res: any) => void }
