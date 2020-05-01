@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 // @ts-ignore
 import { Parser } from 'jison';
+import { AST } from './types';
 
 let parser: Parser;
 

@@ -1,3 +1,5 @@
+import { Token } from './types';
+
 export function tokenize(parser: any, input: string) {
   const tokens: Token[] = [];
   const lexer = parser.lexer;
