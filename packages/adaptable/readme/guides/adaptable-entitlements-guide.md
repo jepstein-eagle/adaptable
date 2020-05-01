@@ -120,6 +120,17 @@ export default {
 
  - All other AdaptableFunctions to be 'Full' (as we have not set the `DefaultAccessLevel` property)
 
+## Additional Rules
+
+Some AdapTable functions require additional conditions to be met if the function is to be available.  
+
+These are usually supplied in Predefined Config or Adaptable Options.  These include:
+
+- Team Sharing: team sharing must be enabled in TeamSharingOptions
+
+- glue42: the glue42 Predefined Config must contain the glue42 object
+
+- ipushpull: the ipushpull Predefined Config must contain the ipushpull object
  
 ## Demos
 
