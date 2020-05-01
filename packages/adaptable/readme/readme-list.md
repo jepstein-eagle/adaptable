@@ -1,10 +1,10 @@
 # AdapTable 'ReadMe' Docs
 
-We provide a number of ReadMe docs each of which address a different general area of how AdapTable works.
+We provide a number of ReadMe docs each of which addresses a specific area of AdapTable functionality.
 
-These are to be used in conjunction with the [AdapTable Developer Documentation](https://api.adaptabletools.com).
+These should be used in conjunction with the more technical [AdapTable Developer Documentation](https://api.adaptabletools.com).
 
-> The main source of AdapTable Help used to be our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
+> The main source of AdapTable Help used to be in [Zendesk](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
 ## Version-Related
  - [Adaptable Core](../README.md)
