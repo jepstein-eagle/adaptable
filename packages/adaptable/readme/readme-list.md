@@ -6,7 +6,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 
 > The main source of AdapTable Help used to be in [Zendesk](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
-## Version-Related
+## Version and Framework Related Guides
  - [Adaptable Core](../README.md)
  - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
  - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
@@ -14,7 +14,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
  - [Version 6 Upgrade Guide](./upgrade-guide.md)
 
  
-## Guides
+## Adaptable Guides
  - [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
  - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
  - [Entitlements Guide](./guides/adaptable-entitlements-guide.md)
