@@ -1,7 +1,6 @@
 # ipushpull (AdaptableFunction)
 
-The ipushpull([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ipushpull`) Function connects with ipushpull.
-
+The ipushpull([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ipushpull`) Function connects with [ipushpull](https://www.ipushpull.com).
 
 ## UI Elements
 ipushpull includes the following UI Elements:
@@ -14,7 +13,7 @@ If successfully logged in, the user sees a list of folders and pages and availab
 2. to send a live report which will send automatic updates as the data in the report changes
 
 ## Entitlements
-ipushpull only works if the Entitlement for is set to 'Full' and if the ipushpull object has been provided in Predefined Config.
+ipushpull only works if the Functino Entitlement for is set to 'Full' and if the ipushpull object has been provided in Predefined Config.
 
 ## FAQ
 
@@ -35,5 +34,11 @@ Yes, you can. This functionality was added in Version 6 (January, 2020).
 
 ### Further Information
 
-To Do
+- [ipushpull State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_ipushpullstate_.ipushpullstate.html)
+
+- [ipushpull Api](https://api.adaptabletools.com/interfaces/_src_api_ipushpullapi_.ipushpullapi.html)
+
+- [ipushpull Demo](https://demo.adaptabletools.com/partners/ipushpulldemo)
+
+- [ipushpull Example App](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
 
