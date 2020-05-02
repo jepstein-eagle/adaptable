@@ -56,7 +56,7 @@ Setting up Team Sharing requires the provision at design-time of 2 functions (bo
 
 You don't need to turn off Team Sharing as its not available by default. 
 
-Team Sharing is only available if the `enableTeamSharing` property is set to true in [Team Sharing Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html) 
+Team Sharing is only available if the `enableTeamSharing` property is set to true in [Team Sharing Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html) and the Function Entitlement for the Team Sharing Function is 'Full'.
 
 **Can we share Adaptable Objects between different Adaptable instances?**
 
