@@ -122,15 +122,15 @@ export default {
 
 ## Additional Rules
 
-Some AdapTable functions require additional conditions to be met if the function is to be available.  
+Some AdapTable Functions require additional conditions for it to be available in addition to setting the Entitlement.  
 
 These are usually supplied in Predefined Config or Adaptable Options.  These include:
 
-- Team Sharing: team sharing must be enabled in TeamSharingOptions
+- **Team Sharing**: the `enableTeamSharing` property must be set to true in [TeamSharingOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html#enableteamsharing)
 
-- glue42: the glue42 Predefined Config must contain the glue42 object
+- **glue42**: the glue42 Predefined Config must contain the glue42 object
 
-- ipushpull: the ipushpull Predefined Config must contain the ipushpull object
+- **ipushpull**: the ipushpull Predefined Config must contain the ipushpull object
  
 ## Demos
 
