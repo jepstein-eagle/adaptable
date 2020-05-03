@@ -1,3 +1,7 @@
+## 6.2.1-canary4
+
+Calculated Column settings
+
 ## 6.2.1-canary3
 
 Fix Percent Bars bug
