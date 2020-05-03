@@ -13,7 +13,7 @@ There are 3 elements to providing an Action Column definition:
     
     Developers can subscribe to this event and perform any additional logic or functionality that is required.
 
-    The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options
+    The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 2.  **Render Function**: The `RenderFunction` returns a string giving the full render contents of the Button that should display in the cell.
 
@@ -35,9 +35,13 @@ Action Column supports these Entitlement Rules:
 
 ## FAQ
 
-**Can we create Action Columns at Run-Time**
+**Can we create Action Columns at Run-Time?**
 
 No, they are a Design-Time only Function; they can be accessed at Run-Time but not created or edited.
+
+**Why do we need to provide the Function Name and Function Implementation separately?**
+
+This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 ### Further Information
 
