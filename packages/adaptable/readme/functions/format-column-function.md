@@ -88,3 +88,5 @@ Yes. Set the Display Format to show the time portion only (e.g. see the 'HH:mm:s
 
 - [Format Column Demo](https://demo.adaptabletools.com/style/aggridformatcolumndemo)
 
+- [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
+

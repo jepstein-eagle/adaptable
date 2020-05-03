@@ -46,7 +46,7 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     });
   }
 
-  public applyFormatColumnFormats(): void {
+  public applyFormatColumnDisplayFormats(): void {
     this.adaptable.applyFormatColumnFormats();
   }
 

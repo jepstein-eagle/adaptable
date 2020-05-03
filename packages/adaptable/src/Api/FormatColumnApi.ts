@@ -6,7 +6,11 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
  *
  *  [Format Column State](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html) | [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md) | [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/) | [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
  *
- * Format Columns are columns which are given a style that is **always** applied (unlike Conditional Styles where the style is dependent on a rule being met).
+ * Format Columns contain 2 optional properties (both objects):
+ *
+ * - **`Style`** - a visual style that is **always** applied (unlike Conditional Styles where the style is dependent on a rule being met).
+ *
+ * - **`DisplayFormat`** - a format to set the display of numeric and date columns to match custom requirements.
  */
 export interface FormatColumnApi {
   /**
@@ -50,11 +54,16 @@ export interface FormatColumnApi {
   deleteFormatColumn(formatColumn: FormatColumn): void;
 
   /**
-   * Deletes **all** Format Columns in the State
+   * Deletes **all** Format Columns in the Adaptable State
    */
   deleteAllFormatColumn(): void;
 
-  applyFormatColumnFormats(): void;
+  /**
+   * Applies the display format for all Format Columns in the State
+   *
+   * Should rarely be used but available just in case it is necessary for whatever reason
+   */
+  applyFormatColumnDisplayFormats(): void;
 
   /**
    * Opens the Format Column popup screen

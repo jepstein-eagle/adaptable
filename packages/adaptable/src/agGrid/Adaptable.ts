@@ -2605,7 +2605,7 @@ export class Adaptable implements IAdaptable {
     // add any special renderers
     this.addSpecialRendereredColumns();
 
-    this.applyFormatColumnFormats();
+    this.applyFormatColumnDisplayFormats();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -2786,7 +2786,7 @@ export class Adaptable implements IAdaptable {
     };
   }
 
-  public applyFormatColumnFormats(): void {
+  public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
     const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithDisplayFormat();
 
