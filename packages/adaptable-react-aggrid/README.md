@@ -257,7 +257,7 @@ Licences can be purchased individually, for a team (minimum 30 end-users), for a
 
 We can make a trial licence available for a short period of time to allow you to try out AdapTable for yourself.
 
-**Note: The AdapTable licence does not include the underlying grid's licence, so if you plan to use AdapTable with a Grid that requires a commercial licence, you must pay for that separately**
+**Note: The AdapTable licence does not include the underlying grid's licence, so if you plan to use AdapTable with a Grid that requires a commercial licence, you must pay for that separately**.
 
 Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for more information.
 
