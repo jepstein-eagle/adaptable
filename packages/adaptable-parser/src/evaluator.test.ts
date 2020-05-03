@@ -1,6 +1,7 @@
 // @ts-ignore
 import { parse } from './parser';
-import { evalNode } from './evaluator';
+import { evaluate } from './evaluator';
+import { baseFunctions } from './functions';
 
 const context: any = {
   row: {
@@ -11,7 +12,7 @@ const context: any = {
 
 const t = (name: string, input: string, output: any) => {
   test(name, () => {
-    expect(evalNode(parse(input), context)).toEqual(output);
+    expect(evaluate(parse(input), baseFunctions, context)).toEqual(output);
   });
 };
 

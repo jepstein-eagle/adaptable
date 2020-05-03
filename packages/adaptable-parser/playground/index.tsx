@@ -1,9 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-// @ts-ignore
-import { parser } from '../src/parser';
-import { evalNode } from '../src/evaluator';
-import { findPathTo } from '../src/utils';
+import { parse, evaluate, findPathTo, baseFunctions } from '../src';
 import {
   ThemeProvider,
   ColorModeProvider,
@@ -24,7 +21,54 @@ import {
   ButtonGroup,
   Divider,
   ButtonProps,
+  Input,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverBody,
+  Flex,
 } from '@chakra-ui/core';
+import { FunctionMap } from '../src/types';
+
+const functions: FunctionMap = {
+  MIN: {
+    handler(args) {
+      return Math.min(...args);
+    },
+    docs: [{ type: 'code', content: 'min(...number): number' }],
+  },
+  MAX: {
+    handler(args) {
+      return Math.max(...args);
+    },
+    docs: [{ type: 'code', content: 'max(...number): number' }],
+  },
+  AVG: {
+    handler(args) {
+      if (args.length === 0) return 0;
+      return args.reduce((a, b) => a + b) / args.length;
+    },
+    docs: [{ type: 'code', content: 'avg(...number): number' }],
+  },
+  BETWEEN: {
+    handler([input, lower, upper]) {
+      if (typeof input !== 'number') throw Error('arg 1 should be a number');
+      return input >= lower && input <= upper;
+    },
+    docs: [
+      {
+        type: 'code',
+        content:
+          'between(input: number, lower: number, upper: number): boolean',
+      },
+      {
+        type: 'paragraph',
+        content: 'description',
+      },
+    ],
+  },
+  ...baseFunctions,
+};
 
 function useSelectionRange<
   T extends HTMLInputElement | HTMLTextAreaElement
@@ -51,13 +95,12 @@ function useSelectionRange<
   return [refCallback, range[0], range[1]];
 }
 
-const functionNames = ['SUM', 'MIN', 'MAX', 'SQRT', 'YEAR', 'MONTH', 'DAY'];
-
 const dragImage = new Image(0, 0);
 dragImage.src =
   'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
 
 function App() {
+  const initialFocusRef = useRef();
   const textAreaRef = useRef<HTMLTextAreaElement>();
   const [
     textAreaRefCallback,
@@ -67,27 +110,21 @@ function App() {
   const cursor = selectionStart === selectionEnd ? selectionStart : null;
 
   const [expr, setExpr] = useState('1 + COL("Ask")');
-  const [columns, setColumns] = useState(
-    JSON.stringify(
-      {
-        Country: 'France',
-        Price: 10,
-        Bid: 15.5,
-        Ask: 23.21,
-        IsLive: true,
-      },
-      null,
-      2
-    )
-  );
-  const columnNames = Object.keys(JSON.parse(columns));
-  let ast, result, error, path, row;
+  const [row, setRow] = useState({
+    Country: 'France',
+    Price: 10,
+    Bid: 15.5,
+    Ask: 23.21,
+    IsLive: true,
+  });
+  const [searchColumns, setSearchColumns] = useState('');
+  const [searchFunctions, setSearchFunctions] = useState('');
+  let ast, result, error, path;
 
   try {
-    ast = parser.parse(expr);
+    ast = parse(expr);
     path = findPathTo(ast, cursor);
-    row = JSON.parse(columns);
-    result = evalNode(ast, { row });
+    result = evaluate(ast, functions, { row });
   } catch (e) {
     error = e;
   }
@@ -108,6 +145,7 @@ function App() {
       key={key}
       draggable={true}
       onDragStart={event => {
+        document.getSelection().empty();
         event.dataTransfer.setData('text', text);
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }}
@@ -152,6 +190,38 @@ function App() {
               {smartButton({ label: '<=' })}
               {smartButton({ label: '>=' })}
             </ButtonGroup>
+            <Box flex={1} />
+            <Popover initialFocusRef={initialFocusRef} placement="bottom-end">
+              <PopoverTrigger>
+                <Button size="sm">Functions</Button>
+              </PopoverTrigger>
+              <PopoverContent zIndex={4} width={200}>
+                <PopoverBody maxHeight={300} overflowY="auto" p={2}>
+                  <Input
+                    ref={initialFocusRef}
+                    size="sm"
+                    placeholder="Functions"
+                    value={searchFunctions}
+                    onChange={e => setSearchFunctions(e.target.value)}
+                  />
+                  {Object.keys(functions)
+                    .filter(
+                      f =>
+                        f
+                          .toLowerCase()
+                          .indexOf(searchFunctions.toLowerCase()) !== -1
+                    )
+                    .map((functionName, index) =>
+                      smartButton({
+                        label: functionName,
+                        text: `${functionName}()`,
+                        key: index,
+                        props: { isFullWidth: true, justifyContent: 'start' },
+                      })
+                    )}
+                </PopoverBody>
+              </PopoverContent>
+            </Popover>
           </Stack>
           <Textarea
             ref={node => {
@@ -168,48 +238,58 @@ function App() {
 
           {path && path.length ? (
             <Box backgroundColor="gray.600" mt={5} p={2}>
-              {path[0].type === 'ADD' && (
-                <Stack spacing={1}>
-                  <Code display="block">
-                    add(arg1: number, arg1: number): number
-                  </Code>
-                  <Text>Documentation for this function</Text>
-                </Stack>
-              )}
-              {path[0].type === 'COL' && (
-                <Stack spacing={1}>
-                  <Code display="block">col(name: string): any</Code>
-                  <Text>Documentation for this function</Text>
-                </Stack>
+              {functions[path[0].type] && functions[path[0].type].docs ? (
+                functions[path[0].type].docs.map((doc, index) =>
+                  doc.type === 'code' ? (
+                    <code key={index}>
+                      <pre>{doc.content}</pre>
+                    </code>
+                  ) : doc.type === 'paragraph' ? (
+                    <p key={index}>{doc.content}</p>
+                  ) : null
+                )
+              ) : (
+                <p>
+                  No docs for <b>{path[0].type}</b>
+                </p>
               )}
             </Box>
           ) : null}
         </Box>
-        <Box width={160}>
-          <Text fontSize="lg" fontWeight="bold" mb={1} px={2} py={1}>
-            Columns
-          </Text>
-          {columnNames.map((column, index) =>
-            smartButton({
-              label: column,
-              text: `COL("${column}")`,
-              key: index,
-              props: { isFullWidth: true, justifyContent: 'start', mb: 1 },
-            })
-          )}
-        </Box>
-        <Box width={120}>
-          <Text fontSize="lg" fontWeight="bold" mb={1} px={2} py={1}>
-            Functions
-          </Text>
-          {functionNames.map((functionName, index) =>
-            smartButton({
-              label: functionName,
-              text: `${functionName}()`,
-              key: index,
-              props: { isFullWidth: true, justifyContent: 'start', mb: 1 },
-            })
-          )}
+        <Box width={220} height={300} overflowY="auto">
+          <Input
+            size="sm"
+            mb={2}
+            placeholder="Columns"
+            value={searchColumns}
+            onChange={e => setSearchColumns(e.target.value)}
+          />
+          {Object.keys(row)
+            .filter(
+              c => c.toLowerCase().indexOf(searchColumns.toLowerCase()) !== -1
+            )
+            .map((column, index) => (
+              <Flex key={index} direction="row">
+                {smartButton({
+                  label: column,
+                  text: `COL("${column}")`,
+                  // key: index,
+                  props: {
+                    isFullWidth: true,
+                    justifyContent: 'start',
+                    flex: 1,
+                    borderRadius: 0,
+                  },
+                })}
+                <Input
+                  size="sm"
+                  flex={1}
+                  borderRadius={0}
+                  value={row[column]}
+                  onChange={e => setRow({ ...row, [column]: e.target.value })}
+                />
+              </Flex>
+            ))}
         </Box>
       </Stack>
 
@@ -219,7 +299,6 @@ function App() {
         <TabList>
           <Tab>Evaluator</Tab>
           <Tab>Parser</Tab>
-          <Tab>Context</Tab>
         </TabList>
         <TabPanels>
           <TabPanel>
@@ -239,16 +318,6 @@ function App() {
             <Code display="block" p={2} fontSize="sm">
               <pre>{ast && JSON.stringify(ast, null, 2)}</pre>
             </Code>
-          </TabPanel>
-          <TabPanel>
-            <Textarea
-              value={columns}
-              onChange={e => setColumns(e.target.value)}
-              height={150}
-              fontFamily="mono"
-              fontSize="sm"
-              p={2}
-            />
           </TabPanel>
         </TabPanels>
       </Tabs>

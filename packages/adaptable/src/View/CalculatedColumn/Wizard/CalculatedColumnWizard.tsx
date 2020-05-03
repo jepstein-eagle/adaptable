@@ -24,19 +24,19 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
           Columns={this.props.Columns}
           Steps={[
             {
-              StepName: 'Settings',
-              Index: 0,
-              Element: <CalculatedColumnSettingsWizard />,
-            },
-            {
               StepName: 'Expression',
-              Index: 1,
+              Index: 0,
               Element: (
                 <CalculatedColumnExpressionWizard
                   GetErrorMessage={this.props.GetErrorMessage}
                   IsExpressionValid={this.props.IsExpressionValid}
                 />
               ),
+            },
+            {
+              StepName: 'Settings',
+              Index: 1,
+              Element: <CalculatedColumnSettingsWizard />,
             },
             {
               StepName: 'Summary',

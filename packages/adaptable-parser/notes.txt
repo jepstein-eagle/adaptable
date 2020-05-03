@@ -1,15 +1,17 @@
+
+
 [x] improve selection (global event listener)
 [x] drag and drop to insert text
-[ ] improve text insert (maybe create a formater/stringifier)
+[-] improve text insert (maybe create a formater/stringifier)
 [x] single quotes
 [x] lowercase functions
 [x] number with dot
-trim empty lines start/end
-min, max, avg, sum
-vars
-or as function
-between
-year of date
+[x] min, max, avg, sum
+[-] OR/AND as function
+[x] between
+[ ] trim empty lines start/end
+[ ] year of date
+[ ] vars
 
 
 {
