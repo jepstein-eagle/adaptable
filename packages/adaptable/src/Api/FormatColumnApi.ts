@@ -4,7 +4,11 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
 /**
  * Provides full and comprehensive run-time access to the Format Column function and associated state.
  *
- *  [Format Column State](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html) | [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md) | [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/) | [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
+ * ### Further Information
+ * - [Format Column State](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)
+ * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
+ * - [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/)
+ * - [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
  *
  * Format Columns contain 2 optional properties (both objects):
  *

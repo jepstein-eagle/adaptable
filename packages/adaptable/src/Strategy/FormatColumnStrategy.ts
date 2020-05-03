@@ -22,7 +22,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         eventName == FormatColumnRedux.FORMAT_COLUMN_EDIT ||
         eventName == FormatColumnRedux.FORMAT_COLUMN_DELETE
       ) {
-        this.adaptable.applyFormatColumnFormats();
+        this.adaptable.applyFormatColumnDisplayFormats();
         this.adaptable.redraw();
       }
     });

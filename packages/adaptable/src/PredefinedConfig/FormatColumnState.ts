@@ -6,8 +6,11 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
 /**
  *
  *
- *  [Format Column API](_src_api_formatcolumnapi_.formatcolumnapi.html) | [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md) | [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/) | [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
- *
+ * ### Further Information
+ * - [Format Column API](_src_api_formatcolumnapi_.formatcolumnapi.html)
+ * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
+ * - [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/)
+ * - [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
  */
 export interface FormatColumnState extends ConfigState {
   FormatColumns?: FormatColumn[];
