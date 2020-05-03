@@ -47,5 +47,7 @@ No, they are a Design-Time only Function; they can be accessed at Run-Time but n
 
 - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo)
 
+- [Action Column Video](https://youtu.be/y0cDvtdmSKM)
+
 - [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html)
 
