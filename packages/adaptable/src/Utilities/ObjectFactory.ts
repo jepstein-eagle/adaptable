@@ -121,7 +121,23 @@ export function CreateEmptyCategoryChartDefinition(): CategoryChartDefinition {
 }
 
 export function CreateEmptyCalculatedColumn(): CalculatedColumn {
-  return { Uuid: createUuid(), ColumnId: EMPTY_STRING, ColumnExpression: EMPTY_STRING };
+  return {
+    Uuid: createUuid(),
+    ColumnId: EMPTY_STRING,
+    ColumnExpression: EMPTY_STRING,
+    // need to create some defaults - which we will change later
+    /*
+    CalculatedColumnSettings: {
+      DataType: 'String',
+      Filterable: true,
+      Resizable: true,
+      Groupable: true,
+      Sortable: true,
+      Pivotable: true,
+      Aggregatable: true,
+    },
+    */
+  };
 }
 
 export function CreateEmptyPlusMinusRule(): PlusMinusRule {

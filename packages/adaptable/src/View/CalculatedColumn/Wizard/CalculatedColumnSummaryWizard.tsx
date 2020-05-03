@@ -28,6 +28,31 @@ export class CalculatedColumnSummaryWizard
           this.props.Columns
         ),
       },
+      { Key: 'DataType', Value: this.props.Data.CalculatedColumnSettings.DataType },
+      {
+        Key: 'Filterable',
+        Value: this.props.Data.CalculatedColumnSettings.Filterable ? 'True' : 'False',
+      },
+      {
+        Key: 'Resizable',
+        Value: this.props.Data.CalculatedColumnSettings.Resizable ? 'True' : 'False',
+      },
+      {
+        Key: 'Groupable',
+        Value: this.props.Data.CalculatedColumnSettings.Groupable ? 'True' : 'False',
+      },
+      {
+        Key: 'Sortable',
+        Value: this.props.Data.CalculatedColumnSettings.Sortable ? 'True' : 'False',
+      },
+      {
+        Key: 'Pivotable',
+        Value: this.props.Data.CalculatedColumnSettings.Pivotable ? 'True' : 'False',
+      },
+      {
+        Key: 'Aggregatable',
+        Value: this.props.Data.CalculatedColumnSettings.Aggregatable ? 'True' : 'False',
+      },
     ];
 
     return (

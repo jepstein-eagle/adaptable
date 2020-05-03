@@ -45,8 +45,11 @@ export interface CalculatedColumn extends AdaptableObject {
    * The expression (which is not the same as an Adaptable expression) evaluates using the [mathjs library](https://mathjs.org).
    */
   ColumnExpression: string;
+  CalculatedColumnSettings?: CalculatedColumnSettings;
+}
 
-  ColumnType?: DataType;
+export interface CalculatedColumnSettings {
+  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 
   Filterable?: boolean;
 

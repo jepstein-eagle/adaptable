@@ -30,6 +30,10 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
                 <CalculatedColumnExpressionWizard
                   GetErrorMessage={this.props.GetErrorMessage}
                   IsExpressionValid={this.props.IsExpressionValid}
+                  Columns={this.props.Columns}
+                  calculatedColumnExpressionService={
+                    this.props.Adaptable.CalculatedColumnExpressionService
+                  }
                 />
               ),
             },

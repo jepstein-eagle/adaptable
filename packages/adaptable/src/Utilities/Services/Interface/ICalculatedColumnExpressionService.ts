@@ -4,9 +4,7 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 export interface ICalculatedColumnExpressionService {
   IsExpressionValid(expression: string): { IsValid: Boolean; ErrorMsg?: string };
   ComputeExpressionValue(expression: string, record: any): any;
-  GetCalculatedColumnDataType(
-    expression: string
-  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
+  GetCalculatedColumnDataType(expression: string): 'String' | 'Number' | 'Boolean' | 'Date';
   GetColumnListFromExpression(expression: string): string[];
   CleanExpressionColumnNames(expression: string, columns: AdaptableColumn[]): string;
   GetExpressionString(expression: string, columns: AdaptableColumn[]): string;

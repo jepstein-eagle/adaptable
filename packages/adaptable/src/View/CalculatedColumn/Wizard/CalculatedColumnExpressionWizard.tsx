@@ -14,11 +14,16 @@ import Input from '../../../components/Input';
 import { Box } from 'rebass';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import CheckBox from '../../../components/CheckBox';
+import { CalculatedColumnExpressionService } from '../../../Utilities/Services/CalculatedColumnExpressionService';
+import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { AdaptableColumn } from '../../../types';
+import calculatedColumn from '../../../components/icons/calculated-column';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
   IsExpressionValid: (expression: string) => void;
   GetErrorMessage: () => string;
+  calculatedColumnExpressionService: ICalculatedColumnExpressionService;
 }
 export interface CalculatedColumnExpressionWizardState {
   ColumnExpression: string;
@@ -53,6 +58,8 @@ export class CalculatedColumnExpressionWizard
           style={{ width: '100%', height: '100px' }}
         ></Textarea>
         {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
+        {/*  
+      Commenting this out until we have done the new stuff - also should it be inputs or labels?  do we want them to edit?
         <FormLayout>
           {this.props.Columns.map(Column => (
             <FormRow key={Column.ColumnId} label={Column.FriendlyName}>
@@ -71,6 +78,7 @@ export class CalculatedColumnExpressionWizard
             </FormRow>
           ))}
         </FormLayout>
+              */}
       </Box>
     );
   }
@@ -91,8 +99,28 @@ export class CalculatedColumnExpressionWizard
     return true;
   }
   public Next(): void {
+    const hasChanged: boolean = this.props.Data.ColumnExpression != this.state.ColumnExpression;
     this.props.Data.ColumnExpression = this.state.ColumnExpression;
-    this.props.Data.ColumnType = this.props.Data.ColumnType ?? DataType.Number; // hard coded for now
+
+    // if its changed then lets work out the other values based on it
+    if (hasChanged) {
+      // workd out the correct datatype if possible
+      const cleanedExpression: string = this.props.calculatedColumnExpressionService.CleanExpressionColumnNames(
+        this.state.ColumnExpression,
+        this.props.Columns
+      );
+
+      const dataType = this.props.calculatedColumnExpressionService.GetCalculatedColumnDataType(
+        cleanedExpression
+      );
+
+      const pivotable: boolean = dataType == DataType.String;
+      const aggregatable: boolean = dataType == DataType.Number;
+
+      this.props.Data.CalculatedColumnSettings.DataType = dataType;
+      this.props.Data.CalculatedColumnSettings.Pivotable = pivotable;
+      this.props.Data.CalculatedColumnSettings.Aggregatable = aggregatable;
+    }
   }
   public Back(): void {
     //todo

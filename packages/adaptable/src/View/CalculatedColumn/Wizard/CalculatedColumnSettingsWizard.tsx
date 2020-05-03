@@ -6,7 +6,6 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
-import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 import ErrorBox from '../../../components/ErrorBox';
@@ -20,7 +19,7 @@ export interface CalculatedColumnSettingsWizardProps
 export interface CalculatedColumnSettingsWizardState {
   ErrorMessage: string;
   ColumnId: string;
-  ColumnType: DataType;
+  DataType: 'String' | 'Number' | 'Boolean' | 'Date';
   Filterable?: boolean;
   Resizable?: boolean;
   Groupable?: boolean;
@@ -37,13 +36,13 @@ export class CalculatedColumnSettingsWizard
     this.state = {
       ErrorMessage: null,
       ColumnId: this.props.Data.ColumnId,
-      ColumnType: this.props.Data.ColumnType,
-      Filterable: this.props.Data.Filterable,
-      Resizable: this.props.Data.Resizable,
-      Groupable: this.props.Data.Groupable,
-      Sortable: this.props.Data.Sortable,
-      Pivotable: this.props.Data.Pivotable,
-      Aggregatable: this.props.Data.Aggregatable,
+      DataType: this.props.Data.CalculatedColumnSettings.DataType,
+      Filterable: this.props.Data.CalculatedColumnSettings.Filterable,
+      Resizable: this.props.Data.CalculatedColumnSettings.Resizable,
+      Groupable: this.props.Data.CalculatedColumnSettings.Groupable,
+      Sortable: this.props.Data.CalculatedColumnSettings.Sortable,
+      Pivotable: this.props.Data.CalculatedColumnSettings.Pivotable,
+      Aggregatable: this.props.Data.CalculatedColumnSettings.Aggregatable,
     };
   }
   render(): any {
@@ -55,14 +54,14 @@ export class CalculatedColumnSettingsWizard
               value={this.state.ColumnId}
               autoFocus
               type="text"
-              placeholder="Enter a name"
+              placeholder="Enter column name"
               onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
             />
           </FormRow>
           <FormRow label="Column Type">
             <Dropdown
-              value={this.state.ColumnType}
-              onChange={ColumnType => this.setState({ ColumnType })}
+              value={this.state.DataType}
+              onChange={DataType => this.setState({ DataType })}
               options={[
                 { value: DataType.Number, label: DataType.Number },
                 { value: DataType.String, label: DataType.String },
@@ -73,37 +72,37 @@ export class CalculatedColumnSettingsWizard
           </FormRow>
           <FormRow label="Filterable">
             <CheckBox
-              checked={this.state.Filterable ?? true}
+              checked={this.state.Filterable}
               onChange={Filterable => this.setState({ Filterable })}
             />
           </FormRow>
           <FormRow label="Resizable">
             <CheckBox
-              checked={this.state.Resizable ?? true}
+              checked={this.state.Resizable}
               onChange={Resizable => this.setState({ Resizable })}
             />
           </FormRow>
           <FormRow label="Groupable">
             <CheckBox
-              checked={this.state.Groupable ?? true}
+              checked={this.state.Groupable}
               onChange={Groupable => this.setState({ Groupable })}
             />
           </FormRow>
           <FormRow label="Sortable">
             <CheckBox
-              checked={this.state.Sortable ?? true}
+              checked={this.state.Sortable}
               onChange={Sortable => this.setState({ Sortable })}
             />
           </FormRow>
           <FormRow label="Pivotable">
             <CheckBox
-              checked={this.state.Pivotable ?? true}
+              checked={this.state.Pivotable}
               onChange={Pivotable => this.setState({ Pivotable })}
             />
           </FormRow>
           <FormRow label="Aggregatable">
             <CheckBox
-              checked={this.state.Aggregatable ?? true}
+              checked={this.state.Aggregatable}
               onChange={Aggregatable => this.setState({ Aggregatable })}
             />
           </FormRow>
@@ -142,13 +141,14 @@ export class CalculatedColumnSettingsWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.ColumnType = this.state.ColumnType;
-    this.props.Data.Filterable = this.state.Filterable;
-    this.props.Data.Resizable = this.state.Resizable;
-    this.props.Data.Groupable = this.state.Groupable;
-    this.props.Data.Sortable = this.state.Sortable;
-    this.props.Data.Pivotable = this.state.Pivotable;
-    this.props.Data.Aggregatable = this.state.Aggregatable;
+
+    this.props.Data.CalculatedColumnSettings.DataType = this.state.DataType;
+    this.props.Data.CalculatedColumnSettings.Filterable = this.state.Filterable;
+    this.props.Data.CalculatedColumnSettings.Resizable = this.state.Resizable;
+    this.props.Data.CalculatedColumnSettings.Groupable = this.state.Groupable;
+    this.props.Data.CalculatedColumnSettings.Sortable = this.state.Sortable;
+    this.props.Data.CalculatedColumnSettings.Pivotable = this.state.Pivotable;
+    this.props.Data.CalculatedColumnSettings.Aggregatable = this.state.Aggregatable;
   }
   public Back(): void {
     //
