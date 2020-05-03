@@ -13,13 +13,19 @@ There are 3 elements to providing an Action Column definition:
     
     Developers can subscribe to this event and perform any additional logic or functionality that is required.
 
-    The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options
+    The Action Column Predefind Config contains the **name** of the button.  When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
 
 2.  **Render Function**: The `RenderFunction` returns a string giving the full render contents of the Button that should display in the cell.
 
     > If this property is not set, then a regular button will appear in the column with the caption of the ButtonText property. A predicate function to decide if to show the Action Column
 
+     The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options
+
+
 3.  **Should Render Predicate**: The `ShouldRenderPredicate` function returns a boolean value indicating whether the Action Column should display a button.
+
+    The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options
+
 
 ## UI Elements
 None at present - it is provided only at design-time in Adaptable State

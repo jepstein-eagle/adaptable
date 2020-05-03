@@ -7,7 +7,11 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * An [Action Column](_src_predefinedconfig_actioncolumnstate_.actioncolumn.html) is a special column which dynamically displays a button.
  *
- * You are able, optionally, to specify for each row, if and how the button will render.
+ * In the Action Column Predefined Config 2 optional functions can be referenced (with the implementations provided in in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options).
+ *
+ * - *RenderFunction*: provides details of what the button will look like.  If not provided then a standard button is shown
+ *
+ *  - *ShouldRenderPredicate*: a function which will evaluate for each row if the button should be rendered
  *
  * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *

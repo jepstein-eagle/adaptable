@@ -246,13 +246,6 @@ export interface AdaptableOptions {
   stateOptions?: StateOptions;
 
   /**
-   * Options for managing the User Interface elements of AdapTable.
-   *
-   * Includes options for themes, menus, tool panels etc.
-   */
-  userInterfaceOptions?: UserInterfaceOptions;
-
-  /**
    * Options for managing 'Team Sharing'
    *
    * This allows users to create Adaptable Objects and share with colleagues
@@ -265,6 +258,13 @@ export interface AdaptableOptions {
    *
    */
   teamSharingOptions?: TeamSharingOptions;
+
+  /**
+   * Options for managing the User Interface elements of AdapTable.
+   *
+   * Includes options for themes, menus, tool panels etc.
+   */
+  userInterfaceOptions?: UserInterfaceOptions;
 
   /**
    * Used for managing the AdapTable Plugins.
