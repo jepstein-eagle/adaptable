@@ -3,6 +3,8 @@ import { SharedEntity } from '../PredefinedConfig/TeamSharingState';
 /**
  * Options for managing **Team Sharing** where Adaptable Objects can be shared between colleagues.
  *
+ * [Demo Site](https://demo.adaptabletools.com/admin/aggridteamsharingdemo) | [Team Sharing Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-team-sharing-guide.md) | [Team Sharing Video](https://youtu.be/bPb1PQtyjlQ)
+ *
  * Includes 2 functions
  *
  * - *getSharedEntities*: retrieves any available Shared Entities for the user to download
