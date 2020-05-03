@@ -4,6 +4,8 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
 /**
  * Provides full and comprehensive run-time access to the Format Column function and associated state.
  *
+ *  [Format Column State](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html) | [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md) | [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/) | [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
+ *
  * Format Columns are columns which are given a style that is **always** applied (unlike Conditional Styles where the style is dependent on a rule being met).
  */
 export interface FormatColumnApi {
@@ -13,13 +15,19 @@ export interface FormatColumnApi {
   getFormatColumnState(): FormatColumnState;
 
   /**
-   * Gets all Format Columns in Adaptable State
+   * Retrieves all Format Columns in Adaptable State
    */
   getAllFormatColumn(): FormatColumn[];
 
+  /**
+   * Retrieves all Format Columns in Adaptable State which have the `Style` property set
+   */
   getAllFormatColumnWithStyle(): FormatColumn[];
 
-  getAllFormatColumnWithColumnFormat(): FormatColumn[];
+  /**
+   * Retrieves all Format Columns in Adaptable State which have the `DisplayFormat` property set
+   */
+  getAllFormatColumnWithDisplayFormat(): FormatColumn[];
 
   /**
    * Adds a new Format Column

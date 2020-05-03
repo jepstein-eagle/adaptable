@@ -20,7 +20,7 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     return this.getAdaptableState().FormatColumn.FormatColumns.filter(fc => fc.Style != null);
   }
 
-  public getAllFormatColumnWithColumnFormat(): FormatColumn[] {
+  public getAllFormatColumnWithDisplayFormat(): FormatColumn[] {
     return this.getAdaptableState().FormatColumn.FormatColumns.filter(
       fc => fc.DisplayFormat != null
     );
