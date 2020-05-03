@@ -3,7 +3,7 @@ import { SharedEntity } from '../PredefinedConfig/TeamSharingState';
 /**
  * Options for managing **Team Sharing** where Adaptable Objects can be shared between colleagues.
  *
- * [Demo Site](https://demo.adaptabletools.com/admin/aggridteamsharingdemo) | [Team Sharing Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-team-sharing-guide.md) | [Team Sharing Video](https://youtu.be/bPb1PQtyjlQ)
+ * [Team Sharing Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-team-sharing-guide.md) | [Team Sharing Demo](https://demo.adaptabletools.com/admin/aggridteamsharingdemo) | [Team Sharing Video](https://youtu.be/bPb1PQtyjlQ)
  *
  * Team Sharing allows users to share - at run-time - Adaptable Objects between colleagues.
  *
@@ -19,9 +19,9 @@ import { SharedEntity } from '../PredefinedConfig/TeamSharingState';
  *
  * 2. In the Layouts Popup an orange Team Share button will appear in the row for the Layout (if Team Sharing is enabled)
  *
- * 3. After this button is clicked, the Layout will be in the Team Sharing collection (available for download by colleagues)
+ * 3. After this button is clicked, the Layout will be in the Team Sharing collection (available for download by the User's colleagues)
  *
- * 4. Any colleague can now open the Team Sharing Popup (which lists all available Adaptable Objects that have been shared) and click to download the Layout created in Step 1.
+ * 4. A colleague opens the Team Sharing Popup (which lists all available Adaptable Objects that have been shared) and clicks to download the Layout created in Step 1.
  *
  * **Team Sharing Functions**
  *
