@@ -51,8 +51,8 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
             this.props.onHide();
           }
         },
-        TeamSharingActivated: AdaptableHelper.isTeamSharingEnabled(
-          this.props.Adaptable.adaptableOptions
+        TeamSharingActivated: this.props.Adaptable.StrategyService.isStrategyAvailable(
+          'TeamSharing'
         ),
         Columns: this.props.Adaptable.api.gridApi.getColumns(),
         UserFilters: this.props.Adaptable.api.userFilterApi.getAllUserFilter(),

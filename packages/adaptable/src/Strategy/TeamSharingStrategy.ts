@@ -11,8 +11,18 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
     super(StrategyConstants.TeamSharingStrategyId, adaptable);
   }
 
+  public isStrategyAvailable(): boolean {
+    return (
+      this.adaptable.api.entitlementsApi.isFunctionFullEntitlement(this.Id) &&
+      this.adaptable.adaptableOptions.teamSharingOptions &&
+      this.adaptable.adaptableOptions.teamSharingOptions.enableTeamSharing &&
+      !!this.adaptable.adaptableOptions.teamSharingOptions.getSharedEntities &&
+      !!this.adaptable.adaptableOptions.teamSharingOptions.setSharedEntities
+    );
+  }
+
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (AdaptableHelper.isTeamSharingEnabled(this.adaptable.adaptableOptions)) {
+    if (this.isStrategyAvailable()) {
       if (this.canCreateMenuItem('ReadOnly')) {
         return this.createMainMenuItemShowPopup({
           Label: StrategyConstants.TeamSharingStrategyFriendlyName,
