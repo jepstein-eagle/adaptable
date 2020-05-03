@@ -62,7 +62,7 @@ Team Sharing is only available if the `enableTeamSharing` property is set to tru
 
 No.  Team Sharing is designed to be used only for instances that share a single `AdaptableId`; e.g. all users of a CDS Pricer can share the same Report but it cannot also be used in a Bond Matrix Pricer.
 
-### Further Information
+## Further Information
 - [Team Sharing Demo](https://demo.adaptabletools.com/admin/aggridteamsharingdemo)
 
 - [Team Sharing Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html)
@@ -79,7 +79,7 @@ The other source for Help is our collection of 'Read Me' Docs ([full list here](
 
 General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
 
-Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/) to see a number of AdapTable.
+Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/) to see a number of AdapTable demos each illustrating a different function.
 
 ## Support
 
