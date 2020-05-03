@@ -75,7 +75,14 @@ The other source for Help is our collection of 'Read Me' Docs ([full list here](
 
 > Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
 
-## More Information
+### Further Information
+- [Team Sharing Demo](https://demo.adaptabletools.com/admin/aggridteamsharingdemo)
+
+- [Team Sharing Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_teamsharingoptions_.teamsharingoptions.html)
+
+- [Team Sharing Video](https://youtu.be/bPb1PQtyjlQ)
+
+## General Information
 
 General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
 
