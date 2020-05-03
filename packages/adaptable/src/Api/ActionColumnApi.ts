@@ -1,7 +1,11 @@
 import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColumnState';
 
 /**
- * Provides full and comprehensive run-time access to the Action Column function and associated state.
+ * Provides run-time access to the Action Column function and associated state.
+ *
+ * The Action Column Function enables the creation of special columns that contain buttons together with a function that is called when the button is clicked by the user.
+ *
+ * --------------
  *
  *  **Further AdapTable Help Resources**
  *
@@ -10,6 +14,10 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  * - [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
  *
  * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
+ *
+ * - [Action Column Video](https://youtu.be/y0cDvtdmSKM)
+ *
+ * --------------
  *
  */
 export interface ActionColumnApi {

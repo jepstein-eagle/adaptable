@@ -12,11 +12,15 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
  *
  * - **`DisplayFormat`** - a format to set the display of numeric and date columns to match custom requirements.
  *
+ * --------------
+ *
  * ### Further Information
  * - [Format Column API](_src_api_formatcolumnapi_.formatcolumnapi.html)
  * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
  * - [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/)
  * - [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
+ *
+ * --------------
  *
  * ### Format Column Predefined Config Example
  *

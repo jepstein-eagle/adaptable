@@ -11,7 +11,7 @@ import { AdaptableFunctionName } from '../types';
  *
  * To share an item click the share button that appears at the end of the row and this will put the Adaptable Object into a storage location where it can then be downloaded by other team members via the Team Sharing popup.
  *
- * **Note**: This section is **Internal State** and is not saved into the User's state
+ * **Note**: This section is **Internal State** - that means it is NOT provided in Predefined Config and it is not saved into the User's state
  */
 export interface TeamSharingState extends InternalState {
   SharedEntities: SharedEntity[];

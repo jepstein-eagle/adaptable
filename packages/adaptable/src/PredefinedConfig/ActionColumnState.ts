@@ -13,9 +13,15 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  --------------
  *
- * **Further AdapTable Help Resources**
+ *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/) | [API](_src_api_actioncolumnapi_.actioncolumnapi.html) | [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
+ * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
+ *
+ * - [Action Column API](_src_api_actioncolumnapi_.actioncolumnapi.html)
+ *
+ * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
+ *
+ * - [Action Column Video](https://youtu.be/y0cDvtdmSKM)
  *
  *  --------------
  *
