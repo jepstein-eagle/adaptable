@@ -25,6 +25,8 @@
     "@glue42/desktop": "^4.6.3",
     "@glue42/office": "^1.5.1",
     "ipushpull-js": "^2.19.3",
+    "moment": "^2.24.0",
+    "moment-timezone": "^0.5.28",
     "next": "^9.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
