@@ -26,6 +26,12 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     );
   }
 
+  public getAllFormatColumnWithCellAlignment(): FormatColumn[] {
+    return this.getAdaptableState().FormatColumn.FormatColumns.filter(
+      fc => fc.CellAlignment != null
+    );
+  }
+
   public addFormatColumn(column: string, style: AdaptableStyle): void {
     let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));

@@ -41,6 +41,11 @@ export interface FormatColumnApi {
   getAllFormatColumnWithDisplayFormat(): FormatColumn[];
 
   /**
+   * Retrieves all Format Columns in Adaptable State which have the `CellAlignment` property set
+   */
+  getAllFormatColumnWithCellAlignment(): FormatColumn[];
+
+  /**
    * Adds a new Format Column
    * @param column The column to apply the Style to
    * @param style The Style to apply - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)

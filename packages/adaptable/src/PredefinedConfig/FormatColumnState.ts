@@ -134,4 +134,6 @@ export interface FormatColumn extends AdaptableObject {
    * Only available for Numeric and Date columns.
    */
   DisplayFormat?: AdaptableFormat;
+
+  CellAlignment?: 'Left' | 'Right' | 'Center';
 }

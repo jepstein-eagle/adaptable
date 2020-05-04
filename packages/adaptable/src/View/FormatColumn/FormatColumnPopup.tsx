@@ -203,11 +203,13 @@ class FormatColumnPopupComponent extends React.Component<
       return false;
     }
 
-    // cannot complete if its an empty style and no format
+    // cannot complete if its an empty style and no format and no alignment
+    // you need at least one
     if (
       formatColumn.Style &&
       UIHelper.IsEmptyStyle(formatColumn.Style) &&
-      formatColumn.DisplayFormat === undefined
+      formatColumn.DisplayFormat === undefined &&
+      formatColumn.CellAlignment == undefined
     ) {
       return false;
     }

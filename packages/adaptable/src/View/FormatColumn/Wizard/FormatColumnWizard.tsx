@@ -7,6 +7,7 @@ import { FormatColumnSummaryWizard } from './FormatColumnSummaryWizard';
 import { FormatColumnFormatWizard } from './FormatColumnFormatWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { FormatColumnAlignmentWizard } from './FormatColumnAlignmentWizard';
 
 export interface FormatColumnWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
@@ -45,8 +46,13 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
               Element: <FormatColumnFormatWizard />,
             },
             {
-              StepName: 'Summary',
+              StepName: 'Cell Alignment',
               Index: 3,
+              Element: <FormatColumnAlignmentWizard />,
+            },
+            {
+              StepName: 'Summary',
+              Index: 4,
               Element: <FormatColumnSummaryWizard />,
             },
           ]}

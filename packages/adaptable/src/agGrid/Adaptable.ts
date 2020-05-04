@@ -160,6 +160,7 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
+import { format } from 'date-fns';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2788,7 +2789,9 @@ export class Adaptable implements IAdaptable {
 
   public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
-    const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithDisplayFormat();
+    const formatColumns: FormatColumn[] = this.api.formatColumnApi
+      .getAllFormatColumnWithDisplayFormat()
+      .concat(this.api.formatColumnApi.getAllFormatColumnWithCellAlignment());
 
     const cols = this.gridOptions.columnApi.getAllColumns();
 
@@ -2808,17 +2811,32 @@ export class Adaptable implements IAdaptable {
         return;
       }
 
-      if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
-        const options = formatColumn.DisplayFormat.Options;
-        colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+      if (formatColumn.DisplayFormat) {
+        if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
+          const options = formatColumn.DisplayFormat.Options;
+          colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+        }
+
+        if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
+          const options = formatColumn.DisplayFormat.Options;
+          colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+        }
       }
 
-      if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
-        const options = formatColumn.DisplayFormat.Options;
-        colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+      // update the alignment if it has been set
+      if (formatColumn.CellAlignment != null) {
+        switch (formatColumn.CellAlignment) {
+          case 'Left':
+            colDef.cellClass = 'ab-cell--align-left';
+            break;
+          case 'Right':
+            colDef.cellClass = 'ab-cell--align-right';
+            break;
+          case 'Center':
+            colDef.cellClass = 'ab-cell--align-center';
+            break;
+        }
       }
-
-      this.gridOptions.columnApi.autoSizeColumn(colDef.field);
     });
   }
 
