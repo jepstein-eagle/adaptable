@@ -96,7 +96,7 @@ export interface FormatColumnApi {
   /**
    * Sets the Cell Alignment for a given Column
    *
-   * Creates (or updates) the Format Column for the given Column
+   * It does this by creating a new (or updating an existing) Format Column for the given Column
    *
    * @param columnId the column to align cell contents
    * @param cellAlignment the cell alignment to set
