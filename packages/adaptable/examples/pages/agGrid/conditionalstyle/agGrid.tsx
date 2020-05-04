@@ -7,8 +7,8 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
-import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
+import { GridOptions, ColDef } from '@ag-grid-community/all-modules';
+
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions } from '../../../../src/types';
 
@@ -17,19 +17,19 @@ import config from './config';
 import jsonData from './dataset.json';
 import { PredefinedConfig } from '../../../../types';
 
-LicenseManager.setLicenseKey(process.env.AG_GRID_LICENSE!);
-
 const getBasicNorthwindColumnSchema = (): any[] => {
   var schema = [];
-  schema.push({
+  const colDef: ColDef = {
     headerName: 'Order Id',
     field: 'OrderId',
     editable: true,
-    cellClass: 'number-cell',
+    cellClass: 'ab-cell--align-center',
+
     filter: true,
     sortable: true,
     type: 'abColDefNumber',
-  });
+  };
+  schema.push(colDef);
   schema.push({
     headerName: 'Cust. Ref',
     field: 'CustomerReference',
