@@ -5,7 +5,7 @@ import { FormatColumnApi } from '../FormatColumnApi';
 import { FormatColumnState, FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import ObjectFactory from '../../Utilities/ObjectFactory';
 
 export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
   public getFormatColumnState(): FormatColumnState {
@@ -32,14 +32,42 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     );
   }
 
-  public addFormatColumn(column: string, style: AdaptableStyle): void {
+  public addFormatColumn(formatColumn: FormatColumn): void {
+    this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));
+  }
+
+  public editFormatColumn(formatColumn: FormatColumn): void {
+    this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
+  }
+
+  public addFormatColumnStyle(column: string, style: AdaptableStyle): void {
     let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));
   }
 
-  public updateFormatColumn(column: string, style: AdaptableStyle): void {
+  public updateFormatColumnStyle(column: string, style: AdaptableStyle): void {
     let formatColumn: FormatColumn = { ColumnId: column, Style: style };
     this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
+  }
+
+  public setFormatColumnStylet(columnId: string, style: AdaptableStyle): void {
+    let formatColumn: FormatColumn = this.getAllFormatColumn().find(fc => fc.ColumnId == columnId);
+    if (formatColumn) {
+      this.addFormatColumnStyle(columnId, style);
+    } else {
+      this.updateFormatColumnStyle(columnId, style);
+    }
+  }
+
+  public setCellAlignment(columnId: string, cellAlignment: 'Left' | 'Right' | 'Center'): void {
+    let formatColumn: FormatColumn = this.getAllFormatColumn().find(fc => fc.ColumnId == columnId);
+    if (formatColumn) {
+      formatColumn.CellAlignment = cellAlignment;
+      this.editFormatColumn(formatColumn);
+    } else {
+      formatColumn = { ColumnId: columnId, CellAlignment: cellAlignment };
+      this.addFormatColumn(formatColumn);
+    }
   }
 
   public deleteFormatColumn(formatColumn: FormatColumn): void {

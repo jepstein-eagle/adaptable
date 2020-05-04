@@ -469,6 +469,7 @@ export function CreateEmptyFormatColumn(): FormatColumn {
     ColumnId: EMPTY_STRING,
     Style: CreateEmptyStyle(),
     DisplayFormat: undefined,
+    CellAlignment: undefined,
   };
 }
 
