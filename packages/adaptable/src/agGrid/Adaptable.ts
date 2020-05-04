@@ -1650,18 +1650,12 @@ export class Adaptable implements IAdaptable {
     const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
     const existingABColumn: AdaptableColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
 
-    let cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
-      calculatedColumn.ColumnExpression,
-      cols
-    );
-
-    const dataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
-      cleanedExpression
-    );
-
-    let agGridDataType: string = dataType == DataType.Number ? 'abColDefNumber' : 'abColDefString';
-
     if (existingABColumn) {
+      let cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
+        calculatedColumn.ColumnExpression,
+        cols
+      );
+
       // now get the ag-Grid ColDef Index
       const colDefs: ColDef[] = this.mapColumnDefs((colDef: ColDef) => {
         if (colDef.headerName === existingABColumn.ColumnId) {
@@ -1670,22 +1664,40 @@ export class Adaptable implements IAdaptable {
           const newColDef: ColDef = { ...colDef };
           //  change the value getter in the coldefs
           newColDef.valueGetter = (params: ValueGetterParams) =>
-            Helper.RoundValueIfNumeric(
-              this.CalculatedColumnExpressionService.ComputeExpressionValue(
-                cleanedExpression,
-                params.node
-              ),
-              4
+            this.CalculatedColumnExpressionService.ComputeExpressionValue(
+              cleanedExpression,
+              params.node
             );
-          newColDef.type = agGridDataType;
+          newColDef.type = this.agGridHelper.getAgGridDataType(
+            calculatedColumn.CalculatedColumnSettings.DataType as DataType
+          );
+
+          // reset other value in case they have changed
+          newColDef.enableValue = calculatedColumn.CalculatedColumnSettings.Aggregatable;
+          newColDef.filter = calculatedColumn.CalculatedColumnSettings.Filterable;
+          newColDef.resizable = calculatedColumn.CalculatedColumnSettings.Resizable;
+          newColDef.enableRowGroup = calculatedColumn.CalculatedColumnSettings.Groupable;
+          newColDef.sortable = calculatedColumn.CalculatedColumnSettings.Sortable;
+          newColDef.enablePivot = calculatedColumn.CalculatedColumnSettings.Pivotable;
 
           // reset the name in case its changed
           newColDef.headerName = calculatedColumn.ColumnId;
           newColDef.colId = calculatedColumn.ColumnId;
 
+          // finally the name of the column or the datatype might have changed so lets update the column in the store to be sure
+          // re-apply the datatype in case it has been changed as a result of the expression changing
+          existingABColumn.ColumnId = calculatedColumn.ColumnId;
+          existingABColumn.DataType = calculatedColumn.CalculatedColumnSettings.DataType;
+          existingABColumn.Aggregatable = this.agGridHelper.isColumnAggregetable(newColDef);
+          existingABColumn.Filterable = this.agGridHelper.isColumnFilterable(newColDef);
+          existingABColumn.Groupable = this.agGridHelper.isColumnGroupable(newColDef);
+          existingABColumn.Pivotable = this.agGridHelper.isColumnPivotable(newColDef);
+          existingABColumn.Sortable = this.agGridHelper.isColumnSortable(newColDef);
+          existingABColumn.ReadOnly = this.agGridHelper.isColumnReadonly(newColDef);
+          this.api.internalApi.addAdaptableColumn(existingABColumn);
+
           return newColDef;
         }
-
         return colDef;
       });
 
@@ -1710,12 +1722,6 @@ export class Adaptable implements IAdaptable {
         }
         childrenColumnList.push(calculatedColumn.ColumnId);
       }
-
-      // finally the name of the column or the datatype might have changed so lets update the column in the store to be sure
-      // re-apply the datatype in case it has been changed as a result of the expression changing
-      existingABColumn.ColumnId = calculatedColumn.ColumnId;
-      existingABColumn.DataType = dataType;
-      this.api.internalApi.addAdaptableColumn(existingABColumn);
     }
     this.postSpecialColumnEditDelete(true);
   }
@@ -1742,7 +1748,6 @@ export class Adaptable implements IAdaptable {
         columnList.splice(index, 1);
       }
     }
-
     this.postSpecialColumnEditDelete(true);
   }
 
@@ -1755,37 +1760,30 @@ export class Adaptable implements IAdaptable {
       cols
     );
 
-    const dataType = this.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
-      cleanedExpression
-    );
-
-    let agGridDataType: string = dataType == DataType.Number ? 'abColDefNumber' : 'abColDefString';
-
     const newColDef: ColDef = {
       headerName: calculatedColumn.ColumnId,
       colId: calculatedColumn.ColumnId,
       hide: true,
-      enableValue: dataType == DataType.Number, // makes the column 'summable'
       editable: false,
-      filter: true,
-      resizable: true,
-      enableRowGroup: dataType == DataType.Number, // makes the column 'groupable'
-      sortable: true,
-      enablePivot: dataType == DataType.String,
-      type: agGridDataType,
+      enableValue: calculatedColumn.CalculatedColumnSettings.Aggregatable,
+      filter: calculatedColumn.CalculatedColumnSettings.Filterable,
+      resizable: calculatedColumn.CalculatedColumnSettings.Resizable,
+      enableRowGroup: calculatedColumn.CalculatedColumnSettings.Groupable,
+      sortable: calculatedColumn.CalculatedColumnSettings.Sortable,
+      enablePivot: calculatedColumn.CalculatedColumnSettings.Pivotable,
+      type: this.agGridHelper.getAgGridDataType(
+        calculatedColumn.CalculatedColumnSettings.DataType as DataType
+      ),
       valueGetter: (params: ValueGetterParams) =>
-        Helper.RoundValueIfNumeric(
-          this.CalculatedColumnExpressionService.ComputeExpressionValue(
-            cleanedExpression,
-            params.node
-          ),
-          4
+        this.CalculatedColumnExpressionService.ComputeExpressionValue(
+          cleanedExpression,
+          params.node
         ),
     };
 
-    if (dataType == DataType.Number) {
-      newColDef.cellStyle = { ' text-align': 'right' };
-      // newColDef.type = 'numericColumn'; // dont like this as aligns header also
+    if (calculatedColumn.CalculatedColumnSettings.DataType == DataType.Number) {
+      // don't think we want this
+      //  newColDef.cellStyle = { ' text-align': 'right' };
     }
 
     colDefs.push(newColDef);
@@ -1803,7 +1801,11 @@ export class Adaptable implements IAdaptable {
       childrenColumnList.push(calculatedColumn.ColumnId);
     }
 
-    this.addSpecialColumnToState(calculatedColumn.Uuid, calculatedColumn.ColumnId, dataType);
+    this.addSpecialColumnToState(
+      calculatedColumn.Uuid,
+      calculatedColumn.ColumnId,
+      calculatedColumn.CalculatedColumnSettings.DataType
+    );
   }
 
   public getColumnDefs = (): (ColDef | ColGroupDef)[] => {
@@ -2603,7 +2605,7 @@ export class Adaptable implements IAdaptable {
     // add any special renderers
     this.addSpecialRendereredColumns();
 
-    this.applyFormatColumnFormats();
+    this.applyFormatColumnDisplayFormats();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -2784,9 +2786,9 @@ export class Adaptable implements IAdaptable {
     };
   }
 
-  public applyFormatColumnFormats(): void {
+  public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
-    const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithColumnFormat();
+    const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithDisplayFormat();
 
     const cols = this.gridOptions.columnApi.getAllColumns();
 

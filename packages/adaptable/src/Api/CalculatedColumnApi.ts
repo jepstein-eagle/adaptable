@@ -4,6 +4,7 @@ export interface CalculatedColumnApi {
   getCalculatedColumnState(): CalculatedColumnState;
   getAllCalculatedColumn(): CalculatedColumn[];
   addCalculatedColumn(calculatedColumn: CalculatedColumn): void;
+  editCalculatedColumn(calculatedColumn: CalculatedColumn): void;
   editCalculatedColumnExpression(column: string, columnExpression: string): void;
   deleteCalculatedColumn(column: string): void;
 

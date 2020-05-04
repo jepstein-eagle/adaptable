@@ -139,6 +139,8 @@ import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
 import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
+import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
+import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -3000,18 +3002,20 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             }
 
             //Create all calculated columns before we load the layout
-            middlewareAPI
-              .getState()
-              .CalculatedColumn.CalculatedColumns.forEach((cc: CalculatedColumn) => {
-                adaptable.addCalculatedColumnToGrid(cc);
-              });
+            let calculatedColumnStrategy = <ICalculatedColumnStrategy>(
+              adaptable.strategies.get(StrategyConstants.CalculatedColumnStrategyId)
+            );
+            if (calculatedColumnStrategy) {
+              calculatedColumnStrategy.addCalculatedColumnsToGrid();
+            }
 
             //Create all free text columns before we load the layout
-            middlewareAPI
-              .getState()
-              .FreeTextColumn.FreeTextColumns.forEach((ftc: FreeTextColumn) => {
-                adaptable.addFreeTextColumnToGrid(ftc);
-              });
+            let freeTextColumnStrategy = <IFreeTextColumnStrategy>(
+              adaptable.strategies.get(StrategyConstants.FreeTextColumnStrategyId)
+            );
+            if (freeTextColumnStrategy) {
+              freeTextColumnStrategy.addFreeTextColumnsToGrid();
+            }
 
             //Create any action columns before we load the layout
             adaptable.api.internalApi.displayActionColumns();

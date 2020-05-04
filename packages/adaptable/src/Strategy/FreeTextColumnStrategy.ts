@@ -16,6 +16,12 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
     super(StrategyConstants.FreeTextColumnStrategyId, adaptable);
   }
 
+  public addFreeTextColumnsToGrid(): void {
+    this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn().forEach(ftc => {
+      this.adaptable.addFreeTextColumnToGrid(ftc);
+    });
+  }
+
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({

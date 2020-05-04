@@ -20,7 +20,7 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     return this.getAdaptableState().FormatColumn.FormatColumns.filter(fc => fc.Style != null);
   }
 
-  public getAllFormatColumnWithColumnFormat(): FormatColumn[] {
+  public getAllFormatColumnWithDisplayFormat(): FormatColumn[] {
     return this.getAdaptableState().FormatColumn.FormatColumns.filter(
       fc => fc.DisplayFormat != null
     );
@@ -46,8 +46,8 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     });
   }
 
-  public applyFormatColumnFormats(): void {
-    this.adaptable.applyFormatColumnFormats();
+  public applyFormatColumnDisplayFormats(): void {
+    this.adaptable.applyFormatColumnDisplayFormats();
   }
 
   public showFormatColumnPopup(): void {

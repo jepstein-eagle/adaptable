@@ -9,11 +9,21 @@ import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnStat
 import ErrorBox from '../../../components/ErrorBox';
 import Textarea from '../../../components/Textarea';
 import WizardPanel from '../../../components/WizardPanel';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
+import Input from '../../../components/Input';
+import { Box } from 'rebass';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
+import CheckBox from '../../../components/CheckBox';
+import { CalculatedColumnExpressionService } from '../../../Utilities/Services/CalculatedColumnExpressionService';
+import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { AdaptableColumn } from '../../../types';
+import calculatedColumn from '../../../components/icons/calculated-column';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
   IsExpressionValid: (expression: string) => void;
   GetErrorMessage: () => string;
+  calculatedColumnExpressionService: ICalculatedColumnExpressionService;
 }
 export interface CalculatedColumnExpressionWizardState {
   ColumnExpression: string;
@@ -36,18 +46,40 @@ export class CalculatedColumnExpressionWizard
       ? null
       : 'error';
 
+    const firstRow = this.props.Adaptable.getFirstRowNode().data;
+
     return (
-      <WizardPanel borderRadius="none" border="none">
+      <Box p={2}>
         <Textarea
           value={this.state.ColumnExpression}
           placeholder="Enter expression"
           autoFocus
           onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-          style={{ width: '100%', height: '75%' }}
+          style={{ width: '100%', height: '100px' }}
         ></Textarea>
-
         {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
-      </WizardPanel>
+        {/*  
+      Commenting this out until we have done the new stuff - also should it be inputs or labels?  do we want them to edit?
+        <FormLayout>
+          {this.props.Columns.map(Column => (
+            <FormRow key={Column.ColumnId} label={Column.FriendlyName}>
+              {Column.DataType === 'Number' ? (
+                <Input type="number" defaultValue={firstRow[Column.ColumnId]} />
+              ) : Column.DataType === 'String' ? (
+                <Input type="text" defaultValue={firstRow[Column.ColumnId]} />
+              ) : Column.DataType === 'Date' ? (
+                <Input
+                  type="date"
+                  defaultValue={firstRow[Column.ColumnId].toISOString().substr(0, 10)}
+                />
+              ) : Column.DataType === 'Boolean' ? (
+                <CheckBox defaultChecked={firstRow[Column.ColumnId]} />
+              ) : null}
+            </FormRow>
+          ))}
+        </FormLayout>
+              */}
+      </Box>
     );
   }
 
@@ -67,7 +99,28 @@ export class CalculatedColumnExpressionWizard
     return true;
   }
   public Next(): void {
+    const hasChanged: boolean = this.props.Data.ColumnExpression != this.state.ColumnExpression;
     this.props.Data.ColumnExpression = this.state.ColumnExpression;
+
+    // if its changed then lets work out the other values based on it
+    if (hasChanged) {
+      // workd out the correct datatype if possible
+      const cleanedExpression: string = this.props.calculatedColumnExpressionService.CleanExpressionColumnNames(
+        this.state.ColumnExpression,
+        this.props.Columns
+      );
+
+      const dataType = this.props.calculatedColumnExpressionService.GetCalculatedColumnDataType(
+        cleanedExpression
+      );
+
+      const pivotable: boolean = dataType == DataType.String;
+      const aggregatable: boolean = dataType == DataType.Number;
+
+      this.props.Data.CalculatedColumnSettings.DataType = dataType;
+      this.props.Data.CalculatedColumnSettings.Pivotable = pivotable;
+      this.props.Data.CalculatedColumnSettings.Aggregatable = aggregatable;
+    }
   }
   public Back(): void {
     //todo

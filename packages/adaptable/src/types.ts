@@ -25,6 +25,11 @@ export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo'
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';
+export {
+  AdaptableFormat,
+  NumberFormatterOptions,
+  DateFormatterOptions,
+} from './PredefinedConfig/Common/AdaptableFormat';
 
 // Adaptable Options Objects
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
@@ -40,6 +45,7 @@ export { LayoutOptions } from './AdaptableOptions/LayoutOptions';
 export { QueryOptions } from './AdaptableOptions/QueryOptions';
 export { SearchOptions } from './AdaptableOptions/SearchOptions';
 export { StateOptions } from './AdaptableOptions/StateOptions';
+export { TeamSharingOptions } from './AdaptableOptions/TeamSharingOptions';
 export { UserInterfaceOptions } from './AdaptableOptions/UserInterfaceOptions';
 
 export { AdaptablePersistStateFunction } from './AdaptableOptions/StateOptions';

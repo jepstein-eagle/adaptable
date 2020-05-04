@@ -21,6 +21,10 @@ export class CalculatedColumnApiImpl extends ApiBase implements CalculatedColumn
     this.dispatchAction(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn));
   }
 
+  public editCalculatedColumn(calculatedColumn: CalculatedColumn): void {
+    this.dispatchAction(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn));
+  }
+
   public editCalculatedColumnExpression(column: string, columnExpression: string): void {
     let calcColumn: CalculatedColumn = this.getAllCalculatedColumn().find(
       cc => cc.ColumnId == column

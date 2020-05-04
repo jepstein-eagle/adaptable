@@ -60,8 +60,8 @@ function InitAdaptableDemo() {
       Entitlements: {
         FunctionEntitlements: [
           {
-            FunctionName: 'ColumnChooser',
-            AccessLevel: 'Hidden',
+            FunctionName: 'TeamSharing',
+            AccessLevel: 'Full',
           },
         ],
       },

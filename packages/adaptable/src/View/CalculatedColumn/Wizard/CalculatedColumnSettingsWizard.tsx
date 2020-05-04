@@ -6,16 +6,26 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
-import { Flex, Box, Text } from 'rebass';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 import ErrorBox from '../../../components/ErrorBox';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
+import Dropdown from '../../../components/Dropdown';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
+import CheckBox from '../../../components/CheckBox';
 
 export interface CalculatedColumnSettingsWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {}
 export interface CalculatedColumnSettingsWizardState {
-  ColumnId: string;
   ErrorMessage: string;
+  ColumnId: string;
+  DataType: 'String' | 'Number' | 'Boolean' | 'Date';
+  Filterable?: boolean;
+  Resizable?: boolean;
+  Groupable?: boolean;
+  Sortable?: boolean;
+  Pivotable?: boolean;
+  Aggregatable?: boolean;
 }
 
 export class CalculatedColumnSettingsWizard
@@ -23,25 +33,80 @@ export class CalculatedColumnSettingsWizard
   implements AdaptableWizardStep {
   constructor(props: CalculatedColumnSettingsWizardProps) {
     super(props);
-    this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
+    this.state = {
+      ErrorMessage: null,
+      ColumnId: this.props.Data.ColumnId,
+      DataType: this.props.Data.CalculatedColumnSettings.DataType,
+      Filterable: this.props.Data.CalculatedColumnSettings.Filterable,
+      Resizable: this.props.Data.CalculatedColumnSettings.Resizable,
+      Groupable: this.props.Data.CalculatedColumnSettings.Groupable,
+      Sortable: this.props.Data.CalculatedColumnSettings.Sortable,
+      Pivotable: this.props.Data.CalculatedColumnSettings.Pivotable,
+      Aggregatable: this.props.Data.CalculatedColumnSettings.Aggregatable,
+    };
   }
   render(): any {
     return (
       <WizardPanel>
-        <Flex flexDirection="row" alignItems="center">
-          <Text>Column Name</Text>
-
-          <Box style={{ flex: 1 }} marginLeft={2} marginRight={2}>
+        <FormLayout>
+          <FormRow label="Column Name">
             <Input
-              style={{ width: '100%' }}
               value={this.state.ColumnId}
               autoFocus
               type="text"
-              placeholder="Enter a name"
+              placeholder="Enter column name"
               onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
             />
-          </Box>
-        </Flex>
+          </FormRow>
+          <FormRow label="Column Type">
+            <Dropdown
+              value={this.state.DataType}
+              onChange={DataType => this.setState({ DataType })}
+              options={[
+                { value: DataType.Number, label: DataType.Number },
+                { value: DataType.String, label: DataType.String },
+                { value: DataType.Date, label: DataType.Date },
+                { value: DataType.Boolean, label: DataType.Boolean },
+              ]}
+            />
+          </FormRow>
+          <FormRow label="Filterable">
+            <CheckBox
+              checked={this.state.Filterable}
+              onChange={Filterable => this.setState({ Filterable })}
+            />
+          </FormRow>
+          <FormRow label="Resizable">
+            <CheckBox
+              checked={this.state.Resizable}
+              onChange={Resizable => this.setState({ Resizable })}
+            />
+          </FormRow>
+          <FormRow label="Groupable">
+            <CheckBox
+              checked={this.state.Groupable}
+              onChange={Groupable => this.setState({ Groupable })}
+            />
+          </FormRow>
+          <FormRow label="Sortable">
+            <CheckBox
+              checked={this.state.Sortable}
+              onChange={Sortable => this.setState({ Sortable })}
+            />
+          </FormRow>
+          <FormRow label="Pivotable">
+            <CheckBox
+              checked={this.state.Pivotable}
+              onChange={Pivotable => this.setState({ Pivotable })}
+            />
+          </FormRow>
+          <FormRow label="Aggregatable">
+            <CheckBox
+              checked={this.state.Aggregatable}
+              onChange={Aggregatable => this.setState({ Aggregatable })}
+            />
+          </FormRow>
+        </FormLayout>
         {this.state.ErrorMessage ? (
           <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
         ) : null}
@@ -76,6 +141,14 @@ export class CalculatedColumnSettingsWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
+
+    this.props.Data.CalculatedColumnSettings.DataType = this.state.DataType;
+    this.props.Data.CalculatedColumnSettings.Filterable = this.state.Filterable;
+    this.props.Data.CalculatedColumnSettings.Resizable = this.state.Resizable;
+    this.props.Data.CalculatedColumnSettings.Groupable = this.state.Groupable;
+    this.props.Data.CalculatedColumnSettings.Sortable = this.state.Sortable;
+    this.props.Data.CalculatedColumnSettings.Pivotable = this.state.Pivotable;
+    this.props.Data.CalculatedColumnSettings.Aggregatable = this.state.Aggregatable;
   }
   public Back(): void {
     //

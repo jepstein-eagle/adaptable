@@ -1,5 +1,6 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { DataType } from './Common/Enums';
 
 /**
  * The Predefined Configuration for the Calculated Column function
@@ -44,4 +45,21 @@ export interface CalculatedColumn extends AdaptableObject {
    * The expression (which is not the same as an Adaptable expression) evaluates using the [mathjs library](https://mathjs.org).
    */
   ColumnExpression: string;
+  CalculatedColumnSettings?: CalculatedColumnSettings;
+}
+
+export interface CalculatedColumnSettings {
+  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
+
+  Filterable?: boolean;
+
+  Resizable?: boolean;
+
+  Groupable?: boolean;
+
+  Sortable?: boolean;
+
+  Pivotable?: boolean;
+
+  Aggregatable?: boolean;
 }

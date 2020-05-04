@@ -748,6 +748,26 @@ export class agGridHelper {
     return DataType.Unknown;
   }
 
+  public getAgGridDataType(dataType: DataType): string {
+    switch (dataType) {
+      case DataType.Boolean:
+        return 'abColDefBoolean';
+      case DataType.Date:
+        return 'abColDefDate';
+      case DataType.Number:
+        return 'abColDefNumber';
+      case DataType.NumberArray:
+        return 'abColDefNumberArray';
+      case DataType.Object:
+        return 'abColDefObject';
+      case DataType.String:
+        return 'abColDefString';
+      case DataType.All:
+      case DataType.Unknown:
+        return 'abColDefCustom';
+    }
+  }
+
   public isModulePresent(moduleName: string): boolean {
     let modules: Module[] = ModuleRegistry.getRegisteredModules();
     let moduleNames: string[] = modules.map(m => m.moduleName);

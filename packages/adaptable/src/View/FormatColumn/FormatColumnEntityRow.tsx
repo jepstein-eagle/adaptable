@@ -25,34 +25,41 @@ export class FormatColumnEntityRow extends React.Component<
       formatColumn.ColumnId,
       this.props.Columns
     );
+    if (adaptableColumn) {
+      colItems[0].Content = <EntityRowItem Content={adaptableColumn.FriendlyName} />;
+      colItems[1].Content = (
+        <EntityRowItem
+          Content={
+            formatColumn.Style == null || UIHelper.IsEmptyStyle(formatColumn.Style) ? (
+              '[None]'
+            ) : (
+              <StyleVisualItem Style={formatColumn.Style} />
+            )
+          }
+        />
+      );
+      colItems[2].Content = (
+        <EntityRowItem Content={this.showFormatExample(formatColumn, adaptableColumn)} />
+      );
+      colItems[3].Content = (
+        <EntityListActionButtons
+          editClick={() => this.props.onEdit(formatColumn)}
+          showShare={this.props.TeamSharingActivated}
+          shareClick={(description: string) => this.props.onShare(description)}
+          ConfirmDeleteAction={this.props.onDeleteConfirm}
+          EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
+          AccessLevel={this.props.AccessLevel}
+        />
+      );
 
-    colItems[0].Content = <EntityRowItem Content={adaptableColumn.FriendlyName} />;
-    colItems[1].Content = (
-      <EntityRowItem
-        Content={
-          formatColumn.Style == null || UIHelper.IsEmptyStyle(formatColumn.Style) ? (
-            '[None]'
-          ) : (
-            <StyleVisualItem Style={formatColumn.Style} />
-          )
-        }
-      />
-    );
-    colItems[2].Content = (
-      <EntityRowItem Content={this.showFormatExample(formatColumn, adaptableColumn)} />
-    );
-    colItems[3].Content = (
-      <EntityListActionButtons
-        editClick={() => this.props.onEdit(formatColumn)}
-        showShare={this.props.TeamSharingActivated}
-        shareClick={(description: string) => this.props.onShare(description)}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
-      />
-    );
-
-    return <AdaptableObjectRow colItems={colItems} />;
+      return <AdaptableObjectRow colItems={colItems} />;
+    } else {
+      colItems[0].Content = formatColumn.ColumnId;
+      colItems[1].Content = 'Column Not Found';
+      colItems[2].Content = 'Column Not Found';
+      colItems[3].Content = '';
+      return <AdaptableObjectRow colItems={colItems} />;
+    }
   }
 
   private showFormatExample(

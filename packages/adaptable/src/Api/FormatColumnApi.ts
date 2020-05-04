@@ -4,7 +4,20 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
 /**
  * Provides full and comprehensive run-time access to the Format Column function and associated state.
  *
- * Format Columns are columns which are given a style that is **always** applied (unlike Conditional Styles where the style is dependent on a rule being met).
+ * Includes functions for retrieving, adding, editing and deleting Format Columns.
+ *
+ * A Format Column is a column that is given a specific `Style` or `DisplayFormat` that is always rendered.
+ *
+ * --------------
+ *
+ * ### Further Information
+ * - [Format Column State](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)
+ * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
+ * - [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/)
+ * - [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
+ *
+ * --------------
+ *
  */
 export interface FormatColumnApi {
   /**
@@ -13,13 +26,19 @@ export interface FormatColumnApi {
   getFormatColumnState(): FormatColumnState;
 
   /**
-   * Gets all Format Columns in Adaptable State
+   * Retrieves all Format Columns in Adaptable State
    */
   getAllFormatColumn(): FormatColumn[];
 
+  /**
+   * Retrieves all Format Columns in Adaptable State which have the `Style` property set
+   */
   getAllFormatColumnWithStyle(): FormatColumn[];
 
-  getAllFormatColumnWithColumnFormat(): FormatColumn[];
+  /**
+   * Retrieves all Format Columns in Adaptable State which have the `DisplayFormat` property set
+   */
+  getAllFormatColumnWithDisplayFormat(): FormatColumn[];
 
   /**
    * Adds a new Format Column
@@ -42,11 +61,16 @@ export interface FormatColumnApi {
   deleteFormatColumn(formatColumn: FormatColumn): void;
 
   /**
-   * Deletes **all** Format Columns in the State
+   * Deletes **all** Format Columns in the Adaptable State
    */
   deleteAllFormatColumn(): void;
 
-  applyFormatColumnFormats(): void;
+  /**
+   * Applies the display format for all Format Columns in the State
+   *
+   * Should rarely be used but available just in case it is necessary for whatever reason
+   */
+  applyFormatColumnDisplayFormats(): void;
 
   /**
    * Opens the Format Column popup screen

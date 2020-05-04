@@ -234,7 +234,7 @@ export interface IAdaptable {
   addActionColumnToGrid(actionColumn: ActionColumn): void;
 
   // formatolumn
-  applyFormatColumnFormats(): void;
+  applyFormatColumnDisplayFormats(): void;
 
   // Percent Bar
   removePercentBar(percentBar: PercentBar): void;

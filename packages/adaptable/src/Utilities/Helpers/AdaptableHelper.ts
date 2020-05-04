@@ -131,15 +131,6 @@ export function isConfigServerEnabled(adaptableOptions: AdaptableOptions): boole
   );
 }
 
-export function isTeamSharingEnabled(adaptableOptions: AdaptableOptions): boolean {
-  return (
-    adaptableOptions.teamSharingOptions &&
-    adaptableOptions.teamSharingOptions.enableTeamSharing &&
-    !!adaptableOptions.teamSharingOptions.getSharedEntities &&
-    !!adaptableOptions.teamSharingOptions.setSharedEntities
-  );
-}
-
 export function AdaptableObjectExistsInState(
   array: AdaptableObject[],
   itemToCheck: AdaptableObject
@@ -225,7 +216,6 @@ export const AdaptableHelper = {
   assignadaptableOptions,
   isValidPrimaryKey,
   isConfigServerEnabled,
-  isTeamSharingEnabled,
   AdaptableObjectExistsInState,
   CheckadaptableOptions,
   createFDC3Message,
