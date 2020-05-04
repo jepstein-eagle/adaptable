@@ -1,3 +1,7 @@
+## 6.2.1-canary6
+
+Calculated Column fix
+
 ## 6.2.1-canary5
 
 No code and ipushpull small updates
