@@ -1,5 +1,5 @@
 
-
+[x] context (functions, data, vars)
 [x] improve selection (global event listener)
 [x] drag and drop to insert text
 [-] improve text insert (maybe create a formater/stringifier)

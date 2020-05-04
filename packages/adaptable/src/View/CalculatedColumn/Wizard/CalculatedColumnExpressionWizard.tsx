@@ -11,13 +11,14 @@ import Textarea from '../../../components/Textarea';
 import WizardPanel from '../../../components/WizardPanel';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import Input from '../../../components/Input';
-import { Box } from 'rebass';
+import { Box, Flex } from 'rebass';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import CheckBox from '../../../components/CheckBox';
 import { CalculatedColumnExpressionService } from '../../../Utilities/Services/CalculatedColumnExpressionService';
 import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { AdaptableColumn } from '../../../types';
 import calculatedColumn from '../../../components/icons/calculated-column';
+import { evaluate } from 'adaptable-parser';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -47,19 +48,31 @@ export class CalculatedColumnExpressionWizard
       : 'error';
 
     const firstRow = this.props.Adaptable.getFirstRowNode().data;
+    let result;
+
+    try {
+      result = evaluate(this.state.ColumnExpression, {
+        data: firstRow,
+      });
+    } catch (error) {
+      result = 'Error: ' + error.message;
+    }
 
     return (
-      <Box p={2}>
-        <Textarea
-          value={this.state.ColumnExpression}
-          placeholder="Enter expression"
-          autoFocus
-          onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-          style={{ width: '100%', height: '100px' }}
-        ></Textarea>
-        {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
-        {/*  
-      Commenting this out until we have done the new stuff - also should it be inputs or labels?  do we want them to edit?
+      <Flex p={2}>
+        <Box flex={1}>
+          <Textarea
+            value={this.state.ColumnExpression}
+            placeholder="Enter expression"
+            autoFocus
+            onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
+            style={{ width: '100%', height: '100px' }}
+          ></Textarea>
+          <pre>{JSON.stringify(result, null, 2)}</pre>
+          {validationState ? (
+            <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox>
+          ) : null}
+        </Box>
         <FormLayout>
           {this.props.Columns.map(Column => (
             <FormRow key={Column.ColumnId} label={Column.FriendlyName}>
@@ -78,8 +91,7 @@ export class CalculatedColumnExpressionWizard
             </FormRow>
           ))}
         </FormLayout>
-              */}
-      </Box>
+      </Flex>
     );
   }
 

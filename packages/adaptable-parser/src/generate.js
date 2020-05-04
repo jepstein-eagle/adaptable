@@ -5,6 +5,9 @@ const { Parser } = require('jison');
 const file = path.join(__dirname, './grammar.jison');
 const grammar = fs.readFileSync(file, 'utf8');
 const parser = new Parser(grammar);
-const source = parser.generate();
+const source = parser.generate({ moduleType: 'js' });
 
-fs.writeFileSync(path.join(__dirname, './parser.js'), source);
+fs.writeFileSync(
+  path.join(__dirname, './parser.js'),
+  source + '\nmodule.exports = parser;'
+);

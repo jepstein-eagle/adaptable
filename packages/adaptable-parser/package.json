@@ -1,8 +1,7 @@
 {
   "version": "0.1.0",
   "license": "MIT",
-  "main": "src/parser.js",
-  "typings": "src/parser.d.ts",
+  "main": "src/index.ts",
   "files": [
     "src"
   ],

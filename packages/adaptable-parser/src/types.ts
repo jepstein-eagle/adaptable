@@ -20,7 +20,9 @@ export type Token = {
 };
 
 export type Context = {
-  row: { [key: string]: any };
+  data: { [key: string]: any };
+  variables: { [key: string]: any };
+  functions: FunctionMap;
 };
 
 export type FunctionMap = {

@@ -60,7 +60,6 @@ To gain access to this registry please follow these steps:
   "peerDependencies": {
       "@ag-grid-community/all-modules": "^22.1.1",
       "@ag-grid-community/react": "^22.1.1",
-      "mathjs": "^5.1.1",
       "react": "=>16.8.6",
       "react-dom": ">=16.8.6",
   }

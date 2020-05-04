@@ -1,6 +1,6 @@
 import React, { useState, useRef, useCallback } from 'react';
 import ReactDOM from 'react-dom';
-import { parse, evaluate, findPathTo, baseFunctions } from '../src';
+import { parse, findPathTo, defaultFunctions } from '../src';
 import {
   ThemeProvider,
   ColorModeProvider,
@@ -30,45 +30,7 @@ import {
 } from '@chakra-ui/core';
 import { FunctionMap } from '../src/types';
 
-const functions: FunctionMap = {
-  MIN: {
-    handler(args) {
-      return Math.min(...args);
-    },
-    docs: [{ type: 'code', content: 'min(...number): number' }],
-  },
-  MAX: {
-    handler(args) {
-      return Math.max(...args);
-    },
-    docs: [{ type: 'code', content: 'max(...number): number' }],
-  },
-  AVG: {
-    handler(args) {
-      if (args.length === 0) return 0;
-      return args.reduce((a, b) => a + b) / args.length;
-    },
-    docs: [{ type: 'code', content: 'avg(...number): number' }],
-  },
-  BETWEEN: {
-    handler([input, lower, upper]) {
-      if (typeof input !== 'number') throw Error('arg 1 should be a number');
-      return input >= lower && input <= upper;
-    },
-    docs: [
-      {
-        type: 'code',
-        content:
-          'between(input: number, lower: number, upper: number): boolean',
-      },
-      {
-        type: 'paragraph',
-        content: 'description',
-      },
-    ],
-  },
-  ...baseFunctions,
-};
+const functions = defaultFunctions;
 
 function useSelectionRange<
   T extends HTMLInputElement | HTMLTextAreaElement
@@ -110,7 +72,7 @@ function App() {
   const cursor = selectionStart === selectionEnd ? selectionStart : null;
 
   const [expr, setExpr] = useState('1 + COL("Ask")');
-  const [row, setRow] = useState({
+  const [data, setData] = useState({
     Country: 'France',
     Price: 10,
     Bid: 15.5,
@@ -119,12 +81,12 @@ function App() {
   });
   const [searchColumns, setSearchColumns] = useState('');
   const [searchFunctions, setSearchFunctions] = useState('');
-  let ast, result, error, path;
+  let e, result, error, path;
 
   try {
-    ast = parse(expr);
-    path = findPathTo(ast, cursor);
-    result = evaluate(ast, functions, { row });
+    e = parse(expr);
+    path = findPathTo(e.ast, cursor);
+    result = e.evaluate({ data });
   } catch (e) {
     error = e;
   }
@@ -264,7 +226,7 @@ function App() {
             value={searchColumns}
             onChange={e => setSearchColumns(e.target.value)}
           />
-          {Object.keys(row)
+          {Object.keys(data)
             .filter(
               c => c.toLowerCase().indexOf(searchColumns.toLowerCase()) !== -1
             )
@@ -285,8 +247,8 @@ function App() {
                   size="sm"
                   flex={1}
                   borderRadius={0}
-                  value={row[column]}
-                  onChange={e => setRow({ ...row, [column]: e.target.value })}
+                  value={data[column]}
+                  onChange={e => setData({ ...data, [column]: e.target.value })}
                 />
               </Flex>
             ))}
@@ -316,7 +278,7 @@ function App() {
           </TabPanel>
           <TabPanel>
             <Code display="block" p={2} fontSize="sm">
-              <pre>{ast && JSON.stringify(ast, null, 2)}</pre>
+              <pre>{e.ast && JSON.stringify(e.ast, null, 2)}</pre>
             </Code>
           </TabPanel>
         </TabPanels>
