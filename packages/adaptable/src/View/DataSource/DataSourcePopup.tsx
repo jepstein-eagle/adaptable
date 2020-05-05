@@ -193,14 +193,16 @@ class DataSourcePopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<DataSourcePopupProps> {
   return {
     DataSources: state.DataSource.DataSources,
     CurrentDataSource: state.DataSource.CurrentDataSource,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<DataSourcePopupProps> {
   return {
     onAddDataSource: (DataSource: DataSource) =>
       dispatch(DataSourceRedux.DataSourceAdd(DataSource)),

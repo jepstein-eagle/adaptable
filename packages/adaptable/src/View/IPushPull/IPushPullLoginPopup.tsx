@@ -131,7 +131,7 @@ const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
   );
 };
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<IPushPullLoginPopupProps> {
   return {
     pushpullLogin: state.IPushPull ? state.IPushPull!.Username : undefined,
     pushpullPassword: state.IPushPull ? state.IPushPull!.Password : undefined,
@@ -139,7 +139,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<IPushPullLoginPopupProps> {
   return {
     onLogin: (login: string, password: string) =>
       dispatch(IPushPullRedux.IPushPullLogin(login, password)),

@@ -19,7 +19,7 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 interface SystemStatusToolPanelProps
   extends ToolPanelStrategyViewPopupProps<SystemStatusToolPanelComponent> {
   StatusMessage: string;
-  StatusType: string;
+  StatusType: 'Info' | 'Success' | 'Warning' | 'Error';
   DefaultStatusMessage: string;
   DefaultStatusType: string;
   onClearSystemStatus: () => SystemStatusRedux.SystemStatusClearAction;
@@ -110,7 +110,7 @@ class SystemStatusToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<SystemStatusToolPanelProps> {
   return {
     StatusMessage: state.SystemStatus.StatusMessage,
     StatusType: state.SystemStatus.StatusType,
@@ -119,7 +119,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SystemStatusToolPanelProps> {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
     onClose: (toolPanel: AdaptableToolPanel) =>

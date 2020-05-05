@@ -267,13 +267,15 @@ class PlusMinusPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PlusMinusPopupProps> {
   return {
     PlusMinusRules: state.PlusMinus.PlusMinusRules,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<PlusMinusPopupProps> {
   return {
     onAddPlusMinusRule: (plusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(plusMinusRule)),

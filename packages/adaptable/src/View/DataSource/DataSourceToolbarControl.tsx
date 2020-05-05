@@ -151,14 +151,19 @@ class DataSourceToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<DataSourceToolbarControlComponentProps> {
   return {
     CurrentDataSourceName: state.DataSource.CurrentDataSource,
     DataSources: state.DataSource.DataSources,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<DataSourceToolbarControlComponentProps> {
   return {
     onSelectDataSource: (DataSourceName: string) =>
       dispatch(DataSourceRedux.DataSourceSelect(DataSourceName)),

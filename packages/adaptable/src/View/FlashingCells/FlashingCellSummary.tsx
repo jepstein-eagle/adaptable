@@ -14,6 +14,7 @@ import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { FlashingCellState } from '../../PredefinedConfig/FlashingCellState';
 import SimpleButton from '../../components/SimpleButton';
+import { FormatColumnSummaryProps } from '../FormatColumn/FormatColumnSummary';
 
 export interface FlashingCellSummaryProps
   extends StrategySummaryProps<FlashingCellSummaryComponent> {
@@ -84,14 +85,16 @@ export class FlashingCellSummaryComponent extends React.Component<
     this.props.onSelectFlashingCell(existingfc);
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FlashingCellSummaryProps> {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
     Columns: state.Grid.Columns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<FlashingCellSummaryProps> {
   return {
     onSelectFlashingCell: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellRedux.FlashingCellSelect(flashingCell)),

@@ -320,7 +320,7 @@ class IPushPullToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<IPushPullToolbarControlComponentProps> {
   return {
     CurrentLiveIPushPullReport: state.IPushPull.CurrentLiveIPushPullReport,
     Reports: state.Export.Reports,
@@ -330,7 +330,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<IPushPullToolbarControlComponentProps> {
   return {
     onIPushPullSendSnapshot: (iPushPullReport: IPushPullReport) =>
       dispatch(IPushPullRedux.IPushPullSendSnapshot(iPushPullReport)),

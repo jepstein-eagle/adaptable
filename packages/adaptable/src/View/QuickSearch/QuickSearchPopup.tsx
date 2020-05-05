@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
@@ -16,14 +15,11 @@ import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
   QUICK_SEARCH_DEFAULT_FORE_COLOR,
 } from '../../Utilities/Constants/GeneralConstants';
-import { DisplayAction, LeafExpressionOperator } from '../../PredefinedConfig/Common/Enums';
+import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
-import { AdaptablePopover } from '../AdaptablePopover';
 
-import WizardPanel from '../../components/WizardPanel';
-import Dropdown from '../../components/Dropdown';
 import Checkbox from '../../components/CheckBox';
-import { Text, Flex, Box } from 'rebass';
+import { Flex } from 'rebass';
 import Panel from '../../components/Panel';
 import FormLayout, { FormRow } from '../../components/FormLayout';
 import HelpBlock from '../../components/HelpBlock';
@@ -32,7 +28,7 @@ import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableForm
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
-  DisplayAction: DisplayAction;
+  DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
   QuickSearchStyle: AdaptableStyle;
 
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
@@ -127,13 +123,6 @@ class QuickSearchPopupComponent extends React.Component<
       <i>Advanced Search</i>,
       '.',
     ];
-
-    let DisplayActions = EnumExtensions.getNames(DisplayAction).map(enumName => {
-      return {
-        label: this.getTextForDisplayAction(enumName as DisplayAction),
-        value: enumName,
-      };
-    });
 
     return (
       <PanelWithImage
@@ -254,7 +243,7 @@ class QuickSearchPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickSearchPopupProps> {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
     DisplayAction: state.QuickSearch.DisplayAction,
@@ -262,7 +251,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<QuickSearchPopupProps> {
   return {
     onRunQuickSearch: (quickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),

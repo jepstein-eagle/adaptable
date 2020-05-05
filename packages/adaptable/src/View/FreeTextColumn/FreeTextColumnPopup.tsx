@@ -190,13 +190,15 @@ class FreeTextColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FreeTextColumnPopupProps> {
   return {
     FreeTextColumns: state.FreeTextColumn.FreeTextColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<FreeTextColumnPopupProps> {
   return {
     onAddFreeTextColumn: (FreeTextColumn: FreeTextColumn) =>
       dispatch(FreeTextColumnRedux.FreeTextColumnAdd(FreeTextColumn)),

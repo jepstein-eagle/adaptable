@@ -264,16 +264,18 @@ class ExportToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<ExportToolPanelComponentProps> {
   return {
     CurrentReport: state.Export.CurrentReport,
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
-    LiveReports: state.System.CurrentLiveReports,
+    //  LiveReports: state.System.CurrentLiveReports,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ExportToolPanelComponentProps> {
   return {
     onApplyExport: (report: Report, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination)),

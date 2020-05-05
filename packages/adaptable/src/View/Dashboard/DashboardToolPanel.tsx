@@ -79,14 +79,19 @@ class DashboardToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<DashboardToolPanelComponentProps> {
   return {
     IsCollapsed: state.Dashboard.IsCollapsed,
     IsFloating: state.Dashboard.IsFloating,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<DashboardToolPanelComponentProps> {
   return {
     onSetDashboardCollapsed: (isCollapsed: boolean) =>
       dispatch(DashboardRedux.DashboardSetIsCollapsed(isCollapsed)),

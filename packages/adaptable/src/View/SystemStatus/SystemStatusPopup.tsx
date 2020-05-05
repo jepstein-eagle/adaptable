@@ -16,7 +16,7 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 interface SystemStatusPopupProps extends StrategyViewPopupProps<SystemStatusPopupComponent> {
   StatusMessage: string;
   StatusFurtherInformation: string;
-  StatusType: MessageType;
+  StatusType: 'Info' | 'Success' | 'Warning' | 'Error';
   ShowAlert: boolean;
   onSetSystemStatusShowAlert: (
     showAlert: boolean
@@ -113,7 +113,7 @@ class SystemStatusPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<SystemStatusPopupProps> {
   return {
     StatusMessage: state.SystemStatus.StatusMessage,
     StatusType: state.SystemStatus.StatusType,
@@ -122,7 +122,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SystemStatusPopupProps> {
   return {
     onSetSystemStatusShowAlert: (showAlert: boolean) =>
       dispatch(SystemStatusRedux.SystemStatusSetShowAlert(showAlert)),

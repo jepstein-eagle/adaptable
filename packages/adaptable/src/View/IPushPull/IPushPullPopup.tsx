@@ -62,14 +62,16 @@ class IPushPullPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<IPushPullPopupProps> {
   return {
     //   SelectedIPushPullReportName: state.IPushPull.SelectedIPushPullReportName,
     //   LiveReports: state.System.CurrentLiveReports,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<IPushPullPopupProps> {
   return {
     onIPushPullSendSnapshot: (report: IPushPullReport) =>
       dispatch(IPushPullRedux.IPushPullSendSnapshot(report)),

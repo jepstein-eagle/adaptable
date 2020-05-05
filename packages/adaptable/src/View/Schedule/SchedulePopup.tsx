@@ -341,7 +341,7 @@ class SchedulePopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<SchedulePopupProps> {
   return {
     Reminders: state.Reminder.Reminders,
     ReportSchedules: state.Export.ReportSchedules,
@@ -350,7 +350,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SchedulePopupProps> {
   return {
     onAddReminderSchedule: (reminderSchedule: ReminderSchedule) =>
       dispatch(ReminderRedux.ReminderScheduleAdd(reminderSchedule)),

@@ -181,13 +181,15 @@ class ReminderPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<ReminderPopupProps> {
   return {
     Reminders: state.Reminder.Reminders,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ReminderPopupProps> {
   return {
     onAddReminder: (reminder: ReminderSchedule) =>
       dispatch(ReminderRedux.ReminderScheduleAdd(reminder)),

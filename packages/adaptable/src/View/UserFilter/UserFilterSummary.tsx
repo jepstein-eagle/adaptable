@@ -187,7 +187,7 @@ export class UserFilterSummaryComponent extends React.Component<
     );
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<UserFilterSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
@@ -196,7 +196,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<UserFilterSummaryProps> {
   return {
     onAddUserFilter: (UserFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),

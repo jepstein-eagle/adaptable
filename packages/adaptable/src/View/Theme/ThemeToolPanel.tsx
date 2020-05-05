@@ -20,7 +20,7 @@ import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 interface ThemeToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ThemeToolPanelComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
-  SystemThemes: AdaptableTheme[];
+  SystemThemes: any[]; // should be  (AdaptableTheme | string)[]
   UserThemes: AdaptableTheme[];
   CurrentTheme: string;
 }
@@ -91,7 +91,10 @@ class ThemeToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ThemeToolPanelComponentProps> {
   return {
     SystemThemes: state.Theme.SystemThemes,
     CurrentTheme: state.Theme.CurrentTheme,
@@ -99,7 +102,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ThemeToolPanelComponentProps> {
   return {
     onSelectTheme: (theme: string) => dispatch(ThemeRedux.ThemeSelect(theme)),
     onClose: (toolPanel: AdaptableToolPanel) =>

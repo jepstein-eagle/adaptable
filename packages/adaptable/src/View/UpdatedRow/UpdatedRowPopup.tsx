@@ -176,13 +176,15 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<UpdatedRowPopupProps> {
   return {
     UpdatedRowState: state.UpdatedRow,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<UpdatedRowPopupProps> {
   return {
     onEnableDisableUpdatedRow: (shouldEnable: boolean) =>
       dispatch(UpdatedRowRedux.UpdatedRowEnableDisable(shouldEnable)),

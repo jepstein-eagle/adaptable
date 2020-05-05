@@ -218,7 +218,10 @@ class SmartEditToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<SmartEditToolbarControlComponentProps> {
   return {
     SmartEditValue: state.SmartEdit.SmartEditValue,
     MathOperation: state.SmartEdit.MathOperation,
@@ -227,7 +230,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SmartEditToolbarControlComponentProps> {
   return {
     onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
     onSmartEditOperationChange: (SmartEditOperation: MathOperation) =>
