@@ -1,6 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
-import { Provider, connect, ConnectedComponent } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
@@ -141,10 +141,7 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-let AdaptableWrapper: ConnectedComponent<typeof AdaptableView, any> = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdaptableView);
+let AdaptableWrapper = connect(mapStateToProps, mapDispatchToProps)(AdaptableView);
 
 export const AdaptableApp = ({ Adaptable }: { Adaptable: IAdaptable }) => (
   <Provider store={Adaptable.AdaptableStore.TheStore}>
