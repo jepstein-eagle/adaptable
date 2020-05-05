@@ -1,6 +1,6 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import * as Redux from 'redux';
-import { Provider, connect } from 'react-redux';
+import { Provider, connect, ConnectedComponent } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
 
@@ -116,7 +116,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AdaptableViewProps> {
   return {
     PopupState: state.Popup,
     SystemState: state.System,
@@ -125,7 +125,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AdaptableViewProps> {
   return {
     onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
     onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
