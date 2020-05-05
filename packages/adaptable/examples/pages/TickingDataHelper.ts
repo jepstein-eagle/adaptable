@@ -96,7 +96,7 @@ export class TickingDataHelper {
             trade.notional = notional;
             trade.changeOnYear = changeOnYear;
           }
-          gridOptions.api!.updateRowData({ update: [trade] });
+          gridOptions.api!.applyTransaction({ update: [trade] });
         }
 
         if (useadaptableApiSetCellValue) {
@@ -249,7 +249,7 @@ export class TickingDataHelper {
         row['staff'] = staff;
         row['budget'] = budget;
 
-        gridOptions.api!.updateRowData({ update: [row] });
+        gridOptions.api!.applyTransaction({ update: [row] });
       }, tickingFrequency);
     }
   }

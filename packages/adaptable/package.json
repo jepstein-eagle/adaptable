@@ -17,7 +17,6 @@
     "lodash": "^4.17.10",
     "mathjs": "^5.1.1",
     "normalize.css": "^8.0.1",
-    "openfin-notifications": "^0.10.1",
     "prop-types": "^15.6.2",
     "react": "^16.9.0",
     "react-beautiful-dnd": "^12.2.0",
@@ -33,10 +32,10 @@
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
-    "@ag-grid-community/all-modules": "^22.1.1"
+    "@ag-grid-community/all-modules": "^23.1.0"
   },
   "devDependencies": {
-    "@ag-grid-community/all-modules": "22.1.1",
+    "@ag-grid-community/all-modules": "23.1.0",
     "@types/body-parser": "^1.17.0",
     "@types/bunyan": "^1.8.4",
     "@types/deep-diff": "0.0.31",

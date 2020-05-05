@@ -721,7 +721,7 @@ export class Adaptable implements IAdaptable {
         return rowNode.data;
       });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
-      this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
+      this.gridOptions.api!.applyTransaction({ update: itemsToUpdate });
     }
   }
 
@@ -2323,7 +2323,7 @@ export class Adaptable implements IAdaptable {
     });
 
     // this handles ticking data
-    // except it doesnt handle when data has been added to ag-Grid using updateRowData
+    // except it doesnt handle when data has been added to ag-Grid using applyTransaction
     this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
@@ -3232,18 +3232,18 @@ export class Adaptable implements IAdaptable {
   ): void {
     config = config || {};
     if (config.batchUpdate) {
-      this.gridOptions.api!.batchUpdateRowData({ update: dataRows }, config.callback);
+      this.gridOptions.api!.applyTransactionAsync({ update: dataRows }, config.callback);
     } else {
-      this.gridOptions.api!.updateRowData({ update: dataRows });
+      this.gridOptions.api!.applyTransaction({ update: dataRows });
     }
   }
 
   public addRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ add: dataRows });
+    this.gridOptions.api!.applyTransaction({ add: dataRows });
   }
 
   public deleteRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ remove: dataRows });
+    this.gridOptions.api!.applyTransaction({ remove: dataRows });
   }
 
   private updateQuickSearchRangeVisibleColumn(columnId: string): void {
