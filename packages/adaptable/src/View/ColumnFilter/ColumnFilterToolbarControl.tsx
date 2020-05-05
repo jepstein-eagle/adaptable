@@ -129,14 +129,19 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ColumnFilterToolbarControlComponentProps> {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     IsQuickFilterActive: state.Grid.IsQuickFilterActive,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnFilterToolbarControlComponentProps> {
   return {
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),

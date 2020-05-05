@@ -224,7 +224,10 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<BulkUpdateToolPanelControlComponentProps> {
   return {
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
@@ -232,7 +235,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<BulkUpdateToolPanelControlComponentProps> {
   return {
     onBulkUpdateValueChange: (value: string) =>
       dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),

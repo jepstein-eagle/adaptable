@@ -17,6 +17,7 @@ import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
 import Panel from '../../components/Panel';
 import Dialog from '../../components/Dialog';
+import { CalculatedColumnSummaryProps } from '../CalculatedColumn/CalculatedColumnSummary';
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
   CurrentCalendar: string;
@@ -158,14 +159,16 @@ class CalendarsPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CalendarsPopupProps> {
   return {
     CurrentCalendar: state.Calendar.CurrentCalendar,
     AvailableCalendars: state.System.AvailableCalendars,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CalendarsPopupProps> {
   return {
     onSelectCalendar: (calendar: Calendar) =>
       dispatch(CalendarsRedux.CalendarSelect(calendar.Name)),

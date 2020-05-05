@@ -230,13 +230,15 @@ class CellValidationPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CellValidationPopupProps> {
   return {
     CellValidations: state.CellValidation.CellValidations,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CellValidationPopupProps> {
   return {
     onAddCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),

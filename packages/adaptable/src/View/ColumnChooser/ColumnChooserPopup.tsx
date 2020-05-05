@@ -86,13 +86,15 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnChooserPopupProps> {
   return {
     ColumnCategories: state.ColumnCategory.ColumnCategories,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnChooserPopupProps> {
   return {
     onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),

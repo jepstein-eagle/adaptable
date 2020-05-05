@@ -194,7 +194,10 @@ class CellSummaryToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<CellSummaryToolPanelComponentProps> {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
@@ -203,7 +206,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CellSummaryToolPanelComponentProps> {
   return {
     onCellSummaryOperationChange: (summaryOperation: CellSummaryOperation | string) =>
       dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),

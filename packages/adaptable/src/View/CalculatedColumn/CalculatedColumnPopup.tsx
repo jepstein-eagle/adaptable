@@ -212,14 +212,19 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<CalculatedColumnPopupProps> {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
     CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CalculatedColumnPopupProps> {
   return {
     onAddCalculatedColumn: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnAdd(calculatedColumn)),
