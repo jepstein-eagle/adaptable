@@ -505,7 +505,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterFormProps> {
   return {
     CurrentColumn: ownProps.CurrentColumn,
     Adaptable: ownProps.Adaptable,
@@ -519,7 +519,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<FilterFormProps> {
   return {
     onMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>

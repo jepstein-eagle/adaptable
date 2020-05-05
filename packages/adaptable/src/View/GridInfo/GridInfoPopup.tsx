@@ -781,11 +781,11 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
   }
 }
 
-function mapStateToProps() {
+function mapStateToProps(): Partial<GridInfoPopupProps> {
   return {};
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(): Partial<GridInfoPopupProps> {
   return {};
 }
 

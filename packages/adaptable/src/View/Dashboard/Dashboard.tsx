@@ -357,7 +357,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<DashboardComponentProps> {
   return {
     DashboardState: state.Dashboard,
     GridState: state.Grid,
@@ -373,7 +373,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<DashboardComponentProps> {
   return {
     dispatch: (action: Redux.Action) => dispatch(action),
     onSetActiveTab: (ActiveTab: number | null) =>

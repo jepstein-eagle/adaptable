@@ -84,11 +84,13 @@ class CustomToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps() {
+function mapStateToProps(): Partial<CustomToolbarControlComponentProps> {
   return {};
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CustomToolbarControlComponentProps> {
   return {};
 }
 

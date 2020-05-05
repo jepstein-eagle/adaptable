@@ -331,7 +331,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFilterFormProps> {
   return {
     CurrentColumn: ownProps.CurrentColumn,
     Adaptable: ownProps.Adaptable,
@@ -343,7 +343,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<QuickFilterFormProps> {
   return {
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
