@@ -12,7 +12,7 @@ export type TextareaProps = HTMLProps<HTMLTextAreaElement> & {
   disabled?: boolean;
 } & BoxProps;
 
-const Textarea = (props: TextareaProps) => {
+const Textarea = React.forwardRef((props: TextareaProps, ref) => {
   let {
     disabled,
 
@@ -31,6 +31,7 @@ const Textarea = (props: TextareaProps) => {
   }
   return (
     <Box
+      ref={ref}
       as="textarea"
       {...textareaProps}
       type={type}
@@ -38,6 +39,6 @@ const Textarea = (props: TextareaProps) => {
       className={join(className, baseClassName, disabled ? `${baseClassName}--disabled` : '')}
     />
   );
-};
+});
 
 export default Textarea;

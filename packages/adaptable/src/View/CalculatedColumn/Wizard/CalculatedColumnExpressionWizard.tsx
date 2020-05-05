@@ -19,6 +19,10 @@ import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/
 import { AdaptableColumn } from '../../../types';
 import calculatedColumn from '../../../components/icons/calculated-column';
 import { evaluate } from 'adaptable-parser';
+import useSelectionRange from '../../../components/utils/useSelectionRange';
+import { Dispatch, SetStateAction, useState } from 'react';
+import useProperty from '../../../components/utils/useProperty';
+import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -28,6 +32,100 @@ export interface CalculatedColumnExpressionWizardProps
 }
 export interface CalculatedColumnExpressionWizardState {
   ColumnExpression: string;
+}
+
+const dragImage = new Image(0, 0);
+dragImage.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+
+interface EditorButtonProps extends SimpleButtonProps {
+  data: string;
+  textAreaRef: React.MutableRefObject<HTMLInputElement | HTMLTextAreaElement>;
+}
+function EditorButton(props: EditorButtonProps) {
+  return (
+    <SimpleButton
+      draggable={true}
+      onDragStart={event => {
+        document.getSelection().empty();
+        event.dataTransfer.setData('text', props.data);
+        event.dataTransfer.setDragImage(dragImage, 0, 0);
+      }}
+      onClick={() => {
+        props.textAreaRef.current.focus();
+        document.execCommand('insertText', false, props.data);
+      }}
+      {...props}
+    />
+  );
+}
+
+interface ExpressionEditorProps {
+  value?: string;
+  onChange?: (event: React.FormEvent) => void;
+  firstRow: { [key: string]: any };
+  columns: AdaptableColumn[];
+}
+function ExpressionEditor(props: ExpressionEditorProps) {
+  const [textAreaRefCallback, textAreaRef, selectionStart, selectionEnd] = useSelectionRange();
+  const cursor = selectionStart === selectionEnd ? selectionStart : null;
+  const [data, setData] = useState(props.firstRow);
+  let result;
+
+  try {
+    result = evaluate(props.value, { data });
+  } catch (error) {
+    result = 'Error: ' + error.message;
+  }
+
+  return (
+    <Flex flexDirection="row">
+      <Box flex={1}>
+        <EditorButton data="+" textAreaRef={textAreaRef}>
+          +
+        </EditorButton>
+        <EditorButton data="-" textAreaRef={textAreaRef}>
+          -
+        </EditorButton>
+        <EditorButton data="*" textAreaRef={textAreaRef}>
+          *
+        </EditorButton>
+        <EditorButton data="/" textAreaRef={textAreaRef}>
+          /
+        </EditorButton>
+        <Textarea
+          ref={textAreaRefCallback}
+          value={props.value}
+          placeholder="Enter expression"
+          autoFocus
+          onChange={props.onChange}
+          style={{ width: '100%', height: '100px', fontFamily: 'monospace' }}
+        />
+        <pre style={{ whiteSpace: 'pre-wrap' }}>{result}</pre>
+      </Box>
+      <FormLayout>
+        {props.columns.map(column => (
+          <FormRow
+            key={column.ColumnId}
+            label={
+              <EditorButton data={`COL('${column.ColumnId}')`} textAreaRef={textAreaRef}>
+                {column.FriendlyName}
+              </EditorButton>
+            }
+          >
+            {column.DataType === 'Number' ? (
+              <Input type="number" defaultValue={data[column.ColumnId]} />
+            ) : column.DataType === 'String' ? (
+              <Input type="text" defaultValue={data[column.ColumnId]} />
+            ) : column.DataType === 'Date' ? (
+              <Input type="date" defaultValue={data[column.ColumnId].toISOString().substr(0, 10)} />
+            ) : column.DataType === 'Boolean' ? (
+              <CheckBox defaultChecked={data[column.ColumnId]} />
+            ) : null}
+          </FormRow>
+        ))}
+      </FormLayout>
+    </Flex>
+  );
 }
 
 export class CalculatedColumnExpressionWizard
@@ -48,49 +146,20 @@ export class CalculatedColumnExpressionWizard
       : 'error';
 
     const firstRow = this.props.Adaptable.getFirstRowNode().data;
-    let result;
-
-    try {
-      result = evaluate(this.state.ColumnExpression, {
-        data: firstRow,
-      });
-    } catch (error) {
-      result = 'Error: ' + error.message;
-    }
 
     return (
       <Flex p={2}>
         <Box flex={1}>
-          <Textarea
+          <ExpressionEditor
             value={this.state.ColumnExpression}
-            placeholder="Enter expression"
-            autoFocus
             onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-            style={{ width: '100%', height: '100px' }}
-          ></Textarea>
-          <pre>{JSON.stringify(result, null, 2)}</pre>
-          {validationState ? (
+            firstRow={firstRow}
+            columns={this.props.Columns}
+          />
+          {/* {validationState ? (
             <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox>
-          ) : null}
+          ) : null} */}
         </Box>
-        <FormLayout>
-          {this.props.Columns.map(Column => (
-            <FormRow key={Column.ColumnId} label={Column.FriendlyName}>
-              {Column.DataType === 'Number' ? (
-                <Input type="number" defaultValue={firstRow[Column.ColumnId]} />
-              ) : Column.DataType === 'String' ? (
-                <Input type="text" defaultValue={firstRow[Column.ColumnId]} />
-              ) : Column.DataType === 'Date' ? (
-                <Input
-                  type="date"
-                  defaultValue={firstRow[Column.ColumnId].toISOString().substr(0, 10)}
-                />
-              ) : Column.DataType === 'Boolean' ? (
-                <CheckBox defaultChecked={firstRow[Column.ColumnId]} />
-              ) : null}
-            </FormRow>
-          ))}
-        </FormLayout>
       </Flex>
     );
   }
