@@ -165,7 +165,10 @@ export class GradientColumnSummaryComponent extends React.Component<
     return StringExtensions.IsNotNullOrEmpty(GradientColumn.ColumnId);
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<GradientColumnSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     GradientColumns: state.GradientColumn.GradientColumns,
@@ -174,7 +177,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<GradientColumnSummaryProps> {
   return {
     onAddGradientColumn: (GradientColumn: GradientColumn) =>
       dispatch(GradientColumnRedux.GradientColumnAdd(GradientColumn)),

@@ -129,14 +129,16 @@ class AlertToolPanelComponent extends React.Component<AlertToolPanelProps, Alert
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AlertToolPanelProps> {
   return {
     AlertDefinitions: state.Alert.AlertDefinitions,
     AdaptableAlerts: state.System.AdaptableAlerts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AlertToolPanelProps> {
   return {
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>

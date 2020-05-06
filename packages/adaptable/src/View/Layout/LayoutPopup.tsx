@@ -218,14 +218,16 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<LayoutPopupProps> {
   return {
     Layouts: state.Layout.Layouts,
     CurrentLayoutName: state.Layout.CurrentLayout,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<LayoutPopupProps> {
   return {
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
     onSelectLayout: (selectedSearchName: string) =>

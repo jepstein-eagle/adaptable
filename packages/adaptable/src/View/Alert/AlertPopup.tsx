@@ -27,8 +27,6 @@ import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
-import SimpleButton from '../../components/SimpleButton';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
@@ -199,13 +197,15 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AlertPopupProps> {
   return {
     AlertDefinitions: state.Alert.AlertDefinitions,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AlertPopupProps> {
   return {
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),

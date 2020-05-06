@@ -162,14 +162,16 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<FlashingCellsPopupProps> {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<FlashingCellsPopupProps> {
   return {
     onSelectColumn: (flashingCell: FlashingCell) =>
       dispatch(FlashingCellsRedux.FlashingCellSelect(flashingCell)),

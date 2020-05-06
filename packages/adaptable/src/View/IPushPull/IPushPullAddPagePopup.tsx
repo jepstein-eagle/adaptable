@@ -171,13 +171,15 @@ const IPushPullAddPageComponent = (props: IPushPullAddPagePopupProps) => {
   );
 };
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<IPushPullAddPagePopupProps> {
   return {
     IPushPullDomainsPages: state.IPushPull.IPushPullDomainsPages,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<IPushPullAddPagePopupProps> {
   return {
     onAddPage: (folder: string, page: string) =>
       dispatch(IPushPullRedux.IPushPullAddPage(folder, page)),

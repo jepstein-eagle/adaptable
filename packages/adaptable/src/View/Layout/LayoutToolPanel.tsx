@@ -206,14 +206,19 @@ class LayoutToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<LayoutToolPanelComponentProps> {
   return {
     CurrentLayout: state.Layout.CurrentLayout,
     Layouts: state.Layout.Layouts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<LayoutToolPanelComponentProps> {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),

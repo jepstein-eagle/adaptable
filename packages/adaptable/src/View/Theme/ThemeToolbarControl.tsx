@@ -18,14 +18,14 @@ import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 interface ThemeToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<ThemeToolbarControlComponent> {
   onSelectTheme: (theme: string) => ThemeRedux.ThemeSelectAction;
-  SystemThemes: AdaptableTheme[];
+  SystemThemes: any[]; // should be  (AdaptableTheme | string)[]
   UserThemes: AdaptableTheme[];
   CurrentTheme: string;
 }
 
 class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlComponentProps, {}> {
   render(): any {
-    let allThemes: AdaptableTheme[] = [...this.props.SystemThemes, ...this.props.UserThemes];
+    let allThemes = [...this.props.SystemThemes, ...this.props.UserThemes];
 
     let themes: any[] = allThemes.map((theme: AdaptableTheme, index) => {
       if (typeof theme === 'string') {
@@ -84,7 +84,10 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ThemeToolbarControlComponentProps> {
   return {
     SystemThemes: state.Theme.SystemThemes,
     CurrentTheme: state.Theme.CurrentTheme,
@@ -92,7 +95,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ThemeToolbarControlComponentProps> {
   return {
     onSelectTheme: (theme: string) => dispatch(ThemeRedux.ThemeSelect(theme)),
     onConfigure: () =>

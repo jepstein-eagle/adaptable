@@ -49,6 +49,10 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
         Key: 'Format',
         Value: this.showFormatExample(this.props.Data, adaptableColumn),
       },
+      {
+        Key: 'Cell Alignment',
+        Value: this.props.Data.CellAlignment,
+      },
     ];
 
     return (

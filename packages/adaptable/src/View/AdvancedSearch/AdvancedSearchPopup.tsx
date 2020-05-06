@@ -25,7 +25,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearchPopupComponent> {
   AdvancedSearches: AdvancedSearch[];
@@ -244,14 +243,16 @@ class AdvancedSearchPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AdvancedSearchPopupProps> {
   return {
     AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
     CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AdvancedSearchPopupProps> {
   return {
     onAddAdvancedSearch: (advancedSearch: AdvancedSearch) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch)),

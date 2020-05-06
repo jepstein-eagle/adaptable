@@ -57,14 +57,16 @@ class Glue42PopupComponent extends React.Component<Glue42PopupProps, EditableCon
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<Glue42PopupProps> {
   return {
     //   SelectedGlue42ReportName: state.Glue42.SelectedGlue42ReportName,
     //   LiveReports: state.System.CurrentLiveReports,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<Glue42PopupProps> {
   return {
     onGlue42SendSnapshot: (report: Glue42Report) =>
       dispatch(Glue42Redux.Glue42SendSnapshot(report)),

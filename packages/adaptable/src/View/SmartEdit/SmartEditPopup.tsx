@@ -215,7 +215,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<SmartEditPopupProps> {
   return {
     SmartEditValue: state.SmartEdit.SmartEditValue,
     MathOperation: state.SmartEdit.MathOperation,
@@ -223,7 +223,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SmartEditPopupProps> {
   return {
     onSmartEditValueChange: (value: number) => dispatch(SmartEditRedux.SmartEditChangeValue(value)),
     onSmartEditOperationChange: (SmartEditOperation: MathOperation) =>

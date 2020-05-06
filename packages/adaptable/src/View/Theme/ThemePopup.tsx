@@ -13,7 +13,7 @@ import { Flex, Box, Text } from 'rebass';
 import Dropdown from '../../components/Dropdown';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
-  SystemThemes: Array<AdaptableTheme>;
+  SystemThemes: (AdaptableTheme | string)[];
   UserThemes: Array<AdaptableTheme>;
   CurrentTheme: string;
   SelectTheme: (newTheme: string) => ThemeRedux.ThemeSelectAction;
@@ -87,7 +87,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
     this.props.SelectTheme(value);
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ThemePopupProps> {
   return {
     SystemThemes: state.Theme.SystemThemes,
     UserThemes: state.Theme.UserThemes,
@@ -95,7 +95,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ThemePopupProps> {
   return {
     SelectTheme: (newTheme: string) => dispatch(ThemeRedux.ThemeSelect(newTheme)),
   };

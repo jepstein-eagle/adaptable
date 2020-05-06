@@ -126,9 +126,9 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
     ColumnId: EMPTY_STRING,
     ColumnExpression: EMPTY_STRING,
     // need to create some defaults - which we will change later
-    /*
+
     CalculatedColumnSettings: {
-      DataType: 'String',
+      DataType: 'Number',
       Filterable: true,
       Resizable: true,
       Groupable: true,
@@ -136,7 +136,6 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
       Pivotable: true,
       Aggregatable: true,
     },
-    */
   };
 }
 
@@ -470,6 +469,7 @@ export function CreateEmptyFormatColumn(): FormatColumn {
     ColumnId: EMPTY_STRING,
     Style: CreateEmptyStyle(),
     DisplayFormat: undefined,
+    CellAlignment: undefined,
   };
 }
 

@@ -241,7 +241,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<ExportPopupProps> {
   return {
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
@@ -250,9 +250,11 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ExportPopupProps> {
   return {
-    onApplyExport: (report: Report, exportDestination: ExportDestination, isLiveReport: boolean) =>
+    onApplyExport: (report: Report, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),

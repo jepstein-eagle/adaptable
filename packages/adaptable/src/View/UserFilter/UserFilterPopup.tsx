@@ -222,11 +222,13 @@ class UserFilterPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<UserFilterPopupProps> {
   return {};
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<UserFilterPopupProps> {
   return {
     onAddUserFilter: (userFilter: UserFilter) =>
       dispatch(UserFilterRedux.UserFilterAdd(userFilter)),

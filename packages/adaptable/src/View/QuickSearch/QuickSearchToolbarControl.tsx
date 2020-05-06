@@ -74,13 +74,18 @@ class QuickSearchToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<QuickSearchToolbarControlComponentProps> {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<QuickSearchToolbarControlComponentProps> {
   return {
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),

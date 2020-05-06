@@ -21,6 +21,7 @@ import {
   AdaptableFunctionName,
 } from '../../PredefinedConfig/Common/Types';
 import DashboardManagerUI from '../../components/Dashboard/DashboardManager';
+import { DashboardProps } from '../../components/Dashboard';
 
 interface DashboardPopupComponentProps extends StrategyViewPopupProps<DashboardPopupComponent> {
   DashboardState: DashboardState;
@@ -177,14 +178,19 @@ class DashboardPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<DashboardPopupComponentProps> {
   return {
     DashboardState: state.Dashboard,
     GridState: state.Grid,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<DashboardPopupComponentProps> {
   return {
     onDashboardSetFunctionButtons: (functionButtons: AdaptableFunctionButtons) =>
       dispatch(DashboardRedux.DashboardSetFunctionButtons(functionButtons)),

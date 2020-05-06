@@ -167,7 +167,7 @@ export class PlusMinusSummaryComponent extends React.Component<
     return expressionDescription == 'Any' ? '[Default Column Nudge Value]' : expressionDescription;
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PlusMinusSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     PlusMinusRules: state.PlusMinus.PlusMinusRules,
@@ -177,7 +177,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<PlusMinusSummaryProps> {
   return {
     onAddPlusMinusRule: (PlusMinusRule: PlusMinusRule) =>
       dispatch(PlusMinusRedux.PlusMinusRuleAdd(PlusMinusRule)),

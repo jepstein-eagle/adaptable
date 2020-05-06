@@ -58,6 +58,54 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
   },
+  FormatColumn: {
+    FormatColumns: [
+      {
+        ColumnId: 'tradeDate',
+        DisplayFormat: {
+          Formatter: 'DateFormatter',
+          Options: {
+            Pattern: 'yyyyMMdd',
+          },
+        },
+      },
+      {
+        ColumnId: 'bid',
+        CellAlignment: 'Right',
+      },
+      {
+        ColumnId: 'counterparty',
+        CellAlignment: 'Center',
+      },
+      {
+        ColumnId: 'notional',
+        Style: {
+          FontWeight: 'Bold',
+          FontSize: 'XSmall',
+          FontStyle: 'Italic',
+          ClassName: '',
+        },
+        DisplayFormat: {
+          Formatter: 'NumberFormatter',
+          Options: {
+            Parentheses: true,
+            IntegerDigits: 3,
+          },
+        },
+        CellAlignment: 'Center',
+      },
+      {
+        ColumnId: 'country',
+        Style: {
+          BackColor: '#d4fb79',
+          ForeColor: '#8b0000',
+          FontWeight: 'Normal',
+          FontStyle: 'Normal',
+          ClassName: '',
+        },
+      },
+    ],
+  },
 };
 
 export default () => {

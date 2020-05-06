@@ -955,7 +955,7 @@ export class ExamplesHelper {
       field: 'start',
       filter: true,
       editable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -963,7 +963,7 @@ export class ExamplesHelper {
       field: 'end',
       filter: true,
       editable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -971,14 +971,14 @@ export class ExamplesHelper {
       field: 'low',
       filter: true,
       editable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
       headerName: 'High',
       field: 'high',
       editable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -993,7 +993,7 @@ export class ExamplesHelper {
       field: 'volume',
       filter: true,
       editable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -1001,7 +1001,7 @@ export class ExamplesHelper {
       field: 'peakHour',
       filter: true,
       editable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -1038,10 +1038,10 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       aggFunc: 'sum',
-      hide: true,
+      // hide: true,
       //   agGroupCellRenderer
       // valueFormatter: notionalFormatter,
-      cellClass: 'number-cell',
+      cellClass: 'ab-cell--align-right',
       type: 'abColDefNumber',
       filter: true,
       resizable: true,
@@ -1057,7 +1057,7 @@ export class ExamplesHelper {
       filter: true,
       hide: true,
       resizable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
       enableValue: true,
       valueFormatter: this.fourDecimalPlaceFormatter,
@@ -1070,7 +1070,7 @@ export class ExamplesHelper {
       resizable: true,
       editable: true,
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
       enableValue: true,
     });
@@ -1147,7 +1147,7 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       sortable: true,
       resizable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       //  tooltipField: 'changeOnYear',
       //  tooltipComponent: 'percentBarTooltip',
     });
@@ -1171,7 +1171,7 @@ export class ExamplesHelper {
       headerName: 'Bbg Bid',
       field: 'bloombergBid',
       columnGroupShow: 'closed',
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
       valueFormatter: this.twoDecimalPlaceFormatter,
       sortable: true,
@@ -1182,7 +1182,7 @@ export class ExamplesHelper {
       field: 'bloombergAsk',
       editable: true,
       columnGroupShow: 'closed',
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -1217,7 +1217,7 @@ export class ExamplesHelper {
       enableValue: true,
       editable: true,
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
       valueFormatter: this.twoDecimalPlaceFormatter,
     });
@@ -1227,7 +1227,7 @@ export class ExamplesHelper {
       columnGroupShow: 'open',
       editable: true,
       enableValue: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       // enableRowGroup: true,
       valueFormatter: this.currencyPlaceFormatter,
       filter: 'agNumberColumnFilter',
@@ -1239,7 +1239,7 @@ export class ExamplesHelper {
       field: 'dv01',
       columnGroupShow: 'closed',
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -1346,7 +1346,7 @@ export class ExamplesHelper {
           enableValue: true,
           editable: true,
           filter: true,
-          cellClass: 'number-cell',
+          // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
         {
@@ -1355,7 +1355,7 @@ export class ExamplesHelper {
           columnGroupShow: 'open',
           editable: true,
           enableValue: true,
-          cellClass: 'number-cell',
+          // cellClass: 'number-cell',
           enableRowGroup: true,
           filter: 'agNumberColumnFilter',
           type: 'abColDefNumber',
@@ -1365,7 +1365,7 @@ export class ExamplesHelper {
           field: 'bid',
           columnGroupShow: 'closed',
           filter: true,
-          cellClass: 'number-cell',
+          // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
 
@@ -1373,7 +1373,7 @@ export class ExamplesHelper {
           headerName: 'Bbg Bid',
           field: 'bloombergBid',
           columnGroupShow: 'closed',
-          cellClass: 'number-cell',
+          // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
         {
@@ -1382,7 +1382,7 @@ export class ExamplesHelper {
           columnGroupShow: 'closed',
           filter: true,
           resizable: true,
-          cellClass: 'number-cell',
+          // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
         {
@@ -1390,7 +1390,7 @@ export class ExamplesHelper {
           field: 'bloombergAsk',
           editable: true,
           columnGroupShow: 'closed',
-          cellClass: 'number-cell',
+          // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
       ],
@@ -1439,7 +1439,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       // valueFormatter: notionalFormatter,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
       filter: true,
       resizable: true,
@@ -1483,7 +1483,7 @@ export class ExamplesHelper {
       field: 'dv01',
       columnGroupShow: 'closed',
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -1607,7 +1607,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       // valueFormatter: notionalFormatter,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
       filter: true,
       resizable: true,
@@ -1653,7 +1653,7 @@ export class ExamplesHelper {
       field: 'bid',
       columnGroupShow: 'closed',
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -1661,7 +1661,7 @@ export class ExamplesHelper {
       headerName: 'Bbg Bid',
       field: 'bloombergBid',
       columnGroupShow: 'closed',
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -1670,7 +1670,7 @@ export class ExamplesHelper {
       columnGroupShow: 'closed',
       filter: true,
       resizable: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -1678,7 +1678,7 @@ export class ExamplesHelper {
       field: 'bloombergAsk',
       editable: true,
       columnGroupShow: 'closed',
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -1723,7 +1723,7 @@ export class ExamplesHelper {
       enableValue: true,
       editable: true,
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
     schema.push({
@@ -1732,7 +1732,7 @@ export class ExamplesHelper {
       columnGroupShow: 'open',
       editable: true,
       enableValue: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       enableRowGroup: true,
       filter: 'agNumberColumnFilter',
       type: 'abColDefNumber',
@@ -1743,7 +1743,7 @@ export class ExamplesHelper {
       field: 'dv01',
       columnGroupShow: 'closed',
       filter: true,
-      cellClass: 'number-cell',
+      // cellClass: 'number-cell',
       type: 'abColDefNumber',
     });
 
@@ -1918,14 +1918,14 @@ export class ExamplesHelper {
         editable: true,
         sortable: true,
         aggFunc: 'sum',
-        cellClass: 'number-cell',
+        // cellClass: 'number-cell',
       },
       {
         field: 'budget',
         editable: true,
         sortable: true,
         aggFunc: 'sum',
-        cellClass: 'number-cell',
+        // cellClass: 'number-cell',
       },
       { field: 'privyCounsellor', editable: true, sortable: true },
       { field: 'memberOfCommons', editable: true, sortable: true },

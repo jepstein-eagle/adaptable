@@ -314,13 +314,15 @@ class GradientColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<GradientColumnPopupProps> {
   return {
     GradientColumns: state.GradientColumn.GradientColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<GradientColumnPopupProps> {
   return {
     onAddGradientColumn: (GradientColumn: GradientColumn) =>
       dispatch(GradientColumnRedux.GradientColumnAdd(GradientColumn)),

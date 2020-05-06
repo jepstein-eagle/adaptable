@@ -32,7 +32,7 @@ import { PercentBarSharedEntity } from '../PercentBar/PercentBarSharedEntity';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
-  onTeamSharingFetch: () => TeamSharingRedux.TeamSharingShareAction;
+  // onTeamSharingFetch: () => TeamSharingRedux.TeamSharingShareAction;
   onImportItem: (
     Entity: AdaptableObject,
     strategy: AdaptableFunctionName
@@ -41,9 +41,9 @@ interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupC
 }
 
 class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {}> {
-  componentDidMount() {
-    this.props.onTeamSharingFetch();
-  }
+  //  componentDidMount() {
+  //    this.props.onTeamSharingFetch();
+  // }
 
   render() {
     let infoBody: any[] = ['Team Sharing'];
@@ -176,15 +176,17 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<TeamSharingPopupProps> {
   return {
     Entities: state.TeamSharing.SharedEntities,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<TeamSharingPopupProps> {
   return {
-    onTeamSharingFetch: () => dispatch(TeamSharingRedux.TeamSharingFetch()),
+    //  onTeamSharingFetch: () => dispatch(TeamSharingRedux.TeamSharingFetch()),
     onImportItem: (entity: AdaptableObject, strategy: AdaptableFunctionName) =>
       dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy)),
     onRemoveItem: (Uuid: string) => dispatch(TeamSharingRedux.TeamSharingRemoveItem(Uuid)),

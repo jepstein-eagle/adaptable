@@ -80,6 +80,14 @@ function InitAdaptableDemo() {
         Revision: 4,
         AdvancedSearches: [],
       },
+      FormatColumn: {
+        FormatColumns: [
+          {
+            ColumnId: 'notional',
+            CellAlignment: 'Right',
+          },
+        ],
+      },
       QuickSearch: {
         Revision: 11,
         QuickSearchText: 'b',
@@ -115,10 +123,13 @@ function InitAdaptableDemo() {
       };
       api.layoutApi.createAndSetLayout(newLayout);
     } else if (toolbarButton.Name == 'btnCopyLayout') {
-      let currentLayout = api.layoutApi.getCurrentLayout();
+      //   let currentLayout = api.layoutApi.getCurrentLayout();
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 
-      api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
+      //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
+      console.log('here');
+      api.formatColumnApi.setCellAlignment('amount', 'Right');
+      api.formatColumnApi.setCellAlignment('notional', 'Center');
     }
   });
 

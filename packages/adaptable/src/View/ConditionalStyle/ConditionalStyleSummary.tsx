@@ -170,7 +170,10 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ConditionalStyleSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
@@ -183,7 +186,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ConditionalStyleSummaryProps> {
   return {
     onAddConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),

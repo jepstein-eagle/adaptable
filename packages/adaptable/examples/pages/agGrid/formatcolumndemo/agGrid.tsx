@@ -84,6 +84,10 @@ let demoConfig: PredefinedConfig = {
         },
       },
       {
+        ColumnId: 'bid',
+        CellAlignment: 'Right',
+      },
+      {
         ColumnId: 'notional',
         Style: {
           FontWeight: 'Bold',
@@ -95,9 +99,10 @@ let demoConfig: PredefinedConfig = {
           Formatter: 'NumberFormatter',
           Options: {
             Parentheses: true,
-            IntegerDigits: 10,
+            IntegerDigits: 3,
           },
         },
+        CellAlignment: 'Center',
       },
       {
         ColumnId: 'country',

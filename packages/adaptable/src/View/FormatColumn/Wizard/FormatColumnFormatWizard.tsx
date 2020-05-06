@@ -4,8 +4,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
-import { Flex, Box } from 'rebass';
-import Radio from '../../../components/Radio';
+import { Flex } from 'rebass';
 import Panel from '../../../components/Panel';
 import HelpBlock from '../../../components/HelpBlock';
 import Input from '../../../components/Input';
