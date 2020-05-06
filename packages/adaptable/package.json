@@ -9,6 +9,8 @@
   "typings": "index.d.ts",
   "dependencies": {
     "@adaptabletools/grid": "^0.1.8",
+    "@mdi/js": "^5.1.45",
+    "@mdi/react": "^1.4.0",
     "adaptable-parser": "file:../adaptable-parser",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",

@@ -31,6 +31,7 @@ export type FunctionMap = {
 
 export type Function = {
   docs?: FunctionDocBlock[];
+  hidden?: boolean;
   handler: FunctionHandler;
 };
 

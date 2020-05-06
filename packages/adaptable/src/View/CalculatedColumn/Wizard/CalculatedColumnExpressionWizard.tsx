@@ -18,11 +18,27 @@ import { CalculatedColumnExpressionService } from '../../../Utilities/Services/C
 import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { AdaptableColumn } from '../../../types';
 import calculatedColumn from '../../../components/icons/calculated-column';
-import { evaluate } from 'adaptable-parser';
+import { evaluate, defaultFunctions, parse, findPathTo } from 'adaptable-parser';
 import useSelectionRange from '../../../components/utils/useSelectionRange';
 import { Dispatch, SetStateAction, useState } from 'react';
 import useProperty from '../../../components/utils/useProperty';
 import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
+import Icon from '@mdi/react';
+import {
+  mdiPlus,
+  mdiMinus,
+  mdiMultiplication,
+  mdiDivision,
+  mdiPercent,
+  mdiExponent,
+  mdiEqual,
+  mdiNotEqual,
+  mdiLessThan,
+  mdiGreaterThan,
+  mdiLessThanOrEqual,
+  mdiGreaterThanOrEqual,
+} from '@mdi/js';
+import { FunctionMap } from 'adaptable-parser/src/types';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -54,6 +70,9 @@ function EditorButton(props: EditorButtonProps) {
         props.textAreaRef.current.focus();
         document.execCommand('insertText', false, props.data);
       }}
+      style={{
+        cursor: 'grab',
+      }}
       {...props}
     />
   );
@@ -64,66 +83,162 @@ interface ExpressionEditorProps {
   onChange?: (event: React.FormEvent) => void;
   firstRow: { [key: string]: any };
   columns: AdaptableColumn[];
+  functions: FunctionMap;
 }
 function ExpressionEditor(props: ExpressionEditorProps) {
   const [textAreaRefCallback, textAreaRef, selectionStart, selectionEnd] = useSelectionRange();
   const cursor = selectionStart === selectionEnd ? selectionStart : null;
   const [data, setData] = useState(props.firstRow);
-  let result;
+  let result, currentFunction;
 
   try {
-    result = evaluate(props.value, { data });
+    const expr = parse(props.value);
+    result = expr.evaluate({ data });
+    const path = findPathTo(expr.ast, cursor);
+    currentFunction = path[0] ? path[0].type : null;
   } catch (error) {
     result = 'Error: ' + error.message;
   }
 
   return (
     <Flex flexDirection="row">
-      <Box flex={1}>
-        <EditorButton data="+" textAreaRef={textAreaRef}>
-          +
-        </EditorButton>
-        <EditorButton data="-" textAreaRef={textAreaRef}>
-          -
-        </EditorButton>
-        <EditorButton data="*" textAreaRef={textAreaRef}>
-          *
-        </EditorButton>
-        <EditorButton data="/" textAreaRef={textAreaRef}>
-          /
-        </EditorButton>
+      <Box flex={1} mr={2}>
+        <Box mb={2}>
+          <EditorButton data="+" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiPlus} />
+          </EditorButton>
+          <EditorButton data="-" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiMinus} />
+          </EditorButton>
+          <EditorButton data="*" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiMultiplication} />
+          </EditorButton>
+          <EditorButton data="/" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiDivision} />
+          </EditorButton>
+          <EditorButton data="%" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiPercent} />
+          </EditorButton>
+          <EditorButton data="^" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiExponent} />
+          </EditorButton>
+          <EditorButton data="AND" textAreaRef={textAreaRef}>
+            AND
+          </EditorButton>
+          <EditorButton data="OR" textAreaRef={textAreaRef}>
+            OR
+          </EditorButton>
+          <EditorButton data="=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiEqual} />
+          </EditorButton>
+          <EditorButton data="!=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiNotEqual} />
+          </EditorButton>
+          <EditorButton data="<" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiLessThan} />
+          </EditorButton>
+          <EditorButton data=">" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiGreaterThan} />
+          </EditorButton>
+          <EditorButton data="<=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiLessThanOrEqual} />
+          </EditorButton>
+          <EditorButton data=">=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiGreaterThanOrEqual} />
+          </EditorButton>
+        </Box>
+        <Box mb={2}>
+          {Object.keys(props.functions).map(functionName =>
+            props.functions[functionName].hidden ? null : (
+              <EditorButton data={`${functionName}()`} textAreaRef={textAreaRef} key={functionName}>
+                {functionName}
+              </EditorButton>
+            )
+          )}
+        </Box>
         <Textarea
           ref={textAreaRefCallback}
           value={props.value}
           placeholder="Enter expression"
           autoFocus
+          spellCheck="false"
           onChange={props.onChange}
-          style={{ width: '100%', height: '100px', fontFamily: 'monospace' }}
+          style={{ width: '100%', height: '100px', fontFamily: 'monospace', fontSize: '1rem' }}
         />
-        <pre style={{ whiteSpace: 'pre-wrap' }}>{result}</pre>
+        {currentFunction ? (
+          props.functions[currentFunction].docs ? (
+            props.functions[currentFunction].docs.map((doc, index) =>
+              doc.type === 'code' ? (
+                <code key={index}>
+                  <pre style={{ whiteSpace: 'pre-wrap' }}>{doc.content}</pre>
+                </code>
+              ) : doc.type === 'paragraph' ? (
+                <p key={index}>{doc.content}</p>
+              ) : null
+            )
+          ) : (
+            <p>
+              No docs for <b>{currentFunction}</b>
+            </p>
+          )
+        ) : null}
+        <pre style={{ whiteSpace: 'pre-wrap' }}>Result: {JSON.stringify(result)}</pre>
       </Box>
-      <FormLayout>
-        {props.columns.map(column => (
-          <FormRow
-            key={column.ColumnId}
-            label={
-              <EditorButton data={`COL('${column.ColumnId}')`} textAreaRef={textAreaRef}>
-                {column.FriendlyName}
-              </EditorButton>
-            }
-          >
-            {column.DataType === 'Number' ? (
-              <Input type="number" defaultValue={data[column.ColumnId]} />
-            ) : column.DataType === 'String' ? (
-              <Input type="text" defaultValue={data[column.ColumnId]} />
-            ) : column.DataType === 'Date' ? (
-              <Input type="date" defaultValue={data[column.ColumnId].toISOString().substr(0, 10)} />
-            ) : column.DataType === 'Boolean' ? (
-              <CheckBox defaultChecked={data[column.ColumnId]} />
-            ) : null}
-          </FormRow>
-        ))}
-      </FormLayout>
+      <Box height={430} style={{ overflowY: 'auto' }}>
+        <FormLayout gridColumnGap="0" gridRowGap="0">
+          {props.columns.map(column => (
+            <FormRow
+              key={column.ColumnId}
+              label={
+                <EditorButton
+                  data={`COL('${column.ColumnId}')`}
+                  textAreaRef={textAreaRef}
+                  width="100%"
+                >
+                  {column.FriendlyName}
+                </EditorButton>
+              }
+            >
+              {column.DataType === 'Number' ? (
+                <Input
+                  type="number"
+                  value={data[column.ColumnId]}
+                  onChange={(e: React.FormEvent) =>
+                    setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                  }
+                  width="100%"
+                />
+              ) : column.DataType === 'String' ? (
+                <Input
+                  type="text"
+                  value={data[column.ColumnId]}
+                  onChange={(e: React.FormEvent) =>
+                    setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                  }
+                  width="100%"
+                />
+              ) : column.DataType === 'Date' ? (
+                <Input
+                  type="date"
+                  value={data[column.ColumnId].toISOString().substr(0, 10)}
+                  onChange={(e: React.FormEvent) => {
+                    setData({
+                      ...data,
+                      [column.ColumnId]: new Date((e.target as HTMLInputElement).value),
+                    });
+                  }}
+                  width="100%"
+                />
+              ) : column.DataType === 'Boolean' ? (
+                <CheckBox
+                  checked={data[column.ColumnId]}
+                  onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
+                />
+              ) : null}
+            </FormRow>
+          ))}
+        </FormLayout>
+      </Box>
     </Flex>
   );
 }
@@ -155,6 +270,7 @@ export class CalculatedColumnExpressionWizard
             onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
             firstRow={firstRow}
             columns={this.props.Columns}
+            functions={defaultFunctions}
           />
           {/* {validationState ? (
             <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox>
