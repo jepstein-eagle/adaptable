@@ -3239,8 +3239,10 @@ export class Adaptable implements IAdaptable {
   public loadDataSource(dataSource: any) {
     this.setDataSource(dataSource);
     let currentLayout = this.api.layoutApi.getCurrentLayout();
-    if (ArrayExtensions.IsNotNullOrEmpty(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys)) {
-      this.expandRowGroupsForValues(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys);
+    if (currentLayout && currentLayout.AdaptableGridInfo) {
+      if (ArrayExtensions.IsNotNullOrEmpty(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys)) {
+        this.expandRowGroupsForValues(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys);
+      }
     }
   }
 
