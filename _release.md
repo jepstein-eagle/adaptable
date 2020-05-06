@@ -1,8 +1,8 @@
-## 6.2.1-canary6
+## 6.2.1-canary8
 
-Calculated Column fix
+Post merge
 
-## 6.2.1-canary5
+## 6.2.1-canary7
 
 Fixing components for build process
 
