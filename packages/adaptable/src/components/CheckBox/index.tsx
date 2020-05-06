@@ -65,11 +65,50 @@ const CheckBox = ({
     checkboxRef.current!.indeterminate = indeterminate;
   }, [indeterminate]);
 
+  let input = (
+    <input
+      className={join(
+        `ab-CheckBox-input`,
+        variant === 'agGrid' ? `ag-checkbox-input ag-input-field-input` : null
+      )}
+      ref={checkboxRef}
+      disabled={disabled}
+      checked={!!computedChecked}
+      type="checkbox"
+      name={name}
+      value={value}
+      style={{
+        verticalAlign: 'middle',
+        opacity: 0,
+        cursor: 'pointer',
+        position: 'relative',
+        top: -2,
+      }}
+      onChange={onInputChange}
+    />
+  );
+  if (variant === 'agGrid') {
+    input = (
+      <div
+        className={join(
+          variant === 'agGrid' ? 'ag-checkbox-input-wrapper' : '',
+          variant === 'agGrid' && checked ? 'ag-checked' : ''
+        )}
+      >
+        {input}
+      </div>
+    );
+  }
   return (
     <Box
       my={2}
       {...props}
-      className={join('ab-CheckBox', disabled ? 'ab-CheckBox--disabled' : '', props.className)}
+      className={join(
+        'ab-CheckBox',
+
+        disabled ? 'ab-CheckBox--disabled' : '',
+        props.className
+      )}
       style={{
         display: 'inline-flex',
         flexFlow: 'row',
@@ -82,23 +121,7 @@ const CheckBox = ({
     >
       {before}
       {beforeGap}
-      <input
-        className="ab-CheckBox-input"
-        ref={checkboxRef}
-        disabled={disabled}
-        checked={!!computedChecked}
-        type="checkbox"
-        name={name}
-        value={value}
-        style={{
-          verticalAlign: 'middle',
-          opacity: 0,
-          cursor: 'pointer',
-          position: 'relative',
-          top: -2,
-        }}
-        onChange={onInputChange}
-      />
+      {input}
 
       {variant !== 'agGrid' ? (
         <svg viewBox="0 0 40 40" height={getSize(19)} className="ab-CheckBox-svg">
@@ -110,9 +133,7 @@ const CheckBox = ({
             <polyline points="9,22 18,30 33,14" />
           )}
         </svg>
-      ) : (
-        <span className={`ag-icon ag-icon-checkbox-${computedChecked ? 'checked' : 'unchecked'}`} />
-      )}
+      ) : null}
 
       {afterGap}
       {after}

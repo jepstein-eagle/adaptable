@@ -1132,7 +1132,15 @@ export class ExamplesHelper {
       enableValue: true,
       editable: true,
       sortable: true,
-      cellRenderer: StarsCellRenderer,
+      // cellRenderer: StarsCellRenderer,
+      valueFormatter: (params: any) => {
+        let text = '';
+        for (var i = 0; i < params.value; i++) {
+          text += '*';
+        }
+
+        return text;
+      },
       type: 'abColDefNumber',
       filter: true,
       enablePivot: true,

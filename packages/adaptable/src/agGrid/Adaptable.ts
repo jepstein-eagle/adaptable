@@ -1382,7 +1382,7 @@ export class Adaptable implements IAdaptable {
   public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
     const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
-      if (colDef.valueFormatter) {
+      if (typeof colDef.valueFormatter == 'function') {
         const column = this.gridOptions.columnApi
           .getAllColumns()
           .find(c => c.getColId() == columnId);

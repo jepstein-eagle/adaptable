@@ -254,7 +254,17 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   private renderItemForVendorStyle = (props: CheckBoxProps): React.ReactNode => {
-    return <CheckBox {...props} variant="agGrid" fontSize="12px" marginTop={1} />;
+    return (
+      <CheckBox
+        {...props}
+        variant="agGrid"
+        fontSize="12px"
+        marginTop={1}
+        marginBottom={1}
+        marginLeft={1}
+        marginRight={1}
+      />
+    );
   };
 
   // Methods for getting the range
