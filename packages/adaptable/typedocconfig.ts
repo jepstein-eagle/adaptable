@@ -3,6 +3,7 @@ module.exports = {
   // mode: 'modules',
   includeDeclarations: false,
   exclude: [
+    'agGrid.ts',
     './src/agGrid/**/*',
     './src/View/**/*',
     './src/components/**/*',
