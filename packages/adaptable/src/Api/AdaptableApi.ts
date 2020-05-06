@@ -88,10 +88,10 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [cellSummaryApi](#cellsummaryapi)               | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columncategoryapi)         | Puts columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) for dealing with many columns |
- *  | [columnChooserApi](#columnchooserapi)         | |
- *  | [columnFilterApi](#columnfilterapi)         | |
- *  | [conditionalStyleApi](#conditionalstyleapi)         | |
+ *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
+ *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
+ *  | [columnFilterApi](#columnfilterapi)             | Manages [Column Filters](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html), allowing run-time code access to filtering|
+ *  | [conditionalStyleApi](#conditionalstyleapi)     | Set rows and columns to have their own [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) depending on cell data|
  *  | [configApi](#configapi)         | |
  *  | [customSortApi](#customsortapi)         | |
  *  | [dashboardApi](#dashboardapi)         | |
