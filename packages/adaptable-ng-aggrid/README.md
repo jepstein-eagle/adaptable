@@ -6,7 +6,7 @@ Repository for the **AdapTable Angular ag-Grid Wrapper** which allows you to ins
 
 Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
 
 ## Installation
 

@@ -20,7 +20,7 @@ AdapTable is written in TypeScript.  All the necessary definition files are incl
 
 Version 6 of AdapTable has introduced many new functionality changes and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
 
 ## Using AdapTable
 
@@ -174,7 +174,7 @@ Developers can learn how to access AdapTable programmatically at [AdapTable Deve
 The other source for Help is our collection of 'Read Me' Docs ([full list here](./packages/adaptable/readme/readme-list.md)).
 
 These include:
- - [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
+ - [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
  - [Adaptable Core](./packages/adaptable/README.md)
  - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
  - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md) 
