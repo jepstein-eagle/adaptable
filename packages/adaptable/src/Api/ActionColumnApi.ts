@@ -13,11 +13,9 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  * - [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
  *
- * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
+ * - [Action Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
  * - [Action Column Video](https://youtu.be/y0cDvtdmSKM)
- *
- * --------------
  *
  */
 export interface ActionColumnApi {

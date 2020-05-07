@@ -7,14 +7,16 @@ These should be used in conjunction with the more technical [AdapTable Developer
 > The main source of AdapTable Help used to be in [Zendesk](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
 ## Version and Framework Related Guides
- - [Adaptable Core](../README.md)
- - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
- - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
- - [Plugins](../../../packages/plugins/README.md)
- - [Version 6 Upgrade Guide](./upgrade-guides/upgrade-guide-v6.md)
+
+- [Adaptable Core](../README.md)
+- [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
+- [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
+- [Plugins](../../../packages/plugins/README.md)
+- [Version 6 Upgrade Guide](./upgrade-guides/upgrade-guide-v6.md)
 
  
 ## Adaptable Guides
+
  - [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
  - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
  - [Entitlements Guide](./guides/adaptable-entitlements-guide.md)
@@ -52,7 +54,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Column Filter](./functions/column-filter-function.md) 
 - [Column Info](./functions/column-info-function.md)             
 - [Conditional Style](./functions/conditional-style-function.md)  
-- [Custom Sort](./functions/custom-sort-function.md)              
+- [Custom Sort](./functions/custom-sort-function.md)
 - [Dashboard](./functions/dashboard-function.md) 
 - [Data Source](./functions/data-source-function.md)  
 - [Export](./functions/export-function.md)  

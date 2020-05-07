@@ -8,7 +8,7 @@ It has some changes of interest:
 
 Note formmatted value expression and column filter dropdown
 
-## Formatted Columns
+## Display Format Columns
 
 To Do
 

@@ -4,9 +4,15 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
 /**
  * Provides full and comprehensive run-time access to the Advanced Search function and associated state.
  *
+ * --------------
+ *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
+ *
+ * - [Advanced Search State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)
+ *
+ * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
  *
  */
 export interface AdvancedSearchApi {
