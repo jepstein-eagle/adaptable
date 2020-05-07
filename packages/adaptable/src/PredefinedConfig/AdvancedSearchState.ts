@@ -20,6 +20,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * - [[AdvancedSearchApi | Advanced Search API]]
  *
  *  The {@link AdvancedSearchApi | Advanced Search API}
+ *  The {@link AdvancedSearchApi}
  *
  * - [Seearch Options](_src_adaptableoptions_searchoptions_.searchoptions.html)
  *
