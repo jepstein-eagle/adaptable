@@ -3,11 +3,17 @@ import { AlertState, AlertProperties, AlertDefinition } from '../PredefinedConfi
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 
 /**
- * Provides full and comprehensive run-time access to the Alert function and associated state.
+ * Provides full and comprehensive run-time access to the Alert function and {@link AlertState|Alert State}.
  *
- * **Further AdapTable Help Resources**
+ * --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo/) | [State](_src_predefinedconfig_alertstate_.alertstate.html) | [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
+ *  ### Further AdapTable Help Resources
+ *
+ * - [Alert Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
+ *
+ * - {@link AlertState|Alert State}
+ *
+ * - [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
  *
  */
 export interface AlertApi {

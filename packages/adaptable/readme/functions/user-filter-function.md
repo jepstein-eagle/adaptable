@@ -22,9 +22,11 @@ Tip
 The name that you give to the Filter is what will appear in the Column Filter dropdown and in the Query Builder in future so make it as succinct but descriptive as possible.
 
 ## UI Elements
+
 To Do
 
 ## Entitlements
+
 To Do
 
 ## FAQ

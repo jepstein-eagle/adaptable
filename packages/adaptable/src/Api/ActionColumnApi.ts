@@ -1,9 +1,9 @@
 import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColumnState';
 
 /**
- * Provides run-time access to the Action Column function and associated state.
+ * Provides run-time access to the Action Column function and associated {@link ActionColumnState|Action Column State}.
  *
- * The Action Column Function enables the creation of special columns that contain buttons together with a function that is called when the button is clicked by the user.
+ * The Action Column Function enables the creation of a special {@link ActionColumn|Action Column} that contain buttons together with a function that is called when the button is clicked by the user.
  *
  * --------------
  *

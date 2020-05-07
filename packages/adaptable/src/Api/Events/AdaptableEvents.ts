@@ -21,6 +21,14 @@ export interface AdaptableEventData {
   id: any;
 }
 
+/**
+ * Base object for all Adaptable Event xxxInfo objects (e.g. AlertInfo, ActionColumnClickedInfo etc.)
+ *
+ * Contains a single `AdaptableApi` property which gives access to the main {@link AdaptableApi|Adaptable API}
+ */
 export interface AdaptableEventInfo {
+  /**
+   * The {@link AdaptableApi|Adaptable API} which provides run-time code access to all AdapTable properties, functions and events.
+   */
   adaptableApi: AdaptableApi;
 }

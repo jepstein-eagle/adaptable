@@ -18,6 +18,7 @@ Column Categories are most used within Column Chooser as a way to easily manage 
 
 
 ## UI Elements
+
 Column Category includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Column Categories with Edit and Delete buttons, plus an Add button to start the Column Category Wizard.
@@ -25,6 +26,7 @@ Column Category includes the following UI Elements:
 - **Wizard** - A series of steps facilitating the creation and editing of Column Categoriess.
 
 ## Entitlements
+
 Column Category supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -39,8 +41,8 @@ Column Category supports these Entitlement Rules:
 
 No. Each column can only be in one (or no) Column Category.
 
-
 ### Further Information
+
 - [Column Category State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columncategorystate_.columncategorystate.html)
 
 - [Column Category Api](https://api.adaptabletools.com/interfaces/_src_api_columncategoryapi_.columncategoryapi.html)

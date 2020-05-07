@@ -54,7 +54,11 @@ export interface SearchOptions {
    *
    * Leave unset (default is 'None') to perform all searching and filtering on the client.
    *
+   * --------------
+   *
    * Read the [Server Functionality Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-server-functionality-guide.md) for full details of server searching options.
+   *
+   * --------------
    *
    *  **Note: Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 150-200,000 records that you need filtering.**
    *
@@ -70,7 +74,7 @@ export interface SearchOptions {
    *
    * - `AllSearchandSort` - runs all search and filtering functions on the server (i.e. Advanced Search, Quick Search, Column Filters etc) and will also run all sorting on the server.
    *
-   * **SearchChanged Event**
+   * ### SearchChanged Event
    *
    * If a search function has been selected to be run on the Server then AdapTable will not do any relevant searching or filtering when the function runs.
    *
@@ -84,7 +88,7 @@ export interface SearchOptions {
    *
    * Once the data is sent to AdapTable, it will automatically make any changes to your sorting, styles etc as required.
    *
-   *  **DataSource Selector**
+   * ### DataSource Selector
    *
    * If the `SearchChangedTrigger` is *DataSource* then you will not need to perform any JSON translation (though you will still, of course, need to provide AdapTable with the new dataset).
    *

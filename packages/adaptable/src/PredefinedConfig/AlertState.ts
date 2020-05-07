@@ -11,9 +11,17 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * You can select the type of the Alert (e.g. Success, Warning, Error etc.) and where it appears.
  *
- * **Further AdapTable Help Resources**
+ * --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo/) | [API](_src_api_alertapi_.alertapi.html) | [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
+ *  ### Further AdapTable Help Resources
+ *
+ * - [Alert Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
+ *
+ * - {@link AlertAPI|Alert API}
+ *
+ * - [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
+ *
+ * --------------
  *
  * **Alert Predefined Config Example**
  *
