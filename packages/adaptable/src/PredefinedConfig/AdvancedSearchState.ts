@@ -19,6 +19,8 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - [[AdvancedSearchApi | Advanced Search API]]
  *
+ *  The {@link AdvancedSearchApi | Advanced Search API}
+ *
  * - [Seearch Options](_src_adaptableoptions_searchoptions_.searchoptions.html)
  *
  * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
