@@ -4,7 +4,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
 import { AdaptableFormat } from './Common/AdaptableFormat';
 
 /**
- *The Predefined Configuration for the `Format Column` function.
+ * The Predefined Configuration for the `FormatColumn` function.
  *
  * A Format Column is a column that is given specific Style and / or Display Format properties that are always rendered:
  *
