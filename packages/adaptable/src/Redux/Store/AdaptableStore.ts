@@ -340,6 +340,9 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
+
+      // temp: putting Glue42 here...
+      ConfigConstants.GLUE42,
     ];
 
     // this is now VERY BADLY NAMED!
