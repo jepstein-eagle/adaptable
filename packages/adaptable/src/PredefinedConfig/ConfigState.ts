@@ -15,7 +15,7 @@ export interface ConfigState {
    *
    * See [Adaptable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md) for more information.
    *
-   * **Note**: This is the only property in ConfigState - the base class for all Adaptable State objects.
+   * **Note**: This is the only property in [ConfigState](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_configstate_.configstate.html) - the base class for all Adaptable State objects.
    */
   Revision?: number;
 }

@@ -55,6 +55,24 @@ export {
   CellSummaryOperationDefinition,
 } from './PredefinedConfig/CellSummaryState';
 export { CellValidationState, CellValidationRule } from './PredefinedConfig/CellValidationState';
+export { ColumnCategoryState, ColumnCategory } from './PredefinedConfig/ColumnCategoryState';
+export { ColumnFilterState, ColumnFilter } from './PredefinedConfig/ColumnFilterState';
+export { ConditionalStyleState, ConditionalStyle } from './PredefinedConfig/ConditionalStyleState';
+export {
+  CustomSortState,
+  CustomSortCompareFunction,
+  CustomSort,
+} from './PredefinedConfig/CustomSortState';
+export { DashboardState, DashboardTab } from './PredefinedConfig/DashboardState';
+export { DataSourceState, DataSource, DataSourceParams } from './PredefinedConfig/DataSourceState';
+export { ExportState, Report, ReportSchedule } from './PredefinedConfig/ExportState';
+export { FlashingCellState, FlashingCell } from './PredefinedConfig/FlashingCellState';
+export { FormatColumnState, FormatColumn } from './PredefinedConfig/FormatColumnState';
+export {
+  FreeTextColumnState,
+  FreeTextColumn,
+  FreeTextStoredValue,
+} from './PredefinedConfig/FreeTextColumnState';
 
 // Adaptable Options Objects
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
