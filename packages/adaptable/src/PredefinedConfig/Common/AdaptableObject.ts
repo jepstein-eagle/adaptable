@@ -13,9 +13,9 @@ export interface AdaptableObject {
   /**
    * A unique identifier for the object
    *
-   * Used to compare State objects
+   * Used internally by AdapTable to compare State objects
    *
-   * **Do not provide this property when creating an Adaptable Object in Predefined Config as Adaptable will do it for you when the application loads.**
+   * **Do not provide this property when defining an AdaptableObject in Predefined Config as AdapTable will do it automatically when the application loads.**
    */
   Uuid?: TypeUuid;
 }

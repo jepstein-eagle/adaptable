@@ -113,16 +113,28 @@ export interface AdvancedSearchState extends ConfigState {
 }
 
 /**
- * The AdvancedSearch object used in the Advanced Search function.
+ * The `AdvancedSearch` object used in the Advanced Search function.
+ *
+ *  See [Advanced Search State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) for full information on how to create Advanced Searches and links to other relevant AdapTable help resources.
+ *
  */
 export interface AdvancedSearch extends AdaptableObject {
   /**
-   * The name of the Advanced Search - used for *external* identification purposes
+   * The name of the Advanced Search
+   *
+   * This is used for *external* identification purposes - please ensure it is unique
+   *
+   * It is the value that will appear in the dropdown in the Advanced Search Toolbar and ToolPanel.
    */
   Name: string;
 
   /**
-   * The Expression (or Query) that the Advanced Search implements when its run.  Only rows that satisfy the Expression are displayed.
+   * The Expression (or Query) that the Advanced Search function evaluates each time it runs.
+   *
+   * Only rows that satisfy the Expression are displayed in AdapTable.
+   *
+   * See [Expression Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-expression-guide.md) for more information.
+   *
    */
   Expression: Expression;
 }
