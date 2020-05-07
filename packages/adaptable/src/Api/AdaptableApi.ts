@@ -91,7 +91,7 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
  *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
  *  | [columnFilterApi](#columnfilterapi)             | Manages [Column Filters](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html), allowing run-time code access to filtering|
- *  | [conditionalStyleApi](#conditionalstyleapi)     | Set rows and columns to have their own [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) depending on cell data|
+ *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
  *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
  *  | [customSortApi](#customsortapi)                 | Manages [Custom Sort](_src_predefinedconfig_customsortstate_.customsortstate.html) allowing bespoke column sorting|
  *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of the Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|

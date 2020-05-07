@@ -7,13 +7,23 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Advanced Search enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
  *
- * Advanced Search uses an [Expression](_src_predefinedconfig_common_expression_.html) (aka Queries) for evaluation.
+ * Advanced Search uses an [Expression](../classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries) for evaluation.
  *
- *  **Further AdapTable Help Resources**
+ * --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [Advanced Search API](_src_api_advancedsearchapi_.advancedsearchapi.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ *  ## Further AdapTable Help Resources**
  *
- * **Advanced Search Predefined Config Example**
+ * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
+ *
+ * - [Advanced Search API](_src_api_advancedsearchapi_.advancedsearchapi.html)
+ *
+ * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ *
+ * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ *
+ * --------------
+ *
+ * ## Advanced Search Predefined Config Example**
  *
  * ```ts
  * export default {
