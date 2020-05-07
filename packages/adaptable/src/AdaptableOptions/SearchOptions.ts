@@ -5,13 +5,25 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
  *
  *  Includes options for running some (or all) search functions on the server and to exclude some columns from Quick Search.
  *
- * **Search Options Example**
+ * --------------
+ *
+ * ### Search Options Example**
  *
  * ```ts
  * searchOptions = {
  *  serverSearchOption: 'AdvancedSearch',
+ *  clearSearchesOnStartUp: true,
+ *  excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
+ *      if (column.ColumnId === 'country' || column.ReadOnly) {
+ *        return true;
+ *      }
+ *      return false;
+ *    },
  *};
  * ```
+ *
+ * In this example we will: perform `AdvancedSearch` on the server; clear any previously running Searches (from the last session) at startup; and exclude the 'country' column, and all ReadOnly columns, from Quick Search.
+ *
  */
 export interface SearchOptions {
   /**
@@ -41,6 +53,8 @@ export interface SearchOptions {
    * Which searching and filtering options, if any, should take place on the server.
    *
    * Leave unset (default is 'None') to perform all searching and filtering on the client.
+   *
+   * Read the [Server Functionality Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-server-functionality-guide.md) for full details of server searching options.
    *
    *  **Note: Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 150-200,000 records that you need filtering.**
    *
@@ -82,6 +96,7 @@ export interface SearchOptions {
    *
    *
    * **Default Value: None**
+   *
    */
   serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort';
 

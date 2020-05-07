@@ -8,13 +8,17 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
  *
  * --------------
  *
- *  **Further AdapTable Help Resources**
+ *  ### Further AdapTable Help Resources
  *
  * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
  *
  * - [Advanced Search State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)
  *
+ * - [Seearch Options](_src_adaptableoptions_searchoptions_.searchoptions.html)
+ *
  * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ *
+ * - [Server Functionality Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-server-functionality-guide.md)
  *
  */
 export interface AdvancedSearchApi {

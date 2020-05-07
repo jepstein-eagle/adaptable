@@ -11,7 +11,11 @@ export interface ConfigState {
    *
    * If the Revision number in Predefined Config is greater than the one stored in the User's state, then the section in Predefined Config will be used, and will replace the State.
    *
-   * If its not greater then Predefined Config is ignored as its already been passed into the User's state (and potentially superseded).
+   * If the Revision number in Predefined Config is not greater than the one stored in the User's state, then it is ignored as its already been passed into the User's state (and potentially superseded).
+   *
+   * See [Adaptable State Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md) for more information.
+   *
+   * **Note**: This is the only property in ConfigState - the base class for all Adaptable State objects.
    */
   Revision?: number;
 }
