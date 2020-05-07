@@ -15,21 +15,9 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
  *
- * - [Advanced Search API](_src_api_advancedsearchapi_.advancedsearchapi.html)
+ * - {@link AdvancedSearchApi|Advanced Search API}
  *
- * - [[AdvancedSearchApi  |  Advanced Search API]]
- *
- * - [[AdvancedSearchApi  ||  Advanced Search API]]
- *
- * - [[AdvancedSearchApi  ||  'Advanced Search API']]
- *
- * - [[AdvancedSearchApi  |  Advanced Search API]]
- *
- *  The {@link AdvancedSearchApi|Advanced Search API}
- *
- *  The {@link AdvancedSearchApi}
- *
- * - [Seearch Options](_src_adaptableoptions_searchoptions_.searchoptions.html)
+ * - {@link SearchOptions|Search Options}
  *
  * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
  *

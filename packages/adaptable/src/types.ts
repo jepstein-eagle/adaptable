@@ -23,6 +23,10 @@ export { DataChangedInfo } from './PredefinedConfig/Common/DataChangedInfo';
 export { AdaptableMenuItem, MenuInfo } from './PredefinedConfig/Common/Menu';
 export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo';
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
+export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
+export { Expression } from './PredefinedConfig/Common/Expression';
+export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
+export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';
 export {
@@ -73,6 +77,8 @@ export {
   FreeTextColumn,
   FreeTextStoredValue,
 } from './PredefinedConfig/FreeTextColumnState';
+export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
+export { LayoutState, Layout, PivotDetails } from './PredefinedConfig/LayoutState';
 
 // Adaptable Options Objects
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
