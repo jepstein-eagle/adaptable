@@ -7,7 +7,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Advanced Search enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
  *
- * Advanced Search uses an [Expression](../classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries) for evaluation.
+ * Advanced Search uses an [[Expression]] (aka Queries) for evaluation.
  *
  * --------------
  *
