@@ -80,7 +80,7 @@ export interface SearchOptions {
    *
    * Note; If you select server searching then you will need to perform any filtering and searching yourself and feed back the data to AdapTable. So you will need some way of 'translating' AdapTable's JSON Objects into a form meaningful to you, and then sending the return result set back to AdapTable.
    *
-   * There are a number of different api methods you can use but the most common is [setGridData](_src_api_gridapi_.gridapi.html#setgriddata)
+   * There are a number of different api methods you can use but the most common is {@link GridApi.setGridData|Set Grid Data} {@link GridApi.setGridData()|Set Grid Data} [setGridData](_src_api_gridapi_.gridapi.html#setgriddata)
    *
    * Once the data is sent to AdapTable, it will automatically make any changes to your sorting, styles etc as required.
    *

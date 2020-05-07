@@ -27,7 +27,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * --------------
  *
- * ### Advanced Search Predefined Config Example**
+ * ### Advanced Search Predefined Config Example
  *
  * ```ts
  * export default {

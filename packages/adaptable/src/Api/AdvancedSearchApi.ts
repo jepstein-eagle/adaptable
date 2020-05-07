@@ -12,9 +12,9 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
  *
  * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
  *
- * - [Advanced Search State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)
+ * - {@link AdvancedSearchState|Advanced Search State}
  *
- * - [Seearch Options](_src_adaptableoptions_searchoptions_.searchoptions.html)
+ * - {@link SearchOptions|Search Options}
  *
  * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
  *
