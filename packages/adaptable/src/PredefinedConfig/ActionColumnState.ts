@@ -17,11 +17,11 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  --------------
  *
- *  **Further AdapTable Help Resources**
+ *   ### Further AdapTable Help Resources
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - [Action Column API](_src_api_actioncolumnapi_.actioncolumnapi.html)
+ * - {@link ActionColumnApi|Action Column API}
  *
  * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
@@ -29,7 +29,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  --------------
  *
- * **Action Column Predefined Config Example**
+ * ### Action Column Predefined Config Example
  *
  * In this example we create a column called 'Delete Trade'.
  *

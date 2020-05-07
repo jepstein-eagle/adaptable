@@ -7,11 +7,11 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  * --------------
  *
- *  **Further AdapTable Help Resources**
+ *  ### Further AdapTable Help Resources
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
+ * - {@link ActionColumnState|Action Column State}
  *
  * - [Action Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
