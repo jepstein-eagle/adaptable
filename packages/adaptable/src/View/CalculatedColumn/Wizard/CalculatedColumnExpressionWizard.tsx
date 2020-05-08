@@ -37,8 +37,11 @@ import {
   mdiGreaterThan,
   mdiLessThanOrEqual,
   mdiGreaterThanOrEqual,
+  mdiDrag,
+  mdiFunction,
 } from '@mdi/js';
 import { FunctionMap } from 'adaptable-parser/src/types';
+import OverlayTrigger from '../../../components/OverlayTrigger';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -60,6 +63,7 @@ interface EditorButtonProps extends SimpleButtonProps {
 function EditorButton(props: EditorButtonProps) {
   return (
     <SimpleButton
+      variant="text"
       draggable={true}
       onDragStart={event => {
         document.getSelection().empty();
@@ -100,10 +104,48 @@ function ExpressionEditor(props: ExpressionEditorProps) {
     result = 'Error: ' + error.message;
   }
 
+  const functionsDropdown = (
+    <OverlayTrigger
+      render={() => (
+        <Flex
+          flexDirection="column"
+          backgroundColor="white"
+          p={2}
+          style={{
+            border: 'var(--ab-cmp-dropdownbutton-list__border)',
+            borderRadius: 'var(--ab-cmp-dropdownbutton-list__border-radius)',
+            zIndex: ('var(--ab-cmp-dropdownbutton-list__z-index)' as unknown) as number,
+            background: 'var(--ab-cmp-dropdownbutton-list__background)',
+          }}
+        >
+          {Object.keys(props.functions).map(functionName =>
+            props.functions[functionName].hidden ? null : (
+              <EditorButton
+                data={`${functionName}()`}
+                textAreaRef={textAreaRef}
+                key={functionName}
+                mr={1}
+              >
+                {functionName}
+              </EditorButton>
+            )
+          )}
+        </Flex>
+      )}
+      showEvent="click"
+      hideEvent="blur"
+    >
+      <SimpleButton>
+        <Icon size="1rem" path={mdiFunction} />
+      </SimpleButton>
+    </OverlayTrigger>
+  );
+
   return (
-    <Flex flexDirection="row">
-      <Box flex={1} mr={2}>
-        <Box mb={2}>
+    <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
+      <Box flex={1} mx={2}>
+        <Flex mb={1} p={1} style={{ background: 'var(--ab-color-primary)' }}>
+          {functionsDropdown}
           <EditorButton data="+" textAreaRef={textAreaRef}>
             <Icon size="1rem" path={mdiPlus} />
           </EditorButton>
@@ -121,12 +163,6 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           </EditorButton>
           <EditorButton data="^" textAreaRef={textAreaRef}>
             <Icon size="1rem" path={mdiExponent} />
-          </EditorButton>
-          <EditorButton data="AND" textAreaRef={textAreaRef}>
-            AND
-          </EditorButton>
-          <EditorButton data="OR" textAreaRef={textAreaRef}>
-            OR
           </EditorButton>
           <EditorButton data="=" textAreaRef={textAreaRef}>
             <Icon size="1rem" path={mdiEqual} />
@@ -146,16 +182,27 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           <EditorButton data=">=" textAreaRef={textAreaRef}>
             <Icon size="1rem" path={mdiGreaterThanOrEqual} />
           </EditorButton>
-        </Box>
-        <Box mb={2}>
+          <EditorButton data="AND" textAreaRef={textAreaRef}>
+            AND
+          </EditorButton>
+          <EditorButton data="OR" textAreaRef={textAreaRef}>
+            OR
+          </EditorButton>
+        </Flex>
+        {/* <Box mb={2} p={1} style={{ background: 'var(--ab-color-primary)' }}>
           {Object.keys(props.functions).map(functionName =>
             props.functions[functionName].hidden ? null : (
-              <EditorButton data={`${functionName}()`} textAreaRef={textAreaRef} key={functionName}>
+              <EditorButton
+                data={`${functionName}()`}
+                textAreaRef={textAreaRef}
+                key={functionName}
+                mr={1}
+              >
                 {functionName}
               </EditorButton>
             )
           )}
-        </Box>
+        </Box> */}
         <Textarea
           ref={textAreaRefCallback}
           value={props.value}
@@ -166,35 +213,44 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           style={{ width: '100%', height: '100px', fontFamily: 'monospace', fontSize: '1rem' }}
         />
         {currentFunction ? (
-          props.functions[currentFunction].docs ? (
-            props.functions[currentFunction].docs.map((doc, index) =>
-              doc.type === 'code' ? (
-                <code key={index}>
-                  <pre style={{ whiteSpace: 'pre-wrap' }}>{doc.content}</pre>
-                </code>
-              ) : doc.type === 'paragraph' ? (
-                <p key={index}>{doc.content}</p>
-              ) : null
-            )
-          ) : (
-            <p>
-              No docs for <b>{currentFunction}</b>
-            </p>
-          )
+          <Box p={2} style={{ background: 'var(--ab-color-primary)' }}>
+            {props.functions[currentFunction].docs ? (
+              props.functions[currentFunction].docs.map((doc, index) => (
+                <Box key={index} mt={index === 0 ? 0 : 1}>
+                  {doc.type === 'paragraph' && doc.content}
+                  {doc.type === 'code' && (
+                    <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>{doc.content}</pre>
+                  )}
+                </Box>
+              ))
+            ) : (
+              <Box>
+                No docs for <b>{currentFunction}</b>
+              </Box>
+            )}
+          </Box>
         ) : null}
         <pre style={{ whiteSpace: 'pre-wrap' }}>Result: {JSON.stringify(result)}</pre>
       </Box>
-      <Box height={430} style={{ overflowY: 'auto' }}>
-        <FormLayout gridColumnGap="0" gridRowGap="0">
+      <Box height={450} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
+        <FormLayout
+          gridColumnGap="var(--ab-space-1)"
+          gridRowGap="var(--ab-space-1)"
+          sizes={['auto', '130px']}
+          style={{ alignItems: 'stretch' }}
+        >
           {props.columns.map(column => (
             <FormRow
               key={column.ColumnId}
               label={
                 <EditorButton
+                  width="100%"
+                  height="100%"
+                  style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
                   data={`COL('${column.ColumnId}')`}
                   textAreaRef={textAreaRef}
-                  width="100%"
                 >
+                  <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
                   {column.FriendlyName}
                 </EditorButton>
               }
@@ -263,21 +319,17 @@ export class CalculatedColumnExpressionWizard
     const firstRow = this.props.Adaptable.getFirstRowNode().data;
 
     return (
-      <Flex p={2}>
-        <Box flex={1}>
-          <ExpressionEditor
-            value={this.state.ColumnExpression}
-            onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-            firstRow={firstRow}
-            columns={this.props.Columns}
-            functions={defaultFunctions}
-          />
-          {/* {validationState ? (
-            <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox>
-          ) : null} */}
-        </Box>
-      </Flex>
+      <ExpressionEditor
+        value={this.state.ColumnExpression}
+        onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
+        firstRow={firstRow}
+        columns={this.props.Columns}
+        functions={defaultFunctions}
+      />
     );
+    /* {validationState ? (
+        <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox>
+      ) : null} */
   }
 
   handleExpressionChange(event: React.FormEvent<any>) {
