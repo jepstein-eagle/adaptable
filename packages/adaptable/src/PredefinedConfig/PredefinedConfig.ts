@@ -158,7 +158,6 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Calendar](_src_predefinedconfig_calendarstate_.calendar.html)   	                          | Yes 	              | Select or provide your own calendar for dealing with holidays |
  *  | [CellSummary](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Yes 	              | Choose which summary operations to see for selected cells     |
  *  | [CellValidation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Yes 	              | Provide (complex) rules to validate cell edits                |
- *  | [Chart](_src_predefinedconfig_chartstate_.chartstate.html)   	                              | Yes 	              | Visualise grid data using a variety of different chart types  |
  *  | [ColumnCategory](_src_predefinedconfig_columncategorystate_.columncategorystate.html)       | Yes     	          | Group columns into category for easier column management      |
  *  | [ColumnFilter](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)             | Yes 	              | Supply your own filters for columns to findy your data easily |
  *  | [ConditionalStyle](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Yes 	              | Dynamically Style columns & rows according to rules provided  |
@@ -170,9 +169,7 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [FlashingCell](_src_predefinedconfig_flashingcellstate_.flashingcellstate.html)             | Yes 	              | Specify how cells will briefly flash as their values change   |
  *  | [FormatColumn](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)             | Yes 	              | Style a column so it always has a particular set of colours   |
  *  | [FreeTextColumn](_src_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Special free entry columns (e.g. Comments) saved with state   |
- *  | [Glue42](_src_predefinedconfig_glue42state_.glue42state.html)                               | Yes 	              | Specify how to send live 2-way data to / from excel via Glue42|
  *  | [GradientColumn](_src_predefinedconfig_gradientcolumnstate_.gradientcolumnstate.html)       | Yes 	              | Style columns so that back colour is in ratio to cell contents|
- *  | [ipushpull](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html)                      | Yes 	              | Specify how to send live data to ipushpull (and Symphony)     |
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
@@ -181,7 +178,6 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Reminder](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Shortcut](_src_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
  *  | [SmartEdit](_src_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
- *  | [SparklineColumn](_src_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | No                  | See columns containing ranges of data as a sparkline          |
  *  | [SystemFilter](_src_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
  *  | [SystemStatus](_src_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
  *  | [Theme](_src_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
@@ -192,7 +188,18 @@ import { GradientColumnState } from './GradientColumnState';
  *
  * --------------
  *
- * ### Predefined Config example
+ *  ### Predefined Config Contents
+ *
+ *  | State Property 	                                                                            | Plugin              | Details                                     	                |
+ *  |----------------	                                                                            |-------------------	|---------------------------------------------	                |
+ *  | [Chart](_src_predefinedconfig_chartstate_.chartstate.html)   	                              | Chart 	            | Visualise grid data using a variety of different chart types  |
+ *  | [SparklineColumn](_src_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | Chart               | See columns containing ranges of data as a sparkline          |
+ *  | [Glue42](_src_predefinedconfig_glue42state_.glue42state.html)                               | Glue42 	            | Specify how to send live 2-way data to / from excel via Glue42|
+ *  | [ipushpull](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html)                      | ipushpull 	        | Specify how to send live data to ipushpull (and Symphony)     |
+ *
+ * --------------
+ *
+ * ### Predefined Config Example
  *
  * ```ts
  * export default {
