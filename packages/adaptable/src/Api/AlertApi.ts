@@ -1,5 +1,5 @@
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
-import { AlertState, AlertProperties, AlertDefinition } from '../PredefinedConfig/AlertState';
+import { AlertState, AlertDefinition } from '../PredefinedConfig/AlertState';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 
 /**
@@ -18,12 +18,19 @@ import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
  */
 export interface AlertApi {
   /**
-   * Retrieves the Alert section from Adaptable State
+   * Retrieves the {@link AlertState|Alert State} section from Adaptable State
    */
   getAlertState(): AlertState;
 
+  /**
+   * Retrieves all the Alert Definitions in {@link AlertState|Alert State}
+   */
   getAlertDefinitions(): AlertDefinition[];
 
+  /**
+   * Displays a given Alert as a Popup
+   * @param alertToDisplayAsPopup the Alert to show
+   */
   displayMessageAlertPopup(alertToDisplayAsPopup: AdaptableAlert): void;
 
   /**

@@ -14,7 +14,15 @@ Alerts can, additionally, include [*Expressions*](https://api.adaptabletools.com
 
 ## Alert Properties
 
-You can set the `MessageType` of the Alert to be "Success", "Info", "Warning" or "Error" (and the colour will vary accordingly).
+You can set the `MessageType` of the Alert (and the colour will vary accordingly).  The available values are:
+
+- **Success** - (default colour is green)
+  
+- **Info**  - (default colour is blue)
+
+- **Warning** - (default colour is amber)
+
+- **Error** - (default colour is red)
 
 You can also specify - through the `AlertProperties` property - what happens when an Alert is triggered.
 
@@ -22,13 +30,15 @@ Options for displaying an Alert include:
 
 - **Display a Popup** - useful for very important Alerts
 
-- **Colour the Cell** where the data changed that triggered the cell (based on the Alert's `MessageType`)
+- **Colour the Cell** where the data changed that triggered the Alert (based on the Alert's `MessageType`)
 
 - **Jump to Cell** so that the Grid will immediately show the row which contains the cell that triggered the Alert
 
 - **Show the Alert details** in a Div element (that you specify in Alert State)
 
-> Note: All Alerts will also display and update in the Alert Toolbar and Alert Tool Panel (see below)
+> Note: All Alerts when triggered will display (and update the count) in the Alert Toolbar and Alert Tool Panel (see below)They
+>
+> Additionally, all Alerts will fire the `AlertFired` event (the contents of which will be also sent to the console).
 
 ## UI Elements
 
