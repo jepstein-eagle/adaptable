@@ -11,10 +11,6 @@ export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 // Types we use
 export { AdaptableFunctionName } from './PredefinedConfig/Common/Types';
 
-// Adaptable Objects
-export { RowStyle } from './PredefinedConfig/UserInterfaceState';
-export { AccessLevel, Entitlement } from './PredefinedConfig/EntitlementState';
-
 // Predefined Config and Predefined Config Common Objects
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { AdaptableState } from './PredefinedConfig/AdaptableState';
@@ -69,6 +65,11 @@ export {
 } from './PredefinedConfig/CustomSortState';
 export { DashboardState, DashboardTab } from './PredefinedConfig/DashboardState';
 export { DataSourceState, DataSource, DataSourceParams } from './PredefinedConfig/DataSourceState';
+export {
+  EntitlementLookUpFunction,
+  AccessLevel,
+  Entitlement,
+} from './PredefinedConfig/EntitlementState';
 export { ExportState, Report, ReportSchedule } from './PredefinedConfig/ExportState';
 export { FlashingCellState, FlashingCell } from './PredefinedConfig/FlashingCellState';
 export { FormatColumnState, FormatColumn } from './PredefinedConfig/FormatColumnState';
@@ -79,6 +80,34 @@ export {
 } from './PredefinedConfig/FreeTextColumnState';
 export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
 export { LayoutState, Layout, PivotDetails } from './PredefinedConfig/LayoutState';
+export {
+  NamedFilterState,
+  NamedFilter,
+  NamedFilterPredicate,
+} from './PredefinedConfig/NamedFilterState';
+export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
+export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';
+export { QuickSearchState } from './PredefinedConfig/QuickSearchState';
+export { ReminderState, ReminderSchedule } from './PredefinedConfig/ReminderState';
+export { ShortcutState, Shortcut } from './PredefinedConfig/ShortcutState';
+export { SmartEditState } from './PredefinedConfig/SmartEditState';
+export { SparklineColumnState, SparklineColumn } from './PredefinedConfig/SparklineColumnState';
+export {
+  TeamSharingState,
+  TeamSharingImportInfo,
+  SharedEntity,
+} from './PredefinedConfig/TeamSharingState';
+export { UpdatedRowState } from './PredefinedConfig/UpdatedRowState';
+export { UserFilterState, UserFilter } from './PredefinedConfig/UserFilterState';
+export {
+  UserInterfaceState,
+  UserMenuItem,
+  UserMenuItemShowPredicate,
+  UserMenuItemClickedFunction,
+  PermittedValuesColumn,
+  EditLookUpColumn,
+  RowStyle,
+} from './PredefinedConfig/UserInterfaceState';
 
 // Adaptable Options Objects
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';

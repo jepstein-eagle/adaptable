@@ -77,10 +77,10 @@ import { GradientColumnApi } from './GradientColumnApi';
  *
  *  | API Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
- *  | [actionColumnApi](#actioncolumnapi)             | Manages [Action Columns](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain buttons with bespoke click logic	    |
+ *  | [actionColumnApi](#actioncolumnapi)             | Manages {@link ActionColumnState|Action Columns} which contain buttons with bespoke click logic	    |
  *  | [advancedSearchApi](#advancedsearchapi)         | Functions relating to the saveable, cross-column [Advanced Searches](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
  *  | [alertApi](#alertapi)                           | [Adaptable Alerts](_src_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications and messages                                 |
- *  | [applicationApi](#applicationapi)               | Use [Application Data Entries](_src_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state and data |
+ *  | [applicationApi](#applicationapi)               | Use {@link ApplicationState|Application Data Entries} to manage custom state and data |
  *  | [auditEventApi](#auditeventapi)                 | Listen to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
  *  | [bulkUpdateApi](#bulkupdateapi)                 | Run Bulk Update so mutliple selected cells are given same value  |
  *  | [calculatedColumnApi](#calculatedcolumnapi)     | Manages [Calculated Columns](_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
@@ -97,9 +97,9 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of the Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
  *  | [dataSourceApi](#datasourceapi)                 | Deals with [Data Sources](_src_predefinedconfig_datasourcestate_.datasourcestate.html) used in Server Searching|
  *  | [entitlementsApi](#entitlementsapi)             | Manages User [Entitlements](_src_predefinedconfig_entitlementstate_.entitlementstate.html) (essentially Permissions)|
- *  | [eventApi](#eventapi)         | |
- *  | [exportApi](#exportapi)         | |
- *  | [flashingCellApi](#flashingcellapi)         | |
+ *  | [eventApi](#eventapi)                           | Subscribe to some of the many Events that AdapTable fires|
+ *  | [exportApi](#exportapi)                         | Run reports either manually or at scheduled times|
+ *  | [flashingCellApi](#flashingcellapi)             | Manages the [Flashing Cell](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_flashingcellstate_.flashingcellstate.html) |
  *  | [freeTextColumnApi](#freetextcolumnapi)         | |
  *  | [glue42Api](#glue42api)         | |
  *  | [gradientColumnApi](#gradientcolumnapi)         | |
