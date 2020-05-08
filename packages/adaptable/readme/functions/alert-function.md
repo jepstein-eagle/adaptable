@@ -12,9 +12,9 @@ Alerts can, additionally, include [*Expressions*](https://api.adaptabletools.com
 
 > Alerts will trigger both as the result of direct user edits in the Grid and as data ticks in the underlying data source.
 
-## Alert Properties
+## Message Type
 
-You can set the `MessageType` of the Alert (and the colour will vary accordingly).  The available values are:
+The `MessageType` of the Alert sets what type of of Message is displayed (and the colour will vary accordingly).  The available values are:
 
 - **Success** - (default colour is green)
   
@@ -24,7 +24,9 @@ You can set the `MessageType` of the Alert (and the colour will vary accordingly
 
 - **Error** - (default colour is red)
 
-You can also specify - through the `AlertProperties` property - what happens when an Alert is triggered.
+## Alert Properties
+
+The `AlertProperties` property of `AlertDefinition` contains a number of properties to configure what happens when an Alert is triggered.
 
 Options for displaying an Alert include:
 
@@ -36,7 +38,7 @@ Options for displaying an Alert include:
 
 - **Show the Alert details** in a Div element (that you specify in Alert State)
 
-> Note: All Alerts when triggered will display (and update the count) in the Alert Toolbar and Alert Tool Panel (see below)They
+> Note: All Alerts when triggered will display (and update the count) in the Alert Toolbar and Alert Tool Panel.
 >
 > Additionally, all Alerts will fire the `AlertFired` event (the contents of which will be also sent to the console).
 
