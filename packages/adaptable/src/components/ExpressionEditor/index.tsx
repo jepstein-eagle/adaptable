@@ -273,6 +273,16 @@ function ExpressionEditor(props: ExpressionEditorProps) {
         {functionDocs}
       </Box>
       <Box height={450} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
+        <Box
+          mb={1}
+          p={2}
+          style={{
+            background: 'var(--ab-color-primarylight)',
+            borderRadius: 'var(--ab__border-radius)',
+          }}
+        >
+          This is just test data
+        </Box>
         {dataTableEditor}
       </Box>
     </Flex>
