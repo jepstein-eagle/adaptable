@@ -50,7 +50,9 @@ No, they are a Design-Time only Function; they can be accessed at Run-Time but n
 
 **Why do we need to provide the Function Name and Function Implementation separately?**
 
-This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
+This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  
+
+As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 ### Further Information
 
