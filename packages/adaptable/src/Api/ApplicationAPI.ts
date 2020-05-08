@@ -2,9 +2,17 @@ import { ApplicationState, ApplicationDataEntry } from '../PredefinedConfig/Appl
 /**
  * Provides an `ApplicationDataEntry` array allowing developers to store their own data in Adaptable State (as Key / Value Pairs).
  *
- *  **Further AdapTable Help Resources**
+ * --------------
  *
- * [State](_src_predefinedconfig_applicationstate_.applicationstate.html) | [AdapTable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
+ *  ### Further AdapTable Help Resources
+ *
+ * - [Application Demo](https://demo.adaptabletools.com/adaptablestate/aggridapplicationdataentriesdemo)
+ *
+ * - {@link ApplicationState|Application State}
+ *
+ * - [Application Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/application-function.md)
+ *
+ * - [Adaptable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
  *
  */
 export interface ApplicationApi {

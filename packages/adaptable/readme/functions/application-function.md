@@ -30,4 +30,6 @@ Yes, by using the [Application Api](https://api.adaptabletools.com/interfaces/_s
 
 - [Application Api](https://api.adaptabletools.com/interfaces/_src_api_applicationapi_.applicationapi.html)
 
-- [Application Demo](https://demo.adaptabletools.com/Applicationsmessages/aggridApplicationdemo)
+- [Application Demo](https://demo.adaptabletools.com/adaptablestate/aggridapplicationdataentriesdemo)
+
+- [AdapTable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)

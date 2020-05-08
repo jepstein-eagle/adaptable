@@ -1,5 +1,5 @@
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { ApplicationApi } from '../ApplicationAPI';
+import { ApplicationApi } from '../ApplicationApi';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
 import { ActionColumnApiImpl } from './ActionColumnApiImpl';
 import { AdvancedSearchApiImpl } from './AdvancedSearchApiImpl';

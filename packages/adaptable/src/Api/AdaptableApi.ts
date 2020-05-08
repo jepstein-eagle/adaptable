@@ -1,4 +1,4 @@
-import { ApplicationApi } from './ApplicationAPI';
+import { ApplicationApi } from './ApplicationApi';
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
