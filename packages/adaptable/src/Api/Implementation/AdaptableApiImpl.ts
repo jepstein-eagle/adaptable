@@ -1,5 +1,4 @@
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { ApplicationApi } from '../ApplicationApi';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
 import { ActionColumnApiImpl } from './ActionColumnApiImpl';
 import { AdvancedSearchApiImpl } from './AdvancedSearchApiImpl';
@@ -95,6 +94,7 @@ import { ScheduleApi } from '../ScheduleApi';
 import { ScheduleApiImpl } from './ScheduleApiImpl';
 import { GradientColumnApi } from '../GradientColumnApi';
 import { GradientColumnApiImpl } from './GradientColumnApiImpl';
+import { ApplicationApi } from '../ApplicationAPI';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;

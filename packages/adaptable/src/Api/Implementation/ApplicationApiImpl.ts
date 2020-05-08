@@ -2,7 +2,7 @@ import { ApiBase } from './ApiBase';
 import * as ApplicationRedux from '../../Redux/ActionsReducers/ApplicationRedux';
 
 import { ApplicationState, ApplicationDataEntry } from '../../PredefinedConfig/ApplicationState';
-import { ApplicationApi } from '../ApplicationApi';
+import { ApplicationApi } from '../ApplicationAPI';
 
 export class ApplicationApiImpl extends ApiBase implements ApplicationApi {
   public getApplicationState(): ApplicationState {

@@ -1,4 +1,3 @@
-import { ApplicationApi } from './ApplicationApi';
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
@@ -46,6 +45,7 @@ import { Glue42Api } from './Glue42Api';
 import { IPushPullApi } from './IPushPullApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
+import { ApplicationApi } from './ApplicationAPI';
 
 /**
  *
