@@ -1,0 +1,237 @@
+import * as React from 'react';
+import { AdaptableColumn } from '../../types';
+import { FunctionMap } from 'adaptable-parser/src/types';
+import useSelectionRange from '../utils/useSelectionRange';
+import { useState } from 'react';
+import { parse, findPathTo } from 'adaptable-parser';
+import OverlayTrigger from '../OverlayTrigger';
+import { Flex, Box } from 'rebass';
+import EditorButton from './EditorButton';
+import SimpleButton from '../SimpleButton';
+import { Icon } from '@mdi/react';
+import Textarea from '../Textarea';
+import FormLayout, { FormRow } from '../FormLayout';
+import Input from '../Input';
+import CheckBox from '../CheckBox';
+import {
+  mdiPlus,
+  mdiMinus,
+  mdiMultiplication,
+  mdiDivision,
+  mdiPercent,
+  mdiExponent,
+  mdiEqual,
+  mdiNotEqual,
+  mdiLessThan,
+  mdiGreaterThan,
+  mdiLessThanOrEqual,
+  mdiGreaterThanOrEqual,
+  mdiDrag,
+  mdiFunction,
+} from '@mdi/js';
+
+interface ExpressionEditorProps {
+  value?: string;
+  onChange?: (event: React.FormEvent) => void;
+  firstRow: { [key: string]: any };
+  columns: AdaptableColumn[];
+  functions: FunctionMap;
+}
+
+function ExpressionEditor(props: ExpressionEditorProps) {
+  const [textAreaRefCallback, textAreaRef, selectionStart, selectionEnd] = useSelectionRange();
+  const cursor = selectionStart === selectionEnd ? selectionStart : null;
+  const [data, setData] = useState(props.firstRow);
+  let result, currentFunction;
+
+  try {
+    const expr = parse(props.value);
+    result = expr.evaluate({ data });
+    const path = findPathTo(expr.ast, cursor);
+    currentFunction = path[0] ? path[0].type : null;
+  } catch (error) {
+    result = 'Error: ' + error.message;
+  }
+
+  const functionsDropdown = (
+    <OverlayTrigger
+      render={() => (
+        <Flex
+          flexDirection="column"
+          backgroundColor="white"
+          p={2}
+          style={{
+            border: 'var(--ab-cmp-dropdownbutton-list__border)',
+            borderRadius: 'var(--ab-cmp-dropdownbutton-list__border-radius)',
+            zIndex: ('var(--ab-cmp-dropdownbutton-list__z-index)' as unknown) as number,
+            background: 'var(--ab-cmp-dropdownbutton-list__background)',
+          }}
+        >
+          {Object.keys(props.functions).map(functionName =>
+            props.functions[functionName].hidden ? null : (
+              <EditorButton
+                data={`${functionName}()`}
+                textAreaRef={textAreaRef}
+                key={functionName}
+                mr={1}
+              >
+                {functionName}
+              </EditorButton>
+            )
+          )}
+        </Flex>
+      )}
+      showEvent="click"
+      hideEvent="blur"
+    >
+      <SimpleButton>
+        <Icon size="1rem" path={mdiFunction} />
+      </SimpleButton>
+    </OverlayTrigger>
+  );
+
+  return (
+    <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
+      <Box flex={1} mx={2}>
+        <Flex mb={1} p={1} style={{ background: 'var(--ab-color-primary)' }}>
+          {functionsDropdown}
+          <EditorButton data="+" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiPlus} />
+          </EditorButton>
+          <EditorButton data="-" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiMinus} />
+          </EditorButton>
+          <EditorButton data="*" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiMultiplication} />
+          </EditorButton>
+          <EditorButton data="/" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiDivision} />
+          </EditorButton>
+          <EditorButton data="%" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiPercent} />
+          </EditorButton>
+          <EditorButton data="^" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiExponent} />
+          </EditorButton>
+          <EditorButton data="=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiEqual} />
+          </EditorButton>
+          <EditorButton data="!=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiNotEqual} />
+          </EditorButton>
+          <EditorButton data="<" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiLessThan} />
+          </EditorButton>
+          <EditorButton data=">" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiGreaterThan} />
+          </EditorButton>
+          <EditorButton data="<=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiLessThanOrEqual} />
+          </EditorButton>
+          <EditorButton data=">=" textAreaRef={textAreaRef}>
+            <Icon size="1rem" path={mdiGreaterThanOrEqual} />
+          </EditorButton>
+          <EditorButton data="AND" textAreaRef={textAreaRef}>
+            AND
+          </EditorButton>
+          <EditorButton data="OR" textAreaRef={textAreaRef}>
+            OR
+          </EditorButton>
+        </Flex>
+        <Textarea
+          ref={textAreaRefCallback}
+          value={props.value}
+          placeholder="Enter expression"
+          autoFocus
+          spellCheck="false"
+          onChange={props.onChange}
+          style={{ width: '100%', height: '100px', fontFamily: 'monospace', fontSize: '1rem' }}
+        />
+        {currentFunction ? (
+          <Box p={2} style={{ background: 'var(--ab-color-primary)' }}>
+            {props.functions[currentFunction].docs ? (
+              props.functions[currentFunction].docs.map((doc, index) => (
+                <Box key={index} mt={index === 0 ? 0 : 1}>
+                  {doc.type === 'paragraph' && doc.content}
+                  {doc.type === 'code' && (
+                    <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>{doc.content}</pre>
+                  )}
+                </Box>
+              ))
+            ) : (
+              <Box>
+                No docs for <b>{currentFunction}</b>
+              </Box>
+            )}
+          </Box>
+        ) : null}
+        <pre style={{ whiteSpace: 'pre-wrap' }}>Result: {JSON.stringify(result)}</pre>
+      </Box>
+      <Box height={450} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
+        <FormLayout
+          gridColumnGap="var(--ab-space-1)"
+          gridRowGap="var(--ab-space-1)"
+          sizes={['auto', '130px']}
+          style={{ alignItems: 'stretch' }}
+        >
+          {props.columns.map(column => (
+            <FormRow
+              key={column.ColumnId}
+              label={
+                <EditorButton
+                  width="100%"
+                  height="100%"
+                  style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
+                  data={`COL('${column.ColumnId}')`}
+                  textAreaRef={textAreaRef}
+                >
+                  <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
+                  {column.FriendlyName}
+                </EditorButton>
+              }
+            >
+              {column.DataType === 'Number' ? (
+                <Input
+                  type="number"
+                  value={data[column.ColumnId]}
+                  onChange={(e: React.FormEvent) =>
+                    setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                  }
+                  width="100%"
+                />
+              ) : column.DataType === 'String' ? (
+                <Input
+                  type="text"
+                  value={data[column.ColumnId]}
+                  onChange={(e: React.FormEvent) =>
+                    setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                  }
+                  width="100%"
+                />
+              ) : column.DataType === 'Date' ? (
+                <Input
+                  type="date"
+                  value={data[column.ColumnId].toISOString().substr(0, 10)}
+                  onChange={(e: React.FormEvent) => {
+                    setData({
+                      ...data,
+                      [column.ColumnId]: new Date((e.target as HTMLInputElement).value),
+                    });
+                  }}
+                  width="100%"
+                />
+              ) : column.DataType === 'Boolean' ? (
+                <CheckBox
+                  checked={data[column.ColumnId]}
+                  onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
+                />
+              ) : null}
+            </FormRow>
+          ))}
+        </FormLayout>
+      </Box>
+    </Flex>
+  );
+}
+
+export default ExpressionEditor;
