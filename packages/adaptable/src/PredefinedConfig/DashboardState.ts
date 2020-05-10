@@ -312,7 +312,7 @@ export interface DashboardState extends ConfigState {
  *     {
  *       Name: 'Toolbar1',
  *       Title: 'First Toolbar',
- *       Glyph: 'advanced-search',
+ *       ShowConfigureButton: true,
  *       ToolbarButtons: [
  *         {
  *           Name: 'btnSuccess',
@@ -349,7 +349,6 @@ export interface DashboardState extends ConfigState {
  *     {
  *       Name: 'Toolbar3',
  *       Title: 'Third Toolbar',
- *       Glyph: 'export',
  *       ToolbarButtons: [
  *         {
  *           Name: 'btnToolbar3',
@@ -399,7 +398,7 @@ export interface CustomToolbar extends AdaptableObject {
   /**
    * Whether to show a Configure button at the bottom of the Custom Toolbar
    *
-   * If set to true the wrench will appear.
+   * If set to true the wrench image will appear.
    *
    * When the button is clicked AdapTable will fire the `CustomToolbarConfigured` event.
    */
@@ -408,7 +407,7 @@ export interface CustomToolbar extends AdaptableObject {
   /**
    * An (optional) Glyph to display in the Custom Toolbar
    *
-   * Since v.6 this property is deprecated and is no longer applied
+   * Since V.6 (Feb 2020) this property has been deprecated and is no longer used or applied
    */
   Glyph?: string;
 }
