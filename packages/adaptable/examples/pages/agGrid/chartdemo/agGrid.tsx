@@ -12,6 +12,7 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../sr
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var api: AdaptableApi;
 
@@ -27,7 +28,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Chart Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 

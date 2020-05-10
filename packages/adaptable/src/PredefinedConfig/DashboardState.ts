@@ -96,6 +96,17 @@ export interface DashboardState extends ConfigState {
   ActiveTab?: number;
 
   /**
+   * Whether or not the Dashboard can be floated.
+   *
+   * If set to true (the default) then double-clicking the Dasbhoard will put it in float mode.
+   *
+   * If set to false then double-clicking is disabled and the floating menu options are removed.
+   *
+   *  **Default Value: True**
+   */
+  CanFloat?: boolean;
+
+  /**
    * Whether or not the Dashboard is collapsed.
    *
    * If the Dashboard is collapsed then only the header is visible but not the contents of any tabs.
@@ -148,6 +159,8 @@ export interface DashboardState extends ConfigState {
    * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
+
+  CustomButtons?: ToolbarButton[];
 
   /**
    * Whether to show the Home dropdown in the Dashboard Header.
@@ -364,11 +377,15 @@ export interface CustomToolbar extends AdaptableObject {
    * The name of the Toolbar
    *
    * This is how it will be referred to in the Dashboard Popup when managing toolbars
+   *
+   * It is **not** the name that will appear in the Toolbar itself when displayed - that is the `Title` property.
    */
   Name: string;
 
   /**
    * The title which will appear in the Toolbar when its displayed
+   *
+   * If not set (or set to an empty string) then no title will appear in the Toolbar
    */
   Title?: string;
 
@@ -383,6 +400,8 @@ export interface CustomToolbar extends AdaptableObject {
    * When one of these buttons is clicked the on('ToolbarButtonClicked') event is fired.
    */
   ToolbarButtons?: ToolbarButton[];
+
+  OnConfigure?: () => void;
 }
 
 export interface DashboardTab extends AdaptableObject {

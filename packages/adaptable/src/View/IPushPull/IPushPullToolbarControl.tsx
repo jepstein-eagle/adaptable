@@ -251,7 +251,6 @@ class IPushPullToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__IPushPull"
         headerText={StrategyConstants.IPushPullStrategyFriendlyName}
-        glyphicon={StrategyConstants.IPushPullGlyph}
         showConfigureButton={false} // later : isIPushPullRunning
         onConfigure={() => this.props.onConfigure()}
       >

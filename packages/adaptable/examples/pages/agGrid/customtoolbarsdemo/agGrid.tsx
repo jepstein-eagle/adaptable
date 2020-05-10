@@ -10,7 +10,11 @@ import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  DashboardButtonClickedInfo,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 import { ToolbarVisibilityChangedInfo } from '../../../../src/Api/Events/ToolbarVisibilityChanged';
@@ -18,6 +22,7 @@ import {
   ToolbarButtonClickedEventData,
   ToolbarButtonClickedInfo,
 } from '../../../../src/Api/Events/ToolbarButtonClicked';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
 
 function InitAdaptableDemo() {
@@ -29,7 +34,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Custom Toolbars Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 
@@ -90,7 +98,7 @@ function InitAdaptableDemo() {
   api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;
     let toolbarButton = eventInfo.toolbarButton;
-
+    console.log(eventInfo);
     if (toolbarButton.Name == 'btnSetButton') {
       let btnSet1: ToolbarButton = {
         Name: 'set1',
@@ -119,11 +127,18 @@ function InitAdaptableDemo() {
       api.dashboardApi.clearCustomToolbarButtons('Toolbar1');
     }
   });
+
+  api.eventApi.on('DashboardButtonClicked', dashboardButtonClickedEventArgs => {
+    let eventInfo: DashboardButtonClickedInfo = dashboardButtonClickedEventArgs.data[0].id;
+    let dashboardButton = eventInfo.dashboardButton;
+    console.log(eventInfo);
+    console.log(dashboardButton.Name);
+  });
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    // AvailableToolbars: ['AdvancedSearch', 'Export'],
+    Revision: 5,
     VisibleToolbars: [
       'QuickSearch',
       'Glue42',
@@ -133,13 +148,32 @@ let demoConfig: PredefinedConfig = {
       'Toolbar3',
       'Toolbar4',
     ],
-    IsInline: true,
+    IsInline: false,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
-    // make this not persistable
+    CustomButtons: [
+      {
+        Name: 'cb1',
+        Caption: 'First',
+        //  Icon:
+        //    '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'success',
+        },
+      },
+      {
+        Name: 'cb2',
+        Caption: 'Second',
+        ButtonStyle: {
+          Variant: 'raised',
+          Tone: 'accent',
+        },
+      },
+    ],
     CustomToolbars: [
       {
         Name: 'Toolbar1',
-        Title: 'First Toolbar',
+        //   Title: 'First Toolbar',
         Glyph: 'advanced-search',
         ToolbarButtons: [
           {
@@ -159,10 +193,13 @@ let demoConfig: PredefinedConfig = {
             },
           },
         ],
+        OnConfigure: () => {
+          alert('hello world');
+        },
       },
       {
         Name: 'Toolbar2',
-        Title: 'Second Toolbar',
+        Title: '',
         ToolbarButtons: [
           {
             Name: 'btnSetButton',
@@ -207,7 +244,7 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Entitlements: {
-    DefaultAccessLevel: 'Hidden',
+    DefaultAccessLevel: 'Full',
     FunctionEntitlements: [
       {
         FunctionName: 'Dashboard',

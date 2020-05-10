@@ -11,6 +11,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var api: AdaptableApi;
 
@@ -24,7 +25,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'User Interface Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 

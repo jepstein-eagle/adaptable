@@ -20,7 +20,7 @@ export interface ToolbarButton extends AdaptableObject {
    *
    * *Currently you cannot provide an image for this button but that will be made available in a forthcoming release*
    */
-  Caption: string;
+  Caption?: string;
 
   /**
    * The style to use for the Custom Toolbar Button.
@@ -28,6 +28,8 @@ export interface ToolbarButton extends AdaptableObject {
    * Includes 'Variant' and 'Tone'
    */
   ButtonStyle?: ButtonStyle;
+
+  Icon?: any; // not sure how to do this...
 }
 
 export interface ButtonStyle {

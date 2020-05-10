@@ -186,9 +186,10 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [UserFilter](_src_predefinedconfig_userfilterstate_.userfilterstate.html)                   | Yes                 | Create your own filters baseed on your data and requirements  |
  *  | [UserInterface](_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)          | No                  | Provide your own menus, styles and colour palettes            |
  *
+ *
  * --------------
  *
- *  ### Predefined Config Contents
+ *  ### Predefined Config Contents (plugins)
  *
  *  | State Property 	                                                                            | Plugin              | Details                                     	                |
  *  |----------------	                                                                            |-------------------	|---------------------------------------------	                |

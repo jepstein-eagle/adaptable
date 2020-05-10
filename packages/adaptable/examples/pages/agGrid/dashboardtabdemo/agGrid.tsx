@@ -8,16 +8,13 @@ import './index.css';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
-  PredefinedConfig,
   AdaptableApi,
-  SearchChangedEventArgs,
-  MenuInfo,
+  ToolbarVisibilityChangedInfo,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
-import { ColumnSort } from '../../../../src/PredefinedConfig/Common/ColumnSort';
+import ReactDOM from 'react-dom';
 
 var api: AdaptableApi;
 
@@ -40,22 +37,53 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: {
       Dashboard: {
-        // Revision: 17,
-        // VisibleToolbars: ['QuickSearch'],
-        //  VisibleToolbars:['']
-
-        // this is empty for now but i can confirm that it works !
+        Revision: 10,
+        CanFloat: true,
         CustomToolbars: [
           {
-            Name: 'Toolbar1',
-            Title: 'First Toolbar',
+            Name: 'Deal Info (Default)',
+            Title: 'Deal Info',
+            OnConfigure: () => {
+              alert('hello world');
+            },
+          },
+          {
+            Name: 'Deal Info (Detailed)',
+            Title: 'Deal Info',
+            OnConfigure: () => {
+              alert('hello world');
+            },
           },
         ],
         ShowFunctionsDropdown: true,
         Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'Toolbar1'], //shouldnt see last one cos of entitlements
+            Toolbars: [
+              'QuickSearch',
+              'DataSource',
+              'AdvancedSearch',
+              'Deal Info (Detailed)',
+              'Deal Info (Default)',
+            ], //shouldnt see last one cos of entitlements
+          },
+        ],
+        CustomButtons: [
+          {
+            Name: 'btnToolbar1',
+            Caption: 'First Toolbar btn',
+            ButtonStyle: {
+              Variant: 'text',
+              Tone: 'success',
+            },
+          },
+          {
+            Name: 'btnToolbar2',
+            Caption: 'Second Toolbar btn',
+            ButtonStyle: {
+              Variant: 'raised',
+              Tone: 'accent',
+            },
           },
         ],
       },
@@ -78,6 +106,37 @@ function InitAdaptableDemo() {
   };
 
   api = Adaptable.init(adaptableOptions);
+
+  api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
+    let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo =
+      toolbarVisibilityChangedEventArgs.data[0].id;
+    console.log('toolbarVisibilityChangedInfo');
+    console.log(toolbarVisibilityChangedInfo);
+    if (toolbarVisibilityChangedInfo.visibility === 'Visible') {
+      let contentsDiv = api.dashboardApi.getCustomToolbarContentsDiv(
+        toolbarVisibilityChangedEventArgs.data[0].id.toolbar
+      );
+      if (toolbarVisibilityChangedInfo.toolbar === 'Deal Info (Default)') {
+        if (contentsDiv) {
+          let toolbarContents: any = (
+            <div style={{ display: 'flex' }}>
+              <span>I'm deal info default</span>
+            </div>
+          );
+          ReactDOM.render(toolbarContents, contentsDiv);
+        }
+      } else if (toolbarVisibilityChangedEventArgs.data[0].id.toolbar === 'Deal Info (Detailed)') {
+        let toolbarContents: any = (
+          <div style={{ display: 'flex' }}>
+            <span>I'm deal info Detailed</span>
+          </div>
+        );
+        ReactDOM.render(toolbarContents, contentsDiv);
+      }
+    } else {
+      console.log('Couldnt find div to render custom content');
+    }
+  });
 }
 
 export default () => {

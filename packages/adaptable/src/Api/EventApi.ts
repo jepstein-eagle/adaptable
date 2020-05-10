@@ -8,6 +8,7 @@ import { AlertFiredEventArgs } from './Events/AlertFired';
 import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
 import { SearchChangedEventArgs } from './Events/SearchChanged';
 import { AdaptableReadyInfo } from './Events/AdaptableReady';
+import { DashboardButtonClickedEventArgs } from './Events/DashboardButtonClicked';
 
 /**
  * AdapTable publishes a large number of events to which users can subscribe as required.
@@ -29,6 +30,8 @@ import { AdaptableReadyInfo } from './Events/AdaptableReady';
  * - **ColumnStateChanged** - fired when the Column visibility or order changes
  *
  * - **ToolbarButtonClicked** - when a button is clicked in a Custom Toolbar
+ *
+ * - **DashboardButtonClicked** - when a custom button is clicked in the Dashboard
  *
  * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
  *
@@ -195,6 +198,7 @@ export interface EventApi {
    *
    * @param callback  ToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
+
   on(
     eventName: 'ToolbarButtonClicked',
     callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
@@ -206,6 +210,29 @@ export interface EventApi {
   off(
     eventName: 'ToolbarButtonClicked',
     callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
+  ): void;
+
+  /**
+   * Event fired whenever **when a Custom Button in the Dashboard is clicked**
+   *
+   * @param eventName DashboardButtonClicked - use as: adaptableApi.eventApi.on('DashboardButtonClicked', (args: DashboardButtonClickedEventArgs) => { .....[do stuff]...})
+   *
+   * @param callback  DashboardButtonClickedEventArgs which provides details of the button that was clicked.
+   */
+
+  // tslint:disable-next-line: adjacent-overload-signatures
+  on(
+    eventName: 'DashboardButtonClicked',
+    callback: (dashboardButtonClickedEventArgs: DashboardButtonClickedEventArgs) => void
+  ): () => void;
+
+  /**
+   * Ubsubscribe from DashboardButtonClicked
+   */
+  // tslint:disable-next-line: adjacent-overload-signatures
+  off(
+    eventName: 'DashboardButtonClicked',
+    callback: (dashboardButtonClickedEventArgs: DashboardButtonClickedEventArgs) => void
   ): void;
 
   /**
@@ -280,6 +307,7 @@ export interface EventApi {
       | 'AlertFired'
       | 'ColumnStateChanged'
       | 'ToolbarButtonClicked'
+      | 'DashboardButtonClicked'
       | 'ToolbarVisibilityChanged'
       | 'LiveDataChanged'
       | 'AdaptableReady',

@@ -196,7 +196,6 @@ class Glue42ToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__Glue42"
         headerText={StrategyConstants.Glue42StrategyFriendlyName}
-        glyphicon={StrategyConstants.Glue42Glyph}
         showConfigureButton={false} // later : isGlue42Running
         onConfigure={() => this.props.onConfigure()}
       >

@@ -166,7 +166,6 @@ class SmartEditToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__SmartEdit"
         headerText={StrategyConstants.SmartEditStrategyFriendlyName}
-        glyphicon={StrategyConstants.SmartEditGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}

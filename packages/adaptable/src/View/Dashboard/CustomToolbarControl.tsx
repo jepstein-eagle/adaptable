@@ -26,18 +26,15 @@ class CustomToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let showGlyphicon: boolean = StringExtensions.IsNotNullOrEmpty(this.props.CustomToolbar.Glyph);
-
     let contentsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__contents';
     let buttonsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__buttons';
 
     return (
       <PanelDashboard
         className="ab-CustomToolbar ab-DashboardToolbar__Custom"
-        headerText={this.props.CustomToolbar.Title}
-        showConfigureButton={false}
-        showGlyphIcon={showGlyphicon}
-        glyphicon={this.props.CustomToolbar.Glyph}
+        headerText={this.props.CustomToolbar.Title ? this.props.CustomToolbar.Title : ''}
+        showConfigureButton={this.props.CustomToolbar.OnConfigure != null}
+        onConfigure={this.props.CustomToolbar.OnConfigure}
       >
         <div
           id={contentsDivId}
@@ -49,6 +46,7 @@ class CustomToolbarControlComponent extends React.Component<
             this.props.CustomToolbar.ToolbarButtons.map((button: ToolbarButton, index: number) => {
               let toolbarButtonClickedInfo: ToolbarButtonClickedInfo = {
                 toolbarButton: button,
+                customToolbar: this.props.CustomToolbar,
                 adaptableApi: this.props.Adaptable.api,
               };
               const toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(

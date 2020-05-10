@@ -66,14 +66,17 @@ The constructor returns the **AdaptableApi** object so it is available for futur
 // Create an AdaptableOptions object to pass in to the constructor
  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId', // a unique column
-    vendorGrid: gridOptions, // the underlying vendor DataGrid
+    vendorGrid: {      // the underlying vendor DataGrid
+      ...gridOptions,   // in this example its an ag-Grid GridOptions
+      modules: AllEnterpriseModules, // passing in any ag-Grid Modules that are required
+    },
     predefinedConfig: applicationJSON, // the predefined config we created
   };
 
 // The AdapTable constructor returns an API object that we can use
  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
  ```
- 
+
 There is also a static `initLazy` constructor which receives an AdaptableOptions object and returns a Promise that contains the `api` object.  It is utilised by the [No Code Version](https://github.com/AdaptableTools/adaptable/tree/master/packages/plugins/nocode-aggrid) and is used as follows: 
 
 ```ts

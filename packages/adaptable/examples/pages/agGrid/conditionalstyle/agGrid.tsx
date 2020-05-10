@@ -16,6 +16,7 @@ import config from './config';
 
 import jsonData from './dataset.json';
 import { PredefinedConfig } from '../../../../types';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 const getBasicNorthwindColumnSchema = (): any[] => {
   var schema = [];
@@ -225,7 +226,10 @@ function InitAdaptableDemo() {
     },
   };
   const adaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     primaryKey: 'tradeId',
     userName: 'demo user',
     adaptableId: 'config demo',

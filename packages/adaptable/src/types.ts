@@ -164,6 +164,10 @@ export {
   ToolbarButtonClickedEventArgs,
   ToolbarButtonClickedInfo,
 } from './Api/Events/ToolbarButtonClicked';
+export {
+  DashboardButtonClickedEventArgs,
+  DashboardButtonClickedInfo,
+} from './Api/Events/DashboardButtonClicked';
 export { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
 
 // Audit Events

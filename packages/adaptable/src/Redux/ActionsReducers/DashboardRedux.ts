@@ -152,10 +152,12 @@ const initialDashboardState: DashboardState = {
   IsInline: false,
   FloatingPosition: { x: 100, y: 100 },
   VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
+  CustomButtons: EMPTY_ARRAY,
   CustomToolbars: EMPTY_ARRAY,
   ShowQuickSearchInHeader: true,
   ShowFunctionsDropdown: true,
   HomeToolbarTitle: '',
+  CanFloat: true,
 
   // deprecated properties
   VisibleToolbars: ['Layout', 'Export', 'ColumnFilter'],

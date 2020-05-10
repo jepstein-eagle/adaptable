@@ -30,12 +30,18 @@ import {
 import { kebabCase } from 'lodash';
 import UIHelper from '../UIHelper';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
-import { AdaptableMenuItem } from '../../types';
+import {
+  AdaptableMenuItem,
+  DashboardButtonClickedInfo,
+  DashboardButtonClickedEventArgs,
+} from '../../types';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { Icon } from '../../components/icons';
 import DropdownButton from '../../components/DropdownButton';
 import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 import DropdownButtonItem from '../../components/DropdownButton/DropdownButtonItem';
+import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 
 interface DashboardComponentProps extends StrategyViewPopupProps<DashboardComponent> {
   DashboardState: DashboardState;
@@ -99,6 +105,22 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
       this.props.onSetActiveTab(index);
     }
   }
+
+  fireToolbarButtonEvent(toolbarButton: ToolbarButton): void {
+    let dashboardButtonClickedInfo: DashboardButtonClickedInfo = {
+      dashboardButton: toolbarButton,
+      adaptableApi: this.props.Adaptable.api,
+    };
+    const dashboardButtonClickedEventArgs: DashboardButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
+      'Dashboard Button Clicked Args',
+      dashboardButtonClickedInfo
+    );
+    this.props.Adaptable.api.eventApi.emit(
+      'DashboardButtonClicked',
+      dashboardButtonClickedEventArgs
+    );
+  }
+
   renderTab(tab: DashboardTab): React.ReactNode {
     // JW: dont understand why we need this line but we do...
     let visibleDashboardControls = tab.Toolbars.filter(vt => vt);
@@ -215,6 +237,31 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
 
     return shortcuts;
   }
+  renderCustomButtons() {
+    let customButtonsArray: ToolbarButton[] = this.props.DashboardState.CustomButtons;
+    let customButtons: any = null;
+    if (customButtonsArray) {
+      customButtons = customButtonsArray.map(cb => {
+        return (
+          <SimpleButton
+            key={cb.Name}
+            variant={cb.ButtonStyle && cb.ButtonStyle.Variant ? cb.ButtonStyle.Variant : 'text'}
+            tone={cb.ButtonStyle && cb.ButtonStyle.Tone ? cb.ButtonStyle.Tone : 'none'}
+            className={`ab-DashboardToolbar__Home__${kebabCase(cb.Name)}`}
+            icon={cb.Icon}
+            tooltip={cb.Name}
+            disabled={this.props.AccessLevel == 'ReadOnly'}
+            onClick={() => this.fireToolbarButtonEvent(cb)}
+            AccessLevel={'Full'}
+          >
+            {cb.Caption}
+          </SimpleButton>
+        );
+      });
+    }
+
+    return customButtons;
+  }
   renderFunctionsDropdown() {
     let strategyKeys: string[] = [...this.props.Adaptable.strategies.keys()];
     let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
@@ -257,7 +304,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             icon: <Icon name="dock" />,
             label: 'Dock Dashboard',
           }
-        : {
+        : this.props.DashboardState.CanFloat && {
             onClick: () => this.props.onSetIsFloating(true),
             icon: <Icon name="dock" />,
             label: 'Float Dashboard',
@@ -309,6 +356,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     return (
       <DashboardUI
         title={instanceName}
+        canFloat={this.props.DashboardState.CanFloat}
         activeTab={this.props.DashboardState.ActiveTab}
         onActiveTabChange={ActiveTab => {
           this.props.onSetActiveTab(ActiveTab as number | null);
@@ -339,8 +387,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         left={this.props.DashboardState.ShowFunctionsDropdown && this.renderFunctionsDropdown()}
         right={
           <>
+            {this.renderCustomButtons()}
             {this.renderFunctionButtons()}
-
             {this.props.DashboardState.ShowQuickSearchInHeader && this.renderQuickSearch()}
           </>
         }

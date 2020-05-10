@@ -69,7 +69,7 @@ function InitAdaptableDemo() {
         ShowFunctionsDropdown: true,
         //  HomeToolbarTitle: 'Hello world',
         ShowQuickSearchInHeader: true,
-        IsInline: true, // making it false in Redux so we dont forget but true here for testing purposes
+        IsInline: false, // making it false in Redux so we dont forget but true here for testing purposes
       },
       SystemStatus: {
         Revision: 13,

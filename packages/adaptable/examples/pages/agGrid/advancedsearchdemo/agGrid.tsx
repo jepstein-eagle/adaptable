@@ -13,6 +13,7 @@ import {
 } from '../../../../src/types';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
@@ -22,7 +23,10 @@ function InitAdaptableDemo() {
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     primaryKey: 'tradeId',
     userName: 'demo user',
     adaptableId: 'advanced search demo',

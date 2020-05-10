@@ -301,7 +301,9 @@ function DashboardManager({
   const handleToolbarDragEnd = (result: DropResult) => {
     const { source, destination, draggableId } = result;
 
-    if (!source || !destination) return;
+    if (!source || !destination) {
+      return;
+    }
 
     if (source.droppableId !== 'UNUSED') {
       const sourceTabToolbars = tabs[Number(source.droppableId)].Toolbars;

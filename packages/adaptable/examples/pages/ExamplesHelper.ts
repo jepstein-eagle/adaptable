@@ -1,6 +1,7 @@
 ﻿import { ColDef, GridOptions } from '@ag-grid-community/all-modules';
 import { StarsCellRenderer } from './StarsCellRenderer';
 import LoggingHelper from '../../src/Utilities/Helpers/LoggingHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 export interface ITrade {
   tradeId: number;
@@ -1818,7 +1819,10 @@ export class ExamplesHelper {
 
   public createAdaptableOptionsTrade(gridOptions: GridOptions, adaptableId: string) {
     const adaptableOptions = {
-      vendorGrid: gridOptions,
+      vendorGrid: {
+        ...gridOptions,
+        modules: AllEnterpriseModules,
+      },
       primaryKey: 'tradeId',
       userName: 'demo user',
       adaptableId,
@@ -1828,7 +1832,10 @@ export class ExamplesHelper {
 
   public createAdaptableOptionsFtse(gridOptions: GridOptions, adaptableId: string) {
     const adaptableOptions = {
-      vendorGrid: gridOptions,
+      vendorGrid: {
+        ...gridOptions,
+        modules: AllEnterpriseModules,
+      },
       primaryKey: 'date',
       userName: 'demo user',
       adaptableId,
