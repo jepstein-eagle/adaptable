@@ -13,6 +13,10 @@ import {
   ToolbarButtonClickedInfo,
   ToolbarButtonClickedEventArgs,
 } from '../../Api/Events/ToolbarButtonClicked';
+import {
+  CustomToolbarConfiguredInfo,
+  CustomToolbarConfiguredEventArgs,
+} from '../../Api/Events/CustomToolbarConfigured';
 
 /**
  * A Custom Toolbar has 2 Divs
@@ -29,12 +33,26 @@ class CustomToolbarControlComponent extends React.Component<
     let contentsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__contents';
     let buttonsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__buttons';
 
+    let customToolbarConfiguredInfo: CustomToolbarConfiguredInfo = {
+      customToolbar: this.props.CustomToolbar,
+      adaptableApi: this.props.Adaptable.api,
+    };
+    const customToolbarConfiguredEventArgs: CustomToolbarConfiguredEventArgs = AdaptableHelper.createFDC3Message(
+      'Custom Toolbar Configured Args',
+      customToolbarConfiguredInfo
+    );
+
     return (
       <PanelDashboard
         className="ab-CustomToolbar ab-DashboardToolbar__Custom"
         headerText={this.props.CustomToolbar.Title ? this.props.CustomToolbar.Title : ''}
-        showConfigureButton={this.props.CustomToolbar.OnConfigure != null}
-        onConfigure={this.props.CustomToolbar.OnConfigure}
+        showConfigureButton={this.props.CustomToolbar.ShowConfigureButton}
+        onConfigure={() =>
+          this.props.Adaptable.api.eventApi.emit(
+            'CustomToolbarConfigured',
+            customToolbarConfiguredEventArgs
+          )
+        }
       >
         <div
           id={contentsDivId}

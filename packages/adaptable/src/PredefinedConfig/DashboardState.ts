@@ -390,18 +390,27 @@ export interface CustomToolbar extends AdaptableObject {
   Title?: string;
 
   /**
-   * An (optional) Glyph to display in the Custom Toolbar
-   */
-  Glyph?: string;
-
-  /**
    * An array of Toolbar Buttons - each of which is rendered as a button in a Custom Toolbar.
    *
    * When one of these buttons is clicked the on('ToolbarButtonClicked') event is fired.
    */
   ToolbarButtons?: ToolbarButton[];
 
-  OnConfigure?: () => void;
+  /**
+   * Whether to show a Configure button at the bottom of the Custom Toolbar
+   *
+   * If set to true the wrench will appear.
+   *
+   * When the button is clicked AdapTable will fire the `CustomToolbarConfigured` event.
+   */
+  ShowConfigureButton?: boolean;
+
+  /**
+   * An (optional) Glyph to display in the Custom Toolbar
+   *
+   * Since v.6 this property is deprecated and is no longer applied
+   */
+  Glyph?: string;
 }
 
 export interface DashboardTab extends AdaptableObject {

@@ -9,6 +9,7 @@ import { ColumnStateChangedEventArgs } from './Events/ColumnStateChanged';
 import { SearchChangedEventArgs } from './Events/SearchChanged';
 import { AdaptableReadyInfo } from './Events/AdaptableReady';
 import { DashboardButtonClickedEventArgs } from './Events/DashboardButtonClicked';
+import { CustomToolbarConfiguredEventArgs } from './Events/CustomToolbarConfigured';
 
 /**
  * AdapTable publishes a large number of events to which users can subscribe as required.
@@ -29,9 +30,11 @@ import { DashboardButtonClickedEventArgs } from './Events/DashboardButtonClicked
  *
  * - **ColumnStateChanged** - fired when the Column visibility or order changes
  *
- * - **ToolbarButtonClicked** - when a button is clicked in a Custom Toolbar
+ * - **ToolbarButtonClicked** - when a button is clicked inside a Custom Toolbar
  *
  * - **DashboardButtonClicked** - when a custom button is clicked in the Dashboard
+ *
+ * - **CustomToolbarConfigured** - when the 'configure' button is clicked in a Custom Toolbar
  *
  * - **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
  *
@@ -101,6 +104,7 @@ export interface EventApi {
    *
    * @param callback SelectionChangedEventArgs which contains information of any cells or rows that are selected.
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'SelectionChanged',
     callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
@@ -109,6 +113,7 @@ export interface EventApi {
   /**
    * Unsubscribe from SelectionChanged
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'SelectionChanged',
     callback: (selectionChangedEventArgs: SelectionChangedEventArgs) => void
@@ -121,6 +126,7 @@ export interface EventApi {
    *
    * @param callback ThemeChangedEventArgs which just contains the name of the current Theme
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'ThemeChanged',
     callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
@@ -129,6 +135,7 @@ export interface EventApi {
   /**
    * Unsubscribe from ThemeChanged
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'ThemeChanged',
     callback: (themeChangedEventArgs: ThemeChangedEventArgs) => void
@@ -141,6 +148,7 @@ export interface EventApi {
    *
    * @param callback AlertFiredEventArgs which wrap the Alert that was fired
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'AlertFired',
     callback: (alertFiredEventArgs: AlertFiredEventArgs) => void
@@ -149,6 +157,7 @@ export interface EventApi {
   /**
    * Unsubscribe from AlertFired
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(eventName: 'AlertFired', callback: (alertFiredEventArgs: AlertFiredEventArgs) => void): void;
 
   /**
@@ -158,6 +167,7 @@ export interface EventApi {
    *
    * @param callback ActionColumnClickedEventArgs which includes details of the ActionColumn
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'ActionColumnClicked',
     callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
@@ -166,6 +176,7 @@ export interface EventApi {
   /**
    * Unsubscribe from ActionColumnClicked
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'ActionColumnClicked',
     callback: (actionColumnClickedEventArgs: ActionColumnClickedEventArgs) => void
@@ -178,6 +189,7 @@ export interface EventApi {
    *
    * @param callback ColumnStateChangedEventArgs which includes just the name of the currently selected Layout.
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'ColumnStateChanged',
     callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
@@ -186,6 +198,7 @@ export interface EventApi {
   /**
    * Unsubscribe from ColumnStateChanged
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'ColumnStateChanged',
     callback: (columnStateChangedEventArgs: ColumnStateChangedEventArgs) => void
@@ -199,6 +212,7 @@ export interface EventApi {
    * @param callback  ToolbarButtonClickedEventArgs which provides details of the button that was clicked.
    */
 
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'ToolbarButtonClicked',
     callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
@@ -207,6 +221,7 @@ export interface EventApi {
   /**
    * Ubsubscribe from ToolbarButtonClicked
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'ToolbarButtonClicked',
     callback: (toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs) => void
@@ -235,6 +250,21 @@ export interface EventApi {
     callback: (dashboardButtonClickedEventArgs: DashboardButtonClickedEventArgs) => void
   ): void;
 
+  // tslint:disable-next-line: adjacent-overload-signatures
+  on(
+    eventName: 'CustomToolbarConfigured',
+    callback: (customToolbarConfiguredEventArgs: CustomToolbarConfiguredEventArgs) => void
+  ): () => void;
+
+  /**
+   * Ubsubscribe from DashboardButtonClicked
+   */
+  // tslint:disable-next-line: adjacent-overload-signatures
+  off(
+    eventName: 'CustomToolbarConfigured',
+    callback: (customToolbarConfiguredEventArgs: CustomToolbarConfiguredEventArgs) => void
+  ): void;
+
   /**
    * Event fired whenever **a toolbar in AdapTable becomes visible**
    *
@@ -244,6 +274,7 @@ export interface EventApi {
    *
    * @param callback ToolbarVisibilityChangedEventArgs which includes the name of the toolbar (and the parent Tab) that has become visible.
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'ToolbarVisibilityChanged',
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
@@ -252,6 +283,7 @@ export interface EventApi {
   /**
    * Unsubscribe from ToolbarVisibilityChanged
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'ToolbarVisibilityChanged',
     callback: (toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs) => void
@@ -266,6 +298,7 @@ export interface EventApi {
    *
    * @param callback LiveDataChangedEventArgs which includes details of what triggered the event and the live report which is affected.
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'LiveDataChanged',
     callback: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void
@@ -274,6 +307,7 @@ export interface EventApi {
   /**
    * Unsubscribe from LiveDataChanged
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'LiveDataChanged',
     callback: (liveDataChangedEventArgs: LiveDataChangedEventArgs) => void
@@ -285,6 +319,7 @@ export interface EventApi {
    *
    * @param callback An `AdaptableReadyInfo` object which contains the adaptableApi and the vendorGrid
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   on(
     eventName: 'AdaptableReady',
     callback: (adaptableReadyInfo: AdaptableReadyInfo) => void
@@ -293,6 +328,7 @@ export interface EventApi {
   /**
    * Unsubscribe from AdaptableReady
    */
+  // tslint:disable-next-line: adjacent-overload-signatures
   off(
     eventName: 'AdaptableReady',
     callback: (adaptableReadyInfo: AdaptableReadyInfo) => void
@@ -308,6 +344,7 @@ export interface EventApi {
       | 'ColumnStateChanged'
       | 'ToolbarButtonClicked'
       | 'DashboardButtonClicked'
+      | 'CustomToolbarConfigured'
       | 'ToolbarVisibilityChanged'
       | 'LiveDataChanged'
       | 'AdaptableReady',

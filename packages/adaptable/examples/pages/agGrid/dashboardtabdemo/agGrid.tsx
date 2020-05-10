@@ -43,16 +43,10 @@ function InitAdaptableDemo() {
           {
             Name: 'Deal Info (Default)',
             Title: 'Deal Info',
-            OnConfigure: () => {
-              alert('hello world');
-            },
           },
           {
             Name: 'Deal Info (Detailed)',
             Title: 'Deal Info',
-            OnConfigure: () => {
-              alert('hello world');
-            },
           },
         ],
         ShowFunctionsDropdown: true,

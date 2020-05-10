@@ -1,13 +1,10 @@
 import { useEffect } from 'react';
-
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
-
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import {
@@ -18,18 +15,15 @@ import {
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 import { ToolbarVisibilityChangedInfo } from '../../../../src/Api/Events/ToolbarVisibilityChanged';
-import {
-  ToolbarButtonClickedEventData,
-  ToolbarButtonClickedInfo,
-} from '../../../../src/Api/Events/ToolbarButtonClicked';
+import { ToolbarButtonClickedInfo } from '../../../../src/Api/Events/ToolbarButtonClicked';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
+import { CustomToolbarConfiguredInfo } from '../../../../src/Api/Events/CustomToolbarConfigured';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
@@ -40,7 +34,6 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: demoConfig,
   };
-
   const api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
@@ -134,6 +127,13 @@ function InitAdaptableDemo() {
     console.log(eventInfo);
     console.log(dashboardButton.Name);
   });
+
+  api.eventApi.on('CustomToolbarConfigured', customToolbarConfiguredEventArgs => {
+    let eventInfo: CustomToolbarConfiguredInfo = customToolbarConfiguredEventArgs.data[0].id;
+    let customToolbar = eventInfo.customToolbar;
+    console.log(eventInfo);
+    console.log(customToolbar.Name);
+  });
 }
 
 let demoConfig: PredefinedConfig = {
@@ -173,8 +173,8 @@ let demoConfig: PredefinedConfig = {
     CustomToolbars: [
       {
         Name: 'Toolbar1',
+        ShowConfigureButton: true,
         //   Title: 'First Toolbar',
-        Glyph: 'advanced-search',
         ToolbarButtons: [
           {
             Name: 'btnToolbar1',
@@ -193,13 +193,11 @@ let demoConfig: PredefinedConfig = {
             },
           },
         ],
-        OnConfigure: () => {
-          alert('hello world');
-        },
       },
       {
         Name: 'Toolbar2',
         Title: '',
+        ShowConfigureButton: false,
         ToolbarButtons: [
           {
             Name: 'btnSetButton',
@@ -213,8 +211,8 @@ let demoConfig: PredefinedConfig = {
       },
       {
         Name: 'Toolbar3',
+        ShowConfigureButton: true,
         Title: 'Third Toolbar',
-        Glyph: 'export',
         ToolbarButtons: [
           {
             Name: 'btnAddButton',
@@ -229,7 +227,7 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'Toolbar4',
         Title: 'Fourth Toolbar',
-        Glyph: 'export',
+        ShowConfigureButton: false,
         ToolbarButtons: [
           {
             Name: 'btnClearButton',
