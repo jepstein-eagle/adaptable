@@ -156,7 +156,11 @@ let demoConfig: PredefinedConfig = {
         Caption: 'First',
         ButtonStyle: {
           Variant: 'text',
-          Tone: 'success',
+          Tone: 'neutral',
+        },
+        Icon: {
+          height: 50,
+          src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
         },
       },
       {
@@ -165,6 +169,17 @@ let demoConfig: PredefinedConfig = {
         ButtonStyle: {
           Variant: 'raised',
           Tone: 'accent',
+        },
+      },
+      {
+        Name: 'cb3',
+        ButtonStyle: {
+          Variant: 'raised',
+          Tone: 'accent',
+        },
+        Icon: {
+          height: 20,
+          src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
         },
       },
     ],

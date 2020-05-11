@@ -248,12 +248,12 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             variant={cb.ButtonStyle && cb.ButtonStyle.Variant ? cb.ButtonStyle.Variant : 'text'}
             tone={cb.ButtonStyle && cb.ButtonStyle.Tone ? cb.ButtonStyle.Tone : 'none'}
             className={`ab-DashboardToolbar__Home__${kebabCase(cb.Name)}`}
-            icon={cb.Icon}
             tooltip={cb.Name}
             disabled={this.props.AccessLevel == 'ReadOnly'}
             onClick={() => this.fireToolbarButtonEvent(cb)}
             AccessLevel={'Full'}
           >
+            {cb.Icon ? <img {...cb.Icon} /> : null}
             {cb.Caption}
           </SimpleButton>
         );
