@@ -1,6 +1,30 @@
 .ab-GridList {
-  display: flex;
-  flex-flow: column;
+  --at-grid__background: var(--ab-cmp-listgroupitem__background);
+  .AT-GridCell_content, .ab-ListGroupItem, .AT-GridColumnCell {
+    width: 100%;
+  }
+  .AT-GridHeader {
+    display: none;
+  }
 
-  align-items: flex-start;
+  &.ab-padding-horizontal-0  .AT-GridColumnCell {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+}
+
+.ab-GridList .AT-GridRow--odd {
+  background: var(--ab-cmp-listgroupitem--odd__background);
+  color: var(--ab-cmp-listgroupitem--odd__color);
+}
+.ab-GridList .AT-GridRow--even {
+  background: var(--ab-cmp-listgroupitem__background);
+  color: var(--ab-cmp-listgroupitem__color);
+
+
+}
+.ab-GridList .ab-ListGroupItem {
+  --ab-cmp-listgroupitem__background: transparent;
+  --ab-cmp-listgroupitem--odd__background: transparent;
 }
