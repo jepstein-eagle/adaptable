@@ -34,7 +34,7 @@ import ErrorBox from '../ErrorBox';
 interface ExpressionEditorProps {
   value?: string;
   onChange?: (event: React.FormEvent) => void;
-  firstRow: { [key: string]: any };
+  initialData: { [key: string]: any };
   columns: AdaptableColumn[];
   functions: FunctionMap;
 }
@@ -42,7 +42,7 @@ interface ExpressionEditorProps {
 function ExpressionEditor(props: ExpressionEditorProps) {
   const [textAreaRefCallback, textAreaRef, selectionStart, selectionEnd] = useSelectionRange();
   const cursor = selectionStart === selectionEnd ? selectionStart : null;
-  const [data, setData] = useState(props.firstRow);
+  const [data, setData] = useState(props.initialData);
   let result, error, currentFunction;
 
   try {

@@ -39,7 +39,7 @@ export class CalculatedColumnExpressionWizard
       <ExpressionEditor
         value={this.state.ColumnExpression}
         onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-        firstRow={firstRow}
+        initialData={firstRow}
         columns={this.props.Columns}
         functions={defaultFunctions}
       />

@@ -278,7 +278,7 @@ function App() {
           </TabPanel>
           <TabPanel>
             <Code display="block" p={2} fontSize="sm">
-              <pre>{e.ast && JSON.stringify(e.ast, null, 2)}</pre>
+              <pre>{e && e.ast && JSON.stringify(e.ast, null, 2)}</pre>
             </Code>
           </TabPanel>
         </TabPanels>
