@@ -6,7 +6,7 @@ import { findPathTo } from './utils';
 import { Context } from './types';
 
 export function parse(input: string) {
-  const ast = parser.parse(input);
+  const ast = parser.parse(input.trim());
 
   const evaluate = (context: Partial<Context>) => {
     const contextWithDefaults: Context = {

@@ -9,9 +9,9 @@
 [x] min, max, avg, sum
 [-] OR/AND as function
 [x] between
-[ ] trim empty lines start/end
+[x] trim empty lines start/end
+[x] vars
 [ ] year of date
-[ ] vars
 
 
 {

@@ -112,6 +112,16 @@ export const defaultFunctions: FunctionMap = {
     },
     docs: [{ type: 'code', content: 'col(name: string): any' }],
   },
+  VAR: {
+    handler(args, context) {
+      if (args.length === 1) {
+        return context.variables[args[0]];
+      }
+      if (args.length === 2) {
+        context.variables[args[0]] = args[1];
+      }
+    },
+  },
   MIN: {
     handler(args) {
       return Math.min(...args);

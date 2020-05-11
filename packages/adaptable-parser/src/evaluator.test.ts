@@ -58,6 +58,6 @@ describe('function', () => {
   t('FUNCTION', 'COL("B")', [10]);
 });
 
-describe('smart', () => {
-  //
+describe('variables', () => {
+  t('VAR', 'VAR("X", 5)\nVAR("X") * 2', [undefined, 10]);
 });
