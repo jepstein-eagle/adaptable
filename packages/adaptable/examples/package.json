@@ -27,7 +27,7 @@
     "ipushpull-js": "^2.19.3",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
-    "next": "^9.3.1",
+    "next": "^9.4.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6"
   },

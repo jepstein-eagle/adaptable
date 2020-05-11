@@ -787,7 +787,7 @@ export class ExamplesHelper {
       floatingFilter: true,
       suppressColumnVirtualisation: true,
       suppressMenuHide: true,
-      rowHeight: 30,
+      rowHeight: 40,
       sideBar: true,
       rowSelection: 'multiple',
       autoGroupColumnDef: {

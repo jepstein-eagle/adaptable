@@ -6,7 +6,13 @@ It has some changes of interest:
 
 ## New ag-Grid Version (23)
 
-Note formmatted value expression and column filter dropdown
+Note formatted value expression and column filter dropdown 
+
+By default, column filters looked very similar to aggrid 22 balham theme, since `filterOptions.useVendorFilterFormStyle` was default to `true`. With the transition to v23, even with `filterOptions.useVendorFilterFormStyle` set to `true`, the styles now look more modern and similar to the aggrid `alpine` theme, which aggrid recommends as default.
+
+## CSS Variables
+
+Added `--ab-cmp-field-wrap__border-radius` css variable
 
 ## Display Format Columns
 

@@ -379,6 +379,8 @@ export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
     public init(params?: IToolPanelParams): void {
       this.gui = document.createElement('div');
       this.gui.id = 'adaptable-tool-panel_' + this.ctx.Adaptable.adaptableOptions.adaptableId;
+      this.gui.style.width = '100%';
+      this.gui.style.overflow = 'auto';
       render(
         <Provider store={this.ctx.Adaptable.AdaptableStore.TheStore}>
           <ThemeProvider theme={theme}>

@@ -1,5 +1,5 @@
 
-
-html.ab--theme-dark .ab-FilterFormPanel .ab-Panel__body {
-  background: #2d3436
+.ab-FilterFormPanel {
+  --ab-cmp-panel_body__background: var(--ag-control-panel-background-color);
 }
+
