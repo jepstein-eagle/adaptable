@@ -245,7 +245,7 @@ export class ListBoxFilterForm extends React.Component<
         <Box mx={this.props.useVendorStyle ? 0 : '2px'} marginBottom={2}>
           {textClear}
         </Box>
-        <GridList>
+        <GridList className={!this.props.useVendorStyle ? 'ab-padding-horizontal-0' : ''}>
           {userFiltersItemsElements}
           {columnValuesItemsElements}
         </GridList>
