@@ -100,7 +100,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__ColumnFilter"
         headerText={StrategyConstants.ColumnFilterStrategyFriendlyName}
-        glyphicon={StrategyConstants.ColumnFilterGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}

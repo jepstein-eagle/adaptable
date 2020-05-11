@@ -18,7 +18,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * You use Dashboard State to set these Tabs and Function Toolbars.
  *
- * You also use Dashboard State to define Custom Toolbars that you can then include in your Dashboard Tabs.
+ * You also use Dashboard State to define 2 sets of bespoke items in your Dashboard:
+ *
+ * - Custom Toolbars that you can then include in your Dashboard Tabs.
+ *
+ * - Custom Buttons that will alongside the Function buttons in the top left corner of the Dashboard.
  *
  *  --------------
  *
@@ -33,11 +37,12 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * ```ts
  * export default {
  * Dashboard: {
- *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+ *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate'],
  *   CustomToolbars: [
  *          {
  *            Name: 'appToolbar',
  *            Title: 'Trades',
+ *            ShowFunctionsDropdown: true,
  *          },
  *        ],
  *   Tabs: [
@@ -54,6 +59,24 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *            Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
  *          },
  *        ],
+ *  CustomButtons: [
+ *      {
+ *        Name: 'cb1',
+ *        Caption: 'First',
+ *         ButtonStyle: {
+ *          Variant: 'text',
+ *          Tone: 'success',
+ *        },
+ *      },
+ *      {
+ *       Name: 'cb2',
+ *       Caption: 'Second',
+ *        ButtonStyle: {
+ *          Variant: 'raised',
+ *          Tone: 'accent',
+ *        },
+ *      },
+ *    ],
  *  }
  * } as PredefinedConfig;
  *
@@ -62,9 +85,9 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - created 3 Dashboard Tabs ('Search', 'Edit' and 'Grid') each with their own Toolbars
  *
- * - created a Custom Toolbar ('appToolbar') and put it in the 'Grid' Tab
+ * - created a Custom Toolbar ('appToolbar') and put it in the 'Grid' Tab (and we set it display the Configure button)
  *
- * - set 6 Function Buttons to be visible
+ * - set 3 Function Buttons to be visible
  *
  *  --------------
  *
@@ -94,6 +117,17 @@ export interface DashboardState extends ConfigState {
    *
    */
   ActiveTab?: number;
+
+  /**
+   * Whether or not the Dashboard can be floated.
+   *
+   * If set to true (the default) then double-clicking the Dasbhoard will put it in float mode.
+   *
+   * If set to false then double-clicking is disabled and the floating menu options are removed.
+   *
+   *  **Default Value: True**
+   */
+  CanFloat?: boolean;
 
   /**
    * Whether or not the Dashboard is collapsed.
@@ -148,6 +182,15 @@ export interface DashboardState extends ConfigState {
    * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
+
+  /**
+   * Buttons set by the User at design-time to appear in the top corner of the Dashboard - next to the Visible Function Buttons
+   *
+   * These buttons - if provided - are always present and cannot be removed at design time.
+   *
+   * When a button is clicked the `DashboardButtonClicked` event is fired.
+   */
+  CustomButtons?: ToolbarButton[];
 
   /**
    * Whether to show the Home dropdown in the Dashboard Header.
@@ -299,7 +342,7 @@ export interface DashboardState extends ConfigState {
  *     {
  *       Name: 'Toolbar1',
  *       Title: 'First Toolbar',
- *       Glyph: 'advanced-search',
+ *       ShowConfigureButton: true,
  *       ToolbarButtons: [
  *         {
  *           Name: 'btnSuccess',
@@ -336,7 +379,6 @@ export interface DashboardState extends ConfigState {
  *     {
  *       Name: 'Toolbar3',
  *       Title: 'Third Toolbar',
- *       Glyph: 'export',
  *       ToolbarButtons: [
  *         {
  *           Name: 'btnToolbar3',
@@ -364,18 +406,17 @@ export interface CustomToolbar extends AdaptableObject {
    * The name of the Toolbar
    *
    * This is how it will be referred to in the Dashboard Popup when managing toolbars
+   *
+   * It is **not** the name that will appear in the Toolbar itself when displayed - that is the `Title` property.
    */
   Name: string;
 
   /**
    * The title which will appear in the Toolbar when its displayed
+   *
+   * If not set (or set to an empty string) then no title will appear in the Toolbar
    */
   Title?: string;
-
-  /**
-   * An (optional) Glyph to display in the Custom Toolbar
-   */
-  Glyph?: string;
 
   /**
    * An array of Toolbar Buttons - each of which is rendered as a button in a Custom Toolbar.
@@ -383,6 +424,22 @@ export interface CustomToolbar extends AdaptableObject {
    * When one of these buttons is clicked the on('ToolbarButtonClicked') event is fired.
    */
   ToolbarButtons?: ToolbarButton[];
+
+  /**
+   * Whether to show a Configure button at the bottom of the Custom Toolbar
+   *
+   * If set to true the wrench image will appear.
+   *
+   * When the button is clicked AdapTable will fire the `CustomToolbarConfigured` event.
+   */
+  ShowConfigureButton?: boolean;
+
+  /**
+   * An (optional) Glyph to display in the Custom Toolbar
+   *
+   * Since V.6 (Feb 2020) this property has been deprecated and is no longer used or applied
+   */
+  Glyph?: string;
 }
 
 export interface DashboardTab extends AdaptableObject {

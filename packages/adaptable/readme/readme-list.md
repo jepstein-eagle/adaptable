@@ -7,41 +7,44 @@ These should be used in conjunction with the more technical [AdapTable Developer
 > The main source of AdapTable Help used to be in [Zendesk](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced.
 
 ## Version and Framework Related Guides
- - [Adaptable Core](../README.md)
- - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
- - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
- - [Plugins](../../../packages/plugins/README.md)
- - [Version 6 Upgrade Guide](./upgrade-guide.md)
+
+- [Adaptable Core](../README.md)
+- [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
+- [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
+- [Plugins](../../../packages/plugins/README.md)
+- [Version 6 Upgrade Guide](./upgrade-guides/upgrade-guide-v6.md)
 
  
 ## Adaptable Guides
- - [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
- - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
- - [Entitlements Guide](./guides/adaptable-entitlements-guide.md)
- - [Adaptable State Guide](./guides/adaptable-state-guide.md)
- - [Filtering Guide](./guides/adaptable-filtering-guide.md)
- - [Adaptable Expression Guide](./guides/adaptable-expression-guide.md)
- - [Run Time Access Guide](./guides/adaptable-runtime-access-guide.md)
- - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
- - [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
- - [Team Sharing Guide](./guides/adaptable-team-sharing-guide.md)
- - [Server Functionality Guide](./guides/adaptable-server-functionality-guide.md)
 
- ## FAQs
- - [General FAQ](./faqs/general-faq.md)
- - [Licences FAQ](./faqs/licences-faq.md)
- - [Look & Feel FAQ](./faqs/look-and-feel-faq.md)
- - [Technical FAQ](./faqs/technical-faq.md)
- - [Troubleshooting FAQ](./faqs/troubleshooting-faq.md)
- - [Column Values FAQ](./faqs/adaptable-column-values-faq.md)
+- [Getting Started Guide](./guides/adaptable-getting-started-guide.md)
+- [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
+- [Entitlements Guide](./guides/adaptable-entitlements-guide.md)
+- [Adaptable State Guide](./guides/adaptable-state-guide.md)
+- [Filtering Guide](./guides/adaptable-filtering-guide.md)
+- [Adaptable Expression Guide](./guides/adaptable-expression-guide.md)
+- [Run Time Access Guide](./guides/adaptable-runtime-access-guide.md)
+- [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
+- [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
+- [Team Sharing Guide](./guides/adaptable-team-sharing-guide.md)
+- [Server Functionality Guide](./guides/adaptable-server-functionality-guide.md)
+
+## FAQs
+
+- [General FAQ](./faqs/general-faq.md)
+- [Licences FAQ](./faqs/licences-faq.md)
+- [Look & Feel FAQ](./faqs/look-and-feel-faq.md)
+- [Technical FAQ](./faqs/technical-faq.md)
+- [Troubleshooting FAQ](./faqs/troubleshooting-faq.md)
+- [Column Values FAQ](./faqs/adaptable-column-values-faq.md)
 
 ## Adaptable Functions
-
 
 - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 - [Action Column](./functions/action-column-function.md)
 - [Advanced Search](./functions/advanced-search-function.md)
 - [Alert](./functions/alert-function.md)
+- [Alert](./functions/application-function.md)
 - [Bulk Update](./functions/bulk-update-function.md)
 - [Calculated Column](./functions/calculated-column-function.md)
 - [Calendar](./functions/calendar-function.md)
@@ -52,7 +55,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Column Filter](./functions/column-filter-function.md) 
 - [Column Info](./functions/column-info-function.md)             
 - [Conditional Style](./functions/conditional-style-function.md)  
-- [Custom Sort](./functions/custom-sort-function.md)              
+- [Custom Sort](./functions/custom-sort-function.md)
 - [Dashboard](./functions/dashboard-function.md) 
 - [Data Source](./functions/data-source-function.md)  
 - [Export](./functions/export-function.md)  
@@ -65,7 +68,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [ipushpull](./functions/ipushpull-function.md)  
 - [Layout](./functions/layout-function.md)                       
 - [Named Filter](./functions/named-filter-function.md)                       
-- [Percent Bar ](./functions/percent-bar-function.md)           
+- [Percent Bar](./functions/percent-bar-function.md)           
 - [Plus Minus](./functions/plus-minus-function.md)                  
 - [Quick Search](./functions/quick-search-function.md)          
 - [Reminder](./functions/reminder-function.md)                   
@@ -77,7 +80,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Updated Row](./functions/updated-row-function.md)             
 - [User Filter](./functions/user-filter-function.md)   
 
-#### Charting Functions
+### Charting Functions
 
 - [Chart](./functions/charts/charts-function.md)  
 - [Pie Chart (View As)](./functions/charts/piechart-function.md)     

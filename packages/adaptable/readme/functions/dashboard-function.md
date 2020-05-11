@@ -9,6 +9,7 @@ The Dashboard can be heavily customised so that it fits your needs both in terms
 >To facilitate this upgrade for existing users, a default Tab is created when AdapTable first loads after the upgrade, containing the Visible toolbars in the Adaptable State.
 
 ## Dashboard Visiblity Modes
+
 There are 3 visibility modes for the Dashboard:
 
 1. **Expanded** - This is the Dashboard default and displays all the Toolbars in the currently selected Tab.
@@ -28,6 +29,7 @@ There are 3 visibility modes for the Dashboard:
     > To float / dock the Dashboard double-click the Name in the Dashboard Header (or select item in Home Menu)
 
 ## Dashboard Contents
+
 The Dashboard contains the following elements:
 
 - **Home Dropdown** - a dropdown on the left hand side of the Dashboard Header that shows a list of all Functions in AdapTable to which the user is 'Entitled'.  Clicking an item in this list will open the popup associated with that Function.
@@ -37,7 +39,7 @@ The Dashboard contains the following elements:
 - **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
   
     > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the (now deprecated) `VisibleToolbars`collection curently in Dashboard State; if there is none, then it will use the default set.
-    
+
 - **Function Buttons** - a group of 'shortcut' buttons which each open the popup associated with that Function.
   
   > This list can be set via the `VisibleButtons` property of Dashboard State.
@@ -46,9 +48,8 @@ The Dashboard contains the following elements:
   
   > This can be hidden via the `ShowQuickSearchInHeader` property of Dashboard State.
 
-  
-
 ## Toolbars
+
 AdapTable ships with a number of Function Toolbars.
 
 These are essentially collections of controls which provide easy and quick access a single Function (e.g. the 'Advanced Search' Toolbar contains a dropdown showing all Advanced Searches together with buttons to add / edit / delete them).
@@ -56,6 +57,7 @@ These are essentially collections of controls which provide easy and quick acces
 Toolbars are grouped into Tabs to give users full control over which Toolbars are visible.
 
 ### Custom Toolbars
+
 In addition to the Toolbars shipped by AdapTable, users can create their own Custom Toolbars at Design-Time.  
 
 Once created, they are treated as full toolbars and can be placed in any Tab as required.
@@ -66,8 +68,14 @@ Custom Toolbars contain 2 sections, either of which can be populated:
 
 - a div which will display any buttons that users provide via the ToolbarButtons property
   
-See [Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
+Custom Toolbars have a few optional properties of interest:
 
+- `Title` - if provided this is displayed at the bottom of the Toolbar
+
+- `ShowConfigureButton` - if true, then a Configure button is displayd in the toolbar which, when clicked, will trigger the `CustomToolbarConfigured` event
+
+
+See [Custom Toolbars Developer Documentation](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.customtoolbar.html) for more information.
 
 ### Dashboard Example
 
@@ -96,12 +104,25 @@ Dashboard: {
       Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
     },
   ],
- }    
+ }
 } as PredefinedConfig;
 
 ```
 
+## Dashboard Events
+
+There are 4 events which are fired by the Dashboard to cater for different scenarios:
+
+- **ToolbarVisibilityChanged** - when a toolbar comes into view (useful for rendering Custom toolbars)
+  
+- **ToolbarButtonClicked** - when a button is clicked inside a Custom Toolbar
+
+- **DashboardButtonClicked** - when a custom button is clicked in the Dashboard
+
+- **CustomToolbarConfigured** - when the 'configure' button is clicked in a Custom Toolbar
+
 ## UI Elements
+
 The Dashboard Function includes the following UI Elements:
 
 - **Dashboard** - Area above the Grid with Tabs, Function Buttons and Quick Search textbox.
@@ -112,8 +133,8 @@ The Dashboard Function includes the following UI Elements:
 
 - **Column Menu** - Facilitates changing the Dashboard Visibility Mode
 
-
 ## Entitlements
+
 Dashboard supports these Entitlement Rules:
 
 - **Full**: Everything in the Dashboard is visible to the User
@@ -142,8 +163,8 @@ This is added automatically by AdapTable when you first upgrade to v6.1 (release
 
 This Tab can be later replaced either in the UI, or in Predefined Config by setting a Revision Number.
 
-
 ### Further Information
+
 - [Dashboard State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.dashboardstate.html)
 
 - [Dashboard Api](https://api.adaptabletools.com/interfaces/_src_api_dashboardapi_.dashboardapi.html)

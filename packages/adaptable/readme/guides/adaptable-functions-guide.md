@@ -6,7 +6,7 @@ Most End-User action in AdapTable will be via AdaptableFunctions.
 
 Many AdaptableFunctions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. AdvancedSearch, ConditionalStyle, PercentBars etc.
 
-### Functions UI
+## Functions UI
 
 There are a number of different ways in which end-Users will interact with AdaptableFunctions in the AdapTable UI:
 
@@ -24,34 +24,35 @@ This table lists all the AdaptableFunctions and which UI elements they support.
 
 Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 
-| AdaptableFunction  	                                           | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
+| AdaptableFunction                                                | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
 | --------  	                                                   | ------ | ------- | ---------  | ----------- | ------------ |
 | [Action Column](../functions/action-column-function.md)          | No     | No      | No         | No          | No           |
 | [Advanced Search](../functions/advanced-search-function.md)      | Yes    | Yes     | Yes        | No          | No           |
-| [Alert](../functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          | 
-| [Bulk Update](../functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          | 
-| [Calculated Column](../functions/calculated-column-function.md)  | Yes    | No      | No         | Yes         | No           | 
-| [Calendar](../functions/calendar-function.md)                    | No     | No      | No         | No          | No           | 
-| [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          | 
-| [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           | 
-| [Column Category](../functions/column-category-function.md)      | Yes    | No      | No         | No          | No           | 
-| [Column Chooser](../functions/column-chooser-function.md)        | No     | No      | No         | Yes         | Yes          | 
-| [Column Filter](../functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          | 
-| [Column Info](../functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          | 
-| [Conditional Style](../functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           | 
-| [Custom Sort](../functions/custom-sort-function.md)              | Yes    | No      | No         | Yes         | No           | 
-| [Dashboard](../functions/dashboard-function.md)                  | No     | No      | Yes        | Yes         | No           | 
-| [Data Source](../functions/data-source-function.md)              | Yes    | Yes     | Yes        | No          | No           | 
-| [Export](../functions/export-function.md)                        | Yes    | Yes     | Yes        | No          | No           | 
-| [Flashing Cell](../functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           | 
-| [Format Column](../functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           | 
-| [FreeText Column](../functions/freetext-column-function.md)     | Yes    | No      | No         | Yes         | No           | 
+| [Alert](../functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          |
+| [Application](../functions/application-function.md)              | No     | No      | No         | No          | No           |
+| [Bulk Update](../functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          |
+| [Calculated Column](../functions/calculated-column-function.md)  | Yes    | No      | No         | Yes         | No           |
+| [Calendar](../functions/calendar-function.md)                    | No     | No      | No         | No          | No           |
+| [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          |
+| [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           |
+| [Column Category](../functions/column-category-function.md)      | Yes    | No      | No         | No          | No           |
+| [Column Chooser](../functions/column-chooser-function.md)        | No     | No      | No         | Yes         | Yes          |
+| [Column Filter](../functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
+| [Column Info](../functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          |
+| [Conditional Style](../functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           |
+| [Custom Sort](../functions/custom-sort-function.md)              | Yes    | No      | No         | Yes         | No           |
+| [Dashboard](../functions/dashboard-function.md)                  | No     | No      | Yes        | Yes         | No           |
+| [Data Source](../functions/data-source-function.md)              | Yes    | Yes     | Yes        | No          | No           |
+| [Export](../functions/export-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
+| [Flashing Cell](../functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           |
+| [Format Column](../functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           |
+| [FreeText Column](../functions/freetext-column-function.md)     | Yes    | No      | No         | Yes         | No           |
 | [Glue42](../functions/glue42-function.md)                        | No     | Yes     | Yes        | No          | No           |
 | [Gradient Column](../functions/gradient-column-function.md)      | Yes    | No      | No         | Yes         | Yes          |
 | [Grid Info](../functions/grid-info-function.md)                  | No     | No      | No         | Yes         | Yes          |
 | [Layout](../functions/layout-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
 | [Named Filter](../functions/named-filter-function.md)            | No     | No      | No         | No          | No           |
-| [Percent Bar ](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
+| [Percent Bar](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
 | [Plus Minus](../functions/plus-minus-function.md)                | Yes    | No      | No         | Yes         | No           |
 | [ipushpull](../functions/ipushpull-function.md)                    | No     | Yes     | Yes        | No          | No           |
 | [Quick Search](../functions/quick-search-function.md)            | No     | Yes     | Yes        | No          | No           |
@@ -60,20 +61,18 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Shortcut](../functions/shortcut-function.md)                    | Yes    | No      | No         | No          | No           |
 | [Smart Edit](../functions/smart-edit-function.md)                | No     | Yes     | Yes        | No          | Yes          |
 | [System Status](../functions/system-status-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
-| Team Sharing                                                     | No     | No      | No         | No          | No           |
 | [Theme](../functions/theme-function.md)                          | No     | Yes     | Yes        | No          | No           |
 | [Updated Row](../functions/updated-row-function.md)              | No     | No      | No         | Yes         | Yes          |
 | [User Filter](../functions/user-filter-function.md)              | Yes    | No      | No         | Yes         | No           |
 
-#### Chart AdaptableFunctions (plugin)
+### Chart AdaptableFunctions (plugin)
 
-| AdaptableFunction                                                      | Wizard    | Toolbar  | Tool Panel | Column Menu | Context Menu  |
-| --------  	                                                         | ------    | -------  | ---------  | ----------- | ------------  |
-| [Chart](../functions/charts/charts-function.md)                        | Yes       | Yes      | Yes        | No          | No            |
-| [Pie Chart (View As)](../functions/charts/piechart-function.md)        | No        | No       | No         | Yes         | Yes           |
-| [Sparkline (View As)](../functions/charts/sparkline-function.md)       | No        | No       | No         | Yes         | Yes           |
-| [Sparkline Column](../functions/charts/sparkline-column-function.md)   | No        | No       | No         | Yes         | Yes           |
-
+| AdaptableFunction                                                    | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
+| -------------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
+| [Chart](../functions/charts/charts-function.md)                      | Yes    | Yes     | Yes        | No          | No           |
+| [Pie Chart (View As)](../functions/charts/piechart-function.md)      | No     | No      | No         | Yes         | Yes          |
+| [Sparkline (View As)](../functions/charts/sparkline-function.md)     | No     | No      | No         | Yes         | Yes          |
+| [Sparkline Column](../functions/charts/sparkline-column-function.md) | No     | No      | No         | Yes         | Yes          |
 
 ### Entitlements
 

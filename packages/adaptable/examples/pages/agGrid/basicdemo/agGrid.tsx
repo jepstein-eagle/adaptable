@@ -40,9 +40,7 @@ function InitAdaptableDemo() {
       ...gridOptions,
       modules: AllEnterpriseModules,
     },
-    filterOptions: {
-      useVendorFilterFormStyle: false,
-    },
+    filterOptions: {},
     predefinedConfig: {
       Dashboard: {
         Tabs: [

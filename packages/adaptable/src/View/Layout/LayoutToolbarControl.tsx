@@ -139,7 +139,6 @@ class LayoutToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__Layout"
         headerText={StrategyConstants.LayoutStrategyFriendlyName}
-        glyphicon={StrategyConstants.LayoutGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}

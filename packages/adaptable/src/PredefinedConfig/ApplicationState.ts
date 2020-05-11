@@ -7,9 +7,19 @@ import { ConfigState } from './ConfigState';
  *
  * In previous version, Application State included an ApplicationToolbar for users to render application-specific content, but this has now been removed and you should use [Custom Toolbars](_src_predefinedconfig_dashboardstate_.dashboardstate.html#customtoolbars) in Dashboard State instead.
  *
- *  **Further AdapTable Help Resources**
+ * --------------
  *
- * [API](_src_api_applicationapi_.applicationapi.html) | [AdapTable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
+ *  ### Further AdapTable Help Resources
+ *
+ * - [Application Demo](https://demo.adaptabletools.com/adaptablestate/aggridapplicationdataentriesdemo)
+ *
+ * - {@link ApplicationApi|Application API}
+ *
+ * - [Application Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/application-function.md)
+ *
+ * - [Adaptable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md)
+ *
+ * --------------
  *
  * **Application Data Entries**
  *

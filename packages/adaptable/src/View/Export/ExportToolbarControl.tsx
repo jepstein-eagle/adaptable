@@ -231,7 +231,6 @@ class ExportToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__Export"
         headerText={StrategyConstants.ExportStrategyFriendlyName}
-        glyphicon={StrategyConstants.ExportGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}

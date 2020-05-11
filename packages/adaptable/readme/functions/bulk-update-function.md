@@ -15,6 +15,7 @@ Users are able to choose between selecting an existing column value or providing
 If the proposed Bulk Update breaks a [Cell Validation Rule](./cell-validation-function.md) then the edit will be prevented (or a warning is displayed).
 
 ## UI Elements
+
 Bulk Update includes the following UI Elements:
 
 - **Popup** - Allows you to perform a Bulk Update operation on selected cells.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the update.
@@ -26,6 +27,7 @@ Bulk Update includes the following UI Elements:
 - **Context Menu** - `Apply Bulk Update` Menu Item opens Bulk Update popup (only visible if selected cells are editable and from a single column).
 
 ## Entitlements
+
 Bulk Update supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -56,8 +58,8 @@ No, like Smart Edit, Bulk Update works on only one column at a time.
 
 Yes, you can. The selector for Bulk Update allows you to add your own value which is not currently contained in the column. Simply enter the new value you wish to set, and then click the selector to confirm.
 
-
 ### Further Information
+
 - [Bulk Update State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_bulkupdatestate_.bulkupdatestate.html)
 
 - [Bulk Update Api](https://api.adaptabletools.com/interfaces/_src_api_bulkupdateapi_.bulkupdateapi.html)

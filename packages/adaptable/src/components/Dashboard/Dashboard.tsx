@@ -21,6 +21,7 @@ export type DashboardProps = {
   children: ReactElement<DashboardTabProps>[];
   left: ReactNode;
   right: ReactNode;
+  canFloat: boolean;
   onShowDashboardPopup?: () => void;
   // activeTab
   activeTab?: number;
@@ -114,7 +115,12 @@ export function Dashboard(props: DashboardProps) {
       onDoubleClick={event => {
         const target = event.target as HTMLElement;
         // ignore double clicks on buttons, inputs and their children
-        if (target.closest('button, input')) return;
+        if (!props.canFloat) {
+          return;
+        }
+        if (target.closest('button, input')) {
+          return;
+        }
         setFloating(!floating);
       }}
     >

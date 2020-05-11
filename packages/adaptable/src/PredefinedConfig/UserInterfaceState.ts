@@ -33,7 +33,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo/)
  *
- * - [User Interface API](_src_api_userinterfaceapi_.userinterfaceapi.html)
+ * - {@link UserInterfaceApi|User Interface API}
  *
  * - [Getting Started Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-getting-started-guide.md)
  **/

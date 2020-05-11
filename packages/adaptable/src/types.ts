@@ -11,10 +11,6 @@ export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 // Types we use
 export { AdaptableFunctionName } from './PredefinedConfig/Common/Types';
 
-// Adaptable Objects
-export { RowStyle } from './PredefinedConfig/UserInterfaceState';
-export { AccessLevel, Entitlement } from './PredefinedConfig/EntitlementState';
-
 // Predefined Config and Predefined Config Common Objects
 export { PredefinedConfig } from './PredefinedConfig/PredefinedConfig';
 export { AdaptableState } from './PredefinedConfig/AdaptableState';
@@ -23,6 +19,10 @@ export { DataChangedInfo } from './PredefinedConfig/Common/DataChangedInfo';
 export { AdaptableMenuItem, MenuInfo } from './PredefinedConfig/Common/Menu';
 export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo';
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
+export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
+export { Expression } from './PredefinedConfig/Common/Expression';
+export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
+export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';
 export {
@@ -31,7 +31,7 @@ export {
   DateFormatterOptions,
 } from './PredefinedConfig/Common/AdaptableFormat';
 
-// Action Column State
+// Get the objects from each Function
 export {
   ActionColumn,
   ActionColumnShouldRenderPredicate,
@@ -39,18 +39,75 @@ export {
   ActionColumnRenderParams,
   ActionColumnRenderFunction,
 } from './PredefinedConfig/ActionColumnState';
-
-// Advanced Search State
 export { AdvancedSearchState, AdvancedSearch } from './PredefinedConfig/AdvancedSearchState';
-
-// Advanced Search State
 export { AlertState, AlertDefinition, AlertProperties } from './PredefinedConfig/AlertState';
-
-// Application State
 export { ApplicationState, ApplicationDataEntry } from './PredefinedConfig/ApplicationState';
-
-// Bulk Update State
 export { BulkUpdateState } from './PredefinedConfig/BulkUpdateState';
+export {
+  CalculatedColumnState,
+  CalculatedColumn,
+  CalculatedColumnSettings,
+} from './PredefinedConfig/CalculatedColumnState';
+export { CalendarState } from './PredefinedConfig/CalendarState';
+export {
+  CellSummaryState,
+  CellSummaryOperationFunction,
+  CellSummaryOperationDefinition,
+} from './PredefinedConfig/CellSummaryState';
+export { CellValidationState, CellValidationRule } from './PredefinedConfig/CellValidationState';
+export { ColumnCategoryState, ColumnCategory } from './PredefinedConfig/ColumnCategoryState';
+export { ColumnFilterState, ColumnFilter } from './PredefinedConfig/ColumnFilterState';
+export { ConditionalStyleState, ConditionalStyle } from './PredefinedConfig/ConditionalStyleState';
+export {
+  CustomSortState,
+  CustomSortCompareFunction,
+  CustomSort,
+} from './PredefinedConfig/CustomSortState';
+export { DashboardState, DashboardTab } from './PredefinedConfig/DashboardState';
+export { DataSourceState, DataSource, DataSourceParams } from './PredefinedConfig/DataSourceState';
+export {
+  EntitlementLookUpFunction,
+  AccessLevel,
+  Entitlement,
+} from './PredefinedConfig/EntitlementState';
+export { ExportState, Report, ReportSchedule } from './PredefinedConfig/ExportState';
+export { FlashingCellState, FlashingCell } from './PredefinedConfig/FlashingCellState';
+export { FormatColumnState, FormatColumn } from './PredefinedConfig/FormatColumnState';
+export {
+  FreeTextColumnState,
+  FreeTextColumn,
+  FreeTextStoredValue,
+} from './PredefinedConfig/FreeTextColumnState';
+export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
+export { LayoutState, Layout, PivotDetails } from './PredefinedConfig/LayoutState';
+export {
+  NamedFilterState,
+  NamedFilter,
+  NamedFilterPredicate,
+} from './PredefinedConfig/NamedFilterState';
+export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
+export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';
+export { QuickSearchState } from './PredefinedConfig/QuickSearchState';
+export { ReminderState, ReminderSchedule } from './PredefinedConfig/ReminderState';
+export { ShortcutState, Shortcut } from './PredefinedConfig/ShortcutState';
+export { SmartEditState } from './PredefinedConfig/SmartEditState';
+export { SparklineColumnState, SparklineColumn } from './PredefinedConfig/SparklineColumnState';
+export {
+  TeamSharingState,
+  TeamSharingImportInfo,
+  SharedEntity,
+} from './PredefinedConfig/TeamSharingState';
+export { UpdatedRowState } from './PredefinedConfig/UpdatedRowState';
+export { UserFilterState, UserFilter } from './PredefinedConfig/UserFilterState';
+export {
+  UserInterfaceState,
+  UserMenuItem,
+  UserMenuItemShowPredicate,
+  UserMenuItemClickedFunction,
+  PermittedValuesColumn,
+  EditLookUpColumn,
+  RowStyle,
+} from './PredefinedConfig/UserInterfaceState';
 
 // Adaptable Options Objects
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
@@ -107,6 +164,14 @@ export {
   ToolbarButtonClickedEventArgs,
   ToolbarButtonClickedInfo,
 } from './Api/Events/ToolbarButtonClicked';
+export {
+  DashboardButtonClickedEventArgs,
+  DashboardButtonClickedInfo,
+} from './Api/Events/DashboardButtonClicked';
+export {
+  CustomToolbarConfiguredEventArgs,
+  CustomToolbarConfiguredInfo,
+} from './Api/Events/CustomToolbarConfigured';
 export { AdaptableReadyInfo } from './Api/Events/AdaptableReady';
 
 // Audit Events

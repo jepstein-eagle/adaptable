@@ -175,7 +175,6 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       <PanelDashboard
         className="ab-DashboardToolbar__Chart"
         headerText={StrategyConstants.ChartStrategyFriendlyName}
-        glyphicon={StrategyConstants.ChartGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}

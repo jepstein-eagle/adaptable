@@ -9,6 +9,7 @@ import '../../../../src/index.scss';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
@@ -19,7 +20,10 @@ function InitAdaptableDemo() {
 
   // creating options here so we can add audit
   const adaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     primaryKey: 'tradeId',
     userName: 'demo user',
     adaptableId: 'cell validation demo',

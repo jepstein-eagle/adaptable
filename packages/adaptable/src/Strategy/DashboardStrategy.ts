@@ -89,7 +89,7 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
             DashboardRedux.DashboardSetIsFloating(false)
           )
         );
-      } else {
+      } else if (this.adaptable.api.dashboardApi.getDashboardState().CanFloat) {
         menuItems.push(
           this.createColumnMenuItemReduxAction(
             'Float Dashboard',

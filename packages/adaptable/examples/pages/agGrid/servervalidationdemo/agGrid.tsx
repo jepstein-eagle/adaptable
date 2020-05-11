@@ -18,6 +18,7 @@ import {
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { ValidationResult } from '../../../../src/AdaptableOptions/EditOptions';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
@@ -33,7 +34,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Server Validation Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 

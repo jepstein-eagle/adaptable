@@ -1,4 +1,3 @@
-import { ApplicationApi } from './ApplicationAPI';
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
 import { AdvancedSearchApi } from './AdvancedSearchApi';
@@ -46,6 +45,7 @@ import { Glue42Api } from './Glue42Api';
 import { IPushPullApi } from './IPushPullApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
+import { ApplicationApi } from './ApplicationAPI';
 
 /**
  *
@@ -77,10 +77,10 @@ import { GradientColumnApi } from './GradientColumnApi';
  *
  *  | API Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
- *  | [actionColumnApi](#actioncolumnapi)             | Manages [Action Columns](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html) which contain buttons with bespoke click logic	    |
- *  | [advancedSearchApi](#advancedsearchapi)         | Functions relating to the saveable, cross-column [Advanced Searches](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)  |
- *  | [alertApi](#alertapi)                           | [Adaptable Alerts](_src_predefinedconfig_alertstate_.alertstate.html) provide bespoke notifications and messages                                 |
- *  | [applicationApi](#applicationapi)               | Use [Application Data Entries](_src_predefinedconfig_applicationstate_.applicationstate.html) to manage custom state and data |
+ *  | [actionColumnApi](#actioncolumnapi)             | Manages {@link ActionColumnState|Action Columns} which contain buttons with bespoke click logic	    |
+ *  | [advancedSearchApi](#advancedsearchapi)         | Functions relating to the saveable, cross-column {@link AdvancedSearchState|Advanced Searches}  |
+ *  | [alertApi](#alertapi)                           | {@link AlertState|Adaptable Alerts} provide bespoke notifications and messages                                 |
+ *  | [applicationApi](#applicationapi)               | Use {@link ApplicationState|Application Data Entries} to manage custom state and data |
  *  | [auditEventApi](#auditeventapi)                 | Listen to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
  *  | [bulkUpdateApi](#bulkupdateapi)                 | Run Bulk Update so mutliple selected cells are given same value  |
  *  | [calculatedColumnApi](#calculatedcolumnapi)     | Manages [Calculated Columns](_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
@@ -88,25 +88,25 @@ import { GradientColumnApi } from './GradientColumnApi';
  *  | [cellSummaryApi](#cellsummaryapi)               | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columncategoryapi)         | Puts columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) for dealing with many columns |
- *  | [columnChooserApi](#columnchooserapi)         | |
- *  | [columnFilterApi](#columnfilterapi)         | |
- *  | [conditionalStyleApi](#conditionalstyleapi)         | |
- *  | [configApi](#configapi)         | |
- *  | [customSortApi](#customsortapi)         | |
- *  | [dashboardApi](#dashboardapi)         | |
- *  | [dataSourceApi](#datasourceapi)         | |
- *  | [entitlementsApi](#entitlementsapi)         | |
- *  | [eventApi](#eventapi)         | |
- *  | [exportApi](#exportapi)         | |
- *  | [flashingCellApi](#flashingcellapi)         | |
- *  | [freeTextColumnApi](#freetextcolumnapi)         | |
- *  | [glue42Api](#glue42api)         | |
- *  | [gradientColumnApi](#gradientcolumnapi)         | |
- *  | [gridApi](#gridapi)         | |
- *  | [ipushpullApi](#ipushpullapi)         | |
- *  | [internalapi](#internalapi)         | Used for **internal purposes only** - not designed for external use |
- *  | [layoutApi](#layoutapi)         | Manages [Layouts](_src_predefinedconfig_configstate_layoutstate_.layoutstate.html) - sets of column order and visibility|
+ *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
+ *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
+ *  | [columnFilterApi](#columnfilterapi)             | Manages [Column Filters](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html), allowing run-time code access to filtering|
+ *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
+ *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
+ *  | [customSortApi](#customsortapi)                 | Manages {@link CustomSortState|Custom Sorts} allowing bespoke column sorting|
+ *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of the Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
+ *  | [dataSourceApi](#datasourceapi)                 | Deals with [Data Sources](_src_predefinedconfig_datasourcestate_.datasourcestate.html) used in Server Searching|
+ *  | [entitlementsApi](#entitlementsapi)             | Manages User {@link EntitlementState|Entitlements} (essentially Permissions)|
+ *  | [eventApi](#eventapi)                           | Subscribe to some of the many Events that AdapTable fires|
+ *  | [exportApi](#exportapi)                         | Run reports either manually or at scheduled times|
+ *  | [flashingCellApi](#flashingcellapi)             | Manages the [Flashing Cell](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_flashingcellstate_.flashingcellstate.html) |
+ *  | [freeTextColumnApi](#freetextcolumnapi)         | Configures {@link FreeTextColumnState|FreeText Columns} - special columns containing bespoke data|
+ *  | [glue42Api](#glue42api)                         | Runs {@link Glue42State|Glue42} partner integration |
+ *  | [gradientColumnApi](#gradientcolumnapi)         | Aids creation of visual {@link GradientColumnState|Gradient Columns} |
+ *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
+ *  | [ipushpullApi](#ipushpullapi)                   | Runs {@link IPushPullState|ipushpull} partner integration ||
+ *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
+ *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
  *  | [namedFilterApi](#namedfilterapi)         | |
  *  | [percentBarApi](#percentbarapi)         | |
  *  | [pluginsApi](#pluginsapi)         | |

@@ -13,6 +13,10 @@ import {
   ToolbarButtonClickedInfo,
   ToolbarButtonClickedEventArgs,
 } from '../../Api/Events/ToolbarButtonClicked';
+import {
+  CustomToolbarConfiguredInfo,
+  CustomToolbarConfiguredEventArgs,
+} from '../../Api/Events/CustomToolbarConfigured';
 
 /**
  * A Custom Toolbar has 2 Divs
@@ -26,18 +30,29 @@ class CustomToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let showGlyphicon: boolean = StringExtensions.IsNotNullOrEmpty(this.props.CustomToolbar.Glyph);
-
     let contentsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__contents';
     let buttonsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__buttons';
+
+    let customToolbarConfiguredInfo: CustomToolbarConfiguredInfo = {
+      customToolbar: this.props.CustomToolbar,
+      adaptableApi: this.props.Adaptable.api,
+    };
+    const customToolbarConfiguredEventArgs: CustomToolbarConfiguredEventArgs = AdaptableHelper.createFDC3Message(
+      'Custom Toolbar Configured Args',
+      customToolbarConfiguredInfo
+    );
 
     return (
       <PanelDashboard
         className="ab-CustomToolbar ab-DashboardToolbar__Custom"
-        headerText={this.props.CustomToolbar.Title}
-        showConfigureButton={false}
-        showGlyphIcon={showGlyphicon}
-        glyphicon={this.props.CustomToolbar.Glyph}
+        headerText={this.props.CustomToolbar.Title ? this.props.CustomToolbar.Title : ''}
+        showConfigureButton={this.props.CustomToolbar.ShowConfigureButton}
+        onConfigure={() =>
+          this.props.Adaptable.api.eventApi.emit(
+            'CustomToolbarConfigured',
+            customToolbarConfiguredEventArgs
+          )
+        }
       >
         <div
           id={contentsDivId}
@@ -49,6 +64,7 @@ class CustomToolbarControlComponent extends React.Component<
             this.props.CustomToolbar.ToolbarButtons.map((button: ToolbarButton, index: number) => {
               let toolbarButtonClickedInfo: ToolbarButtonClickedInfo = {
                 toolbarButton: button,
+                customToolbar: this.props.CustomToolbar,
                 adaptableApi: this.props.Adaptable.api,
               };
               const toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(

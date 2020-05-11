@@ -107,7 +107,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__AdvancedSearch"
         headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName}
-        glyphicon={StrategyConstants.AdvancedSearchGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
