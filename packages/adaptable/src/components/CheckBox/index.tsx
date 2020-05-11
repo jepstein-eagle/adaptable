@@ -81,7 +81,7 @@ const CheckBox = ({
         verticalAlign: 'middle',
         opacity: 0,
         cursor: 'pointer',
-        position: 'relative',
+        position: variant === 'agGrid' ? 'absolute' : 'relative',
         top: -2,
       }}
       onChange={onInputChange}

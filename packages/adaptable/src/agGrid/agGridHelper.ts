@@ -101,11 +101,11 @@ export class agGridHelper {
   }
 
   public getVendorLightThemeName(): string {
-    return 'ag-theme-balham';
+    return 'ag-theme-alpine';
   }
 
   public getVendorDarkThemeName(): string {
-    return 'ag-theme-balham-dark';
+    return 'ag-theme-alpine-dark';
   }
 
   public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {

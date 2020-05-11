@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
@@ -39,6 +39,9 @@ function InitAdaptableDemo() {
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,
+    },
+    filterOptions: {
+      useVendorFilterFormStyle: false,
     },
     predefinedConfig: {
       Dashboard: {

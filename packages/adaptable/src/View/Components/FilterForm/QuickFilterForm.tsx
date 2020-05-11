@@ -129,7 +129,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       this.props.CurrentColumn.DataType != DataType.Unknown ? (
       <Input
         style={{
-          width: this.props.ColumnWidth,
+          width: '100%', // Starting aggrid 23, we no longer use this.props.ColumnWidth, but 100%
           padding: 0,
           margin: 'auto',
 
