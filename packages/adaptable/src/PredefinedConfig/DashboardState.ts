@@ -183,6 +183,13 @@ export interface DashboardState extends ConfigState {
    */
   VisibleButtons?: AdaptableFunctionButtons;
 
+  /**
+   * Buttons set by the User at design-time to appear in the top corner of the Dashboard - next to the Visible Function Buttons
+   *
+   * These buttons - if provided - are always present and cannot be removed at design time.
+   *
+   * When a button is clicked the `DashboardButtonClicked` event is fired.
+   */
   CustomButtons?: ToolbarButton[];
 
   /**
