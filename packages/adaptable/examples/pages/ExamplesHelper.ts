@@ -781,6 +781,11 @@ export class ExamplesHelper {
 
   public getGridOptionsTrade(rowData: any): GridOptions {
     return {
+      defaultColDef: {
+        //   valueGetter: (params: any) => {
+        //      return 'hello';
+        //   },
+      },
       columnDefs: this.getTradeSchema(),
       rowData,
       enableRangeSelection: true,
@@ -1017,7 +1022,8 @@ export class ExamplesHelper {
   }
 
   public getTradeSchema(): ColDef[] {
-    var schema: any[] = [];
+    var schema: ColDef[] = [];
+
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
@@ -1031,6 +1037,20 @@ export class ExamplesHelper {
       // headerCheckboxSelection: true,
       //  checkboxSelection: true,
       cellRenderer: 'agAnimateShowChangeCellRenderer',
+    });
+    schema.push({
+      headerName: 'Country-Stars',
+      //    colId: 'hello',
+      editable: false,
+      filter: true,
+      enableRowGroup: true,
+      valueGetter: (params: any) => {
+        return params.data && params.data.stars && params.data.country
+          ? //   ? params.data.stars + ' - ' + params.data.country
+            params.data.stars * 12
+          : undefined;
+      },
+      type: 'abColDefNumber',
     });
     schema.push({
       headerName: 'Notional',
@@ -1051,6 +1071,7 @@ export class ExamplesHelper {
         footerValueGetter: '"All Notionals (" + x + ")"',
       },
     });
+    /*
     schema.push({
       headerName: 'Ask',
       field: 'ask',
@@ -1083,6 +1104,9 @@ export class ExamplesHelper {
       enableValue: true,
       enablePivot: true,
       //  valueFormatter: this.raduFormatter,
+      valueGetter: (params: any) => {
+        return 'Hello';
+      },
       valueFormatter: (params: any) => {
         return params.value ? params.value.toLocaleString() : undefined;
       },
@@ -1095,6 +1119,7 @@ export class ExamplesHelper {
       // resizable: true,
       //  tooltipComponent: 'percentBarTooltip',
     });
+
     schema.push({
       headerName: 'Country',
       field: 'country',
@@ -1306,6 +1331,7 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       enableRowGroup: true,
     });
+    */
     return schema;
   }
 

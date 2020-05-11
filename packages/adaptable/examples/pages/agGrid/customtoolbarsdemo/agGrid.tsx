@@ -196,6 +196,11 @@ let demoConfig: PredefinedConfig = {
               Variant: 'text',
               Tone: 'success',
             },
+            Icon: {
+              height: 20,
+              width: 20,
+              src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
+            },
           },
           {
             Name: 'btnToolbar2',

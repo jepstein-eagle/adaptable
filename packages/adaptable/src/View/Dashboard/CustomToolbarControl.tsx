@@ -90,6 +90,7 @@ class CustomToolbarControlComponent extends React.Component<
                     );
                   }}
                 >
+                  {button.Icon ? <img {...button.Icon} /> : null}
                   {button.Caption}
                 </SimpleButton>
               );
