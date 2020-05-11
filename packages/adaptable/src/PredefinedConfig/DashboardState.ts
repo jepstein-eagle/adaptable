@@ -18,7 +18,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * You use Dashboard State to set these Tabs and Function Toolbars.
  *
- * You also use Dashboard State to define Custom Toolbars that you can then include in your Dashboard Tabs.
+ * You also use Dashboard State to define 2 sets of bespoke items in your Dashboard:
+ *
+ * - Custom Toolbars that you can then include in your Dashboard Tabs.
+ *
+ * - Custom Buttons that will alongside the Function buttons in the top left corner of the Dashboard.
  *
  *  --------------
  *
@@ -33,11 +37,12 @@ import { AdaptableObject } from './Common/AdaptableObject';
  * ```ts
  * export default {
  * Dashboard: {
- *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+ *   VisibleButtons: ['GridInfo', 'SystemStatus', 'BulkUpdate'],
  *   CustomToolbars: [
  *          {
  *            Name: 'appToolbar',
  *            Title: 'Trades',
+ *            ShowFunctionsDropdown: true,
  *          },
  *        ],
  *   Tabs: [
@@ -54,6 +59,24 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *            Toolbars: ['Layout', 'CellSummary', 'SystemStatus', 'appToolbar']
  *          },
  *        ],
+ *  CustomButtons: [
+ *      {
+ *        Name: 'cb1',
+ *        Caption: 'First',
+ *         ButtonStyle: {
+ *          Variant: 'text',
+ *          Tone: 'success',
+ *        },
+ *      },
+ *      {
+ *       Name: 'cb2',
+ *       Caption: 'Second',
+ *        ButtonStyle: {
+ *          Variant: 'raised',
+ *          Tone: 'accent',
+ *        },
+ *      },
+ *    ],
  *  }
  * } as PredefinedConfig;
  *
@@ -62,9 +85,9 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - created 3 Dashboard Tabs ('Search', 'Edit' and 'Grid') each with their own Toolbars
  *
- * - created a Custom Toolbar ('appToolbar') and put it in the 'Grid' Tab
+ * - created a Custom Toolbar ('appToolbar') and put it in the 'Grid' Tab (and we set it display the Configure button)
  *
- * - set 6 Function Buttons to be visible
+ * - set 3 Function Buttons to be visible
  *
  *  --------------
  *

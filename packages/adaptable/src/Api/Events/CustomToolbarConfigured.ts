@@ -10,5 +10,8 @@ export interface CustomToolbarConfiguredEventData extends AdaptableEventData {
 }
 
 export interface CustomToolbarConfiguredInfo extends AdaptableEventInfo {
+  /**
+   * The Custom Toolbar in which the *Configure* button has been clicked
+   */
   customToolbar: CustomToolbar;
 }

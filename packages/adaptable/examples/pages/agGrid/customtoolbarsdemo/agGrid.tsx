@@ -154,8 +154,6 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'cb1',
         Caption: 'First',
-        //  Icon:
-        //    '<img width="15" height="15" src="https://img.icons8.com/ios-glyphs/30/000000/sort.png">',
         ButtonStyle: {
           Variant: 'text',
           Tone: 'success',

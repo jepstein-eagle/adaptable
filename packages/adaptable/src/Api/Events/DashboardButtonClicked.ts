@@ -10,5 +10,10 @@ export interface DashboardButtonClickedEventData extends AdaptableEventData {
 }
 
 export interface DashboardButtonClickedInfo extends AdaptableEventInfo {
+  /**
+   * The Dashboard button which has been clicked
+   *
+   * This will appear in the top left corner of the Dashboard
+   */
   dashboardButton: ToolbarButton;
 }

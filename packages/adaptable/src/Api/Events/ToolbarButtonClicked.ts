@@ -11,6 +11,13 @@ export interface ToolbarButtonClickedEventData extends AdaptableEventData {
 }
 
 export interface ToolbarButtonClickedInfo extends AdaptableEventInfo {
+  /**
+   * The Toolbar Button which has been clicked by the User
+   */
   toolbarButton: ToolbarButton;
+
+  /**
+   * The Custom Toolbar which contains the button that has been clicked
+   */
   customToolbar: CustomToolbar;
 }
