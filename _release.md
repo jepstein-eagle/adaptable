@@ -1,3 +1,7 @@
+## 6.2.1-canary9
+
+Custom dashboard buttons
+
 ## 6.2.1-canary8
 
 Post merge
