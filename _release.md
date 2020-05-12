@@ -1,3 +1,7 @@
+## 6.2.3
+
+making showconfigurebutton in custom toolbar false by default
+
 ## 6.2.2
 
 patch version containing all recent canaries
