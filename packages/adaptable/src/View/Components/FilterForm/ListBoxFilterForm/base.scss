@@ -3,13 +3,21 @@
   overflow-x: hidden;
 
   margin-Bottom: 0;
-  &--vendor-style { // these were here with aggrid 22, but with v23, they're no longer needed
-    // --ab-cmp-dropdown__border-radius: 0;
-    // --ab-cmp-input__border-radius: 0;
-    // --ab-cmp-input__padding: 0;
-    // --ab-cmp-dropdown__padding: 3px;
-    // --ab-focus__box-shadow: 0 0 3px 0px var(--ab-color-accent);
-  }
+}
+
+// starting with aggrid 23, we have to support balham and alpine themes
+// but the alpine theme filters look pretty much like our filters, so only do this for the balham theme
+// NOTE: this is only applied when filterOptions.useVendorFilterFormStyle is `true`
+.ag-theme-balham .ab-ListBoxFilterForm--vendor-style {
+    --ab-cmp-dropdown__border-radius: 0;
+    --ab-cmp-input__border-radius: 0;
+    --ab-cmp-input__padding: 0;
+    --ab-cmp-dropdown__padding: 3px;
+    --ab-focus__box-shadow: 0 0 3px 0px var(--ab-color-accent);
+
+    .ab-FieldWrap {
+      border-radius: 0;
+    }
 }
 
 html.ab--theme-dark .ab-ListBoxFilterForm--vendor-style {

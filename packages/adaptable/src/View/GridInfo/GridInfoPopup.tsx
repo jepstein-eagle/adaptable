@@ -718,14 +718,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
         'Which searching and filtering options, if any, are taking place on the server.'
       )
     );
-    //   returnRows.push(
-    //      this.createColItem(
-    //        colItems,
-    //        'useDefaultVendorGridThemes',
-    //        options.generalOptions.useDefaultVendorGridThemes == true ? 'Yes' : 'No',
-    //        'Whether the default theme(s) for the vendor grid are being used).'
-    //      )
-    //    );
     returnRows.push(
       this.createColItem(
         colItems,

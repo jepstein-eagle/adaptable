@@ -101,11 +101,14 @@ export class agGridHelper {
   }
 
   public getVendorLightThemeName(): string {
-    return 'ag-theme-alpine';
+    // we try not to call these two methods, as we try to detect the default grid
+    // theme from the grid container element - users should set their aggrid theme in html, on the container element
+    // so we read it from there. if we don't find it there, we'll call this method, as a last resort.
+    return 'ag-theme-balham';
   }
 
   public getVendorDarkThemeName(): string {
-    return 'ag-theme-alpine-dark';
+    return 'ag-theme-balham-dark';
   }
 
   public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {

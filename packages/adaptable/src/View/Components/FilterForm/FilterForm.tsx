@@ -40,6 +40,7 @@ import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
+import AdaptableContext from '../../AdaptableContext';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableColumn;
@@ -542,13 +543,15 @@ export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormC
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <FilterForm
-        Adaptable={FilterContext.Adaptable}
-        CurrentColumn={FilterContext.Column}
-        TeamSharingActivated={false}
-        EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
-        ShowCloseButton={FilterContext.ShowCloseButton}
-      />
+      <AdaptableContext.Provider value={FilterContext.Adaptable}>
+        <FilterForm
+          Adaptable={FilterContext.Adaptable}
+          CurrentColumn={FilterContext.Column}
+          TeamSharingActivated={false}
+          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+          ShowCloseButton={FilterContext.ShowCloseButton}
+        />
+      </AdaptableContext.Provider>
     </ThemeProvider>
   </Provider>
 );

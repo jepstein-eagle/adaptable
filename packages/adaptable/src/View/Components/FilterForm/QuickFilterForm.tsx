@@ -23,6 +23,7 @@ import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
+import AdaptableContext from '../../AdaptableContext';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableColumn;
@@ -361,13 +362,15 @@ export let QuickFilterForm = connect(mapStateToProps, mapDispatchToProps)(QuickF
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <QuickFilterForm
-        Adaptable={FilterContext.Adaptable}
-        CurrentColumn={FilterContext.Column}
-        TeamSharingActivated={false}
-        ColumnWidth={FilterContext.ColumnWidth}
-        EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
-      />
+      <AdaptableContext.Provider value={FilterContext.Adaptable}>
+        <QuickFilterForm
+          Adaptable={FilterContext.Adaptable}
+          CurrentColumn={FilterContext.Column}
+          TeamSharingActivated={false}
+          ColumnWidth={FilterContext.ColumnWidth}
+          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+        />
+      </AdaptableContext.Provider>
     </ThemeProvider>
   </Provider>
 );

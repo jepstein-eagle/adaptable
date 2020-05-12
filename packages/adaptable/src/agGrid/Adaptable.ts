@@ -97,7 +97,6 @@ import {
   HALF_SECOND,
   LIGHT_THEME,
   DARK_THEME,
-  AG_GRID_GROUPED_COLUMN,
 } from '../Utilities/Constants/GeneralConstants';
 import { agGridHelper } from './agGridHelper';
 import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
@@ -3561,6 +3560,41 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public getVendorGridLightThemeName(): string {
+    const container = this.getGridContainerElement();
+
+    if (container && container.classList) {
+      // we detect the ag theme class
+      const classList = container.classList;
+      for (var i = 0, len = classList.length; i < len; i++) {
+        const cls = classList[i];
+
+        if (cls.indexOf('ag-theme-') === 0) {
+          // even if dark theme is included, we compute the light theme name out of it
+          return cls.replace('-dark', '');
+        }
+      }
+    }
+    return this.agGridHelper.getVendorLightThemeName();
+  }
+
+  public getVendorGridCurrentThemeName(): string {
+    const container = this.getGridContainerElement();
+
+    if (container && container.classList) {
+      // we detect the ag theme class
+      const classList = container.classList;
+      for (var i = 0, len = classList.length; i < len; i++) {
+        const cls = classList[i];
+
+        if (cls.indexOf('ag-theme-') === 0) {
+          return cls;
+        }
+      }
+    }
+    return this.getVendorGridLightThemeName();
+  }
+
   public applyAdaptableTheme(theme: AdaptableTheme | string) {
     const themeName: string = typeof theme === 'string' ? theme : theme.Name;
 
@@ -3621,18 +3655,21 @@ export class Adaptable implements IAdaptable {
 
     const container = this.getGridContainerElement();
 
+    const getVendorLightThemeName = () => this.getVendorGridLightThemeName();
+    const getVendorDarkThemeName = () => getVendorLightThemeName() + '-dark';
+
     if (newTheme && isSystemTheme) {
       if (themeName === LIGHT_THEME) {
-        newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+        newTheme.VendorGridClassName = newTheme.VendorGridClassName || getVendorLightThemeName();
       }
       if (themeName === DARK_THEME) {
-        newTheme.VendorGridClassName = this.agGridHelper.getVendorDarkThemeName();
+        newTheme.VendorGridClassName = newTheme.VendorGridClassName || getVendorDarkThemeName();
       }
     }
 
     if (!newTheme.VendorGridClassName) {
       // default the vendor grid to the light theme
-      newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+      newTheme.VendorGridClassName = getVendorLightThemeName();
     }
 
     if (container != null) {
