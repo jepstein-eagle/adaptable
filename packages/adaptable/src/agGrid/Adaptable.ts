@@ -901,7 +901,7 @@ export class Adaptable implements IAdaptable {
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
       if (params.node && !params.node.group) {
-        let columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+        let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
 
         const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
         if (

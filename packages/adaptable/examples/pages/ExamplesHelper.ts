@@ -1055,6 +1055,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Notional',
       field: 'notional',
+      colId: 'notional',
       enableValue: true,
       editable: true,
       sortable: true,
@@ -1071,7 +1072,7 @@ export class ExamplesHelper {
         footerValueGetter: '"All Notionals (" + x + ")"',
       },
     });
-    /*
+
     schema.push({
       headerName: 'Ask',
       field: 'ask',
@@ -1331,7 +1332,7 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       enableRowGroup: true,
     });
-    */
+
     return schema;
   }
 
@@ -1900,7 +1901,7 @@ export class ExamplesHelper {
 
   private shortDateFormatter = new Intl.DateTimeFormat('en-GB');
 
-  private shortDateFormatteragGrid = (params: any) => {
+  private shortDateFormatteragGrid = (params: any): any => {
     try {
       if (params.value) {
         return this.shortDateFormatter.format(params.value);
@@ -1919,14 +1920,14 @@ export class ExamplesHelper {
     return params.value ? params.value.toLocaleTimeString() : null;
   };
 
-  private fourDecimalPlaceFormatter = (params: any) => {
+  private fourDecimalPlaceFormatter = (params: any): any => {
     return params.value ? this.roundTo4Dp(params.value) : null;
   };
-  private twoDecimalPlaceFormatter = (params: any) => {
+  private twoDecimalPlaceFormatter = (params: any): any => {
     return params.value ? this.roundTo2Dp(params.value) : null;
   };
 
-  private currencyPlaceFormatter = (params: any) => {
+  private currencyPlaceFormatter = (params: any): any => {
     return params.value ? '£' + this.twoDecimalPlaceFormatter(params) : null;
   };
 
