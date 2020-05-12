@@ -1664,6 +1664,16 @@ export class Adaptable implements IAdaptable {
   };
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
+    // given how much changes when editing a calculated column lets first ensure that it really has changed
+    const existingCalcColumn: CalculatedColumn = this.api.calculatedColumnApi
+      .getAllCalculatedColumn()
+      .find(cc => cc.Uuid === calculatedColumn.Uuid);
+    if (existingCalcColumn) {
+      if (Helper.areObjectsEqual(existingCalcColumn, calculatedColumn)) {
+        return;
+      }
+    }
+
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
     const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
     const existingABColumn: AdaptableColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
@@ -2876,7 +2886,7 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
-
+      this.applyFormatColumnDisplayFormats();
       this.addSpecialRendereredColumns();
       this._emit('SpecialColumnAdded');
     }

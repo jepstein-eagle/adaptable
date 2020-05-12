@@ -38,6 +38,9 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleButtons: ['CalculatedColumn'],
+  },
   CalculatedColumn: {
     CalculatedColumns: [
       {
@@ -60,9 +63,25 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         Columns: ['tradeId', 'country', 'notional', 'Dob Notional', 'currency'],
-        GroupedColumns: ['currency'],
+        //   GroupedColumns: ['currency'],
         ColumnSorts: [],
         Name: 'with calc cols',
+      },
+    ],
+  },
+  FormatColumn: {
+    FormatColumns: [
+      {
+        ColumnId: 'Dob Notional',
+        DisplayFormat: {
+          Formatter: 'NumberFormatter',
+          Options: {
+            Parentheses: true,
+            IntegerDigits: 5,
+            IntegerSeparator: '',
+          },
+        },
+        CellAlignment: 'Center',
       },
     ],
   },
