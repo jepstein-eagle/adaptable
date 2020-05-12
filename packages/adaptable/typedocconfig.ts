@@ -1,6 +1,6 @@
 module.exports = {
   src: ['./src/'],
-  // mode: 'modules',
+  //  mode: 'modules',
   includeDeclarations: false,
   exclude: [
     'agGrid.ts',

@@ -12,9 +12,11 @@ Warning
 By their nature Sparkline columns require more intensive rendering than normal columns so use sparingly or take into account the extra time it will take to render the Sparkline.
 
 ## UI Elements
+
 To Do
 
 ## Entitlements
+
 To Do
 
 ## FAQ

@@ -114,7 +114,6 @@ class DataSourceToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__DataSource"
         headerText={StrategyConstants.DataSourceStrategyFriendlyName}
-        glyphicon={StrategyConstants.DataSourceGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}

@@ -5,6 +5,7 @@ The Action Column ([AdaptableFunctionName](https://api.adaptabletools.com/module
 Action Columns are created at run-time based on definitions provided by developers at design-time in Predefined Config 
 
 ### How Action Columns work
+
 There are 3 elements to providing an Action Column definition:
 
 1. **Clicked Function**: An implementation for On('ActionColumnClicked') event which fires when an Action Column button is clicked.
@@ -28,9 +29,11 @@ There are 3 elements to providing an Action Column definition:
 
 
 ## UI Elements
+
 None at present - it is provided only at design-time in Adaptable State
 
 ## Entitlements
+
 Action Column supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -47,7 +50,9 @@ No, they are a Design-Time only Function; they can be accessed at Run-Time but n
 
 **Why do we need to provide the Function Name and Function Implementation separately?**
 
-This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
+This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  
+
+As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 ### Further Information
 

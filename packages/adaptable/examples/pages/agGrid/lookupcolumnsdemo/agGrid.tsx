@@ -12,6 +12,7 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../sr
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
 import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var api: AdaptableApi;
 
@@ -25,7 +26,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Edit Lookup Columns Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 

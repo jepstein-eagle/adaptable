@@ -13,9 +13,9 @@ export interface ConfigState {
    *
    * If the Revision number in Predefined Config is not greater than the one stored in the User's state, then it is ignored as its already been passed into the User's state (and potentially superseded).
    *
-   * See [Adaptable State Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md) for more information.
+   * See [Adaptable State Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-state-guide.md) for more information.
    *
-   * **Note**: This is the only property in ConfigState - the base class for all Adaptable State objects.
+   * **Note**: This is the only property in [ConfigState](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_configstate_.configstate.html) - the base class for all Adaptable State objects.
    */
   Revision?: number;
 }

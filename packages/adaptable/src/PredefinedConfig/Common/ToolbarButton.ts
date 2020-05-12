@@ -1,4 +1,5 @@
 import { AdaptableObject } from './AdaptableObject';
+import { CSSProperties } from 'react';
 
 /**
  * Defines a Toolbar Button that is specified at design time by users and rendered dynamically by Adaptable at run-time.
@@ -20,7 +21,7 @@ export interface ToolbarButton extends AdaptableObject {
    *
    * *Currently you cannot provide an image for this button but that will be made available in a forthcoming release*
    */
-  Caption: string;
+  Caption?: string;
 
   /**
    * The style to use for the Custom Toolbar Button.
@@ -28,6 +29,14 @@ export interface ToolbarButton extends AdaptableObject {
    * Includes 'Variant' and 'Tone'
    */
   ButtonStyle?: ButtonStyle;
+
+  /**
+   * An optional icon to display on the Button
+   *
+   * It requires a string for the URL and then any styles, height or width as required
+   *
+   */
+  Icon?: { src: string; style?: CSSProperties; height?: number; width?: number };
 }
 
 export interface ButtonStyle {

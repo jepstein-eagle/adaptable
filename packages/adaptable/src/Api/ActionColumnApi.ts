@@ -1,17 +1,17 @@
 import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColumnState';
 
 /**
- * Provides run-time access to the Action Column function and associated state.
+ * Provides run-time access to the Action Column function and associated {@link ActionColumnState|Action Column State}.
  *
- * The Action Column Function enables the creation of special columns that contain buttons together with a function that is called when the button is clicked by the user.
+ * The Action Column Function enables the creation of a special {@link ActionColumn|Action Column} that contain buttons together with a function that is called when the button is clicked by the user.
  *
  * --------------
  *
- *  **Further AdapTable Help Resources**
+ *  ### Further AdapTable Help Resources
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - [Action Column State](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)
+ * - {@link ActionColumnState|Action Column State}
  *
  * - [Action Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *

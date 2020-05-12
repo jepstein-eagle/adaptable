@@ -52,7 +52,6 @@ class QuickSearchToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyFriendlyName}
-        glyphicon={StrategyConstants.QuickSearchGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         <AdaptableFormControlTextClear

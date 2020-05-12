@@ -25,6 +25,7 @@ Users only need to provide config for those properties which they want intial st
 > To prevent users from editing the Adaptable Objects shipped in PredefinedConfig, set the Entitlement for that function to `ReadOnly`.
 
 ### How Predefined Config Works
+
 Predefined Config is created at design-time in JSON format.  
 
 It is passed into AdapTable via the `predefinedConfig` property in [AdaptableOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#predefinedconfig). 
@@ -57,7 +58,7 @@ Simply put: if you increment (or provide from new) the revision number in a sect
 
 > This is, currently, **replace only**, so you cannot use Revisions to merge a new Layout section in Predefined Config with the user's Layouts in State.  But you can, for example, provide a new CustomSort section in Predefined Config which will replace the user's Custom Sorts in State while keeping their Layouts and other state elements untouched (see example below).
 
-```yaml
+```ts
 export default {
  .....
    CustomSort: {
@@ -93,11 +94,13 @@ This has a single `Uuid` property which is used for easy identification of objec
 
 If [Team Sharing](./adaptable-team-sharing-guide.md) is enabled, then any Adaptable Object can easily be shared - at run-time - between colleagues.
 
-### Bespoke State
+### Bespoke State (Application Data Entries)
 
 The [Application State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_applicationstate_.applicationstate.html) property of Predefined Config contains an `ApplicationDataEntries` array.
 
 This is essentially a set of key / value pairs that you can populate with any data that you want and which AdapTable will store in its state.
+
+See the [Application Data Entries Demo](https://demo.adaptabletools.com/adaptablestate/aggridapplicationdataentriesdemo) for more information.
 
 ## State Management
 
@@ -109,6 +112,7 @@ User state can be created at run-time (through user action e.g. selecting a Layo
 
  
 ### Adaptable State Storage Options
+
 There are 2 modes of storage available in AdapTable:
 
 - **Local Storage** - by default, Adaptable State is stored in the browser's local storage using the unique `adaptableId` property that you provide in AdaptableOptions.
@@ -120,6 +124,7 @@ There are 2 modes of storage available in AdapTable:
   > In older versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.html); however this has now been deprecated and we strongly recommend using the more powerful, and flexible, State Options (see below) as they include and advance all the functionality of Config Server, and will be actively developed going forward.
 
 ### State Options
+
 AdapTable provides 4 function hooks to enable users to provide their own implementations / functionality when state is being managed.
 
 > This functionality is superior to Config Server and is best practice for remote state management.
@@ -139,6 +144,7 @@ The 4 functions you can provide your own implementations for are:
 See more at [State Options Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_stateoptions_.stateoptions.html).
 
 ### Accessing Adaptable State
+
 Developers have full, run-time access to the Adaptable State Store is via the [Adaptable Api](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html).  
 
 Among many other advantages, the Adaptable Api provides full, programmatic, read / write access to all Adaptable State objects in a 'clean' and safe way.
@@ -146,6 +152,7 @@ Among many other advantages, the Adaptable Api provides full, programmatic, read
 > The Adaptable Api is actually a simple wrapper around our Redux store with some additional error handling, logging and other features.
 
 ### Listening to State Changes
+
 The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventAPI](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html) section of Adaptable API. 
 
 
@@ -167,7 +174,7 @@ Yes you can. You are able to build your own Adaptable Objects which are stored a
 
 Yes, that is possible and expected.  AdapTable allows you provide highly configurable and personalised instances.
 
-**Can we store our own data in the AdapTable State / Predefined Config**
+**Can we store our own data in the AdapTable State / Predefined Config?**
 
 Yes you can. Use the AdaptableEntries property of Application State.
 
@@ -178,9 +185,9 @@ This provides an array of key / value pairs which you can use to store your own 
 Yes, it needs to be something that can be JSON stringified so it cannot be a function.
 
 
- ## Predefined Config example
+## Predefined Config example
 
- ```yaml
+ ```ts
  export default {
   Dashboard: {
     Tabs: [
@@ -369,7 +376,9 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
  *
  } as PredefinedConfig;
  ```
- ## State Functions example
+
+## State Functions example
+
 (Taken from our [State Functions demo](https://demo.adaptabletools.com/adaptablestate/aggridstatefunctionsdemo))
 
  ```ts

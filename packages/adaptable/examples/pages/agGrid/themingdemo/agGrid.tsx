@@ -13,6 +13,7 @@ import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, IAdaptable } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -24,7 +25,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo theming demo',
     adaptableId: 'Theming demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 

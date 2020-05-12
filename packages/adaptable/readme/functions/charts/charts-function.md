@@ -52,9 +52,11 @@ You can choose whether to see the Sparkline as Line, Column or Area.
 
 
 ## UI Elements
+
 To Do
 
 ## Entitlements
+
 To Do
 
 ## FAQ

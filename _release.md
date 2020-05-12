@@ -1,3 +1,11 @@
+## 6.2.2
+
+patch version containing all recent canaries
+
+## 6.2.1-canary9
+
+Custom dashboard buttons
+
 ## 6.2.1-canary8
 
 Post merge
