@@ -213,7 +213,7 @@ class ChartToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<ChartToolPanelComponentProps> {
   return {
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
       c => c.Name == state.Chart.CurrentChartName
@@ -222,7 +222,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ChartToolPanelComponentProps> {
   return {
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),

@@ -496,11 +496,11 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PieChartPopupProps> {
   return {};
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(): Partial<PieChartPopupProps> {
   return {};
 }
 

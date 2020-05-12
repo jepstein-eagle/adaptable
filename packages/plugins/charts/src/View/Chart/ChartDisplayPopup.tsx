@@ -271,7 +271,7 @@ class ChartDisplayPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<ChartDisplayPopupProps> {
   return {
     ChartDefinitions: state.Chart.ChartDefinitions,
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
@@ -282,7 +282,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ChartDisplayPopupProps> {
   return {
     onAddChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),

@@ -339,7 +339,7 @@ class AdaptableToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<AdaptableToolPanelProps> {
   return {
     VisibleToolsPanels: state.ToolPanel.VisibleToolPanels,
     AvailableToolPanels: state.ToolPanel.AvailableToolPanels,
@@ -352,7 +352,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AdaptableToolPanelProps> {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
     onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>

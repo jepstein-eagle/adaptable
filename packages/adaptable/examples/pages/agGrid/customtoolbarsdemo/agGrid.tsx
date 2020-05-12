@@ -59,7 +59,7 @@ function InitAdaptableDemo() {
         if (contentsDiv) {
           ReactDOM.render(toolbarContents, contentsDiv);
         } else {
-          console.log('Couldnt find div to render custom content');
+          //     console.log('Couldnt find div to render custom content');
         }
       }
 
@@ -78,7 +78,7 @@ function InitAdaptableDemo() {
         if (contentsDiv) {
           ReactDOM.render(toolbarContents, contentsDiv);
         } else {
-          console.log('Couldnt find div to render custom content');
+          //       console.log('Couldnt find div to render custom content');
         }
       }
     }
@@ -138,16 +138,9 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    Revision: 5,
-    VisibleToolbars: [
-      'QuickSearch',
-      'Glue42',
-      'Alert',
-      'Toolbar1',
-      'Toolbar2',
-      'Toolbar3',
-      'Toolbar4',
-    ],
+    Revision: 8,
+    CanFloat: false,
+    VisibleToolbars: ['Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
     IsInline: false,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
     CustomButtons: [
@@ -224,6 +217,11 @@ let demoConfig: PredefinedConfig = {
               Variant: 'text',
               Tone: 'error',
             },
+            Icon: {
+              height: 90,
+              width: 20,
+              src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
+            },
           },
         ],
       },
@@ -264,7 +262,7 @@ let demoConfig: PredefinedConfig = {
     FunctionEntitlements: [
       {
         FunctionName: 'Dashboard',
-        AccessLevel: 'Full',
+        AccessLevel: 'ReadOnly',
       },
       {
         FunctionName: 'QuickSearch',
