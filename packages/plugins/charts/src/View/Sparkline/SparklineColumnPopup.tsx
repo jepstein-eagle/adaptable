@@ -237,13 +237,15 @@ class SparklineColumnPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<SparklineColumnPopupProps> {
   return {
     SparklineColumns: state.SparklineColumn.SparklineColumns,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SparklineColumnPopupProps> {
   return {
     onAddSparklineColumn: (sparklineColumn: SparklineColumn) =>
       dispatch(SparklineColumnRedux.SparklineColumnsAdd(sparklineColumn)),

@@ -900,7 +900,8 @@ export class Adaptable implements IAdaptable {
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
       if (params.node && !params.node.group) {
-        const columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+        let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
+
         const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
         if (
           StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
@@ -911,34 +912,50 @@ export class Adaptable implements IAdaptable {
             return false;
           }
 
-          //  let excludeColumnFromQuickSearch = adaptable.adaptableOptions.searchOptions!
-          //      .excludeColumnFromQuickSearch;
-          //    if (excludeColumnFromQuickSearch) {
-          //      if (excludeColumnFromQuickSearch(col)) {
-          //   return false;
-          //      }
-          //    }
+          // in the very rare use case where there is no column id and we have a value
+          // then lets try to find the column via the ColumnHeader and do it that way
+          if (columnId == null) {
+            if (params.columnApi) {
+              let allCols: Column[] = params.columnApi.getAllColumns();
+              if (ArrayExtensions.IsNotNullOrEmpty(allCols)) {
+                let currentColumn: Column = allCols.find(
+                  c => c.getColDef().headerName == params.colDef.headerName
+                );
+                if (currentColumn) {
+                  columnId = currentColumn.getColId();
+                }
+              }
+            }
+            // if that fails then we should do a basic comparison (but without creating a range)
+            if (columnId == null && params.value) {
+              return String(params.value)
+                .toLowerCase()
+                .includes(quickSearchState.QuickSearchText);
+            }
+          }
 
-          const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
-          if (range) {
-            // not right but just checking...
-            if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
-              const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                columnId,
-                null,
-                null,
-                null,
-                [range]
-              );
-              if (
-                ExpressionHelper.checkForExpressionFromRowNode(
-                  expression,
-                  params.node,
-                  [col],
-                  adaptable
-                )
-              ) {
-                return true;
+          if (columnId != null) {
+            const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+            if (range) {
+              // not right but just checking...
+              if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
+                const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+                  columnId,
+                  null,
+                  null,
+                  null,
+                  [range]
+                );
+                if (
+                  ExpressionHelper.checkForExpressionFromRowNode(
+                    expression,
+                    params.node,
+                    [col],
+                    adaptable
+                  )
+                ) {
+                  return true;
+                }
               }
             }
           }
@@ -1646,6 +1663,16 @@ export class Adaptable implements IAdaptable {
   };
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
+    // given how much changes when editing a calculated column lets first ensure that it really has changed
+    const existingCalcColumn: CalculatedColumn = this.api.calculatedColumnApi
+      .getAllCalculatedColumn()
+      .find(cc => cc.Uuid === calculatedColumn.Uuid);
+    if (existingCalcColumn) {
+      if (Helper.areObjectsEqual(existingCalcColumn, calculatedColumn)) {
+        return;
+      }
+    }
+
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
     const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
     const existingABColumn: AdaptableColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
@@ -2858,7 +2885,7 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
-
+      this.applyFormatColumnDisplayFormats();
       this.addSpecialRendereredColumns();
       this._emit('SpecialColumnAdded');
     }

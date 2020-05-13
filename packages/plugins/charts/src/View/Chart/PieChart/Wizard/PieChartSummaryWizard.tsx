@@ -48,13 +48,12 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
       { Key: 'Rows in Chart', Value: rowsDescription },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   public canNext(): boolean {

@@ -17,6 +17,7 @@ interface DashboardToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<DashboardToolPanelComponentProps> {
   IsCollapsed: boolean;
   IsFloating: boolean;
+  CanFloat: boolean;
   onSetDashboardCollapsed: (isCollapsed: boolean) => DashboardRedux.DashboardSetIsCollapsedAction;
   onSetDashboardFloating: (isFloating: boolean) => DashboardRedux.DashboardSetIsFloatingAction;
 }
@@ -60,18 +61,20 @@ class DashboardToolPanelComponent extends React.Component<
               Collapse
             </CheckBox>
             {''}
-            <CheckBox
-              className="ab-ToolPanel__Dashboard__collapsed-check"
-              disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
-              marginLeft={1}
-              marginTop={0}
-              fontSize={2}
-              padding={1}
-              checked={this.props.IsFloating}
-              onChange={(checked: boolean) => this.props.onSetDashboardFloating(checked)}
-            >
-              Float
-            </CheckBox>
+            {this.props.CanFloat && (
+              <CheckBox
+                className="ab-ToolPanel__Dashboard__collapsed-check"
+                disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+                marginLeft={1}
+                marginTop={0}
+                fontSize={2}
+                padding={1}
+                checked={this.props.IsFloating}
+                onChange={(checked: boolean) => this.props.onSetDashboardFloating(checked)}
+              >
+                Float
+              </CheckBox>
+            )}
           </div>
         )}
       </PanelToolPanel>
@@ -86,6 +89,7 @@ function mapStateToProps(
   return {
     IsCollapsed: state.Dashboard.IsCollapsed,
     IsFloating: state.Dashboard.IsFloating,
+    CanFloat: state.Dashboard.CanFloat,
   };
 }
 

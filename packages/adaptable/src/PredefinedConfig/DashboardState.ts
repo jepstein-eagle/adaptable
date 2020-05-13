@@ -437,7 +437,7 @@ export interface CustomToolbar extends AdaptableObject {
   /**
    * An (optional) Glyph to display in the Custom Toolbar
    *
-   * Since V.6 (Feb 2020) this property has been deprecated and is no longer used or applied
+   * Since V.6 (Feb 2020) **this property has been deprecated** and is no longer used or applied
    */
   Glyph?: string;
 }

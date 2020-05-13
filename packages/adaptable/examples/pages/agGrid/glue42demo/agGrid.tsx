@@ -29,7 +29,7 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'glue42 Demo',
+    adaptableId: 'Glue42 Excel Demo',
     vendorGrid: {
       ...gridOptions,
       modules: [MenuModule, RangeSelectionModule],
@@ -53,7 +53,13 @@ function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Glue42'],
+    Tabs: [
+      {
+        Name: 'Glue Demo',
+        Toolbars: ['Glue42', 'Alert', 'CellSummary'],
+      },
+    ],
+    VisibleButtons: ['CellValidation'],
   },
   Glue42: {
     Glue: glue42Desktop, // this is the glue object

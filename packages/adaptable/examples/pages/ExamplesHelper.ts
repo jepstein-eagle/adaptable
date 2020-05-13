@@ -781,6 +781,11 @@ export class ExamplesHelper {
 
   public getGridOptionsTrade(rowData: any): GridOptions {
     return {
+      defaultColDef: {
+        //   valueGetter: (params: any) => {
+        //      return 'hello';
+        //   },
+      },
       columnDefs: this.getTradeSchema(),
       rowData,
       enableRangeSelection: true,
@@ -1017,7 +1022,8 @@ export class ExamplesHelper {
   }
 
   public getTradeSchema(): ColDef[] {
-    var schema: any[] = [];
+    var schema: ColDef[] = [];
+
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
@@ -1033,8 +1039,23 @@ export class ExamplesHelper {
       cellRenderer: 'agAnimateShowChangeCellRenderer',
     });
     schema.push({
+      headerName: 'Country-Stars',
+      //    colId: 'hello',
+      editable: false,
+      filter: true,
+      enableRowGroup: true,
+      valueGetter: (params: any) => {
+        return params.data && params.data.stars && params.data.country
+          ? //   ? params.data.stars + ' - ' + params.data.country
+            params.data.stars * 12
+          : undefined;
+      },
+      type: 'abColDefNumber',
+    });
+    schema.push({
       headerName: 'Notional',
       field: 'notional',
+      colId: 'notional',
       enableValue: true,
       editable: true,
       sortable: true,
@@ -1051,6 +1072,7 @@ export class ExamplesHelper {
         footerValueGetter: '"All Notionals (" + x + ")"',
       },
     });
+
     schema.push({
       headerName: 'Ask',
       field: 'ask',
@@ -1083,6 +1105,9 @@ export class ExamplesHelper {
       enableValue: true,
       enablePivot: true,
       //  valueFormatter: this.raduFormatter,
+      valueGetter: (params: any) => {
+        return 'Hello';
+      },
       valueFormatter: (params: any) => {
         return params.value ? params.value.toLocaleString() : undefined;
       },
@@ -1095,6 +1120,7 @@ export class ExamplesHelper {
       // resizable: true,
       //  tooltipComponent: 'percentBarTooltip',
     });
+
     schema.push({
       headerName: 'Country',
       field: 'country',
@@ -1314,6 +1340,7 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
       enableRowGroup: true,
     });
+
     return schema;
   }
 
@@ -1882,7 +1909,7 @@ export class ExamplesHelper {
 
   private shortDateFormatter = new Intl.DateTimeFormat('en-GB');
 
-  private shortDateFormatteragGrid = (params: any) => {
+  private shortDateFormatteragGrid = (params: any): any => {
     try {
       if (params.value) {
         return this.shortDateFormatter.format(params.value);
@@ -1901,14 +1928,14 @@ export class ExamplesHelper {
     return params.value ? params.value.toLocaleTimeString() : null;
   };
 
-  private fourDecimalPlaceFormatter = (params: any) => {
+  private fourDecimalPlaceFormatter = (params: any): any => {
     return params.value ? this.roundTo4Dp(params.value) : null;
   };
-  private twoDecimalPlaceFormatter = (params: any) => {
+  private twoDecimalPlaceFormatter = (params: any): any => {
     return params.value ? this.roundTo2Dp(params.value) : null;
   };
 
-  private currencyPlaceFormatter = (params: any) => {
+  private currencyPlaceFormatter = (params: any): any => {
     return params.value ? '£' + this.twoDecimalPlaceFormatter(params) : null;
   };
 

@@ -46,7 +46,10 @@ class CustomToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-CustomToolbar ab-DashboardToolbar__Custom"
         headerText={this.props.CustomToolbar.Title ? this.props.CustomToolbar.Title : ''}
-        showConfigureButton={this.props.CustomToolbar.ShowConfigureButton}
+        showConfigureButton={
+          this.props.CustomToolbar.ShowConfigureButton != null &&
+          this.props.CustomToolbar.ShowConfigureButton == true
+        }
         onConfigure={() =>
           this.props.Adaptable.api.eventApi.emit(
             'CustomToolbarConfigured',
@@ -90,6 +93,7 @@ class CustomToolbarControlComponent extends React.Component<
                     );
                   }}
                 >
+                  {button.Icon ? <img {...button.Icon} /> : null}
                   {button.Caption}
                 </SimpleButton>
               );

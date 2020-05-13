@@ -267,11 +267,14 @@ class ViewAsSparklinesPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ViewAsSparklinesPopupProps> {
   return {};
 }
 
-function mapDispatchToProps() {
+function mapDispatchToProps(): Partial<ViewAsSparklinesPopupProps> {
   return {};
 }
 

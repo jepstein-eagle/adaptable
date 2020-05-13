@@ -62,7 +62,8 @@ function InitAdaptableDemo() {
         // ],
       },
       Dashboard: {
-        Revision: 1,
+        Revision: 141,
+        CanFloat: false,
         Tabs: [
           {
             Name: 'General',

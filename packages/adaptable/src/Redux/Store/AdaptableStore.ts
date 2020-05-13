@@ -340,6 +340,9 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
+
+      // temp: putting Glue42 here...
+      ConfigConstants.GLUE42,
     ];
 
     // this is now VERY BADLY NAMED!
@@ -1729,6 +1732,42 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
               action: action.type,
               info: actionTyped.selectedSearchName,
               data: advancedSearch,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnAddAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
             };
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -3151,6 +3190,9 @@ export function getFunctionAppliedReduxActions(): string[] {
     ColumnFilterRedux.COLUMN_FILTER_ADD,
     ColumnFilterRedux.COLUMN_FILTER_EDIT,
     ColumnFilterRedux.COLUMN_FILTER_CLEAR,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_ADD,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE,
   ];
 }
 

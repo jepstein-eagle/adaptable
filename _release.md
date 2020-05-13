@@ -1,3 +1,23 @@
+## 6.3.1
+
+fixing chart issue
+
+## 6.3.0
+
+minor version rolling up all recent patches and canaries
+
+## 6.2.2
+
+making showconfigurebutton in custom toolbar false by default
+
+## 6.2.1
+
+patch version containing all recent canaries
+
+## 6.2.1-canary9
+
+Custom dashboard buttons
+
 ## 6.2.1-canary8
 
 Post merge
