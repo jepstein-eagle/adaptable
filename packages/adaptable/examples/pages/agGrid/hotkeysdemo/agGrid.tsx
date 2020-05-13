@@ -54,6 +54,7 @@ function InitAdaptableDemo() {
 
     // metaKey is command on Mac and windows key on PC
     if (key === 'L' && metaKey && shiftKey) {
+      event.preventDefault();
       api.layoutApi.showLayoutPopup();
     }
   });
