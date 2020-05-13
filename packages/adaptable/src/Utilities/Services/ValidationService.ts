@@ -30,6 +30,7 @@ import LoggingHelper from '../Helpers/LoggingHelper';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
 import { EMPTY_STRING } from '../Constants/GeneralConstants';
+import { AdaptableFunctionName } from '../../types';
 
 export class ValidationService implements IValidationService {
   constructor(private adaptable: IAdaptable) {
@@ -106,7 +107,7 @@ export class ValidationService implements IValidationService {
             // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
             if (expressionRule.ActionMode == 'Stop Edit') {
               this.logAuditValidationEvent(
-                StrategyConstants.CellValidationStrategyFriendlyName,
+                StrategyConstants.CellValidationStrategyId,
                 'Validating Cell Edit',
                 'Failed',
                 {
@@ -130,7 +131,7 @@ export class ValidationService implements IValidationService {
         if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
           if (noExpressionRule.ActionMode == 'Stop Edit') {
             this.logAuditValidationEvent(
-              StrategyConstants.CellValidationStrategyFriendlyName,
+              StrategyConstants.CellValidationStrategyId,
               'Validating Cell Edit',
               'Failed',
               {
@@ -147,7 +148,7 @@ export class ValidationService implements IValidationService {
     }
     if (failedWarningRules.length > 0) {
       this.logAuditValidationEvent(
-        StrategyConstants.CellValidationStrategyFriendlyName,
+        StrategyConstants.CellValidationStrategyId,
         'Validating Cell Edit',
         'Warning Shown',
         {
@@ -157,7 +158,7 @@ export class ValidationService implements IValidationService {
       );
     } else {
       this.logAuditValidationEvent(
-        StrategyConstants.CellValidationStrategyFriendlyName,
+        StrategyConstants.CellValidationStrategyId,
         'Validating Cell Edit',
         'Success',
         {
@@ -224,7 +225,12 @@ export class ValidationService implements IValidationService {
     return this.adaptable.api.cellValidationApi.getCellValidationState();
   }
 
-  private logAuditValidationEvent(name: string, action: string, info: string, data?: any): void {
+  private logAuditValidationEvent(
+    name: AdaptableFunctionName,
+    action: string,
+    info: string,
+    data?: any
+  ): void {
     if (this.adaptable.AuditLogService.isAuditFunctionEventsEnabled) {
       let functionAppliedDetails: FunctionAppliedDetails = {
         name: name,
@@ -254,7 +260,7 @@ export class ValidationService implements IValidationService {
             this.adaptable.setValue(dataChangedInfo, false);
 
             this.logAuditValidationEvent(
-              'Server Validation',
+              StrategyConstants.CellValidationStrategyId,
               'Validating Cell Edit on Server',
               validationResult.ValidationMessage,
               {
