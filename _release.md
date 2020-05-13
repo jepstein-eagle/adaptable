@@ -1,6 +1,6 @@
 ## 6.3.1
 
-fixing chart issue
+fixing chart issue around chart summary steps
 
 ## 6.3.0
 
