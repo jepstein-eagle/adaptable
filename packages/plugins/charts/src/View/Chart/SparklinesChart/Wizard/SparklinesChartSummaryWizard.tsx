@@ -35,13 +35,12 @@ export class SparklinesChartSummaryWizard
       { Key: 'Values', Value: this.getExpressionString(this.props.Data.Expression) },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
   private getExpressionString(expression: Expression): string {
     if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
