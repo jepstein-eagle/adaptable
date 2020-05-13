@@ -1,3 +1,7 @@
+## 6.3.2
+
+fixing chart issue due to mismatching react-redux version with core
+
 ## 6.3.1
 
 fixing chart issue around chart summary steps
