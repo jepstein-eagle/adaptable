@@ -3601,7 +3601,12 @@ export class Adaptable implements IAdaptable {
     const themeNamesToRemove: string[] = [];
     const themesToRemove: AdaptableTheme[] = [];
 
-    const allThemes = this.api.themeApi.getAllTheme();
+    const allThemes = this.api.themeApi.getAllTheme().map(t => {
+      // we mutate the theme later,
+      // and since we don't want the mutation to end up in state
+      // we better clone it here
+      return { ...t };
+    });
     const allThemesMap: Record<string, AdaptableTheme> = allThemes.reduce(
       (acc: Record<string, AdaptableTheme>, theme: AdaptableTheme) => {
         acc[theme.Name] = theme;
@@ -3680,6 +3685,15 @@ export class Adaptable implements IAdaptable {
           }
         });
       }
+      // also remove all vendor theme class names
+      const vendorClassNamesToRemove: string[] = [];
+      container.classList.forEach(x => {
+        if (x && x.indexOf('ag-theme-') === 0) {
+          vendorClassNamesToRemove.push(x);
+        }
+      });
+
+      vendorClassNamesToRemove.forEach(x => container.classList.remove(x));
 
       if (newTheme && newTheme.VendorGridClassName) {
         container.classList.add(newTheme.VendorGridClassName);

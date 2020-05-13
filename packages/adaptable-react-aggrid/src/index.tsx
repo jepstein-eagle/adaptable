@@ -156,7 +156,7 @@ const AdaptableReact = ({
   onAdaptableReady,
   ...props
 }: {
-  agGridTheme?: string;
+  agGridTheme?: 'balham' | 'alpine';
   adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
   modules?: Module[];

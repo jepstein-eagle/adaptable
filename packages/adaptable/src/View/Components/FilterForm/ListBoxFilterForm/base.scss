@@ -8,6 +8,7 @@
 // starting with aggrid 23, we have to support balham and alpine themes
 // but the alpine theme filters look pretty much like our filters, so only do this for the balham theme
 // NOTE: this is only applied when filterOptions.useVendorFilterFormStyle is `true`
+.ag-theme-balham-dark .ab-ListBoxFilterForm--vendor-style,
 .ag-theme-balham .ab-ListBoxFilterForm--vendor-style {
     --ab-cmp-dropdown__border-radius: 0;
     --ab-cmp-input__border-radius: 0;

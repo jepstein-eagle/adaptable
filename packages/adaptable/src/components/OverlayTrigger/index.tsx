@@ -141,6 +141,8 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
 
   let overlay;
 
+  const adaptable = useAdaptable();
+
   if (targetRect) {
     let overlayStyle = getOverlayStyle({
       constrainRect: getConstrainRect(targetRef.current as HTMLElement, constrainTo),
@@ -160,7 +162,6 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
 
     let vendorClassName = '';
 
-    const adaptable = useAdaptable();
     if (adaptable) {
       vendorClassName = adaptable.getVendorGridCurrentThemeName();
     }
