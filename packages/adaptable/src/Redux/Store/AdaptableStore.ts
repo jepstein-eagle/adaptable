@@ -1736,6 +1736,42 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnAddAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
 
           case CalendarRedux.CALENDAR_SELECT: {
             const actionTyped = action as CalendarRedux.CalendarSelectAction;
@@ -3154,6 +3190,9 @@ export function getFunctionAppliedReduxActions(): string[] {
     ColumnFilterRedux.COLUMN_FILTER_ADD,
     ColumnFilterRedux.COLUMN_FILTER_EDIT,
     ColumnFilterRedux.COLUMN_FILTER_CLEAR,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_ADD,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE,
   ];
 }
 

@@ -12,6 +12,7 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import { AuditLogEntry } from '../../../../src/Utilities/Interface/AuditLogEntry';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -28,13 +29,25 @@ function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
-  };
 
-  adaptableOptions.layoutOptions = {
-    autoSizeColumnsInLayout: true,
+    layoutOptions: {
+      autoSizeColumnsInLayout: true,
+    },
+    auditOptions: {
+      auditFunctionEvents: {
+        auditAsEvent: true,
+      },
+    },
   };
 
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+
+  adaptableApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
+    console.log('audit event received:');
+    let auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id;
+
+    console.log(auditLogEventArgs);
+  });
 }
 
 let demoConfig: PredefinedConfig = {
