@@ -6,7 +6,9 @@ import '../../../src/themes/dark.scss';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import LoggingHelper from '../../../../adaptable/src/Utilities/Helpers/LoggingHelper';
 
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
@@ -27,6 +29,7 @@ const StatusCmp = (props: any) => (
 export default () => (
   <AdaptableReactAggrid
     style={{ height: '100vh' }}
+    agGridTheme="balham"
     modules={[SideBarModule, MenuModule, RangeSelectionModule]}
     onAdaptableReady={({ adaptableApi: api, vendorGrid: gridOptions }) => {
       console.log('Adaptable ready', api, gridOptions);
@@ -34,11 +37,11 @@ export default () => (
       (global as any).api = api;
       (global as any).gridOptions = gridOptions;
       api.eventApi.on('SearchChanged', (...args: any[]) => {
-        LoggingHelper.LogAdaptableWarning('search changed', args);
+        // LoggingHelper.LogAdaptableWarning('search changed', args);
       });
 
       api.eventApi.on('SelectionChanged', selargs => {
-        console.log(selargs);
+        // console.log(selargs);
       });
     }}
     gridOptions={{
@@ -58,7 +61,6 @@ export default () => (
 
         return c;
       }),
-      rowHeight: 33,
       rowData: examplesHelper.getTrades(500),
       enableRangeSelection: true,
       floatingFilter: true,
@@ -68,6 +70,9 @@ export default () => (
       primaryKey: 'tradeId',
       adaptableId: 'BYOP demos',
       plugins: [charts()],
+      userInterfaceOptions: {
+        showAdaptableToolPanel: true,
+      },
     }}
   />
 );

@@ -17,6 +17,7 @@ import {
   WrapableInterface,
   AllCommunityModules,
   ModuleRegistry,
+  ComponentType,
 } from '@ag-grid-community/all-modules';
 
 export * from '@adaptabletools/adaptable/types';
@@ -45,11 +46,14 @@ const join = (...args: any[]): string => args.filter(x => !!x).join(' ');
 
 const getRandomInt = (max: number): number => Math.floor(Math.random() * Math.floor(max));
 
-const getAgGridWrapperClassName = (agGridTheme: string) => {
+const getAgGridThemeClassName = (agGridTheme: string) => {
   const themeClassName =
     agGridTheme.indexOf('ag-theme') === 0 ? agGridTheme : `ag-theme-${agGridTheme}`;
 
-  return `ab__aggrid-wrapper ab--flex-fill ${themeClassName}`;
+  return themeClassName;
+};
+const getAgGridWrapperClassName = (agGridTheme: string) => {
+  return `ab__aggrid-wrapper ab--flex-fill`;
 };
 
 class AgGridReactOverride extends AgGridReact {
@@ -81,7 +85,7 @@ class AgGridReactOverride extends AgGridReact {
   }
 }
 
-class ReactFrameworkComponentWrapper extends BaseComponentWrapper<AgGrid.WrapableInterface>
+class ReactFrameworkComponentWrapper extends BaseComponentWrapper<WrapableInterface>
   implements FrameworkComponentWrapper {
   private readonly agGridReact!: AgGridReact;
 
@@ -90,8 +94,11 @@ class ReactFrameworkComponentWrapper extends BaseComponentWrapper<AgGrid.Wrapabl
     this.agGridReact = agGridReact;
   }
 
-  createWrapper(UserReactComponent: { new (): any }): WrapableInterface {
-    return new ReactComponent(UserReactComponent, this.agGridReact as any);
+  createWrapper(
+    UserReactComponent: { new (): any },
+    componentType: ComponentType
+  ): WrapableInterface {
+    return new ReactComponent(UserReactComponent, this.agGridReact as any, componentType);
   }
 }
 
@@ -205,6 +212,7 @@ const AdaptableReact = ({
       className={getAgGridWrapperClassName(agGridTheme)}
       childProps={{
         id: gridContainerId,
+        className: getAgGridThemeClassName(agGridTheme),
       }}
     >
       {mounted ? <AgGridReactOverride {...overrideProps} /> : null}
