@@ -9,7 +9,12 @@ import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  AdaptableApi,
+  FunctionAppliedDetails,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { AuditLogEntry } from '../../../../src/Utilities/Interface/AuditLogEntry';
@@ -43,10 +48,12 @@ function InitAdaptableDemo() {
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
   adaptableApi.auditEventApi.on('AuditFunctionApplied', auditLogEventArgs => {
-    console.log('audit event received:');
     let auditLogEntry: AuditLogEntry = auditLogEventArgs.data[0].id;
-
-    console.log(auditLogEventArgs);
+    let funcDetails: FunctionAppliedDetails | undefined = auditLogEntry.function_applied_details;
+    if (funcDetails && funcDetails.name == 'CalculatedColumn') {
+      // will fire for each of Add, Edit and Delete and will have the relevant Calc Column as the argument
+      console.log(funcDetails);
+    }
   });
 }
 
