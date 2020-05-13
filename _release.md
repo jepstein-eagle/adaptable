@@ -1,3 +1,7 @@
+## 6.3.1
+
+fixing chart issue
+
 ## 6.3.0
 
 minor version rolling up all recent patches and canaries
