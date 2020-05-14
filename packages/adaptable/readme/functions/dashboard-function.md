@@ -27,6 +27,8 @@ There are 3 visibility modes for the Dashboard:
 3. **Floating** - This shows just the Dashboard Header in reduced width and it can be dragged to any position by clicking on the Name (the mouse will change to a cross).
 
     > To float / dock the Dashboard double-click the Name in the Dashboard Header (or select item in Home Menu)
+    
+    > Floating is only available if the [CanFloat](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.dashboardstate.html#canfloat) property is set to true in Predefined Config (the default value)
 
 ## Dashboard Contents
 
