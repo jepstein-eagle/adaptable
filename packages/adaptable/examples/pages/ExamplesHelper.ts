@@ -1105,9 +1105,9 @@ export class ExamplesHelper {
       enableValue: true,
       enablePivot: true,
       //  valueFormatter: this.raduFormatter,
-      valueGetter: (params: any) => {
-        return 'Hello';
-      },
+      //   valueGetter: (params: any) => {
+      //     return 'Hello';
+      //   },
       valueFormatter: (params: any) => {
         return params.value ? params.value.toLocaleString() : undefined;
       },

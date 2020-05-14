@@ -63,7 +63,12 @@ function InitAdaptableDemo() {
   adaptableApi = Adaptable.init(adaptableOptions);
 
   if (useTickingData) {
-    tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 5000, tradeCount);
+    tickingDataHelper.useTickingDataagGrid(
+      adaptableOptions.vendorGrid,
+      adaptableApi,
+      5000,
+      tradeCount
+    );
   }
 
   adaptableApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {

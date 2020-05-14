@@ -20,6 +20,7 @@ import { IUpdatedRowStrategy } from '../../Strategy/Interface/IUpdatedRowStrateg
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { IStyleService } from './Interface/IStyleService';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 export class StyleService implements IStyleService {
   private style: HTMLStyleElement;
@@ -287,18 +288,27 @@ export class StyleService implements IStyleService {
     // nothing to do as it uses existing styles
 
     // we define last Flash since it has the highest priority
-    this.adaptable.api.flashingCellApi.getAllFlashingCell().forEach(element => {
-      if (element.IsLive) {
-        this.addCSSRule(
-          `.${StyleConstants.FLASH_CELL_UP_STYLE}-${element.Uuid}`,
-          `background-color: ${element.UpColor} !important`
-        );
-        this.addCSSRule(
-          `.${StyleConstants.FLASH_CELL_DOWN_STYLE}-${element.Uuid}`,
-          `background-color: ${element.DownColor} !important`
-        );
-      }
-    });
+    const flashingCells = this.adaptable.api.flashingCellApi.getAllFlashingCell();
+    if (ArrayExtensions.IsNotNullOrEmpty(flashingCells)) {
+      const defaultUpColour = this.adaptable.api.flashingCellApi.getFlashingCellState()
+        .DefaultUpColor;
+      const defaultDownColour = this.adaptable.api.flashingCellApi.getFlashingCellState()
+        .DefautDownColor;
+      flashingCells.forEach(element => {
+        if (element.IsLive) {
+          const upColor = element.UpColor ? element.UpColor : defaultUpColour;
+          const downColor = element.UpColor ? element.DownColor : defaultDownColour;
+          this.addCSSRule(
+            `.${StyleConstants.FLASH_CELL_UP_STYLE}-${element.Uuid}`,
+            `background-color: ${upColor} !important`
+          );
+          this.addCSSRule(
+            `.${StyleConstants.FLASH_CELL_DOWN_STYLE}-${element.Uuid}`,
+            `background-color: ${downColor} !important`
+          );
+        }
+      });
+    }
   }
 
   private clearCSSRules() {

@@ -41,7 +41,7 @@ function InitAdaptableDemo() {
 
   api = Adaptable.init(adaptableOptions);
   if (useTickingData) {
-    tickingDataHelper.useTickingDataagGrid(gridOptions, api, 200, tradeCount);
+    tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
   }
 }
 

@@ -24,6 +24,9 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
       let fc = flashingCells.find(x => x.ColumnId == col.ColumnId && x.IsLive);
       let cellClassRules: any = {};
       if (fc) {
+        let duration: 250 | 500 | 750 | 1000 = fc.FlashingCellDuration
+          ? fc.FlashingCellDuration
+          : this.adaptable.api.flashingCellApi.getFlashingCellState().DefaultDuration;
         cellClassRules[StyleConstants.FLASH_CELL_UP_STYLE + '-' + fc.Uuid] = function(params: any) {
           if (theadaptable.api.internalApi.isGridInPivotMode()) {
             return false;
@@ -48,7 +51,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             let timer: number = window.setTimeout(() => {
               currentFlashing.set(key, null);
               theadaptable.refreshCells([params.node], [col.ColumnId]);
-            }, fc.FlashingCellDuration);
+            }, duration);
             currentFlashing.set(key, timer);
             return true;
           } else {
@@ -81,7 +84,7 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             let timer: any = window.setTimeout(() => {
               currentFlashing.set(key, null);
               theadaptable.refreshCells([params.node], [col.ColumnId]);
-            }, fc.FlashingCellDuration);
+            }, duration);
             currentFlashing.set(key, timer);
             return true;
           } else {

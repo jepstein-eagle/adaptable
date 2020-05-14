@@ -28,6 +28,7 @@ There are 3 visibility modes for the Dashboard:
 
     > To float / dock the Dashboard double-click the Name in the Dashboard Header (or select item in Home Menu)
     
+    
     > Floating is only available if the [CanFloat](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_dashboardstate_.dashboardstate.html#canfloat) property is set to true in Predefined Config (the default value)
 
 ## Dashboard Contents
@@ -41,6 +42,10 @@ The Dashboard contains the following elements:
 - **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
   
     > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the (now deprecated) `VisibleToolbars`collection curently in Dashboard State; if there is none, then it will use the default set.
+
+- **Custom Buttons** - a group of buttons (of type `ToolbarButton`) which when clicked will trigger the `DashboardButtonClicked` event
+  
+  > This list can be set via the `CustomButtons` property of Dashboard State.
 
 - **Function Buttons** - a group of 'shortcut' buttons which each open the popup associated with that Function.
   
