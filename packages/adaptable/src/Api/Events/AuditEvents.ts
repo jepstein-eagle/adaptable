@@ -2,6 +2,7 @@ import { AdaptableEventData, AdaptableEventArgs } from './AdaptableEvents';
 import { AuditLogEntry } from '../../Utilities/Interface/AuditLogEntry';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
+import { AdaptableFunctionName } from '../../types';
 
 export interface AuditLogEventData extends AdaptableEventData {
   id: AuditLogEntry;
@@ -36,7 +37,7 @@ export enum StateObjectChangeType {
 }
 
 export interface FunctionAppliedDetails {
-  name: string;
+  name: AdaptableFunctionName;
   action: string;
   info?: string;
   data?: any;
