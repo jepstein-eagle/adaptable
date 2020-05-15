@@ -3193,6 +3193,7 @@ export function getFunctionAppliedReduxActions(): string[] {
     CalculatedColumnRedux.CALCULATEDCOLUMN_ADD,
     CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT,
     CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE,
+    LayoutRedux.LAYOUT_SELECT,
   ];
 }
 
