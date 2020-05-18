@@ -49,6 +49,7 @@ let demoConfig: PredefinedConfig = {
         ColumnId: 'status',
         PermittedValues: ['Rejected', 'Pending'],
       },
+
       {
         ColumnId: 'counterparty',
         PermittedValues: (column: AdaptableColumn) => {

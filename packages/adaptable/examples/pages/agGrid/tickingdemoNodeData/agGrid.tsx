@@ -35,7 +35,7 @@ function InitAdaptableDemo() {
   const adaptableApi = Adaptable.init(adaptableOptions);
 
   // turn on mimicing ticking data
-  tickingDataHelper.useTickingDataagGrid(gridOptions, tradeData, 2000, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, tradeData, 2000, tradeCount);
 }
 
 let json: PredefinedConfig = {

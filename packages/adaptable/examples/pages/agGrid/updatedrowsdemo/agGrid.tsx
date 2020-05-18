@@ -44,7 +44,12 @@ function InitAdaptableDemo() {
 
   adaptableApi = Adaptable.init(adaptableOptions);
 
-  tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 3000, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(
+    adaptableOptions.vendorGrid,
+    adaptableApi,
+    3000,
+    tradeCount
+  );
 
   adaptableApi.eventApi.on('ToolbarButtonClicked', () => {
     adaptableApi.updatedRowApi.deleteAllUpdatedRowInfo();
