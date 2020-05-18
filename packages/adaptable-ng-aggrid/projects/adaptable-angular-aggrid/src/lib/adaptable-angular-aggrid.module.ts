@@ -5,7 +5,7 @@ import { AgGridOverrideComponent } from './aggrid-angular-override.component';
 @NgModule({
   declarations: [AgGridOverrideComponent, AdaptableAngularAgGridComponent],
   imports: [],
-  exports: [AdaptableAngularAgGridComponent, AgGridOverrideComponent],
+  exports: [AdaptableAngularAgGridComponent],
   providers: [],
 })
 export class AdaptableAngularAgGridModule {}
