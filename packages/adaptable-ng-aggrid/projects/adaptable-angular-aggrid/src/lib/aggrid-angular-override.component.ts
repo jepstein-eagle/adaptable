@@ -50,8 +50,9 @@ export class AgGridOverrideComponent extends AgGridAngular {
       modules: (this.modules || []) as any,
     };
 
-    if (this.columns && this.columns.length > 0) {
-      this.gridOptions.columnDefs = this.columns.map((column: AgGridColumn) => {
+    const columns = (this as any).columns;
+    if (columns && columns.length > 0) {
+      this.gridOptions.columnDefs = columns.map((column: AgGridColumn) => {
         return column.toColDef();
       });
     }
