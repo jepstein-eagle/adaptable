@@ -242,6 +242,10 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     let customButtons: any = null;
     if (customButtonsArray) {
       customButtons = customButtonsArray.map(cb => {
+        const iconProps: any = cb.Icon ? { ...cb.Icon } : null;
+        if (iconProps) {
+          delete iconProps.Uuid;
+        }
         return (
           <SimpleButton
             key={cb.Name}
@@ -253,7 +257,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             onClick={() => this.fireToolbarButtonEvent(cb)}
             AccessLevel={'Full'}
           >
-            {cb.Icon ? <img {...cb.Icon} /> : null}
+            {cb.Icon ? <img {...iconProps} /> : null}
             {cb.Caption}
           </SimpleButton>
         );
