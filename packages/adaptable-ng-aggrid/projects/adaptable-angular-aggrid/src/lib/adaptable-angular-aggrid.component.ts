@@ -12,6 +12,18 @@ function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
+const getAgGridThemeClassName = (agGridTheme: string) => {
+  if (typeof agGridTheme !== 'string') {
+    agGridTheme = 'balham';
+  }
+  const themeClassName =
+    agGridTheme.indexOf('ag-theme') === 0
+      ? agGridTheme
+      : `ag-theme-${agGridTheme}`;
+
+  return themeClassName;
+};
+
 @Component({
   entryComponents: [],
   selector: 'adaptable-angular-aggrid',
@@ -21,9 +33,10 @@ function getRandomInt(max: number): number {
       <div
         [id]="gridContainerId"
         style="position: relative; flex: 1"
-        [class]="agGridContainerClassName"
+        [class]="getAgGridContainerClassName()"
       >
         <ag-grid-override
+          data-grid-container-id="true"
           [gridContainerId]="gridContainerId"
           [adaptableFactory]="adaptableFactory"
           [gridOptions]="gridOptions"
@@ -51,6 +64,7 @@ export class AdaptableAngularAgGridComponent implements OnInit {
   @Input() adaptableOptions: AdaptableOptions;
   @Input() gridOptions: GridOptions;
   @Input() modules?: Module[];
+  @Input() agGridTheme: 'balham' | 'alpine' = 'balham';
   @Input() agGridContainerClassName: string;
   @Input() onAdaptableReady?: (adaptableReadyInfo: {
     adaptableApi: AdaptableApi;
@@ -69,6 +83,11 @@ export class AdaptableAngularAgGridComponent implements OnInit {
 
     this.adaptableContainerId = `adaptable-${seedId}`;
     this.gridContainerId = `grid-${seedId}`;
+  }
+
+  getAgGridContainerClassName(): string {
+    return `${getAgGridThemeClassName(this.agGridTheme || '') || ''} ${this
+      .agGridContainerClassName || ''}`;
   }
 
   ngOnInit() {

@@ -13,6 +13,8 @@ export default [
   {
     headerName: 'Cust. Ref',
     field: 'CustomerReference',
+    floatingFilter: true,
+    resizable: true,
     editable: true,
     filter: true,
     sortable: true,
@@ -23,6 +25,7 @@ export default [
     field: 'CompanyName',
     editable: true,
     filter: true,
+    resizable: true,
     sortable: true,
     cellRendererFramework: RedComponentComponent,
     enableRowGroup: true,
@@ -49,9 +52,11 @@ export default [
     headerName: 'Order Date',
     field: 'OrderDate',
     editable: true,
+    resizable: true,
     cellEditorParams: {
       useFormatter: true,
     },
+    floatingFilter: true,
     filter: true,
     sortable: true,
     type: 'abColDefDate',

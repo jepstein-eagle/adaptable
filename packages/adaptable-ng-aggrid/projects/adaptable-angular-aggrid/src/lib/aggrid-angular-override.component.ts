@@ -4,14 +4,15 @@ import { ComponentUtil } from '@ag-grid-community/all-modules';
 
 import {
   AgGridAngular,
-  AngularFrameworkOverrides,
-  AngularFrameworkComponentWrapper,
   AgGridColumn,
-} from '@ag-grid-community/angular';
+} from '@ag-grid-community/angular/esm5/ag-grid-community-angular';
+
+import { AngularFrameworkOverrides } from '@ag-grid-community/angular/esm5/lib/angularFrameworkOverrides';
+import { AngularFrameworkComponentWrapper } from '@ag-grid-community/angular/esm5/lib/angularFrameworkComponentWrapper';
+
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '@adaptabletools/adaptable/src/agGrid';
 import { AdaptableApi } from '@adaptabletools/adaptable/types';
-
 @Component({
   selector: 'ag-grid-override',
   template: '',
@@ -27,10 +28,12 @@ export class AgGridOverrideComponent extends AgGridAngular {
     vendorGrid: GridOptions;
   }) => void;
 
+  // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
     (this as any).checkForDeprecatedEvents();
 
     this.gridOptions = ComponentUtil.copyAttributesToGridOptions(
+      // @ts-ignore
       this.gridOptions,
       this,
       true
@@ -63,10 +66,12 @@ export class AgGridOverrideComponent extends AgGridAngular {
     // );
 
     if (adaptable.gridOptions.api) {
+      // @ts-ignore
       this.api = adaptable.gridOptions.api;
     }
 
     if (adaptable.gridOptions.columnApi) {
+      // @ts-ignore
       this.columnApi = adaptable.gridOptions.columnApi;
     }
 

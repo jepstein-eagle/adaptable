@@ -786,10 +786,12 @@ export class ExamplesHelper {
         //      return 'hello';
         //   },
       },
-      columnDefs: this.getTradeSchema(),
+      columnDefs: this.getTradeSchema().map(c => {
+        // c.floatingFilter = true;
+        return c;
+      }),
       rowData,
       enableRangeSelection: true,
-      floatingFilter: true,
       suppressColumnVirtualisation: true,
       suppressMenuHide: true,
       // rowHeight: 40,
@@ -812,10 +814,12 @@ export class ExamplesHelper {
 
   public getGridOptionsTradeWithSparkline(rowData: any): GridOptions {
     return {
-      columnDefs: this.getTradeSchemaWithSparkline(),
+      columnDefs: this.getTradeSchemaWithSparkline().map(c => {
+        c.floatingFilter = true;
+        return c;
+      }),
       rowData,
       enableRangeSelection: true,
-      floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: undefined,
@@ -834,10 +838,12 @@ export class ExamplesHelper {
 
   public getGridOptionsTradeColumnGrouping(rowData: any): GridOptions {
     return {
-      columnDefs: this.getTradeSchemaColumnGroups(),
+      columnDefs: this.getTradeSchemaColumnGroups().map(c => {
+        c.floatingFilter = true;
+        return c;
+      }),
       rowData: rowData,
       enableRangeSelection: true,
-      floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       rowHeight: 30,
@@ -855,10 +861,12 @@ export class ExamplesHelper {
 
   public getGridOptionsTradePivoting(rowData: any): GridOptions {
     return {
-      columnDefs: this.getTradeSchemaPivot(),
+      columnDefs: this.getTradeSchemaPivot().map(c => {
+        c.floatingFilter = true;
+        return c;
+      }),
       rowData: rowData,
       enableRangeSelection: true,
-      floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: true,
@@ -876,10 +884,12 @@ export class ExamplesHelper {
 
   public getGridOptionsFTSE(rowCount: number): GridOptions {
     return {
-      columnDefs: this.getFTSESchema(),
+      columnDefs: this.getFTSESchema().map(c => {
+        c.floatingFilter = true;
+        return c;
+      }),
       rowData: this.getFtseData(rowCount),
       enableRangeSelection: true,
-      floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: undefined,
@@ -895,7 +905,10 @@ export class ExamplesHelper {
 
   public getMasterGridOptionsFTSE(rowCount: number): GridOptions {
     return {
-      columnDefs: this.getFTSESchema(),
+      columnDefs: this.getFTSESchema().map(c => {
+        c.floatingFilter = true;
+        return c;
+      }),
       rowData: this.getFtseData(rowCount),
       masterDetail: true,
       detailCellRendererParams: {
@@ -912,7 +925,6 @@ export class ExamplesHelper {
       },
       enableRangeSelection: true,
       rowSelection: 'multiple',
-      floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: undefined,
@@ -1189,7 +1201,9 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Date',
       field: 'tradeDate',
+      floatingFilter: false,
       editable: true,
+      resizable: true,
 
       enableRowGroup: true,
       //rowGroup: true,
@@ -2430,7 +2444,10 @@ export class ExamplesHelper {
     ];
 
     return {
-      columnDefs: columnDefs,
+      columnDefs: columnDefs.map(c => {
+        c.floatingFilter = true;
+        return c;
+      }),
       rowData: rowData,
       treeData: true, // enable Tree Data mode
       animateRows: true,
@@ -2445,7 +2462,6 @@ export class ExamplesHelper {
         },
       },
       enableRangeSelection: true,
-      floatingFilter: true,
       suppressColumnVirtualisation: false,
       suppressMenuHide: true,
       sideBar: true,

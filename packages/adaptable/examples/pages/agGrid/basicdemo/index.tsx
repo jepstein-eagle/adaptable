@@ -13,7 +13,7 @@ export default () => (
 
     {/*  <!-- div for the underlying grid - please always call this 'grid' or set the 'vendorContainer' property in AdaptableOptions-- > */}
 
-    <div id="grid" className="ag-theme-alpine" style={{ margin: 5 }} />
+    <div id="grid" className="ag-theme-balham" style={{ margin: 5 }} />
 
     <DynamicComponent />
   </>

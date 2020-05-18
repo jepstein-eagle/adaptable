@@ -33,6 +33,9 @@ export class AppComponent {
       vendorContainer: 'vendorDiv', // is this rights
     },
     predefinedConfig: {},
+    userInterfaceOptions: {
+      showAdaptableToolPanel: true,
+    },
     auditOptions: {
       auditCellEdits: {
         auditAsEvent: true,
@@ -43,7 +46,7 @@ export class AppComponent {
     this.gridOptions = {
       animateRows: true,
       enableRangeSelection: true,
-      floatingFilter: true,
+
       suppressAggFuncInHeader: true,
       sideBar: true,
       suppressMenuHide: true,
@@ -65,14 +68,20 @@ export class AppComponent {
     };
   }
 
-  onAdaptableReady(api: AdaptableApi) {
-    console.log('adaptable ready!!!', api);
+  onAdaptableReady({
+    adaptableApi,
+    vendorGrid,
+  }: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: GridOptions;
+  }) {
+    console.log('adaptable ready!!!', adaptableApi);
 
-    api.auditEventApi.on('AuditCellEdited', function(args) {
+    adaptableApi.auditEventApi.on('AuditCellEdited', args => {
       console.warn(args, '!!!!!');
     });
 
-    api.eventApi.on('SelectionChanged', selection => {
+    adaptableApi.eventApi.on('SelectionChanged', selection => {
       console.warn('selection changed', selection);
     });
   }

@@ -16,6 +16,17 @@ We removed `userInterfaceOptions.useDefaultVendorGridThemes` as it was no longer
 
 Slight changes to theming, to accomodate new aggrid themes. Make sure you specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant). We then detect this theme, and apply the corresponding dark theme, when it is selected from theme theme toolbar.
 
+AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
+
+```
+<adaptable-angular-aggrid
+  ...
+  [agGridTheme]="'alpine'"
+  [onAdaptableReady]="onAdaptableReady"
+>
+</adaptable-angular-aggrid>
+
+```
 ## CSS Variables
 
 
