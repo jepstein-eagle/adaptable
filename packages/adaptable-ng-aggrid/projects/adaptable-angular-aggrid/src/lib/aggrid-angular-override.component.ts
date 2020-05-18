@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ComponentUtil } from '@ag-grid-community/all-modules';
+import { ComponentUtil, Module } from '@ag-grid-community/all-modules';
 
 import {
   AgGridAngular,
@@ -27,6 +27,8 @@ export class AgGridOverrideComponent extends AgGridAngular {
     adaptableApi: AdaptableApi;
     vendorGrid: GridOptions;
   }) => void;
+  @Input() gridOptions: GridOptions;
+  @Input() modules?: Module[] = [];
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
