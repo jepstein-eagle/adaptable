@@ -133,7 +133,9 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
     }
   });
 
-  let strategyKeys: string[] = [...props.Adaptable.strategies.keys()];
+  let strategyKeys: string[] = props.Adaptable.strategies
+    ? [...props.Adaptable.strategies.keys()]
+    : [];
   let allowedMenuItems = props.MainMenuItems.filter(
     x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
   );

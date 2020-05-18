@@ -228,7 +228,7 @@ const initialGridState: GridState = {
   SelectedCellInfo: null,
   SelectedRowInfo: null,
   CellSummary: null,
-  IsQuickFilterActive: false,
+  IsQuickFilterVisible: false,
   MainMenuItems: EMPTY_ARRAY,
   IsLiveReportRunning: false,
   IsGridInPivotMode: false,
@@ -273,9 +273,9 @@ export const GridReducer: Redux.Reducer<GridState> = (
         CellSummary: (action as GridSetCellSummaryAction).CellSummary,
       });
     case GRID_QUICK_FILTER_BAR_SHOW:
-      return Object.assign({}, state, { IsQuickFilterActive: true });
+      return Object.assign({}, state, { IsQuickFilterVisible: true });
     case GRID_QUICK_FILTER_BAR_HIDE:
-      return Object.assign({}, state, { IsQuickFilterActive: false });
+      return Object.assign({}, state, { IsQuickFilterVisible: false });
     case SET_MAIN_MENUITEMS: {
       const actionTyped = action as SetMainMenuItemsAction;
       const menuItems = actionTyped.MenuItems.sort((a: AdaptableMenuItem, b: AdaptableMenuItem) =>

@@ -14,6 +14,7 @@ import {
   RowNodeTransaction,
   IClientSideRowModel,
   GridApi,
+  ColumnResizedEvent,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -159,7 +160,6 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
-import { format } from 'date-fns';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -846,14 +846,12 @@ export class Adaptable implements IAdaptable {
   }
 
   private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableColumn): void {
-    if (
-      vendorColumn.getColDef().filter &&
-      this.adaptableOptions!.filterOptions.useAdaptableFilterForm
-    ) {
+    const colDef = vendorColumn.getColDef();
+    if (colDef.filter && this.adaptableOptions!.filterOptions.useAdaptableFilterForm) {
       this.createFilterWrapper(vendorColumn);
     }
 
-    if (this.isQuickFilterActive()) {
+    if (colDef.floatingFilter && this.adaptableOptions!.filterOptions.useAdaptableQuickFilter) {
       this.createQuickFilterWrapper(vendorColumn);
     }
 
@@ -2231,21 +2229,21 @@ export class Adaptable implements IAdaptable {
       }
     });
 
-    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_RESIZED, (params: any) => {
-      if (!this.gridOptions.api) {
-        return;
-      }
-      // if a column is resized there are a couple of things we need to do once its finished
-      if (params.type == 'columnResized' && params.finished == true) {
-        // refresh the header if you have quick filter bar to ensure its full length
-        if (this.isQuickFilterActive()) {
-          this.gridOptions.api!.refreshHeader();
+    this.gridOptions.api!.addEventListener(
+      Events.EVENT_COLUMN_RESIZED,
+      (params: ColumnResizedEvent) => {
+        if (!this.gridOptions.api) {
+          return;
         }
-        if (params.column) {
-          this._emit('ColumnResized', params.column.colId);
+
+        // if a column is resized there are a couple of things we need to do once its finished
+        if (params.type == 'columnResized' && params.finished == true) {
+          if (params.column) {
+            this._emit('ColumnResized', params.column.getColId());
+          }
         }
       }
-    });
+    );
 
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
@@ -3563,28 +3561,31 @@ export class Adaptable implements IAdaptable {
     return !isTreeLayout;
   }
 
-  private isQuickFilterActive(): boolean {
-    return (
-      this.gridOptions.floatingFilter === true &&
-      this.adaptableOptions!.filterOptions.useAdaptableQuickFilter
-    );
+  public isQuickFilterActive(): boolean {
+    return this.hasFloatingFilterOnAtLeastOneColumn() === true;
+  }
+
+  private hasFloatingFilterOnAtLeastOneColumn(defs = this.gridOptions.columnDefs): boolean {
+    let col: ColDef | ColGroupDef;
+    for (col of this.gridOptions.columnDefs) {
+      if ((col as ColDef).floatingFilter) {
+        return true;
+      }
+      if ((col as ColGroupDef).children) {
+        if (this.hasFloatingFilterOnAtLeastOneColumn((col as ColGroupDef).children)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public showQuickFilter(): void {
-    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
-      this.gridOptions.floatingFilter = true;
-      this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
-        this.createQuickFilterWrapper(col);
-      });
-      this.gridOptions.api!.refreshHeader();
-    }
+    this.gridOptions.api.setFloatingFiltersHeight(null);
   }
 
   public hideQuickFilter(): void {
-    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
-      this.gridOptions.floatingFilter = false;
-      this.gridOptions.api!.refreshHeader();
-    }
+    this.gridOptions.api.setFloatingFiltersHeight(0);
   }
 
   public getVendorGridLightThemeName(): string {
@@ -3814,10 +3815,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.api.internalApi.setTreeModeOn();
     }
 
-    // sometimes the header row looks wrong when using quick filter so to be sure...
     if (this.isQuickFilterActive()) {
       this.api.internalApi.showQuickFilterBar();
-      this.gridOptions.api!.refreshHeader();
     }
 
     const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();

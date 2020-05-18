@@ -12,7 +12,7 @@ export interface GridState extends InternalState {
   SelectedCellInfo: SelectedCellInfo;
   SelectedRowInfo: SelectedRowInfo;
   CellSummary: CellSummmary;
-  IsQuickFilterActive: boolean;
+  IsQuickFilterVisible: boolean;
   MainMenuItems: AdaptableMenuItem[];
   IsLiveReportRunning: boolean;
   IsGridInPivotMode: boolean;

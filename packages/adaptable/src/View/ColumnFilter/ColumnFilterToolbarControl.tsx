@@ -37,7 +37,7 @@ interface ColumnFilterToolbarControlComponentProps
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   Entitlements: Entitlement[];
-  IsQuickFilterActive: boolean;
+  IsQuickFilterVisible: boolean;
 }
 
 class ColumnFilterToolbarControlComponent extends React.Component<
@@ -84,9 +84,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         )}
         <CheckBox
           className="ab-DashboardToolbar__ColumnFilter__active-check"
-          disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+          disabled={
+            this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
+            !this.props.Adaptable.isQuickFilterActive()
+          }
           fontSize={2}
-          checked={this.props.IsQuickFilterActive}
+          checked={this.props.IsQuickFilterVisible}
           onChange={(checked: boolean) => {
             checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
           }}
@@ -134,7 +137,7 @@ function mapStateToProps(
 ): Partial<ColumnFilterToolbarControlComponentProps> {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
-    IsQuickFilterActive: state.Grid.IsQuickFilterActive,
+    IsQuickFilterVisible: state.Grid.IsQuickFilterVisible,
   };
 }
 

@@ -290,6 +290,7 @@ export interface IAdaptable {
   // quick filter
   showQuickFilter(): void;
   hideQuickFilter(): void;
+  isQuickFilterActive(): boolean;
 
   // Theme
   getVendorGridLightThemeName(): string;
