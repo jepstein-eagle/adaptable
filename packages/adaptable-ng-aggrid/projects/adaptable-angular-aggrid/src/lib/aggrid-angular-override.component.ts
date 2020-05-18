@@ -2,6 +2,17 @@ import { Component, Input } from '@angular/core';
 
 import { ComponentUtil, Module } from '@ag-grid-community/all-modules';
 
+// import { AgGridColumn } from '@ag-grid-community/angular/lib/ag-grid-column.component';
+// import { AgGridAngular } from '@ag-grid-community/angular';
+// const { AgGridAngular } =require('@ag-grid-community/angular');
+
+// import type { AngularFrameworkOverrides as T_AngularFrameworkOverrides } from '@ag-grid-community/angular/lib/angularFrameworkOverrides';
+// import { AngularFrameworkOverrides } from '@ag-grid-community/angular/esm5/lib/angularFrameworkOverrides';
+// import type { AngularFrameworkComponentWrapper as T_AngularFrameworkComponentWrapper } from '@ag-grid-community/angular/lib/angularFrameworkComponentWrapper';
+// import { AngularFrameworkComponentWrapper } from '@ag-grid-community/angular/esm5/lib/angularFrameworkComponentWrapper';
+// import { AngularFrameworkOverrides }: {AngularFrameworkOverrides} from '@ag-grid-community/angular/esm5/lib/angularFrameworkOverrides';
+// import { AngularFrameworkComponentWrapper } from '@ag-grid-community/angular/esm5/lib/angularFrameworkComponentWrapper';
+
 import {
   AgGridAngular,
   AgGridColumn,
@@ -28,7 +39,7 @@ export class AgGridOverrideComponent extends AgGridAngular {
     vendorGrid: GridOptions;
   }) => void;
   @Input() gridOptions: GridOptions;
-  @Input() modules?: Module[] = [];
+  @Input() modules: Module[] = [];
 
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit(): void {
