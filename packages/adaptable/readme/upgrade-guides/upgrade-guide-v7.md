@@ -10,9 +10,11 @@ Note formatted value expression and column filter dropdown
 
 By default, column filters looked very similar to aggrid 22 balham theme, since `filterOptions.useVendorFilterFormStyle` was default to `true`. With the transition to v23, even with `filterOptions.useVendorFilterFormStyle` set to `true`, the styles now look more modern and similar to the aggrid `alpine` theme, which aggrid recommends as default.
 
-TODO - discuss about `filterOptions.useVendorFilterFormStyle` - what theme should we customize that for?
+`filterOptions.useVendorFilterFormStyle` - custom styles are only applied to balham theme, as the alpine theme looks very similar to our default theme
 
 We removed `userInterfaceOptions.useDefaultVendorGridThemes` as it was no longer used.
+
+Quick filter property is deprecated in gridOptions - `gridOptions.floatingFilter` - you have to specify it at column level.
 
 Slight changes to theming, to accomodate new aggrid themes. Make sure you specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant). We then detect this theme, and apply the corresponding dark theme, when it is selected from theme theme toolbar.
 
@@ -27,6 +29,8 @@ AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"ba
 </adaptable-angular-aggrid>
 
 ```
+
+
 ## CSS Variables
 
 

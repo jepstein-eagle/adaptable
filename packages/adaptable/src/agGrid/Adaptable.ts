@@ -3566,6 +3566,9 @@ export class Adaptable implements IAdaptable {
   }
 
   private hasFloatingFilterOnAtLeastOneColumn(defs = this.gridOptions.columnDefs): boolean {
+    if (this.gridOptions.defaultColDef && this.gridOptions.defaultColDef.floatingFilter) {
+      return true;
+    }
     let col: ColDef | ColGroupDef;
     for (col of this.gridOptions.columnDefs) {
       if ((col as ColDef).floatingFilter) {

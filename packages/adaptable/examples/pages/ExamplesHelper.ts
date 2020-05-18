@@ -782,6 +782,7 @@ export class ExamplesHelper {
   public getGridOptionsTrade(rowData: any): GridOptions {
     return {
       defaultColDef: {
+        floatingFilter: true,
         //   valueGetter: (params: any) => {
         //      return 'hello';
         //   },
