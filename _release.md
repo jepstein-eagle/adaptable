@@ -1,6 +1,7 @@
-## 6.3.2
 
-fixing chart issue due to mismatching react-redux version with core
+## 6.3.2-canary0
+
+Fixing icon spread issue with custom buttons
 
 ## 6.3.1
 
