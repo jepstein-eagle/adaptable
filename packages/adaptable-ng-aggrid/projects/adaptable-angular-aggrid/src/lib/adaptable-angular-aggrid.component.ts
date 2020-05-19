@@ -1,57 +1,30 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  AfterViewInit,
+  EventEmitter,
+  Output,
+  HostBinding,
+} from '@angular/core';
+
+import { GridOptions } from '@ag-grid-community/all-modules';
 
 import {
   AdaptableOptions,
   AdaptableApi,
 } from '@adaptabletools/adaptable/types';
 
-import { GridOptions, Module } from '@ag-grid-community/all-modules';
-import { createAdaptable as adaptableFactory } from './createAdaptable';
+import Adaptable from '@adaptabletools/adaptable/src/agGrid';
 
 function getRandomInt(max: number): number {
   return Math.floor(Math.random() * Math.floor(max));
 }
 
-const getAgGridThemeClassName = (agGridTheme: string) => {
-  if (typeof agGridTheme !== 'string') {
-    agGridTheme = 'balham';
-  }
-  const themeClassName =
-    agGridTheme.indexOf('ag-theme') === 0
-      ? agGridTheme
-      : `ag-theme-${agGridTheme}`;
-
-  return themeClassName;
-};
-
 @Component({
   entryComponents: [],
   selector: 'adaptable-angular-aggrid',
-  template: `
-    <div [id]="adaptableContainerId" [class]="wrapperClassName"></div>
-    <div class="ab__ng-wrapper-aggrid">
-      <div
-        [id]="gridContainerId"
-        style="position: relative; flex: 1"
-        [class]="getAgGridContainerClassName()"
-      >
-        <ag-grid-override
-          data-grid-container-id="true"
-          [gridContainerId]="gridContainerId"
-          [adaptableFactory]="adaptableFactory"
-          [gridOptions]="gridOptions"
-          [onAdaptableReady]="onAdaptableReady"
-        ></ag-grid-override>
-      </div>
-    </div>
-  `,
   styles: [
     `
-      .ab__ng-wrapper-aggrid {
-        flex: 1;
-        display: flex;
-        flex-flow: column;
-      }
       :host {
         display: flex;
         flex-flow: var(--ab_flex-direction, column);
@@ -60,23 +33,21 @@ const getAgGridThemeClassName = (agGridTheme: string) => {
     `,
   ],
 })
-export class AdaptableAngularAgGridComponent implements OnInit {
+export class AdaptableAngularAgGridComponent implements AfterViewInit {
+  @HostBinding('id') get id() {
+    return this.adaptableContainerId;
+  }
+
   @Input() adaptableOptions: AdaptableOptions;
   @Input() gridOptions: GridOptions;
-  @Input() modules?: Module[];
-  @Input() agGridTheme: 'balham' | 'alpine' = 'balham';
-  @Input() agGridContainerClassName: string;
-  @Input() onAdaptableReady?: (adaptableReadyInfo: {
+
+  @Output() adaptableReady = new EventEmitter<{
     adaptableApi: AdaptableApi;
     vendorGrid: GridOptions;
-  }) => void;
+  }>();
 
   public adaptableContainerId: string;
   public gridContainerId: string;
-
-  public wrapperClassName = 'ab__ng-wrapper';
-
-  public adaptableFactory: any;
 
   constructor() {
     const seedId = `${getRandomInt(1000)}-${Date.now()}`;
@@ -85,17 +56,52 @@ export class AdaptableAngularAgGridComponent implements OnInit {
     this.gridContainerId = `grid-${seedId}`;
   }
 
-  getAgGridContainerClassName(): string {
-    return `${getAgGridThemeClassName(this.agGridTheme || '') || ''} ${this
-      .agGridContainerClassName || ''}`;
-  }
+  ngAfterViewInit() {
+    this.adaptableOptions.vendorGrid = this.gridOptions;
 
-  ngOnInit() {
-    this.adaptableFactory = adaptableFactory({
-      adaptableOptions: this.adaptableOptions,
-      adaptableContainerId: this.adaptableContainerId,
-      gridContainerId: this.gridContainerId,
-      modules: this.modules,
+    this.adaptableOptions.containerOptions =
+      this.adaptableOptions.containerOptions || {};
+    this.adaptableOptions.containerOptions.adaptableContainer = this.adaptableContainerId;
+
+    const getContainer = () => {
+      return document.getElementById(
+        this.adaptableOptions.containerOptions.adaptableContainer
+      );
+    };
+
+    const startTime = Date.now();
+
+    const poolForAggrid = (callback: () => void) => {
+      const api = this.gridOptions.api;
+
+      if (Date.now() - startTime > 1000) {
+        console.warn(
+          `Could not find any agGrid instance rendered.
+Please make sure you pass "gridOptions" to AdapTable, so it can connect to the correct agGrid instance.`
+        );
+        return;
+      }
+
+      if (!api) {
+        requestAnimationFrame(() => {
+          poolForAggrid(callback);
+        });
+      } else {
+        callback();
+      }
+    };
+
+    poolForAggrid(() => {
+      const api = Adaptable.init(this.adaptableOptions);
+      api.eventApi.on(
+        'AdaptableReady',
+        (adaptabReadyInfo: {
+          adaptableApi: AdaptableApi;
+          vendorGrid: GridOptions;
+        }) => {
+          this.adaptableReady.emit(adaptabReadyInfo);
+        }
+      );
     });
   }
 }
