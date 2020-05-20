@@ -30,6 +30,7 @@ export class AppComponent {
 
   public gridOptions: GridOptions;
   public rowData: any[];
+  private showAdaptable = true;
   public modules: Module[] = [
     RangeSelectionModule,
     MenuModule,
@@ -79,6 +80,14 @@ export class AppComponent {
         abColDefObject: {},
       },
     };
+
+    // setTimeout(() => {
+    //   this.showAdaptable = true;
+
+    //   setTimeout(() => {
+    //     this.showAdaptable = false;
+    //   }, 2000);
+    // }, 1000);
   }
 
   onAdaptableReady({

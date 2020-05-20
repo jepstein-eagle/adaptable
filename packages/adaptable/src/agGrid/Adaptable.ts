@@ -1956,9 +1956,14 @@ export class Adaptable implements IAdaptable {
     return rowNode;
   }
 
-  destroy(config?: { unmount: boolean }) {
+  destroy(config?: { unmount: boolean; destroyApi?: boolean }) {
     if (this.gridOptions && this.gridOptions.api) {
-      this.gridOptions.api.destroy();
+      (this.gridOptions.api as any).__adaptable = null;
+
+      if (config && config.destroyApi === false) {
+      } else {
+        this.gridOptions.api.destroy();
+      }
     }
 
     this.rowListeners = null;
@@ -2102,9 +2107,10 @@ export class Adaptable implements IAdaptable {
 
   private getGridContainerElement(): HTMLElement | null {
     if (!this.gridContainerElement) {
-      this.gridContainerElement = document.getElementById(
-        this.adaptableOptions!.containerOptions.vendorContainer
-      );
+      this.gridContainerElement =
+        typeof this.adaptableOptions!.containerOptions.vendorContainer === 'string'
+          ? document.getElementById(this.adaptableOptions!.containerOptions.vendorContainer)
+          : this.adaptableOptions!.containerOptions.vendorContainer;
     }
     return this.gridContainerElement;
   }

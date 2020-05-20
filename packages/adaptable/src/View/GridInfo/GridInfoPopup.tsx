@@ -500,7 +500,9 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       this.createColItem(
         colItems,
         'vendorContainer',
-        options.containerOptions.vendorContainer,
+        typeof options.containerOptions.vendorContainer === 'string'
+          ? options.containerOptions.vendorContainer
+          : 'HTMLElement',
         'Id of <div> element which contains the underlying grid'
       )
     );

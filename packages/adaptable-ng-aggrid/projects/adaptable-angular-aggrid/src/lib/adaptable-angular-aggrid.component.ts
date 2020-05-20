@@ -5,6 +5,7 @@ import {
   EventEmitter,
   Output,
   HostBinding,
+  OnDestroy,
 } from '@angular/core';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
@@ -33,7 +34,8 @@ function getRandomInt(max: number): number {
     `,
   ],
 })
-export class AdaptableAngularAgGridComponent implements AfterViewInit {
+export class AdaptableAngularAgGridComponent
+  implements AfterViewInit, OnDestroy {
   @HostBinding('id') get id() {
     return this.adaptableContainerId;
   }
@@ -47,28 +49,15 @@ export class AdaptableAngularAgGridComponent implements AfterViewInit {
   }>();
 
   public adaptableContainerId: string;
-  public gridContainerId: string;
+  private adaptable: Adaptable;
 
   constructor() {
     const seedId = `${getRandomInt(1000)}-${Date.now()}`;
 
     this.adaptableContainerId = `adaptable-${seedId}`;
-    this.gridContainerId = `grid-${seedId}`;
   }
 
   ngAfterViewInit() {
-    this.adaptableOptions.vendorGrid = this.gridOptions;
-
-    this.adaptableOptions.containerOptions =
-      this.adaptableOptions.containerOptions || {};
-    this.adaptableOptions.containerOptions.adaptableContainer = this.adaptableContainerId;
-
-    const getContainer = () => {
-      return document.getElementById(
-        this.adaptableOptions.containerOptions.adaptableContainer
-      );
-    };
-
     const startTime = Date.now();
 
     const poolForAggrid = (callback: () => void) => {
@@ -92,8 +81,42 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
     };
 
     poolForAggrid(() => {
-      const api = Adaptable.init(this.adaptableOptions);
-      api.eventApi.on(
+      // IF YOU UPDATE THIS, make sure you also update the React wrapper impl
+      const layoutElements = (this.gridOptions.api as any).gridOptionsWrapper
+        ? (this.gridOptions.api as any).gridOptionsWrapper.layoutElements || []
+        : [];
+
+      let vendorContainer;
+
+      for (let i = 0, len = layoutElements.length; i < len; i++) {
+        const element = layoutElements[i];
+
+        if (element && element.matches('.ag-root-wrapper')) {
+          const gridContainer = element.closest('[class*="ag-theme"]');
+
+          if (gridContainer) {
+            vendorContainer = gridContainer;
+            break;
+          }
+        }
+      }
+
+      if (!vendorContainer) {
+        console.error(
+          `Could not find the agGrid vendor container. This will probably break some AdapTable functionality.`
+        );
+      }
+
+      this.adaptableOptions.vendorGrid = this.gridOptions;
+
+      this.adaptableOptions.containerOptions =
+        this.adaptableOptions.containerOptions || {};
+      this.adaptableOptions.containerOptions.adaptableContainer = this.adaptableContainerId;
+      this.adaptableOptions.containerOptions.vendorContainer = vendorContainer;
+
+      const adaptable = new Adaptable(this.adaptableOptions);
+
+      adaptable.api.eventApi.on(
         'AdaptableReady',
         (adaptabReadyInfo: {
           adaptableApi: AdaptableApi;
@@ -102,6 +125,19 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
           this.adaptableReady.emit(adaptabReadyInfo);
         }
       );
+
+      this.adaptable = adaptable;
     });
+  }
+
+  ngOnDestroy() {
+    if (!this.adaptable) {
+      return;
+    }
+    this.adaptable.destroy({
+      unmount: true,
+      destroyApi: false,
+    });
+    this.adaptable = null;
   }
 }

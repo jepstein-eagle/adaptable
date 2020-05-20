@@ -4,10 +4,7 @@ import {
   AdaptableFormat,
 } from '../../PredefinedConfig/Common/AdaptableFormat';
 
-// cannot be an import, because the angular wrapper complains about it
-const dateFnsFormat = require('date-fns/format').default;
-
-// import dateFnsFormat from 'date-fns/esm/format';
+import dateFnsFormat from 'date-fns/format';
 
 export function Format(input: any, format: AdaptableFormat) {
   if (format.Formatter === 'NumberFormatter') {
