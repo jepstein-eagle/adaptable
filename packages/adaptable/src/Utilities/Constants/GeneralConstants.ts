@@ -102,7 +102,7 @@ export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
 export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';
 
 // consts for Themes
-export const SYSTEM_THEMES: Array<AdaptableTheme> = [
+export const SYSTEM_THEMES: AdaptableTheme[] = [
   {
     Name: LIGHT_THEME,
     Description: 'Light Theme',

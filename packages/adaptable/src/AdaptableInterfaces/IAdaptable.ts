@@ -290,8 +290,11 @@ export interface IAdaptable {
   // quick filter
   showQuickFilter(): void;
   hideQuickFilter(): void;
+  isQuickFilterActive(): boolean;
 
   // Theme
+  getVendorGridLightThemeName(): string;
+  getVendorGridCurrentThemeName(): string;
   applyAdaptableTheme(theme: AdaptableTheme | string): void;
   setUpRowStyles(): void; // not sure about this...
   clearRowStyles(): void; // not sure about this...

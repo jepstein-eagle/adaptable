@@ -103,7 +103,6 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     clearSearchesOnStartUp: false,
   },
   userInterfaceOptions: {
-    useDefaultVendorGridThemes: true,
     useCustomMacLikeScrollbars: false,
     showAdaptableToolPanel: false,
     showAdaptableContextMenu: true,

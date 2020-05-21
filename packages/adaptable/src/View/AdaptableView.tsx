@@ -20,6 +20,7 @@ import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { AdaptableLoadingScreen } from './Components/Popups/AdaptableLoadingScreen';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import AdaptableContext from './AdaptableContext';
 
 interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   PopupState: PopupState;
@@ -148,7 +149,9 @@ let AdaptableWrapper = connect(mapStateToProps, mapDispatchToProps)(AdaptableVie
 export const AdaptableApp = ({ Adaptable }: { Adaptable: IAdaptable }) => (
   <Provider store={Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <AdaptableWrapper Adaptable={Adaptable} />
+      <AdaptableContext.Provider value={Adaptable}>
+        <AdaptableWrapper Adaptable={Adaptable} />
+      </AdaptableContext.Provider>
     </ThemeProvider>
   </Provider>
 );

@@ -8,21 +8,10 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
  * ```ts
  * userInterfaceOptions = {
  *  showAdaptableToolPanel: true
- *  useDefaultVendorGridThemes: false
  *};
  * ```
  */
 export interface UserInterfaceOptions {
-  /**
-   * Use the default theme that we provide for the vendor grid.
-   *
-   * There is one each for 'Light' and 'Dark'.
-   *
-   * **Default Value: true**
-   *
-   */
-  useDefaultVendorGridThemes?: boolean;
-
   /**
    * Will show custom Mac-like scrollbars in
    * browsers that support scrollbar-theming.

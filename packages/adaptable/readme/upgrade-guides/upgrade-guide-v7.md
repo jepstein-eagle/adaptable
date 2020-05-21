@@ -6,7 +6,106 @@ It has some changes of interest:
 
 ## New ag-Grid Version (23)
 
-Note formmatted value expression and column filter dropdown
+Note formatted value expression and column filter dropdown 
+
+By default, column filters looked very similar to aggrid 22 balham theme, since `filterOptions.useVendorFilterFormStyle` was default to `true`. With the transition to v23, even with `filterOptions.useVendorFilterFormStyle` set to `true`, the styles now look more modern and similar to the aggrid `alpine` theme, which aggrid recommends as default.
+
+`filterOptions.useVendorFilterFormStyle` - custom styles are only applied to balham theme, as the alpine theme looks very similar to our default theme
+
+We removed `userInterfaceOptions.useDefaultVendorGridThemes` as it was no longer used.
+
+Quick filter property is deprecated in gridOptions - `gridOptions.floatingFilter` - you have to specify it at column level.
+
+Slight changes to theming, to accomodate new aggrid themes. Make sure you specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant). We then detect this theme, and apply the corresponding dark theme, when it is selected from theme theme toolbar.
+
+AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
+
+### React wrapper 
+
+With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated - here's a quick summary of the changes:
+
+ * you now have to render `<AgGridReact>` component yourself - although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `"gridOptions"` object** as a prop to the `<AgGridReact>` component
+
+ * you have to pass the same `"gridOptions"` object to the `<AdaptableReactAggrid>` component as well - in this way, `<AdaptableReactAggrid>` and `<AgGridReact>` are connected to the same agGrid instance.
+ 
+```jsx
+
+<div
+  style={{
+    height: '100vh',
+    display: 'flex',
+    flexFlow: 'column',
+  }}
+>
+  <AdaptableReactAggrid
+    adaptableOptions={adaptableOptions}
+    gridOptions={gridOptions}
+    onAdaptableReady={({ adaptableApi, vendorGrid}) => { ... }}
+  >
+  </AdaptableReactAggrid>
+  <div className="ag-theme-alpine" style={{ flex: 1 }>
+    <AgGridReact
+      gridOptions={gridOptions}
+      modules={[SideBarModule, MenuModule, RangeSelectionModule, ClientSideRowModelModule]}
+    />
+  </div>
+</div>
+```
+
+#### Deprecated props
+
+ - `agGridTheme` - no longer supported - see above example for how to specify the agGrid theme - add the corresponding `className` prop on the `div` wrapping `<AgGridReact />`
+ - `modules` - specify agGrid modules directly on the `<AgGridReact />` component.
+ - `render` fn - place the `<AdaptableReactAggrid />` and `<AgGridReact />` components in your jsx wherever you want - they will be connected
+
+### Angular wrapper
+
+With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated - here's a quick summary of the changes:
+
+ * you now have to render `<ag-grid-angular>` component yourself - although most ag-grid properties can be passed into the component via inputs, **you have to make sure you pass the `"gridOptions"` object** as an input to the `<ag-grid-angular>` component
+
+ * you have to pass the same `"gridOptions"` object to the `<adaptable-angular-aggrid>` component as well - in this way, `<adaptable-angular-aggrid>` and `<ag-grid-angular>` are connected to the same agGrid instance.
+ 
+ * the `onAdaptableReady` input is removed from the `<adaptable-angular-aggrid>` component; instead this functionality is exposed as an event, named `adaptableReady` - see example below
+
+```html
+<!-- component.html >
+
+<adaptable-angular-aggrid
+  [adaptableOptions]="adaptableOptions"
+  [gridOptions]="gridOptions"
+  (adaptableReady)="onAdaptableReady($event)"
+>
+</adaptable-angular-aggrid>
+<ag-grid-angular
+  [gridOptions]="gridOptions"
+  [modules]="..."
+  style="height: 90vh"
+  class="ag-theme-alpine"
+>
+</ag-grid-angular>
+```
+
+```js
+// component.ts
+
+onAdaptableReady({
+    adaptableApi,
+    vendorGrid,
+  }: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: GridOptions;
+  }) {
+    adaptableApi.eventApi.on('SelectionChanged', selection => {
+      console.warn('selection changed', selection);
+    });
+  }
+````
+
+## CSS Variables
+
+
+Added `--ab-cmp-field-wrap__border-radius` css variable
 
 ## Display Format Columns
 

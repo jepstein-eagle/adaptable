@@ -57,17 +57,20 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     let baseMenuItems: AdaptableMenuItem[] = [];
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'quickfilter')) {
-      const isFilterActive: boolean = this.adaptable.api.gridApi.getGridState().IsQuickFilterActive;
-      baseMenuItems.push(
-        this.createColumnMenuItemReduxAction(
-          isFilterActive ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
-          isFilterActive ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
-          isFilterActive ? GridRedux.QuickFilterBarHide() : GridRedux.QuickFilterBarShow()
-        )
-      );
-    }
 
+    if (this.adaptable.isQuickFilterActive()) {
+      const isFilterVisible: boolean = this.adaptable.api.gridApi.getGridState()
+        .IsQuickFilterVisible;
+      if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'quickfilter')) {
+        baseMenuItems.push(
+          this.createColumnMenuItemReduxAction(
+            isFilterVisible ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
+            isFilterVisible ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
+            isFilterVisible ? GridRedux.QuickFilterBarHide() : GridRedux.QuickFilterBarShow()
+          )
+        );
+      }
+    }
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'columnfilter')) {
       let existingColumnFilter = this.adaptable.api.columnFilterApi
         .getAllColumnFilter()

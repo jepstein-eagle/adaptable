@@ -14,6 +14,7 @@ import {
   RowNodeTransaction,
   IClientSideRowModel,
   GridApi,
+  ColumnResizedEvent,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -97,7 +98,6 @@ import {
   HALF_SECOND,
   LIGHT_THEME,
   DARK_THEME,
-  AG_GRID_GROUPED_COLUMN,
 } from '../Utilities/Constants/GeneralConstants';
 import { agGridHelper } from './agGridHelper';
 import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
@@ -160,7 +160,6 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
-import { format } from 'date-fns';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -722,7 +721,7 @@ export class Adaptable implements IAdaptable {
         return rowNode.data;
       });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
-      this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
+      this.gridOptions.api!.applyTransaction({ update: itemsToUpdate });
     }
   }
 
@@ -847,14 +846,12 @@ export class Adaptable implements IAdaptable {
   }
 
   private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableColumn): void {
-    if (
-      vendorColumn.getColDef().filter &&
-      this.adaptableOptions!.filterOptions.useAdaptableFilterForm
-    ) {
+    const colDef = vendorColumn.getColDef();
+    if (colDef.filter && this.adaptableOptions!.filterOptions.useAdaptableFilterForm) {
       this.createFilterWrapper(vendorColumn);
     }
 
-    if (this.isQuickFilterActive()) {
+    if (colDef.floatingFilter && this.adaptableOptions!.filterOptions.useAdaptableQuickFilter) {
       this.createQuickFilterWrapper(vendorColumn);
     }
 
@@ -1399,7 +1396,7 @@ export class Adaptable implements IAdaptable {
   public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
     const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
-      if (colDef.valueFormatter) {
+      if (typeof colDef.valueFormatter == 'function') {
         const column = this.gridOptions.columnApi
           .getAllColumns()
           .find(c => c.getColId() == columnId);
@@ -1959,9 +1956,14 @@ export class Adaptable implements IAdaptable {
     return rowNode;
   }
 
-  destroy(config?: { unmount: boolean }) {
+  destroy(config?: { unmount: boolean; destroyApi?: boolean }) {
     if (this.gridOptions && this.gridOptions.api) {
-      this.gridOptions.api.destroy();
+      (this.gridOptions.api as any).__adaptable = null;
+
+      if (config && config.destroyApi === false) {
+      } else {
+        this.gridOptions.api.destroy();
+      }
     }
 
     this.rowListeners = null;
@@ -2105,9 +2107,10 @@ export class Adaptable implements IAdaptable {
 
   private getGridContainerElement(): HTMLElement | null {
     if (!this.gridContainerElement) {
-      this.gridContainerElement = document.getElementById(
-        this.adaptableOptions!.containerOptions.vendorContainer
-      );
+      this.gridContainerElement =
+        typeof this.adaptableOptions!.containerOptions.vendorContainer === 'string'
+          ? document.getElementById(this.adaptableOptions!.containerOptions.vendorContainer)
+          : this.adaptableOptions!.containerOptions.vendorContainer;
     }
     return this.gridContainerElement;
   }
@@ -2232,21 +2235,21 @@ export class Adaptable implements IAdaptable {
       }
     });
 
-    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_RESIZED, (params: any) => {
-      if (!this.gridOptions.api) {
-        return;
-      }
-      // if a column is resized there are a couple of things we need to do once its finished
-      if (params.type == 'columnResized' && params.finished == true) {
-        // refresh the header if you have quick filter bar to ensure its full length
-        if (this.isQuickFilterActive()) {
-          this.gridOptions.api!.refreshHeader();
+    this.gridOptions.api!.addEventListener(
+      Events.EVENT_COLUMN_RESIZED,
+      (params: ColumnResizedEvent) => {
+        if (!this.gridOptions.api) {
+          return;
         }
-        if (params.column) {
-          this._emit('ColumnResized', params.column.colId);
+
+        // if a column is resized there are a couple of things we need to do once its finished
+        if (params.type == 'columnResized' && params.finished == true) {
+          if (params.column) {
+            this._emit('ColumnResized', params.column.getColId());
+          }
         }
       }
-    });
+    );
 
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
@@ -2351,7 +2354,7 @@ export class Adaptable implements IAdaptable {
     });
 
     // this handles ticking data
-    // except it doesnt handle when data has been added to ag-Grid using updateRowData
+    // except it doesnt handle when data has been added to ag-Grid using applyTransaction
     this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
@@ -3279,18 +3282,18 @@ export class Adaptable implements IAdaptable {
   ): void {
     config = config || {};
     if (config.batchUpdate) {
-      this.gridOptions.api!.batchUpdateRowData({ update: dataRows }, config.callback);
+      this.gridOptions.api!.applyTransactionAsync({ update: dataRows }, config.callback);
     } else {
-      this.gridOptions.api!.updateRowData({ update: dataRows });
+      this.gridOptions.api!.applyTransaction({ update: dataRows });
     }
   }
 
   public addRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ add: dataRows });
+    this.gridOptions.api!.applyTransaction({ add: dataRows });
   }
 
   public deleteRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ remove: dataRows });
+    this.gridOptions.api!.applyTransaction({ remove: dataRows });
   }
 
   private updateQuickSearchRangeVisibleColumn(columnId: string): void {
@@ -3564,28 +3567,69 @@ export class Adaptable implements IAdaptable {
     return !isTreeLayout;
   }
 
-  private isQuickFilterActive(): boolean {
-    return (
-      this.gridOptions.floatingFilter === true &&
-      this.adaptableOptions!.filterOptions.useAdaptableQuickFilter
-    );
+  public isQuickFilterActive(): boolean {
+    return this.hasFloatingFilterOnAtLeastOneColumn() === true;
+  }
+
+  private hasFloatingFilterOnAtLeastOneColumn(defs = this.gridOptions.columnDefs): boolean {
+    if (this.gridOptions.defaultColDef && this.gridOptions.defaultColDef.floatingFilter) {
+      return true;
+    }
+    let col: ColDef | ColGroupDef;
+    for (col of this.gridOptions.columnDefs) {
+      if ((col as ColDef).floatingFilter) {
+        return true;
+      }
+      if ((col as ColGroupDef).children) {
+        if (this.hasFloatingFilterOnAtLeastOneColumn((col as ColGroupDef).children)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public showQuickFilter(): void {
-    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
-      this.gridOptions.floatingFilter = true;
-      this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
-        this.createQuickFilterWrapper(col);
-      });
-      this.gridOptions.api!.refreshHeader();
-    }
+    this.gridOptions.api.setFloatingFiltersHeight(null);
   }
 
   public hideQuickFilter(): void {
-    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
-      this.gridOptions.floatingFilter = false;
-      this.gridOptions.api!.refreshHeader();
+    this.gridOptions.api.setFloatingFiltersHeight(0);
+  }
+
+  public getVendorGridLightThemeName(): string {
+    const container = this.getGridContainerElement();
+
+    if (container && container.classList) {
+      // we detect the ag theme class
+      const classList = container.classList;
+      for (var i = 0, len = classList.length; i < len; i++) {
+        const cls = classList[i];
+
+        if (cls.indexOf('ag-theme-') === 0) {
+          // even if dark theme is included, we compute the light theme name out of it
+          return cls.replace('-dark', '');
+        }
+      }
     }
+    return this.agGridHelper.getVendorLightThemeName();
+  }
+
+  public getVendorGridCurrentThemeName(): string {
+    const container = this.getGridContainerElement();
+
+    if (container && container.classList) {
+      // we detect the ag theme class
+      const classList = container.classList;
+      for (var i = 0, len = classList.length; i < len; i++) {
+        const cls = classList[i];
+
+        if (cls.indexOf('ag-theme-') === 0) {
+          return cls;
+        }
+      }
+    }
+    return this.getVendorGridLightThemeName();
   }
 
   public applyAdaptableTheme(theme: AdaptableTheme | string) {
@@ -3594,7 +3638,12 @@ export class Adaptable implements IAdaptable {
     const themeNamesToRemove: string[] = [];
     const themesToRemove: AdaptableTheme[] = [];
 
-    const allThemes = this.api.themeApi.getAllTheme();
+    const allThemes = this.api.themeApi.getAllTheme().map(t => {
+      // we mutate the theme later,
+      // and since we don't want the mutation to end up in state
+      // we better clone it here
+      return { ...t };
+    });
     const allThemesMap: Record<string, AdaptableTheme> = allThemes.reduce(
       (acc: Record<string, AdaptableTheme>, theme: AdaptableTheme) => {
         acc[theme.Name] = theme;
@@ -3648,18 +3697,21 @@ export class Adaptable implements IAdaptable {
 
     const container = this.getGridContainerElement();
 
+    const getVendorLightThemeName = () => this.getVendorGridLightThemeName();
+    const getVendorDarkThemeName = () => getVendorLightThemeName() + '-dark';
+
     if (newTheme && isSystemTheme) {
       if (themeName === LIGHT_THEME) {
-        newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+        newTheme.VendorGridClassName = newTheme.VendorGridClassName || getVendorLightThemeName();
       }
       if (themeName === DARK_THEME) {
-        newTheme.VendorGridClassName = this.agGridHelper.getVendorDarkThemeName();
+        newTheme.VendorGridClassName = newTheme.VendorGridClassName || getVendorDarkThemeName();
       }
     }
 
     if (!newTheme.VendorGridClassName) {
       // default the vendor grid to the light theme
-      newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+      newTheme.VendorGridClassName = getVendorLightThemeName();
     }
 
     if (container != null) {
@@ -3670,6 +3722,15 @@ export class Adaptable implements IAdaptable {
           }
         });
       }
+      // also remove all vendor theme class names
+      const vendorClassNamesToRemove: string[] = [];
+      container.classList.forEach(x => {
+        if (x && x.indexOf('ag-theme-') === 0) {
+          vendorClassNamesToRemove.push(x);
+        }
+      });
+
+      vendorClassNamesToRemove.forEach(x => container.classList.remove(x));
 
       if (newTheme && newTheme.VendorGridClassName) {
         container.classList.add(newTheme.VendorGridClassName);
@@ -3763,10 +3824,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.api.internalApi.setTreeModeOn();
     }
 
-    // sometimes the header row looks wrong when using quick filter so to be sure...
     if (this.isQuickFilterActive()) {
       this.api.internalApi.showQuickFilterBar();
-      this.gridOptions.api!.refreshHeader();
     }
 
     const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();

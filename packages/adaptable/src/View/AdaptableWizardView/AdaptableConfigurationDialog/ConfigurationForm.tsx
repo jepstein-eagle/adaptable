@@ -71,18 +71,6 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         margin={2}
         columns={[{ name: 'children' }, { name: 'label', style: { textAlign: 'start' } }]}
       >
-        <FormRow label="Use Default Vendor Grid Themes">
-          <CheckBox
-            checked={userInterfaceOptions.useDefaultVendorGridThemes}
-            onChange={(useDefaultVendorGridThemes: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.userInterfaceOptions = { ...abOptions.userInterfaceOptions };
-              abOptions.userInterfaceOptions.useDefaultVendorGridThemes = useDefaultVendorGridThemes;
-
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
         <FormRow label="Show Missing Primary Key Warning">
           <CheckBox
             checked={generalOptions.showMissingPrimaryKeyWarning}
@@ -382,7 +370,7 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
 
       {/*
       // Taking this out for now until we add proper chart options
-     
+
       <Flex flexDirection="row" alignItems="center" margin={2}>
         <Text style={{ flex: 3 }} marginRight={2}>
           Pie Chart Maximum Items

@@ -21,12 +21,12 @@ import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import Input from '../../../components/Input';
 import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { ThemeProvider } from 'styled-components';
+import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
+import AdaptableContext from '../../AdaptableContext';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableColumn;
-  ColumnWidth: number;
   Adaptable: IAdaptable;
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
@@ -124,18 +124,31 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         ? 'date'
         : 'text';
 
+    // on chrome, date inputs do not behave correctly in terms
+    // of respecting width - this is one of those scenarios - width: 100%  is not respected
+    // so we need to set this extra styles
+    const extraStyle: CSSProperties =
+      controlType === 'date'
+        ? {
+            position: 'absolute',
+            transform: 'translate3d(0px, -50%, 0px)',
+            top: '50%',
+          }
+        : null;
+
     return this.props.CurrentColumn &&
       this.props.CurrentColumn.Filterable &&
       this.props.CurrentColumn.DataType != DataType.Unknown ? (
       <Input
         style={{
-          width: this.props.ColumnWidth,
+          width: '100%', // Starting aggrid 23, we no longer use this.props.ColumnWidth, but 100%
           padding: 0,
           margin: 'auto',
 
           minHeight: 20,
           maxHeight: 20,
           fontSize: 'var(--ab-font-size-1)',
+          ...extraStyle,
         }}
         className="ab-QuickFilterFormInput"
         autoFocus={false}
@@ -361,13 +374,14 @@ export let QuickFilterForm = connect(mapStateToProps, mapDispatchToProps)(QuickF
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <QuickFilterForm
-        Adaptable={FilterContext.Adaptable}
-        CurrentColumn={FilterContext.Column}
-        TeamSharingActivated={false}
-        ColumnWidth={FilterContext.ColumnWidth}
-        EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
-      />
+      <AdaptableContext.Provider value={FilterContext.Adaptable}>
+        <QuickFilterForm
+          Adaptable={FilterContext.Adaptable}
+          CurrentColumn={FilterContext.Column}
+          TeamSharingActivated={false}
+          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+        />
+      </AdaptableContext.Provider>
     </ThemeProvider>
   </Provider>
 );

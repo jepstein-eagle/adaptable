@@ -1,9 +1,9 @@
 .ab-FieldWrap {
   border: 1px solid var(--ab-color-inputborder);
   color: 1px solid var(--ab-color-inputcolor);
-  border-radius: var(--ab__border-radius);
+  border-radius: var(--ab-cmp-field-wrap__border-radius);
   background: var(--ab-cmp-field-wrap__background);
-  
+
   overflow: hidden;
 
   fill: var(--ab-cmp-field-wrap__fill);
