@@ -2,6 +2,7 @@
 import { StarsCellRenderer } from './StarsCellRenderer';
 import LoggingHelper from '../../src/Utilities/Helpers/LoggingHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+import { DetailCellRenderer } from '../../src/agGrid/DetailCellRenderer';
 
 export interface ITrade {
   tradeId: number;
@@ -931,6 +932,10 @@ export class ExamplesHelper {
       }),
       rowData: this.getFtseData(rowCount),
       masterDetail: true,
+      detailCellRenderer: 'adaptableDetailCellRenderer',
+      components: {
+        adaptableDetailCellRenderer: DetailCellRenderer,
+      },
       detailCellRendererParams: {
         // provide detail grid options
         detailGridOptions: this.getDetailGridOptionsFTSE(),

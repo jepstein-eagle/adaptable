@@ -262,3 +262,14 @@ Can I put them somewhere else?
   }
 
 }
+
+// master detail
+
+.ag-details-row {
+  display: flex;
+  flex-flow: column;
+
+  .ag-details-grid {
+    flex: 1;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
@@ -9,9 +9,9 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import Adaptable from '../../../../agGrid';
 
 /*
 Demo for checking alerts work
@@ -26,7 +26,16 @@ function InitAdaptableDemo() {
     'master detail demo'
   );
 
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableOptions.detailOptions = {
+    primaryKey: 'volume',
+    predefinedConfig: {
+      Dashboard: {
+        IsCollapsed: true,
+      },
+    },
+  };
+
+  Adaptable.init(adaptableOptions);
 }
 
 export default () => {
