@@ -234,6 +234,11 @@ export interface IPushPullApi {
   isIPushPullLiveDataRunning(): boolean | undefined;
 
   /**
+   * Whether to show system reports in the reports dropdown in ipushpull toolbar
+   */
+  includeSystemReports(): boolean;
+
+  /**
    * Clears out the **internal** state of ipushpull
    *
    * This method is only intended to be used **internally** by AdapTable

@@ -134,6 +134,13 @@ export interface IPushPullState extends ConfigState {
   AutoLogin?: boolean;
 
   /**
+   * Whether AdapTable will include the System Reports (e.g. 'All Data', 'Selected Cells' etc) in the dropdown in the ipushpull toolbar
+   *
+   * **Default Value: true**
+   */
+  IncludeSystemReports?: boolean;
+
+  /**
    * Any ipushpull Reports that should be sent according to Schedules sent by you.
    */
   IPushPullSchedules?: IPushPullSchedule[];
