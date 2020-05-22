@@ -104,8 +104,11 @@ class IPushPullToolbarControlComponent extends React.Component<
   };
 
   render(): any {
-    let allReports: Report[] = this.props
-      .SystemReports!.filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
+    let systemReports: Report[] = this.props.Adaptable.api.iPushPullApi.includeSystemReports()
+      ? this.props.SystemReports
+      : [];
+    let allReports: Report[] = systemReports!
+      .filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
       .concat(this.props.Reports);
 
     let availableReports: any[] = allReports.map(report => {

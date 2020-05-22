@@ -198,6 +198,7 @@ const initialFilterState: IPushPullState = {
   IPushPullDomainsPages: EMPTY_ARRAY,
   CurrentLiveIPushPullReport: undefined,
   IPushPullLoginErrorMessage: undefined,
+  IncludeSystemReports: true,
 };
 
 export const IPushPullReducer: Redux.Reducer<IPushPullState> = (

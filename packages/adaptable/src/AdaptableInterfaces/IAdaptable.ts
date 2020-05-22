@@ -1,6 +1,6 @@
 import { AdaptableOptions, AdaptablePlugin } from '../types';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
-import { IStrategyCollection, IStrategy } from '../Strategy/Interface/IStrategy';
+import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
@@ -12,7 +12,7 @@ import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { DistinctCriteriaPairValue, SortOrder } from '../PredefinedConfig/Common/Enums';
+import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
 import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
@@ -34,7 +34,6 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
 import { Report } from '../PredefinedConfig/ExportState';
-import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 
 /**
  *  The only interface for Adaptable
@@ -258,6 +257,7 @@ export interface IAdaptable {
   clearColumnFiltering(columnIds: string[]): void;
 
   // Reports
+  canExportToExcel(): boolean;
   exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]): void;
   exportVisibleToClipboard(report: Report): void;
   exportVisibleToExcel(report: Report): void;

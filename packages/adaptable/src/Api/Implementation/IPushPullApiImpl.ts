@@ -191,6 +191,10 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.adaptable.api.internalApi.hidePopupScreen();
   }
 
+  public includeSystemReports(): boolean {
+    return this.getIPushPullState().IncludeSystemReports;
+  }
+
   public clearIPushPullInternalState(): void {
     this.setIPushPullDomains([]);
     this.setIPushPullRunningOff();
