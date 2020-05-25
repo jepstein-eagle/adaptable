@@ -3814,6 +3814,10 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     return null;
   }
 
+  canExportToExcel(): boolean {
+    return this.agGridHelper.isModulePresent('excel-export');
+  }
+
   exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
     const columnIds = columns.map(col => col.ColumnId);
     const columnDefs: ColDef[] = columns.map(col => ({

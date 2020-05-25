@@ -150,7 +150,8 @@ class ExportToolPanelComponent extends React.Component<
     }
 
     const exportItems = [
-      excelMenuItem,
+      this.props.Adaptable.canExportToExcel() && excelMenuItem,
+      ,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,

@@ -17,6 +17,7 @@ const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
   LiveReports: LiveReport[];
   ReportService: IReportService;
+  canExportToExel: boolean;
   onExport: (exportDestination: ExportDestination) => void;
   onReportStopLive: (
     exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
@@ -76,7 +77,8 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     );
 
     const exportItems = [
-      excelMenuItem,
+      this.props.canExportToExel && excelMenuItem,
+      ,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
