@@ -12,6 +12,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
+import { DetailCellRenderer } from '../../../../src/agGrid/DetailCellRenderer';
 
 /*
 Demo for checking alerts work
@@ -20,7 +21,7 @@ Demo for checking alerts work
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getMasterGridOptionsFTSE(200);
-  // gridOptions.rowSelection = 'multiple';
+
   const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsFtse(
     gridOptions,
     'master detail demo'
@@ -28,12 +29,15 @@ function InitAdaptableDemo() {
 
   adaptableOptions.detailOptions = {
     primaryKey: 'volume',
-    predefinedConfig: {
-      Dashboard: {
-        IsCollapsed: true,
-      },
-    },
+    predefinedConfig: {},
   };
+
+  // TODO move to plugin
+  if (adaptableOptions.detailOptions) {
+    adaptableOptions.vendorGrid.detailCellRenderer = 'adaptableDetailCellRenderer';
+    adaptableOptions.vendorGrid.components = adaptableOptions.vendorGrid.components || {};
+    adaptableOptions.vendorGrid.components.adaptableDetailCellRenderer = DetailCellRenderer;
+  }
 
   Adaptable.init(adaptableOptions);
 }

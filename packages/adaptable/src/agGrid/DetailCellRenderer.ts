@@ -46,8 +46,15 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
       this.adaptable = new Adaptable({
         adaptableId: `${masterAdaptable.adaptableOptions.adaptableId} Detail`,
         ...detailOptions,
+        predefinedConfig: {
+          ...detailOptions.predefinedConfig,
+          Dashboard: {
+            IsCollapsed: true,
+            ...detailOptions.predefinedConfig.Dashboard,
+          },
+        },
         containerOptions: {
-          ...detailOptions?.containerOptions,
+          ...detailOptions.containerOptions,
           adaptableContainer: adaptableContainerId,
           vendorContainer: eDetailGrid,
         },
