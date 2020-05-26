@@ -1,14 +1,9 @@
-import {
-  Grid,
-  GridOptions,
-  ICellRendererComp,
-  ICellRendererParams,
-} from '@ag-grid-community/all-modules';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import {
   DetailCellRenderer as BaseDetailCellRenderer,
   IDetailCellRendererParams,
 } from '@ag-grid-enterprise/master-detail/dist/es6/masterDetail/detailCellRenderer';
-import { Adaptable } from './Adaptable';
+import { Adaptable } from '@adaptabletools/adaptable/src/agGrid/Adaptable';
 
 export class DetailCellRenderer extends BaseDetailCellRenderer {
   adaptable?: Adaptable;

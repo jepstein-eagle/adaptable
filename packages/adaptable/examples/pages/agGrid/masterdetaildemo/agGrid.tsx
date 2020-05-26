@@ -12,7 +12,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
-import { DetailCellRenderer } from '../../../../src/agGrid/DetailCellRenderer';
+import masterDetailAgGridPlugin from '../../../../../plugins/master-detail-aggrid/src';
 
 /*
 Demo for checking alerts work
@@ -27,17 +27,12 @@ function InitAdaptableDemo() {
     'master detail demo'
   );
 
-  adaptableOptions.detailOptions = {
-    primaryKey: 'volume',
-    predefinedConfig: {},
-  };
-
-  // TODO move to plugin
-  if (adaptableOptions.detailOptions) {
-    adaptableOptions.vendorGrid.detailCellRenderer = 'adaptableDetailCellRenderer';
-    adaptableOptions.vendorGrid.components = adaptableOptions.vendorGrid.components || {};
-    adaptableOptions.vendorGrid.components.adaptableDetailCellRenderer = DetailCellRenderer;
-  }
+  adaptableOptions.plugins = [
+    masterDetailAgGridPlugin({
+      primaryKey: 'volume',
+      predefinedConfig: {},
+    }),
+  ];
 
   Adaptable.init(adaptableOptions);
 }

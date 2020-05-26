@@ -106,6 +106,14 @@ jobs:
     - name: Building plugins-finance
       run: cd packages/plugins/finance && npm run build-prod-no-cleanup
 
+    - name: Executing npm install in plugins/master-detail-aggrid
+      run: npm run install-plugins-master-detail-aggrid
+      env:
+        CI: true
+
+    - name: Building plugins-master-detail-aggrid
+      run: cd packages/plugins/master-detail-aggrid && npm run build-prod-no-cleanup
+
     - name: Ship it
       uses: "./.github/actions/execute-cmd"
       with:
