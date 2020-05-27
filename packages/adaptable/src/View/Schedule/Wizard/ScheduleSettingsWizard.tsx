@@ -18,7 +18,8 @@ import Checkbox from '../../../components/CheckBox';
 import { BaseSchedule } from '../../../PredefinedConfig/Common/Schedule';
 import { ReminderSchedule } from '../../../PredefinedConfig/ReminderState';
 import { ReportSchedule, Report } from '../../../PredefinedConfig/ExportState';
-import { IPushPullSchedule, IPushPullDomain } from '../../../PredefinedConfig/IPushPullState';
+import { IPushPullSchedule } from '../../../PredefinedConfig/IPushPullSchedule';
+import { IPushPullDomain } from '../../../PredefinedConfig/SystemState';
 import { EMPTY_STRING } from '../../../Utilities/Constants/GeneralConstants';
 import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
@@ -59,7 +60,6 @@ export class ScheduleSettingsWizard
     super(props);
 
     const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
-
     this.state = {
       // Reminder
       Header:

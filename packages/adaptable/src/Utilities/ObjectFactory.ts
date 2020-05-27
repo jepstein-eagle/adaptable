@@ -66,7 +66,7 @@ import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesCh
 import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED } from '../View/UIHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
+import { IPushPullSchedule, IPushPullReport } from '../PredefinedConfig/IPushPullSchedule';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';

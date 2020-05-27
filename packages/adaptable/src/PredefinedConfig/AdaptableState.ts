@@ -20,6 +20,7 @@ import { FreeTextColumnState } from './FreeTextColumnState';
 import { LayoutState } from './LayoutState';
 import { ColumnCategoryState } from './ColumnCategoryState';
 import { PercentBarState } from './PercentBarState';
+import { ScheduleState } from './ScheduleState';
 import { PlusMinusState } from './PlusMinusState';
 import { QuickSearchState } from './QuickSearchState';
 import { CellSummaryState } from './CellSummaryState';
@@ -93,9 +94,9 @@ export interface AdaptableState {
   GradientColumn: GradientColumnState;
   Layout: LayoutState;
   PercentBar: PercentBarState;
+  Schedule: ScheduleState;
   PlusMinus: PlusMinusState;
   QuickSearch: QuickSearchState;
-  Reminder: ReminderState;
   Shortcut: ShortcutState;
   SmartEdit: SmartEditState;
   TeamSharing: TeamSharingState;

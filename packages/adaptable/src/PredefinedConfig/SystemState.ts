@@ -10,20 +10,10 @@ import { Report } from './ExportState';
 import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { GridCell } from '../types';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { BaseSchedule } from './Common/Schedule';
+import { IPushPullReport } from './IPushPullSchedule';
+import { ConfigState } from './ConfigState';
 
-export interface IPushPullReport extends AdaptableObject {
-  ReportName: string;
-  Folder: string;
-  Page: string;
-}
-
-export interface IPushPullSchedule extends BaseSchedule {
-  iPushPullReport: IPushPullReport;
-  transmission: 'Snapshot' | 'Live Data';
-}
-
+export { IPushPullReport };
 /**
  * Internal object that maps an IPushPull Domain object
  */
@@ -46,7 +36,7 @@ export interface IPushPullDomain {
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
-export interface IPushPullState {
+export interface IPushPullState extends ConfigState {
   IsIPushPullRunning?: boolean;
   IPushPullDomainsPages?: IPushPullDomain[];
   IPushPullLoginErrorMessage?: string;

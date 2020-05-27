@@ -6,8 +6,9 @@ import { IPushPullPluginOptions } from './';
 import {
   IPushPullDomain,
   IPushPullReport,
-  IPushPullSchedule,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+
+import { IPushPullSchedule } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullSchedule';
 import { IPushPullApi } from '@adaptabletools/adaptable/src/Api/IPushPullApi';
 import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
@@ -69,7 +70,11 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public stopLiveData(): void {
-    let currentLiveReport: IPushPullReport = this.getCurrentLiveIPushPullReport();
+    let currentLiveReport: IPushPullReport | undefined = this.getCurrentLiveIPushPullReport();
+
+    if (!currentLiveReport) {
+      return;
+    }
 
     this.getIPPService().unloadPage(currentLiveReport.Page);
 
@@ -101,14 +106,16 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public getIPushPullDomains(): IPushPullDomain[] {
-    return this.getAdaptableState().System.IPushPullDomainsPages;
+    return this.getAdaptableState().System.IPushPullDomainsPages || [];
   }
 
   public getPagesForIPushPullDomain(folderName: string): string[] {
     let returnArray: string[] = [];
     let iPushPullDomains: IPushPullDomain[] = this.getIPushPullDomains();
     if (ArrayExtensions.IsNotNullOrEmpty(iPushPullDomains)) {
-      let iPushPullDomain: IPushPullDomain = iPushPullDomains.find(f => f.Name == folderName);
+      let iPushPullDomain: IPushPullDomain | undefined = iPushPullDomains.find(
+        f => f.Name == folderName
+      );
       if (iPushPullDomain) {
         returnArray = iPushPullDomain.Pages;
       }
@@ -122,7 +129,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public getFolderIdForName(folderName: string): number {
     let iPushPullDomains: IPushPullDomain[] = this.getIPushPullDomains();
-    return iPushPullDomains.find(i => i.Name == folderName).FolderId;
+    return iPushPullDomains.find(i => i.Name == folderName)!.FolderId;
   }
 
   public addNewIPushPullPage(folderName: string, pageName: string): void {
@@ -147,7 +154,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public getIPushPullSchedules(): IPushPullSchedule[] {
-    return this.options!.ippSchedules;
+    return this.getAdaptableState().Schedule.IPushPullSchedules || [];
   }
 
   public showIPushPullPopup(): void {
@@ -208,7 +215,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public includeSystemReports(): boolean {
-    return this.options.includeSystemReports;
+    return this.options.includeSystemReports || false;
   }
 
   public clearIPushPullInternalState(): void {

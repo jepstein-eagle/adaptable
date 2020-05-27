@@ -12,11 +12,11 @@ import {
 } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Menu';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
-import { IPushPullReport } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
+import { IPushPullReport } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullSchedule';
 import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
 import { IPushPullApi } from '@adaptabletools/adaptable/src/Api/IPushPullApi';
 
-import { IPushPullService } from './Interface/IPushPullService';
+import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;

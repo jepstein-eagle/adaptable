@@ -58,8 +58,6 @@ export interface ExportState extends ConfigState {
    * **Default Value**:  Empty array
    */
   Reports?: Report[];
-
-  ReportSchedules?: ReportSchedule[];
 }
 
 export interface Report extends AdaptableObject {

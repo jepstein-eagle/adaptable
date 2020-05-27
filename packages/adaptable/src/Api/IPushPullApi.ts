@@ -1,8 +1,5 @@
-import {
-  IPushPullDomain,
-  IPushPullReport,
-  IPushPullSchedule,
-} from '../PredefinedConfig/SystemState';
+import { IPushPullDomain, IPushPullReport } from '../PredefinedConfig/SystemState';
+import { IPushPullSchedule } from '../PredefinedConfig/IPushPullSchedule';
 
 /**
  * Provides full and comprehensive run-time access to ipushpull state and associated methods.

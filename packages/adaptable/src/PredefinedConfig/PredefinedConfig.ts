@@ -20,10 +20,10 @@ import { FlashingCellState } from './FlashingCellState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { FormatColumnState } from './FormatColumnState';
 import { FreeTextColumnState } from './FreeTextColumnState';
-import { IPushPullState } from './IPushPullState';
 import { Glue42State } from './Glue42State';
 import { LayoutState } from './LayoutState';
 import { PercentBarState } from './PercentBarState';
+import { ScheduleState } from './ScheduleState';
 import { PlusMinusState } from './PlusMinusState';
 import { QuickSearchState } from './QuickSearchState';
 import { ReminderState } from './ReminderState';
@@ -173,6 +173,7 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
+ *  | [Schedule](_src_predefinedconfig_schedulestate_.schedulestate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
  *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
  *  | [QuickSearch](_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
@@ -196,7 +197,6 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Chart](_src_predefinedconfig_chartstate_.chartstate.html)   	                              | Chart 	            | Visualise grid data using a variety of different chart types  |
  *  | [SparklineColumn](_src_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html)    | Chart               | See columns containing ranges of data as a sparkline          |
  *  | [Glue42](_src_predefinedconfig_glue42state_.glue42state.html)                               | Glue42 	            | Specify how to send live 2-way data to / from excel via Glue42|
- *  | [ipushpull](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html)                      | ipushpull 	        | Specify how to send live data to ipushpull (and Symphony)     |
  *
  * --------------
  *
@@ -546,6 +546,11 @@ export interface PredefinedConfig {
   PercentBar?: PercentBarState;
 
   /**
+   * Supplies a collection of *Schedule* objects.
+   */
+  Schedule?: ScheduleState;
+
+  /**
    * Supplies a collection of *PlusMinus* rule objects to stipulate what happens when the user clicks '+' or '-' in a numeric cell.
    */
   PlusMinus?: PlusMinusState;
@@ -554,11 +559,6 @@ export interface PredefinedConfig {
    * Configues how Quick Search will run i.e. how and whether to highlight matching cells and to filter out non-matching rows.
    */
   QuickSearch?: QuickSearchState;
-
-  /**
-   * Supplies a collection of *Reminder* objects to display warnings at scheduled times.
-   */
-  Reminder?: ReminderState;
 
   /**
    * Supplies a collection of *Shortcut* objects to aid data entry and prevent 'fat finger' issues.

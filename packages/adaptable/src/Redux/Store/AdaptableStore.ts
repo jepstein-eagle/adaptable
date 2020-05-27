@@ -29,7 +29,6 @@ import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux';
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux';
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux';
 import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
-import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as GradientColumnRedux from '../ActionsReducers/GradientColumnRedux';
@@ -44,6 +43,7 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
 import * as ToolPanelRedux from '../ActionsReducers/ToolPanelRedux';
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux';
+import * as ScheduleRedux from '../ActionsReducers/ScheduleRedux';
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux';
 import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
@@ -128,7 +128,6 @@ import {
 
 import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/ChartState';
-import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
@@ -139,7 +138,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
-import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { IPushPullState } from '../../PredefinedConfig/SystemState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -243,10 +242,10 @@ This is the main store for Adaptable State
       FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
       Layout: LayoutRedux.LayoutReducer,
       PercentBar: PercentBarRedux.PercentBarReducer,
+      Schedule: ScheduleRedux.ScheduleReducer,
       GradientColumn: GradientColumnRedux.GradientColumnReducer,
       PlusMinus: PlusMinusRedux.PlusMinusReducer,
       QuickSearch: QuickSearchRedux.QuickSearchReducer,
-      Reminder: ReminderRedux.ReminderReducer,
       Shortcut: ShortcutRedux.ShortcutReducer,
       SmartEdit: SmartEditRedux.SmartEditReducer,
       Theme: ThemeRedux.ThemeReducer,
@@ -1508,8 +1507,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           REMINDER
           **********************
            */
-          case ReminderRedux.REMINDER_SCHEDULE_ADD: {
-            const actionTyped = action as ReminderRedux.ReminderScheduleAddAction;
+          case ScheduleRedux.REMINDER_SCHEDULE_ADD: {
+            const actionTyped = action as ScheduleRedux.ReminderScheduleAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1521,8 +1520,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ReminderRedux.REMINDER_SCHEDULE_EDIT: {
-            const actionTyped = action as ReminderRedux.ReminderScheduleEditAction;
+          case ScheduleRedux.REMINDER_SCHEDULE_EDIT: {
+            const actionTyped = action as ScheduleRedux.ReminderScheduleEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1534,8 +1533,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ReminderRedux.REMINDER_SCHEDULE_DELETE: {
-            const actionTyped = action as ReminderRedux.ReminderScheduleDeleteAction;
+          case ScheduleRedux.REMINDER_SCHEDULE_DELETE: {
+            const actionTyped = action as ScheduleRedux.ReminderScheduleDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,

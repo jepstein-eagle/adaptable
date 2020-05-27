@@ -1,12 +1,12 @@
 import * as Redux from 'redux';
 import {
-  IPushPullSchedule,
   IPushPullReport,
   IPushPullDomain,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+
 import { EMPTY_ARRAY } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
-import { createUuid } from '@adaptabletools/adaptable/src/PredefinedConfig/Uuid';
-import { IPushPullState } from '@adaptabletools/adaptable/dist/src/PredefinedConfig/SystemState';
+
+import { IPushPullState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 
 export const IPUSHPULL_SET_THROTTLE_TIME = 'IPUSHPULL_SET_THROTTLE_TIME';
 export const IPUSHPULL_SEND_SNAPSHOT = 'IPUSHPULL_SEND_SNAPSHOT';
@@ -14,10 +14,6 @@ export const IPUSHPULL_REPORT_SELECT = 'IPUSHPULL_REPORT_SELECT';
 
 export const IPUSHPULL_START_LIVE_DATA = 'IPUSHPULL_START_LIVE_DATA';
 export const IPUSHPULL_STOP_LIVE_DATA = 'IPUSHPULL_STOP_LIVE_DATA';
-
-export const IPUSHPULL_SCHEDULE_ADD = 'IPUSHPULL_SCHEDULE_ADD';
-export const IPUSHPULL_SCHEDULE_EDIT = 'IPUSHPULL_SCHEDULE_EDIT';
-export const IPUSHPULL_SCHEDULE_DELETE = 'IPUSHPULL_SCHEDULE_DELETE';
 
 export const IPUSHPULL_ADD_PAGE = 'IPUSHPULL_ADD_PAGE';
 
@@ -38,13 +34,6 @@ export const IPUSHPULL_DOMAIN_PAGES_CLEAR = 'IPUSHPULL_DOMAIN_PAGES_CLEAR';
 export interface IPushPullSetThrottleTimeAction extends Redux.Action {
   throttleTime: number;
 }
-
-export interface IPushPullScheduleAction extends Redux.Action {
-  iPushPullSchedule: IPushPullSchedule;
-}
-export interface IPushPullScheduleAddAction extends IPushPullScheduleAction {}
-export interface IPushPullScheduleEditAction extends IPushPullScheduleAction {}
-export interface IPushPullScheduleDeleteAction extends IPushPullScheduleAction {}
 
 export interface IPushPullSendSnapshotAction extends Redux.Action {
   iPushPullReport: IPushPullReport;
@@ -129,26 +118,6 @@ export const IPushPullAddPage = (folder: string, page: string): IPushPullAddPage
   page,
 });
 
-export const IPushPullScheduleAdd = (
-  iPushPullSchedule: IPushPullSchedule
-): IPushPullScheduleAddAction => ({
-  type: IPUSHPULL_SCHEDULE_ADD,
-  iPushPullSchedule,
-});
-
-export const IPushPullScheduleEdit = (
-  iPushPullSchedule: IPushPullSchedule
-): IPushPullScheduleEditAction => ({
-  type: IPUSHPULL_SCHEDULE_EDIT,
-  iPushPullSchedule,
-});
-export const IPushPullScheduleDelete = (
-  iPushPullSchedule: IPushPullSchedule
-): IPushPullScheduleDeleteAction => ({
-  type: IPUSHPULL_SCHEDULE_DELETE,
-  iPushPullSchedule,
-});
-
 export const SetIPushPullAvailableOn = (): SetIPushPullAvailableOnAction => ({
   type: SET_IPUSHPULL_AVAILABLE_ON,
 });
@@ -191,7 +160,6 @@ export const IPushPullLiveReportClear = (): IPushPullLiveReportClearAction => ({
 });
 
 const initialFilterState = {
-  // IPushPullSchedules: EMPTY_ARRAY,
   IsIPushPullRunning: false,
   IPushPullDomainsPages: EMPTY_ARRAY,
   CurrentLiveIPushPullReport: undefined,
@@ -202,41 +170,7 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
   state: IPushPullState = initialFilterState,
   action: Redux.Action
 ): IPushPullState => {
-  let iPushPullSchedules: IPushPullSchedule[];
-
   switch (action.type) {
-    // case IPUSHPULL_SCHEDULE_ADD: {
-    //   const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
-    //     .iPushPullSchedule;
-
-    //   if (!actionSchedule.Uuid) {
-    //     actionSchedule.Uuid = createUuid();
-    //   }
-    //   iPushPullSchedules = state.IPushPullSchedules ? [...state.IPushPullSchedules] : [];
-    //   iPushPullSchedules.push(actionSchedule);
-    //   return { ...state, IPushPullSchedules: iPushPullSchedules };
-    // }
-    // case IPUSHPULL_SCHEDULE_EDIT: {
-    //   const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
-    //     .iPushPullSchedule;
-    //   return {
-    //     ...state,
-    //     IPushPullSchedules: (state.IPushPullSchedules || []).map(abObject =>
-    //       abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
-    //     ),
-    //   };
-    // }
-    // case IPUSHPULL_SCHEDULE_DELETE: {
-    //   const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
-    //     .iPushPullSchedule;
-    //   return {
-    //     ...state,
-    //     IPushPullSchedules: (state.IPushPullSchedules || []).filter(
-    //       abObject => abObject.Uuid !== actionSchedule.Uuid
-    //     ),
-    //   };
-    // }
-
     case SET_IPUSHPULL_AVAILABLE_ON:
       return Object.assign({}, state, { IsIPushPullAvailable: true });
     case SET_IPUSHPULL_AVAILABLE_OFF:

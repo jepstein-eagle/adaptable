@@ -172,8 +172,8 @@ export class PushPullService implements IPushPullService {
         row.map((cell: any, y: number) => {
           const col =
             i == 0
-              ? style.Header.Columns.find(x => x.columnFriendlyName == data[0][y])
-              : style.Row.Columns.find(x => x.columnFriendlyName == data[0][y]);
+              ? style.Header.Columns.find((x: any) => x.columnFriendlyName == data[0][y])
+              : style.Row.Columns.find((x: any) => x.columnFriendlyName == data[0][y]);
           let styleIPP: any;
           if (i == 0) {
             styleIPP = {

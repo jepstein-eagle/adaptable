@@ -18,19 +18,12 @@ import { IPushPullStrategyId } from '@adaptabletools/adaptable/src/Utilities/Con
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
-import {
-  IPushPullSchedule,
-  SystemState,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 import { IStrategy } from '@adaptabletools/adaptable/src/Strategy/Interface/IStrategy';
 import {
   AdaptableViewFactory,
   AdaptableDashboardFactory,
 } from '@adaptabletools/adaptable/src/View/AdaptableViewFactory';
-
-// import {
-
-// } from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
 
 import { PushPullStrategy } from './Strategy/PushPullStrategy';
 import { IPushPullToolbarControl } from './View/IPushPullToolbarControl';
@@ -46,8 +39,6 @@ import { IPushPullAddPagePopup } from './View/IPushPullAddPagePopup';
 import * as IPushPullRedux from './Redux/ActionReducers/IPushPullRedux';
 import { IPushPullStrategy } from './Strategy/Interface/IPushPullStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
-import { BaseSchedule } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Schedule';
-import { IPushPullReport } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 
 if (version !== coreVersion) {
   console.warn(`
@@ -68,8 +59,8 @@ const getApiSecret = (): string => {
 };
 const defaultOptions: IPushPullPluginOptions = {
   ippConfig: {
-    api_secret: getApiSecret(),
-    api_key: getApiKey(),
+    api_secret: getApiSecret() || '',
+    api_key: getApiKey() || '',
     api_url: 'https://www.ipushpull.com/api/1.0',
     ws_url: 'https://www.ipushpull.com',
     web_url: 'https://www.ipushpull.com',
@@ -82,7 +73,6 @@ const defaultOptions: IPushPullPluginOptions = {
 
   throttleTime: 2000,
   includeSystemReports: true,
-  ippSchedules: [],
 };
 
 // internal - would like not to save if possible... //TODO move into system state
@@ -127,11 +117,6 @@ export interface IPushPullPluginOptions {
    * **Default Value: true**
    */
   includeSystemReports?: boolean;
-
-  /**
-   * Any ipushpull Reports that should be sent according to Schedules sent by you.
-   */
-  ippSchedules?: IPushPullSchedule[];
 }
 
 class IPushPullPlugin extends AdaptablePlugin {
@@ -139,14 +124,18 @@ class IPushPullPlugin extends AdaptablePlugin {
   public pluginId: string = 'ipushpull';
   public iPushPullApi?: IPushPullApi;
   private PushPullService?: PushPullService;
-  private adaptable?: IAdaptable;
 
   constructor(options?: IPushPullPluginOptions) {
     super(options);
     this.options = {
       ...defaultOptions,
       ...options,
-      ippConfig: { ...defaultOptions.ippConfig, ...(options || {}).ippConfig },
+      ippConfig: {
+        api_key: '',
+        api_secret: '',
+        ...defaultOptions.ippConfig,
+        ...(options || {}).ippConfig,
+      },
     };
 
     /**
@@ -156,24 +145,15 @@ class IPushPullPlugin extends AdaptablePlugin {
      */
     // IPushPull?: IPushPullState;
 
-    ipushpull.config.set(this.options.ippConfig);
+    ipushpull.config.set(this.options.ippConfig!);
   }
 
   afterInitApi(adaptable: IAdaptable) {
-    this.adaptable = adaptable;
     this.iPushPullApi = new IPushPullApiImpl(adaptable, this.options);
     this.PushPullService = new PushPullService(adaptable);
     this.iPushPullApi.setIPushPullInstance(ipushpull);
     this.registerProperty('api', () => this.iPushPullApi);
     this.registerProperty('service', () => this.PushPullService);
-  }
-
-  afterInitOptions(adaptable: IAdaptable, adaptableOptions: AdaptableOptions) {
-    // if (adaptableOptions.predefinedConfig) {
-    //   if (!adaptableOptions.predefinedConfig.IPushPull) {
-    //     adaptableOptions.predefinedConfig.IPushPull = this.options.predefinedConfig;
-    //   }
-    // }
   }
 
   rootReducer = {
@@ -183,18 +163,6 @@ class IPushPullPlugin extends AdaptablePlugin {
       return IPushPullReducer(newState, action);
     },
   };
-
-  onStoreEvent(eventName: string) {
-    if (
-      eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_ADD ||
-      eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_EDIT ||
-      eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_DELETE
-    ) {
-      if (this.adaptable) {
-        this.adaptable.ScheduleService.updateIPushPullJobs();
-      }
-    }
-  }
 
   reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {
     return (action, adaptable, middlewareAPI) => {

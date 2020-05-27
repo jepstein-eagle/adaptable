@@ -42,7 +42,7 @@ import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
 import { ConfigApi } from '../ConfigApi';
 import { AdaptableStateKey } from '../../PredefinedConfig/Common/Types';
-import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { IPushPullState } from '../../PredefinedConfig/SystemState';
 import { Glue42State } from '../../PredefinedConfig/Glue42State';
 import { AdaptableSearchState } from '../../types';
 import { AdaptableSortState } from '../Events/SearchChanged';

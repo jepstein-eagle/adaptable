@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
+import * as ScheduleRedux from '../../Redux/ActionsReducers/ScheduleRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -28,8 +28,8 @@ import { ScheduleWizard } from '../Schedule/Wizard/ScheduleWizard';
 
 interface ReminderPopupProps extends StrategyViewPopupProps<ReminderPopupComponent> {
   Reminders: ReminderSchedule[];
-  onAddReminder: (reminder: ReminderSchedule) => ReminderRedux.ReminderScheduleAddAction;
-  onEditReminder: (reminder: ReminderSchedule) => ReminderRedux.ReminderScheduleEditAction;
+  onAddReminder: (reminder: ReminderSchedule) => ScheduleRedux.ReminderScheduleAddAction;
+  onEditReminder: (reminder: ReminderSchedule) => ScheduleRedux.ReminderScheduleEditAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -69,7 +69,7 @@ class ReminderPopupComponent extends React.Component<
           UserFilters={this.props.UserFilters}
           Columns={this.props.Columns}
           onEdit={() => this.onEdit(reminder)}
-          onDeleteConfirm={ReminderRedux.ReminderScheduleDelete(reminder)}
+          onDeleteConfirm={ScheduleRedux.ReminderScheduleDelete(reminder)}
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -183,7 +183,7 @@ class ReminderPopupComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState): Partial<ReminderPopupProps> {
   return {
-    Reminders: state.Reminder.Reminders,
+    Reminders: state.Schedule.Reminders,
   };
 }
 
@@ -192,9 +192,9 @@ function mapDispatchToProps(
 ): Partial<ReminderPopupProps> {
   return {
     onAddReminder: (reminder: ReminderSchedule) =>
-      dispatch(ReminderRedux.ReminderScheduleAdd(reminder)),
+      dispatch(ScheduleRedux.ReminderScheduleAdd(reminder)),
     onEditReminder: (reminder: ReminderSchedule) =>
-      dispatch(ReminderRedux.ReminderScheduleEdit(reminder)),
+      dispatch(ScheduleRedux.ReminderScheduleEdit(reminder)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ReminderStrategyId, description)
