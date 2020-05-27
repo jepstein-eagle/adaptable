@@ -36,7 +36,6 @@ import { SystemFilterState } from './SystemFilterState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
-import { IPushPullState } from './IPushPullState';
 import { Glue42State } from './Glue42State';
 import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
@@ -63,7 +62,6 @@ export interface AdaptableState {
   Application: ApplicationState;
   Entitlements: EntitlementState;
   NamedFilter: NamedFilterState;
-  IPushPull: IPushPullState;
   Glue42: Glue42State;
   SparklineColumn: SparklineColumnState;
   SystemFilter: SystemFilterState;

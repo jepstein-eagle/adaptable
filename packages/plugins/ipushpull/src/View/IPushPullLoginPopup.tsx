@@ -1,21 +1,23 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
+import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
+import { useAdaptable } from '@adaptabletools/adaptable/src/View/AdaptableContext';
 
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import FormLayout, { FormRow } from '../../components/FormLayout';
-import Input from '../../components/Input';
-import SimpleButton from '../../components/SimpleButton';
-import FlexWithFooter from '../../components/FlexWithFooter';
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { usePopupContext } from '../Components/Popups/PopupContext';
-import ErrorBox from '../../components/ErrorBox';
-import HelpBlock from '../../components/HelpBlock';
+import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import * as IPushPullRedux from '../Redux/ActionReducers/IPushPullRedux';
+import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import FormLayout, { FormRow } from '@adaptabletools/adaptable/src/components/FormLayout';
+import Input from '@adaptabletools/adaptable/src/components/Input';
+import SimpleButton from '@adaptabletools/adaptable/src/components/SimpleButton';
+import FlexWithFooter from '@adaptabletools/adaptable/src/components/FlexWithFooter';
+import { PanelWithImage } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelWithImage';
+import { usePopupContext } from '@adaptabletools/adaptable/src/View/Components/Popups/PopupContext';
+import ErrorBox from '@adaptabletools/adaptable/src/components/ErrorBox';
+import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import { Flex } from 'rebass';
+
+import { IPushPullPluginOptions } from '../';
 
 interface IPushPullLoginPopupProps {
   pushpullLogin: string | undefined;
@@ -32,9 +34,12 @@ interface IPushPullLoginPopupInternalState {
 }
 
 const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
+  const adaptable = useAdaptable();
+  const options: IPushPullPluginOptions = adaptable!.getPlugin('ipushpull')!.options;
+
   const [state, setState] = React.useState<IPushPullLoginPopupInternalState>({
-    Login: props.pushpullLogin || '',
-    Password: props.pushpullPassword || '',
+    Login: options.username || '',
+    Password: options.password || '',
   });
 
   const { hidePopup } = usePopupContext();
@@ -133,9 +138,10 @@ const IPushPullLoginComponent = (props: IPushPullLoginPopupProps) => {
 
 function mapStateToProps(state: AdaptableState): Partial<IPushPullLoginPopupProps> {
   return {
-    pushpullLogin: state.IPushPull ? state.IPushPull!.Username : undefined,
-    pushpullPassword: state.IPushPull ? state.IPushPull!.Password : undefined,
-    pushpullLoginErrorMessage: state.IPushPull.IPushPullLoginErrorMessage,
+    // pushpullLogin: state.IPushPull ? state.IPushPull!.Username : undefined,
+    // pushpullPassword: state.IPushPull ? state.IPushPull!.Password : undefined,
+    // pushpullLoginErrorMessage: state.IPushPull.IPushPullLoginErrorMessage,
+    pushpullLoginErrorMessage: state.System.IPushPullLoginErrorMessage,
   };
 }
 

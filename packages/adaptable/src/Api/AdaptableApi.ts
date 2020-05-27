@@ -42,7 +42,6 @@ import { InternalApi } from './InternalApi';
 import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 import { Glue42Api } from './Glue42Api';
-import { IPushPullApi } from './IPushPullApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 import { ApplicationApi } from './ApplicationAPI';
@@ -267,11 +266,6 @@ export interface AdaptableApi {
    * Provides methods for managing the Grid directly e.g. setGridData which will replace the current DataSource with the one provided.
    */
   gridApi: GridApi;
-
-  /**
-   * Provides access to *ipushpull* related functionality, the *ipushpull* object and [ipushpull State](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html).
-   */
-  iPushPullApi: IPushPullApi;
 
   /**
    * Provides access to the *Layout* function, the *Layout* object and [Layout State](_src_predefinedconfig_configstate_layoutstate_.layoutstate.html).

@@ -1,37 +1,38 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Report } from '../../PredefinedConfig/ExportState';
+import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import { ToolbarStrategyViewPopupProps } from '@adaptabletools/adaptable/src/View/Components/SharedProps/ToolbarStrategyViewPopupProps';
+import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
+import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
+import * as IPushPullRedux from '../Redux/ActionReducers/IPushPullRedux';
+import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import { PanelDashboard } from '@adaptabletools/adaptable/src/View/components/Panels/PanelDashboard';
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
+import * as GeneralConstants from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { Report } from '@adaptabletools/adaptable/src/PredefinedConfig/ExportState';
 import { Flex } from 'rebass';
-import Dropdown from '../../components/Dropdown';
-import join from '../../components/utils/join';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
-import { LiveDataChangedEventArgs, LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
+import Dropdown from '@adaptabletools/adaptable/src/components/Dropdown';
+import join from '@adaptabletools/adaptable/src/components/utils/join';
+import {
+  LiveDataChangedEventArgs,
+  LiveDataChangedInfo,
+} from '@adaptabletools/adaptable/src/Api/Events/LiveDataChanged';
 import {
   IPushPullReport,
   IPushPullDomain,
   IPushPullSchedule,
-} from '../../PredefinedConfig/IPushPullState';
-import { ButtonExport } from '../Components/Buttons/ButtonExport';
-import { ButtonLogin } from '../Components/Buttons/ButtonLogin';
-import { ButtonPlay } from '../Components/Buttons/ButtonPlay';
-import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
-import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { ButtonPause } from '../Components/Buttons/ButtonPause';
-import ObjectFactory from '../../Utilities/ObjectFactory';
-import { ButtonNewPage } from '../Components/Buttons/ButtonNewPage';
-import { ButtonLogout } from '../Components/Buttons/ButtonLogout';
+} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { ButtonExport } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonExport';
+import { ButtonLogin } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogin';
+import { ButtonPlay } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPlay';
+import { ButtonSchedule } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonSchedule';
+import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPause';
+import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
+import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
+import { ButtonLogout } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogout';
 
 interface IPushPullToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<IPushPullToolbarControlComponent> {
@@ -103,10 +104,15 @@ class IPushPullToolbarControlComponent extends React.Component<
     }
   };
 
+  getIPPApi() {
+    return this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+  }
+
   render(): any {
-    let systemReports: Report[] = this.props.Adaptable.api.iPushPullApi.includeSystemReports()
+    let systemReports: Report[] = this.getIPPApi().includeSystemReports()
       ? this.props.SystemReports
       : [];
+
     let allReports: Report[] = systemReports!
       .filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
       .concat(this.props.Reports);
@@ -231,7 +237,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         <ButtonLogout
           marginLeft={1}
           className="ab-DashboardToolbar__IPushPull__logout"
-          onClick={() => this.props.Adaptable.api.iPushPullApi.logoutFromIPushPull()}
+          onClick={() => this.getIPPApi().logoutFromIPushPull()}
           tooltip="Logout"
           disabled={isLiveIPushPullReport}
           AccessLevel={this.props.AccessLevel}
@@ -272,9 +278,7 @@ class IPushPullToolbarControlComponent extends React.Component<
 
   private onFolderChanged(folder: string) {
     if (StringExtensions.IsNotNullOrEmpty(folder) && folder !== 'Select Folder') {
-      let avaialablePages = this.props.Adaptable.api.iPushPullApi.getPagesForIPushPullDomain(
-        folder
-      );
+      let avaialablePages = this.getIPPApi().getPagesForIPushPullDomain(folder);
       this.setState({
         Folder: folder,
         AvailablePages: avaialablePages,
@@ -322,19 +326,17 @@ class IPushPullToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState): Partial<IPushPullToolbarControlComponentProps> {
+function mapStateToProps(state: AdaptableState) {
   return {
-    CurrentLiveIPushPullReport: state.IPushPull.CurrentLiveIPushPullReport,
+    CurrentLiveIPushPullReport: state.System.CurrentLiveIPushPullReport,
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
-    IPushPullDomainsPages: state.IPushPull.IPushPullDomainsPages,
-    IsIPushPullRunning: state.IPushPull.IsIPushPullRunning,
+    IPushPullDomainsPages: state.System.IPushPullDomainsPages || [],
+    IsIPushPullRunning: state.System.IsIPushPullRunning,
   };
 }
 
-function mapDispatchToProps(
-  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<IPushPullToolbarControlComponentProps> {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onIPushPullSendSnapshot: (iPushPullReport: IPushPullReport) =>
       dispatch(IPushPullRedux.IPushPullSendSnapshot(iPushPullReport)),
@@ -360,7 +362,7 @@ function mapDispatchToProps(
         PopupRedux.PopupShowScreen(
           StrategyConstants.IPushPullStrategyId,
           ScreenPopups.IPushPullLoginPopup,
-          null,
+          undefined,
           {
             footer: false,
           }
@@ -372,7 +374,7 @@ function mapDispatchToProps(
         PopupRedux.PopupShowScreen(
           StrategyConstants.IPushPullStrategyId,
           ScreenPopups.IPushPullAddPagePopup,
-          null,
+          undefined,
           {
             footer: false,
           }

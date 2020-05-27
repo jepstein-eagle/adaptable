@@ -1,12 +1,12 @@
 import * as Redux from 'redux';
 import {
-  IPushPullState,
   IPushPullSchedule,
   IPushPullReport,
   IPushPullDomain,
-} from '../../PredefinedConfig/IPushPullState';
-import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../PredefinedConfig/Uuid';
+} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { EMPTY_ARRAY } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { createUuid } from '@adaptabletools/adaptable/src/PredefinedConfig/Uuid';
+import { IPushPullState } from '@adaptabletools/adaptable/dist/src/PredefinedConfig/SystemState';
 
 export const IPUSHPULL_SET_THROTTLE_TIME = 'IPUSHPULL_SET_THROTTLE_TIME';
 export const IPUSHPULL_SEND_SNAPSHOT = 'IPUSHPULL_SEND_SNAPSHOT';
@@ -190,15 +190,12 @@ export const IPushPullLiveReportClear = (): IPushPullLiveReportClearAction => ({
   type: IPUSHPULL_LIVE_REPORT_CLEAR,
 });
 
-const initialFilterState: IPushPullState = {
-  IPushPullSchedules: EMPTY_ARRAY,
-  AutoLogin: false,
-  IsIPushPullAvailable: false,
+const initialFilterState = {
+  // IPushPullSchedules: EMPTY_ARRAY,
   IsIPushPullRunning: false,
   IPushPullDomainsPages: EMPTY_ARRAY,
   CurrentLiveIPushPullReport: undefined,
   IPushPullLoginErrorMessage: undefined,
-  IncludeSystemReports: true,
 };
 
 export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
@@ -208,42 +205,37 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
   let iPushPullSchedules: IPushPullSchedule[];
 
   switch (action.type) {
-    case IPUSHPULL_SET_THROTTLE_TIME: {
-      const atctionType = action as IPushPullSetThrottleTimeAction;
-      return Object.assign({}, state, { ThrottleTime: atctionType.throttleTime });
-    }
+    // case IPUSHPULL_SCHEDULE_ADD: {
+    //   const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
+    //     .iPushPullSchedule;
 
-    case IPUSHPULL_SCHEDULE_ADD: {
-      const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
-        .iPushPullSchedule;
-
-      if (!actionSchedule.Uuid) {
-        actionSchedule.Uuid = createUuid();
-      }
-      iPushPullSchedules = [].concat(state.IPushPullSchedules);
-      iPushPullSchedules.push(actionSchedule);
-      return { ...state, IPushPullSchedules: iPushPullSchedules };
-    }
-    case IPUSHPULL_SCHEDULE_EDIT: {
-      const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
-        .iPushPullSchedule;
-      return {
-        ...state,
-        IPushPullSchedules: state.IPushPullSchedules.map(abObject =>
-          abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
-        ),
-      };
-    }
-    case IPUSHPULL_SCHEDULE_DELETE: {
-      const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
-        .iPushPullSchedule;
-      return {
-        ...state,
-        IPushPullSchedules: state.IPushPullSchedules.filter(
-          abObject => abObject.Uuid !== actionSchedule.Uuid
-        ),
-      };
-    }
+    //   if (!actionSchedule.Uuid) {
+    //     actionSchedule.Uuid = createUuid();
+    //   }
+    //   iPushPullSchedules = state.IPushPullSchedules ? [...state.IPushPullSchedules] : [];
+    //   iPushPullSchedules.push(actionSchedule);
+    //   return { ...state, IPushPullSchedules: iPushPullSchedules };
+    // }
+    // case IPUSHPULL_SCHEDULE_EDIT: {
+    //   const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
+    //     .iPushPullSchedule;
+    //   return {
+    //     ...state,
+    //     IPushPullSchedules: (state.IPushPullSchedules || []).map(abObject =>
+    //       abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
+    //     ),
+    //   };
+    // }
+    // case IPUSHPULL_SCHEDULE_DELETE: {
+    //   const actionSchedule: IPushPullSchedule = (action as IPushPullScheduleAction)
+    //     .iPushPullSchedule;
+    //   return {
+    //     ...state,
+    //     IPushPullSchedules: (state.IPushPullSchedules || []).filter(
+    //       abObject => abObject.Uuid !== actionSchedule.Uuid
+    //     ),
+    //   };
+    // }
 
     case SET_IPUSHPULL_AVAILABLE_ON:
       return Object.assign({}, state, { IsIPushPullAvailable: true });
@@ -266,7 +258,8 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
     }
     case IPUSHPULL_DOMAIN_PAGES_SET: {
       return Object.assign({}, state, {
-        IPushPullDomainsPages: (action as IPushPullDomainsPagesSetAction).IPushPullDomainsPages,
+        IPushPullDomainsPages:
+          (action as IPushPullDomainsPagesSetAction).IPushPullDomainsPages || [],
       });
     }
 

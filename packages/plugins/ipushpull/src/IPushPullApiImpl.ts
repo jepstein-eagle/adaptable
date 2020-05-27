@@ -1,43 +1,53 @@
-import { ApiBase } from './ApiBase';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
+import { ApiBase } from '@adaptabletools/adaptable/src/Api/Implementation/ApiBase';
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
+import * as IPushPullRedux from './Redux/ActionReducers/IPushPullRedux';
+import { IPushPullPluginOptions } from './';
 import {
-  IPushPullState,
   IPushPullDomain,
   IPushPullReport,
   IPushPullSchedule,
-} from '../../PredefinedConfig/IPushPullState';
-import { IPushPullApi } from '../IPushPullApi';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import Helper from '../../Utilities/Helpers/Helper';
+} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { IPushPullApi } from '@adaptabletools/adaptable/src/Api/IPushPullApi';
+import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
+import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
+import { IAdaptable } from '@adaptabletools/adaptable/types';
+
+import { IPushPullService } from './Utilities/Services/Interface/IPushPullService';
 
 export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
-  public getIPushPullState(): IPushPullState | undefined {
-    return this.getAdaptableState().IPushPull;
-  }
-  public getIPushPullUsername(): string | undefined {
-    return this.getIPushPullState()!.Username;
-  }
-  public getIPushPullPassword(): string | undefined {
-    return this.getIPushPullState()!.Password;
+  private ippInstance: any;
+  private ippService: IPushPullService | null = null;
+
+  private options: IPushPullPluginOptions;
+
+  constructor(adaptable: IAdaptable, options: IPushPullPluginOptions) {
+    super(adaptable);
+
+    this.options = options;
   }
 
-  public getAutoLogin(): boolean | undefined {
-    return this.getIPushPullState()!.AutoLogin;
+  public getIPushPullUsername(): string | undefined {
+    return this.options.username;
+  }
+  public getIPushPullPassword(): string | undefined {
+    return this.options.password;
+  }
+
+  public getAutoLogin(): boolean {
+    return this.options.autoLogin ?? false;
   }
 
   public getCurrentLiveIPushPullReport(): IPushPullReport | undefined {
-    return this.getIPushPullState()!.CurrentLiveIPushPullReport;
+    return this.getAdaptableState().System.CurrentLiveIPushPullReport;
+  }
+
+  public setIPushPullInstance(ippInstance: any) {
+    this.ippInstance = ippInstance;
   }
 
   public getIPushPullInstance(): any {
-    let pushpullState = this.getIPushPullState()!;
-    if (pushpullState != undefined) {
-      return pushpullState.iPushPullInstance;
-    } else {
-      return pushpullState;
-    }
+    return this.ippInstance;
   }
 
   public sendSnapshot(iPushPullReport: IPushPullReport): void {
@@ -61,7 +71,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   public stopLiveData(): void {
     let currentLiveReport: IPushPullReport = this.getCurrentLiveIPushPullReport();
 
-    this.adaptable.PushPullService.unloadPage(currentLiveReport.Page);
+    this.getIPPService().unloadPage(currentLiveReport.Page);
 
     // clear the live report
     this.dispatchAction(IPushPullRedux.IPushPullLiveReportClear());
@@ -78,22 +88,20 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     if (!iPushPullReport) {
       return false;
     }
-    return (
-      this.getIPushPullState()!.CurrentLiveIPushPullReport != null &&
-      this.getIPushPullState()!.CurrentLiveIPushPullReport == iPushPullReport
-    );
+    const CurrentLiveIPushPullReport = this.getCurrentLiveIPushPullReport();
+    return CurrentLiveIPushPullReport != null && CurrentLiveIPushPullReport == iPushPullReport;
   }
 
-  public isIPushPullAvailable(): boolean | undefined {
-    return this.getIPushPullState()!.IsIPushPullAvailable;
+  public isIPushPullAvailable(): boolean {
+    return true;
   }
 
   public isIPushPullRunning(): boolean | undefined {
-    return this.getIPushPullState()!.IsIPushPullRunning;
+    return this.getAdaptableState().System.IsIPushPullRunning;
   }
 
   public getIPushPullDomains(): IPushPullDomain[] {
-    return this.getIPushPullState()!.IPushPullDomainsPages;
+    return this.getAdaptableState().System.IPushPullDomainsPages;
   }
 
   public getPagesForIPushPullDomain(folderName: string): string[] {
@@ -119,11 +127,11 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public addNewIPushPullPage(folderName: string, pageName: string): void {
     let folderId: number = this.getFolderIdForName(folderName);
-    this.adaptable.PushPullService.addNewPage(folderId, pageName);
+    this.getIPPService().addNewPage(folderId, pageName);
   }
 
   public getIPushPullThrottleTime(): number | undefined {
-    return this.getIPushPullState()!.ThrottleTime;
+    return this.options.throttleTime;
   }
 
   public setIPushPullThrottleTime(throttleTime: number): void {
@@ -139,7 +147,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public getIPushPullSchedules(): IPushPullSchedule[] {
-    return this.getIPushPullState()!.IPushPullSchedules;
+    return this.options!.ippSchedules;
   }
 
   public showIPushPullPopup(): void {
@@ -168,12 +176,20 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public isIPushPullLiveDataRunning(): boolean {
-    return Helper.objectExists(this.getIPushPullState()!.CurrentLiveIPushPullReport);
+    return Helper.objectExists(this.getCurrentLiveIPushPullReport());
+  }
+
+  private getIPPService(): IPushPullService {
+    if (!this.ippService) {
+      this.ippService = this.adaptable.getPluginProperty('ipushpull', 'service') || null;
+    }
+
+    return this.ippService as IPushPullService;
   }
 
   public async loginToIPushPull(userName: string, password: string): Promise<void> {
-    await this.adaptable.PushPullService.login(userName, password);
-    const domainpages: IPushPullDomain[] = await this.adaptable.PushPullService.getDomainPages();
+    await this.getIPPService().login(userName, password);
+    const domainpages: IPushPullDomain[] = await this.getIPPService().getDomainPages();
     this.setIPushPullDomains(domainpages);
     this.setIPushPullRunningOn();
     this.adaptable.api.internalApi.hidePopupScreen();
@@ -182,7 +198,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public async retrieveIPushPullDomainsFromIPushPull(): Promise<void> {
     this.clearIPushPullDomains();
-    const domainpages: IPushPullDomain[] = await this.adaptable.PushPullService.getDomainPages();
+    const domainpages: IPushPullDomain[] = await this.getIPPService().getDomainPages();
     this.setIPushPullDomains(domainpages);
   }
 
@@ -192,7 +208,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public includeSystemReports(): boolean {
-    return this.getIPushPullState().IncludeSystemReports;
+    return this.options.includeSystemReports;
   }
 
   public clearIPushPullInternalState(): void {

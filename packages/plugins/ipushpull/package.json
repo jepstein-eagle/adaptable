@@ -1,5 +1,5 @@
 {
-  "name": "@adaptabletools/adaptable-plugin-charts",
+  "name": "@adaptabletools/adaptable-plugin-ipushpull",
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
   },
@@ -12,7 +12,7 @@
     "tsc-only": "tsc --outDir dist",
     "registry-publish": "npm run build-package-json && npm publish dist",
     "registry-publish-canary": "npm run build-package-json && npm publish --tag canary dist",
-    "build-package-json": "node ../../../scripts/cli/update-package --module=packages/plugins/charts",
+    "build-package-json": "node ../../../scripts/cli/update-package --module=packages/plugins/ipushpull",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i",
     "build": "npm run clean-deps && rimraf dist && npm run build-prod-no-cleanup",
     "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run after-build",
@@ -21,35 +21,27 @@
     "ensure-clean-on-local": "node ../../../scripts/ensure-clean-on-local"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.149",
-    "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
-    "symlink-dir": "^3.1.1",
     "typescript": "^3.8.3",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/react-redux": "7.1.2",
+    "symlink-dir": "^3.1.1",
+    "prettier": "^1.17.0",
+    "@types/node": "^9.6.22",
     "@types/rebass": "^3.0.4",
-    "@ag-grid-community/all-modules": "23.1.0",
-    "@types/node": "^9.6.22"
+    "@types/react-redux": "^7.1.2"
   },
+  "author": {
+    "name": "Jonny Wolfson",
+    "email": "jonny.wolfson@adaptabletools.com"
+  },
+  "homepage": "http://www.adaptabletools.com/",
   "dependencies": {
+    "ipushpull-js": "^2.25.0",
     "lodash": "^4.17.10",
     "react": "^16.9.0",
     "react-redux": "7.2.0",
     "rebass": "^3.2.2",
     "styled-components": "^4.4.1",
     "redux": "^4.0.4",
-    "prop-types": "^15.6.2",
-    "igniteui-react-charts": "16.6.10",
-    "igniteui-react-core": "16.6.10"
-  },
-  "peerDependencies": {
-    "@ag-grid-community/all-modules": "^23.1.0"
-  },
-  "author": {
-    "name": "Jonny Wolfson",
-    "email": "jonny.wolfson@adaptabletools.com"
-  },
-  "homepage": "http://www.adaptabletools.com/"
+    "prop-types": "^15.6.2"
+  }
 }

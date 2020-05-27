@@ -1,25 +1,26 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import FormLayout, { FormRow } from '../../components/FormLayout';
-import Input from '../../components/Input';
-import SimpleButton from '../../components/SimpleButton';
-import FlexWithFooter from '../../components/FlexWithFooter';
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { usePopupContext } from '../Components/Popups/PopupContext';
-import ErrorBox from '../../components/ErrorBox';
-import HelpBlock from '../../components/HelpBlock';
+import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
+import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import * as IPushPullRedux from '../Redux/ActionReducers/IPushPullRedux';
+import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import FormLayout, { FormRow } from '@adaptabletools/adaptable/src/components/FormLayout';
+import Input from '@adaptabletools/adaptable/src/components/Input';
+import SimpleButton from '@adaptabletools/adaptable/src/components/SimpleButton';
+import FlexWithFooter from '@adaptabletools/adaptable/src/components/FlexWithFooter';
+import { PanelWithImage } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelWithImage';
+import { usePopupContext } from '@adaptabletools/adaptable/src/View/Components/Popups/PopupContext';
+import ErrorBox from '@adaptabletools/adaptable/src/components/ErrorBox';
+import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import { Flex } from 'rebass';
-import { IPushPullDomain } from '../../PredefinedConfig/IPushPullState';
-import Helper from '../../Utilities/Helpers/Helper';
-import Dropdown from '../../components/Dropdown';
-import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { IPushPullDomain } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import Dropdown from '@adaptabletools/adaptable/src/components/Dropdown';
+import {
+  EMPTY_STRING,
+  EMPTY_ARRAY,
+} from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 
 interface IPushPullAddPagePopupProps {
   IPushPullDomainsPages: IPushPullDomain[] | undefined;
@@ -171,15 +172,13 @@ const IPushPullAddPageComponent = (props: IPushPullAddPagePopupProps) => {
   );
 };
 
-function mapStateToProps(state: AdaptableState): Partial<IPushPullAddPagePopupProps> {
+function mapStateToProps(state: AdaptableState) {
   return {
-    IPushPullDomainsPages: state.IPushPull.IPushPullDomainsPages,
+    IPushPullDomainsPages: state.System.IPushPullDomainsPages,
   };
 }
 
-function mapDispatchToProps(
-  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<IPushPullAddPagePopupProps> {
+function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onAddPage: (folder: string, page: string) =>
       dispatch(IPushPullRedux.IPushPullAddPage(folder, page)),

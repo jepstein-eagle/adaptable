@@ -527,13 +527,6 @@ export interface PredefinedConfig {
   GradientColumn?: GradientColumnState;
 
   /**
-   * Contains the objects required to export (snapshot or live) data to ipushpull from AdapTable.
-   *
-   * Includes ipushpull config and objects and, optionally, any ipushpull Reports (including schedules).
-   */
-  IPushPull?: IPushPullState;
-
-  /**
    * Supplies a collection of *Layout* objects to name and manage groups of column visibility, order and sorts.
    */
   Layout?: LayoutState;

@@ -20,7 +20,7 @@
      "agGrid/**/*",
     "agGrid.ts",
     "types.ts",
-    "version.ts"
+    "version.ts", "src/Utilities/Interface/IPPStyle.ts", "../plugins/ipushpull/src/Utilities/Services/Interface/IPushPullService.ts", "../plugins/ipushpull/src/Strategy/PushPullStrategy.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

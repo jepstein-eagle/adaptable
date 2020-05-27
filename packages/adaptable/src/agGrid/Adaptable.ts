@@ -1,3 +1,4 @@
+import * as Redux from 'redux';
 import {
   Grid,
   CellRange,
@@ -130,8 +131,6 @@ import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
-import { PushPullService } from '../Utilities/Services/PushPullService';
-import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
@@ -235,8 +234,6 @@ export class Adaptable implements IAdaptable {
   public SearchService: ISearchService;
 
   public Glue42Service: IGlue42Service;
-
-  public PushPullService: IPushPullService;
 
   public ReportService: IReportService;
 
@@ -409,33 +406,8 @@ export class Adaptable implements IAdaptable {
     // the audit service needs to be created before the store
     this.AuditLogService = new AuditLogService(this);
 
-    // create the store
-    this.initStore();
-
     // set up the helper
     this.agGridHelper = new agGridHelper(this, this.gridOptions);
-
-    // create the services
-    this.CalendarService = new CalendarService(this);
-    this.ValidationService = new ValidationService(this);
-    this.StyleService = new StyleService(this);
-    this.ChartService = new ChartService(this);
-    this.FreeTextColumnService = new FreeTextColumnService(this);
-    this.ScheduleService = new ScheduleService(this);
-    this.SearchService = new SearchService(this);
-    this.Glue42Service = new Glue42Service(this);
-    this.PushPullService = new PushPullService(this);
-    this.ReportService = new ReportService(this);
-    this.LayoutService = new LayoutService(this);
-    this.FilterService = new FilterService(this);
-    this.StrategyService = new StrategyService(this);
-    this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
-      this,
-      (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
-    );
-
-    this.forPlugins(plugin => plugin.afterInitServices(this));
-
     // we prefer the grid to be NOT instantiated so that we can do it
     // perhaps in future we will force instantiation only?
     const isGridInstantiated =
@@ -454,6 +426,28 @@ export class Adaptable implements IAdaptable {
     if (this.gridOptions.api) {
       (this.gridOptions.api as any).__adaptable = this;
     }
+    // create the store
+    this.initStore();
+
+    // create the services
+    this.CalendarService = new CalendarService(this);
+    this.ValidationService = new ValidationService(this);
+    this.StyleService = new StyleService(this);
+    this.ChartService = new ChartService(this);
+    this.FreeTextColumnService = new FreeTextColumnService(this);
+    this.ScheduleService = new ScheduleService(this);
+    this.SearchService = new SearchService(this);
+    this.Glue42Service = new Glue42Service(this);
+    this.ReportService = new ReportService(this);
+    this.LayoutService = new LayoutService(this);
+    this.FilterService = new FilterService(this);
+    this.StrategyService = new StrategyService(this);
+    this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
+      this,
+      (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
+    );
+
+    this.forPlugins(plugin => plugin.afterInitServices(this));
 
     // Set up strategies - we set up all the strategies suitable for the vendor grid
     // But users can make some hidden or readonly in their entitlements
@@ -517,6 +511,21 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  getPlugin(pluginId: string): AdaptablePlugin {
+    const plugins = this.adaptableOptions.plugins || [];
+    return plugins.filter(p => p.pluginId === pluginId)[0];
+  }
+
+  getPluginProperty(pluginId: string, propertyName: string, ...args: any): any {
+    const plugins = this.adaptableOptions.plugins || [];
+
+    const thePlugin = plugins.filter(p => p.pluginId === pluginId)[0];
+
+    if (thePlugin && thePlugin.hasProperty(propertyName)) {
+      return thePlugin.getProperty(propertyName)(...args);
+    }
+  }
+
   lookupPlugins(propertyName: string, ...args: any): any {
     const plugins = this.adaptableOptions.plugins || [];
 
@@ -545,18 +554,23 @@ export class Adaptable implements IAdaptable {
   private initStore() {
     this.AdaptableStore = new AdaptableStore(this);
 
-    this.AdaptableStore.onAny((eventName: string, data: any) => {
-      this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
+    this.AdaptableStore.onAny(
+      (
+        eventName: string,
+        data: { action: Redux.Action; state: AdaptableState; newState: AdaptableState }
+      ) => {
+        this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
 
-      if (eventName == INIT_STATE) {
-        // and reset state also?
-        this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
-        this.api.eventApi.emit('AdaptableReady', {
-          adaptableApi: this.api,
-          vendorGrid: this.adaptableOptions.vendorGrid,
-        });
+        if (eventName == INIT_STATE) {
+          // and reset state also?
+          this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
+          this.api.eventApi.emit('AdaptableReady', {
+            adaptableApi: this.api,
+            vendorGrid: this.adaptableOptions.vendorGrid,
+          });
+        }
       }
-    });
+    );
   }
 
   private tryInstantiateAgGrid(): boolean {

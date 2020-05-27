@@ -25,7 +25,7 @@ export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
     return this.adaptable.api.exportApi.getReportSchedules();
   }
   public getAllIPushPullSchedule(): IPushPullSchedule[] {
-    return this.adaptable.api.iPushPullApi.getIPushPullSchedules();
+    return this.adaptable.api.pluginsApi.getPluginApi('ipushpull').getIPushPullSchedules();
   }
   public getAllGlue42Schedule(): Glue42Schedule[] {
     return this.adaptable.api.glue42Api.getGlue42Schedules();

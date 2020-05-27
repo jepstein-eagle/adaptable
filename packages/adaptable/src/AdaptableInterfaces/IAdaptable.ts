@@ -22,7 +22,6 @@ import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
 import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
-import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
@@ -116,7 +115,6 @@ export interface IAdaptable {
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
   Glue42Service: IGlue42Service;
-  PushPullService: IPushPullService;
   ReportService: IReportService;
   StyleService: IStyleService;
   LayoutService: ILayoutService;
@@ -197,6 +195,8 @@ export interface IAdaptable {
   forPlugins(callback: (plugin: AdaptablePlugin) => any): void;
 
   lookupPlugins(propertyName: string, ...args: any): any;
+  getPluginProperty(pluginId: string, propertyName: string, ...args: any): any;
+  getPlugin(pluginId: string): AdaptablePlugin;
 
   // editing related
   setValue(dataChangedInfo: DataChangedInfo, internalUpdate: boolean): void;

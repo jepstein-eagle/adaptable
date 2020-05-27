@@ -1,5 +1,6 @@
 import { ServiceStatus } from '../PushPullService';
-import { IPushPullDomain } from '../../../PredefinedConfig/IPushPullState';
+import { IPushPullDomain } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+
 export interface IPushPullService {
   login(login: string, password: string): Promise<any>;
   getDomainPages(): Promise<IPushPullDomain[]>;

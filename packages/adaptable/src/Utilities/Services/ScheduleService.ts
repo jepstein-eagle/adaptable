@@ -2,7 +2,6 @@ import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import * as ReminderRedux from '../../Redux/ActionsReducers/ReminderRedux';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
-import * as IPushPullRedux from '../../Redux/ActionsReducers/IPushPullRedux';
 import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { Schedule } from '../../PredefinedConfig/Common/Schedule';
@@ -100,12 +99,6 @@ export class ScheduleService implements IScheduleService {
         ) {
           this.updateReportJobs();
         } else if (
-          eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_ADD ||
-          eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_EDIT ||
-          eventName == IPushPullRedux.IPUSHPULL_SCHEDULE_DELETE
-        ) {
-          this.updateIPushPullJobs();
-        } else if (
           eventName == Glue42Redux.GLUE42_SCHEDULE_ADD ||
           eventName == Glue42Redux.GLUE42_SCHEDULE_EDIT ||
           eventName == Glue42Redux.GLUE42_SCHEDULE_DELETE
@@ -134,7 +127,7 @@ export class ScheduleService implements IScheduleService {
       });
   }
 
-  private updateIPushPullJobs() {
+  public updateIPushPullJobs() {
     this.clearAllIPushPullJobs();
     this.adaptable.api.scheduleApi
       .getAllIPushPullSchedule()

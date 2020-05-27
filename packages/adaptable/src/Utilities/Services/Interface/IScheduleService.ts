@@ -1,1 +1,3 @@
-export interface IScheduleService {}
+export interface IScheduleService {
+  public updateIPushPullJobs(): void;
+}

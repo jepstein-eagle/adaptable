@@ -57,7 +57,7 @@ class ChartsPlugin extends AdaptablePlugin {
     super(options);
     this.options = { ...defaultOptions, ...options };
 
-    this.registerValue('sparklineColumnRenderer', sparklineColumn =>
+    this.registerProperty('sparklineColumnRenderer', sparklineColumn =>
       getSparklineRendererForColumn(sparklineColumn)
     );
   }

@@ -1,12 +1,11 @@
-import LoggingHelper from '../Helpers/LoggingHelper';
-import { IPPStyle } from '../Interface/IPPStyle';
-import { IPushPullService } from './Interface/IPushPullService';
+import LoggingHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
+import env from '@adaptabletools/adaptable/src/env';
+import { IAdaptable } from '@adaptabletools/adaptable/src/AdaptableInterfaces/IAdaptable';
+import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
 
-import env from '../../env';
-import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { IPushPullDomain } from '../../PredefinedConfig/IPushPullState';
-import StringExtensions from '../Extensions/StringExtensions';
-import ArrayExtensions from '../Extensions/ArrayExtensions';
+import { IPPStyle } from '@adaptabletools/adaptable/src/Utilities/Interface/IPPStyle';
+import { IPushPullService } from './Interface/IPushPullService';
+import { IPushPullDomain } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 
 export enum ServiceStatus {
   Unknown = 'Unknown',
@@ -25,40 +24,23 @@ export class PushPullService implements IPushPullService {
 
     this.adaptable.api.eventApi.on('AdaptableReady', async () => {
       // turn off and clear everything
-      this.adaptable.api.iPushPullApi.clearIPushPullInternalState();
-      this.adaptable.api.iPushPullApi.setIPushPullAvailableOff();
+      this.getIPPApi().clearIPushPullInternalState();
+      this.getIPPApi().setIPushPullAvailableOff();
 
       if (!this.ppInstance) {
-        let instance = this.adaptable.api.iPushPullApi.getIPushPullInstance();
+        let instance = this.getIPPApi().getIPushPullInstance();
 
         if (instance) {
-          let userPushPullConfig = instance.config;
-
-          instance.config.set({
-            api_url: userPushPullConfig.api_url || 'https://www.ipushpull.com/api/1.0',
-            ws_url: userPushPullConfig.ws_url || 'https://www.ipushpull.com',
-            web_url: userPushPullConfig.web_url || 'https://www.ipushpull.com',
-            docs_url: userPushPullConfig.docs_url || 'https://docs.ipushpull.com',
-            storage_prefix: userPushPullConfig.storage_prefix || 'ipp_local',
-            api_key: userPushPullConfig.api_key || this.getApiKey(),
-            api_secret: userPushPullConfig.api_secret || this.getApiSecret(),
-            transport: userPushPullConfig.transport || 'polling',
-            hsts: false, // strict cors policy
-          });
           this.ppInstance = instance;
 
           // set that it is available
-          this.adaptable.api.iPushPullApi.setIPushPullAvailableOn();
+          this.getIPPApi().setIPushPullAvailableOn();
 
-          let autoLogin: boolean = this.adaptable.api.iPushPullApi.getAutoLogin();
+          let autoLogin: boolean = this.getIPPApi().getAutoLogin();
 
           if (autoLogin) {
-            let userName:
-              | string
-              | undefined = this.adaptable.api.iPushPullApi.getIPushPullUsername();
-            let password:
-              | string
-              | undefined = this.adaptable.api.iPushPullApi.getIPushPullPassword();
+            let userName: string | undefined = this.getIPPApi().getIPushPullUsername();
+            let password: string | undefined = this.getIPPApi().getIPushPullPassword();
 
             if (
               StringExtensions.IsNotNullOrEmpty(userName) &&
@@ -66,10 +48,10 @@ export class PushPullService implements IPushPullService {
             ) {
               try {
                 // slightly circular but it means tht we do the logic in one go..
-                this.adaptable.api.iPushPullApi.loginToIPushPull(userName, password);
+                this.getIPPApi().loginToIPushPull(userName, password);
               } catch (err) {
                 // set that it is not running (but still available)
-                this.adaptable.api.iPushPullApi.setIPushPullRunningOff();
+                this.getIPPApi().setIPushPullRunningOff();
               }
             }
           }
@@ -83,6 +65,10 @@ export class PushPullService implements IPushPullService {
       return ServiceStatus.Error;
     }
     return this.ppInstance.__status as ServiceStatus;
+  }
+
+  private getIPPApi() {
+    return this.adaptable.api.pluginsApi.getPluginApi('ipushpull');
   }
 
   // Logs in to ipushpull
@@ -99,7 +85,7 @@ export class PushPullService implements IPushPullService {
       })
       .catch((err: any) => {
         this.ppInstance.__status = ServiceStatus.Error;
-        this.adaptable.api.iPushPullApi.setIPushPullLoginErrorMessage(
+        this.getIPPApi().setIPushPullLoginErrorMessage(
           err.data ? err.data.error_description || err.message : err.message
         );
         // prefer a more descriptive error, which IPP generally provides
@@ -167,7 +153,7 @@ export class PushPullService implements IPushPullService {
         let message: string = page + "' successfully created.";
         this.adaptable.api.alertApi.showAlertSuccess('ipushpull Page', message);
         this.adaptable.api.internalApi.hidePopupScreen();
-        this.adaptable.api.iPushPullApi.retrieveIPushPullDomainsFromIPushPull();
+        this.getIPPApi().retrieveIPushPullDomainsFromIPushPull();
       })
       .catch((err: any) => {
         LoggingHelper.LogAdaptableError("Couldn't create Page: '" + page + "'. Reason: " + err);
@@ -255,15 +241,5 @@ export class PushPullService implements IPushPullService {
         }
       );
     });
-  }
-
-  private getApiKey(): string {
-    let key = env.IPUSHPULL_API_KEY; // need to make sure that is always there
-    return key;
-  }
-
-  private getApiSecret(): string {
-    let secret: string = env.IPUSHPULL_API_SECRET; // need to make sure that is always there
-    return secret;
   }
 }
