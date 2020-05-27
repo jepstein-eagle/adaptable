@@ -15,6 +15,7 @@ export interface FreeTextColumn extends AdaptableObject {
   ColumnId: string;
   DefaultValue: any;
   FreeTextStoredValues: FreeTextStoredValue[];
+  TextEditor?: 'Inline' | 'Large';
 }
 
 export interface FreeTextStoredValue {

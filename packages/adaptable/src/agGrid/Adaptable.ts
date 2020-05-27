@@ -1853,7 +1853,10 @@ export class Adaptable implements IAdaptable {
       filter: true,
       sortable: true,
       resizable: true,
-      cellEditor: 'agLargeTextCellEditor',
+      cellEditor:
+        freeTextColumn.TextEditor && freeTextColumn.TextEditor == 'Large'
+          ? 'agLargeTextCellEditor'
+          : 'agTextCellEditor',
       type: 'abColDefString',
       valueSetter: (params: ValueSetterParams) => {
         return (params.data[freeTextColumn.ColumnId] = params.newValue);
