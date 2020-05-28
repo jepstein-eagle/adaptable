@@ -210,14 +210,16 @@ class IPushPullToolbarControlComponent extends React.Component<
             )}
             alignItems="stretch"
           >
-            <ButtonSchedule
-              marginLeft={1}
-              className="ab-DashboardToolbar__IPushPull__schedule"
-              onClick={() => this.onNewIPushPullSchedule()}
-              tooltip="Schedule"
-              disabled={isLiveIPushPullReport || !isCompletedReport}
-              AccessLevel={this.props.AccessLevel}
-            />
+            {this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
+              <ButtonSchedule
+                marginLeft={1}
+                className="ab-DashboardToolbar__IPushPull__schedule"
+                onClick={() => this.onNewIPushPullSchedule()}
+                tooltip="Schedule"
+                disabled={isLiveIPushPullReport || !isCompletedReport}
+                AccessLevel={this.props.AccessLevel}
+              />
+            )}
           </Flex>
         )}{' '}
         <ButtonNewPage

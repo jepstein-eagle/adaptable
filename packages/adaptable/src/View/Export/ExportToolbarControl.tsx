@@ -216,14 +216,16 @@ class ExportToolbarControlComponent extends React.Component<
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}
           />
-          <ButtonSchedule
-            marginLeft={1}
-            className="ab-DashboardToolbar__Export__schedule"
-            onClick={() => this.onNewReportSchedule()}
-            tooltip="Schedule"
-            disabled={savedReport == null}
-            AccessLevel={this.props.AccessLevel}
-          />
+          {this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
+            <ButtonSchedule
+              marginLeft={1}
+              className="ab-DashboardToolbar__Export__schedule"
+              onClick={() => this.onNewReportSchedule()}
+              tooltip="Schedule"
+              disabled={savedReport == null}
+              AccessLevel={this.props.AccessLevel}
+            />
+          )}
         </Flex>
       </Flex>
     );
