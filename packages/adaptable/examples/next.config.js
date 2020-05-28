@@ -49,11 +49,22 @@ const withTypescript = (nextConfig = {}) => {
       config.resolve.alias['styled-components'] = path.resolve('../node_modules/styled-components');
       config.resolve.alias.redux = path.resolve('../node_modules/redux');
       config.resolve.alias['react-redux'] = path.resolve('../node_modules/react-redux');
+
       config.resolve.alias['@ag-grid-community/all-modules'] = path.resolve(
         '../node_modules/@ag-grid-community/all-modules'
       );
       config.resolve.alias['@ag-grid-community/core'] = path.resolve(
         '../node_modules/@ag-grid-community/core'
+      );
+
+      config.resolve.alias['@ag-grid-enterprise/all-modules'] = path.resolve(
+        '../node_modules/@ag-grid-enterprise/all-modules'
+      );
+      config.resolve.alias['@ag-grid-enterprise/core'] = path.resolve(
+        '../node_modules/@ag-grid-enterprise/core'
+      );
+      config.resolve.alias['@ag-grid-enterprise/master-detail'] = path.resolve(
+        '../node_modules/@ag-grid-enterprise/master-detail'
       );
 
       if (typeof nextConfig.webpack === 'function') {

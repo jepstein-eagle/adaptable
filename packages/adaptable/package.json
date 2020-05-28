@@ -36,6 +36,8 @@
   },
   "devDependencies": {
     "@ag-grid-community/all-modules": "23.1.0",
+    "@ag-grid-enterprise/all-modules": "^23.1.1",
+    "@ag-grid-enterprise/master-detail": "^23.1.1",
     "@types/body-parser": "^1.17.0",
     "@types/bunyan": "^1.8.4",
     "@types/deep-diff": "0.0.31",

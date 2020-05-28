@@ -3275,12 +3275,18 @@ export class Adaptable implements IAdaptable {
         sortModel.push({ colId: gs.Column, sort: sortDescription });
       });
     }
-    this.gridOptions.api!.setSortModel(sortModel);
-    this.gridOptions.api!.onSortChanged();
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.gridOptions.api.setSortModel(sortModel);
+    this.gridOptions.api.onSortChanged();
   }
 
   public setDataSource(dataSource: any) {
-    this.gridOptions.api!.setRowData(dataSource);
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.gridOptions.api.setRowData(dataSource);
   }
 
   public loadDataSource(dataSource: any) {
