@@ -66,7 +66,6 @@ let demoConfig: PredefinedConfig = {
       {
         ColumnId: 'notional',
         PositiveValue: 100,
-        //  MinValue: 0,
         PositiveColor: '#FFCCE5',
         ShowValue: true,
       },

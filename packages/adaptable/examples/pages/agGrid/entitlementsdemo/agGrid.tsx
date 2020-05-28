@@ -46,10 +46,14 @@ function InitAdaptableDemo() {
             case 'Shortcut':
               return 'ReadOnly';
             case 'AdvancedSearch':
+            case 'PercentBar':
+            case 'Schedule':
             case 'ColumnFilter':
             case 'UserFilter':
+            case 'Export':
             case 'DataSource':
             case 'QuickSearch':
+            case 'Dashboard':
               return getMockPermissionServerResult(functionName, userName, adaptableId);
           }
         },
