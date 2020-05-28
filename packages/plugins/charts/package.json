@@ -39,7 +39,7 @@
     "react-redux": "7.2.0",
     "rebass": "^3.2.2",
     "styled-components": "^4.4.1",
-    "redux": "^4.0.4",
+    "redux": "^4.0.5",
     "prop-types": "^15.6.2",
     "igniteui-react-charts": "16.6.10",
     "igniteui-react-core": "16.6.10"

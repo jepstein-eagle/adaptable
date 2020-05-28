@@ -106,6 +106,41 @@ jobs:
     - name: Building plugins-finance
       run: cd packages/plugins/finance && npm run build-prod-no-cleanup
 
+    - name: Executing npm install in plugins/ipushpull
+      run: npm run install-plugins-ipushpull
+      env:
+        CI: true
+
+    - name: Building plugins-ipushpull
+      run: cd packages/plugins/ipushpull && npm run build-prod-no-cleanup
+
+
+    - name: Executing npm install in plugins/finsemble
+      run: npm run install-plugins-finsemble
+      env:
+        CI: true
+
+    - name: Building plugins-finsemble
+      run: cd packages/plugins/finsemble && npm run build-prod-no-cleanup
+
+
+    - name: Executing npm install in plugins/openfin
+      run: npm run install-plugins-openfin
+      env:
+        CI: true
+
+    - name: Building plugins-openfin
+      run: cd packages/plugins/openfin && npm run build-prod-no-cleanup
+
+
+    - name: Executing npm install in plugins/glue42
+      run: npm run install-plugins-glue42
+      env:
+        CI: true
+
+    - name: Building plugins-glue42
+      run: cd packages/plugins/glue42 && npm run build-prod-no-cleanup
+
     - name: Executing npm install in plugins/master-detail-aggrid
       run: npm run install-plugins-master-detail-aggrid
       env:
