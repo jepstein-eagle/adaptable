@@ -58,6 +58,7 @@ function InitAdaptableDemo() {
         VisibleButtons: ['ConditionalStyle', 'TeamSharing'],
       },
       Entitlements: {
+        Revision: 2,
         FunctionEntitlements: [
           {
             FunctionName: 'TeamSharing',

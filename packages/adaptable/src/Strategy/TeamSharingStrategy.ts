@@ -13,7 +13,7 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
 
   public isStrategyAvailable(): boolean {
     return (
-      this.adaptable.api.entitlementsApi.isFunctionFullEntitlement(this.Id) &&
+      !this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id) &&
       this.adaptable.adaptableOptions.teamSharingOptions &&
       this.adaptable.adaptableOptions.teamSharingOptions.enableTeamSharing &&
       !!this.adaptable.adaptableOptions.teamSharingOptions.getSharedEntities &&
