@@ -36,6 +36,7 @@ export class FreeTextColumnSummaryWizard
           ? 0
           : this.props.Data.FreeTextStoredValues.length,
       },
+      { Key: 'Text Editor', Value: this.props.Data.TextEditor },
     ];
 
     return (
