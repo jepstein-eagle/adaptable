@@ -479,6 +479,7 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
     ColumnId: EMPTY_STRING,
     DefaultValue: EMPTY_STRING,
     FreeTextStoredValues: [],
+    TextEditor: 'Inline',
   };
 }
 

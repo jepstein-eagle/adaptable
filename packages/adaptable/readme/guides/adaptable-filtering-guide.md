@@ -80,7 +80,6 @@ The Quick Filter bar is not available on all grids - only those where the underl
 
 If you want to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable then set the useAdaptableQuickFilter property to false.
 
- 
 ## Demos
 
 Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/filters) to see a number of filtering-related demos
@@ -89,24 +88,24 @@ Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/filters) to see 
 
 ### Column Range Filters
 
-| Operator                | Columns            |
-| ------                  | -------            | 
-| Greater Than            | Number             | 
-| Greater Than or Equals  | Number             | 
-| Less Than               | Number             | 
-| Less Than or Equals     | Number             | 
-| After                   | Dat                | 
-| After or On             | Date               | 
-| Before                  | Date               | 
-| Before or On            | Date               | 
-| Equals                  | Number, Date, Text | 
-| NotEquals               | Number, Date, Text | 
-| Between                 | Number, Date       | 
-| Contains                | Text               | 
-| Not Contains            | Text               | 
-| Starts With             | Text               | 
-| Ends With               | Text               | 
-| Matches Expression      | Text               | 
+| Operator               | Columns            |
+| ---------------------- | ------------------ |
+| Greater Than           | Number             |
+| Greater Than or Equals | Number             |
+| Less Than              | Number             |
+| Less Than or Equals    | Number             |
+| After                  | Dat                |
+| After or On            | Date               |
+| Before                 | Date               |
+| Before or On           | Date               |
+| Equals                 | Number, Date, Text |
+| NotEquals              | Number, Date, Text |
+| Between                | Number, Date       |
+| Contains               | Text               |
+| Not Contains           | Text               |
+| Starts With            | Text               |
+| Ends With              | Text               |
+| Matches Expression     | Text               |
 
 
 ### System Filters
@@ -135,27 +134,24 @@ The System Filters shipped by AdapTable are:
 
 ### Quick Filter Bar Wildcards
 
-| Symbol 	 | Value                    | Columns   | Example      |
-| --------   | ------                   | ------        | ------       | 
-| % 	     | Contains (the default)   | Text, Number  | 'S' or 'S%'  | 
-| = 	     | Equals                   | Text, Number  | '=15'        | 
-|<> 	     | Not Equals               | Number        | '<> 23'      | 
-|>= 	     | Greater Than or Equals   | Number        | '>= 49'      | 
-|> 	         | Greater Than             | Number        | '> 5'        | 
-|<= 	     | Less Than or Equals      | Number        | '<= 49'      | 
-|< 	         | Less Than                | Number        | '<5'         | 
-|: 	         | Between                  | Number        | '5 : 100'    | 
-|*	         | Starts With              | Text, Number  | 'd*'         | 
-|!	         | Doesn't Contain          | Text, Number  | '!he'        | 
-|1	         | True                     | Boolean       | '1'          | 
-|t	         | True                     | Boolean       | 't'          | 
-|y	         | True                     | Boolean       | 'y'          | 
-|0	         | False                    | Boolean       | '0'          | 
-|f	         | False                    | Boolean       | 'f'          | 
-|n	         | False                    | Boolean       | 'n'          | 
-
-
-
+| Symbol   | Value                  | Columns      | Example     |
+| -------- | ---------------------- | ------------ | ----------- |
+| %        | Contains (the default) | Text, Number | 'S' or 'S%' |
+| =        | Equals                 | Text, Number | '=15'       |
+| <>       | Not Equals             | Number       | '<> 23'     |
+| >=       | Greater Than or Equals | Number       | '>= 49'     |
+| >        | Greater Than           | Number       | '> 5'       |
+| <=       | Less Than or Equals    | Number       | '<= 49'     |
+| <        | Less Than              | Number       | '<5'        |
+| :        | Between                | Number       | '5 : 100'   |
+| *        | Starts With            | Text, Number | 'd*'        |
+| !        | Doesn't Contain        | Text, Number | '!he'       |
+| 1        | True                   | Boolean      | '1'         |
+| t (or T) | True                   | Boolean      | 't'         |
+| y        | True                   | Boolean      | 'y'         |
+| 0        | False                  | Boolean      | '0'         |
+| f (or F) | False                  | Boolean      | 'f'         |
+| n        | False                  | Boolean      | 'n'         |
 
 ## Help
 

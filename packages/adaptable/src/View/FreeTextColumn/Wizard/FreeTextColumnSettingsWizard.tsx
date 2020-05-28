@@ -13,6 +13,7 @@ import { Box, Text, Flex } from 'rebass';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 import ErrorBox from '../../../components/ErrorBox';
+import Radio from '../../../components/Radio';
 
 export interface FreeTextColumnSettingsWizardProps
   extends AdaptableWizardStepProps<FreeTextColumn> {}
@@ -20,6 +21,7 @@ export interface FreeTextColumnSettingsWizardState {
   ColumnId: string;
   ErrorMessage: string;
   DefaultValue: string;
+  TextEditor: 'Inline' | 'Large';
 }
 
 export class FreeTextColumnSettingsWizard
@@ -31,6 +33,7 @@ export class FreeTextColumnSettingsWizard
       ColumnId: this.props.Data.ColumnId,
       ErrorMessage: null,
       DefaultValue: this.props.Data.DefaultValue,
+      TextEditor: this.props.Data.TextEditor ? this.props.Data.TextEditor : 'Inline',
     };
   }
   render(): any {
@@ -65,6 +68,23 @@ export class FreeTextColumnSettingsWizard
               />
             </Box>
           </Flex>
+          <Flex alignItems="center" flexDirection="row" marginTop={3}>
+            <Radio
+              value="Inline"
+              checked={this.state.TextEditor == 'Inline'}
+              onChange={(_, e: any) => this.onDynamicSelectChanged(e)}
+              marginRight={2}
+            >
+              Inline Editor
+            </Radio>
+            <Radio
+              value="Large"
+              checked={this.state.TextEditor == 'Large'}
+              onChange={(_, e: any) => this.onDynamicSelectChanged(e)}
+            >
+              Large Editor
+            </Radio>
+          </Flex>
         </WizardPanel>
       </div>
     );
@@ -83,6 +103,13 @@ export class FreeTextColumnSettingsWizard
           : null,
       },
       () => this.props.UpdateGoBackState()
+    );
+  }
+
+  private onDynamicSelectChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.setState({ TextEditor: e.value } as FreeTextColumnSettingsWizardState, () =>
+      this.props.UpdateGoBackState()
     );
   }
 
@@ -108,6 +135,7 @@ export class FreeTextColumnSettingsWizard
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
     this.props.Data.DefaultValue = this.state.DefaultValue;
+    this.props.Data.TextEditor = this.state.TextEditor;
   }
   public Back(): void {
     //
