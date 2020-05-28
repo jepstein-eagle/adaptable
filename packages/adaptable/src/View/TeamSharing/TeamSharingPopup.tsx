@@ -32,7 +32,7 @@ import { PercentBarSharedEntity } from '../PercentBar/PercentBarSharedEntity';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
-  // onTeamSharingFetch: () => TeamSharingRedux.TeamSharingShareAction;
+  onTeamSharingGet: () => TeamSharingRedux.TeamSharingGetAction;
   onImportItem: (
     Entity: AdaptableObject,
     strategy: AdaptableFunctionName
@@ -41,9 +41,9 @@ interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupC
 }
 
 class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {}> {
-  //  componentDidMount() {
-  //    this.props.onTeamSharingFetch();
-  // }
+  componentDidMount() {
+    this.props.onTeamSharingGet();
+  }
 
   render() {
     let infoBody: any[] = ['Team Sharing'];
@@ -186,7 +186,7 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<TeamSharingPopupProps> {
   return {
-    //  onTeamSharingFetch: () => dispatch(TeamSharingRedux.TeamSharingFetch()),
+    onTeamSharingGet: () => dispatch(TeamSharingRedux.TeamSharingGet()),
     onImportItem: (entity: AdaptableObject, strategy: AdaptableFunctionName) =>
       dispatch(TeamSharingRedux.TeamSharingImportItem(entity, strategy)),
     onRemoveItem: (Uuid: string) => dispatch(TeamSharingRedux.TeamSharingRemoveItem(Uuid)),
