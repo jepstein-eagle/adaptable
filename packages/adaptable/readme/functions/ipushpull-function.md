@@ -2,6 +2,8 @@
 
 The ipushpull([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ipushpull`) Function connects AdapTable with [ipushpull](https://www.ipushpull.com) the market-leading collaborative software.
 
+It allows user to send Reports - either System Reports shipped by AdapTable or those created via the [Export function](./export-function.md) - to ipushpull and from their to Symphony and other destinations.
+
 ## UI Elements
 
 ipushpull includes the following UI Elements:
