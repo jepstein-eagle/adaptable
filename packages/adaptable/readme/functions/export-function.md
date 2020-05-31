@@ -1,71 +1,82 @@
 # Export (AdaptableFunction)
 
-The Export([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Export`) Function provides a way to export data from AdapTable via 'Reports'.
+The Export([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Export`) Function provides a way to send data from AdapTable via 'Reports'.
 
-You can use AdapTable to export data dynamically from your grid into other formats through the use of reports (essentially named queries).
+## How Export Works
 
-Tip
-You don't need to first filter the grid before you export; if you have for example, an End of Day report, you need to define it only once and it will evaluate automatically each time you run it. irrespective of how the Grid is currently filtered.
+AdapTable allows you to create **Reports** which you can then send to multiple destinations.  
 
-You can export data from AdapTable to a number of locations including Excel, CSV, Clipboard, JSON, to iPushPull, and live Excel (via Glue42 or OpenFin).
+### Reports
 
-You can specify for each report / column combination whether to export the DisplayValue or RawValue of the column.
+Each report essentially contains 2 elements:
 
-Tip
-The last 3 of these will not always be available depending on how your grid is set up and which options have been configured.
+1. List of Columns which will be exported
+2. Expression that will run when export is triggered and which will evaluate which Rows to include
 
-Note
-You can schedule your exports to run at at time of your choosing or export manually whenever you want.
+You can specify for each report / column combination whether to export the **DisplayValue** or **RawValue** of the column's cell values.
 
-If scheduling then you can choose between running on a one time date only or as a regular recurrence (e.g. Every Day at 17:30).
+> You can schedule your exports to run at at time of your choosing or export manually whenever you want, e.g. you can create an 'End of Day' Report to run every weekeday at 17:00.
 
-AdapTable ships with some predefined reports for frequent queries that you might use. These include: All Data, Visible Data, Selected Cells and Selected Rows.
+#### System Reports
 
+AdapTable ships with some predefined reports designed for frequently used exports. These include:
 
+- All Data
+- Visible Data
+- Selected Cells
+- Selected Rows
+
+### Export Destinations
+
+A report can be sent to a number of different locations including:
+
+- Excel
+- CSV
+- Clipboard
+- JSON
+  
+and also - depending on whether the appropriate plugin is loaded:
+
+- ipushpull
+- OpenFin
+- Glue42
 
 ## UI Elements
+
 To Do
 
 ## Entitlements
+
 To Do
 
 ## FAQ
 
-Where can we export data to?
+**Is the export 'live'  - will it update when the grid data changes?**
 
-Currently you can export reports to the following destinations (though more are being added all the time):
+No - export is a one time only snapshot.  
 
-CSV
+However AdapTable does have other Functions which do offer Live Data e.g. ipushpull, Glue42 and OpenFin plugins
 
-Clipboard
-
-JSON
-
-Excel - if using OpenFin
-
-iPushPull - an iPushPull account is required
-
-Can we have Live Updates if not using either OpenFin or iPushPull?
-
-No.  You will need to be either running in the OpenFin container or have an iPushPull account to benefit from Live Updates.
-
-Do you include column names in the exported data?
+**Do you include column names in the exported data?**
 
 Yes, column names are always included in the report.
 
-Is there an option when just copying to the clipboard to exclude column names?
+**Is there an option when just copying to the clipboard to exclude column names?**
 
 Not at present but this feature will be added in future releases.
 
-Is there a limit on the number of reports that I can create?
+**Is there a limit on the number of reports that I can create?**
 
 No, reports like all other Adaptable Objects are unlimited.
 
-Can I export the underlying raw value in the column and not the displayed / formatted one?
+**Can I export the underlying raw value in the column and not the displayed / formatted one?**
 
-Yes, the exportColumnRawValue property in Export Options allows you to choose for each report / column combination whether to export the Display Value (the default) or the Raw Value.
+Yes, the `exportColumnRawValue` property in Export Options allows you to choose for each report / column combination whether to export the Display Value (the default) or the Raw Value.
 
 ### Further Information
 
-To Do
+- [Export State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_exportstate_.exportstate.html)
 
+- [Export Api](https://api.adaptabletools.com/interfaces/_src_api_exportapi_.exportapi.html)
+
+- [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
