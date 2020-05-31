@@ -1,11 +1,15 @@
 # ipushpull (AdaptableFunction)
 
-The ipushpull([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ipushpull`) Function connects with [ipushpull](https://www.ipushpull.com).
+The ipushpull([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ipushpull`) Function connects AdapTable with [ipushpull](https://www.ipushpull.com) the market-leading collaborative software.
 
 ## UI Elements
 ipushpull includes the following UI Elements:
 
-- **Toolbar** - The main way to interact with ipushpull. Includes a login button that opens a login screen asking for username and password. 
+- **Toolbar** - The main way to interact with ipushpull.
+
+At start-up this displays a login button that opens a login screen asking for username and password. 
+
+>
 
 If successfully logged in, the user sees a list of folders and pages and available reports.  There are also 2 'action buttons':
 
