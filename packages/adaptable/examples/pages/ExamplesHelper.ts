@@ -267,7 +267,7 @@ export class ExamplesHelper {
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
       country: this.getRandomItem(this.getCountries()),
-      changeOnYear: this.generateRandomInt(-1, -200), //this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
+      changeOnYear: this.generateRandomInt(-200, 200), //this.getMeaningfulPositiveNegativeInteger(800), //  this.getMeaningfulPositiveNegativeDouble(),
       stars: this.generateRandomInt(1, 5),
       amount: this.generateRandomInt(20, 100), //this.getRandomItem(this.getAmounts()),
       price,
