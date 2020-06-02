@@ -8,6 +8,7 @@
       "**/node_modules": true,
       "/packages/adaptable/node_modules": true,
       "/packages/adaptable/examples/node_modules": true,
+      "/packages/adaptable/type-dist": true,
       "/packages/adaptable-react-aggrid/examples/node_modules": true,
       "/packages/adaptable-react-aggrid/node_modules": true,
       "/packages/plugins/ipushpull/node_modules": true,
