@@ -5,7 +5,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
-export const TEAMSHARING_FETCH = 'TEAMSHARING_FETCH';
+export const TEAMSHARING_GET = 'TEAMSHARING_GET';
 export const TEAMSHARING_SET = 'TEAMSHARING_SET';
 export const TEAMSHARING_SHARE = 'TEAMSHARING_SHARE';
 export const TEAMSHARING_IMPORT_ITEM = 'TEAMSHARING_IMPORT_ITEM';
@@ -62,8 +62,8 @@ export const TeamSharingRemoveItem = (Uuid: string): TeamSharingRemoveItemAction
   Uuid,
 });
 
-export const TeamSharingFetch = (): TeamSharingGetAction => ({
-  type: TEAMSHARING_FETCH,
+export const TeamSharingGet = (): TeamSharingGetAction => ({
+  type: TEAMSHARING_GET,
 });
 
 const initialTeamSharingState: TeamSharingState = {

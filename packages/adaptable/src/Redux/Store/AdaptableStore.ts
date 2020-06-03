@@ -2711,7 +2711,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
            * TEAM SHARING ACTIONS
            *******************/
 
-          case TeamSharingRedux.TEAMSHARING_FETCH: {
+          case TeamSharingRedux.TEAMSHARING_GET: {
             let returnAction = next(action);
 
             const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;

@@ -1,4 +1,12 @@
 
+## 6.3.3-canary2
+
+Fixing Team Sharing bug
+
+## 6.3.3-canary1
+
+FreeTextColumn inline edit
+
 ## 6.3.3-canary0
 
 Fixing icon spread issue with custom buttons
