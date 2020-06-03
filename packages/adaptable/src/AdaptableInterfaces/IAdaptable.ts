@@ -315,7 +315,7 @@ export interface IAdaptable {
   /**
    * called when you want to destroy the instance & cleanup resources
    */
-  destroy(): void;
+  destroy(config?: { unmount: boolean; destroyApi?: boolean }): void;
 
   expandAllRowGroups(): void;
   closeAllRowGroups(): void;

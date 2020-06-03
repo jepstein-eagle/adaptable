@@ -64,7 +64,7 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
       }
     };
 
-    let adaptable: Adaptable;
+    let adaptableApi: AdaptableApi;
 
     poolForAggrid(() => {
       // IF YOU UPDATE THIS, make sure you also update the Angular wrapper impl
@@ -92,7 +92,7 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
           `Could not find the agGrid vendor container. This will probably break some AdapTable functionality.`
         );
       }
-      adaptable = new Adaptable({
+      adaptableApi = Adaptable.init({
         ...adaptableOptions,
         containerOptions: {
           ...adaptableOptions.containerOptions,
@@ -103,15 +103,18 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
       });
 
       if (onAdaptableReady) {
-        adaptable.api.eventApi.on('AdaptableReady', onAdaptableReady);
+        adaptableApi.eventApi.on('AdaptableReady', onAdaptableReady);
       }
     });
 
     return () => {
-      if (adaptable) {
-        adaptable.destroy({ unmount: false, destroyApi: false });
+      if (adaptableApi) {
+        adaptableApi.destroy({
+          unmount: true,
+          destroyApi: false,
+        });
       }
-      adaptable = null;
+      adaptableApi = null;
     };
   }, []);
 

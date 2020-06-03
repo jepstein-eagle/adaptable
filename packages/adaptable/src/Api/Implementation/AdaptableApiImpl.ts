@@ -195,7 +195,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.internalApi = new InternalApiImpl(adaptable);
   }
 
-  public destroy() {
-    this.adaptable.destroy();
+  public destroy(config?: { unmount: boolean; destroyApi?: boolean }) {
+    this.adaptable.destroy(config);
   }
 }

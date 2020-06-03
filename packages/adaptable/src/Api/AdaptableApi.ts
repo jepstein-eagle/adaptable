@@ -370,5 +370,5 @@ export interface AdaptableApi {
   /**
    * Cleanup method - should be called only when using the vanilla javascript component, as framework components cleanup is performed when the component is destroyed/unmounted.
    */
-  destroy: () => void;
+  destroy: (config?: { unmount: boolean; destroyApi?: boolean }) => void;
 }

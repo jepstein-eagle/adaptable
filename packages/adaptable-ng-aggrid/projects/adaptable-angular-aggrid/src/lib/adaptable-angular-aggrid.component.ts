@@ -49,7 +49,7 @@ export class AdaptableAngularAgGridComponent
   }>();
 
   public adaptableContainerId: string;
-  private adaptable: Adaptable;
+  private adaptableApi: AdaptableApi;
 
   constructor() {
     const seedId = `${getRandomInt(1000)}-${Date.now()}`;
@@ -114,9 +114,9 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
       this.adaptableOptions.containerOptions.adaptableContainer = this.adaptableContainerId;
       this.adaptableOptions.containerOptions.vendorContainer = vendorContainer;
 
-      const adaptable = new Adaptable(this.adaptableOptions);
+      const adaptableApi = Adaptable.init(this.adaptableOptions);
 
-      adaptable.api.eventApi.on(
+      adaptableApi.eventApi.on(
         'AdaptableReady',
         (adaptabReadyInfo: {
           adaptableApi: AdaptableApi;
@@ -126,18 +126,18 @@ Please make sure you pass "gridOptions" to AdapTable, so it can connect to the c
         }
       );
 
-      this.adaptable = adaptable;
+      this.adaptableApi = adaptableApi;
     });
   }
 
   ngOnDestroy() {
-    if (!this.adaptable) {
+    if (!this.adaptableApi) {
       return;
     }
-    this.adaptable.destroy({
+    this.adaptableApi.destroy({
       unmount: true,
       destroyApi: false,
     });
-    this.adaptable = null;
+    this.adaptableApi = null;
   }
 }
