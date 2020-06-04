@@ -6,7 +6,7 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
  *
  * Includes functions for retrieving, adding, editing and deleting Format Columns.
  *
- * A Format Column is a column that is given a specific `Style` or `DisplayFormat` that is always rendered.
+ * A Format Column is a column that is given a specific `Style`, `DisplayFormat` or `CellAlignment` that is always rendered.
  *
  * --------------
  *
@@ -41,18 +41,34 @@ export interface FormatColumnApi {
   getAllFormatColumnWithDisplayFormat(): FormatColumn[];
 
   /**
+   * Retrieves all Format Columns in Adaptable State which have the `CellAlignment` property set
+   */
+  getAllFormatColumnWithCellAlignment(): FormatColumn[];
+
+  addFormatColumn(formatColumn: FormatColumn): void;
+
+  editFormatColumn(formatColumn: FormatColumn): void;
+
+  /**
    * Adds a new Format Column
    * @param column The column to apply the Style to
    * @param style The Style to apply - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
    */
-  addFormatColumn(column: string, style: AdaptableStyle): void;
+  addFormatColumnStyle(column: string, style: AdaptableStyle): void;
 
   /**
    * Updates an existing Format Column
    * @param column The colunn to update the style for.
    * @param style The Style to update - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
    */
-  updateFormatColumn(column: string, style: AdaptableStyle): void;
+  updateFormatColumnStyle(column: string, style: AdaptableStyle): void;
+
+  /**
+   * Updates an existing Format Column Style
+   * @param column The colunn to update the style for.
+   * @param style The Style to update - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
+   */
+  setFormatColumnStylet(columnId: string, style: AdaptableStyle): void;
 
   /**
    * Deletes an existing Format Column
@@ -76,4 +92,14 @@ export interface FormatColumnApi {
    * Opens the Format Column popup screen
    */
   showFormatColumnPopup(): void;
+
+  /**
+   * Sets the Cell Alignment for a given Column
+   *
+   * It does this by creating a new (or updating an existing) Format Column for the given Column
+   *
+   * @param columnId the column to align cell contents
+   * @param cellAlignment the cell alignment to set
+   */
+  setCellAlignment(columnId: string, cellAlignment: 'Left' | 'Right' | 'Center'): void;
 }

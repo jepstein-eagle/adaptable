@@ -66,7 +66,7 @@ import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesCh
 import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED } from '../View/UIHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
+import { IPushPullSchedule, IPushPullReport } from '../PredefinedConfig/IPushPullSchedule';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
@@ -126,9 +126,9 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
     ColumnId: EMPTY_STRING,
     ColumnExpression: EMPTY_STRING,
     // need to create some defaults - which we will change later
-    /*
+
     CalculatedColumnSettings: {
-      DataType: 'String',
+      DataType: 'Number',
       Filterable: true,
       Resizable: true,
       Groupable: true,
@@ -136,7 +136,6 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
       Pivotable: true,
       Aggregatable: true,
     },
-    */
   };
 }
 
@@ -470,6 +469,7 @@ export function CreateEmptyFormatColumn(): FormatColumn {
     ColumnId: EMPTY_STRING,
     Style: CreateEmptyStyle(),
     DisplayFormat: undefined,
+    CellAlignment: undefined,
   };
 }
 
@@ -479,6 +479,7 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
     ColumnId: EMPTY_STRING,
     DefaultValue: EMPTY_STRING,
     FreeTextStoredValues: [],
+    TextEditor: 'Inline',
   };
 }
 

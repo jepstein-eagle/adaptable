@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
@@ -34,14 +36,34 @@ function InitAdaptableDemo() {
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
-      useCustomMacLikeScrollbars: true,
     },
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,
     },
+    filterOptions: {
+      useVendorFilterFormStyle: true,
+      useAdaptableFilterForm: true,
+    },
     predefinedConfig: {
+      Theme: {
+        Revision: Date.now(),
+        // SystemThemes: [
+        //   {
+        //     Name: 'light',
+        //     Description: 'light theme',
+        //     VendorGridClassName: 'ag-theme-alpine',
+        //   },
+        //   {
+        //     Name: 'dark',
+        //     Description: 'dark theme',
+        //     VendorGridClassName: 'ag-theme-alpine-dark',
+        //   },
+        // ],
+      },
       Dashboard: {
+        Revision: 141,
+        CanFloat: false,
         Tabs: [
           {
             Name: 'General',
@@ -69,7 +91,7 @@ function InitAdaptableDemo() {
         ShowFunctionsDropdown: true,
         //  HomeToolbarTitle: 'Hello world',
         ShowQuickSearchInHeader: true,
-        IsInline: true, // making it false in Redux so we dont forget but true here for testing purposes
+        IsInline: false, // making it false in Redux so we dont forget but true here for testing purposes
       },
       SystemStatus: {
         Revision: 13,
@@ -79,6 +101,14 @@ function InitAdaptableDemo() {
       AdvancedSearch: {
         Revision: 4,
         AdvancedSearches: [],
+      },
+      FormatColumn: {
+        FormatColumns: [
+          {
+            ColumnId: 'notional',
+            CellAlignment: 'Right',
+          },
+        ],
       },
       QuickSearch: {
         Revision: 11,
@@ -115,10 +145,13 @@ function InitAdaptableDemo() {
       };
       api.layoutApi.createAndSetLayout(newLayout);
     } else if (toolbarButton.Name == 'btnCopyLayout') {
-      let currentLayout = api.layoutApi.getCurrentLayout();
+      //   let currentLayout = api.layoutApi.getCurrentLayout();
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 
-      api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
+      //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
+      console.log('here');
+      api.formatColumnApi.setCellAlignment('amount', 'Right');
+      api.formatColumnApi.setCellAlignment('notional', 'Center');
     }
   });
 

@@ -4,7 +4,7 @@ import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IReminderStrategy } from './Interface/IReminderStrategy';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import * as ReminderRedux from '../Redux/ActionsReducers/ReminderRedux';
+import * as ScheduleRedux from '../Redux/ActionsReducers/ScheduleRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 
@@ -26,8 +26,8 @@ export class ReminderStrategy extends AdaptableStrategyBase implements IReminder
   public getTeamSharingAction(): TeamSharingImportInfo<ReminderSchedule> {
     return {
       FunctionEntities: this.adaptable.api.reminderApi.getAllReminder(),
-      AddAction: ReminderRedux.ReminderScheduleAdd,
-      EditAction: ReminderRedux.ReminderScheduleEdit,
+      AddAction: ScheduleRedux.ReminderScheduleAdd,
+      EditAction: ScheduleRedux.ReminderScheduleEdit,
     };
   }
 }

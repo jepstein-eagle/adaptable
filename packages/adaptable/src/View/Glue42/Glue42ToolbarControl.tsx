@@ -196,7 +196,6 @@ class Glue42ToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__Glue42"
         headerText={StrategyConstants.Glue42StrategyFriendlyName}
-        glyphicon={StrategyConstants.Glue42Glyph}
         showConfigureButton={false} // later : isGlue42Running
         onConfigure={() => this.props.onConfigure()}
       >
@@ -236,7 +235,7 @@ class Glue42ToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<Glue42ToolbarControlComponentProps> {
   return {
     CurrentLiveGlue42Report: state.Glue42.CurrentLiveGlue42Report,
     Reports: state.Export.Reports,
@@ -246,7 +245,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<Glue42ToolbarControlComponentProps> {
   return {
     onGlue42SendSnapshot: (glue42report: Glue42Report) =>
       dispatch(Glue42Redux.Glue42SendSnapshot(glue42report)),

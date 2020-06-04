@@ -272,13 +272,15 @@ class PercentBarPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PercentBarPopupProps> {
   return {
     PercentBars: state.PercentBar.PercentBars,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<PercentBarPopupProps> {
   return {
     onAddPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),

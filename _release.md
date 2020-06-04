@@ -1,3 +1,52 @@
+
+## 6.3.3-canary2
+
+Fixing Team Sharing bug
+
+## 6.3.3-canary1
+
+FreeTextColumn inline edit
+
+## 6.3.3-canary0
+
+Fixing icon spread issue with custom buttons
+
+## 6.3.1
+
+fixing chart issue around chart summary steps
+
+## 6.3.0
+
+minor version rolling up all recent patches and canaries
+
+## 6.2.2
+
+making showconfigurebutton in custom toolbar false by default
+
+## 6.2.1
+
+patch version containing all recent canaries
+
+## 6.2.1-canary9
+
+Custom dashboard buttons
+
+## 6.2.1-canary8
+
+Post merge
+
+## 6.2.1-canary7
+
+Fixing components for build process
+
+## 6.2.1-canary6
+
+Small updates. 
+
+## 6.2.1-canary5
+
+No code and ipushpull small updates.
+
 ## 6.2.1-canary4
 
 Calculated Column settings

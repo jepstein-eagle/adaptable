@@ -71,7 +71,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
     return ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Columns);
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnFilterSummaryProps> {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
     Columns: state.Grid.Columns,
@@ -80,7 +80,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnFilterSummaryProps> {
   return {
     onClearFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),

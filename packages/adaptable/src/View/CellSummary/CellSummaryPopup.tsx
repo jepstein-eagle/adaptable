@@ -12,7 +12,7 @@ import { CellSummaryDetails } from './CellSummaryDetails';
 
 interface CellSummaryPopupProps extends StrategyViewPopupProps<CellSummaryPopupComponent> {
   CellSummary: CellSummmary;
-  onSetSelectedCellSummary: () => GridRedux.GridSetCellSummaryAction;
+  onCreateCellSummary: () => GridRedux.GridCreateCellSummaryAction;
 }
 
 class CellSummaryPopupComponent extends React.Component<
@@ -20,7 +20,7 @@ class CellSummaryPopupComponent extends React.Component<
   EditableConfigEntityState
 > {
   public componentDidMount() {
-    this.props.onSetSelectedCellSummary();
+    this.props.onCreateCellSummary();
   }
 
   render() {
@@ -42,15 +42,17 @@ class CellSummaryPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CellSummaryPopupProps> {
   return {
     CellSummary: state.Grid.CellSummary,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CellSummaryPopupProps> {
   return {
-    onSetSelectedCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
+    onCreateCellSummary: () => dispatch(GridRedux.GridCreateCellSummary()),
   };
 }
 

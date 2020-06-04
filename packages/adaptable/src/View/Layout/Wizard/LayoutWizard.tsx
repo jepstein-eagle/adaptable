@@ -102,7 +102,6 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}
         />
-        >
       </div>
     );
   }

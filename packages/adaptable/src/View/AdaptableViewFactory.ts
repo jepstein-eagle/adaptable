@@ -17,7 +17,6 @@ import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
-import { IPushPullPopup } from './IPushPull/IPushPullPopup';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup';
 import { ThemePopup } from './Theme/ThemePopup';
@@ -31,8 +30,6 @@ import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
 import { Glue42LoginPopup } from './Glue42/Glue42LoginPopup';
-import { IPushPullLoginPopup } from './IPushPull/IPushPullLoginPopup';
-import { IPushPullAddPagePopup } from './IPushPull/IPushPullAddPagePopup';
 //import { HomeToolbarControl } from './Home/HomeToolbarControl';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
@@ -68,7 +65,7 @@ import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
-import { IPushPullToolbarControl } from './IPushPull/IPushPullToolbarControl';
+
 import { Glue42ToolbarControl } from './Glue42/Glue42ToolbarControl';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
@@ -94,9 +91,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   Glue42Popup,
   Glue42LoginPopup,
   GridInfoPopup,
-  IPushPullPopup,
-  IPushPullLoginPopup,
-  IPushPullAddPagePopup,
   LayoutPopup,
   ColumnCategoryPopup,
   PercentBarPopup,
@@ -132,7 +126,6 @@ export const AdaptableDashboardFactory = new Map<
   [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
-  [StrategyConstants.IPushPullStrategyId, IPushPullToolbarControl],
   [StrategyConstants.Glue42StrategyId, Glue42ToolbarControl],
   // this is special
   [StrategyConstants.DashboardStrategyId, CustomToolbarControl],

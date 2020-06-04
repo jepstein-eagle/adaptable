@@ -38,13 +38,12 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
       { Key: 'X Axis Values', Value: this.getExpressionString(this.props.Data.XAxisExpression) },
     ];
 
-    let summaryPage = (
+    return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
         header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
-    return <div>{summaryPage}</div>;
   }
 
   private getExpressionString(expression: Expression): string {

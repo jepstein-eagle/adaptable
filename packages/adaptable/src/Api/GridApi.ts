@@ -181,4 +181,12 @@ export interface GridApi {
   closeAllRowGroups(): void;
   getExpandRowGroupsKeys(): any[];
   expandRowGroupsForValues(columnValues: any[]): void;
+
+  /**
+   * Destroys the current AdapTable instance.
+   *
+   * When using the React or Angular wrappers, you don't need to call this manually, since it's automatically called in the component lifecycle,
+   * when the component is destroyed.
+   */
+  destroy(): void;
 }

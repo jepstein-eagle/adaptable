@@ -188,4 +188,8 @@ export class GridApiImpl extends ApiBase implements GridApi {
   public expandRowGroupsForValues(columnValues: any[]): void {
     this.adaptable.expandRowGroupsForValues(columnValues);
   }
+
+  public destroy() {
+    this.adaptable.destroy();
+  }
 }

@@ -122,7 +122,6 @@ class AlertToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__Alert"
         headerText={StrategyConstants.AlertStrategyFriendlyName}
-        glyphicon={StrategyConstants.AlertGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -131,14 +130,16 @@ class AlertToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AlertToolbarControlProps> {
   return {
     AlertDefinitions: state.Alert.AlertDefinitions,
     AdaptableAlerts: state.System.AdaptableAlerts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AlertToolbarControlProps> {
   return {
     onDeleteAlert: (alert: AdaptableAlert) => dispatch(SystemRedux.SystemAlertDelete(alert)),
     onDeleteAllAlert: (alerts: AdaptableAlert[]) =>

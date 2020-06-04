@@ -40,6 +40,7 @@ import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
+import AdaptableContext from '../../AdaptableContext';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableColumn;
@@ -505,7 +506,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterFormProps> {
   return {
     CurrentColumn: ownProps.CurrentColumn,
     Adaptable: ownProps.Adaptable,
@@ -519,7 +520,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<FilterFormProps> {
   return {
     onMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
@@ -540,13 +543,15 @@ export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormC
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
   <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <FilterForm
-        Adaptable={FilterContext.Adaptable}
-        CurrentColumn={FilterContext.Column}
-        TeamSharingActivated={false}
-        EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
-        ShowCloseButton={FilterContext.ShowCloseButton}
-      />
+      <AdaptableContext.Provider value={FilterContext.Adaptable}>
+        <FilterForm
+          Adaptable={FilterContext.Adaptable}
+          CurrentColumn={FilterContext.Column}
+          TeamSharingActivated={false}
+          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+          ShowCloseButton={FilterContext.ShowCloseButton}
+        />
+      </AdaptableContext.Provider>
     </ThemeProvider>
   </Provider>
 );

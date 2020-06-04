@@ -34,17 +34,15 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
       this.filterContainer = document.createElement('div');
       this.filterContainer.id = `floatingFilter_${colId}_${adaptable.adaptableOptions.adaptableId}`;
       this.filterContainer.style.display = 'flex';
+      this.filterContainer.style.flex = '1';
       const column: AdaptableColumn = ColumnHelper.getColumnFromId(
         colId,
         adaptable.api.gridApi.getColumns()
       );
 
-      const width: number = params.column.getActualWidth() - 40;
-
       const filterContext: IColumnFilterContext = {
         Column: column,
         Adaptable: adaptable,
-        ColumnWidth: width,
         ShowCloseButton: false,
       };
       ReactDOM.render(

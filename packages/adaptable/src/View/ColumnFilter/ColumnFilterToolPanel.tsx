@@ -35,7 +35,7 @@ interface ColumnFilterToolPanelComponentProps
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   Entitlements: Entitlement[];
-  IsQuickFilterActive: boolean;
+  IsQuickFilterVisible: boolean;
 }
 
 interface ColumnFilterTToolPanelComponentState {
@@ -100,12 +100,15 @@ class ColumnFilterToolPanelComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__BulkUpdate__wrap'}>
           <CheckBox
             className="ab-ToolPanel__ColumnFilter__active-check"
-            disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+            disabled={
+              this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
+              !this.props.Adaptable.isQuickFilterActive()
+            }
             marginLeft={1}
             marginTop={0}
             fontSize={2}
             padding={1}
-            checked={this.props.IsQuickFilterActive}
+            checked={this.props.IsQuickFilterVisible}
             onChange={(checked: boolean) => {
               checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
             }}
@@ -151,14 +154,19 @@ class ColumnFilterToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ColumnFilterToolPanelComponentProps> {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
-    IsQuickFilterActive: state.Grid.IsQuickFilterActive,
+    IsQuickFilterVisible: state.Grid.IsQuickFilterVisible,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnFilterToolPanelComponentProps> {
   return {
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),

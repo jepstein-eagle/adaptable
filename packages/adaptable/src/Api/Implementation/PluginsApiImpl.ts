@@ -4,6 +4,7 @@ import * as PluginsRedux from '../../Redux/ActionsReducers/PluginsRedux';
 import { PluginsApi } from '../PluginsApi';
 import { ApiBase } from './ApiBase';
 import { PluginsState } from '../../Redux/ActionsReducers/PluginsRedux';
+import { IPushPullApi } from '../IPushPullApi';
 
 export class PluginsApiImpl extends ApiBase implements PluginsApi {
   public getPluginsState(): PluginsState {
@@ -20,5 +21,14 @@ export class PluginsApiImpl extends ApiBase implements PluginsApi {
 
   public setPluginState(pluginId: string, newPluginState: any): void {
     this.dispatchAction(PluginsRedux.PluginsSetPluginState(pluginId, newPluginState));
+  }
+
+  public getPluginApi(pluginId: string): any | IPushPullApi {
+    const api = this.adaptable.getPluginProperty(pluginId, 'api');
+    if (pluginId === 'ipushpull') {
+      return api as IPushPullApi;
+    }
+
+    return api;
   }
 }

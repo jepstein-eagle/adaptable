@@ -11,11 +11,19 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * You can select the type of the Alert (e.g. Success, Warning, Error etc.) and where it appears.
  *
- * **Further AdapTable Help Resources**
+ * --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo/) | [API](_src_api_alertapi_.alertapi.html) | [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
+ *  ### Further AdapTable Help Resources
  *
- * **Alert Predefined Config Example**
+ * - [Alert Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
+ *
+ * - {@link AlertApi|Alert API}
+ *
+ * - [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
+ *
+ * --------------
+ *
+ *  ### Alert Predefined Config Example
  *
  * ```ts
  * export default {
@@ -90,6 +98,8 @@ export interface AlertState extends ConfigState {
 
 /**
  * The Alert Definition object used in the Alert function.
+ *
+ * See {@link AlertState|Alert State} for how to use this object.
  */
 export interface AlertDefinition extends AdaptableObject {
   /**
@@ -98,7 +108,7 @@ export interface AlertDefinition extends AdaptableObject {
   ColumnId: string;
 
   /**
-   * The QueryRange of the Alert (see Expression Object Config for more information on Ranges).
+   * The `QueryRange` of the Alert (see [[Expression]] for more information on Ranges).
    */
   Range: QueryRange;
 
@@ -113,11 +123,13 @@ export interface AlertDefinition extends AdaptableObject {
 
   /**
    * The type of the Alert - will influence how the Alert is logged and also the colour and icon displayed.
+   *
+   * Available values are 'Info', 'Success', 'Warning' and'Error';
    */
   MessageType: 'Success' | 'Info' | 'Warning' | 'Error';
 
   /**
-   * Whether to show the Alert when it is triggered as a popup.  All alerts will display in the Alerts toolbar.
+   * A series of properties which set what should happen when the Alert is triggered.
    */
   AlertProperties?: AlertProperties;
 }
@@ -127,7 +139,7 @@ export interface AlertDefinition extends AdaptableObject {
  *
  * Note: All Alerts will display in the Alert Dasbhoard Toolbar and the Alert ToolPanel, and be sent to the Console.
  *
- * These provide **additional** options for you to use.
+ * These provide **additional** options for Users following the triggering of an Alert.
  */
 export interface AlertProperties {
   /**

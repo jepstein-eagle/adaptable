@@ -1,23 +1,12 @@
 import * as React from 'react';
-import { useState, useRef, useEffect, ReactNode, useMemo } from 'react';
+import { useMemo, useLayoutEffect } from 'react';
 
-import { AdaptableApp } from '@adaptabletools/adaptable/src/View/AdaptableView';
 import Adaptable from '@adaptabletools/adaptable/src/agGrid';
 import { AdaptableApi } from '@adaptabletools/adaptable/types';
-import AbsoluteFlexContainer from './AbsoluteFlexContainer';
+
 import { AdaptableOptions } from '@adaptabletools/adaptable/types';
 
 import * as AgGrid from '@ag-grid-community/all-modules';
-import { AgGridReact, AgGridColumn } from '@ag-grid-community/react';
-import { ReactComponent } from '@ag-grid-community/react/lib/reactComponent';
-import {
-  Module,
-  FrameworkComponentWrapper,
-  BaseComponentWrapper,
-  WrapableInterface,
-  AllCommunityModules,
-  ModuleRegistry,
-} from '@ag-grid-community/all-modules';
 
 export * from '@adaptabletools/adaptable/types';
 
@@ -32,220 +21,109 @@ if (version !== coreVersion) {
 `);
 }
 
-ModuleRegistry.registerModules(AllCommunityModules);
-
-type TypeFactory =
-  | string
-  | typeof React.Component
-  | (({ children }: { children: ReactNode }) => ReactNode);
-
-type TypeChildren = ({ adaptable, grid }: { adaptable: ReactNode; grid: ReactNode }) => ReactNode;
-
 const join = (...args: any[]): string => args.filter(x => !!x).join(' ');
 
 const getRandomInt = (max: number): number => Math.floor(Math.random() * Math.floor(max));
 
-const getAgGridWrapperClassName = (agGridTheme: string) => {
-  const themeClassName =
-    agGridTheme.indexOf('ag-theme') === 0 ? agGridTheme : `ag-theme-${agGridTheme}`;
-
-  return `ab__aggrid-wrapper ab--flex-fill ${themeClassName}`;
-};
-
-class AgGridReactOverride extends AgGridReact {
-  public gridOptions: any;
-  public api: any;
-  public columnApi: any;
-  public eGridDiv!: HTMLElement;
-
-  componentDidMount() {
-    let gridOptions = this.props.gridOptions || {};
-    if (AgGridColumn && (AgGridColumn as any).hasChildColumns(this.props)) {
-      gridOptions.columnDefs = (AgGridColumn as any).mapChildColumnDefs(this.props);
-    }
-
-    this.gridOptions = (AgGrid as any).ComponentUtil.copyAttributesToGridOptions(
-      gridOptions,
-      this.props
-    );
-
-    const { adaptableFactory } = this.props as any;
-
-    const adaptable = adaptableFactory(this);
-
-    // don't need the return value
-    // new AgGrid.Grid(this.eGridDiv, this.gridOptions, gridParams);
-
-    this.api = adaptable.gridOptions.api;
-    this.columnApi = adaptable.gridOptions.columnApi;
-  }
-}
-
-class ReactFrameworkComponentWrapper extends BaseComponentWrapper<AgGrid.WrapableInterface>
-  implements FrameworkComponentWrapper {
-  private readonly agGridReact!: AgGridReact;
-
-  constructor(agGridReact: AgGridReact) {
-    super();
-    this.agGridReact = agGridReact;
-  }
-
-  createWrapper(UserReactComponent: { new (): any }): WrapableInterface {
-    return new ReactComponent(UserReactComponent, this.agGridReact as any);
-  }
-}
-
-const createAdaptable = ({
-  adaptableOptions,
-  gridOptions,
-  adaptableContainerId,
-  gridContainerId,
-  agGridReactWrapperInstance,
-  modules,
-}: {
-  adaptableOptions: AdaptableOptions;
-  gridOptions: AgGrid.GridOptions;
-  adaptableContainerId: string;
-  gridContainerId: string;
-  agGridReactWrapperInstance: AgGridReactOverride;
-  modules?: Module[];
-}): Adaptable => {
-  return new Adaptable(
-    {
-      ...adaptableOptions,
-      containerOptions: {
-        ...adaptableOptions.containerOptions,
-        adaptableContainer: adaptableContainerId,
-        vendorContainer: gridContainerId,
-      },
-      vendorGrid: gridOptions,
-    },
-    false,
-    {
-      instantiateGrid: (vendorContainer: HTMLElement, gridOptions) => {
-        const gridParams = {
-          providedBeanInstances: {
-            agGridReact: agGridReactWrapperInstance,
-            frameworkComponentWrapper: new ReactFrameworkComponentWrapper(
-              agGridReactWrapperInstance
-            ),
-          },
-          modules,
-        };
-        return new AgGrid.Grid(vendorContainer, gridOptions, gridParams);
-      },
-    },
-    true
-  );
-};
-
 const AdaptableReact = ({
   adaptableOptions,
   gridOptions,
-  modules,
-  tagName,
-  agGridTheme,
-  render,
   onAdaptableReady,
   ...props
 }: {
-  agGridTheme?: string;
   adaptableOptions: AdaptableOptions;
   gridOptions: AgGrid.GridOptions;
-  modules?: Module[];
-
   onAdaptableReady?: (adaptableReadyInfo: {
     adaptableApi: AdaptableApi;
     vendorGrid: AgGrid.GridOptions;
   }) => void;
-
-  tagName?: TypeFactory;
-} & React.HTMLProps<HTMLElement> & { children?: TypeChildren; render?: TypeChildren }) => {
+} & React.HTMLProps<HTMLDivElement>) => {
   const seedId = useMemo(() => `${getRandomInt(1000)}-${Date.now()}`, []);
   const adaptableContainerId = `adaptable-${seedId}`;
-  const gridContainerId = `grid-${seedId}`;
 
-  const [mounted, setMounted] = useState<boolean>(false);
+  useLayoutEffect(() => {
+    const startTime = Date.now();
 
-  const adaptableFactory = useMemo(() => {
-    return (agGridReactWrapperInstance: AgGridReactOverride) => {
-      const adaptable = createAdaptable({
-        gridOptions,
-        adaptableOptions,
-        gridContainerId,
-        adaptableContainerId,
-        agGridReactWrapperInstance,
-        modules,
-      });
-      if (onAdaptableReady) {
-        adaptable.api.eventApi.on('AdaptableReady', onAdaptableReady);
+    const poolForAggrid = (callback: () => void) => {
+      const api = gridOptions.api;
+
+      if (Date.now() - startTime > 1000) {
+        console.warn(
+          `Could not find any agGrid instance rendered.
+Please make sure you pass "gridOptions" to AdapTable, so it can connect to the correct agGrid instance.`
+        );
+        return;
       }
 
-      setAdaptable(adaptable);
-      return adaptable;
+      if (!api) {
+        requestAnimationFrame(() => {
+          poolForAggrid(callback);
+        });
+      } else {
+        callback();
+      }
     };
-  }, []);
 
-  let [adaptable, setAdaptable] = useState<Adaptable | null>(null);
+    let adaptableApi: AdaptableApi;
 
-  const TagName = tagName || 'div';
-  agGridTheme = agGridTheme || 'balham';
+    poolForAggrid(() => {
+      // IF YOU UPDATE THIS, make sure you also update the Angular wrapper impl
+      const layoutElements = (gridOptions.api as any).gridOptionsWrapper
+        ? (gridOptions.api as any).gridOptionsWrapper.layoutElements || []
+        : [];
 
-  const adaptableNode = adaptable ? <AdaptableApp key="adaptable" Adaptable={adaptable} /> : null;
+      let vendorContainer;
 
-  const overrideProps = {
-    ...gridOptions,
-    adaptableFactory: adaptableFactory,
-  };
+      for (let i = 0, len = layoutElements.length; i < len; i++) {
+        const element = layoutElements[i];
 
-  const gridWrapperNode = (
-    <AbsoluteFlexContainer
-      key="agGridWrapper"
-      style={{ flex: 1 }}
-      className={getAgGridWrapperClassName(agGridTheme)}
-      childProps={{
-        id: gridContainerId,
-      }}
-    >
-      {mounted ? <AgGridReactOverride {...overrideProps} /> : null}
-    </AbsoluteFlexContainer>
-  );
+        if (element && element.matches('.ag-root-wrapper')) {
+          const gridContainer = element.closest('[class*="ag-theme"]');
 
-  const adaptableRef = useRef<Adaptable | null>(adaptable);
+          if (gridContainer) {
+            vendorContainer = gridContainer;
+            break;
+          }
+        }
+      }
 
-  if (adaptable) {
-    adaptableRef.current = adaptable;
-  }
+      if (!vendorContainer) {
+        console.error(
+          `Could not find the agGrid vendor container. This will probably break some AdapTable functionality.`
+        );
+      }
+      adaptableApi = Adaptable.init({
+        ...adaptableOptions,
+        containerOptions: {
+          ...adaptableOptions.containerOptions,
+          adaptableContainer: adaptableContainerId,
+          vendorContainer,
+        },
+        vendorGrid: gridOptions,
+      });
 
-  useEffect(() => {
-    setMounted(true);
+      if (onAdaptableReady) {
+        adaptableApi.eventApi.on('AdaptableReady', onAdaptableReady);
+      }
+    });
 
     return () => {
-      if (adaptableRef.current) {
-        adaptableRef.current.destroy({ unmount: false });
+      if (adaptableApi) {
+        adaptableApi.destroy({
+          unmount: true,
+          destroyApi: false,
+        });
       }
-      adaptableRef.current = null;
+      adaptableApi = null;
     };
   }, []);
 
-  let children: ReactNode | ReactNode[] = [adaptableNode, gridWrapperNode];
-
-  const renderFn = render || props.children;
-
-  if (typeof renderFn === 'function') {
-    children = renderFn({
-      adaptable: adaptableNode,
-      grid: gridWrapperNode,
-    });
-  }
   return (
-    <TagName
+    <div
       {...props}
       id={adaptableContainerId}
       className={join(props.className, 'ab__react-wrapper')}
-    >
-      {children}
-    </TagName>
+    ></div>
   );
 };
 

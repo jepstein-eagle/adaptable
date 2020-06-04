@@ -216,13 +216,15 @@ class CustomSortPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CustomSortPopupProps> {
   return {
     CustomSorts: state.CustomSort.CustomSorts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CustomSortPopupProps> {
   return {
     onAddCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortAdd(customSort)),

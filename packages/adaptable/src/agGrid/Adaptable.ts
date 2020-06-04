@@ -1,3 +1,4 @@
+import * as Redux from 'redux';
 import {
   Grid,
   CellRange,
@@ -14,6 +15,7 @@ import {
   RowNodeTransaction,
   IClientSideRowModel,
   GridApi,
+  ColumnResizedEvent,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -97,7 +99,6 @@ import {
   HALF_SECOND,
   LIGHT_THEME,
   DARK_THEME,
-  AG_GRID_GROUPED_COLUMN,
 } from '../Utilities/Constants/GeneralConstants';
 import { agGridHelper } from './agGridHelper';
 import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
@@ -130,8 +131,6 @@ import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
-import { PushPullService } from '../Utilities/Services/PushPullService';
-import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
@@ -235,8 +234,6 @@ export class Adaptable implements IAdaptable {
   public SearchService: ISearchService;
 
   public Glue42Service: IGlue42Service;
-
-  public PushPullService: IPushPullService;
 
   public ReportService: IReportService;
 
@@ -409,33 +406,8 @@ export class Adaptable implements IAdaptable {
     // the audit service needs to be created before the store
     this.AuditLogService = new AuditLogService(this);
 
-    // create the store
-    this.initStore();
-
     // set up the helper
     this.agGridHelper = new agGridHelper(this, this.gridOptions);
-
-    // create the services
-    this.CalendarService = new CalendarService(this);
-    this.ValidationService = new ValidationService(this);
-    this.StyleService = new StyleService(this);
-    this.ChartService = new ChartService(this);
-    this.FreeTextColumnService = new FreeTextColumnService(this);
-    this.ScheduleService = new ScheduleService(this);
-    this.SearchService = new SearchService(this);
-    this.Glue42Service = new Glue42Service(this);
-    this.PushPullService = new PushPullService(this);
-    this.ReportService = new ReportService(this);
-    this.LayoutService = new LayoutService(this);
-    this.FilterService = new FilterService(this);
-    this.StrategyService = new StrategyService(this);
-    this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
-      this,
-      (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
-    );
-
-    this.forPlugins(plugin => plugin.afterInitServices(this));
-
     // we prefer the grid to be NOT instantiated so that we can do it
     // perhaps in future we will force instantiation only?
     const isGridInstantiated =
@@ -454,6 +426,28 @@ export class Adaptable implements IAdaptable {
     if (this.gridOptions.api) {
       (this.gridOptions.api as any).__adaptable = this;
     }
+    // create the store
+    this.initStore();
+
+    // create the services
+    this.CalendarService = new CalendarService(this);
+    this.ValidationService = new ValidationService(this);
+    this.StyleService = new StyleService(this);
+    this.ChartService = new ChartService(this);
+    this.FreeTextColumnService = new FreeTextColumnService(this);
+    this.ScheduleService = new ScheduleService(this);
+    this.SearchService = new SearchService(this);
+    this.Glue42Service = new Glue42Service(this);
+    this.ReportService = new ReportService(this);
+    this.LayoutService = new LayoutService(this);
+    this.FilterService = new FilterService(this);
+    this.StrategyService = new StrategyService(this);
+    this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
+      this,
+      (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
+    );
+
+    this.forPlugins(plugin => plugin.afterInitServices(this));
 
     // Set up strategies - we set up all the strategies suitable for the vendor grid
     // But users can make some hidden or readonly in their entitlements
@@ -517,6 +511,21 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  getPlugin(pluginId: string): AdaptablePlugin {
+    const plugins = this.adaptableOptions.plugins || [];
+    return plugins.filter(p => p.pluginId === pluginId)[0];
+  }
+
+  getPluginProperty(pluginId: string, propertyName: string, ...args: any): any {
+    const plugins = this.adaptableOptions.plugins || [];
+
+    const thePlugin = plugins.filter(p => p.pluginId === pluginId)[0];
+
+    if (thePlugin && thePlugin.hasProperty(propertyName)) {
+      return thePlugin.getProperty(propertyName)(...args);
+    }
+  }
+
   lookupPlugins(propertyName: string, ...args: any): any {
     const plugins = this.adaptableOptions.plugins || [];
 
@@ -545,18 +554,23 @@ export class Adaptable implements IAdaptable {
   private initStore() {
     this.AdaptableStore = new AdaptableStore(this);
 
-    this.AdaptableStore.onAny((eventName: string, data: any) => {
-      this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
+    this.AdaptableStore.onAny(
+      (
+        eventName: string,
+        data: { action: Redux.Action; state: AdaptableState; newState: AdaptableState }
+      ) => {
+        this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
 
-      if (eventName == INIT_STATE) {
-        // and reset state also?
-        this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
-        this.api.eventApi.emit('AdaptableReady', {
-          adaptableApi: this.api,
-          vendorGrid: this.adaptableOptions.vendorGrid,
-        });
+        if (eventName == INIT_STATE) {
+          // and reset state also?
+          this.forPlugins(plugin => plugin.onAdaptableReady(this, this.adaptableOptions));
+          this.api.eventApi.emit('AdaptableReady', {
+            adaptableApi: this.api,
+            vendorGrid: this.adaptableOptions.vendorGrid,
+          });
+        }
       }
-    });
+    );
   }
 
   private tryInstantiateAgGrid(): boolean {
@@ -721,7 +735,7 @@ export class Adaptable implements IAdaptable {
         return rowNode.data;
       });
     if (ArrayExtensions.IsNotNullOrEmpty(itemsToUpdate)) {
-      this.gridOptions.api!.updateRowData({ update: itemsToUpdate });
+      this.gridOptions.api!.applyTransaction({ update: itemsToUpdate });
     }
   }
 
@@ -846,14 +860,12 @@ export class Adaptable implements IAdaptable {
   }
 
   private applyStylingToColumn(vendorColumn: Column, abColumn: AdaptableColumn): void {
-    if (
-      vendorColumn.getColDef().filter &&
-      this.adaptableOptions!.filterOptions.useAdaptableFilterForm
-    ) {
+    const colDef = vendorColumn.getColDef();
+    if (colDef.filter && this.adaptableOptions!.filterOptions.useAdaptableFilterForm) {
       this.createFilterWrapper(vendorColumn);
     }
 
-    if (this.isQuickFilterActive()) {
+    if (colDef.floatingFilter && this.adaptableOptions!.filterOptions.useAdaptableQuickFilter) {
       this.createQuickFilterWrapper(vendorColumn);
     }
 
@@ -900,7 +912,8 @@ export class Adaptable implements IAdaptable {
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
       if (params.node && !params.node.group) {
-        const columnId = params.colDef.field ? params.colDef.field : params.colDef.colId;
+        let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
+
         const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
         if (
           StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
@@ -911,34 +924,50 @@ export class Adaptable implements IAdaptable {
             return false;
           }
 
-          //  let excludeColumnFromQuickSearch = adaptable.adaptableOptions.searchOptions!
-          //      .excludeColumnFromQuickSearch;
-          //    if (excludeColumnFromQuickSearch) {
-          //      if (excludeColumnFromQuickSearch(col)) {
-          //   return false;
-          //      }
-          //    }
+          // in the very rare use case where there is no column id and we have a value
+          // then lets try to find the column via the ColumnHeader and do it that way
+          if (columnId == null) {
+            if (params.columnApi) {
+              let allCols: Column[] = params.columnApi.getAllColumns();
+              if (ArrayExtensions.IsNotNullOrEmpty(allCols)) {
+                let currentColumn: Column = allCols.find(
+                  c => c.getColDef().headerName == params.colDef.headerName
+                );
+                if (currentColumn) {
+                  columnId = currentColumn.getColId();
+                }
+              }
+            }
+            // if that fails then we should do a basic comparison (but without creating a range)
+            if (columnId == null && params.value) {
+              return String(params.value)
+                .toLowerCase()
+                .includes(quickSearchState.QuickSearchText);
+            }
+          }
 
-          const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
-          if (range) {
-            // not right but just checking...
-            if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
-              const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                columnId,
-                null,
-                null,
-                null,
-                [range]
-              );
-              if (
-                ExpressionHelper.checkForExpressionFromRowNode(
-                  expression,
-                  params.node,
-                  [col],
-                  adaptable
-                )
-              ) {
-                return true;
+          if (columnId != null) {
+            const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
+            if (range) {
+              // not right but just checking...
+              if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
+                const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+                  columnId,
+                  null,
+                  null,
+                  null,
+                  [range]
+                );
+                if (
+                  ExpressionHelper.checkForExpressionFromRowNode(
+                    expression,
+                    params.node,
+                    [col],
+                    adaptable
+                  )
+                ) {
+                  return true;
+                }
               }
             }
           }
@@ -1381,7 +1410,7 @@ export class Adaptable implements IAdaptable {
   public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
     const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
-      if (colDef.valueFormatter) {
+      if (typeof colDef.valueFormatter == 'function') {
         const column = this.gridOptions.columnApi
           .getAllColumns()
           .find(c => c.getColId() == columnId);
@@ -1646,6 +1675,16 @@ export class Adaptable implements IAdaptable {
   };
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
+    // given how much changes when editing a calculated column lets first ensure that it really has changed
+    const existingCalcColumn: CalculatedColumn = this.api.calculatedColumnApi
+      .getAllCalculatedColumn()
+      .find(cc => cc.Uuid === calculatedColumn.Uuid);
+    if (existingCalcColumn) {
+      if (Helper.areObjectsEqual(existingCalcColumn, calculatedColumn)) {
+        return;
+      }
+    }
+
     // the name of the column might have changed so lets get the column from store as that will be the 'old' one
     const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
     const existingABColumn: AdaptableColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
@@ -1825,7 +1864,10 @@ export class Adaptable implements IAdaptable {
       filter: true,
       sortable: true,
       resizable: true,
-      cellEditor: 'agLargeTextCellEditor',
+      cellEditor:
+        freeTextColumn.TextEditor && freeTextColumn.TextEditor == 'Large'
+          ? 'agLargeTextCellEditor'
+          : 'agTextCellEditor',
       type: 'abColDefString',
       valueSetter: (params: ValueSetterParams) => {
         return (params.data[freeTextColumn.ColumnId] = params.newValue);
@@ -1931,9 +1973,14 @@ export class Adaptable implements IAdaptable {
     return rowNode;
   }
 
-  destroy(config?: { unmount: boolean }) {
+  destroy(config?: { unmount: boolean; destroyApi?: boolean }) {
     if (this.gridOptions && this.gridOptions.api) {
-      this.gridOptions.api.destroy();
+      (this.gridOptions.api as any).__adaptable = null;
+
+      if (config && config.destroyApi === false) {
+      } else {
+        this.gridOptions.api.destroy();
+      }
     }
 
     this.rowListeners = null;
@@ -2077,9 +2124,10 @@ export class Adaptable implements IAdaptable {
 
   private getGridContainerElement(): HTMLElement | null {
     if (!this.gridContainerElement) {
-      this.gridContainerElement = document.getElementById(
-        this.adaptableOptions!.containerOptions.vendorContainer
-      );
+      this.gridContainerElement =
+        typeof this.adaptableOptions!.containerOptions.vendorContainer === 'string'
+          ? document.getElementById(this.adaptableOptions!.containerOptions.vendorContainer)
+          : this.adaptableOptions!.containerOptions.vendorContainer;
     }
     return this.gridContainerElement;
   }
@@ -2204,21 +2252,21 @@ export class Adaptable implements IAdaptable {
       }
     });
 
-    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_RESIZED, (params: any) => {
-      if (!this.gridOptions.api) {
-        return;
-      }
-      // if a column is resized there are a couple of things we need to do once its finished
-      if (params.type == 'columnResized' && params.finished == true) {
-        // refresh the header if you have quick filter bar to ensure its full length
-        if (this.isQuickFilterActive()) {
-          this.gridOptions.api!.refreshHeader();
+    this.gridOptions.api!.addEventListener(
+      Events.EVENT_COLUMN_RESIZED,
+      (params: ColumnResizedEvent) => {
+        if (!this.gridOptions.api) {
+          return;
         }
-        if (params.column) {
-          this._emit('ColumnResized', params.column.colId);
+
+        // if a column is resized there are a couple of things we need to do once its finished
+        if (params.type == 'columnResized' && params.finished == true) {
+          if (params.column) {
+            this._emit('ColumnResized', params.column.getColId());
+          }
         }
       }
-    });
+    );
 
     // this event deals with when the user makes an edit - it doesnt look at ticking data
     this.gridOptions.api!.addEventListener(Events.EVENT_CELL_EDITING_STARTED, (params: any) => {
@@ -2323,7 +2371,7 @@ export class Adaptable implements IAdaptable {
     });
 
     // this handles ticking data
-    // except it doesnt handle when data has been added to ag-Grid using updateRowData
+    // except it doesnt handle when data has been added to ag-Grid using applyTransaction
     this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
@@ -2788,7 +2836,9 @@ export class Adaptable implements IAdaptable {
 
   public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
-    const formatColumns: FormatColumn[] = this.api.formatColumnApi.getAllFormatColumnWithDisplayFormat();
+    const formatColumns: FormatColumn[] = this.api.formatColumnApi
+      .getAllFormatColumnWithDisplayFormat()
+      .concat(this.api.formatColumnApi.getAllFormatColumnWithCellAlignment());
 
     const cols = this.gridOptions.columnApi.getAllColumns();
 
@@ -2808,17 +2858,32 @@ export class Adaptable implements IAdaptable {
         return;
       }
 
-      if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
-        const options = formatColumn.DisplayFormat.Options;
-        colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+      if (formatColumn.DisplayFormat) {
+        if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
+          const options = formatColumn.DisplayFormat.Options;
+          colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+        }
+
+        if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
+          const options = formatColumn.DisplayFormat.Options;
+          colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+        }
       }
 
-      if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
-        const options = formatColumn.DisplayFormat.Options;
-        colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+      // update the alignment if it has been set
+      if (formatColumn.CellAlignment != null) {
+        switch (formatColumn.CellAlignment) {
+          case 'Left':
+            colDef.cellClass = 'ab-cell--align-left';
+            break;
+          case 'Right':
+            colDef.cellClass = 'ab-cell--align-right';
+            break;
+          case 'Center':
+            colDef.cellClass = 'ab-cell--align-center';
+            break;
+        }
       }
-
-      this.gridOptions.columnApi.autoSizeColumn(colDef.field);
     });
   }
 
@@ -2841,7 +2906,7 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
-
+      this.applyFormatColumnDisplayFormats();
       this.addSpecialRendereredColumns();
       this._emit('SpecialColumnAdded');
     }
@@ -2958,11 +3023,6 @@ export class Adaptable implements IAdaptable {
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       const colDef: ColDef = vendorGridColumn.getColDef();
       colDef.cellRenderer = cellRendererFunc;
-
-      // change the style from number-cell temporarily?
-      if (colDef.cellClass == 'number-cell') {
-        colDef.cellClass = 'number-cell-changed';
-      }
 
       if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
         colDef.tooltipField = colDef.field;
@@ -3210,19 +3270,27 @@ export class Adaptable implements IAdaptable {
         sortModel.push({ colId: gs.Column, sort: sortDescription });
       });
     }
-    this.gridOptions.api!.setSortModel(sortModel);
-    this.gridOptions.api!.onSortChanged();
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.gridOptions.api.setSortModel(sortModel);
+    this.gridOptions.api.onSortChanged();
   }
 
   public setDataSource(dataSource: any) {
-    this.gridOptions.api!.setRowData(dataSource);
+    if (!this.gridOptions.api) {
+      return;
+    }
+    this.gridOptions.api.setRowData(dataSource);
   }
 
   public loadDataSource(dataSource: any) {
     this.setDataSource(dataSource);
     let currentLayout = this.api.layoutApi.getCurrentLayout();
-    if (ArrayExtensions.IsNotNullOrEmpty(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys)) {
-      this.expandRowGroupsForValues(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys);
+    if (currentLayout && currentLayout.AdaptableGridInfo) {
+      if (ArrayExtensions.IsNotNullOrEmpty(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys)) {
+        this.expandRowGroupsForValues(currentLayout.AdaptableGridInfo.ExpandedRowGroupKeys);
+      }
     }
   }
 
@@ -3232,18 +3300,18 @@ export class Adaptable implements IAdaptable {
   ): void {
     config = config || {};
     if (config.batchUpdate) {
-      this.gridOptions.api!.batchUpdateRowData({ update: dataRows }, config.callback);
+      this.gridOptions.api!.applyTransactionAsync({ update: dataRows }, config.callback);
     } else {
-      this.gridOptions.api!.updateRowData({ update: dataRows });
+      this.gridOptions.api!.applyTransaction({ update: dataRows });
     }
   }
 
   public addRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ add: dataRows });
+    this.gridOptions.api!.applyTransaction({ add: dataRows });
   }
 
   public deleteRows(dataRows: any[]): void {
-    this.gridOptions.api!.updateRowData({ remove: dataRows });
+    this.gridOptions.api!.applyTransaction({ remove: dataRows });
   }
 
   private updateQuickSearchRangeVisibleColumn(columnId: string): void {
@@ -3517,28 +3585,69 @@ export class Adaptable implements IAdaptable {
     return !isTreeLayout;
   }
 
-  private isQuickFilterActive(): boolean {
-    return (
-      this.gridOptions.floatingFilter === true &&
-      this.adaptableOptions!.filterOptions.useAdaptableQuickFilter
-    );
+  public isQuickFilterActive(): boolean {
+    return this.hasFloatingFilterOnAtLeastOneColumn() === true;
+  }
+
+  private hasFloatingFilterOnAtLeastOneColumn(defs = this.gridOptions.columnDefs): boolean {
+    if (this.gridOptions.defaultColDef && this.gridOptions.defaultColDef.floatingFilter) {
+      return true;
+    }
+    let col: ColDef | ColGroupDef;
+    for (col of this.gridOptions.columnDefs) {
+      if ((col as ColDef).floatingFilter) {
+        return true;
+      }
+      if ((col as ColGroupDef).children) {
+        if (this.hasFloatingFilterOnAtLeastOneColumn((col as ColGroupDef).children)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   public showQuickFilter(): void {
-    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
-      this.gridOptions.floatingFilter = true;
-      this.gridOptions.columnApi!.getAllGridColumns().forEach(col => {
-        this.createQuickFilterWrapper(col);
-      });
-      this.gridOptions.api!.refreshHeader();
-    }
+    this.gridOptions.api.setFloatingFiltersHeight(null);
   }
 
   public hideQuickFilter(): void {
-    if (this.adaptableOptions!.filterOptions!.useAdaptableQuickFilter) {
-      this.gridOptions.floatingFilter = false;
-      this.gridOptions.api!.refreshHeader();
+    this.gridOptions.api.setFloatingFiltersHeight(0);
+  }
+
+  public getVendorGridLightThemeName(): string {
+    const container = this.getGridContainerElement();
+
+    if (container && container.classList) {
+      // we detect the ag theme class
+      const classList = container.classList;
+      for (var i = 0, len = classList.length; i < len; i++) {
+        const cls = classList[i];
+
+        if (cls.indexOf('ag-theme-') === 0) {
+          // even if dark theme is included, we compute the light theme name out of it
+          return cls.replace('-dark', '');
+        }
+      }
     }
+    return this.agGridHelper.getVendorLightThemeName();
+  }
+
+  public getVendorGridCurrentThemeName(): string {
+    const container = this.getGridContainerElement();
+
+    if (container && container.classList) {
+      // we detect the ag theme class
+      const classList = container.classList;
+      for (var i = 0, len = classList.length; i < len; i++) {
+        const cls = classList[i];
+
+        if (cls.indexOf('ag-theme-') === 0) {
+          return cls;
+        }
+      }
+    }
+    return this.getVendorGridLightThemeName();
   }
 
   public applyAdaptableTheme(theme: AdaptableTheme | string) {
@@ -3547,7 +3656,12 @@ export class Adaptable implements IAdaptable {
     const themeNamesToRemove: string[] = [];
     const themesToRemove: AdaptableTheme[] = [];
 
-    const allThemes = this.api.themeApi.getAllTheme();
+    const allThemes = this.api.themeApi.getAllTheme().map(t => {
+      // we mutate the theme later,
+      // and since we don't want the mutation to end up in state
+      // we better clone it here
+      return { ...t };
+    });
     const allThemesMap: Record<string, AdaptableTheme> = allThemes.reduce(
       (acc: Record<string, AdaptableTheme>, theme: AdaptableTheme) => {
         acc[theme.Name] = theme;
@@ -3601,18 +3715,21 @@ export class Adaptable implements IAdaptable {
 
     const container = this.getGridContainerElement();
 
+    const getVendorLightThemeName = () => this.getVendorGridLightThemeName();
+    const getVendorDarkThemeName = () => getVendorLightThemeName() + '-dark';
+
     if (newTheme && isSystemTheme) {
       if (themeName === LIGHT_THEME) {
-        newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+        newTheme.VendorGridClassName = newTheme.VendorGridClassName || getVendorLightThemeName();
       }
       if (themeName === DARK_THEME) {
-        newTheme.VendorGridClassName = this.agGridHelper.getVendorDarkThemeName();
+        newTheme.VendorGridClassName = newTheme.VendorGridClassName || getVendorDarkThemeName();
       }
     }
 
     if (!newTheme.VendorGridClassName) {
       // default the vendor grid to the light theme
-      newTheme.VendorGridClassName = this.agGridHelper.getVendorLightThemeName();
+      newTheme.VendorGridClassName = getVendorLightThemeName();
     }
 
     if (container != null) {
@@ -3623,6 +3740,15 @@ export class Adaptable implements IAdaptable {
           }
         });
       }
+      // also remove all vendor theme class names
+      const vendorClassNamesToRemove: string[] = [];
+      container.classList.forEach(x => {
+        if (x && x.indexOf('ag-theme-') === 0) {
+          vendorClassNamesToRemove.push(x);
+        }
+      });
+
+      vendorClassNamesToRemove.forEach(x => container.classList.remove(x));
 
       if (newTheme && newTheme.VendorGridClassName) {
         container.classList.add(newTheme.VendorGridClassName);
@@ -3716,10 +3842,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.api.internalApi.setTreeModeOn();
     }
 
-    // sometimes the header row looks wrong when using quick filter so to be sure...
     if (this.isQuickFilterActive()) {
       this.api.internalApi.showQuickFilterBar();
-      this.gridOptions.api!.refreshHeader();
     }
 
     const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();
@@ -3765,6 +3889,10 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       }
     }
     return null;
+  }
+
+  canExportToExcel(): boolean {
+    return this.agGridHelper.isModulePresent('excel-export');
   }
 
   exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {

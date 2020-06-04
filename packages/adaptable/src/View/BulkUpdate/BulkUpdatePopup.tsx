@@ -270,7 +270,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<BulkUpdatePopupProps> {
   return {
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     PreviewInfo: state.System.BulkUpdatePreviewInfo,
@@ -278,7 +278,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<BulkUpdatePopupProps> {
   return {
     onBulkUpdateValueChange: (value: string) =>
       dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),

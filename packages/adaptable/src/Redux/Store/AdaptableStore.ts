@@ -29,7 +29,6 @@ import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux';
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux';
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux';
 import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
-import * as ReminderRedux from '../ActionsReducers/ReminderRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as GradientColumnRedux from '../ActionsReducers/GradientColumnRedux';
@@ -44,12 +43,12 @@ import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
 import * as ToolPanelRedux from '../ActionsReducers/ToolPanelRedux';
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
 import * as PercentBarRedux from '../ActionsReducers/PercentBarRedux';
+import * as ScheduleRedux from '../ActionsReducers/ScheduleRedux';
 import * as EntitlementsRedux from '../ActionsReducers/EntitlementsRedux';
 import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as IPushPullRedux from '../ActionsReducers/IPushPullRedux';
 import * as Glue42Redux from '../ActionsReducers/Glue42Redux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
@@ -129,78 +128,20 @@ import {
 
 import Emitter from '../../Utilities/Emitter';
 import { ChartDefinition } from '../../PredefinedConfig/ChartState';
-import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IPushPullStrategy } from '../../Strategy/Interface/IPushPullStrategy';
 import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
 import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
+import { IPushPullState } from '../../PredefinedConfig/SystemState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
-/*
-This is the main store for Adaptable State
-*/
-
-const rootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<AdaptableState>({
-  //  Reducers for Non-Persisted State
-  Grid: GridRedux.GridReducer,
-  Popup: PopupRedux.PopupReducer,
-  System: SystemRedux.SystemReducer,
-  SystemStatus: SystemStatusRedux.SystemStatusReducer,
-  TeamSharing: TeamSharingRedux.TeamSharingReducer,
-  Plugins: PluginsRedux.PluginsReducer,
-
-  ActionColumn: ActionColumnRedux.ActionColumnReducer,
-  Entitlements: EntitlementsRedux.EntitlementsReducer,
-  NamedFilter: NamedFilterRedux.NamedFilterReducer,
-  Glue42: Glue42Redux.Glue42Reducer,
-  IPushPull: IPushPullRedux.IPushPullReducer,
-  SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
-  SystemFilter: SystemFilterRedux.SystemFilterReducer,
-  UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
-
-  // not sure
-  CellSummary: CellSummaryRedux.CellSummaryReducer,
-
-  // Reducers for Persisted State
-  AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
-  Alert: AlertRedux.AlertReducer,
-  Application: ApplicationRedux.ApplicationReducer,
-  BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
-  CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
-  Calendar: CalendarRedux.CalendarReducer,
-  CellValidation: CellValidationRedux.CellValidationReducer,
-  Chart: ChartRedux.ChartReducer,
-  ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
-  ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
-  ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
-  CustomSort: CustomSortRedux.CustomSortReducer,
-  Dashboard: DashboardRedux.DashboardReducer,
-  DataSource: DataSourceRedux.DataSourceReducer,
-  Export: ExportRedux.ExportReducer,
-  FlashingCell: FlashingCellsRedux.FlashingCellReducer,
-  FormatColumn: FormatColumnRedux.FormatColumnReducer,
-  FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
-  Layout: LayoutRedux.LayoutReducer,
-  PercentBar: PercentBarRedux.PercentBarReducer,
-  GradientColumn: GradientColumnRedux.GradientColumnReducer,
-  PlusMinus: PlusMinusRedux.PlusMinusReducer,
-  QuickSearch: QuickSearchRedux.QuickSearchReducer,
-  Reminder: ReminderRedux.ReminderReducer,
-  Shortcut: ShortcutRedux.ShortcutReducer,
-  SmartEdit: SmartEditRedux.SmartEditReducer,
-  Theme: ThemeRedux.ThemeReducer,
-  ToolPanel: ToolPanelRedux.ToolPanelReducer,
-  UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
-  UserFilter: UserFilterRedux.UserFilterReducer,
-});
 
 export const RESET_STATE = 'RESET_STATE';
 export const INIT_STATE = 'INIT_STATE';
@@ -230,52 +171,6 @@ export const LoadState = (State: { [s: string]: ConfigState }): LoadStateAction 
   type: LOAD_STATE,
   State,
 });
-
-const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Action) => {
-  switch (action.type) {
-    case RESET_STATE:
-      //This trigger the persist of the state with nothing
-      state.AdvancedSearch = undefined;
-      state.Alert = undefined;
-      state.BulkUpdate = undefined;
-      state.CalculatedColumn = undefined;
-      state.Calendar = undefined;
-      state.CellValidation = undefined;
-      state.ConditionalStyle = undefined;
-      state.Chart = undefined;
-      state.CustomSort = undefined;
-      state.Dashboard.VisibleButtons = [];
-      state.Dashboard = undefined;
-      state.DataSource = undefined;
-      state.Entitlements = undefined;
-      state.Export = undefined;
-      state.FlashingCell = undefined;
-      state.FormatColumn = undefined;
-      state.ColumnFilter.ColumnFilters = [];
-      state.UserFilter.UserFilters = [];
-      state.SystemFilter.SystemFilters = [];
-      state.Grid = undefined;
-      state.Layout = undefined;
-      state.PlusMinus = undefined;
-      state.QuickSearch = undefined;
-      state.Shortcut = undefined;
-      state.SmartEdit = undefined;
-      state.CellSummary = undefined;
-      state.Theme = undefined;
-      state.IPushPull = undefined;
-      state.Glue42 = undefined;
-      state.ToolPanel = undefined;
-      break;
-    case LOAD_STATE:
-      const { State } = action as LoadStateAction;
-      Object.keys(State).forEach(key => {
-        state[key] = State[key];
-      });
-      break;
-  }
-  return rootReducer(state, action);
-};
-
 // const configServerUrl = "/adaptableadaptable-config"
 const configServerTeamSharingUrl = '/adaptableadaptable-teamsharing';
 
@@ -298,6 +193,123 @@ export class AdaptableStore implements IAdaptableStore {
   };
 
   constructor(adaptable: IAdaptable) {
+    /*
+This is the main store for Adaptable State
+*/
+
+    let rootReducerObject = {
+      //  Reducers for Non-Persisted State
+      Grid: GridRedux.GridReducer,
+      Popup: PopupRedux.PopupReducer,
+      System: SystemRedux.SystemReducer,
+      SystemStatus: SystemStatusRedux.SystemStatusReducer,
+      TeamSharing: TeamSharingRedux.TeamSharingReducer,
+      Plugins: PluginsRedux.PluginsReducer,
+
+      IPushPull: (state: IPushPullState, action: Redux.Action) => {
+        return state || null;
+      },
+
+      ActionColumn: ActionColumnRedux.ActionColumnReducer,
+      Entitlements: EntitlementsRedux.EntitlementsReducer,
+      NamedFilter: NamedFilterRedux.NamedFilterReducer,
+      Glue42: Glue42Redux.Glue42Reducer,
+      SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
+      SystemFilter: SystemFilterRedux.SystemFilterReducer,
+      UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
+
+      // not sure
+      CellSummary: CellSummaryRedux.CellSummaryReducer,
+
+      // Reducers for Persisted State
+      AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
+      Alert: AlertRedux.AlertReducer,
+      Application: ApplicationRedux.ApplicationReducer,
+      BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
+      CalculatedColumn: CalculatedColumnRedux.CalculatedColumnReducer,
+      Calendar: CalendarRedux.CalendarReducer,
+      CellValidation: CellValidationRedux.CellValidationReducer,
+      Chart: ChartRedux.ChartReducer,
+      ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
+      ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
+      ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
+      CustomSort: CustomSortRedux.CustomSortReducer,
+      Dashboard: DashboardRedux.DashboardReducer,
+      DataSource: DataSourceRedux.DataSourceReducer,
+      Export: ExportRedux.ExportReducer,
+      FlashingCell: FlashingCellsRedux.FlashingCellReducer,
+      FormatColumn: FormatColumnRedux.FormatColumnReducer,
+      FreeTextColumn: FreeTextColumnRedux.FreeTextColumnReducer,
+      Layout: LayoutRedux.LayoutReducer,
+      PercentBar: PercentBarRedux.PercentBarReducer,
+      Schedule: ScheduleRedux.ScheduleReducer,
+      GradientColumn: GradientColumnRedux.GradientColumnReducer,
+      PlusMinus: PlusMinusRedux.PlusMinusReducer,
+      QuickSearch: QuickSearchRedux.QuickSearchReducer,
+      Shortcut: ShortcutRedux.ShortcutReducer,
+      SmartEdit: SmartEditRedux.SmartEditReducer,
+      Theme: ThemeRedux.ThemeReducer,
+      ToolPanel: ToolPanelRedux.ToolPanelReducer,
+      UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
+      UserFilter: UserFilterRedux.UserFilterReducer,
+    };
+
+    // allow plugins to participate in the root reducer
+    adaptable.forPlugins(plugin => {
+      if (plugin.rootReducer) {
+        rootReducerObject = { ...rootReducerObject, ...plugin.rootReducer };
+      }
+    });
+
+    const initialRootReducer: Redux.Reducer<AdaptableState> = Redux.combineReducers<AdaptableState>(
+      rootReducerObject
+    );
+
+    const rootReducerWithResetManagement = (state: AdaptableState, action: Redux.Action) => {
+      switch (action.type) {
+        case RESET_STATE:
+          //This trigger the persist of the state with nothing
+          state.AdvancedSearch = undefined;
+          state.Alert = undefined;
+          state.BulkUpdate = undefined;
+          state.CalculatedColumn = undefined;
+          state.Calendar = undefined;
+          state.CellValidation = undefined;
+          state.ConditionalStyle = undefined;
+          state.Chart = undefined;
+          state.CustomSort = undefined;
+          state.Dashboard.VisibleButtons = [];
+          state.Dashboard = undefined;
+          state.DataSource = undefined;
+          state.Entitlements = undefined;
+          state.Export = undefined;
+          state.FlashingCell = undefined;
+          state.FormatColumn = undefined;
+          state.ColumnFilter.ColumnFilters = [];
+          state.UserFilter.UserFilters = [];
+          state.SystemFilter.SystemFilters = [];
+          state.Grid = undefined;
+          state.Layout = undefined;
+          state.PlusMinus = undefined;
+          state.QuickSearch = undefined;
+          state.Shortcut = undefined;
+          state.SmartEdit = undefined;
+          state.CellSummary = undefined;
+          state.Theme = undefined;
+          state.IPushPull = undefined;
+          state.Glue42 = undefined;
+          state.ToolPanel = undefined;
+          break;
+        case LOAD_STATE:
+          const { State } = action as LoadStateAction;
+          Object.keys(State).forEach(key => {
+            state[key] = State[key];
+          });
+          break;
+      }
+      return initialRootReducer(state, action);
+    };
+
     let storageEngine: IStorageEngine;
 
     this.emitter = new Emitter();
@@ -340,6 +352,9 @@ export class AdaptableStore implements IAdaptableStore {
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
+
+      // temp: putting Glue42 here...
+      ConfigConstants.GLUE42,
     ];
 
     // this is now VERY BADLY NAMED!
@@ -361,11 +376,13 @@ export class AdaptableStore implements IAdaptableStore {
       // ideally the reducer should be pure,
       // but having the emitter emit the event here
       // is really useful
-      this.emitter.emit(action.type, { action, state, newState });
+      const emitterArg = { action, state, newState };
+      this.emitter.emit(action.type, emitterArg);
+      const finalState = emitterArg.newState;
 
       const shouldPersist = !NON_PERSIST_ACTIONS[action.type] && !init;
       if (shouldPersist) {
-        const storageState = { ...newState };
+        const storageState = { ...finalState };
 
         nonPersistentReduxKeys.forEach(key => {
           delete storageState[key];
@@ -374,7 +391,7 @@ export class AdaptableStore implements IAdaptableStore {
         storageEngine.save(adaptable.adaptableOptions.stateOptions.saveState(storageState));
       }
 
-      return newState;
+      return finalState;
     };
 
     //TODO: need to check if we want the storage to be done before or after
@@ -384,7 +401,7 @@ export class AdaptableStore implements IAdaptableStore {
       composeEnhancers(
         Redux.applyMiddleware(
           stateChangedAuditLogMiddleware(adaptable), // checks for changes in internal / user state and sends to audit log
-          adaptableadaptableMiddleware(adaptable), // the main middleware that actually does stuff
+          adaptableMiddleware(adaptable), // the main middleware that actually does stuff
           functionAppliedLogMiddleware(adaptable) // looks at when functions are applied (e..g Quick Search) and logs accordingly
         )
       )
@@ -1490,8 +1507,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           REMINDER
           **********************
            */
-          case ReminderRedux.REMINDER_SCHEDULE_ADD: {
-            const actionTyped = action as ReminderRedux.ReminderScheduleAddAction;
+          case ScheduleRedux.REMINDER_SCHEDULE_ADD: {
+            const actionTyped = action as ScheduleRedux.ReminderScheduleAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1503,8 +1520,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ReminderRedux.REMINDER_SCHEDULE_EDIT: {
-            const actionTyped = action as ReminderRedux.ReminderScheduleEditAction;
+          case ScheduleRedux.REMINDER_SCHEDULE_EDIT: {
+            const actionTyped = action as ScheduleRedux.ReminderScheduleEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1516,8 +1533,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ReminderRedux.REMINDER_SCHEDULE_DELETE: {
-            const actionTyped = action as ReminderRedux.ReminderScheduleDeleteAction;
+          case ScheduleRedux.REMINDER_SCHEDULE_DELETE: {
+            const actionTyped = action as ScheduleRedux.ReminderScheduleDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.ReminderStrategyId,
               actionType: action.type,
@@ -1729,6 +1746,42 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
               action: action.type,
               info: actionTyped.selectedSearchName,
               data: advancedSearch,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnAddAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
+          case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
+            const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.CalculatedColumnStrategyId,
+              action: action.type,
+              info: actionTyped.calculatedColumn.ColumnId,
+              data: actionTyped.calculatedColumn,
             };
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -1962,7 +2015,7 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
 
 // this is the main function for dealing with Redux Actions which require additional functionality to be triggered.
 // Please document each use case where we have to use the Store rather than a strategy or a popup screen
-var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
+var adaptableMiddleware = (adaptable: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
   ) {
@@ -2563,47 +2616,6 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          /*******************
-           * IPUSHPULL ACTIONS
-           *******************/
-
-          case IPushPullRedux.IPUSHPULL_LOGIN: {
-            const actionTyped = action as IPushPullRedux.IPushPullLoginAction;
-            adaptable.api.iPushPullApi.loginToIPushPull(actionTyped.username, actionTyped.password);
-            return next(action);
-          }
-
-          case IPushPullRedux.IPUSHPULL_SEND_SNAPSHOT: {
-            let iPushPullStrategy = <IPushPullStrategy>(
-              adaptable.strategies.get(StrategyConstants.IPushPullStrategyId)
-            );
-            const actionTyped = action as IPushPullRedux.IPushPullSendSnapshotAction;
-            iPushPullStrategy.sendSnapshot(actionTyped.iPushPullReport);
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-            return next(action);
-          }
-
-          case IPushPullRedux.IPUSHPULL_START_LIVE_DATA: {
-            let iPushPullStrategy = <IPushPullStrategy>(
-              adaptable.strategies.get(StrategyConstants.IPushPullStrategyId)
-            );
-            const actionTyped = action as IPushPullRedux.IPushPullStartLiveDataAction;
-            iPushPullStrategy.startLiveData(actionTyped.iPushPullReport);
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-            return next(action);
-          }
-
-          case IPushPullRedux.IPUSHPULL_STOP_LIVE_DATA: {
-            adaptable.api.iPushPullApi.stopLiveData();
-            return next(action);
-          }
-
-          case IPushPullRedux.IPUSHPULL_ADD_PAGE: {
-            const actionTyped = action as IPushPullRedux.IPushPullAddPageAction;
-            adaptable.api.iPushPullApi.addNewIPushPullPage(actionTyped.folder, actionTyped.page);
-            return next(action);
-          }
-
           // Not doing this for ipushpull and think we should not do the same for the others
           // when we come to update them
           // better to do it in the api for each
@@ -2699,7 +2711,7 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
            * TEAM SHARING ACTIONS
            *******************/
 
-          case TeamSharingRedux.TEAMSHARING_FETCH: {
+          case TeamSharingRedux.TEAMSHARING_GET: {
             let returnAction = next(action);
 
             const { adaptableId, teamSharingOptions } = adaptable.adaptableOptions;
@@ -3033,8 +3045,16 @@ var adaptableadaptableMiddleware = (adaptable: IAdaptable): any =>
             return returnAction;
           }
 
-          default:
-            return next(action);
+          default: {
+            let response: null | Redux.Action<any> = null;
+            adaptable.forPlugins(plugin => {
+              const middleware = plugin.reduxMiddleware(next);
+              if (middleware && !response) {
+                response = middleware(action, adaptable, middlewareAPI);
+              }
+            });
+            return response || next(action);
+          }
         }
       };
     };
@@ -3058,15 +3078,6 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.REPORT_STOP_LIVE,
 
     SystemRedux.REPORT_SET_ERROR_MESSAGE,
-
-    IPushPullRedux.IPUSHPULL_LOGIN,
-    IPushPullRedux.IPUSHPULL_SET_LOGIN_ERROR_MESSAGE,
-    IPushPullRedux.SET_IPUSHPULL_AVAILABLE_ON,
-    IPushPullRedux.SET_IPUSHPULL_AVAILABLE_OFF,
-    IPushPullRedux.IPUSHPULL_DOMAIN_PAGES_SET,
-    IPushPullRedux.IPUSHPULL_DOMAIN_PAGES_CLEAR,
-    IPushPullRedux.IPUSHPULL_LIVE_REPORT_SET,
-    IPushPullRedux.IPUSHPULL_LIVE_REPORT_CLEAR,
 
     SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION,
     SystemRedux.SMARTEDIT_FETCH_PREVIEW,
@@ -3151,6 +3162,10 @@ export function getFunctionAppliedReduxActions(): string[] {
     ColumnFilterRedux.COLUMN_FILTER_ADD,
     ColumnFilterRedux.COLUMN_FILTER_EDIT,
     ColumnFilterRedux.COLUMN_FILTER_CLEAR,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_ADD,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT,
+    CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE,
+    LayoutRedux.LAYOUT_SELECT,
   ];
 }
 

@@ -107,7 +107,6 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__AdvancedSearch"
         headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName}
-        glyphicon={StrategyConstants.AdvancedSearchGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -120,14 +119,19 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<AdvancedSearchToolbarControlComponentProps> {
   return {
     CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
     AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AdvancedSearchToolbarControlComponentProps> {
   return {
     onSelectAdvancedSearch: (advancedSearchName: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),

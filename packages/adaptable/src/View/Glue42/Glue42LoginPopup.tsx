@@ -127,7 +127,7 @@ const Glue42LoginComponent = (props: Glue42LoginPopupProps) => {
   );
 };
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<Glue42LoginPopupProps> {
   return {
     glue42Login: state.Glue42 ? state.Glue42!.Username : undefined,
     glue42Password: state.Glue42 ? state.Glue42!.Password : undefined,
@@ -135,7 +135,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<Glue42LoginPopupProps> {
   return {
     onLogin: (login: string, password: string) =>
       dispatch(Glue42Redux.Glue42Login(login, password)),

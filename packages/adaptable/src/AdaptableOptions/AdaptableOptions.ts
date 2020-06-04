@@ -7,6 +7,7 @@ import { QueryOptions } from './QueryOptions';
 import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
+import { DetailPredefinedConfig } from '../PredefinedConfig/DetailPredefinedConfig';
 import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
@@ -160,7 +161,7 @@ export interface AdaptableOptions {
    *
    * - **Alert**: If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
    *
-   * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](_src_api_auditeventapi_.auditeventapi.html)
+   * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the {@link AuditEventApi|Audit Event API}
    *
    */
   auditOptions?: AuditOptions;
@@ -293,4 +294,10 @@ export interface AdaptableOptions {
    *
    */
   userFunctions?: UserFunctions;
+
+  detailOptions?: DetailAdaptableOptions;
+}
+
+export interface DetailAdaptableOptions extends AdaptableOptions {
+  predefinedConfig?: DetailPredefinedConfig;
 }

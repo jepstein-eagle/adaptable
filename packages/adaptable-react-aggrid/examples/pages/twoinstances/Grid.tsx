@@ -117,7 +117,7 @@ export default function Grid({}: GridProps) {
 
         data.notional = Math.random();
 
-        api!.updateRowData({
+        api!.applyTransaction({
           ['update']: [data],
         });
       }, 1000);

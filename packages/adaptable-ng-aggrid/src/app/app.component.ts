@@ -1,16 +1,25 @@
 import { Component } from '@angular/core';
-import { GridOptions, Module } from '@ag-grid-community/all-modules';
+import {
+  GridOptions,
+  Module,
+  ClientSideRowModelModule,
+} from '@ag-grid-community/all-modules';
 
 import rowData from './rowData';
 import columns from './columns';
-import {
-  AdaptableOptions,
-  AdaptableApi,
-} from '@adaptabletools/adaptable/types';
+// import {
+//   AdaptableOptions,
+//   AdaptableApi,
+// } from '@adaptabletools/adaptable/types';
 
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
+
 import { SideBarModule } from '@ag-grid-enterprise/side-bar';
+import {
+  AdaptableApi,
+  AdaptableOptions,
+} from '@adaptabletools/adaptable/types';
 
 @Component({
   selector: 'app-root',
@@ -18,12 +27,16 @@ import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 })
 export class AppComponent {
   title = 'APP_ROOT';
-  adaptableStyle = {
-    height: '100vh',
-  };
 
   public gridOptions: GridOptions;
-  public modules: Module[] = [RangeSelectionModule, MenuModule, SideBarModule];
+  public rowData: any[];
+  private showAdaptable = true;
+  public modules: Module[] = [
+    RangeSelectionModule,
+    MenuModule,
+    SideBarModule,
+    ClientSideRowModelModule,
+  ];
 
   theOptions: AdaptableOptions = {
     primaryKey: 'OrderId',
@@ -33,6 +46,9 @@ export class AppComponent {
       vendorContainer: 'vendorDiv', // is this rights
     },
     predefinedConfig: {},
+    userInterfaceOptions: {
+      showAdaptableToolPanel: true,
+    },
     auditOptions: {
       auditCellEdits: {
         auditAsEvent: true,
@@ -40,14 +56,15 @@ export class AppComponent {
     },
   };
   constructor() {
+    this.rowData = rowData;
     this.gridOptions = {
       animateRows: true,
       enableRangeSelection: true,
-      floatingFilter: true,
+
       suppressAggFuncInHeader: true,
       sideBar: true,
       suppressMenuHide: true,
-      rowData,
+
       onRowClicked: event => {
         console.log('row clicked', event);
       },
@@ -63,16 +80,30 @@ export class AppComponent {
         abColDefObject: {},
       },
     };
+
+    // setTimeout(() => {
+    //   this.showAdaptable = true;
+
+    //   setTimeout(() => {
+    //     this.showAdaptable = false;
+    //   }, 2000);
+    // }, 1000);
   }
 
-  onAdaptableReady(api: AdaptableApi) {
-    console.log('adaptable ready!!!', api);
+  onAdaptableReady({
+    adaptableApi,
+    vendorGrid,
+  }: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: GridOptions;
+  }) {
+    console.log('IS adaptable ready!!!', adaptableApi);
 
-    api.auditEventApi.on('AuditCellEdited', function(args) {
+    adaptableApi.auditEventApi.on('AuditCellEdited', args => {
       console.warn(args, '!!!!!');
     });
 
-    api.eventApi.on('SelectionChanged', selection => {
+    adaptableApi.eventApi.on('SelectionChanged', selection => {
       console.warn('selection changed', selection);
     });
   }

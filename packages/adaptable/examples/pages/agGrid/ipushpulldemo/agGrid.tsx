@@ -11,7 +11,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import ipushpull from 'ipushpull-js';
+
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { TickingDataHelper } from '../../TickingDataHelper';
@@ -20,18 +20,7 @@ import {
   LiveDataChangedInfo,
 } from '../../../../src/Api/Events/LiveDataChanged';
 import { IPushPullReport } from '../../../../src/PredefinedConfig/IPushPullState';
-
-ipushpull.config.set({
-  api_secret: '',
-  api_key: '',
-  api_url: 'https://www.ipushpull.com/api/1.0',
-  ws_url: 'https://www.ipushpull.com',
-  web_url: 'https://www.ipushpull.com',
-  docs_url: 'https://docs.ipushpull.com',
-  storage_prefix: 'ipp_local',
-  transport: 'polling',
-  hsts: false, // strict cors policy
-});
+import ipp from '../../../../../plugins/ipushpull/src';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -45,6 +34,12 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'ipushpull Demo',
+    plugins: [
+      ipp({
+        username: 'jonny.wolfson@adaptabletools.com',
+        password: 'traders',
+      }),
+    ],
     vendorGrid: {
       ...gridOptions,
       modules: [MenuModule, RangeSelectionModule],
@@ -54,11 +49,21 @@ function InitAdaptableDemo() {
 
   const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
 
+  const ippApi = adaptableApi.pluginsApi.getPluginApi('ipushpull');
+
+  // ippApi.
+  console.log(ippApi);
+
   console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
 
   adaptableApi.eventApi.on('AdaptableReady', ({ vendorGrid: gridOptions }) => {
     if (useTickingData) {
-      tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 1000, tradeCount);
+      tickingDataHelper.useTickingDataagGrid(
+        adaptableOptions.vendorGrid,
+        adaptableApi,
+        1000,
+        tradeCount
+      );
     }
   });
 
@@ -74,14 +79,6 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  IPushPull: {
-    iPushPullInstance: ipushpull,
-    Username: process.env.IPUSHPULL_USERNAME,
-    Password: process.env.IPUSHPULL_PASSWORD,
-    ThrottleTime: 5000,
-    //   AutoLogin: true,
-  },
-
   FlashingCell: {
     FlashingCells: [
       {

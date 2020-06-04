@@ -17,11 +17,11 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  --------------
  *
- *  **Further AdapTable Help Resources**
+ *   ### Further AdapTable Help Resources
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - [Action Column API](_src_api_actioncolumnapi_.actioncolumnapi.html)
+ * - {@link ActionColumnApi|Action Column API}
  *
  * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
@@ -29,7 +29,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  --------------
  *
- * **Action Column Predefined Config Example**
+ * ### Action Column Predefined Config Example
  *
  * In this example we create a column called 'Delete Trade'.
  *
@@ -97,9 +97,13 @@ export interface ActionColumnState extends ConfigState {
  *
  * An Action Column will be dynamically added to your Grid and automatically display a button.
  *
- * When this button is clicked, it will trigger the `ActionColumnClicked` event to which you can subscribe and perform any functin
+ * When this button is clicked, it will trigger the `ActionColumnClicked` event to which you can subscribe and perform any function.
  *
- * You are, optionally, able to provide your own render function and specify for each row whether the button is displayed.
+ * You are, optionally, able to provide 2 other functions:
+ *
+ * - **ShouldRenderPredicate** - which decides whether to display the button
+ *
+ * - **RenderFunction** - which stipulates how the button will look  own render function and specify for each row whether the button is displayed
  */
 export interface ActionColumn extends AdaptableObject {
   /**
@@ -142,11 +146,22 @@ export interface ActionColumn extends AdaptableObject {
   ShouldRenderPredicate?: string;
 }
 
+/**
+ * Function which stipulates how an Action Column button will be rendered.
+ *
+ * Used by an {@link ActionColumn|Action Column} and provided as part of {@link ActionColumnState|Action Column State}
+ */
 export interface ActionColumnRenderFunction extends BaseUserFunction {
   type: 'ActionColumnRenderFunction';
   name: string;
   handler: (params: ActionColumnRenderParams) => string;
 }
+
+/**
+ * Function which stipulates whether an Action Column button should be displayed.
+ *
+ * Used by an {@link ActionColumn|Action Column} and provided as part of {@link ActionColumnState|Action Column State}
+ */
 export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
   type: 'ActionColumnShouldRenderPredicate';
   name: string;
@@ -154,9 +169,9 @@ export interface ActionColumnShouldRenderPredicate extends BaseUserFunction {
 }
 
 /**
- * The params used in the `RenderFunction` and `ShouldRenderPredicate` properties of  [`ActionColumn`](_src_predefinedconfig_actioncolumnstate_.actioncolumn.html).
+ * The params used in the `RenderFunction` and `ShouldRenderPredicate` properties of {@link ActionColumn|Action Column}.
  *
- * Provides details of the column itself and the row (and row node) that is being rendered.
+ * The contents of the object provides details of the column itself and also the row (and row node) that is being rendered.
  */
 export interface ActionColumnRenderParams {
   /**

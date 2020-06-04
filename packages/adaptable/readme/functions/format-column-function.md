@@ -1,6 +1,6 @@
 # Format Column (AdaptableFunction)
 
-The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given a particular **Style** (i.e. colours, font size etc) and / or **Display Format** which **all cells** in the Column will display.
+The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given any (or all) of a particular **Style** (i.e. colours, font size etc), **Display Format** or **Cell Alignment** which **all cells** in the Column will display.
 
 ### Style
 
@@ -23,6 +23,9 @@ Display Formats can be set for:
 
 - **Date Columns**: users can set their own date pattern or select from one of the presets.  The full list of the available patterns is [here](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
 
+### Cell Alignment
+
+The Format Column can be set so that contents in the cells will align to the *left*, *right* or be placed in the *center*.
 
 ## UI Elements
 Format Column includes the following UI Elements:

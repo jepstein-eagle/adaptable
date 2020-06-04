@@ -13,6 +13,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import Adaptable from '../../../../agGrid';
 import { AdaptableColumn } from '../../../../src/PredefinedConfig/Common/AdaptableColumn';
 import { Report } from '../../../../src/PredefinedConfig/ExportState';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var api: AdaptableApi;
 
@@ -26,7 +27,10 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Export Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
 

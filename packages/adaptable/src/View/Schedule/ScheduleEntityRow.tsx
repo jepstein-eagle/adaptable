@@ -10,11 +10,7 @@ import UIHelper from '../UIHelper';
 import { ScheduleType } from '../../PredefinedConfig/Common/Enums';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
-import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
-import {
-  ReminderScheduleEditAction,
-  ReminderScheduleAddAction,
-} from '../../Redux/ActionsReducers/ReminderRedux';
+import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullSchedule';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 
 export class ScheduleEntityRow extends React.Component<

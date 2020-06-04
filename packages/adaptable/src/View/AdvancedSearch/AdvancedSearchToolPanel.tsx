@@ -68,6 +68,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
       <Flex
         flexDirection="column"
         alignItems="stretch"
+        width="100%"
         className="ab-ToolPanel__AdvancedSearch__wrap"
       >
         <Flex
@@ -79,6 +80,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
             className="ab-ToolPanel__AdvancedSearch__select"
             disabled={availableSearches.length == 0}
             style={{ minWidth: 170 }}
+            width="100%"
             options={availableSearches}
             value={this.props.CurrentAdvancedSearchName}
             placeholder="Select Search"
@@ -143,14 +145,19 @@ class AdvancedSearchToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<AdvancedSearchToolPanelComponentProps> {
   return {
     CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
     AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AdvancedSearchToolPanelComponentProps> {
   return {
     onSelectAdvancedSearch: (advancedSearchName: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),

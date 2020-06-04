@@ -5,12 +5,8 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
 export class ReminderApiImpl extends ApiBase implements ReminderApi {
-  public getReminderState(): ReminderState {
-    return this.getAdaptableState().Reminder;
-  }
-
   public getAllReminder(): ReminderSchedule[] {
-    return this.getAdaptableState().Reminder.Reminders;
+    return this.getAdaptableState().Schedule.Reminders;
   }
 
   public showReminderPopup(): void {

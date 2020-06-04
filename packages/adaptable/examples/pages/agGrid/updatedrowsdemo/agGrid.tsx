@@ -13,6 +13,7 @@ import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
@@ -29,7 +30,11 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Updated Rows Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+
     predefinedConfig: demoConfig,
   };
 
@@ -39,7 +44,12 @@ function InitAdaptableDemo() {
 
   adaptableApi = Adaptable.init(adaptableOptions);
 
-  tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 3000, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(
+    adaptableOptions.vendorGrid,
+    adaptableApi,
+    3000,
+    tradeCount
+  );
 
   adaptableApi.eventApi.on('ToolbarButtonClicked', () => {
     adaptableApi.updatedRowApi.deleteAllUpdatedRowInfo();

@@ -22,18 +22,20 @@ Tip
 The name that you give to the Filter is what will appear in the Column Filter dropdown and in the Query Builder in future so make it as succinct but descriptive as possible.
 
 ## UI Elements
+
 To Do
 
 ## Entitlements
+
 To Do
 
 ## FAQ
 
-Can a User Filter include more than one column?
+**Can a User Filter include more than one column?**
 
 No.  A User Filter references just one column so that it can then be re-used in other queries and made available in the Column Filter dropdown.  You can create multi-column queries but they are Advanced Searches.
 
-Can we ship with our own User Filters?
+Can we ship with our own User Filters?****
 
 Yes you can.  Create them in User Filter Config. You can also create dynamic User Filters which contain a predicate that is evaluated at runtime.
 

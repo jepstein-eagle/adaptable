@@ -30,6 +30,9 @@ function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    VisibleButtons: ['FreeTextColumn', 'ColumnChooser'],
+  },
   FreeTextColumn: {
     FreeTextColumns: [
       {

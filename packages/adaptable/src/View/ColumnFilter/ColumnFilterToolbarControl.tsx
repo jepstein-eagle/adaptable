@@ -37,7 +37,7 @@ interface ColumnFilterToolbarControlComponentProps
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   Entitlements: Entitlement[];
-  IsQuickFilterActive: boolean;
+  IsQuickFilterVisible: boolean;
 }
 
 class ColumnFilterToolbarControlComponent extends React.Component<
@@ -84,9 +84,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         )}
         <CheckBox
           className="ab-DashboardToolbar__ColumnFilter__active-check"
-          disabled={this.props.Adaptable.api.internalApi.isGridInPivotMode()}
+          disabled={
+            this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
+            !this.props.Adaptable.isQuickFilterActive()
+          }
           fontSize={2}
-          checked={this.props.IsQuickFilterActive}
+          checked={this.props.IsQuickFilterVisible}
           onChange={(checked: boolean) => {
             checked ? this.props.onShowQuickFilterBar() : this.props.onHideQuickFilterBar();
           }}
@@ -100,7 +103,6 @@ class ColumnFilterToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__ColumnFilter"
         headerText={StrategyConstants.ColumnFilterStrategyFriendlyName}
-        glyphicon={StrategyConstants.ColumnFilterGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -129,14 +131,19 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ColumnFilterToolbarControlComponentProps> {
   return {
     ColumnFilters: state.ColumnFilter.ColumnFilters,
-    IsQuickFilterActive: state.Grid.IsQuickFilterActive,
+    IsQuickFilterVisible: state.Grid.IsQuickFilterVisible,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnFilterToolbarControlComponentProps> {
   return {
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),

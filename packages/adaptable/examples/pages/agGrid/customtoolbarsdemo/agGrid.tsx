@@ -1,38 +1,39 @@
 import { useEffect } from 'react';
-
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
-
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-
 import { GridOptions } from '@ag-grid-community/all-modules';
 import Adaptable from '../../../../src/agGrid';
-import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
+import {
+  AdaptableOptions,
+  PredefinedConfig,
+  DashboardButtonClickedInfo,
+} from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
 import { ToolbarVisibilityChangedInfo } from '../../../../src/Api/Events/ToolbarVisibilityChanged';
-import {
-  ToolbarButtonClickedEventData,
-  ToolbarButtonClickedInfo,
-} from '../../../../src/Api/Events/ToolbarButtonClicked';
+import { ToolbarButtonClickedInfo } from '../../../../src/Api/Events/ToolbarButtonClicked';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
+import { CustomToolbarConfiguredInfo } from '../../../../src/Api/Events/CustomToolbarConfigured';
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Custom Toolbars Demo',
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     predefinedConfig: demoConfig,
   };
-
   const api = Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
@@ -58,7 +59,7 @@ function InitAdaptableDemo() {
         if (contentsDiv) {
           ReactDOM.render(toolbarContents, contentsDiv);
         } else {
-          console.log('Couldnt find div to render custom content');
+          //     console.log('Couldnt find div to render custom content');
         }
       }
 
@@ -77,7 +78,7 @@ function InitAdaptableDemo() {
         if (contentsDiv) {
           ReactDOM.render(toolbarContents, contentsDiv);
         } else {
-          console.log('Couldnt find div to render custom content');
+          //       console.log('Couldnt find div to render custom content');
         }
       }
     }
@@ -90,7 +91,7 @@ function InitAdaptableDemo() {
   api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;
     let toolbarButton = eventInfo.toolbarButton;
-
+    console.log(eventInfo);
     if (toolbarButton.Name == 'btnSetButton') {
       let btnSet1: ToolbarButton = {
         Name: 'set1',
@@ -119,28 +120,67 @@ function InitAdaptableDemo() {
       api.dashboardApi.clearCustomToolbarButtons('Toolbar1');
     }
   });
+
+  api.eventApi.on('DashboardButtonClicked', dashboardButtonClickedEventArgs => {
+    let eventInfo: DashboardButtonClickedInfo = dashboardButtonClickedEventArgs.data[0].id;
+    let dashboardButton = eventInfo.dashboardButton;
+    console.log(eventInfo);
+    console.log(dashboardButton.Name);
+  });
+
+  api.eventApi.on('CustomToolbarConfigured', customToolbarConfiguredEventArgs => {
+    let eventInfo: CustomToolbarConfiguredInfo = customToolbarConfiguredEventArgs.data[0].id;
+    let customToolbar = eventInfo.customToolbar;
+    console.log(eventInfo);
+    console.log(customToolbar.Name);
+  });
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    // AvailableToolbars: ['AdvancedSearch', 'Export'],
-    VisibleToolbars: [
-      'QuickSearch',
-      'Glue42',
-      'Alert',
-      'Toolbar1',
-      'Toolbar2',
-      'Toolbar3',
-      'Toolbar4',
-    ],
-    IsInline: true,
+    Revision: 8,
+    CanFloat: false,
+    VisibleToolbars: ['Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
+    IsInline: false,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
-    // make this not persistable
+    CustomButtons: [
+      {
+        Name: 'cb1',
+        Caption: 'First',
+        ButtonStyle: {
+          Variant: 'text',
+          Tone: 'neutral',
+        },
+        Icon: {
+          height: 50,
+          src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
+        },
+      },
+      {
+        Name: 'cb2',
+        Caption: 'Second',
+        ButtonStyle: {
+          Variant: 'raised',
+          Tone: 'accent',
+        },
+      },
+      {
+        Name: 'cb3',
+        ButtonStyle: {
+          Variant: 'raised',
+          Tone: 'accent',
+        },
+        Icon: {
+          height: 20,
+          src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
+        },
+      },
+    ],
     CustomToolbars: [
       {
         Name: 'Toolbar1',
-        Title: 'First Toolbar',
-        Glyph: 'advanced-search',
+        ShowConfigureButton: true,
+        //   Title: 'First Toolbar',
         ToolbarButtons: [
           {
             Name: 'btnToolbar1',
@@ -148,6 +188,11 @@ let demoConfig: PredefinedConfig = {
             ButtonStyle: {
               Variant: 'text',
               Tone: 'success',
+            },
+            Icon: {
+              height: 20,
+              width: 20,
+              src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
             },
           },
           {
@@ -162,7 +207,8 @@ let demoConfig: PredefinedConfig = {
       },
       {
         Name: 'Toolbar2',
-        Title: 'Second Toolbar',
+        Title: '',
+        ShowConfigureButton: false,
         ToolbarButtons: [
           {
             Name: 'btnSetButton',
@@ -171,13 +217,18 @@ let demoConfig: PredefinedConfig = {
               Variant: 'text',
               Tone: 'error',
             },
+            Icon: {
+              height: 90,
+              width: 20,
+              src: 'https://img.icons8.com/ios-glyphs/30/000000/sort.png',
+            },
           },
         ],
       },
       {
         Name: 'Toolbar3',
+        ShowConfigureButton: true,
         Title: 'Third Toolbar',
-        Glyph: 'export',
         ToolbarButtons: [
           {
             Name: 'btnAddButton',
@@ -192,7 +243,7 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'Toolbar4',
         Title: 'Fourth Toolbar',
-        Glyph: 'export',
+        ShowConfigureButton: false,
         ToolbarButtons: [
           {
             Name: 'btnClearButton',
@@ -207,11 +258,11 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Entitlements: {
-    DefaultAccessLevel: 'Hidden',
+    DefaultAccessLevel: 'Full',
     FunctionEntitlements: [
       {
         FunctionName: 'Dashboard',
-        AccessLevel: 'Full',
+        AccessLevel: 'ReadOnly',
       },
       {
         FunctionName: 'QuickSearch',

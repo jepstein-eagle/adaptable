@@ -58,7 +58,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<DeleteButtonProps> {
   return {
     ConfirmAction: ownProps.ConfirmAction,
     ConfirmationMsg: ownProps.ConfirmationMsg,
@@ -66,7 +66,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<DeleteButtonProps> {
   return {
     onConfirmWarning: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),

@@ -4,13 +4,14 @@ The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools
 
 These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 
- > When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**. 
+ > When an Advanced Search is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**.
 
 Advanced Searches are named and saved and, therefore, available for re-use.
 
 Advanced Searches can be provided at design-time (through [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)) or at run-time through the UI (if Entitlements allow).
 
 ## UI Elements
+
 Advanced Search includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Advanced Searches with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Advanced Search Wizard.
@@ -22,6 +23,7 @@ Advanced Search includes the following UI Elements:
 - **Tool Panel** - Same as Toolbar above.
 
 ## Entitlements
+
 Advanced Search supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -31,7 +33,8 @@ Advanced Search supports these Entitlement Rules:
 - **ReadOnly**: User can run Advanced Searches in Predefined Config but not edit or delete them, nor add others.
 
 ## FAQ
-**Can we apply searches on the server?**
+
+**Can we run Advanced Searches on the server?**
 
 Yes, through setting the [ServerSearchOption](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) in SearchOptions.
 
@@ -50,6 +53,7 @@ That depends on what you have specified for the
 The default is *Never* meaning Advanced Searches won't update as ticking data changes or the underlying data set changes. But you can change this to *Always* or after a *ThrottleDelay*.
 
 ### Further Information
+
 - [Advanced Search State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)
 
 - [Advanced Search Api](https://api.adaptabletools.com/interfaces/_src_api_advancedsearchapi_.advancedsearchapi.html)

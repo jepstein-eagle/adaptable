@@ -142,7 +142,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__BulkUpdate"
         headerText={StrategyConstants.BulkUpdateStrategyFriendlyName}
-        glyphicon={StrategyConstants.BulkUpdateGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -198,7 +197,10 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<BulkUpdateToolbarControlComponentProps> {
   return {
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
@@ -206,7 +208,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<BulkUpdateToolbarControlComponentProps> {
   return {
     onBulkUpdateValueChange: (value: string) =>
       dispatch(BulkUpdateRedux.BulkUpdateChangeValue(value)),

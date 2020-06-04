@@ -160,7 +160,7 @@ export class PercentBarSummaryComponent extends React.Component<
     return StringExtensions.IsNotNullOrEmpty(percentBar.ColumnId);
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PercentBarSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     PercentBars: state.PercentBar.PercentBars,
@@ -169,7 +169,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<PercentBarSummaryProps> {
   return {
     onAddPercentBar: (percentBar: PercentBar) =>
       dispatch(PercentBarRedux.PercentBarAdd(percentBar)),

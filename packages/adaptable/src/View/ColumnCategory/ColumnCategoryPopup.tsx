@@ -191,13 +191,15 @@ class ColumnCategoryPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnCategoryPopupProps> {
   return {
     ColumnCategorys: state.ColumnCategory.ColumnCategories,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnCategoryPopupProps> {
   return {
     onAddColumnCategory: (ColumnCategory: ColumnCategory) =>
       dispatch(ColumnCategoryRedux.ColumnCategoryAdd(ColumnCategory)),

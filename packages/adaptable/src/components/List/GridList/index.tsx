@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { ReactNode } from 'react';
 import { DataSource, GridFactory } from '@adaptabletools/grid';
+import join from '../../utils/join';
 
 const baseClassName = 'ab-GridList';
 
 export interface GridListProps {
   children: ReactNode[];
+  className?: string;
   rowHeight?: number;
 }
 
@@ -27,7 +29,10 @@ const GridList = (props: GridListProps) => {
     <DataSource<GridListItem> data={data} primaryKey="id" fields={['item', 'id']}>
       <Grid
         rowHeight={props.rowHeight || 30}
-        domProps={{ className: baseClassName, style: { minHeight: '15rem' } }}
+        domProps={{
+          className: join(baseClassName, props.className),
+          style: { minHeight: '15rem' },
+        }}
         columns={[{ field: 'item', header: null, flex: 1 }]}
       ></Grid>
     </DataSource>

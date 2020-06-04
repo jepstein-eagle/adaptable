@@ -22,11 +22,11 @@ export interface ContainerOptions {
   adaptableContainer?: string;
 
   /**
-   * Name of the **div** element which contains the underlying vendor grid.
+   * The **div** element which contains the underlying vendor grid. Can be a string with the id of the container, or it can be an HTMLElement
    *
-   * **Default Value: grid**
+   * **Default Value: "grid"**
    */
-  vendorContainer?: string;
+  vendorContainer?: string | HTMLElement;
 
   /**
    * Name of the **div** element where the modals should appear.

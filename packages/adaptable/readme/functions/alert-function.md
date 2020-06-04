@@ -12,24 +12,38 @@ Alerts can, additionally, include [*Expressions*](https://api.adaptabletools.com
 
 > Alerts will trigger both as the result of direct user edits in the Grid and as data ticks in the underlying data source.
 
+## Message Type
+
+The `MessageType` of the Alert sets what type of of Message is displayed (and the colour will vary accordingly).  The available values are:
+
+- **Success** - (default colour is green)
+  
+- **Info**  - (default colour is blue)
+
+- **Warning** - (default colour is amber)
+
+- **Error** - (default colour is red)
+
 ## Alert Properties
 
-You can set the `MessageType` of the Alert - this will be one "Success", "Info", "Warning" or "Error" (and the colour will vary accordingly).
+The `AlertProperties` property of `AlertDefinition` contains a number of properties to configure what happens when an Alert is triggered.
 
-You can also specify - through the `AlertProperties` prop what happens when an Alert is triggered.
+Options for displaying an Alert include:
 
-Options for displaying an Alert include: 
 - **Display a Popup** - useful for very important Alerts
 
-- **Colour the Cell** where the data changed that triggered the cell (based on the Alert's `MessageType`)
+- **Colour the Cell** where the data changed that triggered the Alert (based on the Alert's `MessageType`)
 
 - **Jump to Cell** so that the Grid will immediately show the row which contains the cell that triggered the Alert
 
 - **Show the Alert details** in a Div element (that you specify in Alert State)
 
-> Note: All Alerts will also display and update in the Alert Toolbar and Alert Tool Panel (see below) 
+> Note: All Alerts when triggered will display (and update the count) in the Alert Toolbar and Alert Tool Panel.
+>
+> Additionally, all Alerts will fire the `AlertFired` event (the contents of which will be also sent to the console).
 
 ## UI Elements
+
 Alerts includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Alerts with *Edit* and *Delete* buttons.  Plus an *Add* button to start the Alerts Wizard.
@@ -43,6 +57,7 @@ Alerts includes the following UI Elements:
 - **Context Menu Item** - `Clear Alert` Menu Item opens clears a Cell if it has been coloured by an Alert (only visible if selected cell if one which has triggered a Live Alert and has been coloured by it).
 
 ## Entitlements
+
 Alerts supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -61,7 +76,6 @@ Not at the moment but that is something we hope to have available soon for those
 
 Yes, when you create an Alert Definition you can stipulate, among other things, whether the Alert will popup. See Alert State for the full Alert Definition.
 
-
 ### Further Information
 
 - [Alerts State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)
@@ -73,4 +87,3 @@ Yes, when you create an Alert Definition you can stipulate, among other things, 
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
 
 - [Run-Time Access Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-runtime-access-guide.md)
-

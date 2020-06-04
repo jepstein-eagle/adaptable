@@ -121,14 +121,19 @@ export class CalculatedColumnSummaryComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<CalculatedColumnSummaryProps> {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
     CalculatedColumnErrorMessage: state.System.CalculatedColumnErrorMessage,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CalculatedColumnSummaryProps> {
   return {
     onEdit: (calculatedColumn: CalculatedColumn) =>
       dispatch(CalculatedColumnRedux.CalculatedColumnEdit(calculatedColumn)),

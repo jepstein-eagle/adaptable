@@ -19,7 +19,7 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 interface SystemStatusToolbarControlProps
   extends ToolbarStrategyViewPopupProps<SystemStatusToolbarControlComponent> {
   StatusMessage: string;
-  StatusType: string;
+  StatusType: 'Info' | 'Success' | 'Warning' | 'Error';
   DefaultStatusMessage: string;
   DefaultStatusType: string;
   onClearSystemStatus: () => SystemStatusRedux.SystemStatusClearAction;
@@ -91,7 +91,6 @@ class SystemStatusToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__SystemStatus"
         headerText={StrategyConstants.SystemStatusStrategyFriendlyName}
-        glyphicon={StrategyConstants.SystemStatusGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -100,7 +99,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<SystemStatusToolbarControlProps> {
   return {
     StatusMessage: state.SystemStatus.StatusMessage,
     StatusType: state.SystemStatus.StatusType,
@@ -109,7 +108,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<SystemStatusToolbarControlProps> {
   return {
     onClearSystemStatus: () => dispatch(SystemStatusRedux.SystemStatusClear()),
     onConfigure: () =>

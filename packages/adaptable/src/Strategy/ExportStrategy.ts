@@ -96,6 +96,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
           .getLiveReports()
           .find(x => x.Report.Name == SELECTED_CELLS_REPORT);
         if (liveReport) {
+          // TODO move into openfin strategy/api
           this.throttledRecomputeAndSendLiveDataEvent();
         }
       }
@@ -113,6 +114,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   private sendNewLiveData() {
+    // TODO move into openfin strategy
     //we wait for the last sendNewLiveData to finish
     if (this.isSendingData == true) {
       this.throttledRecomputeAndSendLiveDataEvent();
@@ -235,7 +237,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       case ExportDestination.JSON:
         this.convertReportToJSON(report);
         break;
-      case ExportDestination.OpenfinExcel:
+      case ExportDestination.OpenfinExcel: //TODO remove
         OpenfinHelper.initOpenFinExcel() //.then((workbook) => OpenfinHelper.addReportWorkSheet(workbook, ReportName))
           .then(pageName => {
             this.adaptable.api.internalApi.startLiveReport(

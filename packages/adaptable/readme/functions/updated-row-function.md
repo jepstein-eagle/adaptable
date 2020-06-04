@@ -21,6 +21,7 @@ There are 3 colour settings that Updated Row will show (all can be edited at bot
 Another available property option is to set the Grid to 'jump' to the selected row.
 
 ## UI Elements
+
 Updated Row includes the following UI Elements:
 
 - **Popup** - Allows you to turn on Updated Rows and set the other properties associated with the function.
@@ -30,6 +31,7 @@ Updated Row includes the following UI Elements:
 - **Context Menu** - `Clear Updated Row` Menu Item removes the Updated Row style for that row (only appears in rows which have been updated) 
 
 ## Entitlements
+
 Updated Rows supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User

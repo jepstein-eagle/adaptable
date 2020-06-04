@@ -4,7 +4,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
 import { AdaptableFormat } from './Common/AdaptableFormat';
 
 /**
- *The Predefined Configuration for the `Format Column` function.
+ * The Predefined Configuration for the `FormatColumn` function.
  *
  * A Format Column is a column that is given specific Style and / or Display Format properties that are always rendered:
  *
@@ -12,12 +12,18 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
  *
  * - **`DisplayFormat`** - a format to set the display of numeric and date columns to match custom requirements.
  *
+ * - **`CellAlignment`** - how the contents of each cell in the Format Column should align
+ *
  * --------------
  *
  * ### Further Information
- * - [Format Column API](_src_api_formatcolumnapi_.formatcolumnapi.html)
+ *
+ * - {@link FormatColumnApi|Format Column API}
+ *
  * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
+ *
  * - [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/)
+ *
  * - [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
  *
  * --------------
@@ -28,13 +34,14 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
  * const demoConfig: PredefinedConfig = {
  * FormatColumn: {
  *   FormatColumns: [
- *     // Set a Style for OrderId
+ *     // Set a Style and Cell Alignment for OrderId
  *     {
  *       ColumnId: 'OrderId',
  *       Style: {
  *         BackColor: '#d4fb79',
  *         ForeColor: '#8b0000',
  *       },
+ *       CellAlignment: 'Center',
  *     },
  *     // Set a Time-based Display Format for LastUpdatedTime
  *     {
@@ -95,18 +102,25 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
  *         },
  *       },
  *     },
+ *     // Set the Cell Aligment of the 'Bid' Column to the right
+ *     {
+ *        ColumnId: 'bid',
+ *        CellAlignment: 'Right',
+ *     },
  *   ],
  * },
  *} as PredefinedConfig;
  * ```
- * In this example we have created 6 Format Columns:
+ * In this example we have created 7 Format Columns:
  *
- * - *Order Id* has Visual Style of lime green with a red fore colour
+ * - *Order Id* has Visual Style of lime green with a red fore colour and a CellAlignment of 'Center'
  * - *LastUpdatedTime* has a Display Format with pattern of 'HH:mm:ss' to show just time
  * - *Order Date* has a Visual Style of bold and italicised and with a smaller font and a Display Format with pattern of 'yyyyMMdd'
  * - *ChangeLastOrder* has a Display Format to show negative numbers in parantheses
  * - *InvoicedCost* has a Display Format to show '£' sign and 2 decimal places
  * - *OrderCost* has a Display Format to separate integer thousands with a space, a '$' prefix and '(AUD)' suffix
+ * - *Bid* has a CellAlignment of 'Center'
+ *
  */
 export interface FormatColumnState extends ConfigState {
   FormatColumns?: FormatColumn[];
@@ -134,4 +148,11 @@ export interface FormatColumn extends AdaptableObject {
    * Only available for Numeric and Date columns.
    */
   DisplayFormat?: AdaptableFormat;
+
+  /**
+   * How the cell contents should align.
+   *
+   * Applies to all cells but 'right' align is widely used in numeric columns.
+   */
+  CellAlignment?: 'Left' | 'Right' | 'Center';
 }

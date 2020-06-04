@@ -38,9 +38,9 @@ export interface FlashingCellState extends ConfigState {
 export interface FlashingCell extends AdaptableObject {
   IsLive: boolean;
   ColumnId: string;
-  FlashingCellDuration: 250 | 500 | 750 | 1000;
-  UpColor: string;
-  DownColor: string;
+  FlashingCellDuration?: 250 | 500 | 750 | 1000;
+  UpColor?: string;
+  DownColor?: string;
 }
 
 /*

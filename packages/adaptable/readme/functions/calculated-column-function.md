@@ -84,6 +84,7 @@ Calculated Column includes the following UI Elements:
 - **Column Menu** - `Edit Calculated Column` Menu Item opens the Calculated Column wizard (only visible if that column is a Calculated Column).
 
 ## Entitlements
+
 Calculated Column supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -122,8 +123,8 @@ Yes, your Calculated Column can return a number, string, date or boolean. AdapTa
 
 You can and the change will persist.  However please note that AdapTable will not update any layouts or other objects (e.g. filters) that reference this Calculated Column so be very careful before changing the name of a Calculated Column that is used elsewhere.
 
-
 ### Further Information
+
 - [Calculated Column State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html)
 
 - [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_calculatedcolumnapi_.calculatedcolumnapi.html)

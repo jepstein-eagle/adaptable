@@ -5,6 +5,7 @@ The Action Column ([AdaptableFunctionName](https://api.adaptabletools.com/module
 Action Columns are created at run-time based on definitions provided by developers at design-time in Predefined Config 
 
 ### How Action Columns work
+
 There are 3 elements to providing an Action Column definition:
 
 1. **Clicked Function**: An implementation for On('ActionColumnClicked') event which fires when an Action Column button is clicked.
@@ -13,7 +14,7 @@ There are 3 elements to providing an Action Column definition:
     
     Developers can subscribe to this event and perform any additional logic or functionality that is required.
 
-    The Action Column Predefind Config contains the **name** of the button.  When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
+    The Action Column Predefind Config contains the **name** of the function and the actual **implementation** is given in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 2.  **Render Function**: The `RenderFunction` returns a string giving the full render contents of the Button that should display in the cell.
 
@@ -28,9 +29,11 @@ There are 3 elements to providing an Action Column definition:
 
 
 ## UI Elements
+
 None at present - it is provided only at design-time in Adaptable State
 
 ## Entitlements
+
 Action Column supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -41,9 +44,15 @@ Action Column supports these Entitlement Rules:
 
 ## FAQ
 
-**Can we create Action Columns at Run-Time**
+**Can we create Action Columns at Run-Time?**
 
 No, they are a Design-Time only Function; they can be accessed at Run-Time but not created or edited.
+
+**Why do we need to provide the Function Name and Function Implementation separately?**
+
+This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  
+
+As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 ### Further Information
 

@@ -168,14 +168,16 @@ export class CustomSortSummaryComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CustomSortSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     CustomSorts: state.CustomSort.CustomSorts,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CustomSortSummaryProps> {
   return {
     onAddCustomSort: (customSort: CustomSort) =>
       dispatch(CustomSortRedux.CustomSortAdd(customSort)),

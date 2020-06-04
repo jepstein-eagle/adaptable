@@ -159,7 +159,7 @@ export class FormatColumnSummaryComponent extends React.Component<
     );
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FormatColumnSummaryProps> {
   return {
     Columns: state.Grid.Columns,
     FormatColumns: state.FormatColumn.FormatColumns,
@@ -168,7 +168,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<FormatColumnSummaryProps> {
   return {
     onAddFormatColumn: (FormatColumn: FormatColumn) =>
       dispatch(FormatColumnRedux.FormatColumnAdd(FormatColumn)),

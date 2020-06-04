@@ -1,9 +1,5 @@
-import {
-  IPushPullState,
-  IPushPullDomain,
-  IPushPullReport,
-  IPushPullSchedule,
-} from '../PredefinedConfig/IPushPullState';
+import { IPushPullDomain, IPushPullReport } from '../PredefinedConfig/SystemState';
+import { IPushPullSchedule } from '../PredefinedConfig/IPushPullSchedule';
 
 /**
  * Provides full and comprehensive run-time access to ipushpull state and associated methods.
@@ -17,12 +13,6 @@ import {
  * Note: Some of these methods are intended for internal use only - and have been noted as such.
  */
 export interface IPushPullApi {
-  /**
-   *
-   * Retrieves the ipushpull section from Adaptable State
-   */
-  getIPushPullState(): IPushPullState | undefined;
-
   /**
    * Retrieves the ipushpull `Username` from the ipushpull state.
    */
@@ -38,7 +28,7 @@ export interface IPushPullApi {
    *
    * If `true` then AdapTable will try to log in the user to ipushpull automatically at start-up
    */
-  getAutoLogin(): boolean | undefined;
+  getAutoLogin(): boolean;
 
   /**
    * Retrieves the current ipushpull Report (if there is one) from the ipushpull state.
@@ -81,6 +71,11 @@ export interface IPushPullApi {
    * Retrieves the current ipushpull instance (if one has been provided by the User at design time in ipushpull state)
    */
   getIPushPullInstance(): any;
+
+  /**
+   * Sets the current ipushpull instance - this method should not generally be used.
+   */
+  setIPushPullInstance(ippInstance: any): void;
 
   /**
    * Retrieves all the ipushpull domain to which the current user has access
@@ -232,6 +227,11 @@ export interface IPushPullApi {
    * Checks to see there is currently a report sending Live Data to ipushpull
    */
   isIPushPullLiveDataRunning(): boolean | undefined;
+
+  /**
+   * Whether to show system reports in the reports dropdown in ipushpull toolbar
+   */
+  includeSystemReports(): boolean;
 
   /**
    * Clears out the **internal** state of ipushpull

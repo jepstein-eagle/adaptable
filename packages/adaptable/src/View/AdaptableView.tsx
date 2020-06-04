@@ -1,4 +1,4 @@
-﻿import * as React from 'react';
+import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider, connect, ConnectedComponent } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
@@ -20,6 +20,7 @@ import { ChartVisibility } from '../PredefinedConfig/Common/ChartEnums';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { AdaptableLoadingScreen } from './Components/Popups/AdaptableLoadingScreen';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import AdaptableContext from './AdaptableContext';
 
 interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   PopupState: PopupState;
@@ -116,7 +117,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AdaptableViewProps> {
   return {
     PopupState: state.Popup,
     SystemState: state.System,
@@ -125,7 +126,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<AdaptableViewProps> {
   return {
     onCloseScreenPopup: () => dispatch(PopupRedux.PopupHideScreen()),
     onCloseAlertPopup: () => dispatch(PopupRedux.PopupHideAlert()),
@@ -141,15 +144,14 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
   };
 }
 
-let AdaptableWrapper: ConnectedComponent<typeof AdaptableView, any> = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdaptableView);
+let AdaptableWrapper = connect(mapStateToProps, mapDispatchToProps)(AdaptableView);
 
 export const AdaptableApp = ({ Adaptable }: { Adaptable: IAdaptable }) => (
   <Provider store={Adaptable.AdaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
-      <AdaptableWrapper Adaptable={Adaptable} />
+      <AdaptableContext.Provider value={Adaptable}>
+        <AdaptableWrapper Adaptable={Adaptable} />
+      </AdaptableContext.Provider>
     </ThemeProvider>
   </Provider>
 );

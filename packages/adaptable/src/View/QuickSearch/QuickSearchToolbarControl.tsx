@@ -52,7 +52,6 @@ class QuickSearchToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyFriendlyName}
-        glyphicon={StrategyConstants.QuickSearchGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         <AdaptableFormControlTextClear
@@ -74,13 +73,18 @@ class QuickSearchToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<QuickSearchToolbarControlComponentProps> {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<QuickSearchToolbarControlComponentProps> {
   return {
     onRunQuickSearch: (newQuickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(newQuickSearchText)),

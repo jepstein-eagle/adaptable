@@ -129,7 +129,6 @@ class CellSummaryToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__CellSummary"
         headerText={StrategyConstants.CellSummaryStrategyFriendlyName}
-        glyphicon={StrategyConstants.CellSummaryGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -165,7 +164,10 @@ class CellSummaryToolbarControlComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<CellSummaryToolbarControlComponentProps> {
   return {
     SelectedCellInfo: state.Grid.SelectedCellInfo,
     CellSummaryOperation: state.CellSummary.SummaryOperation,
@@ -174,7 +176,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<CellSummaryToolbarControlComponentProps> {
   return {
     onCellSummaryOperationChange: (summaryOperation: CellSummaryOperation | string) =>
       dispatch(SelectedCellsRedux.CellSummaryChangeOperation(summaryOperation)),

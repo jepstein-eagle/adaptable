@@ -175,7 +175,6 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       <PanelDashboard
         className="ab-DashboardToolbar__Chart"
         headerText={StrategyConstants.ChartStrategyFriendlyName}
-        glyphicon={StrategyConstants.ChartGlyph}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -192,7 +191,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
   }
 }
 
-function mapStateToProps(state: AdaptableState) {
+function mapStateToProps(state: AdaptableState): Partial<ChartToolbarControlComponentProps> {
   return {
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
       c => c.Name == state.Chart.CurrentChartName
@@ -201,7 +200,9 @@ function mapStateToProps(state: AdaptableState) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ChartToolbarControlComponentProps> {
   return {
     onSelectChartDefinition: (chartDefinition: string) =>
       dispatch(ChartRedux.ChartDefinitionSelect(chartDefinition)),

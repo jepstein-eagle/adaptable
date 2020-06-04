@@ -1,6 +1,5 @@
-import { ReminderState, ReminderSchedule } from '../PredefinedConfig/ReminderState';
+import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 export interface ReminderApi {
-  getReminderState(): ReminderState;
   getAllReminder(): ReminderSchedule[];
 
   /**

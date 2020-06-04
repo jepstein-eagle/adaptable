@@ -303,7 +303,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ChartPopupProps> {
   return {
     ChartDefinitions: state.Chart.ChartDefinitions,
     CurrentChartDefinition: state.Chart.ChartDefinitions.find(
@@ -312,7 +312,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any) {
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ChartPopupProps> {
   return {
     onAddChartDefinition: (chartDefinition: ChartDefinition) =>
       dispatch(ChartRedux.ChartDefinitionAdd(chartDefinition)),

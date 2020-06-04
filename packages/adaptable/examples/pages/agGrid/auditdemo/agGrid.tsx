@@ -13,6 +13,7 @@ import { AuditLogEventArgs } from '../../../../src/Api/Events/AuditEvents';
 import { AuditLogEntry } from '../../../../src/Utilities/Interface/AuditLogEntry';
 
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 var adaptableApi: AdaptableApi;
 
 function InitAdaptableDemo() {
@@ -24,7 +25,10 @@ function InitAdaptableDemo() {
   const useTickingData: boolean = false;
 
   const adaptableOptions: AdaptableOptions = {
-    vendorGrid: gridOptions,
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
     primaryKey: 'tradeId',
     userName: 'demo user',
     adaptableId: 'audit demo',
@@ -59,7 +63,12 @@ function InitAdaptableDemo() {
   adaptableApi = Adaptable.init(adaptableOptions);
 
   if (useTickingData) {
-    tickingDataHelper.useTickingDataagGrid(gridOptions, adaptableApi, 5000, tradeCount);
+    tickingDataHelper.useTickingDataagGrid(
+      adaptableOptions.vendorGrid,
+      adaptableApi,
+      5000,
+      tradeCount
+    );
   }
 
   adaptableApi.auditEventApi.on('AuditCellEdited', auditLogEventArgs => {

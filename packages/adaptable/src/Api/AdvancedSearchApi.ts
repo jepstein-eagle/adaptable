@@ -4,9 +4,21 @@ import { TypeUuid } from '../PredefinedConfig/Uuid';
 /**
  * Provides full and comprehensive run-time access to the Advanced Search function and associated state.
  *
- *  **Further AdapTable Help Resources**
+ * Advanced Search enables you to build saveable searches using *Queries* that can be run across multiple columns using a wide variety of *Search Criteria*.
  *
- * [Demo Site](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/) | [State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) | [Advanced Search Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ * --------------
+ *
+ *  ### Further AdapTable Help Resources
+ *
+ * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
+ *
+ * - {@link AdvancedSearchState|Advanced Search State}
+ *
+ * - {@link SearchOptions|Search Options}
+ *
+ * - [Advanced Search Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/advanced-search-function.md)
+ *
+ * - [Server Functionality Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-server-functionality-guide.md)
  *
  */
 export interface AdvancedSearchApi {

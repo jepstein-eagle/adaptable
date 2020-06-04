@@ -1,4 +1,4 @@
- # adaptable
+# adaptable
 
 <img src="./images/adaptablelogo.png"  width="250" height="69">
 
@@ -6,7 +6,7 @@ Repository for AdapTable - the most advanced and powerful HTML5 Data Management 
 
 AdapTable (previously known as the Adaptable Blotter) is a powerful HTML5 DataGrid add-on that integrates with the leading  components and provides all the additional, rich functionality that financial and other advanced users expect from their DataGrids and Data Tables.
 
-AdapTable offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment. 
+AdapTable offers - out of the box - incredibly powerful searching, filtering, sorting, styling and editing functionality. It also provides unparalleled validation and audit functions, vital in the current regulatory and compliance environment.
 
 AdapTable supports a number of underlying vendor grid components, and new vendor grids are being added all the time.  Please contact us if you would like us to implement your favourite HTML5 grid control.
 
@@ -20,25 +20,25 @@ AdapTable is written in TypeScript.  All the necessary definition files are incl
 
 Version 6 of AdapTable has introduced many new functionality changes and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
+For more information please see the [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
 
 ## Using AdapTable
 
 AdapTable comes in 3 variants:
- 
-  * **'core'** (vanilla) JavaScript version
+
+* **'core'** (vanilla) JavaScript version
   
-    To use this install `@adaptabletools/adaptable` 
+    To use this install `@adaptabletools/adaptable`
   
     > For more info, see the [Adaptable Core readme](./packages/adaptable/README.md)
   
-  * **React Wrapper**
+* **React Wrapper**
   
     To use this install `@adaptabletools/adaptable-react-aggrid`
   
     > For more info, see the [React Wrapper readme](./packages/adaptable-react-aggrid/README.md)
   
-  * **Angular Wrapper**
+* **Angular Wrapper**
   
     To use this, install `@adaptabletools/adaptable-angular-aggrid`
   
@@ -58,11 +58,10 @@ To gain access to this registry please follow these steps:
 
     ```sh
     npm config set @adaptabletools:registry https://registry.adaptabletools.com
-
     ```
-    
+
     If you are using yarn then it will be:
-      
+
     ```sh
     yarn config set @adaptabletools:registry https://registry.adaptabletools.com
     ```
@@ -81,7 +80,7 @@ To gain access to this registry please follow these steps:
 
 5. Confirm that you are logged in correctly by using whoami:
 
-    ```
+    ```sh
     npm whoami --registry=https://registry.adaptabletools.com
     ```
 
@@ -89,31 +88,31 @@ To gain access to this registry please follow these steps:
 
     > note: this does not affect your username/login session on the public npm registry
 
-6.  Install the relevant AdapTable package you need.
+6. Install the relevant AdapTable package you need.
 
     For core it will be:
 
-    ```
+    ```sh
     npm i @adaptabletools/adaptable
     ```
 
     For the ag-Grid React Wrapper it will be:
 
-    ```
+    ```sh
     npm i @adaptabletools/adaptable-react-aggrid
     ```
 
     For the ag-Grid Angular Wrapper it will be:
 
-    ```
+    ```sh
     npm i @adaptabletools/adaptable-angular-aggrid
     ```
 
-7.  Install any Adaptable Plugins as required (see section below for more details).
+7. Install any Adaptable Plugins as required (see section below for more details).
 
     e.g. to install the charts plugin it will be:
 
-    ```
+    ```sh
     npm install @adaptabletools/adaptable-plugin-charts
     ```
 
@@ -122,26 +121,27 @@ To gain access to this registry please follow these steps:
     >  Adaptable Tools has no knowledge, or visibility, of anything that you are doing when you use AdapTable.
 
 ## Plugins
+
 AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
 There are currently 3 plugins:
 
-- **Charts** (`@adaptabletools/adaptable-charts-finance`)
+* **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
     > Courtesy of [Infragistics](https://www.infragistics.com/products/ignite-ui-react) - provides Category, Pie, Doughnut, Sparkline and Financial charts.  
 
-- **Finance** (`@adaptabletools/adaptable-plugin-finance`)
+* **Finance** (`@adaptabletools/adaptable-plugin-finance`)
 
     > Adds additional functionality of benefit to advanced financial users (currently very empty but will be added to over time)
 
-- **No Code** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
+* **No Code** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
     > Enables the creation of instances of AdapTable on the fly (using ag-Grid as the underlying vendor grid) by dragging and dropping any Excel or JSON file
 
 Further information is availalbe in the [Plugins ReadMe](./packages/plugins/README.md)
 
-
 ## Licences
+
 A licence for AdapTable provides access to all product features as well as quarterly updates and enhancements through the lifetime of the licence, comprehensive support, and access to all 3rd party libraries.
 
 Licences can be purchased individually, for a team (minimum 30 end-users), for an organisation or for integration into software for onward sale.
@@ -156,17 +156,18 @@ Please contact [`sales@adaptabletools.com`](mailto:sales@adaptabletools.com) for
 
 To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
- ## Example Projects
+## Example Project
 
 We have added a few example projects to Github to help you to understand how to use AdapTable.
 
 These include:
+
 * [Angular Wrapper Example](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
 * [React Wrapper Example](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
 * [No Code (ag-Grid) Example](https://github.com/AdaptableTools/example-adaptable-nocode-aggrid)
 * [Building Minifed File (with parcel.js) Example](https://github.com/AdaptableTools/example-adaptable-with-parceljs)
 * [ipushpull Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
- 
+
 ## Help
 
 Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
@@ -174,23 +175,24 @@ Developers can learn how to access AdapTable programmatically at [AdapTable Deve
 The other source for Help is our collection of 'Read Me' Docs ([full list here](./packages/adaptable/readme/readme-list.md)).
 
 These include:
- - [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guide.md)
- - [Adaptable Core](./packages/adaptable/README.md)
- - [React Wrapper](./packages/adaptable-react-aggrid/README.md)
- - [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md) 
- - [AdapTable Getting Started Guide](./packages/adaptable/readme/guides/adaptable-getting-started-guide.md)
- - [AdapTable Theming and Styling Guide](./packages/adaptable/readme/guides/adaptable-theming-guide.md)
- - [AdapTable State Guide](./packages/adaptable/readme/guides/adaptable-state-guide.md)
- - [AdapTable Filtering Guide](./packages/adaptable/readme/guides/adaptable-filtering-guide.md)
- - [AdapTable Expression Guide](./packages/adaptable/readme/guides/adaptable-expression-guide.md)
- - [AdapTable Functions Guide](./packages/adaptable/readme/guides/adaptable-functions-guide.md)
- - [Plugins](./packages/plugins/README.md)
- 
+
+* [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
+* [Adaptable Core](./packages/adaptable/README.md)
+* [React Wrapper](./packages/adaptable-react-aggrid/README.md)
+* [Angular Wrapper](./packages/adaptable-ng-aggrid/README.md)
+* [AdapTable Getting Started Guide](./packages/adaptable/readme/guides/adaptable-getting-started-guide.md)
+* [AdapTable Theming and Styling Guide](./packages/adaptable/readme/guides/adaptable-theming-guide.md)
+* [AdapTable State Guide](./packages/adaptable/readme/guides/adaptable-state-guide.md)
+* [AdapTable Filtering Guide](./packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+* [AdapTable Expression Guide](./packages/adaptable/readme/guides/adaptable-expression-guide.md)
+* [AdapTable Functions Guide](./packages/adaptable/readme/guides/adaptable-functions-guide.md)
+* [Plugins](./packages/plugins/README.md)
+
 > Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
- 
+
 ## More Information
 
-General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
+General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com)
 
 ## Support
 

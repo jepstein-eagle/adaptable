@@ -104,11 +104,13 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<StateManagementPopupProps> {
   return {};
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<StateManagementPopupProps> {
   return {};
 }
 

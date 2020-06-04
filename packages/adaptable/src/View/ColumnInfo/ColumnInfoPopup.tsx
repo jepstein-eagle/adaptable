@@ -448,14 +448,16 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnInfoPopupProps> {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
     ColumnCategory: state.ColumnCategory.ColumnCategories,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ColumnInfoPopupProps> {
   return {};
 }
 

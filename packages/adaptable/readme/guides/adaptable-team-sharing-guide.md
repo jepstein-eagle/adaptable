@@ -37,13 +37,13 @@ Setting up Team Sharing requires the provision at design-time of 2 functions (bo
           const sharedEntities = JSON.parse(
             localStorage.getItem(`TEAM_SHARING:${adaptableId}`) || '[]'
           );
-          setTimeout(() => resolve(sharedEntities), 1000);
+          resolve(sharedEntities);
         });
       },
       async setSharedEntities(adaptableId, sharedEntities) {
         return new Promise(resolve => {
           localStorage.setItem(`TEAM_SHARING:${adaptableId}`, JSON.stringify(sharedEntities));
-          setTimeout(() => resolve(), 1000);
+          resolve();
         });
       },
     }

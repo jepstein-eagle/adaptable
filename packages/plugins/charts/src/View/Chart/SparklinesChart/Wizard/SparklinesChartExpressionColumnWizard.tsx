@@ -4,6 +4,7 @@ import {
   ExpressionWizardProps,
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { SparklinesChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
+import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { UIHelper } from '@adaptabletools/adaptable/src/View/UIHelper';
 
 export class SparklinesChartExpressionColumnWizard extends ExpressionBuilderPage
@@ -11,7 +12,9 @@ export class SparklinesChartExpressionColumnWizard extends ExpressionBuilderPage
   constructor(private props2: ExpressionWizardProps<SparklinesChartDefinition>) {
     super(props2);
     this.Data = props2.Data;
-    this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);
+    this.state = UIHelper.getExpressionBuilderState(
+      props2.Data.Expression || ExpressionHelper.CreateEmptyExpression()
+    );
   }
 
   public Data: any;

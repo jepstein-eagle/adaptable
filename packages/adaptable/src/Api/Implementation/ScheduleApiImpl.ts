@@ -6,7 +6,7 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { BaseSchedule } from '../../PredefinedConfig/Common/Schedule';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
-import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullSchedule';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 
 export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
@@ -25,7 +25,8 @@ export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
     return this.adaptable.api.exportApi.getReportSchedules();
   }
   public getAllIPushPullSchedule(): IPushPullSchedule[] {
-    return this.adaptable.api.iPushPullApi.getIPushPullSchedules();
+    const ippApi = this.adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    return ippApi ? ippApi.getIPushPullSchedules() : [];
   }
   public getAllGlue42Schedule(): Glue42Schedule[] {
     return this.adaptable.api.glue42Api.getGlue42Schedules();

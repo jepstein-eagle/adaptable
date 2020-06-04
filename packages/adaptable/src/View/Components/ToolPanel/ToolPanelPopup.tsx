@@ -227,14 +227,19 @@ class ToolPanelPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any) {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: any
+): Partial<ToolPanelPopupComponentProps> {
   return {
     ToolPanelState: state.ToolPanel,
     GridState: state.Grid,
   };
 }
 
-function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
+function mapDispatchToProps(
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+): Partial<ToolPanelPopupComponentProps> {
   return {
     onToolPanelSetFunctionButtons: (functionButtons: AdaptableFunctionButtons) =>
       dispatch(ToolPanelRedux.ToolPanelSetFunctionButtons(functionButtons)),

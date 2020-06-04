@@ -13,3 +13,4 @@ export const SPARKLINE_COLUMN = 'SparklineColumn';
 export const CELL_SUMMARY = 'CellSummary';
 export const SYSTEM_FILTER = 'SystemFilter';
 export const PLUGINS = 'Plugins';
+export const GLUE42 = 'Glue42';
