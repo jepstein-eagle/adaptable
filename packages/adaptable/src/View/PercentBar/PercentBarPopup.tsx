@@ -91,11 +91,7 @@ class PercentBarPopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Column', Size: 2 },
-      { Content: 'Min', Size: 2 },
-      { Content: 'Max', Size: 2 },
-      { Content: 'Positive', Size: 2 },
-      { Content: 'Negative', Size: 2 },
+      { Content: 'Column', Size: 10 },
       { Content: '', Size: 2 },
     ];
 
@@ -109,23 +105,10 @@ class PercentBarPopupComponent extends React.Component<
           Column={column}
           Columns={this.props.Columns}
           UserFilters={this.props.UserFilters}
-          ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={PercentBarRedux.PercentBarDelete(percentBar)}
-          onMinimumValueChanged={(percentBar, minimumValue) =>
-            this.onMinimumValueChanged(percentBar, minimumValue)
-          }
-          onMaximumValueChanged={(percentBar, maximumValue) =>
-            this.onMaximumValueChanged(percentBar, maximumValue)
-          }
-          onPositiveColorChanged={(percentBar, positiveColor) =>
-            this.onPositiveColorChanged(percentBar, positiveColor)
-          }
-          onNegativeColorChanged={(percentBar, negativeColor) =>
-            this.onNegativeColorChanged(percentBar, negativeColor)
-          }
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -261,10 +244,7 @@ class PercentBarPopupComponent extends React.Component<
     if (StringExtensions.IsNullOrEmpty(percentBar.ColumnId)) {
       return false;
     }
-    if (
-      StringExtensions.IsNullOrEmpty(percentBar.PositiveColor) &&
-      StringExtensions.IsNullOrEmpty(percentBar.NegativeColor)
-    ) {
+    if (percentBar.Ranges.length === 0) {
       return false;
     }
     // we are not currently checking for columns - ok? or problem?

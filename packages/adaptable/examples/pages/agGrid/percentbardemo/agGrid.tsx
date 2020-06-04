@@ -62,20 +62,24 @@ let demoConfig: PredefinedConfig = {
   },
 
   PercentBar: {
+    Revision: 2,
     PercentBars: [
       {
         ColumnId: 'notional',
-        PositiveValue: 100,
-        PositiveColor: '#FFCCE5',
-        ShowValue: true,
-      },
-      {
-        ColumnId: 'changeOnYear',
-        NegativeValue: -200,
-        PositiveValue: 200,
-        PositiveColor: '#3333FF',
-        NegativeColor: '#FFFF33',
-        ShowValue: true,
+        Ranges: [
+          {
+            Min: 0,
+            Max: 1000,
+            Color: '#FFFF33',
+          },
+          {
+            Min: 1000,
+            Max: 2000,
+            Color: '#FF33FF',
+          },
+        ],
+        DisplayType: 'Inside',
+        DisplayValue: 'Percentage',
       },
     ],
   },

@@ -16,11 +16,6 @@ import Input from '../../components/Input';
 export interface PercentBarEntityRowProps
   extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
   Column: AdaptableColumn;
-  ColorPalette: string[];
-  onMinimumValueChanged: (PercentBar: PercentBar, minimumValue: number) => void;
-  onMaximumValueChanged: (PercentBar: PercentBar, maximumValue: number) => void;
-  onPositiveColorChanged: (PercentBar: PercentBar, positiveColor: string) => void;
-  onNegativeColorChanged: (PercentBar: PercentBar, negativeColor: string) => void;
 }
 
 export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProps, {}> {
@@ -34,76 +29,8 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
         Content={ColumnHelper.getFriendlyNameFromColumn(PercentBar.ColumnId, this.props.Column)}
       />
     );
-    colItems[1].Content = (
-      <EntityRowItem
-        Content={
-          StringExtensions.IsNullOrEmpty(PercentBar.NegativeValueColumnId) ? (
-            <Input
-              type={'number'}
-              style={{ width: '100%' }}
-              placeholder="Min Value"
-              onChange={(e: any) => this.onMinimumValueChanged(e)}
-              value={PercentBar.NegativeValue}
-            />
-          ) : (
-            '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              PercentBar.NegativeValueColumnId,
-              this.props.Columns
-            ) +
-            ']'
-          )
-        }
-      />
-    );
-    colItems[2].Content = (
-      <EntityRowItem
-        Content={
-          StringExtensions.IsNullOrEmpty(PercentBar.PositiveValueColumnId) ? (
-            <Input
-              type={'number'}
-              style={{ width: '100%' }}
-              placeholder="Max Value"
-              onChange={(e: React.SyntheticEvent) => this.onMaximumValueChanged(e)}
-              value={PercentBar.PositiveValue}
-            />
-          ) : (
-            '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              PercentBar.PositiveValueColumnId,
-              this.props.Columns
-            ) +
-            ']'
-          )
-        }
-      />
-    );
-    colItems[3].Content = (
-      <EntityRowItem
-        Content={
-          <ColorPicker
-            style={{ width: '100%' }}
-            ColorPalette={this.props.ColorPalette}
-            value={PercentBar.PositiveColor}
-            onChange={x => this.onPositiveColorChanged(x)}
-          />
-        }
-      />
-    );
-    colItems[4].Content = (
-      <EntityRowItem
-        Content={
-          <ColorPicker
-            style={{ width: '100%' }}
-            ColorPalette={this.props.ColorPalette}
-            value={PercentBar.NegativeColor}
-            onChange={x => this.onNegativeColorChanged(x)}
-          />
-        }
-      />
-    );
 
-    colItems[5].Content = (
+    colItems[1].Content = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.TeamSharingActivated}
@@ -116,31 +43,5 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
     );
 
     return <AdaptableObjectRow colItems={colItems} />;
-  }
-
-  onMinimumValueChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    if (!isNaN(Number(e.value))) {
-      let minValue: number = Number(e.value);
-      this.props.onMinimumValueChanged(this.props.AdaptableObject as PercentBar, minValue);
-    }
-  }
-
-  onMaximumValueChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    if (!isNaN(Number(e.value))) {
-      let maxValue: number = Number(e.value);
-      this.props.onMaximumValueChanged(this.props.AdaptableObject as PercentBar, maxValue);
-    }
-  }
-
-  onPositiveColorChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.onPositiveColorChanged(this.props.AdaptableObject as PercentBar, e.value);
-  }
-
-  onNegativeColorChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    this.props.onNegativeColorChanged(this.props.AdaptableObject as PercentBar, e.value);
   }
 }
