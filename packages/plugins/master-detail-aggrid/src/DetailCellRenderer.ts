@@ -4,14 +4,15 @@ import {
   IDetailCellRendererParams,
 } from '@ag-grid-enterprise/master-detail/dist/es6/masterDetail/detailCellRenderer';
 import { Adaptable } from '@adaptabletools/adaptable/src/agGrid/Adaptable';
+import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
 export class DetailCellRenderer extends BaseDetailCellRenderer {
-  adaptable?: Adaptable;
+  adaptableApi?: AdaptableApi;
   adaptableDestroyed: boolean = false;
   init(params: IDetailCellRendererParams) {
     const oldOnGridReady = params.detailGridOptions.onGridReady;
     params.detailGridOptions.onGridReady = event => {
-      if (this.adaptable || this.adaptableDestroyed) return;
+      if (this.adaptableApi || this.adaptableDestroyed) return;
 
       if (oldOnGridReady) {
         oldOnGridReady(event);
@@ -38,7 +39,7 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
 
       eDetailGrid.parentNode?.prepend(adaptableContainer);
 
-      this.adaptable = new Adaptable({
+      this.adaptableApi = Adaptable.init({
         adaptableId: `${masterAdaptable.adaptableOptions.adaptableId} Detail`,
         ...detailOptions,
         predefinedConfig: {
@@ -60,9 +61,9 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
   }
   destroy() {
     this.adaptableDestroyed = true;
-    if (this.adaptable) {
-      this.adaptable.destroy();
-      this.adaptable = undefined;
+    if (this.adaptableApi) {
+      this.adaptableApi.destroy();
+      this.adaptableApi = undefined;
     }
     super.destroy();
   }
