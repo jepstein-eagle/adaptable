@@ -1,3 +1,6 @@
+## 6.4.1
+
+fix charting plugin by downgrading react-redux deps to be in sync with what react-beautiful-dnd installs
 
 ## 6.4.0
 
