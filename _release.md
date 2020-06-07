@@ -1,3 +1,10 @@
+## 6.4.1
+
+fix charting plugin by downgrading react-redux deps to be in sync with what react-beautiful-dnd installs
+
+## 6.4.0
+
+minor verion release - rolling up all recent canary updates
 
 ## 6.3.3-canary2
 

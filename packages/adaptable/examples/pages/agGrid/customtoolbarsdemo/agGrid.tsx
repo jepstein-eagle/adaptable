@@ -118,6 +118,7 @@ function InitAdaptableDemo() {
 
     if (toolbarButton.Name == 'btnClearButton') {
       api.dashboardApi.clearCustomToolbarButtons('Toolbar1');
+      api.columnFilterApi.clearColumnFilterByColumn('currency');
     }
   });
 
@@ -279,6 +280,21 @@ let demoConfig: PredefinedConfig = {
       {
         FunctionName: 'Glue42',
         AccessLevel: 'Full',
+      },
+    ],
+  },
+  ColumnFilter: {
+    ColumnFilters: [
+      {
+        ColumnId: 'currency',
+        Filter: {
+          ColumnValueExpressions: [
+            {
+              ColumnId: 'currency',
+              ColumnDisplayValues: ['GBP', 'ZAR'],
+            },
+          ],
+        },
       },
     ],
   },
