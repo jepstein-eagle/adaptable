@@ -1414,7 +1414,7 @@ export class Adaptable implements IAdaptable {
           column,
           api: this.gridOptions.api,
           columnApi: this.gridOptions.columnApi,
-          context: null,
+          context: this.gridOptions.context,
         };
         const formattedValue = formatter(params);
         if (colDef.cellRenderer) {
