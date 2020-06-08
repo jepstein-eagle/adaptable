@@ -21,7 +21,6 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { AdaptableTheme } from '../PredefinedConfig/ThemeState';
-import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
@@ -114,7 +113,6 @@ export interface IAdaptable {
   ChartService: IChartService;
   ScheduleService: IScheduleService;
   SearchService: ISearchService;
-  Glue42Service: IGlue42Service;
   ReportService: IReportService;
   StyleService: IStyleService;
   LayoutService: ILayoutService;

@@ -29,8 +29,6 @@ import { GridInfoPopup } from './GridInfo/GridInfoPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
-import { Glue42LoginPopup } from './Glue42/Glue42LoginPopup';
-//import { HomeToolbarControl } from './Home/HomeToolbarControl';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
 import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
@@ -44,7 +42,6 @@ import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
 import { CustomToolbarControl } from './Dashboard/CustomToolbarControl';
 import { FreeTextColumnPopup } from './FreeTextColumn/FreeTextColumnPopup';
-import { Glue42Popup } from './Glue42/Glue42Popup';
 import { PercentBarPopup } from './PercentBar/PercentBarPopup';
 import { CellSummaryPopup } from './CellSummary/CellSummaryPopup';
 import { CellSummaryToolbarControl } from './CellSummary/CellSummaryToolbarControl';
@@ -66,8 +63,6 @@ import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
-import { Glue42ToolbarControl } from './Glue42/Glue42ToolbarControl';
-
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
   AlertPopup,
@@ -88,8 +83,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   UpdatedRowPopup,
   FormatColumnPopup,
   FreeTextColumnPopup,
-  Glue42Popup,
-  Glue42LoginPopup,
   GridInfoPopup,
   LayoutPopup,
   ColumnCategoryPopup,
@@ -126,7 +119,6 @@ export const AdaptableDashboardFactory = new Map<
   [StrategyConstants.SmartEditStrategyId, SmartEditToolbarControl],
   [StrategyConstants.SystemStatusStrategyId, SystemStatusToolbarControl],
   [StrategyConstants.ThemeStrategyId, ThemeToolbarControl],
-  [StrategyConstants.Glue42StrategyId, Glue42ToolbarControl],
   // this is special
   [StrategyConstants.DashboardStrategyId, CustomToolbarControl],
 ]);

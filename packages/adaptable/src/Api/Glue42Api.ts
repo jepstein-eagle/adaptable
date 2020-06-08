@@ -41,4 +41,6 @@ export interface Glue42Api {
   stopLiveData(): void;
 
   clearGlue42InternalState(): void;
+
+  sendSnapshotToDo(glue42Report: Glue42Report): void;
 }

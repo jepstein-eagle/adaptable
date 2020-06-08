@@ -1,7 +1,10 @@
 import * as Redux from 'redux';
-import { Glue42State, Glue42Report, Glue42Schedule } from '../../PredefinedConfig/Glue42State';
-import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../PredefinedConfig/Uuid';
+import {
+  EMPTY_ARRAY,
+  EMPTY_STRING,
+} from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { Glue42Report } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
+import { Glue42State } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
 
 export const GLUE42_LOGIN = 'GLUE42_LOGIN';
 export const GLUE42_SET_LOGIN_ERROR_MESSAGE = 'GLUE42_SET_LOGIN_ERROR_MESSAGE';
@@ -128,7 +131,6 @@ export const Glue42Reducer: Redux.Reducer<Glue42State> = (
   state: Glue42State = initialFilterState,
   action: Redux.Action
 ): Glue42State => {
-  let Glue42Schedules: Glue42Schedule[];
   switch (action.type) {
     case GLUE42_LOGIN: {
       return { ...state, Glue42LoginErrorMessage: undefined };

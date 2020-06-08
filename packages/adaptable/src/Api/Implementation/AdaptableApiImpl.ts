@@ -42,7 +42,6 @@ import { UserInterfaceApiImpl } from './UserInterfaceApiImpl';
 import { UserFilterApiImpl } from './UserFilterApiImpl';
 import { NamedFilterApiImpl } from './NamedFilterApiImpl';
 import { InternalApiImpl } from './InternalApiImpl';
-import { Glue42ApiImpl } from './Glue42ApiImpl';
 import { ColumnChooserApiImpl } from './ColumnChooserApiImpl';
 import { AdaptableApi } from '../../types';
 import { ActionColumnApi } from '../ActionColumnApi';
@@ -140,7 +139,6 @@ export class AdaptableApiImpl implements AdaptableApi {
   public userInterfaceApi: UserInterfaceApi;
   public userFilterApi: UserFilterApi;
   public namedFilterApi: NamedFilterApi;
-  public glue42Api: Glue42ApiImpl;
   public toolPanelApi: ToolPanelApi;
 
   constructor(protected adaptable: IAdaptable) {
@@ -189,7 +187,6 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.userInterfaceApi = new UserInterfaceApiImpl(adaptable);
     this.userFilterApi = new UserFilterApiImpl(adaptable);
     this.namedFilterApi = new NamedFilterApiImpl(adaptable);
-    this.glue42Api = new Glue42ApiImpl(adaptable);
     this.toolPanelApi = new ToolPanelApiImpl(adaptable);
 
     this.internalApi = new InternalApiImpl(adaptable);

@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as ScheduleRedux from '../../Redux/ActionsReducers/ScheduleRedux';
-import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
-import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -29,9 +27,11 @@ import DropdownButton from '../../components/DropdownButton';
 import PlusIcon from '../../components/icons/plus';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
-import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullSchedule';
 import { BaseSchedule } from '../../PredefinedConfig/Common/Schedule';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
+import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { Glue42Api } from '../../Api/Glue42Api';
+import { IPushPullApi } from '../../Api/IPushPullApi';
 interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupComponent> {
   Reminders: ReminderSchedule[];
   ReportSchedules: ReportSchedule[];
@@ -103,11 +103,12 @@ class SchedulePopupComponent extends React.Component<
     let allSchedules: BaseSchedule[] = [];
     allSchedules.push(...this.props.Reminders);
     allSchedules.push(...this.props.ReportSchedules);
-    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi: IPushPullApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
     if (ippApi && ippApi.isIPushPullRunning()) {
       allSchedules.push(...this.props.IPushPullSchedules);
     }
-    if (this.props.Adaptable.api.glue42Api.isGlue42Available()) {
+    const glue42Api: Glue42Api = this.props.Adaptable.api.pluginsApi.getPluginApi('glue42');
+    if (glue42Api && glue42Api.isGlue42Running()) {
       allSchedules.push(...this.props.Glue42Schedules);
     }
 
@@ -171,7 +172,7 @@ class SchedulePopupComponent extends React.Component<
     if (ippApi && ippApi.isIPushPullRunning()) {
       scheduleMenuItems.push(iPushPullMenuItem);
     }
-    if (this.props.Adaptable.api.glue42Api.isGlue42Available()) {
+    if (glue42Api && glue42Api.isGlue42Running()) {
       scheduleMenuItems.push(glue42MenuItem);
     }
 

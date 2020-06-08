@@ -5,9 +5,8 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
+import * as Glue42Redux from '../Redux/ActionsReducers/Glue42Redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -129,29 +128,6 @@ class Glue42ToolbarControlComponent extends React.Component<
           disabled={isLiveGlue42Report || !isCompletedReport}
           AccessLevel={this.props.AccessLevel}
         />
-        {/*
-
-
-        {isLiveGlue42Report ? (
-          <ButtonPause
-            marginLeft={1}
-            className="ab-DashboardToolbar__Glue42__pause"
-            onClick={() => this.props.onGlue42StopLiveData()}
-            tooltip="Stop sync with Glue42"
-            disabled={!isLiveGlue42Report}
-            AccessLevel={this.props.AccessLevel}
-          />
-        ) : (
-          <ButtonPlay
-            marginLeft={1}
-            className="ab-DashboardToolbar__Glue42__play"
-            onClick={() => this.onGlue42StartLiveData()}
-            tooltip="Start sync with Glue42"
-            disabled={isLiveGlue42Report || !isCompletedReport}
-            AccessLevel={this.props.AccessLevel}
-          />
-        )}
-          */}
         {isCompletedReport && (
           <Flex
             className={join(

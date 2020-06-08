@@ -1,12 +1,10 @@
 import * as Redux from 'redux';
-import {
-  IPushPullReport,
-  IPushPullDomain,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 
 import { EMPTY_ARRAY } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 
-import { IPushPullState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { IPushPullReport } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
+import { IPushPullDomain } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
+import { IPushPullState } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
 
 export const IPUSHPULL_SET_THROTTLE_TIME = 'IPUSHPULL_SET_THROTTLE_TIME';
 export const IPUSHPULL_SEND_SNAPSHOT = 'IPUSHPULL_SEND_SNAPSHOT';

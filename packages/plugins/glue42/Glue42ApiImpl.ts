@@ -111,4 +111,8 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
       ScreenPopups.Glue42Popup
     );
   }
+
+  public sendSnapshotToDo(glue42Report: Glue42Report): void {
+    // we need to do this as its changed....
+  }
 }

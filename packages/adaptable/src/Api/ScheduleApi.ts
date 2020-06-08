@@ -1,8 +1,8 @@
 import { BaseSchedule } from '../PredefinedConfig/Common/Schedule';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../PredefinedConfig/ExportState';
-import { IPushPullSchedule } from '../PredefinedConfig/IPushPullSchedule';
 import { Glue42Schedule } from '../PredefinedConfig/Glue42State';
+import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 
 export interface ScheduleApi {
   getAllSchedule(): BaseSchedule[];

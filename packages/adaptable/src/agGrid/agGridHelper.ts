@@ -69,7 +69,6 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
-import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
 import { ActionColumnStrategy } from '../Strategy/ActionColumnStrategy';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
@@ -185,8 +184,6 @@ export class agGridHelper {
     strategies.set(StrategyConstants.HideColumnStrategyId, new HideColumnStrategy(adaptable));
     strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(adaptable));
 
-    // should probably both be plugins
-    strategies.set(StrategyConstants.Glue42StrategyId, new Glue42Strategy(adaptable));
     return strategies;
   }
 

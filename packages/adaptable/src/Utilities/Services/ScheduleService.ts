@@ -1,17 +1,16 @@
 import { IScheduleService } from './Interface/IScheduleService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import * as ScheduleRedux from '../../Redux/ActionsReducers/ScheduleRedux';
-import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
-import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { Schedule } from '../../PredefinedConfig/Common/Schedule';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
-import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullSchedule';
 import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 import DateExtensions from '../Extensions/DateExtensions';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { LogAdaptableError } from '../Helpers/LoggingHelper';
+import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { Glue42Api } from '../../Api/Glue42Api';
 
 interface ScheduleJob {
   cancel: () => any;
@@ -193,18 +192,10 @@ export class ScheduleService implements IScheduleService {
   public AddGlue42Schedule(glue42Schedule: Glue42Schedule): void {
     const date: Date = this.getDateFromSchedule(glue42Schedule.Schedule);
     if (date != null) {
+      const glue42Api: Glue42Api = this.adaptable.api.pluginsApi.getPluginApi('glue42');
       var glue42Job: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
-        // we need to go through Redux as the flow is always Redux => Adaptable Store => api
-        if (glue42Schedule.Transmission == 'Snapshot') {
-          this.adaptable.api.internalApi.dispatchReduxAction(
-            Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
-          );
-        } else if (glue42Schedule.Transmission == 'Live Data') {
-          LogAdaptableError('we dont yet have live data for glue');
-          //   this.adaptable.api.internalApi.dispatchReduxAction(
-          //     Glue42Redux.Glue42SendSnapshot(glue42Schedule.Glue42Report)
-          //   );
-        }
+        glue42Api.sendSnapshotToDo(glue42Schedule.Glue42Report);
+
         this.glue42Jobs.push(glue42Job);
       });
     }

@@ -49,7 +49,6 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as Glue42Redux from '../ActionsReducers/Glue42Redux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -132,13 +131,13 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { IGlue42Strategy } from '../../Strategy/Interface/IGlue42Strategy';
 import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
-import { IPushPullState } from '../../PredefinedConfig/SystemState';
+import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { Glue42State } from '../../PredefinedConfig/Glue42State';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -209,11 +208,13 @@ This is the main store for Adaptable State
       IPushPull: (state: IPushPullState, action: Redux.Action) => {
         return state || null;
       },
+      Glue42: (state: Glue42State, action: Redux.Action) => {
+        return state || null;
+      },
 
       ActionColumn: ActionColumnRedux.ActionColumnReducer,
       Entitlements: EntitlementsRedux.EntitlementsReducer,
       NamedFilter: NamedFilterRedux.NamedFilterReducer,
-      Glue42: Glue42Redux.Glue42Reducer,
       SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
       SystemFilter: SystemFilterRedux.SystemFilterReducer,
       UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
@@ -296,8 +297,6 @@ This is the main store for Adaptable State
           state.SmartEdit = undefined;
           state.CellSummary = undefined;
           state.Theme = undefined;
-          state.IPushPull = undefined;
-          state.Glue42 = undefined;
           state.ToolPanel = undefined;
           break;
         case LOAD_STATE:
@@ -352,9 +351,6 @@ This is the main store for Adaptable State
       ConfigConstants.ACTION_COLUMN,
       ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
-
-      // temp: putting Glue42 here...
-      ConfigConstants.GLUE42,
     ];
 
     // this is now VERY BADLY NAMED!
@@ -2645,40 +2641,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // set livereport off
             //   adaptable.api.internalApi.setLiveReportRunningOff();
             return ret;
-          }
-
-          /*******************
-           * GLUE42 ACTIONS
-           *******************/
-          case Glue42Redux.GLUE42_LOGIN: {
-            const actionTyped = action as Glue42Redux.Glue42LoginAction;
-            adaptable.api.glue42Api.loginToGlue42(actionTyped.username, actionTyped.password);
-            return next(action);
-          }
-
-          case Glue42Redux.GLUE42_SEND_SNAPSHOT: {
-            let glue42Strategy = <IGlue42Strategy>(
-              adaptable.strategies.get(StrategyConstants.Glue42StrategyId)
-            );
-            const actionTyped = action as Glue42Redux.Glue42SendSnapshotAction;
-            glue42Strategy.sendSnapshot(actionTyped.glue42Report);
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-            return next(action);
-          }
-
-          case Glue42Redux.GLUE42_START_LIVE_DATA: {
-            let glue42Strategy = <IGlue42Strategy>(
-              adaptable.strategies.get(StrategyConstants.Glue42StrategyId)
-            );
-            const actionTyped = action as Glue42Redux.Glue42StartLiveDataAction;
-            glue42Strategy.startLiveData(actionTyped.glue42Report);
-            middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-            return next(action);
-          }
-
-          case Glue42Redux.GLUE42_STOP_LIVE_DATA: {
-            adaptable.api.glue42Api.stopLiveData();
-            return next(action);
           }
 
           /*******************

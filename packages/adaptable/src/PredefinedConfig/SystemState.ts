@@ -10,44 +10,20 @@ import { Report } from './ExportState';
 import { LiveReport } from '../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { GridCell } from '../types';
-import { IPushPullReport } from './IPushPullSchedule';
-import { ConfigState } from './ConfigState';
+import { IPushPullState, IPushPullReport } from './IPushPullState';
+import { Glue42State, Glue42Report } from './Glue42State';
 
 export { IPushPullReport };
-/**
- * Internal object that maps an IPushPull Domain object
- */
-export interface IPushPullDomain {
-  /**
-   * the Name of the Domain / Folder
-   */
-  Name: string;
-
-  /**
-   * the Id of the Folder
-   */
-  FolderId: number;
-
-  /**
-   * The names of the pages within the (Folder)
-   */
-  Pages: string[];
-}
+export { Glue42Report };
 
 //SYSTEM STATE IMPLEMENTATIONS - System, Menu, Grid, Popup, TeamSharing
 
-export interface IPushPullState extends ConfigState {
-  IsIPushPullRunning?: boolean;
-  IPushPullDomainsPages?: IPushPullDomain[];
-  IPushPullLoginErrorMessage?: string;
-  CurrentLiveIPushPullReport?: IPushPullReport;
-}
 /**
  * This is for internal use of Adaptable only during a session.
  *
  * None of this State is provided to Adaptable by users (through Predefined Config) and none of it is persisted.
  */
-export interface SystemState extends InternalState, IPushPullState {
+export interface SystemState extends InternalState, IPushPullState, Glue42State {
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
   AvailableCalendars: Calendar[];
@@ -59,7 +35,6 @@ export interface SystemState extends InternalState, IPushPullState {
   ChartVisibility: ChartVisibility;
   CalculatedColumnErrorMessage: string;
   CurrentLiveReports: LiveReport[];
-
   SystemReports: Report[];
   ReportErrorMessage: string;
   QuickSearchRange: QueryRange;

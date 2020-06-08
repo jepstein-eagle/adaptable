@@ -1,10 +1,10 @@
 import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullSchedule';
 import { ScheduleState } from '../../PredefinedConfig/ScheduleState';
 import { ReminderSchedule, ReportSchedule } from '../../types';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
+import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 
 export const REPORT_SCHEDULE_ADD = 'REPORT_SCHEDULE_ADD';
 export const REPORT_SCHEDULE_EDIT = 'REPORT_SCHEDULE_EDIT';

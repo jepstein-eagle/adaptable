@@ -123,10 +123,7 @@ import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from '../Utilities/Defaults/DefaultSparklinesChartProperties';
 import AdaptableWizardView from '../View/AdaptableWizardView';
-
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
-import { Glue42Service } from '../Utilities/Services/Glue42Service';
-import { IGlue42Service } from '../Utilities/Services/Interface/IGlue42Service';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ReportService } from '../Utilities/Services/ReportService';
 import { AdaptableApi } from '../Api/AdaptableApi';
@@ -152,9 +149,6 @@ import { AllCommunityModules, ModuleRegistry } from '@ag-grid-community/all-modu
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { AdaptableComparerFunction } from '../PredefinedConfig/Common/AdaptableComparerFunction';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
-import { hasMagic } from 'glob';
-import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
-import { ICustomSortStrategy } from '../Strategy/Interface/ICustomSortStrategy';
 import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
@@ -232,8 +226,6 @@ export class Adaptable implements IAdaptable {
   public ScheduleService: IScheduleService;
 
   public SearchService: ISearchService;
-
-  public Glue42Service: IGlue42Service;
 
   public ReportService: IReportService;
 
@@ -437,7 +429,6 @@ export class Adaptable implements IAdaptable {
     this.FreeTextColumnService = new FreeTextColumnService(this);
     this.ScheduleService = new ScheduleService(this);
     this.SearchService = new SearchService(this);
-    this.Glue42Service = new Glue42Service(this);
     this.ReportService = new ReportService(this);
     this.LayoutService = new LayoutService(this);
     this.FilterService = new FilterService(this);

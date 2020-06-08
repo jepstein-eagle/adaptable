@@ -41,7 +41,6 @@ import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
 import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
-import { Glue42Api } from './Glue42Api';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 import { ApplicationApi } from './ApplicationAPI';
@@ -100,10 +99,8 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [exportApi](#exportapi)                         | Run reports either manually or at scheduled times|
  *  | [flashingCellApi](#flashingcellapi)             | Manages the [Flashing Cell](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_flashingcellstate_.flashingcellstate.html) |
  *  | [freeTextColumnApi](#freetextcolumnapi)         | Configures {@link FreeTextColumnState|FreeText Columns} - special columns containing bespoke data|
- *  | [glue42Api](#glue42api)                         | Runs {@link Glue42State|Glue42} partner integration |
  *  | [gradientColumnApi](#gradientcolumnapi)         | Aids creation of visual {@link GradientColumnState|Gradient Columns} |
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
- *  | [ipushpullApi](#ipushpullapi)                   | Runs {@link IPushPullState|ipushpull} partner integration ||
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
  *  | [namedFilterApi](#namedfilterapi)         | |
@@ -251,11 +248,6 @@ export interface AdaptableApi {
    * Provides access to the *FreeText Column* function, the *FreeText Column* object and [FreeText Column State](_src_predefinedconfig_configstate_freetextcolumnstate_.freetextcolumnstate.html).
    */
   freeTextColumnApi: FreeTextColumnApi;
-
-  /**
-   *  Provides access to *Glue42* related functionality, the *Glue42* object and [Glue42 State](_src_predefinedconfig_glue42state_.glue42.html).
-   */
-  glue42Api: Glue42Api;
 
   /**
    * Provides access to the *Gradient Column* function, the *Gradient Column* object and [Gradient Column State](_src_predefinedconfig_configstate_gradientcolumnstate_.gradientcolumnstate.html).
