@@ -17,7 +17,7 @@ import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 import { TickingDataHelper } from '../../TickingDataHelper';
-
+import glue42 from '../../../../../plugins/glue42';
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
@@ -34,6 +34,14 @@ function InitAdaptableDemo() {
       ...gridOptions,
       modules: [MenuModule, RangeSelectionModule],
     },
+    plugins: [
+      glue42({
+        glue: glue42Desktop, // this is the glue object
+        glue4Office: glue42office, // this is the Glue4Office object
+        username: 'jonny',
+        password: 'demopassword', // put in .env file
+      }),
+    ],
     predefinedConfig: demoConfig,
   };
 
@@ -65,12 +73,6 @@ let demoConfig: PredefinedConfig = {
       },
     ],
     VisibleButtons: ['CellValidation'],
-  },
-  Glue42: {
-    Glue: glue42Desktop, // this is the glue object
-    Glue4Office: glue42office, // this is the Glue4Office object
-    Username: 'jonny',
-    Password: 'demopassword', // put in .env file
   },
   FlashingCell: {
     FlashingCells: [
