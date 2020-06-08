@@ -5,6 +5,7 @@ import { PluginsApi } from '../PluginsApi';
 import { ApiBase } from './ApiBase';
 import { PluginsState } from '../../Redux/ActionsReducers/PluginsRedux';
 import { IPushPullApi } from '../IPushPullApi';
+import { Glue42Api } from '../Glue42Api';
 
 export class PluginsApiImpl extends ApiBase implements PluginsApi {
   public getPluginsState(): PluginsState {
@@ -23,10 +24,13 @@ export class PluginsApiImpl extends ApiBase implements PluginsApi {
     this.dispatchAction(PluginsRedux.PluginsSetPluginState(pluginId, newPluginState));
   }
 
-  public getPluginApi(pluginId: string): any | IPushPullApi {
+  public getPluginApi(pluginId: string): any | IPushPullApi | Glue42Api {
     const api = this.adaptable.getPluginProperty(pluginId, 'api');
     if (pluginId === 'ipushpull') {
       return api as IPushPullApi;
+    }
+    if (pluginId === 'glue42') {
+      return api as Glue42Api;
     }
 
     return api;

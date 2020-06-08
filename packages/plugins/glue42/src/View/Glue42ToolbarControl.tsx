@@ -1,32 +1,37 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import * as Glue42Redux from '../Redux/ActionsReducers/Glue42Redux';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import { PanelDashboard } from '../Components/Panels/PanelDashboard';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { Report } from '../../PredefinedConfig/ExportState';
+import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import { ToolbarStrategyViewPopupProps } from '@adaptabletools/adaptable/src/View/Components/SharedProps/ToolbarStrategyViewPopupProps';
+import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
+import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
+import * as Glue42Redux from '../Redux/ActionReducers/Glue42Redux';
+import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import { PanelDashboard } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelDashboard';
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
+import * as GeneralConstants from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { Report } from '@adaptabletools/adaptable/src/PredefinedConfig/ExportState';
 import { Flex } from 'rebass';
-import Dropdown from '../../components/Dropdown';
-import join from '../../components/utils/join';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
-import { LiveDataChangedEventArgs, LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
-import { Glue42Report, Glue42Schedule } from '../../PredefinedConfig/Glue42State';
-import { ButtonExport } from '../Components/Buttons/ButtonExport';
-import { ButtonLogin } from '../Components/Buttons/ButtonLogin';
-import { ButtonPlay } from '../Components/Buttons/ButtonPlay';
-import { ButtonSchedule } from '../Components/Buttons/ButtonSchedule';
-import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
-import { ButtonPause } from '../Components/Buttons/ButtonPause';
-import ObjectFactory from '../../Utilities/ObjectFactory';
-import { ButtonNewPage } from '../Components/Buttons/ButtonNewPage';
-import { ButtonLogout } from '../Components/Buttons/ButtonLogout';
+import Dropdown from '@adaptabletools/adaptable/src/components/Dropdown';
+import join from '@adaptabletools/adaptable/src/components/utils/join';
+import {
+  LiveDataChangedEventArgs,
+  LiveDataChangedInfo,
+} from '@adaptabletools/adaptable/src/Api/Events/LiveDataChanged';
+import {
+  Glue42Report,
+  Glue42Schedule,
+} from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
+import { ButtonExport } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonExport';
+import { ButtonLogin } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogin';
+import { ButtonPlay } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPlay';
+import { ButtonSchedule } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonSchedule';
+import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPause';
+import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
+import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
+import { ButtonLogout } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogout';
 
 interface Glue42ToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<Glue42ToolbarControlComponent> {
@@ -85,6 +90,10 @@ class Glue42ToolbarControlComponent extends React.Component<
       this.forceUpdate();
     }
   };
+
+  getGlue42Api() {
+    return this.props.Adaptable.api.pluginsApi.getPluginApi('glue42api');
+  }
 
   render(): any {
     let allReports: Report[] = this.props
@@ -149,7 +158,7 @@ class Glue42ToolbarControlComponent extends React.Component<
         <ButtonLogout
           marginLeft={1}
           className="ab-DashboardToolbar__Glue42_logout"
-          onClick={() => this.props.Adaptable.api.glue42Api.logoutFromGlue42()}
+          onClick={() => this.getGlue42Api().logoutFromGlue42()}
           tooltip="Logout"
           disabled={isLiveGlue42Report}
           AccessLevel={this.props.AccessLevel}

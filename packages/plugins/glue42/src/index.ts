@@ -3,12 +3,8 @@ import {
   IAdaptable,
   AdaptableFunctionName,
   AdaptableState,
-  AdaptableOptions,
-  IAdaptableStore,
 } from '@adaptabletools/adaptable/types';
 import * as Redux from 'redux';
-
-import env from '@adaptabletools/adaptable/src/env';
 
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
@@ -26,7 +22,6 @@ import {
 } from '@adaptabletools/adaptable/src/View/AdaptableViewFactory';
 
 import { Glue42Strategy } from './Strategy/Glue42Strategy';
-import { IPushPullToolbarControl } from './View/IPushPullToolbarControl';
 import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
 import { Glue42ApiImpl } from './Glue42ApiImpl';
 import { Glue42Service } from './Utilities/Services/Glue42Service';
@@ -80,8 +75,8 @@ class Glue42Plugin extends AdaptablePlugin {
 
   afterInitApi(adaptable: IAdaptable) {
     this.glue42Api = new Glue42ApiImpl(adaptable, this.options);
-    this.Glue42Service = new Glue42Service(adaptable);
-    // this.iPushPullApi.setIPushPullInstance(ipushpull);
+    this.Glue42Service = new Glue42Service(adaptable, this.options);
+
     this.registerProperty('api', () => this.glue42Api);
     this.registerProperty('service', () => this.Glue42Service);
   }
@@ -100,7 +95,7 @@ class Glue42Plugin extends AdaptablePlugin {
       switch (action.type) {
         case Glue42Redux.GLUE42_LOGIN: {
           const actionTyped = action as Glue42Redux.Glue42LoginAction;
-          adaptable.api.glue42Api.loginToGlue42(actionTyped.username, actionTyped.password);
+          this.glue42Api.loginToGlue42(actionTyped.username, actionTyped.password);
           return next(action);
         }
 
@@ -125,7 +120,7 @@ class Glue42Plugin extends AdaptablePlugin {
         }
 
         case Glue42Redux.GLUE42_STOP_LIVE_DATA: {
-          adaptable.api.glue42Api.stopLiveData();
+          this.glue42Api.stopLiveData();
           return next(action);
         }
 

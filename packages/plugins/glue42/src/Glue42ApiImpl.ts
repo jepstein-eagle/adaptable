@@ -1,11 +1,27 @@
-import { ApiBase } from './ApiBase';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
-import { Glue42State, Glue42Report, Glue42Schedule } from '../../PredefinedConfig/Glue42State';
-import { Glue42Api } from '../Glue42Api';
+import { ApiBase } from '@adaptabletools/adaptable/src/Api/Implementation/ApiBase';
+
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
+import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
+import { Glue42PluginOptions } from './index';
+import { IAdaptable } from '@adaptabletools/adaptable/types';
+import * as Glue42Redux from './Redux/ActionReducers/Glue42Redux';
+import {
+  Glue42State,
+  Glue42Report,
+  Glue42Schedule,
+} from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
+import { Glue42Service } from './Utilities/Services/Glue42Service';
 
 export class Glue42ApiImpl extends ApiBase implements Glue42Api {
+  private options: Glue42PluginOptions;
+  private glue42Service: Glue42Service | null = null;
+
+  constructor(adaptable: IAdaptable, options: Glue42PluginOptions) {
+    super(adaptable);
+
+    this.options = options;
+  }
   public getGlue42State(): Glue42State | undefined {
     return this.getAdaptableState().Glue42;
   }
@@ -26,8 +42,16 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
     return false;
   }
 
+  private getGlue42Service(): Glue42Service {
+    if (!this.glue42Service) {
+      this.glue42Service = this.adaptable.getPluginProperty('glue42', 'service') || null;
+    }
+
+    return this.glue42Service as Glue42Service;
+  }
+
   public async loginToGlue42(userName: string, password: string): Promise<void> {
-    await this.adaptable.Glue42Service.login(userName, password, this.getGlue42State().GatewayURL);
+    await this.getGlue42Service().login(userName, password, this.getGlue42State().GatewayURL);
     this.adaptable.api.internalApi.hidePopupScreen();
     this.setGlue42LoginErrorMessage('');
   }
@@ -48,7 +72,7 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
   }
 
   public getGlue42ThrottleTime(): number | undefined {
-    return this.getGlue42State().ThrottleTime;
+    return this.options.throttleTime;
   }
 
   public setGlue42ThrottleTime(throttleTime: number): void {
@@ -76,7 +100,7 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
   }
 
   public getGlue42Schedules(): Glue42Schedule[] {
-    return this.getGlue42State()!.Glue42Schedules;
+    return this.getAdaptableState().Schedule.Glue42Schedules || [];
   }
 
   public startLiveData(glue42Report: Glue42Report): void {

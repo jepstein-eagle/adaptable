@@ -1,17 +1,21 @@
-import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import LoggingHelper, { LogAdaptableError } from '../Helpers/LoggingHelper';
+import { IAdaptable } from '@adaptabletools/adaptable/src/AdaptableInterfaces/IAdaptable';
+import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
+import LoggingHelper, {
+  LogAdaptableError,
+} from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
-import Helper from '../Helpers/Helper';
-import ColumnHelper from '../Helpers/ColumnHelper';
-import ArrayExtensions from '../Extensions/ArrayExtensions';
-import { DataType, ActionMode } from '../../PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import ExpressionHelper from '../Helpers/ExpressionHelper';
-import { Glue42State } from '../../PredefinedConfig/Glue42State';
+import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
+import ColumnHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
+import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
+import { DataType, ActionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
+import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
+import { CellValidationRule } from '@adaptabletools/adaptable/src/PredefinedConfig/CellValidationState';
+import ExpressionHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
+import { Glue42State } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
 import { IGlue42Service } from './Interface/IGlue42Service';
-import StringExtensions from '../Extensions/StringExtensions';
+import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
+import { Glue42PluginOptions } from '../..';
 
 export interface Glue42ExportError {
   row: number;
@@ -47,24 +51,34 @@ export class Glue42Service implements IGlue42Service {
     msg: '[Excel] Not checked, changed the addin status 0 times!',
     isResolved: false,
   };
+  private options: Glue42PluginOptions;
 
-  constructor(private adaptable: IAdaptable) {
+  public getGlue42Api(): Glue42Api {
+    return this.adaptable.api.pluginsApi.getPluginApi('glue42');
+  }
+
+  constructor(private adaptable: IAdaptable, options: Glue42PluginOptions) {
     this.adaptable = adaptable;
+    this.options = options;
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
+      const glue42Api = this.getGlue42Api();
+      if (!glue42Api || !this.options) {
+        return;
+      }
       if (!this.glueInstance) {
-        let glue42State: Glue42State | undefined = this.adaptable.api.glue42Api.getGlue42State();
-        if (glue42State && glue42State.Glue && glue42State.Glue4Office) {
-          this.adaptable.api.glue42Api.setGlue42AvailableOn();
+        let glue42State: Glue42State | undefined = glue42Api.getGlue42State();
+        if (this.options.glue && this.options.glue4Office) {
+          glue42Api.setGlue42AvailableOn();
           if (
-            StringExtensions.IsNotNullOrEmpty(glue42State.Username) &&
-            StringExtensions.IsNotNullOrEmpty(glue42State.Password)
+            StringExtensions.IsNotNullOrEmpty(this.options.username) &&
+            StringExtensions.IsNotNullOrEmpty(this.options.password)
           ) {
-            this.login(glue42State.Username, glue42State.Password, glue42State.GatewayURL);
+            this.login(this.options.username, this.options.password, this.options.gatewayURL);
           }
         } else {
-          this.adaptable.api.glue42Api.setGlue42AvailableOff();
-          this.adaptable.api.glue42Api.setGlue42RunningOff();
+          glue42Api.setGlue42AvailableOff();
+          glue42Api.setGlue42RunningOff();
         }
       }
     });
@@ -90,9 +104,8 @@ export class Glue42Service implements IGlue42Service {
         },
       };
 
-      const glue42State: Glue42State = this.adaptable.api.glue42Api.getGlue42State();
-      const glue = glue42State.Glue;
-      const glue4Office = glue42State.Glue4Office;
+      const glue = this.options.glue;
+      const glue4Office = this.options.glue4Office;
 
       if (glue42Config && glue42Config.excelExport && glue42Config.excelExport.timeoutMs) {
         this.excelSyncTimeout = glue42Config.excelExport.timeoutMs;
@@ -106,10 +119,10 @@ export class Glue42Service implements IGlue42Service {
       const glue4OfficeInstance = await glue4Office(glue4OfficeConfig);
       this.glue4ExcelInstance = glue4OfficeInstance.excel; // as Glue42Office.Excel.API;
       this.subscribeToAddinStatusChanges();
-      this.adaptable.api.glue42Api.setGlue42RunningOn();
+      this.getGlue42Api().setGlue42RunningOn();
     } catch (error) {
       LogAdaptableError(error);
-      this.adaptable.api.glue42Api.setGlue42RunningOff();
+      this.getGlue42Api().setGlue42RunningOff();
     }
   }
 

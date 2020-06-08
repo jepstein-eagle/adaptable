@@ -1,19 +1,21 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import FormLayout, { FormRow } from '../../components/FormLayout';
-import Input from '../../components/Input';
-import SimpleButton from '../../components/SimpleButton';
-import FlexWithFooter from '../../components/FlexWithFooter';
-import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { usePopupContext } from '../Components/Popups/PopupContext';
-import ErrorBox from '../../components/ErrorBox';
-import HelpBlock from '../../components/HelpBlock';
+import { useAdaptable } from '@adaptabletools/adaptable/src/View/AdaptableContext';
+import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
+import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import * as Glue42Redux from '../Redux/ActionReducers/Glue42Redux';
+import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import FormLayout, { FormRow } from '@adaptabletools/adaptable/src/components/FormLayout';
+import Input from '@adaptabletools/adaptable/src/components/Input';
+import SimpleButton from '@adaptabletools/adaptable/src/components/SimpleButton';
+import FlexWithFooter from '@adaptabletools/adaptable/src/components/FlexWithFooter';
+import { PanelWithImage } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelWithImage';
+import { usePopupContext } from '@adaptabletools/adaptable/src/View/Components/Popups/PopupContext';
+import ErrorBox from '@adaptabletools/adaptable/src/components/ErrorBox';
+import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import { Flex } from 'rebass';
+import { Glue42PluginOptions } from '..';
 
 interface Glue42LoginPopupProps {
   glue42Login: string | undefined;
@@ -30,9 +32,11 @@ interface Glue42LoginPopupInternalState {
 }
 
 const Glue42LoginComponent = (props: Glue42LoginPopupProps) => {
+  const adaptable = useAdaptable();
+  const options: Glue42PluginOptions = adaptable!.getPlugin('ipushpull')!.options;
   const [state, setState] = React.useState<Glue42LoginPopupInternalState>({
-    Login: props.glue42Login || '',
-    Password: props.glue42Password || '',
+    Login: options.username || '',
+    Password: options.password || '',
   });
 
   const { hidePopup } = usePopupContext();
@@ -129,8 +133,6 @@ const Glue42LoginComponent = (props: Glue42LoginPopupProps) => {
 
 function mapStateToProps(state: AdaptableState): Partial<Glue42LoginPopupProps> {
   return {
-    glue42Login: state.Glue42 ? state.Glue42!.Username : undefined,
-    glue42Password: state.Glue42 ? state.Glue42!.Password : undefined,
     glue42LoginErrorMessage: state.Glue42.Glue42LoginErrorMessage,
   };
 }

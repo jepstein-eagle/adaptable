@@ -1,16 +1,16 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as Glue42Redux from '../../Redux/ActionsReducers/Glue42Redux';
-import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { EditableConfigEntityState } from '../Components/SharedProps/EditableConfigEntityState';
-import { UIHelper } from '../UIHelper';
-import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { Glue42Report } from '../../PredefinedConfig/Glue42State';
+import { PanelWithButton } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelWithButton';
+import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
+import * as Glue42Redux from '../Redux/ActionReducers/Glue42Redux';
+import { StrategyViewPopupProps } from '@adaptabletools/adaptable/src/View/Components/SharedProps/StrategyViewPopupProps';
+import * as TeamSharingRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/TeamSharingRedux';
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import { EditableConfigEntityState } from '@adaptabletools/adaptable/src/View/Components/SharedProps/EditableConfigEntityState';
+import { UIHelper } from '@adaptabletools/adaptable/src/View/UIHelper';
+import { AdaptableObject } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableObject';
+import { Glue42Report } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
 
 interface Glue42PopupProps extends StrategyViewPopupProps<Glue42PopupComponent> {
   //  SelectedGlue42ReportName: string | undefined;

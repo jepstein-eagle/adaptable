@@ -52,9 +52,7 @@ let demoConfig: PredefinedConfig = {
 
       {
         ColumnId: 'counterparty',
-        PermittedValues: (column: AdaptableColumn) => {
-          return ['BAML', 'Nomura', 'UBS'];
-        },
+        PermittedValues: ['BAML', 'Nomura', 'UBS', 'JP Morgan', 'Citi', 'Soc Gen', 'Nat West'],
       },
     ],
   },

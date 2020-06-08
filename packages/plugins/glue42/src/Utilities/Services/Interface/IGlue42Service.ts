@@ -1,5 +1,5 @@
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { Glue42State } from '../../../PredefinedConfig/Glue42State';
+import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
+
 export interface IGlue42Service {
   login(username: string, password: string, gatewayURL: string): void;
 

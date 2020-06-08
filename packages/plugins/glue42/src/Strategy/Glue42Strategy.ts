@@ -1,28 +1,43 @@
-import { AdaptableStrategyBase } from './AdaptableStrategyBase';
-import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
-import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
-import * as _ from 'lodash';
-import { Report } from '../PredefinedConfig/ExportState';
-import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
+import { AdaptableStrategyBase } from '@adaptabletools/adaptable/src/Strategy/AdaptableStrategyBase';
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
+import { IGlue42Strategy } from './Interface/IGlue42Strategy';
+import { Glue42Report } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
+
+import {
+  IAdaptable,
+  DataChangedInfo,
+  AdaptableMenuItem,
+  Report,
+  AdaptableColumn,
+} from '@adaptabletools/adaptable/types';
+import _ from '@adaptabletools/adaptable/node_modules/@types/lodash';
 import {
   SELECTED_CELLS_REPORT,
-  DEFAULT_LIVE_REPORT_THROTTLE_TIME,
   SELECTED_ROWS_REPORT,
-} from '../Utilities/Constants/GeneralConstants';
-import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import { IGlue42Strategy } from './Interface/IGlue42Strategy';
-import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
-import { Glue42Report } from '../PredefinedConfig/Glue42State';
-import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+  DEFAULT_LIVE_REPORT_THROTTLE_TIME,
+} from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import LoggingHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
+import { Glue42Service } from '../Utilities/Services/Glue42Service';
+import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
 
 export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Strategy {
   private isSendingData: boolean = false;
+  private glue42Service: Glue42Service | null = null;
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
+  public getGlue42Api(): Glue42Api {
+    return this.adaptable.api.pluginsApi.getPluginApi('glue42');
+  }
   public setStrategyEntitlement(): void {
-    if (!this.adaptable.api.glue42Api.isGlue42Available()) {
+    const glue42Api = this.getGlue42Api();
+    if (!glue42Api) {
+      this.AccessLevel = 'Hidden';
+      return;
+    }
+
+    if (!glue42Api.isGlue42Available()) {
       this.AccessLevel = 'Hidden';
     } else {
       this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
@@ -35,7 +50,11 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     if (this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id)) {
       return false;
     }
-    return this.adaptable.api.glue42Api.isGlue42Available();
+    const glue42Api = this.getGlue42Api();
+    if (!glue42Api) {
+      return false;
+    }
+    return glue42Api.isGlue42Available();
   }
 
   constructor(adaptable: IAdaptable) {
@@ -54,10 +73,14 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     // currently we DONT send deltas or even check if the updated cell is in the current report  - we should
     // we simply send everything to iGlue42 every time any cell ticks....
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
-      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+      const glue42Api = this.getGlue42Api();
+      if (!glue42Api) {
+        return;
+      }
+      if (glue42Api.isGlue42Running()) {
         let currentLiveIGlue42Report:
           | Glue42Report
-          | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
+          | undefined = glue42Api.getCurrentLiveGlue42Report();
         if (
           currentLiveIGlue42Report &&
           currentLiveIGlue42Report.ReportName !== SELECTED_CELLS_REPORT &&
@@ -69,17 +92,25 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     });
     // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
-      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+      const glue42Api = this.getGlue42Api();
+      if (!glue42Api) {
+        return;
+      }
+      if (glue42Api.isGlue42Running()) {
         //   this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
     // if the grid filters have changed then update any live reports except cell or row selected
     this.adaptable._on('GridFiltered', () => {
+      const glue42Api = this.getGlue42Api();
+      if (!glue42Api) {
+        return;
+      }
       // Rerun all reports except selected cells / rows when filter changes
-      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+      if (glue42Api.isGlue42Running()) {
         let currentLiveIGlue42Report:
           | Glue42Report
-          | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
+          | undefined = glue42Api.getCurrentLiveGlue42Report();
         if (
           currentLiveIGlue42Report &&
           currentLiveIGlue42Report.ReportName !== SELECTED_CELLS_REPORT &&
@@ -91,10 +122,14 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     });
     // if grid selection has changed and the iGlue42 Live report is 'Selected Cells' or 'Selected Rows' then send updated data
     this.adaptable.api.eventApi.on('SelectionChanged', () => {
-      if (this.adaptable.api.glue42Api.isGlue42Running()) {
+      const glue42Api = this.getGlue42Api();
+      if (!glue42Api) {
+        return;
+      }
+      if (glue42Api.isGlue42Running()) {
         let currentLiveIGlue42Report:
           | Glue42Report
-          | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
+          | undefined = glue42Api.getCurrentLiveGlue42Report();
         if (
           currentLiveIGlue42Report &&
           (currentLiveIGlue42Report.ReportName === SELECTED_CELLS_REPORT ||
@@ -122,9 +157,11 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
       this.throttledRecomputeAndSendLiveDataEvent();
       return;
     }
-    let currentLiveIGlue42Report:
-      | Glue42Report
-      | undefined = this.adaptable.api.glue42Api.getCurrentLiveGlue42Report();
+    const glue42Api = this.getGlue42Api();
+    if (!glue42Api) {
+      return;
+    }
+    let currentLiveIGlue42Report: Glue42Report | undefined = glue42Api.getCurrentLiveGlue42Report();
     if (currentLiveIGlue42Report) {
       this.isSendingData = true;
       let report: Report = this.adaptable.api.exportApi.getReportByName(
@@ -184,6 +221,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
 
   public sendSnapshot(glue42Report: Glue42Report): void {
     let report: Report = this.adaptable.api.exportApi.getReportByName(glue42Report.ReportName);
+
     if (report) {
       let data: any[] = this.ConvertReportToArray(report);
       let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
@@ -191,7 +229,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
       let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(report);
       try {
         if (data) {
-          this.adaptable.Glue42Service.exportData.apply(this.adaptable.Glue42Service, [
+          this.glue42Service.exportData.apply(this.glue42Service, [
             data,
             gridColumns,
             primaryKeyValues,
@@ -206,10 +244,14 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
   public startLiveData(glue42Report: Glue42Report): void {
     let report: Report = this.adaptable.api.exportApi.getReportByName(glue42Report.ReportName);
     if (report) {
-      let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
+      const glue42Api = this.getGlue42Api();
+      if (!glue42Api) {
+        return;
+      }
+      // let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
       let reportData: any[] = this.ConvertReportToArray(report);
-      this.adaptable.Glue42Service.openSheet(reportData).then(() => {
-        this.adaptable.api.glue42Api.startLiveData(glue42Report);
+      this.glue42Service.openSheet(reportData).then(() => {
+        glue42Api.startLiveData(glue42Report);
         setTimeout(() => {
           this.throttledRecomputeAndSendLiveDataEvent();
         }, 500);
@@ -230,8 +272,12 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
 
   private getThrottleTimeFromState(): number {
     let iGlue42ThrottleTime: number | undefined;
-    if (this.adaptable.api.glue42Api.isGlue42Running()) {
-      iGlue42ThrottleTime = this.adaptable.api.glue42Api.getGlue42ThrottleTime();
+    const glue42Api = this.getGlue42Api();
+    if (!glue42Api) {
+      return 0;
+    }
+    if (glue42Api.isGlue42Running()) {
+      iGlue42ThrottleTime = glue42Api.getGlue42ThrottleTime();
     }
     return iGlue42ThrottleTime ? iGlue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
