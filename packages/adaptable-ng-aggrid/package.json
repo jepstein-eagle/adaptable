@@ -19,11 +19,11 @@
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@ag-grid-community/all-modules": "23.1.0",
-    "@ag-grid-community/angular": "23.1.0",
-    "@ag-grid-enterprise/menu": "23.1.0",
-    "@ag-grid-enterprise/range-selection": "23.1.0",
-    "@ag-grid-enterprise/side-bar": "23.1.0",
+    "@ag-grid-community/all-modules": "23.2.0",
+    "@ag-grid-community/angular": "23.2.0",
+    "@ag-grid-enterprise/menu": "23.2.0",
+    "@ag-grid-enterprise/range-selection": "23.2.0",
+    "@ag-grid-enterprise/side-bar": "23.2.0",
     "@angular-devkit/build-angular": "~0.901.6",
     "@angular-devkit/build-ng-packagr": "~0.901.6",
     "@angular/cli": "~9.1.6",

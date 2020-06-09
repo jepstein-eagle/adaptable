@@ -402,6 +402,10 @@ export class Adaptable implements IAdaptable {
     this.agGridHelper = new agGridHelper(this, this.gridOptions);
     // we prefer the grid to be NOT instantiated so that we can do it
     // perhaps in future we will force instantiation only?
+
+    // create the store
+    this.initStore();
+
     const isGridInstantiated =
       this.gridOptions.api && typeof this.gridOptions.api!.getValue === 'function';
     if (!isGridInstantiated) {
@@ -418,8 +422,6 @@ export class Adaptable implements IAdaptable {
     if (this.gridOptions.api) {
       (this.gridOptions.api as any).__adaptable = this;
     }
-    // create the store
-    this.initStore();
 
     // create the services
     this.CalendarService = new CalendarService(this);
