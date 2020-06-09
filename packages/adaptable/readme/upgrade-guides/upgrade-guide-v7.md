@@ -1,6 +1,6 @@
 # AdapTable Version 7 Upgrade Guide
 
-Version 7 of AdapTable will be released end of May.
+Version 7 of AdapTable will be released end of June.
 
 It has some changes of interest:
 
@@ -107,15 +107,11 @@ onAdaptableReady({
 
 Added `--ab-cmp-field-wrap__border-radius` css variable
 
-## Display Format Columns
-
-To Do
-
 ## Calculated Columns
 
 To Do
 
-## Team Sharing
+## Schedules
 
 To Do
 
