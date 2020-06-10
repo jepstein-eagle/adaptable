@@ -138,6 +138,7 @@ import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedC
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
 import { Glue42State } from '../../PredefinedConfig/Glue42State';
+import { OpenFinState } from '../../PredefinedConfig/OpenFinState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -209,6 +210,9 @@ This is the main store for Adaptable State
         return state || null;
       },
       Glue42: (state: Glue42State, action: Redux.Action) => {
+        return state || null;
+      },
+      OpenFin: (state: OpenFinState, action: Redux.Action) => {
         return state || null;
       },
 
@@ -2612,37 +2616,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          // Not doing this for ipushpull and think we should not do the same for the others
-          // when we come to update them
-          // better to do it in the api for each
-          case SystemRedux.REPORT_START_LIVE: {
-            let ret = next(action);
-            const actionTyped = action as SystemRedux.ReportStartLiveAction;
-            // fire the Live Report event for Export Started
-            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-              actionTyped.ReportDestination,
-              'LiveDataStarted'
-            );
-            // set livereport on
-            //  adaptable.api.internalApi.setLiveReportRunningOn();
-            return ret;
-          }
-
-          // Not doing this for ipushpull any more either
-          case SystemRedux.REPORT_STOP_LIVE: {
-            const actionTyped = action as SystemRedux.ReportStopLiveAction;
-
-            let ret = next(action);
-            // fire the Live Report event for Export Stopped
-            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-              actionTyped.ReportDestination,
-              'LiveDataStopped'
-            );
-            // set livereport off
-            //   adaptable.api.internalApi.setLiveReportRunningOff();
-            return ret;
-          }
-
           /*******************
            * USER FILTER ACTIONS
            *******************/
@@ -3036,11 +3009,6 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.SYSTEM_UPDATED_ROW_DELETE,
     SystemRedux.SYSTEM_UPDATED_ROW_DELETE_ALL,
 
-    SystemRedux.REPORT_START_LIVE,
-    SystemRedux.REPORT_STOP_LIVE,
-
-    SystemRedux.REPORT_SET_ERROR_MESSAGE,
-
     SystemRedux.SMARTEDIT_CHECK_CELL_SELECTION,
     SystemRedux.SMARTEDIT_FETCH_PREVIEW,
     SystemRedux.SMARTEDIT_SET_VALID_SELECTION,
@@ -3080,8 +3048,6 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
     GridRedux.SET_MAIN_MENUITEMS,
 
-    GridRedux.SET_LIVE_REPORT_RUNNING_ON,
-    GridRedux.SET_LIVE_REPORT_RUNNING_OFF,
     GridRedux.SET_PIVOT_MODE_ON,
     GridRedux.SET_PIVOT_MODE_OFF,
 

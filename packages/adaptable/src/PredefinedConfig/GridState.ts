@@ -14,7 +14,6 @@ export interface GridState extends InternalState {
   CellSummary: CellSummmary;
   IsQuickFilterVisible: boolean;
   MainMenuItems: AdaptableMenuItem[];
-  IsLiveReportRunning: boolean;
   IsGridInPivotMode: boolean;
   IsGridInTreeMode: boolean;
 }

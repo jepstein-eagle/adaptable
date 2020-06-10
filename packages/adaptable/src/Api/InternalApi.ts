@@ -1,5 +1,4 @@
 import { IUIConfirmation, AdaptableAlert } from '../Utilities/Interface/IMessage';
-import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { SystemState } from '../PredefinedConfig/SystemState';
 import { Report } from '../PredefinedConfig/ExportState';
 import { Calendar } from '../PredefinedConfig/CalendarState';
@@ -12,9 +11,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
-import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
@@ -24,20 +21,10 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 export interface InternalApi {
   // System Redux
   getSystemState(): SystemState;
-  startLiveReport(
-    report: Report,
-    pageName: string,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ): void;
-  stopLiveReport(
-    report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ): void;
   getAvailableCalendars(): Calendar[];
   setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;
   getSystemReports(): Report[];
-  getLiveReports(): LiveReport[];
   getAdaptableAlerts(): AdaptableAlert[];
   showPopupConfirmation(confirmation: IUIConfirmation): void;
 
@@ -80,12 +67,6 @@ export interface InternalApi {
   getUpdatedRowInfos(): any[];
 
   isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;
-
-  getCurrentLiveReports(): LiveReport[];
-
-  isLiveReportRunning(): boolean;
-
-  isOpenFinAvailable(): boolean;
 
   setGridCells(gridCells: GridCell[], internalUpdate: boolean, validateChange: boolean): void;
 

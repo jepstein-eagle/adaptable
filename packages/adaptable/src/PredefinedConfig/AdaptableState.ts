@@ -43,6 +43,8 @@ import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
+import { IPushPullState } from './IPushPullState';
+import { OpenFinState } from './OpenFinState';
 
 /**
  * The main state object that Adaptable persists
@@ -64,6 +66,8 @@ export interface AdaptableState {
   Entitlements: EntitlementState;
   NamedFilter: NamedFilterState;
   Glue42: Glue42State;
+  IPushPull: IPushPullState;
+  OpenFin: OpenFinState;
   SparklineColumn: SparklineColumnState;
   SystemFilter: SystemFilterState;
   SystemStatus: SystemStatusState;

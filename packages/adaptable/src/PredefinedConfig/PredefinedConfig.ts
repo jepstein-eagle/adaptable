@@ -20,7 +20,6 @@ import { FlashingCellState } from './FlashingCellState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { FormatColumnState } from './FormatColumnState';
 import { FreeTextColumnState } from './FreeTextColumnState';
-import { Glue42State } from './Glue42State';
 import { LayoutState } from './LayoutState';
 import { PercentBarState } from './PercentBarState';
 import { ScheduleState } from './ScheduleState';
@@ -513,13 +512,6 @@ export interface PredefinedConfig {
    * Supplies a collection of *FreeText* objects so users can make their own notes in bespoke columns that will get stored with their state (and not with the DataSource).  Useful if needing a 'Comments' column.
    */
   FreeTextColumn?: FreeTextColumnState;
-
-  /**
-   * Contains the credentials required to integrate with Glue42 from inside AdapTable.
-   *
-   * Includes Glue42 config, object and, optionally, any Glue42 Reports (including schedules).
-   */
-  Glue42?: Glue42State;
 
   /**
    * Supplies a collection of `GradientColumn` objects that will style the cells in a column according to the proporation of its value tp a given maximum value.

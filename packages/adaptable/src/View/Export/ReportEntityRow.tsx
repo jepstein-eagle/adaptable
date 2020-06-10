@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
@@ -11,17 +10,11 @@ import icons from '../../components/icons';
 import { ReactComponentLike } from 'prop-types';
 import DropdownButton from '../../components/DropdownButton';
 import { IReportService } from '../../Utilities/Services/Interface/IReportService';
-import { LiveReport } from '../../Api/Events/LiveDataChanged';
-
 const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
-  LiveReports: LiveReport[];
   ReportService: IReportService;
   canExportToExel: boolean;
   onExport: (exportDestination: ExportDestination) => void;
-  onReportStopLive: (
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ) => void;
 }
 
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
@@ -43,21 +36,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       onClick: () => this.props.onExport(ExportDestination.Clipboard),
       label: 'Clipboard',
     };
-    let openfinExcelMenuItem = this.props.LiveReports.find(x => x.Report.Uuid == report.Uuid)
-      ? {
-          onClick: () => this.props.onReportStopLive(ExportDestination.OpenfinExcel),
-          label: 'Stop Live Openfin Excel',
-        }
-      : {
-          onClick: () => this.props.onExport(ExportDestination.OpenfinExcel),
-          label: 'Start Live Openfin Excel',
-        };
-
-    let glue42MenuItem = {
-      onClick: () => this.props.onExport(ExportDestination.Glue42),
-      label: 'Export to Excel (via Glue42)',
-    };
-
     let isSystemReport: boolean = this.props.ReportService.IsSystemReport(report);
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -82,11 +60,6 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      this.props.ReportService.IsReportDestinationActive(ExportDestination.OpenfinExcel) &&
-        openfinExcelMenuItem,
-
-      this.props.ReportService.IsReportDestinationActive(ExportDestination.Glue42) &&
-        glue42MenuItem,
     ].filter(x => !!x);
 
     let exportButton = (

@@ -22,6 +22,7 @@ export const ExportStrategyId: AdaptableFunctionName = 'Export';
 export const FlashingCellsStrategyId: AdaptableFunctionName = 'FlashingCells';
 export const FormatColumnStrategyId: AdaptableFunctionName = 'FormatColumn';
 export const FreeTextColumnStrategyId: AdaptableFunctionName = 'FreeTextColumn';
+export const OpenFinStrategyId: AdaptableFunctionName = 'OpenFin';
 export const Glue42StrategyId: AdaptableFunctionName = 'Glue42';
 export const IPushPullStrategyId: AdaptableFunctionName = 'IPushPull';
 export const LayoutStrategyId: AdaptableFunctionName = 'Layout';
@@ -79,6 +80,7 @@ export const GradientColumnStrategyFriendlyName: string = 'Gradient Column';
 export const GridInfoStrategyFriendlyName: string = 'Grid Info';
 export const SparklineColumnStrategyFriendlyName: string = 'Sparkline Column';
 export const SparklineStrategyFriendlyName: string = 'Sparkline';
+export const OpenFinStrategyFriendlyName: string = 'OpenFin';
 export const PieChartStrategyFriendlyName: string = 'Pie Chart';
 export const PlusMinusStrategyFriendlyName: string = 'Plus Minus';
 export const QuickSearchStrategyFriendlyName: string = 'Quick Search';
@@ -125,6 +127,7 @@ export const GradientColumnGlyph: string = 'gradient-column';
 export const GridInfoGlyph: string = 'info';
 export const SparklineColumnGlyph: string = 'spark-line';
 export const SparklinesGlyph: string = 'spark-line';
+export const OpenFinGlyph: string = 'ipushpull';
 export const PieChartGlyph: string = 'pie-chart';
 export const PlusMinusGlyph: string = 'plus-minus';
 export const QuickSearchGlyph: string = 'quick-search';
@@ -185,6 +188,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return FreeTextColumnStrategyId;
     case Glue42StrategyFriendlyName:
       return Glue42StrategyId;
+    case OpenFinStrategyFriendlyName:
+      return OpenFinStrategyId;
     case HideColumnStrategyFriendlyName:
       return HideColumnStrategyId;
     case IPushPullStrategyFriendlyName:
@@ -278,6 +283,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return FreeTextColumnStrategyFriendlyName;
     case Glue42StrategyId:
       return Glue42StrategyFriendlyName;
+    case OpenFinStrategyId:
+      return OpenFinStrategyFriendlyName;
     case HideColumnStrategyId:
       return HideColumnStrategyFriendlyName;
     case IPushPullStrategyId:
@@ -369,6 +376,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return FreeTextColumnGlyph;
     case Glue42StrategyId:
       return Glue42Glyph;
+    case OpenFinStrategyId:
+      return OpenFinGlyph;
     case HideColumnStrategyId:
       return HideColumnGlyph;
     case IPushPullStrategyId:

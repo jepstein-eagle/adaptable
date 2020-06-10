@@ -16,8 +16,6 @@ import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-
-import { LiveReport } from '../../Api/Events/LiveDataChanged';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 
@@ -36,11 +34,6 @@ export const SYSTEM_ALERT_DELETE_ALL = 'SYSTEM_ALERT_DELETE_ALL';
 export const SYSTEM_UPDATED_ROW_ADD = 'SYSTEM_UPDATED_ROW_ADD';
 export const SYSTEM_UPDATED_ROW_DELETE = 'SYSTEM_UPDATED_ROW_DELETE';
 export const SYSTEM_UPDATED_ROW_DELETE_ALL = 'SYSTEM_UPDATED_ROW_DELETE_ALL';
-
-// Live Reports
-export const REPORT_START_LIVE = 'REPORT_START_LIVE';
-export const REPORT_STOP_LIVE = 'REPORT_STOP_LIVE';
-export const REPORT_SET_ERROR_MESSAGE = 'REPORT_SET_ERROR_MESSAGE';
 
 // Smart Edit
 export const SMARTEDIT_CHECK_CELL_SELECTION = 'SMARTEDIT_CHECK_CELL_SELECTION';
@@ -204,26 +197,6 @@ export const SystemUpdatedRowDeleteAll = (
   updatedRowInfos,
 });
 
-export const ReportStartLive = (
-  Report: Report,
-  PageName: string,
-  ReportDestination: 'OpenfinExcel' | 'Glue42'
-): ReportStartLiveAction => ({
-  type: REPORT_START_LIVE,
-  Report,
-  ReportDestination,
-  PageName,
-});
-
-export const ReportStopLive = (
-  Report: Report,
-  ReportDestination: 'OpenfinExcel' | 'Glue42'
-): ReportStopLiveAction => ({
-  type: REPORT_STOP_LIVE,
-  Report,
-  ReportDestination,
-});
-
 export const SmartEditCheckCellSelection = (): SmartEditCheckCellSelectionAction => ({
   type: SMARTEDIT_CHECK_CELL_SELECTION,
 });
@@ -286,10 +259,6 @@ export const CalculatedColumnIsExpressionValid = (
   expression,
 });
 
-export const ReportSetErrorMessage = (ErrorMessage: string): ReportSetErrorMessageAction => ({
-  type: REPORT_SET_ERROR_MESSAGE,
-  ErrorMessage,
-});
 export const QuickSearchSetRange = (QueryRange: QueryRange): QuickSearchSetRangeAction => ({
   type: QUICK_SEARCH_SET_RANGE,
   QueryRange,
@@ -327,7 +296,6 @@ const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
   AvailableCalendars: CalendarHelper.getSystemCalendars(),
-  CurrentLiveReports: EMPTY_ARRAY,
   IsValidSmartEditSelection: false,
   SmartEditPreviewInfo: null,
   BulkUpdateValidationResult: { IsValid: false, Column: null },
@@ -400,25 +368,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       return Object.assign({}, state, { UpdatedRowInfos: [] });
     }
 
-    case REPORT_START_LIVE: {
-      const actionTyped = action as ReportStartLiveAction;
-      const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
-      currentLiveReports.push({
-        ReportDestination: actionTyped.ReportDestination,
-        Report: actionTyped.Report,
-        PageName: actionTyped.PageName,
-      });
-      return Object.assign({}, state, { CurrentLiveReports: currentLiveReports });
-    }
-    case REPORT_STOP_LIVE: {
-      const actionTyped = action as ReportStopLiveAction;
-      const currentLiveReports: LiveReport[] = [].concat(state.CurrentLiveReports);
-      const index = currentLiveReports.findIndex(
-        x => x.Report == actionTyped.Report && x.ReportDestination == actionTyped.ReportDestination
-      );
-      currentLiveReports.splice(index, 1);
-      return Object.assign({}, state, { CurrentLiveReports: currentLiveReports });
-    }
     case SMARTEDIT_SET_VALID_SELECTION:
       return Object.assign({}, state, {
         IsValidSmartEditSelection: (action as SmartEditSetValidSelectionAction)
@@ -453,11 +402,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       });
     }
 
-    case REPORT_SET_ERROR_MESSAGE: {
-      return Object.assign({}, state, {
-        ReportErrorMessage: (action as ReportSetErrorMessageAction).ErrorMessage,
-      });
-    }
     case QUICK_SEARCH_SET_RANGE: {
       return Object.assign({}, state, {
         QuickSearchRange: (action as QuickSearchSetRangeAction).QueryRange,

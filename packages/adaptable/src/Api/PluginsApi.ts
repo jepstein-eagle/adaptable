@@ -1,6 +1,7 @@
 import { PluginsState } from '../Redux/ActionsReducers/PluginsRedux';
 import { IPushPullApi } from './IPushPullApi';
 import { Glue42Api } from './Glue42Api';
+import { OpenFinApi } from './OpenFinApi';
 
 /**
  * Api methods dealing with AdapTable plugins
@@ -17,4 +18,5 @@ export interface PluginsApi {
   getPluginApi(pluginId: string): any;
   getPluginApi(pluginId: 'ipushpull'): IPushPullApi;
   getPluginApi(pluginId: 'glue42'): Glue42Api;
+  getPluginApi(pluginId: 'openfin'): OpenFinApi;
 }

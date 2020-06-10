@@ -1,28 +1,160 @@
-import { AdaptablePlugin, IAdaptable } from '@adaptabletools/adaptable/types';
-import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
+import {
+  AdaptablePlugin,
+  IAdaptable,
+  AdaptableFunctionName,
+  AdaptableState,
+} from '@adaptabletools/adaptable/types';
+import * as Redux from 'redux';
+
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
+
+import { SystemReducer } from '@adaptabletools/adaptable/src/Redux/ActionsReducers/SystemRedux';
+import { OpenFinStrategyId } from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
+
+import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { IStrategy } from '@adaptabletools/adaptable/src/Strategy/Interface/IStrategy';
+import {
+  AdaptableViewFactory,
+  AdaptableDashboardFactory,
+} from '@adaptabletools/adaptable/src/View/AdaptableViewFactory';
+
+import { OpenFinStrategy } from './Strategy/OpenFinStrategy';
+import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
+import { OpenFinApiImpl } from './OpenFinApiImpl';
+import { OpenFinService } from './Utilities/Services/OpenFinService';
+
+import { OpenFinReducer } from './Redux/ActionReducers/OpenFinRedux';
+import { OpenFinToolbarControl } from './View/OpenFinToolbarControl';
+import * as OpenFinRedux from './Redux/ActionReducers/OpenFinRedux';
+import { IOpenFinStrategy } from './Strategy/Interface/IOpenFinStrategy';
+import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
 
 if (version !== coreVersion) {
   console.warn(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!! "@adaptabletools/adaptable-plugin-openfin" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
+!!!!!!! "@adaptabletools/adaptable-plugin-glue42" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 `);
 }
 
-const defaultOptions = {};
-interface OpenfinPluginOptions {}
-class OpenfinPlugin extends AdaptablePlugin {
-  public options: OpenfinPluginOptions;
-  public pluginId: string = 'openfin';
+const defaultOptions: OpenFinPluginOptions = {
+  throttleTime: 2000,
+};
 
-  constructor(options?: OpenfinPluginOptions) {
-    super(options);
-    this.options = { ...defaultOptions, ...options };
-  }
-
-  onAdaptableReady(adaptable: IAdaptable) {}
+export interface OpenFinPluginOptions {
+  throttleTime?: number;
 }
 
-export default (options?: any) => new OpenfinPlugin(options);
+class OpenFinPlugin extends AdaptablePlugin {
+  public options: OpenFinPluginOptions;
+  public pluginId: string = 'openfin';
+  public openFinApi?: OpenFinApi;
+  private OpenFinService?: OpenFinService;
+
+  constructor(options?: OpenFinPluginOptions) {
+    super(options);
+    this.options = {
+      ...defaultOptions,
+      ...options,
+    };
+  }
+
+  afterInitApi(adaptable: IAdaptable) {
+    this.openFinApi = new OpenFinApiImpl(adaptable, this.options);
+    this.OpenFinService = new OpenFinService(adaptable, this.options);
+
+    this.registerProperty('api', () => this.openFinApi);
+    this.registerProperty('service', () => this.OpenFinService);
+  }
+
+  rootReducer = {
+    System: (state: SystemState, action: Redux.Action) => {
+      const newState = SystemReducer(state, action);
+
+      return OpenFinReducer(newState, action);
+    },
+  };
+
+  reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {
+    return (action, adaptable, middlewareAPI) => {
+      const api = adaptable.api.pluginsApi.getPluginApi('openfin');
+      switch (action.type) {
+        case OpenFinRedux.OPENFIN_LOGIN: {
+          const actionTyped = action as OpenFinRedux.OpenFinLoginAction;
+          this.openFinApi.loginToOpenFin(actionTyped.username, actionTyped.password);
+          return next(action);
+        }
+
+        case OpenFinRedux.OPENFIN_SEND_SNAPSHOT: {
+          let glue42Strategy = <IOpenFinStrategy>(
+            adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
+          );
+          const actionTyped = action as OpenFinRedux.OpenFinSendSnapshotAction;
+          glue42Strategy.sendSnapshot(actionTyped.glue42Report);
+          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          return next(action);
+        }
+
+        case OpenFinRedux.OPENFIN_START_LIVE_DATA: {
+          let glue42Strategy = <IOpenFinStrategy>(
+            adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
+          );
+          const actionTyped = action as OpenFinRedux.OpenFinStartLiveDataAction;
+          glue42Strategy.startLiveData(actionTyped.glue42Report);
+          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
+          return next(action);
+        }
+
+        case OpenFinRedux.OPENFIN_STOP_LIVE_DATA: {
+          this.openFinApi.stopLiveData();
+          return next(action);
+        }
+
+        default:
+          return next(action);
+      }
+    };
+  }
+
+  /* This was in Adaptalbe Store but just taken out
+ case SystemRedux.REPORT_START_LIVE: {
+            let ret = next(action);
+            const actionTyped = action as SystemRedux.ReportStartLiveAction;
+            // fire the Live Report event for Export Started
+            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
+              actionTyped.ReportDestination,
+              'LiveDataStarted'
+            );
+            // set livereport on
+            //  adaptable.api.internalApi.setLiveReportRunningOn();
+            return ret;
+          }
+
+          // Not doing this for ipushpull any more either
+          case SystemRedux.REPORT_STOP_LIVE: {
+            const actionTyped = action as SystemRedux.ReportStopLiveAction;
+
+            let ret = next(action);
+            // fire the Live Report event for Export Stopped
+            adaptable.ReportService.PublishLiveLiveDataChangedEvent(
+              actionTyped.ReportDestination,
+              'LiveDataStopped'
+            );
+            // set livereport off
+            //   adaptable.api.internalApi.setLiveReportRunningOff();
+            return ret;
+          }
+          */
+
+  afterInitStrategies(adaptable: IAdaptable, strategies: Map<AdaptableFunctionName, IStrategy>) {
+    strategies.set(OpenFinStrategyId, new OpenFinStrategy(adaptable));
+    AdaptableViewFactory.OpenFinToolbarControl = OpenFinToolbarControl;
+
+    AdaptableDashboardFactory.set(OpenFinStrategyId, OpenFinToolbarControl as any);
+  }
+}
+
+export default (options?: any) => new OpenFinPlugin(options);
