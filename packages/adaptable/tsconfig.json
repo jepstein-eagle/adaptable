@@ -6,6 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
+    "types": ["node",],
     "jsx": "react",
     "lib": ["ES2015","DOM"],
     "noUnusedLocals": false,
@@ -20,7 +21,7 @@
      "agGrid/**/*",
     "agGrid.ts",
     "types.ts",
-    "version.ts", "src/Utilities/Interface/IPPStyle.ts", "../plugins/ipushpull/src/Utilities/Services/Interface/IPushPullService.ts", "../plugins/ipushpull/src/Strategy/PushPullStrategy.ts"
+    "version.ts"
   ],
   "exclude": ["node_modules", ".next"]
 }

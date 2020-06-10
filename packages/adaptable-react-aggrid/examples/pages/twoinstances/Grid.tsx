@@ -1,4 +1,5 @@
 import React, { useCallback, useState, useRef, useEffect, useMemo } from 'react';
+import { AgGridReact } from '@ag-grid-community/react';
 import '@ag-grid-enterprise/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-enterprise/all-modules/dist/styles/ag-theme-balham-dark.css';
 import { ModuleRegistry, AllModules } from '@ag-grid-enterprise/all-modules';
@@ -143,14 +144,15 @@ export default function Grid({}: GridProps) {
       }}
     >
       <h2>Grid: {id}</h2>
+
       <AdaptableReactAgGrid
-        style={{ height: '100vh' }}
-        agGridTheme="dark"
-        modules={AllModules}
         gridOptions={gridOptions}
         adaptableOptions={{ ...adaptableOptions, adaptableId: id }}
         onAdaptableReady={handleAdaptableReady}
       />
+      <div className="ag-theme-balham" style={{ flex: 1, height: '100%', background: 'red' }}>
+        <AgGridReact gridOptions={gridOptions} modules={AllModules} />
+      </div>
     </div>
   );
 }
