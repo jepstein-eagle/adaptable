@@ -15,7 +15,7 @@ import { OpenFinService } from './Utilities/Services/OpenFinService';
 
 export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   private options: OpenFinPluginOptions;
-  //  private OpenFinService: OpenFinService | null = null;
+  private OpenFinService: OpenFinService | null = null;
 
   constructor(adaptable: IAdaptable, options: OpenFinPluginOptions) {
     super(adaptable);
@@ -37,7 +37,7 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   public isOpenFinAvailable(): boolean {
     let OpenFinState: OpenFinState = this.getOpenFinState();
     if (OpenFinState) {
-      return OpenFinState.IsOpenFinAvailable;
+      return true; //OpenFinState.IsOpenFinAvailable;
     }
     return false;
   }
@@ -50,37 +50,18 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
     return this.OpenFinService as OpenFinService;
   }
 
-  public async loginToOpenFin(userName: string, password: string): Promise<void> {
-    await this.getOpenFinService().login(userName, password, this.getOpenFinState().GatewayURL);
-    this.adaptable.api.internalApi.hidePopupScreen();
-    this.setOpenFinLoginErrorMessage('');
-  }
-
-  public logoutFromOpenFin(): void {
-    this.clearOpenFinInternalState();
-    this.adaptable.api.internalApi.hidePopupScreen();
-  }
-
   public clearOpenFinInternalState(): void {
     this.setOpenFinRunningOff();
-    this.setOpenFinLoginErrorMessage('');
-    this.dispatchAction(OpenFinRedux.OpenFinLiveReportClear());
-  }
 
-  public setOpenFinLoginErrorMessage(loginErrorMessage: string): void {
-    this.dispatchAction(OpenFinRedux.OpenFinSetLoginErrorMessage(loginErrorMessage));
+    this.dispatchAction(OpenFinRedux.OpenFinLiveReportClear());
   }
 
   public getOpenFinThrottleTime(): number | undefined {
     return this.options.throttleTime;
   }
 
-  public setOpenFinThrottleTime(throttleTime: number): void {
-    this.dispatchAction(OpenFinRedux.OpenFinSetThrottleTime(throttleTime));
-  }
-
   public getCurrentLiveOpenFinReport(): OpenFinReport | undefined {
-    return undefined; // need to do this
+    return; // need to do this
   }
 
   public setOpenFinAvailableOn(): void {
@@ -100,7 +81,8 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   }
 
   public getOpenFinSchedules(): OpenFinSchedule[] {
-    return this.getAdaptableState().Schedule.OpenFinSchedules || [];
+    // return this.getAdaptableState().Schedule.OpenFinSchedules || [];
+    return [];
   }
 
   public startLiveData(OpenFinReport: OpenFinReport): void {
@@ -134,9 +116,5 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
       StrategyConstants.OpenFinStrategyId,
       ScreenPopups.OpenFinPopup
     );
-  }
-
-  public sendSnapshotToDo(OpenFinReport: OpenFinReport): void {
-    // we need to do this as its changed....
   }
 }

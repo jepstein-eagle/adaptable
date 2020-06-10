@@ -82,22 +82,6 @@ class OpenFinPlugin extends AdaptablePlugin {
     return (action, adaptable, middlewareAPI) => {
       const api = adaptable.api.pluginsApi.getPluginApi('openfin');
       switch (action.type) {
-        case OpenFinRedux.OPENFIN_LOGIN: {
-          const actionTyped = action as OpenFinRedux.OpenFinLoginAction;
-          this.openFinApi.loginToOpenFin(actionTyped.username, actionTyped.password);
-          return next(action);
-        }
-
-        case OpenFinRedux.OPENFIN_SEND_SNAPSHOT: {
-          let glue42Strategy = <IOpenFinStrategy>(
-            adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
-          );
-          const actionTyped = action as OpenFinRedux.OpenFinSendSnapshotAction;
-          glue42Strategy.sendSnapshot(actionTyped.glue42Report);
-          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-          return next(action);
-        }
-
         case OpenFinRedux.OPENFIN_START_LIVE_DATA: {
           let glue42Strategy = <IOpenFinStrategy>(
             adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)

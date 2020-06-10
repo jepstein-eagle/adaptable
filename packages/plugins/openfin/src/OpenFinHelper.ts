@@ -1,4 +1,4 @@
-import { LoggingHelper } from './LoggingHelper';
+import { LoggingHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 /*import { ExcelWorkbook } from '../Services/OpenfinLiveExcel/ExcelWorkbook';*/
 
 // putting this here as we dont use it elswhere - so keeping it here until we redo the OpenFin one day...

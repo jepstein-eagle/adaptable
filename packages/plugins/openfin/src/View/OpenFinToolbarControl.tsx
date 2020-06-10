@@ -24,33 +24,27 @@ import {
   OpenFinSchedule,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
 import { ButtonExport } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonExport';
-import { ButtonLogin } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogin';
+
 import { ButtonPlay } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPlay';
 import { ButtonSchedule } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonSchedule';
 import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPause';
 import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
 import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
-import { ButtonLogout } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogout';
 
 interface OpenFinToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<OpenFinToolbarControlComponent> {
-  onOpenFinSendSnapshot: (OpenFinreport: OpenFinReport) => OpenFinRedux.OpenFinSendSnapshotAction;
-
   onOpenFinStartLiveData: (OpenFinreport: OpenFinReport) => OpenFinRedux.OpenFinStartLiveDataAction;
 
   onOpenFinStopLiveData: () => OpenFinRedux.OpenFinStopLiveDataAction;
 
   onNewOpenFinSchedule: (OpenFinSchedule: OpenFinSchedule) => PopupRedux.PopupShowScreenAction;
 
-  onShowOpenFinLogin: () => PopupRedux.PopupShowScreenAction;
-
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
   SystemReports: Report[] | undefined;
   CurrentLiveOpenFinReport: OpenFinReport | undefined;
   IsOpenFinRunning: boolean;
-  IsOpenFinAvailable: boolean;
 }
 
 interface OpenFinToolbarControlComponentState {
@@ -129,14 +123,25 @@ class OpenFinToolbarControlComponent extends React.Component<
           showClearButton
           marginRight={2}
         ></Dropdown>
-        <ButtonExport
-          marginLeft={1}
-          className="ab-DashboardToolbar__OpenFin__export"
-          onClick={() => this.onOpenFinSendSnapshot()}
-          tooltip="Send Snapshot to OpenFin"
-          disabled={isLiveOpenFinReport || !isCompletedReport}
-          AccessLevel={this.props.AccessLevel}
-        />
+        {isLiveOpenFinReport ? (
+          <ButtonPause
+            marginLeft={1}
+            className="ab-DashboardToolbar__OpenFin__pause"
+            onClick={() => this.props.onOpenFinStopLiveData()}
+            tooltip="Stop sync with OpenFin"
+            disabled={!isLiveOpenFinReport}
+            AccessLevel={this.props.AccessLevel}
+          />
+        ) : (
+          <ButtonPlay
+            marginLeft={1}
+            className="ab-DashboardToolbar__IPushPull__play"
+            onClick={() => this.onOpenFinStartLiveData()}
+            tooltip="Start sync with OpenFin"
+            disabled={isLiveOpenFinReport || !isCompletedReport}
+            AccessLevel={this.props.AccessLevel}
+          />
+        )}
         {isCompletedReport && (
           <Flex
             className={join(
@@ -155,27 +160,8 @@ class OpenFinToolbarControlComponent extends React.Component<
             />
           </Flex>
         )}{' '}
-        <ButtonLogout
-          marginLeft={1}
-          className="ab-DashboardToolbar__OpenFin_logout"
-          onClick={() => this.getOpenFinApi().logoutFromOpenFin()}
-          tooltip="Logout"
-          disabled={isLiveOpenFinReport}
-          AccessLevel={this.props.AccessLevel}
-        />
       </Flex>
-    ) : (
-      <ButtonLogin
-        marginLeft={1}
-        className="ab-DashboardToolbar__OpenFin__login"
-        onClick={() => this.props.onShowOpenFinLogin()}
-        tooltip="Login to OpenFin"
-        AccessLevel={this.props.AccessLevel}
-      >
-        {' '}
-        Login
-      </ButtonLogin>
-    );
+    ) : null;
 
     return (
       <PanelDashboard
@@ -197,19 +183,15 @@ class OpenFinToolbarControlComponent extends React.Component<
     }
   }
 
-  private onOpenFinSendSnapshot() {
-    this.props.onOpenFinSendSnapshot(this.createOpenFinReportFromState());
-  }
-
   private onOpenFinStartLiveData() {
     this.props.onOpenFinStartLiveData(this.createOpenFinReportFromState());
   }
 
   private onNewOpenFinSchedule() {
-    let OpenFinSchedule: OpenFinSchedule = ObjectFactory.CreateOpenFinSchedule(
-      this.createOpenFinReportFromState()
-    );
-    this.props.onNewOpenFinSchedule(OpenFinSchedule);
+    // let OpenFinSchedule: OpenFinSchedule = ObjectFactory.CreateOpenFinSchedule(
+    //   this.createOpenFinReportFromState()
+    // );
+    // this.props.onNewOpenFinSchedule(OpenFinSchedule);
   }
 
   // perhaps this should be props and in real state?
@@ -225,7 +207,7 @@ function mapStateToProps(state: AdaptableState): Partial<OpenFinToolbarControlCo
     CurrentLiveOpenFinReport: state.OpenFin.CurrentLiveOpenFinReport,
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
-    IsOpenFinAvailable: state.OpenFin.IsOpenFinAvailable,
+
     IsOpenFinRunning: state.OpenFin.IsOpenFinRunning,
   };
 }
@@ -234,9 +216,6 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<OpenFinToolbarControlComponentProps> {
   return {
-    onOpenFinSendSnapshot: (OpenFinreport: OpenFinReport) =>
-      dispatch(OpenFinRedux.OpenFinSendSnapshot(OpenFinreport)),
-
     onOpenFinStartLiveData: (OpenFinreport: OpenFinReport) =>
       dispatch(OpenFinRedux.OpenFinStartLiveData(OpenFinreport)),
     onOpenFinStopLiveData: () => dispatch(OpenFinRedux.OpenFinStopLiveData()),
@@ -254,17 +233,6 @@ function mapDispatchToProps(
         )
       ),
 
-    onShowOpenFinLogin: () =>
-      dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.OpenFinStrategyId,
-          ScreenPopups.OpenFinLoginPopup,
-          null,
-          {
-            footer: false,
-          }
-        )
-      ),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.OpenFinStrategyId, ScreenPopups.OpenFinPopup)

@@ -14,15 +14,7 @@ export interface OpenFinApi {
 
   isOpenFinRunning(): boolean;
 
-  loginToOpenFin(userName: string, password: string): void;
-
-  logoutFromOpenFin(): void;
-
-  setOpenFinLoginErrorMessage(loginErrorMessage: string): void;
-
   getOpenFinThrottleTime(): number | undefined;
-
-  setOpenFinThrottleTime(throttleTime: number): void;
 
   getCurrentLiveOpenFinReport(): OpenFinReport | undefined;
 
@@ -41,6 +33,4 @@ export interface OpenFinApi {
   stopLiveData(): void;
 
   clearOpenFinInternalState(): void;
-
-  sendSnapshotToDo(OpenFinReport: OpenFinReport): void;
 }

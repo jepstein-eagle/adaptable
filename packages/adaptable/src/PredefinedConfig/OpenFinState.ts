@@ -5,9 +5,7 @@ import { BaseSchedule } from './Common/Schedule';
 // This is now ENTIRELY local - nothing is provided at design time as that is all done through options
 // and we have moved scheduling
 export interface OpenFinState extends ConfigState {
-  OpenFinLoginErrorMessage?: string;
   CurrentLiveOpenFinReport?: OpenFinReport;
-  IsOpenFinAvailable?: boolean;
   IsOpenFinRunning?: boolean;
 }
 

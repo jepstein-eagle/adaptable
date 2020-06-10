@@ -9,7 +9,6 @@ import { AlertApi } from '../AlertApi';
 import { AlertState, AlertDefinition, AlertProperties } from '../../PredefinedConfig/AlertState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import OpenfinHelper from '../../Utilities/Helpers/OpenfinHelper';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
@@ -98,18 +97,6 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     );
 
     this.displayAlert(alertToShow);
-
-    // tmp
-    if (OpenfinHelper.isRunningInOpenfin) {
-      /*
-      createOpenFinNotification({
-        id: String(Math.random()),
-        title: alertToShow.Header,
-        body: alertToShow.Msg,
-        icon: 'https://openfin.co/favicon.ico',
-      });
-      */
-    }
   }
 
   public showAlertInfo(alertHeader: string, alertMessage: string): void {

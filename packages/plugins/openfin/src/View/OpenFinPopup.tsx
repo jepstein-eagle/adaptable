@@ -68,8 +68,6 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<OpenFinPopupProps> {
   return {
-    onOpenFinSendSnapshot: (report: OpenFinReport) =>
-      dispatch(OpenFinRedux.OpenFinSendSnapshot(report)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.OpenFinStrategyId, description)
