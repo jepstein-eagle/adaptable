@@ -22,11 +22,9 @@ import { IColItem } from '../UIInterfaces';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
 import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { getHexForName, RED, DARK_GREEN } from '../UIHelper';
 
 interface PercentBarPopupProps extends StrategyViewPopupProps<PercentBarPopupComponent> {
   PercentBars: PercentBar[];
@@ -62,14 +60,26 @@ class PercentBarPopupComponent extends React.Component<
 
           let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
           newPercentRender.ColumnId = columnId;
-          let negativeValue = Math.min(...distinctColumnsValues);
-          newPercentRender.NegativeValue = negativeValue < 0 ? negativeValue : undefined;
-          if (negativeValue > 0) {
-            newPercentRender.NegativeColor = undefined;
+
+          const minValue = Math.min(...distinctColumnsValues);
+          const maxValue = Math.max(...distinctColumnsValues);
+
+          if (minValue < 0) {
+            newPercentRender.Ranges.push({
+              Min: minValue,
+              Max: 0,
+              Color: getHexForName(RED),
+            });
           }
 
-          let positiveValue = Math.max(...distinctColumnsValues);
-          newPercentRender.PositiveValue = positiveValue > 0 ? positiveValue : undefined;
+          if (maxValue > 0) {
+            newPercentRender.Ranges.push({
+              Min: 0,
+              Max: maxValue,
+              Color: getHexForName(DARK_GREEN),
+            });
+          }
+
           this.onNewFromColumn(newPercentRender);
         }
         if (this.props.PopupParams.action == 'Edit') {
@@ -95,7 +105,7 @@ class PercentBarPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar, index) => {
+    let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar) => {
       let column = ColumnHelper.getColumnFromId(percentBar.ColumnId, this.props.Columns);
       return (
         <PercentBarEntityRow
@@ -252,7 +262,7 @@ class PercentBarPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PercentBarPopupProps> {
+function mapStateToProps(state: AdaptableState): Partial<PercentBarPopupProps> {
   return {
     PercentBars: state.PercentBar.PercentBars,
   };

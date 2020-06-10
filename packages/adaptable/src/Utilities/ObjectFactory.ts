@@ -63,7 +63,7 @@ import { CellSummmary } from '../PredefinedConfig/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
-import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED } from '../View/UIHelper';
+import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED, GRAY } from '../View/UIHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { IPushPullReport, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
@@ -269,6 +269,8 @@ export function CreateEmptyPercentBar(): PercentBar {
     ShowToolTip: true,
     PositiveValueColumnId: undefined,
     NegativeValueColumnId: undefined,
+    Ranges: [],
+    BackColor: getHexForName(GRAY),
   };
 }
 

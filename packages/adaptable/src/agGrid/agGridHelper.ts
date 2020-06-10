@@ -86,6 +86,7 @@ import { HideColumnStrategy } from '../Strategy/HideColumnStrategy';
 import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants';
+import clamp from 'lodash/clamp';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -221,12 +222,14 @@ export class agGridHelper {
 
     const cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
       let value = params.value;
+      const clampedValue = clamp(value, min, max);
+
       if (Helper.objectNotExists(value)) {
         value = 0;
       }
 
-      const percentageValue = ((value - min) / (max - min)) * 100;
-      const matchingRange = pcr.Ranges.find(r => r.Min <= value && r.Max >= value);
+      const percentageValue = ((clampedValue - min) / (max - min)) * 100;
+      const matchingRange = pcr.Ranges.find(r => r.Min <= clampedValue && r.Max >= clampedValue);
 
       const eOuterDiv = document.createElement('div');
       eOuterDiv.style.height = '100%';
@@ -235,22 +238,25 @@ export class agGridHelper {
       eOuterDiv.style.justifyContent = 'center';
 
       const barDiv = document.createElement('div');
-      barDiv.style.background = '#cccccc';
-      barDiv.style.height = '10px';
+      barDiv.style.background = pcr.BackColor || '#cccccc';
+      barDiv.style.height = pcr.ShowValue ? '10px' : '20px';
 
       const barInsideDiv = document.createElement('div');
-      barInsideDiv.style.background = matchingRange ? matchingRange.Color : 'black';
-      barInsideDiv.style.height = '10px';
+      barInsideDiv.style.background = matchingRange.Color;
+      barInsideDiv.style.height = pcr.ShowValue ? '10px' : '20px';
       barInsideDiv.style.width = `${percentageValue.toFixed(0)}%`;
 
       const valueDiv = document.createElement('div');
       valueDiv.style.lineHeight = '1';
-      valueDiv.innerText =
-        pcr.DisplayValue === 'Percentage' ? `${percentageValue.toFixed(0)}%` : value;
+      if (pcr.DisplayRawValue && pcr.DisplayPercentageValue)
+        valueDiv.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
+      else if (pcr.DisplayRawValue) valueDiv.innerText = value;
+      else if (pcr.DisplayPercentageValue) valueDiv.innerText = `${percentageValue.toFixed(0)}%`;
 
       barDiv.append(barInsideDiv);
       eOuterDiv.append(barDiv);
-      eOuterDiv.append(valueDiv);
+
+      if (pcr.ShowValue) eOuterDiv.append(valueDiv);
 
       return eOuterDiv;
       // if (pcr.ShowValue) {

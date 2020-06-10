@@ -4,7 +4,7 @@ export interface PercentBarState extends ConfigState {
   PercentBars?: PercentBar[];
 }
 
-interface PercentBarRange {
+export interface PercentBarRange {
   Min: number;
   Max: number;
   Color: string;
@@ -12,16 +12,22 @@ interface PercentBarRange {
 
 export interface PercentBar extends AdaptableObject {
   ColumnId: string;
+
+  // deprecated
   NegativeValue?: number;
   PositiveValue?: number;
   NegativeColor?: string;
   PositiveColor?: string;
-  ShowValue?: boolean;
   PositiveValueColumnId?: string;
   NegativeValueColumnId?: string;
+
+  Ranges?: PercentBarRange[];
+
+  ShowValue?: boolean;
   ShowToolTip?: boolean;
 
-  Ranges: PercentBarRange[];
-  DisplayType: 'Inside' | 'Tooltip';
-  DisplayValue: 'Percentage' | 'Raw';
+  DisplayRawValue?: boolean;
+  DisplayPercentageValue?: boolean;
+
+  BackColor: string;
 }
