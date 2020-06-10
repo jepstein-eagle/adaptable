@@ -6,7 +6,7 @@ import { IOpenFinService } from './Interface/IOpenFinService';
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 import { OpenFinPluginOptions } from '../..';
 
-require('../../excel-service');
+require('../../excel-service/index.js');
 
 declare var fin: any;
 declare var chrome: any;
@@ -82,15 +82,20 @@ function initExcelPluginService(): Promise<any> {
 function deployAddIn(servicePath: string, installFolder: string): Promise<any> {
   return new Promise((resolve: any, reject: any) => {
     LoggingHelper.LogAdaptableInfo('Deploying Add-In');
-    fin.desktop.System.launchExternalProcess({
-      alias: 'excel-api-addin',
-      target: servicePath,
-      arguments: '-d "' + installFolder + '"',
-      listener: function(args: any) {
-        LoggingHelper.LogAdaptableSuccess('Installer script completed! ' + args.exitCode);
-        resolve();
-      },
-    });
+    try {
+      fin.desktop.System.launchExternalProcess({
+        alias: 'excel-api-addin',
+        target: servicePath,
+        arguments: '-d "' + installFolder + '"',
+        listener: function(args: any) {
+          LoggingHelper.LogAdaptableSuccess('Installer script completed! ' + args.exitCode);
+          resolve();
+        },
+      });
+    } catch (err) {
+      console.error(err);
+      reject(err);
+    }
   });
 }
 

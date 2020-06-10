@@ -35,7 +35,7 @@ import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/Adaptabl
 if (version !== coreVersion) {
   console.warn(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!! "@adaptabletools/adaptable-plugin-glue42" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
+!!!!!!! "@adaptabletools/adaptable-plugin-openfin" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 `);
 }
