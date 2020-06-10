@@ -34,8 +34,8 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Basic Demo New',
-    plugins: [openfin()],
+    adaptableId: 'openfindemo',
+    plugins: [openfin({})],
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
     },

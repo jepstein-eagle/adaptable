@@ -1,30 +1,12 @@
 import { IAdaptable } from '@adaptabletools/adaptable/src/AdaptableInterfaces/IAdaptable';
-import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import LoggingHelper, {
   LogAdaptableError,
 } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
-import { cloneDeep } from 'lodash';
-import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
-import ColumnHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
-import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
-import {
-  DataType,
-  ActionMode,
-  ExportDestination,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
-import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
-import { CellValidationRule } from '@adaptabletools/adaptable/src/PredefinedConfig/CellValidationState';
-import ExpressionHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
-import {
-  OpenFinState,
-  OpenFinReport,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
 import { IOpenFinService } from './Interface/IOpenFinService';
-import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 import { OpenFinPluginOptions } from '../..';
 
-import '../../excel-service';
+require('../../excel-service');
 
 declare var fin: any;
 declare var chrome: any;
