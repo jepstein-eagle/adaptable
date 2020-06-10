@@ -1,43 +1,32 @@
 import { AdaptableStrategyBase } from '@adaptabletools/adaptable/src/Strategy/AdaptableStrategyBase';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
-import { IOpenFinStrategy } from './Interface/IOpenFinStrategy';
-import { OpenFinReport } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
-
-import {
-  IAdaptable,
-  DataChangedInfo,
-  AdaptableMenuItem,
-  Report,
-  AdaptableColumn,
-} from '@adaptabletools/adaptable/types';
-import _ from '@adaptabletools/adaptable/node_modules/@types/lodash';
+import { IAdaptable } from '@adaptabletools/adaptable/src/AdaptableInterfaces/IAdaptable';
+import * as _ from 'lodash';
+import { Report } from '@adaptabletools/adaptable/src/PredefinedConfig/ExportState';
+import { LoggingHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 import {
   SELECTED_CELLS_REPORT,
-  SELECTED_ROWS_REPORT,
   DEFAULT_LIVE_REPORT_THROTTLE_TIME,
+  SELECTED_ROWS_REPORT,
 } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
-import LoggingHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
-import { OpenFinService } from '../Utilities/Services/OpenFinService';
-import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
+import { AdaptableMenuItem } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Menu';
+import { IOpenFinStrategy } from './Interface/IOpenFinStrategy';
+import { IOpenFinReport } from '@adaptabletools/adaptable/src/PredefinedConfig/IOpenFinSchedule';
+import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
+import { IOpenFinApi } from '@adaptabletools/adaptable/src/Api/IOpenFinApi';
+
+import { IOpenFinService } from '../Utilities/Services/Interface/IOpenFinService';
 
 export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinStrategy {
   private isSendingData: boolean = false;
-  private OpenFinService: OpenFinService | null = null;
+  private ippService: IOpenFinService | null = null;
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
 
-  public getOpenFinApi(): OpenFinApi {
-    return this.adaptable.api.pluginsApi.getPluginApi('openfin');
-  }
   public setStrategyEntitlement(): void {
-    const OpenFinApi = this.getOpenFinApi();
-    if (!OpenFinApi) {
-      this.AccessLevel = 'Hidden';
-      return;
-    }
-
-    if (!OpenFinApi.isOpenFinAvailable()) {
+    // TODO
+    if (!this.adaptable.api.pluginsApi.getPluginApi('iOpenFin').isIOpenFinAvailable()) {
       this.AccessLevel = 'Hidden';
     } else {
       this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
@@ -46,19 +35,19 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     }
   }
 
+  public getIPPApi(): IOpenFinApi {
+    return this.adaptable.api.pluginsApi.getPluginApi('iOpenFin');
+  }
+
   public isStrategyAvailable(): boolean {
     if (this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id)) {
       return false;
     }
-    const OpenFinApi = this.getOpenFinApi();
-    if (!OpenFinApi) {
-      return false;
-    }
-    return OpenFinApi.isOpenFinAvailable();
+    return true;
   }
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.OpenFinStrategyId, adaptable);
+    super(StrategyConstants.IOpenFinStrategyId, adaptable);
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
@@ -73,14 +62,10 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     // currently we DONT send deltas or even check if the updated cell is in the current report  - we should
     // we simply send everything to iOpenFin every time any cell ticks....
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
-      const OpenFinApi = this.getOpenFinApi();
-      if (!OpenFinApi) {
-        return;
-      }
-      if (OpenFinApi.isOpenFinRunning()) {
+      if (this.getIPPApi().isIOpenFinLiveDataRunning()) {
         let currentLiveIOpenFinReport:
-          | OpenFinReport
-          | undefined = OpenFinApi.getCurrentLiveOpenFinReport();
+          | IOpenFinReport
+          | undefined = this.getIPPApi().getCurrentLiveIOpenFinReport();
         if (
           currentLiveIOpenFinReport &&
           currentLiveIOpenFinReport.ReportName !== SELECTED_CELLS_REPORT &&
@@ -92,25 +77,17 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     });
     // if the grid has refreshed then update all live reports
     this.adaptable._on('GridRefreshed', () => {
-      const OpenFinApi = this.getOpenFinApi();
-      if (!OpenFinApi) {
-        return;
-      }
-      if (OpenFinApi.isOpenFinRunning()) {
-        //   this.throttledRecomputeAndSendLiveDataEvent();
+      if (this.getIPPApi().isIOpenFinLiveDataRunning()) {
+        this.throttledRecomputeAndSendLiveDataEvent();
       }
     });
     // if the grid filters have changed then update any live reports except cell or row selected
     this.adaptable._on('GridFiltered', () => {
-      const OpenFinApi = this.getOpenFinApi();
-      if (!OpenFinApi) {
-        return;
-      }
       // Rerun all reports except selected cells / rows when filter changes
-      if (OpenFinApi.isOpenFinRunning()) {
+      if (this.getIPPApi().isIOpenFinLiveDataRunning()) {
         let currentLiveIOpenFinReport:
-          | OpenFinReport
-          | undefined = OpenFinApi.getCurrentLiveOpenFinReport();
+          | IOpenFinReport
+          | undefined = this.getIPPApi().getCurrentLiveIOpenFinReport();
         if (
           currentLiveIOpenFinReport &&
           currentLiveIOpenFinReport.ReportName !== SELECTED_CELLS_REPORT &&
@@ -122,14 +99,10 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     });
     // if grid selection has changed and the iOpenFin Live report is 'Selected Cells' or 'Selected Rows' then send updated data
     this.adaptable.api.eventApi.on('SelectionChanged', () => {
-      const OpenFinApi = this.getOpenFinApi();
-      if (!OpenFinApi) {
-        return;
-      }
-      if (OpenFinApi.isOpenFinRunning()) {
+      if (this.getIPPApi().isIOpenFinLiveDataRunning()) {
         let currentLiveIOpenFinReport:
-          | OpenFinReport
-          | undefined = OpenFinApi.getCurrentLiveOpenFinReport();
+          | IOpenFinReport
+          | undefined = this.getIPPApi().getCurrentLiveIOpenFinReport();
         if (
           currentLiveIOpenFinReport &&
           (currentLiveIOpenFinReport.ReportName === SELECTED_CELLS_REPORT ||
@@ -141,12 +114,20 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     });
   }
 
+  private getIPPService(): IOpenFinService {
+    if (!this.ippService) {
+      this.ippService = this.adaptable.getPluginProperty('iOpenFin', 'service') || null;
+    }
+
+    return this.ippService;
+  }
+
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.OpenFinStrategyFriendlyName,
-        ComponentName: ScreenPopups.OpenFinPopup,
-        Icon: StrategyConstants.OpenFinGlyph,
+        Label: StrategyConstants.IOpenFinStrategyFriendlyName,
+        ComponentName: ScreenPopups.IOpenFinPopup,
+        Icon: StrategyConstants.IOpenFinGlyph,
       });
     }
   }
@@ -157,13 +138,9 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
       this.throttledRecomputeAndSendLiveDataEvent();
       return;
     }
-    const OpenFinApi = this.getOpenFinApi();
-    if (!OpenFinApi) {
-      return;
-    }
     let currentLiveIOpenFinReport:
-      | OpenFinReport
-      | undefined = OpenFinApi.getCurrentLiveOpenFinReport();
+      | IOpenFinReport
+      | undefined = this.getIPPApi().getCurrentLiveIOpenFinReport();
     if (currentLiveIOpenFinReport) {
       this.isSendingData = true;
       let report: Report = this.adaptable.api.exportApi.getReportByName(
@@ -173,7 +150,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
       Promise.resolve()
         .then(() => {
           return new Promise<any>((resolve, reject) => {
-            let reportAsArray: any[] = this.ConvertReportToArray(report);
+            let reportAsArray: any[] = this.convertReportToArray(report);
             if (reportAsArray) {
               resolve(reportAsArray);
             } else {
@@ -182,15 +159,11 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
           });
         })
         .then(reportAsArray => {
-          return [];
-          // this.adaptable.OpenFinService.pushData(
-          //  currentLiveIOpenFinReport.Page,
-          //  reportAsArray
-          //);
+          return this.getIPPService().pushData(currentLiveIOpenFinReport.Page, reportAsArray);
         })
         .then(() => {
           return this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-            'OpenFin',
+            'iOpenFin',
             'LiveDataUpdated',
             currentLiveIOpenFinReport
           );
@@ -200,7 +173,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
             'Failed to send data to iOpenFin for [' + currentLiveIOpenFinReport.ReportName + ']',
             reason
           );
-          //      this.adaptable.api.OpenFinApi.stopLiveData();
+          this.getIPPApi().stopLiveData();
 
           let errorMessage: string = 'Export Failed';
           if (reason) {
@@ -221,65 +194,48 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     }
   }
 
-  public sendSnapshot(OpenFinReport: OpenFinReport): void {
-    let report: Report = this.adaptable.api.exportApi.getReportByName(OpenFinReport.ReportName);
-
-    if (report) {
-      let data: any[] = this.ConvertReportToArray(report);
-      let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-      // for OpenFin we need to pass in the pk values of the data also
-      let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(report);
-      try {
-        if (data) {
-          this.OpenFinService.exportData.apply(this.OpenFinService, [
-            data,
-            gridColumns,
-            primaryKeyValues,
-          ]);
+  public sendSnapshot(iOpenFinReport: IOpenFinReport): void {
+    this.getIPPService()
+      .loadPage(iOpenFinReport.Folder, iOpenFinReport.Page)
+      .then(() => {
+        let report: Report = this.adaptable.api.exportApi.getReportByName(
+          iOpenFinReport.ReportName
+        );
+        if (report) {
+          let reportAsArray: any[] = this.convertReportToArray(report);
+          if (reportAsArray) {
+            this.getIPPService().pushData(iOpenFinReport.Page, reportAsArray);
+          }
         }
-      } catch (error) {
-        LoggingHelper.LogAdaptableError(error);
-      }
-    }
+      });
   }
 
-  public startLiveData(OpenFinReport: OpenFinReport): void {
-    let report: Report = this.adaptable.api.exportApi.getReportByName(OpenFinReport.ReportName);
-    if (report) {
-      const OpenFinApi = this.getOpenFinApi();
-      if (!OpenFinApi) {
-        return;
-      }
-      // let page: string = 'Excel'; // presume we should get this from OpenFin service in async way??
-      let reportData: any[] = this.ConvertReportToArray(report);
-      this.OpenFinService.openSheet(reportData).then(() => {
-        OpenFinApi.startLiveData(OpenFinReport);
+  public startLiveData(iOpenFinReport: IOpenFinReport): void {
+    this.getIPPService()
+      .loadPage(iOpenFinReport.Folder, iOpenFinReport.Page)
+      .then(() => {
+        this.getIPPApi().startLiveData(iOpenFinReport);
         setTimeout(() => {
           this.throttledRecomputeAndSendLiveDataEvent();
         }, 500);
       });
-    }
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values
   // Should probably use same one as Export
-  private ConvertReportToArray(report: Report): any[] {
+  private convertReportToArray(report: Report): any[] {
     let actionReturnObj = this.adaptable.ReportService.ConvertReportToArray(report);
     if (actionReturnObj.Alert) {
       this.adaptable.api.alertApi.displayMessageAlertPopup(actionReturnObj.Alert);
-      return null;
+      return [];
     }
     return actionReturnObj.ActionReturn;
   }
 
   private getThrottleTimeFromState(): number {
     let iOpenFinThrottleTime: number | undefined;
-    const OpenFinApi = this.getOpenFinApi();
-    if (!OpenFinApi) {
-      return 0;
-    }
-    if (OpenFinApi.isOpenFinRunning()) {
-      iOpenFinThrottleTime = OpenFinApi.getOpenFinThrottleTime();
+    if (this.getIPPApi().isIOpenFinRunning()) {
+      iOpenFinThrottleTime = this.getIPPApi().getIOpenFinThrottleTime();
     }
     return iOpenFinThrottleTime ? iOpenFinThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
