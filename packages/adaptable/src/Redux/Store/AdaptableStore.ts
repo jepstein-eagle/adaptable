@@ -2616,10 +2616,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          // Not doing this for ipushpull and think we should not do the same for the others
-          // when we come to update them
-          // better to do it in the api for each
-
           /*******************
            * USER FILTER ACTIONS
            *******************/

@@ -28,7 +28,6 @@ import { OpenFinService } from './Utilities/Services/OpenFinService';
 
 import { OpenFinReducer } from './Redux/ActionReducers/OpenFinRedux';
 import { OpenFinToolbarControl } from './View/OpenFinToolbarControl';
-import { OpenFinLoginPopup } from './View/OpenFinLoginPopup';
 import * as OpenFinRedux from './Redux/ActionReducers/OpenFinRedux';
 import { IOpenFinStrategy } from './Strategy/Interface/IOpenFinStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
@@ -81,7 +80,7 @@ class OpenFinPlugin extends AdaptablePlugin {
 
   reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {
     return (action, adaptable, middlewareAPI) => {
-      const api = adaptable.api.pluginsApi.getPluginApi('glue42');
+      const api = adaptable.api.pluginsApi.getPluginApi('openfin');
       switch (action.type) {
         case OpenFinRedux.OPENFIN_LOGIN: {
           const actionTyped = action as OpenFinRedux.OpenFinLoginAction;
@@ -152,7 +151,6 @@ class OpenFinPlugin extends AdaptablePlugin {
 
   afterInitStrategies(adaptable: IAdaptable, strategies: Map<AdaptableFunctionName, IStrategy>) {
     strategies.set(OpenFinStrategyId, new OpenFinStrategy(adaptable));
-    AdaptableViewFactory.OpenFinLoginPopup = OpenFinLoginPopup;
     AdaptableViewFactory.OpenFinToolbarControl = OpenFinToolbarControl;
 
     AdaptableDashboardFactory.set(OpenFinStrategyId, OpenFinToolbarControl as any);

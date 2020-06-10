@@ -66,7 +66,7 @@ export interface AdaptableState {
   Entitlements: EntitlementState;
   NamedFilter: NamedFilterState;
   Glue42: Glue42State;
-  IpushPull: IPushPullState;
+  IPushPull: IPushPullState;
   OpenFin: OpenFinState;
   SparklineColumn: SparklineColumnState;
   SystemFilter: SystemFilterState;

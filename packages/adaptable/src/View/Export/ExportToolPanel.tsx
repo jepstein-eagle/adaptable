@@ -42,10 +42,6 @@ interface ExportToolPanelComponentProps
   onSelectReport: (Report: string) => ExportRedux.ReportSelectAction;
   onNewReport: () => PopupRedux.PopupShowScreenAction;
   onEditReport: () => PopupRedux.PopupShowScreenAction;
-  onReportStopLive: (
-    Report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ) => SystemRedux.ReportStopLiveAction;
   onNewReportSchedule: (reportSchedule: ReportSchedule) => PopupRedux.PopupShowScreenAction;
 
   Columns: AdaptableColumn[];
@@ -281,10 +277,6 @@ function mapDispatchToProps(
     onApplyExport: (report: Report, exportDestination: ExportDestination) =>
       dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onSelectReport: (Report: string) => dispatch(ExportRedux.ReportSelect(Report)),
-    onReportStopLive: (
-      Report: Report,
-      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-    ) => dispatch(SystemRedux.ReportStopLive(Report, exportDestination)),
     onNewReport: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup, {

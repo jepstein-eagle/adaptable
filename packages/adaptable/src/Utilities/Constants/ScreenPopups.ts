@@ -43,6 +43,7 @@ export const SystemStatusPopup: string = 'SystemStatusPopup';
 export const UserFilterPopup: string = 'UserFilterPopup';
 
 // Plugins
+export const OpenFinPopup: string = 'OpenFinPopup';
 export const Glue42Popup: string = 'Glue42Popup';
 export const Glue42LoginPopup: string = 'Glue42LoginPopup';
 export const IPushPullPopup: string = 'IPushPullPopup';
