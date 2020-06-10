@@ -27,8 +27,6 @@ export const GRID_REFRESH_CELLS = 'GRID_REFRESH_CELLS';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
 export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
 
-export const SET_LIVE_REPORT_RUNNING_ON = 'SET_LIVE_REPORT_RUNNING_ON';
-export const SET_LIVE_REPORT_RUNNING_OFF = 'SET_LIVE_REPORT_RUNNING_OFF';
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
 export const SET_TREE_MODE_ON = 'SET_TREE_MODE_ON';
@@ -193,14 +191,6 @@ export const FilterFormHide = (): FilterFormHideAction => ({
   type: FILTER_FORM_HIDE,
 });
 
-export const SetLiveReportRunningOn = (): SetLiveReportRunningOnAction => ({
-  type: SET_LIVE_REPORT_RUNNING_ON,
-});
-
-export const SetLiveReportRunningOff = (): SetLiveReportRunningOffAction => ({
-  type: SET_LIVE_REPORT_RUNNING_OFF,
-});
-
 export const SetPivotModeOn = (): SetPivotModeOnAction => ({
   type: SET_PIVOT_MODE_ON,
 });
@@ -230,7 +220,6 @@ const initialGridState: GridState = {
   CellSummary: null,
   IsQuickFilterVisible: false,
   MainMenuItems: EMPTY_ARRAY,
-  IsLiveReportRunning: false,
   IsGridInPivotMode: false,
   IsGridInTreeMode: false,
 };
@@ -284,10 +273,6 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { MainMenuItems: menuItems });
     }
 
-    case SET_LIVE_REPORT_RUNNING_ON:
-      return Object.assign({}, state, { IsLiveReportRunning: true });
-    case SET_LIVE_REPORT_RUNNING_OFF:
-      return Object.assign({}, state, { IsLiveReportRunning: false });
     case SET_PIVOT_MODE_ON:
       return Object.assign({}, state, { IsGridInPivotMode: true });
     case SET_PIVOT_MODE_OFF:

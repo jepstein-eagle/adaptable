@@ -171,6 +171,7 @@ export type AdaptableFunctionName =
   | 'HideColumn'
   | 'IPushPull'
   | 'Layout'
+  | 'OpenFin'
   | 'PercentBar'
   | 'PieChart'
   | 'PlusMinus'

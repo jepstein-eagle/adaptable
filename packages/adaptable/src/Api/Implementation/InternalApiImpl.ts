@@ -19,7 +19,6 @@ import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellI
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
@@ -67,10 +66,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public getSystemReports(): Report[] {
     return this.getSystemState().SystemReports;
-  }
-
-  public getLiveReports(): LiveReport[] {
-    return this.getSystemState().CurrentLiveReports;
   }
 
   public getAdaptableAlerts(): AdaptableAlert[] {
@@ -164,18 +159,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection
     );
     return Helper.objectExists(foundUpdatedRowInfo);
-  }
-
-  public getCurrentLiveReports(): LiveReport[] {
-    return this.getAdaptableState().System.CurrentLiveReports;
-  }
-
-  public isLiveReportRunning(): boolean {
-    return this.getAdaptableState().Grid.IsLiveReportRunning;
-  }
-
-  public isOpenFinAvailable(): boolean {
-    return false; // TODO
   }
 
   public setGridCells(

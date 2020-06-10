@@ -12,7 +12,6 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import { LiveReport } from './Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
@@ -37,7 +36,6 @@ export interface InternalApi {
   setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;
   getSystemReports(): Report[];
-  getLiveReports(): LiveReport[];
   getAdaptableAlerts(): AdaptableAlert[];
   showPopupConfirmation(confirmation: IUIConfirmation): void;
 
@@ -80,12 +78,6 @@ export interface InternalApi {
   getUpdatedRowInfos(): any[];
 
   isRowInUpdatedRowInfo(primaryKeyValue: any, changeDirection: ChangeDirection): boolean;
-
-  getCurrentLiveReports(): LiveReport[];
-
-  isLiveReportRunning(): boolean;
-
-  isOpenFinAvailable(): boolean;
 
   setGridCells(gridCells: GridCell[], internalUpdate: boolean, validateChange: boolean): void;
 
