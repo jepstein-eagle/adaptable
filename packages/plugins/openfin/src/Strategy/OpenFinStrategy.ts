@@ -26,7 +26,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
 
   public setStrategyEntitlement(): void {
     // TODO
-    if (!this.adaptable.api.pluginsApi.getPluginApi('iOpenFin').isIOpenFinAvailable()) {
+    if (!this.getOpenFinApi().isOpenFinAvailable()) {
       this.AccessLevel = 'Hidden';
     } else {
       this.AccessLevel = this.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
@@ -36,7 +36,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
   }
 
   public getOpenFinApi(): OpenFinApi {
-    return this.adaptable.api.pluginsApi.getPluginApi('OpenFin');
+    return this.adaptable.api.pluginsApi.getPluginApi('openfin');
   }
 
   public isStrategyAvailable(): boolean {

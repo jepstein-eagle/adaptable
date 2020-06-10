@@ -3,7 +3,7 @@
   "startup_app": {
     "name": "OpenfinPOC",
     "description": "OpenFin POC",
-    "url": "http://localhost:8081/agGrid/basicdemo",
+    "url": "http://localhost:8081/agGrid/openfindemo",
     "uuid": "OpenfinPOC-jnhkluwepvm",
     "autoShow": true
   },
@@ -17,6 +17,7 @@
     "name": "Openfin POC"
   },
   "services": [
+    { "name": "excel" },
     {
       "name": "notifications"
     }

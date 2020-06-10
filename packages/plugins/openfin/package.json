@@ -19,6 +19,7 @@
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "openfin": "node openfin-launcher.js",
+    "start-openfin": "openfin --launch --config ./openfin-app.json",
     "ensure-clean-on-local": "node ../../../scripts/ensure-clean-on-local"
   },
   "dependencies": {

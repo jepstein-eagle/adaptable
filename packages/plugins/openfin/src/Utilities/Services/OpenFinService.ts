@@ -24,6 +24,8 @@ import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 import { OpenFinPluginOptions } from '../..';
 
+import '../../excel-service';
+
 declare var fin: any;
 declare var chrome: any;
 enum ExcelServiceStatus {
@@ -46,7 +48,7 @@ export function isExcelOpenfinLoaded() {
 function addWorkbook(): Promise<string> {
   return new Promise<string>((resolve: any, reject: any) => {
     LoggingHelper.LogAdaptableInfo('Creating new workbook');
-    fin.desktop.Excel.addWorkbook(function(workbook: any /*ExcelWorkbook*/) {
+    fin.desktop.Excel.addWorkbook().then(function(workbook: any /*ExcelWorkbook*/) {
       LoggingHelper.LogAdaptableSuccess('workbook created:' + workbook.name);
       resolve(workbook.name);
       // workbook.addEventListener("workbookActivated", (event) => onWorkbookActivated(event, resolve));
@@ -275,35 +277,39 @@ export class OpenFinService implements IOpenFinService {
 
   public initOpenFinExcel(): Promise<string> {
     // fin.desktop.main(function () {
-    fin.desktop.Excel.init();
-    if (excelStatus == ExcelServiceStatus.Unknown) {
-      return Promise.resolve()
-        .then(initExcelPluginService)
-        .then(connectToExcel)
-        .then(this.onExcelConnected)
-        .then(addWorkbook)
-        .then((workbookName: string) => {
-          this.setWorkbookName(workbookName);
-          return Promise.resolve(workbookName);
-        })
-        .catch(err => {
-          LoggingHelper.LogAdaptableError(err);
-          return '';
-        });
-    } else {
-      return Promise.resolve()
-        .then(connectToExcel)
-        .then(this.onExcelConnected)
-        .then(addWorkbook)
-        .then((workbookName: string) => {
-          this.setWorkbookName(workbookName);
-          return Promise.resolve(workbookName);
-        })
-        .catch(err => {
-          LoggingHelper.LogAdaptableError(err);
-          return '';
-        });
-    }
+
+    return fin.desktop.ExcelService.init().then(() => {
+      //      fin.desktop.Excel.init();
+
+      if (excelStatus == ExcelServiceStatus.Unknown) {
+        return Promise.resolve()
+          .then(initExcelPluginService)
+          .then(connectToExcel)
+          .then(this.onExcelConnected)
+          .then(addWorkbook)
+          .then((workbookName: string) => {
+            this.setWorkbookName(workbookName);
+            return Promise.resolve(workbookName);
+          })
+          .catch(err => {
+            LoggingHelper.LogAdaptableError(err);
+            return '';
+          });
+      } else {
+        return Promise.resolve()
+          .then(connectToExcel)
+          .then(this.onExcelConnected)
+          .then(addWorkbook)
+          .then((workbookName: string) => {
+            this.setWorkbookName(workbookName);
+            return Promise.resolve(workbookName);
+          })
+          .catch(err => {
+            LoggingHelper.LogAdaptableError(err);
+            return '';
+          });
+      }
+    });
 
     // });
   }
