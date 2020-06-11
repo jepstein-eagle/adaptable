@@ -222,86 +222,42 @@ export class agGridHelper {
 
     const cellRendererFunc: ICellRendererFunc = (params: ICellRendererParams) => {
       let value = params.value;
-      const clampedValue = clamp(value, min, max);
 
       if (Helper.objectNotExists(value)) {
         value = 0;
       }
 
+      const clampedValue = clamp(value, min, max);
       const percentageValue = ((clampedValue - min) / (max - min)) * 100;
       const matchingRange = pcr.Ranges.find(r => r.Min <= clampedValue && r.Max >= clampedValue);
 
-      const eOuterDiv = document.createElement('div');
-      eOuterDiv.style.height = '100%';
-      eOuterDiv.style.display = 'flex';
-      eOuterDiv.style.flexDirection = 'column';
-      eOuterDiv.style.justifyContent = 'center';
+      const wrapperEl = document.createElement('div');
+      wrapperEl.style.height = '100%';
+      wrapperEl.style.display = 'flex';
+      wrapperEl.style.flexDirection = 'column';
+      wrapperEl.style.justifyContent = 'center';
 
-      const barDiv = document.createElement('div');
-      barDiv.style.background = pcr.BackColor || '#cccccc';
-      barDiv.style.height = pcr.ShowValue ? '10px' : '20px';
+      const barEl = document.createElement('div');
+      barEl.style.background = pcr.BackColor || '#cccccc';
+      barEl.style.height = pcr.ShowValue ? '10px' : '20px';
 
-      const barInsideDiv = document.createElement('div');
-      barInsideDiv.style.background = matchingRange.Color;
-      barInsideDiv.style.height = pcr.ShowValue ? '10px' : '20px';
-      barInsideDiv.style.width = `${percentageValue.toFixed(0)}%`;
+      const barInsideEl = document.createElement('div');
+      barInsideEl.style.background = matchingRange.Color;
+      barInsideEl.style.height = pcr.ShowValue ? '10px' : '20px';
+      barInsideEl.style.width = `${percentageValue.toFixed(0)}%`;
 
-      const valueDiv = document.createElement('div');
-      valueDiv.style.lineHeight = '1';
+      const textEl = document.createElement('div');
+      textEl.style.lineHeight = '1';
       if (pcr.DisplayRawValue && pcr.DisplayPercentageValue)
-        valueDiv.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
-      else if (pcr.DisplayRawValue) valueDiv.innerText = value;
-      else if (pcr.DisplayPercentageValue) valueDiv.innerText = `${percentageValue.toFixed(0)}%`;
+        textEl.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
+      else if (pcr.DisplayRawValue) textEl.innerText = value;
+      else if (pcr.DisplayPercentageValue) textEl.innerText = `${percentageValue.toFixed(0)}%`;
 
-      barDiv.append(barInsideDiv);
-      eOuterDiv.append(barDiv);
+      barEl.append(barInsideEl);
+      wrapperEl.append(barEl);
+      if (pcr.ShowValue) wrapperEl.append(textEl);
 
-      if (pcr.ShowValue) eOuterDiv.append(valueDiv);
-
-      return eOuterDiv;
-      // if (pcr.ShowValue) {
-      //   const showValueBar = document.createElement('div');
-      //   showValueBar.id = `ab_div-colour-render-text_${adaptableId}_${pcr.ColumnId}`;
-      //   showValueBar.className = 'ab_div-colour-render-text';
-      //   if (showNegatives && showPositives) {
-      //     showValueBar.style.paddingLeft = isNegativeValue ? '50%' : '20%';
-      //   } else {
-      //     showValueBar.style.paddingLeft = '5px';
-      //   }
-      //   showValueBar.innerHTML = params.value;
-      //   eOuterDiv.appendChild(showValueBar);
-      // }
-
-      // if (showNegatives) {
-      //   const fullWidth = showPositives ? 50 : 100;
-
-      //   const negativeDivBlankBar = document.createElement('div');
-      //   negativeDivBlankBar.className = 'ab_div-colour-render-bar';
-      //   negativeDivBlankBar.id = `ab_div-colour-blank-bar_${adaptableId}_${pcr.ColumnId}`;
-      //   negativeDivBlankBar.style.width = `${fullWidth - percentageNegativeValue}%`;
-      //   eOuterDiv.appendChild(negativeDivBlankBar);
-
-      //   const negativeDivPercentBar = document.createElement('div');
-      //   negativeDivPercentBar.className = 'ab_div-colour-render-bar';
-      //   negativeDivBlankBar.id = `ab_div-colour-negative-bar_${adaptableId}_${pcr.ColumnId}`;
-      //   negativeDivPercentBar.style.width = `${percentageNegativeValue}%`;
-      //   if (isNegativeValue) {
-      //     negativeDivPercentBar.style.backgroundColor = pcr.NegativeColor;
-      //   }
-      //   eOuterDiv.appendChild(negativeDivPercentBar);
-      // }
-
-      // if (showPositives) {
-      //   const positivePercentBarDiv = document.createElement('div');
-      //   positivePercentBarDiv.className = 'ab_div-colour-render-bar';
-      //   positivePercentBarDiv.id = `ab_div-colour-positive-bar_${adaptableId}_${pcr.ColumnId}`;
-      //   positivePercentBarDiv.style.width = `${percentagePositiveValue}%`;
-      //   if (!isNegativeValue) {
-      //     positivePercentBarDiv.style.backgroundColor = pcr.PositiveColor;
-      //   }
-      //   eOuterDiv.appendChild(positivePercentBarDiv);
-      // }
-      // return eOuterDiv;
+      return wrapperEl;
     };
 
     return cellRendererFunc;
