@@ -110,7 +110,7 @@ class OpenFinToolbarControlComponent extends React.Component<
       this.props.CurrentLiveOpenFinReport &&
       this.state.ReportName == this.props.CurrentLiveOpenFinReport.ReportName;
 
-    let content = this.props.IsOpenFinRunning ? (
+    let content = (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__OpenFin__wrap">
         <Dropdown
           disabled={allReports.length == 0 || isLiveOpenFinReport}
@@ -161,7 +161,7 @@ class OpenFinToolbarControlComponent extends React.Component<
           </Flex>
         )}{' '}
       </Flex>
-    ) : null;
+    );
 
     return (
       <PanelDashboard
@@ -204,11 +204,11 @@ class OpenFinToolbarControlComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState): Partial<OpenFinToolbarControlComponentProps> {
   return {
-    CurrentLiveOpenFinReport: state.OpenFin.CurrentLiveOpenFinReport,
+    CurrentLiveOpenFinReport: state.System.CurrentLiveOpenFinReport,
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
 
-    IsOpenFinRunning: state.OpenFin.IsOpenFinRunning,
+    IsOpenFinRunning: state.System.IsOpenFinRunning,
   };
 }
 

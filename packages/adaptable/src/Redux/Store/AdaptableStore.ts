@@ -206,15 +206,15 @@ This is the main store for Adaptable State
       TeamSharing: TeamSharingRedux.TeamSharingReducer,
       Plugins: PluginsRedux.PluginsReducer,
 
-      IPushPull: (state: IPushPullState, action: Redux.Action) => {
-        return state || null;
-      },
-      Glue42: (state: Glue42State, action: Redux.Action) => {
-        return state || null;
-      },
-      OpenFin: (state: OpenFinState, action: Redux.Action) => {
-        return state || null;
-      },
+      // IPushPull: (state: IPushPullState, action: Redux.Action) => {
+      //   return state || null;
+      // },
+      // Glue42: (state: Glue42State, action: Redux.Action) => {
+      //   return state || null;
+      // },
+      // OpenFin: (state: OpenFinState, action: Redux.Action) => {
+      //   return state || null;
+      // },
 
       ActionColumn: ActionColumnRedux.ActionColumnReducer,
       Entitlements: EntitlementsRedux.EntitlementsReducer,
@@ -262,7 +262,7 @@ This is the main store for Adaptable State
     // allow plugins to participate in the root reducer
     adaptable.forPlugins(plugin => {
       if (plugin.rootReducer) {
-        rootReducerObject = { ...rootReducerObject, ...plugin.rootReducer };
+        rootReducerObject = { ...rootReducerObject, ...plugin.rootReducer(rootReducerObject) };
       }
     });
 

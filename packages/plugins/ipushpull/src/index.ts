@@ -13,7 +13,6 @@ import env from '@adaptabletools/adaptable/src/env';
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
 
-import { SystemReducer } from '@adaptabletools/adaptable/src/Redux/ActionsReducers/SystemRedux';
 import { IPushPullStrategyId } from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 
@@ -156,12 +155,14 @@ class IPushPullPlugin extends AdaptablePlugin {
     this.registerProperty('service', () => this.PushPullService);
   }
 
-  rootReducer = {
-    System: (state: SystemState, action: Redux.Action) => {
-      const newState = SystemReducer(state, action);
+  rootReducer = (rootReducer: any) => {
+    return {
+      System: (state: SystemState, action: Redux.Action): SystemState => {
+        const newState = rootReducer.System(state, action);
 
-      return IPushPullReducer(newState, action);
-    },
+        return IPushPullReducer(newState, action);
+      },
+    };
   };
 
   reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {

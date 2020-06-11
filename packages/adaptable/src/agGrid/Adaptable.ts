@@ -506,13 +506,21 @@ export class Adaptable implements IAdaptable {
 
   getPlugin(pluginId: string): AdaptablePlugin {
     const plugins = this.adaptableOptions.plugins || [];
-    return plugins.filter(p => p.pluginId === pluginId)[0];
+    const thePlugin = plugins.filter(p => p.pluginId === pluginId)[0];
+    if (!thePlugin) {
+      throw `Cannot find plugin "${pluginId}". Make sure you spelled it right!`;
+    }
+
+    return thePlugin;
   }
 
   getPluginProperty(pluginId: string, propertyName: string, ...args: any): any {
     const plugins = this.adaptableOptions.plugins || [];
 
     const thePlugin = plugins.filter(p => p.pluginId === pluginId)[0];
+    if (!thePlugin) {
+      throw `Cannot find plugin "${pluginId}". Make sure you spelled it right!`;
+    }
 
     if (thePlugin && thePlugin.hasProperty(propertyName)) {
       return thePlugin.getProperty(propertyName)(...args);

@@ -26,17 +26,21 @@ export class PluginsApiImpl extends ApiBase implements PluginsApi {
   }
 
   public getPluginApi(pluginId: string): any | IPushPullApi | Glue42Api {
-    const api = this.adaptable.getPluginProperty(pluginId, 'api');
-    if (pluginId === 'ipushpull') {
-      return api as IPushPullApi;
-    }
-    if (pluginId === 'glue42') {
-      return api as Glue42Api;
-    }
-    if (pluginId === 'openfin') {
-      return api as OpenFinApi;
-    }
+    try {
+      const api = this.adaptable.getPluginProperty(pluginId, 'api');
+      if (pluginId === 'ipushpull') {
+        return api as IPushPullApi;
+      }
+      if (pluginId === 'glue42') {
+        return api as Glue42Api;
+      }
+      if (pluginId === 'openfin') {
+        return api as OpenFinApi;
+      }
 
-    return api;
+      return api;
+    } catch (ex) {
+      return null;
+    }
   }
 }

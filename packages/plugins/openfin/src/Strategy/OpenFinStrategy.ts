@@ -116,7 +116,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
 
   private getOpenFinService(): IOpenFinService {
     if (!this.openFinService) {
-      this.openFinService = this.adaptable.getPluginProperty('OpenFin', 'service') || null;
+      this.openFinService = this.adaptable.getPluginProperty('openfin', 'service') || null;
     }
 
     return this.openFinService;
@@ -196,7 +196,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
         })
         .catch(reason => {
           LoggingHelper.LogAdaptableWarning(
-            'Failed to send data to iOpenFin for [' + currentLiveIOpenFinReport.ReportName + ']',
+            'Failed to send data to OpenFin for [' + currentLiveIOpenFinReport.ReportName + ']',
             reason
           );
           this.getOpenFinApi().stopLiveData();

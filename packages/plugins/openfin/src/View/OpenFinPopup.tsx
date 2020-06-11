@@ -58,10 +58,7 @@ class OpenFinPopupComponent extends React.Component<OpenFinPopupProps, EditableC
 }
 
 function mapStateToProps(state: AdaptableState): Partial<OpenFinPopupProps> {
-  return {
-    //   SelectedOpenFinReportName: state.OpenFin.SelectedOpenFinReportName,
-    //   LiveReports: state.System.CurrentLiveReports,
-  };
+  return {};
 }
 
 function mapDispatchToProps(

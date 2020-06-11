@@ -34,7 +34,7 @@ function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'openfindemo',
+    adaptableId: 'openfindemo1',
     plugins: [openfin({})],
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
@@ -69,7 +69,7 @@ function InitAdaptableDemo() {
         Tabs: [
           {
             Name: 'General',
-            Toolbars: ['Toolbar1', 'SmartEdit', 'CellSummary', 'Layout'],
+            Toolbars: ['Toolbar1', 'SmartEdit', 'CellSummary', 'Layout', 'OpenFin'],
           },
         ],
         VisibleButtons: ['CellSummary', 'ColumnChooser'],

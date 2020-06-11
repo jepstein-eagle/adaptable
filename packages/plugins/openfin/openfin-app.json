@@ -29,7 +29,8 @@
     "name": "Openfin POC"
   },
   "services": [
-    { "name": "excel" },
+    { "name": "excel",
+      "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json" },
     {
       "name": "notifications"
     }

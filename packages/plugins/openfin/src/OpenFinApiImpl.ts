@@ -44,7 +44,7 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
 
   private getOpenFinService(): OpenFinService {
     if (!this.OpenFinService) {
-      this.OpenFinService = this.adaptable.getPluginProperty('OpenFin', 'service') || null;
+      this.OpenFinService = this.adaptable.getPluginProperty('openfin', 'service') || null;
     }
 
     return this.OpenFinService as OpenFinService;
@@ -61,7 +61,7 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   }
 
   public getCurrentLiveOpenFinReport(): OpenFinReport | undefined {
-    return; // need to do this
+    return this.getAdaptableState().System.CurrentLiveOpenFinReport;
   }
 
   public setOpenFinAvailableOn(): void {

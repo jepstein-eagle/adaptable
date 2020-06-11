@@ -36,7 +36,7 @@ export interface OpenFinSendSnapshotAction extends Redux.Action {
 }
 
 export interface OpenFinStartLiveDataAction extends Redux.Action {
-  glue42Report: OpenFinReport;
+  openFinReport: OpenFinReport;
 }
 
 export interface OpenFinStopLiveDataAction extends Redux.Action {}
@@ -54,18 +54,18 @@ export interface SetOpenFinRunningOnAction extends Redux.Action {}
 
 export interface SetOpenFinRunningOffAction extends Redux.Action {}
 
-export const OpenFinStartLiveData = (glue42Report: OpenFinReport): OpenFinStartLiveDataAction => ({
+export const OpenFinStartLiveData = (openFinReport: OpenFinReport): OpenFinStartLiveDataAction => ({
   type: OPENFIN_START_LIVE_DATA,
-  glue42Report,
+  openFinReport: openFinReport,
 });
 
 export const OpenFinStopLiveData = (): OpenFinStopLiveDataAction => ({
   type: OPENFIN_STOP_LIVE_DATA,
 });
 
-export const OpenFinLiveReportSet = (glue42Report: OpenFinReport): OpenFinLiveReportSetAction => ({
+export const OpenFinLiveReportSet = (openFinReport: OpenFinReport): OpenFinLiveReportSetAction => ({
   type: OPENFIN_LIVE_REPORT_SET,
-  openFinReport: glue42Report,
+  openFinReport: openFinReport,
 });
 
 export const OpenFinLiveReportClear = (): OpenFinLiveReportClearAction => ({
@@ -88,7 +88,7 @@ export const SetOpenFinRunningOff = (): SetOpenFinRunningOffAction => ({
   type: SET_OPENFIN_RUNNING_OFF,
 });
 
-const initialFilterState: OpenFinState = {
+const initialOpenFinState: OpenFinState = {
   // OpenFin: undefined,
 
   IsOpenFinRunning: false,
@@ -96,7 +96,7 @@ const initialFilterState: OpenFinState = {
 };
 
 export const OpenFinReducer: Redux.Reducer<OpenFinState> = (
-  state: OpenFinState = initialFilterState,
+  state: OpenFinState = initialOpenFinState,
   action: Redux.Action
 ): OpenFinState => {
   switch (action.type) {

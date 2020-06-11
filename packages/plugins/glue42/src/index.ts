@@ -16,6 +16,7 @@ import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Cons
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
 import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 import { IStrategy } from '@adaptabletools/adaptable/src/Strategy/Interface/IStrategy';
+import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 import {
   AdaptableViewFactory,
   AdaptableDashboardFactory,
@@ -81,12 +82,14 @@ class Glue42Plugin extends AdaptablePlugin {
     this.registerProperty('service', () => this.Glue42Service);
   }
 
-  rootReducer = {
-    System: (state: SystemState, action: Redux.Action) => {
-      const newState = SystemReducer(state, action);
+  rootReducer = (rootReducer: any) => {
+    return {
+      System: (state: SystemState, action: Redux.Action): SystemState => {
+        const newState = rootReducer.System(state, action);
 
-      return Glue42Reducer(newState, action);
-    },
+        return Glue42Reducer(newState, action) as SystemState;
+      },
+    };
   };
 
   reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {
