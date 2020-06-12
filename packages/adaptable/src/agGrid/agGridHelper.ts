@@ -217,6 +217,8 @@ export class agGridHelper {
   }
 
   public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {
+    if (pcr.Ranges === undefined) return;
+
     const min = pcr.Ranges[0].Min;
     const max = pcr.Ranges[pcr.Ranges.length - 1].Max;
 
@@ -238,16 +240,16 @@ export class agGridHelper {
       wrapperEl.style.justifyContent = 'center';
 
       const barEl = document.createElement('div');
-      barEl.style.background = pcr.BackColor || '#cccccc';
-      barEl.style.height = pcr.ShowValue ? '10px' : '20px';
+      barEl.style.background = pcr.BackColor;
+      barEl.style.flex = '1';
 
       const barInsideEl = document.createElement('div');
       barInsideEl.style.background = matchingRange.Color;
-      barInsideEl.style.height = pcr.ShowValue ? '10px' : '20px';
+      barInsideEl.style.height = '100%';
       barInsideEl.style.width = `${percentageValue.toFixed(0)}%`;
 
       const textEl = document.createElement('div');
-      textEl.style.lineHeight = '1';
+      textEl.style.lineHeight = '1.2';
       if (pcr.DisplayRawValue && pcr.DisplayPercentageValue)
         textEl.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
       else if (pcr.DisplayRawValue) textEl.innerText = value;

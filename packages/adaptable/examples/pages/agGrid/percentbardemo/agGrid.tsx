@@ -62,7 +62,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   PercentBar: {
-    Revision: 2,
+    Revision: 6,
     PercentBars: [
       {
         ColumnId: 'notional',
@@ -78,8 +78,18 @@ let demoConfig: PredefinedConfig = {
             Color: '#FF33FF',
           },
         ],
-        DisplayType: 'Inside',
-        DisplayValue: 'Percentage',
+        ShowValue: true,
+        ShowToolTip: true,
+        DisplayRawValue: true,
+        DisplayPercentageValue: true,
+      },
+      {
+        ColumnId: 'bid',
+        PositiveValue: 200,
+        NegativeValue: -200,
+        PositiveColor: '#008000',
+        NegativeColor: '#FF0000',
+        ShowValue: false,
       },
     ],
   },

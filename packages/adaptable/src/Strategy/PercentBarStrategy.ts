@@ -16,6 +16,33 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
   protected PercentBarState: PercentBarState;
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.PercentBarStrategyId, adaptable);
+
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
+      const percentBars = this.adaptable.api.percentBarApi.getAllPercentBar();
+      percentBars.forEach(percentBar => {
+        if (percentBar.Ranges) return;
+
+        percentBar.Ranges = [];
+
+        if (percentBar.NegativeValue !== undefined) {
+          percentBar.Ranges.push({
+            Min: percentBar.NegativeValue,
+            Max: 0,
+            Color: percentBar.NegativeColor,
+          });
+        }
+
+        if (percentBar.PositiveValue !== undefined) {
+          percentBar.Ranges.push({
+            Min: 0,
+            Max: percentBar.PositiveValue,
+            Color: percentBar.PositiveColor,
+          });
+        }
+
+        this.adaptable.api.percentBarApi.editPercentBar(percentBar);
+      });
+    });
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

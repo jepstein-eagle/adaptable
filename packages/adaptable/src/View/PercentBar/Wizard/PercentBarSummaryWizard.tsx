@@ -60,6 +60,19 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
             </Flex>
           ),
         },
+        {
+          Key: 'Back Color',
+          Value: this.props.Data.BackColor ? (
+            <StyleVisualItem
+              Style={{
+                BackColor: this.props.Data.BackColor,
+                ForeColor: this.props.Data.BackColor,
+              }}
+            />
+          ) : (
+            'No'
+          ),
+        },
         { Key: 'Show Cell Value', Value: this.props.Data.ShowValue ? 'Yes' : 'No' },
         { Key: 'Show Tooltip', Value: this.props.Data.ShowToolTip ? 'Yes' : 'No' },
         { Key: 'Display Raw Value', Value: this.props.Data.DisplayRawValue ? 'Yes' : 'No' },

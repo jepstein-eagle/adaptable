@@ -29,5 +29,5 @@ export interface PercentBar extends AdaptableObject {
   DisplayRawValue?: boolean;
   DisplayPercentageValue?: boolean;
 
-  BackColor: string;
+  BackColor?: string;
 }

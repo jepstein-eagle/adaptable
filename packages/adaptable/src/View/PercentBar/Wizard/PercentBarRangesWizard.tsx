@@ -10,6 +10,7 @@ import { Flex } from 'rebass';
 import Panel from '../../../components/Panel';
 import Input from '../../../components/Input';
 import SimpleButton from '../../../components/SimpleButton';
+import { getHexForName, GRAY } from '../../UIHelper';
 
 export interface PercentBarRangesWizardProps extends AdaptableWizardStepProps<PercentBar> {
   ColorPalette: Array<string>;
@@ -129,8 +130,8 @@ export class PercentBarRangesWizard
     this.setState({
       Ranges: Ranges.concat({
         Min: lastRange.Max,
-        Max: lastRange.Max + 1,
-        Color: '#00ff00',
+        Max: lastRange.Max,
+        Color: getHexForName(GRAY),
       }),
     });
   }

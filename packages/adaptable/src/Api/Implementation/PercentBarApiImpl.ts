@@ -1,7 +1,11 @@
 import * as PercentBarRedux from '../../Redux/ActionsReducers/PercentBarRedux';
 import { ApiBase } from './ApiBase';
 import { PercentBarApi } from '../PercentBarApi';
-import { PercentBarState, PercentBar } from '../../PredefinedConfig/PercentBarState';
+import {
+  PercentBarState,
+  PercentBar,
+  PercentBarRange,
+} from '../../PredefinedConfig/PercentBarState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 
@@ -27,19 +31,21 @@ export class PercentBarApiImpl extends ApiBase implements PercentBarApi {
 
   public createPercentBar(
     columnId: string,
-    positiveValue: number,
-    positiveColor: string,
-    negativeValue: number,
-    negativeColor: string,
-    showValue: boolean
+    ranges: PercentBarRange[],
+    showValue: boolean,
+    showToolTip: boolean,
+    displayRawValue: boolean,
+    displayPercentageValue: boolean,
+    backColor: string
   ): void {
     let percentBar: PercentBar = {
       ColumnId: columnId,
-      NegativeValue: negativeValue,
-      PositiveValue: positiveValue,
-      PositiveColor: positiveColor,
-      NegativeColor: negativeColor,
+      Ranges: ranges,
       ShowValue: showValue,
+      ShowToolTip: showToolTip,
+      DisplayRawValue: displayRawValue,
+      DisplayPercentageValue: displayPercentageValue,
+      BackColor: backColor,
     };
     this.addPercentBar(percentBar);
   }

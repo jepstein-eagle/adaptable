@@ -9,6 +9,8 @@ import { ColorPicker } from '../../ColorPicker';
 import Checkbox from '../../../components/CheckBox';
 import Panel from '../../../components/Panel';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
+import { getHexForName, GRAY } from '../../UIHelper';
+import { Flex } from 'rebass';
 
 export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {
   ColorPalette: Array<string>;
@@ -73,14 +75,27 @@ export class PercentBarSettingsWizard
             </Checkbox>
           </FormRow>
           <FormRow label="Back Color">
-            <ColorPicker
-              ColorPalette={this.props.ColorPalette}
-              value={this.state.BackColor}
-              onChange={(event: React.FormEvent) => {
-                const { value } = event.target as HTMLInputElement;
-                this.setState({ BackColor: value });
-              }}
-            />
+            <Flex alignItems="center">
+              <Checkbox
+                checked={!!this.state.BackColor}
+                onChange={checked =>
+                  this.setState({ BackColor: checked ? getHexForName(GRAY) : undefined })
+                }
+                mr={2}
+              >
+                Enabled
+              </Checkbox>
+              {this.state.BackColor !== undefined && (
+                <ColorPicker
+                  ColorPalette={this.props.ColorPalette}
+                  value={this.state.BackColor}
+                  onChange={(event: React.FormEvent) => {
+                    const { value } = event.target as HTMLInputElement;
+                    this.setState({ BackColor: value });
+                  }}
+                />
+              )}
+            </Flex>
           </FormRow>
         </FormLayout>
       </Panel>
