@@ -53,7 +53,7 @@ yy.node = function(type, args, location) {
 
 /* operator associations and precedence */
 
-%left '?' ':'
+%right '?' ':'
 %left '=' '!=' '<' '<=' '>' '>='
 %left '&' '|'
 %left '+' '-'

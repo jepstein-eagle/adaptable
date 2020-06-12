@@ -5,7 +5,6 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ApiBase } from './ApiBase';
 import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
 import { Calendar } from '../../PredefinedConfig/CalendarState';
@@ -19,36 +18,17 @@ import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellI
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { UpdatedRowInfo, ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import Helper from '../../Utilities/Helpers/Helper';
-import { LiveReport } from '../Events/LiveDataChanged';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
-import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-import { USER_NAME, ADAPTABLE_ID } from '../../Utilities/Constants/GeneralConstants';
-import { grid } from 'styled-system';
+import { ADAPTABLE_ID } from '../../Utilities/Constants/GeneralConstants';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import { THIS_YEAR_SYSTEM_FILTER } from '../../Utilities/Services/FilterService';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
-  public startLiveReport(
-    report: Report,
-    pageName: string,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ): void {
-    this.dispatchAction(SystemRedux.ReportStartLive(report, pageName, exportDestination));
-  }
-
-  public stopLiveReport(
-    report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ): void {
-    this.dispatchAction(SystemRedux.ReportStopLive(report, exportDestination));
-  }
-
   public getSystemState(): SystemState {
     return this.getAdaptableState().System;
   }
@@ -67,10 +47,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   public getSystemReports(): Report[] {
     return this.getSystemState().SystemReports;
-  }
-
-  public getLiveReports(): LiveReport[] {
-    return this.getSystemState().CurrentLiveReports;
   }
 
   public getAdaptableAlerts(): AdaptableAlert[] {
@@ -164,18 +140,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       uri => uri.primaryKeyValue == primaryKeyValue && uri.changeDirection == changeDirection
     );
     return Helper.objectExists(foundUpdatedRowInfo);
-  }
-
-  public getCurrentLiveReports(): LiveReport[] {
-    return this.getAdaptableState().System.CurrentLiveReports;
-  }
-
-  public isLiveReportRunning(): boolean {
-    return this.getAdaptableState().Grid.IsLiveReportRunning;
-  }
-
-  public isOpenFinAvailable(): boolean {
-    return false; // TODO
   }
 
   public setGridCells(

@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css';
+import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
@@ -34,7 +36,6 @@ function InitAdaptableDemo() {
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
-      useCustomMacLikeScrollbars: true,
     },
     vendorGrid: {
       ...gridOptions,
@@ -42,8 +43,24 @@ function InitAdaptableDemo() {
     },
     filterOptions: {
       useVendorFilterFormStyle: true,
+      useAdaptableFilterForm: true,
     },
     predefinedConfig: {
+      Theme: {
+        Revision: Date.now(),
+        // SystemThemes: [
+        //   {
+        //     Name: 'light',
+        //     Description: 'light theme',
+        //     VendorGridClassName: 'ag-theme-alpine',
+        //   },
+        //   {
+        //     Name: 'dark',
+        //     Description: 'dark theme',
+        //     VendorGridClassName: 'ag-theme-alpine-dark',
+        //   },
+        // ],
+      },
       Dashboard: {
         Revision: 141,
         CanFloat: false,

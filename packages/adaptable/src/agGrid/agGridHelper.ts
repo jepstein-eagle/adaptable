@@ -69,8 +69,6 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
-import { PushPullStrategy } from '../Strategy/PushPullStrategy';
-import { Glue42Strategy } from '../Strategy/Glue42Strategy';
 import { GradientColumnStrategy } from '../Strategy/GradientColumnStrategy';
 import { ActionColumnStrategy } from '../Strategy/ActionColumnStrategy';
 import { CustomSort } from '../PredefinedConfig/CustomSortState';
@@ -102,6 +100,9 @@ export class agGridHelper {
   }
 
   public getVendorLightThemeName(): string {
+    // we try not to call these two methods, as we try to detect the default grid
+    // theme from the grid container element - users should set their aggrid theme in html, on the container element
+    // so we read it from there. if we don't find it there, we'll call this method, as a last resort.
     return 'ag-theme-balham';
   }
 
@@ -184,9 +185,6 @@ export class agGridHelper {
     strategies.set(StrategyConstants.HideColumnStrategyId, new HideColumnStrategy(adaptable));
     strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(adaptable));
 
-    // should probably both be plugins
-    strategies.set(StrategyConstants.IPushPullStrategyId, new PushPullStrategy(adaptable));
-    strategies.set(StrategyConstants.Glue42StrategyId, new Glue42Strategy(adaptable));
     return strategies;
   }
 

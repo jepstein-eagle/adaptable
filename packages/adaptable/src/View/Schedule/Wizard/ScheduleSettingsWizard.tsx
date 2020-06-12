@@ -18,11 +18,11 @@ import Checkbox from '../../../components/CheckBox';
 import { BaseSchedule } from '../../../PredefinedConfig/Common/Schedule';
 import { ReminderSchedule } from '../../../PredefinedConfig/ReminderState';
 import { ReportSchedule, Report } from '../../../PredefinedConfig/ExportState';
-import { IPushPullSchedule, IPushPullDomain } from '../../../PredefinedConfig/IPushPullState';
 import { EMPTY_STRING } from '../../../Utilities/Constants/GeneralConstants';
 import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
 import { Glue42Schedule } from '../../../PredefinedConfig/Glue42State';
+import { IPushPullSchedule, IPushPullDomain } from '../../../PredefinedConfig/IPushPullState';
 
 /**
  * The setttings page for the Base Schedule  - will vary based on what type of schedule it is  - but should only be 1 page to keep it simple
@@ -58,6 +58,7 @@ export class ScheduleSettingsWizard
   constructor(props: ScheduleSettingsWizardProps) {
     super(props);
 
+    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
     this.state = {
       // Reminder
       Header:
@@ -110,9 +111,11 @@ export class ScheduleSettingsWizard
           ? StringExtensions.IsNotNullOrEmpty(
               (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
             )
-            ? this.props.Adaptable.api.iPushPullApi.getPagesForIPushPullDomain(
-                (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
-              )
+            ? ippApi
+              ? ippApi.getPagesForIPushPullDomain(
+                  (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
+                )
+              : []
             : []
           : [],
       // Glue42
@@ -153,7 +156,8 @@ export class ScheduleSettingsWizard
     });
 
     // ipushpull Stuff
-    let allFolders: IPushPullDomain[] = this.props.Adaptable.api.iPushPullApi.getIPushPullDomains();
+    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    let allFolders: IPushPullDomain[] = ippApi ? ippApi.getIPushPullDomains() : [];
     let availableFolders: any[] = allFolders.map((iPushPullDomain: IPushPullDomain) => {
       return {
         label: iPushPullDomain.Name,
@@ -442,14 +446,13 @@ export class ScheduleSettingsWizard
     }
   }
   private onFolderChanged(folder: string) {
+    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
     if (StringExtensions.IsNotNullOrEmpty(folder) && folder !== 'Select Folder') {
-      let avaialablePages = this.props.Adaptable.api.iPushPullApi.getPagesForIPushPullDomain(
-        folder
-      );
+      let availablePages = ippApi ? ippApi.getPagesForIPushPullDomain(folder) : [];
       this.setState(
         {
           Folder: folder,
-          AvailablePages: avaialablePages,
+          AvailablePages: availablePages,
           Page: EMPTY_STRING,
         } as ScheduleSettingsWizardState,
         () => this.props.UpdateGoBackState()

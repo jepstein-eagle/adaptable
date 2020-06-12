@@ -12,7 +12,7 @@ import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { UIHelper } from '../../UIHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import ListGroupItem from '../../../components/List/ListGroupItem';
-import ListGroup, { ListGroupProps } from '../../../components/List/ListGroup';
+import { ListGroupProps } from '../../../components/List/ListGroup';
 import { Box, Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 
@@ -254,7 +254,17 @@ export class ListBoxFilterForm extends React.Component<
   }
 
   private renderItemForVendorStyle = (props: CheckBoxProps): React.ReactNode => {
-    return <CheckBox {...props} variant="agGrid" fontSize="12px" marginTop={1} />;
+    return (
+      <CheckBox
+        {...props}
+        variant="agGrid"
+        fontSize="12px"
+        marginTop={1}
+        marginBottom={1}
+        marginLeft={1}
+        marginRight={1}
+      />
+    );
   };
 
   // Methods for getting the range

@@ -31,13 +31,10 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
-import { LiveReport } from '../../Api/Events/LiveDataChanged';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];
   SystemReports: Report[];
-  LiveReports: LiveReport[];
   CurrentReport: string;
   onApplyExport: (
     report: Report,
@@ -45,10 +42,6 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
-  onReportStopLive: (
-    report: Report,
-    exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-  ) => SystemRedux.ReportStopLiveAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -105,13 +98,9 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             colItems={colItems}
             Columns={this.props.Columns}
             UserFilters={this.props.UserFilters}
-            LiveReports={this.props.LiveReports}
             onShare={description => this.props.onShare(report, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
-            onReportStopLive={exportDestination =>
-              this.props.onReportStopLive(report, exportDestination)
-            }
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
             AccessLevel={this.props.AccessLevel}
@@ -247,7 +236,6 @@ function mapStateToProps(state: AdaptableState): Partial<ExportPopupProps> {
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
     CurrentReport: state.Export.CurrentReport,
-    LiveReports: state.System.CurrentLiveReports,
   };
 }
 
@@ -259,10 +247,6 @@ function mapDispatchToProps(
       dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
-    onReportStopLive: (
-      report: Report,
-      exportDestination: ExportDestination.OpenfinExcel | ExportDestination.Glue42
-    ) => dispatch(SystemRedux.ReportStopLive(report, exportDestination)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId, description)

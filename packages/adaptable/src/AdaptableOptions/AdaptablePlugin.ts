@@ -1,10 +1,18 @@
+import * as Redux from 'redux';
 import { AdaptableOptions } from './AdaptableOptions';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { AdaptableApi } from '../types';
+import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
+
+export type PluginMiddlewareFunction = (
+  action: Redux.Action,
+  adaptable: IAdaptable,
+  middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
+) => Redux.Action<any>;
 
 export abstract class AdaptablePlugin {
   public options?: any;
@@ -18,7 +26,7 @@ export abstract class AdaptablePlugin {
     this.values = {};
   }
 
-  registerValue(name: string, fn: (...args: any) => any) {
+  registerProperty(name: string, fn: (...args: any) => any) {
     this.values[name] = fn;
   }
 
@@ -31,6 +39,8 @@ export abstract class AdaptablePlugin {
       }
     };
   }
+
+  rootReducer?: { [key: string]: (...args: any[]) => any };
 
   hasProperty(name: string): boolean {
     return !!this.values[name];
@@ -51,6 +61,16 @@ export abstract class AdaptablePlugin {
 
   afterInit(ab: IAdaptable) {}
 
-  onStoreEvent(eventName: string, data: any, adaptableStore: IAdaptableStore) {}
+  reduxMiddleware(
+    next: Redux.Dispatch<Redux.Action<AdaptableState>>
+  ): void | PluginMiddlewareFunction {
+    return;
+  }
+
+  onStoreEvent(
+    eventName: string,
+    data: { action: Redux.Action; state: AdaptableState; newState: AdaptableState },
+    adaptableStore: IAdaptableStore
+  ) {}
   onAdaptableReady(adaptable: IAdaptable, adaptableOptions: AdaptableOptions) {}
 }

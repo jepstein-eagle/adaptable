@@ -60,7 +60,6 @@ To gain access to this registry please follow these steps:
     "peerDependencies": {
         "@ag-grid-community/all-modules": "^22.1.1",
         "@ag-grid-community/angular": "^22.1.1",
-        "mathjs": "^5.1.1",
         "@angular/common": ">=7.0.0",
         "@angular/core": ">=7.0.0",
     }
@@ -108,11 +107,13 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
     ```
 
 ## agGrid Enterprise Modules
-AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
+
+Starting with v22, ag-Grid included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use. AdapTable fully supports this new way of working.
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
 #### Enterprise Modules Example
+
 To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelection as an example):
 
 1. Install the modules in npm:
@@ -129,19 +130,26 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
     import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
     ```
 
-3. Add them to the **modules** prop of the Adaptable Angular Component:
+3. Add them to the **modules** prop of the AgGridAngular Component:
 
     ```
     @Component({
       selector: 'adaptable-root',
       template: `
         <adaptable-angular-aggrid
-          style="width: 100vw; height: 100vh;"
           [adaptableOptions]="adaptableOptions"
           [gridOptions]="gridOptions"
-          [modules]="agGridModules"
+          (adaptableReady)="onAdaptableReady($event)"
         >
         </adaptable-angular-aggrid>
+        <ag-grid-angular
+          [gridOptions]="gridOptions"
+          [rowData]="rowData"
+          [modules]="agGridModules"
+          style="height: 90vh"
+          class="ag-theme-alpine"
+        >
+        </ag-grid-angular>
       `
     })
 
@@ -161,7 +169,7 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
   The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
 
-  > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop
+  > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will pass that directly to `<ag-grid-angular>` component instead.
 
 - **adaptableOptions**
 
@@ -173,15 +181,47 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 ### Optional
 
-- **onAdaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
+#### Events:
+- **adaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
 
   An Adaptable event giving you access to the *AdaptableApi* object.  
   The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
   Also gives access to the underlying ag-Grid instance object. 
   See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more details.
 
-- **modules** Any ag-Grid Enterprise modules that you wish to include (see above)
+```html
+<!-- component.html >
 
+<adaptable-angular-aggrid
+  [adaptableOptions]="adaptableOptions"
+  [gridOptions]="gridOptions"
+  (adaptableReady)="onAdaptableReady($event)"
+>
+</adaptable-angular-aggrid>
+<ag-grid-angular
+  [gridOptions]="gridOptions"
+  [modules]="..."
+  style="height: 90vh"
+  class="ag-theme-alpine"
+>
+</ag-grid-angular>
+```
+
+```js
+// component.ts
+
+onAdaptableReady({
+    adaptableApi,
+    vendorGrid,
+  }: {
+    adaptableApi: AdaptableApi;
+    vendorGrid: GridOptions;
+  }) {
+    adaptableApi.eventApi.on('SelectionChanged', selection => {
+      console.warn('selection changed', selection);
+    });
+  }
+````
 
 ## Usage
 
@@ -191,17 +231,25 @@ In your app module, import AdaptableAngularAgGridModule module
 import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
 ```
 
-After that, you can use the ecomponent in your app
+After that, you can use the component in your app
 
 ```html
+
 <adaptable-angular-aggrid
-  style="height: 100vh"
   [adaptableOptions]="..."
   [gridOptions]="..."
-  [onAdaptableReady]="..."
-  [modules]="..."
+  (adaptableReady)="onAdaptableReady($event)"
 >
 </adaptable-angular-aggrid>
+
+<ag-grid-angular
+  [gridOptions]="gridOptions"
+  [rowData]="rowData"
+  [modules]="agGridModules"
+  style="height: 90vh"
+  class="ag-theme-alpine"
+>
+</ag-grid-angular>
 ```
 
 ## Styling and Theming

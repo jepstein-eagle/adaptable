@@ -20,6 +20,7 @@ import { FreeTextColumnState } from './FreeTextColumnState';
 import { LayoutState } from './LayoutState';
 import { ColumnCategoryState } from './ColumnCategoryState';
 import { PercentBarState } from './PercentBarState';
+import { ScheduleState } from './ScheduleState';
 import { PlusMinusState } from './PlusMinusState';
 import { QuickSearchState } from './QuickSearchState';
 import { CellSummaryState } from './CellSummaryState';
@@ -36,13 +37,14 @@ import { SystemFilterState } from './SystemFilterState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
 import { NamedFilterState } from './NamedFilterState';
-import { IPushPullState } from './IPushPullState';
 import { Glue42State } from './Glue42State';
 import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
+import { IPushPullState } from './IPushPullState';
+import { OpenFinState } from './OpenFinState';
 
 /**
  * The main state object that Adaptable persists
@@ -63,8 +65,9 @@ export interface AdaptableState {
   Application: ApplicationState;
   Entitlements: EntitlementState;
   NamedFilter: NamedFilterState;
-  IPushPull: IPushPullState;
   Glue42: Glue42State;
+  IPushPull: IPushPullState;
+  OpenFin: OpenFinState;
   SparklineColumn: SparklineColumnState;
   SystemFilter: SystemFilterState;
   SystemStatus: SystemStatusState;
@@ -95,9 +98,9 @@ export interface AdaptableState {
   GradientColumn: GradientColumnState;
   Layout: LayoutState;
   PercentBar: PercentBarState;
+  Schedule: ScheduleState;
   PlusMinus: PlusMinusState;
   QuickSearch: QuickSearchState;
-  Reminder: ReminderState;
   Shortcut: ShortcutState;
   SmartEdit: SmartEditState;
   TeamSharing: TeamSharingState;

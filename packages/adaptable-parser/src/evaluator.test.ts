@@ -1,18 +1,21 @@
 // @ts-ignore
-import { parse } from './parser';
-import { evaluate } from './evaluator';
-import { baseFunctions } from './functions';
+import parser from './parser';
+import { evaluateNode } from './evaluator';
+import { defaultFunctions } from './functions';
+import { Context } from './types';
 
-const context: any = {
-  row: {
+const context: Context = {
+  data: {
     A: 'Value A',
     B: 10,
   },
+  functions: defaultFunctions,
+  variables: {},
 };
 
 const t = (name: string, input: string, output: any) => {
   test(name, () => {
-    expect(evaluate(parse(input), baseFunctions, context)).toEqual(output);
+    expect(evaluateNode(parser.parse(input), context)).toEqual(output);
   });
 };
 
@@ -55,6 +58,6 @@ describe('function', () => {
   t('FUNCTION', 'COL("B")', [10]);
 });
 
-describe('smart', () => {
-  //
+describe('variables', () => {
+  t('VAR', 'VAR("X", 5)\nVAR("X") * 2', [undefined, 10]);
 });

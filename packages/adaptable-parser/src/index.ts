@@ -1,16 +1,28 @@
 // @ts-ignore
-import { parser } from './parser';
-import { evaluate } from './evaluator';
-import { baseFunctions } from './functions';
+import parser from './parser';
+import { evaluateNode } from './evaluator';
+import { defaultFunctions } from './functions';
 import { findPathTo } from './utils';
-import { Context, FunctionMap } from './types';
+import { Context } from './types';
 
-const parse = parser.parse.bind(parser);
+export function parse(input: string) {
+  const ast = parser.parse(input.trim());
 
-const compile = (input: string, customFunctions: FunctionMap = {}) => {
-  const ast = parse(input);
-  const functions = { ...baseFunctions, ...customFunctions };
-  return (context: Context) => evaluate(ast, functions, context);
-};
+  const evaluate = (context: Partial<Context>) => {
+    const contextWithDefaults: Context = {
+      data: { ...context.data },
+      variables: { ...context.variables },
+      functions: { ...defaultFunctions, ...context.functions },
+    };
+    const result = evaluateNode(ast, contextWithDefaults);
+    return result[result.length - 1];
+  };
 
-export { parse, evaluate, compile, findPathTo, baseFunctions };
+  return { ast, evaluate };
+}
+
+export function evaluate(input: string, context: Partial<Context>) {
+  return parse(input).evaluate(context);
+}
+
+export { findPathTo, defaultFunctions };

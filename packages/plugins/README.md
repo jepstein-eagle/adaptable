@@ -10,7 +10,15 @@ We currently offer 3 plugins (though more will be added in the coming months):
 
 - [Charting Plugin](./charts)
 
-- [No Code Plugin](./nocode-aggrid)
+- [No Code AgGrid Plugin](./nocode-aggrid)
+
+- [Master Detail AgGrid Plugin](./master-detail-aggrid) - depends on `@ag-grid-enterprise/master-detail`
+
+- [IPushPull Plugin](./ipushpull)
+
+- [Finsemble Plugin](./finsemble)
+
+- [Openfin Plugin](./openfin)
 
 ### Using Plugins
 
@@ -22,6 +30,11 @@ To use the AdapTable plugins you need to do the following:
 npm install @adaptabletools/adaptable-plugin-charts
 npm install @adaptabletools/adaptable-plugin-finance
 npm install @adaptabletools/adaptable-plugin-nocode-aggrid
+npm install @adaptabletools/adaptable-plugin-master-detail-aggrid
+npm install @adaptabletools/adaptable-plugin-ipushpull
+npm install @adaptabletools/adaptable-plugin-finsemble
+npm install @adaptabletools/adaptable-plugin-openfin
+npm install @adaptabletools/adaptable-plugin-glue42
 ```
 
 > You must install the same version of the plugin as you use for the 'core' AdapTable package.  AdapTable will send a warning message to the console if these are different
@@ -32,6 +45,11 @@ npm install @adaptabletools/adaptable-plugin-nocode-aggrid
 import charts from "@adaptabletools/adaptable-plugin-charts";
 import finance from "@adaptabletools/adaptable-plugin-finance";
 import nocode from "@adaptabletools/adaptable-plugin-nocode-aggrid";
+import masterDetail from "@adaptabletools/adaptable-plugin-master-detail-aggrid";
+import ipushpull from "@adaptabletools/adaptable-plugin-ipushpull";
+import finsemble from "@adaptabletools/adaptable-plugin-finsemble";
+import openfin from "@adaptabletools/adaptable-plugin-openfin";
+import glue42 from "@adaptabletools/adaptable-plugin-glue42";
 ```
 
 3.  Add the plugins to the plugins property in AdaptableOptions:

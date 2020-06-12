@@ -37,6 +37,9 @@ describe('logic', () => {
   t('AND', ['1 & 2', '1 AND 2'], [{ type: 'AND', args: [1, 2] }]);
   t('NOT', ['! 1', 'NOT 1'], [{ type: 'NOT', args: [1] }]);
   t('IF', '1 ? 2 : 3', [{ type: 'IF', args: [1, 2, 3] }]);
+  t('IF', '1 ? 2 : 3 ? 4 : 5', [
+    { type: 'IF', args: [1, 2, { type: 'IF', args: [3, 4, 5] }] },
+  ]);
 });
 
 describe('compare', () => {

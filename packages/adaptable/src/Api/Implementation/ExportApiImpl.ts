@@ -29,7 +29,7 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
   }
 
   public getReportSchedules(): ReportSchedule[] {
-    return this.getExportState().ReportSchedules;
+    return this.getAdaptableState().Schedule.ReportSchedules;
   }
 
   public sendReport(reportName: string, destination: ExportDestination): void {

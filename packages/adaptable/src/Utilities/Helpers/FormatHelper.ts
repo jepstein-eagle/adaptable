@@ -3,6 +3,7 @@ import {
   DateFormatterOptions,
   AdaptableFormat,
 } from '../../PredefinedConfig/Common/AdaptableFormat';
+
 import dateFnsFormat from 'date-fns/format';
 
 export function Format(input: any, format: AdaptableFormat) {

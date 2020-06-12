@@ -11,8 +11,8 @@ import { BaseSchedule } from '../../../PredefinedConfig/Common/Schedule';
 import { ScheduleType } from '../../../PredefinedConfig/Common/Enums';
 import { ReminderSchedule } from '../../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../../PredefinedConfig/ExportState';
-import { IPushPullSchedule } from '../../../PredefinedConfig/IPushPullState';
 import { Glue42Schedule } from '../../../PredefinedConfig/Glue42State';
+import { IPushPullSchedule } from '../../../PredefinedConfig/IPushPullState';
 
 export interface ScheduleSummaryWizardProps extends AdaptableWizardStepProps<BaseSchedule> {}
 

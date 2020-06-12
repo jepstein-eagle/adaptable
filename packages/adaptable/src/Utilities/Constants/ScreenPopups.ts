@@ -21,11 +21,7 @@ export const FlashingCellsPopup: string = 'FlashingCellsPopup';
 export const UpdatedRowPopup: string = 'UpdatedRowPopup';
 export const FormatColumnPopup: string = 'FormatColumnPopup';
 export const FreeTextColumnPopup: string = 'FreeTextColumnPopup';
-export const Glue42Popup: string = 'Glue42Popup';
-export const IPushPullPopup: string = 'IPushPullPopup';
-export const IPushPullLoginPopup: string = 'IPushPullLoginPopup';
-export const Glue42LoginPopup: string = 'Glue42LoginPopup';
-export const IPushPullAddPagePopup: string = 'IPushPullAddPagePopup';
+
 export const LayoutPopup: string = 'LayoutPopup';
 export const PercentBarPopup: string = 'PercentBarPopup';
 export const GradientColumnPopup: string = 'GradientColumnPopup';
@@ -45,3 +41,11 @@ export const SchedulePopup: string = 'SchedulePopup';
 export const StateManagementPopup: string = 'StateManagementPopup';
 export const SystemStatusPopup: string = 'SystemStatusPopup';
 export const UserFilterPopup: string = 'UserFilterPopup';
+
+// Plugins
+export const OpenFinPopup: string = 'OpenFinPopup';
+export const Glue42Popup: string = 'Glue42Popup';
+export const Glue42LoginPopup: string = 'Glue42LoginPopup';
+export const IPushPullPopup: string = 'IPushPullPopup';
+export const IPushPullLoginPopup: string = 'IPushPullLoginPopup';
+export const IPushPullAddPagePopup: string = 'IPushPullAddPagePopup';

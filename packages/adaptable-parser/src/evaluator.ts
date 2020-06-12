@@ -1,10 +1,6 @@
-import { Context, FunctionMap } from './types';
+import { Context } from './types';
 
-export function evaluate(
-  node: any,
-  functions: FunctionMap,
-  context: Context
-): any {
+export function evaluateNode(node: any, context: Context): any {
   if (
     typeof node === 'boolean' ||
     typeof node === 'number' ||
@@ -14,13 +10,13 @@ export function evaluate(
   }
 
   if (Array.isArray(node)) {
-    return node.map((n: any) => evaluate(n, functions, context));
+    return node.map((n: any) => evaluateNode(n, context));
   }
 
-  const functionDef = functions[node.type];
+  const functionDef = context.functions[node.type];
 
   if (functionDef) {
-    const args = node.args.map((n: any) => evaluate(n, functions, context));
+    const args = node.args.map((n: any) => evaluateNode(n, context));
     return functionDef.handler(args, context);
   } else {
     throw new Error(`Function not found for type "${node.type}"`);

@@ -102,6 +102,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
         <Flex
           flexDirection="row"
           alignItems="stretch"
+          width="100%"
           className={join(
             shouldDisable ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-ToolPanel__BulkUpdate__wrap'

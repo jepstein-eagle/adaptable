@@ -1,5 +1,5 @@
 // @ts-ignore
-import { parser } from './parser';
+import parser from './parser';
 import { tokenize } from './tokenizer';
 
 const t = (name: string, input: string, output: any) => {

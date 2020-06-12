@@ -1,5 +1,5 @@
 import { ICalculatedColumnExpressionService } from './Interface/ICalculatedColumnExpressionService';
-import * as math from 'mathjs';
+import { evaluate } from 'adaptable-parser';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
@@ -18,14 +18,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
   public GetCalculatedColumnDataType(expression: string): 'String' | 'Number' | 'Boolean' | 'Date' {
     try {
       let firstRecord = this.adaptable.getFirstRowNode();
-      let firstRowValue: any = math.eval(expression, {
-        Col: (columnId: string) => {
-          try {
-            return this.colFunctionValue(columnId, firstRecord);
-          } catch (e) {
-            throw Error('Unknown column ' + columnId);
-          }
-        },
+      let firstRowValue: any = evaluate(expression, {
+        data: firstRecord.data,
       });
       return !isNaN(Number(firstRowValue)) ? DataType.Number : DataType.String;
     } catch (e) {
@@ -39,14 +33,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
       let cleanedExpression: string = this.CleanExpressionColumnNames(expression, columns);
       let firstRecord = this.adaptable.getFirstRowNode();
-      math.eval(cleanedExpression, {
-        Col: (columnId: string) => {
-          try {
-            return this.colFunctionValue(columnId, firstRecord);
-          } catch (e) {
-            throw Error('Unknown column ' + columnId);
-          }
-        },
+      evaluate(cleanedExpression, {
+        data: firstRecord.data,
       });
       return { IsValid: true };
     } catch (e) {
@@ -60,15 +48,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       if (this.adaptable.isGroupRowNode(record)) {
         return undefined;
       }
-      return math.eval(expression, {
-        node: record,
-        Col: (columnId: string) => {
-          try {
-            return this.colFunctionValue(columnId, record);
-          } catch (e) {
-            throw Error('Unknown column ' + columnId);
-          }
-        },
+      return evaluate(expression, {
+        data: record.data,
       });
     } catch (e) {
       LoggingHelper.LogAdaptableError(e);

@@ -98,8 +98,8 @@ export class ReportService implements IReportService {
         return true;
       case ExportDestination.OpenfinExcel:
         return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
-      case ExportDestination.Glue42:
-        return this.adaptable.api.glue42Api.isGlue42Available();
+      //   case ExportDestination.Glue42:
+      //     return this.adaptable.api.glue42Api.isGlue42Available();
     }
 
     return false;

@@ -13,6 +13,8 @@ import join from '../utils/join';
 import usePrevious from '../utils/usePrevious';
 import { getDocRect, getRect } from './utils';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
+// TODO find a way to not reference this
+import { useAdaptable } from '../../View/AdaptableContext';
 
 export type ConstrainToType = ((node: HTMLElement) => HTMLElement) | string;
 
@@ -139,6 +141,8 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
 
   let overlay;
 
+  const adaptable = useAdaptable();
+
   if (targetRect) {
     let overlayStyle = getOverlayStyle({
       constrainRect: getConstrainRect(targetRef.current as HTMLElement, constrainTo),
@@ -156,6 +160,12 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
     const position =
       anchor === 'vertical' ? sizeInfo!.verticalPosition : sizeInfo!.horizontalPosition;
 
+    let vendorClassName = '';
+
+    if (adaptable) {
+      vendorClassName = adaptable.getVendorGridCurrentThemeName();
+    }
+
     overlay = createPortal(
       <Overlay
         {...domProps}
@@ -163,6 +173,7 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
           'ab-Overlay',
           `ab-Overlay--position-${position}`,
           showTriangle ? 'ab-Overlay--show-triangle' : '',
+          vendorClassName,
           domProps.className
         )}
         visible={visible}

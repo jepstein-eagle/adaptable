@@ -1,5 +1,5 @@
 
-
+[x] context (functions, data, vars)
 [x] improve selection (global event listener)
 [x] drag and drop to insert text
 [-] improve text insert (maybe create a formater/stringifier)
@@ -9,9 +9,9 @@
 [x] min, max, avg, sum
 [-] OR/AND as function
 [x] between
-[ ] trim empty lines start/end
+[x] trim empty lines start/end
+[x] vars
 [ ] year of date
-[ ] vars
 
 
 {

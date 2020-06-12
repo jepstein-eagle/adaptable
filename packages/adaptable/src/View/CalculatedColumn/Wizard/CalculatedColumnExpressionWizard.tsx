@@ -6,18 +6,10 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
-import ErrorBox from '../../../components/ErrorBox';
-import Textarea from '../../../components/Textarea';
-import WizardPanel from '../../../components/WizardPanel';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
-import Input from '../../../components/Input';
-import { Box } from 'rebass';
-import FormLayout, { FormRow } from '../../../components/FormLayout';
-import CheckBox from '../../../components/CheckBox';
-import { CalculatedColumnExpressionService } from '../../../Utilities/Services/CalculatedColumnExpressionService';
 import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
-import { AdaptableColumn } from '../../../types';
-import calculatedColumn from '../../../components/icons/calculated-column';
+import { defaultFunctions } from 'adaptable-parser';
+import ExpressionEditor from '../../../components/ExpressionEditor';
 
 export interface CalculatedColumnExpressionWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {
@@ -25,6 +17,7 @@ export interface CalculatedColumnExpressionWizardProps
   GetErrorMessage: () => string;
   calculatedColumnExpressionService: ICalculatedColumnExpressionService;
 }
+
 export interface CalculatedColumnExpressionWizardState {
   ColumnExpression: string;
 }
@@ -40,47 +33,20 @@ export class CalculatedColumnExpressionWizard
     this.state = { ColumnExpression: this.props.Data.ColumnExpression };
   }
   render(): any {
-    let validationState: 'error' | null = StringExtensions.IsNullOrEmpty(
-      this.props.GetErrorMessage()
-    )
-      ? null
-      : 'error';
-
     const firstRow = this.props.Adaptable.getFirstRowNode().data;
 
     return (
-      <Box p={2}>
-        <Textarea
-          value={this.state.ColumnExpression}
-          placeholder="Enter expression"
-          autoFocus
-          onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-          style={{ width: '100%', height: '100px' }}
-        ></Textarea>
-        {validationState ? <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox> : null}
-        {/*  
-      Commenting this out until we have done the new stuff - also should it be inputs or labels?  do we want them to edit?
-        <FormLayout>
-          {this.props.Columns.map(Column => (
-            <FormRow key={Column.ColumnId} label={Column.FriendlyName}>
-              {Column.DataType === 'Number' ? (
-                <Input type="number" defaultValue={firstRow[Column.ColumnId]} />
-              ) : Column.DataType === 'String' ? (
-                <Input type="text" defaultValue={firstRow[Column.ColumnId]} />
-              ) : Column.DataType === 'Date' ? (
-                <Input
-                  type="date"
-                  defaultValue={firstRow[Column.ColumnId].toISOString().substr(0, 10)}
-                />
-              ) : Column.DataType === 'Boolean' ? (
-                <CheckBox defaultChecked={firstRow[Column.ColumnId]} />
-              ) : null}
-            </FormRow>
-          ))}
-        </FormLayout>
-              */}
-      </Box>
+      <ExpressionEditor
+        value={this.state.ColumnExpression}
+        onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
+        initialData={firstRow}
+        columns={this.props.Columns}
+        functions={defaultFunctions}
+      />
     );
+    /* {validationState ? (
+        <ErrorBox marginTop={2}>{this.props.GetErrorMessage()}</ErrorBox>
+      ) : null} */
   }
 
   handleExpressionChange(event: React.FormEvent<any>) {
