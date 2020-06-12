@@ -11,7 +11,7 @@ import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
+import { Flex, Box } from 'rebass';
 
 export interface PercentBarSummaryWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
@@ -41,46 +41,45 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
         },
 
         {
-          Key: 'Positive Value',
-          Value: StringExtensions.IsNullOrEmpty(this.props.Data.PositiveValueColumnId)
-            ? this.props.Data!.PositiveValue
-            : '[' +
-              ColumnHelper.getFriendlyNameFromColumnId(
-                this.props.Data.PositiveValueColumnId,
-                this.props.Columns
-              ) +
-              ']',
+          Key: 'Ranges',
+          Value: (
+            <Flex>
+              {this.props.Data!.Ranges.map((r, i) => (
+                <Flex key={i} alignItems="center" mr={3}>
+                  <Box mr={1}>
+                    {r.Min} to {r.Max}{' '}
+                  </Box>
+                  <StyleVisualItem
+                    Style={{
+                      BackColor: r.Color,
+                      ForeColor: r.Color,
+                    }}
+                  />
+                </Flex>
+              ))}
+            </Flex>
+          ),
         },
         {
-          Key: 'Positive Colour',
-          Value:
-            StringExtensions.IsNotNullOrEmpty(this.props.Data!.PositiveValueColumnId) ||
-            this.props.Data.PositiveValue ? (
-              <StyleVisualItem Style={positiveStyle} />
-            ) : null,
+          Key: 'Back Color',
+          Value: this.props.Data.BackColor ? (
+            <StyleVisualItem
+              Style={{
+                BackColor: this.props.Data.BackColor,
+                ForeColor: this.props.Data.BackColor,
+              }}
+            />
+          ) : (
+            'No'
+          ),
         },
-        {
-          Key: 'Negative Value',
-          Value: StringExtensions.IsNullOrEmpty(this.props.Data.NegativeValueColumnId)
-            ? this.props.Data!.NegativeValue
-            : '[' +
-              ColumnHelper.getFriendlyNameFromColumnId(
-                this.props.Data.NegativeValueColumnId,
-                this.props.Columns
-              ) +
-              ']',
-        },
-        {
-          Key: 'Negative Colour',
-          Value:
-            StringExtensions.IsNotNullOrEmpty(this.props.Data!.NegativeValueColumnId) ||
-            this.props.Data.NegativeValue ? (
-              <StyleVisualItem Style={negativeStyle} />
-            ) : null,
-        },
-
         { Key: 'Show Cell Value', Value: this.props.Data.ShowValue ? 'Yes' : 'No' },
         { Key: 'Show Tooltip', Value: this.props.Data.ShowToolTip ? 'Yes' : 'No' },
+        { Key: 'Display Raw Value', Value: this.props.Data.DisplayRawValue ? 'Yes' : 'No' },
+        {
+          Key: 'Display Percentage Value',
+          Value: this.props.Data.DisplayPercentageValue ? 'Yes' : 'No',
+        },
       ];
     }
 

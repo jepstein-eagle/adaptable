@@ -4,21 +4,24 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-
-import { AdaptablePopover } from '../../AdaptablePopover';
-
 import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
 import { ColorPicker } from '../../ColorPicker';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import WizardPanel from '../../../components/WizardPanel';
 import Checkbox from '../../../components/CheckBox';
-import { Flex, Text, Box } from 'rebass';
 import Panel from '../../../components/Panel';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
+import { getHexForName, GRAY } from '../../UIHelper';
+import { Flex } from 'rebass';
 
-export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {}
+export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {
+  ColorPalette: Array<string>;
+}
+
 export interface PercentBarSettingsWizardState {
-  ShowValue: boolean;
-  ShowTooltip: boolean;
+  ShowValue: PercentBar['ShowValue'];
+  ShowToolTip: PercentBar['ShowToolTip'];
+  DisplayRawValue: PercentBar['DisplayRawValue'];
+  DisplayPercentageValue: PercentBar['DisplayPercentageValue'];
+  BackColor: PercentBar['BackColor'];
 }
 
 export class PercentBarSettingsWizard
@@ -28,68 +31,74 @@ export class PercentBarSettingsWizard
     super(props);
     this.state = {
       ShowValue: this.props.Data.ShowValue,
-      ShowTooltip: this.props.Data.ShowToolTip,
+      ShowToolTip: this.props.Data.ShowToolTip,
+      DisplayRawValue: this.props.Data.DisplayRawValue,
+      DisplayPercentageValue: this.props.Data.DisplayPercentageValue,
+      BackColor: this.props.Data.BackColor,
     };
   }
 
   render(): any {
     return (
-      <WizardPanel>
-        <Panel header={'Negative Value'} marginTop={2}>
-          {' '}
-          <Flex flexDirection="row" alignItems="center" marginTop={3}>
-            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-              Show Cell Value:
-            </Text>
-
-            <Flex flex={3} alignItems="center" flexDirection="row">
+      <Panel header={'Settings'} margin={2}>
+        <FormLayout>
+          <FormRow label="Show">
+            <Checkbox
+              checked={this.state.ShowValue}
+              onChange={checked => this.setState({ ShowValue: checked })}
+              mr={2}
+            >
+              Value
+            </Checkbox>
+            <Checkbox
+              checked={this.state.ShowToolTip}
+              onChange={checked => this.setState({ ShowToolTip: checked })}
+              mr={2}
+            >
+              Tooltip
+            </Checkbox>
+          </FormRow>
+          <FormRow label="Display">
+            <Checkbox
+              checked={this.state.DisplayRawValue}
+              onChange={checked => this.setState({ DisplayRawValue: checked })}
+              mr={2}
+            >
+              Raw Value
+            </Checkbox>
+            <Checkbox
+              checked={this.state.DisplayPercentageValue}
+              onChange={checked => this.setState({ DisplayPercentageValue: checked })}
+              mr={2}
+            >
+              Percentage Value
+            </Checkbox>
+          </FormRow>
+          <FormRow label="Back Color">
+            <Flex alignItems="center">
               <Checkbox
-                marginLeft={2}
-                marginRight={2}
-                onChange={(checked: boolean) => this.onShowValueChanged(checked)}
-                checked={this.state.ShowValue}
-              />
-
-              <AdaptablePopover
-                headerText={'Percent Bar: Show Value'}
-                bodyText={['Whether to show additionally the value of the cell in the bar.']}
-              />
+                checked={!!this.state.BackColor}
+                onChange={checked =>
+                  this.setState({ BackColor: checked ? getHexForName(GRAY) : undefined })
+                }
+                mr={2}
+              >
+                Enabled
+              </Checkbox>
+              {this.state.BackColor !== undefined && (
+                <ColorPicker
+                  ColorPalette={this.props.ColorPalette}
+                  value={this.state.BackColor}
+                  onChange={(event: React.FormEvent) => {
+                    const { value } = event.target as HTMLInputElement;
+                    this.setState({ BackColor: value });
+                  }}
+                />
+              )}
             </Flex>
-          </Flex>
-          <Flex flexDirection="row" alignItems="center" marginTop={3}>
-            <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-              Show Tooltip:
-            </Text>
-            <Flex flex={3} alignItems="center" flexDirection="row">
-              <Checkbox
-                marginLeft={2}
-                marginRight={2}
-                onChange={(checked: boolean) => this.onShowTooltipChanged(checked)}
-                checked={this.state.ShowTooltip}
-              />
-
-              <AdaptablePopover
-                headerText={'Percent Bar: Show Tooltip'}
-                bodyText={[
-                  'Whether to display a tooltip that shows the value of the cell when you hover in the Column.',
-                ]}
-              />
-            </Flex>
-          </Flex>
-        </Panel>
-      </WizardPanel>
-    );
-  }
-
-  private onShowValueChanged(checked: boolean) {
-    this.setState({ ShowValue: checked } as PercentBarSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  }
-
-  private onShowTooltipChanged(checked: boolean) {
-    this.setState({ ShowTooltip: checked } as PercentBarSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+          </FormRow>
+        </FormLayout>
+      </Panel>
     );
   }
 
@@ -100,9 +109,13 @@ export class PercentBarSettingsWizard
   public canBack(): boolean {
     return true;
   }
+
   public Next(): void {
     this.props.Data.ShowValue = this.state.ShowValue;
-    this.props.Data.ShowToolTip = this.state.ShowTooltip;
+    this.props.Data.ShowToolTip = this.state.ShowToolTip;
+    this.props.Data.DisplayRawValue = this.state.DisplayRawValue;
+    this.props.Data.DisplayPercentageValue = this.state.DisplayPercentageValue;
+    this.props.Data.BackColor = this.state.BackColor;
   }
 
   public Back(): void {

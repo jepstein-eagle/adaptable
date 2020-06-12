@@ -1,4 +1,4 @@
-import { PercentBarState, PercentBar } from '../PredefinedConfig/PercentBarState';
+import { PercentBarState, PercentBar, PercentBarRange } from '../PredefinedConfig/PercentBarState';
 
 /**
  * Provides full and comprehensive run-time access to the Percent Bar function and associated Percent Bar state (from Predefined Config).
@@ -35,11 +35,12 @@ export interface PercentBarApi {
    */
   createPercentBar(
     columnId: string,
-    positiveValue: number,
-    positiveColor: string,
-    negativeValue: number,
-    negativeColor: string,
-    showValue: boolean
+    ranges: PercentBarRange[],
+    showValue: boolean,
+    showToolTip: boolean,
+    displayRawValue: boolean,
+    displayPercentageValue: boolean,
+    backColor: string
   ): void;
 
   /**

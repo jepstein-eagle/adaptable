@@ -1,19 +1,20 @@
 import * as React from 'react';
 import Input from '../components/Input';
+import { HTMLProps } from 'react';
+import { BoxProps } from 'rebass';
 
-export interface ColorPickerProps extends React.HTMLProps<ColorPicker> {
+export type ColorPickerProps = HTMLProps<HTMLInputElement> & {
   ColorPalette: string[];
-}
+} & BoxProps;
 
 export class ColorPicker extends React.Component<ColorPickerProps, {}> {
   render(): any {
     const { ColorPalette, ...restProps } = this.props;
     let ABcolorChoicesOptions = ColorPalette.map(x => <option key={x}>{x}</option>);
     let ABcolorChoices = <datalist id={'ABcolorChoices'}>{ABcolorChoicesOptions}</datalist>;
-    const Inpt = Input as any;
     return (
       <div className={'ColorPicker'}>
-        <Inpt
+        <Input
           {...restProps}
           type="color"
           style={{

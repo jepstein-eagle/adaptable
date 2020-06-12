@@ -15,6 +15,7 @@ import {
   RowNodeTransaction,
   IClientSideRowModel,
   GridApi,
+  ITooltipParams,
   ColumnResizedEvent,
 } from '@ag-grid-community/all-modules';
 
@@ -3017,13 +3018,27 @@ export class Adaptable implements IAdaptable {
       const colDef: ColDef = vendorGridColumn.getColDef();
       colDef.cellRenderer = cellRendererFunc;
 
-      if (pcr.ShowToolTip != null && pcr.ShowToolTip == true) {
-        colDef.tooltipField = colDef.field;
+      if (pcr.ShowToolTip != null && pcr.ShowToolTip == true && pcr.Ranges) {
+        const min = pcr.Ranges[0].Min;
+        const max = pcr.Ranges[pcr.Ranges.length - 1].Max;
+
+        // colDef.tooltipField = colDef.field;
         // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
         //  coldDef.tooltipComponent = PercentBarTooltip;
-        // coldDef.tooltipValueGetter = (params: ITooltipParams) => {
-        //   return { value: params.value * 10 };
-        // };
+        colDef.tooltipValueGetter = ({ value }: ITooltipParams) => {
+          const clampedValue = _.clamp(value, min, max);
+          const percentageValue = ((clampedValue - min) / (max - min)) * 100;
+
+          if (pcr.DisplayRawValue && pcr.DisplayPercentageValue) {
+            return `${value} (${percentageValue.toFixed(0)}%)`;
+          }
+
+          if (pcr.DisplayPercentageValue) {
+            return `${percentageValue.toFixed(0)}%`;
+          }
+
+          return value;
+        };
       } else {
         colDef.tooltipField = '';
       }
