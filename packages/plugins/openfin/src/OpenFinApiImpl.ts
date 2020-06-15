@@ -11,7 +11,7 @@ import {
   OpenFinReport,
   OpenFinSchedule,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
-import { OpenFinService } from './Utilities/Services/OpenFinService';
+import { OpenFinService, isRunningInOpenfin } from './Utilities/Services/OpenFinService';
 
 export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   private options: OpenFinPluginOptions;
@@ -23,13 +23,13 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
     this.options = options;
   }
   public getOpenFinState(): OpenFinState | undefined {
-    return this.getAdaptableState().OpenFin;
+    return this.getAdaptableState().System;
   }
 
   public isOpenFinRunning(): boolean {
     let OpenFinState: OpenFinState = this.getOpenFinState();
     if (OpenFinState) {
-      return OpenFinState.IsOpenFinRunning;
+      return !!OpenFinState.CurrentLiveOpenFinReport;
     }
     return false;
   }
@@ -37,7 +37,7 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   public isOpenFinAvailable(): boolean {
     let OpenFinState: OpenFinState = this.getOpenFinState();
     if (OpenFinState) {
-      return true; //OpenFinState.IsOpenFinAvailable;
+      return true && isRunningInOpenfin();
     }
     return false;
   }
@@ -51,8 +51,6 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   }
 
   public clearOpenFinInternalState(): void {
-    this.setOpenFinRunningOff();
-
     this.dispatchAction(OpenFinRedux.OpenFinLiveReportClear());
   }
 
@@ -64,30 +62,13 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
     return this.getAdaptableState().System.CurrentLiveOpenFinReport;
   }
 
-  public setOpenFinAvailableOn(): void {
-    this.dispatchAction(OpenFinRedux.SetOpenFinAvailableOn());
-  }
-
-  public setOpenFinAvailableOff(): void {
-    this.dispatchAction(OpenFinRedux.SetOpenFinAvailableOff());
-  }
-
-  public setOpenFinRunningOn(): void {
-    this.dispatchAction(OpenFinRedux.SetOpenFinRunningOn());
-  }
-
-  public setOpenFinRunningOff(): void {
-    this.dispatchAction(OpenFinRedux.SetOpenFinRunningOff());
-  }
-
   public getOpenFinSchedules(): OpenFinSchedule[] {
-    // return this.getAdaptableState().Schedule.OpenFinSchedules || [];
     return [];
   }
 
   public startLiveData(OpenFinReport: OpenFinReport): void {
     if (this.checkItemExists(OpenFinReport, OpenFinReport.ReportName, 'OpenFin Report')) {
-      this.dispatchAction(OpenFinRedux.OpenFinLiveReportSet(OpenFinReport));
+      this.dispatchAction(OpenFinRedux.OpenFinStartLiveData(OpenFinReport));
 
       this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
         'OpenFin',
@@ -100,8 +81,7 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   public stopLiveData(): void {
     let currentLiveReport: OpenFinReport = this.getCurrentLiveOpenFinReport();
 
-    // anything here to do with the OpenFinService should be done
-    //    this.adaptable.OpenFinService.stopLiveData()
+    this.dispatchAction(OpenFinRedux.OpenFinStopLiveData(currentLiveReport));
 
     // fire the Live Report event for Export Stopped
     this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(

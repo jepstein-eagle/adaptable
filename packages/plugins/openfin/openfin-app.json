@@ -34,12 +34,5 @@
     {
       "name": "notifications"
     }
-  ],
-  "appAssets": [
-    {
-      "src": "http://openfin.github.io/excel-api-example/provider/add-in.zip",
-      "alias": "excel-api-addin",
-      "version": "2.1.1"
-    }
   ]
 }

@@ -39,28 +39,23 @@ export interface OpenFinStartLiveDataAction extends Redux.Action {
   openFinReport: OpenFinReport;
 }
 
-export interface OpenFinStopLiveDataAction extends Redux.Action {}
+export interface OpenFinStopLiveDataAction extends Redux.Action {
+  openFinReport: OpenFinReport;
+}
 
 export interface OpenFinLiveReportSetAction extends Redux.Action {
   openFinReport: OpenFinReport;
 }
 export interface OpenFinLiveReportClearAction extends Redux.Action {}
 
-export interface SetOpenFinAvailableOnAction extends Redux.Action {}
-
-export interface SetOpenFinAvailableOffAction extends Redux.Action {}
-
-export interface SetOpenFinRunningOnAction extends Redux.Action {}
-
-export interface SetOpenFinRunningOffAction extends Redux.Action {}
-
 export const OpenFinStartLiveData = (openFinReport: OpenFinReport): OpenFinStartLiveDataAction => ({
   type: OPENFIN_START_LIVE_DATA,
   openFinReport: openFinReport,
 });
 
-export const OpenFinStopLiveData = (): OpenFinStopLiveDataAction => ({
+export const OpenFinStopLiveData = (openFinReport: OpenFinReport): OpenFinStopLiveDataAction => ({
   type: OPENFIN_STOP_LIVE_DATA,
+  openFinReport: openFinReport,
 });
 
 export const OpenFinLiveReportSet = (openFinReport: OpenFinReport): OpenFinLiveReportSetAction => ({
@@ -72,26 +67,9 @@ export const OpenFinLiveReportClear = (): OpenFinLiveReportClearAction => ({
   type: OPENFIN_LIVE_REPORT_CLEAR,
 });
 
-export const SetOpenFinAvailableOn = (): SetOpenFinAvailableOnAction => ({
-  type: SET_OPENFIN_AVAILABLE_ON,
-});
-
-export const SetOpenFinAvailableOff = (): SetOpenFinAvailableOffAction => ({
-  type: SET_OPENFIN_AVAILABLE_OFF,
-});
-
-export const SetOpenFinRunningOn = (): SetOpenFinRunningOnAction => ({
-  type: SET_OPENFIN_RUNNING_ON,
-});
-
-export const SetOpenFinRunningOff = (): SetOpenFinRunningOffAction => ({
-  type: SET_OPENFIN_RUNNING_OFF,
-});
-
 const initialOpenFinState: OpenFinState = {
   // OpenFin: undefined,
 
-  IsOpenFinRunning: false,
   CurrentLiveOpenFinReport: undefined,
 };
 
@@ -100,20 +78,17 @@ export const OpenFinReducer: Redux.Reducer<OpenFinState> = (
   action: Redux.Action
 ): OpenFinState => {
   switch (action.type) {
-    case OPENFIN_LIVE_REPORT_SET: {
+    case OPENFIN_START_LIVE_DATA: {
       const actionType = action as OpenFinLiveReportSetAction;
       return Object.assign({}, state, { CurrentLiveOpenFinReport: actionType.openFinReport });
     }
 
     case OPENFIN_LIVE_REPORT_CLEAR: {
-      // const atctionType = action as OpenFinLiveReportSetAction;
       return Object.assign({}, state, { CurrentLiveOpenFinReport: undefined });
     }
-
-    case SET_OPENFIN_RUNNING_ON:
-      return Object.assign({}, state, { IsOpenFinRunning: true });
-    case SET_OPENFIN_RUNNING_OFF:
-      return Object.assign({}, state, { IsOpenFinRunning: false });
+    case OPENFIN_STOP_LIVE_DATA: {
+      return Object.assign({}, state, { CurrentLiveOpenFinReport: undefined });
+    }
 
     default:
       return state;

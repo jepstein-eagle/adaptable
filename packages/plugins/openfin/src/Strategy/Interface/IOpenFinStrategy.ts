@@ -3,4 +3,5 @@ import { IStrategy } from '@adaptabletools/adaptable/src/Strategy/Interface/IStr
 
 export interface IOpenFinStrategy extends IStrategy {
   startLiveData(report: OpenFinReport): void;
+  stopLiveData(report: OpenFinReport): void;
 }

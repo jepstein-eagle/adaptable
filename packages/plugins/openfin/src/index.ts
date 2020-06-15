@@ -84,11 +84,11 @@ class OpenFinPlugin extends AdaptablePlugin {
   reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {
     return (action, adaptable, middlewareAPI) => {
       const api = adaptable.api.pluginsApi.getPluginApi('openfin');
+      let openFinStrategy = <IOpenFinStrategy>(
+        adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
+      );
       switch (action.type) {
         case OpenFinRedux.OPENFIN_START_LIVE_DATA: {
-          let openFinStrategy = <IOpenFinStrategy>(
-            adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
-          );
           const actionTyped = action as OpenFinRedux.OpenFinStartLiveDataAction;
           openFinStrategy.startLiveData(actionTyped.openFinReport);
           middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
@@ -96,7 +96,8 @@ class OpenFinPlugin extends AdaptablePlugin {
         }
 
         case OpenFinRedux.OPENFIN_STOP_LIVE_DATA: {
-          this.openFinApi.stopLiveData();
+          const actionTyped = action as OpenFinRedux.OpenFinStartLiveDataAction;
+          openFinStrategy.stopLiveData(actionTyped.openFinReport);
           return next(action);
         }
 

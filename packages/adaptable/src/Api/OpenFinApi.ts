@@ -18,14 +18,6 @@ export interface OpenFinApi {
 
   getCurrentLiveOpenFinReport(): OpenFinReport | undefined;
 
-  setOpenFinAvailableOn(): void;
-
-  setOpenFinAvailableOff(): void;
-
-  setOpenFinRunningOn(): void;
-
-  setOpenFinRunningOff(): void;
-
   getOpenFinSchedules(): OpenFinSchedule[];
 
   startLiveData(OpenFinReport: OpenFinReport): void;

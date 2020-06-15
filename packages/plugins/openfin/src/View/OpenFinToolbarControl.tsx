@@ -23,20 +23,19 @@ import {
   OpenFinReport,
   OpenFinSchedule,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
-import { ButtonExport } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonExport';
 
 import { ButtonPlay } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPlay';
 import { ButtonSchedule } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonSchedule';
 import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPause';
-import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
-import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
+
+import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 
 interface OpenFinToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<OpenFinToolbarControlComponent> {
   onOpenFinStartLiveData: (OpenFinreport: OpenFinReport) => OpenFinRedux.OpenFinStartLiveDataAction;
 
-  onOpenFinStopLiveData: () => OpenFinRedux.OpenFinStopLiveDataAction;
+  onOpenFinStopLiveData: (OpenFinreport: OpenFinReport) => OpenFinRedux.OpenFinStopLiveDataAction;
 
   onNewOpenFinSchedule: (OpenFinSchedule: OpenFinSchedule) => PopupRedux.PopupShowScreenAction;
 
@@ -85,8 +84,8 @@ class OpenFinToolbarControlComponent extends React.Component<
     }
   };
 
-  getOpenFinApi() {
-    return this.props.Adaptable.api.pluginsApi.getPluginApi('OpenFinapi');
+  getOpenFinApi(): OpenFinApi {
+    return this.props.Adaptable.api.pluginsApi.getPluginApi('openfin');
   }
 
   render(): any {
@@ -127,7 +126,7 @@ class OpenFinToolbarControlComponent extends React.Component<
           <ButtonPause
             marginLeft={1}
             className="ab-DashboardToolbar__OpenFin__pause"
-            onClick={() => this.props.onOpenFinStopLiveData()}
+            onClick={() => this.getOpenFinApi().stopLiveData()}
             tooltip="Stop sync with OpenFin"
             disabled={!isLiveOpenFinReport}
             AccessLevel={this.props.AccessLevel}
@@ -184,10 +183,11 @@ class OpenFinToolbarControlComponent extends React.Component<
   }
 
   private onOpenFinStartLiveData() {
-    this.props.onOpenFinStartLiveData(this.createOpenFinReportFromState());
+    this.getOpenFinApi().startLiveData(this.createOpenFinReportFromState());
   }
 
   private onNewOpenFinSchedule() {
+    // TODO continue here?
     // let OpenFinSchedule: OpenFinSchedule = ObjectFactory.CreateOpenFinSchedule(
     //   this.createOpenFinReportFromState()
     // );
@@ -208,7 +208,7 @@ function mapStateToProps(state: AdaptableState): Partial<OpenFinToolbarControlCo
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
 
-    IsOpenFinRunning: state.System.IsOpenFinRunning,
+    IsOpenFinRunning: !!state.System.CurrentLiveOpenFinReport,
   };
 }
 
@@ -216,10 +216,6 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<OpenFinToolbarControlComponentProps> {
   return {
-    onOpenFinStartLiveData: (OpenFinreport: OpenFinReport) =>
-      dispatch(OpenFinRedux.OpenFinStartLiveData(OpenFinreport)),
-    onOpenFinStopLiveData: () => dispatch(OpenFinRedux.OpenFinStopLiveData()),
-
     onNewOpenFinSchedule: (OpenFinSchedule: OpenFinSchedule) =>
       dispatch(
         PopupRedux.PopupShowScreen(

@@ -136,9 +136,6 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
-import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
-import { Glue42State } from '../../PredefinedConfig/Glue42State';
-import { OpenFinState } from '../../PredefinedConfig/OpenFinState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;

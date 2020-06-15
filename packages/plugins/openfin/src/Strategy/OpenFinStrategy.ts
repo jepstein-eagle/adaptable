@@ -23,9 +23,9 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
   private openFinService: IOpenFinService | null = null;
 
   private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
+  private liveIntervalId: number;
 
   public setStrategyEntitlement(): void {
-    // TODO
     if (!this.getOpenFinApi().isOpenFinAvailable()) {
       this.AccessLevel = 'Hidden';
     } else {
@@ -49,15 +49,10 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.OpenFinStrategyId, adaptable);
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      setTimeout(() => {
-        this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
-          () => this.sendNewLiveData(),
-          this.getThrottleTimeFromState()
-        );
-      }, 1000);
-    });
-
+    this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
+      () => this.sendNewLiveData(),
+      this.getThrottleTimeFromState()
+    );
     // if a piece of data has updated then update any live reports except cell or row selected
     // currently we DONT send deltas or even check if the updated cell is in the current report  - we should
     // we simply send everything to iOpenFin every time any cell ticks....
@@ -188,6 +183,8 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
           return this.getOpenFinService().pushData(reportAsArray);
         })
         .then(() => {
+          LoggingHelper.LogAdaptableSuccess('All live report data sent');
+          this.isSendingData = false;
           return this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
             'OpenFin',
             'LiveDataUpdated',
@@ -207,13 +204,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
           }
           errorMessage += '.  This live export has been cancelled.';
           this.adaptable.api.alertApi.showAlertError('iOpenFin Export Error', errorMessage);
-        });
-      Promise.resolve()
-        .then(() => {
-          LoggingHelper.LogAdaptableSuccess('All live report data sent');
-          this.isSendingData = false;
-        })
-        .catch(() => {
+
           LoggingHelper.LogAdaptableWarning('Failed to send data');
           this.isSendingData = false;
         });
@@ -221,10 +212,15 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
   }
 
   public startLiveData(iOpenFinReport: OpenFinReport): void {
-    this.getOpenFinApi().startLiveData(iOpenFinReport);
-    setTimeout(() => {
+    this.liveIntervalId = (setInterval(() => {
       this.throttledRecomputeAndSendLiveDataEvent();
-    }, 500);
+    }, 500) as unknown) as number;
+  }
+
+  public stopLiveData(_iOpenFinReport: OpenFinReport): void {
+    if (this.liveIntervalId) {
+      clearInterval(this.liveIntervalId);
+    }
   }
 
   // Converts a Report into an array of array - first array is the column names and subsequent arrays are the values

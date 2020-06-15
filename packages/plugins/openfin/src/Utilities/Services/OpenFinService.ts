@@ -6,6 +6,8 @@ import { IOpenFinService } from './Interface/IOpenFinService';
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 import { OpenFinPluginOptions } from '../..';
 import { setup } from './setup';
+import { ExcelWorkbook } from '../../excel-service/ExcelWorkbook';
+import { ExcelWorksheet } from '../../excel-service/ExcelWorksheet';
 
 require('../../excel-service/index.js');
 
@@ -62,60 +64,25 @@ function addWorkbook(): Promise<string> {
 //         // });
 //     });
 // }
-function initExcelPluginService(): Promise<any> {
-  var installFolder = '%localappdata%\\OpenFin\\shared\\assets\\excel-api-addin';
-  var servicePath = 'OpenFin.ExcelService.exe';
-  var addInPath = 'OpenFin.ExcelApi-AddIn.xll';
 
-  if (excelStatus != ExcelServiceStatus.Unknown) {
-    LoggingHelper.LogAdaptableInfo('Skipping Add-in deployment as already deployed');
-    return Promise.resolve();
-  }
-
-  excelStatus = ExcelServiceStatus.Connecting;
-
-  return Promise.resolve()
-    .then(() => deployAddIn(servicePath, installFolder))
-    .then(() => startExcelService(servicePath, installFolder))
-    .then(() => registerAddIn(servicePath, installFolder));
-}
-
-function deployAddIn(servicePath: string, installFolder: string): Promise<any> {
-  return new Promise((resolve, reject) => {
-    fin.desktop.Application.getCurrent().getManifest((manifest: any) => {
-      fin.desktop.System.launchExternalProcess(
-        {
-          target: servicePath,
-          arguments: `-d "${installFolder}" -c ${manifest.runtime.version}`,
-          alias: 'excel-api-addin',
-          listener: (result: any) => {
-            console.log(`Asset Deployment completed! Exit Code: ${result.exitCode}`);
-            resolve();
-          },
-        },
-        () => console.log('Deploying Shared Assets'),
-        (err: any) => reject(err)
-      );
-    });
-  });
-  //   return new Promise((resolve: any, reject: any) => {
-  //     LoggingHelper.LogAdaptableInfo('Deploying Add-In');
-  //     try {
-  //       fin.desktop.System.launchExternalProcess({
-  //         alias: 'excel-api-addin',
-  //         target: servicePath,
-  //         arguments: '-d "' + installFolder + '"',
-  //         listener: function(args: any) {
-  //           LoggingHelper.LogAdaptableSuccess('Installer script completed! ' + args.exitCode);
-  //           resolve();
-  //         },
-  //       });
-  //     } catch (err) {
-  //       console.error(err);
-  //       reject(err);
-  //     }
-  //   });
-}
+//   return new Promise((resolve: any, reject: any) => {
+//     LoggingHelper.LogAdaptableInfo('Deploying Add-In');
+//     try {
+//       fin.desktop.System.launchExternalProcess({
+//         alias: 'excel-api-addin',
+//         target: servicePath,
+//         arguments: '-d "' + installFolder + '"',
+//         listener: function(args: any) {
+//           LoggingHelper.LogAdaptableSuccess('Installer script completed! ' + args.exitCode);
+//           resolve();
+//         },
+//       });
+//     } catch (err) {
+//       console.error(err);
+//       reject(err);
+//     }
+//   });
+// }
 
 function startExcelService(servicePath: string, installFolder: string) {
   var serviceUuid = '886834D1-4651-4872-996C-7B2578E953B9';
@@ -157,53 +124,7 @@ function startExcelService(servicePath: string, installFolder: string) {
   });
 }
 
-function registerAddIn(servicePath: string, installFolder: string) {
-  return new Promise((resolve, reject) => {
-    LoggingHelper.LogAdaptableInfo('Registering Add-In');
-    fin.desktop.Excel.install((ack: any) => {
-      LoggingHelper.LogAdaptableInfo('Add-In Registration callback', ack);
-      //if (ack.success) {
-      resolve();
-      //}
-    });
-  });
-}
-function onWorkbookRemoved(event: any) {
-  event.workbook.removeEventListener('workbookActivated', onWorkbookActivated);
-  const { workbook } = event;
-  LoggingHelper.LogAdaptableInfo(
-    'Workbook closed:' + workbook.name + ', Stopping Openfin Live Excel'
-  );
-
-  this.getOpenFinApi().stopLiveData();
-}
-function onWorkbookSaved(event: any) {
-  const NewName = event.workbook.name;
-
-  this.getOpenFinApi().stopLiveData();
-  this.getOpenFinApi().startLiveData({
-    ReportName: NewName,
-  });
-}
-function onWorkbookActivated(event: any) {
-  LoggingHelper.LogAdaptableInfo('Workbook Activated: ' + event.target.name);
-  event.target.getWorksheets((ack: any) => {
-    LoggingHelper.LogAdaptableInfo('getWorksheets:', ack);
-  });
-}
-function onWorkbookAdded(event: any) {
-  LoggingHelper.LogAdaptableSuccess('Workbook Added: ' + event.workbook.name);
-  let workbook = event.workbook;
-  workbook.addEventListener('workbookActivated', onWorkbookActivated);
-}
-
-function connectToExcel() {
-  LoggingHelper.LogAdaptableInfo('Launching Excel');
-  return fin.desktop.Excel.run();
-}
 export class OpenFinService implements IOpenFinService {
-  private glue4ExcelInstance!: any;
-  private glueInstance!: any;
   private excelSyncTimeout?: number;
   private sheet?: any; // think this is wrong but lets give it a go
 
@@ -214,132 +135,105 @@ export class OpenFinService implements IOpenFinService {
     return this.adaptable.api.pluginsApi.getPluginApi('openfin');
   }
 
+  private onWorkbookRemoved = (event: any) => {
+    event.workbook.removeEventListener('workbookActivated', this.onWorkbookActivated);
+    const { workbook } = event;
+    LoggingHelper.LogAdaptableInfo(
+      'Workbook closed:' + workbook.name + ', Stopping Openfin Live Excel'
+    );
+
+    this.getOpenFinApi().stopLiveData();
+  };
+  private onWorkbookSaved = (event: any) => {
+    const NewName = event.workbook.name;
+
+    this.getOpenFinApi().stopLiveData();
+    this.getOpenFinApi().startLiveData({
+      ReportName: NewName,
+    });
+  };
+  private onWorkbookActivated = (event: any) => {
+    LoggingHelper.LogAdaptableInfo('Workbook Activated: ' + event.target.name);
+    event.target.getWorksheets((ack: any) => {
+      LoggingHelper.LogAdaptableInfo('getWorksheets:', ack);
+    });
+  };
+  private onWorkbookAdded = (event: any) => {
+    LoggingHelper.LogAdaptableSuccess('Workbook Added: ' + event.workbook.name);
+    let workbook = event.workbook;
+    workbook.addEventListener('workbookActivated', this.onWorkbookActivated);
+  };
+
+  private async getCurrentWorkbook(): Promise<ExcelWorkbook> {
+    let workbook;
+    if (!this.workbookName) {
+      workbook = await fin.desktop.Excel.addWorkbook();
+      // since  getWorkbookByName only works after getWorkbooks was called
+      await fin.desktop.Excel.getWorkbooks();
+      this.workbookName = workbook.name;
+
+      return workbook;
+    } else {
+      return Promise.resolve(fin.desktop.Excel.getWorkbookByName(this.workbookName));
+    }
+  }
+
   public pushData(data: any[]): Promise<any> {
-    return fin.desktop.Excel.addWorkbook().then((workbook: any) => {
+    return this.getCurrentWorkbook().then((workbook: any) => {
       const workBookName: string = workbook.name;
-      LoggingHelper.LogAdaptableSuccess('workbook created:' + workbook.name);
+
       return new Promise<any>((resolve, reject) => {
         let workBook = fin.desktop.Excel.getWorkbookByName(workBookName);
         if (!workBook) {
           LoggingHelper.LogAdaptableError('Cannot find workbook:' + workBookName);
           reject('Cannot find workbook:' + workBookName);
         }
-        let worksheet = workBook.getWorksheetByName('Sheet1');
-        worksheet.setCells(data, 'A1');
-        resolve();
+        workbook.getWorksheets().then((worksheets: ExcelWorksheet[]) => {
+          var worksheet = worksheets[0];
+          worksheet.setCells(data, 'A1');
+          resolve();
+        });
       });
     });
   }
 
   private onExcelConnected = () => {
-    if (excelStatus == ExcelServiceStatus.Connected) {
-      // LoggingHelper.LogAdaptableSuccess(
-      //   'Excel Connected: ' + fin.desktop.Excel.legacyApi.connectionUuid
-      // );
+    LoggingHelper.LogAdaptableSuccess('Excel Connected');
 
-      // excelStatus = ExcelServiceStatus.Connected;
-      // fin.desktop.Excel.instance.removeEventListener("excelConnected", onExcelConnected);
-      fin.desktop.Excel.addEventListener('workbookClosed', onWorkbookRemoved);
-      fin.desktop.Excel.addEventListener('workbookSaved', onWorkbookSaved);
-      fin.desktop.Excel.addEventListener('workbookAdded', onWorkbookAdded);
-
-      // Grab a snapshot of the current instance, it can change!
-      var legacyApi = fin.desktop.Excel.legacyApi;
-
-      const onExcelDisconnected = function() {
-        LoggingHelper.LogAdaptableInfo('Excel Disconnected: ' + legacyApi.connectionUuid);
-
-        fin.desktop.Excel.instance.removeEventListener('excelDisconnected', onExcelDisconnected);
-        legacyApi.removeEventListener('workbookClosed', onWorkbookRemoved);
-        legacyApi.removeEventListener('workbookSaved', onWorkbookSaved);
-        legacyApi.removeEventListener('workbookAdded', onWorkbookAdded);
-        excelStatus = ExcelServiceStatus.Disconnected;
-
-        LoggingHelper.LogAdaptableInfo('Excel closed stopping all Live Excel');
-        this.getOpenFinApi().stopLiveData();
-
-        if (fin.desktop.Excel.legacyApi) {
-          this.onExcelConnected();
-        } else {
-          excelStatus = ExcelServiceStatus.Disconnected;
-        }
-      };
-
-      fin.desktop.Excel.instance.addEventListener('excelDisconnected', onExcelDisconnected);
-    }
+    fin.desktop.Excel.addEventListener('workbookClosed', this.onWorkbookRemoved);
+    fin.desktop.Excel.addEventListener('workbookSaved', this.onWorkbookSaved);
+    fin.desktop.Excel.addEventListener('workbookAdded', this.onWorkbookAdded);
   };
-  private setWorkbookName(workbookName: string) {
-    this.workbookName = workbookName;
-  }
 
-  public initOpenFinExcel(): Promise<string> {
-    // fin.desktop.main(function () {
+  private onExcelDisconnected = () => {
+    LoggingHelper.LogAdaptableInfo('Excel Disconnected');
 
-    return setup().then(() => {
-      // fin.desktop.Excel.getConnectionStatus(connected => {
-      //       if (connected) {
-      //           console.log('Already connected to Excel, synthetically raising event.')
-      //           onExcelConnected(fin.desktop.Excel);
-      //       } else {
-      //           setStatusLabel("Excel not connected");
-      //           setDisplayContainer(view.noConnectionContainer);
-      //       }
-      //   });
-      //      fin.desktop.Excel.init();
+    fin.desktop.Excel.removeEventListener('workbookClosed', this.onWorkbookRemoved);
+    fin.desktop.Excel.removeEventListener('workbookSaved', this.onWorkbookSaved);
+    fin.desktop.Excel.removeEventListener('workbookAdded', this.onWorkbookAdded);
 
-      console.log('starting excel service...');
-      fin.desktop.ExcelService.addEventListener('excelConnected', () => {
-        console.warn('EXCEL CONNECTED');
+    LoggingHelper.LogAdaptableInfo('Excel closed stopping all Live Excel');
+    this.getOpenFinApi().stopLiveData();
+  };
+
+  public async initOpenFinExcel(): Promise<string> {
+    await setup();
+
+    fin.desktop.ExcelService.addEventListener('excelConnected', this.onExcelConnected);
+    fin.desktop.ExcelService.addEventListener('excelDisconnected', this.onExcelDisconnected);
+
+    await fin.desktop.ExcelService.init();
+
+    LoggingHelper.LogAdaptableSuccess('Excel initialized, now connecting');
+    await fin.desktop.Excel.run();
+    await fin.desktop.Excel.getConnectionStatus().then((connected: boolean) => {
+      LoggingHelper.LogAdaptableSuccess('Excel status', {
+        initialized: fin.desktop.ExcelService.initialized,
+        connected,
       });
-      fin.desktop.ExcelService.init().then(() => {
-        // fin.desktop.Excel.run().then((conn: any) => {
-        // console.log({ conn });
-        console.log('initialized, now connecting');
-        connectToExcel().then(() => {
-          console.log('.... connected?');
-          fin.desktop.Excel.getConnectionStatus((connected: boolean) => {
-            console.log({ connected });
-            //   excelStatus =
-            //     connected || true ? ExcelServiceStatus.Connected : ExcelServiceStatus.Unknown;
-            //   this.onExcelConnected();
-            // });
-          });
-          console.log({
-            initialized: fin.desktop.ExcelService.initialized,
-            connected: fin.desktop.ExcelService.connected,
-          });
-        });
-      });
-      return;
-      if (excelStatus == ExcelServiceStatus.Unknown) {
-        return Promise.resolve()
-          .then(initExcelPluginService)
-          .then(connectToExcel)
-          .then(this.onExcelConnected)
-          .then(addWorkbook)
-          .then((workbookName: string) => {
-            this.setWorkbookName(workbookName);
-            return Promise.resolve(workbookName);
-          })
-          .catch(err => {
-            LoggingHelper.LogAdaptableError(err);
-            return '';
-          });
-      } else {
-        return Promise.resolve()
-          .then(connectToExcel)
-          .then(this.onExcelConnected)
-          .then(addWorkbook)
-          .then((workbookName: string) => {
-            this.setWorkbookName(workbookName);
-            return Promise.resolve(workbookName);
-          })
-          .catch(err => {
-            LoggingHelper.LogAdaptableError(err);
-            return '';
-          });
-      }
     });
+
+    return Promise.resolve('');
 
     // });
   }
@@ -354,12 +248,8 @@ export class OpenFinService implements IOpenFinService {
         return;
       }
 
-      OpenFinApi.setOpenFinRunningOff();
       if (isRunningInOpenfin()) {
-        OpenFinApi.setOpenFinAvailableOn();
         this.initOpenFinExcel();
-      } else {
-        OpenFinApi.setOpenFinAvailableOff();
       }
     });
   }

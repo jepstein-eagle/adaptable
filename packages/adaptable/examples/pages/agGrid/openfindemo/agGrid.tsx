@@ -35,7 +35,11 @@ function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'openfindemo1',
-    plugins: [openfin({})],
+    plugins: [
+      openfin({
+        throttleTime: 10000,
+      }),
+    ],
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
     },
