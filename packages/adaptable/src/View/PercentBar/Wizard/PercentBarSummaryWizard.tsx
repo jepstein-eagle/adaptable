@@ -7,7 +7,6 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableStyle } from '../../../PredefinedConfig/Common/AdaptableStyle';
 import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
@@ -34,9 +33,8 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
       keyValuePairs = [
         {
           Key: 'Column',
-          Value: ColumnHelper.getFriendlyNameFromColumnId(
-            this.props.Data.ColumnId,
-            this.props.Columns
+          Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+            this.props.Data.ColumnId
           ),
         },
 
@@ -45,9 +43,8 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
           Value: StringExtensions.IsNullOrEmpty(this.props.Data.PositiveValueColumnId)
             ? this.props.Data!.PositiveValue
             : '[' +
-              ColumnHelper.getFriendlyNameFromColumnId(
-                this.props.Data.PositiveValueColumnId,
-                this.props.Columns
+              this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+                this.props.Data.PositiveValueColumnId
               ) +
               ']',
         },
@@ -64,9 +61,8 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
           Value: StringExtensions.IsNullOrEmpty(this.props.Data.NegativeValueColumnId)
             ? this.props.Data!.NegativeValue
             : '[' +
-              ColumnHelper.getFriendlyNameFromColumnId(
-                this.props.Data.NegativeValueColumnId,
-                this.props.Columns
+              this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+                this.props.Data.NegativeValueColumnId
               ) +
               ']',
         },

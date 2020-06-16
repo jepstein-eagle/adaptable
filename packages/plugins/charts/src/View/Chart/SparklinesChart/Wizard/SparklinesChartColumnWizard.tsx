@@ -13,7 +13,6 @@ import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extens
 import WizardPanel from '@adaptabletools/adaptable/src/components/WizardPanel';
 
 import FormLayout, { FormRow } from '@adaptabletools/adaptable/src/components/FormLayout';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import Radio from '@adaptabletools/adaptable/src/components/Radio';
 import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';

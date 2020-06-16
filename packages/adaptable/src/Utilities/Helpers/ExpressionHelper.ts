@@ -13,7 +13,6 @@ import {
   FilterExpression,
 } from '../../PredefinedConfig/Common/Expression';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from './ColumnHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { LoggingHelper } from './LoggingHelper';
@@ -24,6 +23,8 @@ import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import Helper from './Helper';
 import RangeHelper from './RangeHelper';
+import Adaptable from '../../agGrid';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -67,6 +68,7 @@ export function CreateSingleColumnExpression(
 export function ConvertExpressionToString(
   Expression: Expression,
   columns: Array<AdaptableColumn>,
+  api: AdaptableApi,
   includeColumnName: boolean = true
 ): string {
   let returnValue = '';
@@ -76,7 +78,7 @@ export function ConvertExpressionToString(
 
   let columnList = GetColumnListFromExpression(Expression);
   for (let columnId of columnList) {
-    let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(columnId, columns);
+    let columnFriendlyName: string = api.gridApi.getFriendlyNameFromColumnId(columnId);
     let columnToString = '';
 
     // Column Display Values
@@ -121,6 +123,7 @@ export function ConvertExpressionToString(
           columnRange,
           columnFriendlyName,
           columns,
+          api,
           includeColumnName
         );
       }
@@ -372,6 +375,7 @@ function RangesToString(
   rangeExpression: RangeExpression,
   columnFriendlyName: string,
   columns: AdaptableColumn[],
+  api: AdaptableApi,
   includeColumnName: boolean
 ): string {
   let returnValue = '';
@@ -390,9 +394,9 @@ function RangesToString(
         returnValue +=
           OperatorToShortFriendlyString(operator) +
           ' ' +
-          getOperandValue(range.Operand1Type, range.Operand1, columns) +
+          getOperandValue(range.Operand1Type, range.Operand1, columns, api) +
           ' AND ' +
-          getOperandValue(range.Operand2Type, range.Operand2, columns);
+          getOperandValue(range.Operand2Type, range.Operand2, columns, api);
       } else {
         if (includeColumnName) {
           returnValue += '[' + columnFriendlyName + '] ';
@@ -400,7 +404,7 @@ function RangesToString(
         returnValue +=
           OperatorToShortFriendlyString(operator) +
           ' ' +
-          getOperandValue(range.Operand1Type, range.Operand1, columns);
+          getOperandValue(range.Operand1Type, range.Operand1, columns, api);
       }
     }
   }
@@ -576,12 +580,13 @@ export function GetOperatorsForDataType(
 function getOperandValue(
   rangeOperandType: string,
   operand: string,
-  columns: AdaptableColumn[]
+  columns: AdaptableColumn[],
+  api: AdaptableApi
 ): string {
   if (rangeOperandType == 'Value') {
     return operand;
   } else {
-    return '[' + ColumnHelper.getFriendlyNameFromColumnId(operand, columns) + ']';
+    return '[' + api.gridApi.getFriendlyNameFromColumnId(operand) + ']';
   }
 }
 

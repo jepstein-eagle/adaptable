@@ -23,7 +23,6 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
@@ -74,15 +73,14 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = ColumnHelper.getColumnFromId(alertDefinition.ColumnId, this.props.Columns);
+      let column = this.props.Adaptable.api.gridApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={alertDefinition}
           Column={column}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={description => this.props.onShare(alertDefinition, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -128,11 +126,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

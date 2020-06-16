@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SelectionMode, SortOrder } from '../../PredefinedConfig/Common/Enums';
@@ -10,7 +10,7 @@ import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import Dropdown from '../../components/Dropdown';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 
-export interface GridSortRowProps<GridSortRow> extends SharedEntityExpressionRowProps<GridSortRow> {
+export interface GridSortRowProps<GridSortRow> extends SharedEntityRowProps<GridSortRow> {
   ColumnSort: ColumnSort;
   onColumnSortColumnChanged: (column: AdaptableColumn) => void;
   onColumnSortOrderChanged: (sortOrder: SortOrder) => void;
@@ -31,7 +31,7 @@ export class GridSortRow extends React.Component<GridSortRowProps<GridSortRow>, 
     colItems[0].Content = (
       <ColumnSelector
         SelectedColumnIds={[this.props.ColumnSort.Column]}
-        ColumnList={this.props.Columns.filter(c => c.Sortable)}
+        ColumnList={this.props.api.gridApi.getColumns().filter(c => c.Sortable)}
         onColumnChange={columns => this.onColumnSelectedChanged(columns)}
         SelectionMode={SelectionMode.Single}
       />

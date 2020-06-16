@@ -10,9 +10,7 @@ import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import WizardPanel from '../../../components/WizardPanel';
 
-export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
-  NumericColumns: Array<AdaptableColumn>;
-}
+export interface PlusMinusColumnWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
 
 export interface PlusMinusColumnWizardState {
   SelectedColumnId: string;
@@ -30,7 +28,7 @@ export class PlusMinusColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.SelectedColumnId]}
-          ColumnList={this.props.NumericColumns}
+          ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

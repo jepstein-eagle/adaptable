@@ -21,22 +21,9 @@ export interface AdaptableWizardStepProps<T> {
   Columns?: AdaptableColumn[];
 }
 
-// props for an Expression Wizard Page
-export interface ExpressionWizardProps<T> extends AdaptableWizardStepProps<T> {
-  UserFilters: UserFilter[];
-  SystemFilters: string[];
-  NamedFilters: NamedFilter[];
-  ColumnCategories: ColumnCategory[];
-}
-
 // props for a wizard that wraps a config entity that contans an Expression
 export interface AdaptableObjectExpressionAdaptableWizardProps<View>
   extends AdaptableObjectAdaptableWizardProps<View> {
-  Columns: Array<AdaptableColumn>;
-  UserFilters: UserFilter[];
-  SystemFilters: string[];
-  NamedFilters: NamedFilter[];
-  ColumnCategories: ColumnCategory[];
   Adaptable: IAdaptable;
 }
 

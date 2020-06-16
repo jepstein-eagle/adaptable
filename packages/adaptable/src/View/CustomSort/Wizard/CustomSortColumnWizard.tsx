@@ -7,7 +7,6 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 import WizardPanel from '../../../components/WizardPanel';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
@@ -30,9 +29,9 @@ export class CustomSortColumnWizard
   }
   render(): any {
     let existingCols = this.props.CustomSorts.map(cs => cs.ColumnId);
-    let sortableCols = ColumnHelper.getSortableColumns(this.props.Columns).filter(c =>
-      ArrayExtensions.NotContainsItem(existingCols, c.ColumnId)
-    );
+    let sortableCols = this.props.Adaptable.api.gridApi
+      .getSortableColumns()
+      .filter(c => ArrayExtensions.NotContainsItem(existingCols, c.ColumnId));
     return (
       <WizardPanel>
         <ColumnSelector

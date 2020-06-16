@@ -24,7 +24,6 @@ import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategorySummary } from '../ColumnCategory/ColumnCategorySummary';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
@@ -53,9 +52,8 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   UNSAFE_componentWillMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.columnId) {
-        let column = ColumnHelper.getColumnFromId(
-          this.props.PopupParams.columnId,
-          this.props.Columns
+        let column = this.props.Adaptable.api.gridApi.getColumnFromId(
+          this.props.PopupParams.columnId
         );
         this.setState({ SelectedColumn: column, ShowSelector: false });
       }

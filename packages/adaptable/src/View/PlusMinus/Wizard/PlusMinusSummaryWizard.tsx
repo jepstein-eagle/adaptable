@@ -9,12 +9,9 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
-export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {
-  UserFilters: UserFilter[];
-}
+export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
 
 export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWizardProps, {}>
   implements AdaptableWizardStep {
@@ -25,9 +22,8 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Name',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
       { Key: 'Nudge Value', Value: this.props.Data.NudgeValue },
@@ -38,7 +34,8 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
           ? 'None'
           : ExpressionHelper.ConvertExpressionToString(
               this.props.Data.Expression,
-              this.props.Columns
+              this.props.Columns,
+              this.props.Adaptable.api
             ),
       },
     ];

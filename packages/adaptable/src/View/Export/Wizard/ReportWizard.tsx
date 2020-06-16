@@ -21,7 +21,6 @@ export class ReportWizard extends React.Component<
           FriendlyName={StrategyConstants.ExportStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Columns',
@@ -41,14 +40,7 @@ export class ReportWizard extends React.Component<
             {
               StepName: 'Rows',
               Index: 3,
-              Element: (
-                <ReportExpressionWizard
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                />
-              ),
+              Element: <ReportExpressionWizard />,
             },
             {
               StepName: 'Settings',

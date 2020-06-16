@@ -53,7 +53,6 @@ import { Adaptable } from './Adaptable';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { RowStyle, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
-import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AlertStrategyagGrid } from './Strategy/AlertStrategyagGrid';
 import { UpdatedRowStrategyagGrid } from './Strategy/UpdatedRowStrategyagGrid';
@@ -637,9 +636,8 @@ export class agGridHelper {
     }
     let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-      column.getId(),
-      this.adaptable.api.gridApi.getColumns()
+    const existingColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+      column.getId()
     );
     if (existingColumn && existingColumn.DataType != DataType.Unknown) {
       return existingColumn.DataType;
@@ -787,7 +785,7 @@ export class agGridHelper {
         if (
           !this.adaptable.api.gridApi
             .getColumnSorts()
-            .find((gs: ColumnSort) => ColumnHelper.isSpecialColumn(gs.Column))
+            .find((gs: ColumnSort) => this.adaptable.api.gridApi.isSpecialColumn(gs.Column))
         ) {
           const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId

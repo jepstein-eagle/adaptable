@@ -14,9 +14,6 @@ import {
 } from '@adaptabletools/adaptable/src/View/Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '@adaptabletools/adaptable/src/View/UIInterfaces';
 import { AdaptableObject } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableObject';
-
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
-
 import EmptyContent from '@adaptabletools/adaptable/src/components/EmptyContent';
 import { Flex } from 'rebass';
 import { SparklineColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/SparklineColumnState';
@@ -84,15 +81,14 @@ class SparklineColumnPopupComponent extends React.Component<
     ];
 
     let SparklineItems = this.props.SparklineColumns.map((sparklineColumn: SparklineColumn) => {
-      let column = ColumnHelper.getColumnFromId(sparklineColumn.ColumnId, this.props.Columns);
+      let column = this.props.Adaptable.api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
       return (
         <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={sparklineColumn}
           Column={column}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(sparklineColumn)}
           onShare={description => this.props.onShare(sparklineColumn, description)}
@@ -137,11 +133,6 @@ class SparklineColumnPopupComponent extends React.Component<
               ColorPalette={this.props.ColorPalette}
               Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

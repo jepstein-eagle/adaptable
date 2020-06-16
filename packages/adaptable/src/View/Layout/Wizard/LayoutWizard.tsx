@@ -10,7 +10,6 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { LayoutGroupedColumnWizard } from './LayoutGroupedColumnWizard';
-import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 import { LayoutSetPivotingWizard } from './LayoutSetPivotingWizard';
 import { LayoutPivotColumnWizard } from './LayoutPivotColumnWizard';
 import { LayoutAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
@@ -30,7 +29,6 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
           FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Source',
@@ -49,7 +47,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Index: 2,
               Element: (
                 <LayoutGridSortWizard
-                  SortableColumns={ColumnHelper.getSortableColumns(this.props.Columns)}
+                  SortableColumns={this.props.Adaptable.api.gridApi.getSortableColumns()}
                 />
               ),
             },
@@ -58,7 +56,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Index: 3,
               Element: (
                 <LayoutGroupedColumnWizard
-                  GroupableColumns={ColumnHelper.getGroupableColumns(this.props.Columns)}
+                  GroupableColumns={this.props.Adaptable.api.gridApi.getGroupableColumns()}
                 />
               ),
             },
@@ -72,7 +70,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Index: 5,
               Element: (
                 <LayoutPivotColumnWizard
-                  PivotableColumns={ColumnHelper.getPivotableColumns(this.props.Columns)}
+                  PivotableColumns={this.props.Adaptable.api.gridApi.getPivotableColumns()}
                 />
               ),
             },
@@ -81,7 +79,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Index: 6,
               Element: (
                 <LayoutAggregationColumnWizard
-                  AggregetableColumns={ColumnHelper.getAggregetableColumns(this.props.Columns)}
+                  AggregetableColumns={this.props.Adaptable.api.gridApi.getAggregetableColumns()}
                 />
               ),
             },

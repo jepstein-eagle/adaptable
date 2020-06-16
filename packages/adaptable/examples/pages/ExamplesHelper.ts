@@ -806,7 +806,7 @@ export class ExamplesHelper {
         //      return 'hello';
         //   },
       },
-      columnDefs: this.getTradeSchema().map(c => {
+      columnDefs: this.getReducedTradeSchema().map(c => {
         // c.floatingFilter = true;
         return c;
       }),
@@ -1235,7 +1235,7 @@ export class ExamplesHelper {
       filter: 'agDateColumnFilter',
       type: 'abColDefDate',
     });
-
+    /*
     schema.push({
       headerName: 'Bbg Bid',
       field: 'bloombergBid',
@@ -1245,7 +1245,7 @@ export class ExamplesHelper {
       valueFormatter: this.twoDecimalPlaceFormatter,
       sortable: true,
     });
-
+*/
     schema.push({
       headerName: 'Bbg Ask',
       field: 'bloombergAsk',
@@ -1373,6 +1373,66 @@ export class ExamplesHelper {
       editable: true,
       type: 'abColDefNumber',
       enableRowGroup: true,
+    });
+
+    return schema;
+  }
+
+  public getReducedTradeSchema(): ColDef[] {
+    var schema: ColDef[] = [];
+
+    schema.push({
+      headerName: 'Trade Id',
+      field: 'tradeId',
+      editable: true,
+      type: ['abColDefNumberx'],
+      sortable: true,
+      filter: true,
+      resizable: true,
+      cellRenderer: 'agAnimateShowChangeCellRenderer',
+    });
+    schema.push({
+      headerName: 'Country-Stars',
+      editable: false,
+      filter: true,
+      enableRowGroup: true,
+      colId: 'country-stars',
+      valueGetter: (params: any) => {
+        return params.data && params.data.stars && params.data.country
+          ? params.data.stars * 12
+          : undefined;
+      },
+      type: 'abColDefNumber',
+    });
+    schema.push({
+      headerName: 'Notional',
+      field: 'notional',
+      colId: 'notional',
+      enableValue: true,
+      editable: true,
+      sortable: true,
+      aggFunc: 'sum',
+      cellClass: 'ab-cell--align-right',
+      type: 'abColDefNumber',
+      filter: true,
+      resizable: true,
+      cellRendererParams: {
+        footerValueGetter: '"All Notionals (" + x + ")"',
+      },
+    });
+
+    schema.push({
+      headerName: 'Ask',
+      field: 'ask',
+      columnGroupShow: 'closed',
+      filter: true,
+      hide: true,
+      resizable: true,
+      // cellClass: 'number-cell',
+      type: 'abColDefNumber',
+      enableValue: true,
+      valueFormatter: this.fourDecimalPlaceFormatter,
+      aggFunc: 'sum',
     });
 
     return schema;

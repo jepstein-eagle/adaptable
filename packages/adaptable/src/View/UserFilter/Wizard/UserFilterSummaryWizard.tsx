@@ -7,13 +7,10 @@ import {
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
-export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<UserFilter> {
-  UserFilters: UserFilter[];
-}
+export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 
 export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWizardProps, {}>
   implements AdaptableWizardStep {
@@ -25,16 +22,16 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
       {
         Key: 'Query',
         Value: ExpressionHelper.ConvertExpressionToString(
           this.props.Data.Expression,
-          this.props.Columns
+          this.props.Columns,
+          this.props.Adaptable.api
         ),
       },
     ];

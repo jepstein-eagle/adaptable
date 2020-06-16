@@ -23,16 +23,11 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
           FriendlyName={StrategyConstants.PlusMinusStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: (
-                <PlusMinusColumnWizard
-                  NumericColumns={this.props.Columns.filter(x => x.DataType == DataType.Number)}
-                />
-              ),
+              Element: <PlusMinusColumnWizard />,
             },
             {
               StepName: 'Settings',
@@ -42,19 +37,12 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
             {
               StepName: 'Query Builder',
               Index: 2,
-              Element: (
-                <PlusMinusExpressionWizard
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                />
-              ),
+              Element: <PlusMinusExpressionWizard />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PlusMinusSummaryWizard UserFilters={this.props.UserFilters} />,
+              Element: <PlusMinusSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

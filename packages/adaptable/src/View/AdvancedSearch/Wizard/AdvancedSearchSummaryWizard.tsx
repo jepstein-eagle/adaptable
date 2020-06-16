@@ -11,9 +11,8 @@ import { AdvancedSearch } from '../../../PredefinedConfig/AdvancedSearchState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
-export interface AdvancedSearchSummaryWizardProps extends AdaptableWizardStepProps<AdvancedSearch> {
-  UserFilters: UserFilter[];
-}
+export interface AdvancedSearchSummaryWizardProps
+  extends AdaptableWizardStepProps<AdvancedSearch> {}
 
 export class AdvancedSearchSummaryWizard
   extends React.Component<AdvancedSearchSummaryWizardProps, {}>
@@ -28,7 +27,8 @@ export class AdvancedSearchSummaryWizard
         Key: 'Query',
         Value: ExpressionHelper.ConvertExpressionToString(
           this.props.Data.Expression,
-          this.props.Columns
+          this.props.Columns,
+          this.props.Adaptable.api
         ),
       },
     ];

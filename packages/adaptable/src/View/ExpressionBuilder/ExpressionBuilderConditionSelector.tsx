@@ -44,10 +44,6 @@ export interface ExpressionBuilderConditionSelectorProps
   ExpressionMode: ExpressionMode;
   onExpressionChange: (Expression: Expression) => void;
   onSelectedColumnChange: (ColumnId: string, Tab: QueryTab) => void;
-  UserFilters: UserFilter[];
-  SystemFilters: string[];
-  NamedFilters: NamedFilter[];
-  ColumnCategories: ColumnCategory[];
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
@@ -144,20 +140,25 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         if (filterExpression) {
           filterExpression.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: UserFilter = theProps.UserFilters.find(uf => uf.Name == fe);
+            let userFilter: UserFilter = theProps.Adaptable.api.userFilterApi
+              .getAllUserFilter()
+              .find(uf => uf.Name == fe);
             if (userFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
             // if it is a system filter add it ot that list
-            let selectedSystemFilter: string = theProps.SystemFilters.find(sf => sf == fe);
+            let selectedSystemFilter: string = theProps.Adaptable.api.systemFilterApi
+              .getAllSystemFilter()
+              .find(sf => sf == fe);
             if (selectedSystemFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
           });
         }
-        let availableFilterExpressions: string[] = theProps.UserFilters.map(f => f.Name).concat(
-          ...theProps.SystemFilters.map(sf => sf)
-        );
+        let availableFilterExpressions: string[] = theProps.Adaptable.api.userFilterApi
+          .getAllUserFilter()
+          .map(f => f.Name)
+          .concat(...theProps.Adaptable.api.systemFilterApi.getAllSystemFilter().map(sf => sf));
 
         // get ranges
         let range: RangeExpression = null;
@@ -326,7 +327,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     // first system filters
     let availableSystemFilterNames: string[] = this.props.Adaptable.FilterService.GetSystemFiltersForColumn(
       selectedColumn,
-      this.props.SystemFilters
+      this.props.Adaptable.api.systemFilterApi.getAllSystemFilter()
     ).map(sf => {
       return sf;
     });
@@ -334,7 +335,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     // then user filters
     let availableUserFilterNames: string[] = this.props.Adaptable.FilterService.GetUserFiltersForColumn(
       selectedColumn,
-      this.props.UserFilters
+      this.props.Adaptable.api.userFilterApi.getAllUserFilter()
     ).map(uf => {
       return uf.Name;
     });
@@ -342,8 +343,8 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     // then named filters
     let availableNamedFilterNames: string[] = this.props.Adaptable.FilterService.GetNamedFiltersForColumn(
       selectedColumn,
-      this.props.NamedFilters,
-      this.props.ColumnCategories
+      this.props.Adaptable.api.namedFilterApi.getAllNamedFilter(),
+      this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory()
     ).map(uf => {
       return uf.Name;
     });

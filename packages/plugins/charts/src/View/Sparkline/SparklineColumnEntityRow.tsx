@@ -3,10 +3,8 @@ import { EntityListActionButtons } from '@adaptabletools/adaptable/src/View/Comp
 import { AdaptableObjectRow } from '@adaptabletools/adaptable/src/View/Components/AdaptableObjectRow';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
-import { SharedEntityExpressionRowProps } from '@adaptabletools/adaptable/src/View/Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '@adaptabletools/adaptable/src/View/Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '@adaptabletools/adaptable/src/View/UIInterfaces';
-
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 
 import { EntityRowItem } from '@adaptabletools/adaptable/src/View/Components/EntityRowItem';
 import Input from '@adaptabletools/adaptable/src/components/Input';
@@ -16,7 +14,7 @@ import { ColorPicker } from '@adaptabletools/adaptable/src/View/ColorPicker';
 import { SparklineTypeEnum } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
 
 export interface SparklineColumnEntityRowProps
-  extends SharedEntityExpressionRowProps<SparklineColumnEntityRow> {
+  extends SharedEntityRowProps<SparklineColumnEntityRow> {
   Column: AdaptableColumn;
   ColorPalette: string[];
 
@@ -37,7 +35,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumn(
+        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
           sparklineColumn.ColumnId,
           this.props.Column
         )}

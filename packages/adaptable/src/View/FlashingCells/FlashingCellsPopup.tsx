@@ -104,8 +104,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         <FlashingCellEntityRow
           AdaptableObject={flashingcell}
           key={flashingcell.ColumnId}
-          Columns={this.props.Columns}
-          UserFilters={null}
+          api={this.props.Adaptable.api}
           colItems={colItems}
           FlashingCellDurations={flashingCellDurations}
           ColorPalette={this.props.ColorPalette}

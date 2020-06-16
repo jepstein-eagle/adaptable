@@ -5,17 +5,16 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { ActionMode } from '../../PredefinedConfig/Common/Enums';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import Dropdown from '../../components/Dropdown';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 
 export interface CellValidationEntityRowProps
-  extends SharedEntityExpressionRowProps<CellValidationEntityRow> {
+  extends SharedEntityRowProps<CellValidationEntityRow> {
   Column: AdaptableColumn;
   ValidationService: IValidationService;
   onChangeActionMode: (cellValidationRule: CellValidationRule, ActionMode: ActionMode) => void;
@@ -65,12 +64,16 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
   setExpressionDescription(CellValidation: CellValidationRule): string {
     return ExpressionHelper.IsNotNullOrEmptyExpression(CellValidation.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns)
+      ? ExpressionHelper.ConvertExpressionToString(
+          CellValidation.Expression,
+          this.props.api.gridApi.getColumns(),
+          this.props.api
+        )
       : 'No Expression';
   }
 
   private getColumnandRule(cellValidation: CellValidationRule): string {
-    let columnInfo: string = ColumnHelper.getFriendlyNameFromColumn(
+    let columnInfo: string = this.props.api.gridApi.getFriendlyNameFromColumn(
       cellValidation.ColumnId,
       this.props.Column
     );
@@ -78,7 +81,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
       ': ' +
       this.props.ValidationService.createCellValidationDescription(
         cellValidation,
-        this.props.Columns
+        this.props.api.gridApi.getColumns()
       );
     return columnInfo;
   }

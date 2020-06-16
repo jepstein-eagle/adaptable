@@ -10,7 +10,6 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
@@ -102,9 +101,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(rulesForColumn)) {
-        let selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-          selectedCell.columnId,
-          columns
+        let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+          selectedCell.columnId
         );
         if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
           //for aggrid as we are getting strings sometimes

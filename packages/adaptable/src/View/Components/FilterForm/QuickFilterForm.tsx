@@ -82,6 +82,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         let expressionDescription = ExpressionHelper.ConvertExpressionToString(
           existingColumnFilter.Filter,
           this.props.Columns,
+          this.props.Adaptable.api,
           false
         );
         this.doUpdate({
@@ -95,6 +96,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
           let expressionDescription = ExpressionHelper.ConvertExpressionToString(
             existingColumnFilter.Filter,
             this.props.Columns,
+            this.props.Adaptable.api,
             false
           );
           this.doUpdate({

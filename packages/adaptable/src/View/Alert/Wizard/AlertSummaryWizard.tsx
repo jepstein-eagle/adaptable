@@ -7,14 +7,11 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
-export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {
-  UserFilters: UserFilter[];
-}
+export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
 export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps, {}>
   implements AdaptableWizardStep {
@@ -27,9 +24,8 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          alertDefinition.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          alertDefinition.ColumnId
         ),
       },
       {
@@ -53,7 +49,8 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
         Value: ExpressionHelper.IsNotNullOrEmptyExpression(alertDefinition.Expression)
           ? ExpressionHelper.ConvertExpressionToString(
               alertDefinition.Expression,
-              this.props.Columns
+              this.props.Columns,
+              this.props.Adaptable.api
             )
           : 'None',
       },

@@ -82,6 +82,7 @@ class ShortcutPopupComponent extends React.Component<
           onEdit={null}
           colItems={colItems}
           AvailableActions={shortcutOperationList}
+          api={this.props.Adaptable.api}
           AvailableKeys={this.getAvailableKeys(shortcut)}
           onShare={description => this.props.onShare(shortcut, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -127,11 +128,6 @@ class ShortcutPopupComponent extends React.Component<
               EditedAdaptableObject={shortcut}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               Adaptable={this.props.Adaptable}
               DateKeysAvailable={
                 shortcut.ShortcutKey

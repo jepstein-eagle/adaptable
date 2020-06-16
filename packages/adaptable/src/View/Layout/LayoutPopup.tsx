@@ -80,10 +80,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           <LayoutEntityRow
             key={x.Uuid}
             colItems={colItems}
+            api={this.props.Adaptable.api}
             IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
             AdaptableObject={x}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
             onEdit={() => this.onEdit(x)}
             onShare={description => this.props.onShare(x, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
@@ -129,11 +128,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               EditedAdaptableObject={this.state.EditedAdaptableObject}
               ConfigEntities={this.props.Layouts}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               ColumnSorts={this.props.ColumnSorts}
               Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}

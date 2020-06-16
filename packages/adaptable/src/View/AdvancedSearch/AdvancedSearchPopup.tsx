@@ -100,10 +100,9 @@ class AdvancedSearchPopupComponent extends React.Component<
           <AdvancedSearchEntityRow
             key={advancedSearch.Uuid || index}
             colItems={colItems}
+            api={this.props.Adaptable.api}
             IsCurrentAdvancedSearch={advancedSearch.Name == this.props.CurrentAdvancedSearchName}
             AdaptableObject={advancedSearch}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
             onEdit={advancedSearch => this.onEdit(advancedSearch as AdvancedSearch)}
             onShare={description => this.props.onShare(advancedSearch, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
@@ -148,11 +147,6 @@ class AdvancedSearchPopupComponent extends React.Component<
               ConfigEntities={this.props.AdvancedSearches}
               Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

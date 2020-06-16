@@ -4,7 +4,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 
 export class PlusMinusSharedEntity extends React.Component<
@@ -17,11 +16,15 @@ export class PlusMinusSharedEntity extends React.Component<
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {ColumnHelper.getFriendlyNameFromColumnId(plusMinusRule.ColumnId, this.props.Columns)}
+          {this.props.Api.gridApi.getFriendlyNameFromColumnId(plusMinusRule.ColumnId)}
         </Flex>
         <Flex flex={3}>{plusMinusRule.NudgeValue.toString()}</Flex>
         <Flex flex={5}>
-          {ExpressionHelper.ConvertExpressionToString(plusMinusRule.Expression, this.props.Columns)}
+          {ExpressionHelper.ConvertExpressionToString(
+            plusMinusRule.Expression,
+            this.props.Api.gridApi.getColumns(),
+            this.props.Api
+          )}
         </Flex>
       </Flex>
     );

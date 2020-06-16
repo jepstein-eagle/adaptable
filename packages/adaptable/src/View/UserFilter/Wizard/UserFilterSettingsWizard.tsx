@@ -5,7 +5,6 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import ErrorBox from '../../../components/ErrorBox';
 import WizardPanel from '../../../components/WizardPanel';
@@ -13,9 +12,7 @@ import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 import HelpBlock from '../../../components/HelpBlock';
 
-export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<UserFilter> {
-  UserFilters: UserFilter[];
-}
+export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSettingsWizardState {
   FilterName: string;
   ErrorMessage: string;
@@ -70,11 +67,11 @@ export class UserFilterSettingsWizard
       {
         FilterName: e.value,
         ErrorMessage:
-          this.props.UserFilters.findIndex(
-            x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId
-          ) > -1
+          this.props.Adaptable.api.userFilterApi
+            .getAllUserFilter()
+            .findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1
             ? 'A User Filter already exists with that name for column: ' +
-              ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+              this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
             : null,
       } as UserFilterSettingsWizardState,
       () => this.props.UpdateGoBackState()

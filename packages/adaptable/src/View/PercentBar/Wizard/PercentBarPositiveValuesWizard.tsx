@@ -8,7 +8,6 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
 
 import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import WizardPanel from '../../../components/WizardPanel';

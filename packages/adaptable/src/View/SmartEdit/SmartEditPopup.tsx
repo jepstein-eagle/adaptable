@@ -14,7 +14,6 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
@@ -68,7 +67,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let col: AdaptableColumn;
     if (this.props.PreviewInfo) {
-      col = ColumnHelper.getColumnFromId(this.props.PreviewInfo.ColumnId, this.props.Columns);
+      col = this.props.Adaptable.api.gridApi.getColumnFromId(this.props.PreviewInfo.ColumnId);
     }
 
     let globalValidationMessage: string = PreviewHelper.GetValidationMessage(
@@ -83,6 +82,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
       <PreviewResultsPanel
         style={{ flex: '1 1 100%', overflow: 'initial', height: '100%' }}
         PreviewInfo={this.props.PreviewInfo}
+        Api={this.props.Adaptable.api}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
         SelectedColumn={col}

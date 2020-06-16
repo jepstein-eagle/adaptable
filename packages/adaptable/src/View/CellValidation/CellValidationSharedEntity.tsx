@@ -3,7 +3,6 @@ import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 import { AdaptableColumn, IAdaptable } from '../../types';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
@@ -22,18 +21,20 @@ export class CellValidationSharedEntity extends React.Component<
 
     return (
       <Flex flexDirection="row" alignItems="center">
-        <Flex flex={4}>
-          {ColumnHelper.getFriendlyNameFromColumnId(cellVal.ColumnId, this.props.Columns)}
-        </Flex>
+        <Flex flex={4}>{this.props.Api.gridApi.getFriendlyNameFromColumnId(cellVal.ColumnId)}</Flex>
         <Flex flex={4}>
           {this.props.ValidationService.createCellValidationDescription(
             cellVal,
-            this.props.Columns
+            this.props.Api.gridApi.getColumns()
           )}
         </Flex>
         <Flex flex={4}>
           {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)
-            ? ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Columns)
+            ? ExpressionHelper.ConvertExpressionToString(
+                cellVal.Expression,
+                this.props.Api.gridApi.getColumns(),
+                this.props.Api
+              )
             : 'No Expression'}
         </Flex>
       </Flex>

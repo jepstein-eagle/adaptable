@@ -14,7 +14,6 @@ import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/
 import { ArrayExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 import { SecondaryColumnOperation } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
 import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import { Flex, Text, Box } from 'rebass';
 import WizardPanel from '@adaptabletools/adaptable/src/components/WizardPanel';
 import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
@@ -48,7 +47,7 @@ export class PieChartSecondaryColumnWizard
       | 'Date'
       | 'Object'
       | 'Unknown' = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId)
-      ? ColumnHelper.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId, this.props.Columns)
+      ? this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId)
       : 'Unknown';
 
     return (

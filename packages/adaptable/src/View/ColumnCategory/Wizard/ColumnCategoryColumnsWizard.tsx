@@ -7,7 +7,6 @@ import {
 import { PanelWithInfo } from '../../Components/Panels/PanelWithInfo';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import HelpBlock from '../../../components/HelpBlock';
 import WizardPanel from '../../../components/WizardPanel';
@@ -27,9 +26,8 @@ export class ColumnCategoryColumnsWizard
   constructor(props: ColumnCategoryColumnsWizardProps) {
     super(props);
 
-    let selectedFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(
-      this.props.Data.ColumnIds,
-      this.props.Columns
+    let selectedFriendlyColumns = this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+      this.props.Data.ColumnIds
     );
     let currentlyColumnCategorys: string[] = [];
     this.props.ColumnCategorys.map(lk => {
@@ -44,9 +42,8 @@ export class ColumnCategoryColumnsWizard
       }
     });
 
-    let availableFriendlyColumns = ColumnHelper.getFriendlyNamesFromColumnIds(
-      availableColumns,
-      this.props.Columns
+    let availableFriendlyColumns = this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+      availableColumns
     );
     selectedFriendlyColumns.forEach(sc => availableFriendlyColumns.push(sc));
 
@@ -89,9 +86,8 @@ export class ColumnCategoryColumnsWizard
     return !this.state.IsEdit;
   }
   public Next(): void {
-    this.props.Data.ColumnIds = ColumnHelper.getColumnIdsFromFriendlyNames(
-      this.state.SelectedColumns,
-      this.props.Columns
+    this.props.Data.ColumnIds = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+      this.state.SelectedColumns
     );
   }
   public Back(): void {

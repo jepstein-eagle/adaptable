@@ -20,7 +20,6 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
           FriendlyName={StrategyConstants.ColumnCategoryStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Name',

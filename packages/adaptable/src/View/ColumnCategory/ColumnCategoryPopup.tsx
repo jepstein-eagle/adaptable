@@ -79,9 +79,8 @@ class ColumnCategoryPopupComponent extends React.Component<
         <ColumnCategoryEntityRow
           key={index}
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={item}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(item)}
           onShare={description => this.props.onShare(item, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -121,11 +120,6 @@ class ColumnCategoryPopupComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject}
             ConfigEntities={this.props.ColumnCategorys}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             ColumnCategorys={this.props.ColumnCategorys}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}

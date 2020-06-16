@@ -3,7 +3,6 @@ import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 
@@ -15,7 +14,8 @@ export class UserFilterSharedEntity extends React.Component<
     let filter = this.props.Entity as UserFilter;
     let expressionString = ExpressionHelper.ConvertExpressionToString(
       filter.Expression,
-      this.props.Columns
+      this.props.Api.gridApi.getColumns(),
+      this.props.Api
     );
 
     return (

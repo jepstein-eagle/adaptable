@@ -21,6 +21,8 @@ export interface GeneralOptions {
    */
   showMissingPrimaryKeyWarning?: boolean;
 
+  showMissingColumnsWarning?: boolean;
+
   /**
    * Whether to prevent a duplicate value being entered into the Primary Key column.
    *

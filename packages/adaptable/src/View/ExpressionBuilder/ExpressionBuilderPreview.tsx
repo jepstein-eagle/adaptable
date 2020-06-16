@@ -23,17 +23,17 @@ import {
 import ExpressionHelper from '../../Utilities/Helpers/ExpressionHelper';
 
 import ButtonPreviewDelete from '../Components/Buttons/ButtonPreviewDelete';
-import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';
 import SimpleButton from '../../components/SimpleButton';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 
 export interface ExpressionBuilderPreviewProps
   extends React.ClassAttributes<ExpressionBuilderPreview> {
   Expression: Expression;
-  UserFilters: UserFilter[];
+  Api: AdaptableApi;
   onSelectedColumnChange: (ColumnId: string, tab: QueryTab) => void;
   ColumnsList: Array<AdaptableColumn>;
   DeleteRange: (ColumnId: string, index: number) => void;
@@ -218,10 +218,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         });
       }
 
-      let columnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
-        columnId,
-        this.props.ColumnsList
-      );
+      let columnFriendlyName = this.props.Api.gridApi.getFriendlyNameFromColumnId(columnId);
 
       return (
         <div

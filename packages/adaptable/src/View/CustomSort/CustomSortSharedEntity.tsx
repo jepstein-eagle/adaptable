@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../../types';
@@ -16,7 +15,7 @@ export class CustomSortSharedEntity extends React.Component<
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {ColumnHelper.getFriendlyNameFromColumnId(customSort.ColumnId, this.props.Columns)}
+          {this.props.Api.gridApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
         </Flex>
         <Flex flex={8}>{this.getCustomSortedValues(customSort)}</Flex>
       </Flex>

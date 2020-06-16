@@ -5,7 +5,6 @@ import {
   AdaptableWizardStep,
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '@adaptabletools/adaptable/src/Utilities/Interface/KeyValuePair';
 import { WizardSummaryPage } from '@adaptabletools/adaptable/src/View/Components/WizardSummaryPage';
 import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
@@ -21,7 +20,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
   }
   render(): any {
     let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
-      return ColumnHelper.getFriendlyNameFromColumnId(c, this.props.Columns);
+      return this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(c);
     });
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
@@ -30,9 +29,8 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
       { Key: 'Total', Value: this.props.Data.YAxisTotal },
       {
         Key: 'X Axis Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.XAxisColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.XAxisColumnId
         ),
       },
       { Key: 'X Axis Values', Value: this.getExpressionString(this.props.Data.XAxisExpression) },
@@ -50,7 +48,12 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
       return '[All Column Values]';
     } else {
-      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false);
+      return ExpressionHelper.ConvertExpressionToString(
+        expression,
+        this.props.Columns,
+        this.props.Adaptable.api,
+        false
+      );
     }
   }
 

@@ -15,7 +15,6 @@ import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInf
 import { GridRow } from '../../PredefinedConfig/Selection/GridRow';
 import ObjectFactory from '../ObjectFactory';
 import { IReportService } from './Interface/IReportService';
-import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
@@ -60,7 +59,9 @@ export class ReportService implements IReportService {
       case ReportColumnScope.SelectedCellColumns:
         return '[Selected Columns]';
       case ReportColumnScope.BespokeColumns:
-        return ColumnHelper.getFriendlyNamesFromColumnIds(report.ColumnIds, cols).join(', ');
+        return this.adaptable.api.gridApi
+          .getFriendlyNamesFromColumnIds(report.ColumnIds)
+          .join(', ');
     }
   }
 
@@ -84,7 +85,11 @@ export class ReportService implements IReportService {
         case ReportRowScope.SelectedRows:
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
-          return ExpressionHelper.ConvertExpressionToString(Report.Expression, cols);
+          return ExpressionHelper.ConvertExpressionToString(
+            Report.Expression,
+            cols,
+            this.adaptable.api
+          );
       }
     }
   }

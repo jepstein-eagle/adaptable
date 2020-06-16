@@ -136,6 +136,7 @@ class ChartDisplayPopupComponent extends React.Component<
                   ChartData={this.props.ChartData}
                   ColorPalette={this.props.ColorPalette}
                   Columns={this.props.Columns}
+                  Api={this.props.Adaptable.api}
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
@@ -145,6 +146,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 <PieChartComponent
                   CurrentChartDefinition={this.props.CurrentChartDefinition as PieChartDefinition}
                   ChartData={this.props.ChartData}
+                  Api={this.props.Adaptable.api}
                   //   ColorPalette={this.props.ColorPalette}
                   //   Columns={this.props.Columns}
 
@@ -183,11 +185,6 @@ class ChartDisplayPopupComponent extends React.Component<
                 EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Columns={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SystemFilters={this.props.SystemFilters}
-                NamedFilters={this.props.NamedFilters}
-                ColumnCategories={this.props.ColumnCategories}
                 Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
@@ -200,11 +197,6 @@ class ChartDisplayPopupComponent extends React.Component<
                 EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Columns={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SystemFilters={this.props.SystemFilters}
-                NamedFilters={this.props.NamedFilters}
-                ColumnCategories={this.props.ColumnCategories}
                 Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
@@ -218,11 +210,6 @@ class ChartDisplayPopupComponent extends React.Component<
                 EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Columns={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SystemFilters={this.props.SystemFilters}
-                NamedFilters={this.props.NamedFilters}
-                ColumnCategories={this.props.ColumnCategories}
                 Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}

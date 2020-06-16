@@ -12,7 +12,6 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { AdaptablePopover } from '../../AdaptablePopover';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 
@@ -50,14 +49,13 @@ export class CellValidationRulesWizard
         value: operator.toString(),
         label: ExpressionHelper.OperatorToLongFriendlyString(
           operator,
-          ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+          this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)
         ),
       };
     });
 
-    let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
-      this.props.Data.ColumnId,
-      this.props.Columns
+    let columnFriendlyName: string = this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      this.props.Data.ColumnId
     );
 
     let helpText: string =
@@ -119,9 +117,8 @@ export class CellValidationRulesWizard
             !this.checkOperator(LeafExpressionOperator.IsPositive) &&
             !this.checkOperator(LeafExpressionOperator.IsNegative) &&
             !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
-            ColumnHelper.getColumnDataTypeFromColumnId(
-              this.props.Data.ColumnId,
-              this.props.Columns
+            this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId
             ) == DataType.Number && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -146,9 +143,8 @@ export class CellValidationRulesWizard
           {/* if  date then show a date control */}
           {this.state.Operator != null &&
             !this.checkOperator(LeafExpressionOperator.AnyChange) &&
-            ColumnHelper.getColumnDataTypeFromColumnId(
-              this.props.Data.ColumnId,
-              this.props.Columns
+            this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId
             ) == DataType.Date && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -175,9 +171,8 @@ export class CellValidationRulesWizard
             !this.checkOperator(LeafExpressionOperator.AnyChange) &&
             !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
             !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
-            ColumnHelper.getColumnDataTypeFromColumnId(
-              this.props.Data.ColumnId,
-              this.props.Columns
+            this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+              this.props.Data.ColumnId
             ) == DataType.String && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -237,7 +232,7 @@ export class CellValidationRulesWizard
 
   private getAvailableOperators(): LeafExpressionOperator[] {
     switch (
-      ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+      this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)
     ) {
       case DataType.Boolean:
         return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];

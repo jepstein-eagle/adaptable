@@ -3,19 +3,17 @@ import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from '../UIInterfaces';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
 
-export interface PlusMinusEntityRowProps
-  extends SharedEntityExpressionRowProps<PlusMinusEntityRow> {
+export interface PlusMinusEntityRowProps extends SharedEntityRowProps<PlusMinusEntityRow> {
   Column: AdaptableColumn;
   onColumnDefaultNudgeValueChange: (
     plusMinusRule: PlusMinusRule,
@@ -30,7 +28,10 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumn(plusMinusRule.ColumnId, this.props.Column)}
+        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+          plusMinusRule.ColumnId,
+          this.props.Column
+        )}
       />
     );
     colItems[1].Content = (
@@ -67,6 +68,10 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
   private wrapExpressionDescription(PlusMinusRule: PlusMinusRule): string {
     return PlusMinusRule.IsDefaultNudge
       ? '[Default Column Nudge Value]'
-      : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.Columns);
+      : ExpressionHelper.ConvertExpressionToString(
+          PlusMinusRule.Expression,
+          this.props.api.gridApi.getColumns(),
+          this.props.api
+        );
   }
 }

@@ -4,7 +4,6 @@ import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
-import ColumnHelper from '../Helpers/ColumnHelper';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
   constructor(
@@ -77,10 +76,10 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       let columnId: any = match[1];
 
       // check if its a column name
-      let col: AdaptableColumn = ColumnHelper.getColumnFromId(columnId, columns, false);
+      let col: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(columnId);
       if (!col) {
         // no column so lets see if they are using FriendlyName
-        col = ColumnHelper.getColumnFromFriendlyName(columnId, columns, false);
+        col = this.adaptable.api.gridApi.getColumnFromFriendlyName(columnId);
         if (col) {
           columnNameList.push(columnId);
         }
@@ -90,7 +89,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
     columnNameList.forEach(c => {
       let stringToReplace: string = 'Col("' + c + '")';
-      let columnId = ColumnHelper.getColumnIdFromFriendlyName(c, columns);
+      let columnId = this.adaptable.api.gridApi.getColumnIdFromFriendlyName(c);
       let newString: string = 'Col("' + columnId + '")';
       newExpression = newExpression.replace(stringToReplace, newString);
     });
@@ -102,7 +101,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     let columnIds: string[] = this.GetColumnListFromExpression(cleanExpression);
     columnIds.forEach(c => {
       let stringToReplace: string = 'Col("' + c + '")';
-      let columnFriendName = ColumnHelper.getFriendlyNameFromColumnId(c, columns);
+      let columnFriendName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(c);
       let newString: string = '[' + columnFriendName + ']';
       cleanExpression = cleanExpression.replace(stringToReplace, newString);
     });

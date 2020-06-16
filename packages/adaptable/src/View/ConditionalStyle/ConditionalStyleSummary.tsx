@@ -78,7 +78,11 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CS' + index}
             Item1={<StyleVisualItem Style={item.Style} />}
-            Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)}
+            Item2={ExpressionHelper.ConvertExpressionToString(
+              item.Expression,
+              this.props.Columns,
+              this.props.Adaptable.api
+            )}
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -100,11 +104,6 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             ColorPalette={this.props.ColorPalette}
             StyleClassNames={this.props.StyleClassNames}
             Adaptable={this.props.Adaptable}

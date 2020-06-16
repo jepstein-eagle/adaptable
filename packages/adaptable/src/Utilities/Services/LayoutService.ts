@@ -1,6 +1,5 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Layout, PivotDetails, VendorGridInfo } from '../../PredefinedConfig/LayoutState';
@@ -40,7 +39,7 @@ export class LayoutService implements ILayoutService {
     let returnString: string = '';
     columnSorts.forEach((gs: ColumnSort) => {
       returnString +=
-        ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) +
+        this.adaptable.api.gridApi.getFriendlyNameFromColumnId(gs.Column) +
         this.getSortOrder(gs.SortOrder);
     });
     return returnString;

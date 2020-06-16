@@ -62,12 +62,11 @@ class ReminderPopupComponent extends React.Component<
       return (
         <ReminderEntityRow
           AdaptableObject={reminder}
+          api={this.props.Adaptable.api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(reminder, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          UserFilters={this.props.UserFilters}
-          Columns={this.props.Columns}
           onEdit={() => this.onEdit(reminder)}
           onDeleteConfirm={ScheduleRedux.ReminderScheduleDelete(reminder)}
           AccessLevel={this.props.AccessLevel}
@@ -105,11 +104,6 @@ class ReminderPopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as ReminderSchedule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

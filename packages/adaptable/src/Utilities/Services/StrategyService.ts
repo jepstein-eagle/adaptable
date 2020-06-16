@@ -1,6 +1,4 @@
-import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../Helpers/ColumnHelper';
 import {
   DataType,
   LeafExpressionOperator,
@@ -11,9 +9,9 @@ import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, AdaptableMenuItem } from '../../types';
-import { IStrategyCollection, IStrategy } from '../../Strategy/Interface/IStrategy';
+import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import Helper from '../Helpers/Helper';
-import { TeamSharingImportInfo, SharedEntity } from '../../PredefinedConfig/TeamSharingState';
+import { TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 export interface IStrategyService {
@@ -64,7 +62,9 @@ export class StrategyService implements IStrategyService {
       | 'Boolean'
       | 'Date'
       | 'Object'
-      | 'Unknown' = ColumnHelper.getColumnDataTypeFromColumnId(alertDefinition.ColumnId, columns);
+      | 'Unknown' = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+      alertDefinition.ColumnId
+    );
     let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
       alertDefinition.Range.Operator as LeafExpressionOperator,
       dataType

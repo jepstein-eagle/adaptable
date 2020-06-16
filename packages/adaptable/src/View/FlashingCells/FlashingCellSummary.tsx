@@ -11,7 +11,6 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { IColItem } from '../UIInterfaces';
 import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { FlashingCellState } from '../../PredefinedConfig/FlashingCellState';
 import SimpleButton from '../../components/SimpleButton';
 import { FormatColumnSummaryProps } from '../FormatColumn/FormatColumnSummary';
@@ -70,9 +69,8 @@ export class FlashingCellSummaryComponent extends React.Component<
       let flashingCellState: FlashingCellState = this.props.Adaptable.api.configApi.configGetFlashingCellState(
         false
       );
-      let col: AdaptableColumn = ColumnHelper.getColumnFromId(
-        this.props.SummarisedColumn.ColumnId,
-        this.props.Columns
+      let col: AdaptableColumn = this.props.Adaptable.api.gridApi.getColumnFromId(
+        this.props.SummarisedColumn.ColumnId
       );
       existingfc = ObjectFactory.CreateDefaultFlashingCell(
         col,

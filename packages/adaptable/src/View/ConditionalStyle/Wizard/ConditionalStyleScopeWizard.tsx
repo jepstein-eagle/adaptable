@@ -21,9 +21,7 @@ import HelpBlock from '../../../components/HelpBlock';
 import CheckBox from '../../../components/CheckBox';
 
 export interface ConditionalStyleScopeWizardProps
-  extends AdaptableWizardStepProps<ConditionalStyle> {
-  ColumnCategories: Array<ColumnCategory>;
-}
+  extends AdaptableWizardStepProps<ConditionalStyle> {}
 
 export interface ConditionalStyleScopeWizardState {
   ColumnId: string;
@@ -57,12 +55,14 @@ export class ConditionalStyleScopeWizard
       };
     });
 
-    let optionColumnCategorys = this.props.ColumnCategories.map(cc => {
-      return {
-        value: cc.ColumnCategoryId,
-        label: cc.ColumnCategoryId,
-      };
-    });
+    let optionColumnCategorys = this.props.Adaptable.api.columnCategoryApi
+      .getAllColumnCategory()
+      .map(cc => {
+        return {
+          value: cc.ColumnCategoryId,
+          label: cc.ColumnCategoryId,
+        };
+      });
 
     return (
       <WizardPanel>
@@ -136,7 +136,9 @@ export class ConditionalStyleScopeWizard
             </Box>
           )}
 */}
-          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && (
+          {ArrayExtensions.IsNotNullOrEmpty(
+            this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory()
+          ) && (
             <Box>
               <HelpBlock marginBottom={2}>
                 Apply the Conditional Style to all the columns in a Column Category
@@ -155,7 +157,9 @@ export class ConditionalStyleScopeWizard
             </Box>
           )}
 
-          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
+          {ArrayExtensions.IsNotNullOrEmpty(
+            this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory()
+          ) &&
             this.state.ConditionalStyleScope == 'ColumnCategory' && (
               <Box>
                 <Dropdown

@@ -5,7 +5,6 @@ import {
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { AxisTotal } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import { ArrayExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 
 import { AdaptablePopover } from '@adaptabletools/adaptable/src/View/AdaptablePopover';
@@ -43,11 +42,11 @@ export class CategoryChartYAxisWizard
     let availableColumns: string[] = numericColumnIds
       .filter(c => ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c))
       .map(ac => {
-        return ColumnHelper.getFriendlyNameFromColumnId(ac, this.props.Columns);
+        return this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(ac);
       });
 
     let existingColumns: string[] = this.state.YAxisColumnIds.map(ec => {
-      return ColumnHelper.getFriendlyNameFromColumnId(ec, this.props.Columns);
+      return this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(ec);
     });
 
     return (
@@ -102,7 +101,7 @@ export class CategoryChartYAxisWizard
   }
 
   OnSelectedValuesChange(newValues: Array<string>) {
-    let yAxisColumnIds = ColumnHelper.getColumnIdsFromFriendlyNames(newValues, this.props.Columns);
+    let yAxisColumnIds = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(newValues);
     this.setState({ YAxisColumnIds: yAxisColumnIds } as CategoryChartYAxisWizardState, () =>
       this.props.UpdateGoBackState()
     );

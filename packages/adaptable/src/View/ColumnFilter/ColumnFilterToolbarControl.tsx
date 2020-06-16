@@ -48,6 +48,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     let activeFiltersPanel = (
       <ActiveFiltersPanel
         Columns={this.props.Columns}
+        Api={this.props.Adaptable.api}
         ColumnFilters={this.props.ColumnFilters}
         AccessLevel={this.props.AccessLevel}
         onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}

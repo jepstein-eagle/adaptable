@@ -96,8 +96,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             AdaptableObject={report}
             key={report.Uuid}
             colItems={colItems}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
+            api={this.props.Adaptable.api}
             onShare={description => this.props.onShare(report, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
@@ -143,11 +142,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             EditedAdaptableObject={this.state.EditedAdaptableObject as Report}
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.Reports}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

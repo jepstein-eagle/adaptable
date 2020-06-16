@@ -21,7 +21,6 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 
 import EmptyContent from '../../components/EmptyContent';
@@ -100,15 +99,14 @@ class PercentBarPopupComponent extends React.Component<
     ];
 
     let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar, index) => {
-      let column = ColumnHelper.getColumnFromId(percentBar.ColumnId, this.props.Columns);
+      let column = this.props.Adaptable.api.gridApi.getColumnFromId(percentBar.ColumnId);
       return (
         <PercentBarEntityRow
           key={percentBar.Uuid}
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={percentBar}
           Column={column}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
@@ -166,12 +164,7 @@ class PercentBarPopupComponent extends React.Component<
               ConfigEntities={null}
               Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
               ColorPalette={this.props.ColorPalette}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

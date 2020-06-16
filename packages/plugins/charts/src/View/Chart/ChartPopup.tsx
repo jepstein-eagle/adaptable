@@ -90,6 +90,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         <ChartEntityRow
           colItems={colItems}
           AdaptableObject={Chart}
+          api={this.props.Adaptable.api}
           key={Chart.Name}
           onEdit={() => this.onEdit(Chart as ChartDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -161,11 +162,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Columns={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SystemFilters={this.props.SystemFilters}
-                NamedFilters={this.props.NamedFilters}
-                ColumnCategories={this.props.ColumnCategories}
                 Adaptable={this.props.Adaptable}
                 WizardStartIndex={this.state.WizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
@@ -178,11 +174,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Columns={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SystemFilters={this.props.SystemFilters}
-                NamedFilters={this.props.NamedFilters}
-                ColumnCategories={this.props.ColumnCategories}
                 Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
@@ -196,11 +187,6 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Columns={this.props.Columns}
-                UserFilters={this.props.UserFilters}
-                SystemFilters={this.props.SystemFilters}
-                NamedFilters={this.props.NamedFilters}
-                ColumnCategories={this.props.ColumnCategories}
                 Adaptable={this.props.Adaptable}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}

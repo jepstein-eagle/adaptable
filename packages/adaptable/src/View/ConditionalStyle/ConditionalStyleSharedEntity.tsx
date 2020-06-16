@@ -4,7 +4,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 
 export class ConditionalStyleSharedEntity extends React.Component<
@@ -18,10 +17,7 @@ export class ConditionalStyleSharedEntity extends React.Component<
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
           {conditionalStyle.ConditionalStyleScope == 'Column'
-            ? ColumnHelper.getFriendlyNameFromColumnId(
-                conditionalStyle.ColumnId,
-                this.props.Columns
-              )
+            ? this.props.Api.gridApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId)
             : 'Whole Row'}
         </Flex>
         <Flex flex={3}>
@@ -30,7 +26,8 @@ export class ConditionalStyleSharedEntity extends React.Component<
         <Flex flex={5}>
           {ExpressionHelper.ConvertExpressionToString(
             conditionalStyle.Expression,
-            this.props.Columns
+            this.props.Api.gridApi.getColumns(),
+            this.props.Api
           )}
         </Flex>
       </Flex>

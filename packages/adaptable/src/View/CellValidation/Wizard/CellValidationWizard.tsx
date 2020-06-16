@@ -20,7 +20,6 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
           FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',
@@ -45,19 +44,12 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
             {
               StepName: 'Query Builder',
               Index: 4,
-              Element: (
-                <CellValidationExpressionWizard
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                />
-              ),
+              Element: <CellValidationExpressionWizard />,
             },
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <CellValidationSummaryWizard UserFilters={this.props.UserFilters} />,
+              Element: <CellValidationSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

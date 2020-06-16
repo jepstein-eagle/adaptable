@@ -11,7 +11,6 @@ import {
 import { AuditDestinationOptions, AuditOptions } from '../../AdaptableOptions/AuditOptions';
 import { AdaptableAlert } from '../Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
-import ColumnHelper from '../Helpers/ColumnHelper';
 import ObjectFactory from '../ObjectFactory';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 
@@ -154,10 +153,7 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditAsAlert) {
         let message: string =
           'Column: ' +
-          ColumnHelper.getFriendlyNameFromColumnId(
-            dataChangedInfo.ColumnId,
-            this.adaptable.api.gridApi.getColumns()
-          ) +
+          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId) +
           '.  Identifier: ' +
           dataChangedInfo.PrimaryKeyValue +
           '.  Old Value: ' +
@@ -274,10 +270,7 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditAsAlert) {
         let message: string =
           'Column: ' +
-          ColumnHelper.getFriendlyNameFromColumnId(
-            dataChangedInfo.ColumnId,
-            this.adaptable.api.gridApi.getColumns()
-          ) +
+          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId) +
           '.  Identifier: ' +
           dataChangedInfo.PrimaryKeyValue +
           '.  Old Value: ' +

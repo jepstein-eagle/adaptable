@@ -5,7 +5,6 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
 import { Report } from '../../../PredefinedConfig/ExportState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
@@ -24,9 +23,8 @@ export class ReportColumnChooserWizard
 
     this.state = {
       AllColumnValues: this.props.Columns.map(c => c.FriendlyName),
-      SelectedColumnValues: ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.ColumnIds,
-        this.props.Columns
+      SelectedColumnValues: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+        this.props.Data.ColumnIds
       ),
     };
   }

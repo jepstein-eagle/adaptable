@@ -93,12 +93,7 @@ export class GradientColumnSummaryComponent extends React.Component<
           <GradientColumnWizard
             EditedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
             ConfigEntities={this.props.GradientColumns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             ColorPalette={this.props.ColorPalette}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

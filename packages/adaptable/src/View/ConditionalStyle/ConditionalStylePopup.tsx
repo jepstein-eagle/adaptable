@@ -95,11 +95,10 @@ class ConditionalStylePopupComponent extends React.Component<
           <ConditionalStyleEntityRow
             AdaptableObject={conditionalStyle}
             colItems={colItems}
+            api={this.props.Adaptable.api}
             key={'CS' + (conditionalStyle.Uuid || index)}
             onShare={description => this.props.onShare(conditionalStyle, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
-            UserFilters={this.props.UserFilters}
-            Columns={this.props.Columns}
             onEdit={() => this.onEdit(conditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
             AccessLevel={this.props.AccessLevel}
@@ -141,11 +140,6 @@ class ConditionalStylePopupComponent extends React.Component<
               ModalContainer={this.props.ModalContainer}
               ColorPalette={this.props.ColorPalette}
               StyleClassNames={this.props.StyleClassNames}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

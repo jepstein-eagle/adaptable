@@ -13,7 +13,6 @@ export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   ColorPalette: string[];
   StyleClassNames: string[];
-  ColumnCategories: ColumnCategory[];
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -24,14 +23,11 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
           FriendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Scope',
               Index: 0,
-              Element: (
-                <ConditionalStyleScopeWizard ColumnCategories={this.props.ColumnCategories} />
-              ),
+              Element: <ConditionalStyleScopeWizard />,
             },
             {
               StepName: 'Style',
@@ -46,19 +42,12 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             {
               StepName: 'Query Builder',
               Index: 2,
-              Element: (
-                <ConditionalStyleExpressionWizard
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                />
-              ),
+              Element: <ConditionalStyleExpressionWizard />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <ConditionalStyleSummaryWizard UserFilters={this.props.UserFilters} />,
+              Element: <ConditionalStyleSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

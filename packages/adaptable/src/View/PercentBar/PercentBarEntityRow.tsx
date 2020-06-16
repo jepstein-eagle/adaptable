@@ -3,18 +3,15 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ColorPicker } from '../ColorPicker';
-
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
 
-export interface PercentBarEntityRowProps
-  extends SharedEntityExpressionRowProps<PercentBarEntityRow> {
+export interface PercentBarEntityRowProps extends SharedEntityRowProps<PercentBarEntityRow> {
   Column: AdaptableColumn;
   ColorPalette: string[];
   onMinimumValueChanged: (PercentBar: PercentBar, minimumValue: number) => void;
@@ -31,7 +28,10 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumn(PercentBar.ColumnId, this.props.Column)}
+        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+          PercentBar.ColumnId,
+          this.props.Column
+        )}
       />
     );
     colItems[1].Content = (
@@ -47,10 +47,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
             />
           ) : (
             '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              PercentBar.NegativeValueColumnId,
-              this.props.Columns
-            ) +
+            this.props.api.gridApi.getFriendlyNameFromColumnId(PercentBar.NegativeValueColumnId) +
             ']'
           )
         }
@@ -69,10 +66,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
             />
           ) : (
             '[' +
-            ColumnHelper.getFriendlyNameFromColumnId(
-              PercentBar.PositiveValueColumnId,
-              this.props.Columns
-            ) +
+            this.props.api.gridApi.getFriendlyNameFromColumnId(PercentBar.PositiveValueColumnId) +
             ']'
           )
         }

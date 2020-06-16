@@ -44,6 +44,7 @@ import FormLayout, {
   FormLayoutColumn,
 } from '@adaptabletools/adaptable/src/components/FormLayout';
 import { ChartContainer } from '@adaptabletools/adaptable/src/components/ChartContainer';
+import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
 /*
 This is really only going to be for Category Charts.
@@ -53,6 +54,7 @@ interface CategoryChartComponentProps {
   CurrentChartDefinition: CategoryChartDefinition;
   ChartData: ChartData;
   Columns: AdaptableColumn[];
+  Api: AdaptableApi;
   ColorPalette: string[];
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
@@ -77,7 +79,7 @@ export class CategoryChartComponent extends React.Component<
 
     this.state = CategoryChartUIHelper.setChartDisplayPopupState(
       this.props.CurrentChartDefinition as CategoryChartDefinition,
-      this.props.Columns
+      this.props.Api
     );
     IgrCategoryChartModule.register();
     IgrDataChartAnnotationModule.register();
@@ -88,7 +90,7 @@ export class CategoryChartComponent extends React.Component<
       this.setState(
         CategoryChartUIHelper.setChartDisplayPopupState(
           nextProps.CurrentChartDefinition as CategoryChartDefinition,
-          this.props.Columns
+          this.props.Api
         ) as CategoryChartComponentState
       );
     }
@@ -1381,7 +1383,7 @@ export class CategoryChartComponent extends React.Component<
     if (useDefault) {
       return CategoryChartUIHelper.createDefaultYAxisTitle(
         this.props.CurrentChartDefinition,
-        this.props.Columns
+        this.props.Api
       );
     }
     return this.state.ChartProperties.YAxisTitle;
@@ -1391,7 +1393,7 @@ export class CategoryChartComponent extends React.Component<
     if (useDefault) {
       return CategoryChartUIHelper.createDefaultXAxisTitle(
         this.props.CurrentChartDefinition,
-        this.props.Columns
+        this.props.Api
       );
     }
     return this.state.ChartProperties.XAxisTitle;

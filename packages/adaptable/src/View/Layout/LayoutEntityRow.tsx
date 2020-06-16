@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
@@ -13,7 +13,7 @@ import Radio from '../../components/Radio';
 import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
 
 export interface LayoutEntityRowProps<LayoutEntityRow>
-  extends SharedEntityExpressionRowProps<LayoutEntityRow> {
+  extends SharedEntityRowProps<LayoutEntityRow> {
   IsCurrentLayout: boolean;
   onSelect: (Layout: Layout) => void;
   LayoutService: ILayoutService;
@@ -39,7 +39,10 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
     colItems[1].Content = <EntityRowItem Content={layout.Name} />;
     colItems[2].Content = (
       <EntityRowItem
-        Content={this.props.LayoutService.getLayoutDescription(layout, this.props.Columns)}
+        Content={this.props.LayoutService.getLayoutDescription(
+          layout,
+          this.props.api.gridApi.getColumns()
+        )}
       />
     );
 

@@ -91,12 +91,7 @@ export class FormatColumnSummaryComponent extends React.Component<
           <FormatColumnWizard
             EditedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
             ConfigEntities={this.props.FormatColumns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             ColorPalette={this.props.ColorPalette}
             StyleClassNames={this.props.StyleClassNames}
             WizardStartIndex={this.state.WizardStartIndex}

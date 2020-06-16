@@ -5,7 +5,6 @@ import LoggingHelper, {
 } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 import { cloneDeep } from 'lodash';
 import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
-import ColumnHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
@@ -224,9 +223,8 @@ export class OpenFinService implements IOpenFinService {
       doneCallback: () => void,
       delta: any[]
     ) => {
-      let primaryKeyColumnFriendlyName = ColumnHelper.getFriendlyNameFromColumnId(
-        this.adaptable.adaptableOptions.primaryKey,
-        gridColumns
+      let primaryKeyColumnFriendlyName = this.adaptable.api.gridapi.getFriendlyNameFromColumnId(
+        this.adaptable.adaptableOptions.primaryKey
       );
 
       let dataChangedInfos: DataChangedInfo[] = [];
@@ -236,9 +234,8 @@ export class OpenFinService implements IOpenFinService {
         if (deltaItem.action === 'modified') {
           deltaItem.row.forEach((change: any, changeIndex: number) => {
             if (change !== null) {
-              const column = ColumnHelper.getColumnFromFriendlyName(
-                exportColumns[changeIndex],
-                gridColumns
+              const column = this.adaptable.api.gridapi.getColumnFromFriendlyName(
+                exportColumns[changeIndex]
               );
 
               const originalRow = sentRows[deltaItem.rowBeforeIndex - 1];

@@ -10,7 +10,10 @@ export interface ColumnCategoryApi {
   deleteColumnCategory(columnCategoryId: string): void;
   addColumnsToColumnCategory(columnCategoryId: string, columns: string[]): void;
   removeColumnsFromColumnCategory(columnCategoryId: string, columns: string[]): void;
-
+  getColumnCategoryFromColumnCategories(
+    columnId: string,
+    ColumnCategoryns: ColumnCategory[]
+  ): string;
   /**
    * Opens the Column Category popup screen
    */

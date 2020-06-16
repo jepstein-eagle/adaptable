@@ -17,7 +17,6 @@ export class ScheduleWizard extends React.Component<ScheduleWizardProps, {}> {
           FriendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Settings',

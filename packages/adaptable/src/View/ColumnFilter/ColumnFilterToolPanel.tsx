@@ -56,6 +56,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
       <ActiveFiltersPanel
         Columns={this.props.Columns}
         ColumnFilters={this.props.ColumnFilters}
+        Api={this.props.Adaptable.api}
         AccessLevel={this.props.AccessLevel}
         onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}
         onSaveColumnFilterasUserFilter={(columnFilter: ColumnFilter) =>

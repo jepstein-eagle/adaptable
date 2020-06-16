@@ -50,10 +50,12 @@ import Checkbox from '@adaptabletools/adaptable/src/components/CheckBox';
 
 import SizedContainer from '@adaptabletools/adaptable/src/components/SizedContainer';
 import { ChartContainer } from '@adaptabletools/adaptable/src/components/ChartContainer';
+import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
 interface PieChartComponentProps {
   CurrentChartDefinition: PieChartDefinition;
   ChartData: ChartData;
+  Api: AdaptableApi;
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
 

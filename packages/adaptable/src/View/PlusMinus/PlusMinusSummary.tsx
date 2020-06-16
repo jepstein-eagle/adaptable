@@ -71,7 +71,11 @@ export class PlusMinusSummaryComponent extends React.Component<
             key={'PM' + index}
             Item1={'Nudge Value: ' + item.NudgeValue}
             Item2={this.wrapExpressionDescription(
-              ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Columns)
+              ExpressionHelper.ConvertExpressionToString(
+                item.Expression,
+                this.props.Columns,
+                this.props.Adaptable.api
+              )
             )}
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
@@ -94,12 +98,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

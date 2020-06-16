@@ -3,18 +3,15 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ColorPicker } from '../ColorPicker';
-
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Input from '../../components/Input';
 
 export interface GradientColumnEntityRowProps
-  extends SharedEntityExpressionRowProps<GradientColumnEntityRow> {
+  extends SharedEntityRowProps<GradientColumnEntityRow> {
   Column: AdaptableColumn;
   ColorPalette: string[];
   onNegativeValueChanged: (GradientColumn: GradientColumn, minimumValue: number) => void;
@@ -32,7 +29,10 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumn(GradientColumn.ColumnId, this.props.Column)}
+        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+          GradientColumn.ColumnId,
+          this.props.Column
+        )}
       />
     );
     colItems[1].Content = (

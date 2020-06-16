@@ -2,7 +2,7 @@ import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { BaseSchedule } from '../../PredefinedConfig/Common/Schedule';
@@ -14,7 +14,7 @@ import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 
 export class ScheduleEntityRow extends React.Component<
-  SharedEntityExpressionRowProps<ScheduleEntityRow>,
+  SharedEntityRowProps<ScheduleEntityRow>,
   {}
 > {
   render(): any {

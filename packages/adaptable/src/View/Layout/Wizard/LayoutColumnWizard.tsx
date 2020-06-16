@@ -8,7 +8,6 @@ import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualLis
 import { Helper } from '../../../Utilities/Helpers/Helper';
 import { SHORTCUT_ADD } from '../../../Redux/ActionsReducers/ShortcutRedux';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 
@@ -23,9 +22,8 @@ export class LayoutColumnWizard
   constructor(props: LayoutColumnWizardProps) {
     super(props);
     this.state = {
-      SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.Columns,
-        this.props.Columns
+      SelectedColumns: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+        this.props.Data.Columns
       ),
     };
   }
@@ -62,9 +60,8 @@ export class LayoutColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.Columns = ColumnHelper.getColumnIdsFromFriendlyNames(
-      this.state.SelectedColumns,
-      this.props.Columns
+    this.props.Data.Columns = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+      this.state.SelectedColumns
     );
   }
   public Back(): void {

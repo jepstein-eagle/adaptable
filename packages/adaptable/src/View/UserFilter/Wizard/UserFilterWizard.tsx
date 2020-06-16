@@ -21,7 +21,6 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
           FriendlyName={StrategyConstants.UserFilterStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',
@@ -31,25 +30,17 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
             {
               StepName: 'Query Builder',
               Index: 1,
-              Element: (
-                <UserFilterExpressionWizard
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                  ExpressionMode={ExpressionMode.SingleColumn}
-                />
-              ),
+              Element: <UserFilterExpressionWizard ExpressionMode={ExpressionMode.SingleColumn} />,
             },
             {
               StepName: 'Settings',
               Index: 2,
-              Element: <UserFilterSettingsWizard UserFilters={this.props.UserFilters} />,
+              Element: <UserFilterSettingsWizard />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <UserFilterSummaryWizard UserFilters={this.props.UserFilters} />,
+              Element: <UserFilterSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -12,11 +11,12 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Flex } from 'rebass';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
   ColumnFilters: ColumnFilter[];
   Columns: AdaptableColumn[];
-
+  Api: AdaptableApi;
   AccessLevel: AccessLevel;
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
@@ -49,13 +49,13 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
   private createRow(colItems: IColItem[], columnFilter: ColumnFilter): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
-    rowColItems[0].Content = ColumnHelper.getFriendlyNameFromColumnId(
-      columnFilter.ColumnId,
-      this.props.Columns
+    rowColItems[0].Content = this.props.Api.gridApi.getFriendlyNameFromColumnId(
+      columnFilter.ColumnId
     );
     rowColItems[1].Content = ExpressionHelper.ConvertExpressionToString(
       columnFilter.Filter,
       this.props.Columns,
+      this.props.Api,
       false
     );
     rowColItems[2].Content = (

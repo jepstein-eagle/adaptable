@@ -95,6 +95,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   generalOptions: {
     showMissingPrimaryKeyWarning: true,
+    showMissingColumnsWarning: false,
     preventDuplicatePrimaryKeyValues: true,
     showGroupingTotalsAsHeader: false,
   },

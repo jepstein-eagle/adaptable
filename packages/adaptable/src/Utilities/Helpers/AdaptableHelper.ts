@@ -1,5 +1,4 @@
 import { cloneDeepWith, isPlainObject } from 'lodash';
-import { ColumnHelper } from './ColumnHelper';
 import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';
@@ -102,10 +101,9 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
   return returnadaptableOptions;
 }
 
-export function isValidPrimaryKey(adaptable: IAdaptable, columns: AdaptableColumn[]): boolean {
-  const pkColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-    adaptable.adaptableOptions.primaryKey,
-    columns
+export function isValidPrimaryKey(adaptable: IAdaptable): boolean {
+  const pkColumn: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(
+    adaptable.adaptableOptions.primaryKey
   );
 
   if (pkColumn == null) {

@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { ExpressionEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { BaseEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
@@ -13,7 +12,7 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
 export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
-  extends ExpressionEntityRowProps<AdvancedSearchEntityRow> {
+  extends BaseEntityRowProps<AdvancedSearchEntityRow> {
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
   ColumnFilter: ColumnFilter;
@@ -28,9 +27,8 @@ export class ColumnFilterEntityRow extends React.Component<
     let colItems: IColItem[] = [].concat(this.props.colItems);
     colItems[0].Content = (
       <EntityRowItem
-        Content={ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.ColumnFilter.ColumnId,
-          this.props.Columns
+        Content={this.props.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.ColumnFilter.ColumnId
         )}
       />
     );
@@ -38,7 +36,8 @@ export class ColumnFilterEntityRow extends React.Component<
       <EntityRowItem
         Content={ExpressionHelper.ConvertExpressionToString(
           this.props.ColumnFilter.Filter,
-          this.props.Columns
+          this.props.api.gridApi.getColumns(),
+          this.props.api
         )}
       />
     );

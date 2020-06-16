@@ -26,7 +26,6 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
           FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Y Axis',
@@ -42,14 +41,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
               StepName: 'X Axis',
               Index: 2,
               Element: (
-                <CategoryChartXAxisExpressionWizard
-                  Columns={this.props.Columns}
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                  ExpressionMode={ExpressionMode.SingleColumn}
-                />
+                <CategoryChartXAxisExpressionWizard ExpressionMode={ExpressionMode.SingleColumn} />
               ),
             },
             {

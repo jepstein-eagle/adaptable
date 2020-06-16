@@ -7,7 +7,6 @@ import {
 import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '@adaptabletools/adaptable/src/View/Components/Selectors/ColumnSelector';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import WizardPanel from '@adaptabletools/adaptable/src/components/WizardPanel';
 import { SparklineColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/SparklineColumnState';
 
@@ -36,7 +35,7 @@ export class SparklineColumnSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={ColumnHelper.getNumericArrayColumns(this.props.Columns)}
+          ColumnList={this.props.Adaptable.api.gridApi.getNumericArrayColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

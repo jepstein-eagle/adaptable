@@ -64,9 +64,8 @@ export class LayoutGridSortWizard
         <GridSortRow
           key={index}
           AdaptableObject={null}
+          api={this.props.Adaptable.api}
           colItems={colItems}
-          Columns={this.props.SortableColumns}
-          UserFilters={null}
           onEdit={null}
           onDeleteColumnSort={() => this.onDeleteGridSort(index)}
           onColumnSortColumnChanged={column => this.onColumnSelectedChanged(index, column)}

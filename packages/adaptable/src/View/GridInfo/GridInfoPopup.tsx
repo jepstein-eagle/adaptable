@@ -14,7 +14,6 @@ import Radio from '../../components/Radio';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import SimpleButton from '../../components/SimpleButton';
 import { AdaptableColumn, AdaptableOptions } from '../../types';
-import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonMaximise } from '../Components/Buttons/ButtonMaximise';
 import { ButtonMinimise } from '../Components/Buttons/ButtonMinimise';
@@ -409,7 +408,11 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       columns
     );
     let sorts: any = this.props.Adaptable.api.gridApi.getColumnSorts().map(gs => {
-      return ColumnHelper.getFriendlyNameFromColumnId(gs.Column, columns) + ': ' + gs.SortOrder;
+      return (
+        this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(gs.Column) +
+        ': ' +
+        gs.SortOrder
+      );
     });
 
     returnRows.push(

@@ -8,7 +8,6 @@ import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { DualListBoxEditor } from '../Components/ListBox/DualListBoxEditor';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IMasterChildren } from '../../Utilities/Interface/IMasterChildren';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
@@ -31,16 +30,16 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
         return {
           Master: cc.ColumnCategoryId,
           Children: cc.ColumnIds.map(ci =>
-            ColumnHelper.getFriendlyNameFromColumnId(ci, this.props.Columns)
+            this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(ci)
           ),
         };
       });
     }
     availableValues = this.props.Columns.map(x =>
-      ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x)
+      this.props.Adaptable.api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
     selectedValues = this.props.Columns.filter(x => x.Visible).map(x =>
-      ColumnHelper.getFriendlyNameFromColumn(x.ColumnId, x)
+      this.props.Adaptable.api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
 
     let infoBody: any[] = [
@@ -78,9 +77,8 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
   }
 
   private ColumnListChange(columnList: Array<string>) {
-    let cols: AdaptableColumn[] = ColumnHelper.getColumnsFromFriendlyNames(
-      columnList,
-      this.props.Columns
+    let cols: AdaptableColumn[] = this.props.Adaptable.api.gridApi.getColumnsFromFriendlyNames(
+      columnList
     );
     this.props.onNewColumnListOrder(cols);
   }

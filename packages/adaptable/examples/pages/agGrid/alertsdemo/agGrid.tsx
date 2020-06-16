@@ -8,25 +8,41 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
+import { TickingDataHelper } from '../../TickingDataHelper';
 
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 /*
 Demo for checking alerts work
 */
 
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(500);
+  const tradeCount: number = 25;
+  const tradeData: any = examplesHelper.getTrades(tradeCount);
+  const tickingDataHelper = new TickingDataHelper();
+  const useTickingData: boolean = true;
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'Alerts Demo'
-  );
-  adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableOptions: AdaptableOptions = {
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    primaryKey: 'tradeId',
+    userName: 'demo user',
+    adaptableId: 'alerts demo',
+    predefinedConfig: demoConfig,
+  };
   const adaptableApi = Adaptable.init(adaptableOptions);
+  tickingDataHelper.useTickingDataagGrid(
+    adaptableOptions.vendorGrid,
+    adaptableApi,
+    1000,
+    tradeCount,
+    true
+  );
 }
 
 let demoConfig: PredefinedConfig = {
@@ -34,24 +50,24 @@ let demoConfig: PredefinedConfig = {
     VisibleToolbars: ['Layout', 'Alert'],
   },
   Alert: {
+    Revision: 4,
     AlertDefinitions: [
       {
-        ColumnId: 'price',
+        ColumnId: 'notional',
         MessageType: 'Warning',
         Range: {
-          Operand1: '100',
           Operand1Type: 'Value',
-          Operator: 'PercentChange',
+          Operator: 'AnyChange',
         },
         AlertProperties: {
           ShowPopup: false,
-          ShowInDiv: true,
+          ShowInDiv: false,
         },
       },
     ],
-    AlertDisplayDiv: 'alertDiv', // for when testing showing alerts in the User nominated Div
+    //  AlertDisplayDiv: 'alertDiv', // for when testing showing alerts in the User nominated Div
     // AlertDisplayDiv: '',
-    MaxAlertsInStore: 5,
+    MaxAlertsInStore: 105,
   },
 };
 

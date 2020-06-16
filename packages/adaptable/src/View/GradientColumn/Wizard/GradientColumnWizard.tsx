@@ -21,7 +21,6 @@ export class GradientColumnWizard extends React.Component<GradientColumnWizardPr
           FriendlyName={StrategyConstants.GradientColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',

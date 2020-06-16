@@ -8,8 +8,6 @@ import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enum
 
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
-
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import HelpBlock from '../../../components/HelpBlock';
 
 import WizardPanel from '../../../components/WizardPanel';
@@ -38,11 +36,6 @@ export class CustomSortValuesWizard
   }
 
   render(): any {
-    let friendlyName = ColumnHelper.getFriendlyNameFromColumnId(
-      this.props.Data.ColumnId,
-      this.props.Columns
-    );
-
     return (
       <WizardPanel>
         <HelpBlock marginBottom={2}>

@@ -21,7 +21,6 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
           FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',
@@ -51,21 +50,12 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
             {
               StepName: 'Query Builder',
               Index: 5,
-              Element: (
-                <AlertExpressionWizard
-                  Columns={this.props.Columns}
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
-                  Adaptable={this.props.Adaptable}
-                />
-              ),
+              Element: <AlertExpressionWizard Adaptable={this.props.Adaptable} />,
             },
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <AlertSummaryWizard UserFilters={this.props.UserFilters} />,
+              Element: <AlertSummaryWizard />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

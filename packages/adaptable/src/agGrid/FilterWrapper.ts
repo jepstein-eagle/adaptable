@@ -12,7 +12,6 @@ import { IColumnFilterContext } from '../Utilities/Interface/IColumnFilterContex
 import { Adaptable } from './Adaptable';
 import { FilterFormReact } from '../View/Components/FilterForm/FilterForm';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export let FilterWrapperFactory = (adaptable: Adaptable) => {
   return <any>class FilterWrapper implements IFilterComp {
@@ -53,10 +52,7 @@ export let FilterWrapperFactory = (adaptable: Adaptable) => {
     afterGuiAttached?(params?: { hidePopup?: Function }): void {
       //we always unmount first so the autofocus from the form works... in other grids we unmount when hidden
       ReactDOM.unmountComponentAtNode(this.filterContainer);
-      let column: AdaptableColumn = ColumnHelper.getColumnFromId(
-        this.column.getColId(),
-        adaptable.api.gridApi.getColumns()
-      );
+      let column: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(this.column.getColId());
       let filterContext: IColumnFilterContext = {
         Column: column,
         Adaptable: adaptable,

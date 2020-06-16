@@ -17,17 +17,17 @@ import {
 
 import { EnumExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/EnumExtensions';
 import * as React from 'react';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import { CategoryChartComponentState } from './CategoryChartComponentState';
 import { DefaultCategoryChartProperties } from '@adaptabletools/adaptable/src/Utilities/Defaults/DefaultCategoryChartProperties';
+import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
 /* Trying to make Charting a bit more 'manageable by putting some of the functionality in ChartDisplayPopup into this Helper Class
  */
 
 export function setChartDisplayPopupState(
   chartDefinition: CategoryChartDefinition,
-  columns: AdaptableColumn[]
+  api: AdaptableApi
 ): CategoryChartComponentState {
   let categoryChartProperties: CategoryChartProperties = Object.assign(
     {},
@@ -48,13 +48,13 @@ export function setChartDisplayPopupState(
     SetYAxisMaximumValue: categoryChartProperties.YAxisMaximumValue != undefined,
     SetYAxisLabelColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.YAxisLabelColor),
     SetYAxisTitleColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.YAxisTitleColor),
-    UseDefaultYAxisTitle: isDefaultYAxisTitle(chartDefinition, columns), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.YAxisTitle),
+    UseDefaultYAxisTitle: isDefaultYAxisTitle(chartDefinition, api), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.YAxisTitle),
 
     // X Axis
     IsXAxisMinimised: true,
     SetXAxisLabelColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.XAxisLabelColor),
     SetXAxisTitleColor: StringExtensions.IsNotNullOrEmpty(categoryChartProperties.XAxisTitleColor),
-    UseDefaultXAxisTitle: isDefaultXAxisTitle(chartDefinition, columns), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.XAxisTitle),
+    UseDefaultXAxisTitle: isDefaultXAxisTitle(chartDefinition, api), // StringExtensions.IsNullOrEmpty(chartDefinition.ChartProperties.XAxisTitle),
 
     // Highlights
     IsHighlightsMinimised: true,
@@ -66,42 +66,36 @@ export function setChartDisplayPopupState(
   };
 }
 
-function isDefaultYAxisTitle(
-  chartDefinition: CategoryChartDefinition,
-  columns: AdaptableColumn[]
-): boolean {
+function isDefaultYAxisTitle(chartDefinition: CategoryChartDefinition, api: AdaptableApi): boolean {
   let categoryChartProperties: CategoryChartProperties = chartDefinition.ChartProperties as CategoryChartProperties;
   return (
     StringExtensions.IsNullOrEmpty(categoryChartProperties.YAxisTitle) ||
-    categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, columns)
+    categoryChartProperties.YAxisTitle == createDefaultYAxisTitle(chartDefinition, api)
   );
 }
 
-function isDefaultXAxisTitle(
-  chartDefinition: CategoryChartDefinition,
-  columns: AdaptableColumn[]
-): boolean {
+function isDefaultXAxisTitle(chartDefinition: CategoryChartDefinition, api: AdaptableApi): boolean {
   let categoryChartProperties: CategoryChartProperties = chartDefinition.ChartProperties as CategoryChartProperties;
   return (
     StringExtensions.IsNullOrEmpty(categoryChartProperties.XAxisTitle) ||
-    categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, columns)
+    categoryChartProperties.XAxisTitle == createDefaultXAxisTitle(chartDefinition, api)
   );
 }
 
 export function createDefaultYAxisTitle(
   chartDefinition: CategoryChartDefinition,
-  columns: AdaptableColumn[]
+  api: AdaptableApi
 ): string {
   return chartDefinition.YAxisColumnIds.map(c => {
-    return ColumnHelper.getFriendlyNameFromColumnId(c, columns);
+    return api.gridApi.getFriendlyNameFromColumnId(c);
   }).join(', ');
 }
 
 export function createDefaultXAxisTitle(
   chartDefinition: CategoryChartDefinition,
-  columns: AdaptableColumn[]
+  api: AdaptableApi
 ): string {
-  return ColumnHelper.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId, columns);
+  return api.gridApi.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId);
 }
 
 export function setDefaultChartDisplayPopupState(): CategoryChartComponentState {

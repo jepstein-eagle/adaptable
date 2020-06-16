@@ -2,7 +2,6 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
-  ExpressionWizardProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
@@ -10,7 +9,7 @@ import { Report } from '../../../PredefinedConfig/ExportState';
 import { UIHelper } from '../../UIHelper';
 
 export class ReportExpressionWizard extends ExpressionBuilderPage implements AdaptableWizardStep {
-  constructor(private props2: ExpressionWizardProps<Report>) {
+  constructor(private props2: AdaptableWizardStepProps<Report>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);

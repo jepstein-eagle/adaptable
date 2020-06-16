@@ -72,7 +72,6 @@ import { Report } from '../../PredefinedConfig/ExportState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import {
   DEFAULT_LAYOUT,
   CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
@@ -1951,7 +1950,8 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
                 Column: actionTyped.columnFilter.ColumnId,
                 ColumnFilter: ExpressionHelper.ConvertExpressionToString(
                   actionTyped.columnFilter.Filter,
-                  middlewareAPI.getState().Grid.Columns
+                  middlewareAPI.getState().Grid.Columns,
+                  adaptable.api
                 ),
               },
             };
@@ -1968,7 +1968,8 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
                 Column: actionTyped.columnFilter.ColumnId,
                 ColumnFilter: ExpressionHelper.ConvertExpressionToString(
                   actionTyped.columnFilter.Filter,
-                  middlewareAPI.getState().Grid.Columns
+                  middlewareAPI.getState().Grid.Columns,
+                  adaptable.api
                 ),
               },
             };
@@ -2305,7 +2306,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               // set columns
               let adaptableColumns: AdaptableColumn[] = [];
               currentLayout.AdaptableGridInfo.CurrentColumns.forEach(c => {
-                let column = ColumnHelper.getColumnFromId(c, gridState.Columns);
+                let column = adaptable.api.gridApi.getColumnFromId(c);
                 if (column) {
                   adaptableColumns.push(column);
                 } else {

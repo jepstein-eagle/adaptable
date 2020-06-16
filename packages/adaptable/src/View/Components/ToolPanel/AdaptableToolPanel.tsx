@@ -32,7 +32,7 @@ import {
 import SimpleButton from '../../../components/SimpleButton';
 import { ButtonConfigure } from '../Buttons/ButtonConfigure';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import ColumnHelper from '../../../Utilities/Helpers/ColumnHelper';
+
 import AdaptableContext from '../../AdaptableContext';
 
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
@@ -177,7 +177,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
   ];
 
   const onSetColumnVisibility = (name: string) => {
-    let changedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(name, props.Columns);
+    let changedColumn: AdaptableColumn = props.Adaptable.api.gridApi.getColumnFromId(name);
 
     let columns: AdaptableColumn[] = [].concat(props.Columns);
     changedColumn = Object.assign({}, changedColumn, {

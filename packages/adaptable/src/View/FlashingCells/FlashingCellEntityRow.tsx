@@ -1,17 +1,15 @@
 import * as React from 'react';
 
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ColorPicker } from '../ColorPicker';
 import { IColItem } from '../UIInterfaces';
 import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import Checkbox from '../../components/CheckBox';
 import Dropdown from '../../components/Dropdown';
 
-export interface FlashingCellEntityRowProps
-  extends SharedEntityExpressionRowProps<FlashingCellEntityRow> {
+export interface FlashingCellEntityRowProps extends SharedEntityRowProps<FlashingCellEntityRow> {
   FlashingCellDurations: any[];
   ColorPalette: string[];
   onSelect: (flashingCell: FlashingCell) => void;
@@ -38,7 +36,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     }
 
     let isDisabled = false; // TODO:  need to get from Entitlements !  flashingCell.IsReadOnly
-    let column = ColumnHelper.getColumnFromId(flashingCell.ColumnId, this.props.Columns);
+    let column = this.props.api.gridApi.getColumnFromId(flashingCell.ColumnId);
     if (!column) {
       return null;
     }

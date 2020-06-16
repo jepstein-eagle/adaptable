@@ -26,7 +26,6 @@ import { UIHelper } from '../UIHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
@@ -92,15 +91,15 @@ class CustomSortPopupComponent extends React.Component<
       return (
         <CustomSortEntityRow
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={customSort}
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-          ColumnLabel={ColumnHelper.getFriendlyNameFromColumnId(
-            customSort.ColumnId,
-            this.props.Columns
+          ColumnLabel={this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+            customSort.ColumnId
           )}
           AccessLevel={this.props.AccessLevel}
         />
@@ -137,11 +136,6 @@ class CustomSortPopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
               ConfigEntities={this.props.CustomSorts}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

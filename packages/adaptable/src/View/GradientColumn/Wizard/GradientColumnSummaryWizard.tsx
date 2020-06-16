@@ -7,11 +7,9 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableStyle } from '../../../PredefinedConfig/Common/AdaptableStyle';
 import { GradientColumn } from '../../../PredefinedConfig/GradientColumnState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 
 export interface GradientColumnSummaryWizardProps
   extends AdaptableWizardStepProps<GradientColumn> {}
@@ -34,9 +32,8 @@ export class GradientColumnSummaryWizard
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
       {

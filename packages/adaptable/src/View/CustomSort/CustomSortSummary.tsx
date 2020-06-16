@@ -95,11 +95,6 @@ export class CustomSortSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
             ConfigEntities={this.props.CustomSorts}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

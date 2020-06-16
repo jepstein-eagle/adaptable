@@ -21,7 +21,6 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
           FriendlyName={StrategyConstants.PercentBarStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',

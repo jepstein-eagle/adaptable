@@ -5,15 +5,14 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class ConditionalStyleEntityRow extends React.Component<
-  SharedEntityExpressionRowProps<ConditionalStyleEntityRow>,
+  SharedEntityRowProps<ConditionalStyleEntityRow>,
   {}
 > {
   render(): any {
@@ -21,7 +20,7 @@ export class ConditionalStyleEntityRow extends React.Component<
 
     let column: AdaptableColumn | undefined =
       conditionalStyle.ConditionalStyleScope == 'Column'
-        ? ColumnHelper.getColumnFromId(conditionalStyle.ColumnId!, this.props.Columns)
+        ? this.props.api.gridApi.getColumnFromId(conditionalStyle.ColumnId!)
         : undefined;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
@@ -34,7 +33,8 @@ export class ConditionalStyleEntityRow extends React.Component<
       <EntityRowItem
         Content={ExpressionHelper.ConvertExpressionToString(
           conditionalStyle.Expression,
-          this.props.Columns
+          this.props.api.gridApi.getColumns(),
+          this.props.api
         )}
       />
     );
@@ -60,10 +60,7 @@ export class ConditionalStyleEntityRow extends React.Component<
       case 'Row':
         return 'Row';
       case 'Column':
-        return ColumnHelper.getFriendlyNameFromColumnId(
-          conditionalStyle.ColumnId,
-          this.props.Columns
-        );
+        return this.props.api.gridApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId);
       //   case 'DataType':
       //     return conditionalStyle.DataType + ' Columns';
       case 'ColumnCategory':

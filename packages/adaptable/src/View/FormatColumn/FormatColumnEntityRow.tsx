@@ -4,26 +4,24 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { UIHelper } from '../UIHelper';
 import FormatHelper from '../../Utilities/Helpers/FormatHelper';
 
 export class FormatColumnEntityRow extends React.Component<
-  SharedEntityExpressionRowProps<FormatColumnEntityRow>,
+  SharedEntityRowProps<FormatColumnEntityRow>,
   {}
 > {
   render(): any {
     let formatColumn = this.props.AdaptableObject as FormatColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
-    let adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-      formatColumn.ColumnId,
-      this.props.Columns
+    let adaptableColumn: AdaptableColumn = this.props.api.gridApi.getColumnFromId(
+      formatColumn.ColumnId
     );
     if (adaptableColumn) {
       colItems[0].Content = <EntityRowItem Content={adaptableColumn.FriendlyName} />;

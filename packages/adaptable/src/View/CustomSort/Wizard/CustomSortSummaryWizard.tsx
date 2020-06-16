@@ -7,7 +7,6 @@ import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColum
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface CustomSortSummaryWizardProps extends AdaptableWizardStepProps<CustomSort> {}
@@ -21,9 +20,8 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
       { Key: 'Values', Value: this.props.Data.SortedValues.join(', ') },

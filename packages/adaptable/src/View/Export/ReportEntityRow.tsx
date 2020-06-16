@@ -2,7 +2,7 @@ import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { ExportDestination } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { EntityRowItem } from '../Components/EntityRowItem';
@@ -11,7 +11,7 @@ import { ReactComponentLike } from 'prop-types';
 import DropdownButton from '../../components/DropdownButton';
 import { IReportService } from '../../Utilities/Services/Interface/IReportService';
 const ExportIcon = icons.export as ReactComponentLike;
-export interface ReportEntityRowProps extends SharedEntityExpressionRowProps<ReportEntityRow> {
+export interface ReportEntityRowProps extends SharedEntityRowProps<ReportEntityRow> {
   ReportService: IReportService;
   canExportToExel: boolean;
   onExport: (exportDestination: ExportDestination) => void;
@@ -42,14 +42,17 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
     colItems[0].Content = <EntityRowItem Content={report.Name} />;
     colItems[1].Content = (
       <EntityRowItem
-        Content={this.props.ReportService.GetReportColumnsDescription(report, this.props.Columns)}
+        Content={this.props.ReportService.GetReportColumnsDescription(
+          report,
+          this.props.api.gridApi.getColumns()
+        )}
       />
     );
     colItems[2].Content = (
       <EntityRowItem
         Content={this.props.ReportService.GetReportExpressionDescription(
           report,
-          this.props.Columns
+          this.props.api.gridApi.getColumns()
         )}
       />
     );

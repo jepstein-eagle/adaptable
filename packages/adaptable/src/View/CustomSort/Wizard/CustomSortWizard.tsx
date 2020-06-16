@@ -18,16 +18,15 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
         FriendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
         ModalContainer={this.props.ModalContainer}
         Adaptable={this.props.Adaptable}
-        Columns={this.props.Columns}
         Steps={[
           {
             StepName: 'Select Column',
             Index: 0,
             Element: (
               <CustomSortColumnWizard
-                SortedColumns={this.props.Columns.filter(
-                  x => !customSorts.find(y => y.ColumnId == x.ColumnId)
-                )}
+                SortedColumns={this.props.Adaptable.api.gridApi
+                  .getColumns()
+                  .filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))}
                 CustomSorts={customSorts}
               />
             ),

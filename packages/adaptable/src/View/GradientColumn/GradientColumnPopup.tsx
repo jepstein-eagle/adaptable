@@ -20,7 +20,6 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { GradientColumnWizard } from './Wizard/GradientColumnWizard';
@@ -110,15 +109,14 @@ class GradientColumnPopupComponent extends React.Component<
 
     let GradientColumnItems = this.props.GradientColumns.map(
       (gradientColumn: GradientColumn, index) => {
-        let column = ColumnHelper.getColumnFromId(gradientColumn.ColumnId, this.props.Columns);
+        let column = this.props.Adaptable.api.gridApi.getColumnFromId(gradientColumn.ColumnId);
         return (
           <GradientColumnEntityRow
             key={gradientColumn.Uuid}
             colItems={colItems}
+            api={this.props.Adaptable.api}
             AdaptableObject={gradientColumn}
             Column={column}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
             ColorPalette={this.props.ColorPalette}
             onEdit={() => this.onEdit(gradientColumn)}
             onShare={description => this.props.onShare(gradientColumn, description)}
@@ -181,12 +179,7 @@ class GradientColumnPopupComponent extends React.Component<
               ConfigEntities={null}
               Adaptable={this.props.Adaptable}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
               ColorPalette={this.props.ColorPalette}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

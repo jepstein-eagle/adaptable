@@ -10,9 +10,7 @@ import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { UpdatedRowInfo, ChangeDirection } from '../Utilities/Services/Interface/IDataService';
-import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import * as UpdatedRowRedux from '../Redux/ActionsReducers/UpdatedRowRedux';
 
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {
@@ -103,9 +101,8 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
       return ChangeDirection.Neutral;
     }
 
-    let columnDataType = ColumnHelper.getColumnDataTypeFromColumnId(
-      dataChangedInfo.ColumnId,
-      this.adaptable.api.gridApi.getColumns()
+    let columnDataType = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+      dataChangedInfo.ColumnId
     );
 
     if (columnDataType != DataType.Number && columnDataType != DataType.Date) {

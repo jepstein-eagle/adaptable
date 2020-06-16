@@ -90,11 +90,6 @@ export class AlertSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}

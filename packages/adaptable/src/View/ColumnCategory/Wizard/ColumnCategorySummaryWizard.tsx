@@ -7,9 +7,6 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-
 export interface ColumnCategorySummaryWizardProps
   extends AdaptableWizardStepProps<ColumnCategory> {}
 
@@ -37,10 +34,9 @@ export class ColumnCategorySummaryWizard
   }
 
   private getColumnNames(): string {
-    return ColumnHelper.getFriendlyNamesFromColumnIds(
-      this.props.Data.ColumnIds,
-      this.props.Columns
-    ).join(', ');
+    return this.props.Adaptable.api.gridApi
+      .getFriendlyNamesFromColumnIds(this.props.Data.ColumnIds)
+      .join(', ');
   }
 
   public canBack(): boolean {

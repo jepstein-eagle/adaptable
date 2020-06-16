@@ -72,6 +72,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
     let previewPanel = (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
+        Api={this.props.Adaptable.api}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
         SelectedColumn={selectedColumn}

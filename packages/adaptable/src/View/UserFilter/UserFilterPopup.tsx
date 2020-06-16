@@ -101,12 +101,11 @@ class UserFilterPopupComponent extends React.Component<
       return (
         <UserFilterEntityRow
           AdaptableObject={userFilter}
+          api={this.props.Adaptable.api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(userFilter, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          UserFilters={this.props.UserFilters}
-          Columns={this.props.Columns}
           onEdit={() => this.onEdit(userFilter)}
           onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
           AccessLevel={this.props.AccessLevel}
@@ -147,13 +146,8 @@ class UserFilterPopupComponent extends React.Component<
           {this.state.EditedAdaptableObject != null && (
             <UserFilterWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
-              Columns={this.props.Columns}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={selectedColumnId}
               Adaptable={this.props.Adaptable}

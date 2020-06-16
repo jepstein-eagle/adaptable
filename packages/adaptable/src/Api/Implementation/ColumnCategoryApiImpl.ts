@@ -4,6 +4,7 @@ import { ColumnCategoryApi } from '../ColumnCategoryApi';
 import { ColumnCategoryState, ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class ColumnCategoryApiImpl extends ApiBase implements ColumnCategoryApi {
   public getColumnCategoryState(): ColumnCategoryState {
@@ -58,6 +59,22 @@ export class ColumnCategoryApiImpl extends ApiBase implements ColumnCategoryApi 
       cc => cc.ColumnCategoryId == columnCategoryId
     );
     this.dispatchAction(ColumnCategoryRedux.ColumnCategoryDelete(columnCategory));
+  }
+
+  public getColumnCategoryFromColumnCategories(
+    columnId: string,
+    ColumnCategoryns: ColumnCategory[]
+  ): string {
+    let returnValue: string = '';
+    ColumnCategoryns.forEach(c => {
+      if (StringExtensions.IsNullOrEmpty(returnValue)) {
+        const column: string | undefined = c.ColumnIds.find(col => col == columnId);
+        if (column) {
+          returnValue = c.ColumnCategoryId;
+        }
+      }
+    });
+    return returnValue;
   }
 
   public showColumnCategoryPopup(): void {

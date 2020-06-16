@@ -8,7 +8,6 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import UIHelper from '../../UIHelper';
 import FormatHelper from '../../../Utilities/Helpers/FormatHelper';
@@ -22,17 +21,15 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
 
   render() {
-    let adaptableColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-      this.props.Data.ColumnId,
-      this.props.Columns
+    let adaptableColumn: AdaptableColumn = this.props.Adaptable.api.gridApi.getColumnFromId(
+      this.props.Data.ColumnId
     );
 
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
 

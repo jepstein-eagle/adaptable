@@ -1,20 +1,14 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
-import { AdaptablePopover } from '../../AdaptablePopover';
 
 import { GradientColumn } from '../../../PredefinedConfig/GradientColumnState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import WizardPanel from '../../../components/WizardPanel';
 import Panel from '../../../components/Panel';
-import Radio from '../../../components/Radio';
-import { Flex, Text, Box } from 'rebass';
+import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 import HelpBlock from '../../../components/HelpBlock';
 import { ColorPicker } from '../../ColorPicker';

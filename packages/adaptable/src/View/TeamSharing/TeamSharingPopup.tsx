@@ -112,23 +112,28 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
     switch (sharedEntity.FunctionName) {
       case StrategyConstants.AdvancedSearchStrategyId: {
         return (
-          <AdvancedSearchSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
+          <AdvancedSearchSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />
         );
       }
       case StrategyConstants.CalculatedColumnStrategyId: {
         return (
-          <CalculatedColumnSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
+          <CalculatedColumnSharedEntity
+            Entity={sharedEntity.Entity}
+            Api={this.props.Adaptable.api}
+          />
         );
       }
       case StrategyConstants.CustomSortStrategyId: {
-        return <CustomSortSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return (
+          <CustomSortSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />
+        );
       }
 
       case StrategyConstants.CellValidationStrategyId: {
         return (
           <CellValidationSharedEntity
             Entity={sharedEntity.Entity}
-            Columns={this.props.Columns}
+            Api={this.props.Adaptable.api}
             ValidationService={this.props.Adaptable.ValidationService}
           />
         );
@@ -136,35 +141,44 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
       case StrategyConstants.ConditionalStyleStrategyId: {
         return (
-          <ConditionalStyleSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
+          <ConditionalStyleSharedEntity
+            Entity={sharedEntity.Entity}
+            Api={this.props.Adaptable.api}
+          />
         );
       }
 
       case StrategyConstants.ExportStrategyId: {
-        return <ExportSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return <ExportSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />;
       }
 
       case StrategyConstants.FormatColumnStrategyId: {
         return (
-          <FormatColumnSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />
+          <FormatColumnSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />
         );
       }
 
       case StrategyConstants.LayoutStrategyId: {
-        return <LayoutSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return <LayoutSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />;
       }
 
       case StrategyConstants.PercentBarStrategyId: {
-        return <PercentBarSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return (
+          <PercentBarSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />
+        );
       }
       case StrategyConstants.PlusMinusStrategyId: {
-        return <PlusMinusSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return (
+          <PlusMinusSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />
+        );
       }
       case StrategyConstants.ShortcutStrategyId: {
-        return <ShortcutSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return <ShortcutSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />;
       }
       case StrategyConstants.UserFilterStrategyId: {
-        return <UserFilterSharedEntity Entity={sharedEntity.Entity} Columns={this.props.Columns} />;
+        return (
+          <UserFilterSharedEntity Entity={sharedEntity.Entity} Api={this.props.Adaptable.api} />
+        );
       }
 
       case StrategyConstants.ColumnFilterStrategyId: {

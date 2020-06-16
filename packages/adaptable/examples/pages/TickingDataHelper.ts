@@ -23,6 +23,7 @@ export class TickingDataHelper {
     notionalOnly: boolean = false
   ) {
     if (gridOptions != null && gridOptions.api != null) {
+      console.log('here');
       const examplesHelper = new ExamplesHelper();
       let useadaptableApiUpdateGridData: boolean = true;
       let useadaptableApiUpdateGridDataBatch: boolean = false;
@@ -32,7 +33,7 @@ export class TickingDataHelper {
       let gridOptionsUpdateRowData: boolean = false;
 
       setInterval(() => {
-        let tradeId = this.generateRandomInt(0, tradeCount - 1);
+        let tradeId = 5; // this.generateRandomInt(0, tradeCount - 1);
 
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
         const randomInt = this.generateRandomInt(1, 2);
@@ -44,13 +45,14 @@ export class TickingDataHelper {
         const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         const bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
         const bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-        const notional = trade.notional + this.generateRandomInt(-5, 5); // this.getRandomItem(examplesHelper.getNotionals());
+        const notional = trade.notional + this.generateRandomInt(-100, 100); // this.getRandomItem(examplesHelper.getNotionals());
         const changeOnYear = examplesHelper.getMeaningfulDouble();
 
         if (useadaptableApiUpdateGridData) {
           if (notionalOnly) {
             trade.notional = notional;
           } else {
+            console.log(4);
             trade.price = price;
             trade.bid = bid;
             trade.ask = ask;

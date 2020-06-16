@@ -6,7 +6,6 @@ import {
   AdaptableWizardStep,
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { SparklinesChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import ColumnHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import { WizardSummaryPage } from '@adaptabletools/adaptable/src/View/Components/WizardSummaryPage';
 import { KeyValuePair } from '@adaptabletools/adaptable/src/Utilities/Interface/KeyValuePair';
 import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
@@ -27,9 +26,8 @@ export class SparklinesChartSummaryWizard
       { Key: 'Description', Value: this.props.Data.Description },
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
       { Key: 'Values', Value: this.getExpressionString(this.props.Data.Expression) },
@@ -46,7 +44,12 @@ export class SparklinesChartSummaryWizard
     if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
       return '[All Column Values]';
     } else {
-      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Columns, false);
+      return ExpressionHelper.ConvertExpressionToString(
+        expression,
+        this.props.Columns,
+        this.props.Adaptable.api,
+        false
+      );
     }
   }
 

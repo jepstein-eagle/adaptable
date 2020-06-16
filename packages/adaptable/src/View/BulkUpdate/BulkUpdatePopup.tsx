@@ -17,7 +17,6 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import CheckBox from '../../components/CheckBox';
@@ -95,6 +94,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
+        Api={this.props.Adaptable.api}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
         SelectedColumn={col}

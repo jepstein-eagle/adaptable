@@ -9,7 +9,6 @@ import * as AlertRedux from '../Redux/ActionsReducers/AlertRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
@@ -72,7 +71,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
         this.adaptable.api.alertApi.showAlert(
-          ColumnHelper.getFriendlyNameFromColumnId(alertDefintion.ColumnId, columns),
+          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(alertDefintion.ColumnId),
           this.adaptable.StrategyService.createAlertDescription(alertDefintion, columns),
           alertDefintion,
           dataChangedInfo
@@ -134,7 +133,9 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
+    let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+      dataChangedEvent.ColumnId
+    );
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
       alert.Range,
       dataChangedEvent.NewValue,

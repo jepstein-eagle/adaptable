@@ -21,7 +21,6 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
           FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Primary Column',

@@ -132,12 +132,11 @@ class SchedulePopupComponent extends React.Component<
       return (
         <ScheduleEntityRow
           AdaptableObject={baseSchedule}
+          api={this.props.Adaptable.api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(baseSchedule, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
-          UserFilters={this.props.UserFilters}
-          Columns={this.props.Columns}
           onEdit={() => this.onEdit(baseSchedule)}
           onDeleteConfirm={deleteAction}
           AccessLevel={this.props.AccessLevel}
@@ -210,11 +209,6 @@ class SchedulePopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as BaseSchedule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

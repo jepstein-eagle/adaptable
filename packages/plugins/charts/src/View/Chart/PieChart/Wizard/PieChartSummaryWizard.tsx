@@ -5,7 +5,6 @@ import {
   AdaptableWizardStep,
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { PieChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '@adaptabletools/adaptable/src/Utilities/Interface/KeyValuePair';
 import { WizardSummaryPage } from '@adaptabletools/adaptable/src/View/Components/WizardSummaryPage';
 import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
@@ -18,17 +17,15 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
     super(props);
   }
   render(): any {
-    let primaryColumnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
-      this.props.Data.PrimaryColumnId,
-      this.props.Columns
+    let primaryColumnFriendlyName: string = this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      this.props.Data.PrimaryColumnId
     );
     let seondaryColumnFriendlyName: string = StringExtensions.IsNullOrEmpty(
       this.props.Data.SecondaryColumnId
     )
       ? '[None]'
-      : ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.SecondaryColumnId,
-          this.props.Columns
+      : this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.SecondaryColumnId
         );
 
     let seondaryColumnOperation: string = StringExtensions.IsNullOrEmpty(

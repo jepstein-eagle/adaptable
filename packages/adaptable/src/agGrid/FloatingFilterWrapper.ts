@@ -15,7 +15,6 @@ import theme from '../theme';
 
 import { QuickFilterFormReact } from '../View/Components/FilterForm/QuickFilterForm';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 
 export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
   <any>class FloatingFilterWrapper implements IFloatingFilterComp {
@@ -35,10 +34,7 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
       this.filterContainer.id = `floatingFilter_${colId}_${adaptable.adaptableOptions.adaptableId}`;
       this.filterContainer.style.display = 'flex';
       this.filterContainer.style.flex = '1';
-      const column: AdaptableColumn = ColumnHelper.getColumnFromId(
-        colId,
-        adaptable.api.gridApi.getColumns()
-      );
+      const column: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(colId);
 
       const filterContext: IColumnFilterContext = {
         Column: column,

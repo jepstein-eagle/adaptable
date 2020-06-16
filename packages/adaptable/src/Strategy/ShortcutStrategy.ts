@@ -7,7 +7,6 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { DataType, MathOperation } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../Utilities/Helpers/ColumnHelper';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { FunctionAppliedDetails } from '../Api/Events/AuditEvents';
 import { Shortcut } from '../PredefinedConfig/ShortcutState';
@@ -43,9 +42,8 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (!activeCell) {
       return;
     }
-    let selectedColumn: AdaptableColumn = ColumnHelper.getColumnFromId(
-      activeCell.columnId,
-      this.adaptable.api.gridApi.getColumns()
+    let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+      activeCell.columnId
     );
     if (activeCell && !selectedColumn.ReadOnly) {
       let columnDataType = selectedColumn.DataType;

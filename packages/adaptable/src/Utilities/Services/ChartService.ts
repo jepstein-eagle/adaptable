@@ -1,7 +1,6 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
@@ -44,9 +43,8 @@ export class ChartService implements IChartService {
     // and then set chart.includedProperties to array of strings that contain selected data columns:
     // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
 
-    let xAxisColumnName = ColumnHelper.getFriendlyNameFromColumnId(
-      chartDefinition.XAxisColumnId,
-      columns
+    let xAxisColumnName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      chartDefinition.XAxisColumnId
     );
     let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
 
@@ -68,7 +66,7 @@ export class ChartService implements IChartService {
           columns,
           showAverageTotal
         );
-        let colName = ColumnHelper.getFriendlyNameFromColumnId(colID, columns);
+        let colName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(colID);
         if (yAxisColumnNames.indexOf(colName) < 0) {
           yAxisColumnNames.push(colName);
         }
@@ -472,8 +470,12 @@ export class ChartService implements IChartService {
   ): boolean {
     let returnValue: boolean = false;
     if (dataCounter.size > 15) {
-      let primaryColumn = ColumnHelper.getColumnFromId(chartDefinition.PrimaryColumnId, columns);
-      let primaryColumnIsNumeric: boolean = ColumnHelper.isNumericColumn(primaryColumn);
+      let primaryColumn = this.adaptable.api.gridApi.getColumnFromId(
+        chartDefinition.PrimaryColumnId
+      );
+      let primaryColumnIsNumeric: boolean = this.adaptable.api.gridApi.isNumericColumn(
+        primaryColumn
+      );
 
       returnValue = primaryColumnIsNumeric;
     }

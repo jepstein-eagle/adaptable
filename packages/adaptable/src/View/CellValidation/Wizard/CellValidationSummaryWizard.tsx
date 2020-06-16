@@ -8,14 +8,11 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface CellValidationSummaryWizardProps
-  extends AdaptableWizardStepProps<CellValidationRule> {
-  UserFilters: UserFilter[];
-}
+  extends AdaptableWizardStepProps<CellValidationRule> {}
 
 export class CellValidationSummaryWizard
   extends React.Component<CellValidationSummaryWizardProps, {}>
@@ -28,9 +25,8 @@ export class CellValidationSummaryWizard
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: ColumnHelper.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId,
-          this.props.Columns
+        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+          this.props.Data.ColumnId
         ),
       },
       { Key: 'Mode', Value: this.props.Data.ActionMode },
@@ -46,7 +42,8 @@ export class CellValidationSummaryWizard
         Value: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression)
           ? ExpressionHelper.ConvertExpressionToString(
               this.props.Data.Expression,
-              this.props.Columns
+              this.props.Columns,
+              this.props.Adaptable.api
             )
           : 'None',
       },

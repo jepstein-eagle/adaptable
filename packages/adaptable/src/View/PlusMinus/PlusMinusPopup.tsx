@@ -25,7 +25,6 @@ import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
@@ -92,15 +91,14 @@ class PlusMinusPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
     let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-      let column = ColumnHelper.getColumnFromId(x.ColumnId, this.props.Columns);
+      let column = this.props.Adaptable.api.gridApi.getColumnFromId(x.ColumnId);
 
       return (
         <PlusMinusEntityRow
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={x}
           key={index}
-          UserFilters={this.props.UserFilters}
-          Columns={this.props.Columns}
           onEdit={() => this.onEdit(x)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={description => this.props.onShare(x, description)}
@@ -145,11 +143,6 @@ class PlusMinusPopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              Columns={this.props.Columns}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
               Adaptable={this.props.Adaptable}

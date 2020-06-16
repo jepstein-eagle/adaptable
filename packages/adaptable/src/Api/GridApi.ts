@@ -5,6 +5,7 @@ import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { DataType, SortOrder } from '../PredefinedConfig/Common/Enums';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import { ColumnCategory } from '../types';
 
 /**
  * Provides access to important elements of Adaptable like columns, sorting, selected cells etc.
@@ -181,6 +182,26 @@ export interface GridApi {
   closeAllRowGroups(): void;
   getExpandRowGroupsKeys(): any[];
   expandRowGroupsForValues(columnValues: any[]): void;
+
+  isSpecialColumn(columnId: string): boolean;
+  isNumericColumn(column: AdaptableColumn): boolean;
+  getColumnDataTypeFromColumnId(
+    columnId: string
+  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
+  getFriendlyNameFromColumn(columnId: string, column: AdaptableColumn): string;
+  getFriendlyNameFromColumnId(columnId: string): string;
+  getFriendlyNamesFromColumnIds(columnIds: string[]): string[];
+  getColumnFromFriendlyName(columnName: string): AdaptableColumn;
+  getColumnIdFromFriendlyName(friendlyName: string): string;
+  getColumnIdsFromFriendlyNames(friendlyNames: string[]): string[];
+  getColumnsFromFriendlyNames(friendlyNames: string[]): AdaptableColumn[];
+  getColumnsFromIds(columnIds: string[]): AdaptableColumn[];
+  getColumnFromId(columnId: string): AdaptableColumn;
+
+  getSortableColumns(): AdaptableColumn[];
+  getGroupableColumns(): AdaptableColumn[];
+  getPivotableColumns(): AdaptableColumn[];
+  getAggregetableColumns(): AdaptableColumn[];
 
   /**
    * Destroys the current AdapTable instance.

@@ -4,7 +4,6 @@ import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { Flex } from 'rebass';
 
 export class FormatColumnSharedEntity extends React.Component<
@@ -16,9 +15,7 @@ export class FormatColumnSharedEntity extends React.Component<
 
     return (
       <Flex flexDirection="row" alignItems="center">
-        <Flex flex={4}>
-          {ColumnHelper.getFriendlyNameFromColumnId(fc.ColumnId, this.props.Columns)}
-        </Flex>
+        <Flex flex={4}>{this.props.Api.gridApi.getFriendlyNameFromColumnId(fc.ColumnId)}</Flex>
         <Flex flex={8}>
           <StyleVisualItem Style={fc.Style} />
         </Flex>

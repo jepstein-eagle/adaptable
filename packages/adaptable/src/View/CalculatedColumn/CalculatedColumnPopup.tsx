@@ -96,6 +96,7 @@ class CalculatedColumnPopupComponent extends React.Component<
         return (
           <CalculatedColumnEntityRow
             colItems={colItems}
+            api={this.props.Adaptable.api}
             Columns={this.props.Columns}
             onShare={description => this.props.onShare(calculatedColumn, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
@@ -143,12 +144,7 @@ class CalculatedColumnPopupComponent extends React.Component<
           <CalculatedColumnWizard
             EditedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
             ConfigEntities={this.props.CalculatedColumns}
-            Columns={this.props.Columns}
             ModalContainer={this.props.ModalContainer}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
             Adaptable={this.props.Adaptable}

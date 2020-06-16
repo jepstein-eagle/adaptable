@@ -16,10 +16,6 @@ import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-  UserFilters: Array<UserFilter>;
-  SystemFilters: Array<string>;
-  NamedFilters: Array<NamedFilter>;
-  ColumnCategories: Array<ColumnCategory>;
   ExpressionMode?: ExpressionMode;
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
@@ -78,10 +74,6 @@ export class ExpressionBuilderPage
           <ExpressionBuilderConditionSelector
             ColumnsList={this.props.Columns || []}
             QueryBuildStatus={queryBuildStatus}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             Expression={this.state.Expression}
             ExpressionMode={
               this.props.ExpressionMode != null
@@ -97,7 +89,7 @@ export class ExpressionBuilderPage
 
           <ExpressionBuilderPreview
             Expression={this.state.Expression}
-            UserFilters={this.props.UserFilters}
+            Api={this.props.Adaptable.api}
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             ColumnsList={this.props.Columns || []}
             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}

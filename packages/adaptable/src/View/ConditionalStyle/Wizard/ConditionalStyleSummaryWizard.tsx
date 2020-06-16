@@ -9,14 +9,11 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 
 export interface ConditionalStyleSummaryWizardProps
-  extends AdaptableWizardStepProps<ConditionalStyle> {
-  UserFilters: UserFilter[];
-}
+  extends AdaptableWizardStepProps<ConditionalStyle> {}
 
 export class ConditionalStyleSummaryWizard
   extends React.Component<ConditionalStyleSummaryWizardProps, {}>
@@ -34,7 +31,8 @@ export class ConditionalStyleSummaryWizard
         Key: 'Query',
         Value: ExpressionHelper.ConvertExpressionToString(
           this.props.Data.Expression,
-          this.props.Columns
+          this.props.Columns,
+          this.props.Adaptable.api
         ),
       },
     ];
@@ -54,7 +52,7 @@ export class ConditionalStyleSummaryWizard
       case 'Column':
         return (
           'Column:' +
-          ColumnHelper.getFriendlyNameFromColumnId(this.props.Data.ColumnId, this.props.Columns)
+          this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
         );
       //  case 'DataType':
       //     return this.props.Data.DataType + ' Columns';

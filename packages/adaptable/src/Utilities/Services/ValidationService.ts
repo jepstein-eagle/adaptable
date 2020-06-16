@@ -6,7 +6,6 @@ import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper'
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { ColumnHelper } from '../Helpers/ColumnHelper';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import {
   DistinctCriteriaPairValue,
@@ -209,7 +208,9 @@ export class ValidationService implements IValidationService {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = ColumnHelper.getColumnFromId(dataChangedEvent.ColumnId, columns);
+    let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+      dataChangedEvent.ColumnId
+    );
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
       cellValidationRule.Range,
       dataChangedEvent.NewValue,
@@ -296,13 +297,15 @@ export class ValidationService implements IValidationService {
       .Operator as LeafExpressionOperator;
     let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
       operator,
-      ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns)
+      this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId)
     );
 
     if (!ExpressionHelper.OperatorRequiresValue(operator)) {
       return valueDescription;
     }
-    let dataType = ColumnHelper.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId, columns);
+    let dataType = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+      cellValidationRule.ColumnId
+    );
     let operand1Text: string =
       dataType == DataType.Boolean || dataType == DataType.Number
         ? cellValidationRule.Range.Operand1
@@ -343,14 +346,18 @@ export class ValidationService implements IValidationService {
 
   public CreateCellValidationMessage(CellValidation: CellValidationRule): string {
     let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-    let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
-      CellValidation.ColumnId,
-      columns
+    let columnFriendlyName: string = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      CellValidation.ColumnId
     );
     let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
       CellValidation.Expression
     )
-      ? ' when ' + ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, columns)
+      ? ' when ' +
+        ExpressionHelper.ConvertExpressionToString(
+          CellValidation.Expression,
+          columns,
+          this.adaptable.api
+        )
       : EMPTY_STRING;
     return (
       columnFriendlyName +

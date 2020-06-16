@@ -8,10 +8,6 @@ import { SparklinesChartExpressionColumnWizard } from './SparklinesChartExpressi
 import { SparklinesChartSummaryWizard } from './SparklinesChartSummaryWizard';
 import { SparklinesChartSettingsWizard } from './SparklinesChartSettingsWizard';
 import { ExpressionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
-import { ColumnHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ColumnHelper';
-// import { PieChartSummaryWizard } from './PieChartSummaryWizard';
-// import { PieChartPrimaryColumnWizard } from './PieChartPrimaryColumnWizard';
-// import { PieChartSecondaryColumnWizard } from './PieChartSecondaryColumnWizard';
 
 export interface SparklinesChartWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<SparklinesChartWizard> {}
@@ -26,7 +22,6 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
           FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Adaptable={this.props.Adaptable}
-          Columns={this.props.Columns}
           Steps={[
             {
               StepName: 'Select Column',
@@ -38,11 +33,6 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
               Index: 1,
               Element: (
                 <SparklinesChartExpressionColumnWizard
-                  Columns={this.props.Columns}
-                  UserFilters={this.props.UserFilters}
-                  SystemFilters={this.props.SystemFilters}
-                  NamedFilters={this.props.NamedFilters}
-                  ColumnCategories={this.props.ColumnCategories}
                   ExpressionMode={ExpressionMode.SingleColumn}
                 />
               ),

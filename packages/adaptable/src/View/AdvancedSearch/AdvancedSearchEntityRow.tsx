@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IColItem } from '../UIInterfaces';
@@ -11,7 +11,7 @@ import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import Radio from '../../components/Radio';
 
 export interface AdvancedSearchEntityRowProps<AdvancedSearchEntityRow>
-  extends SharedEntityExpressionRowProps<AdvancedSearchEntityRow> {
+  extends SharedEntityRowProps<AdvancedSearchEntityRow> {
   IsCurrentAdvancedSearch: boolean;
   onSelect: (advancedSearch: AdvancedSearch) => void;
 }
@@ -36,7 +36,8 @@ export class AdvancedSearchEntityRow extends React.Component<
       <EntityRowItem
         Content={ExpressionHelper.ConvertExpressionToString(
           advancedSearch.Expression,
-          this.props.Columns
+          this.props.api.gridApi.getColumns(),
+          this.props.api
         )}
       />
     );

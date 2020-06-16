@@ -16,7 +16,6 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ColumnValueSelector } from '../Components/Selectors/ColumnValueSelector';
@@ -68,6 +67,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     let previewPanel = (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
+        Api={this.props.Adaptable.api}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
         SelectedColumn={selectedColumn}

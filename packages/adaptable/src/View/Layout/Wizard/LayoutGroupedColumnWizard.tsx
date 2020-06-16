@@ -5,7 +5,6 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
@@ -24,9 +23,8 @@ export class LayoutGroupedColumnWizard
   constructor(props: LayoutGroupedColumnWizardProps) {
     super(props);
     this.state = {
-      SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.GroupedColumns,
-        this.props.Columns
+      SelectedColumns: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+        this.props.Data.GroupedColumns
       ),
     };
   }
@@ -69,9 +67,8 @@ export class LayoutGroupedColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.GroupedColumns = ColumnHelper.getColumnIdsFromFriendlyNames(
-      this.state.SelectedColumns,
-      this.props.Columns
+    this.props.Data.GroupedColumns = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+      this.state.SelectedColumns
     );
   }
   public Back(): void {

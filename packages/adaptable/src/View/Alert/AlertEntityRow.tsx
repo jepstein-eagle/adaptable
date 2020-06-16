@@ -3,9 +3,8 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { SharedEntityExpressionRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
+import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -14,7 +13,7 @@ import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import Dropdown from '../../components/Dropdown';
 import { IStrategyService } from '../../Utilities/Services/StrategyService';
 
-export interface AlertEntityRowProps extends SharedEntityExpressionRowProps<AlertEntityRow> {
+export interface AlertEntityRowProps extends SharedEntityRowProps<AlertEntityRow> {
   Column: AdaptableColumn;
   onChangeMessageType: (alertDefinition: AlertDefinition, Type: MessageType) => void;
   StrategyService: IStrategyService;
@@ -64,17 +63,22 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
   setExpressionDescription(Alert: AlertDefinition): string {
     return ExpressionHelper.IsNotNullOrEmptyExpression(Alert.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.Columns)
+      ? ExpressionHelper.ConvertExpressionToString(
+          Alert.Expression,
+          this.props.api.gridApi.getColumns(),
+          this.props.api
+        )
       : 'No Expression';
   }
 
   private getColumnandRule(Alert: AlertDefinition): string {
-    let columnInfo: string = ColumnHelper.getFriendlyNameFromColumn(
+    let columnInfo: string = this.props.api.gridApi.getFriendlyNameFromColumn(
       Alert.ColumnId,
       this.props.Column
     );
     columnInfo +=
-      ': ' + this.props.StrategyService.createAlertDescription(Alert, this.props.Columns);
+      ': ' +
+      this.props.StrategyService.createAlertDescription(Alert, this.props.api.gridApi.getColumns());
     return columnInfo;
   }
 

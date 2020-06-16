@@ -7,7 +7,7 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-import { GridOptions, Column } from '@ag-grid-community/all-modules';
+import { GridOptions, Column, ColDef } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
   AdaptableApi,
@@ -149,9 +149,19 @@ function InitAdaptableDemo() {
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 
       //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
-      console.log('here');
-      api.formatColumnApi.setCellAlignment('amount', 'Right');
-      api.formatColumnApi.setCellAlignment('notional', 'Center');
+      console.log('here world');
+      const gridOptions: GridOptions = api.gridApi.getadaptableOptions().vendorGrid as GridOptions;
+      console.log(gridOptions);
+      let bbgBid: ColDef = {
+        headerName: 'Bbg Bid',
+        field: 'bloombergBid',
+        type: 'abColDefNumber',
+        hide: true,
+        sortable: true,
+      };
+      let columnDefs: any = gridOptions.columnDefs;
+      columnDefs?.push(bbgBid);
+      gridOptions.api?.setColumnDefs(columnDefs);
     }
   });
 

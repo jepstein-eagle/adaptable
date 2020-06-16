@@ -10,7 +10,6 @@ import {
   PermittedValuesColumn,
 } from '../../PredefinedConfig/UserInterfaceState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import ColumnHelper from '../../Utilities/Helpers/ColumnHelper';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {
@@ -54,9 +53,8 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     }
 
     if (typeof permittedValuesColumn.PermittedValues === 'function') {
-      let column: AdaptableColumn = ColumnHelper.getColumnFromId(
-        permittedValuesColumn.ColumnId,
-        this.adaptable.api.gridApi.getColumns()
+      let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+        permittedValuesColumn.ColumnId
       );
       return permittedValuesColumn.PermittedValues(column);
     } else {
@@ -95,9 +93,8 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     }
 
     if (typeof editLookUpColumn.LookUpValues === 'function') {
-      let column: AdaptableColumn = ColumnHelper.getColumnFromId(
-        editLookUpColumn.ColumnId,
-        this.adaptable.api.gridApi.getColumns()
+      let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+        editLookUpColumn.ColumnId
       );
       return editLookUpColumn.LookUpValues(column);
     } else {

@@ -87,11 +87,6 @@ export class UserFilterSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
             Adaptable={this.props.Adaptable}
             WizardStartIndex={this.state.WizardStartIndex}
@@ -120,7 +115,11 @@ export class UserFilterSummaryComponent extends React.Component<
       return 'Column is not filterable';
     }
 
-    return ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Columns);
+    return ExpressionHelper.ConvertExpressionToString(
+      userFilter.Expression,
+      this.props.Columns,
+      this.props.Adaptable.api
+    );
   }
 
   isFilterable(): boolean {

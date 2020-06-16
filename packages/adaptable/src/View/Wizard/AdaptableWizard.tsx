@@ -26,7 +26,6 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
   ModalContainer: HTMLElement;
   canFinishWizard: Function;
   Adaptable: IAdaptable;
-  Columns: Array<AdaptableColumn>;
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -239,7 +238,6 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       Data: this.props.Data,
       UpdateGoBackState: () => this.ForceUpdateGoBackState(),
       Adaptable: this.props.Adaptable,
-      Columns: this.props.Columns,
     });
   }
 }

@@ -8,7 +8,6 @@ import Helper from '../Helpers/Helper';
 import { IFilterService } from './Interface/IFilterService';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { KeyValuePair } from '../Interface/KeyValuePair';
-import ColumnHelper from '../Helpers/ColumnHelper';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
@@ -319,15 +318,16 @@ export class FilterService implements IFilterService {
   ): KeyValuePair[] {
     let infoBody: KeyValuePair[] = [];
     columnFilters.forEach(x => {
-      let column: AdaptableColumn = ColumnHelper.getColumnFromId(x.ColumnId, columns);
+      let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(x.ColumnId);
       if (column) {
         let expression: string = ExpressionHelper.ConvertExpressionToString(
           x.Filter,
           columns,
+          this.adaptable.api,
           false
         );
         infoBody.push({
-          Key: ColumnHelper.getFriendlyNameFromColumnId(x.ColumnId, columns),
+          Key: this.adaptable.api.gridApi.getFriendlyNameFromColumnId(x.ColumnId),
           Value: expression,
         });
       }

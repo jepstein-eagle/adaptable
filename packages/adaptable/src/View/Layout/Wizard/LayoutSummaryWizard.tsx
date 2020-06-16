@@ -7,7 +7,6 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 
@@ -58,7 +57,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
 
   private getColumnNames(columns: string[]): string {
     return ArrayExtensions.IsNotNullOrEmpty(columns)
-      ? ColumnHelper.getFriendlyNamesFromColumnIds(columns, this.props.Columns).join(', ')
+      ? this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(columns).join(', ')
       : 'None';
   }
 

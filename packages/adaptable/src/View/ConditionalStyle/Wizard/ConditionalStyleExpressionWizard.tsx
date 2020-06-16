@@ -1,6 +1,6 @@
 import {
   AdaptableWizardStep,
-  ExpressionWizardProps,
+  AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionBuilderPage } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
@@ -8,7 +8,7 @@ import { UIHelper } from '../../UIHelper';
 
 export class ConditionalStyleExpressionWizard extends ExpressionBuilderPage
   implements AdaptableWizardStep {
-  constructor(private props2: ExpressionWizardProps<ConditionalStyle>) {
+  constructor(private props2: AdaptableWizardStepProps<ConditionalStyle>) {
     super(props2);
     this.Data = props2.Data;
     this.state = UIHelper.getExpressionBuilderState(props2.Data.Expression);

@@ -10,7 +10,6 @@ import {
 } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
@@ -50,9 +49,8 @@ export class AlertRulesWizard
       };
     });
 
-    let columnFriendlyName: string = ColumnHelper.getFriendlyNameFromColumnId(
-      this.props.Data.ColumnId,
-      this.props.Columns
+    let columnFriendlyName: string = this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      this.props.Data.ColumnId
     );
 
     return (
@@ -217,7 +215,7 @@ export class AlertRulesWizard
     | 'Date'
     | 'Object'
     | 'Unknown' {
-    return ColumnHelper.getColumnDataTypeFromColumnId(this.props.Data.ColumnId, this.props.Columns);
+    return this.props.Adaptable.api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId);
   }
 
   private checkOperator(operator: LeafExpressionOperator): boolean {

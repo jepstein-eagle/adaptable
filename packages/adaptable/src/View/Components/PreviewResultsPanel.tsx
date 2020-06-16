@@ -14,6 +14,7 @@ import CheckIcon from '../../components/icons/check';
 import UIHelper from '../UIHelper';
 import Panel from '../../components/Panel';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 
 type PreviewDataItem = {
   Id: number;
@@ -27,6 +28,7 @@ const Grid = GridFactory<PreviewDataItem>();
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   PreviewInfo: IPreviewInfo;
   Columns: AdaptableColumn[];
+  Api: AdaptableApi;
   UserFilters: UserFilter[];
   SelectedColumn: AdaptableColumn;
   ShowPanel: boolean;
@@ -139,7 +141,11 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
         CellValidation.Expression
       )
         ? ' when ' +
-          ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Columns)
+          ExpressionHelper.ConvertExpressionToString(
+            CellValidation.Expression,
+            this.props.Columns,
+            this.props.Api
+          )
         : '';
       returnString.push(
         this.props.ValidationService.createCellValidationDescription(CellValidation, columns) +

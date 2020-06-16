@@ -5,7 +5,6 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
-import { ColumnHelper } from '../../../Utilities/Helpers/ColumnHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
@@ -29,9 +28,8 @@ export class LayoutAggregationColumnWizard
       this.props.Data.PivotDetails = ObjectFactory.CreateEmptyPivotDetails();
     }
     this.state = {
-      SelectedColumns: ColumnHelper.getFriendlyNamesFromColumnIds(
-        this.props.Data.PivotDetails.AggregationColumns,
-        this.props.Columns
+      SelectedColumns: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+        this.props.Data.PivotDetails.AggregationColumns
       ),
     };
   }
@@ -67,9 +65,8 @@ export class LayoutAggregationColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.PivotDetails.AggregationColumns = ColumnHelper.getColumnIdsFromFriendlyNames(
-      this.state.SelectedColumns,
-      this.props.Columns
+    this.props.Data.PivotDetails.AggregationColumns = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+      this.state.SelectedColumns
     );
   }
   public Back(): void {

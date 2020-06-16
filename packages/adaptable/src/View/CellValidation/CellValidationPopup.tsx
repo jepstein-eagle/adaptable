@@ -23,7 +23,6 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import SimpleButton from '../../components/SimpleButton';
@@ -90,15 +89,14 @@ class CellValidationPopupComponent extends React.Component<
     ];
 
     let CellValidationItems = this.props.CellValidations.map((cellValidationRule, index) => {
-      let column = ColumnHelper.getColumnFromId(cellValidationRule.ColumnId, this.props.Columns);
+      let column = this.props.Adaptable.api.gridApi.getColumnFromId(cellValidationRule.ColumnId);
       return (
         <CellValidationEntityRow
           key={index}
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={cellValidationRule}
           Column={column}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(cellValidationRule)}
           onShare={description => this.props.onShare(cellValidationRule, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -148,11 +146,6 @@ class CellValidationPopupComponent extends React.Component<
             ConfigEntities={null}
             Adaptable={this.props.Adaptable}
             ModalContainer={this.props.ModalContainer}
-            Columns={this.props.Columns}
-            UserFilters={this.props.UserFilters}
-            SystemFilters={this.props.SystemFilters}
-            NamedFilters={this.props.NamedFilters}
-            ColumnCategories={this.props.ColumnCategories}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

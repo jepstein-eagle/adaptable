@@ -90,9 +90,8 @@ class FormatColumnPopupComponent extends React.Component<
         <FormatColumnEntityRow
           key={formatColumn.Uuid}
           colItems={colItems}
+          api={this.props.Adaptable.api}
           AdaptableObject={formatColumn}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={description => this.props.onShare(formatColumn, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -131,11 +130,6 @@ class FormatColumnPopupComponent extends React.Component<
               ModalContainer={this.props.ModalContainer}
               ColorPalette={this.props.ColorPalette}
               StyleClassNames={this.props.StyleClassNames}
-              UserFilters={this.props.UserFilters}
-              SystemFilters={this.props.SystemFilters}
-              NamedFilters={this.props.NamedFilters}
-              ColumnCategories={this.props.ColumnCategories}
-              Columns={this.props.Columns}
               Adaptable={this.props.Adaptable}
               ConfigEntities={this.props.FormatColumns}
               WizardStartIndex={this.state.WizardStartIndex}

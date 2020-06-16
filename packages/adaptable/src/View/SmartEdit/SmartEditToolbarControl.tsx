@@ -13,12 +13,10 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { StatusColour, MathOperation } from '../../PredefinedConfig/Common/Enums';
 import { PreviewResultsPanel } from '../Components/PreviewResultsPanel';
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { UIHelper } from '../UIHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
@@ -72,12 +70,13 @@ class SmartEditToolbarControlComponent extends React.Component<
     let statusColour: StatusColour = this.getStatusColour();
 
     let selectedColumn = StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)
-      ? ColumnHelper.getColumnFromId(this.state.SelectedColumnId, this.props.Columns)
+      ? this.props.Adaptable.api.gridApi.getColumnFromId(this.state.SelectedColumnId)
       : null;
 
     let previewPanel = (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
+        Api={this.props.Adaptable.api}
         Columns={this.props.Columns}
         UserFilters={this.props.UserFilters}
         SelectedColumn={selectedColumn}
