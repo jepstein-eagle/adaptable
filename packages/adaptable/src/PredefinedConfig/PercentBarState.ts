@@ -4,18 +4,30 @@ export interface PercentBarState extends ConfigState {
   PercentBars?: PercentBar[];
 }
 
+export interface PercentBarRange {
+  Min: number;
+  Max: number;
+  Color: string;
+}
+
 export interface PercentBar extends AdaptableObject {
   ColumnId: string;
+
+  // deprecated
   NegativeValue?: number;
   PositiveValue?: number;
   NegativeColor?: string;
   PositiveColor?: string;
-  ShowValue?: boolean;
   PositiveValueColumnId?: string;
   NegativeValueColumnId?: string;
 
-  /**
-   * Whether to display a tooltip that will appear when you hover over the column showing the cell's numeric value.
-   */
+  Ranges?: PercentBarRange[];
+
+  ShowValue?: boolean;
   ShowToolTip?: boolean;
+
+  DisplayRawValue?: boolean;
+  DisplayPercentageValue?: boolean;
+
+  BackColor?: string;
 }

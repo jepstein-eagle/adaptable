@@ -7,14 +7,14 @@ import {
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { PercentBar } from '../../../PredefinedConfig/PercentBarState';
+import { PercentBar, PercentBarRange } from '../../../PredefinedConfig/PercentBarState';
 import WizardPanel from '../../../components/WizardPanel';
+import { getHexForName, RED, DARK_GREEN } from '../../UIHelper';
 
 export interface PercentBarSelectColumnWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 export interface PercentBarSelectColumnWizardState {
   ColumnId: string;
-  PositiveValue: number | undefined;
-  NegativeValue: number | undefined;
+  Ranges: PercentBarRange[];
 }
 
 export class PercentBarSelectColumnWizard
@@ -24,8 +24,7 @@ export class PercentBarSelectColumnWizard
     super(props);
     this.state = {
       ColumnId: this.props.Data!.ColumnId,
-      PositiveValue: this.props.Data!.PositiveValue,
-      NegativeValue: this.props.Data!.NegativeValue,
+      Ranges: this.props.Data!.Ranges,
     };
   }
 
@@ -49,11 +48,29 @@ export class PercentBarSelectColumnWizard
       );
       let minValue = Math.min(...distinctColumnsValues);
       let maxValue = Math.max(...distinctColumnsValues);
+
+      const ranges: PercentBarRange[] = [];
+
+      if (minValue < 0) {
+        ranges.push({
+          Min: minValue,
+          Max: 0,
+          Color: getHexForName(RED),
+        });
+      }
+
+      if (maxValue > 0) {
+        ranges.push({
+          Min: 0,
+          Max: maxValue,
+          Color: getHexForName(DARK_GREEN),
+        });
+      }
+
       this.setState(
         {
           ColumnId: columns[0].ColumnId,
-          PositiveValue: maxValue >= 0 ? maxValue : undefined,
-          NegativeValue: minValue < 0 ? minValue : undefined,
+          Ranges: ranges,
         } as PercentBarSelectColumnWizardState,
         () => this.props.UpdateGoBackState()
       );
@@ -73,12 +90,7 @@ export class PercentBarSelectColumnWizard
   }
   public Next(): void {
     this.props.Data!.ColumnId = this.state.ColumnId;
-    this.props.Data!.PositiveValue = this.state.PositiveValue;
-    this.props.Data!.NegativeValue = this.state.NegativeValue;
-
-    if (!this.state.NegativeValue) {
-      this.props.Data!.NegativeColor = undefined;
-    }
+    this.props.Data!.Ranges = this.state.Ranges;
   }
 
   public Back(): void {
