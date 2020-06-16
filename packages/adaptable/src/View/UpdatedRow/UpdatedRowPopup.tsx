@@ -107,7 +107,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
               <ColorPicker
                 ColorPalette={this.props.ColorPalette}
                 value={this.state.UpColor}
-                onChange={x => this.onUpColorSelectChange(x)}
+                onChange={(x: any) => this.onUpColorSelectChange(x)}
               />
             </Flex>
 
@@ -117,7 +117,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
               <ColorPicker
                 ColorPalette={this.props.ColorPalette}
                 value={this.state.DownColor}
-                onChange={x => this.onDownColorSelectChange(x)}
+                onChange={(x: any) => this.onDownColorSelectChange(x)}
               />
             </Flex>
             <Flex flexDirection="row" alignItems="center" margin={2}>
@@ -126,7 +126,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
               <ColorPicker
                 ColorPalette={this.props.ColorPalette}
                 value={this.state.NeutralColor}
-                onChange={x => this.onNeutralColorSelectChange(x)}
+                onChange={(x: any) => this.onNeutralColorSelectChange(x)}
               />
             </Flex>
           </Flex>

@@ -81,7 +81,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
             style={{ width: '100%' }}
             ColorPalette={this.props.ColorPalette}
             value={GradientColumn.PositiveColor}
-            onChange={x => this.onPositiveColorChanged(x)}
+            onChange={(x: any) => this.onPositiveColorChanged(x)}
           />
         }
       />
@@ -93,7 +93,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
             style={{ width: '100%' }}
             ColorPalette={this.props.ColorPalette}
             value={GradientColumn.NegativeColor}
-            onChange={x => this.onNegativeColorChanged(x)}
+            onChange={(x: any) => this.onNegativeColorChanged(x)}
           />
         }
       />

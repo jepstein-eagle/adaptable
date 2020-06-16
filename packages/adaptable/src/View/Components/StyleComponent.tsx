@@ -109,7 +109,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                       <ColorPicker
                         ColorPalette={this.props.ColorPalette}
                         value={this.state.myStyle.BackColor}
-                        onChange={x => this.onBackColorSelectChange(x)}
+                        onChange={(x: any) => this.onBackColorSelectChange(x)}
                       />
                     )}
                   </Flex>
@@ -129,7 +129,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                       <ColorPicker
                         ColorPalette={this.props.ColorPalette}
                         value={this.state.myStyle.ForeColor}
-                        onChange={x => this.onForeColorSelectChange(x)}
+                        onChange={(x: any) => this.onForeColorSelectChange(x)}
                       />
                     )}
                   </Flex>

@@ -72,7 +72,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
             ColorPalette={this.props.ColorPalette}
             disabled={isDisabled}
             value={flashingCell.UpColor}
-            onChange={x => this.onUpColorChange(x)}
+            onChange={(x: any) => this.onUpColorChange(x)}
           />
         }
       />
@@ -84,7 +84,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
             ColorPalette={this.props.ColorPalette}
             disabled={isDisabled}
             value={flashingCell.DownColor}
-            onChange={x => this.onDownColorChange(x)}
+            onChange={(x: any) => this.onDownColorChange(x)}
           />
         }
       />

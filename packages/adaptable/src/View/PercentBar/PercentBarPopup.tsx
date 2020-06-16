@@ -21,12 +21,6 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
-<<<<<<< HEAD
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-
-=======
-import { ColumnHelper } from '../../Utilities/Helpers/ColumnHelper';
->>>>>>> a7625cb4b1f59815d0dd48eda24639d44edb008c
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { getHexForName, RED, DARK_GREEN } from '../UIHelper';
@@ -111,7 +105,7 @@ class PercentBarPopupComponent extends React.Component<
     ];
 
     let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar) => {
-      let column = ColumnHelper.getColumnFromId(percentBar.ColumnId, this.props.Columns);
+      let column = this.props.Adaptable.api.gridApi.getColumnFromId(percentBar.ColumnId);
       return (
         <PercentBarEntityRow
           key={percentBar.Uuid}
@@ -119,8 +113,6 @@ class PercentBarPopupComponent extends React.Component<
           api={this.props.Adaptable.api}
           AdaptableObject={percentBar}
           Column={column}
-          Columns={this.props.Columns}
-          UserFilters={this.props.UserFilters}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}

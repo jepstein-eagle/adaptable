@@ -107,7 +107,7 @@ export class PercentBarPositiveValuesWizard
               <ColorPicker
                 ColorPalette={this.props.ColorPalette}
                 value={this.state.PositiveColor}
-                onChange={x => this.onPositiveColorSelectChanged(x)}
+                onChange={(x: any) => this.onPositiveColorSelectChanged(x)}
               />
             </Flex>
           </Flex>
