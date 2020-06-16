@@ -6,17 +6,13 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
-  constructor(
-    private adaptable: IAdaptable,
-    private colFunctionValue: (columnId: string, record: any) => any
-  ) {
+  constructor(private adaptable: IAdaptable) {
     this.adaptable = adaptable;
-    this.colFunctionValue = colFunctionValue;
   }
 
   public GetCalculatedColumnDataType(expression: string): 'String' | 'Number' | 'Boolean' | 'Date' {
     try {
-      let firstRecord = this.adaptable.getFirstRowNode();
+      let firstRecord = this.adaptable.api.gridApi.getFirstRowNode();
       let firstRowValue: any = evaluate(expression, {
         data: firstRecord.data,
       });

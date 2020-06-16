@@ -21,7 +21,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
-  Columns?: Array<AdaptableColumn>;
+  // Columns?: Array<AdaptableColumn>;
   Api: AdaptableApi;
 }
 
@@ -73,7 +73,7 @@ export class ExpressionBuilderPage
       >
         <Flex flexDirection="row" style={{ height: '100%' }}>
           <ExpressionBuilderConditionSelector
-            ColumnsList={this.props.Columns || []}
+            ColumnsList={this.props.Api.gridApi.getColumns()}
             QueryBuildStatus={queryBuildStatus}
             Expression={this.state.Expression}
             ExpressionMode={
@@ -93,7 +93,7 @@ export class ExpressionBuilderPage
             Expression={this.state.Expression}
             Api={this.props.Api}
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
-            ColumnsList={this.props.Columns || []}
+            ColumnsList={this.props.Api.gridApi.getColumns() || []}
             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}
             DeleteUserFilterExpression={(columnId, index) =>
               this.DeleteUserFilterExpression(columnId, index)

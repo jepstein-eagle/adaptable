@@ -25,6 +25,7 @@ import join from '../../components/utils/join';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
+import { IAdaptable } from '../../types';
 
 interface BulkUpdateToolPanelControlComponentProps
   extends ToolPanelStrategyViewPopupProps<BulkUpdateToolPanelControlComponent> {
@@ -57,9 +58,14 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    this.props.Api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
-      this.checkSelectedCells();
-    });
+    if (this.props.Api) {
+      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+      if (adaptable) {
+        this.props.Api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
+          this.checkSelectedCells();
+        });
+      }
+    }
   }
 
   render() {

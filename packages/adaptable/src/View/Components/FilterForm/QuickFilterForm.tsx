@@ -81,7 +81,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         // if we have no placeholder then set one - together with the placeholder
         let expressionDescription = ExpressionHelper.ConvertExpressionToString(
           existingColumnFilter.Filter,
-          this.props.Adaptable.api,
+          this.props.Api,
           false
         );
         this.doUpdate({
@@ -94,7 +94,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         if (diff) {
           let expressionDescription = ExpressionHelper.ConvertExpressionToString(
             existingColumnFilter.Filter,
-            this.props.Adaptable.api,
+            this.props.Api,
             false
           );
           this.doUpdate({
@@ -376,7 +376,7 @@ export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <QuickFilterForm
-          Adaptable={FilterContext.Adaptable}
+          AdaptableApi={FilterContext.AdaptableApi}
           CurrentColumn={FilterContext.Column}
           TeamSharingActivated={false}
           EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}

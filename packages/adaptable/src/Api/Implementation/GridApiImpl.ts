@@ -333,6 +333,9 @@ export class GridApiImpl extends ApiBase implements GridApi {
   public isGridPivotable(): boolean {
     return this.adaptable.isPivotable();
   }
+  public isGridGroupable(): boolean {
+    return this.adaptable.isGroupable();
+  }
 
   private LogMissingColumnWarning(columnId: string): void {
     if (

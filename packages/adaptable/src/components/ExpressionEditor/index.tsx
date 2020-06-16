@@ -281,7 +281,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             borderRadius: 'var(--ab__border-radius)',
           }}
         >
-          This is just test data
+          Test data (taken from 1st row in Grid)
         </Box>
         {dataTableEditor}
       </Box>

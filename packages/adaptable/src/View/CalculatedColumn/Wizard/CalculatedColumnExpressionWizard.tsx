@@ -33,7 +33,7 @@ export class CalculatedColumnExpressionWizard
     this.state = { ColumnExpression: this.props.Data.ColumnExpression };
   }
   render(): any {
-    const firstRow = this.props.Api.internalApi.getAdaptableInstance().getFirstRowNode().data;
+    const firstRow = this.props.Api.gridApi.getFirstRowNode().data;
 
     return (
       <ExpressionEditor

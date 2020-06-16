@@ -31,10 +31,9 @@ export class LayoutGroupedColumnWizard
   }
 
   render(): any {
-    let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
     return (
       <WizardPanel>
-        {adaptable.isGroupable() ? (
+        {this.props.Api.gridApi.isGridGroupable() ? (
           <div>
             <HelpBlock marginBottom={2}>
               Select which Columns, if any, should be <b>Grouped</b> in the Layout.

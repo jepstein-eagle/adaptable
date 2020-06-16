@@ -88,7 +88,7 @@ function InitAdaptableDemo() {
   };
 
   api = Adaptable.init(adaptableOptions); // turn on mimicing ticking data
-  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
+  //  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
 }
 
 let demoConfig: PredefinedConfig = {
