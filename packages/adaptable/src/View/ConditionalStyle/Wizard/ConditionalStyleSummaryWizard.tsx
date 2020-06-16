@@ -31,8 +31,7 @@ export class ConditionalStyleSummaryWizard
         Key: 'Query',
         Value: ExpressionHelper.ConvertExpressionToString(
           this.props.Data.Expression,
-          this.props.Columns,
-          this.props.Adaptable.api
+          this.props.Api
         ),
       },
     ];
@@ -51,8 +50,7 @@ export class ConditionalStyleSummaryWizard
         return 'Row';
       case 'Column':
         return (
-          'Column:' +
-          this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
+          'Column:' + this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
         );
       //  case 'DataType':
       //     return this.props.Data.DataType + ' Columns';

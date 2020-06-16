@@ -54,17 +54,9 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
         TeamSharingActivated: this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(
           'TeamSharing'
         ),
-        Columns: this.props.Adaptable.api.gridApi.getColumns(),
-        UserFilters: this.props.Adaptable.api.userFilterApi.getAllUserFilter(),
-        SystemFilters: this.props.Adaptable.api.systemFilterApi.getAllSystemFilter(),
-        NamedFilters: this.props.Adaptable.api.namedFilterApi.getAllNamedFilter(),
-        ColumnFilters: this.props.Adaptable.api.columnFilterApi.getAllColumnFilter(),
         ModalContainer: modalContainer,
-        ColumnCategories: this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory(),
-        ColorPalette: this.props.Adaptable.api.userInterfaceApi.getColorPalette(),
-        ColumnSorts: this.props.Adaptable.api.gridApi.getColumnSorts(),
         AccessLevel: accessLevel,
-        Adaptable: this.props.Adaptable,
+        Api: this.props.Adaptable.api,
       };
 
       var body: any = React.createElement(bodyElement, commonProps);

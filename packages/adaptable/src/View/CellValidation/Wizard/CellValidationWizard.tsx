@@ -19,37 +19,37 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
         <AdaptableWizard
           FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <CellValidationSelectColumnWizard />,
+              Element: <CellValidationSelectColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Action',
               Index: 1,
-              Element: <CellValidationActionWizard />,
+              Element: <CellValidationActionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Validation',
               Index: 2,
-              Element: <CellValidationRulesWizard />,
+              Element: <CellValidationRulesWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 3,
-              Element: <CellValidationSelectQueryWizard />,
+              Element: <CellValidationSelectQueryWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
-              Element: <CellValidationExpressionWizard />,
+              Element: <CellValidationExpressionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <CellValidationSummaryWizard />,
+              Element: <CellValidationSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

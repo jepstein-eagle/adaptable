@@ -38,6 +38,8 @@ export interface ExportApi {
    */
   sendReport(reportName: string, destination: ExportDestination): void;
 
+  canExportToExcel(): boolean;
+
   /**
    * Opens the Export popup screen
    */

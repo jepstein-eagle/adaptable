@@ -21,6 +21,7 @@ import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { CellSummaryOperationDefinition } from '../../PredefinedConfig/CellSummaryState';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 interface CellSummaryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<CellSummaryToolbarControlComponent> {
@@ -43,19 +44,13 @@ class CellSummaryToolbarControlComponent extends React.Component<
     super(props);
   }
   public componentDidMount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable._on('CellsSelected', () => {
+    if (this.props.Api) {
+      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+      adaptable._on('CellsSelected', () => {
         this.props.onCreateCellSummary();
       });
     }
   }
-
-  // needed?
-  // public componentWillUnmount() {
-  //   if (this.props.Adaptable) {
-  //     this.props.Adaptable.onSelectedCellsChanged().Unsubscribe(this.state.SubFunc);
-  //   }
-  // }
 
   render() {
     let operationMenuItems = EnumExtensions.getNames(CellSummaryOperation).map(
@@ -80,7 +75,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
 
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
-      this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
+      this.props.Api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 
     let content = (

@@ -1,9 +1,7 @@
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
-import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
+import { AdaptableApi } from '../../../Api/AdaptableApi';
 
 export interface AdaptableWizardStep {
   canNext(): boolean;
@@ -17,14 +15,13 @@ export interface AdaptableWizardStep {
 export interface AdaptableWizardStepProps<T> {
   Data?: T;
   UpdateGoBackState?(): void;
-  Adaptable?: IAdaptable;
-  Columns?: AdaptableColumn[];
+  Api: AdaptableApi;
 }
 
 // props for a wizard that wraps a config entity that contans an Expression
 export interface AdaptableObjectExpressionAdaptableWizardProps<View>
   extends AdaptableObjectAdaptableWizardProps<View> {
-  Adaptable: IAdaptable;
+  Api: AdaptableApi;
 }
 
 // props for a basic wizard

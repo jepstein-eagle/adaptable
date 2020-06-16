@@ -11,7 +11,6 @@ import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
-  ColorPalette: string[];
   StyleClassNames: string[];
 }
 
@@ -22,32 +21,32 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
         <AdaptableWizard
           FriendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Scope',
               Index: 0,
-              Element: <ConditionalStyleScopeWizard />,
+              Element: <ConditionalStyleScopeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Style',
               Index: 1,
               Element: (
                 <ConditionalStyleStyleWizard
-                  ColorPalette={this.props.ColorPalette}
                   StyleClassNames={this.props.StyleClassNames}
+                  Api={this.props.Api}
                 />
               ),
             },
             {
               StepName: 'Query Builder',
               Index: 2,
-              Element: <ConditionalStyleExpressionWizard />,
+              Element: <ConditionalStyleExpressionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <ConditionalStyleSummaryWizard />,
+              Element: <ConditionalStyleSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

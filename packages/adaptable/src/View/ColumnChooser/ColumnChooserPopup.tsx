@@ -25,22 +25,21 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     let availableValues: any[];
     let selectedValues: any[];
     let masterChildren: IMasterChildren[];
+    let columns: AdaptableColumn[] = this.props.Api.gridApi.getColumns();
     if (ArrayExtensions.IsNotEmpty(this.props.ColumnCategories)) {
       masterChildren = this.props.ColumnCategories.map(cc => {
         return {
           Master: cc.ColumnCategoryId,
-          Children: cc.ColumnIds.map(ci =>
-            this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(ci)
-          ),
+          Children: cc.ColumnIds.map(ci => this.props.Api.gridApi.getFriendlyNameFromColumnId(ci)),
         };
       });
     }
-    availableValues = this.props.Columns.map(x =>
-      this.props.Adaptable.api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
+    availableValues = columns.map(x =>
+      this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
-    selectedValues = this.props.Columns.filter(x => x.Visible).map(x =>
-      this.props.Adaptable.api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
-    );
+    selectedValues = columns
+      .filter(x => x.Visible)
+      .map(x => this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x));
 
     let infoBody: any[] = [
       "Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.",
@@ -77,9 +76,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
   }
 
   private ColumnListChange(columnList: Array<string>) {
-    let cols: AdaptableColumn[] = this.props.Adaptable.api.gridApi.getColumnsFromFriendlyNames(
-      columnList
-    );
+    let cols: AdaptableColumn[] = this.props.Api.gridApi.getColumnsFromFriendlyNames(columnList);
     this.props.onNewColumnListOrder(cols);
   }
 }

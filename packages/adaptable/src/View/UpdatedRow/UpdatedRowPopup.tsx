@@ -105,7 +105,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
               <Text marginRight={4}>Up Direction Change Color:</Text>
 
               <ColorPicker
-                ColorPalette={this.props.ColorPalette}
+                Api={this.props.Api}
                 value={this.state.UpColor}
                 onChange={(x: any) => this.onUpColorSelectChange(x)}
               />
@@ -115,7 +115,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
               <Text marginRight={3}>Down Direction Change Color:</Text>
 
               <ColorPicker
-                ColorPalette={this.props.ColorPalette}
+                Api={this.props.Api}
                 value={this.state.DownColor}
                 onChange={(x: any) => this.onDownColorSelectChange(x)}
               />
@@ -124,7 +124,7 @@ class UpdatedRowPopupComponent extends React.Component<UpdatedRowPopupProps, Upd
               <Text marginRight={4}>No Direction Change Color:</Text>
 
               <ColorPicker
-                ColorPalette={this.props.ColorPalette}
+                Api={this.props.Api}
                 value={this.state.NeutralColor}
                 onChange={(x: any) => this.onNeutralColorSelectChange(x)}
               />

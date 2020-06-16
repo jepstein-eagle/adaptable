@@ -91,12 +91,12 @@ class PlusMinusPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
     let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-      let column = this.props.Adaptable.api.gridApi.getColumnFromId(x.ColumnId);
+      let column = this.props.Api.gridApi.getColumnFromId(x.ColumnId);
 
       return (
         <PlusMinusEntityRow
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={x}
           key={index}
           onEdit={() => this.onEdit(x)}
@@ -145,7 +145,7 @@ class PlusMinusPopupComponent extends React.Component<
               ModalContainer={this.props.ModalContainer}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

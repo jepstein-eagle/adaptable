@@ -36,7 +36,7 @@ export class UserFilterSelectColumnWizard
         </HelpBlock>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Columns}
+          ColumnList={this.props.Api.gridApi.getColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

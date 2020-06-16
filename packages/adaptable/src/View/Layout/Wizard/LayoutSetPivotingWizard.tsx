@@ -22,16 +22,16 @@ export class LayoutSetPivotingWizard
   constructor(props: LayoutSetPivotingWizardProps) {
     super(props);
     this.state = {
-      IsPivotLayout: this.props.Adaptable.LayoutService.isPivotedLayout(
-        this.props.Data.PivotDetails
-      ),
+      IsPivotLayout: this.props.Api.internalApi
+        .getLayoutService()
+        .isPivotedLayout(this.props.Data.PivotDetails),
     };
   }
 
   render(): any {
     return (
       <WizardPanel>
-        {this.props.Adaptable.isPivotable() ? (
+        {this.props.Api.gridApi.isGridPivotable() ? (
           <div>
             <HelpBlock marginBottom={2}>
               Check the box to create a <b>Pivoted Layout</b> (one which uses Aggregation).

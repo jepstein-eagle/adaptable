@@ -93,14 +93,14 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
   }
 
   onClearLocalStorage() {
-    this.props.Adaptable.api.configApi.configDeleteLocalStorage();
+    this.props.Api.configApi.configDeleteLocalStorage();
   }
 
   onCopyAllStateToClipboard() {
-    this.props.Adaptable.api.configApi.configCopyAllStateToClipboard();
+    this.props.Api.configApi.configCopyAllStateToClipboard();
   }
   onCopyUserStateToClipboard() {
-    this.props.Adaptable.api.configApi.configCopyUserStateToClipboard();
+    this.props.Api.configApi.configCopyUserStateToClipboard();
   }
 }
 

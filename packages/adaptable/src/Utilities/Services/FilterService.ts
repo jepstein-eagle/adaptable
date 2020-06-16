@@ -322,7 +322,6 @@ export class FilterService implements IFilterService {
       if (column) {
         let expression: string = ExpressionHelper.ConvertExpressionToString(
           x.Filter,
-          columns,
           this.adaptable.api,
           false
         );

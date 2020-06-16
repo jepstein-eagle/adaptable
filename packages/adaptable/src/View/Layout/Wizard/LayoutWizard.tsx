@@ -28,26 +28,31 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
         <AdaptableWizard
           FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Source',
               Index: 0,
               Element: (
-                <LayoutSelectionWizard Layouts={layouts} ColumnSorts={this.props.ColumnSorts} />
+                <LayoutSelectionWizard
+                  Layouts={layouts}
+                  ColumnSorts={this.props.ColumnSorts}
+                  Api={this.props.Api}
+                />
               ),
             },
             {
               StepName: 'Columns',
               Index: 1,
-              Element: <LayoutColumnWizard />,
+              Element: <LayoutColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Sorting',
               Index: 2,
               Element: (
                 <LayoutGridSortWizard
-                  SortableColumns={this.props.Adaptable.api.gridApi.getSortableColumns()}
+                  SortableColumns={this.props.Api.gridApi.getSortableColumns()}
+                  Api={this.props.Api}
                 />
               ),
             },
@@ -56,21 +61,23 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Index: 3,
               Element: (
                 <LayoutGroupedColumnWizard
-                  GroupableColumns={this.props.Adaptable.api.gridApi.getGroupableColumns()}
+                  GroupableColumns={this.props.Api.gridApi.getGroupableColumns()}
+                  Api={this.props.Api}
                 />
               ),
             },
             {
               StepName: 'Pivoting',
               Index: 4,
-              Element: <LayoutSetPivotingWizard />,
+              Element: <LayoutSetPivotingWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Pivoting',
               Index: 5,
               Element: (
                 <LayoutPivotColumnWizard
-                  PivotableColumns={this.props.Adaptable.api.gridApi.getPivotableColumns()}
+                  PivotableColumns={this.props.Api.gridApi.getPivotableColumns()}
+                  Api={this.props.Api}
                 />
               ),
             },
@@ -79,19 +86,20 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
               Index: 6,
               Element: (
                 <LayoutAggregationColumnWizard
-                  AggregetableColumns={this.props.Adaptable.api.gridApi.getAggregetableColumns()}
+                  AggregetableColumns={this.props.Api.gridApi.getAggregetableColumns()}
+                  Api={this.props.Api}
                 />
               ),
             },
             {
               StepName: 'Settings',
               Index: 7,
-              Element: <LayoutSettingsWizard Layouts={layouts} />,
+              Element: <LayoutSettingsWizard Layouts={layouts} Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 8,
-              Element: <LayoutSummaryWizard />,
+              Element: <LayoutSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

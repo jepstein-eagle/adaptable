@@ -78,11 +78,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CS' + index}
             Item1={<StyleVisualItem Style={item.Style} />}
-            Item2={ExpressionHelper.ConvertExpressionToString(
-              item.Expression,
-              this.props.Columns,
-              this.props.Adaptable.api
-            )}
+            Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Api)}
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -104,9 +100,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            ColorPalette={this.props.ColorPalette}
             StyleClassNames={this.props.StyleClassNames}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -174,12 +169,7 @@ function mapStateToProps(
   ownProps: any
 ): Partial<ConditionalStyleSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
-    ColorPalette: state.UserInterface.ColorPalette,
     StyleClassNames: state.UserInterface.StyleClassNames,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
   };

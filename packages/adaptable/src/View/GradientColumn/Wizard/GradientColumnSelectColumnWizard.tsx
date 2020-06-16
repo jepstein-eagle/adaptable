@@ -40,7 +40,7 @@ export class GradientColumnSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
+          ColumnList={this.props.Api.gridApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -50,9 +50,9 @@ export class GradientColumnSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
-        columns[0].ColumnId
-      );
+      let distinctColumnsValues: number[] = this.props.Api.internalApi
+        .getStrategyService()
+        .getDistinctColumnValues(columns[0].ColumnId);
 
       let smallestValue = Math.min(...distinctColumnsValues);
 

@@ -39,6 +39,10 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
     }
   }
 
+  public canExportToExcel(): boolean {
+    return this.adaptable.canExportToExcel();
+  }
+
   public showExportPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.ExportStrategyId,

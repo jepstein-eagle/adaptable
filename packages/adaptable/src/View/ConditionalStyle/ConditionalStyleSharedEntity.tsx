@@ -24,11 +24,7 @@ export class ConditionalStyleSharedEntity extends React.Component<
           <StyleVisualItem Style={conditionalStyle.Style} />
         </Flex>
         <Flex flex={5}>
-          {ExpressionHelper.ConvertExpressionToString(
-            conditionalStyle.Expression,
-            this.props.Api.gridApi.getColumns(),
-            this.props.Api
-          )}
+          {ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Api)}
         </Flex>
       </Flex>
     );

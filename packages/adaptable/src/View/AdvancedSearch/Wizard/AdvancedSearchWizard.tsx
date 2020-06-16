@@ -17,12 +17,12 @@ export class AdvancedSearchWizard extends React.Component<
         <AdaptableWizard
           FriendlyName={StrategyConstants.AdvancedSearchStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Query Builder',
               Index: 0,
-              Element: <AdvancedSearchExpressionWizard />,
+              Element: <AdvancedSearchExpressionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Name',
@@ -30,13 +30,14 @@ export class AdvancedSearchWizard extends React.Component<
               Element: (
                 <AdvancedSearchSettingsWizard
                   AdvancedSearches={this.props.ConfigEntities as AdvancedSearch[]}
+                  Api={this.props.Api}
                 />
               ),
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <AdvancedSearchSummaryWizard />,
+              Element: <AdvancedSearchSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject as AdvancedSearch}

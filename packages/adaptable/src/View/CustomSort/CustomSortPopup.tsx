@@ -91,16 +91,14 @@ class CustomSortPopupComponent extends React.Component<
       return (
         <CustomSortEntityRow
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={customSort}
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-          ColumnLabel={this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-            customSort.ColumnId
-          )}
+          ColumnLabel={this.props.Api.gridApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -136,7 +134,7 @@ class CustomSortPopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
               ConfigEntities={this.props.CustomSorts}
               ModalContainer={this.props.ModalContainer}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

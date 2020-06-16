@@ -203,6 +203,8 @@ export interface GridApi {
   getPivotableColumns(): AdaptableColumn[];
   getAggregetableColumns(): AdaptableColumn[];
 
+  isGridPivotable(): boolean;
+
   /**
    * Destroys the current AdapTable instance.
    *

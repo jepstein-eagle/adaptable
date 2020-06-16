@@ -18,17 +18,19 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
         <AdaptableWizard
           FriendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Settings',
               Index: 0,
-              Element: <DataSourceSettingsWizard DataSourceNames={dataSourceNames} />,
+              Element: (
+                <DataSourceSettingsWizard DataSourceNames={dataSourceNames} Api={this.props.Api} />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 1,
-              Element: <DataSourceSummaryWizard />,
+              Element: <DataSourceSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

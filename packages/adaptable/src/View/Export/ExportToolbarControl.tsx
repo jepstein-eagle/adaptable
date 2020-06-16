@@ -58,15 +58,11 @@ class ExportToolbarControlComponent extends React.Component<
   {}
 > {
   public componentDidMount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
-    }
+    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
-    }
+    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -82,11 +78,11 @@ class ExportToolbarControlComponent extends React.Component<
   render(): any {
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props
-      .SystemReports!.filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
+      .SystemReports!.filter(s =>
+        this.props.Api.internalApi.getReportService().IsSystemReportActive(s)
+      )
       .concat(this.props.Reports);
-    let currentReport: Report = this.props.Adaptable.api.exportApi.getReportByName(
-      this.props.CurrentReport
-    );
+    let currentReport: Report = this.props.Api.exportApi.getReportByName(this.props.CurrentReport);
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
       ? selectReportString
@@ -142,13 +138,13 @@ class ExportToolbarControlComponent extends React.Component<
     }
 
     const exportItems = [
-      this.props.Adaptable.canExportToExcel() && excelMenuItem,
+      this.props.Api.exportApi.canExportToExcel() && excelMenuItem,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      this.props.Adaptable.ReportService.IsReportDestinationActive(
-        ExportDestination.OpenfinExcel
-      ) && openfinExcelMenuItem,
+      this.props.Api.internalApi
+        .getReportService()
+        .IsReportDestinationActive(ExportDestination.OpenfinExcel) && openfinExcelMenuItem,
     ].filter(x => !!x);
 
     let content = (
@@ -186,7 +182,8 @@ class ExportToolbarControlComponent extends React.Component<
             tooltip="Edit Report"
             className="ab-DashboardToolbar__Export__edit"
             disabled={
-              savedReport == null || this.props.Adaptable.ReportService.IsSystemReport(savedReport)
+              savedReport == null ||
+              this.props.Api.internalApi.getReportService().IsSystemReport(savedReport)
             }
             AccessLevel={this.props.AccessLevel}
           />
@@ -205,14 +202,15 @@ class ExportToolbarControlComponent extends React.Component<
             tooltip="Delete Report"
             className="ab-DashboardToolbar__Export__delete"
             disabled={
-              savedReport == null || this.props.Adaptable.ReportService.IsSystemReport(savedReport)
+              savedReport == null ||
+              this.props.Api.internalApi.getReportService().IsSystemReport(savedReport)
             }
             ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
             ConfirmationMsg={deleteMessage}
             ConfirmationTitle={'Delete Report'}
             AccessLevel={this.props.AccessLevel}
           />
-          {this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
+          {this.props.Api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
             <ButtonSchedule
               marginLeft={1}
               className="ab-DashboardToolbar__Export__schedule"

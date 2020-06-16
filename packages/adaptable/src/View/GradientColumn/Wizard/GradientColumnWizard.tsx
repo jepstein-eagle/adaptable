@@ -9,9 +9,7 @@ import { GradientColumnPositiveValuesWizard } from './GradientColumnPositiveValu
 import { GradientColumnNegativeValuesWizard } from './GradientColumnNegativeValuesWizard';
 
 export interface GradientColumnWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<GradientColumnWizard> {
-  ColorPalette: Array<string>;
-}
+  extends AdaptableObjectExpressionAdaptableWizardProps<GradientColumnWizard> {}
 
 export class GradientColumnWizard extends React.Component<GradientColumnWizardProps, {}> {
   render() {
@@ -20,37 +18,33 @@ export class GradientColumnWizard extends React.Component<GradientColumnWizardPr
         <AdaptableWizard
           FriendlyName={StrategyConstants.GradientColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <GradientColumnSelectColumnWizard />,
+              Element: <GradientColumnSelectColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Base Value',
               Index: 1,
-              Element: <GradientColumnBaseValuesWizard />,
+              Element: <GradientColumnBaseValuesWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Positive Value',
               Index: 2,
-              Element: (
-                <GradientColumnPositiveValuesWizard ColorPalette={this.props.ColorPalette} />
-              ),
+              Element: <GradientColumnPositiveValuesWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Negative Value',
               Index: 3,
-              Element: (
-                <GradientColumnNegativeValuesWizard ColorPalette={this.props.ColorPalette} />
-              ),
+              Element: <GradientColumnNegativeValuesWizard Api={this.props.Api} />,
             },
 
             {
               StepName: 'Summary',
               Index: 4,
-              Element: <GradientColumnSummaryWizard />,
+              Element: <GradientColumnSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

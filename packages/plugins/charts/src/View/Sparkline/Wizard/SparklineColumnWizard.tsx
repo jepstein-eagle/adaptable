@@ -18,7 +18,7 @@ export class SparklineColumnWizard extends React.Component<SparklineColumnWizard
         <AdaptableWizard
           FriendlyName={StrategyConstants.SparklineColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
@@ -28,7 +28,7 @@ export class SparklineColumnWizard extends React.Component<SparklineColumnWizard
             {
               StepName: 'Sparkline Settings',
               Index: 1,
-              Element: <SparklineColumnSettingsWizard ColorPalette={this.props.ColorPalette} />,
+              Element: <SparklineColumnSettingsWizard Api={this.props.api} />,
             },
             {
               StepName: 'Summary',

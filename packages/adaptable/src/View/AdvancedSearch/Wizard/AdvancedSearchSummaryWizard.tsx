@@ -27,8 +27,7 @@ export class AdvancedSearchSummaryWizard
         Key: 'Query',
         Value: ExpressionHelper.ConvertExpressionToString(
           this.props.Data.Expression,
-          this.props.Columns,
-          this.props.Adaptable.api
+          this.props.Api
         ),
       },
     ];

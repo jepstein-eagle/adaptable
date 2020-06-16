@@ -90,7 +90,7 @@ class FormatColumnPopupComponent extends React.Component<
         <FormatColumnEntityRow
           key={formatColumn.Uuid}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={formatColumn}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={description => this.props.onShare(formatColumn, description)}
@@ -128,9 +128,8 @@ class FormatColumnPopupComponent extends React.Component<
             <FormatColumnWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
               ModalContainer={this.props.ModalContainer}
-              ColorPalette={this.props.ColorPalette}
+              Api={this.props.Api}
               StyleClassNames={this.props.StyleClassNames}
-              Adaptable={this.props.Adaptable}
               ConfigEntities={this.props.FormatColumns}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

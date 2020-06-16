@@ -14,6 +14,7 @@ import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import SimpleButton from '../../components/SimpleButton';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
   ExpressionMode?: ExpressionMode;
@@ -21,7 +22,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
   Columns?: Array<AdaptableColumn>;
-  Adaptable?: IAdaptable;
+  Api: AdaptableApi;
 }
 
 export interface ExpressionBuilderPageState {
@@ -84,12 +85,13 @@ export class ExpressionBuilderPage
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             SelectedColumnId={this.state.SelectedColumnId}
             SelectedTab={this.state.SelectedTab}
-            Adaptable={this.props.Adaptable!}
+            Api={this.props.Api}
+            Adaptable={this.props.Api.internalApi.getAdaptableInstance()}
           />
 
           <ExpressionBuilderPreview
             Expression={this.state.Expression}
-            Api={this.props.Adaptable.api}
+            Api={this.props.Api}
             onSelectedColumnChange={(columnId, tab) => this.onSelectedColumnChange(columnId, tab)}
             ColumnsList={this.props.Columns || []}
             DeleteColumnValue={(columnId, value) => this.DeleteColumnValue(columnId, value)}

@@ -65,10 +65,9 @@ export class AlertSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CV' + index}
             Item1={'something here?'}
-            Item2={this.props.Adaptable.StrategyService.createAlertDescription(
-              item,
-              this.props.Columns
-            )}
+            Item2={this.props.Api.internalApi
+              .getStrategyService()
+              .createAlertDescription(item, this.props.Api.gridApi.getColumns())}
             ConfigEnity={item}
             EntityType={StrategyConstants.AlertStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -90,7 +89,7 @@ export class AlertSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -149,11 +148,7 @@ export class AlertSummaryComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<AlertSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     Alerts: state.Alert.AlertDefinitions,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
   };
 }
 

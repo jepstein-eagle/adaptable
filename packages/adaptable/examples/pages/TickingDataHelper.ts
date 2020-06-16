@@ -33,7 +33,7 @@ export class TickingDataHelper {
       let gridOptionsUpdateRowData: boolean = false;
 
       setInterval(() => {
-        let tradeId = 5; // this.generateRandomInt(0, tradeCount - 1);
+        let tradeId = this.generateRandomInt(0, tradeCount - 1);
 
         const trade: ITrade = { ...gridOptions.rowData[tradeId] };
         const randomInt = this.generateRandomInt(1, 2);
@@ -50,7 +50,11 @@ export class TickingDataHelper {
 
         if (useadaptableApiUpdateGridData) {
           if (notionalOnly) {
-            trade.notional = notional;
+            if (randomInt == 1) {
+              trade.notional = 1200;
+            } else {
+              trade.notional = notional;
+            }
           } else {
             console.log(4);
             trade.price = price;

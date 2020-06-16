@@ -12,9 +12,7 @@ import Input from '../../../components/Input';
 import SimpleButton from '../../../components/SimpleButton';
 import { getHexForName, GRAY } from '../../UIHelper';
 
-export interface PercentBarRangesWizardProps extends AdaptableWizardStepProps<PercentBar> {
-  ColorPalette: Array<string>;
-}
+export interface PercentBarRangesWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
 export interface PercentBarRangesWizardState {
   Ranges: PercentBar['Ranges'];
@@ -54,7 +52,7 @@ export class PercentBarRangesWizard
               mr={2}
             />
             <ColorPicker
-              ColorPalette={this.props.ColorPalette}
+              Api={this.props.Api}
               value={range.Color}
               onChange={(event: React.FormEvent) => {
                 const { value } = event.target as HTMLInputElement;

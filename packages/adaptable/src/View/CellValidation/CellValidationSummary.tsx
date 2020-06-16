@@ -74,10 +74,9 @@ export class CellValidationSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CV' + index}
             Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
-            Item2={this.props.Adaptable.ValidationService.createCellValidationDescription(
-              item,
-              this.props.Columns
-            )}
+            Item2={this.props.Api.internalApi
+              .getValidationService()
+              .createCellValidationDescription(item, this.props.Api.gridApi.getColumns())}
             ConfigEnity={item}
             EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -99,7 +98,7 @@ export class CellValidationSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -163,11 +162,7 @@ function mapStateToProps(
   ownProps: any
 ): Partial<CellValidationSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     CellValidations: state.CellValidation.CellValidations,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
   };
 }
 

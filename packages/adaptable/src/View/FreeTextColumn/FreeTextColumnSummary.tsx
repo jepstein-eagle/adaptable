@@ -91,7 +91,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
           />
         )}
       </div>
@@ -149,7 +149,6 @@ function mapStateToProps(
   ownProps: any
 ): Partial<FreeTextColumnSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     FreeTextColumns: state.FreeTextColumn.FreeTextColumns,
   };
 }

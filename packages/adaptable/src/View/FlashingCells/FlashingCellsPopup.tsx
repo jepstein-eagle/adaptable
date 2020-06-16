@@ -69,7 +69,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     let flashingCellDurations: number[] = [250, 500, 750, 1000];
 
     let calculatedColumns: string[] = this.props.CalculatedColumns.map(c => c.ColumnId);
-    let numericColumns = this.props.Columns.filter(c => c.DataType == DataType.Number);
+    let numericColumns = this.props.Api.gridApi.getNumericColumns();
     let numericNonCalcColumns = numericColumns.filter(c =>
       ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId)
     );
@@ -80,7 +80,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     );
 
     let allPotentialFlashingCells: FlashingCell[] = [];
-    let flashingCellState: FlashingCellState = this.props.Adaptable.api.configApi.configGetFlashingCellState(
+    let flashingCellState: FlashingCellState = this.props.Api.configApi.configGetFlashingCellState(
       false
     );
     numericNonCalcColumns.forEach(nc => {
@@ -104,10 +104,9 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
         <FlashingCellEntityRow
           AdaptableObject={flashingcell}
           key={flashingcell.ColumnId}
-          api={this.props.Adaptable.api}
           colItems={colItems}
           FlashingCellDurations={flashingCellDurations}
-          ColorPalette={this.props.ColorPalette}
+          api={this.props.Api}
           onSelect={flashingcell => this.props.onSelectColumn(flashingcell)}
           onChangeFlashingDuration={(flashingcell, newFlashDuration) =>
             this.props.onChangeFlashDuration(flashingcell, newFlashDuration)

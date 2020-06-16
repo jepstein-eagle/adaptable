@@ -62,7 +62,7 @@ class ReminderPopupComponent extends React.Component<
       return (
         <ReminderEntityRow
           AdaptableObject={reminder}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(reminder, description)}
@@ -104,7 +104,7 @@ class ReminderPopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as ReminderSchedule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

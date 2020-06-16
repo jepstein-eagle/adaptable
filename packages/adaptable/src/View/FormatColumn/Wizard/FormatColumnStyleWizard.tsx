@@ -12,7 +12,6 @@ import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import ObjectFactory from '../../../Utilities/ObjectFactory';
 
 export interface FormatColumnStyleWizardProps extends AdaptableWizardStepProps<FormatColumn> {
-  ColorPalette: string[];
   StyleClassNames: string[];
 }
 
@@ -39,7 +38,7 @@ export class FormatColumnStyleWizard
     return (
       <div>
         <StyleComponent
-          ColorPalette={this.props.ColorPalette}
+          api={this.props.Api}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.state.Style}
           UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}

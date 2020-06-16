@@ -92,13 +92,12 @@ export class FormatColumnSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.FormatColumns}
-            ColorPalette={this.props.ColorPalette}
+            Api={this.props.Api}
             StyleClassNames={this.props.StyleClassNames}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Adaptable={this.props.Adaptable}
           />
         )}
       </div>
@@ -156,7 +155,6 @@ export class FormatColumnSummaryComponent extends React.Component<
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FormatColumnSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     FormatColumns: state.FormatColumn.FormatColumns,
     ColorPalette: state.UserInterface.ColorPalette,
     StyleClassNames: state.UserInterface.StyleClassNames,

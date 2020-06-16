@@ -30,9 +30,7 @@ export class SparklineColumnSummaryWizard
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          this.props.Data!.ColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data!.ColumnId),
       },
       {
         Key: 'Minimum Value',

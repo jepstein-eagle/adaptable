@@ -34,9 +34,7 @@ interface ColumnFilterToolbarControlComponentProps
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
   ColumnFilters: ColumnFilter[];
-  Columns: AdaptableColumn[];
-  UserFilters: UserFilter[];
-  Entitlements: Entitlement[];
+
   IsQuickFilterVisible: boolean;
 }
 
@@ -47,8 +45,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   render(): any {
     let activeFiltersPanel = (
       <ActiveFiltersPanel
-        Columns={this.props.Columns}
-        Api={this.props.Adaptable.api}
+        Columns={this.props.Api.gridApi.getColumns()}
+        Api={this.props.Api}
         ColumnFilters={this.props.ColumnFilters}
         AccessLevel={this.props.AccessLevel}
         onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}
@@ -86,8 +84,8 @@ class ColumnFilterToolbarControlComponent extends React.Component<
         <CheckBox
           className="ab-DashboardToolbar__ColumnFilter__active-check"
           disabled={
-            this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
-            !this.props.Adaptable.isQuickFilterActive()
+            this.props.Api.internalApi.isGridInPivotMode() ||
+            !this.props.Api.internalApi.getAdaptableInstance().isQuickFilterActive()
           }
           fontSize={2}
           checked={this.props.IsQuickFilterVisible}
@@ -114,12 +112,12 @@ class ColumnFilterToolbarControlComponent extends React.Component<
   private onClearFilters() {
     // better to put in store but lets test first...
     this.props.onClearAllFilters();
-    this.props.Adaptable.clearGridFiltering();
+    this.props.Api.internalApi.getAdaptableInstance().clearGridFiltering();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
     this.props.onClearColumnFilter(columnFilter);
-    this.props.Adaptable.clearColumnFiltering([columnFilter.ColumnId]);
+    this.props.Api.internalApi.getAdaptableInstance().clearColumnFiltering([columnFilter.ColumnId]);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

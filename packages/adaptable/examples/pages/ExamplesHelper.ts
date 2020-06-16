@@ -806,7 +806,7 @@ export class ExamplesHelper {
         //      return 'hello';
         //   },
       },
-      columnDefs: this.getReducedTradeSchema().map(c => {
+      columnDefs: this.getTradeSchema().map(c => {
         // c.floatingFilter = true;
         return c;
       }),

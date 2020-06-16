@@ -10,7 +10,6 @@ import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleStat
 
 export interface ConditionalStyleStyleWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
-  ColorPalette: string[];
   StyleClassNames: string[];
 }
 
@@ -32,7 +31,7 @@ export class ConditionalStyleStyleWizard
       <div style={{ height: '100%' }}>
         <StyleComponent
           style={{ height: '100%' }}
-          ColorPalette={this.props.ColorPalette}
+          api={this.props.Api}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.props.Data.Style}
           UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}

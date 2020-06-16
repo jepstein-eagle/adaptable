@@ -69,15 +69,11 @@ class Glue42ToolbarControlComponent extends React.Component<
   }
 
   public componentDidMount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
-    }
+    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
-    }
+    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -92,12 +88,14 @@ class Glue42ToolbarControlComponent extends React.Component<
   };
 
   getGlue42Api() {
-    return this.props.Adaptable.api.pluginsApi.getPluginApi('glue42api');
+    return this.props.Api.pluginsApi.getPluginApi('glue42api');
   }
 
   render(): any {
     let allReports: Report[] = this.props
-      .SystemReports!.filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
+      .SystemReports!.filter(s =>
+        this.props.Api.internalApi.getReportService().IsSystemReportActive(s)
+      )
       .concat(this.props.Reports);
 
     let availableReports: any[] = allReports.map(report => {

@@ -26,6 +26,7 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import join from '../../components/utils/join';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 interface BulkUpdateToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<BulkUpdateToolbarControlComponent> {
@@ -52,10 +53,13 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable._on('CellsSelected', () => {
-        this.checkSelectedCells();
-      });
+    if (this.props.Api) {
+      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+      if (adaptable) {
+        adaptable._on('CellsSelected', () => {
+          this.checkSelectedCells();
+        });
+      }
     }
   }
 
@@ -67,20 +71,17 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     let previewPanel = (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Adaptable.api}
-        Columns={this.props.Columns}
-        UserFilters={this.props.UserFilters}
+        Api={this.props.Api}
         SelectedColumn={selectedColumn}
         ShowPanel={true}
         ShowHeader={false}
-        ValidationService={this.props.Adaptable.ValidationService}
       />
     );
 
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
       !this.props.BulkUpdateValidationResult.IsValid ||
-      this.props.Adaptable.api.internalApi.isGridInPivotMode();
+      this.props.Api.internalApi.isGridInPivotMode();
 
     const applyStyle = {
       color: statusColour,
@@ -104,7 +105,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
           disabled={shouldDisable}
           SelectedColumnValue={this.props.BulkUpdateValue}
           SelectedColumn={selectedColumn}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
         />
 
@@ -184,10 +185,9 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
-      confirmAction,
-      cancelAction
-    );
+    let confirmation: IUIConfirmation = this.props.Api.internalApi
+      .getValidationService()
+      .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);
   }
 

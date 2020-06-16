@@ -16,7 +16,6 @@ import { IStrategyService } from '../../Utilities/Services/StrategyService';
 export interface AlertEntityRowProps extends SharedEntityRowProps<AlertEntityRow> {
   Column: AdaptableColumn;
   onChangeMessageType: (alertDefinition: AlertDefinition, Type: MessageType) => void;
-  StrategyService: IStrategyService;
 }
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
@@ -63,11 +62,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
   setExpressionDescription(Alert: AlertDefinition): string {
     return ExpressionHelper.IsNotNullOrEmptyExpression(Alert.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(
-          Alert.Expression,
-          this.props.api.gridApi.getColumns(),
-          this.props.api
-        )
+      ? ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.api)
       : 'No Expression';
   }
 
@@ -78,7 +73,9 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     );
     columnInfo +=
       ': ' +
-      this.props.StrategyService.createAlertDescription(Alert, this.props.api.gridApi.getColumns());
+      this.props.api.internalApi
+        .getStrategyService()
+        .createAlertDescription(Alert, this.props.api.gridApi.getColumns());
     return columnInfo;
   }
 

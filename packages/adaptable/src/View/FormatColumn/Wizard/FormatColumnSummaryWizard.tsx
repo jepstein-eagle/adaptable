@@ -21,16 +21,14 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   }
 
   render() {
-    let adaptableColumn: AdaptableColumn = this.props.Adaptable.api.gridApi.getColumnFromId(
+    let adaptableColumn: AdaptableColumn = this.props.Api.gridApi.getColumnFromId(
       this.props.Data.ColumnId
     );
 
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
 
       {

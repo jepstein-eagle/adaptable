@@ -13,7 +13,6 @@ import Input from '../../components/Input';
 export interface GradientColumnEntityRowProps
   extends SharedEntityRowProps<GradientColumnEntityRow> {
   Column: AdaptableColumn;
-  ColorPalette: string[];
   onNegativeValueChanged: (GradientColumn: GradientColumn, minimumValue: number) => void;
   onPositiveValueChanged: (GradientColumn: GradientColumn, maximumValue: number) => void;
   onBaseValueChanged: (GradientColumn: GradientColumn, maximumValue: number) => void;
@@ -79,7 +78,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
         Content={
           <ColorPicker
             style={{ width: '100%' }}
-            ColorPalette={this.props.ColorPalette}
+            Api={this.props.api}
             value={GradientColumn.PositiveColor}
             onChange={(x: any) => this.onPositiveColorChanged(x)}
           />
@@ -91,7 +90,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
         Content={
           <ColorPicker
             style={{ width: '100%' }}
-            ColorPalette={this.props.ColorPalette}
+            Api={this.props.api}
             value={GradientColumn.NegativeColor}
             onChange={(x: any) => this.onNegativeColorChanged(x)}
           />

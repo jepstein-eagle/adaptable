@@ -223,7 +223,7 @@ class ToolPanelPopupComponent extends React.Component<
   }
 
   isFullStrategy(functionName: AdaptableFunctionName): boolean {
-    return this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(functionName);
+    return this.props.Api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 

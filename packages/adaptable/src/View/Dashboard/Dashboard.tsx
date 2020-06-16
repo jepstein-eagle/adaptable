@@ -109,16 +109,13 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
   fireToolbarButtonEvent(toolbarButton: ToolbarButton): void {
     let dashboardButtonClickedInfo: DashboardButtonClickedInfo = {
       dashboardButton: toolbarButton,
-      adaptableApi: this.props.Adaptable.api,
+      adaptableApi: this.props.Api,
     };
     const dashboardButtonClickedEventArgs: DashboardButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
       'Dashboard Button Clicked Args',
       dashboardButtonClickedInfo
     );
-    this.props.Adaptable.api.eventApi.emit(
-      'DashboardButtonClicked',
-      dashboardButtonClickedEventArgs
-    );
+    this.props.Api.eventApi.emit('DashboardButtonClicked', dashboardButtonClickedEventArgs);
   }
 
   renderTab(tab: DashboardTab): React.ReactNode {
@@ -130,7 +127,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         ct => ct.Name == control
       );
       if (customToolbar) {
-        let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        let accessLevel: AccessLevel = this.props.Api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
           StrategyConstants.DashboardStrategyId
         );
 
@@ -140,12 +137,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
           );
           if (customToolbarControl) {
             let customDshboardElememt = React.createElement(customToolbarControl, {
-              Adaptable: this.props.Adaptable,
-              Columns: this.props.Columns,
-              UserFilters: this.props.UserFilters,
-              SystemFilters: this.props.SystemFilters,
-              ColorPalette: this.props.ColorPalette,
-              ColumnSorts: this.props.ColumnSorts,
+              Api: this.props.Api,
               AccessLevel: accessLevel,
               CustomToolbar: customToolbar,
             });
@@ -165,8 +157,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         }
       } else {
         let shippedToolbar = control as AdaptableFunctionName;
-        if (this.props.Adaptable.StrategyService.isStrategyAvailable(shippedToolbar)) {
-          let accessLevel: AccessLevel = this.props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        if (this.props.Api.internalApi.getStrategyService().isStrategyAvailable(shippedToolbar)) {
+          let accessLevel: AccessLevel = this.props.Api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
             shippedToolbar
           );
 
@@ -174,12 +166,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
             if (dashboardControl) {
               let dashboardElememt = React.createElement(dashboardControl, {
-                Adaptable: this.props.Adaptable,
-                Columns: this.props.Columns,
-                UserFilters: this.props.UserFilters,
-                SystemFilters: this.props.SystemFilters,
-                ColorPalette: this.props.ColorPalette,
-                ColumnSorts: this.props.ColumnSorts,
+                Api: this.props.Api,
+
                 AccessLevel: accessLevel,
               });
               return (
@@ -267,7 +255,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     return customButtons;
   }
   renderFunctionsDropdown() {
-    let strategyKeys: string[] = [...this.props.Adaptable.strategies.keys()];
+    let strategyKeys: string[] = [
+      ...this.props.Api.internalApi.getAdaptableInstance().strategies.keys(),
+    ];
     let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
@@ -356,7 +346,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     );
   }
   render() {
-    let instanceName = this.props.Adaptable.api.internalApi.setToolbarTitle();
+    let instanceName = this.props.Api.internalApi.setToolbarTitle();
     return (
       <DashboardUI
         title={instanceName}
@@ -415,13 +405,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<Dashboar
     GridState: state.Grid,
     StatusType: state.SystemStatus.StatusType,
     QuickSearchText: state.QuickSearch.QuickSearchText,
-    // need to get these props so we can 'feed' the toolbars...
-    Columns: state.Grid.Columns,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
-    ColorPalette: state.UserInterface.ColorPalette,
-    ColumnSorts: state.Grid.ColumnSorts,
   };
 }
 

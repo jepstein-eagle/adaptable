@@ -40,8 +40,6 @@ class Glue42PopupComponent extends React.Component<Glue42PopupProps, EditableCon
   render() {
     let infoBody: any[] = ['Create a report to send to Glue42.', <br />, <br />];
 
-    //  let Glue42DomainPages: Glue42Domain[] = this.props.Adaptable.api.Glue42Api.getGlue42Domains();
-
     return (
       <PanelWithButton
         headerText={StrategyConstants.Glue42StrategyFriendlyName}

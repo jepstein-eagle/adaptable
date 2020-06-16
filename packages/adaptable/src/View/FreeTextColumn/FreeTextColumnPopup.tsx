@@ -86,7 +86,7 @@ class FreeTextColumnPopupComponent extends React.Component<
           <FreeTextColumnEntityRow
             key={FreeTextColumn.Uuid}
             colItems={colItems}
-            api={this.props.Adaptable.api}
+            api={this.props.Api}
             AdaptableObject={FreeTextColumn}
             onEdit={() => this.onEdit(FreeTextColumn)}
             onShare={description => this.props.onShare(FreeTextColumn, description)}
@@ -125,7 +125,7 @@ class FreeTextColumnPopupComponent extends React.Component<
             <FreeTextColumnWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
               ModalContainer={this.props.ModalContainer}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               ConfigEntities={this.props.FreeTextColumns}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

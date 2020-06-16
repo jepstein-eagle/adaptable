@@ -23,15 +23,16 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
       { Key: 'Columns', Value: this.getColumnNames(this.props.Data.Columns) },
       {
         Key: 'Column Sorts',
-        Value: this.props.Adaptable.LayoutService.getColumnSort(
-          this.props.Data.ColumnSorts,
-          this.props.Columns
-        ),
+        Value: this.props.Api.internalApi
+          .getLayoutService()
+          .getColumnSort(this.props.Data.ColumnSorts, this.props.Api.gridApi.getColumns()),
       },
       { Key: 'Grouped Columns', Value: this.getColumnNames(this.props.Data.GroupedColumns) },
     ];
     let pivotKeyValuePairs: KeyValuePair[] = [];
-    if (this.props.Adaptable.LayoutService.isPivotedLayout(this.props.Data.PivotDetails)) {
+    if (
+      this.props.Api.internalApi.getLayoutService().isPivotedLayout(this.props.Data.PivotDetails)
+    ) {
       pivotKeyValuePairs = [
         {
           Key: 'Pivot Columns',
@@ -57,7 +58,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
 
   private getColumnNames(columns: string[]): string {
     return ArrayExtensions.IsNotNullOrEmpty(columns)
-      ? this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(columns).join(', ')
+      ? this.props.Api.gridApi.getFriendlyNamesFromColumnIds(columns).join(', ')
       : 'None';
   }
 

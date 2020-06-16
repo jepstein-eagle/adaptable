@@ -9,13 +9,13 @@ import Dropdown from '../../../components/Dropdown';
 import FieldWrap from '../../../components/FieldWrap';
 import DropdownButton, { DropdownButtonProps } from '../../../components/DropdownButton';
 import Input from '../../../components/Input';
-import LoggingHelper from '../../../Utilities/Helpers/LoggingHelper';
+import { AdaptableApi } from '../../../Api/AdaptableApi';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
   SelectedColumn: AdaptableColumn;
   SelectedColumnValue: string;
   onColumnValueChange: (columnvalue: any) => void;
-  Adaptable: IAdaptable;
+  Api: AdaptableApi;
   AllowNew?: boolean; // defaults to true if not provided
   style?: React.CSSProperties;
   newLabel?: string;
@@ -74,12 +74,13 @@ export class ColumnValueSelector extends React.Component<
           this.onSelectedValueChange([{ RawValue: selected }]);
         }}
         options={() => {
+          let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
           if (
             this.props.SelectedColumn != null &&
-            this.props.Adaptable != null &&
-            this.props.Adaptable.getColumnValueDisplayValuePairDistinctList != null
+            adaptable != null &&
+            adaptable.getColumnValueDisplayValuePairDistinctList != null
           ) {
-            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
+            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = adaptable.getColumnValueDisplayValuePairDistinctList(
               this.props.SelectedColumn.ColumnId,
               DistinctCriteriaPairValue.DisplayValue,
               false

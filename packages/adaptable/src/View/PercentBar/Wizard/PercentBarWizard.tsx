@@ -8,9 +8,7 @@ import { PercentBarSettingsWizard } from './PercentBarSettingsWizard';
 import { PercentBarRangesWizard } from './PercentBarRangesWizard';
 
 export interface PercentBarWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<PercentBarWizard> {
-  ColorPalette: Array<string>;
-}
+  extends AdaptableObjectExpressionAdaptableWizardProps<PercentBarWizard> {}
 
 export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}> {
   render() {
@@ -19,27 +17,27 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
         <AdaptableWizard
           FriendlyName={StrategyConstants.PercentBarStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <PercentBarSelectColumnWizard />,
+              Element: <PercentBarSelectColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Ranges',
               Index: 1,
-              Element: <PercentBarRangesWizard ColorPalette={this.props.ColorPalette} />,
+              Element: <PercentBarRangesWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Settings',
               Index: 2,
-              Element: <PercentBarSettingsWizard ColorPalette={this.props.ColorPalette} />,
+              Element: <PercentBarSettingsWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PercentBarSummaryWizard />,
+              Element: <PercentBarSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

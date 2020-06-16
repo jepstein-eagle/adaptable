@@ -28,7 +28,7 @@ export class PlusMinusColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.SelectedColumnId]}
-          ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
+          ColumnList={this.props.Api.gridApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

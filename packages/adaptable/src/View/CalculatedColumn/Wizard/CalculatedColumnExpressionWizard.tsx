@@ -33,14 +33,14 @@ export class CalculatedColumnExpressionWizard
     this.state = { ColumnExpression: this.props.Data.ColumnExpression };
   }
   render(): any {
-    const firstRow = this.props.Adaptable.getFirstRowNode().data;
+    const firstRow = this.props.Api.internalApi.getAdaptableInstance().getFirstRowNode().data;
 
     return (
       <ExpressionEditor
         value={this.state.ColumnExpression}
         onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
         initialData={firstRow}
-        columns={this.props.Columns}
+        columns={this.props.Api.gridApi.getColumns()}
         functions={defaultFunctions}
       />
     );
@@ -73,7 +73,7 @@ export class CalculatedColumnExpressionWizard
       // workd out the correct datatype if possible
       const cleanedExpression: string = this.props.calculatedColumnExpressionService.CleanExpressionColumnNames(
         this.state.ColumnExpression,
-        this.props.Columns
+        this.props.Api.gridApi.getColumns()
       );
 
       const dataType = this.props.calculatedColumnExpressionService.GetCalculatedColumnDataType(

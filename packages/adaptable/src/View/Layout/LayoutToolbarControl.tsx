@@ -45,12 +45,12 @@ class LayoutToolbarControlComponent extends React.Component<
     // this is wrong at the moment an always returning true
     // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
     // but worth fixing and then making that save button enabled depending on whether this is true
-    let isModifiedLayout: boolean = this.props.Adaptable.LayoutService.isLayoutModified(
-      layoutEntity
-    );
+    let isModifiedLayout: boolean = this.props.Api.internalApi
+      .getLayoutService()
+      .isLayoutModified(layoutEntity);
 
     let isManualSaveLayout: boolean =
-      this.props.Adaptable.adaptableOptions.layoutOptions!.autoSaveLayouts == false;
+      this.props.Api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
       return {
@@ -161,7 +161,7 @@ class LayoutToolbarControlComponent extends React.Component<
     if (currentLayoutObject) {
       let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
 
-      let visibleColumns = this.props.Columns.filter(c => c.Visible);
+      let visibleColumns = this.props.Api.gridApi.getColumns().filter(c => c.Visible);
       let layoutToSave: Layout = {
         Uuid: currentLayoutObject.Uuid,
         Name: this.props.CurrentLayout,
@@ -170,8 +170,8 @@ class LayoutToolbarControlComponent extends React.Component<
         VendorGridInfo: gridState,
         AdaptableGridInfo: {
           CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          CurrentColumnSorts: this.props.ColumnSorts,
-          ExpandedRowGroupKeys: this.props.Adaptable.api.gridApi.getExpandRowGroupsKeys(),
+          CurrentColumnSorts: this.props.Api.gridApi.getColumnSorts(),
+          ExpandedRowGroupKeys: this.props.Api.gridApi.getExpandRowGroupsKeys(),
         },
       };
       this.props.onSaveLayout(layoutToSave);

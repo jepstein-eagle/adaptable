@@ -3,7 +3,6 @@ import * as Redux from 'redux';
 import { Provider, connect, ConnectedComponent } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
 import theme from '../theme';
-
 import * as PopupRedux from '../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { AdaptablePopup } from './Components/Popups/AdaptablePopup';
@@ -49,7 +48,7 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
     return (
       <div>
         {this.props.Adaptable.StrategyService.isStrategyAvailable('Dashboard') && (
-          <Dashboard Adaptable={this.props.Adaptable} />
+          <Dashboard Adaptable={this.props.Adaptable} Api={this.props.Adaptable.api} />
         )}
         {/* The chart widget - it will decide where it will display
                 Either modally (if we set ShowModal in our Predefiend Config for Chart State)

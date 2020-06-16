@@ -50,18 +50,20 @@ let demoConfig: PredefinedConfig = {
     VisibleToolbars: ['Layout', 'Alert'],
   },
   Alert: {
-    Revision: 4,
+    Revision: 6,
     AlertDefinitions: [
       {
         ColumnId: 'notional',
         MessageType: 'Warning',
         Range: {
           Operand1Type: 'Value',
-          Operator: 'AnyChange',
+          Operator: 'Equals',
+          Operand1: '1200',
         },
         AlertProperties: {
           ShowPopup: false,
           ShowInDiv: false,
+          HighlightCell: true,
         },
       },
     ],

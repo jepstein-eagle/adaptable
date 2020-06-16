@@ -20,7 +20,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
   }
   render(): any {
     let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
-      return this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(c);
+      return this.props.Api.gridApi.getFriendlyNameFromColumnId(c);
     });
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
@@ -29,9 +29,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
       { Key: 'Total', Value: this.props.Data.YAxisTotal },
       {
         Key: 'X Axis Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          this.props.Data.XAxisColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId),
       },
       { Key: 'X Axis Values', Value: this.getExpressionString(this.props.Data.XAxisExpression) },
     ];
@@ -48,12 +46,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
       return '[All Column Values]';
     } else {
-      return ExpressionHelper.ConvertExpressionToString(
-        expression,
-        this.props.Columns,
-        this.props.Adaptable.api,
-        false
-      );
+      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Api, false);
     }
   }
 

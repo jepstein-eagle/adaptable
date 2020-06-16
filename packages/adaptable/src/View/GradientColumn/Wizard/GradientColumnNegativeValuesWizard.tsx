@@ -14,9 +14,7 @@ import HelpBlock from '../../../components/HelpBlock';
 import { ColorPicker } from '../../ColorPicker';
 
 export interface GradientColumnNegativeValuesWizardProps
-  extends AdaptableWizardStepProps<GradientColumn> {
-  ColorPalette: Array<string>;
-}
+  extends AdaptableWizardStepProps<GradientColumn> {}
 
 export interface GradientColumnNegativeValuesWizardState {
   NegativeValue: number;
@@ -66,7 +64,7 @@ export class GradientColumnNegativeValuesWizard
 
             <Flex flex={3}>
               <ColorPicker
-                ColorPalette={this.props.ColorPalette}
+                Api={this.props.Api}
                 value={this.state.NegativeColor}
                 onChange={(x: any) => this.onNegativeColorSelectChanged(x)}
               />

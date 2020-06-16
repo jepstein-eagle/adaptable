@@ -89,12 +89,11 @@ export class PercentBarSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.PercentBars}
-            ColorPalette={this.props.ColorPalette}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
           />
         )}
       </div>
@@ -105,9 +104,9 @@ export class PercentBarSummaryComponent extends React.Component<
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
-      this.props.SummarisedColumn.ColumnId
-    );
+    let distinctColumnsValues: number[] = this.props.Api.internalApi
+      .getStrategyService()
+      .getDistinctColumnValues(this.props.SummarisedColumn.ColumnId);
 
     configEntity.NegativeValue = Math.min(...distinctColumnsValues);
     configEntity.PositiveValue = Math.max(...distinctColumnsValues);
@@ -157,7 +156,6 @@ export class PercentBarSummaryComponent extends React.Component<
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PercentBarSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     PercentBars: state.PercentBar.PercentBars,
     ColorPalette: state.UserInterface.ColorPalette,
     StyleClassNames: state.UserInterface.StyleClassNames,

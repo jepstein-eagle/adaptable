@@ -12,8 +12,6 @@ import DropdownButton from '../../components/DropdownButton';
 import { IReportService } from '../../Utilities/Services/Interface/IReportService';
 const ExportIcon = icons.export as ReactComponentLike;
 export interface ReportEntityRowProps extends SharedEntityRowProps<ReportEntityRow> {
-  ReportService: IReportService;
-  canExportToExel: boolean;
   onExport: (exportDestination: ExportDestination) => void;
 }
 
@@ -36,29 +34,29 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       onClick: () => this.props.onExport(ExportDestination.Clipboard),
       label: 'Clipboard',
     };
-    let isSystemReport: boolean = this.props.ReportService.IsSystemReport(report);
+    let isSystemReport: boolean = this.props.api.internalApi
+      .getReportService()
+      .IsSystemReport(report);
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={report.Name} />;
     colItems[1].Content = (
       <EntityRowItem
-        Content={this.props.ReportService.GetReportColumnsDescription(
-          report,
-          this.props.api.gridApi.getColumns()
-        )}
+        Content={this.props.api.internalApi
+          .getReportService()
+          .GetReportColumnsDescription(report, this.props.api.gridApi.getColumns())}
       />
     );
     colItems[2].Content = (
       <EntityRowItem
-        Content={this.props.ReportService.GetReportExpressionDescription(
-          report,
-          this.props.api.gridApi.getColumns()
-        )}
+        Content={this.props.api.internalApi
+          .getReportService()
+          .GetReportExpressionDescription(report, this.props.api.gridApi.getColumns())}
       />
     );
 
     const exportItems = [
-      this.props.canExportToExel && excelMenuItem,
+      this.props.api.exportApi.canExportToExcel() && excelMenuItem,
       ,
       csvMenuItem,
       clipboardMenuItem,

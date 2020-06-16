@@ -79,7 +79,7 @@ class ColumnCategoryPopupComponent extends React.Component<
         <ColumnCategoryEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={item}
           onEdit={() => this.onEdit(item)}
           onShare={description => this.props.onShare(item, description)}
@@ -121,7 +121,7 @@ class ColumnCategoryPopupComponent extends React.Component<
             ConfigEntities={this.props.ColumnCategorys}
             ModalContainer={this.props.ModalContainer}
             ColumnCategorys={this.props.ColumnCategorys}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

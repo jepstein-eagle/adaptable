@@ -16,7 +16,6 @@ export interface LayoutEntityRowProps<LayoutEntityRow>
   extends SharedEntityRowProps<LayoutEntityRow> {
   IsCurrentLayout: boolean;
   onSelect: (Layout: Layout) => void;
-  LayoutService: ILayoutService;
 }
 
 export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<LayoutEntityRow>, {}> {
@@ -39,10 +38,9 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
     colItems[1].Content = <EntityRowItem Content={layout.Name} />;
     colItems[2].Content = (
       <EntityRowItem
-        Content={this.props.LayoutService.getLayoutDescription(
-          layout,
-          this.props.api.gridApi.getColumns()
-        )}
+        Content={this.props.api.internalApi
+          .getLayoutService()
+          .getLayoutDescription(layout, this.props.api.gridApi.getColumns())}
       />
     );
 

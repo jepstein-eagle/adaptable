@@ -2,13 +2,12 @@ import * as React from 'react';
 
 import { AdaptableWizardStep } from './Interface/IAdaptableWizard';
 import { WizardLegend } from './WizardLegend';
-import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { Flex, Box } from 'rebass';
+import { Flex } from 'rebass';
 import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
 import Panel from '../../components/Panel';
+import { AdaptableApi } from '../../types';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -25,7 +24,7 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
   FriendlyName?: string;
   ModalContainer: HTMLElement;
   canFinishWizard: Function;
-  Adaptable: IAdaptable;
+  Api: AdaptableApi;
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -237,7 +236,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       },
       Data: this.props.Data,
       UpdateGoBackState: () => this.ForceUpdateGoBackState(),
-      Adaptable: this.props.Adaptable,
+      Api: this.props.Api,
     });
   }
 }

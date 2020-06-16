@@ -134,9 +134,9 @@ class ChartDisplayPopupComponent extends React.Component<
                     this.props.CurrentChartDefinition as CategoryChartDefinition
                   }
                   ChartData={this.props.ChartData}
-                  ColorPalette={this.props.ColorPalette}
+                  Api={this.props.api}
                   Columns={this.props.Columns}
-                  Api={this.props.Adaptable.api}
+                  Api={this.props.Api}
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }
@@ -146,8 +146,8 @@ class ChartDisplayPopupComponent extends React.Component<
                 <PieChartComponent
                   CurrentChartDefinition={this.props.CurrentChartDefinition as PieChartDefinition}
                   ChartData={this.props.ChartData}
-                  Api={this.props.Adaptable.api}
-                  //   ColorPalette={this.props.ColorPalette}
+                  Api={this.props.Api}
+                  //   Api={this.props.api}
                   //   Columns={this.props.Columns}
 
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
@@ -185,7 +185,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Adaptable={this.props.Adaptable}
+                Api={this.props.Api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -197,7 +197,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Adaptable={this.props.Adaptable}
+                Api={this.props.Api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -210,7 +210,7 @@ class ChartDisplayPopupComponent extends React.Component<
                 EditedAdaptableObject={this.state.EditedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Adaptable={this.props.Adaptable}
+                Api={this.props.Api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}

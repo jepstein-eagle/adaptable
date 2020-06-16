@@ -103,11 +103,11 @@ class SchedulePopupComponent extends React.Component<
     let allSchedules: BaseSchedule[] = [];
     allSchedules.push(...this.props.Reminders);
     allSchedules.push(...this.props.ReportSchedules);
-    const ippApi: IPushPullApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi: IPushPullApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
     if (ippApi && ippApi.isIPushPullRunning()) {
       allSchedules.push(...this.props.IPushPullSchedules);
     }
-    const glue42Api: Glue42Api = this.props.Adaptable.api.pluginsApi.getPluginApi('glue42');
+    const glue42Api: Glue42Api = this.props.Api.pluginsApi.getPluginApi('glue42');
     if (glue42Api && glue42Api.isGlue42Running()) {
       allSchedules.push(...this.props.Glue42Schedules);
     }
@@ -132,7 +132,7 @@ class SchedulePopupComponent extends React.Component<
       return (
         <ScheduleEntityRow
           AdaptableObject={baseSchedule}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(baseSchedule, description)}
@@ -209,7 +209,7 @@ class SchedulePopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as BaseSchedule}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

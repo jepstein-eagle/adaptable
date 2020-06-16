@@ -12,9 +12,7 @@ import FormLayout, { FormRow } from '../../../components/FormLayout';
 import { getHexForName, GRAY } from '../../UIHelper';
 import { Flex } from 'rebass';
 
-export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {
-  ColorPalette: Array<string>;
-}
+export interface PercentBarSettingsWizardProps extends AdaptableWizardStepProps<PercentBar> {}
 
 export interface PercentBarSettingsWizardState {
   ShowValue: PercentBar['ShowValue'];
@@ -87,7 +85,7 @@ export class PercentBarSettingsWizard
               </Checkbox>
               {this.state.BackColor !== undefined && (
                 <ColorPicker
-                  ColorPalette={this.props.ColorPalette}
+                  Api={this.props.Api}
                   value={this.state.BackColor}
                   onChange={(event: React.FormEvent) => {
                     const { value } = event.target as HTMLInputElement;

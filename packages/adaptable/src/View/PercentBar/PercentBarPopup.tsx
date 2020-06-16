@@ -53,9 +53,9 @@ class PercentBarPopupComponent extends React.Component<
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
         let columnId: string = this.props.PopupParams.columnId;
         if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
-            columnId
-          );
+          let distinctColumnsValues: number[] = this.props.Api.internalApi
+            .getStrategyService()
+            .getDistinctColumnValues(columnId);
 
           let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
           newPercentRender.ColumnId = columnId;
@@ -105,12 +105,12 @@ class PercentBarPopupComponent extends React.Component<
     ];
 
     let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar) => {
-      let column = this.props.Adaptable.api.gridApi.getColumnFromId(percentBar.ColumnId);
+      let column = this.props.Api.gridApi.getColumnFromId(percentBar.ColumnId);
       return (
         <PercentBarEntityRow
           key={percentBar.Uuid}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={percentBar}
           Column={column}
           onEdit={() => this.onEdit(percentBar)}
@@ -155,9 +155,8 @@ class PercentBarPopupComponent extends React.Component<
             <PercentBarWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
               ConfigEntities={null}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               ModalContainer={this.props.ModalContainer}
-              ColorPalette={this.props.ColorPalette}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

@@ -33,9 +33,7 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
       keyValuePairs = [
         {
           Key: 'Column',
-          Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-            this.props.Data.ColumnId
-          ),
+          Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
         },
 
         {

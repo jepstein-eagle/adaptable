@@ -25,6 +25,7 @@ import DropdownButton from '../../components/DropdownButton';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 interface SmartEditToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<SmartEditToolbarControlComponent> {
@@ -59,10 +60,13 @@ class SmartEditToolbarControlComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable._on('CellsSelected', () => {
-        this.props.onSmartEditCheckSelectedCells();
-      });
+    if (this.props.Api) {
+      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+      if (adaptable) {
+        adaptable._on('CellsSelected', () => {
+          this.props.onSmartEditCheckSelectedCells();
+        });
+      }
     }
   }
 
@@ -70,19 +74,16 @@ class SmartEditToolbarControlComponent extends React.Component<
     let statusColour: StatusColour = this.getStatusColour();
 
     let selectedColumn = StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)
-      ? this.props.Adaptable.api.gridApi.getColumnFromId(this.state.SelectedColumnId)
+      ? this.props.Api.gridApi.getColumnFromId(this.state.SelectedColumnId)
       : null;
 
     let previewPanel = (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Adaptable.api}
-        Columns={this.props.Columns}
-        UserFilters={this.props.UserFilters}
+        Api={this.props.Api}
         SelectedColumn={selectedColumn}
         ShowPanel={true}
         ShowHeader={false}
-        ValidationService={this.props.Adaptable.ValidationService}
       />
     );
 
@@ -103,7 +104,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
-      this.props.Adaptable.api.internalApi.isGridInPivotMode();
+      this.props.Api.internalApi.isGridInPivotMode();
 
     let content = (
       <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
@@ -204,10 +205,9 @@ class SmartEditToolbarControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
-      confirmAction,
-      cancelAction
-    );
+    let confirmation: IUIConfirmation = this.props.Api.internalApi
+      .getValidationService()
+      .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);
   }
 

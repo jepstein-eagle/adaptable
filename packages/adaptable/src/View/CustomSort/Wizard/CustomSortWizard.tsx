@@ -17,29 +17,30 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
       <AdaptableWizard
         FriendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
         ModalContainer={this.props.ModalContainer}
-        Adaptable={this.props.Adaptable}
+        Api={this.props.Api}
         Steps={[
           {
             StepName: 'Select Column',
             Index: 0,
             Element: (
               <CustomSortColumnWizard
-                SortedColumns={this.props.Adaptable.api.gridApi
+                SortedColumns={this.props.Api.gridApi
                   .getColumns()
                   .filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))}
                 CustomSorts={customSorts}
+                Api={this.props.Api}
               />
             ),
           },
           {
             StepName: 'Sort Order',
             Index: 1,
-            Element: <CustomSortValuesWizard />,
+            Element: <CustomSortValuesWizard Api={this.props.Api} />,
           },
           {
             StepName: 'Summary',
             Index: 2,
-            Element: <CustomSortSummaryWizard />,
+            Element: <CustomSortSummaryWizard Api={this.props.Api} />,
           },
         ]}
         Data={this.props.EditedAdaptableObject}

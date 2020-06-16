@@ -12,11 +12,12 @@ import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
 import Dropdown from '../../components/Dropdown';
 import { CSSProperties } from 'react';
+import { AdaptableApi } from '../../Api/AdaptableApi';
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
   className?: string;
   style?: CSSProperties;
-  ColorPalette: string[];
+  api: AdaptableApi;
   StyleClassNames: string[];
   Style: AdaptableStyle;
   UpdateStyle: (style: AdaptableStyle) => void;
@@ -107,7 +108,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
                     {this.state.myStyle.BackColor != null && (
                       <ColorPicker
-                        ColorPalette={this.props.ColorPalette}
+                        Api={this.props.api}
                         value={this.state.myStyle.BackColor}
                         onChange={(x: any) => this.onBackColorSelectChange(x)}
                       />
@@ -127,7 +128,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
                     {this.state.myStyle.ForeColor != null && (
                       <ColorPicker
-                        ColorPalette={this.props.ColorPalette}
+                        Api={this.props.api}
                         value={this.state.myStyle.ForeColor}
                         onChange={(x: any) => this.onForeColorSelectChange(x)}
                       />

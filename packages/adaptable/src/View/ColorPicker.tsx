@@ -2,14 +2,16 @@ import * as React from 'react';
 import Input from '../components/Input';
 import { HTMLProps } from 'react';
 import { BoxProps } from 'rebass';
+import { AdaptableApi } from '../Api/AdaptableApi';
 
 export type ColorPickerProps = HTMLProps<HTMLInputElement> & {
-  ColorPalette: string[];
+  Api: AdaptableApi;
 } & BoxProps;
 
 export class ColorPicker extends React.Component<ColorPickerProps, {}> {
   render(): any {
-    const { ColorPalette, ...restProps } = this.props;
+    let ColorPalette = this.props.Api.userInterfaceApi.getColorPalette();
+    const { ...restProps } = this.props;
     let ABcolorChoicesOptions = ColorPalette.map(x => <option key={x}>{x}</option>);
     let ABcolorChoices = <datalist id={'ABcolorChoices'}>{ABcolorChoicesOptions}</datalist>;
     return (

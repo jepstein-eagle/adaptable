@@ -73,12 +73,12 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = this.props.Adaptable.api.gridApi.getColumnFromId(alertDefinition.ColumnId);
+      let column = this.props.Api.gridApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={alertDefinition}
           Column={column}
           onEdit={() => this.onEdit(alertDefinition)}
@@ -89,7 +89,6 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             this.onMessageTypeChanged(alertDef, messageType)
           }
           AccessLevel={this.props.AccessLevel}
-          StrategyService={this.props.Adaptable.StrategyService}
         />
       );
     });
@@ -126,7 +125,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
             EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

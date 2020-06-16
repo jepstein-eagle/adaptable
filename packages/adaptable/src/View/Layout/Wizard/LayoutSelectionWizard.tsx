@@ -93,7 +93,10 @@ export class LayoutSelectionWizard
   public Next(): void {
     if (this.state.LayoutSource == LayoutSource.Existing) {
       // need to popuplate the layout
-      let visibleColumns = this.props.Columns.filter(c => c.Visible).map(c => c.ColumnId);
+      let visibleColumns = this.props.Api.gridApi
+        .getColumns()
+        .filter(c => c.Visible)
+        .map(c => c.ColumnId);
       this.props.Data.Columns = visibleColumns;
       this.props.Data.ColumnSorts = this.props.ColumnSorts;
     }

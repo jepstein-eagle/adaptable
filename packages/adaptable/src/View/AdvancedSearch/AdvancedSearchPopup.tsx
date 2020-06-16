@@ -100,7 +100,7 @@ class AdvancedSearchPopupComponent extends React.Component<
           <AdvancedSearchEntityRow
             key={advancedSearch.Uuid || index}
             colItems={colItems}
-            api={this.props.Adaptable.api}
+            api={this.props.Api}
             IsCurrentAdvancedSearch={advancedSearch.Name == this.props.CurrentAdvancedSearchName}
             AdaptableObject={advancedSearch}
             onEdit={advancedSearch => this.onEdit(advancedSearch as AdvancedSearch)}
@@ -145,7 +145,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             <AdvancedSearchWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject}
               ConfigEntities={this.props.AdvancedSearches}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               ModalContainer={this.props.ModalContainer}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
@@ -189,10 +189,7 @@ class AdvancedSearchPopupComponent extends React.Component<
       this.props.PopupParams.source &&
       this.props.PopupParams.source == 'Toolbar'
     ) {
-      if (
-        this.props.AdvancedSearches ===
-        this.props.Adaptable.api.advancedSearchApi.getAllAdvancedSearch()
-      ) {
+      if (this.props.AdvancedSearches === this.props.Api.advancedSearchApi.getAllAdvancedSearch()) {
         this.props.onClosePopup();
       }
     }

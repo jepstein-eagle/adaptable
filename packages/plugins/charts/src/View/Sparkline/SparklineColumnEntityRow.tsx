@@ -16,7 +16,6 @@ import { SparklineTypeEnum } from '@adaptabletools/adaptable/src/PredefinedConfi
 export interface SparklineColumnEntityRowProps
   extends SharedEntityRowProps<SparklineColumnEntityRow> {
   Column: AdaptableColumn;
-  ColorPalette: string[];
 
   onSparklineTypeChange: (
     sparklineColumn: SparklineColumn,
@@ -96,9 +95,9 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
         Content={
           <ColorPicker
             style={{ width: '100%' }}
-            ColorPalette={this.props.ColorPalette}
+            Api={this.props.api}
             value={sparklineColumn.LineColor}
-            onChange={x => this.onLineColorChanged(x)}
+            onChange={(x: any) => this.onLineColorChanged(x)}
           />
         }
       />

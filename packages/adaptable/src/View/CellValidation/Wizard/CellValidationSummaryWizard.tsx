@@ -25,26 +25,19 @@ export class CellValidationSummaryWizard
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
       { Key: 'Mode', Value: this.props.Data.ActionMode },
       {
         Key: 'Rule',
-        Value: this.props.Adaptable.ValidationService.createCellValidationDescription(
-          this.props.Data,
-          this.props.Columns
-        ),
+        Value: this.props.Api.internalApi
+          .getValidationService()
+          .createCellValidationDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
       },
       {
         Key: 'Query',
         Value: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression)
-          ? ExpressionHelper.ConvertExpressionToString(
-              this.props.Data.Expression,
-              this.props.Columns,
-              this.props.Adaptable.api
-            )
+          ? ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Api)
           : 'None',
       },
     ];

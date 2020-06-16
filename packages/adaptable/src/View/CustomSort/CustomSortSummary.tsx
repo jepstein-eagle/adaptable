@@ -95,7 +95,7 @@ export class CustomSortSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
             ConfigEntities={this.props.CustomSorts}
             ModalContainer={this.props.ModalContainer}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -165,7 +165,6 @@ export class CustomSortSummaryComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CustomSortSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     CustomSorts: state.CustomSort.CustomSorts,
   };
 }

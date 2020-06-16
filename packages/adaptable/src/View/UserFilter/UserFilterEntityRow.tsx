@@ -26,11 +26,7 @@ export class UserFilterEntityRow extends React.Component<
     );
     colItems[2].Content = (
       <EntityRowItem
-        Content={ExpressionHelper.ConvertExpressionToString(
-          userFilter.Expression,
-          this.props.api.gridApi.getColumns(),
-          this.props.api
-        )}
+        Content={ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.api)}
       />
     );
     colItems[3].Content = (

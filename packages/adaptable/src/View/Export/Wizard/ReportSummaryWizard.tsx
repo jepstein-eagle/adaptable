@@ -23,17 +23,15 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Columns',
-        Value: this.props.Adaptable!.ReportService.GetReportColumnsDescription(
-          this.props.Data,
-          this.props.Columns
-        ),
+        Value: this.props.Api.internalApi
+          .getReportService()
+          .GetReportColumnsDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
       },
       {
         Key: 'Rows',
-        Value: this.props.Adaptable!.ReportService.GetReportExpressionDescription(
-          this.props.Data,
-          this.props.Columns
-        ),
+        Value: this.props.Api.internalApi
+          .getReportService()
+          .GetReportExpressionDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
       },
       //  { Key: 'Schedule', Value: scheduleDescription },
     ];

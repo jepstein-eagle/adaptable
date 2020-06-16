@@ -33,14 +33,12 @@ export class ConditionalStyleEntityRow extends React.Component<
       <EntityRowItem
         Content={ExpressionHelper.ConvertExpressionToString(
           conditionalStyle.Expression,
-          this.props.api.gridApi.getColumns(),
           this.props.api
         )}
       />
     );
     let buttons: any = (
       <EntityListActionButtons
-        //   Adaptable={this.props.Adaptable}
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}

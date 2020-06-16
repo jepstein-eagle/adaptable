@@ -16,17 +16,17 @@ export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardPr
         <AdaptableWizard
           FriendlyName={StrategyConstants.FreeTextColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Settings',
               Index: 0,
-              Element: <FreeTextColumnSettingsWizard />,
+              Element: <FreeTextColumnSettingsWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 1,
-              Element: <FreeTextColumnSummaryWizard />,
+              Element: <FreeTextColumnSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

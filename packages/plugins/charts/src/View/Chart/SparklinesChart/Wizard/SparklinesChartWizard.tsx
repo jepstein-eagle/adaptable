@@ -21,7 +21,7 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
         <AdaptableWizard
           FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',

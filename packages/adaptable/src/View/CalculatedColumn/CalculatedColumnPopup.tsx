@@ -96,8 +96,7 @@ class CalculatedColumnPopupComponent extends React.Component<
         return (
           <CalculatedColumnEntityRow
             colItems={colItems}
-            api={this.props.Adaptable.api}
-            Columns={this.props.Columns}
+            api={this.props.Api}
             onShare={description => this.props.onShare(calculatedColumn, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             AdaptableObject={calculatedColumn}
@@ -105,9 +104,6 @@ class CalculatedColumnPopupComponent extends React.Component<
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
             AccessLevel={this.props.AccessLevel}
-            CalculatedColumnExpressionService={
-              this.props.Adaptable.CalculatedColumnExpressionService
-            }
           />
         );
       }
@@ -147,7 +143,7 @@ class CalculatedColumnPopupComponent extends React.Component<
             ModalContainer={this.props.ModalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

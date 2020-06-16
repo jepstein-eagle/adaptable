@@ -81,7 +81,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         // if we have no placeholder then set one - together with the placeholder
         let expressionDescription = ExpressionHelper.ConvertExpressionToString(
           existingColumnFilter.Filter,
-          this.props.Columns,
           this.props.Adaptable.api,
           false
         );
@@ -95,7 +94,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         if (diff) {
           let expressionDescription = ExpressionHelper.ConvertExpressionToString(
             existingColumnFilter.Filter,
-            this.props.Columns,
             this.props.Adaptable.api,
             false
           );

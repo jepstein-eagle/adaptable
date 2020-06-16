@@ -90,7 +90,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         <ChartEntityRow
           colItems={colItems}
           AdaptableObject={Chart}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           key={Chart.Name}
           onEdit={() => this.onEdit(Chart as ChartDefinition)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -162,7 +162,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Adaptable={this.props.Adaptable}
+                Api={this.props.Api}
                 WizardStartIndex={this.state.WizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -174,7 +174,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Adaptable={this.props.Adaptable}
+                Api={this.props.Api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -187,7 +187,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
                 ModalContainer={this.props.ModalContainer}
-                Adaptable={this.props.Adaptable}
+                Api={this.props.Api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -251,9 +251,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       this.props.PopupParams.source &&
       this.props.PopupParams.source == 'Toolbar'
     ) {
-      if (
-        this.props.ChartDefinitions === this.props.Adaptable.api.chartApi.getAllChartDefinitions()
-      ) {
+      if (this.props.ChartDefinitions === this.props.Api.chartApi.getAllChartDefinitions()) {
         this.props.onClosePopup();
       }
     }

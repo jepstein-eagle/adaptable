@@ -67,7 +67,6 @@ export function CreateSingleColumnExpression(
 // Converts an Expression to a readable string - used in display boxes
 export function ConvertExpressionToString(
   Expression: Expression,
-  columns: Array<AdaptableColumn>,
   api: AdaptableApi,
   includeColumnName: boolean = true
 ): string {
@@ -119,6 +118,7 @@ export function ConvertExpressionToString(
         if (columnToString != '') {
           columnToString += ' OR ';
         }
+        let columns = api.gridApi.getColumns();
         columnToString += RangesToString(
           columnRange,
           columnFriendlyName,

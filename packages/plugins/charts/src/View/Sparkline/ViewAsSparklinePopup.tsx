@@ -145,17 +145,17 @@ class ViewAsSparklinesPopupComponent extends React.Component<
           <FormRow>
             <label>Line Color</label>
             <ColorPicker
-              ColorPalette={this.props.ColorPalette}
+              Api={this.props.Api}
               value={this.state.Brush}
-              onChange={x => this.onBrushColorChange(x)}
+              onChange={(x: any) => this.onBrushColorChange(x)}
             />
           </FormRow>
           <FormRow>
             <label>Negative Color (for Columns)</label>
             <ColorPicker
-              ColorPalette={this.props.ColorPalette}
+              Api={this.props.Api}
               value={this.state.NegativeBrush}
-              onChange={x => this.onNegativeBrushColorChange(x)}
+              onChange={(x: any) => this.onNegativeBrushColorChange(x)}
             />
           </FormRow>
         </FormLayout>
@@ -200,7 +200,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
               showClearButton={false}
               SelectedColumnIds={[this.state.SparklinesChartDefinition.ColumnId]}
               SelectionMode={SelectionMode.Single}
-              ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
+              ColumnList={this.props.Api.gridApi.getNumericColumns()}
               onColumnChange={columns => this.onDataColumnChanged(columns)}
             />
           </Flex>
@@ -243,10 +243,9 @@ class ViewAsSparklinesPopupComponent extends React.Component<
       sparklinesChartDefinition.PrimaryKeyValues = primaryKeyValues;
     }
 
-    let chartData: ChartData = this.props.Adaptable.ChartService.BuildSparklinesChartData(
-      sparklinesChartDefinition,
-      this.props.Columns
-    );
+    let chartData: ChartData = this.props.Api.internalApi
+      .getChartService()
+      .BuildSparklinesChartData(sparklinesChartDefinition, this.props.Api.gridApi.getColumns());
     let dataSource: number[] = chartData.Data;
     let errorMessage: string = chartData.ErrorMessage;
 

@@ -56,9 +56,9 @@ class GradientColumnPopupComponent extends React.Component<
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
         let columnId: string = this.props.PopupParams.columnId;
         if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
-            columnId
-          );
+          let distinctColumnsValues: number[] = this.props.Api.internalApi
+            .getStrategyService()
+            .getDistinctColumnValues(columnId);
 
           let newGradientColumn: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
           newGradientColumn.ColumnId = columnId;
@@ -109,15 +109,14 @@ class GradientColumnPopupComponent extends React.Component<
 
     let GradientColumnItems = this.props.GradientColumns.map(
       (gradientColumn: GradientColumn, index) => {
-        let column = this.props.Adaptable.api.gridApi.getColumnFromId(gradientColumn.ColumnId);
+        let column = this.props.Api.gridApi.getColumnFromId(gradientColumn.ColumnId);
         return (
           <GradientColumnEntityRow
             key={gradientColumn.Uuid}
             colItems={colItems}
-            api={this.props.Adaptable.api}
+            api={this.props.Api}
             AdaptableObject={gradientColumn}
             Column={column}
-            ColorPalette={this.props.ColorPalette}
             onEdit={() => this.onEdit(gradientColumn)}
             onShare={description => this.props.onShare(gradientColumn, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
@@ -177,9 +176,8 @@ class GradientColumnPopupComponent extends React.Component<
             <GradientColumnWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
               ConfigEntities={null}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               ModalContainer={this.props.ModalContainer}
-              ColorPalette={this.props.ColorPalette}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

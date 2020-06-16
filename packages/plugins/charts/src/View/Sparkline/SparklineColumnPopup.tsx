@@ -81,15 +81,14 @@ class SparklineColumnPopupComponent extends React.Component<
     ];
 
     let SparklineItems = this.props.SparklineColumns.map((sparklineColumn: SparklineColumn) => {
-      let column = this.props.Adaptable.api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+      let column = this.props.Api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
       return (
         <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={sparklineColumn}
           Column={column}
-          ColorPalette={this.props.ColorPalette}
           onEdit={() => this.onEdit(sparklineColumn)}
           onShare={description => this.props.onShare(sparklineColumn, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
@@ -130,8 +129,8 @@ class SparklineColumnPopupComponent extends React.Component<
             <SparklineColumnWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
               ConfigEntities={null}
-              ColorPalette={this.props.ColorPalette}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.api}
+              Api={this.props.Api}
               ModalContainer={this.props.ModalContainer}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

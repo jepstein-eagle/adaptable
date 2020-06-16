@@ -20,7 +20,7 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
         <AdaptableWizard
           FriendlyName={StrategyConstants.CalculatedColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Expression',
@@ -29,21 +29,20 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
                 <CalculatedColumnExpressionWizard
                   GetErrorMessage={this.props.GetErrorMessage}
                   IsExpressionValid={this.props.IsExpressionValid}
-                  calculatedColumnExpressionService={
-                    this.props.Adaptable.CalculatedColumnExpressionService
-                  }
+                  calculatedColumnExpressionService={this.props.Api.internalApi.getCalculatedColumnExpressionService()}
+                  Api={this.props.Api}
                 />
               ),
             },
             {
               StepName: 'Settings',
               Index: 1,
-              Element: <CalculatedColumnSettingsWizard />,
+              Element: <CalculatedColumnSettingsWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <CalculatedColumnSummaryWizard />,
+              Element: <CalculatedColumnSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

@@ -330,6 +330,10 @@ export class GridApiImpl extends ApiBase implements GridApi {
       .filter(c => c.DataType == DataType.Number);
   }
 
+  public isGridPivotable(): boolean {
+    return this.adaptable.isPivotable();
+  }
+
   private LogMissingColumnWarning(columnId: string): void {
     if (
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&

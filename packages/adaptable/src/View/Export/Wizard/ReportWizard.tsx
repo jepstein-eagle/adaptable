@@ -20,37 +20,42 @@ export class ReportWizard extends React.Component<
         <AdaptableWizard
           FriendlyName={StrategyConstants.ExportStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Columns',
               Index: 0,
-              Element: <ReportColumnTypeWizard />,
+              Element: <ReportColumnTypeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Columns',
               Index: 1,
-              Element: <ReportColumnChooserWizard />,
+              Element: <ReportColumnChooserWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Rows',
               Index: 2,
-              Element: <ReportRowTypeWizard />,
+              Element: <ReportRowTypeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Rows',
               Index: 3,
-              Element: <ReportExpressionWizard />,
+              Element: <ReportExpressionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Settings',
               Index: 4,
-              Element: <ReportSettingsWizard Reports={this.props.ConfigEntities as Report[]} />,
+              Element: (
+                <ReportSettingsWizard
+                  Reports={this.props.ConfigEntities as Report[]}
+                  Api={this.props.Api}
+                />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <ReportSummaryWizard />,
+              Element: <ReportSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject as Report}

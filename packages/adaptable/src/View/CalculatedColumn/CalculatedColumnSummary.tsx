@@ -70,7 +70,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
             ModalContainer={this.props.ModalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

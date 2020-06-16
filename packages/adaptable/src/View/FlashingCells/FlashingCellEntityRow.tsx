@@ -11,7 +11,6 @@ import Dropdown from '../../components/Dropdown';
 
 export interface FlashingCellEntityRowProps extends SharedEntityRowProps<FlashingCellEntityRow> {
   FlashingCellDurations: any[];
-  ColorPalette: string[];
   onSelect: (flashingCell: FlashingCell) => void;
   onChangeFlashingDuration: (flashingCell: FlashingCell, NewFlashDuration: number) => void;
   onChangeDownColorFlashingCell: (flashingCell: FlashingCell, DownColor: string) => void;
@@ -69,7 +68,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       <EntityRowItem
         Content={
           <ColorPicker
-            ColorPalette={this.props.ColorPalette}
+            Api={this.props.api}
             disabled={isDisabled}
             value={flashingCell.UpColor}
             onChange={(x: any) => this.onUpColorChange(x)}
@@ -81,7 +80,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       <EntityRowItem
         Content={
           <ColorPicker
-            ColorPalette={this.props.ColorPalette}
+            Api={this.props.api}
             disabled={isDisabled}
             value={flashingCell.DownColor}
             onChange={(x: any) => this.onDownColorChange(x)}

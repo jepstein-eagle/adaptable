@@ -84,7 +84,7 @@ class DashboardPopupComponent extends React.Component<
     });
 
     let systemToolbars = availableToolbars
-      .filter(at => this.props.Adaptable.StrategyService.isStrategyAvailable(at))
+      .filter(at => this.props.Api.internalApi.getStrategyService().isStrategyAvailable(at))
       .map(at => ({
         Id: at,
         Title: StrategyConstants.getFriendlyNameForStrategyId(at),
@@ -102,7 +102,9 @@ class DashboardPopupComponent extends React.Component<
         );
         return customToolbar
           ? true
-          : this.props.Adaptable.StrategyService.isStrategyAvailable(vt as AdaptableFunctionName);
+          : this.props.Api.internalApi
+              .getStrategyService()
+              .isStrategyAvailable(vt as AdaptableFunctionName);
       });
 
       return { ...tab, Toolbars };

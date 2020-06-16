@@ -94,12 +94,11 @@ export class GradientColumnSummaryComponent extends React.Component<
             EditedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.GradientColumns}
-            ColorPalette={this.props.ColorPalette}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
           />
         )}
       </div>
@@ -110,9 +109,9 @@ export class GradientColumnSummaryComponent extends React.Component<
     let configEntity: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Adaptable.StrategyService.getDistinctColumnValues(
-      this.props.SummarisedColumn.ColumnId
-    );
+    let distinctColumnsValues: number[] = this.props.Api.internalApi
+      .getStrategyService()
+      .getDistinctColumnValues(this.props.SummarisedColumn.ColumnId);
 
     configEntity.NegativeValue = Math.min(...distinctColumnsValues);
     configEntity.PositiveValue = Math.max(...distinctColumnsValues);
@@ -165,7 +164,6 @@ function mapStateToProps(
   ownProps: any
 ): Partial<GradientColumnSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     GradientColumns: state.GradientColumn.GradientColumns,
     ColorPalette: state.UserInterface.ColorPalette,
     StyleClassNames: state.UserInterface.StyleClassNames,

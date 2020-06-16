@@ -54,7 +54,6 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
     );
     rowColItems[1].Content = ExpressionHelper.ConvertExpressionToString(
       columnFilter.Filter,
-      this.props.Columns,
       this.props.Api,
       false
     );

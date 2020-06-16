@@ -23,10 +23,12 @@ export class CalculatedColumnSummaryWizard
       { Key: 'Name', Value: this.props.Data.ColumnId },
       {
         Key: 'Expression',
-        Value: this.props.Adaptable.CalculatedColumnExpressionService.GetExpressionString(
-          this.props.Data.ColumnExpression,
-          this.props.Columns
-        ),
+        Value: this.props.Api.internalApi
+          .getCalculatedColumnExpressionService()
+          .GetExpressionString(
+            this.props.Data.ColumnExpression,
+            this.props.Api.gridApi.getColumns()
+          ),
       },
       { Key: 'DataType', Value: this.props.Data.CalculatedColumnSettings.DataType },
       {

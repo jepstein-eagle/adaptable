@@ -43,6 +43,8 @@ export class UserFilterSummaryComponent extends React.Component<
   render(): any {
     let strategySummaries: any = [];
 
+    let userFilters: UserFilter[] = this.props.Api.userFilterApi.getAllUserFilter();
+
     // title row
     let titleRow = (
       <StrategyHeader
@@ -58,7 +60,7 @@ export class UserFilterSummaryComponent extends React.Component<
     strategySummaries.push(titleRow);
 
     // existing items
-    this.props.UserFilters.map((item, index) => {
+    userFilters.map((item, index) => {
       if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
@@ -88,7 +90,7 @@ export class UserFilterSummaryComponent extends React.Component<
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -105,7 +107,9 @@ export class UserFilterSummaryComponent extends React.Component<
     }
 
     return Helper.ReturnItemCount(
-      this.props.UserFilters.filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId),
+      this.props.Api.userFilterApi
+        .getAllUserFilter()
+        .filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId),
       StrategyConstants.UserFilterStrategyFriendlyName
     );
   }
@@ -115,11 +119,7 @@ export class UserFilterSummaryComponent extends React.Component<
       return 'Column is not filterable';
     }
 
-    return ExpressionHelper.ConvertExpressionToString(
-      userFilter.Expression,
-      this.props.Columns,
-      this.props.Adaptable.api
-    );
+    return ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Api);
   }
 
   isFilterable(): boolean {
@@ -187,12 +187,7 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<UserFilterSummaryProps> {
-  return {
-    Columns: state.Grid.Columns,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
-  };
+  return {};
 }
 
 function mapDispatchToProps(

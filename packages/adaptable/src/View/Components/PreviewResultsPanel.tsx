@@ -3,13 +3,9 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { IPreviewInfo, IPreviewResult } from '../../Utilities/Interface/IPreview';
+import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-
 import { DataSource, GridFactory } from '@adaptabletools/grid';
-
-import Table from '../../components/Table';
 import CheckIcon from '../../components/icons/check';
 import UIHelper from '../UIHelper';
 import Panel from '../../components/Panel';
@@ -27,14 +23,11 @@ const Grid = GridFactory<PreviewDataItem>();
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
   PreviewInfo: IPreviewInfo;
-  Columns: AdaptableColumn[];
   Api: AdaptableApi;
-  UserFilters: UserFilter[];
   SelectedColumn: AdaptableColumn;
   ShowPanel: boolean;
   style?: React.CSSProperties;
   ShowHeader: boolean;
-  ValidationService: IValidationService;
 }
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
@@ -61,12 +54,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
                     headerText={'Validation Error'}
-                    bodyText={[
-                      this.getValidationErrorMessage(
-                        previewResult.ValidationRules,
-                        this.props.Columns
-                      ),
-                    ]}
+                    bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]}
                     MessageType={MessageType.Error}
                   />
                 )}
@@ -75,12 +63,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
                     headerText={'Validation Error'}
-                    bodyText={[
-                      this.getValidationErrorMessage(
-                        previewResult.ValidationRules,
-                        this.props.Columns
-                      ),
-                    ]}
+                    bodyText={[this.getValidationErrorMessage(previewResult.ValidationRules)]}
                     MessageType={MessageType.Warning}
                   />
                 )}
@@ -131,24 +114,19 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     ) : null;
   }
 
-  private getValidationErrorMessage(
-    CellValidations: CellValidationRule[],
-    columns: AdaptableColumn[]
-  ): string {
+  private getValidationErrorMessage(CellValidations: CellValidationRule[]): string {
+    let columns = this.props.Api.gridApi.getColumns();
+    let validationService: IValidationService = this.props.Api.internalApi.getValidationService();
     let returnString: string[] = [];
     for (let CellValidation of CellValidations) {
       let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
         CellValidation.Expression
       )
         ? ' when ' +
-          ExpressionHelper.ConvertExpressionToString(
-            CellValidation.Expression,
-            this.props.Columns,
-            this.props.Api
-          )
+          ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Api)
         : '';
       returnString.push(
-        this.props.ValidationService.createCellValidationDescription(CellValidation, columns) +
+        validationService.createCellValidationDescription(CellValidation, columns) +
           expressionDescription
       );
     }

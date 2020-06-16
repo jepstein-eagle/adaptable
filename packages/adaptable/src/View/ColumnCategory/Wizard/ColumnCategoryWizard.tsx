@@ -19,24 +19,32 @@ export class ColumnCategoryWizard extends React.Component<ColumnCategoryWizardPr
         <AdaptableWizard
           FriendlyName={StrategyConstants.ColumnCategoryStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Name',
               Index: 0,
               Element: (
-                <ColumnCategorySettingsWizard ColumnCategorys={this.props.ColumnCategorys} />
+                <ColumnCategorySettingsWizard
+                  ColumnCategorys={this.props.ColumnCategorys}
+                  Api={this.props.Api}
+                />
               ),
             },
             {
               StepName: 'Selected Columns',
               Index: 1,
-              Element: <ColumnCategoryColumnsWizard ColumnCategorys={this.props.ColumnCategorys} />,
+              Element: (
+                <ColumnCategoryColumnsWizard
+                  ColumnCategorys={this.props.ColumnCategorys}
+                  Api={this.props.Api}
+                />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <ColumnCategorySummaryWizard />,
+              Element: <ColumnCategorySummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

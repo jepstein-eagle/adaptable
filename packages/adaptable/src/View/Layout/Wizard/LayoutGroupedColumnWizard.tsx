@@ -8,6 +8,7 @@ import { Layout } from '../../../PredefinedConfig/LayoutState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
+import { IAdaptable } from '../../../types';
 
 export interface LayoutGroupedColumnWizardProps extends AdaptableWizardStepProps<Layout> {
   GroupableColumns: AdaptableColumn[];
@@ -23,16 +24,17 @@ export class LayoutGroupedColumnWizard
   constructor(props: LayoutGroupedColumnWizardProps) {
     super(props);
     this.state = {
-      SelectedColumns: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+      SelectedColumns: this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
         this.props.Data.GroupedColumns
       ),
     };
   }
 
   render(): any {
+    let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
     return (
       <WizardPanel>
-        {this.props.Adaptable.isGroupable() ? (
+        {adaptable.isGroupable() ? (
           <div>
             <HelpBlock marginBottom={2}>
               Select which Columns, if any, should be <b>Grouped</b> in the Layout.
@@ -67,7 +69,7 @@ export class LayoutGroupedColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.GroupedColumns = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+    this.props.Data.GroupedColumns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns
     );
   }

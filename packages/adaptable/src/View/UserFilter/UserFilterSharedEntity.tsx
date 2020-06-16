@@ -14,7 +14,6 @@ export class UserFilterSharedEntity extends React.Component<
     let filter = this.props.Entity as UserFilter;
     let expressionString = ExpressionHelper.ConvertExpressionToString(
       filter.Expression,
-      this.props.Api.gridApi.getColumns(),
       this.props.Api
     );
 

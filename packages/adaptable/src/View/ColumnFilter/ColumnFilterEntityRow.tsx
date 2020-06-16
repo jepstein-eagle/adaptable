@@ -36,7 +36,6 @@ export class ColumnFilterEntityRow extends React.Component<
       <EntityRowItem
         Content={ExpressionHelper.ConvertExpressionToString(
           this.props.ColumnFilter.Filter,
-          this.props.api.gridApi.getColumns(),
           this.props.api
         )}
       />

@@ -71,11 +71,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             key={'PM' + index}
             Item1={'Nudge Value: ' + item.NudgeValue}
             Item2={this.wrapExpressionDescription(
-              ExpressionHelper.ConvertExpressionToString(
-                item.Expression,
-                this.props.Columns,
-                this.props.Adaptable.api
-              )
+              ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Api)
             )}
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
@@ -99,7 +95,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -168,11 +164,7 @@ export class PlusMinusSummaryComponent extends React.Component<
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<PlusMinusSummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     PlusMinusRules: state.PlusMinus.PlusMinusRules,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
   };
 }
 

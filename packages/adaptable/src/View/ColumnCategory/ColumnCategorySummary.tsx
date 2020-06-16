@@ -87,7 +87,7 @@ export class ColumnCategorySummaryComponent extends React.Component<
             ConfigEntities={null}
             ModalContainer={this.props.ModalContainer}
             ColumnCategorys={this.props.ColumnCategorys}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -141,11 +141,7 @@ function mapStateToProps(
   ownProps: any
 ): Partial<ColumnCategorySummaryProps> {
   return {
-    Columns: state.Grid.Columns,
     ColumnCategorys: state.ColumnCategory.ColumnCategories,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
   };
 }
 

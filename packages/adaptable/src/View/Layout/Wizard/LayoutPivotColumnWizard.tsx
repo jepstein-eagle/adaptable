@@ -28,7 +28,7 @@ export class LayoutPivotColumnWizard
       this.props.Data.PivotDetails = ObjectFactory.CreateEmptyPivotDetails();
     }
     this.state = {
-      SelectedColumns: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+      SelectedColumns: this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
         this.props.Data.PivotDetails.PivotColumns
       ),
     };
@@ -65,7 +65,7 @@ export class LayoutPivotColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.PivotDetails.PivotColumns = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+    this.props.Data.PivotDetails.PivotColumns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns
     );
   }

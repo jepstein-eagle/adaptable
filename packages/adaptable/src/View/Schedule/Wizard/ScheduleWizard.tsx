@@ -16,22 +16,22 @@ export class ScheduleWizard extends React.Component<ScheduleWizardProps, {}> {
         <AdaptableWizard
           FriendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Settings',
               Index: 0,
-              Element: <ScheduleSettingsWizard />,
+              Element: <ScheduleSettingsWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Schedule',
               Index: 1,
-              Element: <ScheduleScheduleWizard />,
+              Element: <ScheduleScheduleWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <ScheduleSummaryWizard />,
+              Element: <ScheduleSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

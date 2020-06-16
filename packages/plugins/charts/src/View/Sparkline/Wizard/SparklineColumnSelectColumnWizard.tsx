@@ -35,7 +35,7 @@ export class SparklineColumnSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Adaptable.api.gridApi.getNumericArrayColumns()}
+          ColumnList={this.props.Api.gridApi.getNumericArrayColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -45,20 +45,9 @@ export class SparklineColumnSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      // let distinctColumnsValues: number[] = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-      //   columns[0].ColumnId,
-      //   DistinctCriteriaPairValue.RawValue,
-      //   false
-      // ).map(pair => {
-      //   return pair.RawValue;
-      // });
-      // let minValue = Math.min(...distinctColumnsValues);
-      // let maxValue = Math.max(...distinctColumnsValues);
       this.setState(
         {
           ColumnId: columns[0].ColumnId,
-          // MinimumValue: minValue,
-          // MaximumValue: maxValue,
         } as SparklineColumnSelectColumnWizardState,
         () => this.props.UpdateGoBackState()
       );

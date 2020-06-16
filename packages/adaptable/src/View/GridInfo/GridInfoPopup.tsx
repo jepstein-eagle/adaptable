@@ -20,6 +20,7 @@ import { ButtonMinimise } from '../Components/Buttons/ButtonMinimise';
 import Helper from '../../Utilities/Helpers/Helper';
 import { AdaptablePopover } from '../AdaptablePopover';
 import version from '../../../version';
+import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 
 interface GridInfoPopupProps extends StrategyViewPopupProps<GridInfoPopupComponent> {}
 
@@ -54,6 +55,8 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
   }
 
   render() {
+    let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+
     let gridPropertiesColItems: IColItem[] = [
       { Content: 'Property', Size: 5 },
       { Content: 'Value', Size: 7 },
@@ -65,57 +68,64 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       { Content: '', Size: 2 },
     ];
 
-    let gridProperties = this.CreateGridInfo(gridPropertiesColItems).map((x, index) => {
+    let gridProperties = this.CreateGridInfo(gridPropertiesColItems, adaptable).map((x, index) => {
       return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
-    let baseadaptableOptions = this.CreateBaseOptionsInfo(adaptableOptionsColItems).map(
+    let baseadaptableOptions = this.CreateBaseOptionsInfo(adaptableOptionsColItems, adaptable).map(
       (x, index) => {
         return <AdaptableObjectRow key={index} colItems={x} />;
       }
     );
 
-    let containeradaptableOptions = this.CreateContainerOptionsInfo(adaptableOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
-
-    let auditadaptableOptions = this.CreateAuditOptionsInfo(adaptableOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
-
-    let configServeradaptableOptions = this.CreateConfigServerOptionsInfo(
-      adaptableOptionsColItems
+    let containeradaptableOptions = this.CreateContainerOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
     ).map((x, index) => {
       return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
-    let queryadaptableOptions = this.CreateQueryOptionsInfo(adaptableOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
+    let auditadaptableOptions = this.CreateAuditOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
+    ).map((x, index) => {
+      return <AdaptableObjectRow key={index} colItems={x} />;
+    });
 
-    let layoutadaptableOptions = this.CreateLayoutOptionsInfo(adaptableOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
+    let configServeradaptableOptions = this.CreateConfigServerOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
+    ).map((x, index) => {
+      return <AdaptableObjectRow key={index} colItems={x} />;
+    });
 
-    let filteradaptableOptions = this.CreateFilterOptionsInfo(adaptableOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
+    let queryadaptableOptions = this.CreateQueryOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
+    ).map((x, index) => {
+      return <AdaptableObjectRow key={index} colItems={x} />;
+    });
 
-    let generaladaptableOptions = this.CreateGeneralOptionsInfo(adaptableOptionsColItems).map(
-      (x, index) => {
-        return <AdaptableObjectRow key={index} colItems={x} />;
-      }
-    );
+    let layoutadaptableOptions = this.CreateLayoutOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
+    ).map((x, index) => {
+      return <AdaptableObjectRow key={index} colItems={x} />;
+    });
+
+    let filteradaptableOptions = this.CreateFilterOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
+    ).map((x, index) => {
+      return <AdaptableObjectRow key={index} colItems={x} />;
+    });
+
+    let generaladaptableOptions = this.CreateGeneralOptionsInfo(
+      adaptableOptionsColItems,
+      adaptable
+    ).map((x, index) => {
+      return <AdaptableObjectRow key={index} colItems={x} />;
+    });
 
     let showBaseOptionsButton = this.state.IsBaseOptionsMinimised
       ? this.createMaximiseButton('Base', () => {
@@ -396,28 +406,21 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     );
   }
 
-  private CreateGridInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateGridInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let calcColumns: string[] = this.props.Adaptable.api.calculatedColumnApi
+    let calcColumns: string[] = this.props.Api.calculatedColumnApi
       .getAllCalculatedColumn()
       .map(c => c.ColumnId);
-    let columns: AdaptableColumn[] = this.props.Adaptable.api.gridApi.getColumns();
-    let columnFilterDescription: string = this.props.Adaptable.FilterService.GetColumnFiltersDescription(
-      this.props.Adaptable.api.columnFilterApi.getAllColumnFilter(),
-      columns
-    );
-    let sorts: any = this.props.Adaptable.api.gridApi.getColumnSorts().map(gs => {
-      return (
-        this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(gs.Column) +
-        ': ' +
-        gs.SortOrder
-      );
+    let columns: AdaptableColumn[] = this.props.Api.gridApi.getColumns();
+    let columnFilterDescription: string = this.props.Api.internalApi
+      .getFilterService()
+      .GetColumnFiltersDescription(this.props.Api.columnFilterApi.getAllColumnFilter(), columns);
+    let sorts: any = this.props.Api.gridApi.getColumnSorts().map(gs => {
+      return this.props.Api.gridApi.getFriendlyNameFromColumnId(gs.Column) + ': ' + gs.SortOrder;
     });
 
-    returnRows.push(
-      this.createColItem(colItems, 'Vendor Grid', this.props.Adaptable.vendorGridName)
-    );
+    returnRows.push(this.createColItem(colItems, 'Vendor Grid', adaptable.vendorGridName));
 
     returnRows.push(this.createColItem(colItems, 'Adaptable Version', version));
 
@@ -429,22 +432,14 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       )
     );
     returnRows.push(this.createColItem(colItems, 'Column Filters', columnFilterDescription));
-    returnRows.push(this.createColItem(colItems, 'All Rows', this.props.Adaptable.getRowCount()));
+    returnRows.push(this.createColItem(colItems, 'All Rows', adaptable.getRowCount()));
+    returnRows.push(this.createColItem(colItems, 'Visible Rows', adaptable.getVisibleRowCount()));
+    returnRows.push(this.createColItem(colItems, 'All Columns', adaptable.getColumnCount()));
     returnRows.push(
-      this.createColItem(colItems, 'Visible Rows', this.props.Adaptable.getVisibleRowCount())
+      this.createColItem(colItems, 'Visible Column', adaptable.getVisibleColumnCount())
     );
     returnRows.push(
-      this.createColItem(colItems, 'All Columns', this.props.Adaptable.getColumnCount())
-    );
-    returnRows.push(
-      this.createColItem(colItems, 'Visible Column', this.props.Adaptable.getVisibleColumnCount())
-    );
-    returnRows.push(
-      this.createColItem(
-        colItems,
-        'Can Multi Select',
-        this.props.Adaptable.isSelectable() ? 'True' : 'False'
-      )
+      this.createColItem(colItems, 'Can Multi Select', adaptable.isSelectable() ? 'True' : 'False')
     );
     returnRows.push(
       this.createColItem(
@@ -457,10 +452,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateBaseOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateBaseOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     // base options
     returnRows.push(
@@ -487,10 +482,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateContainerOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateContainerOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
     returnRows.push(
       this.createColItem(
         colItems,
@@ -529,10 +524,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateAuditOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateAuditOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     returnRows.push(
       this.createColItem(
@@ -586,10 +581,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateConfigServerOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateConfigServerOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     returnRows.push(
       this.createColItem(
@@ -611,10 +606,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateQueryOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateQueryOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     returnRows.push(
       this.createColItem(
@@ -652,10 +647,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateLayoutOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateLayoutOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     returnRows.push(
       this.createColItem(
@@ -677,10 +672,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateFilterOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateFilterOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     returnRows.push(
       this.createColItem(
@@ -710,10 +705,10 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     return returnRows;
   }
 
-  private CreateGeneralOptionsInfo(colItems: IColItem[]): IColItem[][] {
+  private CreateGeneralOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let options: AdaptableOptions = this.props.Adaptable.adaptableOptions;
+    let options: AdaptableOptions = adaptable.adaptableOptions;
 
     returnRows.push(
       this.createColItem(

@@ -502,7 +502,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetYAxisLabelColor && (
                       <ColorPicker
-                        ColorPalette={this.props.ColorPalette}
+                        Api={this.props.api}
                         value={this.state.ChartProperties.YAxisLabelColor}
                         onChange={x => this.onYAxisLabelColorChange(x)}
                       />
@@ -544,7 +544,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetYAxisTitleColor && (
                       <ColorPicker
-                        ColorPalette={this.props.ColorPalette}
+                        Api={this.props.api}
                         value={this.state.ChartProperties.YAxisTitleColor}
                         onChange={x => this.onYAxisTitleColorChange(x)}
                       />
@@ -626,7 +626,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetXAxisLabelColor && (
                       <ColorPicker
-                        ColorPalette={this.props.ColorPalette}
+                        Api={this.props.api}
                         value={this.state.ChartProperties.XAxisLabelColor}
                         onChange={x => this.onXAxisLabelColorChange(x)}
                       />
@@ -688,7 +688,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetXAxisTitleColor && (
                       <ColorPicker
-                        ColorPalette={this.props.ColorPalette}
+                        Api={this.props.api}
                         value={this.state.ChartProperties.XAxisTitleColor}
                         onChange={x => this.onXAxisTitleColorChange(x)}
                       />

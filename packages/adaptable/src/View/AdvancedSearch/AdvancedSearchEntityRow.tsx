@@ -36,7 +36,6 @@ export class AdvancedSearchEntityRow extends React.Component<
       <EntityRowItem
         Content={ExpressionHelper.ConvertExpressionToString(
           advancedSearch.Expression,
-          this.props.api.gridApi.getColumns(),
           this.props.api
         )}
       />

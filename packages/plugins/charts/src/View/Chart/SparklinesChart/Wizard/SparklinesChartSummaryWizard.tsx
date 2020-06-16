@@ -26,9 +26,7 @@ export class SparklinesChartSummaryWizard
       { Key: 'Description', Value: this.props.Data.Description },
       {
         Key: 'Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
       { Key: 'Values', Value: this.getExpressionString(this.props.Data.Expression) },
     ];
@@ -44,12 +42,7 @@ export class SparklinesChartSummaryWizard
     if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
       return '[All Column Values]';
     } else {
-      return ExpressionHelper.ConvertExpressionToString(
-        expression,
-        this.props.Columns,
-        this.props.Adaptable.api,
-        false
-      );
+      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Api, false);
     }
   }
 

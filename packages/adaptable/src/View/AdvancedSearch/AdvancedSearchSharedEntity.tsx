@@ -13,7 +13,6 @@ export class AdvancedSearchSharedEntity extends React.Component<
     let search: AdvancedSearch = this.props.Entity as AdvancedSearch;
     let expressionString = ExpressionHelper.ConvertExpressionToString(
       search.Expression,
-      this.props.Api.gridApi.getColumns(),
       this.props.Api
     );
     return (

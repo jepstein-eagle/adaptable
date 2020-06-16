@@ -64,11 +64,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
 
   setExpressionDescription(CellValidation: CellValidationRule): string {
     return ExpressionHelper.IsNotNullOrEmptyExpression(CellValidation.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(
-          CellValidation.Expression,
-          this.props.api.gridApi.getColumns(),
-          this.props.api
-        )
+      ? ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.api)
       : 'No Expression';
   }
 

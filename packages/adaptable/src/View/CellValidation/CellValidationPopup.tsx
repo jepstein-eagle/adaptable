@@ -89,12 +89,12 @@ class CellValidationPopupComponent extends React.Component<
     ];
 
     let CellValidationItems = this.props.CellValidations.map((cellValidationRule, index) => {
-      let column = this.props.Adaptable.api.gridApi.getColumnFromId(cellValidationRule.ColumnId);
+      let column = this.props.Api.gridApi.getColumnFromId(cellValidationRule.ColumnId);
       return (
         <CellValidationEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={cellValidationRule}
           Column={column}
           onEdit={() => this.onEdit(cellValidationRule)}
@@ -103,7 +103,7 @@ class CellValidationPopupComponent extends React.Component<
           onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
           onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
           AccessLevel={this.props.AccessLevel}
-          ValidationService={this.props.Adaptable.ValidationService}
+          ValidationService={this.props.Api.internalApi.getValidationService()}
         />
       );
     });
@@ -144,7 +144,7 @@ class CellValidationPopupComponent extends React.Component<
           <CellValidationWizard
             EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             ConfigEntities={null}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             ModalContainer={this.props.ModalContainer}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
@@ -214,10 +214,9 @@ class CellValidationPopupComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
       ExpressionHelper.IsNullOrEmptyOrValidExpression(cellValidationRule.Expression) &&
       StringExtensions.IsNotNullOrEmpty(
-        this.props.Adaptable.ValidationService.createCellValidationDescription(
-          cellValidationRule,
-          this.props.Columns
-        )
+        this.props.Api.internalApi
+          .getValidationService()
+          .createCellValidationDescription(cellValidationRule, this.props.Api.gridApi.getColumns())
       )
     );
   }

@@ -54,7 +54,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
         <ColumnFilterEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           AdaptableObject={null}
           ColumnFilter={columnFilter}
           onEdit={null}
@@ -94,7 +94,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
       columnFilters.forEach(cf => {
         this.props.onClearColumnFilter(cf);
       });
-      this.props.Adaptable.clearColumnFiltering([columnId]);
+      this.props.Api.internalApi.getAdaptableInstance().clearColumnFiltering([columnId]);
     }
   }
 

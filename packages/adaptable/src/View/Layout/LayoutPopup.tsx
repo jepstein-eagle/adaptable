@@ -80,7 +80,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           <LayoutEntityRow
             key={x.Uuid}
             colItems={colItems}
-            api={this.props.Adaptable.api}
+            api={this.props.Api}
             IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
             AdaptableObject={x}
             onEdit={() => this.onEdit(x)}
@@ -89,7 +89,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
             onSelect={() => this.props.onSelectLayout(x.Name)}
             AccessLevel={this.props.AccessLevel}
-            LayoutService={this.props.Adaptable.LayoutService}
           />
         );
       }
@@ -128,8 +127,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
               EditedAdaptableObject={this.state.EditedAdaptableObject}
               ConfigEntities={this.props.Layouts}
               ModalContainer={this.props.ModalContainer}
-              ColumnSorts={this.props.ColumnSorts}
-              Adaptable={this.props.Adaptable}
+              ColumnSorts={this.props.Api.gridApi.getColumnSorts()}
+              Api={this.props.Api}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

@@ -200,7 +200,7 @@ class QuickSearchPopupComponent extends React.Component<
                 />
                 {this.props.QuickSearchStyle.BackColor != null && (
                   <ColorPicker
-                    ColorPalette={this.props.ColorPalette}
+                    Api={this.props.Api}
                     value={this.props.QuickSearchStyle.BackColor}
                     onChange={(x: any) => this.onBackColorSelectChange(x)}
                   />
@@ -218,7 +218,7 @@ class QuickSearchPopupComponent extends React.Component<
                 />
                 {this.props.QuickSearchStyle.ForeColor != null && (
                   <ColorPicker
-                    ColorPalette={this.props.ColorPalette}
+                    Api={this.props.Api}
                     value={this.props.QuickSearchStyle.ForeColor}
                     onChange={(x: any) => this.onForeColorSelectChange(x)}
                   />

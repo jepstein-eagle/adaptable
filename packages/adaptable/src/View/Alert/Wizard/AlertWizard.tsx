@@ -20,42 +20,42 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
         <AdaptableWizard
           FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <AlertSelectColumnWizard />,
+              Element: <AlertSelectColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Alert Rules',
               Index: 1,
-              Element: <AlertRulesWizard />,
+              Element: <AlertRulesWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Message Type',
               Index: 2,
-              Element: <AlertTypeWizard />,
+              Element: <AlertTypeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Behaviour',
               Index: 3,
-              Element: <AlertScopeWizard />,
+              Element: <AlertScopeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
-              Element: <AlertSelectQueryWizard />,
+              Element: <AlertSelectQueryWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 5,
-              Element: <AlertExpressionWizard Adaptable={this.props.Adaptable} />,
+              Element: <AlertExpressionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <AlertSummaryWizard />,
+              Element: <AlertSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

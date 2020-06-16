@@ -22,7 +22,7 @@ export class LayoutColumnWizard
   constructor(props: LayoutColumnWizardProps) {
     super(props);
     this.state = {
-      SelectedColumns: this.props.Adaptable.api.gridApi.getFriendlyNamesFromColumnIds(
+      SelectedColumns: this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
         this.props.Data.Columns
       ),
     };
@@ -37,7 +37,7 @@ export class LayoutColumnWizard
         </HelpBlock>
         <DualListBoxEditor
           style={{ flex: 1, overflow: 'hidden' }}
-          AvailableValues={this.props.Columns.map(x => x.FriendlyName)}
+          AvailableValues={this.props.Api.gridApi.getColumns().map(x => x.FriendlyName)}
           SelectedValues={this.state.SelectedColumns}
           HeaderAvailable="Available Columns"
           HeaderSelected="Columns in Layout"
@@ -60,7 +60,7 @@ export class LayoutColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.Columns = this.props.Adaptable.api.gridApi.getColumnIdsFromFriendlyNames(
+    this.props.Data.Columns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns
     );
   }

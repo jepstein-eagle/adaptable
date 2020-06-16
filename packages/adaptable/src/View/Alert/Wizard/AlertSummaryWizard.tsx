@@ -24,16 +24,13 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          alertDefinition.ColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(alertDefinition.ColumnId),
       },
       {
         Key: 'Rule',
-        Value: this.props.Adaptable.StrategyService.createAlertDescription(
-          alertDefinition,
-          this.props.Columns
-        ),
+        Value: this.props.Api.internalApi
+          .getStrategyService()
+          .createAlertDescription(alertDefinition, this.props.Api.gridApi.getColumns()),
       },
       { Key: 'Alert Type', Value: alertDefinition.MessageType },
       {
@@ -47,11 +44,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       {
         Key: 'Query',
         Value: ExpressionHelper.IsNotNullOrEmptyExpression(alertDefinition.Expression)
-          ? ExpressionHelper.ConvertExpressionToString(
-              alertDefinition.Expression,
-              this.props.Columns,
-              this.props.Adaptable.api
-            )
+          ? ExpressionHelper.ConvertExpressionToString(alertDefinition.Expression, this.props.Api)
           : 'None',
       },
     ];

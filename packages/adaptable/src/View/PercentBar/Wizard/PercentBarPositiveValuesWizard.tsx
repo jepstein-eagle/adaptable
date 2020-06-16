@@ -91,7 +91,7 @@ export class PercentBarPositiveValuesWizard
               ) : (
                 <ColumnSelector
                   SelectedColumnIds={[this.state.PositiveValueColumnId]}
-                  ColumnList={this.props.Columns}
+                  ColumnList={this.props.Api.gridApi.getColumns()}
                   onColumnChange={columns => this.onPositiveColumnSelectedChanged(columns)}
                   SelectionMode={SelectionMode.Single}
                 />
@@ -105,7 +105,7 @@ export class PercentBarPositiveValuesWizard
             </Text>
             <Flex flex={7} alignItems="center">
               <ColorPicker
-                ColorPalette={this.props.ColorPalette}
+                Api={this.props.Api}
                 value={this.state.PositiveColor}
                 onChange={(x: any) => this.onPositiveColorSelectChanged(x)}
               />

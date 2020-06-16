@@ -55,14 +55,12 @@ export class ConditionalStyleScopeWizard
       };
     });
 
-    let optionColumnCategorys = this.props.Adaptable.api.columnCategoryApi
-      .getAllColumnCategory()
-      .map(cc => {
-        return {
-          value: cc.ColumnCategoryId,
-          label: cc.ColumnCategoryId,
-        };
-      });
+    let optionColumnCategorys = this.props.Api.columnCategoryApi.getAllColumnCategory().map(cc => {
+      return {
+        value: cc.ColumnCategoryId,
+        label: cc.ColumnCategoryId,
+      };
+    });
 
     return (
       <WizardPanel>
@@ -95,7 +93,7 @@ export class ConditionalStyleScopeWizard
             <Box marginBottom={2}>
               <ColumnSelector
                 SelectedColumnIds={[this.state.ColumnId]}
-                ColumnList={this.props.Columns}
+                ColumnList={this.props.Api.gridApi.getColumns()}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single}
               />
@@ -137,7 +135,7 @@ export class ConditionalStyleScopeWizard
           )}
 */}
           {ArrayExtensions.IsNotNullOrEmpty(
-            this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory()
+            this.props.Api.columnCategoryApi.getAllColumnCategory()
           ) && (
             <Box>
               <HelpBlock marginBottom={2}>
@@ -158,7 +156,7 @@ export class ConditionalStyleScopeWizard
           )}
 
           {ArrayExtensions.IsNotNullOrEmpty(
-            this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory()
+            this.props.Api.columnCategoryApi.getAllColumnCategory()
           ) &&
             this.state.ConditionalStyleScope == 'ColumnCategory' && (
               <Box>

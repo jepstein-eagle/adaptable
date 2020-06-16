@@ -95,7 +95,7 @@ class ConditionalStylePopupComponent extends React.Component<
           <ConditionalStyleEntityRow
             AdaptableObject={conditionalStyle}
             colItems={colItems}
-            api={this.props.Adaptable.api}
+            api={this.props.Api}
             key={'CS' + (conditionalStyle.Uuid || index)}
             onShare={description => this.props.onShare(conditionalStyle, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
@@ -138,9 +138,8 @@ class ConditionalStylePopupComponent extends React.Component<
               EditedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
               ConfigEntities={null}
               ModalContainer={this.props.ModalContainer}
-              ColorPalette={this.props.ColorPalette}
+              Api={this.props.Api}
               StyleClassNames={this.props.StyleClassNames}
-              Adaptable={this.props.Adaptable}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

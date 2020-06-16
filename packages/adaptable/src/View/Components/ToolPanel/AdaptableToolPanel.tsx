@@ -113,9 +113,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
       if (toolPanel) {
         let toolPanelElememt = React.createElement(toolPanel, {
           AccessLevel: accessLevel,
-          AdaptableApi: props.Adaptable.api,
-          Adaptable: props.Adaptable,
-          Columns: props.Adaptable.api.gridApi.getColumns(),
+          Api: props.Adaptable.api,
         });
         return (
           <Box

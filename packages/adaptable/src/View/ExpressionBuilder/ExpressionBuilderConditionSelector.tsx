@@ -36,6 +36,7 @@ import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
 import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
+import { AdaptableApi } from '../../types';
 
 export interface ExpressionBuilderConditionSelectorProps
   extends React.ClassAttributes<ExpressionBuilderConditionSelector> {
@@ -47,6 +48,7 @@ export interface ExpressionBuilderConditionSelectorProps
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
+  Api: AdaptableApi;
   Adaptable: IAdaptable;
 }
 
@@ -140,14 +142,14 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         if (filterExpression) {
           filterExpression.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: UserFilter = theProps.Adaptable.api.userFilterApi
+            let userFilter: UserFilter = theProps.Api.userFilterApi
               .getAllUserFilter()
               .find(uf => uf.Name == fe);
             if (userFilter) {
               selectedColumnFilterExpressions.push(fe);
             }
             // if it is a system filter add it ot that list
-            let selectedSystemFilter: string = theProps.Adaptable.api.systemFilterApi
+            let selectedSystemFilter: string = theProps.Api.systemFilterApi
               .getAllSystemFilter()
               .find(sf => sf == fe);
             if (selectedSystemFilter) {
@@ -155,10 +157,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             }
           });
         }
-        let availableFilterExpressions: string[] = theProps.Adaptable.api.userFilterApi
+        let availableFilterExpressions: string[] = theProps.Api.userFilterApi
           .getAllUserFilter()
           .map(f => f.Name)
-          .concat(...theProps.Adaptable.api.systemFilterApi.getAllSystemFilter().map(sf => sf));
+          .concat(...theProps.Api.systemFilterApi.getAllSystemFilter().map(sf => sf));
 
         // get ranges
         let range: RangeExpression = null;
@@ -307,7 +309,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             SelectedColumnId: props.SelectedColumnId,
           };
           // set the UIPermittedValues for this column to what has been sent
-          props.Adaptable.api.userInterfaceApi.setColumnPermittedValues(
+          props.Api.userInterfaceApi.setColumnPermittedValues(
             props.SelectedColumnId,
             distinctItems
           );
@@ -325,29 +327,35 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     // get filter names
     // first system filters
-    let availableSystemFilterNames: string[] = this.props.Adaptable.FilterService.GetSystemFiltersForColumn(
-      selectedColumn,
-      this.props.Adaptable.api.systemFilterApi.getAllSystemFilter()
-    ).map(sf => {
-      return sf;
-    });
+    let availableSystemFilterNames: string[] = this.props.Api.internalApi
+      .getFilterService()
+      .GetSystemFiltersForColumn(
+        selectedColumn,
+        this.props.Api.systemFilterApi.getAllSystemFilter()
+      )
+      .map(sf => {
+        return sf;
+      });
 
     // then user filters
-    let availableUserFilterNames: string[] = this.props.Adaptable.FilterService.GetUserFiltersForColumn(
-      selectedColumn,
-      this.props.Adaptable.api.userFilterApi.getAllUserFilter()
-    ).map(uf => {
-      return uf.Name;
-    });
+    let availableUserFilterNames: string[] = this.props.Api.internalApi
+      .getFilterService()
+      .GetUserFiltersForColumn(selectedColumn, this.props.Api.userFilterApi.getAllUserFilter())
+      .map(uf => {
+        return uf.Name;
+      });
 
     // then named filters
-    let availableNamedFilterNames: string[] = this.props.Adaptable.FilterService.GetNamedFiltersForColumn(
-      selectedColumn,
-      this.props.Adaptable.api.namedFilterApi.getAllNamedFilter(),
-      this.props.Adaptable.api.columnCategoryApi.getAllColumnCategory()
-    ).map(uf => {
-      return uf.Name;
-    });
+    let availableNamedFilterNames: string[] = this.props.Api.internalApi
+      .getFilterService()
+      .GetNamedFiltersForColumn(
+        selectedColumn,
+        this.props.Api.namedFilterApi.getAllNamedFilter(),
+        this.props.Api.columnCategoryApi.getAllColumnCategory()
+      )
+      .map(uf => {
+        return uf.Name;
+      });
 
     // get the help descriptions
     let firstTimeText: string = 'Start creating the query by selecting a column';

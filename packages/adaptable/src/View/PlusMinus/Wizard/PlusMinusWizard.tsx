@@ -22,27 +22,27 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
         <AdaptableWizard
           FriendlyName={StrategyConstants.PlusMinusStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <PlusMinusColumnWizard />,
+              Element: <PlusMinusColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Settings',
               Index: 1,
-              Element: <PlusMinusSettingsWizard />,
+              Element: <PlusMinusSettingsWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 2,
-              Element: <PlusMinusExpressionWizard />,
+              Element: <PlusMinusExpressionWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PlusMinusSummaryWizard />,
+              Element: <PlusMinusSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

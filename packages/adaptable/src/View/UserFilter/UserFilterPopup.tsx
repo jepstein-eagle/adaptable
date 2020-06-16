@@ -97,21 +97,23 @@ class UserFilterPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let UserFilterItems = this.props.UserFilters.map((userFilter, index) => {
-      return (
-        <UserFilterEntityRow
-          AdaptableObject={userFilter}
-          api={this.props.Adaptable.api}
-          colItems={colItems}
-          key={'CS' + index}
-          onShare={description => this.props.onShare(userFilter, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
-          onEdit={() => this.onEdit(userFilter)}
-          onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
-          AccessLevel={this.props.AccessLevel}
-        />
-      );
-    });
+    let UserFilterItems = this.props.Api.userFilterApi
+      .getAllUserFilter()
+      .map((userFilter, index) => {
+        return (
+          <UserFilterEntityRow
+            AdaptableObject={userFilter}
+            api={this.props.Api}
+            colItems={colItems}
+            key={'CS' + index}
+            onShare={description => this.props.onShare(userFilter, description)}
+            TeamSharingActivated={this.props.TeamSharingActivated}
+            onEdit={() => this.onEdit(userFilter)}
+            onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
+            AccessLevel={this.props.AccessLevel}
+          />
+        );
+      });
 
     let newButton = (
       <ButtonNew
@@ -150,7 +152,7 @@ class UserFilterPopupComponent extends React.Component<
               ModalContainer={this.props.ModalContainer}
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={selectedColumnId}
-              Adaptable={this.props.Adaptable}
+              Api={this.props.Api}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

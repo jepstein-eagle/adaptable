@@ -58,7 +58,7 @@ export class ScheduleSettingsWizard
   constructor(props: ScheduleSettingsWizardProps) {
     super(props);
 
-    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
     this.state = {
       // Reminder
       Header:
@@ -140,7 +140,7 @@ export class ScheduleSettingsWizard
     });
 
     // Report Stuff
-    let allReports: Report[] = this.props.Adaptable.api.exportApi.getAllReports();
+    let allReports: Report[] = this.props.Api.exportApi.getAllReports();
     let availableReports: any[] = allReports.map(report => {
       return {
         label: report.Name,
@@ -156,7 +156,7 @@ export class ScheduleSettingsWizard
     });
 
     // ipushpull Stuff
-    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
     let allFolders: IPushPullDomain[] = ippApi ? ippApi.getIPushPullDomains() : [];
     let availableFolders: any[] = allFolders.map((iPushPullDomain: IPushPullDomain) => {
       return {
@@ -446,7 +446,7 @@ export class ScheduleSettingsWizard
     }
   }
   private onFolderChanged(folder: string) {
-    const ippApi = this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
     if (StringExtensions.IsNotNullOrEmpty(folder) && folder !== 'Select Folder') {
       let availablePages = ippApi ? ippApi.getPagesForIPushPullDomain(folder) : [];
       this.setState(

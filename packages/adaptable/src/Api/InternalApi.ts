@@ -13,6 +13,15 @@ import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { ChangeDirection } from '../Utilities/Services/Interface/IDataService';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
+import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
+import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
+import { IStrategyService } from '../Utilities/Services/StrategyService';
+import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
+import { IReportService } from '../Utilities/Services/Interface/IReportService';
+import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
+import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
+import { IChartService } from '../Utilities/Services/Interface/IChartService';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *
@@ -79,6 +88,18 @@ export interface InternalApi {
   setDefaultDashboardTab(): void;
 
   displayActionColumns(): void;
+
+  getAdaptableInstance(): IAdaptable;
+
+  getAdaptableOptions(): AdaptableOptions;
+
+  getValidationService(): IValidationService;
+  getStrategyService(): IStrategyService;
+  getFilterService(): IFilterService;
+  getReportService(): IReportService;
+  getLayoutService(): ILayoutService;
+  getChartService(): IChartService;
+  getCalculatedColumnExpressionService(): ICalculatedColumnExpressionService;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;

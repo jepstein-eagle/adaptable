@@ -66,10 +66,10 @@ export class FlashingCellSummaryComponent extends React.Component<
       e => e.ColumnId == this.props.SummarisedColumn.ColumnId
     );
     if (!existingfc) {
-      let flashingCellState: FlashingCellState = this.props.Adaptable.api.configApi.configGetFlashingCellState(
+      let flashingCellState: FlashingCellState = this.props.Api.configApi.configGetFlashingCellState(
         false
       );
-      let col: AdaptableColumn = this.props.Adaptable.api.gridApi.getColumnFromId(
+      let col: AdaptableColumn = this.props.Api.gridApi.getColumnFromId(
         this.props.SummarisedColumn.ColumnId
       );
       existingfc = ObjectFactory.CreateDefaultFlashingCell(
@@ -86,7 +86,6 @@ export class FlashingCellSummaryComponent extends React.Component<
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FlashingCellSummaryProps> {
   return {
     FlashingCells: state.FlashingCell.FlashingCells,
-    Columns: state.Grid.Columns,
   };
 }
 

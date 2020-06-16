@@ -90,7 +90,7 @@ export class PercentBarNegativeValuesWizard
               ) : (
                 <ColumnSelector
                   SelectedColumnIds={[this.state.NegativeValueColumnId]}
-                  ColumnList={this.props.Columns}
+                  ColumnList={this.props.Api.gridApi.getColumns()}
                   onColumnChange={columns => this.onColumnMinValueSelectedChanged(columns)}
                   SelectionMode={SelectionMode.Single}
                 />
@@ -104,7 +104,7 @@ export class PercentBarNegativeValuesWizard
             </Text>
             <Flex flex={7} alignItems="center">
               <ColorPicker
-                ColorPalette={this.props.ColorPalette}
+                Api={this.props.Api}
                 value={this.state.NegativeColor}
                 onChange={(x: any) => this.onNegativeColorSelectChanged(x)}
               />

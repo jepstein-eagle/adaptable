@@ -47,7 +47,7 @@ export class SparklinesChartColumnWizard
           <FormRow label="Column">
             <ColumnSelector
               SelectedColumnIds={[this.state.ColumnId]}
-              ColumnList={this.props.Adaptable.api.gridApi.getNumericColumns()}
+              ColumnList={this.props.Api.gridApi.getNumericColumns()}
               onColumnChange={columns => this.onColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />

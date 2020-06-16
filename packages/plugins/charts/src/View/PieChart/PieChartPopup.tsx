@@ -358,7 +358,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                   style={{ flex: 1 }}
                   SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
                   SelectionMode={SelectionMode.Single}
-                  ColumnList={this.props.Columns}
+                  ColumnList={this.props.Api.gridApi.getColumns()}
                   onColumnChange={columns => this.onDataGroupColumnChanged(columns)}
                 />
               </Flex>
@@ -407,9 +407,9 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
       pieChartDefinition.PrimaryKeyValues = primaryKeyValues;
     }
 
-    let chartData: ChartData = this.props.Adaptable.ChartService.BuildPieChartData(
-      pieChartDefinition
-    );
+    let chartData: ChartData = this.props.Api.internalApi
+      .getChartService()
+      .BuildPieChartData(pieChartDefinition);
     let dataSource: PieChartDataItem[] = chartData.Data;
     let errorMessage: string = chartData.ErrorMessage;
     dataSource = PieChartUIHelper.sortDataSource(this.state.SliceSortOption, dataSource);

@@ -66,7 +66,7 @@ class DataSourcePopupComponent extends React.Component<
           key={'ns' + index}
           onEdit={() => this.onEdit(dataSource)}
           colItems={colItems}
-          api={this.props.Adaptable.api}
+          api={this.props.Api}
           onShare={description => this.props.onShare(dataSource, description)}
           TeamSharingActivated={this.props.TeamSharingActivated}
           onDeleteConfirm={DataSourceRedux.DataSourceDelete(dataSource)}
@@ -108,7 +108,7 @@ class DataSourcePopupComponent extends React.Component<
             EditedAdaptableObject={DataSource}
             ConfigEntities={this.props.DataSources}
             ModalContainer={this.props.ModalContainer}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

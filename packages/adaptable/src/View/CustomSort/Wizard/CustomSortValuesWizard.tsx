@@ -11,6 +11,7 @@ import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
 import HelpBlock from '../../../components/HelpBlock';
 
 import WizardPanel from '../../../components/WizardPanel';
+import { IAdaptable } from '../../../types';
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<CustomSort> {}
 export interface CustomSortValuesWizardState {
@@ -23,9 +24,10 @@ export class CustomSortValuesWizard
   extends React.Component<CustomSortValuesWizardProps, CustomSortValuesWizardState>
   implements AdaptableWizardStep {
   constructor(props: CustomSortValuesWizardProps) {
+    let adaptable: IAdaptable = props.Api.internalApi.getAdaptableInstance();
     super(props);
     this.state = {
-      ColumnValues: this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
+      ColumnValues: adaptable.getColumnValueDisplayValuePairDistinctList(
         this.props.Data.ColumnId,
         DistinctCriteriaPairValue.DisplayValue,
         false

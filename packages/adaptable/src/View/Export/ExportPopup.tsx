@@ -96,15 +96,13 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             AdaptableObject={report}
             key={report.Uuid}
             colItems={colItems}
-            api={this.props.Adaptable.api}
+            api={this.props.Api}
             onShare={description => this.props.onShare(report, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
             AccessLevel={this.props.AccessLevel}
-            ReportService={this.props.Adaptable.ReportService}
-            canExportToExel={this.props.Adaptable.canExportToExcel()}
           />
         );
       }
@@ -142,7 +140,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             EditedAdaptableObject={this.state.EditedAdaptableObject as Report}
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.Reports}
-            Adaptable={this.props.Adaptable}
+            Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

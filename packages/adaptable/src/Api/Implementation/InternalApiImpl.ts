@@ -27,6 +27,14 @@ import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
+import { IAdaptable, AdaptableOptions } from '../../types';
+import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
+import { IStrategyService } from '../../Utilities/Services/StrategyService';
+import { IFilterService } from '../../Utilities/Services/Interface/IFilterService';
+import { IReportService } from '../../Utilities/Services/Interface/IReportService';
+import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
+import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
+import { IChartService } from '../../Utilities/Services/Interface/IChartService';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public getSystemState(): SystemState {
@@ -221,6 +229,36 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
       );
       this.dispatchAction(DashboardRedux.DashboardCreateDefaultTab());
     }
+  }
+
+  public getAdaptableInstance(): IAdaptable {
+    return this.adaptable;
+  }
+
+  public getAdaptableOptions(): AdaptableOptions {
+    return this.adaptable.adaptableOptions;
+  }
+
+  public getValidationService(): IValidationService {
+    return this.adaptable.ValidationService;
+  }
+  public getStrategyService(): IStrategyService {
+    return this.adaptable.StrategyService;
+  }
+  public getFilterService(): IFilterService {
+    return this.adaptable.FilterService;
+  }
+  public getReportService(): IReportService {
+    return this.adaptable.ReportService;
+  }
+  public getLayoutService(): ILayoutService {
+    return this.adaptable.LayoutService;
+  }
+  public getChartService(): IChartService {
+    return this.adaptable.ChartService;
+  }
+  public getCalculatedColumnExpressionService(): ICalculatedColumnExpressionService {
+    return this.adaptable.CalculatedColumnExpressionService;
   }
 
   // General way to get to store from inside Adaptable...

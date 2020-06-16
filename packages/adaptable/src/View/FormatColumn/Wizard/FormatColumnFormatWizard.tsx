@@ -38,7 +38,9 @@ export class FormatColumnFormatWizard
   column: AdaptableColumn;
   constructor(props: FormatColumnFormatWizardProps) {
     super(props);
-    const column = this.props.Columns.find(column => column.ColumnId === this.props.Data.ColumnId);
+    const column = this.props.Api.gridApi
+      .getColumns()
+      .find(column => column.ColumnId === this.props.Data.ColumnId);
     this.state = { DisplayFormat: this.props.Data.DisplayFormat };
 
     if (this.state.DisplayFormat === undefined && column.DataType === 'Number') {

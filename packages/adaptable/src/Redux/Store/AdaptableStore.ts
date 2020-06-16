@@ -1950,7 +1950,6 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
                 Column: actionTyped.columnFilter.ColumnId,
                 ColumnFilter: ExpressionHelper.ConvertExpressionToString(
                   actionTyped.columnFilter.Filter,
-                  middlewareAPI.getState().Grid.Columns,
                   adaptable.api
                 ),
               },
@@ -1968,7 +1967,6 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
                 Column: actionTyped.columnFilter.ColumnId,
                 ColumnFilter: ExpressionHelper.ConvertExpressionToString(
                   actionTyped.columnFilter.Filter,
-                  middlewareAPI.getState().Grid.Columns,
                   adaptable.api
                 ),
               },

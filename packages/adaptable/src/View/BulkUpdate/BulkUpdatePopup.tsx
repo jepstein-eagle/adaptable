@@ -94,13 +94,10 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
         PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Adaptable.api}
-        Columns={this.props.Columns}
-        UserFilters={this.props.UserFilters}
+        Api={this.props.Api}
         SelectedColumn={col}
         ShowPanel={showPanel}
         ShowHeader={true}
-        ValidationService={this.props.Adaptable.ValidationService}
       />
     ) : null;
 
@@ -140,7 +137,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                   <ColumnValueSelector
                     SelectedColumnValue={this.props.BulkUpdateValue}
                     SelectedColumn={col}
-                    Adaptable={this.props.Adaptable}
+                    Api={this.props.Api}
                     onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                     AllowNew={false}
                     style={{ width: '100%', maxWidth: 'inherit' }}
@@ -182,7 +179,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
                 <ColumnValueSelector
                   SelectedColumnValue={this.props.BulkUpdateValue}
                   SelectedColumn={col}
-                  Adaptable={this.props.Adaptable}
+                  Api={this.props.Api}
                   onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                   style={{ width: '100%', maxWidth: 'inherit' }}
                 />
@@ -262,10 +259,9 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Adaptable.ValidationService.createCellValidationUIConfirmation(
-      confirmAction,
-      cancelAction
-    );
+    let confirmation: IUIConfirmation = this.props.Api.internalApi
+      .getValidationService()
+      .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);
   }
 }

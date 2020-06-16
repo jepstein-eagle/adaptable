@@ -56,7 +56,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
       <ActiveFiltersPanel
         Columns={this.props.Columns}
         ColumnFilters={this.props.ColumnFilters}
-        Api={this.props.Adaptable.api}
+        Api={this.props.Api}
         AccessLevel={this.props.AccessLevel}
         onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}
         onSaveColumnFilterasUserFilter={(columnFilter: ColumnFilter) =>
@@ -102,8 +102,8 @@ class ColumnFilterToolPanelComponent extends React.Component<
           <CheckBox
             className="ab-ToolPanel__ColumnFilter__active-check"
             disabled={
-              this.props.Adaptable.api.internalApi.isGridInPivotMode() ||
-              !this.props.Adaptable.isQuickFilterActive()
+              this.props.Api.internalApi.isGridInPivotMode() ||
+              !this.props.Api.internalApi.getAdaptableInstance().isQuickFilterActive()
             }
             marginLeft={1}
             marginTop={0}
@@ -137,12 +137,12 @@ class ColumnFilterToolPanelComponent extends React.Component<
   private onClearFilters() {
     // better to put in store but lets test first...
     this.props.onClearAllFilters();
-    this.props.Adaptable.clearGridFiltering();
+    this.props.Api.internalApi.getAdaptableInstance().clearGridFiltering();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
     this.props.onClearColumnFilter(columnFilter);
-    this.props.Adaptable.clearColumnFiltering([columnFilter.ColumnId]);
+    this.props.Api.internalApi.getAdaptableInstance().clearColumnFiltering([columnFilter.ColumnId]);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

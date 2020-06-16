@@ -25,7 +25,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
         <AdaptableWizard
           FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Y Axis',

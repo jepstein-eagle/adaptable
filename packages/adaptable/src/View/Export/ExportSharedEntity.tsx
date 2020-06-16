@@ -14,7 +14,6 @@ export class ExportSharedEntity extends React.Component<
     let report = this.props.Entity as Report;
     let expressionString = ExpressionHelper.ConvertExpressionToString(
       report.Expression,
-      this.props.Api.gridApi.getColumns(),
       this.props.Api
     );
 

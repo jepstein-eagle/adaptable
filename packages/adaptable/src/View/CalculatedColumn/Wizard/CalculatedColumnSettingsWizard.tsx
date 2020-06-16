@@ -120,7 +120,7 @@ export class CalculatedColumnSettingsWizard
       {
         ColumnId: e.value,
         ErrorMessage: ArrayExtensions.ContainsItem(
-          this.props.Columns.map(c => c.ColumnId),
+          this.props.Api.gridApi.getColumns().map(c => c.ColumnId),
           e.value
         )
           ? 'A Column already exists with that name'

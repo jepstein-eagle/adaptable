@@ -22,16 +22,13 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Column',
-        Value: this.props.Adaptable.api.gridApi.getFriendlyNameFromColumnId(
-          this.props.Data.ColumnId
-        ),
+        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
       {
         Key: 'Query',
         Value: ExpressionHelper.ConvertExpressionToString(
           this.props.Data.Expression,
-          this.props.Columns,
-          this.props.Adaptable.api
+          this.props.Api
         ),
       },
     ];

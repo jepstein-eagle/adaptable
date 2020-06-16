@@ -353,11 +353,7 @@ export class ValidationService implements IValidationService {
       CellValidation.Expression
     )
       ? ' when ' +
-        ExpressionHelper.ConvertExpressionToString(
-          CellValidation.Expression,
-          columns,
-          this.adaptable.api
-        )
+        ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.adaptable.api)
       : EMPTY_STRING;
     return (
       columnFriendlyName +

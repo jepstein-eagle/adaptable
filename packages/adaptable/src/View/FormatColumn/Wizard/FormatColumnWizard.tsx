@@ -11,7 +11,6 @@ import { FormatColumnAlignmentWizard } from './FormatColumnAlignmentWizard';
 
 export interface FormatColumnWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
-  ColorPalette: string[];
   StyleClassNames: string[];
 }
 
@@ -22,37 +21,38 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
         <AdaptableWizard
           FriendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
-          Adaptable={this.props.Adaptable}
+          Api={this.props.Api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <FormatColumnScopeWizard />,
+              Element: <FormatColumnScopeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Style',
               Index: 1,
               Element: (
                 <FormatColumnStyleWizard
-                  ColorPalette={this.props.ColorPalette}
+                  // Api={this.props.api}
                   StyleClassNames={this.props.StyleClassNames}
+                  Api={this.props.Api}
                 />
               ),
             },
             {
               StepName: 'Display Format',
               Index: 2,
-              Element: <FormatColumnFormatWizard />,
+              Element: <FormatColumnFormatWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Cell Alignment',
               Index: 3,
-              Element: <FormatColumnAlignmentWizard />,
+              Element: <FormatColumnAlignmentWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 4,
-              Element: <FormatColumnSummaryWizard />,
+              Element: <FormatColumnSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

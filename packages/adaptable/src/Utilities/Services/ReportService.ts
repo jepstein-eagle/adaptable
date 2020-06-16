@@ -85,11 +85,7 @@ export class ReportService implements IReportService {
         case ReportRowScope.SelectedRows:
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
-          return ExpressionHelper.ConvertExpressionToString(
-            Report.Expression,
-            cols,
-            this.adaptable.api
-          );
+          return ExpressionHelper.ConvertExpressionToString(Report.Expression, this.adaptable.api);
       }
     }
   }
