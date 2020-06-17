@@ -120,6 +120,9 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public isGridInPivotMode(): boolean {
     return this.getAdaptableState().Grid.IsGridInPivotMode;
   }
+  public isQuickFilterActive(): boolean {
+    return this.adaptable.isQuickFilterActive();
+  }
 
   public setTreeModeOn(): void {
     this.dispatchAction(GridRedux.SetTreeModeOn());

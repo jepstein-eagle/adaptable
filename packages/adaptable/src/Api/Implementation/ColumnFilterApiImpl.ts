@@ -48,11 +48,13 @@ export class ColumnFilterApiImpl extends ApiBase implements ColumnFilterApi {
       columnFiltersForColumn.forEach(cf => {
         this.dispatchAction(ColumnFilterRedux.ColumnFilterClear(cf));
       });
+      this.adaptable.clearColumnFiltering([column]);
     }
   }
 
   public clearAllColumnFilter(): void {
     this.dispatchAction(ColumnFilterRedux.ColumnFilterClearAll());
+    this.adaptable.clearGridFiltering();
   }
 
   public getAllColumnFilter(): ColumnFilter[] {

@@ -64,6 +64,7 @@ export interface InternalApi {
   setPivotModeOff(): void;
 
   isGridInPivotMode(): boolean;
+  isQuickFilterActive(): boolean;
 
   setTreeModeOn(): void;
 

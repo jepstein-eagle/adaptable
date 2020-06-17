@@ -87,15 +87,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
   }
 
   private onClearColumnFilter(columnId: string) {
-    let columnFilters: ColumnFilter[] = this.props.ColumnFilters.filter(
-      cf => cf.ColumnId == columnId
-    );
-    if (ArrayExtensions.IsNotNullOrEmpty(columnFilters)) {
-      columnFilters.forEach(cf => {
-        this.props.onClearColumnFilter(cf);
-      });
-      this.props.Api.internalApi.getAdaptableInstance().clearColumnFiltering([columnId]);
-    }
+    this.props.Api.columnFilterApi.clearColumnFilterByColumn(columnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

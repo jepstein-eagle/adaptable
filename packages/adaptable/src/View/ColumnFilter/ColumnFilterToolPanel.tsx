@@ -26,8 +26,6 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 
 interface ColumnFilterToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ColumnFilterToolPanelComponent> {
-  onClearAllFilters: () => ColumnFilterRedux.ColumnFilterClearAllAction;
-  onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
@@ -103,7 +101,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
             className="ab-ToolPanel__ColumnFilter__active-check"
             disabled={
               this.props.Api.internalApi.isGridInPivotMode() ||
-              !this.props.Api.internalApi.getAdaptableInstance().isQuickFilterActive()
+              !this.props.Api.internalApi.isQuickFilterActive()
             }
             marginLeft={1}
             marginTop={0}
@@ -135,14 +133,11 @@ class ColumnFilterToolPanelComponent extends React.Component<
   }
 
   private onClearFilters() {
-    // better to put in store but lets test first...
-    this.props.onClearAllFilters();
-    this.props.Api.internalApi.getAdaptableInstance().clearGridFiltering();
+    this.props.Api.columnFilterApi.clearAllColumnFilter();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
-    this.props.onClearColumnFilter(columnFilter);
-    this.props.Api.internalApi.getAdaptableInstance().clearColumnFiltering([columnFilter.ColumnId]);
+    this.props.Api.columnFilterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {
@@ -169,10 +164,7 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<ColumnFilterToolPanelComponentProps> {
   return {
-    onClearColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
-    onClearAllFilters: () => dispatch(ColumnFilterRedux.ColumnFilterClearAll()),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
     onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
     onClose: (toolPanel: AdaptableToolPanel) =>
