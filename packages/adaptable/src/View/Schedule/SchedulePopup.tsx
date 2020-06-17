@@ -32,11 +32,14 @@ import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 import { Glue42Api } from '../../Api/Glue42Api';
 import { IPushPullApi } from '../../Api/IPushPullApi';
+import { OpenFinApi } from '../../Api/OpenFinApi';
+import { OpenFinSchedule } from '../../PredefinedConfig/OpenFinState';
 interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupComponent> {
   Reminders: ReminderSchedule[];
   ReportSchedules: ReportSchedule[];
   IPushPullSchedules: IPushPullSchedule[];
   Glue42Schedules: Glue42Schedule[];
+  OpenFinSchedules: OpenFinSchedule[];
 
   onAddReminderSchedule: (
     reminderchedule: ReminderSchedule
@@ -54,6 +57,12 @@ interface SchedulePopupProps extends StrategyViewPopupProps<SchedulePopupCompone
   ) => ScheduleRedux.IPushPullScheduleEditAction;
   onAddGlue42Schedule: (glue42Schedule: Glue42Schedule) => ScheduleRedux.Glue42ScheduleAddAction;
   onEditGlue42Schedule: (glue42Schedule: Glue42Schedule) => ScheduleRedux.Glue42ScheduleEditAction;
+  onAddOpenFinSchedule: (
+    OpenFinSchedule: OpenFinSchedule
+  ) => ScheduleRedux.OpenFinScheduleAddAction;
+  onEditOpenFinSchedule: (
+    OpenFinSchedule: OpenFinSchedule
+  ) => ScheduleRedux.OpenFinScheduleEditAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -112,6 +121,11 @@ class SchedulePopupComponent extends React.Component<
       allSchedules.push(...this.props.Glue42Schedules);
     }
 
+    const openFinApi: OpenFinApi = this.props.Adaptable.api.pluginsApi.getPluginApi('openfin');
+    if (openFinApi && openFinApi.isOpenFinAvailable()) {
+      allSchedules.push(...this.props.OpenFinSchedules);
+    }
+
     let allScheduleRows = allSchedules.map((baseSchedule: BaseSchedule, index) => {
       let deleteAction: Redux.Action<any>;
       switch (baseSchedule.ScheduleType) {
@@ -126,6 +140,9 @@ class SchedulePopupComponent extends React.Component<
           break;
         case ScheduleType.Glue42:
           deleteAction = ScheduleRedux.Glue42ScheduleDelete(baseSchedule as Glue42Schedule);
+          break;
+        case ScheduleType.OpenFin:
+          deleteAction = ScheduleRedux.OpenFinScheduleDelete(baseSchedule as OpenFinSchedule);
           break;
       }
 
@@ -167,12 +184,21 @@ class SchedulePopupComponent extends React.Component<
       label: 'Glue42',
     };
 
+    let openFinMenuItem = {
+      disabled: this.props.AccessLevel == 'ReadOnly',
+      onClick: () => this.onCreateSchedule(ScheduleType.OpenFin),
+      label: 'OpenFin Report',
+    };
+
     let scheduleMenuItems = [reminderMenuItem, reportMenuItem];
     if (ippApi && ippApi.isIPushPullRunning()) {
       scheduleMenuItems.push(iPushPullMenuItem);
     }
     if (glue42Api && glue42Api.isGlue42Running()) {
       scheduleMenuItems.push(glue42MenuItem);
+    }
+    if (openFinApi && openFinApi.isOpenFinAvailable()) {
+      scheduleMenuItems.push(openFinMenuItem);
     }
 
     let dropdownButton = (
@@ -235,6 +261,9 @@ class SchedulePopupComponent extends React.Component<
         break;
       case ScheduleType.Glue42:
         baseSchedule = ObjectFactory.CreateEmptyGlue42Schedule();
+        break;
+      case ScheduleType.OpenFin:
+        baseSchedule = ObjectFactory.CreateEmptyOpenFinSchedule();
         break;
     }
     this.onNew(baseSchedule);
@@ -302,6 +331,13 @@ class SchedulePopupComponent extends React.Component<
           this.props.onAddGlue42Schedule(baseSchedule as Glue42Schedule);
         }
         break;
+      case ScheduleType.OpenFin:
+        if (this.state.WizardStatus == WizardStatus.Edit) {
+          this.props.onEditOpenFinSchedule(baseSchedule as OpenFinSchedule);
+        } else {
+          this.props.onAddOpenFinSchedule(baseSchedule as OpenFinSchedule);
+        }
+        break;
     }
 
     this.setState({
@@ -342,6 +378,7 @@ function mapStateToProps(state: AdaptableState): Partial<SchedulePopupProps> {
     ReportSchedules: state.Schedule.ReportSchedules,
     IPushPullSchedules: state.Schedule.IPushPullSchedules,
     Glue42Schedules: state.Schedule.Glue42Schedules,
+    OpenFinSchedules: state.Schedule.OpenFinSchedules,
   };
 }
 
@@ -365,6 +402,10 @@ function mapDispatchToProps(
       dispatch(ScheduleRedux.Glue42ScheduleAdd(glue42Schedule)),
     onEditGlue42Schedule: (glue42Schedule: Glue42Schedule) =>
       dispatch(ScheduleRedux.Glue42ScheduleEdit(glue42Schedule)),
+    onAddOpenFinSchedule: (openFinSchedule: OpenFinSchedule) =>
+      dispatch(ScheduleRedux.OpenFinScheduleAdd(openFinSchedule)),
+    onEditOpenFinSchedule: (openFinSchedule: OpenFinSchedule) =>
+      dispatch(ScheduleRedux.OpenFinScheduleEdit(openFinSchedule)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ScheduleStrategyId, description)

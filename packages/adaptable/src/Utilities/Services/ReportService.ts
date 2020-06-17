@@ -16,7 +16,6 @@ import { GridRow } from '../../PredefinedConfig/Selection/GridRow';
 import ObjectFactory from '../ObjectFactory';
 import { IReportService } from './Interface/IReportService';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
-import OpenfinHelper from '../Helpers/OpenfinHelper';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
@@ -97,10 +96,6 @@ export class ReportService implements IReportService {
       case ExportDestination.Clipboard:
       case ExportDestination.JSON:
         return true;
-      case ExportDestination.OpenfinExcel:
-        return OpenfinHelper.isRunningInOpenfin() && OpenfinHelper.isExcelOpenfinLoaded();
-      //   case ExportDestination.Glue42:
-      //     return this.adaptable.api.glue42Api.isGlue42Available();
     }
 
     return false;

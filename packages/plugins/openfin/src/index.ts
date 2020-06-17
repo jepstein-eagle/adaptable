@@ -31,11 +31,12 @@ import { OpenFinToolbarControl } from './View/OpenFinToolbarControl';
 import * as OpenFinRedux from './Redux/ActionReducers/OpenFinRedux';
 import { IOpenFinStrategy } from './Strategy/Interface/IOpenFinStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
+import { OpenFinState } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
 
 if (version !== coreVersion) {
   console.warn(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!! "@adaptabletools/adaptable-plugin-glue42" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
+!!!!!!! "@adaptabletools/adaptable-plugin-openfin" (v @${version}) and "@adaptabletools/adaptable" (v @${coreVersion}) have different versions - they should have the exact same version.
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 `);
 }
@@ -70,46 +71,33 @@ class OpenFinPlugin extends AdaptablePlugin {
     this.registerProperty('service', () => this.OpenFinService);
   }
 
-  rootReducer = {
-    System: (state: SystemState, action: Redux.Action) => {
-      const newState = SystemReducer(state, action);
+  rootReducer = (rootReducer: any) => {
+    return {
+      System: (state: SystemState, action: Redux.Action): SystemState => {
+        const newState = rootReducer.System(state, action);
 
-      return OpenFinReducer(newState, action);
-    },
+        return OpenFinReducer(newState, action) as SystemState;
+      },
+    };
   };
 
   reduxMiddleware(next: Redux.Dispatch<Redux.Action<AdaptableState>>): PluginMiddlewareFunction {
     return (action, adaptable, middlewareAPI) => {
       const api = adaptable.api.pluginsApi.getPluginApi('openfin');
+      let openFinStrategy = <IOpenFinStrategy>(
+        adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
+      );
       switch (action.type) {
-        case OpenFinRedux.OPENFIN_LOGIN: {
-          const actionTyped = action as OpenFinRedux.OpenFinLoginAction;
-          this.openFinApi.loginToOpenFin(actionTyped.username, actionTyped.password);
-          return next(action);
-        }
-
-        case OpenFinRedux.OPENFIN_SEND_SNAPSHOT: {
-          let glue42Strategy = <IOpenFinStrategy>(
-            adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
-          );
-          const actionTyped = action as OpenFinRedux.OpenFinSendSnapshotAction;
-          glue42Strategy.sendSnapshot(actionTyped.glue42Report);
-          middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
-          return next(action);
-        }
-
         case OpenFinRedux.OPENFIN_START_LIVE_DATA: {
-          let glue42Strategy = <IOpenFinStrategy>(
-            adaptable.strategies.get(StrategyConstants.OpenFinStrategyId)
-          );
           const actionTyped = action as OpenFinRedux.OpenFinStartLiveDataAction;
-          glue42Strategy.startLiveData(actionTyped.glue42Report);
+          openFinStrategy.startLiveData(actionTyped.openFinReport);
           middlewareAPI.dispatch(PopupRedux.PopupHideScreen());
           return next(action);
         }
 
         case OpenFinRedux.OPENFIN_STOP_LIVE_DATA: {
-          this.openFinApi.stopLiveData();
+          const actionTyped = action as OpenFinRedux.OpenFinStartLiveDataAction;
+          openFinStrategy.stopLiveData(actionTyped.openFinReport);
           return next(action);
         }
 

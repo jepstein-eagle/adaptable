@@ -1,5 +1,28 @@
 # AdapTable Openfin Plugin Read Me
 
+In order to use this plugin, you have to install `@adaptabletools/adaptable-plugin-openfin` and specify it in your `adaptableOptions` configuration object, as shown below:
+
+```ts
+const adaptableOptions: AdaptableOptions = {
+    adaptableId: 'openfindemo1',
+    plugins: [
+      openfin()
+    ]
+    // ... other options
+}
+```
+
+## OpenFin configuration
+
+To use the AdapTable-Excel integration with your openfin setup, in your app.json, you need to specify
+
+```json
+"services": [
+    { "name": "excel",
+        "manifestUrl": "http://openfin.github.io/excel-api-example/provider/app.json"
+    }
+]
+```
 
 ## Help
 

@@ -99,6 +99,7 @@ export enum ScheduleType {
   iPushPull = 'iPushPull',
   Glue42 = 'Glue42',
   Reminder = 'Reminder',
+  OpenFin = 'OpenFin',
 }
 
 export enum SortOrder {

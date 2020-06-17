@@ -10,6 +10,8 @@ import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 import { Glue42Api } from '../Glue42Api';
 import { IPushPullApi } from '../IPushPullApi';
+import { OpenFinSchedule } from '../../PredefinedConfig/OpenFinState';
+import { OpenFinApi } from '../OpenFinApi';
 
 export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
   public getAllSchedule(): BaseSchedule[] {
@@ -18,6 +20,7 @@ export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
     allSchedules.push(...this.getAllReportSchedule());
     allSchedules.push(...this.getAllIPushPullSchedule());
     allSchedules.push(...this.getAllGlue42Schedule());
+    allSchedules.push(...this.getAllOpenFinSchedule());
     return allSchedules;
   }
   public getAllReminderSchedule(): ReminderSchedule[] {
@@ -33,6 +36,11 @@ export class ScheduleApiImpl extends ApiBase implements ScheduleApi {
   public getAllGlue42Schedule(): Glue42Schedule[] {
     const glue42Api: Glue42Api = this.adaptable.api.pluginsApi.getPluginApi('glue42');
     return glue42Api ? glue42Api.getGlue42Schedules() : [];
+  }
+
+  public getAllOpenFinSchedule(): OpenFinSchedule[] {
+    const openFinApi: OpenFinApi = this.adaptable.api.pluginsApi.getPluginApi('openfin');
+    return openFinApi ? openFinApi.getOpenFinSchedules() : [];
   }
 
   public showSchedulePopup(): void {

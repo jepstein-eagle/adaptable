@@ -12,6 +12,7 @@ import { ReminderSchedule } from '../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../PredefinedConfig/ExportState';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { OpenFinSchedule } from '../../PredefinedConfig/OpenFinState';
 
 export class ScheduleEntityRow extends React.Component<
   SharedEntityRowProps<ScheduleEntityRow>,
@@ -48,6 +49,10 @@ export class ScheduleEntityRow extends React.Component<
       case ScheduleType.Glue42:
         let glue42Schedule: Glue42Schedule = baseSchedule as Glue42Schedule;
         details = glue42Schedule.Glue42Report.ReportName;
+        break;
+      case ScheduleType.OpenFin:
+        let openFinSchedule: OpenFinSchedule = baseSchedule as OpenFinSchedule;
+        details = openFinSchedule.OpenFinReport.ReportName;
         break;
     }
 

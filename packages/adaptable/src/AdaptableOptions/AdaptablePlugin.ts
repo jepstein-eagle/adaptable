@@ -8,6 +8,9 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
 
+type AdaptableReducerObject = {
+  [key: string]: (...args: any[]) => any;
+};
 export type PluginMiddlewareFunction = (
   action: Redux.Action,
   adaptable: IAdaptable,
@@ -40,7 +43,7 @@ export abstract class AdaptablePlugin {
     };
   }
 
-  rootReducer?: { [key: string]: (...args: any[]) => any };
+  rootReducer?: (rootReducer: AdaptableReducerObject) => AdaptableReducerObject;
 
   hasProperty(name: string): boolean {
     return !!this.values[name];

@@ -58,18 +58,13 @@ class OpenFinPopupComponent extends React.Component<OpenFinPopupProps, EditableC
 }
 
 function mapStateToProps(state: AdaptableState): Partial<OpenFinPopupProps> {
-  return {
-    //   SelectedOpenFinReportName: state.OpenFin.SelectedOpenFinReportName,
-    //   LiveReports: state.System.CurrentLiveReports,
-  };
+  return {};
 }
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<OpenFinPopupProps> {
   return {
-    onOpenFinSendSnapshot: (report: OpenFinReport) =>
-      dispatch(OpenFinRedux.OpenFinSendSnapshot(report)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.OpenFinStrategyId, description)

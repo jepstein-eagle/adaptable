@@ -12,6 +12,7 @@ import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { VISIBLE_DATA_REPORT } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import ColumnHelper from '../Utilities/Helpers/ColumnHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   constructor(adaptable: IAdaptable) {

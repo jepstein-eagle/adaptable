@@ -53,7 +53,7 @@ export interface LiveDataChangedInfo extends AdaptableEventInfo {
   /**
    * Which of Adaptable partners is being used as the export destination to which to send live data.
    */
-  ReportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
+  ReportDestination: 'OpenFin' | 'iPushPull' | 'Glue42';
 
   /**
    * What triggered the event to be fired.

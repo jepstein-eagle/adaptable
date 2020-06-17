@@ -23,6 +23,7 @@ import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
 import { Glue42Schedule } from '../../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule, IPushPullDomain } from '../../../PredefinedConfig/IPushPullState';
+import { OpenFinSchedule } from '../../../PredefinedConfig/OpenFinState';
 
 /**
  * The setttings page for the Base Schedule  - will vary based on what type of schedule it is  - but should only be 1 page to keep it simple
@@ -50,6 +51,9 @@ export interface ScheduleSettingsWizardState {
   // Glue42 Related Settings
   Glue42ReportName: string; // not different name to avod a conflict...
   Glue42Transmission?: 'Snapshot' | 'Live Data';
+
+  OpenFinReportName: string;
+  OpenFinTransmission?: 'Live Data';
 }
 
 export class ScheduleSettingsWizard
@@ -126,6 +130,16 @@ export class ScheduleSettingsWizard
       Glue42Transmission:
         this.props.Data!.ScheduleType === ScheduleType.Glue42
           ? (this.props.Data as Glue42Schedule)!.Transmission
+          : undefined,
+
+      OpenFinReportName:
+        this.props.Data!.ScheduleType === ScheduleType.OpenFin
+          ? (this.props.Data as OpenFinSchedule)!.OpenFinReport.ReportName
+          : undefined,
+
+      OpenFinTransmission:
+        this.props.Data!.ScheduleType === ScheduleType.OpenFin
+          ? (this.props.Data as OpenFinSchedule)!.Transmission
           : undefined,
     };
   }
@@ -352,35 +366,26 @@ export class ScheduleSettingsWizard
                   showClearButton
                   marginRight={2}
                 />
-
-                {/*
-
-
-                <HelpBlock marginBottom={1} marginTop={3}>
-                  Choose whether to send Glue42 Data as 'Snapshot' (One-off report) or 'Live Data'
-                  (updating as Grid updates)
-                </HelpBlock>
-
-                <Flex flex={7} flexDirection="row" alignItems="center">
-                  <Radio
-                    marginRight={3}
-                    marginLeft={2}
-                    value="Snapshot"
-                    checked={this.state.Glue42Transmission === 'Snapshot'}
-                    onChange={(_, e: any) => this.onGlue42TransmissionChanged(e)}
-                  >
-                    Snapshot (one off report)
-                  </Radio>
-                  <Radio
-                    value="Live Data"
-                    checked={this.state.Glue42Transmission === 'Live Data'}
-                    onChange={(_, e: any) => this.onGlue42TransmissionChanged(e)}
-                  >
-                    Live Data (real-time updates)
-                  </Radio>
-                </Flex>
-
-                */}
+              </Flex>
+            </>
+          )}
+          {this.props.Data!.ScheduleType === ScheduleType.OpenFin && (
+            <>
+              <Flex flexDirection="column" padding={1}>
+                <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
+                <Dropdown
+                  disabled={allReports.length == 0}
+                  style={{ minWidth: 300 }}
+                  options={availableReports}
+                  className="ab-DashboardToolbar__Export__select"
+                  placeholder="Select Report"
+                  onChange={(openFinReportName: string) =>
+                    this.onOpenFinSelectedReportChanged(openFinReportName)
+                  }
+                  value={this.state.OpenFinReportName ? this.state.OpenFinReportName : null}
+                  showClearButton
+                  marginRight={2}
+                />
               </Flex>
             </>
           )}
@@ -499,6 +504,18 @@ export class ScheduleSettingsWizard
     }
   }
 
+  private onOpenFinSelectedReportChanged(reportName: string) {
+    if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
+      this.setState({ OpenFinReportName: reportName } as ScheduleSettingsWizardState, () =>
+        this.props.UpdateGoBackState()
+      );
+    } else {
+      this.setState({ OpenFinReportName: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
+        this.props.UpdateGoBackState()
+      );
+    }
+  }
+
   private onGlue42TransmissionChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Glue42Transmission: e.value } as ScheduleSettingsWizardState, () =>
@@ -523,6 +540,9 @@ export class ScheduleSettingsWizard
         );
       case ScheduleType.Glue42:
         return StringExtensions.IsNotNullOrEmpty(this.state.Glue42ReportName);
+
+      case ScheduleType.OpenFin:
+        return StringExtensions.IsNotNullOrEmpty(this.state.OpenFinReportName);
     }
   }
 
@@ -556,6 +576,11 @@ export class ScheduleSettingsWizard
       case ScheduleType.Glue42:
         (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName = this.state.Glue42ReportName;
         (this.props.Data as Glue42Schedule)!.Transmission = this.state.Glue42Transmission;
+        break;
+      case ScheduleType.OpenFin:
+        (this.props
+          .Data as OpenFinSchedule)!.OpenFinReport.ReportName = this.state.OpenFinReportName;
+        (this.props.Data as OpenFinSchedule)!.Transmission = this.state.OpenFinTransmission;
         break;
     }
   }
