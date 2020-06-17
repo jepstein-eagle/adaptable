@@ -1,3 +1,5 @@
+import { Token } from './types';
+
 export function getCurrentToken(tokens: Token[], offset: number) {
   return (
     tokens.find(({ range }) => range[0] <= offset && range[1] > offset) ||
