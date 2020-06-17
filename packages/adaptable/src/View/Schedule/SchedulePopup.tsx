@@ -121,7 +121,7 @@ class SchedulePopupComponent extends React.Component<
       allSchedules.push(...this.props.Glue42Schedules);
     }
 
-    const openFinApi: OpenFinApi = this.props.Adaptable.api.pluginsApi.getPluginApi('openfin');
+    const openFinApi: OpenFinApi = this.props.Api.pluginsApi.getPluginApi('openfin');
     if (openFinApi && openFinApi.isOpenFinAvailable()) {
       allSchedules.push(...this.props.OpenFinSchedules);
     }
