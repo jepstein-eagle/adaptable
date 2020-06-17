@@ -806,7 +806,7 @@ export class ExamplesHelper {
         //      return 'hello';
         //   },
       },
-      columnDefs: this.getTradeSchema().map(c => {
+      columnDefs: this.getReducedTradeSchema().map(c => {
         // c.floatingFilter = true;
         return c;
       }),
@@ -1412,6 +1412,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       aggFunc: 'sum',
+      width: 500,
       cellClass: 'ab-cell--align-right',
       type: 'abColDefNumber',
       filter: true,

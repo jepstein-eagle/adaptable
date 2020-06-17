@@ -21,6 +21,13 @@ export interface GeneralOptions {
    */
   showMissingPrimaryKeyWarning?: boolean;
 
+  /**
+   * Whether or not to show a warning if AdapTable cannot find a column.
+   *
+   * Not required in most circumstances but in some rare use cases (e.g. if columns get added to the grid piecemeal) then AdapTable can send unnecessary warnings.
+   *
+   * **Default Value: false**
+   */
   showMissingColumnsWarning?: boolean;
 
   /**

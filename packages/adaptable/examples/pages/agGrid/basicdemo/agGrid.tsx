@@ -41,6 +41,12 @@ function InitAdaptableDemo() {
       ...gridOptions,
       modules: AllEnterpriseModules,
     },
+    generalOptions: {
+      showMissingColumnsWarning: false,
+    },
+    layoutOptions: {
+      autoSizeColumnsInDefaultLayout: false,
+    },
     filterOptions: {
       useVendorFilterFormStyle: true,
       useAdaptableFilterForm: true,

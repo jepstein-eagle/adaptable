@@ -340,7 +340,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
   private LogMissingColumnWarning(columnId: string): void {
     if (
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&
-      this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning == true
+      this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning === true
     ) {
       if (!this.isSpecialColumn(columnId)) {
         LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);

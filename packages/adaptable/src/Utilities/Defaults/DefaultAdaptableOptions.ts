@@ -1,5 +1,6 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
+import { truncate } from 'lodash';
 
 export const DefaultAdaptableOptions: AdaptableOptions = {
   vendorGrid: null,
@@ -95,7 +96,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   generalOptions: {
     showMissingPrimaryKeyWarning: true,
-    showMissingColumnsWarning: false,
+    showMissingColumnsWarning: true,
     preventDuplicatePrimaryKeyValues: true,
     showGroupingTotalsAsHeader: false,
   },
