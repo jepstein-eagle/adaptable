@@ -11,6 +11,8 @@ import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { LogAdaptableError } from '../Helpers/LoggingHelper';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
 import { Glue42Api } from '../../Api/Glue42Api';
+import { OpenFinApi } from '../../Api/OpenFinApi';
+import { OpenFinSchedule } from '../../PredefinedConfig/OpenFinState';
 
 interface ScheduleJob {
   cancel: () => any;
@@ -58,6 +60,7 @@ export class ScheduleService implements IScheduleService {
   private exportJobs: ScheduleJob[];
   private iPushPullJobs: ScheduleJob[];
   private glue42Jobs: ScheduleJob[];
+  private openFinJobs: ScheduleJob[];
 
   constructor(private adaptable: IAdaptable) {
     this.adaptable = adaptable;
@@ -65,6 +68,7 @@ export class ScheduleService implements IScheduleService {
     this.exportJobs = [];
     this.iPushPullJobs = [];
     this.glue42Jobs = [];
+    this.openFinJobs = [];
 
     this.AddMidnightRefreshSchedule();
 
@@ -74,6 +78,7 @@ export class ScheduleService implements IScheduleService {
         this.updateReportJobs();
         this.updateIPushPullJobs();
         this.updateGlue42Jobs();
+        this.updateOpenFinJobs();
       }, 2000);
     });
 
@@ -109,6 +114,12 @@ export class ScheduleService implements IScheduleService {
           eventName == ScheduleRedux.GLUE42_SCHEDULE_DELETE
         ) {
           this.updateGlue42Jobs();
+        } else if (
+          eventName == ScheduleRedux.OPENFIN_SCHEDULE_ADD ||
+          eventName == ScheduleRedux.OPENFIN_SCHEDULE_EDIT ||
+          eventName == ScheduleRedux.OPENFIN_SCHEDULE_DELETE
+        ) {
+          this.updateOpenFinJobs();
         }
       }
     });
@@ -147,6 +158,15 @@ export class ScheduleService implements IScheduleService {
       .getAllGlue42Schedule()
       .forEach((glue42Schedule: Glue42Schedule) => {
         this.AddGlue42Schedule(glue42Schedule);
+      });
+  }
+
+  private updateOpenFinJobs() {
+    this.clearAllOpenFinJobs();
+    this.adaptable.api.scheduleApi
+      .getAllOpenFinSchedule()
+      .forEach((OpenFinSchedule: OpenFinSchedule) => {
+        this.AddOpenFinSchedule(OpenFinSchedule);
       });
   }
 
@@ -197,6 +217,18 @@ export class ScheduleService implements IScheduleService {
         glue42Api.sendSnapshotToDo(glue42Schedule.Glue42Report);
 
         this.glue42Jobs.push(glue42Job);
+      });
+    }
+  }
+
+  public AddOpenFinSchedule(openFinSchedule: OpenFinSchedule): void {
+    const date: Date = this.getDateFromSchedule(openFinSchedule.Schedule);
+    if (date != null) {
+      const openFinApi: OpenFinApi = this.adaptable.api.pluginsApi.getPluginApi('openfin');
+      var OpenFinJob: ScheduleJob = NodeSchedule.scheduleJob(date, () => {
+        openFinApi.startLiveData(openFinSchedule.OpenFinReport);
+
+        this.openFinJobs.push(OpenFinJob);
       });
     }
   }
@@ -272,5 +304,14 @@ export class ScheduleService implements IScheduleService {
       }
     });
     this.glue42Jobs = [];
+  }
+
+  private clearAllOpenFinJobs(): void {
+    this.openFinJobs.forEach(j => {
+      if (j != null) {
+        j.cancel();
+      }
+    });
+    this.openFinJobs = [];
   }
 }

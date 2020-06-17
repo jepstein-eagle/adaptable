@@ -149,7 +149,10 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
           return new Promise<any>((resolve, reject) => {
             let previousDimension = this.workAroundOpenfinExcelDataDimension.get(report.Uuid);
             let ReportAsArray: any[] = this.convertReportToArray(report);
-            let newDimension = { x: ReportAsArray[0].length, y: ReportAsArray.length };
+            let newDimension = {
+              x: ReportAsArray.length ? ReportAsArray[0].length : 0,
+              y: ReportAsArray.length,
+            };
             if (previousDimension) {
               let missingNumberOfRows = previousDimension.y - newDimension.y;
               let missingNumberOfColumns = previousDimension.x - newDimension.x;

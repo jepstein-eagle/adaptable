@@ -27,7 +27,7 @@ var api: AdaptableApi;
 function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 25;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -164,6 +164,7 @@ function InitAdaptableDemo() {
   // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 2000, tradeCount);
     // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
     /*
     setTimeout(() => {

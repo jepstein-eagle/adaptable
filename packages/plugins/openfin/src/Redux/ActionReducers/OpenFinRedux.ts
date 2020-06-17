@@ -68,8 +68,6 @@ export const OpenFinLiveReportClear = (): OpenFinLiveReportClearAction => ({
 });
 
 const initialOpenFinState: OpenFinState = {
-  // OpenFin: undefined,
-
   CurrentLiveOpenFinReport: undefined,
 };
 

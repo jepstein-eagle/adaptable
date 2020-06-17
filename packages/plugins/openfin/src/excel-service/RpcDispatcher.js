@@ -95,7 +95,8 @@ class RpcDispatcher {
           RpcDispatcher.promiseExecutors[currentMessageId] = executor;
         },
         nak => {
-          executor.reject(new Error(nak));
+          // executor.reject(new Error(nak)); // TODO this was us
+          console.error(new Error(nak));
         }
       );
     } else {

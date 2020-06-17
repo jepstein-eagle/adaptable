@@ -16,5 +16,5 @@ export interface OpenFinReport extends AdaptableObject {
 
 export interface OpenFinSchedule extends BaseSchedule {
   OpenFinReport: OpenFinReport;
-  Transmission: 'Snapshot' | 'Live Data';
+  Transmission: 'Live Data';
 }

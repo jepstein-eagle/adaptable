@@ -63,7 +63,7 @@ export class OpenFinApiImpl extends ApiBase implements OpenFinApi {
   }
 
   public getOpenFinSchedules(): OpenFinSchedule[] {
-    return [];
+    return this.getAdaptableState().Schedule.OpenFinSchedules || [];
   }
 
   public startLiveData(OpenFinReport: OpenFinReport): void {

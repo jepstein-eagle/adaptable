@@ -3,6 +3,7 @@ import { Schedule, BaseSchedule } from './Common/Schedule';
 import { ReminderSchedule } from './ReminderState';
 import { Glue42Schedule } from './Glue42State';
 import { IPushPullSchedule } from './IPushPullState';
+import { OpenFinSchedule } from './OpenFinState';
 
 /**
  *
@@ -12,6 +13,7 @@ export interface ScheduleState extends ConfigState {
   Reminders?: ReminderSchedule[];
   IPushPullSchedules?: IPushPullSchedule[];
   Glue42Schedules?: Glue42Schedule[];
+  OpenFinSchedules?: OpenFinSchedule[];
 }
 
 /**

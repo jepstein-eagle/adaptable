@@ -5,6 +5,7 @@ import { ScheduleState } from '../../PredefinedConfig/ScheduleState';
 import { ReminderSchedule, ReportSchedule } from '../../types';
 import { Glue42Schedule } from '../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule } from '../../PredefinedConfig/IPushPullState';
+import { OpenFinSchedule } from '../../PredefinedConfig/OpenFinState';
 
 export const REPORT_SCHEDULE_ADD = 'REPORT_SCHEDULE_ADD';
 export const REPORT_SCHEDULE_EDIT = 'REPORT_SCHEDULE_EDIT';
@@ -21,6 +22,10 @@ export const IPUSHPULL_SCHEDULE_DELETE = 'IPUSHPULL_SCHEDULE_DELETE';
 export const GLUE42_SCHEDULE_ADD = 'GLUE42_SCHEDULE_ADD';
 export const GLUE42_SCHEDULE_EDIT = 'GLUE42_SCHEDULE_EDIT';
 export const GLUE42_SCHEDULE_DELETE = 'GLUE42_SCHEDULE_DELETE';
+
+export const OPENFIN_SCHEDULE_ADD = 'OPENFIN_SCHEDULE_ADD';
+export const OPENFIN_SCHEDULE_EDIT = 'OPENFIN_SCHEDULE_EDIT';
+export const OPENFIN_SCHEDULE_DELETE = 'OPENFIN_SCHEDULE_DELETE';
 
 export interface Glue42ScheduleAction extends Redux.Action {
   glue42Schedule: Glue42Schedule;
@@ -43,6 +48,31 @@ export const Glue42ScheduleDelete = (
 ): Glue42ScheduleDeleteAction => ({
   type: GLUE42_SCHEDULE_DELETE,
   glue42Schedule,
+});
+
+export interface OpenFinScheduleAction extends Redux.Action {
+  openFinSchedule: OpenFinSchedule;
+}
+export interface OpenFinScheduleAddAction extends OpenFinScheduleAction {}
+export interface OpenFinScheduleEditAction extends OpenFinScheduleAction {}
+export interface OpenFinScheduleDeleteAction extends OpenFinScheduleAction {}
+
+export const OpenFinScheduleAdd = (openFinSchedule: OpenFinSchedule): OpenFinScheduleAddAction => ({
+  type: OPENFIN_SCHEDULE_ADD,
+  openFinSchedule,
+});
+
+export const OpenFinScheduleEdit = (
+  openFinSchedule: OpenFinSchedule
+): OpenFinScheduleEditAction => ({
+  type: OPENFIN_SCHEDULE_EDIT,
+  openFinSchedule,
+});
+export const OpenFinScheduleDelete = (
+  openFinSchedule: OpenFinSchedule
+): OpenFinScheduleDeleteAction => ({
+  type: OPENFIN_SCHEDULE_DELETE,
+  openFinSchedule,
 });
 
 export interface IPushPullScheduleAction extends Redux.Action {
@@ -127,6 +157,7 @@ const initialScheduleState: ScheduleState = {
   ReportSchedules: EMPTY_ARRAY,
   Reminders: EMPTY_ARRAY,
   IPushPullSchedules: EMPTY_ARRAY,
+  OpenFinSchedules: EMPTY_ARRAY,
 };
 
 export const ScheduleReducer: Redux.Reducer<ScheduleState> = (
@@ -158,6 +189,35 @@ export const ScheduleReducer: Redux.Reducer<ScheduleState> = (
       return {
         ...state,
         Glue42Schedules: state.Glue42Schedules.filter(
+          abObject => abObject.Uuid !== actionSchedule.Uuid
+        ),
+      };
+    }
+
+    case OPENFIN_SCHEDULE_ADD: {
+      const actionSchedule: OpenFinSchedule = (action as OpenFinScheduleAction).openFinSchedule;
+
+      if (!actionSchedule.Uuid) {
+        actionSchedule.Uuid = createUuid();
+      }
+      const OpenFinSchedules = [].concat(state.OpenFinSchedules);
+      OpenFinSchedules.push(actionSchedule);
+      return { ...state, OpenFinSchedules: OpenFinSchedules };
+    }
+    case OPENFIN_SCHEDULE_EDIT: {
+      const actionSchedule: OpenFinSchedule = (action as OpenFinScheduleAction).openFinSchedule;
+      return {
+        ...state,
+        OpenFinSchedules: state.OpenFinSchedules.map(abObject =>
+          abObject.Uuid === actionSchedule.Uuid ? actionSchedule : abObject
+        ),
+      };
+    }
+    case OPENFIN_SCHEDULE_DELETE: {
+      const actionSchedule: OpenFinSchedule = (action as OpenFinScheduleAction).openFinSchedule;
+      return {
+        ...state,
+        OpenFinSchedules: state.OpenFinSchedules.filter(
           abObject => abObject.Uuid !== actionSchedule.Uuid
         ),
       };

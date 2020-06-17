@@ -71,6 +71,7 @@ import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
+import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -371,6 +372,12 @@ export function CreateEmptyGlue42Report(): Glue42Report {
     ReportName: EMPTY_STRING,
   };
 }
+export function CreateEmptyOpenFinReport(): OpenFinReport {
+  return {
+    Uuid: createUuid(),
+    ReportName: EMPTY_STRING,
+  };
+}
 export function CreateEmptyIPushPullSchedule(): IPushPullSchedule {
   return {
     Uuid: createUuid(),
@@ -388,6 +395,16 @@ export function CreateEmptyGlue42Schedule(): Glue42Schedule {
     Schedule: CreateEmptySchedule(),
     Glue42Report: CreateEmptyGlue42Report(),
     Transmission: 'Snapshot',
+  };
+}
+
+export function CreateEmptyOpenFinSchedule(): OpenFinSchedule {
+  return {
+    Uuid: createUuid(),
+    ScheduleType: ScheduleType.OpenFin,
+    Schedule: CreateEmptySchedule(),
+    OpenFinReport: CreateEmptyOpenFinReport(),
+    Transmission: 'Live Data',
   };
 }
 
@@ -692,6 +709,8 @@ export const ObjectFactory = {
   CreateIPushPullSchedule,
   CreateGlue42Schedule,
   CreateReportSchedule,
+  CreateEmptyOpenFinReport,
+  CreateEmptyOpenFinSchedule,
   CreateEmptySchedule,
   CreateEmptyShortcut,
   CreateEmptyConditionalStyle,

@@ -19,10 +19,7 @@ import {
   LiveDataChangedEventArgs,
   LiveDataChangedInfo,
 } from '@adaptabletools/adaptable/src/Api/Events/LiveDataChanged';
-import {
-  OpenFinReport,
-  OpenFinSchedule,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
+import { OpenFinReport } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
 
 import { ButtonPlay } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPlay';
 import { ButtonSchedule } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonSchedule';
@@ -30,6 +27,7 @@ import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/
 import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPause';
 
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
+import { CreateEmptyOpenFinSchedule } from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
 
 interface OpenFinToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<OpenFinToolbarControlComponent> {
@@ -37,7 +35,7 @@ interface OpenFinToolbarControlComponentProps
 
   onOpenFinStopLiveData: (OpenFinreport: OpenFinReport) => OpenFinRedux.OpenFinStopLiveDataAction;
 
-  onNewOpenFinSchedule: (OpenFinSchedule: OpenFinSchedule) => PopupRedux.PopupShowScreenAction;
+  onNewOpenFinSchedule: () => PopupRedux.PopupShowScreenAction;
 
   Columns: AdaptableColumn[];
   Reports: Report[] | undefined;
@@ -134,31 +132,29 @@ class OpenFinToolbarControlComponent extends React.Component<
         ) : (
           <ButtonPlay
             marginLeft={1}
-            className="ab-DashboardToolbar__IPushPull__play"
+            className="ab-DashboardToolbar__OpenFin__play"
             onClick={() => this.onOpenFinStartLiveData()}
             tooltip="Start sync with OpenFin"
             disabled={isLiveOpenFinReport || !isCompletedReport}
             AccessLevel={this.props.AccessLevel}
           />
         )}
-        {isCompletedReport && (
-          <Flex
-            className={join(
-              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
-              'ab-DashboardToolbar__OpenFin__controls'
-            )}
-            alignItems="stretch"
-          >
-            <ButtonSchedule
-              marginLeft={1}
-              className="ab-DashboardToolbar__OpenFin__schedule"
-              onClick={() => this.onNewOpenFinSchedule()}
-              tooltip="Schedule"
-              disabled={isLiveOpenFinReport || !isCompletedReport}
-              AccessLevel={this.props.AccessLevel}
-            />
-          </Flex>
-        )}{' '}
+
+        <Flex
+          className={join(
+            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+            'ab-DashboardToolbar__OpenFin__controls'
+          )}
+          alignItems="stretch"
+        >
+          <ButtonSchedule
+            marginLeft={1}
+            className="ab-DashboardToolbar__OpenFin__schedule"
+            onClick={() => this.onNewOpenFinSchedule()}
+            tooltip="Schedule"
+            AccessLevel={this.props.AccessLevel}
+          />
+        </Flex>
       </Flex>
     );
 
@@ -166,7 +162,7 @@ class OpenFinToolbarControlComponent extends React.Component<
       <PanelDashboard
         className="ab-DashboardToolbar__OpenFin"
         headerText={StrategyConstants.OpenFinStrategyFriendlyName}
-        showConfigureButton={false} // later : isOpenFinRunning
+        showConfigureButton={false}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -187,11 +183,13 @@ class OpenFinToolbarControlComponent extends React.Component<
   }
 
   private onNewOpenFinSchedule() {
-    // TODO continue here?
-    // let OpenFinSchedule: OpenFinSchedule = ObjectFactory.CreateOpenFinSchedule(
-    //   this.createOpenFinReportFromState()
-    // );
-    // this.props.onNewOpenFinSchedule(OpenFinSchedule);
+    // let OpenFinSchedule: OpenFinSchedule = {
+    //   ...ObjectFactory.CreateEmptyBaseSchedule(ScheduleType.OpenFin),
+    //   OpenFinReport: this.createOpenFinReportFromState(),
+    //   Transmission: 'Live Data',
+    // };
+
+    this.props.onNewOpenFinSchedule();
   }
 
   // perhaps this should be props and in real state?
@@ -216,7 +214,7 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<OpenFinToolbarControlComponentProps> {
   return {
-    onNewOpenFinSchedule: (OpenFinSchedule: OpenFinSchedule) =>
+    onNewOpenFinSchedule: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
           StrategyConstants.ScheduleStrategyId,
@@ -224,7 +222,7 @@ function mapDispatchToProps(
           {
             action: 'New',
             source: 'Toolbar',
-            value: OpenFinSchedule,
+            value: CreateEmptyOpenFinSchedule(),
           }
         )
       ),

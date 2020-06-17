@@ -13,6 +13,7 @@ import { ReminderSchedule } from '../../../PredefinedConfig/ReminderState';
 import { ReportSchedule } from '../../../PredefinedConfig/ExportState';
 import { Glue42Schedule } from '../../../PredefinedConfig/Glue42State';
 import { IPushPullSchedule } from '../../../PredefinedConfig/IPushPullState';
+import { OpenFinSchedule } from '../../../PredefinedConfig/OpenFinState';
 
 export interface ScheduleSummaryWizardProps extends AdaptableWizardStepProps<BaseSchedule> {}
 
@@ -80,6 +81,15 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
           //   },
         ];
         keyValuePairs.push(...glue42KVP);
+        break;
+      case ScheduleType.OpenFin:
+        let openFinKVP: KeyValuePair[] = [
+          {
+            Key: 'Report',
+            Value: (this.props.Data as OpenFinSchedule)!.OpenFinReport.ReportName,
+          },
+        ];
+        keyValuePairs.push(...openFinKVP);
         break;
     }
     keyValuePairs.push({
