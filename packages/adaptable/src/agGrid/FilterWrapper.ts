@@ -56,6 +56,7 @@ export let FilterWrapperFactory = (adaptable: Adaptable) => {
       let filterContext: IColumnFilterContext = {
         Column: column,
         Adaptable: adaptable,
+        AdaptableApi: adaptable.api,
         ShowCloseButton: params != null && params.hidePopup != null,
       };
       adaptable.hideFilterFormPopup = params ? params.hidePopup : null;

@@ -436,10 +436,7 @@ export class Adaptable implements IAdaptable {
     this.LayoutService = new LayoutService(this);
     this.FilterService = new FilterService(this);
     this.StrategyService = new StrategyService(this);
-    this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(
-      this,
-      (columnId, rowNode) => this.gridOptions.api!.getValue(columnId, rowNode)
-    );
+    this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this);
 
     this.forPlugins(plugin => plugin.afterInitServices(this));
 
