@@ -133,7 +133,7 @@ const Glue42LoginComponent = (props: Glue42LoginPopupProps) => {
 
 function mapStateToProps(state: AdaptableState): Partial<Glue42LoginPopupProps> {
   return {
-    glue42LoginErrorMessage: state.Glue42.Glue42LoginErrorMessage,
+    glue42LoginErrorMessage: state.System.Glue42LoginErrorMessage,
   };
 }
 

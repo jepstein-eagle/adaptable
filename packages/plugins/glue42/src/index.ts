@@ -8,15 +8,12 @@ import * as Redux from 'redux';
 
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
-
-import { SystemReducer } from '@adaptabletools/adaptable/src/Redux/ActionsReducers/SystemRedux';
 import { Glue42StrategyId } from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
 import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 import { IStrategy } from '@adaptabletools/adaptable/src/Strategy/Interface/IStrategy';
-import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
 import {
   AdaptableViewFactory,
   AdaptableDashboardFactory,

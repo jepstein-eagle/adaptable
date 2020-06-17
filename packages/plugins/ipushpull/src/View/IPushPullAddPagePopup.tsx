@@ -14,7 +14,7 @@ import { usePopupContext } from '@adaptabletools/adaptable/src/View/Components/P
 import ErrorBox from '@adaptabletools/adaptable/src/components/ErrorBox';
 import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import { Flex } from 'rebass';
-import { IPushPullDomain } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { IPushPullDomain } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
 import Dropdown from '@adaptabletools/adaptable/src/components/Dropdown';
 import {
   EMPTY_STRING,

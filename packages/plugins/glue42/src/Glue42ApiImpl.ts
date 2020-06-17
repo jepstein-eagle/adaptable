@@ -51,7 +51,7 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
   }
 
   public async loginToGlue42(userName: string, password: string): Promise<void> {
-    await this.getGlue42Service().login(userName, password, this.getGlue42State().GatewayURL);
+    await this.getGlue42Service().login(userName, password, this.options.gatewayURL);
     this.adaptable.api.internalApi.hidePopupScreen();
     this.setGlue42LoginErrorMessage('');
   }

@@ -220,11 +220,11 @@ class Glue42ToolbarControlComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState): Partial<Glue42ToolbarControlComponentProps> {
   return {
-    CurrentLiveGlue42Report: state.Glue42.CurrentLiveGlue42Report,
+    CurrentLiveGlue42Report: state.System.CurrentLiveGlue42Report,
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
-    IsGlue42Available: state.Glue42.IsGlue42Available,
-    IsGlue42Running: state.Glue42.IsGlue42Running,
+    IsGlue42Available: state.System.IsGlue42Available,
+    IsGlue42Running: state.System.IsGlue42Running,
   };
 }
 

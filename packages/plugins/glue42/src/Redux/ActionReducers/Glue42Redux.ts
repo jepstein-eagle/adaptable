@@ -121,7 +121,6 @@ export const SetGlue42RunningOff = (): SetGlue42RunningOffAction => ({
 const initialFilterState: Glue42State = {
   // Glue42: undefined,
   Glue42LoginErrorMessage: EMPTY_STRING,
-  Glue42Schedules: EMPTY_ARRAY,
   IsGlue42Available: false,
   IsGlue42Running: false,
   CurrentLiveGlue42Report: undefined,
