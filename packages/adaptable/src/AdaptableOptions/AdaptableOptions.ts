@@ -7,7 +7,6 @@ import { QueryOptions } from './QueryOptions';
 import { GeneralOptions } from './GeneralOptions';
 import { ChartOptions } from './ChartOptions';
 import { PredefinedConfig } from '../PredefinedConfig/PredefinedConfig';
-import { DetailPredefinedConfig } from '../PredefinedConfig/DetailPredefinedConfig';
 import { EditOptions } from './EditOptions';
 import { StateOptions } from './StateOptions';
 import { UserInterfaceOptions } from './UserInterfaceOptions';
