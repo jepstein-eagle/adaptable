@@ -24,7 +24,7 @@
     "prettier": "^1.17.0",
     "rimraf": "^2.6.3",
     "symlink-dir": "^3.1.1",
-    "typescript": "3.6.2",
+    "typescript": "^3.8.3",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "7.1.2",
