@@ -6,9 +6,9 @@ import { IPushPullPluginOptions } from './';
 import {
   IPushPullDomain,
   IPushPullReport,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+  IPushPullSchedule,
+} from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
 
-import { IPushPullSchedule } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullSchedule';
 import { IPushPullApi } from '@adaptabletools/adaptable/src/Api/IPushPullApi';
 import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
