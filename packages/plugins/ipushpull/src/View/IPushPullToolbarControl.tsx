@@ -7,7 +7,7 @@ import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/A
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import * as IPushPullRedux from '../Redux/ActionReducers/IPushPullRedux';
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
-import { PanelDashboard } from '@adaptabletools/adaptable/src/View/components/Panels/PanelDashboard';
+import { PanelDashboard } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelDashboard';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
