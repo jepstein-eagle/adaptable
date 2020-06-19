@@ -24,7 +24,7 @@ const GridList = (props: GridListProps) => {
       item: c,
       id: index,
     };
-  });
+  }).filter(data => !!data.item);
   return (
     <DataSource<GridListItem> data={data} primaryKey="id" fields={['item', 'id']}>
       <Grid
