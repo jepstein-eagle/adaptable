@@ -11,7 +11,7 @@ import { IToolPanelComp, IToolPanelParams } from '@ag-grid-community/all-modules
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Flex, Box } from 'rebass';
-import { IAdaptable } from '../../../types';
+import { IAdaptable, AdaptableApi } from '../../../types';
 import { Entitlement, AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import AdaptableHelper from '../../../Utilities/Helpers/AdaptableHelper';
@@ -39,6 +39,7 @@ const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface AdaptableToolPanelProps {
   Adaptable: IAdaptable;
+  Api: AdaptableApi;
   TeamSharingActivated?: boolean;
   VisibleToolsPanels: AdaptableToolPanels;
   AvailableToolPanels: AdaptableToolPanels;
@@ -375,6 +376,7 @@ export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
             <AdaptableContext.Provider value={this.ctx.Adaptable}>
               <ConnectedAdaptableToolPanel
                 Adaptable={this.ctx.Adaptable}
+                Api={this.ctx.Api}
                 TeamSharingActivated={false}
               />
             </AdaptableContext.Provider>

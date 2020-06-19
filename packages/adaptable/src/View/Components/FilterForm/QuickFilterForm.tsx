@@ -24,10 +24,12 @@ import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
+import { AdaptableApi } from '../../../Api/AdaptableApi';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableColumn;
   Adaptable: IAdaptable;
+  Api: AdaptableApi;
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
@@ -376,7 +378,7 @@ export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <QuickFilterForm
-          AdaptableApi={FilterContext.AdaptableApi}
+          Api={FilterContext.Adaptable.api}
           CurrentColumn={FilterContext.Column}
           TeamSharingActivated={false}
           EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}

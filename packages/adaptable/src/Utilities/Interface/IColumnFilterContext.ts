@@ -5,6 +5,5 @@ import { AdaptableApi } from '../../Api/AdaptableApi';
 export interface IColumnFilterContext {
   Column: AdaptableColumn;
   Adaptable: IAdaptable;
-  AdaptableApi: AdaptableApi;
   ShowCloseButton: boolean;
 }
