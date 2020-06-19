@@ -26,13 +26,14 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <SparklinesChartColumnWizard />,
+              Element: <SparklinesChartColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Build Query',
               Index: 1,
               Element: (
                 <SparklinesChartExpressionColumnWizard
+                  Api={this.props.Api}
                   ExpressionMode={ExpressionMode.SingleColumn}
                 />
               ),
@@ -40,12 +41,14 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
             {
               StepName: 'Chart Settings',
               Index: 2,
-              Element: <SparklinesChartSettingsWizard ChartNames={chartNames} />,
+              Element: (
+                <SparklinesChartSettingsWizard ChartNames={chartNames} Api={this.props.Api} />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <SparklinesChartSummaryWizard />,
+              Element: <SparklinesChartSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}
