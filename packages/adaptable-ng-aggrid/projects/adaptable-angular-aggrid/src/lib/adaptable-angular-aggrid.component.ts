@@ -33,6 +33,7 @@ function getRandomInt(max: number): number {
       }
     `,
   ],
+  template: '',
 })
 export class AdaptableAngularAgGridComponent
   implements AfterViewInit, OnDestroy {
