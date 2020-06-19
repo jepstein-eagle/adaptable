@@ -91,6 +91,10 @@ function InitAdaptableDemo() {
                 Name: 'btnCopyLayout',
                 Caption: 'Copy Layout',
               },
+              {
+                Name: 'btnCopyLayout',
+                Caption: 'Copy Layout',
+              },
             ],
           },
         ],
