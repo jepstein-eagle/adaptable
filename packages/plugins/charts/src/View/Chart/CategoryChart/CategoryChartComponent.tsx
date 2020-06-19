@@ -502,9 +502,9 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetYAxisLabelColor && (
                       <ColorPicker
-                        Api={this.props.api}
+                        Api={this.props.Api}
                         value={this.state.ChartProperties.YAxisLabelColor}
-                        onChange={x => this.onYAxisLabelColorChange(x)}
+                        onChange={(x: any) => this.onYAxisLabelColorChange(x)}
                       />
                     )}
                   </FormRow>
@@ -544,9 +544,9 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetYAxisTitleColor && (
                       <ColorPicker
-                        Api={this.props.api}
+                        Api={this.props.Api}
                         value={this.state.ChartProperties.YAxisTitleColor}
-                        onChange={x => this.onYAxisTitleColorChange(x)}
+                        onChange={(x: any) => this.onYAxisTitleColorChange(x)}
                       />
                     )}
                   </FormRow>
@@ -626,9 +626,9 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetXAxisLabelColor && (
                       <ColorPicker
-                        Api={this.props.api}
+                        Api={this.props.Api}
                         value={this.state.ChartProperties.XAxisLabelColor}
-                        onChange={x => this.onXAxisLabelColorChange(x)}
+                        onChange={(x: any) => this.onXAxisLabelColorChange(x)}
                       />
                     )}
                   </FormRow>
@@ -688,9 +688,9 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetXAxisTitleColor && (
                       <ColorPicker
-                        Api={this.props.api}
+                        Api={this.props.Api}
                         value={this.state.ChartProperties.XAxisTitleColor}
-                        onChange={x => this.onXAxisTitleColorChange(x)}
+                        onChange={(x: any) => this.onXAxisTitleColorChange(x)}
                       />
                     )}
                   </FormRow>
