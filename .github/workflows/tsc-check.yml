@@ -89,3 +89,10 @@ jobs:
     - name: tsc-plugins-openfin
       run: npm run --prefix packages/plugins/openfin tsc
 
+    - name: Executing npm install in plugins:master-detail-aggrid
+      run: npm install --prefix packages/plugins/master-detail-aggrid
+      env:
+        CI: true
+    - name: tsc-plugins-master-detail-aggrid
+      run: npm run --prefix packages/plugins/master-detail-aggrid tsc
+
