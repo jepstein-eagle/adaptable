@@ -298,6 +298,4 @@ export interface AdaptableOptions {
   detailOptions?: DetailAdaptableOptions;
 }
 
-export interface DetailAdaptableOptions extends AdaptableOptions {
-  predefinedConfig?: DetailPredefinedConfig;
-}
+export interface DetailAdaptableOptions extends AdaptableOptions {}
