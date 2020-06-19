@@ -40,7 +40,6 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
         Column: column,
         Adaptable: adaptable,
         ShowCloseButton: false,
-        AdaptableApi: adaptable.api,
       };
       ReactDOM.render(
         React.createElement(ThemeProvider, { theme }, QuickFilterFormReact(filterContext)),

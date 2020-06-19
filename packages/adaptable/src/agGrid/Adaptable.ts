@@ -611,7 +611,7 @@ export class Adaptable implements IAdaptable {
             sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableToolPanel());
           }
         }
-        const toolpanelContext: AdaptableToolPanelContext = { Adaptable: this };
+        const toolpanelContext: AdaptableToolPanelContext = { Adaptable: this, Api: this.api };
         this.gridOptions.components.AdaptableToolPanel = AdaptableToolPanelBuilder(
           toolpanelContext
         );
