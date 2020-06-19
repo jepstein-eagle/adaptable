@@ -9,11 +9,12 @@ import { ChartData } from './ChartState';
 import { Report } from './ExportState';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
 import { GridCell } from '../types';
-import { IPushPullState, IPushPullReport } from './IPushPullState';
+import { IPushPullState, IPushPullReport, IPushPullDomain } from './IPushPullState';
 import { Glue42State, Glue42Report } from './Glue42State';
 import { OpenFinState, OpenFinReport } from './OpenFinState';
 
-export { IPushPullReport };
+export { IPushPullReport, IPushPullDomain };
+
 export { Glue42Report };
 export { OpenFinReport };
 

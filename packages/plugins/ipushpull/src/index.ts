@@ -18,6 +18,7 @@ import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Cons
 
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
 import { SystemState } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { IPushPullState } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
 import { IStrategy } from '@adaptabletools/adaptable/src/Strategy/Interface/IStrategy';
 import {
   AdaptableViewFactory,
@@ -157,7 +158,7 @@ class IPushPullPlugin extends AdaptablePlugin {
 
   rootReducer = (rootReducer: any) => {
     return {
-      System: (state: SystemState, action: Redux.Action): SystemState => {
+      System: (state: IPushPullState, action: Redux.Action): IPushPullState => {
         const newState = rootReducer.System(state, action);
 
         return IPushPullReducer(newState, action);

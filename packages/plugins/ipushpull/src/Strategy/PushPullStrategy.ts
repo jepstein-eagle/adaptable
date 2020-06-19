@@ -12,7 +12,7 @@ import {
 } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Menu';
 import { IPushPullStrategy } from './Interface/IPushPullStrategy';
-import { IPushPullReport } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullSchedule';
+import { IPushPullReport } from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
 import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
 import { IPushPullApi } from '@adaptabletools/adaptable/src/Api/IPushPullApi';
 

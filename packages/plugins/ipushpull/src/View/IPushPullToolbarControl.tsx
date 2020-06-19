@@ -23,7 +23,7 @@ import {
   IPushPullReport,
   IPushPullDomain,
   IPushPullSchedule,
-} from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+} from '@adaptabletools/adaptable/src/PredefinedConfig/IPushPullState';
 import { ButtonExport } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonExport';
 import { ButtonLogin } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogin';
 import { ButtonPlay } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonPlay';
@@ -82,15 +82,11 @@ class IPushPullToolbarControlComponent extends React.Component<
   }
 
   public componentDidMount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
-    }
+    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    if (this.props.Adaptable) {
-      this.props.Adaptable.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
-    }
+    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -105,7 +101,7 @@ class IPushPullToolbarControlComponent extends React.Component<
   };
 
   getIPPApi() {
-    return this.props.Adaptable.api.pluginsApi.getPluginApi('ipushpull');
+    return this.props.Api.pluginsApi.getPluginApi('ipushpull');
   }
 
   render(): any {
@@ -114,7 +110,7 @@ class IPushPullToolbarControlComponent extends React.Component<
       : [];
 
     let allReports: Report[] = systemReports!
-      .filter(s => this.props.Adaptable.ReportService.IsSystemReportActive(s))
+      .filter(s => this.props.Api.internalApi.getReportService().IsSystemReportActive(s))
       .concat(this.props.Reports);
 
     let availableReports: any[] = allReports.map(report => {
@@ -216,7 +212,7 @@ class IPushPullToolbarControlComponent extends React.Component<
             )}
             alignItems="stretch"
           >
-            {this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
+            {this.props.Api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
               <ButtonSchedule
                 marginLeft={1}
                 className="ab-DashboardToolbar__IPushPull__schedule"

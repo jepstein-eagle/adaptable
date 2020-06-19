@@ -157,7 +157,7 @@ export const IPushPullLiveReportClear = (): IPushPullLiveReportClearAction => ({
   type: IPUSHPULL_LIVE_REPORT_CLEAR,
 });
 
-const initialFilterState = {
+const initialFilterState: IPushPullState = {
   IsIPushPullRunning: false,
   IPushPullDomainsPages: EMPTY_ARRAY,
   CurrentLiveIPushPullReport: undefined,
