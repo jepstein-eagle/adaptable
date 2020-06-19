@@ -189,12 +189,12 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     if (
       ExpressionHelper.ConvertExpressionToString(
         cd1.XAxisExpression,
-        this.GetColumnState(),
+
         this.adaptable.api
       ) !=
       ExpressionHelper.ConvertExpressionToString(
         cd2.XAxisExpression,
-        this.GetColumnState(),
+
         this.adaptable.api
       )
     ) {

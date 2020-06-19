@@ -52,7 +52,7 @@ export class CategoryChartXAxisWizard
           <Flex flex={7} flexDirection="row" alignItems="center">
             <ColumnSelector
               SelectedColumnIds={[this.state.XAxisColumnId]}
-              ColumnList={this.props.Columns}
+              ColumnList={this.props.Api.gridApi.getColumns()}
               onColumnChange={columns => this.onXAxisColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />

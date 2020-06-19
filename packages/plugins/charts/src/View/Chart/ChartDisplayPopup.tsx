@@ -134,9 +134,8 @@ class ChartDisplayPopupComponent extends React.Component<
                     this.props.CurrentChartDefinition as CategoryChartDefinition
                   }
                   ChartData={this.props.ChartData}
-                  Api={this.props.api}
-                  Columns={this.props.Columns}
                   Api={this.props.Api}
+                  Columns={this.props.Api.gridApi.getColumns()}
                   onUpdateChartProperties={(chartUuid, chartProperties) =>
                     this.props.onUpdateChartProperties(chartUuid, chartProperties)
                   }

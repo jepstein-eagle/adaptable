@@ -182,9 +182,9 @@ export class SparklineColumnSettingsWizard
               <label htmlFor={`${this._prefix}_brush`}>Line Color</label>
               <ColorPicker
                 id={`${this._prefix}_brush`}
-                Api={this.props.api}
+                Api={this.props.Api}
                 value={this.state.LineColor}
-                onChange={x => this.onBrushColorChange(x)}
+                onChange={(x: any) => this.onBrushColorChange(x)}
               />
             </FormRow>
           </FormLayout>

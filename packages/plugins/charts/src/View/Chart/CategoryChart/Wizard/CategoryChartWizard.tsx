@@ -30,29 +30,32 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
             {
               StepName: 'Y Axis',
               Index: 0,
-              Element: <CategoryChartYAxisWizard />,
+              Element: <CategoryChartYAxisWizard Api={this.props.Api} />,
             },
             {
               StepName: 'X Axis',
               Index: 1,
-              Element: <CategoryChartXAxisWizard />,
+              Element: <CategoryChartXAxisWizard Api={this.props.Api} />,
             },
             {
               StepName: 'X Axis',
               Index: 2,
               Element: (
-                <CategoryChartXAxisExpressionWizard ExpressionMode={ExpressionMode.SingleColumn} />
+                <CategoryChartXAxisExpressionWizard
+                  Api={this.props.Api}
+                  ExpressionMode={ExpressionMode.SingleColumn}
+                />
               ),
             },
             {
               StepName: 'Settings',
               Index: 5,
-              Element: <CategoryChartSettingsWizard ChartNames={chartNames} />,
+              Element: <CategoryChartSettingsWizard Api={this.props.Api} ChartNames={chartNames} />,
             },
             {
               StepName: 'Summary',
               Index: 6,
-              Element: <CategoryChartSummaryWizard />,
+              Element: <CategoryChartSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

@@ -7,9 +7,7 @@ import { AdaptableObjectExpressionAdaptableWizardProps } from '@adaptabletools/a
 import { SparklineColumnSettingsWizard } from './SparklineColumnSettingsWizard';
 
 export interface SparklineColumnWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<SparklineColumnWizard> {
-  ColorPalette: Array<string>;
-}
+  extends AdaptableObjectExpressionAdaptableWizardProps<SparklineColumnWizard> {}
 
 export class SparklineColumnWizard extends React.Component<SparklineColumnWizardProps, {}> {
   render() {
@@ -23,17 +21,22 @@ export class SparklineColumnWizard extends React.Component<SparklineColumnWizard
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <SparklineColumnSelectColumnWizard />,
+              Element: <SparklineColumnSelectColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Sparkline Settings',
               Index: 1,
-              Element: <SparklineColumnSettingsWizard Api={this.props.api} />,
+              Element: (
+                <SparklineColumnSettingsWizard
+                  ColorPalette={this.props.Api.userInterfaceApi.getColorPalette()}
+                  Api={this.props.Api}
+                />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <SparklineColumnSummaryWizard />,
+              Element: <SparklineColumnSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

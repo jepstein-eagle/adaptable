@@ -55,7 +55,7 @@ interface CategoryChartComponentProps {
   ChartData: ChartData;
   Columns: AdaptableColumn[];
   Api: AdaptableApi;
-  ColorPalette: string[];
+
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
 

@@ -25,22 +25,22 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
             {
               StepName: 'Primary Column',
               Index: 0,
-              Element: <PieChartPrimaryColumnWizard />,
+              Element: <PieChartPrimaryColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Secondary Column',
               Index: 1,
-              Element: <PieChartSecondaryColumnWizard />,
+              Element: <PieChartSecondaryColumnWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Settings',
               Index: 2,
-              Element: <PieChartSettingsWizard ChartNames={chartNames} />,
+              Element: <PieChartSettingsWizard ChartNames={chartNames} Api={this.props.Api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PieChartSummaryWizard />,
+              Element: <PieChartSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}
