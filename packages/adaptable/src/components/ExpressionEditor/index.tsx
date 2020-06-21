@@ -30,6 +30,7 @@ import {
   mdiFunction,
 } from '@mdi/js';
 import ErrorBox from '../ErrorBox';
+import HelpBlock from '../HelpBlock';
 
 interface ExpressionEditorProps {
   value?: string;
@@ -227,65 +228,85 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   );
 
   return (
-    <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
-      <Box flex={1} mx={2}>
-        <Flex
-          mb={2}
-          p={2}
-          style={{
-            background: 'var(--ab-color-primarylight)',
-            borderRadius: 'var(--ab__border-radius)',
-          }}
-        >
-          {functionsDropdown}
-          {operatorButtons}
-        </Flex>
-        <Textarea
-          ref={textAreaRefCallback}
-          value={props.value}
-          placeholder="Enter expression"
-          autoFocus
-          spellCheck="false"
-          onChange={props.onChange}
-          style={{
-            width: '100%',
-            height: '100px',
-            fontFamily: 'monospace',
-            fontSize: '1rem',
-            padding: 'var(--ab-space-2)',
-          }}
-        />
-        {error && <ErrorBox mt={2}>{error.message}</ErrorBox>}
-        {result !== undefined && (
-          <Box
-            mt={1}
+    <div>
+      {' '}
+      <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
+        Create a Calculated Column 'Expression' using, as required, a mixture of:
+        <ul>
+          <li>
+            <b>Functions</b>: Select from the functions dropdown or pick one listed below - each one
+            is separately documented
+          </li>
+          <li>
+            <b>Columns</b> (which you can drag from the right hand side)
+          </li>
+          <li>
+            <b>Static Values</b>
+          </li>{' '}
+        </ul>
+        The result of the Expression is displayed underneath the Editor - using the Test Data (taken
+        from first row of grid).
+      </HelpBlock>{' '}
+      <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
+        <Box flex={1} mx={2}>
+          <Flex
+            mb={2}
             p={2}
             style={{
               background: 'var(--ab-color-primarylight)',
               borderRadius: 'var(--ab__border-radius)',
             }}
           >
-            <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
-              Result: <b>{JSON.stringify(result)}</b>
-            </pre>
-          </Box>
-        )}
-        {functionDocs}
-      </Box>
-      <Box height={450} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
-        <Box
-          mb={1}
-          p={2}
-          style={{
-            background: 'var(--ab-color-primarylight)',
-            borderRadius: 'var(--ab__border-radius)',
-          }}
-        >
-          Test data (taken from 1st row in Grid)
+            {functionsDropdown}
+            {operatorButtons}
+          </Flex>
+          <Textarea
+            ref={textAreaRefCallback}
+            value={props.value}
+            placeholder="Enter expression"
+            autoFocus
+            spellCheck="false"
+            onChange={props.onChange}
+            style={{
+              width: '100%',
+              height: '100px',
+              fontFamily: 'monospace',
+              fontSize: '1rem',
+              padding: 'var(--ab-space-2)',
+            }}
+          />
+          {error && <ErrorBox mt={2}>{error.message}</ErrorBox>}
+          {result !== undefined && (
+            <Box
+              mt={1}
+              p={2}
+              style={{
+                background: 'var(--ab-color-primarylight)',
+                borderRadius: 'var(--ab__border-radius)',
+              }}
+            >
+              <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
+                Result: <b>{JSON.stringify(result)}</b>
+              </pre>
+            </Box>
+          )}
+          {functionDocs}
         </Box>
-        {dataTableEditor}
-      </Box>
-    </Flex>
+        <Box height={450} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
+          <Box
+            mb={1}
+            p={2}
+            style={{
+              background: 'var(--ab-color-primarylight)',
+              borderRadius: 'var(--ab__border-radius)',
+            }}
+          >
+            Test Data
+          </Box>
+          {dataTableEditor}
+        </Box>
+      </Flex>
+    </div>
   );
 }
 
