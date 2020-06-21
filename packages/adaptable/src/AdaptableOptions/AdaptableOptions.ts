@@ -104,7 +104,7 @@ export interface AdaptableOptions {
   /**
    * The name of the current AdapTable user.
    *
-   * Strongly recommended to be set if using Config Server.
+   * Strongly recommended to be set if using remote storages (via Server Options)
    *
    * Also used in Audit Log to identify the current user who has made edits or changed state.
    *

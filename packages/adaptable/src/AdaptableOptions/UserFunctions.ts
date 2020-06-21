@@ -9,6 +9,7 @@ import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
 import {
   UserMenuItemClickedFunction,
   UserMenuItemShowPredicate,
+  UserMenuItemLabelFunction,
 } from '../PredefinedConfig/UserInterfaceState';
 
 /**
@@ -30,16 +31,17 @@ import {
  *
  * The types supported are:
  *
- *  | User Function                       | Description                                          |
- *  |---------                            |-------------------	                                 |
- *  | `CustomSortComparerFunction`        | A Comparer function for running bespoke Custom Sorts |
- *  | `CellSummaryOperationFunction`      | Bespoke Cell Summaries 	                             |
- *  | `ActionColumnRenderFunction`        | Render an Action Column in a non-standard way        |
- *  | `ActionColumnShouldRenderPredicate` | Whether or not to render an Acton Column	                   |
- *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	 |
- *  | `NamedFilterPredicate`              | Runs each time a Named Filter is applied          	 |
- *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	 |
- *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item                 	 |
+ *  | User Function                       | Description                                             |
+ *  |---------                            |-------------------	                                    |
+ *  | `CustomSortComparerFunction`        | A Comparer function for running bespoke Custom Sorts    |
+ *  | `CellSummaryOperationFunction`      | Bespoke Cell Summaries 	                                |
+ *  | `ActionColumnRenderFunction`        | Render an Action Column in a non-standard way           |
+ *  | `ActionColumnShouldRenderPredicate` | Whether or not to render an Acton Column	              |
+ *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	    |
+ *  | `NamedFilterPredicate`              | Runs each time a Named Filter is applied          	    |
+ *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	    |
+ *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item               |
+ *  | `UserMenuItemLabelFunction`         | Retrieves a distinct value for the label of a Menu Item |
  *
  */
 export type UserFunction =
@@ -50,7 +52,8 @@ export type UserFunction =
   | EntitlementLookUpFunction
   | NamedFilterPredicate
   | UserMenuItemClickedFunction
-  | UserMenuItemShowPredicate;
+  | UserMenuItemShowPredicate
+  | UserMenuItemLabelFunction;
 
 /**
  * Type which wraps an array of `UserFunction`

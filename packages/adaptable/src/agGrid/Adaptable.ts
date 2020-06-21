@@ -2708,11 +2708,25 @@ export class Adaptable implements IAdaptable {
               : true;
           })
           .forEach((userMenuItem: UserMenuItem) => {
+            let label: string = userMenuItem.Label;
+            // if there is a function for the label use that return value instead of the label value
+            let functionLabel = this.getUserFunctionHandler(
+              'UserMenuItemLabelFunction',
+              userMenuItem.Label
+            );
+            if (functionLabel) {
+              let labelFunctionResult: string = functionLabel(menuInfo);
+              if (StringExtensions.IsNotNullOrEmpty(labelFunctionResult)) {
+                label = labelFunctionResult;
+              }
+            }
             let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+              label,
               userMenuItem,
               menuInfo,
-              'columnMenu'
+              'contextMenu'
             );
+
             colMenuItems.push(menuItem);
           });
       }
@@ -2796,7 +2810,20 @@ export class Adaptable implements IAdaptable {
                   : true;
               })
               .forEach((userMenuItem: UserMenuItem) => {
+                let label: string = userMenuItem.Label;
+                // if there is a function for the label use that return value instead of the label value
+                let functionLabel = this.getUserFunctionHandler(
+                  'UserMenuItemLabelFunction',
+                  userMenuItem.Label
+                );
+                if (functionLabel) {
+                  let labelFunctionResult: string = functionLabel(menuInfo);
+                  if (StringExtensions.IsNotNullOrEmpty(labelFunctionResult)) {
+                    label = labelFunctionResult;
+                  }
+                }
                 let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                  label,
                   userMenuItem,
                   menuInfo,
                   'contextMenu'

@@ -533,22 +533,23 @@ export class agGridHelper {
   }
 
   public createAgGridMenuDefFromUsereMenu(
-    x: UserMenuItem,
+    label: string,
+    menuItem: UserMenuItem,
     menuInfo: MenuInfo,
     type: 'contextMenu' | 'columnMenu'
   ): MenuItemDef {
     const fn = this.adaptable.getUserFunctionHandler(
       type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
-      x.UserMenuItemClickedFunction
+      menuItem.UserMenuItemClickedFunction
     );
     return {
-      name: x.Label,
+      name: label,
       action: () => fn(menuInfo),
-      icon: x.Icon,
-      subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
+      icon: menuItem.Icon,
+      subMenu: ArrayExtensions.IsNullOrEmpty(menuItem.SubMenuItems)
         ? undefined
-        : x.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo, type);
+        : menuItem.SubMenuItems!.map(s => {
+            return this.createAgGridMenuDefFromUsereMenu(menuItem.Label, s, menuInfo, type);
           }),
     };
   }

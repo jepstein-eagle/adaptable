@@ -127,7 +127,7 @@ There are 2 modes of storage available in AdapTable:
 
 AdapTable provides 4 function hooks to enable users to provide their own implementations / functionality when state is being managed.
 
-> This functionality is superior to Config Server and is best practice for remote state management.
+> This functionality is superior to the previous remote state management implementation which used 'Config Server' and was removed in Version 7.
 
 This allows you to provide your own hydration or rehydration functionality or to enrich the State when its being loaded with your own items (e.g. entitlements).
 

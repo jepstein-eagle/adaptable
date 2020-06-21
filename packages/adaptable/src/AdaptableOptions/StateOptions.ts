@@ -7,7 +7,7 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
  *
  * The various state-management functions provided here allow you to change this default behaviour, and also to add custom properties in the persisted state.
  *
- * Note: since Version 7 this is the only way to manage remote storage as the deprecated Config Server Options have been removed.
+ * Note: since Version 7 this is the only way to manage remote storage as the deprecated Config Server Options were removed.
  *
  * --------------
  *

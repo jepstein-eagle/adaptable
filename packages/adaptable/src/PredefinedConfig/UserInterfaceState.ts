@@ -566,6 +566,8 @@ export interface RowStyle {
 export interface UserMenuItem {
   /**
    * The text that will appear in the Menu Item
+   *
+   * Can be either a hard-coded value or the name of a `UserMenuItemLabelFunction` (with the implementation provided in Usser Functions)
    */
   Label: string;
 
@@ -640,4 +642,19 @@ export interface UserMenuItemShowPredicate extends BaseUserFunction {
   type: 'UserMenuItemShowPredicate';
   name: string;
   handler: (menuInfo: MenuInfo) => boolean;
+}
+
+/**
+ * A Function which will run each time a menu item is about to displayed and will return the Label for that menu item.
+ *
+ * This is for both Column Menus and Context Menus.
+ *
+ * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
+ */
+export interface UserMenuItemLabelFunction extends BaseUserFunction {
+  type: 'UserMenuItemLabelFunction';
+  name: string;
+  handler: (menuInfo: MenuInfo) => string;
 }
