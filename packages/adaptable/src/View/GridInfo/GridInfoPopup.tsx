@@ -1,18 +1,13 @@
 import * as React from 'react';
-import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { UIHelper } from '../UIHelper';
 import { IColItem } from '../UIInterfaces';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import Dialog from '../../components/Dialog';
 import { Flex } from 'rebass';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import Radio from '../../components/Radio';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
-import SimpleButton from '../../components/SimpleButton';
 import { AdaptableColumn, AdaptableOptions } from '../../types';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonMaximise } from '../Components/Buttons/ButtonMaximise';
@@ -31,7 +26,6 @@ export interface AdaptableGridInfoState {
   IsBaseOptionsMinimised: boolean;
   IsContainerOptionsMinimised: boolean;
   IsAuditOptionsMinimised: boolean;
-  IsConfigServerOptionsMinimised: boolean;
   IsQueryOptionsMinimised: boolean;
   IsLayoutOptionsMinimised: boolean;
   IsFilterOptionsMinimised: boolean;
@@ -46,7 +40,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       IsBaseOptionsMinimised: true,
       IsContainerOptionsMinimised: true,
       IsAuditOptionsMinimised: true,
-      IsConfigServerOptionsMinimised: true,
       IsQueryOptionsMinimised: true,
       IsLayoutOptionsMinimised: true,
       IsFilterOptionsMinimised: true,
@@ -92,13 +85,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
       return <AdaptableObjectRow key={index} colItems={x} />;
     });
 
-    let configServeradaptableOptions = this.CreateConfigServerOptionsInfo(
-      adaptableOptionsColItems,
-      adaptable
-    ).map((x, index) => {
-      return <AdaptableObjectRow key={index} colItems={x} />;
-    });
-
     let queryadaptableOptions = this.CreateQueryOptionsInfo(
       adaptableOptionsColItems,
       adaptable
@@ -133,7 +119,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
             IsBaseOptionsMinimised: false,
             IsContainerOptionsMinimised: true,
             IsAuditOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: true,
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
@@ -150,7 +135,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
             IsBaseOptionsMinimised: true,
             IsContainerOptionsMinimised: false,
             IsAuditOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: true,
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
@@ -167,7 +151,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
             IsBaseOptionsMinimised: true,
             IsAuditOptionsMinimised: false,
             IsContainerOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: true,
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
@@ -178,30 +161,12 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
           this.setState({ IsAuditOptionsMinimised: true } as AdaptableGridInfoState);
         });
 
-    let showConfigServerOptionsButton = this.state.IsConfigServerOptionsMinimised
-      ? this.createMaximiseButton('Config Server', () => {
-          this.setState({
-            IsBaseOptionsMinimised: true,
-            IsAuditOptionsMinimised: true,
-            IsContainerOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: false,
-            IsQueryOptionsMinimised: true,
-            IsLayoutOptionsMinimised: true,
-            IsFilterOptionsMinimised: true,
-            IsGeneralOptionsMinimised: true,
-          } as AdaptableGridInfoState);
-        })
-      : this.createMinimiseButton('Config Server', () => {
-          this.setState({ IsConfigServerOptionsMinimised: true } as AdaptableGridInfoState);
-        });
-
     let showQueryOptionsButton = this.state.IsQueryOptionsMinimised
       ? this.createMaximiseButton('Query', () => {
           this.setState({
             IsBaseOptionsMinimised: true,
             IsAuditOptionsMinimised: true,
             IsContainerOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: false,
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
@@ -218,7 +183,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
             IsBaseOptionsMinimised: true,
             IsAuditOptionsMinimised: true,
             IsContainerOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: true,
             IsLayoutOptionsMinimised: false,
             IsFilterOptionsMinimised: true,
@@ -235,7 +199,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
             IsBaseOptionsMinimised: true,
             IsAuditOptionsMinimised: true,
             IsContainerOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: true,
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: false,
@@ -252,7 +215,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
             IsBaseOptionsMinimised: true,
             IsAuditOptionsMinimised: true,
             IsContainerOptionsMinimised: true,
-            IsConfigServerOptionsMinimised: true,
             IsQueryOptionsMinimised: true,
             IsLayoutOptionsMinimised: true,
             IsFilterOptionsMinimised: true,
@@ -332,18 +294,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
                   />
                 )}
               </PanelWithButton>
-              <PanelWithButton
-                variant="default"
-                headerText={'Config Server Options'}
-                button={showConfigServerOptionsButton}
-              >
-                {this.state.IsConfigServerOptionsMinimised == false && (
-                  <AdaptableObjectCollection
-                    colItems={adaptableOptionsColItems}
-                    items={configServeradaptableOptions}
-                  />
-                )}
-              </PanelWithButton>
+
               <PanelWithButton
                 variant="default"
                 headerText={'Query Options'}
@@ -575,31 +526,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
         'auditLogsSendInterval',
         options.auditOptions.auditLogsSendInterval,
         "The 'batch' time (in seconds) for pushing Audit Log messages"
-      )
-    );
-
-    return returnRows;
-  }
-
-  private CreateConfigServerOptionsInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
-    let returnRows: IColItem[][] = [];
-
-    let options: AdaptableOptions = adaptable.adaptableOptions;
-
-    returnRows.push(
-      this.createColItem(
-        colItems,
-        'enableConfigServer',
-        options.configServerOptions.enableConfigServer == true ? 'Yes' : 'No',
-        "If enabled Config Server store State in the remote location specified in the 'configServerUrl' property (rather than the default of using local storage)."
-      )
-    );
-    returnRows.push(
-      this.createColItem(
-        colItems,
-        'configServerUrl',
-        options.configServerOptions.configServerUrl,
-        'Location of Config Server that persists the user state and gives it back on demand (only used if enableConfigServer is true).'
       )
     );
 

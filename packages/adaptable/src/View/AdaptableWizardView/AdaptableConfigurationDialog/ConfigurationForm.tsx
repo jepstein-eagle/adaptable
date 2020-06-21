@@ -6,7 +6,6 @@ import { FilterOptions } from '../../../AdaptableOptions/FilterOptions';
 import { LayoutOptions } from '../../../AdaptableOptions/LayoutOptions';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import HelpBlock from '../../../components/HelpBlock';
-import { ConfigServerOptions } from '../../../AdaptableOptions/ConfigServerOptions';
 import Input from '../../../components/Input';
 import { GeneralOptions } from '../../../AdaptableOptions/GeneralOptions';
 import { QueryOptions } from '../../../AdaptableOptions/QueryOptions';
@@ -46,11 +45,6 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
   const queryOptions: QueryOptions = {
     ...DefaultAdaptableOptions.queryOptions,
     ...abOptions.queryOptions,
-  };
-
-  const configServerOptions: ConfigServerOptions = {
-    ...DefaultAdaptableOptions.configServerOptions,
-    ...abOptions.configServerOptions,
   };
 
   const chartOptions: ChartOptions = {

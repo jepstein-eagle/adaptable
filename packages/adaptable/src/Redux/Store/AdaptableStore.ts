@@ -167,8 +167,6 @@ export const LoadState = (State: { [s: string]: ConfigState }): LoadStateAction 
   type: LOAD_STATE,
   State,
 });
-// const configServerUrl = "/adaptableadaptable-config"
-const configServerTeamSharingUrl = '/adaptableadaptable-teamsharing';
 
 export class AdaptableStore implements IAdaptableStore {
   public TheStore: Redux.Store<AdaptableState>;
@@ -317,23 +315,13 @@ This is the main store for Adaptable State
     // not sure we can do this as we need to be backwardly compatible with existing users so need to stick with adaptable id (which should be unique)
     // const localStorageKey =  'adaptable-adaptable-state-' + adaptable.adaptableOptions.primaryKey;
 
-    if (AdaptableHelper.isConfigServerEnabled(adaptable.adaptableOptions)) {
-      storageEngine = createEngineRemote({
-        url: adaptable.adaptableOptions.configServerOptions.configServerUrl,
-        userName: adaptable.adaptableOptions.userName,
-        adaptableId: adaptable.adaptableOptions.adaptableId,
-        loadState: adaptable.adaptableOptions.stateOptions.loadState,
-        persistState: adaptable.adaptableOptions.stateOptions.persistState,
-      });
-    } else {
-      storageEngine = createEngineLocal({
-        adaptableId: adaptable.adaptableOptions.adaptableId,
-        userName: adaptable.adaptableOptions.userName,
-        predefinedConfig: adaptable.adaptableOptions.predefinedConfig,
-        loadState: adaptable.adaptableOptions.stateOptions.loadState,
-        persistState: adaptable.adaptableOptions.stateOptions.persistState,
-      });
-    }
+    storageEngine = createEngineLocal({
+      adaptableId: adaptable.adaptableOptions.adaptableId,
+      userName: adaptable.adaptableOptions.userName,
+      predefinedConfig: adaptable.adaptableOptions.predefinedConfig,
+      loadState: adaptable.adaptableOptions.stateOptions.loadState,
+      persistState: adaptable.adaptableOptions.stateOptions.persistState,
+    });
 
     const nonPersistentReduxKeys = [
       // Non Persisted State

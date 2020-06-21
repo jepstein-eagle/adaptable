@@ -115,6 +115,16 @@ To Do
 
 To Do
 
+## Percent Bars
+
+To Do
+
+## Config Server
+
+Since Version 5 of AdapTable Config Server (which enabled remote storage of State) has been deprecated in favour of the more powerful State Options functions.  
+
+In Version 7 Config Server has finally been removed.
+
 ## Demo
 
 To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).

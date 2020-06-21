@@ -1,6 +1,5 @@
 import { ContainerOptions } from './ContainerOptions';
 import { AuditOptions } from './AuditOptions';
-import { ConfigServerOptions } from './ConfigServerOptions';
 import { LayoutOptions } from './LayoutOptions';
 import { FilterOptions } from './FilterOptions';
 import { QueryOptions } from './QueryOptions';
@@ -40,7 +39,6 @@ import { TeamSharingOptions } from './TeamSharingOptions';
  *  | [vendorGrid](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#vendorgrid)                  | Underlying vendor grid object (e.g. *GridOptions* for ag-Grid)|
  *  | [auditOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#auditoptions)               | Audit Log related options                                   	|
  *  | [chartOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#chartoptions)                | Chart-based options (used when using chart plugin)           	|
- *  | [configServerOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#configserveroptions) | Options related to (the now deprecated) Config Server   |
  *  | [editOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#editoptions)                 | Editing (and server-editing) related options                  |
  *  | [exportOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#exportoptions)             | Export and reporting related options                          |
  *  | [filterOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#filteroptions)             | Options relating to filtering functionality in AdapTable      |
@@ -171,13 +169,6 @@ export interface AdaptableOptions {
    * Primarily concerned with how and where charts appear.
    */
   chartOptions?: ChartOptions;
-
-  /**
-   * Options for setting Config Server.
-   *
-   * This feature allows for storing user state remotely (as opposed to in local storage, which is the default).
-   */
-  configServerOptions?: ConfigServerOptions;
 
   /**
    * Options for setting the *Div elements* in which AdapTable and the underlying grid are placed.

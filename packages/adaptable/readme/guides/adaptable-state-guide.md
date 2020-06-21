@@ -121,7 +121,7 @@ There are 2 modes of storage available in AdapTable:
 
 - **Remote Storage** - Adaptable state is automatically persisted (and retrieved from) a specificed, remote, location
   
-  > In older versions of AdapTable remote storage was managed via [Config Server](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_configserveroptions_.configserveroptions.html); however this has now been deprecated and we strongly recommend using the more powerful, and flexible, State Options (see below) as they include and advance all the functionality of Config Server, and will be actively developed going forward.
+  > In older versions of AdapTable remote storage was managed via *Config Server*; however in Version 7 this was removed.
 
 ### State Options
 
@@ -160,7 +160,7 @@ The recommended way to listen to changes in the Store is by subscribing to the `
 
 **Where is configuration stored?**
 
-By default its stored in the local browser cache. However if the enableConfigServer property is set to true during installation you can choose to store in a different location which is more convenient for you.
+By default its stored in the local browser cache. However you can use the State Options functions to choose to save your state in any location that you specify (as well as to enrich it).
 
 **Do you provide data adapters to fetch / save configuration?**
 

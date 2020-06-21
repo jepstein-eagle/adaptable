@@ -18,11 +18,6 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
     DefaultAdaptableOptions.auditOptions,
     adaptableOptions.auditOptions
   );
-  returnadaptableOptions.configServerOptions = Object.assign(
-    {},
-    DefaultAdaptableOptions.configServerOptions,
-    adaptableOptions.configServerOptions
-  );
   returnadaptableOptions.layoutOptions = Object.assign(
     {},
     DefaultAdaptableOptions.layoutOptions,
@@ -120,15 +115,6 @@ export function isValidPrimaryKey(adaptable: IAdaptable): boolean {
   return true;
 }
 
-export function isConfigServerEnabled(adaptableOptions: AdaptableOptions): boolean {
-  return (
-    adaptableOptions.configServerOptions != null &&
-    adaptableOptions.configServerOptions.enableConfigServer != null &&
-    adaptableOptions.configServerOptions.enableConfigServer == true &&
-    StringExtensions.IsNotNullOrEmpty(adaptableOptions.configServerOptions.configServerUrl)
-  );
-}
-
 export function AdaptableObjectExistsInState(
   array: AdaptableObject[],
   itemToCheck: AdaptableObject
@@ -213,7 +199,6 @@ export function runAdaptableComparerFunction(
 export const AdaptableHelper = {
   assignadaptableOptions,
   isValidPrimaryKey,
-  isConfigServerEnabled,
   AdaptableObjectExistsInState,
   CheckadaptableOptions,
   createFDC3Message,

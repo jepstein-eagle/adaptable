@@ -113,7 +113,6 @@ export {
 export { AdaptableOptions } from './AdaptableOptions/AdaptableOptions';
 export { AuditOptions } from './AdaptableOptions/AuditOptions';
 export { ChartOptions } from './AdaptableOptions/ChartOptions';
-export { ConfigServerOptions } from './AdaptableOptions/ConfigServerOptions';
 export { ContainerOptions } from './AdaptableOptions/ContainerOptions';
 export { EditOptions } from './AdaptableOptions/EditOptions';
 export { ExportOptions } from './AdaptableOptions/ExportOptions';
