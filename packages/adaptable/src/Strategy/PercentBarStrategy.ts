@@ -20,7 +20,9 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       const percentBars = this.adaptable.api.percentBarApi.getAllPercentBar();
       percentBars.forEach(percentBar => {
-        if (percentBar.Ranges) return;
+        if (percentBar.Ranges) {
+          return;
+        }
 
         percentBar.Ranges = [];
 

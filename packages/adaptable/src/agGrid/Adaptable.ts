@@ -2025,62 +2025,7 @@ export class Adaptable implements IAdaptable {
   // This horrible method is used to get the grid style for when we export to ipushpull
   // We need to find a better implementation
   public getCurrentIPPStyle(): IPPStyle {
-    const headerFirstCol: HTMLElement = document
-      .querySelectorAll('.ag-header-cell')
-      .item(0) as HTMLElement;
-    const header: HTMLElement = document.querySelector('.ag-header') as HTMLElement;
-    const headerColStyle = header ? window.getComputedStyle(header, null) : null;
-    const firstRow: HTMLElement = document.querySelector('.ag-row-even') as HTMLElement;
-    const firstRowStyle = firstRow ? window.getComputedStyle(firstRow, null) : null;
-    const secondRow: HTMLElement = document.querySelector('.ag-row-odd') as HTMLElement;
-    const secondRowStyle = secondRow
-      ? window.getComputedStyle(secondRow, null)
-      : {
-          backgroundColor: '#fff',
-        };
-    return {
-      Header: {
-        headerColor: new Color(headerColStyle.color).toHex(),
-        headerBackColor: new Color(headerColStyle.backgroundColor).toHex(),
-        headerFontFamily: headerColStyle.fontFamily,
-        headerFontSize: headerColStyle.fontSize,
-        headerFontStyle: headerColStyle.fontStyle,
-        headerFontWeight: headerColStyle.fontWeight,
-        height: Number(headerColStyle.height.replace('px', '')),
-        Columns: this.api.gridApi.getColumns().map(col => {
-          const headerColumn: HTMLElement = document.querySelector(
-            `.ag-header-cell[col-id='${col.ColumnId}']`
-          ) as HTMLElement;
-          const headerColumnStyle = window.getComputedStyle(headerColumn || headerFirstCol, null);
-          return {
-            columnFriendlyName: col.FriendlyName,
-            width: Number(headerColumnStyle.width.replace('px', '')),
-            textAlign: headerColumnStyle.textAlign,
-          };
-        }),
-      },
-      Row: {
-        color: new Color(firstRowStyle.color).toHex(),
-        backColor: new Color(firstRowStyle.backgroundColor).toHex(),
-        altBackColor: new Color(secondRowStyle.backgroundColor).toHex(),
-        fontFamily: firstRowStyle.fontFamily,
-        fontSize: firstRowStyle.fontSize,
-        fontStyle: firstRowStyle.fontStyle,
-        fontWeight: firstRowStyle.fontWeight,
-        height: Number(firstRowStyle.height.replace('px', '')),
-        Columns: this.api.gridApi.getColumns().map(col => {
-          const cellElement: HTMLElement = document.querySelector(
-            `.ag-cell[col-id='${col.ColumnId}']`
-          ) as HTMLElement;
-          const headerColumnStyle = window.getComputedStyle(cellElement || firstRow, null);
-          return {
-            columnFriendlyName: col.FriendlyName,
-            width: Number(headerColumnStyle.width.replace('px', '')),
-            textAlign: headerColumnStyle.textAlign,
-          };
-        }),
-      },
-    };
+    return this.agGridHelper.getCurrentIPPStyle();
   }
 
   private getadaptableContainerElement(): HTMLElement | null {

@@ -40,29 +40,13 @@ export class PercentBarSettingsWizard
     return (
       <Panel header={'Settings'} margin={2}>
         <FormLayout>
-          <FormRow label="Show">
-            <Checkbox
-              checked={this.state.ShowValue}
-              onChange={checked => this.setState({ ShowValue: checked })}
-              mr={2}
-            >
-              Value
-            </Checkbox>
-            <Checkbox
-              checked={this.state.ShowToolTip}
-              onChange={checked => this.setState({ ShowToolTip: checked })}
-              mr={2}
-            >
-              Tooltip
-            </Checkbox>
-          </FormRow>
-          <FormRow label="Display">
+          <FormRow label="Value to Show: ">
             <Checkbox
               checked={this.state.DisplayRawValue}
               onChange={checked => this.setState({ DisplayRawValue: checked })}
               mr={2}
             >
-              Raw Value
+              Cell Value
             </Checkbox>
             <Checkbox
               checked={this.state.DisplayPercentageValue}
@@ -70,6 +54,22 @@ export class PercentBarSettingsWizard
               mr={2}
             >
               Percentage Value
+            </Checkbox>
+          </FormRow>
+          <FormRow label="Show: ">
+            <Checkbox
+              checked={this.state.ShowValue}
+              onChange={checked => this.setState({ ShowValue: checked })}
+              mr={2}
+            >
+              Value In Cell
+            </Checkbox>
+            <Checkbox
+              checked={this.state.ShowToolTip}
+              onChange={checked => this.setState({ ShowToolTip: checked })}
+              mr={2}
+            >
+              Tooltip
             </Checkbox>
           </FormRow>
           <FormRow label="Back Color">
@@ -80,9 +80,7 @@ export class PercentBarSettingsWizard
                   this.setState({ BackColor: checked ? getHexForName(GRAY) : undefined })
                 }
                 mr={2}
-              >
-                Enabled
-              </Checkbox>
+              ></Checkbox>
               {this.state.BackColor !== undefined && (
                 <ColorPicker
                   Api={this.props.Api}

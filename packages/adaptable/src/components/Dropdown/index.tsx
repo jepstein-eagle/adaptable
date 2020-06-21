@@ -87,7 +87,7 @@ const Dropdown = (props: DropdownProps) => {
     options = lazyOptions;
   }
 
-  let placeholder = props.emptyText || props.placeholder || 'Please select an option';
+  let placeholder = props.emptyText || props.placeholder || 'Select an option';
 
   const finalOptions: DropdownOption[] = (options as (DropdownOption | string)[]).map(
     (option: DropdownOption | string): DropdownOption => {

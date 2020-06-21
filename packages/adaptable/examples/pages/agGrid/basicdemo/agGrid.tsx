@@ -138,6 +138,19 @@ function InitAdaptableDemo() {
           },
         ],
       },
+      PercentBar: {
+        Revision: 1,
+        PercentBars: [
+          {
+            ColumnId: 'changeOnYear',
+            PositiveValue: 200,
+            NegativeValue: -200,
+            NegativeColor: '#FF0000',
+            PositiveColor: '#008000',
+            ShowValue: false,
+          },
+        ],
+      },
     },
   };
 
