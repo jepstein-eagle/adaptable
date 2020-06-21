@@ -235,7 +235,7 @@ export class agGridHelper {
       const matchingRange = pcr.Ranges.find(r => r.Min <= clampedValue && r.Max >= clampedValue);
 
       const wrapperEl = document.createElement('div');
-      wrapperEl.style.height = '100%';
+      wrapperEl.style.height = pcr.ShowValue ? '100%' : '80%';
       wrapperEl.style.display = 'flex';
       wrapperEl.style.flexDirection = 'column';
       wrapperEl.style.justifyContent = 'center';
