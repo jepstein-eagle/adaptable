@@ -113,7 +113,9 @@ To Do
 
 ## Schedules
 
-To Do
+In previous version each Function that had a Schedule persisted details of the Schedule in its own section of State.
+
+This has been changed and now there is a Schedule section of State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
 
 ## Percent Bars
 
