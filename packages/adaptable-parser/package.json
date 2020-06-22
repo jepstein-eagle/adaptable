@@ -15,7 +15,7 @@
     "build": "node ./src/generate.js",
     "prepare": "npm run build",
     "build-prod-no-cleanup": "npm run before-build && npm run tsc && npm run build-package-json && npm run after-build",
-    "build-package-json": "node ../../scripts/cli/update-package --ignoreDep --module=packages/adaptable-parser",
+    "build-package-json": "node ../../scripts/cli/update-package --module=packages/adaptable-parser --ignore-dep=true",
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
