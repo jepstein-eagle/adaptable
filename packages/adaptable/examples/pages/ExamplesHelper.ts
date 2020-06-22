@@ -1079,7 +1079,7 @@ export class ExamplesHelper {
       valueGetter: (params: any) => {
         return params.data && params.data.stars && params.data.country
           ? //   ? params.data.stars + ' - ' + params.data.country
-            params.data.stars * 12
+            params.data.stars * 20
           : undefined;
       },
       type: 'abColDefNumber',
@@ -1104,7 +1104,18 @@ export class ExamplesHelper {
         footerValueGetter: '"All Notionals (" + x + ")"',
       },
     });
-
+    schema.push({
+      headerName: 'Change',
+      field: 'changeOnYear',
+      filter: true,
+      editable: true,
+      type: 'abColDefNumber',
+      sortable: true,
+      resizable: true,
+      // cellClass: 'number-cell',
+      //  tooltipField: 'changeOnYear',
+      //  tooltipComponent: 'percentBarTooltip',
+    });
     schema.push({
       headerName: 'Ask',
       field: 'ask',
@@ -1206,18 +1217,6 @@ export class ExamplesHelper {
       resizable: true,
     });
 
-    schema.push({
-      headerName: 'Change',
-      field: 'changeOnYear',
-      filter: true,
-      editable: true,
-      type: 'abColDefNumber',
-      sortable: true,
-      resizable: true,
-      // cellClass: 'number-cell',
-      //  tooltipField: 'changeOnYear',
-      //  tooltipComponent: 'percentBarTooltip',
-    });
     schema.push({
       headerName: 'Trade Date',
       field: 'tradeDate',

@@ -7,7 +7,7 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
  *
  * The various state-management functions provided here allow you to change this default behaviour, and also to add custom properties in the persisted state.
  *
- * Note: this is the recommended way to manage remote storage in preference to [Config Server](_src_adaptableoptions_configserveroptions_.configserveroptions.html) as it provides far more flexibility and control.
+ * Note: since Version 7 this is the only way to manage remote storage as the deprecated Config Server Options were removed.
  *
  * --------------
  *
@@ -34,7 +34,7 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
  */
 export interface StateOptions {
   /**
-   * Allows the customization of state persistence. By default, state stringified using JSON.stringify and persisted into the localStorage, at the key denoted by `adaptableId` - in case no config server was defined via `configServerOptions`. If a config server was specified, the default implementation sends a POST request at the url of the config server, with adaptable state as the body (in JSON) of the request.
+   * Allows the customization of state persistence. By default, state stringified using JSON.stringify and persisted into the localStorage, at the key denoted by `adaptableId`.
    *
    * This function can be used to change this behavior, throttle state persistence, etc.
    *

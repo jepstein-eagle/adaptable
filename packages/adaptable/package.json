@@ -121,8 +121,7 @@
     "tsc": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist",
     "tscw": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --watch --outDir dist",
     "tscv": "tsc --version",
-    "build": "npm run build-prod",
-    "configserver": "ts-node configserver/configserver.ts --configfolder ./tmp | bunyan"
+    "build": "npm run build-prod"
   },
   "keywords": [
     "web-components",

@@ -84,6 +84,8 @@ import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants';
 import clamp from 'lodash/clamp';
+import { Color } from '../Utilities/color';
+import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -214,7 +216,9 @@ export class agGridHelper {
   }
 
   public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {
-    if (pcr.Ranges === undefined) return;
+    if (pcr.Ranges === undefined) {
+      return;
+    }
 
     const min = pcr.Ranges[0].Min;
     const max = pcr.Ranges[pcr.Ranges.length - 1].Max;
@@ -231,7 +235,7 @@ export class agGridHelper {
       const matchingRange = pcr.Ranges.find(r => r.Min <= clampedValue && r.Max >= clampedValue);
 
       const wrapperEl = document.createElement('div');
-      wrapperEl.style.height = '100%';
+      wrapperEl.style.height = pcr.ShowValue ? '100%' : '80%';
       wrapperEl.style.display = 'flex';
       wrapperEl.style.flexDirection = 'column';
       wrapperEl.style.justifyContent = 'center';
@@ -247,14 +251,19 @@ export class agGridHelper {
 
       const textEl = document.createElement('div');
       textEl.style.lineHeight = '1.2';
-      if (pcr.DisplayRawValue && pcr.DisplayPercentageValue)
+      if (pcr.DisplayRawValue && pcr.DisplayPercentageValue) {
         textEl.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
-      else if (pcr.DisplayRawValue) textEl.innerText = value;
-      else if (pcr.DisplayPercentageValue) textEl.innerText = `${percentageValue.toFixed(0)}%`;
+      } else if (pcr.DisplayRawValue) {
+        textEl.innerText = value;
+      } else if (pcr.DisplayPercentageValue) {
+        textEl.innerText = `${percentageValue.toFixed(0)}%`;
+      }
 
       barEl.append(barInsideEl);
       wrapperEl.append(barEl);
-      if (pcr.ShowValue) wrapperEl.append(textEl);
+      if (pcr.ShowValue) {
+        wrapperEl.append(textEl);
+      }
 
       return wrapperEl;
     };
@@ -533,22 +542,23 @@ export class agGridHelper {
   }
 
   public createAgGridMenuDefFromUsereMenu(
-    x: UserMenuItem,
+    label: string,
+    menuItem: UserMenuItem,
     menuInfo: MenuInfo,
     type: 'contextMenu' | 'columnMenu'
   ): MenuItemDef {
     const fn = this.adaptable.getUserFunctionHandler(
       type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
-      x.UserMenuItemClickedFunction
+      menuItem.UserMenuItemClickedFunction
     );
     return {
-      name: x.Label,
+      name: label,
       action: () => fn(menuInfo),
-      icon: x.Icon,
-      subMenu: ArrayExtensions.IsNullOrEmpty(x.SubMenuItems)
+      icon: menuItem.Icon,
+      subMenu: ArrayExtensions.IsNullOrEmpty(menuItem.SubMenuItems)
         ? undefined
-        : x.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(s, menuInfo, type);
+        : menuItem.SubMenuItems!.map(s => {
+            return this.createAgGridMenuDefFromUsereMenu(menuItem.Label, s, menuInfo, type);
           }),
     };
   }
@@ -854,6 +864,65 @@ export class agGridHelper {
 
       //return the comparison from the list if the two items are in the list
       return indexFirstElement - indexSecondElement;
+    };
+  }
+
+  public getCurrentIPPStyle(): IPPStyle {
+    const headerFirstCol: HTMLElement = document
+      .querySelectorAll('.ag-header-cell')
+      .item(0) as HTMLElement;
+    const header: HTMLElement = document.querySelector('.ag-header') as HTMLElement;
+    const headerColStyle = header ? window.getComputedStyle(header, null) : null;
+    const firstRow: HTMLElement = document.querySelector('.ag-row-even') as HTMLElement;
+    const firstRowStyle = firstRow ? window.getComputedStyle(firstRow, null) : null;
+    const secondRow: HTMLElement = document.querySelector('.ag-row-odd') as HTMLElement;
+    const secondRowStyle = secondRow
+      ? window.getComputedStyle(secondRow, null)
+      : {
+          backgroundColor: '#fff',
+        };
+    return {
+      Header: {
+        headerColor: new Color(headerColStyle.color).toHex(),
+        headerBackColor: new Color(headerColStyle.backgroundColor).toHex(),
+        headerFontFamily: headerColStyle.fontFamily,
+        headerFontSize: headerColStyle.fontSize,
+        headerFontStyle: headerColStyle.fontStyle,
+        headerFontWeight: headerColStyle.fontWeight,
+        height: Number(headerColStyle.height.replace('px', '')),
+        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+          const headerColumn: HTMLElement = document.querySelector(
+            `.ag-header-cell[col-id='${col.ColumnId}']`
+          ) as HTMLElement;
+          const headerColumnStyle = window.getComputedStyle(headerColumn || headerFirstCol, null);
+          return {
+            columnFriendlyName: col.FriendlyName,
+            width: Number(headerColumnStyle.width.replace('px', '')),
+            textAlign: headerColumnStyle.textAlign,
+          };
+        }),
+      },
+      Row: {
+        color: new Color(firstRowStyle.color).toHex(),
+        backColor: new Color(firstRowStyle.backgroundColor).toHex(),
+        altBackColor: new Color(secondRowStyle.backgroundColor).toHex(),
+        fontFamily: firstRowStyle.fontFamily,
+        fontSize: firstRowStyle.fontSize,
+        fontStyle: firstRowStyle.fontStyle,
+        fontWeight: firstRowStyle.fontWeight,
+        height: Number(firstRowStyle.height.replace('px', '')),
+        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+          const cellElement: HTMLElement = document.querySelector(
+            `.ag-cell[col-id='${col.ColumnId}']`
+          ) as HTMLElement;
+          const headerColumnStyle = window.getComputedStyle(cellElement || firstRow, null);
+          return {
+            columnFriendlyName: col.FriendlyName,
+            width: Number(headerColumnStyle.width.replace('px', '')),
+            textAlign: headerColumnStyle.textAlign,
+          };
+        }),
+      },
     };
   }
 }

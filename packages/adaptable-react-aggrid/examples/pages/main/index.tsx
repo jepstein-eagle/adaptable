@@ -311,10 +311,7 @@ const App = () => {
       chartContainer: 'chart-container-xx', // set our own container
       vendorContainer: 'grid',
     },
-    configServerOptions: {
-      //   enableConfigServer: true,
-      //   configServerUrl: 'http://localhost:8080/adaptable-config',
-    },
+
     layoutOptions: {
       includeVendorStateInLayouts: true,
       autoSaveLayouts: true,

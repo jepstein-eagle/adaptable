@@ -1,11 +1,20 @@
 import { ConfigState } from './ConfigState';
-import { Schedule, BaseSchedule } from './Common/Schedule';
 import { ReminderSchedule } from './ReminderState';
 import { Glue42Schedule } from './Glue42State';
 import { IPushPullSchedule } from './IPushPullState';
 import { OpenFinSchedule } from './OpenFinState';
+import { ReportSchedule } from '../types';
 
 /**
+ * Schedules run by AdapTable
+ *
+ * The following functions contain Schedules:
+ *
+ * * Export
+ * * Reminder
+ * * ipushpull - if using the ipushpull plugin
+ * * Glue42 - if using the Glue42 plugin
+ * * OpenFin - if using the OpenFin plugin
  *
  */
 export interface ScheduleState extends ConfigState {
@@ -14,16 +23,4 @@ export interface ScheduleState extends ConfigState {
   IPushPullSchedules?: IPushPullSchedule[];
   Glue42Schedules?: Glue42Schedule[];
   OpenFinSchedules?: OpenFinSchedule[];
-}
-
-/**
- * Defines a Scheduled Report.  Includes 2 properties:
- *
- * - Schedule: **When** the Report will run
- *
- * - ExportDestination: **Where** the Report data will be exported.
- */
-export interface ReportSchedule extends BaseSchedule {
-  ReportName: string;
-  ExportDestination: 'Excel' | 'CSV' | 'Clipboard' | 'JSON';
 }

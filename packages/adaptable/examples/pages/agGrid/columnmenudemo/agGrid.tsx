@@ -39,10 +39,24 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
+        type: 'UserMenuItemLabelFunction',
+        name: 'changeTitle',
+        handler(menuInfo) {
+          return 'Goodbye World';
+        },
+      },
+      {
         type: 'UserMenuItemClickedFunction',
-        name: 'minimizeDashboard',
+        name: 'showAlert',
         handler() {
-          adaptableApi.dashboardApi.minimise();
+          alert('hello world');
+        },
+      },
+      {
+        type: 'UserMenuItemClickedFunction',
+        name: 'collapseDashboard',
+        handler() {
+          adaptableApi.dashboardApi.collapseDashboard();
         },
       },
       {
@@ -109,10 +123,15 @@ let demoConfig: PredefinedConfig = {
   },
 
   UserInterface: {
+    Revision: 3,
     ColumnMenuItems: [
       {
-        Label: 'Mimise Dashboard',
-        UserMenuItemClickedFunction: 'minimizeDashboard',
+        Label: 'Collapse Dashboard',
+        UserMenuItemClickedFunction: 'collapseDashboard',
+      },
+      {
+        Label: 'changeTitle',
+        UserMenuItemClickedFunction: 'showAlert',
       },
       {
         Label: 'Set System Status',

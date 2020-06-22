@@ -45,10 +45,6 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     alertMessageType: 'Info',
     alertShowAsPopup: false,
   },
-  configServerOptions: {
-    enableConfigServer: false,
-    configServerUrl: '',
-  },
   containerOptions: {
     adaptableContainer: 'adaptable',
     vendorContainer: 'grid',

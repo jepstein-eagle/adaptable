@@ -113,7 +113,19 @@ To Do
 
 ## Schedules
 
+In previous version each Function that had a Schedule persisted details of the Schedule in its own section of State.
+
+This has been changed and now there is a Schedule section of State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
+
+## Percent Bars
+
 To Do
+
+## Config Server
+
+Since Version 5 of AdapTable Config Server (which enabled remote storage of State) has been deprecated in favour of the more powerful State Options functions.  
+
+In Version 7 Config Server has finally been removed.
 
 ## Demo
 

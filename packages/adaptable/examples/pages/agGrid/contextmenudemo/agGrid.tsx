@@ -42,6 +42,13 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
     userFunctions: [
       {
+        type: 'UserMenuItemLabelFunction',
+        name: 'changeValue',
+        handler(menuInfo) {
+          return 'change from ' + menuInfo.GridCell.displayValue;
+        },
+      },
+      {
         type: 'UserMenuItemClickedFunction',
         name: 'sortColumn',
         handler(menuInfo) {
@@ -50,6 +57,18 @@ function InitAdaptableDemo() {
             SortOrder: 'Ascending',
           };
           menuInfo.AdaptableApi.gridApi.sortAdaptable([customSort]);
+        },
+      },
+      {
+        type: 'UserMenuItemClickedFunction',
+        name: 'changeToGS',
+        handler(menuInfo) {
+          menuInfo.AdaptableApi.gridApi.setCellValue(
+            'counterparty',
+            'GS',
+            menuInfo.GridCell.primaryKeyValue,
+            false
+          );
         },
       },
       {
@@ -71,6 +90,13 @@ function InitAdaptableDemo() {
         name: 'isGrouped',
         handler(menuInfo) {
           return menuInfo.IsGroupedNode;
+        },
+      },
+      {
+        type: 'UserMenuItemShowPredicate',
+        name: 'isCounterparty',
+        handler(menuInfo) {
+          return menuInfo.Column.ColumnId == 'counterparty';
         },
       },
     ],
@@ -99,7 +125,13 @@ let demoConfig: PredefinedConfig = {
     ShowAlert: false,
   },
   UserInterface: {
+    Revision: 6,
     ContextMenuItems: [
+      {
+        Label: 'changeValue',
+        UserMenuItemClickedFunction: 'changeToGS',
+        UserMenuItemShowPredicate: 'isCounterparty',
+      },
       {
         Label: 'Sort Column',
         Icon:
