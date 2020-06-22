@@ -1,5 +1,5 @@
 import { ICalculatedColumnExpressionService } from './Interface/ICalculatedColumnExpressionService';
-import { evaluate } from 'adaptable-parser';
+import { evaluate } from '@adaptabletools/adaptable-parser/src';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { AdaptableColumn } from '../../types';
-import { FunctionMap } from 'adaptable-parser/src/types';
+import { FunctionMap } from '@adaptabletools/adaptable-parser/src/types';
 import useSelectionRange from '../utils/useSelectionRange';
 import { useState } from 'react';
-import { parse, findPathTo } from 'adaptable-parser';
+import { parse, findPathTo } from '@adaptabletools/adaptable-parser/src';
 import OverlayTrigger from '../OverlayTrigger';
 import { Flex, Box } from 'rebass';
 import EditorButton from './EditorButton';

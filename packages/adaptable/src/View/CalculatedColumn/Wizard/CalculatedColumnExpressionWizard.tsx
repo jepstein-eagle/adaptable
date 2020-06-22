@@ -8,7 +8,7 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { CalculatedColumn } from '../../../PredefinedConfig/CalculatedColumnState';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import { ICalculatedColumnExpressionService } from '../../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
-import { defaultFunctions } from 'adaptable-parser';
+import { defaultFunctions } from '@adaptabletools/adaptable-parser/src';
 import ExpressionEditor from '../../../components/ExpressionEditor';
 
 export interface CalculatedColumnExpressionWizardProps
