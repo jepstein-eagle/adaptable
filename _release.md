@@ -1,3 +1,7 @@
+## 7.0.3 canary
+
+small lodash fix
+
 ## 7.0.0 canary
 
 🎉
