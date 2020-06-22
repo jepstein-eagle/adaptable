@@ -39,14 +39,17 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
 
       eDetailGrid.parentNode?.prepend(adaptableContainer);
 
+      const predefinedConfig =
+        typeof detailOptions.predefinedConfig === 'string' ? {} : detailOptions.predefinedConfig;
+
       this.adaptableApi = Adaptable.init({
         adaptableId: `${masterAdaptable.adaptableOptions.adaptableId} Detail`,
         ...detailOptions,
         predefinedConfig: {
-          ...detailOptions.predefinedConfig,
+          ...predefinedConfig,
           Dashboard: {
             IsCollapsed: true,
-            ...detailOptions.predefinedConfig.Dashboard,
+            ...predefinedConfig.Dashboard,
           },
         },
         containerOptions: {
