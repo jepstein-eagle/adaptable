@@ -172,7 +172,7 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
  *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
- *  | [Schedule](_src_predefinedconfig_schedulestate_.schedulestate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
+ *  | [Schedule](_src_predefinedconfig_schedulestate_.schedulestate.html)                         | Yes 	              | Set Functions (e.g. E|
  *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
  *  | [QuickSearch](_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Reminder](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |

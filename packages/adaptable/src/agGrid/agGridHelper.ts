@@ -83,7 +83,7 @@ import { HideColumnStrategy } from '../Strategy/HideColumnStrategy';
 import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants';
-import clamp from 'lodash/clamp';
+import { clamp } from 'lodash';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 

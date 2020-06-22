@@ -1,10 +1,22 @@
 # AdapTable Version 7 Upgrade Guide
 
-Version 7 of AdapTable will be released end of June.
+Version 7 of AdapTable will be released on 28 June.
 
-It has some changes of interest:
+This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes of interest:
 
-## New ag-Grid Version (23)
+* Support for latest ag-Grid Version (23) - necessitating changes to the React and Angular Wrappers.
+
+* New Calculated Column Expression Syntax
+
+* Schedule State Changes
+
+* Percent Bars Improvements
+
+* Config Server Removed
+
+* Additional CSS Variables
+
+## Support for ag-Grid Version 23
 
 Note formatted value expression and column filter dropdown 
 
@@ -102,30 +114,31 @@ onAdaptableReady({
   }
 ````
 
-## CSS Variables
 
 
-Added `--ab-cmp-field-wrap__border-radius` css variable
-
-## Calculated Columns
+## New Calculated Column Expression Syntax
 
 To Do
 
-## Schedules
+## Schedule State Changes
 
 In previous version each Function that had a Schedule persisted details of the Schedule in its own section of State.
 
 This has been changed and now there is a Schedule section of State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
 
-## Percent Bars
+## Percent Bar Improvements
 
 To Do
 
-## Config Server
+## Config Server Removed
 
-Since Version 5 of AdapTable Config Server (which enabled remote storage of State) has been deprecated in favour of the more powerful State Options functions.  
+Since Version 5 of AdapTable, Config Server (which enabled remote storage of Adaptable State) has been deprecated in favour of the more powerful and flexible [StateOptions](../../../adaptable/src/AdaptableOptions/StateOptions.ts) functions.  
 
 In Version 7 Config Server has finally been removed.
+
+## Additional CSS Variables
+
+Added `--ab-cmp-field-wrap__border-radius` css variable
 
 ## Demo
 
