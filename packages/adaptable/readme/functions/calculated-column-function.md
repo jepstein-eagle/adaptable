@@ -12,17 +12,20 @@ There are numerous potential uses for Calculated Columns including showing Histo
 
 ## Calculated Column Expression
 
-Calculated Columns include an **Expression** that users provide. 
+Calculated Columns include an **Expression** that users provide in the Expression Editor.
 
-An Expression typically includes a mathematical operator and will reference other columns. 
+An Expression typically includes a mathematical operator and will likely reference other columns.
 
-> There is a huge array of potential mathematical operators that you can use to create your Expression.  (We use the [Math.JS](https://mathjs.org/) library to evaluate the Expression).  
+AdapTable ships with the most common mathematical operators that you can use to create your Expression.  Future releases will include more functions, and the ability for users to provide their own.
 
-> An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
+> Older versions of AdapTable used Math.js to build Expressions but this dependency was removed in Version 7. 
+
+An Expression can include as many operators as required: there is no limit on the number of operators or the number of other columns that can be referenced.
 
 Note: The Expression in the Calculated Column updates in real time as values in the columns to which it refers change.
 
 ## Calculated Column Expression Examples
+
 There is not currently a GUI to help you write Calculated Column Expressions - though one will be released soon.  
 
 So for the time being they need to be written by hand.
@@ -67,11 +70,6 @@ To create an Expression which returns the highest of 4 Columns in the row (great
 max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
  ```
 
-To create an Expression which mixes strings and numbers and formats the result (here to 2 decimal places):
-
-```
-print("(20% VAT): $tax", {tax: (Col("OrderCost")*0.2).toFixed(2)} ),
- ```
  
 ## UI Elements
 
@@ -97,7 +95,11 @@ Calculated Column supports these Entitlement Rules:
 
 **Which mathematical operators can we use to build the Expression?**
 
-You can use any of the hundreds available in the [Math.JS](https://mathjs.org/) library.
+You can use any of the functions currently available and more are being added all the time.
+
+**Can we add our own function and then refrence it in the Expression?**
+
+Not at the moment, but that funcionality will be coming soon.
 
 **Its quite cumbersome to have to write the Expression by hand.  Is there a GUI option?**
 
