@@ -6,7 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "types": ["node",],
+    "types": ["node"],
     "jsx": "react",
     "lib": ["ES2015","DOM"],
     "noUnusedLocals": false,
@@ -14,9 +14,14 @@
     "importHelpers": true,
     "emitDecoratorMetadata": false,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "@adaptabletools/*":["../*","*"]
+    }
   },
   "include": [
+    "../**/*",
     "src/**/*",
      "agGrid/**/*",
     "agGrid.ts",

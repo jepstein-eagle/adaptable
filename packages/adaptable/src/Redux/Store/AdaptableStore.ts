@@ -139,6 +139,10 @@ import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColum
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
 
+declare global {
+  var process: any;
+}
+
 export const RESET_STATE = 'RESET_STATE';
 export const INIT_STATE = 'INIT_STATE';
 export const LOAD_STATE = 'LOAD_STATE';

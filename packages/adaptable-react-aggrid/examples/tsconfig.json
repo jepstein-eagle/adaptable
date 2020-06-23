@@ -1,14 +1,5 @@
 {
-  "extends": "../../../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "preserve",
-    "lib": ["dom", "es2017"],
-    "module": "commonjs",
-    "allowJs": false,
-    "declaration": false,
-    "target": "es6",
-    "typeRoots": ["node_modules/@types", "../typings"]
-  },
-  "include": ["./**/*.ts", "./**/*.tsx"],
+  "extends": "../tsconfig.json",
+  "include": ["./**/*"],
   "exclude": ["node_modules", "lib", ".next"]
 }
