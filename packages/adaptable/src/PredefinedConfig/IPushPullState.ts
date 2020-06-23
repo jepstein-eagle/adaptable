@@ -4,6 +4,10 @@ import { ConfigState } from './ConfigState';
 
 // This is now ENTIRELY local - nothing is provided at design time as that is all done through options
 // and we have moved scheduling
+
+/**
+ * This State is purely local - used by AdapTable internally for managing the ipushpull plugin
+ */
 export interface IPushPullState extends ConfigState {
   IsIPushPullRunning?: boolean;
   IPushPullDomainsPages?: IPushPullDomain[];
