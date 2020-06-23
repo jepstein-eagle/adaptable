@@ -21,7 +21,8 @@
         "dist/adaptable-angular-aggrid/*"
       ],
       "@adaptabletools/*":["../*","*"]
-    }
+    },
+    "rootDir": "../"
   },
   "include": [
     "src/**/*",
