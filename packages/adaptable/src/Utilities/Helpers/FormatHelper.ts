@@ -4,7 +4,9 @@ import {
   AdaptableFormat,
 } from '../../PredefinedConfig/Common/AdaptableFormat';
 
-import dateFnsFormat from 'date-fns/format';
+// TODO inspect why the following is erroring on angular build
+// import dateFnsFormat from 'date-fns/format';
+import { format as dateFnsFormat } from 'date-fns';
 
 export function Format(input: any, format: AdaptableFormat) {
   if (format.Formatter === 'NumberFormatter') {

@@ -14,11 +14,7 @@
     "importHelpers": true,
     "emitDecoratorMetadata": false,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "baseUrl": ".",
-    "paths": {
-      "@adaptabletools/*":["../*","*"]
-    }
+    "allowSyntheticDefaultImports": true
   },
   "include": [
     "src/**/*",
