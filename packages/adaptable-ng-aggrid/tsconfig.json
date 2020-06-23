@@ -19,7 +19,8 @@
       ],
       "adaptable-angular-aggrid/*": [
         "dist/adaptable-angular-aggrid/*"
-      ]
+      ],
+      "@adaptabletools/*":["../*","*"]
     }
   },
   "include": [

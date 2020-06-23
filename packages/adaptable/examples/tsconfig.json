@@ -17,9 +17,14 @@
     "noUnusedParameters": false,
     "esModuleInterop": true,
     "moduleResolution": "node",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "baseUrl": ".",
+    "paths": {
+      "@adaptabletools/adaptable-parser/*":["../../adaptable-parser/*"]
+    }
   },
   "include": [
+    "../../adaptable-parser",
     "./**/*.ts",
     "./**/*.tsx",
     "../src/**/*.ts",

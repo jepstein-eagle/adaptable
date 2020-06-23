@@ -30,7 +30,7 @@
     "redux-devtools-extension": "^2.13.5",
     "resize-observer-polyfill": "^1.5.1",
     "styled-components": "^4.4.1",
-    "tslib": "^1.9.3",
+    "tslib": "^1.11.1",
     "uuid": "^3.3.2"
   },
   "peerDependencies": {
@@ -87,7 +87,6 @@
     "request": "^2.87.0",
     "rimraf": "^2.6.2",
     "style-loader": "^0.18.2",
-    "symlink-dir": "^4.1.0",
     "ts-loader": "^2.2.1",
     "ts-node": "^4.1.0",
     "typedoc": "^0.16.11",
@@ -119,11 +118,10 @@
     "update-env-file": "node ../../scripts/updateEnvFile",
     "sass": "node-sass ./src/index.scss ./dist/index.css && ../../node_modules/.bin/postcss ./dist/index.css --config ../../ --output ./dist/index.css && node-sass ./src/base.scss ./dist/base.css && ../../node_modules/.bin/postcss ./dist/base.css --config ../../ --output ./dist/base.css && node-sass ./src/themes/light.scss ./dist/themes/light.css && ../../node_modules/.bin/postcss ./dist/themes/light.css --config ../../ --output ./dist/themes/light.css && node-sass ./src/themes/dark.scss ./dist/themes/dark.css && ../../node_modules/.bin/postcss ./dist/themes/dark.css --config ../../ --output ./dist/themes/dark.css ",
     "copy-assets": "cp -R ./src/fonts ./dist/ && cp README.md ./dist && cp LICENSE.md ./dist",
-    "tsc": "npm run link-parser && tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist",
+    "tsc": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist",
     "tscw": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --watch --outDir dist",
     "tscv": "tsc --version",
-    "build": "npm run build-prod",
-    "link-parser": "symlink-dir ../adaptable-parser ./node_modules/@adaptabletools/adaptable-parser"
+    "build": "npm run build-prod"
   },
   "keywords": [
     "web-components",
