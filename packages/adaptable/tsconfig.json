@@ -21,7 +21,6 @@
     }
   },
   "include": [
-    "../**/*",
     "src/**/*",
      "agGrid/**/*",
     "agGrid.ts",
