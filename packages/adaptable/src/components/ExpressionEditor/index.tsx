@@ -231,17 +231,18 @@ function ExpressionEditor(props: ExpressionEditorProps) {
     <div>
       {' '}
       <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
-        Create a Calculated Column 'Expression' using, as required, a mixture of:
+        Create a Calculated Column 'Expression' using, as required, a mixture (and any number) of:
         <ul>
           <li>
-            <b>Functions</b>: Select from the functions dropdown or pick one listed below - each one
-            is separately documented
+            <b>Functions</b>: Select from the functions dropdown or pick one displayed below; each
+            function is separately documented
           </li>
           <li>
-            <b>Columns</b> (which you can drag from the right hand side)
+            <b>Columns</b> - Drag n Drop required columns from the right hand side - they will
+            resolve to 'Col([column-name])'
           </li>
           <li>
-            <b>Static Values</b>
+            <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
           </li>{' '}
         </ul>
         The result of the Expression is displayed underneath the Editor - using the Test Data (taken
