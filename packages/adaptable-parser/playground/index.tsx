@@ -1,5 +1,6 @@
-import React, { useState, useRef, useCallback } from 'react';
-import ReactDOM from 'react-dom';
+import * as React from 'react';
+import { useState, useRef, useCallback } from 'react';
+import { render } from 'react-dom';
 import { parse, findPathTo, defaultFunctions } from '../src';
 import {
   ThemeProvider,
@@ -287,7 +288,7 @@ function App() {
   );
 }
 
-ReactDOM.render(
+render(
   <ThemeProvider>
     <ColorModeProvider value="dark">
       <CSSReset />
