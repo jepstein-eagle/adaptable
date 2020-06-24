@@ -88,7 +88,8 @@ export {
 export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
 export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';
 export { QuickSearchState } from './PredefinedConfig/QuickSearchState';
-export { ReminderState, ReminderSchedule } from './PredefinedConfig/ReminderState';
+export { ReminderSchedule } from './PredefinedConfig/ReminderState';
+export { ScheduleState } from './PredefinedConfig/ScheduleState';
 export { ShortcutState, Shortcut } from './PredefinedConfig/ShortcutState';
 export { SmartEditState } from './PredefinedConfig/SmartEditState';
 export { SparklineColumnState, SparklineColumn } from './PredefinedConfig/SparklineColumnState';

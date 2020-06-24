@@ -35,7 +35,6 @@ import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
 import { NamedFilterState } from '../../PredefinedConfig/NamedFilterState';
 import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
-import { ReminderState } from '../../PredefinedConfig/ReminderState';
 import { SystemFilterState } from '../../PredefinedConfig/SystemFilterState';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
@@ -43,7 +42,7 @@ import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
 import { ConfigApi } from '../ConfigApi';
 import { AdaptableStateKey } from '../../PredefinedConfig/Common/Types';
 import { Glue42State } from '../../PredefinedConfig/Glue42State';
-import { AdaptableSearchState } from '../../types';
+import { AdaptableSearchState, ScheduleState } from '../../types';
 import { AdaptableSortState } from '../Events/SearchChanged';
 import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
 
@@ -265,10 +264,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().QuickSearch)
           : this.getAdaptableState().QuickSearch;
-      case 'Reminder':
+      case 'Schedule':
         return returnJson
-          ? JSON.stringify(this.getAdaptableState().Reminder)
-          : this.getAdaptableState().Reminder;
+          ? JSON.stringify(this.getAdaptableState().Schedule)
+          : this.getAdaptableState().Schedule;
 
       case 'Shortcut':
         return returnJson
@@ -405,8 +404,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetQuickSearchState(returnJson: boolean = false): QuickSearchState {
     return this.configGetUserStateByStateKey('QuickSearch', returnJson) as QuickSearchState;
   }
-  public configGetReminderState(returnJson: boolean = false): ReminderState {
-    return this.configGetUserStateByStateKey('Reminder', returnJson) as ReminderState;
+  public configGetScheduleState(returnJson: boolean = false): ScheduleState {
+    return this.configGetUserStateByStateKey('Schedule', returnJson) as ScheduleState;
   }
   public configGetShortcutState(returnJson: boolean = false): ShortcutState {
     return this.configGetUserStateByStateKey('Shortcut', returnJson) as ShortcutState;
