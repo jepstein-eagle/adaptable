@@ -15,7 +15,7 @@ import { usePopupContext } from '@adaptabletools/adaptable/src/View/Components/P
 import ErrorBox from '@adaptabletools/adaptable/src/components/ErrorBox';
 import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import { Flex } from 'rebass';
-import { Glue42PluginOptions } from '..';
+import { Glue42PluginOptions } from '../Glue42PluginOptions';
 
 interface Glue42LoginPopupProps {
   glue42Login: string | undefined;

@@ -3,7 +3,7 @@ import { ApiBase } from '@adaptabletools/adaptable/src/Api/Implementation/ApiBas
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
-import { OpenFinPluginOptions } from './index';
+import { OpenFinPluginOptions } from './OpenFinPluginOptions';
 import { IAdaptable } from '@adaptabletools/adaptable/types';
 import * as OpenFinRedux from './Redux/ActionReducers/OpenFinRedux';
 import {

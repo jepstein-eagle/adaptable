@@ -2,7 +2,7 @@ import { ApiBase } from '@adaptabletools/adaptable/src/Api/Implementation/ApiBas
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
 import * as IPushPullRedux from './Redux/ActionReducers/IPushPullRedux';
-import { IPushPullPluginOptions } from './';
+
 import {
   IPushPullDomain,
   IPushPullReport,
@@ -15,6 +15,7 @@ import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { IAdaptable } from '@adaptabletools/adaptable/types';
 
 import { IPushPullService } from './Utilities/Services/Interface/IPushPullService';
+import { IPushPullPluginOptions } from './IPushPullPluginOptions';
 
 export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   private ippInstance: any;

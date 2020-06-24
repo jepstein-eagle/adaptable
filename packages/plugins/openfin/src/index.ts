@@ -32,6 +32,7 @@ import * as OpenFinRedux from './Redux/ActionReducers/OpenFinRedux';
 import { IOpenFinStrategy } from './Strategy/Interface/IOpenFinStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
 import { OpenFinState } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
+import { OpenFinPluginOptions } from './OpenFinPluginOptions';
 
 if (version !== coreVersion) {
   console.warn(`
@@ -44,10 +45,6 @@ if (version !== coreVersion) {
 const defaultOptions: OpenFinPluginOptions = {
   throttleTime: 2000,
 };
-
-export interface OpenFinPluginOptions {
-  throttleTime?: number;
-}
 
 class OpenFinPlugin extends AdaptablePlugin {
   public options: OpenFinPluginOptions;
