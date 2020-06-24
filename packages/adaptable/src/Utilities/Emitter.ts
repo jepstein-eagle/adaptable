@@ -5,6 +5,7 @@ export type EmitterAnyCallback = (eventName: string, data?: any) => any;
 
 const anyMap = new WeakMap();
 const eventsMap = new WeakMap();
+const triggeredMap = new WeakMap();
 const resolvedPromise = Promise.resolve();
 
 //type EmitterCallback = (data?: any) => any;
@@ -98,6 +99,7 @@ class Emittery {
   constructor() {
     anyMap.set(this, new Set());
     eventsMap.set(this, new Map());
+    triggeredMap.set(this, new Map());
   }
 
   on(eventName: string, listener: EmitterCallback) {
@@ -123,13 +125,29 @@ class Emittery {
     });
   }
 
+  onIncludeFired(eventName: string, listener: EmitterCallback) {
+    const triggeredEventsMap = triggeredMap.get(this);
+
+    const eventInfo = triggeredEventsMap.get(eventName);
+
+    if (eventInfo) {
+      listener(eventInfo.data);
+      return () => {};
+    } else {
+      return this.on(eventName, listener);
+    }
+  }
+
   async emit(eventName: string, eventData?: any) {
     assertEventName(eventName);
 
     const listeners = getListeners(this, eventName);
+    const triggeredEventsMap = triggeredMap.get(this);
     const anyListeners = anyMap.get(this);
     const staticListeners = [...listeners];
     const staticAnyListeners = [...anyListeners];
+
+    triggeredEventsMap.set(eventName, { data: eventData });
 
     await resolvedPromise;
     return Promise.all([

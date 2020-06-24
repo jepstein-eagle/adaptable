@@ -190,9 +190,11 @@ async function InitAdaptableDemo() {
 
   // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
 
-  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
-    /*
+  setTimeout(() => {
+    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+      console.log('READY');
+      // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
+      /*
     setTimeout(() => {
       api.dashboardApi.floatDashboard();
     }, 2000);
@@ -205,8 +207,9 @@ async function InitAdaptableDemo() {
     setTimeout(() => {
       api.dashboardApi.unCollapseDashboard();
     }, 8000); */
-    //  info.adaptableApi.flashingCellApi.showFlashingCellPopup();
-  });
+      //  info.adaptableApi.flashingCellApi.showFlashingCellPopup();
+    });
+  }, 3000);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     //  console.log('search changed');

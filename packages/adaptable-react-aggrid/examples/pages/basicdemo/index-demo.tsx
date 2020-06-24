@@ -30,6 +30,15 @@ const StatusCmp = (props: any) => (
   </div>
 );
 
+const adaptableOptions = {
+  primaryKey: 'tradeId',
+  adaptableId: 'BYOP demos',
+
+  plugins: [charts()],
+  userInterfaceOptions: {
+    showAdaptableToolPanel: true,
+  },
+};
 export default () => {
   const gridOptions = useMemo((): GridOptions => {
     const options: GridOptions = {
@@ -101,15 +110,7 @@ export default () => {
           }, 500);
         }}
         gridOptions={gridOptions}
-        adaptableOptions={{
-          primaryKey: 'tradeId',
-          adaptableId: 'BYOP demos',
-
-          plugins: [charts()],
-          userInterfaceOptions: {
-            showAdaptableToolPanel: true,
-          },
-        }}
+        adaptableOptions={adaptableOptions}
       />
       <div className="ag-theme-alpine" style={{ flex: 1 }}>
         <AgGridReact

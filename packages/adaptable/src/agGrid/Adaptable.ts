@@ -168,7 +168,7 @@ const waitForAgGrid = (isReady: () => boolean): Promise<any> => {
     const wait = (callback: () => void) => {
       const ready = isReady();
 
-      if (Date.now() - startTime > 1000) {
+      if (Date.now() - startTime > 50000) {
         console.warn(`Could not find any agGrid instance rendered.`);
         reject(`Could not find any agGrid instance rendered.`);
         return;

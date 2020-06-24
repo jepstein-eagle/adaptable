@@ -12,8 +12,16 @@ export class EventApiImpl extends ApiBase implements EventApi {
 
   // new way of doing this - much cleaner
   private emitter: Emitter;
-  on = (eventName: string, callback: EmitterCallback): (() => void) =>
-    this.emitter.on(eventName, callback);
+  on = (eventName: string, callback: EmitterCallback): (() => void) => {
+    let result: () => void;
+    if (eventName === 'AdaptableReady') {
+      result = this.emitter.onIncludeFired(eventName, callback);
+    } else {
+      result = this.emitter.on(eventName, callback);
+    }
+
+    return result;
+  };
 
   off = (eventName: string, callback: EmitterCallback): void =>
     this.emitter.off(eventName, callback);
