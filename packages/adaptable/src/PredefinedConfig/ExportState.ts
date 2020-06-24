@@ -1,7 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
-import { Schedule, BaseSchedule } from './Common/Schedule';
+import { BaseSchedule } from './Common/Schedule';
 
 /**
  * The Predefined Configuration for the Export function
@@ -115,7 +115,9 @@ export interface Report extends AdaptableObject {
 }
 
 /**
- * Defines a Scheduled Report.  Includes 2 properties:
+ * Defines a Scheduled Report.  Used in the Schedule Function (where the State will be stored).
+ *
+ * Includes 2 properties:
  *
  * - Schedule: **When** the Report will run
  *
