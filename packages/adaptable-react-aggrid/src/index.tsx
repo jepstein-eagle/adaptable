@@ -44,25 +44,22 @@ const AdaptableReact = ({
   useLayoutEffect(() => {
     let adaptableApi: AdaptableApi;
 
-    const init = async () => {
-      adaptableApi = await Adaptable.initInternal(
-        {
-          ...adaptableOptions,
-          containerOptions: {
-            ...adaptableOptions.containerOptions,
-            adaptableContainer: adaptableContainerId,
-          },
-          vendorGrid: gridOptions,
+    Adaptable.initInternal(
+      {
+        ...adaptableOptions,
+        containerOptions: {
+          ...adaptableOptions.containerOptions,
+          adaptableContainer: adaptableContainerId,
         },
-        { waitForAgGrid: true }
-      );
-
+        vendorGrid: gridOptions,
+      },
+      { waitForAgGrid: true }
+    ).then(api => {
+      adaptableApi = api;
       if (onAdaptableReady) {
         adaptableApi.eventApi.on('AdaptableReady', onAdaptableReady);
       }
-    };
-
-    init();
+    });
 
     return () => {
       if (adaptableApi) {

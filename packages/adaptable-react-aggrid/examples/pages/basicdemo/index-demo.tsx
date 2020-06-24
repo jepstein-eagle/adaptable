@@ -72,7 +72,7 @@ export default () => {
     >
       <AdaptableReactAggrid
         onAdaptableReady={({ adaptableApi: api, vendorGrid: gridOptions }) => {
-          console.log('Adaptable ready', api, gridOptions);
+          console.log('Adaptable ready!!!!', api, gridOptions);
 
           (global as any).api = api;
           (global as any).gridOptions = gridOptions;
