@@ -17,7 +17,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -39,7 +39,7 @@ function InitAdaptableDemo() {
     autoSizeColumnsInLayout: true,
   };
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 
   adaptableApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     console.log('fetching');

@@ -25,7 +25,7 @@ import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -53,7 +53,7 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

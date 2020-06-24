@@ -19,7 +19,7 @@ Has pseudo ticking data together with some JSON that sets flashing in 3 columns
 This uses the agGrid updateRowData method which does NOT call cell value changed
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
   let rowCount: number = 25;
@@ -32,7 +32,7 @@ function InitAdaptableDemo() {
     'ticking data add delete row'
   );
   adaptableOptions.predefinedConfig = json;
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
 
   // turn on mimicing adding rows
   tickingDataHelper.startTickingDataagGridAddRow(adaptableApi, tradeData, rowCount);

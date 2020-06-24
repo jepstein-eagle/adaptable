@@ -24,7 +24,7 @@ var api: AdaptableApi;
 
 import rowData from './FTSEClose.json';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const gridOptions: GridOptions = {
     defaultColDef: {
       sortable: true,
@@ -99,7 +99,7 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

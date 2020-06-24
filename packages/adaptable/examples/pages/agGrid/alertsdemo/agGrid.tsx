@@ -18,7 +18,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 Demo for checking alerts work
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 25;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -35,7 +35,7 @@ function InitAdaptableDemo() {
     adaptableId: 'alerts demo',
     predefinedConfig: demoConfig,
   };
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
   tickingDataHelper.useTickingDataagGrid(
     adaptableOptions.vendorGrid,
     adaptableApi,

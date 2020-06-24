@@ -17,7 +17,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 15;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -42,7 +42,7 @@ function InitAdaptableDemo() {
     autoApplyFilter: false,
   };
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 
   tickingDataHelper.useTickingDataagGrid(
     adaptableOptions.vendorGrid,

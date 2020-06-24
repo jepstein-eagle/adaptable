@@ -26,7 +26,7 @@ import { TickingDataHelper } from '../../TickingDataHelper';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -51,7 +51,7 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
 
-  api = Adaptable.init(adaptableOptions); // turn on mimicing ticking data 200, tradeCount);
+  api = await Adaptable.init(adaptableOptions); // turn on mimicing ticking data 200, tradeCount);
 }
 
 let demoConfig: PredefinedConfig = {

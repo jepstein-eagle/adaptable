@@ -30,7 +30,7 @@ but a plain JSON object like the one below
 
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
 

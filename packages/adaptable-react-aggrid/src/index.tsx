@@ -42,70 +42,27 @@ const AdaptableReact = ({
   const adaptableContainerId = `adaptable-${seedId}`;
 
   useLayoutEffect(() => {
-    const startTime = Date.now();
-
-    const poolForAggrid = (callback: () => void) => {
-      const api = gridOptions.api;
-
-      if (Date.now() - startTime > 1000) {
-        console.warn(
-          `Could not find any agGrid instance rendered.
-Please make sure you pass "gridOptions" to AdapTable, so it can connect to the correct agGrid instance.`
-        );
-        return;
-      }
-
-      if (!api) {
-        requestAnimationFrame(() => {
-          poolForAggrid(callback);
-        });
-      } else {
-        callback();
-      }
-    };
-
     let adaptableApi: AdaptableApi;
 
-    poolForAggrid(() => {
-      // IF YOU UPDATE THIS, make sure you also update the Angular wrapper impl
-      const layoutElements = (gridOptions.api as any).gridOptionsWrapper
-        ? (gridOptions.api as any).gridOptionsWrapper.layoutElements || []
-        : [];
-
-      let vendorContainer;
-
-      for (let i = 0, len = layoutElements.length; i < len; i++) {
-        const element = layoutElements[i];
-
-        if (element && element.matches('.ag-root-wrapper')) {
-          const gridContainer = element.closest('[class*="ag-theme"]');
-
-          if (gridContainer) {
-            vendorContainer = gridContainer;
-            break;
-          }
-        }
-      }
-
-      if (!vendorContainer) {
-        console.error(
-          `Could not find the agGrid vendor container. This will probably break some AdapTable functionality.`
-        );
-      }
-      adaptableApi = Adaptable.init({
-        ...adaptableOptions,
-        containerOptions: {
-          ...adaptableOptions.containerOptions,
-          adaptableContainer: adaptableContainerId,
-          vendorContainer,
+    const init = async () => {
+      adaptableApi = await Adaptable.initInternal(
+        {
+          ...adaptableOptions,
+          containerOptions: {
+            ...adaptableOptions.containerOptions,
+            adaptableContainer: adaptableContainerId,
+          },
+          vendorGrid: gridOptions,
         },
-        vendorGrid: gridOptions,
-      });
+        { waitForAgGrid: true }
+      );
 
       if (onAdaptableReady) {
         adaptableApi.eventApi.on('AdaptableReady', onAdaptableReady);
       }
-    });
+    };
+
+    init();
 
     return () => {
       if (adaptableApi) {

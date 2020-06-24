@@ -23,7 +23,7 @@ import { Layout } from '../../../../src/PredefinedConfig/LayoutState';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
   const tradeCount: number = 100;
@@ -154,7 +154,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;

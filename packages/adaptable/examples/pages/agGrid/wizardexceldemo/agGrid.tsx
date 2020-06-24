@@ -17,7 +17,7 @@ import { AdaptableNoCodeWizard } from '../../../../src/agGrid/Adaptable';
 Basic demo of wizard that allow d&d of a json with an array contents
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'dtmKey', // will be added later ...
     //adaptableId: 'Position Monitor',

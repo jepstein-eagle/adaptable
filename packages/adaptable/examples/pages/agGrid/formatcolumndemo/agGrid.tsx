@@ -25,7 +25,7 @@ import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -50,7 +50,7 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     // to set a pinned row (in this case the 5th row in our data source)

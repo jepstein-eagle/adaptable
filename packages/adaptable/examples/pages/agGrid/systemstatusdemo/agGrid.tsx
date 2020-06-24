@@ -14,7 +14,7 @@ import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../sr
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -30,7 +30,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
   };
 
-  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
 
   adaptableApi.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     switch (toolbarButtonClickedEventArgs.data[0].id.toolbarButton.Name) {

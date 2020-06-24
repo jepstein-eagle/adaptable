@@ -18,7 +18,7 @@ import masterDetailAgGridPlugin from '../../../../../plugins/master-detail-aggri
 Demo for checking alerts work
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getMasterGridOptionsFTSE(200);
 

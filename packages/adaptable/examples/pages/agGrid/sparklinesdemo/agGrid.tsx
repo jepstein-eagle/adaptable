@@ -20,7 +20,7 @@ No JSON or anything complicated
 Nor do we create the ag-Grid
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(300);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeWithSparkline(tradeData);
@@ -32,7 +32,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.predefinedConfig = demoConfig;
 
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

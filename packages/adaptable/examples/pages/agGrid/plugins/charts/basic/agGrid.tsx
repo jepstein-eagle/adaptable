@@ -21,7 +21,7 @@ import charts from '../../../../../../../plugins/charts/src';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 5000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -47,7 +47,7 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     console.log('search changed');

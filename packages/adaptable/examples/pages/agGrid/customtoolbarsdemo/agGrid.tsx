@@ -20,7 +20,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
 import { CustomToolbarConfiguredInfo } from '../../../../src/Api/Events/CustomToolbarConfigured';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(250);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -34,7 +34,7 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: demoConfig,
   };
-  const api = Adaptable.init(adaptableOptions);
+  const api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs => {
     let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo =

@@ -13,14 +13,14 @@ import { AdaptableOptions } from '../../../../src/types';
 import { GridOptions } from '@ag-grid-community/all-modules';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsFTSE(50);
   const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsFtse(
     gridOptions,
     'ftse demo'
   );
-  const api = Adaptable.init(adaptableOptions);
+  const api = await Adaptable.init(adaptableOptions);
 }
 
 export default () => {

@@ -15,7 +15,7 @@ import Mousetrap from 'mousetrap';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -31,7 +31,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   // using mousetrap as dependency
   Mousetrap.bind('alt+shift+1', () => api.advancedSearchApi.showAdvancedSearchPopup());

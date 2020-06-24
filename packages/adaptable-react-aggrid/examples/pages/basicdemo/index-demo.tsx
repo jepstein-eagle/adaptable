@@ -31,6 +31,7 @@ const StatusCmp = (props: any) => (
 export default () => {
   const gridOptions = useMemo((): GridOptions => {
     const options: GridOptions = {
+      sideBar: true,
       columnTypes: {
         abColDefNumber: {},
         abColDefString: {},
@@ -77,11 +78,28 @@ export default () => {
           api.eventApi.on('SelectionChanged', selargs => {
             // console.log(selargs);
           });
+
+          setTimeout(() => {
+            setInterval(() => {
+              const index = Math.round(Math.random() * gridOptions.rowData.length);
+              let data = gridOptions.rowData[index];
+              if (data) {
+                data = { ...data };
+                data.price = Math.round(Math.random() * 100);
+                data.amount = Math.round(Math.random() * 100);
+
+                console.log(data);
+
+                gridOptions.api.applyTransactionAsync({ update: [data] });
+              }
+            }, 100);
+          }, 500);
         }}
         gridOptions={gridOptions}
         adaptableOptions={{
           primaryKey: 'tradeId',
           adaptableId: 'BYOP demos',
+
           plugins: [charts()],
           userInterfaceOptions: {
             showAdaptableToolPanel: true,

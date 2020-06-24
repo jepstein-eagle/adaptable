@@ -29,7 +29,7 @@ import { DataType } from '../../../../src/PredefinedConfig/Common/Enums';
 import Helper from '../../../../src/Utilities/Helpers/Helper';
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -89,7 +89,7 @@ function InitAdaptableDemo() {
     showAdaptableToolPanel: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
   (global as any).api = api;
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {

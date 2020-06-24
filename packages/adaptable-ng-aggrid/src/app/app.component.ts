@@ -42,9 +42,6 @@ export class AppComponent {
     primaryKey: 'OrderId',
     userName: 'demo user',
     adaptableId: 'an angular wrapper',
-    containerOptions: {
-      vendorContainer: 'vendorDiv', // is this rights
-    },
     predefinedConfig: {},
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
@@ -70,6 +67,24 @@ export class AppComponent {
       },
       onGridReady: params => {
         console.log(params);
+        const { api } = params;
+
+        setTimeout(() => {
+          setInterval(() => {
+            const index = Math.round(Math.random() * rowData.length);
+            let data = rowData[index];
+            if (data) {
+              data = { ...data };
+              data.OrderCost = Math.round(Math.random() * 100);
+              data.ItemCost = Math.round(Math.random() * 100);
+              data.PackageCost = Math.round(Math.random() * 100);
+
+              console.log(data);
+
+              api.applyTransactionAsync({ update: [data] });
+            }
+          }, 100);
+        }, 500);
       },
       columnDefs: columns,
       columnTypes: {

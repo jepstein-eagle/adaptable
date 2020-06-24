@@ -14,7 +14,7 @@ import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradePivoting(tradeData);
@@ -41,7 +41,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.predefinedConfig = demoConfig;
 
-  const adaptable = Adaptable.init(adaptableOptions);
+  const adaptable = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

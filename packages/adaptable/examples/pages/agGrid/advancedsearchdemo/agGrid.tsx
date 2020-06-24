@@ -17,7 +17,7 @@ import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -33,7 +33,7 @@ function InitAdaptableDemo() {
   };
   adaptableOptions.predefinedConfig = demoConfig;
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

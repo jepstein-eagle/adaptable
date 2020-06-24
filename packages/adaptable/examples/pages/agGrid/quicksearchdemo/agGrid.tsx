@@ -17,7 +17,7 @@ import { TickingDataHelper } from '../../TickingDataHelper';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100000;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -54,7 +54,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 
   adaptableApi.eventApi.on('AdaptableReady', ({ vendorGrid: gridOptions }) => {
     if (useTickingData) {

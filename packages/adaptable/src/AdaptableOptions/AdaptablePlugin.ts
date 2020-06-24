@@ -49,13 +49,7 @@ export abstract class AdaptablePlugin {
     return !!this.values[name];
   }
 
-  beforeInit(
-    adaptableOptions: AdaptableOptions,
-    extraOptions: {
-      renderGrid: boolean;
-      runtimeConfig: any;
-    }
-  ): void {}
+  beforeInit(adaptableOptions: AdaptableOptions): void {}
 
   afterInitOptions(adaptable: IAdaptable, adaptableOptions: AdaptableOptions): void {}
   afterInitApi(adaptable: IAdaptable, api: AdaptableApi) {}
