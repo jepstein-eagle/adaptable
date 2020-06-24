@@ -31,6 +31,7 @@ export class CalculatedColumnSummaryWizard
           ),
       },
       { Key: 'DataType', Value: this.props.Data.CalculatedColumnSettings.DataType },
+      { Key: 'Width', Value: this.props.Data.CalculatedColumnSettings.Width },
       {
         Key: 'Filterable',
         Value: this.props.Data.CalculatedColumnSettings.Filterable ? 'True' : 'False',

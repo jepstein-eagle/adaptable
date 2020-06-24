@@ -20,6 +20,7 @@ export interface CalculatedColumnSettingsWizardState {
   ErrorMessage: string;
   ColumnId: string;
   DataType: 'String' | 'Number' | 'Boolean' | 'Date';
+  Width: number;
   Filterable?: boolean;
   Resizable?: boolean;
   Groupable?: boolean;
@@ -37,6 +38,7 @@ export class CalculatedColumnSettingsWizard
       ErrorMessage: null,
       ColumnId: this.props.Data.ColumnId,
       DataType: this.props.Data.CalculatedColumnSettings.DataType,
+      Width: this.props.Data.CalculatedColumnSettings.Width,
       Filterable: this.props.Data.CalculatedColumnSettings.Filterable,
       Resizable: this.props.Data.CalculatedColumnSettings.Resizable,
       Groupable: this.props.Data.CalculatedColumnSettings.Groupable,
@@ -53,6 +55,7 @@ export class CalculatedColumnSettingsWizard
             <Input
               value={this.state.ColumnId}
               autoFocus
+              width={300}
               type="text"
               placeholder="Enter column name"
               onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
@@ -68,6 +71,16 @@ export class CalculatedColumnSettingsWizard
                 { value: DataType.Date, label: DataType.Date },
                 { value: DataType.Boolean, label: DataType.Boolean },
               ]}
+            />
+          </FormRow>
+          <FormRow label="Width">
+            <Input
+              type="number"
+              width={300}
+              value={this.state.Width}
+              onChange={(e: React.SyntheticEvent) =>
+                this.setState({ Width: Number((e.target as HTMLInputElement).value) })
+              }
             />
           </FormRow>
           <FormRow label="Filterable">
@@ -143,6 +156,7 @@ export class CalculatedColumnSettingsWizard
     this.props.Data.ColumnId = this.state.ColumnId;
 
     this.props.Data.CalculatedColumnSettings.DataType = this.state.DataType;
+    this.props.Data.CalculatedColumnSettings.Width = this.state.Width;
     this.props.Data.CalculatedColumnSettings.Filterable = this.state.Filterable;
     this.props.Data.CalculatedColumnSettings.Resizable = this.state.Resizable;
     this.props.Data.CalculatedColumnSettings.Groupable = this.state.Groupable;
