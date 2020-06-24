@@ -32,13 +32,13 @@ import { IPushPullApiImpl } from './IPushPullApiImpl';
 import { PushPullService } from './Utilities/Services/PushPullService';
 
 import ipushpull from 'ipushpull-js';
-import { IIPPConfig } from 'ipushpull-js/dist/Config';
 import { IPushPullReducer } from './Redux/ActionReducers/IPushPullRedux';
 import { IPushPullLoginPopup } from './View/IPushPullLoginPopup';
 import { IPushPullAddPagePopup } from './View/IPushPullAddPagePopup';
 import * as IPushPullRedux from './Redux/ActionReducers/IPushPullRedux';
 import { IPushPullStrategy } from './Strategy/Interface/IPushPullStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
+import { IPushPullPluginOptions } from './IPushPullPluginOptions';
 
 if (version !== coreVersion) {
   console.warn(`
@@ -74,50 +74,6 @@ const defaultOptions: IPushPullPluginOptions = {
   throttleTime: 2000,
   includeSystemReports: true,
 };
-
-// internal - would like not to save if possible... //TODO move into system state
-// IsIPushPullAvailable?: boolean;
-// IsIPushPullRunning?: boolean;
-// IPushPullDomainsPages?: IPushPullDomain[];
-// IPushPullLoginErrorMessage?: string;
-// CurrentLiveIPushPullReport?: IPushPullReport;
-
-export interface IPushPullPluginOptions {
-  ippConfig?: IIPPConfig;
-
-  /**
-   * The user's ipushpull user name (usually an email address)
-   *
-   * If supplied then the ipushpull login screen's username textbox will be pre-populated
-   */
-  username?: string;
-  /**
-   * The user's ipushpull password
-   *
-   * If supplied then the ipushpull login screen's password textbox will be pre-populated
-   */
-  password?: string;
-  /**
-   * How long (in miliseconds) Adaptable should throttle when sending a data update to ipushpull.
-   *
-   * **Default Value: 2000**
-   */
-  throttleTime?: number;
-
-  /**
-   * Whether AdapTable will try log you in to ipushpull automatically at start-up
-   *
-   * **Default Value: false**
-   */
-  autoLogin?: boolean;
-
-  /**
-   * Whether AdapTable will include the System Reports (e.g. 'All Data', 'Selected Cells' etc) in the dropdown in the ipushpull toolbar
-   *
-   * **Default Value: true**
-   */
-  includeSystemReports?: boolean;
-}
 
 class IPushPullPlugin extends AdaptablePlugin {
   public options: IPushPullPluginOptions;

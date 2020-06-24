@@ -4,7 +4,7 @@ In order to keep the 'core' download a manageable size, Version 6 (released in J
 
 Plugins are additional groupings of functionality relevant to a particular set of users or usage.
 
-We currently offer 3 plugins (though more will be added in the coming months):
+There are currently 8 plugins available (though more are being added all the time):
 
 - [Finance Plugin](./finance)
 
@@ -12,47 +12,49 @@ We currently offer 3 plugins (though more will be added in the coming months):
 
 - [No Code AgGrid Plugin](./nocode-aggrid)
 
-- [Master Detail AgGrid Plugin](./master-detail-aggrid) - depends on `@ag-grid-enterprise/master-detail`
+- [Master Detail AgGrid Plugin](./master-detail-aggrid)
 
-- [IPushPull Plugin](./ipushpull)
+- [ipushpull Plugin](./ipushpull)
 
 - [Finsemble Plugin](./finsemble)
 
-- [Openfin Plugin](./openfin)
+- [OpenFin Plugin](./openfin)
 
-### Using Plugins
+- [Glue42 Plugin](./glue42)
+
+## Using Plugins
 
 To use the AdapTable plugins you need to do the following:
 
-1.  Install the packages you need in npm. So to install charting and finance plugins you would do:
+1. Install the packages you need in npm. So depending on the plugins you require, you would add some or all of the following:
 
-```sh
-npm install @adaptabletools/adaptable-plugin-charts
-npm install @adaptabletools/adaptable-plugin-finance
-npm install @adaptabletools/adaptable-plugin-nocode-aggrid
-npm install @adaptabletools/adaptable-plugin-master-detail-aggrid
-npm install @adaptabletools/adaptable-plugin-ipushpull
-npm install @adaptabletools/adaptable-plugin-finsemble
-npm install @adaptabletools/adaptable-plugin-openfin
-npm install @adaptabletools/adaptable-plugin-glue42
-```
+  ```sh
+  npm install @adaptabletools/adaptable-plugin-charts
+  npm install @adaptabletools/adaptable-plugin-finance
+  npm install @adaptabletools/adaptable-plugin-nocode-aggrid
+  npm install @adaptabletools/adaptable-plugin-master-detail-aggrid
+  npm install @adaptabletools/adaptable-plugin-ipushpull
+  npm install @adaptabletools/adaptable-plugin-finsemble
+  npm install @adaptabletools/adaptable-plugin-openfin
+  npm install @adaptabletools/adaptable-plugin-glue42
+  ```
 
-> You must install the same version of the plugin as you use for the 'core' AdapTable package.  AdapTable will send a warning message to the console if these are different
+  > You must install the same version of the plugin as you use for the 'core' AdapTable package.  AdapTable will send a warning message to the console if these are different
 
-2.  Import the plugin(s) in your code when instantiating AdapTable:
+2. Import the plugin(s) in your code when instantiating AdapTable:
 
-```ts
-import charts from "@adaptabletools/adaptable-plugin-charts";
-import finance from "@adaptabletools/adaptable-plugin-finance";
-import nocode from "@adaptabletools/adaptable-plugin-nocode-aggrid";
-import masterDetail from "@adaptabletools/adaptable-plugin-master-detail-aggrid";
-import ipushpull from "@adaptabletools/adaptable-plugin-ipushpull";
-import finsemble from "@adaptabletools/adaptable-plugin-finsemble";
-import openfin from "@adaptabletools/adaptable-plugin-openfin";
-import glue42 from "@adaptabletools/adaptable-plugin-glue42";
-```
+  ```ts
+  import charts from "@adaptabletools/adaptable-plugin-charts";
+  import finance from "@adaptabletools/adaptable-plugin-finance";
+  import nocode from "@adaptabletools/adaptable-plugin-nocode-aggrid";
+  import masterDetail from "@adaptabletools/adaptable-plugin-master-detail-aggrid";
+  import ipushpull from "@adaptabletools/adaptable-plugin-ipushpull";
+  import finsemble from "@adaptabletools/adaptable-plugin-finsemble";
+  import openfin from "@adaptabletools/adaptable-plugin-openfin";
+  import glue42 from "@adaptabletools/adaptable-plugin-glue42";
+  ```
 
-3.  Add the plugins to the plugins property in AdaptableOptions:
+3. Add the plugins to the plugins property in AdaptableOptions:
 
 ```ts
 const adaptableOptions: AdaptableOptions = {
@@ -88,17 +90,35 @@ The charts on offer include:
 
 - Data Charts
 
-> We have made it a plugin so that those users who don't need charting, or have their own charting libraries, can avoid having to download a package that they will not use.
+> Charting was converted into a plugin so that those users who don't need this functionality, or have their own charting libraries, can avoid having to download a package that they will not use.
 
 ### No Code Plugin
 
-The No Code plugin enables the creation of AdapTable instances purely for drag n drop of JSON or Excel files.
+The No Code plugin enables the creation of new AdapTable instances purely by dragging and dropping existing JSON or Excel files.
 
-An Adaptable wizard will work out the column names and types - and allow you to set filtering, sorting, and editability as required.
+An AdapTable wizard will work out the column names and types from the uploaded file - and allow you to set filtering, sorting, and editability as required.
 
 The wizard will also allow you to choose from more advanced options so you can create a dynamic AdapTable instance to meet your particular requirements.
 
 Once built AdapTable will save the state as it does for developer-built instances, so that any filters, searches, reports etc that are created are available the next time that named instance is run.
+
+### Master Detail AgGrid Plugin
+
+For use when ag-Grid has been set to Master / Detail mode.
+
+It allows each detail grid to be an instance of AdapTable.
+
+### ipushpull Plugin
+
+### Finsemble Plugin
+
+### OpenFin Plugin
+
+Designed for when AdapTable will be used inside the OpenFin container.
+
+This plugin allows users to take advantage of some additional functionality courtesy of OpenFin e.g. 'Live Excel' - where data exported to Excel updates in real time as the data in AdapTable itself ticks.
+
+### Glue42 Plugin
 
 ## Demo
 

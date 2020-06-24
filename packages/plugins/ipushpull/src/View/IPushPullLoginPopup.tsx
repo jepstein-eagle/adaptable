@@ -16,8 +16,7 @@ import { usePopupContext } from '@adaptabletools/adaptable/src/View/Components/P
 import ErrorBox from '@adaptabletools/adaptable/src/components/ErrorBox';
 import HelpBlock from '@adaptabletools/adaptable/src/components/HelpBlock';
 import { Flex } from 'rebass';
-
-import { IPushPullPluginOptions } from '../';
+import { IPushPullPluginOptions } from '../IPushPullPluginOptions';
 
 interface IPushPullLoginPopupProps {
   pushpullLogin: string | undefined;

@@ -47,14 +47,12 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Flashing Cell](../functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           |
 | [Format Column](../functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           |
 | [FreeText Column](../functions/freetext-column-function.md)     | Yes    | No      | No         | Yes         | No           |
-| [Glue42](../functions/glue42-function.md)                        | No     | Yes     | Yes        | No          | No           |
 | [Gradient Column](../functions/gradient-column-function.md)      | Yes    | No      | No         | Yes         | Yes          |
 | [Grid Info](../functions/grid-info-function.md)                  | No     | No      | No         | Yes         | Yes          |
 | [Layout](../functions/layout-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
 | [Named Filter](../functions/named-filter-function.md)            | No     | No      | No         | No          | No           |
 | [Percent Bar](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
 | [Plus Minus](../functions/plus-minus-function.md)                | Yes    | No      | No         | Yes         | No           |
-| [ipushpull](../functions/ipushpull-function.md)                    | No     | Yes     | Yes        | No          | No           |
 | [Quick Search](../functions/quick-search-function.md)            | No     | Yes     | Yes        | No          | No           |
 | [Reminder](../functions/reminder-function.md)                    | No     | No      | No         | No          | No           |
 | [Schedule](../functions/schedule-function.md)                    | Yes    | No      | No         | No          | No           |
@@ -73,6 +71,15 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 | [Pie Chart (View As)](../functions/charts/piechart-function.md)      | No     | No      | No         | Yes         | Yes          |
 | [Sparkline (View As)](../functions/charts/sparkline-function.md)     | No     | No      | No         | Yes         | Yes          |
 | [Sparkline Column](../functions/charts/sparkline-column-function.md) | No     | No      | No         | Yes         | Yes          |
+
+### Plugin-based AdaptableFunctions 
+
+| AdaptableFunction                                             | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
+| ------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
+| [ipushpull](../functions/charts/charts-function.md)           | No     | Yes     | No         | No          | No           |
+| [Glue42](../functions/charts/piechart-function.md)            | No     | No      | No         | Yes         | Yes          |
+| [OpenFin](../functions/charts/sparkline-function.md)          | No     | No      | No         | Yes         | Yes          |
+| [Finsemble](../functions/charts/sparkline-column-function.md) | No     | No      | No         | Yes         | Yes          |
 
 ### Entitlements
 

@@ -1,17 +1,21 @@
 # Schedule (AdaptableFunction)
 
-The Schedule([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Schedule`) Function 'wraps' all the AdaptableFunctions that include scheduling functionality (i.e. Reminders, Export and ipushpull).
+The Schedule([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Schedule`) Function allows certain actions to be performed at a given point in time - either as a one-off date or a repeated activity.
 
-As a result there is no Schedule object in the Adaptable State: instead the Schedule Popup lists all Schedules currently existing in other objects in the Adaptable State together with options to create / edit / delete them.  
+The Schedule function 'wraps' all the AdaptableFunctions that include scheduling functionality (i.e. Reminders, Export and ipushpull).  
 
-Likewise when starting the wizard, the user will access the Wizard of the object for which the Schedule is being created.
+As a result, when starting the Schedule wizard, the user will access the Wizard of the object for which the Schedule is being created - but the end object will be stored in the Schedule State.
+
+> In older versions of AdapTable Schedules were stored in the relevant Function's State, but in Version 7 these were centralised to all be stored in [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html).
 
 ## UI Elements
+
 Schedule includes the following UI Elements:
 
 - **Popup** - Shows a list of any existing Reports, Reminders (and other Adaptable Objects) which have attached schedules.  Each row contains an edit button to start the relevant wizard.  Plus an *Add* button to start the Wizard for the type of Schedule required.
 
 ## Entitlements
+
 Schedule supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -22,9 +26,11 @@ Schedule supports these Entitlement Rules:
 
 ## FAQ
 
-**Can I create Schedules in Adaptable State**
+#### Can I create Schedules in Adaptable State
 
-Yes, but not in the Schedule section of Adaptable State (as it doesn't exist); instead create the Schedules in the relevant property sections of the objects creating the Schedules (e.g. Export, Reminder etc.)
+Yes.  In previous versions of AdapTable the Schedules were stored in the State section relating to that Function.  
+
+But this became unwieldy and difficult to manage, so in Version 7 of AdapTable this was changed so that all Schedules are stored in [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html).
 
 ### Further Information
 
@@ -32,6 +38,4 @@ Yes, but not in the Schedule section of Adaptable State (as it doesn't exist); i
 
 - [Schedule Api](https://api.adaptabletools.com/interfaces/_src_api_scheduleapi_.scheduleapi.html)
 
-- [Reminder State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_reminderstate_.reminderstate.html)
-
-- [Export State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_exportstate_.exportstate.html)
+- [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html)

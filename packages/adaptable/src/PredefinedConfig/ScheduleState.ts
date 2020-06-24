@@ -6,9 +6,25 @@ import { OpenFinSchedule } from './OpenFinState';
 import { ReportSchedule } from '../types';
 
 /**
- * Schedules run by AdapTable
+ * The Predefined Configuration for the Schedule function
  *
- * The following functions contain Schedules:
+ * AdapTable offers the ability to run particular actinos at scheduled times and dates - either as a one-off or repeated activity.
+ *
+ * --------------
+ *
+ *  ### Further AdapTable Help Resources
+ *
+ * - [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)
+ *
+ * - {@link AdvancedSearchApi|Advanced Search API}
+ *
+ * - {@link SearchOptions|Search Options}
+ *
+ * - [Schedule Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/schedule-function.md)
+ *
+ * --------------
+ *
+ * The following AdapTable Functions contain Schedules:
  *
  * * Export
  * * Reminder

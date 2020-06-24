@@ -32,7 +32,6 @@ import { EntitlementState } from '../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../PredefinedConfig/FreeTextColumnState';
 import { NamedFilterState } from '../PredefinedConfig/NamedFilterState';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
-import { ReminderState } from '../PredefinedConfig/ReminderState';
 import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 import { TeamSharingState } from '../PredefinedConfig/TeamSharingState';
@@ -41,7 +40,7 @@ import { UserInterfaceState } from '../PredefinedConfig/UserInterfaceState';
 import { AdaptableStateKey } from '../PredefinedConfig/Common/Types';
 import { IPushPullState } from '../PredefinedConfig/IPushPullState';
 import { Glue42State } from '../PredefinedConfig/Glue42State';
-import { AdaptableSearchState } from '../types';
+import { AdaptableSearchState, ScheduleState } from '../types';
 import { AdaptableSortState } from './Events/SearchChanged';
 
 export interface ConfigApi {
@@ -107,7 +106,7 @@ export interface ConfigApi {
   configGetGlue42State(returnJson: boolean): Glue42State;
   configGetPercentBarState(returnJson: boolean): PercentBarState;
   configGetPlusMinusState(returnJson: boolean): PlusMinusState;
-  configGetReminderState(returnJson: boolean): ReminderState;
+  configGetScheduleState(returnJson: boolean): ScheduleState;
   configGetQuickSearchState(returnJson: boolean): QuickSearchState;
   configGetShortcutState(returnJson: boolean): ShortcutState;
   configGetSmartEditState(returnJson: boolean): SmartEditState;

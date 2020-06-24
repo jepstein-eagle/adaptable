@@ -134,7 +134,7 @@ export type AdaptableStateKey =
   | 'PercentBar'
   | 'PlusMinus'
   | 'QuickSearch'
-  | 'Reminder'
+  | 'Schedule'
   | 'Shortcut'
   | 'SmartEdit'
   | 'SparklineColumn'

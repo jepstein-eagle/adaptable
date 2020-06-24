@@ -290,7 +290,7 @@ export interface AdaptableApi {
   quickSearchApi: QuickSearchApi;
 
   /**
-   * Provides access to the *Reminder* function, the *Reminder* object and [Reminder State](_src_predefinedconfig_configstate_reminderstate_.reminderstate.html).
+   * Provides access to the *Reminder* function
    */
   reminderApi: ReminderApi;
 

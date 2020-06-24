@@ -29,7 +29,6 @@ import { SmartEditState } from './SmartEditState';
 import { TeamSharingState } from './TeamSharingState';
 import { ThemeState } from './ThemeState';
 import { UserFilterState } from './UserFilterState';
-import { ReminderState } from './ReminderState';
 import { ConfigState } from './ConfigState';
 import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';

@@ -18,7 +18,7 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 ## Support for ag-Grid Version 23
 
-Note formatted value expression and column filter dropdown 
+Note formatted value expression and column filter dropdown
 
 By default, column filters looked very similar to aggrid 22 balham theme, since `filterOptions.useVendorFilterFormStyle` was default to `true`. With the transition to v23, even with `filterOptions.useVendorFilterFormStyle` set to `true`, the styles now look more modern and similar to the aggrid `alpine` theme, which aggrid recommends as default.
 
@@ -122,9 +122,11 @@ To Do
 
 ## Schedule State Changes
 
-In previous version each Function that had a Schedule persisted details of the Schedule in its own section of State.
+In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of State.
 
 This has been changed and now there is a Schedule section of State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
+
+One consequence of this is that the `Reminder` section of Adaptable State has been removed as it is no longer required.
 
 ## Percent Bar Improvements
 

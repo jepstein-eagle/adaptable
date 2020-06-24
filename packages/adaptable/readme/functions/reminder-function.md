@@ -43,3 +43,5 @@ To Do
 - [Reminder Api](https://api.adaptabletools.com/interfaces/_src_api_reminderapi_.reminderapi.html)
 
 - [Reminder Demo](https://demo.adaptabletools.com/alertsmessages/aggridreminderdemo)
+  
+- [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html)

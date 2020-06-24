@@ -2,6 +2,8 @@
 
 To Do...
 
+note this plugin depends on `@ag-grid-enterprise/master-detail`
+
 ## Demo
 
 To Do...

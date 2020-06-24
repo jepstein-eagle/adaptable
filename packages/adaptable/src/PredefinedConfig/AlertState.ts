@@ -105,12 +105,12 @@ export interface AlertDefinition extends AdaptableObject {
   /**
    * The Id (fieldname) of the column whose change will trigger the alert
    */
-  ColumnId: string;
+  ColumnId?: string;
 
   /**
    * The `QueryRange` of the Alert (see [[Expression]] for more information on Ranges).
    */
-  Range: QueryRange;
+  Range?: QueryRange;
 
   /**
    * An (optional) Expression (or Query).
