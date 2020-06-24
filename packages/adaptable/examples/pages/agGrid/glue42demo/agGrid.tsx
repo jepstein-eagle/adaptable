@@ -18,7 +18,7 @@ import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 import { TickingDataHelper } from '../../TickingDataHelper';
 import glue42 from '../../../../../plugins/glue42';
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -52,7 +52,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
 
   if (useTickingData) {
     tickingDataHelper.useTickingDataagGrid(

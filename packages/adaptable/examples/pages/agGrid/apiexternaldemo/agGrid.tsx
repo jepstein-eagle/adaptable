@@ -42,7 +42,7 @@ export function setCustomTheme() {
   adaptableApi.themeApi.loadTheme('custom-theme');
 }
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -51,7 +51,7 @@ function InitAdaptableDemo() {
     'api external demo'
   );
   adaptableOptions.predefinedConfig = demoConfig;
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

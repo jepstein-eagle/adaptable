@@ -23,7 +23,7 @@ import { AuditLogEntry } from '../../../../src/Utilities/Interface/AuditLogEntry
 import { ca } from 'date-fns/locale';
 import { api } from 'ipushpull-js';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(1000);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -52,7 +52,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
 
   // here we subscribe to the AuditFunctionApplied and filter out where its not Calculated Column
   // then we can do stuff

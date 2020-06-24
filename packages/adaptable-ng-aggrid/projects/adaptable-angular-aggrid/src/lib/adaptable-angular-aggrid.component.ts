@@ -58,77 +58,28 @@ export class AdaptableAngularAgGridComponent
     this.adaptableContainerId = `adaptable-${seedId}`;
   }
 
-  ngAfterViewInit() {
-    const startTime = Date.now();
+  async ngAfterViewInit() {
+    this.adaptableOptions.vendorGrid = this.gridOptions;
 
-    const poolForAggrid = (callback: () => void) => {
-      const api = this.gridOptions.api;
+    this.adaptableOptions.containerOptions =
+      this.adaptableOptions.containerOptions || {};
+    this.adaptableOptions.containerOptions.adaptableContainer = this.adaptableContainerId;
 
-      if (Date.now() - startTime > 1000) {
-        console.warn(
-          `Could not find any agGrid instance rendered.
-Please make sure you pass "gridOptions" to AdapTable, so it can connect to the correct agGrid instance.`
-        );
-        return;
-      }
-
-      if (!api) {
-        requestAnimationFrame(() => {
-          poolForAggrid(callback);
-        });
-      } else {
-        callback();
-      }
-    };
-
-    poolForAggrid(() => {
-      // IF YOU UPDATE THIS, make sure you also update the React wrapper impl
-      const layoutElements = (this.gridOptions.api as any).gridOptionsWrapper
-        ? (this.gridOptions.api as any).gridOptionsWrapper.layoutElements || []
-        : [];
-
-      let vendorContainer;
-
-      for (let i = 0, len = layoutElements.length; i < len; i++) {
-        const element = layoutElements[i];
-
-        if (element && element.matches('.ag-root-wrapper')) {
-          const gridContainer = element.closest('[class*="ag-theme"]');
-
-          if (gridContainer) {
-            vendorContainer = gridContainer;
-            break;
-          }
-        }
-      }
-
-      if (!vendorContainer) {
-        console.error(
-          `Could not find the agGrid vendor container. This will probably break some AdapTable functionality.`
-        );
-      }
-
-      this.adaptableOptions.vendorGrid = this.gridOptions;
-
-      this.adaptableOptions.containerOptions =
-        this.adaptableOptions.containerOptions || {};
-      this.adaptableOptions.containerOptions.adaptableContainer = this.adaptableContainerId;
-      this.adaptableOptions.containerOptions.vendorContainer = vendorContainer;
-
-      const adaptableApi = Adaptable.init(this.adaptableOptions);
-
-      adaptableApi.eventApi.on(
-        'AdaptableReady',
-        (adaptabReadyInfo: {
-          adaptableApi: AdaptableApi;
-          vendorGrid: GridOptions;
-        }) => {
-          this.adaptableReady.emit(adaptabReadyInfo);
-        }
-      );
-
-      this.adaptableApi = adaptableApi;
+    const adaptableApi = await Adaptable.initInternal(this.adaptableOptions, {
+      waitForAgGrid: true,
     });
+
+    adaptableApi.eventApi.on(
+      'AdaptableReady',
+      (adaptabReadyInfo: {
+        adaptableApi: AdaptableApi;
+        vendorGrid: GridOptions;
+      }) => {
+        this.adaptableReady.emit(adaptabReadyInfo);
+      }
+    );
+
+    this.adaptableApi = adaptableApi;
   }
 
   ngOnDestroy() {

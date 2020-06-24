@@ -18,7 +18,7 @@ import {
 } from '../../../../src/types';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   // const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = {
     columnDefs: [
@@ -83,7 +83,7 @@ function InitAdaptableDemo() {
     },
   };
   adaptableOptions.predefinedConfig = demoConfig;
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
 
   adaptableApi.eventApi.on('SearchChanged', (args: SearchChangedEventArgs) => {
     const { data } = args;

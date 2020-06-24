@@ -24,7 +24,7 @@ import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarBu
 import openfin from '../../../../../plugins/openfin/src';
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
   const tradeCount: number = 25;
@@ -137,7 +137,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;

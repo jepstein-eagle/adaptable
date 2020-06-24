@@ -15,7 +15,7 @@ import nocode from '../../../../../../../plugins/nocode-aggrid/src';
 import charts from '../../../../../../../plugins/charts/src';
 import finance from '../../../../../../../plugins/finance/src';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',

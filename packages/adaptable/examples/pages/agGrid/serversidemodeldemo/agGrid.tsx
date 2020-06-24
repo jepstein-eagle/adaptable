@@ -21,7 +21,7 @@ import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 100;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -53,7 +53,7 @@ function InitAdaptableDemo() {
     clearSearchesOnStartUp: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   const TOTAL_COUNT = 100;
   // create ServerSideDatasource with a reference to your server

@@ -16,7 +16,7 @@ Demo that hopefully will demonstrate how to create a dark theme
 Needs other things to work but it should be possible to stipulate a Current Theme and then that will make it all work?
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(10);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -33,7 +33,7 @@ function InitAdaptableDemo() {
     },
     predefinedConfig: demoConfig,
   };
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

@@ -37,7 +37,7 @@ It tests both the 'old' event syntax and the new one with an option to switch be
 Goign forward, new events wil ONLY use the new syntax.
 */
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(500);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -50,7 +50,7 @@ function InitAdaptableDemo() {
     serverSearchOption: 'AllSearchandSort',
   };
   adaptableOptions.predefinedConfig = demoConfig;
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 
   // new way
   adaptableApi.eventApi.on('ThemeChanged', (themeChangedEventArgs: ThemeChangedEventArgs) => {

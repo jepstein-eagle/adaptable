@@ -15,7 +15,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { TickingDataHelper } from '../../TickingDataHelper';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTreeData();
   const tickingDataHelper = new TickingDataHelper();
@@ -33,7 +33,7 @@ function InitAdaptableDemo() {
 
   adaptableOptions.predefinedConfig = demoConfig;
 
-  const api = Adaptable.init(adaptableOptions);
+  const api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     tickingDataHelper.useTickingDataTreeGrid(info.vendorGrid, info.adaptableApi, 10);

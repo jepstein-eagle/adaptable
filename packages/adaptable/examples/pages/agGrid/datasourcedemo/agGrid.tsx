@@ -21,7 +21,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AdaptableSearchState } from '../../../../src/Api/Events/SearchChanged/AdaptableSearchState';
 import { SearchChangedInfo } from '../../../../src/Api/Events/SearchChanged/SearchChangedInfo';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   // const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(null);
@@ -48,7 +48,7 @@ function InitAdaptableDemo() {
     },
   };
   adaptableOptions.predefinedConfig = demoConfig;
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 function listenToSearchChange(

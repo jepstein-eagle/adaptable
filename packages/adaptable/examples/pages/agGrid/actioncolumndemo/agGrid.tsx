@@ -17,7 +17,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 
 var adaptableApi: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
 
   const tradeData: any = examplesHelper.getTrades(300);
@@ -57,7 +57,7 @@ function InitAdaptableDemo() {
     autoSizeColumnsInLayout: true,
   };
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
   adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {

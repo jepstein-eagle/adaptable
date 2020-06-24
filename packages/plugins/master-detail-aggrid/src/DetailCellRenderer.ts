@@ -11,7 +11,7 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
   adaptableDestroyed: boolean = false;
   init(params: IDetailCellRendererParams) {
     const oldOnGridReady = params.detailGridOptions.onGridReady;
-    params.detailGridOptions.onGridReady = event => {
+    params.detailGridOptions.onGridReady = async (event: any) => {
       if (this.adaptableApi || this.adaptableDestroyed) return;
 
       if (oldOnGridReady) {
@@ -42,7 +42,7 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
       const predefinedConfig =
         typeof detailOptions.predefinedConfig === 'string' ? {} : detailOptions.predefinedConfig;
 
-      this.adaptableApi = Adaptable.init({
+      this.adaptableApi = await Adaptable.init({
         adaptableId: `${masterAdaptable.adaptableOptions.adaptableId} Detail`,
         ...detailOptions,
         predefinedConfig: {

@@ -22,7 +22,7 @@ import {
 import { IPushPullReport } from '../../../../src/PredefinedConfig/IPushPullState';
 import ipp from '../../../../../plugins/ipushpull/src';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -47,7 +47,7 @@ function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
   };
 
-  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
 
   const ippApi = adaptableApi.pluginsApi.getPluginApi('ipushpull');
 

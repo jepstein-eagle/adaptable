@@ -22,7 +22,7 @@ import { TickingDataHelper } from '../../TickingDataHelper';
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -56,7 +56,7 @@ function InitAdaptableDemo() {
     showGroupingTotalsAsHeader: true,
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
     if (useTickingData) {

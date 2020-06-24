@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { GridOptions } from '@ag-grid-community/all-modules';
 
-import { AdaptableOptions, IAdaptable } from '../types';
+import { AdaptableOptions } from '../types';
+import { AdaptableApi } from '../Api/AdaptableApi';
 
 export type AdaptableNoCodeWizardInitFn = ({
   gridOptions,
@@ -9,7 +10,7 @@ export type AdaptableNoCodeWizardInitFn = ({
 }: {
   gridOptions: GridOptions;
   adaptableOptions: AdaptableOptions;
-}) => IAdaptable | null | void;
+}) => Promise<AdaptableApi>;
 
 export interface AdaptableNoCodeWizardOptions {
   onInit?: AdaptableNoCodeWizardInitFn;

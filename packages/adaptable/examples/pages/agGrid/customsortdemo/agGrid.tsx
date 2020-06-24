@@ -16,7 +16,7 @@ import { ApplicationDataEntry } from '../../../../src/PredefinedConfig/Applicati
 
 var api: AdaptableApi;
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
@@ -62,7 +62,7 @@ function InitAdaptableDemo() {
     ],
   };
 
-  api = Adaptable.init(adaptableOptions);
+  api = await Adaptable.init(adaptableOptions);
 
   api.eventApi.on('AdaptableReady', () => {
     let entries: ApplicationDataEntry[] = api.applicationApi.getApplicationDataEntries();

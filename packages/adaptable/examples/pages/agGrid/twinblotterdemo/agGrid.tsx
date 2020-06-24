@@ -7,7 +7,7 @@ import { GridOptions } from '@ag-grid-community/all-modules';
 import { AdaptableOptions } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
 
   // first grid
@@ -21,7 +21,7 @@ function InitAdaptableDemo() {
     adaptableContainer: 'adaptable1',
     vendorContainer: 'grid1',
   };
-  const api1 = Adaptable.init(adaptableOptions1);
+  const api1 = await Adaptable.init(adaptableOptions1);
 
   // second grid
   const tradeData2: any = examplesHelper.getTrades(500);
@@ -34,7 +34,7 @@ function InitAdaptableDemo() {
     adaptableContainer: 'adaptable2',
     vendorContainer: 'grid2',
   };
-  const api2 = Adaptable.init(adaptableOptions2);
+  const api2 = await Adaptable.init(adaptableOptions2);
 }
 
 export default () => {

@@ -24,7 +24,7 @@ import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
 import { UserMenuItem } from '../../../../src/PredefinedConfig/UserInterfaceState';
 
 var adaptableApi: AdaptableApi;
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
@@ -114,7 +114,7 @@ function InitAdaptableDemo() {
     },
   };
 
-  adaptableApi = Adaptable.init(adaptableOptions);
+  adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {

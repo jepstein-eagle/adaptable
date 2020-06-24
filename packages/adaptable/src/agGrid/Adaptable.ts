@@ -157,9 +157,35 @@ import FormatHelper from '../Utilities/Helpers/FormatHelper';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
+const waitForAgGrid = (isReady: () => boolean): Promise<any> => {
+  const startTime = Date.now();
+
+  return new Promise((resolve, reject) => {
+    const wait = (callback: () => void) => {
+      const ready = isReady();
+
+      if (Date.now() - startTime > 1000) {
+        console.warn(`Could not find any agGrid instance rendered.`);
+        reject(`Could not find any agGrid instance rendered.`);
+        return;
+      }
+
+      if (!ready) {
+        requestAnimationFrame(() => {
+          wait(callback);
+        });
+      } else {
+        callback();
+      }
+    };
+
+    wait(resolve);
+  });
+};
+
 // do I need this in both places??
 type RuntimeConfig = {
-  instantiateGrid?: (...args: any[]) => any;
+  waitForAgGrid?: boolean;
 };
 
 const RowNodeProto: any = RowNode.prototype as unknown;
@@ -250,8 +276,6 @@ export class Adaptable implements IAdaptable {
 
   private agGridHelper: agGridHelper;
 
-  private renderGrid: boolean;
-
   private runtimeConfig?: RuntimeConfig;
 
   private emitter: Emitter;
@@ -270,37 +294,12 @@ export class Adaptable implements IAdaptable {
   private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
-  /**
-   * Static constructor for Adaptable
-   * Receives an AdaptableOptions object and returns the api object to enable run-time access to AdapTable's properties and functions
-   * @param adaptableOptions an instance of AdaptableOptions
-   */
-  public static init(adaptableOptions: AdaptableOptions): AdaptableApi {
-    const extraOptions = {
-      renderGrid: undefined as boolean,
-      runtimeConfig: null as RuntimeConfig,
-    };
+  public static initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
+    return Adaptable.initInternal(adaptableOptions);
+  }
 
-    if (Array.isArray(adaptableOptions.plugins)) {
-      adaptableOptions.plugins.forEach(plugin => {
-        plugin.beforeInit(adaptableOptions, extraOptions);
-      });
-    }
-
-    const ab = new Adaptable(
-      adaptableOptions,
-      extraOptions.renderGrid,
-      extraOptions.runtimeConfig,
-      true
-    );
-
-    if (Array.isArray(adaptableOptions.plugins)) {
-      adaptableOptions.plugins.forEach(plugin => {
-        plugin.afterInit(ab);
-      });
-    }
-
-    return ab.api;
+  public static init(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
+    return Adaptable.initInternal(adaptableOptions);
   }
 
   /**
@@ -309,7 +308,10 @@ export class Adaptable implements IAdaptable {
    * Returns a Promise containing the api object in order to enable run-time access to AdapTable's properties and functions
    * @param adaptableOptions an instance of AdaptableOptions
    */
-  public static async initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
+  public static async initInternal(
+    adaptableOptions: AdaptableOptions,
+    runtimeConfig?: RuntimeConfig
+  ): Promise<AdaptableApi> {
     const extraOptions = {
       renderGrid: undefined as boolean,
       runtimeConfig: null as RuntimeConfig,
@@ -317,24 +319,21 @@ export class Adaptable implements IAdaptable {
 
     if (Array.isArray(adaptableOptions.plugins)) {
       for await (let plugin of adaptableOptions.plugins) {
-        await plugin.beforeInit(adaptableOptions, extraOptions);
+        await plugin.beforeInit(adaptableOptions);
       }
     }
 
-    const ab = new Adaptable(
-      adaptableOptions,
-      extraOptions.renderGrid,
-      extraOptions.runtimeConfig,
-      true
-    );
+    const ab = new Adaptable();
 
-    if (Array.isArray(adaptableOptions.plugins)) {
-      adaptableOptions.plugins.forEach(plugin => {
-        plugin.afterInit(ab);
-      });
-    }
+    return ab.init(adaptableOptions, runtimeConfig, true).then(api => {
+      if (Array.isArray(adaptableOptions.plugins)) {
+        adaptableOptions.plugins.forEach(plugin => {
+          plugin.afterInit(ab);
+        });
+      }
 
-    return ab.api;
+      return api;
+    });
   }
 
   private static collectInstance(adaptable: Adaptable) {
@@ -352,31 +351,31 @@ export class Adaptable implements IAdaptable {
     delete adaptableInstances[adaptable._id];
   }
 
+  constructor() {}
+
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
-  constructor(
+  async init(
     adaptableOptions: AdaptableOptions,
-    renderGrid: boolean = true,
     runtimeConfig?: RuntimeConfig,
     _staticInit?: boolean
-  ) {
+  ): Promise<AdaptableApi> {
     if (!_staticInit) {
       LoggingHelper.LogAdaptableWarning(`
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!!!!!!! You should not use the "Adaptable" constructor directly, as it is deprecated and will not work in a future version!
+!!!!!!! You should not use the "Adaptable" constructor directly, as it was deprecated in v6 and removed in v7!
 !!!!!!!
-!!!!!!! Use Adaptable.init(adaptableOptions) instead.
+!!!!!!! Use const api = await Adaptable.init(adaptableOptions) instead.
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`);
     }
     this.emitter = new Emitter();
 
-    this.renderGrid = renderGrid;
     // we create AdaptableOptions by merging the values provided by the user with the defaults (where no value has been set)
     this.adaptableOptions = AdaptableHelper.assignadaptableOptions(adaptableOptions);
 
     Adaptable.collectInstance(this);
     AdaptableHelper.CheckadaptableOptions(this.adaptableOptions);
-    this.runtimeConfig = runtimeConfig;
+    this.runtimeConfig = runtimeConfig || ({} as RuntimeConfig);
 
     this.gridOptions = this.adaptableOptions!.vendorGrid;
     if (this.gridOptions.allowContextMenuWithControlKey === undefined) {
@@ -407,23 +406,6 @@ export class Adaptable implements IAdaptable {
     // create the store
     this.initStore();
 
-    const isGridInstantiated =
-      this.gridOptions.api && typeof this.gridOptions.api!.getValue === 'function';
-    if (!isGridInstantiated) {
-      const canInstantiateGrid = this.tryInstantiateAgGrid();
-      if (!canInstantiateGrid) {
-        // we have no grid, we can't do anything
-        LoggingHelper.LogAdaptableError('Unable to set up ag-Grid');
-        return;
-      }
-    }
-
-    // add our adaptable object to the grid options api object
-    // this is VERY useful for when we need to access Adaptable inside of agGrid only functions
-    if (this.gridOptions.api) {
-      (this.gridOptions.api as any).__adaptable = this;
-    }
-
     // create the services
     this.CalendarService = new CalendarService(this);
     this.ValidationService = new ValidationService(this);
@@ -446,34 +428,44 @@ export class Adaptable implements IAdaptable {
 
     this.forPlugins(plugin => plugin.afterInitStrategies(this, this.strategies));
 
-    // Load the store
-    this.AdaptableStore.Load.then(
-      () => this.strategies.forEach(strat => strat.initializeWithRedux()),
-      e => {
-        LoggingHelper.LogAdaptableError('Failed to Init AdaptableStore : ', e);
-        // for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
-        this.strategies.forEach(strat => strat.initializeWithRedux());
-        this.api.internalApi.hideLoadingScreen(); // doesnt really help but at least clears the screen
+    return this.initializeAgGrid().then(initialized => {
+      if (!initialized) {
+        // we have no grid, we can't do anything
+        LoggingHelper.LogAdaptableError('Unable to set up ag-Grid');
+        return this.api;
       }
-    )
-      .then(
-        () => this.initInternalGridLogic(),
+
+      // add our adaptable object to the grid options api object
+      // this is VERY useful for when we need to access Adaptable inside of agGrid only functions
+      if (this.gridOptions.api) {
+        (this.gridOptions.api as any).__adaptable = this;
+      }
+
+      // Load the store
+      this.AdaptableStore.Load.then(
+        () => this.strategies.forEach(strat => strat.initializeWithRedux()),
         e => {
-          LoggingHelper.LogAdaptableError('Failed to Init Strategies : ', e);
-          // for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
-          this.initInternalGridLogic();
+          LoggingHelper.LogAdaptableError('Failed to Init AdaptableStore : ', e);
+          // for now we initiliaze the strategies even if loading state has failed (perhaps revisit this?)
+          this.strategies.forEach(strat => strat.initializeWithRedux());
           this.api.internalApi.hideLoadingScreen(); // doesnt really help but at least clears the screen
         }
       )
-      .then(async () => {
-        this.applyFinalRendering();
-        this.isInitialised = true;
-        this.api.internalApi.hideLoadingScreen();
-      });
+        .then(
+          () => this.initInternalGridLogic(),
+          e => {
+            LoggingHelper.LogAdaptableError('Failed to Init Strategies : ', e);
+            // for now we initiliaze the grid even if initialising strategies has failed (perhaps revisit this?)
+            this.initInternalGridLogic();
+            this.api.internalApi.hideLoadingScreen(); // doesnt really help but at least clears the screen
+          }
+        )
+        .then(async () => {
+          this.applyFinalRendering();
+          this.isInitialised = true;
+          this.api.internalApi.hideLoadingScreen();
+        });
 
-    // render Adaptable - might be false because for example the react wrapper will skip rendering
-    // as it will do rendering by itself
-    if (renderGrid) {
       if (this.abContainerElement == null) {
         this.abContainerElement = this.getadaptableContainerElement();
       }
@@ -481,17 +473,19 @@ export class Adaptable implements IAdaptable {
         this.abContainerElement.innerHTML = '';
         ReactDOM.render(AdaptableApp({ Adaptable: this }), this.abContainerElement);
       }
-    }
 
-    // create debounce methods that take a time based on user settings
-    this.throttleOnDataChangedUser = _.throttle(
-      this.applyDataChange,
-      this.adaptableOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
-    );
-    this.throttleOnDataChangedExternal = _.throttle(
-      this.applyDataChange,
-      this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
-    );
+      // create debounce methods that take a time based on user settings
+      this.throttleOnDataChangedUser = _.throttle(
+        this.applyDataChange,
+        this.adaptableOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
+      );
+      this.throttleOnDataChangedExternal = _.throttle(
+        this.applyDataChange,
+        this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
+      );
+
+      return this.api;
+    });
   }
 
   forPlugins(callback: (plugin: AdaptablePlugin) => any) {
@@ -572,15 +566,7 @@ export class Adaptable implements IAdaptable {
     );
   }
 
-  private tryInstantiateAgGrid(): boolean {
-    const vendorContainer = this.getGridContainerElement();
-    if (!vendorContainer) {
-      LoggingHelper.LogAdaptableError(
-        'You must provide an element id in `containerOptions.vendorContainer`'
-      );
-      return false;
-    }
-
+  private async initializeAgGrid(): Promise<boolean> {
     // set up whether we use the getRowNode method or loop when finding a rowNode (former is preferable)
     // can only do that here as the gridOptions not yet set up
     this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
@@ -617,18 +603,87 @@ export class Adaptable implements IAdaptable {
         );
       }
     }
+
+    const checkVendorContainer = () => {
+      let vendorContainer = this.getGridContainerElement();
+
+      if (!vendorContainer) {
+        vendorContainer = this.initVendorContainerFromInitializedAgGrid();
+        if (!vendorContainer) {
+          LoggingHelper.LogAdaptableError(
+            'You must provide an element id in `containerOptions.vendorContainer`'
+          );
+
+          return false;
+        }
+      }
+      return true;
+    };
+
+    const isGridInstantiated =
+      this.gridOptions.api && typeof this.gridOptions.api!.getValue === 'function';
+
+    if (isGridInstantiated) {
+      if (!checkVendorContainer()) {
+        return Promise.resolve(false);
+      }
+      return Promise.resolve(true);
+    }
+
+    if (this.runtimeConfig.waitForAgGrid) {
+      return waitForAgGrid(() => !!this.gridOptions.api).then(() => {
+        this.initVendorContainerFromInitializedAgGrid();
+        return Promise.resolve(true);
+      });
+    } else {
+      if (!checkVendorContainer()) {
+        return Promise.resolve(false);
+      }
+    }
     // now create the grid itself - we have to do it this way as previously when we instantiated the Grid 'properly' it got created as J.Grid
     let grid: any;
     const modules = (this.adaptableOptions.vendorGrid || {}).modules || [];
 
-    delete (this.gridOptions as any).modules;
+    const vendorContainer = this.getGridContainerElement();
 
-    if (this.runtimeConfig && this.runtimeConfig.instantiateGrid) {
-      grid = this.runtimeConfig.instantiateGrid(vendorContainer, this.gridOptions, { modules });
-    } else {
-      grid = new Grid(vendorContainer, this.gridOptions, { modules });
+    grid = new Grid(vendorContainer, this.gridOptions, { modules });
+
+    return Promise.resolve(grid != null);
+  }
+
+  private initVendorContainerFromInitializedAgGrid() {
+    if (this.getGridContainerElement()) {
+      return;
     }
-    return grid != null;
+
+    const layoutElements = this.gridOptions.api
+      ? (this.gridOptions.api as any).gridOptionsWrapper
+        ? (this.gridOptions.api as any).gridOptionsWrapper.layoutElements || []
+        : []
+      : [];
+
+    let vendorContainer;
+
+    for (let i = 0, len = layoutElements.length; i < len; i++) {
+      const element = layoutElements[i];
+
+      if (element && element.matches('.ag-root-wrapper')) {
+        const gridContainer = element.closest('[class*="ag-theme"]');
+
+        if (gridContainer) {
+          vendorContainer = gridContainer;
+          break;
+        }
+      }
+    }
+
+    if (!vendorContainer) {
+      console.error(
+        `Could not find the agGrid vendor container. This will probably break some AdapTable functionality.`
+      );
+    }
+
+    return (this.adaptableOptions.containerOptions.vendorContainer = vendorContainer);
   }
 
   // debounced methods
@@ -2066,18 +2121,16 @@ export class Adaptable implements IAdaptable {
   }
 
   private initInternalGridLogic() {
-    if (this.renderGrid) {
-      if (this.abContainerElement == null) {
-        this.abContainerElement = this.getadaptableContainerElement();
-      }
-      if (this.abContainerElement == null) {
-        LoggingHelper.LogAdaptableError(
-          `There is no DIV with id="${
-            this.adaptableOptions!.containerOptions.adaptableContainer
-          }" so cannot render Adaptable`
-        );
-        return;
-      }
+    if (this.abContainerElement == null) {
+      this.abContainerElement = this.getadaptableContainerElement();
+    }
+    if (this.abContainerElement == null) {
+      LoggingHelper.LogAdaptableError(
+        `There is no DIV with id="${
+          this.adaptableOptions!.containerOptions.adaptableContainer
+        }" so cannot render Adaptable`
+      );
+      return;
     }
 
     const gridContainerElement = this.getGridContainerElement();
@@ -3897,10 +3950,10 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
    * @param adaptableOptions
    */
   constructor(adaptableOptions: AdaptableOptions, extraOptions: AdaptableNoCodeWizardOptions = {}) {
-    const defaultInit: AdaptableNoCodeWizardInitFn = ({ gridOptions, adaptableOptions }) => {
+    const defaultInit: AdaptableNoCodeWizardInitFn = async ({ gridOptions, adaptableOptions }) => {
       adaptableOptions.vendorGrid = gridOptions;
 
-      return new Adaptable(adaptableOptions);
+      return await Adaptable.init(adaptableOptions);
     };
 
     this.adaptableOptions = adaptableOptions;
@@ -3934,19 +3987,13 @@ export class AdaptableNoCodeWizard implements IAdaptableNoCodeWizard {
         adaptableOptions: this.adaptableOptions,
         ...this.extraOptions,
         onInit: (adaptableOptions: AdaptableOptions) => {
-          let adaptable: IAdaptable | null | void;
-
           container!.classList.remove('adaptable--in-wizard');
           ReactDOM.unmountComponentAtNode(container!);
 
-          adaptable = this.init({
+          this.init({
             adaptableOptions,
             gridOptions: adaptableOptions.vendorGrid,
           });
-
-          if (adaptable === undefined) {
-            new Adaptable(adaptableOptions);
-          }
         },
       }),
       container

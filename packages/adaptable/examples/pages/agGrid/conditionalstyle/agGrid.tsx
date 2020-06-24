@@ -208,7 +208,7 @@ const getBasicNorthwindColumnSchema = (): any[] => {
   return schema;
 };
 
-function InitAdaptableDemo() {
+async function InitAdaptableDemo() {
   const gridOptions: GridOptions = {
     columnDefs: getBasicNorthwindColumnSchema(),
     rowData: jsonData,
@@ -236,7 +236,7 @@ function InitAdaptableDemo() {
     predefinedConfig: config as PredefinedConfig,
   };
 
-  const adaptableApi = Adaptable.init(adaptableOptions);
+  const adaptableApi = await Adaptable.init(adaptableOptions);
   setTimeout(() => {
     if (adaptableApi.layoutApi.getCurrentLayoutName() === 'Ab_Default_Layout') {
       gridOptions.columnApi!.autoSizeAllColumns();
