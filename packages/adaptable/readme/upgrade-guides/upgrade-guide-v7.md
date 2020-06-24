@@ -64,6 +64,10 @@ With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was update
 </div>
 ```
 
+#### TODO components
+
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+
 #### Deprecated props
 
  - `agGridTheme` - no longer supported - see above example for how to specify the agGrid theme - add the corresponding `className` prop on the `div` wrapping `<AgGridReact />`
@@ -114,6 +118,10 @@ onAdaptableReady({
   }
 ````
 
+
+#### TODO components
+
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 
 
 ## New Calculated Column Expression Syntax

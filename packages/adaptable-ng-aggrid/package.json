@@ -22,6 +22,7 @@
     "@ag-grid-community/all-modules": "23.2.0",
     "@ag-grid-community/angular": "23.2.0",
     "@ag-grid-enterprise/menu": "23.2.0",
+    "@ag-grid-enterprise/all-modules": "23.2.0",
     "@ag-grid-enterprise/range-selection": "23.2.0",
     "@ag-grid-enterprise/side-bar": "23.2.0",
     "@angular-devkit/build-angular": "~0.901.6",

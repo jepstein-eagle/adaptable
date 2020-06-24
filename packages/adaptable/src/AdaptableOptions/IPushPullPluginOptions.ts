@@ -1,7 +1,5 @@
-import { IIPPConfig } from 'ipushpull-js/dist/Config';
-
 export interface IPushPullPluginOptions {
-  ippConfig?: IIPPConfig;
+  ippConfig?: any;
 
   /**
    * The user's ipushpull user name (usually an email address)

@@ -29,7 +29,6 @@ function getRandomInt(max: number): number {
       :host {
         display: flex;
         flex-flow: var(--ab_flex-direction, column);
-        min-height: var(--ab_min-height, 100px);
       }
     `,
   ],

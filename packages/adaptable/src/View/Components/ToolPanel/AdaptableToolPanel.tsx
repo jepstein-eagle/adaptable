@@ -7,7 +7,7 @@ import * as SystemRedux from '../../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
-import { IToolPanelComp, IToolPanelParams } from '@ag-grid-community/all-modules';
+import { IToolPanelComp, IToolPanelParams, GridApi } from '@ag-grid-community/all-modules';
 import { render } from 'react-dom';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Flex, Box } from 'rebass';
@@ -356,27 +356,26 @@ export const ConnectedAdaptableToolPanel = connect(
   mapDispatchToProps
 )(AdaptableToolPanelComponent);
 
-export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
-  class AdaptableToolPanel implements IToolPanelComp {
+export const getAdaptableToolPanelAgGridComponent = (adaptable?: IAdaptable) => {
+  return class AdaptableToolPanelAgGridComponent implements IToolPanelComp {
     public gui: HTMLElement;
-    public ctx: AdaptableToolPanelContext;
-
-    public constructor() {
-      this.ctx = ctx;
-    }
 
     public init(params?: IToolPanelParams): void {
+      const api = params.api as GridApi;
+      const Adaptable = (api as any).__adaptable || adaptable;
+      const AdaptableApi = Adaptable.api;
+
       this.gui = document.createElement('div');
-      this.gui.id = 'adaptable-tool-panel_' + this.ctx.Adaptable.adaptableOptions.adaptableId;
+      this.gui.id = 'adaptable-tool-panel_' + Adaptable.adaptableOptions.adaptableId;
       this.gui.style.width = '100%';
       this.gui.style.overflow = 'auto';
       render(
-        <Provider store={this.ctx.Adaptable.AdaptableStore.TheStore}>
+        <Provider store={Adaptable.AdaptableStore.TheStore}>
           <ThemeProvider theme={theme}>
-            <AdaptableContext.Provider value={this.ctx.Adaptable}>
+            <AdaptableContext.Provider value={Adaptable}>
               <ConnectedAdaptableToolPanel
-                Adaptable={this.ctx.Adaptable}
-                Api={this.ctx.Api}
+                Adaptable={Adaptable}
+                Api={AdaptableApi}
                 TeamSharingActivated={false}
               />
             </AdaptableContext.Provider>
@@ -397,3 +396,6 @@ export const AdaptableToolPanelBuilder = (ctx: AdaptableToolPanelContext) =>
       // no refresh logic needed
     }
   };
+};
+
+export const AdaptableToolPanelAgGridComponent = getAdaptableToolPanelAgGridComponent();

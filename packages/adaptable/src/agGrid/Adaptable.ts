@@ -102,7 +102,7 @@ import {
   DARK_THEME,
 } from '../Utilities/Constants/GeneralConstants';
 import { agGridHelper } from './agGridHelper';
-import { AdaptableToolPanelBuilder } from '../View/Components/ToolPanel/AdaptableToolPanel';
+import { getAdaptableToolPanelAgGridComponent } from '../View/Components/ToolPanel/AdaptableToolPanel';
 import { IScheduleService } from '../Utilities/Services/Interface/IScheduleService';
 import { ScheduleService } from '../Utilities/Services/ScheduleService';
 import { QuickSearchState } from '../PredefinedConfig/QuickSearchState';
@@ -160,6 +160,10 @@ ModuleRegistry.registerModules(AllCommunityModules);
 const waitForAgGrid = (isReady: () => boolean): Promise<any> => {
   const startTime = Date.now();
 
+  const ready = isReady();
+  if (ready) {
+    return Promise.resolve();
+  }
   return new Promise((resolve, reject) => {
     const wait = (callback: () => void) => {
       const ready = isReady();
@@ -428,6 +432,11 @@ export class Adaptable implements IAdaptable {
 
     this.forPlugins(plugin => plugin.afterInitStrategies(this, this.strategies));
 
+    // also try to set it early, here, if the grid is initialized - needed for AdapTable tool panel
+    if (this.gridOptions.api) {
+      (this.gridOptions.api as any).__adaptable = this;
+    }
+
     return this.initializeAgGrid().then(initialized => {
       if (!initialized) {
         // we have no grid, we can't do anything
@@ -566,7 +575,7 @@ export class Adaptable implements IAdaptable {
     );
   }
 
-  private async initializeAgGrid(): Promise<boolean> {
+  private initializeAgGrid(): Promise<boolean> {
     // set up whether we use the getRowNode method or loop when finding a rowNode (former is preferable)
     // can only do that here as the gridOptions not yet set up
     this.useRowNodeLookUp = this.agGridHelper.TrySetUpNodeIds();
@@ -597,10 +606,11 @@ export class Adaptable implements IAdaptable {
             sidebarDef.toolPanels.push(this.agGridHelper.createAdaptableToolPanel());
           }
         }
-        const toolpanelContext: AdaptableToolPanelContext = { Adaptable: this, Api: this.api };
-        this.gridOptions.components.AdaptableToolPanel = AdaptableToolPanelBuilder(
-          toolpanelContext
-        );
+        this.gridOptions.components.AdaptableToolPanel = getAdaptableToolPanelAgGridComponent(this);
+
+        if (this.gridOptions.api) {
+          this.gridOptions.api.setSideBar(this.gridOptions.sideBar as SideBarDef);
+        }
       }
     }
 
@@ -646,7 +656,17 @@ export class Adaptable implements IAdaptable {
 
     const vendorContainer = this.getGridContainerElement();
 
+    if ((this.gridOptions as any).modules) {
+      delete (this.gridOptions as any).modules;
+    }
+
     grid = new Grid(vendorContainer, this.gridOptions, { modules });
+
+    // add our adaptable object to the grid options api object
+    // this is VERY useful for when we need to access Adaptable inside of agGrid only functions
+    if (this.gridOptions.api) {
+      (this.gridOptions.api as any).__adaptable = this;
+    }
 
     return Promise.resolve(grid != null);
   }

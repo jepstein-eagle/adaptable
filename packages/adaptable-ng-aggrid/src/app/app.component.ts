@@ -5,6 +5,8 @@ import {
   ClientSideRowModelModule,
 } from '@ag-grid-community/all-modules';
 
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
+
 import rowData from './rowData';
 import columns from './columns';
 // import {
@@ -36,6 +38,7 @@ export class AppComponent {
     MenuModule,
     SideBarModule,
     ClientSideRowModelModule,
+    ...AllEnterpriseModules,
   ];
 
   theOptions: AdaptableOptions = {

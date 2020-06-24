@@ -97,6 +97,24 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       editedColumnFilter: existingColumnFilter,
     };
   }
+
+  // TODO impl and call this to sync when column filters are cleared (eg: from toolbar)
+  // syncColumnFilter() {
+  //   let existingColumnFilter = this.props.ColumnFilters.find(
+  //     cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+  //   );
+  //   if (!existingColumnFilter) {
+  //     existingColumnFilter = ObjectFactory.CreateColumnFilter(
+  //       this.props.CurrentColumn.ColumnId,
+  //       ExpressionHelper.CreateEmptyExpression()
+  //     );
+  //   }
+
+  //   this.setState({
+  //     editedColumnFilter: existingColumnFilter,
+  //   });
+  // }
+
   componentDidMount() {
     if (this.props.CurrentColumn.DataType != DataType.Boolean) {
       let columnValuePairs: IRawValueDisplayValuePair[] = [];

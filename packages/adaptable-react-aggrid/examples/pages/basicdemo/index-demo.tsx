@@ -13,12 +13,14 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import LoggingHelper from '../../../../adaptable/src/Utilities/Helpers/LoggingHelper';
 
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 import { SideBarModule } from '@ag-grid-enterprise/side-bar';
 import { ClientSideRowModelModule, GridOptions } from '@ag-grid-community/all-modules';
 
 import charts from '../../../../plugins/charts/src';
 import './index.css';
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 
 const examplesHelper = new ExamplesHelper();
 
@@ -32,6 +34,9 @@ export default () => {
   const gridOptions = useMemo((): GridOptions => {
     const options: GridOptions = {
       sideBar: true,
+      // components: {
+      //   AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
+      // },
       columnTypes: {
         abColDefNumber: {},
         abColDefString: {},
@@ -109,7 +114,7 @@ export default () => {
       <div className="ag-theme-alpine" style={{ flex: 1 }}>
         <AgGridReact
           gridOptions={gridOptions}
-          modules={[SideBarModule, MenuModule, RangeSelectionModule, ClientSideRowModelModule]}
+          modules={[...AllEnterpriseModules, ClientSideRowModelModule]}
         />
       </div>
     </div>

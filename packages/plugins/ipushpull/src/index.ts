@@ -38,7 +38,7 @@ import { IPushPullAddPagePopup } from './View/IPushPullAddPagePopup';
 import * as IPushPullRedux from './Redux/ActionReducers/IPushPullRedux';
 import { IPushPullStrategy } from './Strategy/Interface/IPushPullStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
-import { IPushPullPluginOptions } from './IPushPullPluginOptions';
+import { IPushPullPluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/IPushPullPluginOptions';
 
 if (version !== coreVersion) {
   console.warn(`

@@ -15,7 +15,7 @@ import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { IAdaptable } from '@adaptabletools/adaptable/types';
 
 import { IPushPullService } from './Utilities/Services/Interface/IPushPullService';
-import { IPushPullPluginOptions } from './IPushPullPluginOptions';
+import { IPushPullPluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/IPushPullPluginOptions';
 
 export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   private ippInstance: any;
