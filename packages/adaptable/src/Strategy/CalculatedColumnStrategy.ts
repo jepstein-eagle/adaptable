@@ -31,6 +31,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
       let sortable: boolean;
       let pivotable: boolean;
       let aggregatable: boolean;
+      let width: number;
 
       if (cc.CalculatedColumnSettings == null || cc.CalculatedColumnSettings.DataType == null) {
         const cleanedExpression: string = this.adaptable.CalculatedColumnExpressionService.CleanExpressionColumnNames(
@@ -80,6 +81,12 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
       } else {
         aggregatable = cc.CalculatedColumnSettings.Aggregatable;
       }
+      if (cc.CalculatedColumnSettings == null || cc.CalculatedColumnSettings.Width == null) {
+        width = null; // ? is this right???
+        hasChanged = true;
+      } else {
+        width = cc.CalculatedColumnSettings.Width;
+      }
       if (hasChanged) {
         cc.CalculatedColumnSettings = {
           DataType: dataType,
@@ -89,6 +96,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
           Sortable: sortable,
           Pivotable: pivotable,
           Aggregatable: aggregatable,
+          Width: width,
         };
         this.adaptable.api.calculatedColumnApi.editCalculatedColumn(cc);
       }

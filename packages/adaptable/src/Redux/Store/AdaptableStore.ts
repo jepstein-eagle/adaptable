@@ -2934,7 +2934,8 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               currentLayout = layoutState.CurrentLayout;
             }
 
-            //Create all calculated columns before we load the layout
+            //Create all calculated columns which have stored in Adaptable State to be vendor Columns
+            // do this before we load the layout
             let calculatedColumnStrategy = <ICalculatedColumnStrategy>(
               adaptable.strategies.get(StrategyConstants.CalculatedColumnStrategyId)
             );
