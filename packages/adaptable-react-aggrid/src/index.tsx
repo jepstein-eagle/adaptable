@@ -81,4 +81,5 @@ const AdaptableReact = ({
   );
 };
 
+export { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 export default AdaptableReact;
