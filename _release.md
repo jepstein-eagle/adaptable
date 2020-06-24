@@ -1,4 +1,8 @@
-## 7.0.3 canary
+## 7.0.0-canary.4
+
+adaptable-parser integration fix
+
+## 7.0.0-canary.3
 
 small lodash fix
 

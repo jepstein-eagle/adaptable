@@ -62,7 +62,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "link-core": "symlink-dir ../adaptable ./node_modules/@adaptabletools/adaptable && npm run --prefix ./projects/adaptable-angular-aggrid link-core",
+    "link-core": "symlink-dir ../adaptable-parser ./node_modules/@adaptabletools/adaptable-parser && symlink-dir ../adaptable ./node_modules/@adaptabletools/adaptable && npm run --prefix ./projects/adaptable-angular-aggrid link-core",
     "start": "npm run link-core && node --max-old-space-size=4096 ./node_modules/.bin/ng serve",
     "clean-deps": "rimraf yarn.lock && rimraf package-lock.json && rimraf node_modules && npm i && npm run clean-deps-projects",
     "clean-deps-projects": "rimraf projects/adaptable-angular-aggrid/yarn.lock && rimraf projects/adaptable-angular-aggrid/package-lock.json && rimraf projects/adaptable-angular-aggrid/node_modules && npm --prefix projects/adaptable-angular-aggrid/ i",

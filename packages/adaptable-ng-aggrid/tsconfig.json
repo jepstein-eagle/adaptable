@@ -24,6 +24,8 @@
   },
   "include": [
     "src/**/*",
-    "../adaptable/src/**/*"
-  ]
+    "../adaptable/src/**/*",
+    "../adaptable-parser/src/*"
+  ],
+  "exclude": ["src/test.ts", "src/**/*.spec.ts","../adaptable-parser/src/**/*.test.ts"]
 }

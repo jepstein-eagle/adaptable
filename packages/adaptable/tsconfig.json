@@ -6,7 +6,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "target": "es5",
-    "types": ["node",],
+    "types": ["node"],
     "jsx": "react",
     "lib": ["ES2015","DOM"],
     "noUnusedLocals": false,

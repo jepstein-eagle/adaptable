@@ -207,7 +207,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           ) : column.DataType === 'Date' ? (
             <Input
               type="date"
-              value={data[column.ColumnId].toISOString().substr(0, 10)}
+              value={new Date(data[column.ColumnId]).toISOString().substr(0, 10)}
               onChange={(e: React.FormEvent) => {
                 setData({
                   ...data,
