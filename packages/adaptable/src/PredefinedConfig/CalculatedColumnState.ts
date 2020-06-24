@@ -51,6 +51,8 @@ export interface CalculatedColumn extends AdaptableObject {
 export interface CalculatedColumnSettings {
   DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 
+  Width?: number;
+
   Filterable?: boolean;
 
   Resizable?: boolean;

@@ -1773,6 +1773,7 @@ export class Adaptable implements IAdaptable {
           );
 
           // reset other value in case they have changed
+          newColDef.width = calculatedColumn.CalculatedColumnSettings.Width;
           newColDef.enableValue = calculatedColumn.CalculatedColumnSettings.Aggregatable;
           newColDef.filter = calculatedColumn.CalculatedColumnSettings.Filterable;
           newColDef.resizable = calculatedColumn.CalculatedColumnSettings.Resizable;
@@ -1865,6 +1866,7 @@ export class Adaptable implements IAdaptable {
       colId: calculatedColumn.ColumnId,
       hide: true,
       editable: false,
+      width: calculatedColumn.CalculatedColumnSettings.Width,
       enableValue: calculatedColumn.CalculatedColumnSettings.Aggregatable,
       filter: calculatedColumn.CalculatedColumnSettings.Filterable,
       resizable: calculatedColumn.CalculatedColumnSettings.Resizable,
