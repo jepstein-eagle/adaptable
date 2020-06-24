@@ -16,7 +16,10 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       let firstRowValue: any = evaluate(expression, {
         data: firstRecord.data,
       });
-      return !isNaN(Number(firstRowValue)) ? DataType.Number : DataType.String;
+      if (firstRowValue instanceof Date) return DataType.Date;
+      if (typeof firstRowValue === 'boolean') return DataType.Boolean;
+      if (typeof firstRowValue === 'string') return DataType.String;
+      if (typeof firstRowValue === 'number') return DataType.Number;
     } catch (e) {
       LoggingHelper.LogAdaptableWarning(e);
       return DataType.Number;
