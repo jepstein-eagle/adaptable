@@ -73,8 +73,8 @@ The constructor returns the **AdaptableApi** object so it is available for futur
     predefinedConfig: applicationJSON, // the predefined config we created
   };
 
-// The AdapTable constructor returns an API object that we can use
- const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+// The AdapTable constructor returns a promise containing an API object that we can use
+ const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
  ```
 
 There is also a static `initLazy` constructor which receives an AdaptableOptions object and returns a Promise that contains the `api` object.  It is utilised by the [No Code Version](https://github.com/AdaptableTools/adaptable/tree/master/packages/plugins/nocode-aggrid) and is used as follows: 
