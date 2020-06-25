@@ -1,12 +1,9 @@
-import { AdaptablePlugin, IAdaptable } from '@adaptabletools/adaptable/types';
+import { AdaptablePlugin, IAdaptable, AdaptableApi } from '@adaptabletools/adaptable/types';
 import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/CellSummaryState';
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
-import {
-  DetailAdaptableOptions,
-  AdaptableOptions,
-} from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptableOptions';
+import { AdaptableOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptableOptions';
 import { DetailCellRenderer } from './DetailCellRenderer';
 
 if (version !== coreVersion) {
@@ -17,7 +14,12 @@ if (version !== coreVersion) {
 `);
 }
 
-interface MasterDetailAgGridPluginOptions extends DetailAdaptableOptions {}
+interface DetailAdaptableOptions extends AdaptableOptions {}
+
+interface MasterDetailAgGridPluginOptions {
+  adaptableOptions: DetailAdaptableOptions;
+  onDetailInit?: (api: AdaptableApi) => void;
+}
 
 class MasterDetailAgGridPlugin extends AdaptablePlugin {
   public options: MasterDetailAgGridPluginOptions;
@@ -29,7 +31,6 @@ class MasterDetailAgGridPlugin extends AdaptablePlugin {
   }
 
   beforeInit(adaptableOptions: AdaptableOptions) {
-    adaptableOptions.detailOptions = this.options;
     adaptableOptions.vendorGrid.detailCellRenderer = 'adaptableDetailCellRenderer';
     adaptableOptions.vendorGrid.components = adaptableOptions.vendorGrid.components || {};
     adaptableOptions.vendorGrid.components.adaptableDetailCellRenderer = DetailCellRenderer;
