@@ -22,6 +22,20 @@ import {
 import { IPushPullReport } from '../../../../src/PredefinedConfig/IPushPullState';
 import ipp from '../../../../../plugins/ipushpull/src';
 
+import { IIPPConfig } from 'ipushpull-js/dist/Config';
+
+const pushpullConfig: IIPPConfig = {
+  api_url: 'https://www.ipushpull.com/api/1.0',
+  ws_url: 'https://www.ipushpull.com',
+  web_url: 'https://www.ipushpull.com',
+  docs_url: 'https://docs.ipushpull.com',
+  storage_prefix: 'ipp_local',
+  api_key: '',
+  api_secret: '',
+  transport: 'polling',
+  hsts: false, // strict cors policy
+};
+
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
@@ -38,6 +52,7 @@ async function InitAdaptableDemo() {
       ipp({
         username: 'jonny.wolfson@adaptabletools.com',
         password: 'traders',
+        ippConfig: pushpullConfig,
       }),
     ],
     vendorGrid: {
