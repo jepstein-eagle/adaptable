@@ -10,7 +10,7 @@ There are 3 primary ways that developers / users 'interact' with the code in Ada
 
 - [AdapTable Api](/interfaces/_src_api_adaptableapi_.adaptableapi.html): **Access all functionality and state** in AdapTable through code (at runtime) 
 
-These 3 objects are linked as follows: 
+These 3 objects are linked as follows:
 
 **Predefined Configuration** is a property of **AdaptableOptions** which is passed into the AdapTable constructor that returns the **AdaptableApi**
 
@@ -22,8 +22,8 @@ These 3 objects are linked as follows:
     predefinedConfig: applicationJSON, // the predefined config we created
   };
 
-// The AdapTable constructor returns an API object that we can use
- const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+// The async AdapTable constructor returns a Promise containing an API object that we can use
+ const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
 ```
 
 ## AdapTable Options
@@ -44,7 +44,6 @@ You can provide  AdapTable at start-up with _Predefined Configuration_ which ens
 AdapTable's `api` provides full safe, run-time access to all the functionality and state inside AdapTable. This allows you to create, save and delete AdapTable objects in your our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
 
 [AdapTable API Developer Documentation](/interfaces/_src_api_adaptableapi_.adaptableapi.html)
-
 
 # Additional Resources
 

@@ -142,4 +142,4 @@ class OpenFinPlugin extends AdaptablePlugin {
   }
 }
 
-export default (options?: any) => new OpenFinPlugin(options);
+export default (options?: OpenFinPluginOptions) => new OpenFinPlugin(options);

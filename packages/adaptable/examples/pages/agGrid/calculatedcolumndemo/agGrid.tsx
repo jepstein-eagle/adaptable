@@ -40,7 +40,7 @@ async function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
 
     layoutOptions: {
-      autoSizeColumnsInLayout: true,
+      autoSizeColumnsInLayout: false,
     },
     auditOptions: {
       auditFunctionEvents: {
@@ -96,13 +96,18 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleButtons: ['CalculatedColumn'],
+    VisibleButtons: ['CalculatedColumn', 'ColumnChooser'],
   },
   CalculatedColumn: {
     CalculatedColumns: [
       {
         ColumnExpression: 'Col("notional") * 2',
         ColumnId: 'Dob Notional',
+        CalculatedColumnSettings: {
+          Width: 700,
+          Filterable: true,
+          Pivotable: true,
+        },
       },
       {
         ColumnExpression:

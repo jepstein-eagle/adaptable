@@ -1883,11 +1883,6 @@ export class Adaptable implements IAdaptable {
         ),
     };
 
-    if (calculatedColumn.CalculatedColumnSettings.DataType == DataType.Number) {
-      // don't think we want this
-      //  newColDef.cellStyle = { ' text-align': 'right' };
-    }
-
     colDefs.push(newColDef);
     this.safeSetColDefs(colDefs);
 

@@ -6,6 +6,8 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * Support for latest ag-Grid Version (23) - necessitating changes to the React and Angular Wrappers.
 
+* Async Static Constructor
+
 * New Calculated Column Expression Syntax
 
 * Schedule State Changes
@@ -123,6 +125,20 @@ onAdaptableReady({
 
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 
+
+## Async Static Constructor (for 'core' AdapTable)
+
+The static constructor used for instantiating AdapTable has become asynchronous.
+
+It still returns an `AdaptableApi` object but now via a Promise.
+
+So instead of:
+
+const api: AdaptableApi = Adaptable.init(adaptableOptions)
+
+You now do:
+
+const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 
 ## New Calculated Column Expression Syntax
 

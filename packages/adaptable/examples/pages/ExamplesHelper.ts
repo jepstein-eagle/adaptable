@@ -1066,6 +1066,7 @@ export class ExamplesHelper {
       sortable: true,
       filter: true,
       resizable: true,
+      // width: 500,
       // headerCheckboxSelection: true,
       //  checkboxSelection: true,
       cellRenderer: 'agAnimateShowChangeCellRenderer',

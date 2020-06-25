@@ -187,12 +187,12 @@ For more information please read the [Adaptable State Guide](../../packages/adap
 
 ## Instantiation
 
-You create an instance of AdapTable by providing a static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) object.
+You create an instance of AdapTable by providing the aysnc static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) object.
 
-The constructor will return an [Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
+The constructor will return a Promise containning an [Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
 
 ```ts
-const api: AdaptableApi = Adaptable.init(adaptableOptions)
+const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 ```
 
 
@@ -275,8 +275,8 @@ const gridOptions: GridOptions=  {
     predefinedConfig: demoConfig,
   };
 
-  // Instantiate AdapTable with AdaptableOptions and recieve an AdaptableApi object for later use
-  const adaptableApi: AdaptableApi = Adaptable.init(adaptableOptions);
+  // Instantiate AdapTable with AdaptableOptions and recieve an AdaptableApi object (via a Promise) for later use
+  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
   
   // We can now use the API to manage AdapTable and listen to Adaptable events, e.g.
  api.eventApi.on('AdaptableReady', () => {
