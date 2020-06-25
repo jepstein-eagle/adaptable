@@ -146,4 +146,4 @@ class FinancePlugin extends AdaptablePlugin {
   }
 }
 
-export default (options?: any) => new FinancePlugin(options);
+export default (options?: FinancePluginOptions) => new FinancePlugin(options);

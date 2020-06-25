@@ -9,5 +9,5 @@ const source = parser.generate({ moduleType: 'js' });
 
 fs.writeFileSync(
   path.join(__dirname, './parser.js'),
-  source + '\nexport default parser;'
+  source + '\nmodule.exports = { default: parser };'
 );
