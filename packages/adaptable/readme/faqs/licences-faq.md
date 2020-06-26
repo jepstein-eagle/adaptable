@@ -8,7 +8,7 @@ If you want to do a longer-term POC then you will need to agree a commercial Tri
 
 **How much do licences cost?**
 
-It depends on how many users there are. We sell bundles of licences and operate a sliding scale, so the more users you have the lower the cost per user with the cost per user falling rapidly.
+It depends on how many users there are, and whether AdapTable is to be used across a single application or multiple applications. We sell bundles of licences and operate a sliding scale, so the more users you have the lower the cost per user with the cost per user falling rapidly.
 
 We also offer a Universal Licence giving unlimited usage for unlimited users which can be more appropriate in some situations.
 
@@ -20,13 +20,15 @@ Yes:  We offer a Universal Licence for software houses and similar clients who a
 
 One year from when it is signed.  It is also possible to agree a multi-year licence and/or pricing formula where there is a desire for greater certainty and a willingness to commit.
 
+At the end of the licence period, if you choose not to renew AdapTable will continue to work but there will no longer be eligibility for updates or Support.
+
 **Does that include updates?**
 
 Yes, we guarantee a minimum of 4 quarterly updates a year which continue to expand the functionality available.
 
 **Does a licence include Support? And if so, how much?**
 
-We provide Support through email (support@adaptabletools.com) and Zendesk, and aim to respond to all queries within 12 hours.  
+We provide Support through email (support@adaptabletools.com) and [Zendesk](https://adaptabletools.zendesk.com/hc/en-us/requests/new), and aim to respond to all queries within 12 hours.  
 
 **What happens if an underlying grid releases a new version? Does the licence cover that?**
 
