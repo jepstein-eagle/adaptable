@@ -4,7 +4,7 @@ import LoggingHelper, {
 } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 import { IOpenFinService } from './Interface/IOpenFinService';
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
-import { OpenFinPluginOptions } from '../../OpenFinPluginOptions';
+import { OpenFinPluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/OpenFinPluginOptions';
 import { setup } from './setup';
 import { ExcelWorkbook } from '../../excel-service/ExcelWorkbook';
 import { ExcelWorksheet } from '../../excel-service/ExcelWorksheet';

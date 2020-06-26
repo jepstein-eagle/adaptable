@@ -280,7 +280,17 @@ export interface AdaptableApi {
   plusMinusApi: PlusMinusApi;
 
   /**
-   * Provides access to the **Plugins** functionality of AdapTable - currently *Charting* and *Finance*, but with more to come in due course.
+   * Provides access to the **Plugins** functionality of AdapTable - currently 8 in total including *Charting* and *Finance* and with more to come in due course.
+   *
+   * Use this api to get hold of the api for any plugins (i.e. for ipushpull, OpenFin etc)
+   *
+   * e.g. to get the ipushpull Api do:
+   *
+   * ```ts
+   *
+   * const ipushpullApi: IPushPullApi = adaptableApi.pluginsApi.getPluginApi('ipushpull');
+   *
+   * ```
    */
   pluginsApi: PluginsApi;
 
