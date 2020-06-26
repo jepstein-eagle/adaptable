@@ -125,6 +125,9 @@ export { SearchOptions } from './AdaptableOptions/SearchOptions';
 export { StateOptions } from './AdaptableOptions/StateOptions';
 export { TeamSharingOptions } from './AdaptableOptions/TeamSharingOptions';
 export { UserInterfaceOptions } from './AdaptableOptions/UserInterfaceOptions';
+export { Glue42PluginOptions } from './AdaptableOptions/Glue42PluginOptions';
+export { OpenFinPluginOptions } from './AdaptableOptions/OpenFinPluginOptions';
+export { IPushPullPluginOptions } from './AdaptableOptions/IPushPullPluginOptions';
 
 export { AdaptablePersistStateFunction } from './AdaptableOptions/StateOptions';
 export { AdaptableLoadStateFunction } from './AdaptableOptions/StateOptions';

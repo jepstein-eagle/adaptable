@@ -14,7 +14,7 @@ import { Glue42State } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue
 import { IGlue42Service } from './Interface/IGlue42Service';
 import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
 import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
-import { Glue42PluginOptions } from '../../Glue42PluginOptions';
+import { Glue42PluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/Glue42PluginOptions';
 
 export interface Glue42ExportError {
   row: number;

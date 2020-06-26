@@ -16,10 +16,6 @@ import { ReportSchedule } from '../types';
  *
  * - [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)
  *
- * - {@link AdvancedSearchApi|Advanced Search API}
- *
- * - {@link SearchOptions|Search Options}
- *
  * - [Schedule Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/schedule-function.md)
  *
  * --------------

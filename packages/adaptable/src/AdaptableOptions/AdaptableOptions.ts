@@ -262,12 +262,23 @@ export interface AdaptableOptions {
    *
    * These allow us to keep the download size of AdapTable manageable while allowing you to access only the functionality you need.
    *
-   * There are currently 2 plugins:
+   * There are currently 8 plugins:
    *
-   * - Charting
+   * - `charts` - a powerful charting suite based on a package from Infragistics
    *
-   * - Financial
+   * - `finance` - some additional finance-related features (e.g. for cell summaries)
    *
+   * - `finsemble` - a plugin designed for using AdapTable with Finsemble from ChartIQ (currently empty)
+   *
+   * - `glue42` - a plugin with special functionality for working with Glue42, inclding 2-way live, validated Excel
+   *
+   * - `ipushpull` - features relating to ipushpull helping collaboration and data sharing
+   *
+   * - `master-detail-aggrid` - designed for when using the Master/Detail option in ag-Grid, so that all child grids are AdapTable instances
+   *
+   * - `nocode-aggrid` - powerful plugin whch enables the creation of new AdapTable instances (using ag-Grid) with no code required
+   *
+   * - `openfin` - designed for when using AdapTable inside the OpenFin container; contains custom functionality like 'Live Excel'
    */
   plugins?: AdaptablePlugin[];
 
@@ -284,8 +295,4 @@ export interface AdaptableOptions {
    *
    */
   userFunctions?: UserFunctions;
-
-  detailOptions?: DetailAdaptableOptions;
 }
-
-export interface DetailAdaptableOptions extends AdaptableOptions {}

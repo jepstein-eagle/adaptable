@@ -30,7 +30,7 @@ import { Glue42LoginPopup } from './View/Glue42LoginPopup';
 import * as Glue42Redux from './Redux/ActionReducers/Glue42Redux';
 import { IGlue42Strategy } from './Strategy/Interface/IGlue42Strategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
-import { Glue42PluginOptions } from './Glue42PluginOptions';
+import { Glue42PluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/Glue42PluginOptions';
 
 if (version !== coreVersion) {
   console.warn(`

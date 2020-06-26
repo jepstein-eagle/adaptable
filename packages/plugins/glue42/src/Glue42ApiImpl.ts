@@ -3,7 +3,7 @@ import { ApiBase } from '@adaptabletools/adaptable/src/Api/Implementation/ApiBas
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
 import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
-import { Glue42PluginOptions } from './Glue42PluginOptions';
+import { Glue42PluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/Glue42PluginOptions';
 import { IAdaptable } from '@adaptabletools/adaptable/types';
 import * as Glue42Redux from './Redux/ActionReducers/Glue42Redux';
 import {

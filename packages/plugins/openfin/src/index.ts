@@ -32,7 +32,7 @@ import * as OpenFinRedux from './Redux/ActionReducers/OpenFinRedux';
 import { IOpenFinStrategy } from './Strategy/Interface/IOpenFinStrategy';
 import { PluginMiddlewareFunction } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptablePlugin';
 import { OpenFinState } from '@adaptabletools/adaptable/src/PredefinedConfig/OpenFinState';
-import { OpenFinPluginOptions } from './OpenFinPluginOptions';
+import { OpenFinPluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/OpenFinPluginOptions';
 
 if (version !== coreVersion) {
   console.warn(`

@@ -731,4 +731,4 @@ function Parser () {
 Parser.prototype = parser;parser.Parser = Parser;
 return new Parser;
 })();
-module.exports = { default: parser };
+module.exports = parser; module.exports.default = parser;

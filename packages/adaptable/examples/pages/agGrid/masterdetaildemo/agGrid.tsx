@@ -29,8 +29,14 @@ async function InitAdaptableDemo() {
 
   adaptableOptions.plugins = [
     masterDetailAgGridPlugin({
-      primaryKey: 'volume',
-      predefinedConfig: {},
+      adaptableOptions: {
+        primaryKey: 'volume',
+        predefinedConfig: {},
+      },
+      onDetailInit(detailApi) {
+        console.log('detail instance created', detailApi);
+        detailApi.eventApi.on('AdaptableReady', () => console.log('ready'));
+      },
     }),
   ];
 
