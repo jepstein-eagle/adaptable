@@ -93,4 +93,4 @@ class ChartsPlugin extends AdaptablePlugin {
   onAdaptableReady(adaptable: IAdaptable) {}
 }
 
-export default (options?: any) => new ChartsPlugin(options);
+export default (options?: ChartsPluginOptions) => new ChartsPlugin(options);

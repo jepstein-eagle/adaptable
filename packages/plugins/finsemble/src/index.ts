@@ -25,4 +25,4 @@ class FinsemblePlugin extends AdaptablePlugin {
   onAdaptableReady(adaptable: IAdaptable) {}
 }
 
-export default (options?: any) => new FinsemblePlugin(options);
+export default (options?: FinsemblePluginOptions) => new FinsemblePlugin(options);

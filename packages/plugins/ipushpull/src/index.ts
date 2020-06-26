@@ -87,10 +87,10 @@ class IPushPullPlugin extends AdaptablePlugin {
       ...defaultOptions,
       ...options,
       ippConfig: {
-        api_key: '',
-        api_secret: '',
         ...defaultOptions.ippConfig,
         ...(options || {}).ippConfig,
+        api_key: defaultOptions.ippConfig.api_key,
+        api_secret: defaultOptions.ippConfig.api_secret,
       },
     };
 
@@ -179,4 +179,4 @@ class IPushPullPlugin extends AdaptablePlugin {
   }
 }
 
-export default (options?: any) => new IPushPullPlugin(options);
+export default (options?: IPushPullPluginOptions) => new IPushPullPlugin(options);

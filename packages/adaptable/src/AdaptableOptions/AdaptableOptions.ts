@@ -284,8 +284,4 @@ export interface AdaptableOptions {
    *
    */
   userFunctions?: UserFunctions;
-
-  detailOptions?: DetailAdaptableOptions;
 }
-
-export interface DetailAdaptableOptions extends AdaptableOptions {}

@@ -21,11 +21,9 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
       // @ts-ignore
       const masterAdaptable: Adaptable = params.api.__adaptable;
 
-      const { detailOptions } = masterAdaptable.adaptableOptions;
-
-      if (!detailOptions) {
-        throw 'detailOptions is required in master/detail';
-      }
+      const { onDetailInit, adaptableOptions } = masterAdaptable.getPlugin(
+        'master-detail-aggrid'
+      ).options;
 
       // @ts-ignore
       const detailGridOptions: GridOptions = this.detailGridOptions;
@@ -40,11 +38,13 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
       eDetailGrid.parentNode?.prepend(adaptableContainer);
 
       const predefinedConfig =
-        typeof detailOptions.predefinedConfig === 'string' ? {} : detailOptions.predefinedConfig;
+        typeof adaptableOptions.predefinedConfig === 'string'
+          ? {}
+          : adaptableOptions.predefinedConfig;
 
       this.adaptableApi = await Adaptable.init({
         adaptableId: `${masterAdaptable.adaptableOptions.adaptableId} Detail`,
-        ...detailOptions,
+        ...adaptableOptions,
         predefinedConfig: {
           ...predefinedConfig,
           Dashboard: {
@@ -53,12 +53,14 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
           },
         },
         containerOptions: {
-          ...detailOptions.containerOptions,
+          ...adaptableOptions.containerOptions,
           adaptableContainer: adaptableContainerId,
           vendorContainer: eDetailGrid,
         },
         vendorGrid: detailGridOptions,
       });
+
+      if (onDetailInit) onDetailInit(this.adaptableApi);
     };
     super.init(params);
   }

@@ -131,4 +131,4 @@ class Glue42Plugin extends AdaptablePlugin {
   }
 }
 
-export default (options?: any) => new Glue42Plugin(options);
+export default (options?: Glue42PluginOptions) => new Glue42Plugin(options);
