@@ -42,6 +42,10 @@ if (version !== coreVersion) {
 `);
 }
 
+const defaultOptions: OpenFinPluginOptions = {
+  throttleTime: 2000,
+};
+
 class OpenFinPlugin extends AdaptablePlugin {
   public options: OpenFinPluginOptions;
   public pluginId: string = 'openfin';
