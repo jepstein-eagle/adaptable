@@ -95,6 +95,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               SummarisedColumn={this.state.SelectedColumn}
               TeamSharingActivated={this.props.TeamSharingActivated}
               AccessLevel={this.getAccessLevel(StrategyConstants.ColumnChooserStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -115,6 +116,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -135,6 +137,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.ConditionalStyleStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -155,6 +158,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.CellValidationStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -175,6 +179,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.UserFilterStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -195,6 +200,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.ColumnFilterStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -216,6 +222,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -236,6 +243,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -259,6 +267,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.PercentBarStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -282,6 +291,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.GradientColumnStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -305,6 +315,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
               AccessLevel={this.getAccessLevel(StrategyConstants.PlusMinusStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -327,6 +338,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               key={StrategyConstants.FlashingCellsStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               AccessLevel={this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );
@@ -351,6 +363,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
               key={StrategyConstants.CalculatedColumnStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               AccessLevel={this.getAccessLevel(StrategyConstants.CalculatedColumnStrategyId)}
+              Api={this.props.Api}
             />
           </div>
         );

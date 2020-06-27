@@ -1736,7 +1736,6 @@ export class Adaptable implements IAdaptable {
   };
 
   public editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void {
-    // given how much changes when editing a calculated column lets first ensure that it really has changed
     const existingCalcColumn: CalculatedColumn = this.api.calculatedColumnApi
       .getAllCalculatedColumn()
       .find(cc => cc.Uuid === calculatedColumn.Uuid);
@@ -1751,6 +1750,7 @@ export class Adaptable implements IAdaptable {
     const existingABColumn: AdaptableColumn = cols.find(c => c.Uuid == calculatedColumn.Uuid);
 
     if (existingABColumn) {
+      // clean the expression in case it got dirty
       let cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
         calculatedColumn.ColumnExpression,
         cols
@@ -1759,8 +1759,6 @@ export class Adaptable implements IAdaptable {
       // now get the ag-Grid ColDef Index
       const colDefs: ColDef[] = this.mapColumnDefs((colDef: ColDef) => {
         if (colDef.headerName === existingABColumn.ColumnId) {
-          // clean the expression in case it got dirty
-
           const newColDef: ColDef = { ...colDef };
           //  change the value getter in the coldefs
           newColDef.valueGetter = (params: ValueGetterParams) =>
@@ -1998,7 +1996,7 @@ export class Adaptable implements IAdaptable {
         ColumnId: columnId,
         FriendlyName: columnId,
         DataType: dataType,
-        Visible: false,
+        Visible: false, // get from vendor col def?
         ReadOnly: this.agGridHelper.isColumnReadonly(vendorColDef),
         Sortable: this.agGridHelper.isColumnSortable(vendorColDef),
         Filterable: this.agGridHelper.isColumnFilterable(vendorColDef),

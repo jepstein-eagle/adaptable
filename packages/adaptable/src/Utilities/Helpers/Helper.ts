@@ -184,7 +184,6 @@ export function areObjectsEqual(obj1: any, obj2: any) {
     if (obj1.hasOwnProperty(p) !== obj2.hasOwnProperty(p)) {
       return false;
     }
-
     switch (typeof obj1[p]) {
       // Deep compare objects
       case 'object':
@@ -215,8 +214,8 @@ export function areObjectsEqual(obj1: any, obj2: any) {
         return false;
       }
     }
-    return true;
   }
+  return true;
 }
 
 export function StringifyValue(value: any): string {
