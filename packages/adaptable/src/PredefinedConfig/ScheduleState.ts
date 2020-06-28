@@ -8,7 +8,7 @@ import { ReportSchedule } from '../types';
 /**
  * The Predefined Configuration for the Schedule function
  *
- * AdapTable offers the ability to run particular actinos at scheduled times and dates - either as a one-off or repeated activity.
+ * AdapTable offers the ability to run particular actions at scheduled times and dates - either as a one-off or repeated activity.
  *
  * --------------
  *
@@ -30,9 +30,36 @@ import { ReportSchedule } from '../types';
  *
  */
 export interface ScheduleState extends ConfigState {
+  /**
+   * Any Schedules connected to Reports (created in the Export function)
+   */
   ReportSchedules?: ReportSchedule[];
+
+  /**
+   * Any Schedules connected to Reminders - Alerts that fire at set times
+   */
   Reminders?: ReminderSchedule[];
+
+  /**
+   * Any Schedules connected to ipushpull Reports
+   *
+   * Only available if the ipushpull plugin has been loaded
+   */
   IPushPullSchedules?: IPushPullSchedule[];
+
+  /**
+   * Any Schedules connected to Glue42 exports
+   *
+   * Only available if the Glue42 plugin has been loaded
+   */
+
   Glue42Schedules?: Glue42Schedule[];
+
+  /**
+   * Any Schedules connected to OpenFin data exports
+   *
+   * Only available if the OpenFin plugin has been loaded
+   */
+
   OpenFinSchedules?: OpenFinSchedule[];
 }
