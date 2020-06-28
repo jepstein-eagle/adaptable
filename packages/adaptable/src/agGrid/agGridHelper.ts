@@ -114,7 +114,10 @@ export class agGridHelper {
   public setUpStrategies(): Map<AdaptableFunctionName, IStrategy> {
     const strategies = new Map<AdaptableFunctionName, IStrategy>();
     const adaptable = this.adaptable as Adaptable;
+    // this is order is semi important as it currently decides the order of the  items in the Column Menu
+    // so we put Dashboard first followed by Column Inof and then the rest in alphabetical order
     strategies.set(StrategyConstants.DashboardStrategyId, new DashboardStrategy(adaptable));
+    strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(adaptable));
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(adaptable));
     strategies.set(StrategyConstants.ActionColumnStrategyId, new ActionColumnStrategy(adaptable));
     strategies.set(
@@ -134,7 +137,6 @@ export class agGridHelper {
 
     strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
     strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
-    strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
       new ConditionalStyleStrategyagGrid(adaptable)

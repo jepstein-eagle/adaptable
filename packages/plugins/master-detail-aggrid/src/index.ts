@@ -1,10 +1,10 @@
-import { AdaptablePlugin, IAdaptable, AdaptableApi } from '@adaptabletools/adaptable/types';
+import { AdaptablePlugin, IAdaptable } from '@adaptabletools/adaptable/types';
 import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
-import { CellSummaryOperationDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/CellSummaryState';
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
 import { AdaptableOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptableOptions';
 import { DetailCellRenderer } from './DetailCellRenderer';
+import { MasterDetailAgGridPluginOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/MasterDetailAgGridPluginOptions';
 
 if (version !== coreVersion) {
   console.warn(`
@@ -14,20 +14,13 @@ if (version !== coreVersion) {
 `);
 }
 
-interface DetailAdaptableOptions extends AdaptableOptions {}
-
-interface MasterDetailAgGridPluginOptions {
-  adaptableOptions: DetailAdaptableOptions;
-  onDetailInit?: (api: AdaptableApi) => void;
-}
-
 class MasterDetailAgGridPlugin extends AdaptablePlugin {
-  public options: MasterDetailAgGridPluginOptions;
+  public pluginOptions: MasterDetailAgGridPluginOptions;
   public pluginId: string = 'master-detail-aggrid';
 
-  constructor(options?: MasterDetailAgGridPluginOptions) {
-    super(options);
-    this.options = options;
+  constructor(pluginOptions?: MasterDetailAgGridPluginOptions) {
+    super(pluginOptions);
+    this.pluginOptions = pluginOptions;
   }
 
   beforeInit(adaptableOptions: AdaptableOptions) {
@@ -37,4 +30,5 @@ class MasterDetailAgGridPlugin extends AdaptablePlugin {
   }
 }
 
-export default (options?: MasterDetailAgGridPluginOptions) => new MasterDetailAgGridPlugin(options);
+export default (pluginOptions?: MasterDetailAgGridPluginOptions) =>
+  new MasterDetailAgGridPlugin(pluginOptions);

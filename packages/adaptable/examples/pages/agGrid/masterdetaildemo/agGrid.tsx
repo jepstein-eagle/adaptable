@@ -29,7 +29,7 @@ async function InitAdaptableDemo() {
 
   adaptableOptions.plugins = [
     masterDetailAgGridPlugin({
-      adaptableOptions: {
+      detailAdaptableOptions: {
         primaryKey: 'volume',
         predefinedConfig: {},
       },
