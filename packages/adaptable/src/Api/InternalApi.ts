@@ -88,8 +88,6 @@ export interface InternalApi {
 
   setDefaultDashboardTab(): void;
 
-  displayActionColumns(): void;
-
   getAdaptableInstance(): IAdaptable;
 
   getAdaptableOptions(): AdaptableOptions;

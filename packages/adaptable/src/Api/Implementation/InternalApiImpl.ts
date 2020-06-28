@@ -184,14 +184,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     mimicPromise();
   }
 
-  public displayActionColumns(): void {
-    if (this.isCorrectlyEntitled('ActionColumn', 'ReadOnly')) {
-      this.adaptable.api.actionColumnApi.getAllActionColumn().forEach((ac: ActionColumn) => {
-        this.adaptable.addActionColumnToGrid(ac);
-      });
-    }
-  }
-
   private createDataChangedInfoFromGridCell(gridCell: GridCell): DataChangedInfo {
     let currentValue = this.adaptable.getDisplayValue(gridCell.primaryKeyValue, gridCell.columnId);
     let currentRowNode = this.adaptable.getRowNodeForPrimaryKey(gridCell.primaryKeyValue);

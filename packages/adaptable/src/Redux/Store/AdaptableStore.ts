@@ -135,6 +135,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
+import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -2952,7 +2953,12 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             }
 
             //Create any action columns before we load the layout
-            adaptable.api.internalApi.displayActionColumns();
+            let actionColumnStrategy = <IActionColumnStrategy>(
+              adaptable.strategies.get(StrategyConstants.ActionColumnStrategyId)
+            );
+            if (actionColumnStrategy) {
+              actionColumnStrategy.addActionColumnsToGrid();
+            }
 
             //load the default layout if its current
             if (currentLayout == DEFAULT_LAYOUT) {
