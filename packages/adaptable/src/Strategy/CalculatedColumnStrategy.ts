@@ -22,6 +22,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
 
   public addCalculatedColumnsToGrid(): void {
     this.adaptable.api.calculatedColumnApi.getAllCalculatedColumn().forEach(cc => {
+      // I've no idea why we do this to be honest as it seems a waste of time
       let hasChanged: boolean = false;
 
       let dataType: 'String' | 'Number' | 'Boolean' | 'Date';
