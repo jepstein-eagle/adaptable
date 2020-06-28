@@ -1,3 +1,7 @@
+## 7.0.0-canary.12
+
+## 7.0.0-canary.10
+
 ## 7.0.0-canary.4
 
 adaptable-parser integration fix

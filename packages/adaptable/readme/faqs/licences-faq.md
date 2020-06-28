@@ -1,36 +1,34 @@
 # AdapTable Licences FAQ
 
-**Do we need a licence to do a long-term POC?**
+**Do we need a licence to do a Trial?**
 
-Yes. Its generally free to do an evaluation of AdapTable, using a Trial Licence, and that gives you full access to all the functions.
+Yes. There is no charge for an initial limited short-term trial licence but you do need to get in touch so that we can provide you with the keys needed to access to AdapTable's rich functionality.  
 
-If you want to do a longer-term POC then you will need to negotiate for a commercial Trial Licence. The cost of this is fully redeemable against a Licence.
+If you want to do a longer-term POC then you will need to agree a commercial Trial Licence. The cost of this is fully redeemable against purchase of an AdapTable Licence.
 
 **How much do licences cost?**
 
-It depends on how many users there are in your company. We have a sliding scale of cost, so the more users you have the lower the cost per user.
+It depends on how many users there are, and whether AdapTable is to be used across a single application or multiple applications. We sell bundles of licences and operate a sliding scale, so the more users you have the lower the cost per user with the cost per user falling rapidly.
 
-We also offer Universal licence which gives you unlimited usage for unlimited users.
+We also offer a Universal Licence giving unlimited usage for unlimited users which can be more appropriate in some situations.
 
 **We are a software company so we don't know how many end users we will have. Is there a model that works for us?.**
 
-Yes, we offer a Universal licence for software houses and similar companies who are unable to provide us with a precise number of end users. In this scenario, we set a fixed annual price that allows for unlimited usage (and unlimited users).
+Yes:  We offer a Universal Licence for software houses and similar clients who are unable to provide us with a precise number of end users. In this scenario, we set a fixed annual price that allows for unlimited usage (and unlimited users).
 
 **How long does a licence last?**
 
-One year from when it is signed.
+One year from when it is signed.  It is also possible to agree a multi-year licence and/or pricing formula where there is a desire for greater certainty and a willingness to commit.
+
+At the end of the licence period, if you choose not to renew AdapTable will continue to work but there will no longer be eligibility for updates or Support.
 
 **Does that include updates?**
 
-Yes, we guarantee a minimum of 4 quarterly updates a year.
+Yes, we guarantee a minimum of 4 quarterly updates a year which continue to expand the functionality available.
 
-**Do you keep track on the number of end user licenses being used?**
+**Does a licence include Support? And if so, how much?**
 
-No we don't. We rely on the honesty and good faith of our customers to tell us how many users they have. We are pleased that we have a great relationship with many large organisations who provide us with this information readily.
-
-**Does that include Support? And if so, how much?**
-
-We provide long daytime support and guarantee to answer support questions within a maximum of 12 hours. You can either use our Zendesk support to submit a request, or contact Support directly at support@adaptabletools.com
+We provide Support through email (support@adaptabletools.com) and [Zendesk](https://adaptabletools.zendesk.com/hc/en-us/requests/new), and aim to respond to all queries within 12 hours.  
 
 **What happens if an underlying grid releases a new version? Does the licence cover that?**
 
