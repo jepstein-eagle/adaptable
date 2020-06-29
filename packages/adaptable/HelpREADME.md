@@ -1,6 +1,6 @@
 # Accessing AdapTable through code
 
-> These pages provide auto-generated Help for AdapTable and are very 'code-related'.  For general overviews on AdapTable and the key concepts see the [Read Me Docs](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/readme-list.md).
+> These pages provide auto-generated Help for AdapTable and are very 'code-related'.  For general overviews on AdapTable, and it's key concepts, see the [Read Me Docs](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/readme-list.md).
 
 There are 3 primary ways that developers / users 'interact' with the code in AdapTable:
 

@@ -3,9 +3,9 @@ import { AdaptableObject } from './Common/AdaptableObject';
 import { BaseSchedule } from './Common/Schedule';
 
 /**
- * This State is purely local - used by AdapTable internally for managing the OpenFin plugin
+ * This State **is purely internal** - used by AdapTable for managing the OpenFin plugin
  *
- * It does not form part of Predefined Config
+ * It does not form part of Predefined Config and it is not persisted as part of Adaptable State.
  */
 export interface OpenFinState extends ConfigState {
   CurrentLiveOpenFinReport?: OpenFinReport;

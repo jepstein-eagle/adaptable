@@ -3,9 +3,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
 import { ConfigState } from './ConfigState';
 
 /**
- * This State is purely local - used by AdapTable internally for managing the ipushpull plugin
+ * This State **is purely internal** - used by AdapTable for managing the ipushpull plugin
  *
- * It does not form part of Predefined Config
+ * It does not form part of Predefined Config and it is not persisted as part of Adaptable State.
+ *
+ * To set up ipushpull at design time please use the [ipushpull Plugin Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_ipushpullpluginoptions_.ipushpullpluginoptions.html)
  */
 export interface IPushPullState extends ConfigState {
   IsIPushPullRunning?: boolean;

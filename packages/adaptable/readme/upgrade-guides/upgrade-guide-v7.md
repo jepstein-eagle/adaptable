@@ -125,7 +125,6 @@ onAdaptableReady({
 
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 
-
 ## Async Static Constructor (for 'core' AdapTable)
 
 The static constructor used for instantiating AdapTable has become asynchronous.
