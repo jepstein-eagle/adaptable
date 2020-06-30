@@ -6,13 +6,19 @@ In other words, the width of the bar is proportional to the value in the column.
 
 In Version 7 the concept of 'Ranges' were introduced so that the Percent Bar colour will vary according to which range its value falls in.
 
-### Percent Bar Options
+### Percent Bar Ranges
 
-When a Percent Bar is created AdapTable will, by default, create one range based on the current miminum and maximum values in that column.
+A range is simply a minimum and maximum colour with an associated colour.  
+
+If the cell value is inside the range then the bar will display the associated colour.
+
+When a Percent Bar is first created (or pre Version 7 Percent Bars are loaded), AdapTable will, by default, create one range based on the current miminum and maximum values in that column.
 
 However, these can be edited by the User - at both design-time or run-time - and additional ranges can be created as required.
 
-Other options when creating a Percent Bar include: 
+### Percent Bar Options
+
+There are a number of other options available when creating a Percent Bar.  These include: 
 
 - choosing the colours for each range - the default colour is green
 
@@ -25,7 +31,6 @@ Other options when creating a Percent Bar include:
 - showing the cell value (and / or the percentage value) as a Tooltip
 
 > Percent Bars are like 'normal' columns and can be edited (if the column is editable) and filtered (if the column is filterable) like any other column.
-
 
 ## UI Elements
 Percent Bar includes the following UI Elements:
@@ -64,4 +69,3 @@ In version 7 of AdapTable we introduced Ranges.  These allow you to set multiple
 - [Percent Bar Api](https://api.adaptabletools.com/interfaces/_src_api_percentbarapi_.percentbarapi.html)
 
 - [Percent Bar Demo](https://demo.adaptabletools.com/style/aggridpercentbardemo)
-
