@@ -4,23 +4,27 @@ The Percent Bar([AdaptableFunctionName](https://api.adaptabletools.com/modules/_
 
 In other words, the width of the bar is proportional to the value in the column.
 
+In Version 7 the concept of 'Ranges' were introduced so that the Percent Bar colour will vary according to which range its value falls in.
+
 ### Percent Bar Options
 
-When a Percent Bar is created AdapTable will, by default, work out the width of the bar by using the current minimum and maximum values in the column respectively. 
+When a Percent Bar is created AdapTable will, by default, create one range based on the current miminum and maximum values in that column.
 
-However, these can be set by the User - at both design-time or run-time - so that a different set of minimum and maximum values are used.
+However, these can be edited by the User - at both design-time or run-time - and additional ranges can be created as required.
 
 Other options when creating a Percent Bar include: 
 
-- choosing the colours for positive and negative cells (the defaults are red and green)
+- choosing the colours for each range - the default colour is green
 
-- set the minimum and maximum values to be other columns rather than 'hard-coded' values (e.g. you can set the percent bar in Column 'A' to use Column 'B' - so that it displays the width as the percentage of the value in Column 'A' compared to that in Column 'B')
+- setting a back colour for the cell (some users like the visual effect this provides) - the default is gray
 
-- additionally displaying the actual cell value in the call
+- displaying the actual value in the cell
 
-- showing the cell value as Tooltip
+- displaying the cell value as a percentage of the maximum value in the range (or the highest range if there is more than one)
 
-> Percent Bars work for both positive and negative values and can be edited (if editable) and filtered (if filterable) like any other column.
+- showing the cell value (and / or the percentage value) as a Tooltip
+
+> Percent Bars are like 'normal' columns and can be edited (if the column is editable) and filtered (if the column is filterable) like any other column.
 
 
 ## UI Elements
@@ -48,6 +52,10 @@ Percent Bar supports these Entitlement Rules:
 **Can we see the underlying value in the cell?**
 
 Yes - you can do this either at Design Time or at Run Time.
+
+**We used to be able to see negative and positive values in the same bar - why has that changed?**
+
+In version 7 of AdapTable we introduced Ranges.  These allow you to set multiple colours for the percent bar depending on the value.  one result of this is that percent bars no longer show minus values the way that they did so previously.
 
 ### Further Information
 
