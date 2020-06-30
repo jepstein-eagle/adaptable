@@ -20,7 +20,9 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 ## Support for ag-Grid Version 23
 
-Note formatted value expression and column filter dropdown
+Version 7 of AdapTable supports ag-Grid Version 23 which has some major changes around theming in particular. 
+
+### Column Filters
 
 By default, column filters looked very similar to aggrid 22 balham theme, since `filterOptions.useVendorFilterFormStyle` was default to `true`. With the transition to v23, even with `filterOptions.useVendorFilterFormStyle` set to `true`, the styles now look more modern and similar to the aggrid `alpine` theme, which aggrid recommends as default.
 
@@ -28,13 +30,21 @@ By default, column filters looked very similar to aggrid 22 balham theme, since 
 
 We removed `userInterfaceOptions.useDefaultVendorGridThemes` as it was no longer used.
 
+### Quick Filter
+
 Quick filter property is deprecated in gridOptions - `gridOptions.floatingFilter` - you have to specify it at column level.
 
-Slight changes to theming, to accomodate new aggrid themes. Make sure you specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant). We then detect this theme, and apply the corresponding dark theme, when it is selected from theme theme toolbar.
+### Themes
+
+ag-Grid have introduced a new Alpine theme.  
+
+This has neceesistated some slight changes to AdapTable theming as a result. 
+
+Make sure you specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant). We then detect this theme, and apply the corresponding dark theme, when it is selected from theme theme toolbar.
 
 AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
 
-### React wrapper 
+### React wrapper
 
 With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated - here's a quick summary of the changes:
 
@@ -66,9 +76,13 @@ With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was update
 </div>
 ```
 
-#### TODO components
+#### AdapTable Tool Panel Component
 
+One consequence of the update is that in the React Wrapper the AdapTable Tool Panel needs to be explicitly imported in any harness you write, e.g.:
+
+```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+````
 
 #### Deprecated props
 
@@ -120,10 +134,13 @@ onAdaptableReady({
   }
 ````
 
+#### AdapTable Tool Panel Component
 
-#### TODO components
+One consequence of the update is that in the Angular Wrapper the AdapTable Tool Panel needs to be explicitly imported in any harness you write, e.g.:
 
+```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+````
 
 ## Async Static Constructor (for 'core' AdapTable)
 
@@ -133,15 +150,24 @@ It still returns an `AdaptableApi` object but now via a Promise.
 
 So instead of:
 
+```js
 const api: AdaptableApi = Adaptable.init(adaptableOptions)
+````
 
 You now do:
-
+```js
 const api: AdaptableApi = await Adaptable.init(adaptableOptions)
+````
 
 ## New Calculated Column Expression Syntax
 
-To Do
+Previously Calculated Columns were created using an external library (Math.js).
+
+Now we use an internally-built parser for the Expression.  This brings many advantages as the Expression can be more powerful than before, 
+
+**This is a breaking change**.
+
+The required syntax is very similar and in most cases existing Calculated Columns will just run normally; however this cannot be guaranteed, particularly if they are using some of the more estoric features of math.js or its formatting.
 
 ## Schedule State Changes
 
