@@ -146,7 +146,7 @@ import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src
 
 The static constructor used for instantiating AdapTable has become asynchronous.
 
-It still returns an `AdaptableApi` object but now via a Promise.
+It still returns an `AdaptableApi` object but now does so via a Promise.
 
 So instead of:
 
@@ -155,6 +155,7 @@ const api: AdaptableApi = Adaptable.init(adaptableOptions)
 ````
 
 You now do:
+
 ```js
 const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 ````
@@ -163,7 +164,11 @@ const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 
 Previously Calculated Columns were created using an external library (Math.js).
 
-Now we use an internally-built parser for the Expression.  This brings many advantages as the Expression can be more powerful than before, 
+Now we use an internally-built parser for the Expression.  
+
+This brings many advantages as the Expression can be more powerful than before, allowing for more complex expressions using multiple columns.
+
+We have also introduced a more usable for creating Expressions using drag and drop and providing more information about the available functions.
 
 **This is a breaking change**.
 
