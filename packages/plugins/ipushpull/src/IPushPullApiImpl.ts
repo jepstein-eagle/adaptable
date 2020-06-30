@@ -55,6 +55,8 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   public sendSnapshot(iPushPullReport: IPushPullReport): void {
     if (this.checkItemExists(iPushPullReport, iPushPullReport.ReportName, 'IPushPull Report')) {
       this.dispatchAction(IPushPullRedux.IPushPullSendSnapshot(iPushPullReport));
+
+      this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('ipushpull', 'SnapshotSent');
     }
   }
 

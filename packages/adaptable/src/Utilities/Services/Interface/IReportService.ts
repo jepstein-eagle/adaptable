@@ -23,6 +23,7 @@ export interface IReportService {
     liveDataChangedTrigger:
       | 'Connected'
       | 'Disconnected'
+      | 'SnapshotSent'
       | 'LiveDataStarted'
       | 'LiveDataStopped'
       | 'LiveDataUpdated',
