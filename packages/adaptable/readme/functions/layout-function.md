@@ -116,7 +116,7 @@ This is a Layout that we create on start-up based on the column definitions you 
 
 **Is every layout editable and deletable?**
 
-Yes, other than the Default Layout (assuming that your [Entitlements](./guides/adaptable-entitlements-guide.md) allow you to edit / delete predefined Adaptable Objects).
+Yes, other than the Default Layout (assuming that your [Entitlements](../../guides/adaptable-entitlements-guide.md) allow you to edit / delete predefined Adaptable Objects).
 
 ### Further Information
 - [Layout State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html)
