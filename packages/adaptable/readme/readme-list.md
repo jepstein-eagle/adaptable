@@ -12,6 +12,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
 - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
 - [Plugins](../../../packages/plugins/README.md)
+- [Version 7 Upgrade Guide](./upgrade-guides/upgrade-guide-v7.md)
 - [Version 6 Upgrade Guide](./upgrade-guides/upgrade-guide-v6.md)
 
 ## Adaptable Guides
