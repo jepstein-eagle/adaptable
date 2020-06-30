@@ -96,7 +96,7 @@ export enum ExportDestination {
 
 export enum ScheduleType {
   Report = 'Report',
-  iPushPull = 'iPushPull',
+  ipushpull = 'ipushpull',
   Glue42 = 'Glue42',
   Reminder = 'Reminder',
   OpenFin = 'OpenFin',

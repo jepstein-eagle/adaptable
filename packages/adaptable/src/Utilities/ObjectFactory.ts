@@ -383,7 +383,7 @@ export function CreateEmptyOpenFinReport(): OpenFinReport {
 export function CreateEmptyIPushPullSchedule(): IPushPullSchedule {
   return {
     Uuid: createUuid(),
-    ScheduleType: ScheduleType.iPushPull,
+    ScheduleType: ScheduleType.ipushpull,
     Schedule: CreateEmptySchedule(),
     IPushPullReport: CreateEmptyIPushPullReport(),
     Transmission: 'Snapshot',
@@ -422,7 +422,7 @@ export function CreateEmptyReminder(): ReminderSchedule {
 export function CreateIPushPullSchedule(iPushPullReport: IPushPullReport): IPushPullSchedule {
   return {
     Uuid: createUuid(),
-    ScheduleType: ScheduleType.iPushPull,
+    ScheduleType: ScheduleType.ipushpull,
     Schedule: CreateEmptySchedule(),
     IPushPullReport: iPushPullReport,
     Transmission: 'Snapshot',

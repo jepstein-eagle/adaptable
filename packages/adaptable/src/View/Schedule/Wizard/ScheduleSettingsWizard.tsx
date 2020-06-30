@@ -95,23 +95,23 @@ export class ScheduleSettingsWizard
 
       // ipushpull
       IPushPullReportName:
-        this.props.Data!.ScheduleType === ScheduleType.iPushPull
+        this.props.Data!.ScheduleType === ScheduleType.ipushpull
           ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.ReportName
           : undefined,
       Page:
-        this.props.Data!.ScheduleType === ScheduleType.iPushPull
+        this.props.Data!.ScheduleType === ScheduleType.ipushpull
           ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page
           : undefined,
       Folder:
-        this.props.Data!.ScheduleType === ScheduleType.iPushPull
+        this.props.Data!.ScheduleType === ScheduleType.ipushpull
           ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
           : undefined,
       IPushPullTransmission:
-        this.props.Data!.ScheduleType === ScheduleType.iPushPull
+        this.props.Data!.ScheduleType === ScheduleType.ipushpull
           ? (this.props.Data as IPushPullSchedule)!.Transmission
           : undefined,
       AvailablePages:
-        this.props.Data!.ScheduleType === ScheduleType.iPushPull
+        this.props.Data!.ScheduleType === ScheduleType.ipushpull
           ? StringExtensions.IsNotNullOrEmpty(
               (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
             )
@@ -275,7 +275,7 @@ export class ScheduleSettingsWizard
             </>
           )}
 
-          {this.props.Data!.ScheduleType === ScheduleType.iPushPull && (
+          {this.props.Data!.ScheduleType === ScheduleType.ipushpull && (
             <>
               <Flex flexDirection="column" padding={1}>
                 <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
@@ -532,7 +532,7 @@ export class ScheduleSettingsWizard
           StringExtensions.IsNotNullOrEmpty(this.state.ReportName) &&
           StringExtensions.IsNotNullOrEmpty(this.state.ExportDestination)
         );
-      case ScheduleType.iPushPull:
+      case ScheduleType.ipushpull:
         return (
           StringExtensions.IsNotNullOrEmpty(this.state.IPushPullReportName) &&
           StringExtensions.IsNotNullOrEmpty(this.state.Page) &&
@@ -565,7 +565,7 @@ export class ScheduleSettingsWizard
         (this.props.Data as ReportSchedule)!.ExportDestination = this.state.ExportDestination;
         break;
 
-      case ScheduleType.iPushPull:
+      case ScheduleType.ipushpull:
         (this.props
           .Data as IPushPullSchedule)!.IPushPullReport.ReportName = this.state.IPushPullReportName;
         (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder = this.state.Folder;

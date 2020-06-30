@@ -253,7 +253,7 @@ Fixing bug when using pinning that throws an error if the row is not financial
 
 ## 6.0.3
 
-Fix bug in iPushPull where not updating cell selection when data inside selected cells ticks
+Fix bug in ipushpull where not updating cell selection when data inside selected cells ticks
 
 ## 6.0.2
 

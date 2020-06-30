@@ -63,7 +63,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
       this.dispatchAction(IPushPullRedux.IPushPullLiveReportSet(iPushPullReport));
 
       this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-        'iPushPull',
+        'ipushpull',
         'LiveDataStarted',
         iPushPullReport
       );
@@ -84,7 +84,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
     // fire the Live Report event for Export Stopped
     this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-      'iPushPull',
+      'ipushpull',
       'LiveDataStopped',
       currentLiveReport
     );
@@ -175,12 +175,12 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public setIPushPullRunningOn(): void {
     this.dispatchAction(IPushPullRedux.SetIPushPullRunningOn());
-    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('iPushPull', 'Connected');
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('ipushpull', 'Connected');
   }
 
   public setIPushPullRunningOff(): void {
     this.dispatchAction(IPushPullRedux.SetIPushPullRunningOff());
-    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('iPushPull', 'Disconnected');
+    this.adaptable.ReportService.PublishLiveLiveDataChangedEvent('ipushpull', 'Disconnected');
   }
 
   public isIPushPullLiveDataRunning(): boolean {

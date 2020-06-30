@@ -54,7 +54,7 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
         ];
         keyValuePairs.push(...reportKVP);
         break;
-      case ScheduleType.iPushPull:
+      case ScheduleType.ipushpull:
         let iPushPullKVP: KeyValuePair[] = [
           {
             Key: 'Report',

@@ -34,7 +34,7 @@ export class ScheduleEntityRow extends React.Component<
         let reportSchedule: ReportSchedule = baseSchedule as ReportSchedule;
         details = reportSchedule.ReportName + ' (' + reportSchedule.ExportDestination + ')';
         break;
-      case ScheduleType.iPushPull:
+      case ScheduleType.ipushpull:
         let iPushPullSchedule: IPushPullSchedule = baseSchedule as IPushPullSchedule;
         details =
           iPushPullSchedule.IPushPullReport.ReportName +

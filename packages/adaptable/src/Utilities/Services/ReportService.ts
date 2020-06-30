@@ -342,7 +342,7 @@ export class ReportService implements IReportService {
   }
 
   public PublishLiveLiveDataChangedEvent(
-    reportDestination: 'iPushPull' | 'Glue42',
+    reportDestination: 'ipushpull' | 'Glue42',
     liveDataTrigger:
       | 'Connected'
       | 'Disconnected'

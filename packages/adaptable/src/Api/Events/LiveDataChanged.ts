@@ -53,7 +53,7 @@ export interface LiveDataChangedInfo extends AdaptableEventInfo {
   /**
    * Which of Adaptable partners is being used as the export destination to which to send live data.
    */
-  ReportDestination: 'OpenFin' | 'iPushPull' | 'Glue42';
+  ReportDestination: 'OpenFin' | 'ipushpull' | 'Glue42';
 
   /**
    * What triggered the event to be fired.
@@ -99,5 +99,5 @@ export interface LiveDataChangedInfo extends AdaptableEventInfo {
 export interface LiveReport {
   PageName: string; // for OpenFin this will be the workbook name (?), for iPushpull the page name.  for Glue42 the Spreadsheet name.
   Report: Report;
-  ReportDestination: 'OpenfinExcel' | 'iPushPull' | 'Glue42';
+  ReportDestination: 'OpenfinExcel' | 'ipushpull' | 'Glue42';
 }

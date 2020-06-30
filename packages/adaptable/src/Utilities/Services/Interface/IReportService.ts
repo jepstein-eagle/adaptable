@@ -19,7 +19,7 @@ export interface IReportService {
   GetPrimaryKeysForReport(report: Report): any[];
 
   PublishLiveLiveDataChangedEvent(
-    reportDestination: 'OpenFin' | 'iPushPull' | 'Glue42',
+    reportDestination: 'OpenFin' | 'ipushpull' | 'Glue42',
     liveDataChangedTrigger:
       | 'Connected'
       | 'Disconnected'

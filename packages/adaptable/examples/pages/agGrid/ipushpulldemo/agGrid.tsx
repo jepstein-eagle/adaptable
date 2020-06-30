@@ -84,7 +84,7 @@ async function InitAdaptableDemo() {
 
   adaptableApi.eventApi.on('LiveDataChanged', (eventArgs: LiveDataChangedEventArgs) => {
     let eventData: LiveDataChangedInfo = eventArgs.data[0].id;
-    if (eventData.ReportDestination == 'iPushPull') {
+    if (eventData.ReportDestination == 'ipushpull') {
       if (eventData.LiveDataTrigger === 'LiveDataStarted') {
         const iPushPullReport: IPushPullReport = eventData.LiveReport;
         // do somthing wih the report...

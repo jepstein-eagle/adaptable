@@ -135,7 +135,7 @@ class SchedulePopupComponent extends React.Component<
         case ScheduleType.Report:
           deleteAction = ScheduleRedux.ReportScheduleDelete(baseSchedule as ReportSchedule);
           break;
-        case ScheduleType.iPushPull:
+        case ScheduleType.ipushpull:
           deleteAction = ScheduleRedux.IPushPullScheduleDelete(baseSchedule as IPushPullSchedule);
           break;
         case ScheduleType.Glue42:
@@ -174,7 +174,7 @@ class SchedulePopupComponent extends React.Component<
 
     let iPushPullMenuItem = {
       disabled: this.props.AccessLevel == 'ReadOnly',
-      onClick: () => this.onCreateSchedule(ScheduleType.iPushPull),
+      onClick: () => this.onCreateSchedule(ScheduleType.ipushpull),
       label: 'ipushpull',
     };
 
@@ -256,7 +256,7 @@ class SchedulePopupComponent extends React.Component<
       case ScheduleType.Report:
         baseSchedule = ObjectFactory.CreateEmptyReportSchedule();
         break;
-      case ScheduleType.iPushPull:
+      case ScheduleType.ipushpull:
         baseSchedule = ObjectFactory.CreateEmptyIPushPullSchedule();
         break;
       case ScheduleType.Glue42:
@@ -317,7 +317,7 @@ class SchedulePopupComponent extends React.Component<
           this.props.onAddReportSchedule(baseSchedule as ReportSchedule);
         }
         break;
-      case ScheduleType.iPushPull:
+      case ScheduleType.ipushpull:
         if (this.state.WizardStatus == WizardStatus.Edit) {
           this.props.onEditIPushPullSchedule(baseSchedule as IPushPullSchedule);
         } else {

@@ -163,7 +163,7 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
         })
         .then(() => {
           return this.adaptable.ReportService.PublishLiveLiveDataChangedEvent(
-            'iPushPull',
+            'ipushpull',
             'LiveDataUpdated',
             currentLiveIPushPullReport
           );
