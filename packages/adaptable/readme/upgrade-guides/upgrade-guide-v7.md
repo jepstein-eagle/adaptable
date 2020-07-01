@@ -255,7 +255,13 @@ Please read the [Plugin ReadMe](https://github.com/AdaptableTools/adaptable/blob
 
 ## Support for Master / Detail grids
 
-To Do
+Version 7 of AdapTable provides support for Master / Detail grids in ag-Grid.
+
+Users are able to create a definition not only for the Master Grid but also for the Detail Grids (one Adaptable Options which is shared by all the grids). 
+
+This allows you to create searches, alerts, conditional styles etc to be used by any Detail Grid.
+
+To use this functionality you need to use the new `master-detail-aggrid Plugin` - full details in the [Master Detail Plugin ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/master-detail-aggrid/README.md)
 
 ## Additional CSS Variables
 
