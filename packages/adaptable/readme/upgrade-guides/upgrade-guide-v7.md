@@ -1,14 +1,14 @@
 # AdapTable Version 7 Upgrade Guide
 
-Version 7 of AdapTable will be released on 28 June.
+Version 7 of AdapTable will be released on Sunday 5 July.
 
-This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes of interest:
+This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes that will be of interest, including:
 
 * Support for latest ag-Grid Version (23) - necessitating changes to the React and Angular Wrappers.
 
-* Async Static Constructor
+* Static Constructor now asynchronous
 
-* New Calculated Column Expression Syntax
+* New Calculated Column Expression Syntax and UI
 
 * Schedule State Changes
 
@@ -20,7 +20,7 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 ## Support for ag-Grid Version 23
 
-Version 7 of AdapTable supports ag-Grid Version 23 which has some major changes around theming in particular. 
+Version 7 of AdapTable supports ag-Grid Version 23 which has some major changes, particularly around theming but also in other aspects as well.
 
 ### Column Filters
 
@@ -32,7 +32,9 @@ We removed `userInterfaceOptions.useDefaultVendorGridThemes` as it was no longer
 
 ### Quick Filter
 
-Quick filter property is deprecated in gridOptions - `gridOptions.floatingFilter` - you have to specify it at column level.
+The `floatingFilter` property is deprecated in gridOptions - `gridOptions.floatingFilter` - you now have to specify it at column level (or in a default column definition).  
+
+Consequently, AdapTable will only show the Quick Filter bar if at least one column has this set to true - and will activate it only for those columns.
 
 ### Themes
 
@@ -50,7 +52,7 @@ With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was update
 
  * you now have to render `<AgGridReact>` component yourself - although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `"gridOptions"` object** as a prop to the `<AgGridReact>` component
 
- * you have to pass the same `"gridOptions"` object to the `<AdaptableReactAggrid>` component as well - in this way, `<AdaptableReactAggrid>` and `<AgGridReact>` are connected to the same agGrid instance.
+ * **you have to pass the same `"gridOptions"` object to the `<AdaptableReactAggrid>` component as well** - in this way, `<AdaptableReactAggrid>` and `<AgGridReact>` are connected to the same agGrid instance.
  
 ```jsx
 
@@ -78,7 +80,7 @@ With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was update
 
 #### AdapTable Tool Panel Component
 
-One consequence of the update is that in the React Wrapper the AdapTable Tool Panel needs to be explicitly imported in any harness you write, e.g.:
+One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the React Wrapper, it needs to be explicitly imported in your code, e.g.:
 
 ```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
@@ -136,15 +138,14 @@ onAdaptableReady({
 
 #### AdapTable Tool Panel Component
 
-One consequence of the update is that in the Angular Wrapper the AdapTable Tool Panel needs to be explicitly imported in any harness you write, e.g.:
-
+One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the Angular Wrapper, it needs to be explicitly imported in your code, e.g.:
 ```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ````
 
 ## Async Static Constructor (for 'core' AdapTable)
 
-The static constructor used for instantiating AdapTable has become asynchronous.
+The static constructor used for instantiating AdapTable outside of a Wrapper has become asynchronous.
 
 It still returns an `AdaptableApi` object but now does so via a Promise.
 
@@ -160,25 +161,27 @@ You now do:
 const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 ````
 
-## New Calculated Column Expression Syntax
+## New Calculated Column Expression Syntax and UI
 
 Previously Calculated Columns were created using an external library (Math.js).
 
 Now we use an internally-built parser for the Expression.  
 
-This brings many advantages as the Expression can be more powerful than before, allowing for more complex expressions using multiple columns.
+This brings many advantages as the Expression can be more powerful than before e.g. by allowing for multiple columns, for mixing columns and static values and (coming soon) for allowing users to add their own custom functions.
 
-We have also introduced a more usable for creating Expressions using drag and drop and providing more information about the available functions.
+We have also introduced a much more usable UI for creating Expressions with drag and drop features, multiple functions, dummy data and provision of help-based information about the available functions.
+
+We have removed formatting from inside the Calculated Column Expression and instead this can be done through our new, improved Format Column function; this separation of concerns allows the Expression just to be a computation and the formatting to be handled the same way as it is for other columns.
 
 **This is a breaking change**.
 
-The required syntax is very similar and in most cases existing Calculated Columns will just run normally; however this cannot be guaranteed, particularly if they are using some of the more estoric features of math.js or its formatting.
+The required syntax is very similar to previous versions of AdapTable, and in most cases existing Calculated Columns will just run normally; however this cannot be guaranteed, particularly if they were using some of the more estoric features of math.js or its formatting.
 
 ## Schedule State Changes
 
-In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of State.
+In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of Adaptable State (e.g. Export, Reminder, ipushpull etc).
 
-This has been changed and now there is a Schedule section of State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
+This has been changed, and now there is a dedicated Schedule section of Adaptable State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
 
 One consequence of this is that the `Reminder` section of Adaptable State has been removed as it is no longer required.
 
