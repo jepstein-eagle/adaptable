@@ -6,7 +6,7 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { AdaptableOptions, ColumnCategory } from '../../types';
+import { AdaptableOptions } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
@@ -157,6 +157,29 @@ export class GridApiImpl extends ApiBase implements GridApi {
 
   public isSpecialColumn(columnId: string): boolean {
     return columnId == AG_GRID_GROUPED_COLUMN;
+  }
+
+  public isCalculatedColumn(columnId: string): boolean {
+    return (
+      this.adaptable.api.calculatedColumnApi
+        .getAllCalculatedColumn()
+        .find(cc => cc.ColumnId == columnId) != null
+    );
+  }
+
+  public isFreeTextColumn(columnId: string): boolean {
+    return (
+      this.adaptable.api.freeTextColumnApi
+        .getAllFreeTextColumn()
+        .find(cc => cc.ColumnId == columnId) != null
+    );
+  }
+
+  public isActionColumn(columnId: string): boolean {
+    return (
+      this.adaptable.api.actionColumnApi.getAllActionColumn().find(cc => cc.ColumnId == columnId) !=
+      null
+    );
   }
 
   public isNumericColumn(column: AdaptableColumn): boolean {
@@ -342,7 +365,12 @@ export class GridApiImpl extends ApiBase implements GridApi {
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning === true
     ) {
-      if (!this.isSpecialColumn(columnId)) {
+      if (
+        !this.isSpecialColumn(columnId) &&
+        !this.isCalculatedColumn(columnId) &&
+        !this.isFreeTextColumn(columnId) &&
+        !this.isActionColumn(columnId)
+      ) {
         LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);
       }
     }

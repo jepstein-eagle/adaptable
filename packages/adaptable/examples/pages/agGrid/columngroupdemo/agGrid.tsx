@@ -9,7 +9,7 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../src/agGrid';
 import { AdaptableOptions, PredefinedConfig } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
@@ -19,12 +19,17 @@ async function InitAdaptableDemo() {
   const tradeData: any = examplesHelper.getTrades(100);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTradeColumnGrouping(tradeData);
 
-  const adaptableOptions: AdaptableOptions = examplesHelper.createAdaptableOptionsTrade(
-    gridOptions,
-    'grouping-demo'
-  );
-
-  //adaptableOptions.predefinedConfig = demoConfig;
+  const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Grouping Demo',
+    //  plugins: [finance()],
+    vendorGrid: {
+      ...gridOptions,
+      modules: AllEnterpriseModules,
+    },
+    predefinedConfig: demoConfig,
+  };
 
   const adaptableApi = await Adaptable.init(adaptableOptions);
 }

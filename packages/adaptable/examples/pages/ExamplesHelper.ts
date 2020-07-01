@@ -858,10 +858,7 @@ export class ExamplesHelper {
 
   public getGridOptionsTradeColumnGrouping(rowData: any): GridOptions {
     return {
-      columnDefs: this.getTradeSchemaColumnGroups().map(c => {
-        c.floatingFilter = true;
-        return c;
-      }),
+      columnDefs: this.getTradeSchemaColumnGroups(),
       rowData: rowData,
       enableRangeSelection: true,
       suppressColumnVirtualisation: false,
@@ -1513,6 +1510,7 @@ export class ExamplesHelper {
           columnGroupShow: 'closed',
           filter: true,
           resizable: true,
+          floatingFilter: true,
           // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
@@ -1536,6 +1534,7 @@ export class ExamplesHelper {
           field: 'country',
           editable: true,
           filter: true,
+          floatingFilter: true,
           sortable: true,
           enableRowGroup: true,
           type: 'abColDefString',
@@ -1569,6 +1568,7 @@ export class ExamplesHelper {
       enableValue: true,
       editable: true,
       sortable: true,
+      floatingFilter: true,
       // valueFormatter: notionalFormatter,
       // cellClass: 'number-cell',
       type: 'abColDefNumber',

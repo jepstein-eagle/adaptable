@@ -3609,7 +3609,7 @@ export class Adaptable implements IAdaptable {
       return true;
     }
     let col: ColDef | ColGroupDef;
-    for (col of this.gridOptions.columnDefs) {
+    for (col of defs) {
       if ((col as ColDef).floatingFilter) {
         return true;
       }

@@ -184,6 +184,10 @@ export interface GridApi {
   expandRowGroupsForValues(columnValues: any[]): void;
 
   isSpecialColumn(columnId: string): boolean;
+  isCalculatedColumn(columnId: string): boolean;
+  isFreeTextColumn(columnId: string): boolean;
+  isActionColumn(columnId: string): boolean;
+
   isNumericColumn(column: AdaptableColumn): boolean;
   getColumnDataTypeFromColumnId(
     columnId: string
