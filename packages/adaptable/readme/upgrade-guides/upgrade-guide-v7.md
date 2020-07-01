@@ -16,6 +16,10 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * Config Server Removed
 
+* New 'Partner' plugins
+
+* Support for Master / Detail grids
+
 * Additional CSS Variables
 
 ## Support for ag-Grid Version 23
@@ -177,6 +181,8 @@ We have removed formatting from inside the Calculated Column Expression and inst
 
 The required syntax is very similar to previous versions of AdapTable, and in most cases existing Calculated Columns will just run normally; however this cannot be guaranteed, particularly if they were using some of the more estoric features of math.js or its formatting.
 
+> One effect of this change is that the download size of AdapTable has been greatly reduced as the math.js folder was the single largest element in the downloaded package.
+
 ## Schedule State Changes
 
 In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of Adaptable State (e.g. Export, Reminder, ipushpull etc).
@@ -194,6 +200,62 @@ To Do
 Since Version 5 of AdapTable, Config Server (which enabled remote storage of Adaptable State) has been deprecated in favour of the more powerful and flexible [StateOptions](../../../adaptable/src/AdaptableOptions/StateOptions.ts) functions.  
 
 In Version 7 Config Server has finally been removed.
+
+## New 'Partner' plugins
+
+We continue to move non-core functionality out of the main package and into Plugins. 
+
+This allows us to reduce the size of the core package and enables users to choose just those additional plugins which meet their requirements.
+
+In Version 7 we have created 4 new plugins which contain bespoke functionality for each of our partners.
+
+These are:
+
+* ipushpull
+
+* Glue42
+
+* OpenFin
+
+* Finsemble
+
+In each case any configuration that was previously stored in the partner's section of Predefined Config in Adaptable State is now provided through an xxxPluginOptions object injected into the Plugin.
+
+For example to use the ipushpull plugin you will do something like:
+
+```js
+
+const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'ipushpull Demo',
+     plugins: [
+      ipp({
+        username: process.env.IPUSHPULL_USERNAME,
+        password: process.env.IPUSHPULL_PASSWORD,
+        throttleTime: 5000,
+        includeSystemReports: true,
+        ippConfig: {
+          api_url: 'https://www.ipushpull.com/api/1.0',
+          ws_url: 'https://www.ipushpull.com',
+          web_url: 'https://www.ipushpull.com',
+          docs_url: 'https://docs.ipushpull.com',
+          storage_prefix: 'ipp_local',
+          transport: 'polling',
+          hsts: false, // strict cors policy
+        },
+      }),
+    ],
+    predefinedConfig: demoConfig,
+    vendorGrid: { ...gridOptions, modules: AllEnterpriseModules },
+  };
+  
+ ```` 
+Please read the [Plugin ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/README.md) for more information - this has links to more detailed information for each Plugin.
+
+## Support for Master / Detail grids
+
+To Do
 
 ## Additional CSS Variables
 
