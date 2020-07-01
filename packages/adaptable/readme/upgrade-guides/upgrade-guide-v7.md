@@ -4,7 +4,7 @@ Version 7 of AdapTable will be released on Sunday 5 July.
 
 This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes that will be of interest, including:
 
-* Support for latest ag-Grid Version (23) - necessitating changes to the React and Angular Wrappers.
+* Support for latest ag-Grid Version (23) including Alpine theme - necessitating changes to the React and Angular Wrappers.
 
 * Static Constructor now asynchronous
 
