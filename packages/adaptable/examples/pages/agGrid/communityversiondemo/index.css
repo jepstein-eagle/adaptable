@@ -1,0 +1,15 @@
+html,
+body,
+#__next {
+  height: 100%;
+}
+
+#grid {
+  height: 85%;
+}
+
+html {
+  font-family: “Helvetica Neue”, Helvetica, Arial, sans-serif;
+}
+
+

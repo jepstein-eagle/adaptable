@@ -51,7 +51,6 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   NamedFilters: NamedFilter[];
   ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
-  MenuItems: AdaptableMenuItem[];
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
   onClearColumnFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
@@ -323,8 +322,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           >
             {this.state.SelectedTab == ColumnMenuTab.Menu ? (
               <ListBoxMenu
-                MenuItems={this.props.MenuItems}
-                onMenuItemClick={action => this.onMenuItemClick(action)}
+                MenuItems={this.props.Adaptable.buildStandaloneColumnHeader(
+                  this.props.CurrentColumn
+                )}
+                onMenuItemClick={menuItem => this.onMenuItemClick(menuItem)}
               />
             ) : (
               <div>
@@ -518,8 +519,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.props.onHideFilterForm();
   }
 
-  onMenuItemClick(action: Redux.Action): any {
-    this.props.onMenuItemClick(action);
+  onMenuItemClick(menuItem: AdaptableMenuItem): any {
+    //action: Redux.Action
+    if (menuItem.ReduxAction) {
+      this.props.onMenuItemClick(menuItem.ReduxAction);
+    }
+    if (menuItem.ClickFunction) {
+      menuItem.ClickFunction();
+    }
     this.props.onHideFilterForm();
   }
 }

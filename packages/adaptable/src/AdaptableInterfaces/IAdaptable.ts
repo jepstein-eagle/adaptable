@@ -1,4 +1,4 @@
-import { AdaptableOptions, AdaptablePlugin } from '../types';
+import { AdaptableOptions, AdaptablePlugin, AdaptableMenuItem, MenuInfo } from '../types';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
 import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
@@ -32,6 +32,7 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
 import { Report } from '../PredefinedConfig/ExportState';
+import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 
 /**
  *  The only interface for Adaptable
@@ -89,7 +90,9 @@ export interface IAdaptable {
   vendorGridName: 'agGrid' | 'Hypergrid';
 
   /**
-   * Whether the vendor grid has its own column menu that we need to use (e.g. ag-Grid) or doesnt in which case we build one (e.g. hypergrid)
+   * Whether the vendor grid has its own column menu that we need to use (e.g. ag-Grid Enterprise) or doesnt in which case we build one (e.g. hypergrid)
+   *
+   * Note: if ag-Grid is using community or menu is not added then this should be true.
    */
   embedColumnMenu: boolean;
 
@@ -319,4 +322,6 @@ export interface IAdaptable {
   closeAllRowGroups(): void;
   expandRowGroupsForValues(columnValues: any[]): void;
   getExpandRowGroupsKeys(): any[];
+
+  buildStandaloneColumnHeader(adaptableColumn: AdaptableColumn): AdaptableMenuItem[];
 }

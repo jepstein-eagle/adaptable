@@ -543,14 +543,13 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromUsereMenu(
+  public createAgGridMenuDefFromUserMenu(
     label: string,
     menuItem: UserMenuItem,
-    menuInfo: MenuInfo,
-    type: 'contextMenu' | 'columnMenu'
+    menuInfo: MenuInfo
   ): MenuItemDef {
     const fn = this.adaptable.getUserFunctionHandler(
-      type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
+      'UserMenuItemClickedFunction',
       menuItem.UserMenuItemClickedFunction
     );
     return {
@@ -559,10 +558,29 @@ export class agGridHelper {
       icon: menuItem.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(menuItem.SubMenuItems)
         ? undefined
-        : menuItem.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(menuItem.Label, s, menuInfo, type);
+        : menuItem.SubMenuItems!.map((subMenuItem: UserMenuItem) => {
+            return this.createAgGridMenuDefFromUserMenu(subMenuItem.Label, subMenuItem, menuInfo);
           }),
     };
+  }
+
+  public createAdaptableMenuItemFromUserMenu(
+    label: string,
+    menuItem: UserMenuItem,
+    menuInfo: MenuInfo
+  ): AdaptableMenuItem {
+    const fn = this.adaptable.getUserFunctionHandler(
+      'UserMenuItemClickedFunction',
+      menuItem.UserMenuItemClickedFunction
+    );
+    let adaptableMenuItem: AdaptableMenuItem = {
+      Label: label,
+      ReduxAction: null,
+      ClickFunction: () => fn(menuInfo),
+      IsVisible: true,
+      Icon: menuItem.Icon,
+    };
+    return adaptableMenuItem;
   }
 
   public isColumnReadonly(colDef: ColDef): boolean {
