@@ -124,7 +124,7 @@ This plugin allows users to take advantage of some additional functionality cour
 
 ## Glue42 Plugin
 
-Designed for when AdapTable will be used on a desktop also running [Glue42](https://glue42.com/).
+Designed for when AdapTable will be used on a desktop also running the [Glue42](https://glue42.com/) desktop.
 
 This plugin leverages many of the powerful features of Glue42 to offer users additional options such as Audited, Validated 2 way export between AdapTable and Excel.  
 
