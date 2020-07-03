@@ -16,11 +16,12 @@ There are currently 8 plugins available (though more are being added all the tim
 
 - [ipushpull Plugin](./ipushpull)
 
-- [Finsemble Plugin](./finsemble)
-
 - [OpenFin Plugin](./openfin)
 
 - [Glue42 Plugin](./glue42)
+
+- [Finsemble Plugin](./finsemble)
+
 
 ## Using Plugins
 
