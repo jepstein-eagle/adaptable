@@ -14,9 +14,17 @@ The ipushpull plugin contains an [ipushpull Plugin Options](https://api.adaptabl
 
 It contains credential details, useful properties (e.g. `throttleTime`, `autoLogin` etc.) and the ipupshpull config object.
 
-### ipushpull Options Example
+## ipushpull Api
+
+The [ipushpull Api](https://api.adaptabletools.com/interfaces/_src_api_ipushpullapi_.ipushpullapi.html) is available for full runtime programmatic access to ipushpull objects and methods.
+
+> Note: because ipushpull is a plugin, you can get hold of this object through the `getPluginApi` method of [pluginsApi](https://api.adaptabletools.com/interfaces/_src_api_pluginsapi_.pluginsapi.html).
+
+## ipushpull Setup Example
  
   ```ts
+  
+  // sset up AdaptableOptions
   const adaptableOptions: AdaptableOptions = {
      ******
       plugins: [
@@ -38,6 +46,15 @@ It contains credential details, useful properties (e.g. `throttleTime`, `autoLog
      ],
     ******
    };
+   
+  // Instantitate AdapTable and get the main Api object 
+  adaptableApi = await Adaptable.init(adaptableOptions);
+  
+  // use the plugins api to get the IPushPullApi object
+  const ipushpullApi: IPushPullApi = adaptableApi.pluginsApi.getPluginApi(
+    'ipushpull'
+  );
+  
  ```
 
 ## ipushpull Toolbar
