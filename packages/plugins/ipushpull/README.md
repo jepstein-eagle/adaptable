@@ -4,6 +4,8 @@ The ipushpull plugin connects AdapTable with [ipushpull](https://www.ipushpull.c
 
 It allows user to send Reports - either System Reports shipped by AdapTable or those created via the [Export function](../../adaptable/readme/functions/export-function.md) - to ipushpull and from their to Symphony and other destinations.
 
+**Version 7 of AdapTable made significant changes to how ipushpull is set up by using this dedicated plugin and removing the ipushpull section from Predefined Config.  Most of the functionality and objects are identical but it is now done through an `ipushpullPluginOptions` object**.
+
 ## ipushpull Options
 
 The ipushpull plugin contains an [ipushpull Plugin Options](../ipushpull/src/index.ts) object which allows users to set up their instance - more to follow...
