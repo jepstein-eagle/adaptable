@@ -6,7 +6,7 @@ It allows user to send Reports - either System Reports shipped by AdapTable or t
 
 **Version 7 of AdapTable made significant changes to how ipushpull is set up by using this dedicated plugin and removing the ipushpull section from Predefined Config.**
 
-**The functionality and objects are almost identical but it is now done through an `ipushpullPluginOptions` object**.
+**The functionality and objects are almost identical but most settings are now provided through the `ipushpullPluginOptions` object**.
 
 ## ipushpull Options
 
@@ -14,9 +14,7 @@ The ipushpull plugin contains an [ipushpull Plugin Options](https://api.adaptabl
 
 It contains credential details, useful properties (e.g. `throttleTime`, `autoLogin` etc.) and the ipupshpull config object.
 
-### Example
-
-  ### ipushpull Options Example
+### ipushpull Options Example
  
   ```ts
   const adaptableOptions: AdaptableOptions = {
