@@ -122,9 +122,9 @@ To gain access to this registry please follow these steps:
 
 ## Plugins
 
-AdapTable since version 6 includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
+AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-There are currently 3 plugins:
+There are currently 8 plugins:
 
 * **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
@@ -137,6 +137,26 @@ There are currently 3 plugins:
 * **No Code** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
     > Enables the creation of instances of AdapTable on the fly (using ag-Grid as the underlying vendor grid) by dragging and dropping any Excel or JSON file
+    
+* **Master Detail** (`@adaptabletools/adaptable-master-detail-aggrid`)
+
+    > Supports Master / Detail grids in ag-Grid by ensuring that the Master and all Detail grids are AdapTable instances with full access to all the rich functionality on offer.
+    
+* **ipushpull** (`@adaptabletools/adaptable-plugin-ipushpull`)
+
+    > Designed for [ipushpull](https://www.ipushpull.com) users, enabling advanced collaboration scenarios.
+    
+* **OpenFin** (`@adaptabletools/adaptable-plugin-openfin`)
+
+    > Designed for when AdapTable will be used inside the [OpenFin](https://openfin.co/) container.
+    
+* **Glue42** (`@adaptabletools/adaptable-plugin-glue42`)
+
+    > Designed for when AdapTable will be used on a desktop also running [Glue42](https://glue42.com/).
+    
+* **Finsemble** (`@adaptabletools/adaptable-plugin-finsemble`)
+
+    > Designed for when AdapTable is running alongside [Finsemble](https://www.chartiq.com/finsemble/). 
 
 Further information is availalbe in the [Plugins ReadMe](./packages/plugins/README.md)
 
