@@ -1,8 +1,8 @@
 # AdapTable Plugins Guide
 
-In order to keep the 'core' download a manageable size, Version 6 (released in January 2020) of AdapTable introduced plugins. 
+In order to keep the 'core' download a manageable size, [Version 6](./adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of AdapTable introduced plugins. 
 
-Plugins are additional groupings of functionality relevant to a particular set of users or usage.
+Plugins are essential groupings of functionality relevant to a particular use case or set of users.
 
 There are currently 8 plugins available (though more are being added all the time):
 
@@ -106,15 +106,13 @@ Once built AdapTable will save the state as it does for developer-built instance
 
 For use when ag-Grid has been set to Master / Detail mode.
 
-It allows each detail grid to be an instance of AdapTable.
+It allows each individual detail grid to be an instance of AdapTable and for them all to share AdapTable objects (e.g. Advanced Searches or Conditional Styles).
 
 ## ipushpull Plugin
 
-https://www.ipushpull.com
+Designed for [ipushpull](https://www.ipushpull.com) users.  
 
-## Finsemble Plugin
-
-Used with [Finsemble](https://www.chartiq.com/finsemble/)
+The dedicated ipushpull toolbar allows data to be sent from AdapTable (either snapshot or live updates) to an ipushpull page, and other collaborative scenarios.
 
 ## OpenFin Plugin
 
@@ -126,7 +124,11 @@ This plugin allows users to take advantage of some additional functionality cour
 
 Designed for when AdapTable will be used on a desktop also running the [Glue42](https://glue42.com/) desktop.
 
-This plugin leverages many of the powerful features of Glue42 to offer users additional options such as Audited, Validated 2 way export between AdapTable and Excel.  
+This plugin leverages many of the powerful features of Glue42 to offer users additional options such as Audited, Validated 2-way data export between AdapTable and Excel.  
+
+## Finsemble Plugin
+
+Designed for when AdapTable is used in conjunction with [Finsemble](https://www.chartiq.com/finsemble/).
 
 ## Demo
 
