@@ -4,7 +4,7 @@ The ipushpull plugin connects AdapTable with [ipushpull](https://www.ipushpull.c
 
 It allows user to send Reports - either System Reports shipped by AdapTable or those created via the [Export function](../../adaptable/readme/functions/export-function.md) - to ipushpull and from their to Symphony and other destinations.
 
-**Version 7 of AdapTable made significant changes to how ipushpull is set up by using this dedicated plugin and removing the ipushpull section from Predefined Config.  
+**Version 7 of AdapTable made significant changes to how ipushpull is set up by using this dedicated plugin and removing the ipushpull section from Predefined Config.**
 
 **The functionality and objects are almost identical but it is now done through an `ipushpullPluginOptions` object**.
 
@@ -13,6 +13,34 @@ It allows user to send Reports - either System Reports shipped by AdapTable or t
 The ipushpull plugin contains an [ipushpull Plugin Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_ipushpullpluginoptions_.ipushpullpluginoptions.html) object which allows users to set up their instance.
 
 It contains credential details, useful properties (e.g. `throttleTime`, `autoLogin` etc.) and the ipupshpull config object.
+
+### Example
+
+  ### ipushpull Options Example
+ 
+  ```ts
+  const adaptableOptions: AdaptableOptions = {
+     ******
+      plugins: [
+        ipp({
+          username: process.env.IPUSHPULL_USERNAME,
+          password: process.env.IPUSHPULL_PASSWORD,
+          throttleTime: 5000,
+          includeSystemReports: true,
+          ippConfig: {
+             api_url: 'https://www.ipushpull.com/api/1.0',
+             ws_url: 'https://www.ipushpull.com',
+             web_url: 'https://www.ipushpull.com',
+             docs_url: 'https://docs.ipushpull.com',
+             storage_prefix: 'ipp_local',
+             transport: 'polling',
+             hsts: false, // strict cors policy
+         },
+       }),
+     ],
+    ******
+   };
+ ```
 
 ## ipushpull Toolbar
 
