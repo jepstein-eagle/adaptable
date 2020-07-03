@@ -1,5 +1,8 @@
 # AdapTable Finsemble Plugin Read Me
 
+This plugin is designed for using AdapTable inside [Finsemble](https://www.chartiq.com/finsemble/).
+
+> Note: As of Version 7 there is no meaningful functionality in this plugin (unlike for ipushpull, OpenFin and Glue42 plugins).  However, it will be added in the near future so the plugin was created in order to facilitate this.
 
 ## Help
 
