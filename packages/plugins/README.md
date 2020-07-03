@@ -110,7 +110,11 @@ It allows each detail grid to be an instance of AdapTable.
 
 ## ipushpull Plugin
 
+https://www.ipushpull.com
+
 ## Finsemble Plugin
+
+Used with [Finsemble](https://www.chartiq.com/finsemble/)
 
 ## OpenFin Plugin
 
