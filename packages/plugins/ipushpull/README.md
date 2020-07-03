@@ -4,27 +4,27 @@ The ipushpull plugin connects AdapTable with [ipushpull](https://www.ipushpull.c
 
 It allows user to send Reports - either System Reports shipped by AdapTable or those created via the [Export function](../../adaptable/readme/functions/export-function.md) - to ipushpull and from their to Symphony and other destinations.
 
-**Version 7 of AdapTable made significant changes to how ipushpull is set up by using this dedicated plugin and removing the ipushpull section from Predefined Config.  Most of the functionality and objects are identical but it is now done through an `ipushpullPluginOptions` object**.
+**Version 7 of AdapTable made significant changes to how ipushpull is set up by using this dedicated plugin and removing the ipushpull section from Predefined Config.  
+
+**The functionality and objects are almost identical but it is now done through an `ipushpullPluginOptions` object**.
 
 ## ipushpull Options
 
-The ipushpull plugin contains an [ipushpull Plugin Options](../ipushpull/src/index.ts) object which allows users to set up their instance - more to follow...
+The ipushpull plugin contains an [ipushpull Plugin Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_ipushpullpluginoptions_.ipushpullpluginoptions.html) object which allows users to set up their instance.
 
-## UI Elements
+It contains credential details, useful properties (e.g. `throttleTime`, `autoLogin` etc.) and the ipupshpull config object.
 
-ipushpull includes the following UI Elements:
+## ipushpull Toolbar
 
-- **Toolbar** - The main way to interact with ipushpull.
-
-## Toolbar Contents
+The ipushpull plugin includes a dedicated ipushpull Toolbar - the main way to interact with ipushpull inside AdapTable.
 
 At start-up this simply displays a login button that, when clicked, opens a login screen asking for username and password.
 
-> There is a `AutoLogin` property option which will automatically log the user in to ipushpull (if the correct credentials have been provided in Predefined Config).
+> There is a `AutoLogin` property option which will automatically log the user in to ipushpull (if the correct credentials have been provided in ipushpull Plugin Options).
+
+Once the user is successfully logged in, the Toolbar will contain a number of elements (primarily dropdowns and buttons). These include:
 
 ### Dropdowns
-
-Once successfully logged in, the Toolbar sees 3 dropdowns.  These are:
 
 1. **Reports Dropdown** - this shows all the Reports that have been created via the [Export function](../../adaptable/readme/functions/export-function.md).
     > This dropdown will also include any System Reports that AdapTable ships by default (e.g. Selected Cells); however these can be removed by setting `IncludeSystemReports` to false
@@ -34,8 +34,6 @@ Once successfully logged in, the Toolbar sees 3 dropdowns.  These are:
 3. **Pages Dropdown** - lists all the ipushpull pages in the currently selected Folder (in the Folders Dropdown).
 
 ### Buttons
-
-The Toolbar also contains 4 buttons (some are only visible if an ipushpull page has been selected):
 
 1. **Send Snapshot** - this will run the current report and send the data to the currently selected ipushpull page.  This is a **one-off** action.
 
@@ -51,7 +49,7 @@ The Toolbar also contains 4 buttons (some are only visible if an ipushpull page 
 
 ## Entitlements
 
-ipushpull only works if the Function Entitlement for is set to 'Full' and if the ipushpull object has been provided in Predefined Config.  
+ipushpull only works if the Function Entitlement for is set to 'Full' and if this plugin has been injected into Adaptable Options.  
 
 See the [Entitlement Guide](../../adaptable/readme/guides/adaptable-entitlements-guide.md) for more information.
 
@@ -65,7 +63,7 @@ You will need to provide your username and password in the Login Control.
 
 **How do I provide my ipushpull Credentials?**
 
-As part of ipushpull State. You must inject the ipushpull instance into AdapTable. (This allows us to reduce the size of the bundle so that we only ship core dependencies).
+As part of ipushpull Plugin Options.
 
 **Can I create a new ipushpull page in AdapTable?**
 
