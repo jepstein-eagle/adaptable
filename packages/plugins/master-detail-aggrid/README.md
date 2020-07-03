@@ -8,6 +8,10 @@ This means that if you create a Conditional Style in Predefind Config it will ap
 
 ## How It Works
 
+### Example
+
+This code taken from the [Master-Detail demo](https://demo.adaptabletools.com/aggridfeatures/aggridmasterdetaildemo) shows how it works:
+
 ```ts
  const gridOptions: GridOptions = {
     columnDefs,
@@ -26,16 +30,7 @@ This means that if you create a Conditional Style in Predefind Config it will ap
     isRowMaster: function(dataItem) {
       return dataItem ? dataItem.squad.length > 0 : false;
     },
-    enableRangeSelection: true,
-    suppressColumnVirtualisation: false,
-    suppressMenuHide: true,
-    columnTypes: {
-      abColDefNumber: {},
-      abColDefString: {},
-      abColDefBoolean: {},
-      abColDefDate: {},
-      abColDefObject: {},
-    },
+    .......
   };
 
   const adaptableOptions: AdaptableOptions = {
