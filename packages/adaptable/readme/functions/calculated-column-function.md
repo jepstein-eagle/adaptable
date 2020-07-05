@@ -101,7 +101,7 @@ Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
 To create an Expression which returns the highest of 4 Columns in the row (great for things like MiFID):
 
 ```
-max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
+MAX(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
  ```
 
 ## Calculated Column Settings
