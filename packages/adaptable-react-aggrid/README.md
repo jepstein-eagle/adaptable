@@ -246,8 +246,6 @@ import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
 import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css";
-import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
-import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css";
 
 // import any AdapTable plugins you require
 import charts from '@adaptable/adaptable-plugins-charts'
