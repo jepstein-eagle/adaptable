@@ -45,5 +45,7 @@ This was removed in Version 7 of AdapTable when all Schedules were stored in [Sc
 - [Reminder Api](https://api.adaptabletools.com/interfaces/_src_api_reminderapi_.reminderapi.html)
 
 - [Reminder Demo](https://demo.adaptabletools.com/alertsmessages/aggridreminderdemo)
-  
+
 - [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html)
+
+- [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)
