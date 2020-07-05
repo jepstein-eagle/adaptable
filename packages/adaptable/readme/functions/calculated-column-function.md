@@ -14,7 +14,7 @@ There are numerous potential uses for Calculated Columns including showing Histo
 
 Calculated Columns include an **Expression** that users provide in the Expression Editor.
 
-> Up to Version 7 of AdapTable the Expression was created using an extermal library (Math.js) but this dependnecy has been removed and Expressions are now created and evaluated interally using our own parser.
+> Up to [Version 7](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of AdapTable the Expression was created using an extermal library (Math.js) but this dependnecy has been removed and Expressions are now created and evaluated interally using our own parser.
 
 An Expression typically includes one or more mathematical operators or functions and will likely reference other columns.
 
@@ -26,7 +26,7 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 
 ## Expression Editor
 
-Since Version 7 Expressions can be most easily created using our Expression Editor.  
+Since [Version 7](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) Expressions can be most easily created using our Expression Editor.  
 
 This has a number of useful features including:
 
@@ -34,9 +34,9 @@ This has a number of useful features including:
 
 - List of all the available functions as buttons or in a dropdown so they are immediately applied in the Editor
 
-- Output example of the Expression using data from the first row of the Grid
+- Dispaly the return value of the Expression (using data from the first row of the Grid)
 
-- Support / Help for each available function
+- Context sensitive Support / Help for each available function
 
 ## Expression Syntax
 
@@ -62,10 +62,12 @@ COL('ItemCount') + COL('PackageCost')
 
 ## Expression Examples
 
+There are limitless Expressions you can create but here a few examples to show you what is possible - try them out at the [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo).
+
 To create an Expression which references another column and a mathematical operator: 
 
 ```
-Col("Notional") * 2
+Col("ItemCost") * 2
  ```      
 
 To create an Expression which references 2 columns:
