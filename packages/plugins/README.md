@@ -8,7 +8,7 @@ There are currently 8 plugins available (though more are being added all the tim
 
 - [Finance Plugin](./finance)
 
-- [Charting Plugin](./charts)
+- [Charts Plugin](./charts)
 
 - [No Code AgGrid Plugin](./nocode-aggrid)
 
@@ -75,7 +75,7 @@ It includes specialised Cell Summary operations like 'VWap' and 'Only' and will 
 
 > AdapTable was initially called the Adaptable Blotter to reflect the fact that its early users were in financial services. However it soon became apparent that the data management functionality on offer was of much wider application to a great many other sectors.  Hence the product was renamed AdapTable and the finance-specific functionality was moved to the finance plugin.
 
-## Chart Plugin
+## Charts Plugin
 
 The charting plugin allows you to access the rich AdapTable charting set courtesy of Infragistics.
 
