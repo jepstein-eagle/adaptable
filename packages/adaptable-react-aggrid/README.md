@@ -4,9 +4,9 @@ Repository for the **AdapTable React ag-Grid Wrapper** which allows you to insta
 
 ## Upgrade Guide
 
-Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
+Version 7 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
+For more information please see the [Version 7 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md)
 
 ## Installation
 
@@ -16,7 +16,6 @@ To gain access to this registry please follow these steps:
 
 1. Acquire a commercial AdapTable License - you can email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) who will provide you with your unique credentials.
 
-
 2. Point your npm client to the correct registry for packages under the `@adaptabletools` scope
 
   ```npm config set @adaptabletools:registry https://registry.adaptabletools.com```
@@ -24,7 +23,6 @@ To gain access to this registry please follow these steps:
   if you're using yarn
 
   ```yarn config set @adaptabletools:registry https://registry.adaptabletools.com```
-
 
 3. Login to the AdapTable private registry:
 
@@ -69,7 +67,7 @@ To gain access to this registry please follow these steps:
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-There are currently 3 plugins:
+There are currently 8 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
@@ -82,6 +80,26 @@ There are currently 3 plugins:
 - **NoCode** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
   > enables the creation of dynamic AdapTable instances by dragging and droppping JSON or Excel files.
+  
+- **Master Detail** (`@adaptabletools/adaptable-master-detail-aggrid`)
+
+  > Supports Master / Detail grids in ag-Grid by ensuring that the Master and all Detail grids are AdapTable instances with full access to all the rich functionality on offer.
+    
+- **ipushpull** (`@adaptabletools/adaptable-plugin-ipushpull`)
+
+  > Designed for [ipushpull](https://www.ipushpull.com) users, enabling advanced collaboration scenarios.
+    
+- **OpenFin** (`@adaptabletools/adaptable-plugin-openfin`)
+
+  > Designed for when AdapTable will be used inside the [OpenFin](https://openfin.co/) container.
+    
+- **Glue42** (`@adaptabletools/adaptable-plugin-glue42`)
+
+  > Designed for when AdapTable will be used on a desktop also running [Glue42](https://glue42.com/).
+    
+- **Finsemble** (`@adaptabletools/adaptable-plugin-finsemble`)
+
+  > Designed for when AdapTable is running alongside [Finsemble](https://www.chartiq.com/finsemble/). 
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
@@ -220,7 +238,10 @@ import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes
 import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
-import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css";
+import "@ag-grid-community/all-modules/dist/styles/ag-theme-balham-dark.css";
 
 // import any AdapTable plugins you require
 import charts from '@adaptable/adaptable-plugins-charts'
@@ -229,6 +250,7 @@ import charts from '@adaptable/adaptable-plugins-charts'
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 
+// create the Adaptable Options object
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
@@ -236,16 +258,28 @@ const adaptableOptions: AdaptableOptions = {
   plugins: [charts()] // adaptable plugins
 };
 
-export default () => <AdaptableReactAgGrid
-  style={{ height: '100vh' }}
-  modules={[MenuModule, RangeSelectionModule]} // ag-grid modules 
-  gridOptions={ ... }
-  adaptableOptions={adaptableOptions}
-  onAdaptableReady={(adaptableApi, gridOptions) => { 
-    // use adaptableApi for full runtime access to AdapTable state and functions
-    // use gridOptions for full runtime access to any ag-Grid methods and events
-  }}
-/>
+// Instantiate BOTH the AdaptableReact and the AgGridReact Components
+const App: React.FC = () => (
+  <div style={{ display: "flex", flexFlow: "column", height: "100vh" }}>
+    <AdaptableReact
+      style={{ flex: "none" }}
+      gridOptions={gridOptions}
+      adaptableOptions={adaptableOptions}
+      onAdaptableReady={({ adaptableApi }) => {
+        console.log("ready!!!!");
+        adaptableApi.eventApi.on("SelectionChanged", (args) => {
+          console.warn(args);
+        });
+      }}
+    />
+    <div className="ag-theme-alpine" style={{ flex: 1 }}>
+      <AgGridReact
+        gridOptions={gridOptions}
+        modules={[...RangeSelectionModule, MenuModule, ClientSideRowModelModule]}
+      />
+    </div>
+  </div>
+);
 
 ```
 
