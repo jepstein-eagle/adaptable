@@ -161,9 +161,9 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 Unlike with previoius version, **you now need to provide 2 components**:
 
-- **AgGridReact** This is the ag-Grid React component.  You should pass as props the GridOptions object and any Modules (see above)
+- **AgGridReact:** This is the ag-Grid React component.  You should pass as props the GridOptions object and any Modules (see above)
 
-- **AdaptableReact** This is the AdapTable React component. See below for a list of the props required.
+- **AdaptableReact:** This is the AdapTable React component. See below for a list of the props required.
 
 
 ## AdaptableReact Props
@@ -230,7 +230,7 @@ For more information please read the [Adaptable State Guide](../../packages/adap
 
 ## Demo
 
-For a standalone working example app of the React Wrapper, see the [React Demo](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
+For a standalone working example app of the React Wrapper, see the [React Example Project](https://github.com/AdaptableTools/example-adaptable-react-aggrid)
 
 To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 
@@ -254,7 +254,24 @@ import charts from '@adaptable/adaptable-plugins-charts'
 import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import { MenuModule } from '@ag-grid-enterprise/menu';
 
-// create the Adaptable Options object
+/// Create the ag-Grid GridOptions object
+const gridOptions: GridOptions = {
+    getColumnDefs(),
+    getRowData(),
+    enableRangeSelection: true,
+    sideBar: true,
+   ....
+    columnTypes: {
+      abColDefNumber: {},
+      abColDefString: {},
+      abColDefBoolean: {},
+      abColDefDate: {},
+      abColDefObject: {},
+      abColDefNumberArray: {},
+    },
+  };
+
+// create the Adaptable Options object including any plugins
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
