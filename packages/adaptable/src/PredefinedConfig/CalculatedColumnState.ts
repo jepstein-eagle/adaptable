@@ -53,6 +53,9 @@ export interface CalculatedColumn extends AdaptableObject {
   CalculatedColumnSettings?: CalculatedColumnSettings;
 }
 
+/**
+ * Set of optional properties that define a Calculated Column's behaviour
+ */
 export interface CalculatedColumnSettings {
   /**
    * The DataType of the Expression's return value when it evaluates
