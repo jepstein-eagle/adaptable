@@ -196,6 +196,7 @@ The other source for Help is our collection of 'Read Me' Docs ([full list here](
 
 These include:
 
+* [Version 7 Upgrade Guide](./packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md)
 * [Version 6 Upgrade Guide](./packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
 * [Adaptable Core](./packages/adaptable/README.md)
 * [React Wrapper](./packages/adaptable-react-aggrid/README.md)
