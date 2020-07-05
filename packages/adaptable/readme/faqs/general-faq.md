@@ -20,10 +20,6 @@ You can use AdapTable in any profession or industry. Its a first class tool for 
 
 > If you are a financial user then you can add our [Finance Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finance/README.md) which contains some financial-specific functionality.
 
-**Can I have multiple AdapTable instances all looking at the same data source?**
-
-Yes, this is something that we support. To see a good example of multiple grids sharing data and updates with each other (and with 3rd party components via OpenFin and Finsemble) download the Finsemble demo from our demo site.
-
 **Can I restrict who can do what in AdapTable?**
 
 Yes. Our [Entitlements](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-entitlements-guide.md) functionality allows you set different permissions for each user.
@@ -31,10 +27,6 @@ Yes. Our [Entitlements](https://github.com/AdaptableTools/adaptable/blob/master/
 **Can I use AdapTable to match trades?**
 
 This is a good example of a very specific use case where it does not make sense for AdapTable to provide a full solution out of the box in its core functionality. However as a result of the Action Columns function, the RowSelection event and our Api, it is something that is trivial for developers using the Adaptable to do in just a few minutes.
-
-**Do you store any user data?**
-
-No AdapTable has no storage mechanism. Any data that is dispalayed in the Grid via AdapTable is not accessible to us in any way.
 
 **Who is the target audience of AdapTable?**
 
@@ -68,7 +60,7 @@ No, it doesn't. AdapTable is completely data agnostic and has no knowledge of an
 
 **Does AdapTable help me to gather my data?**
 
-No. AdapTable does not get involved in getting your data into the grid, nor what happens to your data after you edit it. 
+No. AdapTable does not get involved in procuring your data or in getting your data into the grid, nor what happens to your data after you edit it in the grid. 
 
 The sole focus of AdapTable is to ensure that while the data is in front of you, you are able to search, edit, style, export, and manage your data in exciting, powerful and intuitive ways not previously possible.
 
@@ -83,6 +75,11 @@ So long your data is suitable to act as the datasource in the underlying grid, A
 No we have no storage mechanism. Any data that is used in AdapTable is not accessible to us in any way.  
 
 Likewise we have no visibility on anything that users do in AdapTable.  
+
+**Can I have multiple AdapTable instances all looking at the same data source?**
+
+Yes, this is something that we support. To see a good example of multiple grids sharing data and updates with each other (and with 3rd party components via OpenFin and Finsemble) download the Finsemble demo from our demo site.
+
 
 ## Grids
 
@@ -102,7 +99,7 @@ We currently support:
 
 We are adding more grids all the time so please watch this space.
 
-> Additionally, we plan to release in 2020 our own Adaptable Grid designed to work closely with AdapTable.
+> Additionally, we plan to release in 2020 our own Adaptable Grid (currently in development) designed to work closely with AdapTable.
 
 **Which grids do you plan to add next?**
 
@@ -112,13 +109,17 @@ We are planning to add implementations for ng-Grid, SlickGrid and FancyGrid. But
 
 Each use case is different but it usually takes a couple of months for us to implement a new grid. Most of our functions are implemented very quickly, but there is always one that requires a lot of bespoke work and effort. 
 
-**Can we add a grid implementation?**
+**Can we add our own grid implementation?**
 
-Yes, you can. We would be delighted if others contributed to our current grid implementations. Please get in touch.
+Yes, you can. We provide a basic interface that all grid implementations should implement.
+
+We would be delighted if others contributed to our current grid implementations. Please get in touch with details.
 
 **Do you support all the functionality in the underlying grid e.g. grouping?**
 
-Yes, if the underlying grid has grouping then AdapTable will support it fully and all our functions will work while grouping is applied. For example, see the ag-Grid grouping demo on our demo site.
+Yes, if the underlying grid contains functionality then AdapTable will support.
+
+For example, if the underlying grid has grouping or Tree Views or Master Detail, then AdapTable will support it fully and all our functions will work while grouping is applied. For example, see the ag-Grid grouping demo on our demo site.
 
 
 ## Libraries and Frameworks
