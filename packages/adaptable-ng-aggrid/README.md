@@ -188,6 +188,8 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 - **gridOptions**
 
   The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+  
+   **This must be the same ag-Grid *GridOptions* object that you pass into the `<ag-grid-angular>` component**
 
   > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will pass that directly to `<ag-grid-angular>` component instead.
 
@@ -272,6 +274,13 @@ After that, you can use the component in your app
 >
 </ag-grid-angular>
 ```
+
+## AdapTable Tool Panel Component
+
+To use the Adaptable Tool Panel while using the Angular Wrapper, you need to explicitly import it in your code, e.g.:
+```js
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+````
 
 ## Styling and Theming
 
