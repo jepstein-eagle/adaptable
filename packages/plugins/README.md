@@ -1,6 +1,6 @@
 # AdapTable Plugins Guide
 
-In order to keep the 'core' download a manageable size, [Version 6](./adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of AdapTable introduced plugins. 
+In order to keep the 'core' download a manageable size, [Version 6](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md) of AdapTable introduced plugins. 
 
 Plugins are essential groupings of functionality relevant to a particular use case or set of users.
 
