@@ -125,7 +125,7 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
   ```
 
 ## agGrid Enterprise Modules
-AdapTable uses ag-Grid v.23.  In Version 22 ag-Grid introduced [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
+Version 22 of ag-Grid (we now support v.23) introduced [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
@@ -157,9 +157,11 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
   
 ## Components
 
-[Version 7](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of the AdapTable React Wrapper introduces a big change.  You now need to provide 2 components:
+[Version 7](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of the AdapTable React Wrapper introduces a big change.  
 
-- **AgGridReact** This is the ag-Grid React component.  You should pass as props the GridOptions objects and any Modules (see above)
+Unlike with previoius version, **you now need to provide 2 components**:
+
+- **AgGridReact** This is the ag-Grid React component.  You should pass as props the GridOptions object and any Modules (see above)
 
 - **AdaptableReact** This is the AdapTable React component. See below for a list of the props required.
 
@@ -188,18 +190,14 @@ See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_ada
 
 - **onAdaptableReady: ({ adaptableApi: AdaptableApi, vendorGrid: GridOptions })** 
 
-  An event that fires as soon as AdapTable is ready - the callback function is called with an object with `{adaptableApi, vendorGrid}` which provides access to 2 important objects:
+  An event that fires as soon as AdapTable is ready - the callback function is called with an object with `{adaptableApi, vendorGrid}`.
+  
+  This provides access to 2 important objects:
+  
   1. The *AdaptableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more details.)
 
   2. The underlying VendorGrid instance being used - in this case GridOptions. This is because AdapTable enriches the 'gridOptions' it receives with modules and other properties, so if you want access to the underlying grid then you should use this object.
 
-- **render|children: ({ grid, adaptable}) => ReactNode**  
-
-  Can specify a custom render function that is called with the rendered grid and adaptable, and can be used to change the layout of the component, and render additional elements or change adaptable/grid order
-
-- **modules** 
-
-  Any ag-Grid Enterprise modules that you wish to include (see above)
 
 ## Styling and Theming
 
@@ -267,6 +265,7 @@ const adaptableOptions: AdaptableOptions = {
 };
 
 // Instantiate BOTH the AdaptableReact and the AgGridReact Components
+// Make sure they both recieve as props the SAME gridOptions object
 const App: React.FC = () => (
   <div style={{ display: "flex", flexFlow: "column", height: "100vh" }}>
     <AdaptableReact
@@ -274,9 +273,8 @@ const App: React.FC = () => (
       gridOptions={gridOptions}
       adaptableOptions={adaptableOptions}
       onAdaptableReady={({ adaptableApi }) => {
-        console.log("ready!!!!");
-        adaptableApi.eventApi.on("SelectionChanged", (args) => {
-          console.warn(args);
+         adaptableApi.eventApi.on("SelectionChanged", (args) => {
+          // do something..
         });
       }}
     />
@@ -288,7 +286,6 @@ const App: React.FC = () => (
     </div>
   </div>
 );
-
 ```
 
 ## Licences
