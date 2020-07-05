@@ -60,7 +60,7 @@ AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"ba
 
 With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated.
 
-Here is a quick summary of the changes (for full information see the [React Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
+Here is a quick summary of the changes (for full information see the [React Wrapper])(https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
 
  * you now have to render `<AgGridReact>` component yourself - although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `"gridOptions"` object** as a prop to the `<AgGridReact>` component
 
@@ -92,7 +92,7 @@ Here is a quick summary of the changes (for full information see the [React Wrap
 
 ### AdapTable Tool Panel Component
 
-One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the React Wrapper, it needs to be explicitly imported in your code, e.g.:
+One consequence of the new ag-Grid version is that if you want to use the AdapTable Tool Panel while using the React Wrapper, it needs to be explicitly imported in your code, e.g.:
 
 ```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
@@ -152,7 +152,7 @@ onAdaptableReady({
 
 ### AdapTable Tool Panel Component
 
-One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the Angular Wrapper, it needs to be explicitly imported in your code, e.g.:
+One consequence of the new ag-Grid version is that if you want to use the AdapTable Tool Panel while using the Angular Wrapper, it needs to be explicitly imported in your code, e.g.:
 ```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ````
@@ -199,9 +199,9 @@ For more information see the [Calculated Column ReadMe](https://github.com/Adapt
 
 In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of Adaptable State (e.g. Export, Reminder, ipushpull etc).
 
-This has been changed, and now there is a dedicated Schedule section of Adaptable State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
+This has been changed, and now there is a dedicated Schedule section of AdapTable State which contains all the Schedules i.e. for Export, Reminder, ipushpull etc.
 
-One consequence of this is that the `Reminder` section of Adaptable State has been removed as it is no longer required.
+One consequence of this is that the `Reminder` section of AdapTable State has been removed as it is no longer required.
 
 For more information see the [Schedule Function ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/schedule-function.md)
 
@@ -243,7 +243,7 @@ These are:
 
 * [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) 
 
-In each case any configuration that was previously stored in the partner's section of Predefined Config in Adaptable State is now provided through an xxxPluginOptions object injected into the Plugin.
+In each case any configuration that was previously stored in the partner's section of Predefined Config in AdapTable State is now provided through an xxxPluginOptions object injected into the Plugin.
 
 For example to use the ipushpull plugin you will do something like:
 
