@@ -93,9 +93,9 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [No Code AgGrid Plugin](../../plugins/nocode-aggrid/README.md)
 - [Master Detail AgGrid Plugin](../../plugins/master-detail-aggrid/README.md)
 - [ipushpull Plugin](../../plugins/ipushpull/README.md)
-- [Finsemble Plugin](../../plugins/finsemble/README.md)
-- [OpenFin Plugin](../../plugins/openfin/README.md)
 - [Glue42 Plugin](../../plugins/glue42/README.md)
+- [OpenFin Plugin](../../plugins/openfin/README.md)
+- [Finsemble Plugin](../../plugins/finsemble/README.md)
 
 ## Demo
 
