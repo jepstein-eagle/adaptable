@@ -4,7 +4,11 @@ Version 7 of AdapTable will be released on Sunday 5 July.
 
 This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes that will be of interest, including:
 
-* Support for latest ag-Grid Version (23) including Alpine theme - necessitating changes to the React and Angular Wrappers.
+* Support for latest ag-Grid Version (23) including Alpine theme 
+
+* React Wrapper Changes
+
+* Angular Wrapper Changes
 
 * Static Constructor now asynchronous
 
@@ -52,7 +56,7 @@ Make sure you specify your theme in your html, on the grid container element - i
 
 AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
 
-## React wrapper
+## React Wrapper Changes
 
 With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated.
 
@@ -100,7 +104,7 @@ import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src
  - `modules` - specify agGrid modules directly on the `<AgGridReact />` component.
  - `render` fn - place the `<AdaptableReactAggrid />` and `<AgGridReact />` components in your jsx wherever you want - they will be connected
 
-## Angular wrapper
+## Angular Wrapper Changes
 
 With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated.
 
@@ -189,6 +193,8 @@ The required syntax is very similar to previous versions of AdapTable, and in mo
 
 > One effect of this change is that the download size of AdapTable has been greatly reduced as the math.js folder was the single largest element in the downloaded package.
 
+For more information see the [Calculated Column ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
+
 ## Schedule State Changes
 
 In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of Adaptable State (e.g. Export, Reminder, ipushpull etc).
@@ -197,9 +203,13 @@ This has been changed, and now there is a dedicated Schedule section of Adaptabl
 
 One consequence of this is that the `Reminder` section of Adaptable State has been removed as it is no longer required.
 
+For more information see the [Schedule Function ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/schedule-function.md)
+
 ## Percent Bar Improvements
 
 To Do
+
+For more information see the [Percent Bar ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/percent-bar-function.md)
 
 ## Config Server Removed
 
@@ -217,13 +227,13 @@ In Version 7 we have created 4 new plugins which contain bespoke functionality f
 
 These are:
 
-* ipushpull
+* [ipushpull](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md) 
 
-* Glue42
+* [Glue42](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md) 
 
-* OpenFin
+* [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md) 
 
-* Finsemble
+* [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) 
 
 In each case any configuration that was previously stored in the partner's section of Predefined Config in Adaptable State is now provided through an xxxPluginOptions object injected into the Plugin.
 
