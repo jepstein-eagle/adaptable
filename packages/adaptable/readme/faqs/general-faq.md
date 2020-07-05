@@ -2,9 +2,11 @@
 
 This FAQ includes some of the more general questions that we have been asked. More specific questions can be found in the other FAQs.
 
+## General Information
+
 **Is there a demo site where I can see AdapTable in action?**
 
-Yes, we have a demo site. This contains multiple data sets - many of which are pre-populated with Adaptable Objects like searches and styles - so you can see some examples of how AdapTable can be used.
+Yes, we have a [Demo Site](http://www.adaptabletools.com) . This contains multiple data sets - many of which are pre-populated with Adaptable Objects like searches and styles - so you can see some examples of how AdapTable can be used.
 
 **How performant is AdapTable?**
 
@@ -58,7 +60,7 @@ Yes AdapTable doesn't hide the underlying grid. So you still have full access to
 
 No, we don't. If the underlying grid requires a commercial licence then you must pay for that separately. AdapTable will not check if the licence is present. 
 
-### Grids
+## Grids
 
 **Which grid version do you support?**
 
@@ -95,7 +97,7 @@ Yes, you can. We would be delighted if others contributed to our current grid im
 Yes, if the underlying grid has grouping then AdapTable will support it fully and all our functions will work while grouping is applied. For example, see the ag-Grid grouping demo on our demo site.
 
 
-### Libraries and Frameworks
+## Libraries and Frameworks
 
 **What JavaScript libraries or framework do you use?**
 
