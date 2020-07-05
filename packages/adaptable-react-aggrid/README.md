@@ -220,7 +220,7 @@ To find out how to your write your custom themes, provide custom icons - and abo
 
 ## AdapTable Tool Panel Component
 
-o use the Adaptable Tool Panel while using the React Wrapper, you need to explicitly import it in your code, e.g.:
+To use the Adaptable Tool Panel while using the React Wrapper, you need to explicitly import it in your code, e.g.:
 
 ```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
@@ -271,7 +271,7 @@ To see AdapTable, more generally, in action visit our [Demo Site](https://demo.a
 ```jsx
 
 import AdaptableReact from '@adaptabletools/adaptable-react-aggrid';
-
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 import '@adaptabletools/adaptable-react-aggrid/index.css'; // this also includes the light theme
 import '@adaptabletools/adaptable-react-aggrid/themes/dark.css'
 
@@ -292,6 +292,9 @@ const gridOptions: GridOptions = {
     getRowData(),
     enableRangeSelection: true,
     sideBar: true,
+    components: {
+      AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
+    },
    ....
     columnTypes: {
       abColDefNumber: {},
@@ -309,6 +312,9 @@ const adaptableOptions: AdaptableOptions = {
   userName: 'demo user',
   adaptableId: 'react demo',
   plugins: [charts()] // adaptable plugins
+  userInterfaceOptions: { // show the AdapTable ToolPanel
+    showAdaptableToolPanel: true,
+  },
 };
 
 // Instantiate BOTH the AdaptableReact and the AgGridReact Components
