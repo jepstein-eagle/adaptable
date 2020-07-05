@@ -74,7 +74,9 @@ Yes AdapTable doesn't hide the underlying grid. So you still have full access to
 
 **Do you include licences for the underlying grid?**
 
-No, we don't. If the underlying grid requires a commercial licence then you must pay for that separately. AdapTable will not check if the licence is present. 
+No, we don't. If the underlying grid requires a commercial licence then you must pay for that separately. 
+
+See the [Licences Faq](./licences.md) for full details of how licencing works.
 
 ## Grids
 
