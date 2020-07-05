@@ -26,11 +26,17 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 
 ## Expression Editor
 
-Since Version 7 Expressions can be most easily created using our Expression Editor.  This has a number of helpful features including:
+Since Version 7 Expressions can be most easily created using our Expression Editor.  
 
-- blah 
+This has a number of useful features including:
 
-- blah
+- Drag n Drop of Columns into the Editor
+
+- List of all the available functions as buttons or in a dropdown so they are immediately applied in the Editor
+
+- Output example of the Expression using data from the first row of the Grid
+
+- Support / Help for each available function
 
 ## Expression Syntax
 
@@ -39,6 +45,20 @@ One key thing to note is that columns are referenced in the Expression as Col("C
 You currently have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. Col("orderId") rather than the Caption visible in the grid (e.g. 'Order Id').  However we provide the Caption in the UI to help you identify them
 
 > In a forthcoming release we hope to enable both field and captions to be used in the Expression.
+
+We provide a 'shortcut' for the most commonly used functions.
+
+For example instead of using the 'ADD' function as follows:
+
+```
+ADD(COL('ItemCount'),COL('PackageCost'))
+ ```
+ 
+you can provide the '+' sign (available in the UI as a button): 
+
+```
+COL('ItemCount') + COL('PackageCost')
+ ```
 
 ## Expression Examples
 
@@ -63,7 +83,13 @@ ColumnExpression: Col("InvoicedCost") - ( Col("OrderCost") + Col("PackageCost"))
 To create an Expression which multiplies many columns:
 
 ```
-multiply(Col("OrderCost") , Col("ItemCost"), Col("PackageCost"))
+MUL(Col("OrderCost") , Col("ItemCost"), Col("PackageCost"))
+ ```
+ 
+though this is more readable using the function short syntax as:
+
+```
+Col("OrderCost") * Col("ItemCost")* Col("PackageCost")
  ```
  
 To create an Expression which uses ternary (if) logic (and outputs a string):
@@ -78,6 +104,25 @@ To create an Expression which returns the highest of 4 Columns in the row (great
 max(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
  ```
 
+## Calculated Column Settings
+
+When creating a Calculated Column there are a number of properties you can provide in the wizard so that the column will operate according to your requirements.  These include:
+
+- Column Type (AdapTable will infer this from the Expression and your data but you can override this if the assumption is incorrect)
+
+- Width (if left empty then the width will be set by the underlying grid based on whatever other properties are set)
+
+- Filterable
+
+- Resizable
+
+- Groupable
+
+- Sortable
+
+- Pivotable
+
+- Aggregatable
  
 ## UI Elements
 
@@ -111,7 +156,7 @@ Not at the moment, but that funcionality will be coming soon.
 
 **Its quite cumbersome to have to write the Expression by hand.  Is there a GUI option?**
 
-Not at present but it is on the To Do list and will be in a future release.  We anticipate that you will be able to drag and drop the columns and choose the operators from a dropdown.
+Yes, this was introduced in Version 7.
 
 **Can I include more than one operator in an Expression?**
 
@@ -123,7 +168,7 @@ Yes, once the Calculated Column is created, then its treated the same as any oth
 
 **Can I edit the value a Calculated Column directly?**
 
-No, a Calculated Column is readonly. You can edit the Expression but cannot edit one of the cells in the column itself.
+No, a Calculated Column is readonly. You can edit the **Expression** but you cannot edit one of the cells in the column itself.
 
 **Can I create a Calculated Column that returns a string?**
 
@@ -131,7 +176,9 @@ Yes, your Calculated Column can return a number, string, date or boolean. AdapTa
 
 **Can I change the name of a Calculated Column?**
 
-You can and the change will persist.  However please note that AdapTable will not update any layouts or other objects (e.g. filters) that reference this Calculated Column so be very careful before changing the name of a Calculated Column that is used elsewhere.
+You can and the change will persist.  
+
+> However please note that AdapTable will not update any layouts or other objects (e.g. filters) that reference this Calculated Column so be very careful before changing the name of a Calculated Column that is used elsewhere.
 
 ### Further Information
 
