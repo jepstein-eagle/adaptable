@@ -1,4 +1,4 @@
-# AdapTable Finance Plugin Read Me
+# AdapTable Finance Plugin
 
 AdapTable is data-agnostic and designed to appeal to users in any sector or industry.
 
