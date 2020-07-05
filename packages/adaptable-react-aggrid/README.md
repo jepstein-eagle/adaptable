@@ -56,8 +56,8 @@ To gain access to this registry please follow these steps:
 
   ```
   "peerDependencies": {
-      "@ag-grid-community/all-modules": "^22.1.1",
-      "@ag-grid-community/react": "^22.1.1",
+      "@ag-grid-community/all-modules": "^23.2.1",
+      "@ag-grid-community/react": "^23.2.1",
       "react": "=>16.8.6",
       "react-dom": ">=16.8.6",
   }
@@ -125,7 +125,7 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
   ```
 
 ## agGrid Enterprise Modules
-AdapTable uses ag-Grid v.22.  This included a big change by introducing [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
+AdapTable uses ag-Grid v.23.  In Version 22 ag-Grid introduced [modularization](https://www.ag-grid.com/javascript-grid-modules/), giving users more control over which functionality they want to use.  AdapTable fully supports this new way of working.
 
 **If using any ag-Grid Enterprise modules, please make sure you have a valid ag-Grid licence**
 
@@ -146,27 +146,35 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
   import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
   ```
 
-3. Add them to the **modules** prop of the AdaptableReact Component:
+3. Add them to the **modules** prop of the AgGridReact Component:
 
   ```
-  export default () => <AdaptableReactAgGrid
-    ....
-    modules={[SideBarModule, MenuModule, RangeSelectionModule]}
-  ....
-  />
-
+   <AgGridReact
+     gridOptions={gridOptions}
+     modules={[...RangeSelectionModule, MenuModule, ClientSideRowModelModule]}
+   />
   ```
+  
+## Components
+
+[Version 7](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of the AdapTable React Wrapper introduces a big change.  You now need to provide 2 components:
+
+- **AgGridReact** This is the ag-Grid React component.  You should pass as props the GridOptions objects and any Modules (see above)
+
+- **AdaptableReact** This is the AdapTable React component. See below for a list of the props required.
 
 
-## React Props
+## AdaptableReact Props
 
 ### Mandatory:
 
 - **gridOptions**: 
 
   The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+  
+  **This must be the same ag-Grid *GridOptions* object that you pass into the AgGridReact component**
 
-  > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop of the component.
+  > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop of the AgGridReact component.
 
 - **adaptableOptions**: 
 
