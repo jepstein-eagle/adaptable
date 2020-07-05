@@ -1,5 +1,10 @@
 # AdapTable Glue42 Plugin Read Me
 
+Designed for when AdapTable will be used on a desktop also running [Glue42](https://glue42.com/).
+
+This plugin leverages many of the powerful features of Glue42 to offer users additional options such as Audited, Validated 2 way export between AdapTable and Excel. 
+
+For instance you can export data to Excel via Glue42, and any edits made by users in Excel will be sent back to AdapTable (so the 2 remain in sync) and will be subject to any validation rules that have been created in AdapTable.  This ensures that data in Excel are not only validated but (thanks to [Audit Log](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-audit-log-guide.md)) also fully audited.
 
 ## Help
 

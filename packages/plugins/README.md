@@ -1,8 +1,8 @@
 # AdapTable Plugins Guide
 
-In order to keep the 'core' download a manageable size, Version 6 (released in January 2020) of AdapTable introduced plugins. 
+In order to keep the 'core' download a manageable size, [Version 6](./adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of AdapTable introduced plugins. 
 
-Plugins are additional groupings of functionality relevant to a particular set of users or usage.
+Plugins are essential groupings of functionality relevant to a particular use case or set of users.
 
 There are currently 8 plugins available (though more are being added all the time):
 
@@ -16,11 +16,12 @@ There are currently 8 plugins available (though more are being added all the tim
 
 - [ipushpull Plugin](./ipushpull)
 
-- [Finsemble Plugin](./finsemble)
-
 - [OpenFin Plugin](./openfin)
 
 - [Glue42 Plugin](./glue42)
+
+- [Finsemble Plugin](./finsemble)
+
 
 ## Using Plugins
 
@@ -66,7 +67,7 @@ const adaptableOptions: AdaptableOptions = {
 }
 ```
 
-### Finance Plugin
+## Finance Plugin
 
 This contains functionality that is of particular interest to financial services users.
 
@@ -74,7 +75,7 @@ It includes specialised Cell Summary operations like 'VWap' and 'Only' and will 
 
 > AdapTable was initially called the Adaptable Blotter to reflect the fact that its early users were in financial services. However it soon became apparent that the data management functionality on offer was of much wider application to a great many other sectors.  Hence the product was renamed AdapTable and the finance-specific functionality was moved to the finance plugin.
 
-### Chart Plugin
+## Chart Plugin
 
 The charting plugin allows you to access the rich AdapTable charting set courtesy of Infragistics.
 
@@ -92,7 +93,7 @@ The charts on offer include:
 
 > Charting was converted into a plugin so that those users who don't need this functionality, or have their own charting libraries, can avoid having to download a package that they will not use.
 
-### No Code Plugin
+## No Code Plugin
 
 The No Code plugin enables the creation of new AdapTable instances purely by dragging and dropping existing JSON or Excel files.
 
@@ -102,23 +103,33 @@ The wizard will also allow you to choose from more advanced options so you can c
 
 Once built AdapTable will save the state as it does for developer-built instances, so that any filters, searches, reports etc that are created are available the next time that named instance is run.
 
-### Master Detail AgGrid Plugin
+## Master Detail AgGrid Plugin
 
 For use when ag-Grid has been set to Master / Detail mode.
 
-It allows each detail grid to be an instance of AdapTable.
+It allows each individual detail grid to be an instance of AdapTable and for them all to share AdapTable objects (e.g. Advanced Searches or Conditional Styles).
 
-### ipushpull Plugin
+## ipushpull Plugin
 
-### Finsemble Plugin
+Designed for [ipushpull](https://www.ipushpull.com) users.  
 
-### OpenFin Plugin
+The dedicated ipushpull toolbar allows data to be sent from AdapTable (either snapshot or live updates) to an ipushpull page, and other collaborative scenarios.
 
-Designed for when AdapTable will be used inside the OpenFin container.
+## OpenFin Plugin
 
-This plugin allows users to take advantage of some additional functionality courtesy of OpenFin e.g. 'Live Excel' - where data exported to Excel updates in real time as the data in AdapTable itself ticks.
+Designed for when AdapTable will be used inside the [OpenFin](https://openfin.co/) container.
 
-### Glue42 Plugin
+This plugin allows users to take advantage of some additional functionality courtesy of OpenFin, e.g. 'Live Excel' - where data exported to Excel updates in the spreadsheet in real time as the source data in AdapTable itself ticks.
+
+## Glue42 Plugin
+
+Designed for when AdapTable will be used on a desktop also running the [Glue42](https://glue42.com/) desktop.
+
+This plugin leverages many of the powerful features of Glue42 to offer users additional options such as Audited, Validated 2-way data export between AdapTable and Excel.  
+
+## Finsemble Plugin
+
+Designed for when AdapTable is used in conjunction with [Finsemble](https://www.chartiq.com/finsemble/).
 
 ## Demo
 
@@ -127,6 +138,10 @@ Visit the [Charts Demo](https://demo.adaptabletools.com/charts) to see AdapTable
 Visit the [Cell Summary Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo) to see AdapTable with the Finance plugin.
 
 Visit the [No Code Demo](https://demo.adaptabletools.com/admin/aggridnocodedemo) to see AdapTable with the No Code plugin.
+
+Visit the [Master Detail Demo](https://demo.adaptabletools.com/aggridfeatures/aggridmasterdetaildemo) to see AdapTable with the Master-detail plugin.
+
+Visit the [ipushpull Demo](https://demo.adaptabletools.com/partners/ipushpulldemo) to see AdapTable with the ipushpull plugin.
 
 ## Help
 

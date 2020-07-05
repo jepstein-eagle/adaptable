@@ -2,11 +2,26 @@
 
 The Schedule([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Schedule`) Function allows certain actions to be performed at a given point in time - either as a one-off date or a repeated activity.
 
-The Schedule function 'wraps' all the AdaptableFunctions that include scheduling functionality (i.e. Reminders, Export and ipushpull).  
+The Schedule function 'wraps' all the AdaptableFunctions that include scheduling functionality in one place.  
 
 As a result, when starting the Schedule wizard, the user will access the Wizard of the object for which the Schedule is being created - but the end object will be stored in the Schedule State.
 
 > In older versions of AdapTable Schedules were stored in the relevant Function's State, but in Version 7 these were centralised to all be stored in [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html).
+
+## Functions with Schedules
+
+The following Functions use Schedules:
+
+- Export
+
+- Reminder
+
+- ipushpull (via the ipushpull Plugin)
+
+- Glue42 (via the Glue42 Plugin)
+
+- OpenFin (via the OpenFin Plugin)
+
 
 ## UI Elements
 

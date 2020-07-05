@@ -4,7 +4,11 @@ Version 7 of AdapTable will be released on Sunday 5 July.
 
 This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes that will be of interest, including:
 
-* Support for latest ag-Grid Version (23) including Alpine theme - necessitating changes to the React and Angular Wrappers.
+* Support for latest ag-Grid Version (23) including Alpine theme 
+
+* React Wrapper Changes
+
+* Angular Wrapper Changes
 
 * Static Constructor now asynchronous
 
@@ -24,7 +28,9 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 ## Support for ag-Grid Version 23
 
-Version 7 of AdapTable supports ag-Grid Version 23 which has some major changes, particularly around theming but also in other aspects as well.
+Version 7 of AdapTable supports ag-Grid Version 23.
+
+This contains some major changes, particularly around theming but also in other aspects as well, namely:
 
 ### Column Filters
 
@@ -50,9 +56,11 @@ Make sure you specify your theme in your html, on the grid container element - i
 
 AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
 
-### React wrapper
+## React Wrapper Changes
 
-With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated - here's a quick summary of the changes:
+With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated.
+
+Here is a quick summary of the changes (for full information see the [React Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
 
  * you now have to render `<AgGridReact>` component yourself - although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `"gridOptions"` object** as a prop to the `<AgGridReact>` component
 
@@ -82,7 +90,7 @@ With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was update
 </div>
 ```
 
-#### AdapTable Tool Panel Component
+### AdapTable Tool Panel Component
 
 One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the React Wrapper, it needs to be explicitly imported in your code, e.g.:
 
@@ -90,15 +98,17 @@ One consequence of the new ag-Grid version is that if you want to use the Adapta
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ````
 
-#### Deprecated props
+### Deprecated props
 
  - `agGridTheme` - no longer supported - see above example for how to specify the agGrid theme - add the corresponding `className` prop on the `div` wrapping `<AgGridReact />`
  - `modules` - specify agGrid modules directly on the `<AgGridReact />` component.
  - `render` fn - place the `<AdaptableReactAggrid />` and `<AgGridReact />` components in your jsx wherever you want - they will be connected
 
-### Angular wrapper
+## Angular Wrapper Changes
 
-With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated - here's a quick summary of the changes:
+With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated.
+
+Here is a quick summary of the changes (for full information see the [Angular Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-ng-aggrid/README.md):
 
  * you now have to render `<ag-grid-angular>` component yourself - although most ag-grid properties can be passed into the component via inputs, **you have to make sure you pass the `"gridOptions"` object** as an input to the `<ag-grid-angular>` component
 
@@ -140,7 +150,7 @@ onAdaptableReady({
   }
 ````
 
-#### AdapTable Tool Panel Component
+### AdapTable Tool Panel Component
 
 One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the Angular Wrapper, it needs to be explicitly imported in your code, e.g.:
 ```js
@@ -167,21 +177,23 @@ const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 
 ## New Calculated Column Expression Syntax and UI
 
-Previously Calculated Columns were created using an external library (Math.js).
+Previously Calculated Column Expressions were created using an external library (Math.js).
 
-Now we use an internally-built parser for the Expression.  
+Now we use an internally-built parser to create the Expression.  
 
-This brings many advantages as the Expression can be more powerful than before e.g. by allowing for multiple columns, for mixing columns and static values and (coming soon) for allowing users to add their own custom functions.
+This brings many advantages as the Expression can be more powerful than before e.g. by allowing for multiple columns, enabling mixing columns and static values and (coming soon) by allowing users to add their own custom functions.
 
-We have also introduced a much more usable UI for creating Expressions with drag and drop features, multiple functions, dummy data and provision of help-based information about the available functions.
+We have also introduced a much more usable UI for creating Expressions with drag and drop features, multiple functions, dummy data and provision of help-based information about each of the available functions.
 
-We have removed formatting from inside the Calculated Column Expression and instead this can be done through our new, improved Format Column function; this separation of concerns allows the Expression just to be a computation and the formatting to be handled the same way as it is for other columns.
+We have removed formatting from inside the Calculated Column Expression and instead this can be done through our new, improved [Format Column Function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md); this separation of concerns allows the Expression to be just a computation and the formatting to be handled exactly the same way as it is for other columns.
 
 **This is a breaking change**.
 
 The required syntax is very similar to previous versions of AdapTable, and in most cases existing Calculated Columns will just run normally; however this cannot be guaranteed, particularly if they were using some of the more estoric features of math.js or its formatting.
 
 > One effect of this change is that the download size of AdapTable has been greatly reduced as the math.js folder was the single largest element in the downloaded package.
+
+For more information see the [Calculated Column ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
 
 ## Schedule State Changes
 
@@ -191,9 +203,21 @@ This has been changed, and now there is a dedicated Schedule section of Adaptabl
 
 One consequence of this is that the `Reminder` section of Adaptable State has been removed as it is no longer required.
 
+For more information see the [Schedule Function ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/schedule-function.md)
+
 ## Percent Bar Improvements
 
-To Do
+Percent Bars now include **Ranges**.
+
+These are sets of values with an associated colour (e.g. 1 - 50, Blue).
+
+This allows you, for example, to create a traffic light effect (1-30: Red, 31-60: Amber, 61-100: Green).
+
+AdapTable will automatically update any existing Percent Bars for you; if there are only positive or negative numbers then it will create one range, if there are both then it will create a range for each.
+
+We have also introduced new properties including (optional) back colour, show column value, show value as % and more.
+
+For full information on all these changes see the [Percent Bar ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/percent-bar-function.md)
 
 ## Config Server Removed
 
@@ -211,13 +235,13 @@ In Version 7 we have created 4 new plugins which contain bespoke functionality f
 
 These are:
 
-* ipushpull
+* [ipushpull](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md) 
 
-* Glue42
+* [Glue42](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md) 
 
-* OpenFin
+* [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md) 
 
-* Finsemble
+* [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) 
 
 In each case any configuration that was previously stored in the partner's section of Predefined Config in Adaptable State is now provided through an xxxPluginOptions object injected into the Plugin.
 

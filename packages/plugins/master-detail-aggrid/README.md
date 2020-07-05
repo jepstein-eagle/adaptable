@@ -8,21 +8,31 @@ This means that if you create a Conditional Style in Predefind Config it will ap
 
 ## How It Works
 
+The `masterDetailAgGridPlugin` has 2 properties:
+
+- *detailAdaptableOptions* - an `AdaptableOptions` object to be used for **every** Detail grid
+
+- *onDetailInit: (api: AdaptableApi) => void* - an optional function which will be called whenever a Detail grid is opened (essentially initialised), providing you with the AdaptableApi instance for full programmatic access to all Adaptable features.
+
 ### Example
 
-This code taken from the [Master-Detail demo](https://demo.adaptabletools.com/aggridfeatures/aggridmasterdetaildemo) shows how it works:
+This code taken from the [Master-Detail demo](https://demo.adaptabletools.com/aggridfeatures/aggridmasterdetaildemo) shows how it works.
+
+We have set up a Master-Detail grid in ag-Grid and the Adaptable Options object for the Master grid in the normal way.
+
+And we have supplied the detail grid Adaptable Options in the plugins section.  Here we create a Conditional Style in Predefined Config to be used in all Detail grids.
 
 ```ts
+// typical ag-Grid GridOptions object but popuplated for use in a Master-Detail grid 
+// for more information see: https://www.ag-grid.com/javascript-grid-master-detail/
  const gridOptions: GridOptions = {
     columnDefs,
     rowData,
     masterDetail: true,
     detailCellRendererParams: {
-      // provide detail column defs
       detailGridOptions: {
         columnDefs: detailColumnDefs,
       },
-      // extract and supply row data for detail
       getDetailRowData: function(params: any) {
         params.successCallback(params.data.squad);
       },

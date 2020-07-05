@@ -27,7 +27,7 @@ One of the key functionalities offered by AdapTable is User State Management. Th
 
 ## Adaptable Options
 
-AdaptableOptions is a large group of property options designed to help developers set up AdapTable at design time so that it fits their requirements. 
+[Adaptable Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) is a large group of property options designed to help developers set up AdapTable at design time so that it fits their requirements. 
 
 There are 2 mandatory properties (primaryKey and vendorGrid) and a host of optional ones (including Predefined Config - see below). 
 
@@ -42,7 +42,7 @@ Where a property is not provided, AdapTable provides a sensible default, so deve
 
 ## Adaptable Api
 
-AdapTable's rich, powerful api provides full safe, run-time access to all the functionality and state inside AdapTable. 
+AdapTable's rich, powerful [runtime API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) provides full safe, run-time access to all the functionality and state inside AdapTable. 
 
 This allows users to create, save and delete AdapTable objects in their our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
 
@@ -57,9 +57,9 @@ Everything that can be done in AdapTable through the UI can also be done through
 
 These 3 objects are linked as follows:
 
-**Predefined Configuration** is a property of **AdaptableOptions**.  
-This is the only object which the *AdapTable static constructor* requires in order to initialise everything and build the grid.
-The constructor returns the **AdaptableApi** object so it is available for future reference.
+**Predefined Configuration** is a property of **AdaptableOptions**.
+This is the only object which the *AdapTable async static constructor* requires in order to initialise everything and build the grid.
+The constructor returns the **AdaptableApi** object (via a Promise) so it is available for future reference.
 
 ```ts
 

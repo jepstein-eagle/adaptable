@@ -4,25 +4,77 @@ The ipushpull plugin connects AdapTable with [ipushpull](https://www.ipushpull.c
 
 It allows user to send Reports - either System Reports shipped by AdapTable or those created via the [Export function](../../adaptable/readme/functions/export-function.md) - to ipushpull and from their to Symphony and other destinations.
 
+## Version 7 
+Version 7 of AdapTable made significant changes to how ipushpull is set up, primarily by using this dedicated plugin.
+
+As a consequence, the ipushpull section from Predefined Config was removed and no ipushpull information is provided by users that way.
+
+Similarly all ipushpull state is now transient and **not persisted** when the application ends.
+
+Instead we now use the `ipushpullPluginOptions` object in a similar way to other plugins. 
+
+The actual ipushpull functionality is unchanged, and the information required to be supplied by the user is identical but it now done through Options and not Predefined Config - isolating it in this way enables us to add more ipushpull-related functionality in a much quicker and safer way, isolated from the rest of the application.
+
 ## ipushpull Options
 
-The ipushpull plugin contains an [ipushpull Plugin Options](../ipushpull/src/index.ts) object which allows users to set up their instance - more to follow...
+The ipushpull plugin contains an [ipushpull Plugin Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_ipushpullpluginoptions_.ipushpullpluginoptions.html) object which allows users to set up their instance.
 
-## UI Elements
+It contains credential details, useful properties (e.g. `throttleTime`, `autoLogin` etc.) and the ipupshpull config object.
 
-ipushpull includes the following UI Elements:
+## ipushpull Api
 
-- **Toolbar** - The main way to interact with ipushpull.
+The [ipushpull Api](https://api.adaptabletools.com/interfaces/_src_api_ipushpullapi_.ipushpullapi.html) is available for full runtime programmatic access to ipushpull objects and methods.
 
-## Toolbar Contents
+> Note: because ipushpull is a plugin, you can get hold of this object through the `getPluginApi` method of [pluginsApi](https://api.adaptabletools.com/interfaces/_src_api_pluginsapi_.pluginsapi.html).
+
+## ipushpull Setup Example
+ 
+  ```ts
+  
+  // sset up AdaptableOptions
+  const adaptableOptions: AdaptableOptions = {
+     ******
+      plugins: [
+        ipp({
+          username: process.env.IPUSHPULL_USERNAME,
+          password: process.env.IPUSHPULL_PASSWORD,
+          throttleTime: 5000,
+          includeSystemReports: true,
+          ippConfig: {
+             api_url: 'https://www.ipushpull.com/api/1.0',
+             ws_url: 'https://www.ipushpull.com',
+             web_url: 'https://www.ipushpull.com',
+             docs_url: 'https://docs.ipushpull.com',
+             storage_prefix: 'ipp_local',
+             transport: 'polling',
+             hsts: false, // strict cors policy
+         },
+       }),
+     ],
+    ******
+   };
+   
+  // Instantitate AdapTable and get the main Api object 
+  adaptableApi = await Adaptable.init(adaptableOptions);
+  
+  // use the plugins api to get the IPushPullApi object
+  const ipushpullApi: IPushPullApi = adaptableApi.pluginsApi.getPluginApi(
+    'ipushpull'
+  );
+  
+ ```
+
+## ipushpull Toolbar
+
+The ipushpull plugin includes a dedicated ipushpull Toolbar - the main way to interact with ipushpull inside AdapTable.
 
 At start-up this simply displays a login button that, when clicked, opens a login screen asking for username and password.
 
-> There is a `AutoLogin` property option which will automatically log the user in to ipushpull (if the correct credentials have been provided in Predefined Config).
+> There is a `AutoLogin` property option which will automatically log the user in to ipushpull (if the correct credentials have been provided in ipushpull Plugin Options).
+
+Once the user is successfully logged in, the Toolbar will contain a number of elements (primarily dropdowns and buttons). These include:
 
 ### Dropdowns
-
-Once successfully logged in, the Toolbar sees 3 dropdowns.  These are:
 
 1. **Reports Dropdown** - this shows all the Reports that have been created via the [Export function](../../adaptable/readme/functions/export-function.md).
     > This dropdown will also include any System Reports that AdapTable ships by default (e.g. Selected Cells); however these can be removed by setting `IncludeSystemReports` to false
@@ -32,8 +84,6 @@ Once successfully logged in, the Toolbar sees 3 dropdowns.  These are:
 3. **Pages Dropdown** - lists all the ipushpull pages in the currently selected Folder (in the Folders Dropdown).
 
 ### Buttons
-
-The Toolbar also contains 4 buttons (some are only visible if an ipushpull page has been selected):
 
 1. **Send Snapshot** - this will run the current report and send the data to the currently selected ipushpull page.  This is a **one-off** action.
 
@@ -49,7 +99,7 @@ The Toolbar also contains 4 buttons (some are only visible if an ipushpull page 
 
 ## Entitlements
 
-ipushpull only works if the Function Entitlement for is set to 'Full' and if the ipushpull object has been provided in Predefined Config.  
+ipushpull only works if the Function Entitlement for is set to 'Full' and if this plugin has been injected into Adaptable Options.  
 
 See the [Entitlement Guide](../../adaptable/readme/guides/adaptable-entitlements-guide.md) for more information.
 
@@ -63,7 +113,7 @@ You will need to provide your username and password in the Login Control.
 
 **How do I provide my ipushpull Credentials?**
 
-As part of ipushpull State. You must inject the ipushpull instance into AdapTable. (This allows us to reduce the size of the bundle so that we only ship core dependencies).
+As part of ipushpull Plugin Options.
 
 **Can I create a new ipushpull page in AdapTable?**
 
