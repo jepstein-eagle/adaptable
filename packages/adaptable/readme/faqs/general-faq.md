@@ -20,6 +20,36 @@ You can use AdapTable in any profession or industry. Its a first class tool for 
 
 > If you are a financial user then you can add our [Finance Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finance/README.md) which contains some financial-specific functionality.
 
+**Can I have multiple AdapTable instances all looking at the same data source?**
+
+Yes, this is something that we support. To see a good example of multiple grids sharing data and updates with each other (and with 3rd party components via OpenFin and Finsemble) download the Finsemble demo from our demo site.
+
+**Can I restrict who can do what in AdapTable?**
+
+Yes. Our [Entitlements](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-entitlements-guide.md) functionality allows you set different permissions for each user.
+
+**Can I use AdapTable to match trades?**
+
+This is a good example of a very specific use case where it does not make sense for AdapTable to provide a full solution out of the box in its core functionality. However as a result of the Action Columns function, the RowSelection event and our Api, it is something that is trivial for developers using the Adaptable to do in just a few minutes.
+
+**Do you store any user data?**
+
+No AdapTable has no storage mechanism. Any data that is dispalayed in the Grid via AdapTable is not accessible to us in any way.
+
+**Who is the target audience of AdapTable?**
+
+Anyone who has to manage large data sets and would benefit from the searching, styling, editing, exporting and other functions that we offer. Although we have initially targeted financial services in our marketing and sales efforts, AdapTable can be - and is being - used across all industries.
+
+**Do I still have access to the underlying grid control if I use AdapTable?**
+
+Yes AdapTable doesn't hide the underlying grid. So you still have full access to the full API and can code against it just as if AdapTable was not being used.
+
+**Do you include licences for the underlying grid?**
+
+No, we don't. If the underlying grid requires a commercial licence then you must pay for that separately. 
+
+See the [Licences Faq](./licences-faq.md) for full details of how licencing works.
+
 ## Data Requirements
 
 **Is there a particular asset class or type of data for which AdapTable is most suitable? Can we use AdapTable for FX?**
@@ -48,35 +78,11 @@ Anywhere that you want. It can be streamed, or come from a database, middle tier
 
 So long your data is suitable to act as the datasource in the underlying grid, AdapTable will be able to use the data.
 
-**Can I have multiple AdapTable instances all looking at the same data source?**
+**Do you store any user's data or grid data?**
 
-Yes, this is something that we support. To see a good example of multiple grids sharing data and updates with each other (and with 3rd party components via OpenFin and Finsemble) download the Finsemble demo from our demo site.
+No we have no storage mechanism. Any data that is used in AdapTable is not accessible to us in any way.  
 
-**Can I restrict who can do what?**
-
-Yes. Our [Entitlements](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-entitlements-guide.md) functionality allows you set different permissions for each user.
-
-**Can I use AdapTable to match trades?**
-
-This is a good example of a very specific use case where it does not make sense for AdapTable to provide a full solution out of the box in its core functionality. However as a result of the Action Columns function, the RowSelection event and our Api, it is something that is trivial for developers using the Adaptable to do in just a few minutes.
-
-**Do you store any user data?**
-
-No we have no storage mechanism. Any data that is used in AdapTable is not accessible to us in any way.
-
-**Who are the target audience of AdapTable?**
-
-Anyone who has to manage large data sets and would benefit from the searching, styling, editing, exporting and other functions that we offer. Although we have initially targeted financial services in our marketing and sales efforts, AdapTable can be - and is being - used across all industries.
-
-**Do I still have access to the underlying grid control if I use AdapTable?**
-
-Yes AdapTable doesn't hide the underlying grid. So you still have full access to the full API and can code against it just as if AdapTable was not being used.
-
-**Do you include licences for the underlying grid?**
-
-No, we don't. If the underlying grid requires a commercial licence then you must pay for that separately. 
-
-See the [Licences Faq](./licences.md) for full details of how licencing works.
+Likewise we have no visibility on anything that users do in AdapTable.  
 
 ## Grids
 
