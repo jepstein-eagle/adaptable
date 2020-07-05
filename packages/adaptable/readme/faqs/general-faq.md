@@ -10,7 +10,9 @@ Yes, we have a [Demo Site](http://www.adaptabletools.com). This contains multipl
 
 **How performant is AdapTable?**
 
-Very. We are confident that it is the fastest fully-featured HTML5 grid on the market. You see on our [Big Data Demo](https://demo.adaptabletools.com/admin/aggridbigdatademo) that even with a very large data set and hundreds of thousands flashing cell and data updates a second, AdapTable is still completely reactive and all the styles and searches still work.
+Very. We are confident that it is the fastest fully-featured HTML5 grid on the market. 
+
+You can see from the [Big Data Demo](https://demo.adaptabletools.com/admin/aggridbigdatademo) that even with a very large data set and hundreds of thousands flashing cell and data updates a second, AdapTable is still completely reactive and all the styles and searches still work.
 
 **We are not a financial company but would still like the functionality you offer. Are you only suitable for trading?**
 
@@ -18,21 +20,33 @@ You can use AdapTable in any profession or industry. Its a first class tool for 
 
 > If you are a financial user then you can add our [Finance Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finance/README.md) which contains some financial-specific functionality.
 
+## Data Requirements
+
 **Is there a particular asset class or type of data for which AdapTable is most suitable? Can we use AdapTable for FX?**
 
-AdapTable works with any type of data, and is not restricted to one particular asset class. Indeed the data in AdapTable doesn't have to be financial. Any 'tabular' data that fits neatly into rows and columns is suitable for AdapTable. So you can use the tool with any data that you want.
+AdapTable works with any data set, and is not restricted to one particular asset class; indeed the data in AdapTable doesn't have to be financial. 
+
+Any 'tabular' data that fits neatly into rows and columns is suitable for AdapTable. 
+
+So you can use the tool with any data that you want - we have users across mutliple sectors including legal, pharmaceutical and media.
 
 **Does AdapTable know about particular asset classes?**
 
-No, it doesn't. Its completely data agnostic and has no knowledge of any asset classes or financial instruments. The only financial element it has are Holiday Calendars and even in this regard most of our advanced users supply their own.
+No, it doesn't. AdapTable is completely data agnostic and has no knowledge of any asset classes or financial instruments. 
+
+> If you are a financial user then you can add our [Finance Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finance/README.md) which contains some financial-specific functionality.
 
 **Does AdapTable help me to gather my data?**
 
-No. AdapTable does not get involved in getting your data into the grid, nor what happens to your data after you edit it. The sole focus of the product is to ensure that while the data is in front of you, you are able to search, edit, style, export, and manage your data in exciting, powerful and intuitive ways not previously possible.
+No. AdapTable does not get involved in getting your data into the grid, nor what happens to your data after you edit it. 
+
+The sole focus of AdapTable is to ensure that while the data is in front of you, you are able to search, edit, style, export, and manage your data in exciting, powerful and intuitive ways not previously possible.
 
 **Where does the data AdapTable can display come from?**
 
-Anywhere that you want. It can be streamed, or come from a database, middle tier, read from files or anything else you want. So long as its able to be a datasource in the underlying grid, AdapTable will be able to use the data.
+Anywhere that you want. It can be streamed, or come from a database, middle tier, the cloud, read from files or anything else you want. 
+
+So long your data is suitable to act as the datasource in the underlying grid, AdapTable will be able to use the data.
 
 **Can I have multiple AdapTable instances all looking at the same data source?**
 
@@ -40,11 +54,11 @@ Yes, this is something that we support. To see a good example of multiple grids 
 
 **Can I restrict who can do what?**
 
-Yes. Our Configuration Service allows you set different permissions for each user or group. Read the Configuration FAQ for more details.
+Yes. Our [Entitlements](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-entitlements-guide.md) functionality allows you set different permissions for each user.
 
 **Can I use AdapTable to match trades?**
 
-This is a good example of a very specific use case where it does not make sense for AdapTable to provide a full solution out of the box in its core functionality. However as a result of the Action Columns function, the RowSelection event and our API, it is something that is trivial for developers using the Adaptable to do in just a few minutes.
+This is a good example of a very specific use case where it does not make sense for AdapTable to provide a full solution out of the box in its core functionality. However as a result of the Action Columns function, the RowSelection event and our Api, it is something that is trivial for developers using the Adaptable to do in just a few minutes.
 
 **Do you store any user data?**
 
