@@ -1,4 +1,4 @@
-# AdapTable Charts Plugin Read Me
+# AdapTable Charts Plugin
 
 Charting in AdapTable is provided courtesy of the [Infragistics Charting Library](https://www.infragistics.com/products/ignite-ui-react/react/components/category-chart.html).  
 
