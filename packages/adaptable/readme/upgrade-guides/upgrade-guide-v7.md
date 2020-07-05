@@ -24,7 +24,9 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 ## Support for ag-Grid Version 23
 
-Version 7 of AdapTable supports ag-Grid Version 23 which has some major changes, particularly around theming but also in other aspects as well.
+Version 7 of AdapTable supports ag-Grid Version 23.
+
+This contains some major changes, particularly around theming but also in other aspects as well, namely:
 
 ### Column Filters
 
@@ -50,9 +52,11 @@ Make sure you specify your theme in your html, on the grid container element - i
 
 AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
 
-### React wrapper
+## React wrapper
 
-With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated - here's a quick summary of the changes:
+With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated.
+
+Here is a quick summary of the changes (for full information see the [React Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
 
  * you now have to render `<AgGridReact>` component yourself - although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `"gridOptions"` object** as a prop to the `<AgGridReact>` component
 
@@ -82,7 +86,7 @@ With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was update
 </div>
 ```
 
-#### AdapTable Tool Panel Component
+### AdapTable Tool Panel Component
 
 One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the React Wrapper, it needs to be explicitly imported in your code, e.g.:
 
@@ -90,15 +94,17 @@ One consequence of the new ag-Grid version is that if you want to use the Adapta
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ````
 
-#### Deprecated props
+### Deprecated props
 
  - `agGridTheme` - no longer supported - see above example for how to specify the agGrid theme - add the corresponding `className` prop on the `div` wrapping `<AgGridReact />`
  - `modules` - specify agGrid modules directly on the `<AgGridReact />` component.
  - `render` fn - place the `<AdaptableReactAggrid />` and `<AgGridReact />` components in your jsx wherever you want - they will be connected
 
-### Angular wrapper
+## Angular wrapper
 
-With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated - here's a quick summary of the changes:
+With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated.
+
+Here is a quick summary of the changes (for full information see the [Angular Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-ng-aggrid/README.md):
 
  * you now have to render `<ag-grid-angular>` component yourself - although most ag-grid properties can be passed into the component via inputs, **you have to make sure you pass the `"gridOptions"` object** as an input to the `<ag-grid-angular>` component
 
@@ -140,7 +146,7 @@ onAdaptableReady({
   }
 ````
 
-#### AdapTable Tool Panel Component
+### AdapTable Tool Panel Component
 
 One consequence of the new ag-Grid version is that if you want to use the Adaptable Tool Panel while using the Angular Wrapper, it needs to be explicitly imported in your code, e.g.:
 ```js
