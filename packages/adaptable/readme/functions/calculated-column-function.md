@@ -26,19 +26,21 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 
 ## Expression Editor
 
-Since Version 7 Expressions can be most easily created using our Expression Editor.  This
+Since Version 7 Expressions can be most easily created using our Expression Editor.  This has a number of helpful features including:
+
+- blah 
+
+- blah
 
 ## Expression Syntax
 
 One key thing to note is that columns are referenced in the Expression as Col("ColumnName"), e.g. Col("Bid").  
 
-> You currently have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. Col("orderId") rather than the Caption visible in the grid (e.g. 'Order Id').  However we provide the Caption in the UI to help you identify them, and in future releases we will allow for both in the Editor
+You currently have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. Col("orderId") rather than the Caption visible in the grid (e.g. 'Order Id').  However we provide the Caption in the UI to help you identify them
+
+> In a forthcoming release we hope to enable both field and captions to be used in the Expression.
 
 ## Expression Examples
-
-One key thing to note is that columns are referenced in the Expression as Col("ColumnName"), e.g. Col("Bid").  
-
-> You currently have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. Col("orderId") rather than the Caption visible in the grid (e.g. 'Order Id').  However we provide the Caption in the UI to help you identify them, and in future releases we will allow for both in the Editor
 
 To create an Expression which references another column and a mathematical operator: 
 
