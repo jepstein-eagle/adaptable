@@ -6,15 +6,17 @@ This FAQ includes some of the more general questions that we have been asked. Mo
 
 **Is there a demo site where I can see AdapTable in action?**
 
-Yes, we have a [Demo Site](http://www.adaptabletools.com) . This contains multiple data sets - many of which are pre-populated with Adaptable Objects like searches and styles - so you can see some examples of how AdapTable can be used.
+Yes, we have a [Demo Site](http://www.adaptabletools.com). This contains multiple data sets - many of which are pre-populated with Adaptable Objects like searches and styles - so you can see some examples of how AdapTable can be used.
 
 **How performant is AdapTable?**
 
-Very. We are confident that it is the fastest fully-featured HTML5 grid on the market. You see on our demo site that even with a very large data set and hundreds of thousands flashing cell and data updates a second, AdapTable is still completely reactive and all the styles and searches still work.
+Very. We are confident that it is the fastest fully-featured HTML5 grid on the market. You see on our [Big Data Demo](https://demo.adaptabletools.com/admin/aggridbigdatademo) that even with a very large data set and hundreds of thousands flashing cell and data updates a second, AdapTable is still completely reactive and all the styles and searches still work.
 
 **We are not a financial company but would still like the functionality you offer. Are you only suitable for trading?**
 
 You can use AdapTable in any profession or industry. Its a first class tool for managing large amounts of data, irrespective of what that data is. So while it is very popular with traders, sales and other financial users it is widely used in other industries as well.
+
+> If you are a financial user then you can add our [Finance Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finance/README.md) which contains some financial-specific functionality.
 
 **Is there a particular asset class or type of data for which AdapTable is most suitable? Can we use AdapTable for FX?**
 
