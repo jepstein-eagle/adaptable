@@ -22,7 +22,8 @@ These 3 objects are linked as follows:
     predefinedConfig: applicationJSON, // the predefined config we created
   };
 
-// The async AdapTable constructor returns a Promise containing an API object that we can use
+// The async AdapTable constructor returns a Promise
+// this contains the Adaptable Api object for runtime access
  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
 ```
 
