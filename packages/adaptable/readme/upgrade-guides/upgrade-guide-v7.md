@@ -177,15 +177,15 @@ const api: AdaptableApi = await Adaptable.init(adaptableOptions)
 
 ## New Calculated Column Expression Syntax and UI
 
-Previously Calculated Columns were created using an external library (Math.js).
+Previously Calculated Column Expressions were created using an external library (Math.js).
 
-Now we use an internally-built parser for the Expression.  
+Now we use an internally-built parser to create the Expression.  
 
-This brings many advantages as the Expression can be more powerful than before e.g. by allowing for multiple columns, for mixing columns and static values and (coming soon) for allowing users to add their own custom functions.
+This brings many advantages as the Expression can be more powerful than before e.g. by allowing for multiple columns, enabling mixing columns and static values and (coming soon) by allowing users to add their own custom functions.
 
-We have also introduced a much more usable UI for creating Expressions with drag and drop features, multiple functions, dummy data and provision of help-based information about the available functions.
+We have also introduced a much more usable UI for creating Expressions with drag and drop features, multiple functions, dummy data and provision of help-based information about each of the available functions.
 
-We have removed formatting from inside the Calculated Column Expression and instead this can be done through our new, improved Format Column function; this separation of concerns allows the Expression just to be a computation and the formatting to be handled the same way as it is for other columns.
+We have removed formatting from inside the Calculated Column Expression and instead this can be done through our new, improved [Format Column Function](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md); this separation of concerns allows the Expression to be just a computation and the formatting to be handled exactly the same way as it is for other columns.
 
 **This is a breaking change**.
 
@@ -207,9 +207,17 @@ For more information see the [Schedule Function ReadMe](https://github.com/Adapt
 
 ## Percent Bar Improvements
 
-To Do
+Percent Bars now include **Ranges**.
 
-For more information see the [Percent Bar ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/percent-bar-function.md)
+These are sets of values with an associated colour (e.g. 1 - 50, Blue).
+
+This allows you, for example, to create a traffic light effect (1-30: Red, 31-60: Amber, 61-100: Green).
+
+AdapTable will automatically update any existing Percent Bars for you; if there are only positive or negative numbers then it will create one range, if there are both then it will create a range for each.
+
+We have also introduced new properties including (optional) back colour, show column value, show value as % and more.
+
+For full information on all these changes see the [Percent Bar ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/percent-bar-function.md)
 
 ## Config Server Removed
 
