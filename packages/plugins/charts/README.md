@@ -1,7 +1,24 @@
 # AdapTable Charts Plugin Read Me
 
+Charting in AdapTable is provided courtesy of the [Infragistics Charting Library](https://www.infragistics.com/products/ignite-ui-react/react/components/category-chart.html).  
 
-To Do...
+The currently available Charts are:
+
+- Category Charts
+
+- Pie / Doughnut Charts
+
+- Sparkline Charts
+
+- Financial Charts
+
+- Data Charts
+
+In addition AdapTable provides 2 Chart-based Column-related Functions:
+
+- Sparkline Column
+
+- Pie Chart Column
 
 ## Using the Charts Plugin
 
