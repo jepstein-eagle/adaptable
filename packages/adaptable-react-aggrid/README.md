@@ -218,6 +218,38 @@ import "@adaptabletools/adaptable-react-aggrid/themes/dark.css"
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/guides/adaptable-theming-guide.md)
 
+## AdapTable Tool Panel Component
+
+o use the Adaptable Tool Panel while using the React Wrapper, you need to explicitly import it in your code, e.g.:
+
+```js
+import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+````
+and then add it to the `components` section of GridOptions
+
+```ts
+ const options: GridOptions = {
+     ....
+      sideBar: true,
+       components: {
+         AdaptableToolPanel: AdaptableToolPanelAgGridComponent,
+       },
+     ....
+  }
+````
+
+and makes sure the `showAdaptableToolPanel` property is set in the `userInterfaceOptions` section of AdaptableOptions
+
+```ts
+const adaptableOptions = {
+ ...
+  userInterfaceOptions: {
+    showAdaptableToolPanel: true,
+  },
+  ...
+};
+````
+
 ## Adaptable State
 
 AdapTable will manage the persistence of all Adaptable (ie. User) State.  This takes 2 forms:  
