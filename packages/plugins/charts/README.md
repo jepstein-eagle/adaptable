@@ -2,6 +2,14 @@
 
 Charting in AdapTable is provided courtesy of the [Infragistics Charting Library](https://www.infragistics.com/products/ignite-ui-react/react/components/category-chart.html).  
 
+Charts can be provided either at design-time through Predefined Config or built at run-time.
+
+There are a huge number of options available when creating charts and all charts are automatically persisted as part of Adaptable State.
+
+Charts are 'live' so they will update in real time as the underlying data changes.
+
+## Chart Types
+
 The currently available Charts are:
 
 - Category Charts
@@ -52,7 +60,7 @@ const adaptableOptions: AdaptableOptions = {
 
 ## Demo
 
-Visit the [Charts Demo](https://demo.adaptabletools.com/charts) to see AdapTable running with the Charts plugin.
+Visit the [Charts Demos](https://demo.adaptabletools.com/charts) to see AdapTable running with the Charts plugin.
 
 ## Help
 
