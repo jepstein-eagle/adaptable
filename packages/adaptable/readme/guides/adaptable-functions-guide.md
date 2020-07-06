@@ -103,13 +103,11 @@ For example, you can ship AdapTable with pre-created Custom Sorts for use in the
 
 ## FAQ
 
-Can we hide particular Functions from our users as they are not relevant (i.e. we are a readonly grid so don't require Smart Edit or Shortcuts Functions)?
+**Can we hide particular Functions from our users as they are not relevant (i.e. we are a readonly grid so don't require Smart Edit or Shortcuts Functions)?**
 
-Yes, you can use the Entitlements property in Predefined Config to state which Functions are available to your users.
+Yes, you can use the Entitlements section of Predefined Config to set which Functions are available to each user, and whether they are hidden, editable or readonly.
 
-Additionally you can set for each user (or role) which properties in the Function are visible, editable or readonly.
-
-Do you plan to add more Functions?
+**Do you plan to add more Functions?**
 
 Yes, we continue to add more Functions all the time, primarily in response to suggestions and ideas submitted by our Users.
 
