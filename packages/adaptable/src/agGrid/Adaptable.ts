@@ -300,10 +300,6 @@ export class Adaptable implements IAdaptable {
   private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
-  public static initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
-    return Adaptable.initInternal(adaptableOptions);
-  }
-
   public static init(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
     return Adaptable.initInternal(adaptableOptions);
   }
