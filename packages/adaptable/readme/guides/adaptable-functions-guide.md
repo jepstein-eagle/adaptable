@@ -76,10 +76,10 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 
 | AdaptableFunction                                             | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
 | ------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
-| [ipushpull](../functions/ipushpull-function.md)           | No     | Yes     | No         | No          | No           |
-| [Glue42](../functions/glue42-function.md)            | No     | No      | No         | Yes         | Yes          |
-| [OpenFin](../functions/openfin-function.md)          | No     | No      | No         | Yes         | Yes          |
-| [Finsemble](../functions/finsemble-function.md) | No     | No      | No         | Yes         | Yes          |
+| [ipushpull](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md)           | No     | Yes     | No         | No          | No           |
+| [Glue42](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md)            | No     | Yes      | No         | No         | No          |
+| [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md)          | No     | Yes      | No         | No         | Yes          |
+| [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) | No     | No      | No         | No         | No          |
 
 ### Entitlements
 
