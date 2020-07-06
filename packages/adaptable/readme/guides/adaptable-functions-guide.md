@@ -78,7 +78,7 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | ------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
 | [ipushpull](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md)           | No     | Yes     | No         | No          | No           |
 | [Glue42](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md)            | No     | Yes      | No         | No         | No          |
-| [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md)          | No     | Yes      | No         | No         | Yes          |
+| [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md)          | No     | Yes      | No         | No         | No          |
 | [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) | No     | No      | No         | No         | No          |
 
 ### Entitlements
