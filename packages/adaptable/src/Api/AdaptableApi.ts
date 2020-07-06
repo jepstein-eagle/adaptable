@@ -103,7 +103,7 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
- *  | [namedFilterApi](#namedfilterapi)         | |
+ *  | [namedFilterApi](#namedfilterapi)         | Manages {@link NamedFilterState|Named Filers|} - filter predicates provided at design-time|
  *  | [percentBarApi](#percentbarapi)         | |
  *  | [pluginsApi](#pluginsapi)         | |
  *  | [quickSearchApi](#quicksearchapi)         | |
