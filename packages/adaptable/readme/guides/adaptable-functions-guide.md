@@ -76,10 +76,10 @@ Click on a link to go to a dedicated ReadMe for that AdaptableFunction.
 
 | AdaptableFunction                                             | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
 | ------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
-| [ipushpull](../functions/charts/charts-function.md)           | No     | Yes     | No         | No          | No           |
-| [Glue42](../functions/charts/piechart-function.md)            | No     | No      | No         | Yes         | Yes          |
-| [OpenFin](../functions/charts/sparkline-function.md)          | No     | No      | No         | Yes         | Yes          |
-| [Finsemble](../functions/charts/sparkline-column-function.md) | No     | No      | No         | Yes         | Yes          |
+| [ipushpull](../functions/ipushpull-function.md)           | No     | Yes     | No         | No          | No           |
+| [Glue42](../functions/glue42-function.md)            | No     | No      | No         | Yes         | Yes          |
+| [OpenFin](../functions/openfin-function.md)          | No     | No      | No         | Yes         | Yes          |
+| [Finsemble](../functions/finsemble-function.md) | No     | No      | No         | Yes         | Yes          |
 
 ### Entitlements
 
