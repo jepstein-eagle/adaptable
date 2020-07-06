@@ -109,16 +109,16 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [quickSearchApi](#quicksearchapi)               | Functions for running and clearing Quick Search|
  *  | [reminderApi](#reminderapi)                     | Manages Reminders (scheduled Alerts) |
  *  | [scheduleApi](#scheduleapi)                     | Supports {@link ScheduleState|Schedules} for running Actions at set time|
- *  | [shortcutApi](#shortcutapi)         | |
- *  | [smartEditApi](#smarteditapi)         | |
- *  | [sparklineColumnApi](#sparklinecolumnapi)         | |
- *  | [systemFilterApi](#systemfilterapi)         | |
- *  | [systemStatusApi](#systemstatusapi)         | |
- *  | [themeApi](#themeapi)         | |
- *  | [toolPanelApi](#toolpanelapi)         | |
- *  | [updatedRowApi](#updatedrowapi)         | |
- *  | [userFilterApi](#userfilterapi)         | |
- *  | [userInterfaceApi](#userinterfaceapiapi)         | |
+ *  | [shortcutApi](#shortcutapi)                     | Deals with {@link ShortcutState|Shortcuts} for faster & safer data entry|
+ *  | [smartEditApi](#smarteditapi)                   | Functions for managing the Smart Edit function to enable better editing|
+ *  | [sparklineColumnApi](#sparklinecolumnapi)       | For {@link SparklineColumnState|Sparkline Columns} - ideal for historical or array-based data|
+ *  | [systemFilterApi](#systemfilterapi)             | Fetches the System Filters (shipped by AdapTable)
+ *  | [systemStatusApi](#systemstatusapi)             | Manages the System Status function - that displayes run-time messages to Users|
+ *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
+ *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
+ *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
+ *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
+ *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
  *  |
  */
 export interface AdaptableApi {
