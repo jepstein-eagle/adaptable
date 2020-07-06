@@ -1,6 +1,6 @@
 # AdapTable Plugins Guide
 
-In order to keep the 'core' download a manageable size, [Version 6](./adaptable/readme/upgrade-guides/upgrade-guide-v7.md) of AdapTable introduced plugins. 
+In order to keep the 'core' download a manageable size, [Version 6](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md) of AdapTable introduced plugins. 
 
 Plugins are essential groupings of functionality relevant to a particular use case or set of users.
 
@@ -8,7 +8,7 @@ There are currently 8 plugins available (though more are being added all the tim
 
 - [Finance Plugin](./finance)
 
-- [Charting Plugin](./charts)
+- [Charts Plugin](./charts)
 
 - [No Code AgGrid Plugin](./nocode-aggrid)
 
@@ -75,7 +75,7 @@ It includes specialised Cell Summary operations like 'VWap' and 'Only' and will 
 
 > AdapTable was initially called the Adaptable Blotter to reflect the fact that its early users were in financial services. However it soon became apparent that the data management functionality on offer was of much wider application to a great many other sectors.  Hence the product was renamed AdapTable and the finance-specific functionality was moved to the finance plugin.
 
-## Chart Plugin
+## Charts Plugin
 
 The charting plugin allows you to access the rich AdapTable charting set courtesy of Infragistics.
 
