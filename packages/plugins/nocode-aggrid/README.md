@@ -42,8 +42,8 @@ const adaptableOptions: AdaptableOptions = {
   ]
 };
 
-Adaptable.initLazy(adaptableOptions).then(api => {
-  // do stuff at run-time with the AdapTable api object
+Adaptable.init(adaptableOptions).then((api) => {
+  console.log(api, "!!!");
 });
 ```
 
