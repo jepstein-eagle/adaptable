@@ -77,14 +77,6 @@ The constructor returns the **AdaptableApi** object (via a Promise) so it is ava
  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
  ```
 
-There is also a static `initLazy` constructor which receives an AdaptableOptions object and returns a Promise that contains the `api` object.  It is utilised by the [No Code Version](https://github.com/AdaptableTools/adaptable/tree/master/packages/plugins/nocode-aggrid) and is used as follows: 
-
-```ts
-  Adaptable.initLazy(adaptableOptions).then((api: AdaptableApi) => {
-    // do run-time stuff with the api
-  });
- ```
-
 ## UI Elements
 
 There are a number of key UI elements in AdapTable:
