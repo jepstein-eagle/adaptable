@@ -34,6 +34,9 @@ We provide Support through email (support@adaptabletools.com) and [Zendesk](http
 
 We guarantee to support any major release of an underlying vendor grid within 30 days of its release. We try to ensure backward compatibility but obviously if there are breaking changes then we will support only the newest version.
 
+**Does the AdapTable licence include one for the underlying vendor grid?**
+
+No it doesnt.  If the underlying grid requires a commercial licence then you must pay for that separately.
 
 ## Help
 
