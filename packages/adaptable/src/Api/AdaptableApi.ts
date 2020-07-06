@@ -103,12 +103,12 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
- *  | [namedFilterApi](#namedfilterapi)         | |
- *  | [percentBarApi](#percentbarapi)         | |
- *  | [pluginsApi](#pluginsapi)         | |
- *  | [quickSearchApi](#quicksearchapi)         | |
- *  | [reminderApi](#reminderapi)         | |
- *  | [scheduleApi](#scheduleapi)         | |
+ *  | [namedFilterApi](#namedfilterapi)               | Manages {@link NamedFilterState|Named Filers} - filter predicates provided at design-time|
+ *  | [percentBarApi](#percentbarapi)                 | Aids creation and editing of visual {@link PercentBarState: Percent Bars} |
+ *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
+ *  | [quickSearchApi](#quicksearchapi)               | Functions for running and clearing Quick Search|
+ *  | [reminderApi](#reminderapi)                     | Manages Reminders (scheduled Alerts) |
+ *  | [scheduleApi](#scheduleapi)                     | Supports {@link ScheduleState|Schedules} for running Actions at set time|
  *  | [shortcutApi](#shortcutapi)         | |
  *  | [smartEditApi](#smarteditapi)         | |
  *  | [sparklineColumnApi](#sparklinecolumnapi)         | |
