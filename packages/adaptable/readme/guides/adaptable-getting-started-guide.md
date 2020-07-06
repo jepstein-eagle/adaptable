@@ -131,7 +131,7 @@ These make it easy to create and edit Adaptable Objects step by step by clicking
 
 > Wizards also contain a legend that tells you where you are positioned in the Wizard at one time; if editing an existing object, the links in the legend are activated to make it easy to jump forward to a later wizard stage.
 
-Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Adaptable Expression Guide](./adaptable-expression-guide)).
+Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Adaptable Expression Guide](./adaptable-expression-guide.md)).
 
 ### Selection Tool
 
