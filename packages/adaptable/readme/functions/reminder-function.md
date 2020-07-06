@@ -16,6 +16,8 @@ The Reminder contains 3 elements
 
 AdapTable fires an event each time an alert is triggered and this will include if it was triggered by a Reminder so it will be visible in the Alert Toolbar and Tool Panel.
 
+**As of Version 7 of AdapTable the Reminder section has been removed from Adaptable State, as all Schedules are now stored in the [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html) section instead**
+
 ## UI Elements
 Reminder includes the following UI Elements:
 
@@ -34,14 +36,16 @@ Reminder supports these Entitlement Rules:
 
 ## FAQ
 
-To Do
+**Why is there no Reminder section of Adaptable State any more?**
+
+This was removed in Version 7 of AdapTable when all Schedules were stored in [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html) instead.
 
 ### Further Information
-
-- [Reminder State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_reminderstate_.reminderstate.html)
 
 - [Reminder Api](https://api.adaptabletools.com/interfaces/_src_api_reminderapi_.reminderapi.html)
 
 - [Reminder Demo](https://demo.adaptabletools.com/alertsmessages/aggridreminderdemo)
-  
+
 - [Schedule State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_schedulestate_.schedulestate.html)
+
+- [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)

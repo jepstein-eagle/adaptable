@@ -112,7 +112,7 @@ To add a plugin you need to do the following 3 steps (using the `charts` plugin 
 
   ```import charts from '@adaptable/adaptable-plugins-charts'```
 
-3. Add it to the `plugins` property of *AdaptableOptions*:
+3. Add it to the `plugins` property of *AdapTableOptions*:
 
   ```
   const adaptableOptions: AdaptableOptions = {
@@ -163,10 +163,10 @@ Unlike with previoius version, **you now need to provide 2 components**:
 
 - **AgGridReact:** This is the ag-Grid React component.  You should pass as props the GridOptions object and any Modules (see above)
 
-- **AdaptableReact:** This is the AdapTable React component. See below for a list of the props required.
+- **AdapTableReact:** This is the AdapTable React component. See below for a list of the props required.
 
 
-## AdaptableReact Props
+## AdapTableReact Props
 
 ### Mandatory:
 
@@ -178,9 +178,9 @@ Unlike with previoius version, **you now need to provide 2 components**:
 
   > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will provide this through the `modules` prop of the AgGridReact component.
 
-- **adaptableOptions**: 
+- **adapTableOptions**: 
 
-  The *AdaptableOptions* object that contains all the settings and options required for managing AdapTable. 
+  The *AdapTableOptions* object that contains all the settings and options required for managing AdapTable. 
 See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) for more details.
 
   > Do not set the `vendorGrid` property of *AdaptableOptions* as this has been provided in the *gridOptions* prop.
@@ -188,13 +188,13 @@ See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_ada
 
 ### Optional:
 
-- **onAdaptableReady: ({ adaptableApi: AdaptableApi, vendorGrid: GridOptions })** 
+- **onAdapTableReady: ({ adapTableApi: AdapTableApi, vendorGrid: GridOptions })** 
 
   An event that fires as soon as AdapTable is ready - the callback function is called with an object with `{adaptableApi, vendorGrid}`.
   
   This provides access to 2 important objects:
   
-  1. The *AdaptableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more details.)
+  1. The *AdapTableApi* object. The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable. (See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more details.)
 
   2. The underlying VendorGrid instance being used - in this case GridOptions. This is because AdapTable enriches the 'gridOptions' it receives with modules and other properties, so if you want access to the underlying grid then you should use this object.
 
@@ -250,15 +250,15 @@ const adaptableOptions = {
 };
 ````
 
-## Adaptable State
+## AdapTable State
 
-AdapTable will manage the persistence of all Adaptable (ie. User) State.  This takes 2 forms:  
+AdapTable will manage the persistence of all AdapTable (ie. User) State.  This takes 2 forms:  
 
 - **Predefined Config** - State created at design-time and given to AdapTable so that at first-time use of the application, the user has everything he or she needs to get started.
 
 - **State Management** - Ensuring that all changes made by the user at run-time are saved and persisted to an appropriate location so they are available the next time the system runs.
 
-For more information please read the [Adaptable State Guide](../../packages/adaptable/readme/guides/adaptable-state-guide.md)
+For more information please read the [AdapTable State Guide](../../packages/adaptable/readme/guides/adaptable-state-guide.md)
 
 ## Demo
 
@@ -306,7 +306,7 @@ const gridOptions: GridOptions = {
     },
   };
 
-// create the Adaptable Options object including any plugins
+// create the AdapTable Options object including any plugins
 const adaptableOptions: AdaptableOptions = {
   primaryKey: 'tradeId',
   userName: 'demo user',
