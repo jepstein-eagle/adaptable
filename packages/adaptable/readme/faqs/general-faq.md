@@ -6,7 +6,7 @@ This FAQ includes some of the more general questions that we have been asked. Mo
 
 **Is there a demo site where I can see AdapTable in action?**
 
-Yes, we have a [Demo Site](http://www.adaptabletools.com). This contains multiple data sets - many of which are pre-populated with Adaptable Objects like searches and styles - so you can see some examples of how AdapTable can be used.
+Yes, we have a [Demo Site](http://demo.adaptabletools.com). This contains multiple data sets - many of which are pre-populated with Adaptable Objects like searches and styles - so you can see some examples of how AdapTable can be used.
 
 **How performant is AdapTable?**
 
