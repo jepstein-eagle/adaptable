@@ -27,14 +27,14 @@ import { ConfigState } from './ConfigState';
  *
  * ```ts
  * export default {
- * QuickSearch: {
- *    QuickSearchText:"j*",
- *    DisplayAction:"ShowRowAndHighlightCell",
- *    Style: {
- *      BackColor: '#ffff00',
- *      ForeColor: '#8b0000',
- *   },
- *  }
+ *  QuickSearch: {
+ *      QuickSearchText: 'j*',
+ *      DisplayAction: 'ShowRowAndHighlightCell',
+ *      Style: {
+ *        BackColor: '#ffff00',
+ *        ForeColor: '#8b0000',
+ *      },
+ *    }
  * } as PredefinedConfig;
  * ```
  * In this example we have set up Quick Search to run a search at startup for all cells whose contents start with 'j'.
