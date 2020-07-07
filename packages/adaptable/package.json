@@ -12,7 +12,6 @@
     "@types/react": ">=16.0.0",
     "@mdi/js": "^5.1.45",
     "@mdi/react": "^1.4.0",
-    "@adaptabletools/adaptable-parser": "*",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",
     "date-fns": "^2.14.0",
@@ -115,16 +114,15 @@
     "before-build": "npm run ensure-clean-on-local",
     "after-build": "",
     "ensure-clean-on-local": "node ../../scripts/ensure-clean-on-local",
-    "build-package-json": "node ../../scripts/cli/update-package --module=packages/adaptable --ignore-dep=true && node ./scripts/update-parser-version",
+    "build-package-json": "node ../../scripts/cli/update-package --module=packages/adaptable --ignore-dep=true",
     "update-version-file": "node ../../scripts/updateVersionFile",
     "update-env-file": "node ../../scripts/updateEnvFile",
     "sass": "node-sass ./src/index.scss ./dist/index.css && ../../node_modules/.bin/postcss ./dist/index.css --config ../../ --output ./dist/index.css && node-sass ./src/base.scss ./dist/base.css && ../../node_modules/.bin/postcss ./dist/base.css --config ../../ --output ./dist/base.css && node-sass ./src/themes/light.scss ./dist/themes/light.css && ../../node_modules/.bin/postcss ./dist/themes/light.css --config ../../ --output ./dist/themes/light.css && node-sass ./src/themes/dark.scss ./dist/themes/dark.css && ../../node_modules/.bin/postcss ./dist/themes/dark.css --config ../../ --output ./dist/themes/dark.css ",
     "copy-assets": "cp -R ./src/fonts ./dist/ && cp README.md ./dist && cp LICENSE.md ./dist",
-    "tsc": "npm run link-parser && tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist",
-    "tscw": "npm run link-parser && tsc --version && rimraf node_modules/@types/react-native/ && tsc --watch --outDir dist",
+    "tsc": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist",
+    "tscw": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --watch --outDir dist",
     "tscv": "tsc --version",
-    "build": "npm run build-prod",
-    "link-parser": "symlink-dir ../adaptable-parser ./node_modules/@adaptabletools/adaptable-parser"
+    "build": "npm run build-prod"
   },
   "keywords": [
     "web-components",
