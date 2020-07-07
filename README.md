@@ -44,7 +44,7 @@ AdapTable comes in 3 variants:
   
     > For more info, see the [Angular Wrapper readme](./packages/adaptable-ng-aggrid/README.md)
   
-  Each of these packages has its own initialisation requirements so please read the appropriate documentation
+Each of these packages has its own initialisation requirements so please read the appropriate documentation
 
 ## Installing AdapTable
 
@@ -207,6 +207,7 @@ These include:
 * [AdapTable Filtering Guide](./packages/adaptable/readme/guides/adaptable-filtering-guide.md)
 * [AdapTable Expression Guide](./packages/adaptable/readme/guides/adaptable-expression-guide.md)
 * [AdapTable Functions Guide](./packages/adaptable/readme/guides/adaptable-functions-guide.md)
+* [AdapTable ag-Grid Guide](./packages/adaptable/readme/guides/adaptable-aggrid-guide.md)
 * [Plugins](./packages/plugins/README.md)
 
 > Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.

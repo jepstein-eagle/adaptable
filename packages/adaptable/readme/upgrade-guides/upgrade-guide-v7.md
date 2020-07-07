@@ -1,6 +1,6 @@
 # AdapTable Version 7 Upgrade Guide
 
-Version 7 of AdapTable will be released on Sunday 5 July.
+Version 7 of AdapTable will be released on Sunday 12 July.
 
 This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes that will be of interest, including:
 
@@ -26,6 +26,8 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * Additional CSS Variables
 
+> For details of the previous Version see [Version 6 Upgrade Guide](upgrade-guide-v6.md).
+
 ## Support for ag-Grid Version 23
 
 Version 7 of AdapTable supports ag-Grid Version 23.
@@ -50,22 +52,22 @@ Consequently, AdapTable will only show the Quick Filter bar if at least one colu
 
 ag-Grid have introduced a new Alpine theme.  
 
-This has neceesistated some slight changes to AdapTable theming as a result. 
+This has neceesistated some slight changes to AdapTable theming as a result.
 
 Make sure you specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant). We then detect this theme, and apply the corresponding dark theme, when it is selected from theme theme toolbar.
 
-AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
-
 ## React Wrapper Changes
 
-With v7 of `AdapTable`, which works with agGrid 23, the React wrapper was updated.
+In order to work seamlessly with agGrid 23, the React Wrapper was updated.
 
-Here is a quick summary of the changes (for full information see the [React Wrapper])(https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
+Here is a quick summary of the changes - for fuller information see the [React Wrapper Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
 
- * you now have to render `<AgGridReact>` component yourself - although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `"gridOptions"` object** as a prop to the `<AgGridReact>` component
+* The `<AgGridReact>` component now needs to be rendered explicitly.  Note: although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `gridOptions` object** as a prop to the `<AgGridReact>` component
 
- * **you have to pass the same `"gridOptions"` object to the `<AdaptableReactAggrid>` component as well** - in this way, `<AdaptableReactAggrid>` and `<AgGridReact>` are connected to the same agGrid instance.
- 
+* **The same `gridOptions` object must be passed to the `<AdaptableReactAggrid>` component as well**: in this way, `<AdaptableReactAggrid>` and `<AgGridReact>` are connected to the same agGrid instance.
+  
+* Theming now needs to be set expliclity (and not via a prop to `<AdaptableReactAggrid>` as before).  This will typically be done by wrapping the `<AgGridReact>` component in a `div` element with the class set to that of the required ag-Grid theme (e.g. 'ag-theme-apline').
+
 ```jsx
 
 <div
@@ -105,6 +107,8 @@ import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src
  - `render` fn - place the `<AdaptableReactAggrid />` and `<AgGridReact />` components in your jsx wherever you want - they will be connected
 
 ## Angular Wrapper Changes
+
+AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
 
 With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated.
 
