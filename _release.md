@@ -1,3 +1,7 @@
+## 7.0.0-canary.18
+
+fix parser after embedding in core
+
 ## 7.0.0-canary.16
 
 ## 7.0.0-canary.15
