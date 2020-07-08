@@ -119,7 +119,7 @@
     "update-env-file": "node ../../scripts/updateEnvFile",
     "sass": "node-sass ./src/index.scss ./dist/index.css && ../../node_modules/.bin/postcss ./dist/index.css --config ../../ --output ./dist/index.css && node-sass ./src/base.scss ./dist/base.css && ../../node_modules/.bin/postcss ./dist/base.css --config ../../ --output ./dist/base.css && node-sass ./src/themes/light.scss ./dist/themes/light.css && ../../node_modules/.bin/postcss ./dist/themes/light.css --config ../../ --output ./dist/themes/light.css && node-sass ./src/themes/dark.scss ./dist/themes/dark.css && ../../node_modules/.bin/postcss ./dist/themes/dark.css --config ../../ --output ./dist/themes/dark.css ",
     "copy-assets": "cp -R ./src/fonts ./dist/ && cp README.md ./dist && cp LICENSE.md ./dist",
-    "tsc": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist",
+    "tsc": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --outDir dist && cpy src/parser/src/parser.js dist/src/parser/src",
     "tscw": "tsc --version && rimraf node_modules/@types/react-native/ && tsc --watch --outDir dist",
     "tscv": "tsc --version",
     "build": "npm run build-prod"
