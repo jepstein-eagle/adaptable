@@ -283,10 +283,38 @@ And you should also use the ag-Grid Angular compoment (passing in the gridOption
 
 ## AdapTable Tool Panel Component
 
-To use the Adaptable Tool Panel while using the Angular Wrapper, you need to explicitly import it in your code, e.g.:
+To set up the Adaptable Tool Panel while using the Angular Wrapper, you need to follow these 3 steps:
+
+1. Explicitly import it in your code, e.g.:
+
 ```js
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ````
+
+2. Reference the Component in the `components` section of ag-Grid GridOptions (and make sure the `sideBar` property is set also):
+
+```tsx
+this.gridOptions = {
+     ...
+      sideBar: true,
+      components: {
+        AdaptableToolPanel: AdaptableToolPanelAgGridComponent
+      },
+      ...
+    }; 
+```
+3. Ensure that the `showAdaptableToolPanel` is set to true in `userInterfaceOptions` section of AdaptableOptions:
+
+```tsx
+this.adaptableOptions = {
+    ...
+    adaptableId: 'angularapp',
+    userInterfaceOptions: {
+      showAdaptableToolPanel: true
+    }
+    ...
+  };
+```
 
 ## Styling and Theming
 
