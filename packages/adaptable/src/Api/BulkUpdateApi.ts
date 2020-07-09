@@ -3,7 +3,11 @@ import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 /**
  * Provides full and comprehensive run-time access to the Bulk Update function
  *
- * Bulk Update is a convenience function that allows you to update a group of selected cells in the same column to hold the same value with a single click.
+ * Bulk Update is a convenience function that allows users - with a single action - to update a group of selected cells in the same column.   All the cells will contain the same value (either existing in the column already or now).
+ *
+ * Bulk Update works on any column type.
+ *
+ * --------------
  *
  * **Further AdapTable Help Resources**
  *
