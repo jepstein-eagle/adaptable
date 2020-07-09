@@ -30,10 +30,10 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
   }
 
   public getIPushPullUsername(): string | undefined {
-    return this.options.username;
+    return this.getAdaptableState().System.CurrentIPushpullUsername;
   }
   public getIPushPullPassword(): string | undefined {
-    return this.options.password;
+    return this.getAdaptableState().System.CurrentIPushpullPassword;
   }
 
   public getAutoLogin(): boolean {
@@ -214,6 +214,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public logoutFromIPushPull(): void {
     this.clearIPushPullInternalState();
+    this.dispatchAction(IPushPullRedux.IPushPullLogout());
     this.adaptable.api.internalApi.hidePopupScreen();
   }
 

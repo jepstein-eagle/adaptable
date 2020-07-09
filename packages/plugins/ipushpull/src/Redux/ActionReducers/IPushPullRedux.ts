@@ -16,6 +16,7 @@ export const IPUSHPULL_STOP_LIVE_DATA = 'IPUSHPULL_STOP_LIVE_DATA';
 export const IPUSHPULL_ADD_PAGE = 'IPUSHPULL_ADD_PAGE';
 
 export const IPUSHPULL_LOGIN = 'IPUSHPULL_LOGIN';
+export const IPUSHPULL_LOGOUT = 'IPUSHPULL_LOGOUT';
 export const IPUSHPULL_SET_LOGIN_ERROR_MESSAGE = 'IPUSHPULL_SET_LOGIN_ERROR_MESSAGE';
 
 export const SET_IPUSHPULL_AVAILABLE_ON = 'SET_IPUSHPULL_AVAILABLE_ON';
@@ -46,6 +47,7 @@ export interface IPushPullLoginAction extends Redux.Action {
   username: string;
   password: string;
 }
+export interface IPushPullLogoutAction extends Redux.Action {}
 
 export interface IPushPullSetLoginErrorMessageAction extends Redux.Action {
   errorMessage: string;
@@ -101,6 +103,10 @@ export const IPushPullLogin = (username: string, password: string): IPushPullLog
   type: IPUSHPULL_LOGIN,
   username,
   password,
+});
+
+export const IPushPullLogout = (): IPushPullLogoutAction => ({
+  type: IPUSHPULL_LOGOUT,
 });
 
 export const IPushPullSetLoginErrorMessage = (
@@ -180,7 +186,20 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
       return Object.assign({}, state, { IsIPushPullRunning: false });
 
     case IPUSHPULL_LOGIN: {
-      return { ...state, IPushPullLoginErrorMessage: undefined };
+      let loginAction: IPushPullLoginAction = action as IPushPullLoginAction;
+      return {
+        ...state,
+        CurrentIPushpullUsername: loginAction.username,
+        CurrentIPushpullPassword: loginAction.password,
+        IPushPullLoginErrorMessage: undefined,
+      };
+    }
+    case IPUSHPULL_LOGOUT: {
+      return {
+        ...state,
+        CurrentIPushpullUsername: undefined,
+        CurrentIPushpullPassword: undefined,
+      };
     }
     case IPUSHPULL_SET_LOGIN_ERROR_MESSAGE: {
       return {
