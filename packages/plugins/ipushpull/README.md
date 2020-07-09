@@ -31,7 +31,7 @@ The [ipushpull Api](https://api.adaptabletools.com/interfaces/_src_api_ipushpull
  
   ```ts
   
-  // sset up AdaptableOptions
+  // set up AdaptableOptions
   const adaptableOptions: AdaptableOptions = {
      ******
       plugins: [
