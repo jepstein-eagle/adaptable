@@ -12,7 +12,7 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * Static Constructor now asynchronous
 
-* New Calculated Column Expression Syntax and UI
+* New Calculated Column Expression Editor and Syntax
 
 * Schedule State Changes
 
@@ -20,7 +20,7 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * Config Server Removed
 
-* New 'Partner' plugins
+* New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble
 
 * Support for Master / Detail grids
 
