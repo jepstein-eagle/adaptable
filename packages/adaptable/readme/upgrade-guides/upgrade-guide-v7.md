@@ -108,17 +108,15 @@ import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src
 
 ## Angular Wrapper Changes
 
-AdapTable Angular wrapper - introduced `agGridTheme` property - defaults to `"balham"`
-
-With v7 of `AdapTable`, which works with agGrid 23, the angular wrapper was updated.
+In order to work seamlessly with agGrid 23, the Angular Wrapper was also updated.
 
 Here is a quick summary of the changes (for full information see the [Angular Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-ng-aggrid/README.md):
 
- * you now have to render `<ag-grid-angular>` component yourself - although most ag-grid properties can be passed into the component via inputs, **you have to make sure you pass the `"gridOptions"` object** as an input to the `<ag-grid-angular>` component
+ * The`<ag-grid-angular>` component needs to be provided explicitly.  Although most ag-grid properties can be passed into the component via inputs, **you have to make sure you pass the `"gridOptions"` object** as an input to the `<ag-grid-angular>` component.  The ag-Grid theme is set via the `class` property.
 
- * you have to pass the same `"gridOptions"` object to the `<adaptable-angular-aggrid>` component as well - in this way, `<adaptable-angular-aggrid>` and `<ag-grid-angular>` are connected to the same agGrid instance.
+ * The same `"gridOptions"` object must be passed into the `<adaptable-angular-aggrid>` component as well - in this way, `<adaptable-angular-aggrid>` and `<ag-grid-angular>` are guaranteed to be connected to the same agGrid instance.
  
- * the `onAdaptableReady` input is removed from the `<adaptable-angular-aggrid>` component; instead this functionality is exposed as an event, named `adaptableReady` - see example below
+ * The `onAdaptableReady` input is removed from the `<adaptable-angular-aggrid>` component; instead this functionality is exposed as an event, named `adaptableReady` - see example below
 
 ```html
 <!-- component.html >
