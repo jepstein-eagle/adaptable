@@ -41,6 +41,8 @@ The [ipushpull Api](https://api.adaptabletools.com/interfaces/_src_api_ipushpull
           throttleTime: 5000,
           includeSystemReports: true,
           ippConfig: {
+             api_secret: process.env.IPUSHPULL_API_KEY,
+             api_key: process.env.IPUSHPULL_API_KEY,
              api_url: 'https://www.ipushpull.com/api/1.0',
              ws_url: 'https://www.ipushpull.com',
              web_url: 'https://www.ipushpull.com',
