@@ -254,16 +254,22 @@ In your app module, import AdaptableAngularAgGridModule module
 import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
 ```
 
-After that, you can use the component in your app
+After that, you can use the AdapTable Angular component in your app:
 
 ```html
 
 <adaptable-angular-aggrid
   [adaptableOptions]="..."
-  [gridOptions]="..."
+  [gridOptions]="gridOptions"
   (adaptableReady)="onAdaptableReady($event)"
 >
 </adaptable-angular-aggrid>
+
+```
+
+And you should also use the ag-Grid Angular compoment (passing in the gridOptions as you gave the AdapTable component):
+
+```html
 
 <ag-grid-angular
   [gridOptions]="gridOptions"
