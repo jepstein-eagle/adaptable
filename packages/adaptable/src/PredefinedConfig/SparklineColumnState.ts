@@ -10,7 +10,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/column/aggridsparklinecolumnsdemo/) | [API](_src_api_sparklinecolumnapi_.sparklinecolumnapi.html) | [Sparkline Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/charts/sparkline-column-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/column/aggridsparklinecolumnsdemo/) | [API](_src_api_sparklinecolumnapi_.sparklinecolumnapi.html) | [Sparkline Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/charts/sparkline-column-function.md)
  *
  * **Sparkline Column Predefined Config Example**
  *

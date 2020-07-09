@@ -5,7 +5,7 @@ import { ConfigState } from './ConfigState';
  *
  * The Application function is designed to allow developers to provide Adaptable with appliation-specific data.
  *
- * In previous version, Application State included an ApplicationToolbar for users to render application-specific content, but this has now been removed and you should use [Custom Toolbars](_src_predefinedconfig_dashboardstate_.dashboardstate.html#customtoolbars) in Dashboard State instead.
+ * In previous versions of AdapTable, Application State included an ApplicationToolbar for users to render application-specific content, but this is now available through the [Custom Toolbars](_src_predefinedconfig_dashboardstate_.dashboardstate.html#customtoolbars) property in Dashboard State.
  *
  * --------------
  *

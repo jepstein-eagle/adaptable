@@ -14,6 +14,8 @@ export interface IPushPullState extends ConfigState {
   IPushPullDomainsPages?: IPushPullDomain[];
   IPushPullLoginErrorMessage?: string;
   CurrentLiveIPushPullReport?: IPushPullReport;
+  CurrentIPushpullUsername?: string;
+  CurrentIPushpullPassword?: string;
 }
 
 /**

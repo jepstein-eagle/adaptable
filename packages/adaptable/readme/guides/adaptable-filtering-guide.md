@@ -18,7 +18,7 @@ Users can create as many Column Filters as required and the grid will automatica
 
 Any active Column Filters when the system closes are immediately re-applied on startup. But Column Filters cannot be saved and re-used elsewhere. However they can be easily converted into named - and re-usable [User Filters](../functions/user-filter-function.md) for this very purpose.
 
-See the [Column Filter Function Read Me](../functions/column-filter-function.md) for more information on Column Filters and creating User Filters.
+See the [Column Filter Read Me](../functions/column-filter-function.md) for more information on Column Filters and creating User Filters.
 
 There are 2 types of filter that you can apply:
 
@@ -44,13 +44,13 @@ There are 2 types of filter that you can apply:
 
         These are essentially named Column Filters (allowing for recursion) e.g. 'This Business Year' could be a filter for 'Between 1/05/20 and 31/04/21'
 
-        See the [User Filter Function Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
+        See the [User Filter Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
 
     - **Named Filters**: filters created by developers at design-time and provided through Predefined Config.
     
         Named Filtes contain a Predicate function that will be run each time the filter is evaluated.
 
-        See the [Named Filter Function Read Me](../functions/named-filter-function.md) for more information on how to create Named Filters.
+        See the [Named Filter Read Me](../functions/named-filter-function.md) for more information on how to create Named Filters.
 
     - **Column Values**: the distinct column values for that Column.  
 

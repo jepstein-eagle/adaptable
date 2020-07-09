@@ -23,7 +23,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - {@link ActionColumnApi|Action Column API}
  *
- * - [Action Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
+ * - [Action Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
  * - [Action Column Video](https://youtu.be/y0cDvtdmSKM)
  *
