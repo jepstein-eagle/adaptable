@@ -12,11 +12,13 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Once created a Calculated Column is treated like any other Column in the Grid - though **only the name and Expression are stored** and not the cell data.
  *
+ * --------------
+ *
  * **Further AdapTable Help Resources**
  *
  * [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo/)
  *
- * [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_calculatedcolumnapi_.calculatedcolumnapi)
+ * {@link CalculatedColumnApi|Calculated Column API}
  *
  * [Calculated Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
  *
