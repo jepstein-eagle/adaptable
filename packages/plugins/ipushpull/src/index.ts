@@ -83,15 +83,21 @@ class IPushPullPlugin extends AdaptablePlugin {
 
   constructor(options?: IPushPullPluginOptions) {
     super(options);
+    const ippConfig = {
+      ...defaultOptions.ippConfig,
+      ...(options || {}).ippConfig,
+    };
+    if (!ippConfig.api_key) {
+      ippConfig.api_key = defaultOptions.ippConfig.api_key;
+    }
+    if (!ippConfig.api_secret) {
+      ippConfig.api_secret = defaultOptions.ippConfig.api_secret;
+    }
+
     this.options = {
       ...defaultOptions,
       ...options,
-      ippConfig: {
-        ...defaultOptions.ippConfig,
-        ...(options || {}).ippConfig,
-        api_key: defaultOptions.ippConfig.api_key,
-        api_secret: defaultOptions.ippConfig.api_secret,
-      },
+      ippConfig,
     };
 
     /**
