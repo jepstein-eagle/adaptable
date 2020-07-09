@@ -2,13 +2,13 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullDomain, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 
 /**
- * Provides full and comprehensive run-time access to ipushpull state and associated methods.
+ * Provides full and comprehensive run-time access to the ipushpull Plugin.
  *
  * Use the API to find out if ipushpull is available or running and much else.
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [ipushpull State](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html) | [ipushpull Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/ipushpull-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/)
  *
  * Note: Some of these methods are intended for internal use only - and have been noted as such.
  */

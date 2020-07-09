@@ -18,7 +18,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_calculatedcolumnapi_.calculatedcolumnapi)
  *
- * [Calculated Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
+ * [Calculated Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
  *
  **/
 export interface CalculatedColumnState extends ConfigState {

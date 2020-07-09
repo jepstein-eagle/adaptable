@@ -1,8 +1,19 @@
 import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 
 /**
- * Provides full and comprehensive run-time access to the Bulk Update function and associated state.
- */
+ * Provides full and comprehensive run-time access to the Bulk Update function
+ *
+ * Bulk Update is a convenience function that allows you to update a group of selected cells in the same column to hold the same value with a single click.
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Bulk Update Demo](https://demo.adaptabletools.com/edit/aggridbulkupdatedemo/)
+ *
+ * {@link BulkUpdateState|Bulk Update State}
+ *
+ * [Bulk Update Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/bulk-update-function.md)
+ *
+ **/
 export interface BulkUpdateApi {
   /**
    * Returns the whole contents of the Bulk Update State

@@ -21,7 +21,7 @@ import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridsystemstatusdemo/) | [System Status State](_src_predefinedconfig_systemstatusstate_.systemstatusstate.html) | [System Status Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/system-status-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridsystemstatusdemo/) | [System Status State](_src_predefinedconfig_systemstatusstate_.systemstatusstate.html) | [System Status Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/system-status-function.md)
  *
  */
 export interface SystemStatusApi {

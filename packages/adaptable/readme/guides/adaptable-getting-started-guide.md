@@ -152,7 +152,7 @@ When the cursor hovers over the icon, the help information appears in a pop-up d
 
 ### More Information
 
-- [Dashboard Function Read Me](../functions/dashboard-function.md)
+- [Dashboard Read Me](../functions/dashboard-function.md)
 - [Dashboard Demos](https://demo.adaptabletools.com/dashboard)
 - [User Interface State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
 - [User Interface Demos](https://demo.adaptabletools.com/userinterface)

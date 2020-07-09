@@ -5,7 +5,7 @@ import { SparklineColumnState, SparklineColumn } from '../PredefinedConfig/Spark
  * 
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/column/aggridsparklinecolumnsdemo/) | [State](_src_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html) | [Sparkline Column Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/charts/sparkline-column-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/column/aggridsparklinecolumnsdemo/) | [State](_src_predefinedconfig_sparklinecolumnstate_.sparklinecolumnstate.html) | [Sparkline Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/charts/sparkline-column-function.md)
 
  */
 export interface SparklineColumnApi {

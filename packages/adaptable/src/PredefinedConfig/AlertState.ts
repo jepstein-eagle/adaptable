@@ -19,7 +19,7 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * - {@link AlertApi|Alert API}
  *
- * - [Alert Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
+ * - [Alert Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
  *
  * --------------
  *

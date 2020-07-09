@@ -12,7 +12,7 @@ import { SelectedCellInfo } from '../types';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_src_api_cellsummaryapi_.cellsummaryapi.html) | [Cell Summary Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_src_api_cellsummaryapi_.cellsummaryapi.html) | [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
  *
  *  *Cell Summary Operations*
  *

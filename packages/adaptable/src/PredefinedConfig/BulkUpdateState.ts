@@ -8,9 +8,9 @@ import { ConfigState } from './/ConfigState';
  *
  * [Bulk Update Demo](https://demo.adaptabletools.com/edit/aggridbulkupdatedemo/)
  *
- * [Bulk Update Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_bulkupdateapi_.bulkupdateapi.html)
+ * {@link BulkUpdateApi|Bulk Update API}
  *
- * [Bulk Update Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/bulk-update-function.md)
+ * [Bulk Update Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/bulk-update-function.md)
  *
  **/
 export interface BulkUpdateState extends ConfigState {
