@@ -1,9 +1,6 @@
-## 7.0.0-canary.22
-
-testing build
-
 ## 7.0.0-canary.21
 
+testing build
 add username and password to ipushpull state so can be retrieved
 
 ## 7.0.0-canary.20
