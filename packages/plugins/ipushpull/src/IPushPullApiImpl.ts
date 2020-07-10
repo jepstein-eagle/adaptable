@@ -29,11 +29,20 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.options = options;
   }
 
-  public getIPushPullUsername(): string | undefined {
+  public getCurrentIPushPullUsername(): string | undefined {
     return this.getAdaptableState().System.CurrentIPushpullUsername;
   }
-  public getIPushPullPassword(): string | undefined {
+
+  public getCurrentIPushPullPassword(): string | undefined {
     return this.getAdaptableState().System.CurrentIPushpullPassword;
+  }
+
+  public getIPushPullUsername(): string | undefined {
+    return this.options.username;
+  }
+
+  public getIPushPullPassword(): string | undefined {
+    return this.options.password;
   }
 
   public getAutoLogin(): boolean {
@@ -204,6 +213,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.setIPushPullRunningOn();
     this.adaptable.api.internalApi.hidePopupScreen();
     this.setIPushPullLoginErrorMessage('');
+    this.dispatchAction(IPushPullRedux.IPushPullSetLoginDetails(userName, password));
   }
 
   public async retrieveIPushPullDomainsFromIPushPull(): Promise<void> {

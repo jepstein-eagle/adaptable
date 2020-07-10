@@ -14,17 +14,26 @@ import { IPushPullDomain, IPushPullSchedule } from '../PredefinedConfig/IPushPul
  */
 export interface IPushPullApi {
   /**
-   * Retrieves the ipushpull `Username` from the ipushpull state.
+   * Retrieves the ipushpull `Username` from the ipushpull state - AFTER someone logs in
+   */
+  getCurrentIPushPullUsername(): string | undefined;
+
+  /**
+   * Retrieves the ipushpull `Password` from the ipushpull state -- AFTER someone logs in
+   */
+  getCurrentIPushPullPassword(): string | undefined;
+  /**
+   * Retrieves the ipushpull `Username` from the ipushpull options (if provided).
    */
   getIPushPullUsername(): string | undefined;
 
   /**
-   * Retrieves the ipushpull `Password` from the ipushpull state.
+   * Retrieves the ipushpull `Password` from the ipushpull options (if provided)..
    */
   getIPushPullPassword(): string | undefined;
 
   /**
-   * Retrieves the ipushpull `AutoLogin` from the ipushpull state.
+   * Retrieves the ipushpull `AutoLogin` from the ipushpull options (if provided)..
    *
    * If `true` then AdapTable will try to log in the user to ipushpull automatically at start-up
    */

@@ -39,6 +39,7 @@ export class PushPullService implements IPushPullService {
           let autoLogin: boolean = this.getIPPApi().getAutoLogin();
 
           if (autoLogin) {
+            // get the username and passwrord from the options
             let userName: string | undefined = this.getIPPApi().getIPushPullUsername();
             let password: string | undefined = this.getIPPApi().getIPushPullPassword();
 
