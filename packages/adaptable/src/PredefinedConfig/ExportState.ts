@@ -8,7 +8,7 @@ import { BaseSchedule } from './Common/Schedule';
  *
  * Export enables you to create saveable Reports that you can run either manually or on a schedule.
  *
- * Adaptable will popuplate the Export dropdown with your reports and allow you to export the data to a number of destinations.
+ * Adaptable will popuplate the Export dropdown with your reports (and the shipped System reports) and allows you to export the data to a number of destinations.
  *
  * Each Report has both Row and Column Scope to allow you define which Rows and Columns are contained in the Export
  *
@@ -22,7 +22,7 @@ import { BaseSchedule } from './Common/Schedule';
  *
  * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
  *
- * [Export Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_exportoptions_.exportoptions.html)
+ * {@link ExportOptions|Export Options}
  *
  * --------------
  *

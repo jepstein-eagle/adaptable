@@ -6,7 +6,7 @@ import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportS
  *
  * Export enables you to create saveable Reports that you can run either manually or on a schedule.
  *
- * AdapTable will popuplate the Export dropdown with your reports and allow you to export the data to a number of destinations.
+ * AdapTable will popuplate the Export dropdown with your reports (and the shipped System reports) and allows you to export the data to a number of destinations.
  *
  * --------------
  *
@@ -14,7 +14,7 @@ import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportS
  *
  * [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
  *
- * {@link ExportApi|Export API}
+ * {@link ExportState|Export State}
  *
  * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
  *

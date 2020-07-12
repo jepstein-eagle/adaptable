@@ -84,6 +84,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *    ],
  * ```
  *
+ *
  */
 export interface NamedFilterState extends ConfigState {
   /**
