@@ -6,7 +6,7 @@ However its genesis is in the financial services industry and many of its users 
 
 Accordingly, the Finance Plugin was developed in order to keep the core product 'sector-neutral' while providing useful functionality for financial services clients through a dedicated plugin.
 
-For instance, it includes specialised Cell Summary operations useful for Financial Services like *Weighted Average* and *VWap*.
+For instance, it includes specialised Cell Summary operations useful for Financial Services like *Weighted Average*, *Only* and *VWap*.
 
 ## Using the Financial Plugin
 

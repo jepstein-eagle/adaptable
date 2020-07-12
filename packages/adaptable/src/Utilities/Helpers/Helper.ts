@@ -278,23 +278,15 @@ export function meanNumberArray(numericValues: number[]): number {
 }
 
 export function medianNumberArray(numericValues: number[]): number {
-  // median of [3, 5, 4, 4, 1, 1, 2, 3] = 3
-  var median = 0,
-    numsLen = numericValues.length;
-  numericValues.sort();
-
-  if (
-    numsLen % 2 ===
-    0 // is even
-  ) {
-    // average of two middle numbers
-    median = (numericValues[numsLen / 2 - 1] + numericValues[numsLen / 2]) / 2;
+  numericValues.sort(function(a, b) {
+    return a - b;
+  });
+  var middle = Math.floor((numericValues.length - 1) / 2); // NB: operator precedence
+  if (numericValues.length % 2) {
+    return numericValues[middle];
   } else {
-    // is odd
-    // middle number only
-    median = numericValues[(numsLen - 1) / 2];
+    return (numericValues[middle] + numericValues[middle + 1]) / 2.0;
   }
-  return median;
 }
 
 export function modeNumberArray(numbers: number[]): number {
