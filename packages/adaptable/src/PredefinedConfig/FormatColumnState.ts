@@ -6,7 +6,7 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
 /**
  * The Predefined Configuration for the `FormatColumn` function.
  *
- * A Format Column is a column that is given specific Style and / or Display Format properties that are always rendered:
+ * A Format Column is a column that is given specific Style and / or Display Format properties that are always (i.e. unconditionally) rendered.
  *
  * - **`Style`** - a visual style that is **always** applied (unlike Conditional Styles where the style is dependent on a rule being met).
  *

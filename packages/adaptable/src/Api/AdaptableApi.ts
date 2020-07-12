@@ -113,7 +113,7 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [smartEditApi](#smarteditapi)                   | Functions for managing the Smart Edit function to enable better editing|
  *  | [sparklineColumnApi](#sparklinecolumnapi)       | For {@link SparklineColumnState|Sparkline Columns} - ideal for historical or array-based data|
  *  | [systemFilterApi](#systemfilterapi)             | Fetches the System Filters (shipped by AdapTable)
- *  | [systemStatusApi](#systemstatusapi)             | Manages the System Status function - that displayes run-time messages to Users|
+ *  | [systemStatusApi](#systemstatusapi)             | Manages how the System Status function will display run-time messages|
  *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
  *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
  *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|

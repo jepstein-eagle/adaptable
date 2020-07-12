@@ -3,6 +3,22 @@ import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportS
 
 /**
  * Provides full and comprehensive run-time access to the Export function and associated Report state (from Predefined Config).
+ *
+ * Export enables you to create saveable Reports that you can run either manually or on a schedule.
+ *
+ * AdapTable will popuplate the Export dropdown with your reports and allow you to export the data to a number of destinations.
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+ *
+ * {@link ExportApi|Export API}
+ *
+ * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
+ *
+ *
  */
 export interface ExportApi {
   /**
@@ -15,6 +31,10 @@ export interface ExportApi {
    */
   getCurrentReport(): Report;
 
+  /**
+   * Retrieves the Report with the given name
+   * @param reportName report to retrieve
+   */
   getReportByName(reportName: string): Report;
 
   /**
@@ -27,6 +47,9 @@ export interface ExportApi {
    */
   getAllReports(): Report[];
 
+  /**
+   * gets all Report Schedules
+   */
   getReportSchedules(): ReportSchedule[];
 
   /**
@@ -38,6 +61,11 @@ export interface ExportApi {
    */
   sendReport(reportName: string, destination: ExportDestination): void;
 
+  /**
+   * Indicates whether this AdapTable instance is able to export to Excel
+   *
+   * If false, then the Export to Excel will not be visible in the Export Toolbar or ToolPanel
+   */
   canExportToExcel(): boolean;
 
   /**

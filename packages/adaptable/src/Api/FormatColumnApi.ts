@@ -6,7 +6,7 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
  *
  * Includes functions for retrieving, adding, editing and deleting Format Columns.
  *
- * A Format Column is a column that is given a specific `Style`, `DisplayFormat` or `CellAlignment` that is always rendered.
+ * A Format Column is a column that is given a specific `Style`, `DisplayFormat` or `CellAlignment` that is always (i.e. unconditionally) rendered.
  *
  * --------------
  *

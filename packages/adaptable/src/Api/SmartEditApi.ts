@@ -3,7 +3,7 @@ import { SmartEditState } from '../PredefinedConfig/SmartEditState';
 /**
  * Provides full and comprehensive run-time access to the Smart Edit function
  *
- * Smart Edit is a convenience function that allows users - with a single action - to edit a cell (or group of cells in the same column) using a mathmatical operation.
+ * Smart Edit allows users - with a single action - to edit a cell (or group of cells in the same column) using a mathmatical operation.
  *
  * Smart Edit works on **numeric columns only**.
  *

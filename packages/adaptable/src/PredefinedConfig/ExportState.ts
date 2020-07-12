@@ -12,35 +12,93 @@ import { BaseSchedule } from './Common/Schedule';
  *
  * Each Report has both Row and Column Scope to allow you define which Rows and Columns are contained in the Export
  *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+ *
+ * {@link ExportApi|Export API}
+ *
+ * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
+ *
+ * --------------
+ *
  *  * **Export Predefined Config Example**
  *
  * ```ts
- * Export: {
- *    Reports: [
- *      {
- *        Name: 'End of Day',
- *        ColumnIds: [
- *          'bid',
- *          'counterparty',
- *          'currency',
- *          'tradeDate',
- *          'settlementDate',
- *          'ask',
- *          'moodysRating',
- *          'bloombergBid',
- *          'bloombergAsk',
- *       ],
- *        ReportColumnScope: 'BespokeColumns',
- *        ReportRowScope: 'VisibleRows',
- *        ExportDestination: 'JSON',
+ *   Export: {
+ *   CurrentReport: 'My Team Big Invoice',
+ *   Reports: [
+ *     {
+ *       Expression: {
+ *         ColumnValueExpressions: [
+ *           {
+ *             ColumnId: 'Employee',
+ *             ColumnDisplayValues: [
+ *               'Robert King',
+ *               'Margaret Peacock',
+ *               'Anne Dodsworth',
+ *             ],
+ *           },
+ *         ],
+ *         RangeExpressions: [
+ *           {
+ *             ColumnId: 'InvoicedCost',
+ *             Ranges: [
+ *               {
+ *                 Operator: 'GreaterThan',
+ *                 Operand1: '1000',
+ *                 Operand1Type: 'Value',
+ *               },
+ *             ],
+ *           },
+ *         ],
  *       },
- *      },
- *    ],
- *    CurrentReport: 'End of Day',
- *  },
- * } as PredefinedConfig;
+ *       Name: 'My Team Big Invoice',
+ *       ReportColumnScope: 'AllColumns',
+ *       ReportRowScope: 'ExpressionRows',
+ *     },
+ *     {
+ *       ColumnIds: [
+ *         'OrderId',
+ *         'ChangeLastOrder',
+ *         'ContactName',
+ *         'InvoicedCost',
+ *         'ItemCost',
+ *         'ItemCount',
+ *         'OrderCost',
+ *         'OrderDate',
+ *       ],
+ *       Name: 'End of Day',
+ *       ReportColumnScope: 'BespokeColumns',
+ *       ReportRowScope: 'VisibleRows',
+ *     },
+ *   ],
+ * },
+ * Schedule: {
+ *   ReportSchedules: [
+ *     {
+ *       ScheduleType: 'Report',
+ *       ReportName: 'End of Day',
+ *       ExportDestination: 'Excel',
+ *       Schedule: {
+ *         DaysOfWeek: [1, 2, 3, 4, 5],
+ *         Hour: 17,
+ *         Minute: 30,
+ *       },
+ *     },
+ *   ],
+ * }, as PredefinedConfig;
  * ```
  *
+ * In this example we have created 2 Reports
+ *
+ * - 'My Team Big Invoice' (the currently selected one) - which exports ALL Columns and any rows where the 'InvoicedCost' Column > 1000 AND the 'Employee' column value is one of 'Robert King', 'Margaret Peacock' or 'Anne Dodsworth'
+ *
+ * - 'End of Day' - which exports 8 named Columns and ALL Rows.
+ *
+ * Note: we have also defined a Schedule so that the 'End of Day' Report will export to Excel automatically every weekday at 17:30
  */
 export interface ExportState extends ConfigState {
   /**

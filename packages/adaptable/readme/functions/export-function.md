@@ -43,11 +43,23 @@ and also - depending on whether the appropriate plugin is loaded:
 
 ## UI Elements
 
-To Do
+Export includes the following UI Elements:
+
+- **Popup** - Shows all the available Reports (both System and User) together with an option to export to a destination of the User's choice.   Plus an *Add* button to start the Export Wizard.
+
+- **Toolbar** - Shows all the available Reports (both System and User) together with an option to export to a destination of the User's choice.  Also includes a Schedule button to enable reports to be run on Schedules.
+
+- **Tool Panel** - Same as Toolbar above.
 
 ## Entitlements
 
-To Do
+Export supports these Entitlement Rules:
+
+- **Full**: All Reports can be run and User Reports can be created / updated / deleted
+
+- **Hidden**: Reports can be run but not edited
+
+- **ReadOnly**: N/A
 
 ## FAQ
 
