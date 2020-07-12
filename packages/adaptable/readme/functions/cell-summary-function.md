@@ -11,20 +11,25 @@ Simply select a group of cells and you can see the summary information about tho
 
 The following Cell Summary Operations are shipped with AdapTable:
 
-- Sum (Numeric columns only)
-- Average (Numeric columns only)
-- Median (Numeric columns only)
-- Mode (Numeric columns only)
-- Distinct 
-- Max (Numeric columns only)
-- Min (Numeric columns only)
-- Count 
+| Operation | Columns | Description                                |
+| --------- | ------- | ------------------------------------------ |
+| Sum       | Numeric | Total of all cells                         |
+| Average   | Numeric | Average of all cells                       |
+| Median    | Numeric | Middle (value) of all cells (when ordered) |
+| Mode      | Numeric | Most common value                          |
+| Distinct  | All     | Count of distinct cell values              |
+| Max       | Numeric | Highest Cell Value                         |
+| Min       | Numeric | Lowest Cell Value                          |
+| Count     | All     | Number of selected cells                   |
 
 If using the [Finance Plugin](../../../plugins/finance/README.md) the additional Cell Summary Operations are available:
 
-- Only 
-- VWap 
-- WeightedAverage
+| Operation       | Columns | Description                                                   |
+| --------------- | ------- | ------------------------------------------------------------- |
+| Only            | Numeric | Returns true if all selected cells match (single column only) |
+| VWap            | Numeric | To Do                                                         |
+| WeightedAverage | Numeric | To Do                                                         |
+
 
 ## UI Elements
 
@@ -55,7 +60,7 @@ Yes, you need to provide a [CellSummaryOperationDefinition](https://api.adaptabl
 
 **Can we see Financial Operations?**
 
-Yes, if you use the AdapTable Finance plug-in.  (See [plugins](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/README.md) for more info)
+Yes, if you use the AdapTable [Finance Plugin](../../../plugins/finance/README.md).
 
 
 ### Further Information
