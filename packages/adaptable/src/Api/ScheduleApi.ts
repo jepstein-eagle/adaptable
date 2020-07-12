@@ -8,14 +8,13 @@ import { OpenFinSchedule } from '../PredefinedConfig/OpenFinState';
 /**
  * Provides full and comprehensive run-time access to the Schedule function and associated state.
  *
- /**
- * The Predefined Configuration for the Schedule function
- *
  * AdapTable offers the ability to run particular actions at scheduled times and dates - either as a one-off or repeated activity.
  *
  * --------------
  *
  *  ### Further AdapTable Help Resources
+ *
+ * - {@link ScheduleState|Schedule State}
  *
  * - [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)
  *
@@ -27,11 +26,11 @@ import { OpenFinSchedule } from '../PredefinedConfig/OpenFinState';
  *
  * * Export
  * * Reminder
- * * ipushpull - if using the ipushpull plugin
- * * Glue42 - if using the Glue42 plugin
- * * OpenFin - if using the OpenFin plugin
+ * * ipushpull (f using the ipushpull Plugin)
+ * * Glue42 (f using the Glue42 Plugin)
+ * * OpenFin (f using the OpenFin Plugin)
  *
-  */
+ */
 export interface ScheduleApi {
   /**
    * Retrieves the Schedule section from Adaptable State

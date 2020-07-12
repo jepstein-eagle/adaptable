@@ -14,6 +14,8 @@ import { ReportSchedule } from '../types';
  *
  *  ### Further AdapTable Help Resources
  *
+ * - {@link ScheduleApi|Schedule API}
+ *
  * - [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)
  *
  * - [Schedule Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/schedule-function.md)
@@ -24,9 +26,10 @@ import { ReportSchedule } from '../types';
  *
  * * Export
  * * Reminder
- * * ipushpull - if using the ipushpull plugin
- * * Glue42 - if using the Glue42 plugin
- * * OpenFin - if using the OpenFin plugin
+ * * ipushpull (f using the ipushpull Plugin)
+ * * Glue42 (f using the Glue42 Plugin)
+ * * OpenFin (f using the OpenFin Plugin)
+ *
  *
  */
 export interface ScheduleState extends ConfigState {

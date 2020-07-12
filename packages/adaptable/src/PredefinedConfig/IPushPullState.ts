@@ -38,11 +38,26 @@ export interface IPushPullDomain {
   Pages: string[];
 }
 
+/**
+ * An ipushpull report
+ *
+ * Contains the name of the Report (which will exist in the Export State), and the ipushpull `Folder` and `Page` to which it will be sent.
+ */
+
 export interface IPushPullReport extends AdaptableObject {
   ReportName: string;
   Folder: string;
   Page: string;
 }
+/**
+ * Defines an ipushpull Schedule.  Used in the Schedule Function (where the State will be stored).
+ *
+ * Includes 2 properties:
+ *
+ * - `IPushPullReport`: The report being exported to Excel (via ipushpull)
+ *
+ * - `Transmission`: Whether Snapshot or Live Data
+ */
 export interface IPushPullSchedule extends BaseSchedule {
   IPushPullReport: IPushPullReport;
   Transmission: 'Snapshot' | 'Live Data';
