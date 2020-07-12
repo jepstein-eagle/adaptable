@@ -24,11 +24,11 @@ The following Cell Summary Operations are shipped with AdapTable:
 
 If using the [Finance Plugin](../../../plugins/finance/README.md) the additional Cell Summary Operations are available:
 
-| Operation       | Columns | Description                                                   |
-| --------------- | ------- | ------------------------------------------------------------- |
-| Only            | Numeric | Returns true if all selected cells match (single column only) |
-| VWap            | Numeric | To Do                                                         |
-| WeightedAverage | Numeric | To Do                                                         |
+| Operation       | Columns | Description                                                                   |
+| --------------- | ------- | ----------------------------------------------------------------------------- |
+| Only            | Numeric | Returns true if all selected cells match (single column only)                 |
+| VWap            | Numeric | Runs VWAP analysis - requires selection of 2 contiguous columns               |
+| WeightedAverage | Numeric | Calculateds the Weighted Average - requires selection of 2 contiguous columns |
 
 
 ## UI Elements

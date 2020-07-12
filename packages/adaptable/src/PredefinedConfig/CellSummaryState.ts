@@ -21,17 +21,19 @@ import { SelectedCellInfo } from '../types';
  *  | Sum       | Total of all selected cells	                     |
  *  | Average   | Average of all selected cells 	                 |
  *  | Median    | Median of all selected cells 	                   |
- *  | Distinct  | Lists all distinct values in the selected cells	 |
+ *  | Mode      | The most common value of all selected cells 	                   |
+ *  | Distinct  | Count of distinct values in the selected cells	 |
  *  | Max  	    | Highest value in selected cells 	               |
  *  | Min   	  | Lowest value in selected cells 	                 |
  *  | Count  	  | Count of selected cells 	                       |
  *
  * *Finance Plugin Additional Operations*
  *
- *  | Operation | Description                                      |
- *  |---------  |-------------------	                             |
- *  | Only      | If all cells are same value it returns that value; otherwise it returns nothing |
- *  | VWAP      | Runs VWAP analysis - requires selection of 2 contiguous columns	                |
+ *  | Operation       | Description                                      |
+ *  |---------        |-------------------	                             |
+ *  | Only            | If all cells are same value it returns that value; otherwise it returns nothing |
+ *  | VWAP            | Runs VWAP analysis - requires selection of 2 contiguous columns	                |
+ *  | WeightedAverage | Calculates Weighted Average - requires selection of 2 contiguous columns	                |
  *
  *
  */
