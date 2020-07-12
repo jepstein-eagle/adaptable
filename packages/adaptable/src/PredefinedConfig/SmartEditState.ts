@@ -4,7 +4,23 @@ import { MathOperation } from './Common/Enums';
 /**
  * The Predefined Configuration for the Smart Editfunction
  *
- * Use Smart Edit when you want to edit a cell (or group of cells in the same column) using a mathmatical operation.
+ * Provides full and comprehensive run-time access to the Smart Edit function
+ *
+ * Smart Edit is a convenience function that allows users - with a single action - to edit a cell (or group of cells in the same column) using a mathmatical operation.
+ *
+ * Smart Edit works on **numeric columns only**.
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Smart Edit Demo](https://demo.adaptabletools.com/edit/aggridsmarteditdemo/)
+ *
+ * {@link SmartEditApi|Smart Edit API}
+ *
+ * [Smart Edit Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/smart-edit-function.md)
+ *
+ * --------------
  *
  * ```ts
  * export default {

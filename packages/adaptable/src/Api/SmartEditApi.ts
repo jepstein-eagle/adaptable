@@ -1,5 +1,23 @@
 import { SmartEditState } from '../PredefinedConfig/SmartEditState';
 
+/**
+ * Provides full and comprehensive run-time access to the Smart Edit function
+ *
+ * Smart Edit is a convenience function that allows users - with a single action - to edit a cell (or group of cells in the same column) using a mathmatical operation.
+ *
+ * Smart Edit works on **numeric columns only**.
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Smart Edit Demo](https://demo.adaptabletools.com/edit/aggridsmarteditdemo/)
+ *
+ * {@link SmartEditState|Smart Edit State}
+ *
+ * [Smart Edit Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/smart-edit-function.md)
+ *
+ **/
 export interface SmartEditApi {
   /**
    * Retrieves the Smart Edit section from Adaptable State
