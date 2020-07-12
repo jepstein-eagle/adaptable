@@ -4,6 +4,8 @@ import { ConfigState } from './ConfigState';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
+ * The Predefined Configuration for Named Filters
+ *
  * Named Filters are filters provided at run-time together with a Predicate Function that will be evaluated each time the Filter runs.
  *
  * The Predicate Function will be given 3 params:
@@ -13,6 +15,20 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * b. *columnId* - the column which contains the Named Filter
  *
  * c. *cellValue* - the value being tested
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Named Filter Demo](https://demo.adaptabletools.com/filters/aggridnamedfiltersdemo)
+ *
+ * {@link NamedFilterApi|Named Filter API}
+ *
+ * [Named Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/named-filter-function.md)
+ *
+ * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
+ * --------------
  *
  * **Named Filter Example**
  *
@@ -84,6 +100,19 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *    ],
  * ```
  *
+ * --------------
+ *
+ *
+ *  AdapTable offers 4 types of Filters:
+ *
+ *  | Filter Type                                   | Usage
+ *  | -----------                                   | -----------
+ *  | {@link ColumnFilterState|Column Filters}      | Filter a single Column using either a list of Column Values or a Range
+ *  | {@link UserFilterState|User Filters}          | Columm Filters which are saved and named and therefore able to be re-used in multiple Functions
+ *  | {@link NamedFilterState|Named Filters}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
+ *  | {@link SystemFilterState|System Filters}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
+ *
+ * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *
  */
 export interface NamedFilterState extends ConfigState {
