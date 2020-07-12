@@ -20,13 +20,14 @@ The following Cell Summary Operations are shipped with AdapTable:
 - Min (Numeric columns only)
 - Count 
 
-If using the Finance plugin the additional Cell Summary Operations are available:
+If using the [Finance Plugin](../../../plugins/finance/README.md) the additional Cell Summary Operations are available:
 
 - Only 
 - VWap 
-
+- WeightedAverage
 
 ## UI Elements
+
 Cell Summary includes the following UI Elements:
 
 - **Popup** - Shows all the Cell Summary Operation results for the selected cells
