@@ -10,9 +10,17 @@ import { SelectedCellInfo } from '../types';
  *
  * Note: if you are using the Finance plug-in, extra finance-related operations are available.
  *
- *  **Further AdapTable Help Resources**
+ * --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_src_api_cellsummaryapi_.cellsummaryapi.html) | [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
+ * **Further AdapTable Help Resources**
+ *
+ * [Cell Summary Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/)
+ *
+ * {@link CellSummaryApi|Cell Summary API}
+ *
+ * [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.mdd)
+ *
+ * --------------
  *
  *  *Cell Summary Operations*
  *
