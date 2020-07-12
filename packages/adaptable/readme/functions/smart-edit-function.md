@@ -63,7 +63,7 @@ Not at present but the Smart Edit Toolbar will soon contain a range of very adva
 
 **Can I use Smart Edit to perform a bulk edit?**
 
-No, Smart Edit only updates existing cell values. Use the [Bulk Update Function](./bulk-update-function.md) Function to replace an existing cell value with a new one entirely
+No, Smart Edit only updates existing cell values. Use the [Bulk Update](./bulk-update-function.md) Function to replace an existing cell value with a new one entirely
 
 ### Further Information
 
