@@ -18,7 +18,7 @@ import { SelectedCellInfo } from '../types';
  *
  * {@link CellSummaryApi|Cell Summary API}
  *
- * [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.mdd)
+ * [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
  *
  * --------------
  *
