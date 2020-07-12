@@ -18,6 +18,7 @@ import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportS
  *
  * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
  *
+ * {@link ExportOptions|Export Options}
  *
  */
 export interface ExportApi {

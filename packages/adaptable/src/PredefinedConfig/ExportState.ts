@@ -22,6 +22,8 @@ import { BaseSchedule } from './Common/Schedule';
  *
  * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
  *
+ * [Export Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_exportoptions_.exportoptions.html)
+ *
  * --------------
  *
  *  * **Export Predefined Config Example**
