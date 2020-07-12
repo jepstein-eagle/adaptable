@@ -145,6 +145,9 @@ export interface NamedFilter extends AdaptableObject {
   FilterPredicate?: string;
 }
 
+/**
+ * The predicate function provided by the User at design-time which is called each time a Named Filter is evaluated
+ */
 export interface NamedFilterPredicate extends BaseUserFunction {
   type: 'NamedFilterPredicate';
   name: string;
