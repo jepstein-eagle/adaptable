@@ -23,12 +23,12 @@ import { Expression } from './Common/Expression';
  *
  *  AdapTable offers 4 types of Filters:
  *
- *  | Filter Type                                   | Usage
+ *  | Type                                   | Usage
  *  | -----------                                   | -----------
- *  | {@link ColumnFilterState|Column Filters}      | Filter a single Column using either a list of Column Values or a Range
- *  | {@link UserFilterState|User Filters}          | Columm Filters which are saved and named and therefore able to be re-used in multiple Functions
- *  | {@link NamedFilterState|Named Filters}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
- *  | {@link SystemFilterState|System Filters}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
+ *  | {@link ColumnFilterState|Column}      | Filter a single Column using either a list of Column Values or a Range
+ *  | {@link UserFilterState|User}          | Columm Filters which are saved and named and can therefore be re-used in multiple Functions
+ *  | {@link NamedFilterState|Named}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
+ *  | {@link SystemFilterState|System}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
  *
  * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *
