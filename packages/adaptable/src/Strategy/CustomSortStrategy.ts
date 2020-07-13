@@ -44,6 +44,11 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
 
+      // dont show a menu item if there is a custom sort that uses a comparer function
+      if (customSort && customSort.CustomSortComparerFunction) {
+        return undefined;
+      }
+
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: customSort ? 'Edit' : 'New',
