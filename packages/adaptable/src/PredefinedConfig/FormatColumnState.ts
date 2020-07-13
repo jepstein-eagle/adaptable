@@ -89,7 +89,7 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
  *         },
  *       },
  *     },
- *     // Set a Display Format of $ with 'AUD' suffix and space for integer separator for OrderCost
+ *     // Set Display Format of $ with 'AUD' suffix and integer space separator for OrderCost
  *     {
  *       ColumnId: 'OrderCost',
  *       DisplayFormat: {

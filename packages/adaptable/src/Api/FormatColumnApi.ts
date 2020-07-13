@@ -11,9 +11,13 @@ import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColum
  * --------------
  *
  * ### Further Information
- * - [Format Column State](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)
+ *
+ * - {@link FormatColumnState|Format Column State}
+ *
  * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
+ *
  * - [Format Column Demo](https://demo.adaptableblotter.com/style/aggridformatcolumndemo/)
+ *
  * - [Format Column Video](https://youtu.be/tYTGQ1ufhbc)
  *
  * --------------

@@ -801,7 +801,7 @@ export class ExamplesHelper {
   public getGridOptionsTrade(rowData: any): GridOptions {
     return {
       defaultColDef: {
-        floatingFilter: true,
+        //  floatingFilter: true,
         //   valueGetter: (params: any) => {
         //      return 'hello';
         //   },
@@ -1218,7 +1218,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Date',
       field: 'tradeDate',
-      floatingFilter: false,
+      //  floatingFilter: false,
       editable: true,
       resizable: true,
 
@@ -1393,6 +1393,7 @@ export class ExamplesHelper {
       editable: false,
       filter: true,
       enableRowGroup: true,
+      floatingFilter: true,
       colId: 'country-stars',
       valueGetter: (params: any) => {
         return params.data && params.data.stars && params.data.country
@@ -1426,6 +1427,7 @@ export class ExamplesHelper {
       filter: true,
       hide: true,
       resizable: true,
+      floatingFilter: true,
       // cellClass: 'number-cell',
       type: 'abColDefNumber',
       enableValue: true,
@@ -1510,7 +1512,7 @@ export class ExamplesHelper {
           columnGroupShow: 'closed',
           filter: true,
           resizable: true,
-          floatingFilter: true,
+          //   floatingFilter: true,
           // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
