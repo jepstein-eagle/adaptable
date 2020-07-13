@@ -44,7 +44,7 @@ Action Column supports these Entitlement Rules:
 
 ## FAQ
 
-**Can we create Action Columns at Run-Time?**
+**Can we create / update / delete Action Columns at Run-Time?**
 
 No, they are a Design-Time only Function; they can be accessed at Run-Time but not created or edited.
 
@@ -52,7 +52,7 @@ No, they are a Design-Time only Function; they can be accessed at Run-Time but n
 
 This is because Predefined Config is stored as (stringified) JSON and so it cannot persist functions.  
 
-As a result the convention in AdapTable is for the function to be named in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
+As a result the convention in AdapTable is for the function name to be provided in Predefined Config but the actual implementation to be supplied in the [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 ### Further Information
 
