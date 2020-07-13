@@ -172,6 +172,9 @@ async function InitAdaptableDemo() {
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 
       //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
+
+      //  api.customSortApi.addCustomSort()
+
       console.log('here world');
       const gridOptions: GridOptions = api.gridApi.getadaptableOptions().vendorGrid as GridOptions;
       console.log(gridOptions);
