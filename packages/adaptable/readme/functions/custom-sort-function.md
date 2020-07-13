@@ -2,11 +2,13 @@
 
 The Custom Sort([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CustomSort`) Function enables columns to be given a different sort order to the default for their data type.
 
-This is useful when users need to order a column in an non-standard way (i.e. not in alphabetical, numerical, or date order). For example, if they want to sort a Rating column according to the rating (i.e. 'AAA', 'AA' etc), rather than alphabetically.
+This is useful when users need to order a column in an non-standard way (i.e. not in alphabetical, numerical, or date order). 
 
-> The default sort order for text columns is alphabetical order; for numerical columns it is high-low order; and for date columns it is newest-oldest order.
+For example, to sort a Rating column according to the rating (i.e. 'AAA', 'AA' etc) rather than alphabetically a Custom Sort would be used.
 
-When a custom sort order is used, AdapTable applies the custom order first. If the column has values that are not included in the custom sort order, they are sorted according to the default order for the column, for example, alphabetical order for text values.
+> The default sort order for text columns is alphabetical order; for numerical columns it is high-low order; and for date columns it is oldest-newest order.
+
+When a custom sort order is used, AdapTable applies the custom order first. If the column contains values that are not included in the custom sort definition, they are sorted according to the default order for the column, for example, alphabetical order for text values.
 
 ### Defining a Custom Sort
 The Custom Sort section of Predefined Config can accept 2 types of Custom Sort definitions:
@@ -26,7 +28,7 @@ Custom Sort includes the following UI Elements:
 
 - **Wizard** - A series of steps facilitating the creation and editing of a Custom Sort.
 
-- **Column Menu** - The `Create Custom Sort` Menu Item starts the Custom Sort wizard; if the column already has a Custom Sort it says `Edit GCustom Sort`.
+- **Column Menu** - The `Create Custom Sort` Menu Item starts the Custom Sort wizard; if the column already has a Custom Sort it says `Edit Custom Sort`.
 
 ## Entitlements
 
