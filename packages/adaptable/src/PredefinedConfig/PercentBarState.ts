@@ -6,7 +6,66 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * Percent Bars allow you to colour and fill cells in a column based on the cell value as a proportion of the column's maximum values.
  *
- * They can also include a `PercentBarRange` collection, which allow for different colours in the Percent Bar based upon which range the cell value lies.*
+ * They can also include a `PercentBarRange` collection, which allow for different colours in the Percent Bar based upon which range the cell value lies.
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Percent Bar Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/percent-bar-function.md)
+ *
+ * [Percent Bar Demo](https://demo.adaptabletools.com/style/aggridpercentbardemo)
+ *
+ * {@link PercentBarApi|Percent Bar API}
+ *
+ * --------------
+ *
+ * **Percent Bar Example**
+ *
+ * ```ts
+ *
+ * export default {
+ * PercentBar: {
+ *    PercentBars: [
+ *      {
+ *        ColumnId: 'InvoicedCost',
+ *        Ranges: [
+ *          { Min: 0, Max: 500, Color: '#ff0000' },
+ *          { Min: 500, Max: 1000, Color: '#ffa500' },
+ *          { Min: 1000, Max: 3000, Color: '#008000' },
+ *        ],
+ *        ShowValue: false,
+ *      },
+ *      {
+ *        BackColor: '#d3d3d3',
+ *        ColumnId: 'ItemCost',
+ *        DisplayPercentageValue: true,
+ *        DisplayRawValue: true,
+ *        Ranges: [{ Min: 0, Max: 200, Color: '#87cefa' }],
+ *        ShowValue: true,
+ *      },
+ *      {
+ *        BackColor: '#808080',
+ *        ColumnId: 'ItemCount',
+ *        DisplayRawValue: true,
+ *        Ranges: [{ Min: 0, Max: 21, Color: '#006400' }],
+ *        ShowToolTip: true,
+ *        ShowValue: false,
+ *      },
+ *    ],
+ *  },
+ * } as PredefinedConfig;
+ *
+ * ```
+ *
+ * In this example we have created 3 Percent Bars:
+ *
+ * - One on the 'InvoicedCost' Column - has 3 Ranges (0-500 Red, 500-1000 Orange, 1000-3000 Green)
+ *
+ * - One on the 'ItemCost' Column - has 1 Range, shows both the Cell Value and the equivalent Percent Value and has a back colour.
+ *
+ * - One on the 'ItemCount' Column - has 1 Range and shows the Cell Value as a tooltip.
+ *
  */
 export interface PercentBarState extends ConfigState {
   PercentBars?: PercentBar[];
@@ -71,41 +130,41 @@ export interface PercentBar extends AdaptableObject {
   /**
    * Deprecated property - no longer used
    *
-   * Has been rplaced with a `PercentBarRamge`
+   * Has been replaced with a `PercentBarRamge`
    */
   NegativeValue?: number;
   /**
    * Deprecated property - no longer used
    *
-   * Has been rplaced with a `PercentBarRamge`
+   * Has been replaced with a `PercentBarRamge`
    */
 
   PositiveValue?: number;
   /**
    * Deprecated property - no longer used
    *
-   * Has been rplaced with a `PercentBarRamge`
+   * Has been replaced with a `PercentBarRamge`
    */
 
   NegativeColor?: string;
   /**
    * Deprecated property - no longer used
    *
-   * Has been rplaced with a `PercentBarRamge`
+   * Has been replaced with a `PercentBarRamge`
    */
 
   PositiveColor?: string;
   /**
    * Deprecated property - no longer used
    *
-   * Has been rplaced with a `PercentBarRamge`
+   * Has been replaced with a `PercentBarRamge`
    */
 
   PositiveValueColumnId?: string;
   /**
    * Deprecated property - no longer used
    *
-   * Has been rplaced with a `PercentBarRamge`
+   * Has been replaced with a `PercentBarRamge`
    */
 
   NegativeValueColumnId?: string;

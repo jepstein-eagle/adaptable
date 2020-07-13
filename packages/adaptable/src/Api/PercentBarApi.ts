@@ -3,6 +3,20 @@ import { PercentBarState, PercentBar, PercentBarRange } from '../PredefinedConfi
 /**
  * Provides full and comprehensive run-time access to the Percent Bar function and associated Percent Bar state (from Predefined Config).
  *
+ * Percent Bars allow you to colour and fill cells in a column based on the cell value as a proportion of the column's maximum values.
+ *
+ * They can also include a `PercentBarRange` collection, which allow for different colours in the Percent Bar based upon which range the cell value lies.
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Percent Bar Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/percent-bar-function.md)
+ *
+ * [Percent Bar Demo](https://demo.adaptabletools.com/style/aggridpercentbardemo)
+ *
+ * {@link PercentBarState|Percent Bar State}
+ *
  */
 export interface PercentBarApi {
   /**
