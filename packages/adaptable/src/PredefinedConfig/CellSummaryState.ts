@@ -22,6 +22,56 @@ import { SelectedCellInfo } from '../types';
  *
  * --------------
  *
+ *  * **Cell Summary Example**
+ *
+ * ```ts
+ *
+ * export default {
+ *  CellSummary: {
+ *    CellSummaryOperationDefinitions: [
+ *      {
+ *        OperationName: 'Oldest',
+ *        OperationFunction: 'OldestOperationFunction',
+ *      },
+ *    ],
+ *    SummaryOperation: 'Min',
+ *  },
+ * } as PredefinedConfig;
+ *
+ *  const adaptableOptions: AdaptableOptions = {
+ *   ...
+ *    userFunctions: [
+ *      {
+ *        type: 'CellSummaryOperationFunction',
+ *        name: 'OldestOperationFunction',
+ *        handler(operationParam) {
+ *          let dateValues: Date[] = [];
+ *          operationParam.selectedCellInfo.Columns.filter(
+ *            c => c.DataType === 'Date'
+ *          ).forEach(dc => {
+ *            let gridCells = operationParam.selectedCellInfo.GridCells.filter(
+ *              gc => gc.columnId == dc.ColumnId
+ *            ).map(gc => gc.rawValue);
+ *            dateValues.push(...gridCells);
+ *          });
+ *          if (dateValues.length > 0) {
+ *            const sortedDates = dateValues.sort((a, b) => {
+ *              return new Date(a).getTime() - new Date(b).getTime();
+ *            });
+ *            return new Date(sortedDates[0]).toLocaleDateString();
+ *          }
+ *        },
+ *      },
+ *    ],
+ *    ...
+ *  };
+ *
+ *  In this example we have created a Custom Cell Summary definition called 'Oldest'.
+ *
+ *  We reference it in the Cell Summary section of Predefined Config and provide the actual function implementation in the `userFunctions` section of AdaptableOptions.
+ *
+ * --------------
+ *
  *  *Cell Summary Operations*
  *
  *  | Operation | Description                                      |
