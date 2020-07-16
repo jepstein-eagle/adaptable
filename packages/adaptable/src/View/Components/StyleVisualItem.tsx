@@ -10,6 +10,9 @@ export interface StyleVisualItemProps extends React.ClassAttributes<StyleVisualI
 
 export class StyleVisualItem extends React.Component<StyleVisualItemProps, {}> {
   render(): any {
+    if (!this.props.Style) {
+      return null;
+    }
     let styleVisualisation: any;
     if (this.props.Style.ClassName) {
       styleVisualisation = <div>{'CSS Class: ' + this.props.Style.ClassName}</div>;

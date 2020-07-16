@@ -20,6 +20,8 @@ import { MathOperation } from './Common/Enums';
  *
  * --------------
  *
+ *  **Smart Edit Example**
+ *
  * ```ts
  * export default {
  * SmartEdit: {

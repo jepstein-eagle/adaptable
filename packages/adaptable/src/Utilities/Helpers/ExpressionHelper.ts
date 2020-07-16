@@ -25,6 +25,7 @@ import Helper from './Helper';
 import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
 import { AdaptableApi } from '../../Api/AdaptableApi';
+import { range } from 'lodash';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -890,14 +891,18 @@ export function AddMissingProperties(expression: Expression): void {
 }
 
 function getExistingItem(adaptable: IAdaptable, rangeEvaluation: IRangeEvaluation): any {
+  console.log(rangeEvaluation);
   let displayValuePairs: IRawValueDisplayValuePair[] = adaptable.getColumnValueDisplayValuePairDistinctList(
     rangeEvaluation.columnId,
     DistinctCriteriaPairValue.DisplayValue,
     false
   );
+  console.log(displayValuePairs);
   let existingItem = displayValuePairs.find(
     dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue
   );
+  console.log('found one');
+  console.log(existingItem);
   return existingItem;
 }
 

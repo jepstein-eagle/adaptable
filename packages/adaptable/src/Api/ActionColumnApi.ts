@@ -5,6 +5,8 @@ import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColum
  *
  * The Action Column Function enables the creation of a special {@link ActionColumn|Action Column} that contain buttons together with a function that is called when the button is clicked by the user.
  *
+ * Because Action Columns are configured at Design-Time and cannot be created / updated / deleted at run-time, the API for Action Column is pretty sparse.
+ *
  * --------------
  *
  *  ### Further AdapTable Help Resources

@@ -21,13 +21,11 @@ import { Expression } from './Common/Expression';
  *
  * --------------
  *
- *
- *  AdapTable offers 4 types of Filters:
+ *  As well as User Filters, AdapTable offers 3 other types of Filters:
  *
  *  | Filter Type                                   | Usage
  *  | -----------                                   | -----------
  *  | {@link ColumnFilterState|Column}      | Filter a single Column using either a list of Column Values or a Range
- *  | {@link UserFilterState|User}          | Columm Filters which are saved & named; can therefore be re-used in multiple Functions
  *  | {@link NamedFilterState|Named}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
  *  | {@link SystemFilterState|System}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
  *
