@@ -1,3 +1,7 @@
+## 7.0.0-canary.23
+
+small fixes post testing
+
 ## 7.0.0-canary.22
 
 another ipuspull fix - this time for autologin
