@@ -1871,6 +1871,7 @@ export class Adaptable implements IAdaptable {
       width: calculatedColumn.CalculatedColumnSettings.Width,
       enableValue: calculatedColumn.CalculatedColumnSettings.Aggregatable,
       filter: calculatedColumn.CalculatedColumnSettings.Filterable,
+      floatingFilter: calculatedColumn.CalculatedColumnSettings.Filterable,
       resizable: calculatedColumn.CalculatedColumnSettings.Resizable,
       enableRowGroup: calculatedColumn.CalculatedColumnSettings.Groupable,
       sortable: calculatedColumn.CalculatedColumnSettings.Sortable,
