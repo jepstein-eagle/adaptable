@@ -46,7 +46,6 @@ const defaultOptions: Glue42PluginOptions = {
   gatewayURL: '',
   glue: undefined,
   glue4Office: undefined,
-  throttleTime: 2000,
 };
 
 class Glue42Plugin extends AdaptablePlugin {

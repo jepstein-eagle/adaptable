@@ -15,7 +15,9 @@ import { Glue42State, Glue42Report, Glue42Schedule } from '../PredefinedConfig/G
  *
  *  **Further AdapTable Help Resources**
  *
- * [Glue42 Demo](https://demo.adaptabletools.com/partners/glue42demo/)
+ * - [Glue42 Demo](https://demo.adaptabletools.com/partners/glue42demo/)
+ *
+ * - [Glue42 Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md)
  *
  * --------------
  *
@@ -57,11 +59,6 @@ export interface Glue42Api {
    * @param loginErrorMessage errorMessage to display
    */
   setGlue42LoginErrorMessage(loginErrorMessage: string): void;
-
-  /**
-   * Retrieves the Throttle time set in Glue42 PluginOptions
-   */
-  getGlue42ThrottleTime(): number | undefined;
 
   /**
    * Retrieves the current Live Report
