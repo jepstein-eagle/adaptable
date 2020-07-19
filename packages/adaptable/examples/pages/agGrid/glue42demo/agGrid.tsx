@@ -18,6 +18,7 @@ import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 import { TickingDataHelper } from '../../TickingDataHelper';
 import glue42 from '../../../../../plugins/glue42';
+
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tradeCount: number = 30;
