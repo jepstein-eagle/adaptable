@@ -1,4 +1,5 @@
 import { ActionColumnState, ActionColumn } from '../PredefinedConfig/ActionColumnState';
+import { ActionColumnClickedInfo } from './Events/ActionColumnClicked';
 
 /**
  * Provides run-time access to the Action Column function and associated {@link ActionColumnState|Action Column State}.
@@ -30,4 +31,6 @@ export interface ActionColumnApi {
    * Returns all the `ActionColumn` objects in the Action Column section of Adaptable State
    */
   getAllActionColumn(): ActionColumn[];
+
+  fireActionColumnButtonClickedEvent(actionColumnClickedInfo: ActionColumnClickedInfo): void;
 }

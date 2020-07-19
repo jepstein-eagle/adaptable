@@ -1723,6 +1723,18 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
         // Note: not done custom sort as not sure how!
         // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
+          case ActionColumnRedux.ACTION_COLUMN_APPLY: {
+            const actionTyped = action as ActionColumnRedux.ActionColumnApplyAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.ActionColumnStrategyId,
+              action: action.type,
+              info: actionTyped.actionColumnClickedInfo,
+              data: actionTyped.actionColumnClickedInfo.actionColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
           case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
             const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
             let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(
@@ -3067,6 +3079,7 @@ export function getFunctionAppliedReduxActions(): string[] {
 
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout
   return [
+    ActionColumnRedux.ACTION_COLUMN_APPLY,
     AdvancedSearchRedux.ADVANCED_SEARCH_SELECT,
     CalendarRedux.CALENDAR_SELECT,
     ChartRedux.CHART_DEFINITION_SELECT,

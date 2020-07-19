@@ -39,7 +39,7 @@ export enum StateObjectChangeType {
 export interface FunctionAppliedDetails {
   name: AdaptableFunctionName;
   action: string;
-  info?: string;
+  info?: any;
   data?: any;
 }
 
