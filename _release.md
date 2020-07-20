@@ -1,3 +1,7 @@
+## 7.0.0-canary.25
+
+fixing build
+
 ## 7.0.0-canary.24
 
 fixing Glue42
