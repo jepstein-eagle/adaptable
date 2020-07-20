@@ -88,7 +88,7 @@ class Glue42ToolbarControlComponent extends React.Component<
   };
 
   getGlue42Api() {
-    return this.props.Api.pluginsApi.getPluginApi('glue42api');
+    return this.props.Api.pluginsApi.getPluginApi('glue42');
   }
 
   render(): any {
@@ -182,7 +182,7 @@ class Glue42ToolbarControlComponent extends React.Component<
         showConfigureButton={false} // later : isGlue42Running
         onConfigure={() => this.props.onConfigure()}
       >
-        {content}
+        {content || 'no glue42'}
       </PanelDashboard>
     );
   }

@@ -33,7 +33,7 @@ interface Glue42LoginPopupInternalState {
 
 const Glue42LoginComponent = (props: Glue42LoginPopupProps) => {
   const adaptable = useAdaptable();
-  const options: Glue42PluginOptions = adaptable!.getPlugin('ipushpull')!.options;
+  const options: Glue42PluginOptions = adaptable!.getPlugin('glue42')!.options;
   const [state, setState] = React.useState<Glue42LoginPopupInternalState>({
     Login: options.username || '',
     Password: options.password || '',
