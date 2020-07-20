@@ -11,7 +11,7 @@ import {
   Report,
   AdaptableColumn,
 } from '@adaptabletools/adaptable/types';
-import _ from '@adaptabletools/adaptable/node_modules/@types/lodash';
+import * as _ from 'lodash';
 import {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,

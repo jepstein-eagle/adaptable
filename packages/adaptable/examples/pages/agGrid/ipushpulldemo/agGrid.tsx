@@ -22,9 +22,9 @@ import {
 import { IPushPullReport } from '../../../../src/PredefinedConfig/IPushPullState';
 import ipp from '../../../../../plugins/ipushpull/src';
 
-import { IIPPConfig } from 'ipushpull-js/dist/Config';
+// import { IIPPConfig } from 'ipushpull-js/dist/Config';
 
-const pushpullConfig: IIPPConfig = {
+const pushpullConfig = {
   api_url: 'https://www.ipushpull.com/api/1.0',
   ws_url: 'https://www.ipushpull.com',
   web_url: 'https://www.ipushpull.com',

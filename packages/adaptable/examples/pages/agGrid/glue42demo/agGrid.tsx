@@ -17,7 +17,7 @@ import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
 import glue42Desktop from '@glue42/desktop';
 import glue42office from '@glue42/office';
 import { TickingDataHelper } from '../../TickingDataHelper';
-import glue42 from '../../../../../plugins/glue42';
+import glue42 from '../../../../../plugins/glue42/src';
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
