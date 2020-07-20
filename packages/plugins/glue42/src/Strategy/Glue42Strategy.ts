@@ -276,9 +276,11 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     if (!glue42Api) {
       return 0;
     }
-    if (glue42Api.isGlue42Running()) {
-      iGlue42ThrottleTime = glue42Api.getGlue42ThrottleTime();
-    }
-    return iGlue42ThrottleTime ? iGlue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+    return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+
+    //  if (glue42Api.isGlue42Running()) {
+    //    iGlue42ThrottleTime = glue42Api.getGlue42ThrottleTime();
+    //  }
+    //  return iGlue42ThrottleTime ? iGlue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
 }
