@@ -4,6 +4,7 @@ import { IFlashingCellsStrategy } from '../../Strategy/Interface/IFlashingCellsS
 import * as StyleConstants from '../../Utilities/Constants/StyleConstants';
 import { ChangeDirection } from '../../Utilities/Services/Interface/IDataService';
 import { FlashingCell } from '../../PredefinedConfig/FlashingCellState';
+import { CellClassParams } from '@ag-grid-community/all-modules';
 
 export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
   implements IFlashingCellsStrategy {
@@ -25,7 +26,12 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
         let duration: 250 | 500 | 750 | 1000 = fc.FlashingCellDuration
           ? fc.FlashingCellDuration
           : this.adaptable.api.flashingCellApi.getFlashingCellState().DefaultDuration;
-        cellClassRules[StyleConstants.FLASH_CELL_UP_STYLE + '-' + fc.Uuid] = function(params: any) {
+        cellClassRules[StyleConstants.FLASH_CELL_UP_STYLE + '-' + fc.Uuid] = function(
+          params: CellClassParams
+        ) {
+          const newValue: number = Number(params.value);
+          // should we check if its not a number?
+
           if (theadaptable.api.internalApi.isGridInPivotMode()) {
             return false;
           }
@@ -36,13 +42,13 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
             return true;
           }
 
-          let oldValue = theadaptable.DataService.GetPreviousColumnValue(
+          let oldValue: number = theadaptable.DataService.GetPreviousColumnValue(
             col.ColumnId,
             primaryKey,
-            params.value,
+            newValue,
             ChangeDirection.Up
           );
-          if (oldValue && params.value > oldValue) {
+          if (oldValue && newValue > oldValue) {
             if (currentFlashTimer) {
               window.clearTimeout(currentFlashTimer);
             }
@@ -58,11 +64,12 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
         };
 
         cellClassRules[StyleConstants.FLASH_CELL_DOWN_STYLE + '-' + fc.Uuid] = function(
-          params: any
+          params: CellClassParams
         ) {
           if (theadaptable.api.internalApi.isGridInPivotMode()) {
             return false;
           }
+          const newValue: number = Number(params.value);
           let primaryKey = theadaptable.getPrimaryKeyValueFromRowNode(params.node);
           let key = primaryKey + col.ColumnId + 'down';
           let currentFlashTimer = currentFlashing.get(key);
@@ -72,10 +79,10 @@ export class FlashingCellStrategyagGrid extends FlashingCellsStrategy
           let oldValue = theadaptable.DataService.GetPreviousColumnValue(
             col.ColumnId,
             primaryKey,
-            params.value,
+            newValue,
             ChangeDirection.Down
           );
-          if (oldValue && params.value < oldValue) {
+          if (oldValue && newValue < oldValue) {
             if (currentFlashTimer) {
               window.clearTimeout(currentFlashTimer);
             }

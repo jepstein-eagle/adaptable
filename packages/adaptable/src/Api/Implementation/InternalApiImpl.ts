@@ -105,10 +105,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.GridSetSelectedRows(selectedRowInfo));
   }
 
-  public showQuickFilterBar(): void {
-    this.dispatchAction(GridRedux.QuickFilterBarShow());
-  }
-
   public setPivotModeOn(): void {
     this.dispatchAction(GridRedux.SetPivotModeOn());
   }

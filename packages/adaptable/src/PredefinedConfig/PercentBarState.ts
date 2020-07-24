@@ -100,7 +100,7 @@ export interface PercentBar extends AdaptableObject {
   /**
    * Whether to display a tooltip when the mouse hovers over a cell in the Percent Bar
    *
-   *  Default Value: true
+   *  Default Value: false
    */
   ShowToolTip?: boolean;
 

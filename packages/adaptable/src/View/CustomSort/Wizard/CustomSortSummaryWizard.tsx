@@ -17,7 +17,6 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     super(props);
   }
   render(): any {
-    console.log(this.props.Data.SortedValues);
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',

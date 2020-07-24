@@ -26,7 +26,7 @@ var api: AdaptableApi;
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeCount: number = 5;
+  const tradeCount: number = 2;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -166,8 +166,10 @@ async function InitAdaptableDemo() {
         Columns: ['bid', 'currency', 'counterparty'],
         GroupedColumns: ['country'],
       };
-      api.layoutApi.createAndSetLayout(newLayout);
+      // api.layoutApi.createAndSetLayout(newLayout);
+      api.gridApi.showQuickFilterBar();
     } else if (toolbarButton.Name == 'btnCopyLayout') {
+      api.gridApi.hideQuickFilterBar();
       //   let currentLayout = api.layoutApi.getCurrentLayout();
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 

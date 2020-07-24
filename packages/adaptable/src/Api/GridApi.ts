@@ -210,6 +210,9 @@ export interface GridApi {
   isGridPivotable(): boolean;
   isGridGroupable(): boolean;
 
+  showQuickFilterBar(): void;
+  hideQuickFilterBar(): void;
+
   /**
    * Destroys the current AdapTable instance.
    *

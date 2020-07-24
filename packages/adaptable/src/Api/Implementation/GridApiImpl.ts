@@ -360,6 +360,14 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return this.adaptable.isGroupable();
   }
 
+  public showQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarShow());
+  }
+
+  public hideQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarHide());
+  }
+
   private LogMissingColumnWarning(columnId: string): void {
     if (
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&

@@ -3924,7 +3924,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     }
 
     if (this.isQuickFilterActive()) {
-      this.api.internalApi.showQuickFilterBar();
+      this.api.gridApi.showQuickFilterBar();
     }
 
     const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();
