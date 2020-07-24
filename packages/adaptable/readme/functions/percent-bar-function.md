@@ -69,3 +69,5 @@ In version 7 of AdapTable we introduced Ranges.  These allow you to set multiple
 - [Percent Bar Api](https://api.adaptabletools.com/interfaces/_src_api_percentbarapi_.percentbarapi.html)
 
 - [Percent Bar Demo](https://demo.adaptabletools.com/style/aggridpercentbardemo)
+
+- [Percent Bar Vidoo](https://youtu.be/UfjkNgN3bH4)
