@@ -2,8 +2,6 @@
 
 This guide explains how best to manage the Column and Context menus in AdapTable.
 
-
-
 AdapTable provides 2 menus each of which contains menu entries appropriate to the current column or cell:
 
 - **Column Header Menu**: accessed by clicking on the image in the right corner of a column header
