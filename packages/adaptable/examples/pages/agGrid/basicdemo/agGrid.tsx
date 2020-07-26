@@ -26,7 +26,7 @@ var api: AdaptableApi;
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeCount: number = 2;
+  const tradeCount: number = 20;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -51,6 +51,20 @@ async function InitAdaptableDemo() {
       useVendorFilterFormStyle: true,
       useAdaptableFilterForm: true,
     },
+    userFunctions: [
+      {
+        type: 'CustomReportFunction',
+        name: 'getDummyData',
+        handler(reportName: string) {
+          let data = [
+            ['Eliana', 5],
+            ['Naftali', 9],
+            ['Sigal', 10],
+          ];
+          return data;
+        },
+      },
+    ],
     predefinedConfig: {
       Theme: {
         Revision: Date.now(),
@@ -151,6 +165,18 @@ async function InitAdaptableDemo() {
           },
         ],
       },
+      Export: {
+        Revision: 4,
+        Reports: [
+          {
+            ReportColumnScope: 'BespokeColumns',
+            ReportRowScope: 'CustomRows',
+            ColumnIds: ['notional', 'currency'],
+            Name: 'My Custom Report',
+            CustomReportFunction: 'getDummyData',
+          },
+        ],
+      },
     },
   };
 
@@ -170,6 +196,16 @@ async function InitAdaptableDemo() {
       api.gridApi.showQuickFilterBar();
     } else if (toolbarButton.Name == 'btnCopyLayout') {
       api.gridApi.hideQuickFilterBar();
+
+      let cols: string[] = ['Person', 'How much loves Dad'];
+
+      let data = [
+        ['Eliana', 5],
+        ['Naftali', 9],
+        ['Sigal', 10],
+      ];
+
+      api.exportApi.exportDataToExcel(cols, data, 'Test Report');
       //   let currentLayout = api.layoutApi.getCurrentLayout();
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 

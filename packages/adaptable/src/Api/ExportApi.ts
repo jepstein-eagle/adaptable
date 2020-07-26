@@ -69,6 +69,8 @@ export interface ExportApi {
    */
   canExportToExcel(): boolean;
 
+  exportDataToExcel(columnIds: string[], data: any[], fileName: string): void;
+
   /**
    * Opens the Export popup screen
    */

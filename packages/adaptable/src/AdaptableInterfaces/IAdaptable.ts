@@ -259,7 +259,7 @@ export interface IAdaptable {
 
   // Reports
   canExportToExcel(): boolean;
-  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]): void;
+  exportToExcel(columnNames: string[], data: any[], fileName: string): void;
   exportVisibleToClipboard(report: Report): void;
   exportVisibleToExcel(report: Report): void;
   exportVisibleToCsv(report: Report): void;

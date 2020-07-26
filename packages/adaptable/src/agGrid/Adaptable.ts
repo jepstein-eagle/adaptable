@@ -3976,14 +3976,13 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     return this.agGridHelper.isModulePresent('excel-export');
   }
 
-  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
-    const columnIds = columns.map(col => col.ColumnId);
-    const columnDefs: ColDef[] = columns.map(col => ({
-      field: col.ColumnId,
-      headerName: col.FriendlyName,
+  exportToExcel(columnNames: string[], data: any[], fileName: string) {
+    const columnDefs: ColDef[] = columnNames.map(columnName => ({
+      field: columnName,
+      headerName: columnName,
     }));
 
-    const rowData: any[] = data.map(row => _.zipObject(columnIds, row));
+    const rowData: any[] = data.map(row => _.zipObject(columnNames, row));
 
     const gridOptions: GridOptions = {
       columnDefs,
@@ -3994,7 +3993,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     gridOptions.api.exportDataAsExcel({
       sheetName: 'Sheet 1',
-      fileName: report.Name,
+      fileName: fileName,
     });
 
     grid.destroy();
