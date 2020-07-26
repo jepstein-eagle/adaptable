@@ -28,6 +28,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
 - [Team Sharing Guide](./guides/adaptable-team-sharing-guide.md)
 - [Server Functionality Guide](./guides/adaptable-server-functionality-guide.md)
+- [Menus Guide](./guides/adaptable-menus-guide.md)
 - [ag-Grid Guide](./guides/adaptable-aggrid-guide.md)
 
 ## FAQs

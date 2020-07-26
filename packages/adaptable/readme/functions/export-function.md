@@ -15,9 +15,8 @@ Each report essentially contains 2 elements:
 
 You can specify for each report / column combination whether to export the **DisplayValue** or **RawValue** of the column's cell values.
 
-> You can schedule your exports to run at at time of your choosing or export manually whenever you want, e.g. you can create an 'End of Day' Report to run every weekeday at 17:00.
 
-#### System Reports
+### System Reports
 
 AdapTable ships with some predefined reports designed for frequently used exports. These include:
 
@@ -39,7 +38,10 @@ and also - depending on whether the appropriate plugin is loaded:
 
 - ipushpull
 - OpenFin
-- Glue42
+
+### Schedules
+
+You can schedule your exports to run at at time of your choosing or export manually whenever you want, e.g. you can create an 'End of Day' Report to run every weekeday at 17:00.
 
 ## UI Elements
 
@@ -83,7 +85,11 @@ No, reports like all other Adaptable Objects are unlimited.
 
 **Can I export the underlying raw value in the column and not the displayed / formatted one?**
 
-Yes, the `exportColumnRawValue` property in Export Options allows you to choose for each report / column combination whether to export the Display Value (the default) or the Raw Value.
+Yes, the `exportColumnRawValue` property in [Export Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_exportoptions_.exportoptions.html#exportcolumnrawvalue) allows you to choose for each report / column combination whether to export the Display Value (the default) or the Raw Value.
+
+**Why can I not see the *Excel* destination?**
+
+If you are using ag-Grid then you need to be using either ag-Grid Enterprise or have the 'Excel' module loaded for this option to be available.
 
 ### Further Information
 
