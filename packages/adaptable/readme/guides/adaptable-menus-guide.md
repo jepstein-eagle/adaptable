@@ -37,8 +37,8 @@ The full list (as of July 2020) is:
 | Edit Calculated Column       | [Calculated Column](../functions/calculated-column-function.md) | Calculated Columns    |
 | Create Cell Validation Rule  | [Cell Validation](../functions/cell-validation-function.md)     | All                   |
 | Show Column Chooser          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
-| Hide Column          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
-| Select Column          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
+| Hide Column                  | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
+| Select Column                | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
 | Show / Hide Quick Filter Bar | [Column Filter](../functions/column-filter-function.md)         | All                   |
 | Clear Column Filter          | [Column Filter](../functions/column-filter-function.md)         | Currently Filtered    |
 | Column Info                  | [Column Info](../functions/column-info-function.md)             | All                   |
@@ -57,7 +57,7 @@ The full list (as of July 2020) is:
 | Clear Updated Rows           | [Updated Row](../functions/updated-row-function.md)             | All (if updated rows) |
 | Create User Filter           | [User Filer](../functions/user-filter-function.md)              | All                   |
 
-If running the Chart Plugin the following Column Menu Entries are also available:
+If running the [Chart Plugin](../../../plugins/charts/README.md) the following Column Menu Entries are also available:
 
 | Menu Entry            | AdaptableFunction                                                   | Columns Displayed |
 | --------------------- | ------------------------------------------------------------------- | ----------------- |
@@ -118,19 +118,19 @@ The full list (as of July 2020) is:
 | Filter on Cell Value(s) | [Column Filter](../functions/column-filter-function.md)     | Always                                   |
 | Show Column Info        | [Column Info](../functions/column-info-function.md)         | Single column selected                   |
 | Export Selected Cells   | [Export](../functions/export-function.md)                   | Any cells selected                       |
-| Edit Gradient Column    | [Gradient Column](../functions/gradient-column-function.md) | Single Gradient Column selected         |
+| Edit Gradient Column    | [Gradient Column](../functions/gradient-column-function.md) | Single Gradient Column selected          |
 | Show Grid Info          | [Grid Info](../functions/grid-info-function.md)             | Always                                   |
 | Edit Percent Bar        | [Percent Bar](../functions/percent-bar-function.md)         | Single Percent Bar Column selected       |
 | Apply Smart Edit        | [Smart Edit](../functions/smart-edit-function.md)           | Single, editable numeric column selected |
 | Show System Status      | [System Status](../functions/system-status-function.md)     | Always                                   |
 | Clear Updated Rows      | [Updated Row](../functions/updated-row-function.md)         | Any live Updated Rows                    |
 
-If running the Chart Plugin the following Context Menu Entries are also available:
+If running the [Chart Plugin](../../../plugins/charts/README.md) the following Context Menu Entries are also available:
 
-| Menu Entry            | AdaptableFunction                                                   | Columns Displayed |
-| --------------------- | ------------------------------------------------------------------- | ----------------- |
-| View as Pie Chart     | [Pie Chart](../functions/charts/piechart-function.md)               | All               |
-| View as Sparkline     | [Sparkline](../functions/charts/sparkline-function.md)              | All               |
+| Menu Entry            | AdaptableFunction                                                   | Columns Displayed                |
+| --------------------- | ------------------------------------------------------------------- | -------------------------------- |
+| View as Pie Chart     | [Pie Chart](../functions/charts/piechart-function.md)               | All                              |
+| View as Sparkline     | [Sparkline](../functions/charts/sparkline-function.md)              | All                              |
 | Edit Sparkline Column | [Sparkline Coumn](../functions/charts/sparkline-column-function.md) | Single Sparkline Column selected |
 
 #### Hiding System Context Menu Entries
@@ -167,6 +167,12 @@ All 3 of the AdapTable Menus obey [Entitlement](adaptable-entitlements-guide.md)
 
 This means that if an AdaptableFunction has an Entitlement of `Hidden` it wont appear in any of the menus.
 
+## Demos
+
+- [Column Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcolumnmenudemo)
+
+- [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo)
+
 ## More Information
 
 - [User Interface State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
@@ -176,13 +182,6 @@ This means that if an AdaptableFunction has an Entitlement of `Hidden` it wont a
 - [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html)
 
 - [User Interface Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html)
-
-
-## Demos
-
-- [Column Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcolumnmenudemo)
-
-- [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo)
 
 ## Help
 
