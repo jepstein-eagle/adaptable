@@ -61,6 +61,8 @@ export class ReportService implements IReportService {
         return this.adaptable.api.gridApi
           .getFriendlyNamesFromColumnIds(report.ColumnIds)
           .join(', ');
+      case ReportColumnScope.CustomColumns:
+        return '[Custom Columns]';
     }
   }
 
@@ -125,8 +127,11 @@ export class ReportService implements IReportService {
         reportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
         break;
       case ReportColumnScope.CustomColumns:
-        // this assumes the custom columns exist already (so we dont really need them)
-        reportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
+        // Need to turn these into Adaptable Columns
+        // Bit overkill but it allows us then to keep things neater for other report types (and this is rare)
+        reportColumns = report.ColumnIds.map(c => {
+          return AdaptableHelper.createAdaptableColumnFromColumnId(c);
+        });
         break;
     }
     return reportColumns;

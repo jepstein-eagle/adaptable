@@ -166,12 +166,12 @@ async function InitAdaptableDemo() {
         ],
       },
       Export: {
-        Revision: 4,
+        Revision: 5,
         Reports: [
           {
-            ReportColumnScope: 'BespokeColumns',
+            ReportColumnScope: 'CustomColumns',
             ReportRowScope: 'CustomRows',
-            ColumnIds: ['notional', 'currency'],
+            ColumnIds: ['Football', 'Testing'],
             Name: 'My Custom Report',
             CustomReportFunction: 'getDummyData',
           },
