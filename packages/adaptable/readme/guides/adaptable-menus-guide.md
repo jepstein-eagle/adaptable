@@ -30,13 +30,15 @@ AdapTable, by default, includes a number of entries in the Column Menu.
 
 Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont wish to appear).
 
-The full list (as of July 2000) is:
+The full list (as of July 2020) is:
 
 | Menu Entry                   | AdaptableFunction                                               | Columns Displayed     |
 | ---------------------------- | --------------------------------------------------------------- | --------------------- |
 | Edit Calculated Column       | [Calculated Column](../functions/calculated-column-function.md) | Calculated Columns    |
 | Create Cell Validation Rule  | [Cell Validation](../functions/cell-validation-function.md)     | All                   |
 | Show Column Chooser          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
+| Hide Column          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
+| Select Column          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
 | Show / Hide Quick Filter Bar | [Column Filter](../functions/column-filter-function.md)         | All                   |
 | Clear Column Filter          | [Column Filter](../functions/column-filter-function.md)         | Currently Filtered    |
 | Column Info                  | [Column Info](../functions/column-info-function.md)             | All                   |
@@ -105,7 +107,7 @@ AdapTable, by default, includes a number of entries in the Context Menu.
 
 Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont want to appear).
 
-These include:
+The full list (as of July 2020) is:
 
 | Menu Entry              | AdaptableFunction                                           | When Displayed                           |
 | ----------------------- | ----------------------------------------------------------- | ---------------------------------------- |
