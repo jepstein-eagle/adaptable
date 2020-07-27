@@ -1,3 +1,7 @@
+## 7.0.0-canary.26
+
+Custom Excel reports
+
 ## 7.0.0-canary.25
 
 fixing build
