@@ -6,6 +6,7 @@ import { IColumnChooserStrategy } from './Interface/IColumnChooserStrategy';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
+import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
   constructor(adaptable: IAdaptable) {
@@ -29,6 +30,16 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
           'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
           ScreenPopups.ColumnChooserPopup,
           StrategyConstants.ColumnChooserGlyph
+        ),
+        this.createColumnMenuItemReduxAction(
+          'Hide Column',
+          'hide-column',
+          GridRedux.GridHideColumn(column.ColumnId)
+        ),
+        this.createColumnMenuItemReduxAction(
+          'Select Column',
+          'tab-unselected',
+          GridRedux.GridSelectColumn(column.ColumnId)
         ),
       ];
     }
