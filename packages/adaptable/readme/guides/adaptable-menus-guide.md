@@ -1,16 +1,18 @@
 # AdapTable Menus Guide
 
-This guide explains how best to manage menus in AdapTable.
+This guide explains how best to manage, customise and augment the menus in AdapTable.
 
-AdapTable provides 3 menus - Function, Column Header and Context - each of which performs a different task.
+AdapTable provides 3 menus: - **Function**, **Column** and **Context**. 
+
+Each menu performs a different task and has different entries and customisation options.
 
 ## AdaptableFunction Menu
 
-The Function menu appears in left corner of the Dashboard (with a 'house' icon).
+The Function menu appears in the left corner of the Dashboard (with a 'house' icon).
 
-It contains a list of all the AdapTable Functions to which the current user is entitled.  
+It contains a list of all the AdapTable Functions to which the current user is [entitled](adaptable-entitlements-guide.md).  
 
-All entries open a popup window allowing the user to access the function.
+Each menu entry opens a popup window specific to that function.
 
 > Unlike the Column and Context menus, the entries in the Function menu cannot be edited by developers.
 
@@ -18,17 +20,17 @@ All entries open a popup window allowing the user to access the function.
 
 The Column Header Menu is accessed by clicking the 3 horizontal lines in the Column Header.  
 
-> If you want to make the 3 vertical lines that signify a Column Menu to be always visible in the Column Header set `suppressMenuHide` to true when setting GridOptions.
+> To make the 3 horizontal lines **always visible** in the Column Header set `suppressMenuHide` to true in GridOptions.
 
-It contains a mix of menu entries applicable either to the current Column or to the Grid as a whole.
+The menu contains a mix of entries applicable either to the current Column or to the Grid as a whole.
 
 ### System Column Menu Entries
 
 AdapTable, by default, includes a number of entries in the Column Menu.  
 
-Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont want to appear).
+Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont wish to appear).
 
-These include:
+The full list (as of July 2000) is:
 
 | Menu Entry                   | AdaptableFunction                                               | Columns Displayed     |
 | ---------------------------- | --------------------------------------------------------------- | --------------------- |
@@ -83,6 +85,8 @@ It might not always make sense for a User Column Menu entry to appear (e.g. it m
 
 For this reason, AdapTable provides a function enabling devs to 'hide' Column Menu entries based on the current context.
 
+This is done in a similar 2 steps:
+
 1. Provide a custom, named [UserMenuItemShowPredicate](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.usermenuitemshowpredicate.html) implementation in [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
 2. Reference the predicate by name in the [User Interface](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html) section of Predefined Config.
@@ -91,13 +95,13 @@ For this reason, AdapTable provides a function enabling devs to 'hide' Column Me
 
 The Context Menu is accessed by right-clicking any cell in the grid.
 
-> If you are using a trackpad you might not be able to access the ag-Grid context menu (which AdapTable uses when ag-Grid is the vendor grid); if that is the case then set allowContextMenuWithControlKey to true in gridOptions.
+> If you are using a trackpad you might not be able to access the ag-Grid context menu (which AdapTable uses when ag-Grid is the vendor grid); if that is the case then set `allowContextMenuWithControlKey` to true in GridOptions.
 
 ### System Context Menu Entries
 
 AdapTable, by default, includes a number of entries in the Context Menu.  
 
-> These entries will vary depending on which column the click occurs, which other cells (if any) are selected and from which column(s).
+> These entries will vary depending on which column the click occurs, which other cells (if any) are selected and in which column(s).
 
 Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont want to appear).
 
@@ -112,9 +116,9 @@ These include:
 | Filter on Cell Value(s) | [Column Filter](../functions/column-filter-function.md)     | Always                                   |
 | Show Column Info        | [Column Info](../functions/column-info-function.md)         | Single column selected                   |
 | Export Selected Cells   | [Export](../functions/export-function.md)                   | Any cells selected                       |
-| Edit Gradient Column    | [Gradient Column](../functions/gradient-column-function.md) | Single, Gradient column selected         |
+| Edit Gradient Column    | [Gradient Column](../functions/gradient-column-function.md) | Single Gradient Column selected         |
 | Show Grid Info          | [Grid Info](../functions/grid-info-function.md)             | Always                                   |
-| Edit Percent Bar        | [Percent Bar](../functions/percent-bar-function.md)         | Single Percent Bar column selected       |
+| Edit Percent Bar        | [Percent Bar](../functions/percent-bar-function.md)         | Single Percent Bar Column selected       |
 | Apply Smart Edit        | [Smart Edit](../functions/smart-edit-function.md)           | Single, editable numeric column selected |
 | Show System Status      | [System Status](../functions/system-status-function.md)     | Always                                   |
 | Clear Updated Rows      | [Updated Row](../functions/updated-row-function.md)         | Any live Updated Rows                    |
@@ -125,7 +129,7 @@ If running the Chart Plugin the following Context Menu Entries are also availabl
 | --------------------- | ------------------------------------------------------------------- | ----------------- |
 | View as Pie Chart     | [Pie Chart](../functions/charts/piechart-function.md)               | All               |
 | View as Sparkline     | [Sparkline](../functions/charts/sparkline-function.md)              | All               |
-| Edit Sparkline Column | [Sparkline Coumn](../functions/charts/sparkline-column-function.md) | Sparkline Columns |
+| Edit Sparkline Column | [Sparkline Coumn](../functions/charts/sparkline-column-function.md) | Single Sparkline Column selected |
 
 #### Hiding System Context Menu Entries
 
@@ -145,9 +149,11 @@ This is done in 2 steps:
 
 #### Hiding User Context Menu Entries
 
-It might not always make sense for a User Context Menu entry to appear (e.g. it might only make sense if cells from multiple columns are selected).
+It might not always make sense for a User Context Menu entry to appear (e.g. the menu might require cells from a single Date Column to be selected).
 
 For this reason, AdapTable provides a function enabling devs to 'hide' Context Menu entries based on the current context.
+
+This is done in 2 steps:
 
 1. Provide a custom, named [UserMenuItemShowPredicate](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.usermenuitemshowpredicate.html) implementation in [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html) section of Adaptable Options.
 
@@ -159,14 +165,22 @@ All 3 of the AdapTable Menus obey [Entitlement](adaptable-entitlements-guide.md)
 
 This means that if an AdaptableFunction has an Entitlement of `Hidden` it wont appear in any of the menus.
 
-### More Information
+## More Information
 
 - [User Interface State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
-- [User Interface Demos](https://demo.adaptabletools.com/userinterface)
+
+- [User Interface Api](https://api.adaptabletools.com/interfaces/_src_api_userinterfaceapi_.userinterfaceapi.html)
+
+- [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html)
+
+- [User Interface Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_userinterfaceoptions_.userinterfaceoptions.html)
+
 
 ## Demos
 
-To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
+- [Column Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcolumnmenudemo)
+
+- [Context Menu Demo](https://demo.adaptabletools.com/userinterface/aggridcontextmenudemo)
 
 ## Help
 
