@@ -75,7 +75,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(report)}
-        overrideDisableEdit={isSystemReport}
+        overrideDisableEdit={isSystemReport || report.ReportColumnScope == 'CustomColumns'}
         overrideDisableDelete={isSystemReport}
         overrideDisableShare={isSystemReport}
         showShare={this.props.TeamSharingActivated}

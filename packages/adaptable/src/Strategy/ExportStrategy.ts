@@ -18,6 +18,7 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   constructor(adaptable: IAdaptable) {
@@ -117,10 +118,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     let reportCols = reportAsArray.shift();
 
-    let cols: AdaptableColumn[] = this.adaptable.api.gridApi.getColumnsFromFriendlyNames(
-      reportCols
-    );
-
+    let cols: AdaptableColumn[];
+    if (report.ReportColumnScope == 'CustomColumns') {
+      cols = report.ColumnIds.map(c => {
+        return AdaptableHelper.createAdaptableColumnFromColumnId(c);
+      });
+    } else {
+      cols = this.adaptable.api.gridApi.getColumnsFromFriendlyNames(reportCols);
+    }
     this.adaptable.api.exportApi.exportDataToExcel(
       cols.map(c => c.FriendlyName),
       reportAsArray,
