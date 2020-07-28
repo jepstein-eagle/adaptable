@@ -1,7 +1,7 @@
 {
   "include": ["src", "types", "test"],
   "exclude": ["src/**/*.test.ts"],
-  "extends": "../adaptable/tsconfig.json",
+  "extends": "../../../adaptable/tsconfig.json",
   "compilerOptions": {
     "rootDir": "./src"
   }

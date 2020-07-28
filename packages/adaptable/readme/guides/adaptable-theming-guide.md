@@ -8,8 +8,11 @@ You can have more css theme files imported in the app without them overriding ea
 
 AdapTable ships with 2 themes: **light** (the default) and **dark**.
 
-If you wish to use the Dark Theme, specify *dark* as the Current Theme in the Theme section of Predefined Config. 
-Make sure to import the Adptable dark.css file and, if using ag-Grid, also to import the associated dark vendor theme.
+If you wish to use the Dark Theme, specify **dark** as the Current Theme in the Theme section of Predefined Config.
+
+Make sure to import the AdapTable `dark.css` file and, if using ag-Grid, also to import the associated dark vendor theme.
+
+> AdapTable supports both ag-Grid's new Alpine and the older Balham themes in their dark versions.
 
  ```ts
 import '@adaptabletools/adaptable/index.css';

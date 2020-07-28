@@ -1,6 +1,6 @@
 {
   "name": "@adaptabletools/adaptable-monorepo",
-  "version": "7.0.0-canary.13",
+  "version": "7.0.0-canary.26",
   "private": true,
   "publishConfig": {
     "registry": "https://registry.adaptabletools.com"
@@ -54,7 +54,6 @@
     "install-plugins-ipushpull": "npm install --prefix packages/plugins/ipushpull",
     "install-plugins-master-detail-aggrid": "npm install --prefix packages/plugins/master-detail-aggrid",
     "install-plugins-nocode-aggrid": "npm install --prefix packages/plugins/nocode-aggrid",
-    "install-adaptable-parser": "npm install --prefix packages/adaptable-parser",
     "install-react": "npm install --prefix packages/adaptable-react-aggrid",
     "install-angular": "npm install --prefix packages/adaptable-ng-aggrid",
     "ci-build-core-check-size": "npm run --prefix packages/adaptable build-check-size",

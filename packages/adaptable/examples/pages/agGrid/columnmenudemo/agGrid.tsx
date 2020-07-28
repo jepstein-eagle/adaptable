@@ -97,9 +97,6 @@ async function InitAdaptableDemo() {
     ],
   };
   adaptableOptions.userInterfaceOptions = {
-    // showAdaptableColumnMenu: true,
-    // showAdaptableColumnMenu: false,
-
     showAdaptableColumnMenu: (menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => {
       if (
         menuInfo.Column.ColumnId === 'counterparty' &&
@@ -110,7 +107,6 @@ async function InitAdaptableDemo() {
       return true;
     },
   };
-
   adaptableApi = await Adaptable.init(adaptableOptions);
 }
 

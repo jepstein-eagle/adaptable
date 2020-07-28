@@ -75,6 +75,7 @@ export enum ReportColumnScope {
   VisibleColumns = 'VisibleColumns',
   SelectedCellColumns = 'SelectedCellColumns',
   BespokeColumns = 'BespokeColumns',
+  CustomColumns = 'CustomColumns',
 }
 
 export enum ReportRowScope {
@@ -83,6 +84,7 @@ export enum ReportRowScope {
   SelectedCellRows = 'SelectedCellRows',
   SelectedRows = 'SelectedRows',
   ExpressionRows = 'ExpressionRows',
+  CustomRows = 'CustomRows',
 }
 
 export enum ExportDestination {

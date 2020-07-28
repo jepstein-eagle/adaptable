@@ -2,29 +2,52 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullDomain, IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 
 /**
- * Provides full and comprehensive run-time access to ipushpull state and associated methods.
+ * Provides full and comprehensive run-time access to the ipushpull Plugin.
  *
- * Use the API to find out if ipushpull is available or running and much else.
+ * Use the Api to find out if ipushpull is available or running and much else.
+ *
+ * Note: as its part of a Plugin you need to access the Api as follows:
+ *
+ * ```ts
+ * const ippApi = adaptableApi.pluginsApi.getPluginApi('ipushpull');
+ * ```
+ *
+ * --------------
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/) | [ipushpull State](_src_predefinedconfig_ipushpullstate_.ipushpullstate.html) | [ipushpull Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/ipushpull-function.md)
+ * - [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/)
+ *
+ * - [ipushpull Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md)
+ *
+ * - [ipushpull Integration Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+ *
+ * --------------
  *
  * Note: Some of these methods are intended for internal use only - and have been noted as such.
  */
 export interface IPushPullApi {
   /**
-   * Retrieves the ipushpull `Username` from the ipushpull state.
+   * Retrieves the ipushpull `Username` from the ipushpull state - AFTER someone logs in
+   */
+  getCurrentIPushPullUsername(): string | undefined;
+
+  /**
+   * Retrieves the ipushpull `Password` from the ipushpull state -- AFTER someone logs in
+   */
+  getCurrentIPushPullPassword(): string | undefined;
+  /**
+   * Retrieves the ipushpull `Username` from the ipushpull options (if provided).
    */
   getIPushPullUsername(): string | undefined;
 
   /**
-   * Retrieves the ipushpull `Password` from the ipushpull state.
+   * Retrieves the ipushpull `Password` from the ipushpull options (if provided)..
    */
   getIPushPullPassword(): string | undefined;
 
   /**
-   * Retrieves the ipushpull `AutoLogin` from the ipushpull state.
+   * Retrieves the ipushpull `AutoLogin` from the ipushpull options (if provided)..
    *
    * If `true` then AdapTable will try to log in the user to ipushpull automatically at start-up
    */

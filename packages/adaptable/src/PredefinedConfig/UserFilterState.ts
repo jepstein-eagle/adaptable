@@ -3,12 +3,34 @@ import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 
 /**
- * 
- * blah 
- * 
- * 
- * Adaptable has 4 different types of configuration filters - ColumnFilters, UserFilters and SystemFilters.
-
+ *
+ * The Predefined Configuration for User Filters
+ *
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [User Filter Demo](https://demo.adaptabletools.com/filters/aggriduserfiltersdemo/)
+ *
+ * {@link UserFilterApi|User Filter API}
+ *
+ * [User Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/user-filter-function.md)
+ *
+ * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
+ * --------------
+ *
+ *  As well as User Filters, AdapTable offers 3 other types of Filters:
+ *
+ *  | Filter Type                                   | Usage
+ *  | -----------                                   | -----------
+ *  | {@link ColumnFilterState|Column}      | Filter a single Column using either a list of Column Values or a Range
+ *  | {@link NamedFilterState|Named}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
+ *  | {@link SystemFilterState|System}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
+ *
+ * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
  */
 export interface UserFilterState extends ConfigState {
   UserFilters?: UserFilter[];

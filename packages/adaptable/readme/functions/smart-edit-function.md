@@ -6,7 +6,8 @@ Rather than users needing to change multiple columns individually, Smart Edit en
 
 > If the proposed Smart Edit breaks a Cell Validation Rule then it will be prevented or display a warning as appropriate.
 
-### Smart Edit Operations
+## Smart Edit Operations
+
 The following mathematical operations are available:
 
 - Addition
@@ -14,7 +15,10 @@ The following mathematical operations are available:
 - Multiplication
 - Division
 
+> There is currently no provision for users to add their own Smart Edit operations via custom functions but this will be added in a forthcoming release.
+
 ## UI Elements
+
 Smart Edit includes the following UI Elements:
 
 - **Popup** - Allows you to perform a Smart Edit operation on selected cells.  Will show what the new value for each selected cell will be and also whether any cell validation rules will be broken as a result of the Smart Edit.
@@ -26,6 +30,7 @@ Smart Edit includes the following UI Elements:
 - **Context Menu** - `Apply Smart Edit` Menu Item opens the Smart Edit popup (only visible if selected cells are editable, numeric and from on a single column).
 
 ## Entitlements
+
 Smart Edit supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -58,7 +63,7 @@ Not at present but the Smart Edit Toolbar will soon contain a range of very adva
 
 **Can I use Smart Edit to perform a bulk edit?**
 
-No, Smart Edit only updates existing cell values. if you want to replace the existing cell value with a new one entirely, please use the [Smart Edit Function](./smart-edit-function.md) Function.
+No, Smart Edit only updates existing cell values. Use the [Bulk Update](./bulk-update-function.md) Function to replace an existing cell value with a new one entirely
 
 ### Further Information
 
@@ -69,4 +74,3 @@ No, Smart Edit only updates existing cell values. if you want to replace the exi
 - [Edit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_editoptions_.editoptions.html)
 
 - [Smart Edit Demo](https://demo.adaptabletools.com/edit/aggridsmarteditdemo)
-

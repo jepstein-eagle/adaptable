@@ -26,7 +26,7 @@ var api: AdaptableApi;
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 20;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -51,6 +51,20 @@ async function InitAdaptableDemo() {
       useVendorFilterFormStyle: true,
       useAdaptableFilterForm: true,
     },
+    userFunctions: [
+      {
+        type: 'CustomReportFunction',
+        name: 'getDummyData',
+        handler(reportName: string) {
+          let data = [
+            ['Eliana', 5],
+            ['Naftali', 9],
+            ['Sigal', 10],
+          ];
+          return data;
+        },
+      },
+    ],
     predefinedConfig: {
       Theme: {
         Revision: Date.now(),
@@ -151,6 +165,18 @@ async function InitAdaptableDemo() {
           },
         ],
       },
+      Export: {
+        Revision: 5,
+        Reports: [
+          {
+            ReportColumnScope: 'CustomColumns',
+            ReportRowScope: 'CustomRows',
+            ColumnIds: ['Football', 'Testing'],
+            Name: 'My Custom Report',
+            CustomReportFunction: 'getDummyData',
+          },
+        ],
+      },
     },
   };
 
@@ -166,12 +192,27 @@ async function InitAdaptableDemo() {
         Columns: ['bid', 'currency', 'counterparty'],
         GroupedColumns: ['country'],
       };
-      api.layoutApi.createAndSetLayout(newLayout);
+      // api.layoutApi.createAndSetLayout(newLayout);
+      api.gridApi.showQuickFilterBar();
     } else if (toolbarButton.Name == 'btnCopyLayout') {
+      api.gridApi.hideQuickFilterBar();
+
+      let cols: string[] = ['Person', 'How much loves Dad'];
+
+      let data = [
+        ['Eliana', 5],
+        ['Naftali', 9],
+        ['Sigal', 10],
+      ];
+
+      api.exportApi.exportDataToExcel(cols, data, 'Test Report');
       //   let currentLayout = api.layoutApi.getCurrentLayout();
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 
       //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
+
+      //  api.customSortApi.addCustomSort()
+
       console.log('here world');
       const gridOptions: GridOptions = api.gridApi.getadaptableOptions().vendorGrid as GridOptions;
       console.log(gridOptions);

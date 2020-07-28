@@ -32,6 +32,13 @@ async function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    auditOptions: {
+      alertShowAsPopup: true,
+      auditFunctionEvents: {
+        //  auditAsEvent: true,
+        auditToConsole: true,
+      },
+    },
     userFunctions: [
       {
         type: 'ActionColumnRenderFunction',
@@ -67,6 +74,10 @@ async function InitAdaptableDemo() {
 }
 
 function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedEventArgs) {
+  console.log('hello');
+
+  console.log(actionColumnEventArgs);
+
   console.log('alert fired event received');
   console.log(actionColumnEventArgs.data[0].id.actionColumn.FriendlyName);
   console.log(actionColumnEventArgs.data[0].id.actionColumn.ButtonText);

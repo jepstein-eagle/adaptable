@@ -12,11 +12,24 @@ export interface OpenFinState extends ConfigState {
   IsOpenFinRunning?: boolean;
 }
 
+/**
+ * An OpenFin report
+ *
+ * Currently just contains the name of the Report (which will exist in the Export State)
+ */
 export interface OpenFinReport extends AdaptableObject {
   ReportName: string;
-  // might be more properties
 }
 
+/**
+ * Defines a OpenFin Schedule.  Used in the Schedule Function (where the State will be stored).
+ *
+ * Includes 2 properties:
+ *
+ * - `OpenFinReport`: The report being exported to Excel (via OpenFin)
+ *
+ * - `Transmission`: Whether Snapshot or Live Data (currently only the latter is supported)
+ */
 export interface OpenFinSchedule extends BaseSchedule {
   OpenFinReport: OpenFinReport;
   Transmission: 'Live Data';

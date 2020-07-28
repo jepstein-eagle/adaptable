@@ -16,7 +16,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  *
  * [Conditional Style API](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
  *
- * [Conditional Style Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/conditional-style-function.md)
+ * [Conditional Style Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/conditional-style-function.md)
  *
  * **Conditional Style Predefined Config Example**
  *

@@ -19,6 +19,7 @@ import {
   ColumnResizedEvent,
   IAggFunc,
   ColumnState,
+  GetMainMenuItems,
 } from '@ag-grid-community/all-modules';
 
 import * as ReactDOM from 'react-dom';
@@ -159,6 +160,7 @@ import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
 import { isEqual } from 'lodash';
 import { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
+import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -317,10 +319,6 @@ export class Adaptable implements IAdaptable {
   private _emit = (eventName: string, data?: any): Promise<any> =>
     this.emitter.emit(eventName, data);
 
-  public static initLazy(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
-    return Adaptable.initInternal(adaptableOptions);
-  }
-
   public static init(adaptableOptions: AdaptableOptions): Promise<AdaptableApi> {
     return Adaptable.initInternal(adaptableOptions);
   }
@@ -405,7 +403,6 @@ export class Adaptable implements IAdaptable {
       this.gridOptions.allowContextMenuWithControlKey = true;
     }
     this.vendorGridName = 'agGrid';
-    this.embedColumnMenu = true;
     this.isInitialised = false;
 
     this.useRowNodeLookUp = false; // we will set later in instantiate if possible to be true
@@ -423,6 +420,7 @@ export class Adaptable implements IAdaptable {
 
     // set up the helper
     this.agGridHelper = new agGridHelper(this, this.gridOptions);
+
     // we prefer the grid to be NOT instantiated so that we can do it
     // perhaps in future we will force instantiation only?
 
@@ -1418,6 +1416,9 @@ export class Adaptable implements IAdaptable {
   // This method returns selected cells ONLY (if selection mode is cells or multiple cells).
   // If the selection mode is row it will returns nothing - use the setSelectedRows() method
   public setSelectedCells(): void {
+    if (!this.isSelectable()) {
+      return;
+    }
     const selected: CellRange[] = this.gridOptions.api!.getCellRanges();
 
     const columns: AdaptableColumn[] = [];
@@ -1487,6 +1488,9 @@ export class Adaptable implements IAdaptable {
   }
 
   public setSelectedRows(): void {
+    if (!this.isSelectable()) {
+      return;
+    }
     const nodes: RowNode[] = this.gridOptions.api!.getSelectedNodes();
     const selectedRows: GridRow[] = [];
 
@@ -2117,6 +2121,7 @@ export class Adaptable implements IAdaptable {
         width: calculatedColumn.CalculatedColumnSettings.Width,
         enableValue: calculatedColumn.CalculatedColumnSettings.Aggregatable,
         filter: calculatedColumn.CalculatedColumnSettings.Filterable,
+        floatingFilter: calculatedColumn.CalculatedColumnSettings.Filterable,
         resizable: calculatedColumn.CalculatedColumnSettings.Resizable,
         enableRowGroup: calculatedColumn.CalculatedColumnSettings.Groupable,
         sortable: calculatedColumn.CalculatedColumnSettings.Sortable,
@@ -2916,23 +2921,10 @@ export class Adaptable implements IAdaptable {
     this.applyFormatColumnDisplayFormats();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
-    const originalgetMainMenuItems = this.gridOptions.getMainMenuItems;
+    const originalgetMainMenuItems: GetMainMenuItems = this.gridOptions.getMainMenuItems;
     this.gridOptions.getMainMenuItems = (params: GetMainMenuItemsParams) => {
       // couldnt find a way to listen for menu close. There is a Menu Item Select, but you can also close menu from filter and clicking outside menu....
       const colId: string = params.column.getColId();
-
-      const adaptableMenuItems: AdaptableMenuItem[] = [];
-
-      const adaptableColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(colId);
-      if (adaptableColumn != null) {
-        this.strategies.forEach(s => {
-          let menuItems: AdaptableMenuItem[] | undefined = s.addColumnMenuItems(adaptableColumn);
-          if (menuItems) {
-            adaptableMenuItems.push(...menuItems);
-          }
-        });
-      }
-
       let colMenuItems: (string | MenuItemDef)[];
       // if there was an initial implementation we init the list of menu items with this one; otherwise we take the default items
       if (originalgetMainMenuItems) {
@@ -2943,74 +2935,37 @@ export class Adaptable implements IAdaptable {
       }
       colMenuItems.push('separator');
 
-      let menuInfo: MenuInfo = {
-        GridCell: undefined,
-        Column: adaptableColumn,
-        IsSelectedCell: false,
-        IsSingleSelectedColumn: false,
-        IsGroupedNode: false,
-        RowNode: undefined,
-        PrimaryKeyValue: undefined,
-        SelectedCellInfo: this.api.gridApi.getSelectedCellInfo(),
-        SelectedRowInfo: this.api.gridApi.getSelectedRowInfo(),
-        AdaptableApi: this.api,
-      };
+      const adaptableColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(colId);
+      if (adaptableColumn != null) {
+        let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
+        // First get all the Strategy based Adaptable Menu Items
+        const adaptableMenuItems: AdaptableMenuItem[] = this.getAdaptableMenuItemsColumnHeader(
+          adaptableColumn,
+          menuInfo
+        );
 
-      let showAdaptableColumnMenu = this.adaptableOptions.userInterfaceOptions!
-        .showAdaptableColumnMenu;
-
-      if (showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false) {
+        // And then convert them into Menu Item Defs
         adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
-          if (adaptableMenuItem) {
-            let addColumnMenuItem: boolean = true;
-            if (showAdaptableColumnMenu != null && typeof showAdaptableColumnMenu === 'function') {
-              addColumnMenuItem = showAdaptableColumnMenu(adaptableMenuItem, menuInfo);
-            }
-            if (addColumnMenuItem) {
-              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-                adaptableMenuItem
-              );
-              colMenuItems.push(menuItem);
-            }
-          }
+          let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+            adaptableMenuItem
+          );
+          colMenuItems.push(menuItem);
         });
-      }
-      let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
 
-      if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-        userColumnMenuItems
-          .filter((userMenuItem: UserMenuItem) => {
-            return userMenuItem.UserMenuItemShowPredicate
-              ? this.getUserFunctionHandler(
-                  'UserMenuItemShowPredicate',
-                  userMenuItem.UserMenuItemShowPredicate
-                )(menuInfo)
-              : true;
-          })
-          .forEach((userMenuItem: UserMenuItem) => {
-            let label: string = userMenuItem.Label;
-            // if there is a function for the label use that return value instead of the label value
-            let functionLabel = this.getUserFunctionHandler(
-              'UserMenuItemLabelFunction',
-              userMenuItem.Label
+        // Next get all the User Menu Items
+        let userColumnMenuItems: KeyValuePair[] = this.getUserMenuItemsColumnHeader(menuInfo);
+        if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+          userColumnMenuItems.forEach((kvp: KeyValuePair) => {
+            // And then convert them into Menu Item Defs
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUserMenu(
+              kvp.Key,
+              kvp.Value,
+              menuInfo
             );
-            if (functionLabel) {
-              let labelFunctionResult: string = functionLabel(menuInfo);
-              if (StringExtensions.IsNotNullOrEmpty(labelFunctionResult)) {
-                label = labelFunctionResult;
-              }
-            }
-            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
-              label,
-              userMenuItem,
-              menuInfo,
-              'contextMenu'
-            );
-
             colMenuItems.push(menuItem);
           });
+        }
       }
-
       return colMenuItems;
     };
 
@@ -3102,11 +3057,10 @@ export class Adaptable implements IAdaptable {
                     label = labelFunctionResult;
                   }
                 }
-                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUsereMenu(
+                let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUserMenu(
                   label,
                   userMenuItem,
-                  menuInfo,
-                  'contextMenu'
+                  menuInfo
                 );
                 contextMenuItems.push(menuItem);
               });
@@ -3115,6 +3069,115 @@ export class Adaptable implements IAdaptable {
       }
       return contextMenuItems;
     };
+  }
+
+  private createMenuInfoObject(adaptableColumn: AdaptableColumn): MenuInfo {
+    return {
+      GridCell: undefined,
+      Column: adaptableColumn,
+      IsSelectedCell: false,
+      IsSingleSelectedColumn: false,
+      IsGroupedNode: false,
+      RowNode: undefined,
+      PrimaryKeyValue: undefined,
+      SelectedCellInfo: this.api.gridApi.getSelectedCellInfo(),
+      SelectedRowInfo: this.api.gridApi.getSelectedRowInfo(),
+      AdaptableApi: this.api,
+    };
+  }
+
+  public buildStandaloneColumnHeader(adaptableColumn: AdaptableColumn): AdaptableMenuItem[] {
+    let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
+    let returnMenuItems: AdaptableMenuItem[] = [];
+    returnMenuItems.push(...this.getAdaptableMenuItemsColumnHeader(adaptableColumn, menuInfo));
+
+    let userColumnMenuItems: KeyValuePair[] = this.getUserMenuItemsColumnHeader(menuInfo);
+    if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+      userColumnMenuItems.forEach((kvp: KeyValuePair) => {
+        let adaptableMenuItem: AdaptableMenuItem = this.agGridHelper.createAdaptableMenuItemFromUserMenu(
+          kvp.Key,
+          kvp.Value,
+          menuInfo
+        );
+        returnMenuItems.push(adaptableMenuItem);
+      });
+    }
+    return returnMenuItems;
+  }
+
+  // method to get all the Adaptable Menu Items - together with running the function where user can choose whether or not to display
+  private getAdaptableMenuItemsColumnHeader(
+    adaptableColumn: AdaptableColumn,
+    menuInfo: MenuInfo
+  ): AdaptableMenuItem[] {
+    const adaptableMenuItems: AdaptableMenuItem[] = [];
+    let showAdaptableColumnMenu = this.adaptableOptions.userInterfaceOptions!
+      .showAdaptableColumnMenu;
+
+    let runCheck: boolean = showAdaptableColumnMenu == null || showAdaptableColumnMenu !== false;
+    if (adaptableColumn != null) {
+      this.strategies.forEach(s => {
+        let menuItems: AdaptableMenuItem[] | undefined = s.addColumnMenuItems(adaptableColumn);
+        if (menuItems) {
+          if (runCheck) {
+            menuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+              if (adaptableMenuItem) {
+                let addColumnMenuItem: boolean = true;
+                if (
+                  showAdaptableColumnMenu != null &&
+                  typeof showAdaptableColumnMenu === 'function'
+                ) {
+                  addColumnMenuItem = showAdaptableColumnMenu(adaptableMenuItem, menuInfo);
+                }
+                if (addColumnMenuItem) {
+                  adaptableMenuItems.push(adaptableMenuItem);
+                }
+              }
+            });
+          } else {
+            adaptableMenuItems.push(...menuItems);
+          }
+        }
+      });
+    }
+    return adaptableMenuItems;
+  }
+
+  private getUserMenuItemsColumnHeader(menuInfo: MenuInfo): KeyValuePair[] {
+    let returnValues: KeyValuePair[] = [];
+    let userColumnMenuItems = this.api.userInterfaceApi.getUserInterfaceState().ColumnMenuItems;
+
+    if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+      userColumnMenuItems
+        .filter((userMenuItem: UserMenuItem) => {
+          return userMenuItem.UserMenuItemShowPredicate
+            ? this.getUserFunctionHandler(
+                'UserMenuItemShowPredicate',
+                userMenuItem.UserMenuItemShowPredicate
+              )(menuInfo)
+            : true;
+        })
+        .forEach((userMenuItem: UserMenuItem) => {
+          let label: string = userMenuItem.Label;
+          // if there is a function for the label use that return value instead of the label value
+          let functionLabel = this.getUserFunctionHandler(
+            'UserMenuItemLabelFunction',
+            userMenuItem.Label
+          );
+          if (functionLabel) {
+            let labelFunctionResult: string = functionLabel(menuInfo);
+            if (StringExtensions.IsNotNullOrEmpty(labelFunctionResult)) {
+              label = labelFunctionResult;
+            }
+          }
+          let kvp: KeyValuePair = {
+            Key: label,
+            Value: userMenuItem,
+          };
+          returnValues.push(kvp);
+        });
+    }
+    return returnValues;
   }
 
   public applyFormatColumnDisplayFormats(): void {
@@ -3708,6 +3771,7 @@ export class Adaptable implements IAdaptable {
     columnApi.setColumnState(columnState, columnEventType);
   }
 
+  // do we want to do this each time or check once at startup and then set a flag?
   public isSelectable(): boolean {
     let isRangeSelectionModuleRegistered: boolean = this.agGridHelper.isModulePresent(
       'range-selection'
@@ -3741,7 +3805,7 @@ export class Adaptable implements IAdaptable {
       return true;
     }
     let col: ColDef | ColGroupDef;
-    for (col of this.gridOptions.columnDefs) {
+    for (col of defs) {
       if ((col as ColDef).floatingFilter) {
         return true;
       }
@@ -3948,6 +4012,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
   private applyFinalRendering(): void {
     // Apply row styles here?  weird that it cannot find the method in Helper.
 
+    this.embedColumnMenu = this.agGridHelper.isModulePresent('menu');
+
     // Build the default group sort comparator - will get custom sort values (but not functions) in real time
     this.gridOptions.defaultGroupSortComparator = this.agGridHelper.runAdaptableNodeComparerFunction();
 
@@ -3990,7 +4056,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     }
 
     if (this.isQuickFilterActive()) {
-      this.api.internalApi.showQuickFilterBar();
+      this.api.gridApi.showQuickFilterBar();
     }
 
     const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();
@@ -4042,14 +4108,13 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     return this.agGridHelper.isModulePresent('excel-export');
   }
 
-  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]) {
-    const columnIds = columns.map(col => col.ColumnId);
-    const columnDefs: ColDef[] = columns.map(col => ({
-      field: col.ColumnId,
-      headerName: col.FriendlyName,
+  exportToExcel(columnNames: string[], data: any[], fileName: string) {
+    const columnDefs: ColDef[] = columnNames.map(columnName => ({
+      field: columnName,
+      headerName: columnName,
     }));
 
-    const rowData: any[] = data.map(row => _.zipObject(columnIds, row));
+    const rowData: any[] = data.map(row => _.zipObject(columnNames, row));
 
     const gridOptions: GridOptions = {
       columnDefs,
@@ -4060,7 +4125,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     gridOptions.api.exportDataAsExcel({
       sheetName: 'Sheet 1',
-      fileName: report.Name,
+      fileName: fileName,
     });
 
     grid.destroy();

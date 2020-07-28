@@ -58,8 +58,6 @@ export interface InternalApi {
 
   setSelectedRows(selectedRowInfo: SelectedRowInfo): void;
 
-  showQuickFilterBar(): void;
-
   setPivotModeOn(): void;
 
   setPivotModeOff(): void;

@@ -61,6 +61,8 @@ export class ReportService implements IReportService {
         return this.adaptable.api.gridApi
           .getFriendlyNamesFromColumnIds(report.ColumnIds)
           .join(', ');
+      case ReportColumnScope.CustomColumns:
+        return '[Custom Columns]';
     }
   }
 
@@ -85,6 +87,8 @@ export class ReportService implements IReportService {
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
           return ExpressionHelper.ConvertExpressionToString(Report.Expression, this.adaptable.api);
+        case ReportRowScope.CustomRows:
+          return '[Custom Rows]';
       }
     }
   }
@@ -101,7 +105,7 @@ export class ReportService implements IReportService {
     return false;
   }
 
-  private getReportColumnsForReport(report: Report): any {
+  private getReportColumnsForReport(report: Report): AdaptableColumn[] {
     let reportColumns: AdaptableColumn[] = [];
     let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
 
@@ -121,6 +125,13 @@ export class ReportService implements IReportService {
         break;
       case ReportColumnScope.BespokeColumns:
         reportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
+        break;
+      case ReportColumnScope.CustomColumns:
+        // Need to turn these into Adaptable Columns
+        // Bit overkill but it allows us then to keep things neater for other report types (and this is rare)
+        reportColumns = report.ColumnIds.map(c => {
+          return AdaptableHelper.createAdaptableColumnFromColumnId(c);
+        });
         break;
     }
     return reportColumns;
@@ -183,9 +194,7 @@ export class ReportService implements IReportService {
         const selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
 
         const { GridCells } = selectedCellInfo;
-
         // Im sure this can be done better... but this is how I do it
-
         // 1.  Get - and sort - all the distinct primary key values
         let distinctPKValues = [
           ...new Set(
@@ -234,6 +243,16 @@ export class ReportService implements IReportService {
             }
           );
         }
+        break;
+
+      case ReportRowScope.CustomRows:
+        let customReportFunction = this.adaptable.getUserFunctionHandler(
+          'CustomReportFunction',
+          report.CustomReportFunction
+        );
+        let reportData = customReportFunction(report.Name);
+
+        dataToExport.push(...reportData);
         break;
     }
     return { ActionReturn: dataToExport };

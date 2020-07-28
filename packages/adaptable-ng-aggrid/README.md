@@ -4,9 +4,9 @@ Repository for the **AdapTable Angular ag-Grid Wrapper** which allows you to ins
 
 ## Upgrade Guide
 
-Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
+Version 7 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
+For more information please see the [Version 7 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md)
 
 ## Installation
 
@@ -69,7 +69,7 @@ To gain access to this registry please follow these steps:
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-There are currently 3 plugins:
+There are currently 8 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
@@ -82,6 +82,26 @@ There are currently 3 plugins:
 - **NoCode** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
   > enables the creation of dynamic AdapTable instances by dragging and droppping JSON or Excel files.
+  
+- **Master Detail** (`@adaptabletools/adaptable-master-detail-aggrid`)
+
+  > Supports Master / Detail grids in ag-Grid by ensuring that the Master and all Detail grids are AdapTable instances with full access to all the rich functionality on offer.
+    
+- **ipushpull** (`@adaptabletools/adaptable-plugin-ipushpull`)
+
+  > Designed for [ipushpull](https://www.ipushpull.com) users, enabling advanced collaboration scenarios.
+    
+- **OpenFin** (`@adaptabletools/adaptable-plugin-openfin`)
+
+  > Designed for when AdapTable will be used inside the [OpenFin](https://openfin.co/) container.
+    
+- **Glue42** (`@adaptabletools/adaptable-plugin-glue42`)
+
+  > Designed for when AdapTable will be used on a desktop also running [Glue42](https://glue42.com/).
+    
+- **Finsemble** (`@adaptabletools/adaptable-plugin-finsemble`)
+
+  > Designed for when AdapTable is running alongside [Finsemble](https://www.chartiq.com/finsemble/). 
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):
@@ -161,13 +181,15 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
     ```
 
-## Angular Attributes
+## adaptable-angular-aggrid Attributes
 
 ### Mandatory
 
 - **gridOptions**
 
   The standard ag-Grid *GridOptions* object used for building column schema and setting key grid properties.
+  
+   **This must be the same ag-Grid *GridOptions* object that you pass into the `<ag-grid-angular>` component**
 
   > Unlike in the 'vanilla' version, you do not need to set the `modules` property of *GridOptions* as you will pass that directly to `<ag-grid-angular>` component instead.
 
@@ -181,12 +203,13 @@ To add an ag-Grid Enterprise follow these 3 steps (using Menus and RangeSelectio
 
 ### Optional
 
-#### Events:
-- **adaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)** 
+- **adaptableReady: (adaptableApi: AdaptableApi, vendorGrid: GridOptions)**
 
   An Adaptable event giving you access to the *AdaptableApi* object.  
-  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.  
-  Also gives access to the underlying ag-Grid instance object. 
+  The api contains hundreds of methods providing full, safe, runtime access to all the functionality in AdapTable.
+  
+  Also gives access to the underlying ag-Grid instance object.
+  
   See [Developer Documentation](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) for more details.
 
 ```html
@@ -231,17 +254,21 @@ In your app module, import AdaptableAngularAgGridModule module
 import { AdaptableAngularAgGridModule } from '@adaptabletools/adaptable-angular-aggrid';
 ```
 
-After that, you can use the component in your app
+After that, you can use the AdapTable Angular component in your app:
 
 ```html
-
 <adaptable-angular-aggrid
   [adaptableOptions]="..."
-  [gridOptions]="..."
+  [gridOptions]="gridOptions"
   (adaptableReady)="onAdaptableReady($event)"
 >
 </adaptable-angular-aggrid>
 
+```
+
+And you should also use the ag-Grid Angular compoment (passing in the gridOptions as you gave the AdapTable component):
+
+```html
 <ag-grid-angular
   [gridOptions]="gridOptions"
   [rowData]="rowData"
@@ -251,6 +278,41 @@ After that, you can use the component in your app
 >
 </ag-grid-angular>
 ```
+
+## AdapTable Tool Panel Component
+
+To set up the Adaptable Tool Panel while using the Angular Wrapper, you need to follow these 3 steps:
+
+1. Explicitly import it in your code, e.g.:
+
+    ```js
+    import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
+    ````
+
+2. Reference the Component in the `components` section of ag-Grid GridOptions (and make sure the `sideBar` property is set also):
+
+    ```js
+    this.gridOptions = {
+         ...
+          sideBar: true,
+          components: {
+            AdaptableToolPanel: AdaptableToolPanelAgGridComponent
+          },
+          ...
+        }; 
+    ```
+3. Ensure that the `showAdaptableToolPanel` is set to true in `userInterfaceOptions` section of AdaptableOptions:
+
+    ```tsx
+    this.adaptableOptions = {
+        ...
+        adaptableId: 'angularapp',
+        userInterfaceOptions: {
+          showAdaptableToolPanel: true
+        }
+        ...
+      };
+    ```
 
 ## Styling and Theming
 
@@ -283,7 +345,7 @@ For more information please read the [Adaptable State Guide](../../packages/adap
 
 ## Demo
 
-For a standalone working example app of the Angular Wrapper, see the [Angular Demo](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
+For a standalone working example app of the Angular Wrapper, see the [Angular Example App](https://github.com/AdaptableTools/example-adaptable-angular-aggrid)
 
 To see AdapTable, more generally, in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).
 

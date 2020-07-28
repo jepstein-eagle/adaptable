@@ -25,6 +25,7 @@ import Helper from './Helper';
 import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
 import { AdaptableApi } from '../../Api/AdaptableApi';
+import { range } from 'lodash';
 
 export interface IRangeEvaluation {
   operand1: any;

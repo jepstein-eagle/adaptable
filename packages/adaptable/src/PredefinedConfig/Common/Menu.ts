@@ -49,12 +49,12 @@ export interface AdaptableMenuItem {
   /**
    * The name of the function.
    */
-  FunctionName: AdaptableFunctionName;
+  FunctionName?: AdaptableFunctionName;
 
   ReduxAction?: Redux.Action;
   ClickFunction?: () => void;
   IsVisible: boolean;
-  Icon: string;
+  Icon?: string;
 }
 
 /**

@@ -103,22 +103,22 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
- *  | [namedFilterApi](#namedfilterapi)         | |
- *  | [percentBarApi](#percentbarapi)         | |
- *  | [pluginsApi](#pluginsapi)         | |
- *  | [quickSearchApi](#quicksearchapi)         | |
- *  | [reminderApi](#reminderapi)         | |
- *  | [scheduleApi](#scheduleapi)         | |
- *  | [shortcutApi](#shortcutapi)         | |
- *  | [smartEditApi](#smarteditapi)         | |
- *  | [sparklineColumnApi](#sparklinecolumnapi)         | |
- *  | [systemFilterApi](#systemfilterapi)         | |
- *  | [systemStatusApi](#systemstatusapi)         | |
- *  | [themeApi](#themeapi)         | |
- *  | [toolPanelApi](#toolpanelapi)         | |
- *  | [updatedRowApi](#updatedrowapi)         | |
- *  | [userFilterApi](#userfilterapi)         | |
- *  | [userInterfaceApi](#userinterfaceapiapi)         | |
+ *  | [namedFilterApi](#namedfilterapi)               | Manages {@link NamedFilterState|Named Filers} - filter predicates provided at design-time|
+ *  | [percentBarApi](#percentbarapi)                 | Aids creation and editing of visual {@link PercentBarState: Percent Bars} |
+ *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
+ *  | [quickSearchApi](#quicksearchapi)               | Functions for running and clearing Quick Search|
+ *  | [reminderApi](#reminderapi)                     | Manages Reminders (scheduled Alerts) |
+ *  | [scheduleApi](#scheduleapi)                     | Supports {@link ScheduleState|Schedules} for running Actions at set time|
+ *  | [shortcutApi](#shortcutapi)                     | Deals with {@link ShortcutState|Shortcuts} for faster & safer data entry|
+ *  | [smartEditApi](#smarteditapi)                   | Functions for managing the Smart Edit function to enable better editing|
+ *  | [sparklineColumnApi](#sparklinecolumnapi)       | For {@link SparklineColumnState|Sparkline Columns} - ideal for historical or array-based data|
+ *  | [systemFilterApi](#systemfilterapi)             | Fetches the System Filters (shipped by AdapTable)
+ *  | [systemStatusApi](#systemstatusapi)             | Manages how the System Status function will display run-time messages|
+ *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
+ *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
+ *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
+ *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
+ *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
  *  |
  */
 export interface AdaptableApi {

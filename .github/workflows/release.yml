@@ -80,14 +80,6 @@ jobs:
     - name: Building angular
       run: cd packages/adaptable-ng-aggrid && npm run build-prod-no-cleanup
 
-    - name: Executing npm install in adaptable-parser
-      run: npm run install-adaptable-parser
-      env:
-        CI: true
-
-    - name: Building adaptable-parser
-      run: cd packages/adaptable-parser && npm run build-prod-no-cleanup
-
     - name: Executing npm install in plugins/charts
       run: npm run install-plugins-charts
       env:

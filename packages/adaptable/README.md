@@ -2,14 +2,14 @@
 
 Repository for the 'Core' AdapTable package - developed by Adaptable Tools.
 
-There are also [React](../../packages/adaptable-react-aggrid)
-and [Angular](../../packages/adaptable-ng-aggrid) Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
+There are also [React](../../packages/adaptable-react-aggrid/README.md)
+and [Angular](../../packages/adaptable-ng-aggrid/README.md) Wrappers available for those who wish to access AdapTable (when running with ag-Grid) using their preferred Framework.
 
 ## Upgrade Guide
 
-Version 6 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
+Version 7 of AdapTable has introduced many new functionality and upgrades and also some new, exciting, ways of interacting with the product.  
 
-For more information please see the [Version 6 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v6.md)
+For more information please see the [Version 7 Upgrade Guide](../../packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md)
 
 ## Installation
 
@@ -64,7 +64,7 @@ To gain access to this registry please follow these steps:
 ## Plugins
 AdapTable now includes plugins to reduce the download size of the 'core' project and to allow you to select only the functionality you want.  
 
-There are currently 3 plugins:
+There are currently 8 plugins:
 
 - **Charts** (`@adaptabletools/adaptable-charts-finance`)
 
@@ -77,6 +77,26 @@ There are currently 3 plugins:
 - **NoCode** (`@adaptabletools/adaptable-plugin-nocode-aggrid`)
 
   > enables the creation of dynamic AdapTable instances by dragging and droppping JSON or Excel files.
+  
+- **Master Detail** (`@adaptabletools/adaptable-master-detail-aggrid`)
+
+  > Supports Master / Detail grids in ag-Grid by ensuring that the Master and all Detail grids are AdapTable instances with full access to all the rich functionality on offer.
+    
+- **ipushpull** (`@adaptabletools/adaptable-plugin-ipushpull`)
+
+  > Designed for [ipushpull](https://www.ipushpull.com) users, enabling advanced collaboration scenarios.
+    
+- **OpenFin** (`@adaptabletools/adaptable-plugin-openfin`)
+
+  > Designed for when AdapTable will be used inside the [OpenFin](https://openfin.co/) container.
+    
+- **Glue42** (`@adaptabletools/adaptable-plugin-glue42`)
+
+  > Designed for when AdapTable will be used on a desktop also running [Glue42](https://glue42.com/).
+    
+- **Finsemble** (`@adaptabletools/adaptable-plugin-finsemble`)
+
+  > Designed for when AdapTable is running alongside [Finsemble](https://www.chartiq.com/finsemble/). 
 
 #### Plugins Example
 To add a plugin you need to do the following 3 steps (using the `charts` plugin as an example):

@@ -8,7 +8,7 @@ import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 
 export interface ListBoxMenuProps extends ListGroupProps {
   MenuItems: AdaptableMenuItem[];
-  onMenuItemClick: (action: Redux.Action) => Redux.Action;
+  onMenuItemClick: (menuItem: AdaptableMenuItem) => AdaptableMenuItem;
 }
 
 export interface ListBoxMenuState extends React.ClassAttributes<ListBoxMenu> {}
@@ -21,10 +21,11 @@ export class ListBoxMenu extends React.Component<ListBoxMenuProps, ListBoxMenuSt
   }
 
   render() {
-    let menuItems = this.props.MenuItems.map((menuItem: AdaptableMenuItem) => {
+    let menuItems = this.props.MenuItems.map((menuItem: AdaptableMenuItem, index: number) => {
       return (
-        <ListGroupItem key={menuItem.Label} onClick={() => this.onClick(menuItem)}>
-          <Icon name={menuItem.Icon} /> {menuItem.Label}
+        <ListGroupItem key={index} onClick={() => this.onClick(menuItem)}>
+          {menuItem.Icon && <Icon name={menuItem.Icon} />}
+          {menuItem.Label}
         </ListGroupItem>
       );
     });
@@ -37,7 +38,7 @@ export class ListBoxMenu extends React.Component<ListBoxMenuProps, ListBoxMenuSt
   }
 
   onClick(menuItem: AdaptableMenuItem) {
-    this.props.onMenuItemClick(menuItem.ReduxAction);
+    this.props.onMenuItemClick(menuItem);
   }
 }
 

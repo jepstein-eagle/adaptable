@@ -27,7 +27,7 @@ One of the key functionalities offered by AdapTable is User State Management. Th
 
 ## Adaptable Options
 
-AdaptableOptions is a large group of property options designed to help developers set up AdapTable at design time so that it fits their requirements. 
+[Adaptable Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) is a large group of property options designed to help developers set up AdapTable at design time so that it fits their requirements. 
 
 There are 2 mandatory properties (primaryKey and vendorGrid) and a host of optional ones (including Predefined Config - see below). 
 
@@ -42,7 +42,7 @@ Where a property is not provided, AdapTable provides a sensible default, so deve
 
 ## Adaptable Api
 
-AdapTable's rich, powerful api provides full safe, run-time access to all the functionality and state inside AdapTable. 
+AdapTable's rich, powerful [runtime API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) provides full safe, run-time access to all the functionality and state inside AdapTable. 
 
 This allows users to create, save and delete AdapTable objects in their our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
 
@@ -57,9 +57,9 @@ Everything that can be done in AdapTable through the UI can also be done through
 
 These 3 objects are linked as follows:
 
-**Predefined Configuration** is a property of **AdaptableOptions**.  
-This is the only object which the *AdapTable static constructor* requires in order to initialise everything and build the grid.
-The constructor returns the **AdaptableApi** object so it is available for future reference.
+**Predefined Configuration** is a property of **AdaptableOptions**.
+This is the only object which the *AdapTable async static constructor* requires in order to initialise everything and build the grid.
+The constructor returns the **AdaptableApi** object (via a Promise) so it is available for future reference.
 
 ```ts
 
@@ -75,14 +75,6 @@ The constructor returns the **AdaptableApi** object so it is available for futur
 
 // The AdapTable constructor returns a promise containing an API object that we can use
  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
- ```
-
-There is also a static `initLazy` constructor which receives an AdaptableOptions object and returns a Promise that contains the `api` object.  It is utilised by the [No Code Version](https://github.com/AdaptableTools/adaptable/tree/master/packages/plugins/nocode-aggrid) and is used as follows: 
-
-```ts
-  Adaptable.initLazy(adaptableOptions).then((api: AdaptableApi) => {
-    // do run-time stuff with the api
-  });
  ```
 
 ## UI Elements
@@ -139,7 +131,7 @@ These make it easy to create and edit Adaptable Objects step by step by clicking
 
 > Wizards also contain a legend that tells you where you are positioned in the Wizard at one time; if editing an existing object, the links in the legend are activated to make it easy to jump forward to a later wizard stage.
 
-Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Adaptable Expression Guide](./adaptable-expression-guide)).
+Note: many of the wizards include a step to build a **query**. This step is quite complex and itself can involve numerous iterations (if required). (For more information see the [Adaptable Expression Guide](./adaptable-expression-guide.md)).
 
 ### Selection Tool
 
@@ -160,7 +152,7 @@ When the cursor hovers over the icon, the help information appears in a pop-up d
 
 ### More Information
 
-- [Dashboard Function Read Me](../functions/dashboard-function.md)
+- [Dashboard Read Me](../functions/dashboard-function.md)
 - [Dashboard Demos](https://demo.adaptabletools.com/dashboard)
 - [User Interface State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html)
 - [User Interface Demos](https://demo.adaptabletools.com/userinterface)

@@ -15,6 +15,7 @@ module.exports = {
     './src/themes/**/*',
     './src/Api/Implementation/**/*',
     './src/env.ts',
+    './src/parser/**/*',
     './src/theme.ts',
     './src/types.ts',
     './src/PredefinedConfig/AdaptableState.ts',

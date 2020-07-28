@@ -39,8 +39,7 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
         ) : (
           <Flex flex={6} flexDirection="column">
             <Flex>
-              <Flex flex={3} />
-              <Flex flex={9}>
+              <Flex flex={6}>
                 <Radio
                   value="Menu"
                   checked={this.props.ColumnMenuTab == ColumnMenuTab.Menu}
@@ -49,10 +48,7 @@ export class FilterFormPanel extends React.Component<FilterFormPanelProps, {}> {
                   Menu
                 </Radio>
               </Flex>
-            </Flex>
-            <Flex>
-              <Flex flex={3} />
-              <Flex flex={9}>
+              <Flex flex={6}>
                 <Radio
                   value="Filter"
                   checked={this.props.ColumnMenuTab == ColumnMenuTab.Filter}

@@ -4,7 +4,9 @@ import { ConfigState } from './ConfigState';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
- * Named Filters are filters provided at run-time together with a Predicate Function that will be evaluated each time the Filter runs.
+ * The Predefined Configuration for Named Filters
+ *
+ * Named Filters are filters provided by users at run-time together with a Predicate Function that will be evaluated each time the Filter runs.
  *
  * The Predicate Function will be given 3 params:
  *
@@ -14,33 +16,42 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * c. *cellValue* - the value being tested
  *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Named Filter Demo](https://demo.adaptabletools.com/filters/aggridnamedfiltersdemo)
+ *
+ * {@link NamedFilterApi|Named Filter API}
+ *
+ * [Named Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/named-filter-function.md)
+ *
+ * {@link UserFunctions|User Functions}
+ *
+ * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
+ * --------------
+ *
  * **Named Filter Example**
  *
  * ```ts
  *
- * // Predefined Config
  * export default {
  * NamedFilter: {
  *   NamedFilters: [
  *     {
  *        Name: '$ Trades',
- *          Scope: {
- *            ColumnIds: ['currency'],
- *          },
- *       FilterPredicate: 'usdTrades',
+ *        Scope: { ColumnIds: ['currency'] },
+ *        FilterPredicate: 'usdTrades',
  *     },
  *     {
  *        Name: 'High',
- *          Scope: {
- *            DataType: 'Number',
- *          },
+ *        Scope: { DataType: 'Number' }
  *        FilterPredicate: 'high',
  *      },
  *     {
- *         Name: 'Biz Year',
- *          Scope: {
- *            DataType: 'Date',
- *          },
+ *        Name: 'Biz Year',
+ *        Scope: { DataType: 'Date' },
  *        FilterPredicate: 'bizYear',
  *      },
  *   ],
@@ -84,6 +95,19 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *    ],
  * ```
  *
+ * --------------
+ *
+ *
+ *  As well as Named Filters, AdapTable offers 3 other types of Filters:
+ *
+ *  | Filter Type                                   | Usage
+ *  | -----------                                   | -----------
+ *  | {@link ColumnFilterState|Column}      | Filter a single Column using either a list of Column Values or a Range
+ *  | {@link UserFilterState|User}          | Columm Filters which are saved & named; can therefore be re-used in multiple Functions
+ *  | {@link SystemFilterState|System}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
+ *
+ * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
  */
 export interface NamedFilterState extends ConfigState {
   /**
@@ -120,6 +144,9 @@ export interface NamedFilter extends AdaptableObject {
   FilterPredicate?: string;
 }
 
+/**
+ * The predicate function provided by the User at design-time which is called each time a Named Filter is evaluated
+ */
 export interface NamedFilterPredicate extends BaseUserFunction {
   type: 'NamedFilterPredicate';
   name: string;

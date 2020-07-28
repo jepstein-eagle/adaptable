@@ -12,6 +12,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [React Wrapper](../../../packages/adaptable-react-aggrid/README.md)
 - [Angular Wrapper](../../../packages/adaptable-ng-aggrid/README.md)
 - [Plugins](../../../packages/plugins/README.md)
+- [Version 7 Upgrade Guide](./upgrade-guides/upgrade-guide-v7.md)
 - [Version 6 Upgrade Guide](./upgrade-guides/upgrade-guide-v6.md)
 
 ## Adaptable Guides
@@ -27,6 +28,8 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
 - [Team Sharing Guide](./guides/adaptable-team-sharing-guide.md)
 - [Server Functionality Guide](./guides/adaptable-server-functionality-guide.md)
+- [Menus Guide](./guides/adaptable-menus-guide.md)
+- [ag-Grid Guide](./guides/adaptable-aggrid-guide.md)
 
 ## FAQs
 
@@ -92,9 +95,9 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [No Code AgGrid Plugin](../../plugins/nocode-aggrid/README.md)
 - [Master Detail AgGrid Plugin](../../plugins/master-detail-aggrid/README.md)
 - [ipushpull Plugin](../../plugins/ipushpull/README.md)
-- [Finsemble Plugin](../../plugins/finsemble/README.md)
-- [OpenFin Plugin](../../plugins/openfin/README.md)
 - [Glue42 Plugin](../../plugins/glue42/README.md)
+- [OpenFin Plugin](../../plugins/openfin/README.md)
+- [Finsemble Plugin](../../plugins/finsemble/README.md)
 
 ## Demo
 

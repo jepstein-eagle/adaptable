@@ -858,10 +858,7 @@ export class ExamplesHelper {
 
   public getGridOptionsTradeColumnGrouping(rowData: any): GridOptions {
     return {
-      columnDefs: this.getTradeSchemaColumnGroups().map(c => {
-        c.floatingFilter = true;
-        return c;
-      }),
+      columnDefs: this.getTradeSchemaColumnGroups(),
       rowData: rowData,
       enableRangeSelection: true,
       suppressColumnVirtualisation: false,
@@ -1221,7 +1218,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Date',
       field: 'tradeDate',
-      floatingFilter: false,
+      //  floatingFilter: false,
       editable: true,
       resizable: true,
 
@@ -1396,6 +1393,7 @@ export class ExamplesHelper {
       editable: false,
       filter: true,
       enableRowGroup: true,
+      floatingFilter: true,
       colId: 'country-stars',
       valueGetter: (params: any) => {
         return params.data && params.data.stars && params.data.country
@@ -1429,6 +1427,7 @@ export class ExamplesHelper {
       filter: true,
       hide: true,
       resizable: true,
+      floatingFilter: true,
       // cellClass: 'number-cell',
       type: 'abColDefNumber',
       enableValue: true,
@@ -1513,6 +1512,7 @@ export class ExamplesHelper {
           columnGroupShow: 'closed',
           filter: true,
           resizable: true,
+          //   floatingFilter: true,
           // cellClass: 'number-cell',
           type: 'abColDefNumber',
         },
@@ -1536,6 +1536,7 @@ export class ExamplesHelper {
           field: 'country',
           editable: true,
           filter: true,
+          floatingFilter: true,
           sortable: true,
           enableRowGroup: true,
           type: 'abColDefString',
@@ -1569,6 +1570,7 @@ export class ExamplesHelper {
       enableValue: true,
       editable: true,
       sortable: true,
+      floatingFilter: true,
       // valueFormatter: notionalFormatter,
       // cellClass: 'number-cell',
       type: 'abColDefNumber',

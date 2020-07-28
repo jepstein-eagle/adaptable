@@ -78,6 +78,7 @@ export class CustomSortSummaryComponent extends React.Component<
           ConfigEnity={customSort}
           EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
           onEdit={() => this.onEdit(customSort)}
+          showEdit={customSort.CustomSortComparerFunction == undefined}
           onShare={description => this.props.onShare(customSort, description)}
           showShare={this.props.TeamSharingActivated}
           onDelete={CustomSortRedux.CustomSortDelete(customSort)}

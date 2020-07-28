@@ -29,9 +29,18 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.options = options;
   }
 
+  public getCurrentIPushPullUsername(): string | undefined {
+    return this.getAdaptableState().System.CurrentIPushpullUsername;
+  }
+
+  public getCurrentIPushPullPassword(): string | undefined {
+    return this.getAdaptableState().System.CurrentIPushpullPassword;
+  }
+
   public getIPushPullUsername(): string | undefined {
     return this.options.username;
   }
+
   public getIPushPullPassword(): string | undefined {
     return this.options.password;
   }
@@ -204,6 +213,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
     this.setIPushPullRunningOn();
     this.adaptable.api.internalApi.hidePopupScreen();
     this.setIPushPullLoginErrorMessage('');
+    this.dispatchAction(IPushPullRedux.IPushPullSetLoginDetails(userName, password));
   }
 
   public async retrieveIPushPullDomainsFromIPushPull(): Promise<void> {
@@ -214,6 +224,7 @@ export class IPushPullApiImpl extends ApiBase implements IPushPullApi {
 
   public logoutFromIPushPull(): void {
     this.clearIPushPullInternalState();
+    this.dispatchAction(IPushPullRedux.IPushPullLogout());
     this.adaptable.api.internalApi.hidePopupScreen();
   }
 

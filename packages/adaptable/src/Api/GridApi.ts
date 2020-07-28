@@ -184,6 +184,10 @@ export interface GridApi {
   expandRowGroupsForValues(columnValues: any[]): void;
 
   isRowGroupColumn(columnId: string): boolean;
+  isCalculatedColumn(columnId: string): boolean;
+  isFreeTextColumn(columnId: string): boolean;
+  isActionColumn(columnId: string): boolean;
+
   isNumericColumn(column: AdaptableColumn): boolean;
   getColumnDataTypeFromColumnId(
     columnId: string
@@ -205,6 +209,9 @@ export interface GridApi {
 
   isGridPivotable(): boolean;
   isGridGroupable(): boolean;
+
+  showQuickFilterBar(): void;
+  hideQuickFilterBar(): void;
 
   /**
    * Destroys the current AdapTable instance.

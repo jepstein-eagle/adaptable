@@ -2,45 +2,106 @@ import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 import { BaseSchedule } from './Common/Schedule';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 
 /**
  * The Predefined Configuration for the Export function
  *
  * Export enables you to create saveable Reports that you can run either manually or on a schedule.
  *
- * Adaptable will popuplate the Export dropdown with your reports and allow you to export the data to a number of destinations.
+ * Adaptable will popuplate the Export dropdown with your reports (and the shipped System reports) and allows you to export the data to a number of destinations.
  *
  * Each Report has both Row and Column Scope to allow you define which Rows and Columns are contained in the Export
+ *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [Export Demos](https://demo.adaptabletools.com/export)
+ *
+ * {@link ExportApi|Export API}
+ *
+ * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
+ *
+ * {@link ExportOptions|Export Options}
+ *
+ * --------------
  *
  *  * **Export Predefined Config Example**
  *
  * ```ts
- * Export: {
- *    Reports: [
- *      {
- *        Name: 'End of Day',
- *        ColumnIds: [
- *          'bid',
- *          'counterparty',
- *          'currency',
- *          'tradeDate',
- *          'settlementDate',
- *          'ask',
- *          'moodysRating',
- *          'bloombergBid',
- *          'bloombergAsk',
- *       ],
- *        ReportColumnScope: 'BespokeColumns',
- *        ReportRowScope: 'VisibleRows',
- *        ExportDestination: 'JSON',
+ *   Export: {
+ *   CurrentReport: 'My Team Big Invoice',
+ *   Reports: [
+ *     {
+ *       Expression: {
+ *         ColumnValueExpressions: [
+ *           {
+ *             ColumnId: 'Employee',
+ *             ColumnDisplayValues: [
+ *               'Robert King',
+ *               'Margaret Peacock',
+ *               'Anne Dodsworth',
+ *             ],
+ *           },
+ *         ],
+ *         RangeExpressions: [
+ *           {
+ *             ColumnId: 'InvoicedCost',
+ *             Ranges: [
+ *               {
+ *                 Operator: 'GreaterThan',
+ *                 Operand1: '1000',
+ *                 Operand1Type: 'Value',
+ *               },
+ *             ],
+ *           },
+ *         ],
  *       },
- *      },
- *    ],
- *    CurrentReport: 'End of Day',
- *  },
- * } as PredefinedConfig;
+ *       Name: 'My Team Big Invoice',
+ *       ReportColumnScope: 'AllColumns',
+ *       ReportRowScope: 'ExpressionRows',
+ *     },
+ *     {
+ *       ColumnIds: [
+ *         'OrderId',
+ *         'ChangeLastOrder',
+ *         'ContactName',
+ *         'InvoicedCost',
+ *         'ItemCost',
+ *         'ItemCount',
+ *         'OrderCost',
+ *         'OrderDate',
+ *       ],
+ *       Name: 'End of Day',
+ *       ReportColumnScope: 'BespokeColumns',
+ *       ReportRowScope: 'VisibleRows',
+ *     },
+ *   ],
+ * },
+ * Schedule: {
+ *   ReportSchedules: [
+ *     {
+ *       ScheduleType: 'Report',
+ *       ReportName: 'End of Day',
+ *       ExportDestination: 'Excel',
+ *       Schedule: {
+ *         DaysOfWeek: [1, 2, 3, 4, 5],
+ *         Hour: 17,
+ *         Minute: 30,
+ *       },
+ *     },
+ *   ],
+ * }, as PredefinedConfig;
  * ```
  *
+ * In this example we have created 2 Reports
+ *
+ * - 'My Team Big Invoice' (the currently selected one) - which exports ALL Columns and any rows where the 'InvoicedCost' Column > 1000 AND the 'Employee' column value is one of 'Robert King', 'Margaret Peacock' or 'Anne Dodsworth'
+ *
+ * - 'End of Day' - which exports 8 named Columns and ALL Rows.
+ *
+ * Note: we have also defined a Schedule so that the 'End of Day' Report will export to Excel automatically every weekday at 17:30
  */
 export interface ExportState extends ConfigState {
   /**
@@ -77,7 +138,12 @@ export interface Report extends AdaptableObject {
    *
    * - BespokeColumns - a list of Columns to be provided by you; if the Report is built using the UI Wizard a separate page appears to facilitate this column selection
    */
-  ReportColumnScope: 'AllColumns' | 'VisibleColumns' | 'SelectedCellColumns' | 'BespokeColumns';
+  ReportColumnScope:
+    | 'AllColumns'
+    | 'VisibleColumns'
+    | 'SelectedCellColumns'
+    | 'BespokeColumns'
+    | 'CustomColumns';
 
   /**
    * Which Rows are exported when the Report runs.  The choices are:
@@ -97,7 +163,8 @@ export interface Report extends AdaptableObject {
     | 'VisibleRows'
     | 'SelectedCellRows'
     | 'SelectedRows'
-    | 'ExpressionRows';
+    | 'ExpressionRows'
+    | 'CustomRows';
 
   /**
    * Which columns to include in the report.
@@ -112,6 +179,27 @@ export interface Report extends AdaptableObject {
    * This is only required if the `ReportRowScope` is 'ExpressionRows'
    */
   Expression?: Expression;
+
+  /**
+   * Function that is invoked when running a Custom Report.
+   *
+   * A Custom Report is one where the `ReportRowScope` property is set to 'CustomRows'
+   *
+   * The **name** of the function is provided here and then an implementation with the same name should be included in UserFunctions section of AdaptableOptions.
+   *
+   * The actual function itself receives the name of the Report as the sole parameter and returns the data to display in the report
+   *
+   * This data should be in the nature of an array of arrays.
+   *
+   * Note: the data should **not** include the Column Names - they are given in the `ColumnIds` property of the report.
+   *
+   * The Signature of the function is:
+   *
+   * ```ts
+   * ((reportName: string) => any[])
+   *  ```
+   */
+  CustomReportFunction?: string;
 }
 
 /**
@@ -126,4 +214,21 @@ export interface Report extends AdaptableObject {
 export interface ReportSchedule extends BaseSchedule {
   ReportName: string;
   ExportDestination: 'Excel' | 'CSV' | 'Clipboard' | 'JSON';
+}
+
+/**
+ * A Function which will run each time a Report with 'Custom Rows' is run.
+ *
+ * Each time it runs it is given the name of the Report as the only parameter and it returns the data to display in the report
+ *
+ * This data should be in the nature of an array of arrays.
+ *
+ * Note: the data should **not** include the Column Names - they are given in the `ColumnIds` property of the report.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `Export` section of Predefined Config.
+ */
+export interface CustomReportFunction extends BaseUserFunction {
+  type: 'CustomReportFunction';
+  name: string;
+  handler: (reportName: string) => any[];
 }

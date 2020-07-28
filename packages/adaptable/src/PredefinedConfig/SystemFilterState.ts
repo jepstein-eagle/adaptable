@@ -7,6 +7,18 @@ import { ConfigState } from './ConfigState';
  *
  * By default **all** the System Filters provided by Adaptable will be used, so only set this property if you dont want to use the full range.
  *
+ * --------------
+ *
+ * **Further AdapTable Help Resources**
+ *
+ * [System Filter Demo](https://demo.adaptabletools.com/filters/aggridsystemfiltersdemo/)
+ *
+ * {@link SystemFilterApi|System Filter API}
+ *
+ * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *
+ * --------------
+ *
  * **If this section is not set then all System Filters will be used**
  *
  * If you want **no System Filters** to be used then provide an empty array:
@@ -48,6 +60,18 @@ import { ConfigState } from './ConfigState';
  *  | Next Working Day        | Date
  *  | Previous Working Day    | Date
  *  | This Year               | Date
+ *
+ *  --------------
+ *
+ *  As well as System Filters, AdapTable offers 3 other types of Filters:
+ *
+ *  | Filter Type                                   | Usage
+ *  | -----------                                   | -----------
+ *  | {@link ColumnFilterState|Column}      | Filter a single Column using either a list of Column Values or a Range
+ *  | {@link UserFilterState|User}          | Columm Filters which are saved & named; can therefore be re-used in multiple Functions
+ *  | {@link NamedFilterState|Named}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
+ *
+ * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *
  */
 

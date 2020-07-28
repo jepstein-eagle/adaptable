@@ -16,7 +16,9 @@ export const IPUSHPULL_STOP_LIVE_DATA = 'IPUSHPULL_STOP_LIVE_DATA';
 export const IPUSHPULL_ADD_PAGE = 'IPUSHPULL_ADD_PAGE';
 
 export const IPUSHPULL_LOGIN = 'IPUSHPULL_LOGIN';
+export const IPUSHPULL_LOGOUT = 'IPUSHPULL_LOGOUT';
 export const IPUSHPULL_SET_LOGIN_ERROR_MESSAGE = 'IPUSHPULL_SET_LOGIN_ERROR_MESSAGE';
+export const IPUSHPULL_SET_LOGIN_DETAILS = 'IPUSHPULL_SET_LOGIN_DETAILS';
 
 export const SET_IPUSHPULL_AVAILABLE_ON = 'SET_IPUSHPULL_AVAILABLE_ON';
 export const SET_IPUSHPULL_AVAILABLE_OFF = 'SET_IPUSHPULL_AVAILABLE_OFF';
@@ -43,6 +45,12 @@ export interface IPushPullStartLiveDataAction extends Redux.Action {
 export interface IPushPullStopLiveDataAction extends Redux.Action {}
 
 export interface IPushPullLoginAction extends Redux.Action {
+  username: string;
+  password: string;
+}
+export interface IPushPullLogoutAction extends Redux.Action {}
+
+export interface IPushPullSetLoginDetailsAction extends Redux.Action {
   username: string;
   password: string;
 }
@@ -99,6 +107,19 @@ export const IPushPullStopLiveData = (): IPushPullStopLiveDataAction => ({
 
 export const IPushPullLogin = (username: string, password: string): IPushPullLoginAction => ({
   type: IPUSHPULL_LOGIN,
+  username,
+  password,
+});
+
+export const IPushPullLogout = (): IPushPullLogoutAction => ({
+  type: IPUSHPULL_LOGOUT,
+});
+
+export const IPushPullSetLoginDetails = (
+  username: string,
+  password: string
+): IPushPullSetLoginDetailsAction => ({
+  type: IPUSHPULL_SET_LOGIN_DETAILS,
   username,
   password,
 });
@@ -179,8 +200,20 @@ export const IPushPullReducer: Redux.Reducer<IPushPullState> = (
     case SET_IPUSHPULL_RUNNING_OFF:
       return Object.assign({}, state, { IsIPushPullRunning: false });
 
-    case IPUSHPULL_LOGIN: {
-      return { ...state, IPushPullLoginErrorMessage: undefined };
+    case IPUSHPULL_SET_LOGIN_DETAILS: {
+      let loginAction: IPushPullSetLoginDetailsAction = action as IPushPullSetLoginDetailsAction;
+      return {
+        ...state,
+        CurrentIPushpullUsername: loginAction.username,
+        CurrentIPushpullPassword: loginAction.password,
+      };
+    }
+    case IPUSHPULL_LOGOUT: {
+      return {
+        ...state,
+        CurrentIPushpullUsername: undefined,
+        CurrentIPushpullPassword: undefined,
+      };
     }
     case IPUSHPULL_SET_LOGIN_ERROR_MESSAGE: {
       return {

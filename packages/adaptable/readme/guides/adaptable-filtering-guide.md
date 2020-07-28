@@ -1,24 +1,34 @@
 # AdapTable Filtering Guide
 
-Filtering is one of the most common - and powerful - functionalities offered by AdapTable.
+Filtering is one of the most commonly used - and powerful - functions offered by AdapTable.
 
-It is designeed to be intuitive and easy to use, but there is actualy a lot of different types of filters and options on offer for filtering. 
+It is designed to be intuitive and easy to use, but that simplicity of use 'hides' a great deal of complexity in terms of the filtering options and functonalities on offer.
 
-There are 2 places where filtering can take place in AdapTable:
+There are 2 'controls' which provide filtering capabilities in AdapTable:
 
-- **Column Filters**:  The dropdown that appears when you click the filter icon in the Column Header (or in the Tab of the Column Header Menu)
+- **Column Filter Component**:  This powerful control allow you to buld very complex Column-based filters entirelly through the UI.
 
-- **Quick Filter Bar**:  The textbox that appears in the row between the Column Header and the first data row in the grid.
+- **Quick Filter Bar**:  The textbox that is displayed in the row between the Column Header and the first data row in the grid - allows Filters to be created through text entry.
 
-## Column Filters
+Both controls update the same [ColumnFilterState](../../src/PredefinedConfig/ColumnFilterState.ts) section in AdaptableState.
 
-Each column in Adaptable - which is marked as filterable - has a filter dropdown which allows for quick filter selection.
+## Column Filter Component
+
+Each column in Adaptable - which is marked as filterable - will have Column Filter Component to enable quick filter selection.
+
+The Component can appear in 2 places:
+
+1. In the dropdown which appears when you click the filter icon in any Column Header, or if you select the Filter tab in the Column Header Menu.
+  
+2. In the Filter ToolPanel appears in the 'sidebar', by default at the right hand side of the grid.  
 
 Users can create as many Column Filters as required and the grid will automatically update so that it only shows rows that match the filters set for the column.
 
-Any active Column Filters when the system closes are immediately re-applied on startup. But Column Filters cannot be saved and re-used elsewhere. However they can be easily converted into named - and re-usable [User Filters](../functions/user-filter-function.md) for this very purpose.
+Any active Column Filters when the system closes are automatically persisted and then immediately re-applied on startup.
 
-See the [Column Filter Function Read Me](../functions/column-filter-function.md) for more information on Column Filters and creating User Filters.
+> Note: Column Filters cannot be saved and re-used elsewhere. But they can be easily converted into named - and re-usable [User Filters](../functions/user-filter-function.md) for this very purpose.
+
+See the [Column Filter Read Me](../functions/column-filter-function.md) for more information on Column Filters and creating User Filters.
 
 There are 2 types of filter that you can apply:
 
@@ -44,13 +54,13 @@ There are 2 types of filter that you can apply:
 
         These are essentially named Column Filters (allowing for recursion) e.g. 'This Business Year' could be a filter for 'Between 1/05/20 and 31/04/21'
 
-        See the [User Filter Function Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
+        See the [User Filter Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
 
     - **Named Filters**: filters created by developers at design-time and provided through Predefined Config.
     
         Named Filtes contain a Predicate function that will be run each time the filter is evaluated.
 
-        See the [Named Filter Function Read Me](../functions/named-filter-function.md) for more information on how to create Named Filters.
+        See the [Named Filter Read Me](../functions/named-filter-function.md) for more information on how to create Named Filters.
 
     - **Column Values**: the distinct column values for that Column.  
 
@@ -62,11 +72,15 @@ There are 2 types of filter that you can apply:
 
 Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
 
+Each column in Adaptable - which is marked as filterable - has a filter dropdown which allows for quick filter selection.
+
+> In version 23 of ag-Grid the Quick Filter Bar is set at **column** level and not grid level (through the `floatingFilter` property).
+
 If the Quick Filter is visible then AdapTable will provide additional functionality such as wildcards.
 
 The Quick Filter bar allows you to use free text to find the data you want for a column.
 
-> By default, the filter uses 'Contains' when searching - so any cell which contains the inputted text will be included in the filter results.
+> By default, the filter uses 'Contains' when searching - so any cell which **contains** the inputted text will be included in the filter results.
 
 You can change this behaviour by using one of the wildcards (e.g. 'Starts With') that are listed below.
 
@@ -82,7 +96,7 @@ If you want to use the underlying vendor grid's quick filter bar instead of the 
 
 ## Demos
 
-Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/filters) to see a number of filtering-related demos
+The [Demo Site's filter section](https://demo.adaptabletools.com/filters) contains a number of filtering-related demos
 
 ## Appendices
 
@@ -152,6 +166,12 @@ The System Filters shipped by AdapTable are:
 | 0        | False                  | Boolean      | '0'         |
 | f (or F) | False                  | Boolean      | 'f'         |
 | n        | False                  | Boolean      | 'n'         |
+
+## FAQ
+
+**Can we do AND or OR in the Quick Filter Bar?**
+
+Not at present but this is in the Issue Log and will be added in a future release.
 
 ## Help
 

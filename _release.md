@@ -1,3 +1,42 @@
+## 7.0.0-canary.26
+
+Custom Excel reports
+
+## 7.0.0-canary.25
+
+fixing build
+
+## 7.0.0-canary.24
+
+fixing Glue42
+
+## 7.0.0-canary.23
+
+small fixes post testing
+
+## 7.0.0-canary.22
+
+another ipuspull fix - this time for autologin
+
+## 7.0.0-canary.21
+
+testing build
+add username and password to ipushpull state so can be retrieved
+
+## 7.0.0-canary.20
+
+## 7.0.0-canary.19
+
+## 7.0.0-canary.18
+
+fix parser after embedding in core
+
+## 7.0.0-canary.16
+
+## 7.0.0-canary.15
+
+## 7.0.0-canary.14
+
 ## 7.0.0-canary.13
 
 ## 7.0.0-canary.12

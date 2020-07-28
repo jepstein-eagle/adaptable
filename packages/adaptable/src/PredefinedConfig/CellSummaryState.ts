@@ -10,9 +10,67 @@ import { SelectedCellInfo } from '../types';
  *
  * Note: if you are using the Finance plug-in, extra finance-related operations are available.
  *
- *  **Further AdapTable Help Resources**
+ * --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/) | [Cell Summary API](_src_api_cellsummaryapi_.cellsummaryapi.html) | [Cell Summary Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
+ * **Further AdapTable Help Resources**
+ *
+ * [Cell Summary Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/)
+ *
+ * {@link CellSummaryApi|Cell Summary API}
+ *
+ * [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
+ *
+ * --------------
+ *
+ *  * **Cell Summary Example**
+ *
+ * ```ts
+ *
+ * export default {
+ *  CellSummary: {
+ *    CellSummaryOperationDefinitions: [
+ *      {
+ *        OperationName: 'Oldest',
+ *        OperationFunction: 'OldestOperationFunction',
+ *      },
+ *    ],
+ *    SummaryOperation: 'Min',
+ *  },
+ * } as PredefinedConfig;
+ *
+ *  const adaptableOptions: AdaptableOptions = {
+ *   ...
+ *    userFunctions: [
+ *      {
+ *        type: 'CellSummaryOperationFunction',
+ *        name: 'OldestOperationFunction',
+ *        handler(operationParam) {
+ *          let dateValues: Date[] = [];
+ *          operationParam.selectedCellInfo.Columns.filter(
+ *            c => c.DataType === 'Date'
+ *          ).forEach(dc => {
+ *            let gridCells = operationParam.selectedCellInfo.GridCells.filter(
+ *              gc => gc.columnId == dc.ColumnId
+ *            ).map(gc => gc.rawValue);
+ *            dateValues.push(...gridCells);
+ *          });
+ *          if (dateValues.length > 0) {
+ *            const sortedDates = dateValues.sort((a, b) => {
+ *              return new Date(a).getTime() - new Date(b).getTime();
+ *            });
+ *            return new Date(sortedDates[0]).toLocaleDateString();
+ *          }
+ *        },
+ *      },
+ *    ],
+ *    ...
+ *  };
+ *
+ *  In this example we have created a Custom Cell Summary definition called 'Oldest'.
+ *
+ *  We reference it in the Cell Summary section of Predefined Config and provide the actual function implementation in the `userFunctions` section of AdaptableOptions.
+ *
+ * --------------
  *
  *  *Cell Summary Operations*
  *
@@ -21,17 +79,19 @@ import { SelectedCellInfo } from '../types';
  *  | Sum       | Total of all selected cells	                     |
  *  | Average   | Average of all selected cells 	                 |
  *  | Median    | Median of all selected cells 	                   |
- *  | Distinct  | Lists all distinct values in the selected cells	 |
+ *  | Mode      | The most common value of all selected cells 	                   |
+ *  | Distinct  | Count of distinct values in the selected cells	 |
  *  | Max  	    | Highest value in selected cells 	               |
  *  | Min   	  | Lowest value in selected cells 	                 |
  *  | Count  	  | Count of selected cells 	                       |
  *
  * *Finance Plugin Additional Operations*
  *
- *  | Operation | Description                                      |
- *  |---------  |-------------------	                             |
- *  | Only      | If all cells are same value it returns that value; otherwise it returns nothing |
- *  | VWAP      | Runs VWAP analysis - requires selection of 2 contiguous columns	                |
+ *  | Operation       | Description                                      |
+ *  |---------        |-------------------	                             |
+ *  | Only            | If all cells are same value it returns that value; otherwise it returns nothing |
+ *  | VWAP            | Runs VWAP analysis - requires selection of 2 contiguous columns	                |
+ *  | WeightedAverage | Calculates Weighted Average - requires selection of 2 contiguous columns	                |
  *
  *
  */

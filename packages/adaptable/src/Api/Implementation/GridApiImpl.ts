@@ -165,6 +165,29 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return columnId == AG_GRID_GROUPED_COLUMN;
   }
 
+  public isCalculatedColumn(columnId: string): boolean {
+    return (
+      this.adaptable.api.calculatedColumnApi
+        .getAllCalculatedColumn()
+        .find(cc => cc.ColumnId == columnId) != null
+    );
+  }
+
+  public isFreeTextColumn(columnId: string): boolean {
+    return (
+      this.adaptable.api.freeTextColumnApi
+        .getAllFreeTextColumn()
+        .find(cc => cc.ColumnId == columnId) != null
+    );
+  }
+
+  public isActionColumn(columnId: string): boolean {
+    return (
+      this.adaptable.api.actionColumnApi.getAllActionColumn().find(cc => cc.ColumnId == columnId) !=
+      null
+    );
+  }
+
   public isNumericColumn(column: AdaptableColumn): boolean {
     return column.DataType == DataType.Number;
   }
@@ -343,12 +366,26 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return this.adaptable.isGroupable();
   }
 
+  public showQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarShow());
+  }
+
+  public hideQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarHide());
+  }
+
   private LogMissingColumnWarning(columnId: string): void {
     if (
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning === true
     ) {
-      if (!this.isRowGroupColumn(columnId)) {
+      // if (!this.isRowGroupColumn(columnId)) {
+      if (
+        !this.isRowGroupColumn(columnId) &&
+        !this.isCalculatedColumn(columnId) &&
+        !this.isFreeTextColumn(columnId) &&
+        !this.isActionColumn(columnId)
+      ) {
         LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);
       }
     }

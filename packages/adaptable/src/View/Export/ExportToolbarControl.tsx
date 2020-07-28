@@ -183,7 +183,8 @@ class ExportToolbarControlComponent extends React.Component<
             className="ab-DashboardToolbar__Export__edit"
             disabled={
               savedReport == null ||
-              this.props.Api.internalApi.getReportService().IsSystemReport(savedReport)
+              this.props.Api.internalApi.getReportService().IsSystemReport(savedReport) ||
+              savedReport.ReportColumnScope == 'CustomColumns'
             }
             AccessLevel={this.props.AccessLevel}
           />

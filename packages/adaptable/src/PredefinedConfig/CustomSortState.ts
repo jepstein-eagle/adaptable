@@ -16,13 +16,17 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  * - Through the `CustomSortComparerFunction` - a standard 'Comparer' function provided by you.
  *
+ * --------------
+ *
  * **Further AdapTable Help Resources**
  *
  * [Custom Sort Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/custom-sort-function.md)
  *
  * [Custom Sort Demo](https://demo.adaptabletools.com/gridmanagement/aggridcustomsortdemo/)
  *
- * [Custom Sort API](_src_api_customsortapi_.customsortapi.html)
+ * {@link CustomSortApi|Custom Sort API}
+ *
+ * --------------
  *
  * **Custom Sort Example**
  *

@@ -12,6 +12,7 @@ import HelpBlock from '../../../components/HelpBlock';
 
 import WizardPanel from '../../../components/WizardPanel';
 import { IAdaptable } from '../../../types';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 
 export interface CustomSortValuesWizardProps extends AdaptableWizardStepProps<CustomSort> {}
 export interface CustomSortValuesWizardState {
@@ -33,7 +34,7 @@ export class CustomSortValuesWizard
         false
       ),
       SelectedValues: this.props.Data.SortedValues,
-      IsEdit: this.props.Data.SortedValues.length > 0,
+      IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.Data.SortedValues),
     };
   }
 

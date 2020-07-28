@@ -11,7 +11,7 @@ import {
   Report,
   AdaptableColumn,
 } from '@adaptabletools/adaptable/types';
-import _ from '@adaptabletools/adaptable/node_modules/@types/lodash';
+import * as _ from 'lodash';
 import {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,
@@ -47,6 +47,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
   }
 
   public isStrategyAvailable(): boolean {
+    return true;
     if (this.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(this.Id)) {
       return false;
     }
@@ -219,6 +220,14 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     }
   }
 
+  private getGlue42Service(): Glue42Service {
+    if (!this.glue42Service) {
+      this.glue42Service = this.adaptable.getPluginProperty('glue42', 'service') || null;
+    }
+
+    return this.glue42Service;
+  }
+
   public sendSnapshot(glue42Report: Glue42Report): void {
     let report: Report = this.adaptable.api.exportApi.getReportByName(glue42Report.ReportName);
 
@@ -229,11 +238,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
       let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(report);
       try {
         if (data) {
-          this.glue42Service.exportData.apply(this.glue42Service, [
-            data,
-            gridColumns,
-            primaryKeyValues,
-          ]);
+          this.getGlue42Service().exportData(data, gridColumns, primaryKeyValues);
         }
       } catch (error) {
         LoggingHelper.LogAdaptableError(error);
@@ -250,12 +255,14 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
       }
       // let page: string = 'Excel'; // presume we should get this from Glue42 service in async way??
       let reportData: any[] = this.ConvertReportToArray(report);
-      this.glue42Service.openSheet(reportData).then(() => {
-        glue42Api.startLiveData(glue42Report);
-        setTimeout(() => {
-          this.throttledRecomputeAndSendLiveDataEvent();
-        }, 500);
-      });
+      this.getGlue42Service()
+        .openSheet(reportData)
+        .then(() => {
+          glue42Api.startLiveData(glue42Report);
+          setTimeout(() => {
+            this.throttledRecomputeAndSendLiveDataEvent();
+          }, 500);
+        });
     }
   }
 
@@ -276,9 +283,11 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
     if (!glue42Api) {
       return 0;
     }
-    if (glue42Api.isGlue42Running()) {
-      iGlue42ThrottleTime = glue42Api.getGlue42ThrottleTime();
-    }
-    return iGlue42ThrottleTime ? iGlue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+    return DEFAULT_LIVE_REPORT_THROTTLE_TIME;
+
+    //  if (glue42Api.isGlue42Running()) {
+    //    iGlue42ThrottleTime = glue42Api.getGlue42ThrottleTime();
+    //  }
+    //  return iGlue42ThrottleTime ? iGlue42ThrottleTime : DEFAULT_LIVE_REPORT_THROTTLE_TIME;
   }
 }

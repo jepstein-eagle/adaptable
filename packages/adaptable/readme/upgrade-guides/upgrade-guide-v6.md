@@ -216,7 +216,7 @@ Find out more - and see the full list of AdapTable events at [Event API Document
 
 ## New Features
 
-We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptabletools.com/interfaces/_adaptableoptions_adaptableoptions_.adaptableoptions) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
+We have added a lot of new functionality to AdapTable in version 6.  This includes many more options (and option groups) to [Adaptable Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) (the object you create at design time and provide to the AdapTable constructor), more [API methods](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi)  and more [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) properties. 
 
 The result is to give you more complete control over how your instance of AdapTable looks and works. 
 
@@ -232,7 +232,6 @@ There are far too many new features to list here but some of the headlines are:
 * [Column Menu bespoke items](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html#columnmenuitems)
 * [Context Menu bespoke items](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html#contextmenuitems)
 * [Quick Search exclude columns](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#excludecolumnfromquicksearch)
-* [ipushpull improvements](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_ipushpullstate_.ipushpullstate.html)
 
 
 ## Basic Installation Example

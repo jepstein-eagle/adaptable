@@ -196,6 +196,28 @@ export function runAdaptableComparerFunction(
   };
 }
 
+/*
+Not a very nice function but it does the trick for Custom Reports
+It takes a column id and returns an AdaptableColumn - this is needed for elsewhere in reporting but its a bit hacky
+*/
+export function createAdaptableColumnFromColumnId(columnId: string): AdaptableColumn {
+  return {
+    ColumnId: columnId,
+    FriendlyName: columnId,
+    Filterable: false,
+    DataType: 'String',
+    ReadOnly: true,
+    Sortable: false,
+    Visible: false,
+    Groupable: false,
+    Pivotable: false,
+    Aggregatable: false,
+    SpecialColumn: false,
+    IsExcludedFromQuickSearch: false,
+    IsSparkline: false,
+  };
+}
+
 export const AdaptableHelper = {
   assignadaptableOptions,
   isValidPrimaryKey,
@@ -203,5 +225,6 @@ export const AdaptableHelper = {
   CheckadaptableOptions,
   createFDC3Message,
   runAdaptableComparerFunction,
+  createAdaptableColumnFromColumnId,
 };
 export default AdaptableHelper;

@@ -12,7 +12,9 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
   init(params: IDetailCellRendererParams) {
     const oldOnGridReady = params.detailGridOptions.onGridReady;
     params.detailGridOptions.onGridReady = async (event: any) => {
-      if (this.adaptableApi || this.adaptableDestroyed) return;
+      if (this.adaptableApi || this.adaptableDestroyed) {
+        return;
+      }
 
       if (oldOnGridReady) {
         oldOnGridReady(event);
@@ -21,7 +23,7 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
       // @ts-ignore
       const masterAdaptable: Adaptable = params.api.__adaptable;
 
-      const { onDetailInit, adaptableOptions } = masterAdaptable.getPlugin(
+      const { onDetailInit, detailAdaptableOptions } = masterAdaptable.getPlugin(
         'master-detail-aggrid'
       ).options;
 
@@ -38,13 +40,13 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
       eDetailGrid.parentNode?.prepend(adaptableContainer);
 
       const predefinedConfig =
-        typeof adaptableOptions.predefinedConfig === 'string'
+        typeof detailAdaptableOptions.predefinedConfig === 'string'
           ? {}
-          : adaptableOptions.predefinedConfig;
+          : detailAdaptableOptions.predefinedConfig;
 
       this.adaptableApi = await Adaptable.init({
         adaptableId: `${masterAdaptable.adaptableOptions.adaptableId} Detail`,
-        ...adaptableOptions,
+        ...detailAdaptableOptions,
         predefinedConfig: {
           ...predefinedConfig,
           Dashboard: {
@@ -53,14 +55,16 @@ export class DetailCellRenderer extends BaseDetailCellRenderer {
           },
         },
         containerOptions: {
-          ...adaptableOptions.containerOptions,
+          ...detailAdaptableOptions.containerOptions,
           adaptableContainer: adaptableContainerId,
           vendorContainer: eDetailGrid,
         },
         vendorGrid: detailGridOptions,
       });
 
-      if (onDetailInit) onDetailInit(this.adaptableApi);
+      if (onDetailInit) {
+        onDetailInit(this.adaptableApi);
+      }
     };
     super.init(params);
   }

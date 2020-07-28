@@ -79,8 +79,6 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
-import { HideColumnStrategy } from '../Strategy/HideColumnStrategy';
-import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants';
 import { clamp } from 'lodash';
@@ -185,8 +183,6 @@ export class agGridHelper {
     strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
-    strategies.set(StrategyConstants.HideColumnStrategyId, new HideColumnStrategy(adaptable));
-    strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(adaptable));
 
     return strategies;
   }
@@ -235,39 +231,40 @@ export class agGridHelper {
       const clampedValue = clamp(value, min, max);
       const percentageValue = ((clampedValue - min) / (max - min)) * 100;
       const matchingRange = pcr.Ranges.find(r => r.Min <= clampedValue && r.Max >= clampedValue);
+      if (matchingRange) {
+        const wrapperEl = document.createElement('div');
+        wrapperEl.style.height = pcr.ShowValue ? '100%' : '80%';
+        wrapperEl.style.display = 'flex';
+        wrapperEl.style.flexDirection = 'column';
+        wrapperEl.style.justifyContent = 'center';
 
-      const wrapperEl = document.createElement('div');
-      wrapperEl.style.height = pcr.ShowValue ? '100%' : '80%';
-      wrapperEl.style.display = 'flex';
-      wrapperEl.style.flexDirection = 'column';
-      wrapperEl.style.justifyContent = 'center';
+        const barEl = document.createElement('div');
+        barEl.style.background = pcr.BackColor;
+        barEl.style.flex = '1';
 
-      const barEl = document.createElement('div');
-      barEl.style.background = pcr.BackColor;
-      barEl.style.flex = '1';
+        const barInsideEl = document.createElement('div');
+        barInsideEl.style.background = matchingRange.Color;
+        barInsideEl.style.height = '100%';
+        barInsideEl.style.width = `${percentageValue.toFixed(0)}%`;
 
-      const barInsideEl = document.createElement('div');
-      barInsideEl.style.background = matchingRange.Color;
-      barInsideEl.style.height = '100%';
-      barInsideEl.style.width = `${percentageValue.toFixed(0)}%`;
+        const textEl = document.createElement('div');
+        textEl.style.lineHeight = '1.2';
+        if (pcr.DisplayRawValue && pcr.DisplayPercentageValue) {
+          textEl.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
+        } else if (pcr.DisplayRawValue) {
+          textEl.innerText = value;
+        } else if (pcr.DisplayPercentageValue) {
+          textEl.innerText = `${percentageValue.toFixed(0)}%`;
+        }
 
-      const textEl = document.createElement('div');
-      textEl.style.lineHeight = '1.2';
-      if (pcr.DisplayRawValue && pcr.DisplayPercentageValue) {
-        textEl.innerText = `${value} (${percentageValue.toFixed(0)}%)`;
-      } else if (pcr.DisplayRawValue) {
-        textEl.innerText = value;
-      } else if (pcr.DisplayPercentageValue) {
-        textEl.innerText = `${percentageValue.toFixed(0)}%`;
+        barEl.append(barInsideEl);
+        wrapperEl.append(barEl);
+        if (pcr.ShowValue) {
+          wrapperEl.append(textEl);
+        }
+
+        return wrapperEl;
       }
-
-      barEl.append(barInsideEl);
-      wrapperEl.append(barEl);
-      if (pcr.ShowValue) {
-        wrapperEl.append(textEl);
-      }
-
-      return wrapperEl;
     };
 
     return cellRendererFunc;
@@ -551,14 +548,13 @@ export class agGridHelper {
     };
   }
 
-  public createAgGridMenuDefFromUsereMenu(
+  public createAgGridMenuDefFromUserMenu(
     label: string,
     menuItem: UserMenuItem,
-    menuInfo: MenuInfo,
-    type: 'contextMenu' | 'columnMenu'
+    menuInfo: MenuInfo
   ): MenuItemDef {
     const fn = this.adaptable.getUserFunctionHandler(
-      type === 'contextMenu' ? 'UserMenuItemClickedFunction' : 'UserMenuItemClickedFunction',
+      'UserMenuItemClickedFunction',
       menuItem.UserMenuItemClickedFunction
     );
     return {
@@ -567,10 +563,29 @@ export class agGridHelper {
       icon: menuItem.Icon,
       subMenu: ArrayExtensions.IsNullOrEmpty(menuItem.SubMenuItems)
         ? undefined
-        : menuItem.SubMenuItems!.map(s => {
-            return this.createAgGridMenuDefFromUsereMenu(menuItem.Label, s, menuInfo, type);
+        : menuItem.SubMenuItems!.map((subMenuItem: UserMenuItem) => {
+            return this.createAgGridMenuDefFromUserMenu(subMenuItem.Label, subMenuItem, menuInfo);
           }),
     };
+  }
+
+  public createAdaptableMenuItemFromUserMenu(
+    label: string,
+    menuItem: UserMenuItem,
+    menuInfo: MenuInfo
+  ): AdaptableMenuItem {
+    const fn = this.adaptable.getUserFunctionHandler(
+      'UserMenuItemClickedFunction',
+      menuItem.UserMenuItemClickedFunction
+    );
+    let adaptableMenuItem: AdaptableMenuItem = {
+      Label: label,
+      ReduxAction: null,
+      ClickFunction: () => fn(menuInfo),
+      IsVisible: true,
+      Icon: menuItem.Icon,
+    };
+    return adaptableMenuItem;
   }
 
   public isColumnReadonly(colDef: ColDef): boolean {

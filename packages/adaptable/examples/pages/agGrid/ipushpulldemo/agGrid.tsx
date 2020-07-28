@@ -22,9 +22,9 @@ import {
 import { IPushPullReport } from '../../../../src/PredefinedConfig/IPushPullState';
 import ipp from '../../../../../plugins/ipushpull/src';
 
-import { IIPPConfig } from 'ipushpull-js/dist/Config';
+// import { IIPPConfig } from 'ipushpull-js/dist/Config';
 
-const pushpullConfig: IIPPConfig = {
+const pushpullConfig = {
   api_url: 'https://www.ipushpull.com/api/1.0',
   ws_url: 'https://www.ipushpull.com',
   web_url: 'https://www.ipushpull.com',
@@ -53,6 +53,7 @@ async function InitAdaptableDemo() {
         username: 'jonny.wolfson@adaptabletools.com',
         password: 'traders',
         ippConfig: pushpullConfig,
+        autoLogin: true,
       }),
     ],
     vendorGrid: {
@@ -72,6 +73,9 @@ async function InitAdaptableDemo() {
   console.log(process.env.IPUSHPULL_API_KEY, 'IPUSHPULL_API_KEY');
 
   adaptableApi.eventApi.on('AdaptableReady', ({ vendorGrid: gridOptions }) => {
+    console.log('autologin');
+    console.log(ippApi.getAutoLogin());
+
     if (useTickingData) {
       tickingDataHelper.useTickingDataagGrid(
         adaptableOptions.vendorGrid,
@@ -85,6 +89,10 @@ async function InitAdaptableDemo() {
   adaptableApi.eventApi.on('LiveDataChanged', (eventArgs: LiveDataChangedEventArgs) => {
     let eventData: LiveDataChangedInfo = eventArgs.data[0].id;
     if (eventData.ReportDestination == 'ipushpull') {
+      console.log('username');
+      console.log(ippApi.getCurrentIPushPullUsername());
+      console.log('password');
+      console.log(ippApi.getCurrentIPushPullPassword());
       if (eventData.LiveDataTrigger === 'LiveDataStarted') {
         const iPushPullReport: IPushPullReport = eventData.LiveReport;
         // do somthing wih the report...
@@ -128,7 +136,7 @@ let demoConfig: PredefinedConfig = {
   },
 
   Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert', 'IPushPull'],
+    VisibleToolbars: ['IPushPull'],
   },
 };
 

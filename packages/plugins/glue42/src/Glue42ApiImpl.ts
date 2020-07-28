@@ -71,14 +71,6 @@ export class Glue42ApiImpl extends ApiBase implements Glue42Api {
     this.dispatchAction(Glue42Redux.Glue42SetLoginErrorMessage(loginErrorMessage));
   }
 
-  public getGlue42ThrottleTime(): number | undefined {
-    return this.options.throttleTime;
-  }
-
-  public setGlue42ThrottleTime(throttleTime: number): void {
-    this.dispatchAction(Glue42Redux.Glue42SetThrottleTime(throttleTime));
-  }
-
   public getCurrentLiveGlue42Report(): Glue42Report | undefined {
     return undefined; // need to do this
   }

@@ -33,7 +33,7 @@ import { ConfigState } from './ConfigState';
  *
  * **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridsystemstatusdemo/) | [System Status Function Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/system-status-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/alertsmessages/aggridsystemstatusdemo/) | [System Status Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/system-status-function.md)
  *
  * **System Status Predefined Config Example**
  *
