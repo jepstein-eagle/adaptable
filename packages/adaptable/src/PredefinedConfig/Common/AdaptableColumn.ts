@@ -23,6 +23,8 @@ export interface AdaptableColumn extends AdaptableObject {
   IsSparkline: boolean;
   Groupable: boolean;
   Pivotable: boolean;
+  Width?: number;
+  Flex?: number;
   Aggregatable: boolean;
   SpecialColumn: boolean;
   IsExcludedFromQuickSearch: boolean;

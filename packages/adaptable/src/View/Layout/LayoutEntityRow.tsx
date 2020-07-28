@@ -15,6 +15,7 @@ import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutServic
 export interface LayoutEntityRowProps<LayoutEntityRow>
   extends SharedEntityRowProps<LayoutEntityRow> {
   IsCurrentLayout: boolean;
+  canDelete: boolean;
   onSelect: (Layout: Layout) => void;
 }
 
@@ -51,7 +52,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
         editClick={() => this.props.onEdit(layout)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={false}
-        overrideDisableDelete={layout.Name == DEFAULT_LAYOUT}
+        overrideDisableDelete={!this.props.canDelete}
         EntityType={StrategyConstants.LayoutStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />

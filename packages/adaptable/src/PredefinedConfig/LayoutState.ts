@@ -84,6 +84,13 @@ export interface LayoutState extends ConfigState {
    * **Default Value**:  Empty array
    */
   Layouts?: Layout[];
+
+  CreateDefaultLayout?:
+    | boolean
+    | (Omit<Layout, 'Name' | 'Columns'> & {
+        Columns?: string[];
+        Name?: string;
+      });
 }
 
 /**
@@ -104,6 +111,14 @@ export interface Layout extends AdaptableObject {
    */
   Columns: string[];
 
+  ColumnWidthMap?: {
+    [key: string]: number;
+  };
+
+  ColumnFlexMap?: {
+    [key: string]: number;
+  };
+
   /**
    * What sorting wil be applied in the Layout.
    *
@@ -118,6 +133,8 @@ export interface Layout extends AdaptableObject {
    */
   GroupedColumns?: string[];
 
+  PinnedColumnsMap?: { [colId: string]: 'left' | 'right' };
+
   /**
    * Whether pivoting should be applied to the Layout.
    *
@@ -127,22 +144,12 @@ export interface Layout extends AdaptableObject {
    *
    * - `AggregationColumns`: Which Columns will be **aggregated** in the pivot
    *
+   * @deprecated
+   *
    */
   PivotDetails?: PivotDetails;
-  /**
-   * **Do not set this property when creating a layout**
-   *
-   *  This is state saved automatically by Adaptable for internal use to manage layouts
-   *
-   *  Note: This is only used if `includeVendorStateInLayouts` is set to true in [LayoutOptions](_src_adaptableoptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
-   */
-  VendorGridInfo?: VendorGridInfo;
-  /**
-   * **Do not set this property when creating a layout**
-   *
-   *  This is state saved automatically by Adaptable for internal use to manage layouts
-   */
-  AdaptableGridInfo?: AdaptableGridInfo;
+
+  ExpandedRowGroupKeys?: any[];
 }
 
 /**

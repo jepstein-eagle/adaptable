@@ -12,9 +12,12 @@ export interface FreeTextColumnState extends ConfigState {
 }
 
 export interface FreeTextColumn extends AdaptableObject {
+  //todo rename to friendlyName
+  FriendlyName?: string;
+
   ColumnId: string;
-  DefaultValue: any;
-  FreeTextStoredValues: FreeTextStoredValue[];
+  DefaultValue?: any;
+  FreeTextStoredValues?: FreeTextStoredValue[];
   TextEditor?: 'Inline' | 'Large';
 }
 

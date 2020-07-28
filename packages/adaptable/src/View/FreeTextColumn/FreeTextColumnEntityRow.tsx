@@ -20,7 +20,8 @@ export class FreeTextColumnEntityRow extends React.Component<
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={FreeTextColumn.ColumnId} />;
-    colItems[1].Content = (
+    colItems[1].Content = <EntityRowItem Content={FreeTextColumn.FriendlyName} />;
+    colItems[2].Content = (
       <EntityRowItem
         Content={
           StringExtensions.IsNullOrEmpty(FreeTextColumn.DefaultValue)
@@ -29,7 +30,7 @@ export class FreeTextColumnEntityRow extends React.Component<
         }
       />
     );
-    colItems[2].Content = (
+    colItems[3].Content = (
       <EntityRowItem
         Content={
           ArrayExtensions.IsNullOrEmpty(FreeTextColumn.FreeTextStoredValues)
@@ -38,7 +39,7 @@ export class FreeTextColumnEntityRow extends React.Component<
         }
       />
     );
-    colItems[3].Content = (
+    colItems[4].Content = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(FreeTextColumn)}
         showShare={this.props.TeamSharingActivated}

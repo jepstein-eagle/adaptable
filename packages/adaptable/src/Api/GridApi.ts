@@ -183,7 +183,7 @@ export interface GridApi {
   getExpandRowGroupsKeys(): any[];
   expandRowGroupsForValues(columnValues: any[]): void;
 
-  isSpecialColumn(columnId: string): boolean;
+  isRowGroupColumn(columnId: string): boolean;
   isCalculatedColumn(columnId: string): boolean;
   isFreeTextColumn(columnId: string): boolean;
   isActionColumn(columnId: string): boolean;
@@ -200,7 +200,7 @@ export interface GridApi {
   getColumnIdsFromFriendlyNames(friendlyNames: string[]): string[];
   getColumnsFromFriendlyNames(friendlyNames: string[]): AdaptableColumn[];
   getColumnsFromIds(columnIds: string[]): AdaptableColumn[];
-  getColumnFromId(columnId: string): AdaptableColumn;
+  getColumnFromId(columnId: string, logWarning?: boolean): AdaptableColumn;
 
   getSortableColumns(): AdaptableColumn[];
   getGroupableColumns(): AdaptableColumn[];

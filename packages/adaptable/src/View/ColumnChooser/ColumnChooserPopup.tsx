@@ -14,9 +14,7 @@ import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { Flex } from 'rebass';
 
 interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPopupComponent> {
-  onNewColumnListOrder: (
-    VisibleColumnList: AdaptableColumn[]
-  ) => SystemRedux.SetNewColumnListOrderAction;
+  onNewColumnListOrder: (VisibleColumnList: string[]) => SystemRedux.SetNewColumnListOrderAction;
   ColumnCategories: Array<ColumnCategory>;
 }
 
@@ -37,8 +35,8 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     availableValues = columns.map(x =>
       this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
-    selectedValues = columns
-      .filter(x => x.Visible)
+    selectedValues = this.props.Api.gridApi
+      .getVisibleColumns()
       .map(x => this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x));
 
     let infoBody: any[] = [
@@ -75,9 +73,11 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     );
   }
 
-  private ColumnListChange(columnList: Array<string>) {
-    let cols: AdaptableColumn[] = this.props.Api.gridApi.getColumnsFromFriendlyNames(columnList);
-    this.props.onNewColumnListOrder(cols);
+  private ColumnListChange(columnList: string[]) {
+    let colIds: string[] = this.props.Api.gridApi
+      .getColumnsFromFriendlyNames(columnList)
+      .map(c => c.ColumnId);
+    this.props.onNewColumnListOrder(colIds);
   }
 }
 
@@ -91,7 +91,7 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<ColumnChooserPopupProps> {
   return {
-    onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>
+    onNewColumnListOrder: (VisibleColumnList: string[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
   };
 }

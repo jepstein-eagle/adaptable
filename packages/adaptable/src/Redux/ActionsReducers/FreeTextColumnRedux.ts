@@ -8,6 +8,7 @@ import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
 export const FREE_TEXT_COLUMN_ADD = 'FREE_TEXT_COLUMN_ADD';
+export const FREE_TEXT_COLUMN_SET = 'FREE_TEXT_COLUMN_SET';
 export const FREE_TEXT_COLUMN_EDIT = 'FREE_TEXT_COLUMN_EDIT';
 export const FREE_TEXT_COLUMN_DELETE = 'FREE_TEXT_COLUMN_DELETE';
 export const FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE = 'FREE_TEXT_COLUMN_ADD_EDIT_STORED_VALUE';
@@ -17,8 +18,12 @@ export interface FreeTextColumnAction extends Redux.Action {
 }
 
 export interface FreeTextColumnAddAction extends FreeTextColumnAction {}
-
-export interface FreeTextColumnEditAction extends FreeTextColumnAction {}
+export interface FreeTextColumnSetAction extends Redux.Action {
+  freeTextColumns: FreeTextColumn[];
+}
+export interface FreeTextColumnEditAction extends Redux.Action {
+  freeTextColumn: Partial<FreeTextColumn> & { ColumnId: string };
+}
 
 export interface FreeTextColumnDeleteAction extends FreeTextColumnAction {}
 
@@ -32,7 +37,14 @@ export const FreeTextColumnAdd = (freeTextColumn: FreeTextColumn): FreeTextColum
   freeTextColumn,
 });
 
-export const FreeTextColumnEdit = (freeTextColumn: FreeTextColumn): FreeTextColumnEditAction => ({
+export const FreeTextColumnSet = (freeTextColumns: FreeTextColumn[]): FreeTextColumnSetAction => ({
+  type: FREE_TEXT_COLUMN_SET,
+  freeTextColumns,
+});
+
+export const FreeTextColumnEdit = (
+  freeTextColumn: Partial<FreeTextColumn> & { ColumnId: string }
+): FreeTextColumnEditAction => ({
   type: FREE_TEXT_COLUMN_EDIT,
   freeTextColumn,
 });
@@ -79,8 +91,21 @@ export const FreeTextColumnReducer: Redux.Reducer<FreeTextColumnState> = (
       return {
         ...state,
         FreeTextColumns: state.FreeTextColumns.map(abObject =>
-          abObject.Uuid === actionFreeTextColumn.Uuid ? actionFreeTextColumn : abObject
+          abObject.Uuid === actionFreeTextColumn.Uuid
+            ? // we need to assign and return the same object
+              // in order to make working with aggrid easier, as the col getter
+              // references this object
+              Object.assign(abObject, actionFreeTextColumn)
+            : abObject
         ),
+      };
+
+    case FREE_TEXT_COLUMN_SET:
+      const actionFreeTextColumns: FreeTextColumn[] = (action as FreeTextColumnSetAction)
+        .freeTextColumns;
+      return {
+        ...state,
+        FreeTextColumns: actionFreeTextColumns,
       };
 
     case FREE_TEXT_COLUMN_DELETE: {

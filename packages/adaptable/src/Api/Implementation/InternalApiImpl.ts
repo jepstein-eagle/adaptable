@@ -1,6 +1,7 @@
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
+import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ApiBase } from './ApiBase';
 import { InternalApi } from '../InternalApi';
@@ -27,7 +28,7 @@ import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import { DashboardTab } from '../../PredefinedConfig/DashboardState';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
-import { IAdaptable, AdaptableOptions } from '../../types';
+import { IAdaptable, AdaptableOptions, Layout } from '../../types';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 import { IStrategyService } from '../../Utilities/Services/StrategyService';
 import { IFilterService } from '../../Utilities/Services/Interface/IFilterService';
@@ -135,6 +136,15 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public addAdaptableColumn(AdaptableColumn: AdaptableColumn): void {
     this.dispatchAction(GridRedux.GridAddColumn(AdaptableColumn));
   }
+  public addAdaptableColumns(AdaptableColumns: AdaptableColumn[]): void {
+    this.dispatchAction(GridRedux.GridAddColumns(AdaptableColumns));
+  }
+  public removeAdaptableColumn(colId: string): void {
+    const col = this.getAdaptableState().Grid.Columns.find(c => c.ColumnId === colId);
+    if (col) {
+      this.dispatchAction(GridRedux.GridRemoveColumn(col));
+    }
+  }
 
   public getUpdatedRowInfos(): any[] {
     return this.getSystemState().UpdatedRowInfos;
@@ -206,6 +216,10 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
 
   setLastAppliedShortCut(gridCell: GridCell | undefined): void {
     this.dispatchAction(SystemRedux.SetLastAppliedShortcut(gridCell));
+  }
+
+  updateCurrentDraftLayout(layout: Layout): void {
+    this.dispatchAction(LayoutRedux.LayoutUpdateCurrentDraft(layout));
   }
 
   setDefaultDashboardTab(): void {

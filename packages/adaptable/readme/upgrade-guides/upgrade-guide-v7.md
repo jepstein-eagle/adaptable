@@ -293,6 +293,15 @@ To use this functionality you need to use the new `master-detail-aggrid Plugin` 
 
 Added `--ab-cmp-field-wrap__border-radius` css variable
 
+
+## Breaking changes
+
+* LayoutApi.restoreLayout was removed
+* LayoutApi.clearLayout was removed
+* LayoutApi.restorelayout was removed
+* GridApi.isSpecialColumn was renamed to isRowGroupColumn
+
+
 ## Demo
 
 To see AdapTable in action visit our [Demo Site](https://demo.adaptabletools.com).  Here you can see a large number of AdapTable demos each showing a different feature, function or option in AdapTable (using dummy data sets).

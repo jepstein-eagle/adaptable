@@ -30,7 +30,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "7.1.2",
     "@types/rebass": "^3.0.4",
-    "@ag-grid-community/all-modules": "23.2.0",
+    "@ag-grid-community/all-modules": "23.2.1",
     "@types/node": "^9.6.22"
   },
   "dependencies": {
@@ -45,7 +45,7 @@
     "igniteui-react-core": "16.6.10"
   },
   "peerDependencies": {
-    "@ag-grid-community/all-modules": "^23.2.0"
+    "@ag-grid-community/all-modules": "^23.2.1"
   },
   "author": {
     "name": "Jonny Wolfson",

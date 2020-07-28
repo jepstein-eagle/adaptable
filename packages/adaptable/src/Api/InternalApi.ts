@@ -22,6 +22,7 @@ import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
+import { Layout } from '../PredefinedConfig/LayoutState';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *
@@ -71,6 +72,7 @@ export interface InternalApi {
   isGridInTreeMode(): boolean;
 
   addAdaptableColumn(AdaptableColumn: AdaptableColumn): void;
+  removeAdaptableColumn(colId: string): void;
 
   getUpdatedRowInfos(): any[];
 
@@ -85,6 +87,7 @@ export interface InternalApi {
   setLastAppliedShortCut(gridCell: GridCell | undefined): void;
 
   setDefaultDashboardTab(): void;
+  updateCurrentDraftLayout(layout: Layout): void;
 
   getAdaptableInstance(): IAdaptable;
 

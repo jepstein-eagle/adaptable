@@ -20,7 +20,7 @@ export interface LayoutOptions {
    *
    * **Default Value: true**
    */
-  includeVendorStateInLayouts?: boolean;
+  includeVendorStateInLayouts?: boolean; //TODO remove
 
   /**
    * Whether layouts should include details of which grouped rows when they save.
@@ -56,7 +56,7 @@ export interface LayoutOptions {
    *
    * **Default Value: true**
    */
-  autoSizeColumnsInDefaultLayout?: boolean;
+  autoSizeColumnsInDefaultLayout?: boolean; //TODO remove
 
   /**
    * Whether columns should be auto-sized when a Pivot-based Layout loads for the first time

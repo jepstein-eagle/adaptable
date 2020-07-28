@@ -8,10 +8,14 @@ import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInf
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+import { LAYOUT_UPDATE_CURRENT_DRAFT, LayoutAction, LAYOUT_SELECT } from './LayoutRedux';
+import { Layout } from '../../types';
 
 export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
+export const GRID_ADD_COLUMNS = 'GRID_ADD_COLUMNS';
+export const GRID_REMOVE_COLUMN = 'GRID_REMOVE_COLUMN';
 export const GRID_EDIT_COLUMN = 'GRID_EDIT_COLUMN';
 export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
@@ -36,6 +40,12 @@ export interface GridSetColumnsAction extends Redux.Action {
   Columns: AdaptableColumn[];
 }
 export interface GridAddColumnAction extends Redux.Action {
+  Column: AdaptableColumn;
+}
+export interface GridAddColumnsAction extends Redux.Action {
+  Columns: AdaptableColumn[];
+}
+export interface GridRemoveColumnAction extends Redux.Action {
   Column: AdaptableColumn;
 }
 export interface GridEditColumnAction extends Redux.Action {
@@ -113,6 +123,14 @@ export const GridSetColumns = (Columns: AdaptableColumn[]): GridSetColumnsAction
 
 export const GridAddColumn = (Column: AdaptableColumn): GridAddColumnAction => ({
   type: GRID_ADD_COLUMN,
+  Column,
+});
+export const GridAddColumns = (Columns: AdaptableColumn[]): GridAddColumnsAction => ({
+  type: GRID_ADD_COLUMNS,
+  Columns,
+});
+export const GridRemoveColumn = (Column: AdaptableColumn): GridRemoveColumnAction => ({
+  type: GRID_REMOVE_COLUMN,
   Column,
 });
 
@@ -214,6 +232,7 @@ export const SetMainMenuItems = (MenuItems: AdaptableMenuItem[]): SetMainMenuIte
 
 const initialGridState: GridState = {
   Columns: EMPTY_ARRAY,
+  CurrentLayout: null,
   ColumnSorts: EMPTY_ARRAY,
   SelectedCellInfo: null,
   SelectedRowInfo: null,
@@ -238,6 +257,14 @@ export const GridReducer: Redux.Reducer<GridState> = (
       let columns = [].concat(state.Columns);
       columns.push(actionTypedAdd.Column);
       return Object.assign({}, state, { Columns: columns });
+
+    case GRID_ADD_COLUMNS:
+      const actionTypedAddMany = action as GridAddColumnsAction;
+
+      return Object.assign({}, state, {
+        Columns: [...state.Columns, ...actionTypedAddMany.Columns],
+      });
+
     case GRID_EDIT_COLUMN:
       const actioncolumn: AdaptableColumn = (action as GridEditColumnAction).Column;
       return {
@@ -245,6 +272,12 @@ export const GridReducer: Redux.Reducer<GridState> = (
         Columns: state.Columns.map(abObject =>
           abObject.Uuid === actioncolumn.Uuid ? actioncolumn : abObject
         ),
+      };
+    case GRID_REMOVE_COLUMN:
+      const removeColumn: AdaptableColumn = (action as GridRemoveColumnAction).Column;
+      return {
+        ...state,
+        Columns: state.Columns.filter(abObject => abObject.Uuid !== removeColumn.Uuid),
       };
 
     case GRID_SET_SORT:
@@ -271,6 +304,13 @@ export const GridReducer: Redux.Reducer<GridState> = (
         a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
       );
       return Object.assign({}, state, { MainMenuItems: menuItems });
+    }
+
+    case LAYOUT_UPDATE_CURRENT_DRAFT: {
+      const currentDraftLayout: Layout = (action as LayoutAction).layout;
+      return Object.assign({}, state, {
+        CurrentLayout: currentDraftLayout,
+      });
     }
 
     case SET_PIVOT_MODE_ON:

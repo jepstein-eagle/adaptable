@@ -17,14 +17,14 @@
   "peerDependencies": {
     "@angular/common": ">=7.0.0",
     "@angular/core": ">=7.0.0",
-    "@ag-grid-community/all-modules": "^23.2.0",
-    "@ag-grid-community/angular": "^23.2.0"
+    "@ag-grid-community/all-modules": "^23.2.1",
+    "@ag-grid-community/angular": "^23.2.1"
   },
   "devDependencies": {
     "symlink-dir": "^3.1.1",
     "rimraf": "^2.6.3",
-    "@ag-grid-community/all-modules": "23.2.0",
-    "@ag-grid-community/angular": "23.2.0"
+    "@ag-grid-community/all-modules": "23.2.1",
+    "@ag-grid-community/angular": "23.2.1"
   },
   "scripts": {
     "link-core": "rimraf node_modules/@types/react-native && rimraf node_modules/@adaptabletools && symlink-dir ../../../adaptable ./node_modules/@adaptabletools/adaptable"

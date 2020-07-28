@@ -1,5 +1,22 @@
 {
   "extends": "../tsconfig.json",
-  "include": ["./**/*"],
-  "exclude": ["node_modules", "lib", ".next"]
+  "include": [
+    "./**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    ".next"
+  ],
+  "compilerOptions": {
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": false,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "isolatedModules": true,
+    "jsx": "preserve"
+  }
 }

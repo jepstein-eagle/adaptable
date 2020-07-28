@@ -30,7 +30,7 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     return {
       FunctionEntities: this.adaptable.api.layoutApi.getAllLayout(),
       AddAction: LayoutRedux.LayoutAdd,
-      EditAction: LayoutRedux.LayoutEdit,
+      EditAction: LayoutRedux.LayoutSave,
     };
   }
 }

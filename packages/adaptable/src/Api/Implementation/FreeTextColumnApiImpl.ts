@@ -19,8 +19,18 @@ export class FreeTextColumnApiImpl extends ApiBase implements FreeTextColumnApi 
     return this.getAdaptableState().FreeTextColumn.FreeTextColumns;
   }
 
+  /**
+   * Sets all Free Text Columns in Adaptable State
+   */
+  setFreeTextColumns(freeTextColumns: FreeTextColumn[]) {
+    this.dispatchAction(FreeTextColumnRedux.FreeTextColumnSet(freeTextColumns));
+  }
+
   public addFreeTextColumn(freeTextColumn: FreeTextColumn): void {
     this.dispatchAction(FreeTextColumnRedux.FreeTextColumnAdd(freeTextColumn));
+  }
+  public editFreeTextColumn(freeTextColumn: Partial<FreeTextColumn> & { ColumnId: string }): void {
+    this.dispatchAction(FreeTextColumnRedux.FreeTextColumnEdit(freeTextColumn));
   }
 
   public addEditFreeTextColumnStoredValue(
@@ -32,9 +42,18 @@ export class FreeTextColumnApiImpl extends ApiBase implements FreeTextColumnApi 
     );
   }
 
-  public createFreeTextColumn(columnId: string, defaultValue: string = null): void {
+  public createFreeTextColumn({
+    columnName,
+    columnId,
+    defaultValue = null,
+  }: {
+    columnId: string;
+    columnName?: string;
+    defaultValue: string;
+  }): void {
     let freeTextColumn = ObjectFactory.CreateEmptyFreeTextColumn();
     freeTextColumn.ColumnId = columnId;
+    freeTextColumn.FriendlyName = columnName || columnId;
     freeTextColumn.DefaultValue = defaultValue;
     this.addFreeTextColumn(freeTextColumn);
   }

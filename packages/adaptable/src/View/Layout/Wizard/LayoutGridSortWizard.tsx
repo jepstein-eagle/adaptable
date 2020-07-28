@@ -37,7 +37,7 @@ export class LayoutGridSortWizard
     super(props);
 
     this.state = {
-      ColumnSorts: this.props.Data.ColumnSorts,
+      ColumnSorts: this.props.Data.ColumnSorts || [],
     };
   }
   render(): any {
