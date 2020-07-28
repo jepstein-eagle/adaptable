@@ -17,7 +17,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * **Further AdapTable Help Resources**
  *
- * [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+ * [Export Demos](https://demo.adaptabletools.com/export)
  *
  * {@link ExportApi|Export API}
  *

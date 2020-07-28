@@ -12,7 +12,7 @@ import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportS
  *
  * **Further AdapTable Help Resources**
  *
- * [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+ * [Export Demos](https://demo.adaptabletools.com/export)
  *
  * {@link ExportState|Export State}
  *

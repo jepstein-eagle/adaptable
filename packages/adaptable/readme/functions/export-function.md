@@ -6,6 +6,14 @@ The Export([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_p
 
 AdapTable allows you to create **Reports** which you can then send to multiple destinations.  
 
+There are 3 types of reports you can run:
+
+1. System Reports
+
+2. User Reports
+
+3. Custom Reports
+
 ### Reports
 
 Each report essentially contains 2 elements:
@@ -15,7 +23,6 @@ Each report essentially contains 2 elements:
 
 You can specify for each report / column combination whether to export the **DisplayValue** or **RawValue** of the column's cell values.
 
-
 ### System Reports
 
 AdapTable ships with some predefined reports designed for frequently used exports. These include:
@@ -24,6 +31,20 @@ AdapTable ships with some predefined reports designed for frequently used export
 - Visible Data
 - Selected Cells
 - Selected Rows
+
+### User Reports
+
+User can provide at design-time (through [Export State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_exportstate_.exportstate.html)) or at run-time (via the Report Wizard) their own reports.
+
+Each User Report will have its own column definition and row query.
+  
+### Custom Reports
+
+Custom Reports do not need to include data (or columns) currently present in the grid in the exported data set.
+
+Instead the data in the export is fetched each time the report is run via a function provided in UserFunctions (and referenced in [Export State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_exportstate_.exportstate.html)).
+
+This allows developers to provide their own reports but still to leverage AdapTable state, scheduling and report destinations.
 
 ### Export Destinations
 
@@ -91,10 +112,14 @@ Yes, the `exportColumnRawValue` property in [Export Options](https://api.adaptab
 
 If you are using ag-Grid then you need to be using either ag-Grid Enterprise or have the 'Excel' module loaded for this option to be available.
 
+**Can I run a Report even though it will display data not in AdapTable?**
+
+Yes, use a *Custom Report*.  Simply provide the function that will called each time the function runs and it can include any data you want.
+
 ### Further Information
 
 - [Export State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_exportstate_.exportstate.html)
 
 - [Export Api](https://api.adaptabletools.com/interfaces/_src_api_exportapi_.exportapi.html)
 
-- [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+- [Export Demos](https://demo.adaptabletools.com/export)
