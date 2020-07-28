@@ -20,7 +20,8 @@ export class CalculatedColumnEntityRow extends React.Component<
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={calculatedColumn.ColumnId} />;
-    colItems[1].Content = (
+    colItems[1].Content = <EntityRowItem Content={calculatedColumn.FriendlyName} />;
+    colItems[2].Content = (
       <EntityRowItem
         Content={this.props.api.internalApi
           .getCalculatedColumnExpressionService()
@@ -41,7 +42,7 @@ export class CalculatedColumnEntityRow extends React.Component<
         AccessLevel={this.props.AccessLevel}
       />
     );
-    colItems[2].Content = buttons;
+    colItems[3].Content = buttons;
 
     return <AdaptableObjectRow colItems={colItems} />;
   }

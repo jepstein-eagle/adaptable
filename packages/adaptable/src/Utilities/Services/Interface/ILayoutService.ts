@@ -5,8 +5,10 @@ export interface ILayoutService {
   getLayoutDescription(layout: Layout, columns: AdaptableColumn[]): string;
   getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string;
   getSortOrder(sortOrder: 'Ascending' | 'Descending'): string;
-  autoSaveLayout(): void;
+
+  areEqual(layout1: Layout, layout2: Layout): boolean;
+  createDefaultLayoutIfNeeded(): Layout | null;
   isPivotedLayout(pivotDetails: PivotDetails): boolean;
-  isLayoutModified(layoutEntity: Layout): boolean;
+
   getSortsForLayout(layout: Layout): ColumnSort[];
 }

@@ -52,7 +52,6 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     chartContainer: undefined,
   },
   layoutOptions: {
-    includeVendorStateInLayouts: true,
     includeOpenedRowGroups: false,
     autoSaveLayouts: true,
     autoSizeColumnsInLayout: false,

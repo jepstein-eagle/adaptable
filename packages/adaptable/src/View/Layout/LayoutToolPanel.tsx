@@ -9,7 +9,7 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
-import { ButtonUndo } from '../Components/Buttons/ButtonUndo';
+
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
@@ -26,11 +26,13 @@ import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 interface LayoutToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<LayoutToolPanelComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onRestoreLayout: (layout: Layout) => LayoutRedux.LayoutRestoreAction;
+
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
-  CurrentLayout: string;
+  CurrentLayoutName: string;
+  CurrentDraftLayout: Layout;
+  CanSave: boolean;
 }
 
 interface LayoutToolPanelComponentState {
@@ -51,17 +53,8 @@ class LayoutToolPanelComponent extends React.Component<
       l => l.Name != GeneralConstants.DEFAULT_LAYOUT
     );
     let layoutEntity = nonDefaultLayouts.find(
-      x => x.Name == this.props.CurrentLayout || x.Uuid == this.props.CurrentLayout
+      x => x.Name == this.props.CurrentLayoutName || x.Uuid == this.props.CurrentLayoutName
     );
-
-    // let availableLayouts: any = nonDefaultLayouts.filter(l => l.Name != currentLayoutTitle);
-
-    // this is wrong at the moment an always returning true
-    // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
-    // but worth fixing and then making that save button enabled depending on whether this is true
-    let isModifiedLayout: boolean = this.props.Api.internalApi
-      .getLayoutService()
-      .isLayoutModified(layoutEntity);
 
     let isManualSaveLayout: boolean =
       this.props.Api.gridApi.getadaptableOptions().layoutOptions!.autoSaveLayouts == false;
@@ -87,12 +80,7 @@ class LayoutToolPanelComponent extends React.Component<
             onChange={(layoutName: any) => {
               this.onSelectedLayoutChanged(layoutName);
             }}
-            clearButtonProps={{
-              tooltip: 'Clear layout',
-              disabled: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
-              AccessLevel: this.props.AccessLevel,
-            }}
-            showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
+            showClearButton={false}
           />
         </Flex>
         <Flex
@@ -107,7 +95,7 @@ class LayoutToolPanelComponent extends React.Component<
               className="ab-ToolPanel__Layout__save"
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
-              disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+              disabled={!this.props.CanSave}
               AccessLevel={this.props.AccessLevel}
             />
           )}
@@ -122,26 +110,14 @@ class LayoutToolPanelComponent extends React.Component<
             AccessLevel={this.props.AccessLevel}
           />
 
-          <ButtonUndo
-            className="ab-ToolPanel__Layout__undo"
-            onClick={() =>
-              isManualSaveLayout
-                ? this.onSelectedLayoutChanged(this.props.CurrentLayout)
-                : this.onRestoreLayout()
-            }
-            disabled={
-              this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT //|| !isModifiedLayout
-            }
-            tooltip={isManualSaveLayout ? 'Undo Layout Changes' : 'Restore Layout'}
-            AccessLevel={this.props.AccessLevel}
-          />
-
           <ButtonDelete
             tooltip="Delete Layout"
             className="ab-ToolPanel__Layout__delete"
-            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+            disabled={this.props.Layouts.length <= 1}
             ConfirmAction={LayoutRedux.LayoutDelete(layoutEntity)}
-            ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+            ConfirmationMsg={
+              "Are you sure you want to delete '" + this.props.CurrentLayoutName + "'?"
+            }
             ConfirmationTitle={'Delete Layout'}
             AccessLevel={this.props.AccessLevel}
           />
@@ -172,35 +148,10 @@ class LayoutToolPanelComponent extends React.Component<
   }
 
   private onSaveLayout() {
-    let currentLayoutObject: Layout | undefined = this.props.Layouts.find(
-      l => l.Name == this.props.CurrentLayout
-    );
-    if (currentLayoutObject) {
-      let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
+    const currentLayoutObject: Layout | null = this.props.CurrentDraftLayout;
 
-      let visibleColumns = this.props.Api.gridApi.getColumns().filter(c => c.Visible);
-      let layoutToSave: Layout = {
-        Uuid: currentLayoutObject.Uuid,
-        Name: this.props.CurrentLayout,
-        Columns: currentLayoutObject.Columns,
-        ColumnSorts: currentLayoutObject.ColumnSorts,
-        VendorGridInfo: gridState,
-        AdaptableGridInfo: {
-          CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          CurrentColumnSorts: this.props.Api.gridApi.getColumnSorts(),
-          ExpandedRowGroupKeys: this.props.Api.gridApi.getExpandRowGroupsKeys(),
-        },
-      };
-      this.props.onSaveLayout(layoutToSave);
-    }
-  }
-
-  private onRestoreLayout() {
-    let currentLayoutObject: Layout | undefined = this.props.Layouts.find(
-      l => l.Name == this.props.CurrentLayout
-    );
     if (currentLayoutObject) {
-      this.props.onRestoreLayout(currentLayoutObject);
+      this.props.onSaveLayout(currentLayoutObject);
     }
   }
 }
@@ -209,9 +160,16 @@ function mapStateToProps(
   state: AdaptableState,
   ownProps: any
 ): Partial<LayoutToolPanelComponentProps> {
+  const CurrentLayoutName = state.Layout.CurrentLayout;
+  const Layouts = state.Layout.Layouts || [];
+  const selectedLayout = Layouts.find(l => l.Name === CurrentLayoutName);
   return {
-    CurrentLayout: state.Layout.CurrentLayout,
-    Layouts: state.Layout.Layouts,
+    CurrentLayoutName,
+    CurrentDraftLayout: state.Grid.CurrentLayout || selectedLayout,
+    CanSave: !ownProps.Api.internalApi
+      .getLayoutService()
+      .areEqual(selectedLayout, state.Grid.CurrentLayout),
+    Layouts,
   };
 }
 
@@ -221,7 +179,7 @@ function mapDispatchToProps(
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
-    onRestoreLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutRestore(layout)),
+
     onNewLayout: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {

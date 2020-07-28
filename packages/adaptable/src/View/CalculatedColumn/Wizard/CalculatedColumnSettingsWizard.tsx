@@ -19,6 +19,7 @@ export interface CalculatedColumnSettingsWizardProps
 export interface CalculatedColumnSettingsWizardState {
   ErrorMessage: string;
   ColumnId: string;
+  ColumnName: string;
   DataType: 'String' | 'Number' | 'Boolean' | 'Date';
   Width: number;
   Filterable?: boolean;
@@ -27,6 +28,7 @@ export interface CalculatedColumnSettingsWizardState {
   Sortable?: boolean;
   Pivotable?: boolean;
   Aggregatable?: boolean;
+  ColumnNameFocused: boolean;
 }
 
 export class CalculatedColumnSettingsWizard
@@ -37,6 +39,8 @@ export class CalculatedColumnSettingsWizard
     this.state = {
       ErrorMessage: null,
       ColumnId: this.props.Data.ColumnId,
+      ColumnName: this.props.Data.FriendlyName ?? this.props.Data.ColumnId,
+      ColumnNameFocused: false,
       DataType: this.props.Data.CalculatedColumnSettings.DataType,
       Width: this.props.Data.CalculatedColumnSettings.Width,
       Filterable: this.props.Data.CalculatedColumnSettings.Filterable,
@@ -48,13 +52,39 @@ export class CalculatedColumnSettingsWizard
     };
   }
   render(): any {
+    const inEdit = !!this.props.Data.ColumnId;
     return (
       <WizardPanel>
         <FormLayout>
+          <FormRow label="Column ID">
+            <Input
+              value={this.state.ColumnId || ''}
+              width={300}
+              autoFocus={!inEdit}
+              disabled={inEdit}
+              type="text"
+              placeholder="Enter an id"
+              onChange={(e: React.SyntheticEvent) => this.handleColumnIdChange(e)}
+            />
+          </FormRow>
           <FormRow label="Column Name">
             <Input
-              value={this.state.ColumnId}
-              autoFocus
+              autoFocus={inEdit}
+              onFocus={() => {
+                this.setState({
+                  ColumnNameFocused: true,
+                });
+              }}
+              onBlur={() => {
+                this.setState({
+                  ColumnNameFocused: false,
+                });
+              }}
+              value={
+                this.state.ColumnNameFocused
+                  ? this.state.ColumnName || ''
+                  : this.state.ColumnName || this.state.ColumnId || ''
+              }
               width={300}
               type="text"
               placeholder="Enter column name"
@@ -127,7 +157,7 @@ export class CalculatedColumnSettingsWizard
     );
   }
 
-  handleColumnNameChange(event: React.FormEvent<any>) {
+  handleColumnIdChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState(
       {
@@ -136,8 +166,18 @@ export class CalculatedColumnSettingsWizard
           this.props.Api.gridApi.getColumns().map(c => c.ColumnId),
           e.value
         )
-          ? 'A Column already exists with that name'
+          ? 'A Column already exists with that id'
           : null,
+      },
+      () => this.props.UpdateGoBackState()
+    );
+  }
+
+  handleColumnNameChange(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.setState(
+      {
+        ColumnName: e.value,
       },
       () => this.props.UpdateGoBackState()
     );
@@ -154,6 +194,7 @@ export class CalculatedColumnSettingsWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
+    this.props.Data.FriendlyName = this.state.ColumnName || this.state.ColumnId;
 
     this.props.Data.CalculatedColumnSettings.DataType = this.state.DataType;
     this.props.Data.CalculatedColumnSettings.Width = this.state.Width;

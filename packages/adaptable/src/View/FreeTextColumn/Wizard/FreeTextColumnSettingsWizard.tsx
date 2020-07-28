@@ -14,13 +14,16 @@ import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 import ErrorBox from '../../../components/ErrorBox';
 import Radio from '../../../components/Radio';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
 
 export interface FreeTextColumnSettingsWizardProps
   extends AdaptableWizardStepProps<FreeTextColumn> {}
 export interface FreeTextColumnSettingsWizardState {
   ColumnId: string;
+  ColumnName: string;
   ErrorMessage: string;
   DefaultValue: string;
+  ColumnNameFocused: boolean;
   TextEditor: 'Inline' | 'Large';
 }
 
@@ -31,34 +34,65 @@ export class FreeTextColumnSettingsWizard
     super(props);
     this.state = {
       ColumnId: this.props.Data.ColumnId,
+      ColumnName: this.props.Data.FriendlyName ?? this.props.Data.ColumnId,
       ErrorMessage: null,
       DefaultValue: this.props.Data.DefaultValue,
       TextEditor: this.props.Data.TextEditor ? this.props.Data.TextEditor : 'Inline',
+      ColumnNameFocused: false,
     };
   }
   render(): any {
+    const inEdit = !!this.props.Data.ColumnId;
     return (
       <div style={{ height: '100%' }}>
         <WizardPanel>
-          <Flex alignItems="center" flexDirection="row">
-            <Text style={{ flex: 2 }}>Column Name</Text>
-
-            <Box style={{ flex: 8 }}>
+          <FormLayout>
+            <FormRow label="Column ID">
               <Input
-                value={this.state.ColumnId}
+                autoFocus={!inEdit}
+                value={this.state.ColumnId || ''}
+                style={{ width: '100%', maxWidth: 500 }}
+                disabled={inEdit}
+                type="text"
+                placeholder="Enter an id"
+                onChange={(e: React.SyntheticEvent) => this.handleColumnIdChange(e)}
+              />
+            </FormRow>
+
+            {this.state.ErrorMessage ? (
+              <FormRow label="">
+                <ErrorBox style={{ width: '100%', maxWidth: 500 }}>
+                  {this.state.ErrorMessage}
+                </ErrorBox>
+              </FormRow>
+            ) : null}
+
+            <FormRow label="Column Name">
+              <Input
+                autoFocus={inEdit}
+                onFocus={() => {
+                  this.setState({
+                    ColumnNameFocused: true,
+                  });
+                }}
+                onBlur={() => {
+                  this.setState({
+                    ColumnNameFocused: false,
+                  });
+                }}
+                value={
+                  this.state.ColumnNameFocused
+                    ? this.state.ColumnName || ''
+                    : this.state.ColumnName || this.state.ColumnId || ''
+                }
                 style={{ width: '100%', maxWidth: 500 }}
                 type="text"
                 placeholder="Enter a name"
                 onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
               />
-            </Box>
-          </Flex>
-          {this.state.ErrorMessage ? (
-            <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
-          ) : null}
-          <Flex alignItems="center" flexDirection="row" marginTop={3}>
-            <Text style={{ flex: 2 }}>Default Value</Text>
-            <Box style={{ flex: 8 }}>
+            </FormRow>
+
+            <FormRow label="Default Value">
               <Input
                 value={this.state.DefaultValue}
                 style={{ width: '100%', maxWidth: 500 }}
@@ -66,31 +100,31 @@ export class FreeTextColumnSettingsWizard
                 placeholder="Default Column Value (not required)"
                 onChange={(e: React.SyntheticEvent) => this.handleDefaultValueChange(e)}
               />
-            </Box>
-          </Flex>
-          <Flex alignItems="center" flexDirection="row" marginTop={3}>
-            <Radio
-              value="Inline"
-              checked={this.state.TextEditor == 'Inline'}
-              onChange={(_, e: any) => this.onDynamicSelectChanged(e)}
-              marginRight={2}
-            >
-              Inline Editor
-            </Radio>
-            <Radio
-              value="Large"
-              checked={this.state.TextEditor == 'Large'}
-              onChange={(_, e: any) => this.onDynamicSelectChanged(e)}
-            >
-              Large Editor
-            </Radio>
-          </Flex>
+            </FormRow>
+            <FormRow label="Editor Type">
+              <Radio
+                value="Inline"
+                checked={this.state.TextEditor == 'Inline'}
+                onChange={(_, e: any) => this.onDynamicSelectChanged(e)}
+                marginRight={2}
+              >
+                Inline Editor
+              </Radio>
+              <Radio
+                value="Large"
+                checked={this.state.TextEditor == 'Large'}
+                onChange={(_, e: any) => this.onDynamicSelectChanged(e)}
+              >
+                Large Editor
+              </Radio>
+            </FormRow>
+          </FormLayout>
         </WizardPanel>
       </div>
     );
   }
 
-  handleColumnNameChange(event: React.FormEvent<any>) {
+  handleColumnIdChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState(
       {
@@ -99,8 +133,18 @@ export class FreeTextColumnSettingsWizard
           this.props.Api.gridApi.getColumns().map(c => c.ColumnId),
           e.value
         )
-          ? 'A Column already exists with that name'
+          ? 'A Column already exists with that id'
           : null,
+      },
+      () => this.props.UpdateGoBackState()
+    );
+  }
+
+  handleColumnNameChange(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    this.setState(
+      {
+        ColumnName: e.value,
       },
       () => this.props.UpdateGoBackState()
     );
@@ -134,6 +178,7 @@ export class FreeTextColumnSettingsWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
+    this.props.Data.FriendlyName = this.state.ColumnName || this.state.ColumnId;
     this.props.Data.DefaultValue = this.state.DefaultValue;
     this.props.Data.TextEditor = this.state.TextEditor;
   }

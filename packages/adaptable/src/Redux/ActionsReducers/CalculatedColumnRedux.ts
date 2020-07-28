@@ -70,7 +70,12 @@ export const CalculatedColumnReducer: Redux.Reducer<CalculatedColumnState> = (
       return {
         ...state,
         CalculatedColumns: state.CalculatedColumns.map(abObject =>
-          abObject.Uuid === actionCalculatedColumn.Uuid ? actionCalculatedColumn : abObject
+          abObject.Uuid === actionCalculatedColumn.Uuid
+            ? // we need to assign and return the same object
+              // in order to make working with aggrid easier, as the col getter
+              // references this object
+              Object.assign(abObject, actionCalculatedColumn)
+            : abObject
         ),
       };
     }

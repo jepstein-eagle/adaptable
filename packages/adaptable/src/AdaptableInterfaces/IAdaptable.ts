@@ -159,8 +159,8 @@ export interface IAdaptable {
   selectColumns(columnIds: string[]): void;
 
   // column related
-  setColumnIntoStore(): void;
-  setNewColumnListOrder(visibleColumnList: Array<AdaptableColumn>): void;
+  updateColumnsIntoStore(): void;
+  setColumnOrder(visibleColumnList: string[]): void;
 
   // getting rowNode and keys
   getPrimaryKeyValueFromRowNode(rowNode: any): any;
@@ -218,17 +218,19 @@ export interface IAdaptable {
   //sortLayout(layout: Layout):void;
 
   // FreeTextColumn
-  addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
+  addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn, _colDefs?: any[]): void;
+  addFreeTextColumnsToGrid(freeTextColumns: FreeTextColumn[], colDefs?: any[]): void;
   removeFreeTextColumnFromGrid(freeTextColumnId: string): void;
   editFreeTextColumnInGrid(freeTextColumn: FreeTextColumn): void;
 
   // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
+  addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], _colDefs?: any[]): void;
   removeCalculatedColumnFromGrid(calculatedColumnId: string): void;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // actionColumn
-  addActionColumnToGrid(actionColumn: ActionColumn): void;
+  addActionColumnsToGrid(actionColumns: ActionColumn[]): void;
 
   // formatolumn
   applyFormatColumnDisplayFormats(): void;
@@ -272,11 +274,8 @@ export interface IAdaptable {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridLayoutInfo(visibleCols: string[]): VendorGridInfo;
-  getVendorGridDefaultLayoutInfo(): VendorGridInfo;
-  setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void;
   setGroupedColumns(groupedCols: string[]): void;
-  setPivotingDetails(pivotDetails: PivotDetails): void;
+  // setPivotingDetails(pivotDetails: PivotDetails): void;
   setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
   setLayout(layout: Layout): void;
 

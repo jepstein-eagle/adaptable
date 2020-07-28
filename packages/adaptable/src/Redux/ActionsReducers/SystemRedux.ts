@@ -155,7 +155,7 @@ export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Acti
 export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {}
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
-  VisibleColumnList: Array<AdaptableColumn>;
+  VisibleColumnList: string[];
 }
 
 export interface SetLastAppliedShortcutAction extends Redux.Action {
@@ -279,7 +279,7 @@ export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisi
 });
 
 export const SetNewColumnListOrder = (
-  VisibleColumnList: Array<AdaptableColumn>
+  VisibleColumnList: string[]
 ): SetNewColumnListOrderAction => ({
   type: SET_NEW_COLUMN_LIST_ORDER,
   VisibleColumnList,

@@ -296,11 +296,19 @@ export class agGridHelper {
   public createAdaptableColumnFromVendorColumn(vendorColumn: Column): AdaptableColumn {
     const colId: string = vendorColumn.getColId();
     const colDef: ColDef = vendorColumn.getColDef();
+
+    const FriendlyName = this.gridOptions.columnApi!.getDisplayNameForColumn(
+      vendorColumn,
+      'header'
+    );
+
+    const ColumnId = colId;
+
     const abColumn: AdaptableColumn = {
       Uuid: createUuid(),
-      ColumnId: colId,
-      FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
-      DataType: this.getColumnDataType(vendorColumn),
+      ColumnId,
+      FriendlyName,
+      DataType: this.getColumnDataType(vendorColumn, false),
       Visible: vendorColumn.isVisible(),
       ReadOnly: this.isColumnReadonly(colDef),
       Sortable: this.isColumnSortable(colDef),
@@ -609,7 +617,8 @@ export class agGridHelper {
   }
 
   public getColumnDataType(
-    column: Column
+    column: Column,
+    logWarning = true
   ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     // Some columns can have no ID or Title. we return string as a consequence but it needs testing
     if (!column) {
@@ -619,7 +628,8 @@ export class agGridHelper {
     let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
     const existingColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
-      column.getId()
+      column.getId(),
+      logWarning
     );
     if (existingColumn && existingColumn.DataType != DataType.Unknown) {
       return existingColumn.DataType;
@@ -715,6 +725,8 @@ export class agGridHelper {
           return DataType.String;
         case 'abColDefBoolean':
           return DataType.Boolean;
+        case 'abColDefActionColumn':
+          return DataType.Object;
         case 'abColDefDate':
           return DataType.Date;
         case 'abColDefObject':
@@ -767,7 +779,7 @@ export class agGridHelper {
         if (
           !this.adaptable.api.gridApi
             .getColumnSorts()
-            .find((gs: ColumnSort) => this.adaptable.api.gridApi.isSpecialColumn(gs.Column))
+            .find((gs: ColumnSort) => this.adaptable.api.gridApi.isRowGroupColumn(gs.Column))
         ) {
           const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId

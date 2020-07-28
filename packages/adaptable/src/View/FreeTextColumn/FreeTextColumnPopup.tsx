@@ -75,7 +75,8 @@ class FreeTextColumnPopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Column', Size: 3 },
+      { Content: 'Column ID', Size: 3 },
+      { Content: 'Column Name', Size: 3 },
       { Content: 'Default Value', Size: 4 },
       { Content: 'No. Stored Value', Size: 3 },
       { Content: '', Size: 2 },

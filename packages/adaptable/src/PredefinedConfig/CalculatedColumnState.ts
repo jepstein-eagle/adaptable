@@ -39,6 +39,8 @@ export interface CalculatedColumn extends AdaptableObject {
    */
   ColumnId: string;
 
+  FriendlyName?: string;
+
   /**
    * An **Expression** which will retrieve the value to display in the Column and is re-evaluated each time cells in the columns in the expression change.
    *

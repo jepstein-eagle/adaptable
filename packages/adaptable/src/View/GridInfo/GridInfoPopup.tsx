@@ -581,14 +581,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     returnRows.push(
       this.createColItem(
         colItems,
-        'includeVendorStateInLayouts',
-        options.layoutOptions.includeVendorStateInLayouts == true ? 'Yes' : 'No',
-        'Whether layouts include vendor grid related state.'
-      )
-    );
-    returnRows.push(
-      this.createColItem(
-        colItems,
         'autoSaveLayouts',
         options.layoutOptions.autoSaveLayouts == true ? 'Yes' : 'No',
         'Whether layouts save as soon as column order or sorts change.'

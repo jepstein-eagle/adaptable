@@ -33,6 +33,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
   Layouts: Layout[];
   CurrentLayoutName: string;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
+  onAddLayout: (layout: Layout) => LayoutRedux.LayoutAddAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
   onShare: (
     entity: AdaptableObject,
@@ -87,6 +88,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             onShare={description => this.props.onShare(x, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
+            canDelete={this.props.Layouts.length > 1}
             onSelect={() => this.props.onSelectLayout(x.Name)}
             AccessLevel={this.props.AccessLevel}
           />
@@ -172,11 +174,15 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
-    this.props.onSaveLayout(clonedObject);
+    const isNew = this.state.WizardStatus == WizardStatus.New;
+    if (isNew) {
+      this.props.onAddLayout(clonedObject);
+    } else {
+      this.props.onSaveLayout(clonedObject);
+    }
 
     let currentLayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayoutName);
-    let shouldChangeLayout: boolean =
-      this.state.WizardStatus == WizardStatus.New || currentLayout.Uuid == clonedObject.Uuid;
+    let shouldChangeLayout: boolean = isNew || currentLayout.Uuid == clonedObject.Uuid;
 
     this.setState({
       EditedAdaptableObject: null,
@@ -223,6 +229,7 @@ function mapDispatchToProps(
 ): Partial<LayoutPopupProps> {
   return {
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onAddLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutAdd(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
 

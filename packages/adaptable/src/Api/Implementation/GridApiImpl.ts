@@ -6,7 +6,7 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { AdaptableOptions, ColumnCategory } from '../../types';
+import { AdaptableOptions, Layout } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
@@ -72,7 +72,13 @@ export class GridApiImpl extends ApiBase implements GridApi {
   }
 
   public getVisibleColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.Visible);
+    const layout: Layout = this.adaptable.api.layoutApi.getCurrentLayout();
+    const visibleCols = layout.Columns.reduce((acc, colId) => {
+      acc[colId] = true;
+      return acc;
+    }, {} as { [colId: string]: boolean });
+
+    return this.getColumns().filter(c => visibleCols[c.ColumnId]);
   }
 
   public getCellDisplayValue(primaryKeyValue: any, columnId: string): string {
@@ -155,7 +161,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.expandRowGroupsForValues(columnValues);
   }
 
-  public isSpecialColumn(columnId: string): boolean {
+  public isRowGroupColumn(columnId: string): boolean {
     return columnId == AG_GRID_GROUPED_COLUMN;
   }
 
@@ -342,7 +348,7 @@ export class GridApiImpl extends ApiBase implements GridApi {
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&
       this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning === true
     ) {
-      if (!this.isSpecialColumn(columnId)) {
+      if (!this.isRowGroupColumn(columnId)) {
         LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);
       }
     }

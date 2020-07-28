@@ -503,39 +503,15 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
   };
 }
 
-export function CreateEmptyLayout(): Layout {
+export function CreateEmptyLayout(layout?: Partial<Layout> & { Name: string }): Layout {
   return {
+    ...layout,
     Uuid: createUuid(),
-    Columns: [],
-    ColumnSorts: [],
-    GroupedColumns: null,
-    PivotDetails: null,
-    Name: '',
-    VendorGridInfo: null,
-    AdaptableGridInfo: null,
-  };
-}
-
-export function CreateDefaultLayout(
-  columns: AdaptableColumn[],
-  columnSorts: ColumnSort[],
-  vendorGridInfo: VendorGridInfo,
-  name: string
-): Layout {
-  let columnIds: string[] = columns ? columns.filter(x => x.Visible).map(x => x.ColumnId) : [];
-  return {
-    Uuid: createUuid(),
-    Columns: columnIds,
-    ColumnSorts: columnSorts,
-    GroupedColumns: null,
-    PivotDetails: null,
-    Name: name,
-    VendorGridInfo: vendorGridInfo,
-    AdaptableGridInfo: {
-      CurrentColumns: columnIds,
-      CurrentColumnSorts: columnSorts,
-      ExpandedRowGroupKeys: undefined,
-    },
+    Columns: layout.Columns || [],
+    ColumnSorts: layout.ColumnSorts || [],
+    ColumnFlexMap: layout.ColumnFlexMap || {},
+    ColumnWidthMap: layout.ColumnWidthMap || {},
+    GroupedColumns: layout.GroupedColumns || [],
   };
 }
 
@@ -718,8 +694,8 @@ export const ObjectFactory = {
   CreateEmptyConditionalStyle,
   CreateEmptyFormatColumn,
   CreateEmptyFreeTextColumn,
+
   CreateEmptyLayout,
-  CreateDefaultLayout,
   CreateEmptyPivotDetails,
   CreateColumnFilter,
   CreateUserFilterFromColumnFilter,

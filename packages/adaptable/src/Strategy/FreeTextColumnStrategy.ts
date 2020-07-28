@@ -14,12 +14,25 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
   implements IFreeTextColumnStrategy {
   constructor(adaptable: IAdaptable) {
     super(StrategyConstants.FreeTextColumnStrategyId, adaptable);
+
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
+      let freeTextColumns = this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn();
+
+      freeTextColumns = freeTextColumns.map(freeTextColumn => {
+        if (!freeTextColumn.ColumnId && freeTextColumn.FriendlyName) {
+          freeTextColumn.ColumnId = freeTextColumn.FriendlyName;
+        }
+        return freeTextColumn;
+      });
+
+      this.adaptable.api.freeTextColumnApi.setFreeTextColumns(freeTextColumns);
+    });
   }
 
   public addFreeTextColumnsToGrid(): void {
-    this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn().forEach(ftc => {
-      this.adaptable.addFreeTextColumnToGrid(ftc);
-    });
+    const ftcArray = this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn();
+
+    this.adaptable.addFreeTextColumnsToGrid(ftcArray);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {

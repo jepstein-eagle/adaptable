@@ -22,6 +22,11 @@ export interface FreeTextColumnApi {
   getAllFreeTextColumn(): FreeTextColumn[];
 
   /**
+   * Sets all Free Text Columns in Adaptable State
+   */
+  setFreeTextColumns(freeTextColumns: FreeTextColumn[]): void;
+
+  /**
    * Adds a new Free Text Column to Adaptable State
    *
    * @param freeTextColumn the freeTextColumn to add
@@ -29,13 +34,24 @@ export interface FreeTextColumnApi {
   addFreeTextColumn(freeTextColumn: FreeTextColumn): void;
 
   /**
+   * Edits an existing Free Text Column to Adaptable State
+   *
+   * @param freeTextColumn the freeTextColumn to edit - ColumnId property is mandatory
+   */
+  editFreeTextColumn(freeTextColumn: Partial<FreeTextColumn> & { ColumnId: string }): void;
+
+  /**
    * Creates a new Free Text Column and adds it to Adaptable State
    *
-   * @param columnId the name for the column - try to keep this small and unique (and dont use spaces)
-   *
-   * @param defaultValue the default value that will appear in the Column unless overrident - leave blank if you dont require a default value
+   * @param param.columnId the id for the column - try to keep this small and unique (and dont use spaces)
+   * @param param.columnName the name for the column - optional - if not provided, will default to the columnId
+   * @param param.defaultValue the default value that will appear in the Column unless overrident - leave blank if you dont require a default value
    */
-  createFreeTextColumn(columnId: string, defaultValue: string): void;
+  createFreeTextColumn(param: {
+    columnId: string;
+    columnName?: string;
+    defaultValue: string;
+  }): void;
 
   /**
    * Deletes an existing Free Text Column from Adaptable State

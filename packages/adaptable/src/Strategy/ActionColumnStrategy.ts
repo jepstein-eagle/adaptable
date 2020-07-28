@@ -10,8 +10,7 @@ export class ActionColumnStrategy extends AdaptableStrategyBase implements IActi
   }
 
   public addActionColumnsToGrid(): void {
-    this.adaptable.api.actionColumnApi.getAllActionColumn().forEach((ac: ActionColumn) => {
-      this.adaptable.addActionColumnToGrid(ac);
-    });
+    const actionColumns: ActionColumn[] = this.adaptable.api.actionColumnApi.getAllActionColumn();
+    this.adaptable.addActionColumnsToGrid(actionColumns);
   }
 }

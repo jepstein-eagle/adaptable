@@ -3,25 +3,39 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+
 import { LayoutApi } from '../LayoutApi';
 import { LayoutState, Layout } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+
 import ObjectFactory from '../../Utilities/ObjectFactory';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import Helper from '../../Utilities/Helpers/Helper';
 import { createUuid } from '../../PredefinedConfig/Uuid';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
+import { ColumnStateChangedInfo, ColumnStateChangedEventArgs } from '../../types';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutState(): LayoutState {
     return this.getAdaptableState().Layout;
   }
 
+  public getCurrentVisibleColumnIds(): { [key: string]: boolean } {
+    const layout = this.getCurrentLayout();
+
+    return layout.Columns.reduce((acc, colId) => {
+      acc[colId] = true;
+      return acc;
+    }, {} as { [key: string]: boolean });
+  }
+
   public setLayout(layoutName: string): void {
     if (this.isCorrectlyEntitled('Layout', 'ReadOnly', 'Select Layout')) {
-      if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
+      if (
+        StringExtensions.IsNotNullOrEmpty(layoutName) &&
+        layoutName !== this.getCurrentLayoutName()
+      ) {
         let layout: Layout = this.getAdaptableState().Layout.Layouts.find(
           l => l.Name == layoutName
         );
@@ -29,17 +43,29 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
           this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)
         ) {
           this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
+
+          let columnStateChangedInfo: ColumnStateChangedInfo = {
+            currentLayout: layoutName,
+            adaptableApi: this.adaptable.api,
+          };
+          const columnStateChangedEventArgs: ColumnStateChangedEventArgs = AdaptableHelper.createFDC3Message(
+            'Column State Changed Args',
+            columnStateChangedInfo
+          );
+
+          this.adaptable.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
         }
       }
     }
   }
 
-  public clearLayout(): void {
-    this.dispatchAction(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT));
-  }
-
   public getCurrentLayout(): Layout {
-    let layoutName = this.getAdaptableState().Layout.CurrentLayout;
+    const state = this.getAdaptableState();
+
+    if (state.Grid.CurrentLayout) {
+      return state.Grid.CurrentLayout;
+    }
+    let layoutName = state.Layout.CurrentLayout;
     return this.getLayoutByName(layoutName);
   }
 
@@ -65,35 +91,13 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   }
 
   public saveCurrentLayout(): void {
-    let currentLayoutName: string = this.getAdaptableState().Layout.CurrentLayout;
-    if (currentLayoutName != DEFAULT_LAYOUT) {
-      let currentLayoutObject: Layout = this.getAdaptableState().Layout.Layouts.find(
-        l => l.Name == currentLayoutName
-      );
-      if (currentLayoutObject) {
-        let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
-        let visibleColumns: AdaptableColumn[] = this.getAdaptableState().Grid.Columns.filter(
-          c => c.Visible
-        );
-        let columnSorts: ColumnSort[] = this.getAdaptableState().Grid.ColumnSorts;
+    let currentLayout: Layout = this.getCurrentLayout();
 
-        let layoutToSave: Layout = {
-          Uuid: currentLayoutObject.Uuid,
-          Name: currentLayoutName,
-          Columns: currentLayoutObject.Columns,
-          ColumnSorts: currentLayoutObject.ColumnSorts,
-          GroupedColumns: currentLayoutObject.GroupedColumns,
-          PivotDetails: currentLayoutObject.PivotDetails,
-          VendorGridInfo: gridState,
-          AdaptableGridInfo: {
-            CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-            CurrentColumnSorts: columnSorts,
-            ExpandedRowGroupKeys: this.adaptable.api.gridApi.getExpandRowGroupsKeys(),
-          },
-        };
-
-        this.saveLayout(layoutToSave);
-      }
+    if (!this.adaptable.adaptableOptions.layoutOptions?.autoSaveLayouts) {
+      currentLayout = this.getAdaptableState().Grid.CurrentLayout || currentLayout;
+    }
+    if (currentLayout) {
+      this.saveLayout(currentLayout);
     }
   }
 
@@ -101,44 +105,36 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     if (layout == null) {
       return false;
     }
-    let existingLayout = this.getAllLayout().find(l => l.Uuid == layout.Uuid);
+    let existingLayout = this.getAllLayout().find(
+      l => l.Uuid == layout.Uuid || l.Name === layout.Name
+    );
     return existingLayout != null;
   }
 
-  public createAndSetLayout(layoutToCreate: Layout): void {
-    if (this.doesLayoutExist(layoutToCreate)) {
-      LoggingHelper.LogAdaptableError(
-        "Cannot create layout with the Name: '" + layoutToCreate.Name + "' as it already exists"
-      );
-      return;
-    }
-    this.createLayout(layoutToCreate);
-    setTimeout(() => {
-      this.setLayout(layoutToCreate.Name);
-    }, 200);
+  findLayoutByName(layoutName: string): Layout | null {
+    return this.getAllLayout().find(l => l.Name == layoutName);
   }
 
-  public createLayout(layoutToCreate: Layout): void {
+  public createAndSetLayout(layoutToCreate: Layout): Layout {
+    if (this.createLayout(layoutToCreate)) {
+      this.setLayout(layoutToCreate.Name);
+
+      return layoutToCreate;
+    }
+  }
+
+  public createLayout(layoutToCreate: Layout): Layout {
     if (this.doesLayoutExist(layoutToCreate)) {
       LoggingHelper.LogAdaptableError(
         "Cannot create layout with the Name: '" + layoutToCreate.Name + "' as it already exists"
       );
       return;
     }
-    let newLayout: Layout = ObjectFactory.CreateEmptyLayout();
-    newLayout.Name = layoutToCreate.Name;
-    newLayout.Columns = layoutToCreate.Columns;
-    newLayout.ColumnSorts = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.ColumnSorts)
-      ? layoutToCreate.ColumnSorts
-      : [];
-    newLayout.GroupedColumns = ArrayExtensions.IsNotNullOrEmpty(layoutToCreate.GroupedColumns)
-      ? layoutToCreate.GroupedColumns
-      : [];
-    newLayout.PivotDetails = layoutToCreate.PivotDetails;
-    // make sure that the objects we need are null and have NOT been pre-loaded...
-    newLayout.VendorGridInfo = null;
-    newLayout.AdaptableGridInfo = null;
-    this.dispatchAction(LayoutRedux.LayoutSave(newLayout));
+    const newLayout = ObjectFactory.CreateEmptyLayout({ ...layoutToCreate });
+
+    this.dispatchAction(LayoutRedux.LayoutAdd(newLayout));
+
+    return newLayout;
   }
 
   public cloneAndSetLayout(layoutToClone: Layout, layoutName: string): void {
@@ -149,9 +145,8 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       return;
     }
     this.cloneLayout(layoutToClone, layoutName);
-    setTimeout(() => {
-      this.setLayout(layoutName);
-    }, 200);
+
+    this.setLayout(layoutName);
   }
 
   public cloneLayout(layoutToClone: Layout, layoutName: string): void {
@@ -161,17 +156,19 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       );
       return;
     }
-    let newLayout: Layout = Helper.cloneObject(layoutToClone);
-    (newLayout.Uuid = createUuid()), (newLayout.Name = layoutName);
-    this.dispatchAction(LayoutRedux.LayoutSave(newLayout));
+    const newLayout: Layout = Helper.cloneObject(layoutToClone);
+    newLayout.Uuid = createUuid();
+    newLayout.Name = layoutName;
+
+    this.dispatchAction(LayoutRedux.LayoutAdd(newLayout));
   }
 
   public saveLayout(layoutToSave: Layout): void {
-    this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
-  }
-
-  public restorelayout(layoutToRestore: Layout): void {
-    this.dispatchAction(LayoutRedux.LayoutRestore(layoutToRestore));
+    if (!this.doesLayoutExist(layoutToSave)) {
+      this.dispatchAction(LayoutRedux.LayoutAdd(layoutToSave));
+    } else {
+      this.dispatchAction(LayoutRedux.LayoutSave(layoutToSave));
+    }
   }
 
   public showLayoutPopup(): void {

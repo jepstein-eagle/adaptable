@@ -8,7 +8,7 @@ export const LAYOUT_EDIT = 'LAYOUT_EDIT';
 export const LAYOUT_DELETE = 'LAYOUT_DELETE';
 export const LAYOUT_SELECT = 'LAYOUT_SELECT';
 export const LAYOUT_SAVE = 'LAYOUT_SAVE';
-export const LAYOUT_RESTORE = 'LAYOUT_RESTORE';
+export const LAYOUT_UPDATE_CURRENT_DRAFT = 'LAYOUT_UPDATE_CURRENT_DRAFT';
 
 export interface LayoutAction extends Redux.Action {
   layout: Layout;
@@ -22,7 +22,7 @@ export interface LayoutDeleteAction extends LayoutAction {}
 
 export interface LayoutSaveAction extends LayoutAction {}
 
-export interface LayoutRestoreAction extends LayoutAction {}
+export interface LayoutUpdateCurrentDraftAction extends LayoutAction {}
 
 export interface LayoutSelectAction extends Redux.Action {
   LayoutName: string;
@@ -37,10 +37,6 @@ export const LayoutAdd = (layout: Layout): LayoutAddAction => ({
   layout,
 });
 
-export const LayoutEdit = (layout: Layout): LayoutEditAction => ({
-  type: LAYOUT_EDIT,
-  layout,
-});
 export const LayoutDelete = (layout: Layout): LayoutDeleteAction => ({
   type: LAYOUT_DELETE,
   layout,
@@ -56,8 +52,8 @@ export const LayoutSelect = (LayoutName: string): LayoutSelectAction => ({
   LayoutName,
 });
 
-export const LayoutRestore = (layout: Layout): LayoutRestoreAction => ({
-  type: LAYOUT_RESTORE,
+export const LayoutUpdateCurrentDraft = (layout: Layout): LayoutUpdateCurrentDraftAction => ({
+  type: LAYOUT_UPDATE_CURRENT_DRAFT,
   layout,
 });
 
@@ -72,10 +68,13 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
 ): LayoutState => {
   let layouts: Layout[];
   switch (action.type) {
-    //  case LAYOUT_SAVE: // we do nothing here as its all done in the store
-    //      return state
-    case LAYOUT_SELECT:
-      return Object.assign({}, state, { CurrentLayout: (action as LayoutSelectAction).LayoutName });
+    case LAYOUT_SELECT: {
+      const newCurrentLayout = (action as LayoutSelectAction).LayoutName;
+      if ((state.Layouts || []).find(l => l.Name === newCurrentLayout)) {
+        return Object.assign({}, state, { CurrentLayout: newCurrentLayout });
+      }
+      return state;
+    }
     case LAYOUT_ADD: {
       const actionLayout: Layout = (action as LayoutAction).layout;
 
@@ -87,8 +86,9 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
       return { ...state, Layouts: layouts };
     }
 
-    case LAYOUT_EDIT: {
+    case LAYOUT_SAVE: {
       const actionLayout: Layout = (action as LayoutAction).layout;
+
       return {
         ...state,
         Layouts: state.Layouts.map(abObject =>
@@ -99,9 +99,12 @@ export const LayoutReducer: Redux.Reducer<LayoutState> = (
 
     case LAYOUT_DELETE: {
       const actionLayout: Layout = (action as LayoutAction).layout;
+      const newLayouts = state.Layouts.filter(abObject => abObject.Uuid !== actionLayout.Uuid);
       return {
         ...state,
-        Layouts: state.Layouts.filter(abObject => abObject.Uuid !== actionLayout.Uuid),
+        CurrentLayout:
+          state.CurrentLayout === actionLayout.Name ? newLayouts[0].Name : state.CurrentLayout,
+        Layouts: newLayouts,
       };
     }
     default:
