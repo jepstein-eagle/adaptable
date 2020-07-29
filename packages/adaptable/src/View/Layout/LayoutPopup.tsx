@@ -144,7 +144,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout({
+        Name: '',
+      }),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
