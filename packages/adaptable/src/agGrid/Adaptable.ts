@@ -2146,7 +2146,7 @@ export class Adaptable implements IAdaptable {
   };
 
   public getColumnDefsWithCorrectVisibility = (): ColDef[] => {
-    const visibleColIds = this.api.layoutApi.getCurrentVisibleColumnIds();
+    const visibleColIds = this.api.layoutApi.getCurrentVisibleColumnIdsMap();
 
     return this.gridOptions.columnApi.getAllColumns().map(c => {
       const colDef = c.getColDef();

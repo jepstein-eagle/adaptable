@@ -269,6 +269,9 @@ let demoConfig: PredefinedConfig = {
       // },
     ],
   },
+  Layout: {
+    CreateDefaultLayout: {},
+  },
   // Layout: {
   //   CreateDefaultLayout: false,
   //   Revision: 5,

@@ -21,13 +21,17 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     return this.getAdaptableState().Layout;
   }
 
-  public getCurrentVisibleColumnIds(): { [key: string]: boolean } {
+  public getCurrentVisibleColumnIdsMap(): { [key: string]: boolean } {
     const layout = this.getCurrentLayout();
 
     return layout.Columns.reduce((acc, colId) => {
       acc[colId] = true;
       return acc;
     }, {} as { [key: string]: boolean });
+  }
+
+  public getCurrentVisibleColumnIds() {
+    return this.getCurrentLayout().Columns;
   }
 
   public setLayout(layoutName: string): void {

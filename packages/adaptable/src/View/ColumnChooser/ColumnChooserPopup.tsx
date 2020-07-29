@@ -35,9 +35,10 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
     availableValues = columns.map(x =>
       this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
-    selectedValues = this.props.Api.gridApi
-      .getVisibleColumns()
-      .map(x => this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x));
+
+    selectedValues = this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
+      this.props.Api.layoutApi.getCurrentVisibleColumnIds()
+    );
 
     let infoBody: any[] = [
       "Move items between the 'Hidden Columns' and 'Visible Columns' listboxes to hide / show them.",

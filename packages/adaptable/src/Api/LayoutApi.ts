@@ -26,7 +26,12 @@ export interface LayoutApi {
   /**
    * Retrieves a map with visible columns in the current layout. The col ids are the keys, and the values are `true`
    */
-  getCurrentVisibleColumnIds(): { [key: string]: boolean };
+  getCurrentVisibleColumnIdsMap(): { [key: string]: boolean };
+
+  /**
+   * Retrieves an array of visible column ids in the current layout.
+   */
+  getCurrentVisibleColumnIds(): string[];
 
   /**
    * Retrieves the name of the current Layout
@@ -71,7 +76,7 @@ export interface LayoutApi {
    */
   createAndSetLayout(layoutToCreate: Layout): Layout;
 
-  getCurrentVisibleColumnIds(): { [key: string]: boolean };
+  getCurrentVisibleColumnIdsMap(): { [key: string]: boolean };
 
   /**
    * Clones the given Layout by creating a new one with the same properties but with a new name (using the one provided)
