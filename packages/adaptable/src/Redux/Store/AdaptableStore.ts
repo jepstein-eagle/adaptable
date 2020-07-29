@@ -2832,14 +2832,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           case RESET_STATE: {
             let returnAction = next(action);
 
-            const layoutState: LayoutState = middlewareAPI.getState().Layout;
-            const defaultLayout = adaptable.LayoutService.createDefaultLayoutIfNeeded();
-
-            let currentLayout: string = layoutState.CurrentLayout || defaultLayout?.Name;
-            if (!adaptable.api.layoutApi.findLayoutByName(currentLayout)) {
-              currentLayout = defaultLayout ? defaultLayout.Name : layoutState.Layouts[0].Name;
-            }
-
             //Create all calculated columns which have stored in Adaptable State to be vendor Columns
             // do this before we load the layout
             let calculatedColumnStrategy = <ICalculatedColumnStrategy>(
@@ -2864,6 +2856,18 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             if (actionColumnStrategy) {
               actionColumnStrategy.addActionColumnsToGrid();
             }
+
+            // make sure we have the grid columns in state, before we do any layout work
+            adaptable.updateColumnsIntoStore();
+
+            const layoutState: LayoutState | undefined = middlewareAPI.getState().Layout;
+            const defaultLayout = adaptable.LayoutService.createDefaultLayoutIfNeeded();
+
+            let currentLayout: string = layoutState?.CurrentLayout || defaultLayout?.Name;
+            if (!adaptable.api.layoutApi.findLayoutByName(currentLayout)) {
+              currentLayout = defaultLayout ? defaultLayout.Name : layoutState.Layouts[0].Name;
+            }
+
             middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
 
             // do this now so it sets strategy entitlements
