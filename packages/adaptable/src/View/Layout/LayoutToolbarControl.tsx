@@ -41,12 +41,6 @@ class LayoutToolbarControlComponent extends React.Component<
     let layoutEntity = this.props.Layouts.find(
       x => x.Name == this.props.CurrentLayoutName || x.Uuid == this.props.CurrentLayoutName
     );
-    // this is wrong at the moment an always returning true
-    // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
-    // but worth fixing and then making that save button enabled depending on whether this is true
-    // let isModifiedLayout: boolean = this.props.Api.internalApi
-    //   .getLayoutService()
-    //   .isLayoutModified(layoutEntity); //TODO
 
     let isManualSaveLayout: boolean =
       this.props.Api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
@@ -66,7 +60,7 @@ class LayoutToolbarControlComponent extends React.Component<
           style={{ minWidth: 160 }}
           marginRight={2}
           className="ab-DashboardToolbar__Layout__select"
-          placeholder="Select Layout"
+          showEmptyItem={false}
           value={layoutEntity ? layoutEntity.Name : null}
           options={availableLayoutOptions}
           onChange={(layoutName: any) => {
