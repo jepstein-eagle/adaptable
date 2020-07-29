@@ -21,7 +21,6 @@ interface ColumnChooserPopupProps extends StrategyViewPopupProps<ColumnChooserPo
 class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProps, {}> {
   render() {
     let availableValues: any[];
-    let selectedValues: any[];
     let masterChildren: IMasterChildren[];
     let columns: AdaptableColumn[] = this.props.Api.gridApi.getColumns();
     if (ArrayExtensions.IsNotEmpty(this.props.ColumnCategories)) {
@@ -36,8 +35,14 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
       this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
 
-    selectedValues = this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
-      this.props.Api.layoutApi.getCurrentVisibleColumnIds()
+    const visibleColumnIds = this.props.Api.layoutApi
+      .getCurrentVisibleColumnIds()
+      .filter(columnId => {
+        return !this.props.Api.gridApi.isRowGroupColumn(columnId);
+      });
+
+    const selectedValues: string[] = this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
+      visibleColumnIds
     );
 
     let infoBody: any[] = [
@@ -77,6 +82,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
   private ColumnListChange(columnList: string[]) {
     let colIds: string[] = this.props.Api.gridApi
       .getColumnsFromFriendlyNames(columnList)
+      .filter(c => c)
       .map(c => c.ColumnId);
     this.props.onNewColumnListOrder(colIds);
   }
