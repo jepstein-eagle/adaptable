@@ -1273,6 +1273,7 @@ export class ExamplesHelper {
       sortable: true,
       enableRowGroup: true,
       enablePivot: true,
+      aggFunc: 'sum',
       //   pivotComparator: this.statusComparator,
       // pivot: true,
       type: 'abColDefString',

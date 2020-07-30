@@ -1272,6 +1272,7 @@ export class Adaptable implements IAdaptable {
         if (pivotedColumnsIndexesMap[colId] != null) {
           newColState.pivotIndex = pivotedColumnsIndexesMap[colId];
         }
+        newColState.aggFunc = null;
         if (aggregationFunctionsColumnsMap[colId] != null) {
           newColState.aggFunc = aggregationFunctionsColumnsMap[colId];
         }
@@ -1318,6 +1319,9 @@ export class Adaptable implements IAdaptable {
 
       if (shouldUpdatePivoted) {
         this.gridOptions.columnApi.setPivotMode(pivoted);
+      }
+      if (pivoted) {
+        this.gridOptions.columnApi.addValueColumns(layout.PivotDetails.AggregationColumns);
       }
       this.updateColumnsIntoStore();
     } else {
@@ -1378,12 +1382,16 @@ export class Adaptable implements IAdaptable {
       if (colDef.pivotIndex != null) {
         pivotedColumns[colDef.pivotIndex] = colId;
       }
-      if (colDef.aggFunc) {
-        pivotAggregatedColumns.push(colId);
-      }
+      // if (colDef.aggFunc) {
+      //   pivotAggregatedColumns.push(colId);
+      // }
 
       return acc;
     }, {} as { [key: string]: number });
+
+    this.gridOptions.columnApi.getValueColumns().forEach(col => {
+      pivotAggregatedColumns.push(col.getColId());
+    });
 
     groupedColumns = groupedColumns.filter(x => !!x);
     pivotedColumns = pivotedColumns.filter(x => !!x);
