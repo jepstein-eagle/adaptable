@@ -7,6 +7,7 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import * as ColumnCategoryRedux from '../Redux/ActionsReducers/ColumnCategoryRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class ColumnCategoryStrategy extends AdaptableStrategyBase
   implements IColumnCategoryStrategy {
@@ -30,5 +31,15 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase
       AddAction: ColumnCategoryRedux.ColumnCategoryAdd,
       EditAction: ColumnCategoryRedux.ColumnCategoryEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let columnCategories: ColumnCategory[] = this.adaptable.api.columnCategoryApi
+      .getAllColumnCategory()
+      .filter((cc: ColumnCategory) => cc.ColumnIds.includes(specialColumnId));
+
+    return ArrayExtensions.IsNotNullOrEmpty(columnCategories)
+      ? columnCategories.length + ' Column Categories'
+      : undefined;
   }
 }

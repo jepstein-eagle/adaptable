@@ -84,7 +84,7 @@ export class CalculatedColumnSummaryComponent extends React.Component<
   onEdit(calculatedColumn: CalculatedColumn) {
     this.setState({
       EditedAdaptableObject: Helper.cloneObject(calculatedColumn),
-      WizardStartIndex: 1,
+      WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
   }

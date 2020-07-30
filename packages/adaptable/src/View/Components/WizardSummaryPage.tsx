@@ -23,6 +23,7 @@ export const WizardSummaryPage = (props: WizardSummaryPageProps) => {
           domProps={{
             style: {
               height: '100%',
+              margin: '10px',
             },
           }}
           columns={[

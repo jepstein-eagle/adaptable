@@ -229,7 +229,7 @@ export interface IAdaptable {
   // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], _colDefs?: any[]): void;
-  removeCalculatedColumnFromGrid(calculatedColumnId: string): void;
+  removeCalculatedColumnFromGrid(calculatedColumnId: string): boolean;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // actionColumn

@@ -71,5 +71,15 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     };
   }
 
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let formatColumns: FormatColumn[] = this.adaptable.api.formatColumnApi
+      .getAllFormatColumn()
+      .filter((fc: FormatColumn) => fc.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(formatColumns)
+      ? formatColumns.length + ' Format Columns'
+      : undefined;
+  }
+
   public abstract initStyles(): void;
 }

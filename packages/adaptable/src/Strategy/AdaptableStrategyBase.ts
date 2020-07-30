@@ -55,6 +55,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
+  public getSpecialColumnReferences(specialColumnId: string): string {
+    return undefined;
+  }
+
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     // base class implementation which is empty
     return undefined;

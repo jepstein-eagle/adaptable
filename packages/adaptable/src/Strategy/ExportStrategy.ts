@@ -173,4 +173,12 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       EditAction: ExportRedux.ReportEdit,
     };
   }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let reports: Report[] = this.adaptable.api.exportApi
+      .getAllReports()
+      .filter((r: Report) => r.ColumnIds.includes(specialColumnId));
+
+    return ArrayExtensions.IsNotNullOrEmpty(reports) ? reports.length + ' Reports' : undefined;
+  }
 }

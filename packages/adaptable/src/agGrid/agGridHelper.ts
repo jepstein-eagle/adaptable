@@ -306,7 +306,7 @@ export class agGridHelper {
       ColumnId,
       FriendlyName,
       DataType: this.getColumnDataType(vendorColumn, false),
-      Visible: vendorColumn.isVisible(),
+      Visible: !colDef.hide, // vendorColumn.isVisible(),
       ReadOnly: this.isColumnReadonly(colDef),
       Sortable: this.isColumnSortable(colDef),
       Filterable: this.isColumnFilterable(colDef),
