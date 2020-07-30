@@ -13,6 +13,8 @@ import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Dropdown from '../../../components/Dropdown';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import CheckBox from '../../../components/CheckBox';
+import Panel from '../../../components/Panel';
+import { Flex } from 'rebass';
 
 export interface CalculatedColumnSettingsWizardProps
   extends AdaptableWizardStepProps<CalculatedColumn> {}
@@ -55,101 +57,111 @@ export class CalculatedColumnSettingsWizard
     const inEdit = !!this.props.Data.ColumnId;
     return (
       <WizardPanel>
-        <FormLayout>
-          <FormRow label="Column ID">
-            <Input
-              value={this.state.ColumnId || ''}
-              width={300}
-              autoFocus={!inEdit}
-              disabled={inEdit}
-              type="text"
-              placeholder="Enter an id"
-              onChange={(e: React.SyntheticEvent) => this.handleColumnIdChange(e)}
-            />
-          </FormRow>
-          <FormRow label="Column Name">
-            <Input
-              autoFocus={inEdit}
-              onFocus={() => {
-                this.setState({
-                  ColumnNameFocused: true,
-                });
-              }}
-              onBlur={() => {
-                this.setState({
-                  ColumnNameFocused: false,
-                });
-              }}
-              value={
-                this.state.ColumnNameFocused
-                  ? this.state.ColumnName || ''
-                  : this.state.ColumnName || this.state.ColumnId || ''
-              }
-              width={300}
-              type="text"
-              placeholder="Enter column name"
-              onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
-            />
-          </FormRow>
-          <FormRow label="Column Type">
-            <Dropdown
-              value={this.state.DataType}
-              onChange={DataType => this.setState({ DataType })}
-              options={[
-                { value: DataType.Number, label: DataType.Number },
-                { value: DataType.String, label: DataType.String },
-                { value: DataType.Date, label: DataType.Date },
-                { value: DataType.Boolean, label: DataType.Boolean },
-              ]}
-            />
-          </FormRow>
-          <FormRow label="Width">
-            <Input
-              type="number"
-              width={300}
-              value={this.state.Width}
-              onChange={(e: React.SyntheticEvent) =>
-                this.setState({ Width: Number((e.target as HTMLInputElement).value) })
-              }
-            />
-          </FormRow>
-          <FormRow label="Filterable">
-            <CheckBox
-              checked={this.state.Filterable}
-              onChange={Filterable => this.setState({ Filterable })}
-            />
-          </FormRow>
-          <FormRow label="Resizable">
-            <CheckBox
-              checked={this.state.Resizable}
-              onChange={Resizable => this.setState({ Resizable })}
-            />
-          </FormRow>
-          <FormRow label="Groupable">
-            <CheckBox
-              checked={this.state.Groupable}
-              onChange={Groupable => this.setState({ Groupable })}
-            />
-          </FormRow>
-          <FormRow label="Sortable">
-            <CheckBox
-              checked={this.state.Sortable}
-              onChange={Sortable => this.setState({ Sortable })}
-            />
-          </FormRow>
-          <FormRow label="Pivotable">
-            <CheckBox
-              checked={this.state.Pivotable}
-              onChange={Pivotable => this.setState({ Pivotable })}
-            />
-          </FormRow>
-          <FormRow label="Aggregatable">
-            <CheckBox
-              checked={this.state.Aggregatable}
-              onChange={Aggregatable => this.setState({ Aggregatable })}
-            />
-          </FormRow>
-        </FormLayout>
+        <Panel header="Column Name" margin={2}>
+          <Flex flexDirection="row">
+            <FormLayout>
+              <FormRow label="Column Id">
+                <Input
+                  value={this.state.ColumnId || ''}
+                  width={300}
+                  autoFocus={!inEdit}
+                  disabled={inEdit}
+                  type="text"
+                  placeholder="Enter an id"
+                  onChange={(e: React.SyntheticEvent) => this.handleColumnIdChange(e)}
+                />
+              </FormRow>
+              <FormRow label="Column Name">
+                <Input
+                  autoFocus={inEdit}
+                  onFocus={() => {
+                    this.setState({
+                      ColumnNameFocused: true,
+                    });
+                  }}
+                  onBlur={() => {
+                    this.setState({
+                      ColumnNameFocused: false,
+                    });
+                  }}
+                  value={
+                    this.state.ColumnNameFocused
+                      ? this.state.ColumnName || ''
+                      : this.state.ColumnName || this.state.ColumnId || ''
+                  }
+                  width={300}
+                  type="text"
+                  placeholder="Enter column name"
+                  onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
+                />
+              </FormRow>
+              <FormRow label="Column Type">
+                <Dropdown
+                  value={this.state.DataType}
+                  onChange={DataType => this.setState({ DataType })}
+                  options={[
+                    { value: DataType.Number, label: DataType.Number },
+                    { value: DataType.String, label: DataType.String },
+                    { value: DataType.Date, label: DataType.Date },
+                    { value: DataType.Boolean, label: DataType.Boolean },
+                  ]}
+                />
+              </FormRow>
+              <FormRow label="Width">
+                <Input
+                  type="number"
+                  width={300}
+                  value={this.state.Width}
+                  onChange={(e: React.SyntheticEvent) =>
+                    this.setState({ Width: Number((e.target as HTMLInputElement).value) })
+                  }
+                />
+              </FormRow>
+            </FormLayout>
+          </Flex>
+        </Panel>
+        <Panel header="Column Properties" margin={2}>
+          <Flex flexDirection="row">
+            <FormLayout>
+              <FormRow label="Filterable">
+                <CheckBox
+                  checked={this.state.Filterable}
+                  onChange={Filterable => this.setState({ Filterable })}
+                />
+              </FormRow>
+              <FormRow label="Resizable">
+                <CheckBox
+                  checked={this.state.Resizable}
+                  onChange={Resizable => this.setState({ Resizable })}
+                />
+              </FormRow>
+              <FormRow label="Groupable">
+                <CheckBox
+                  checked={this.state.Groupable}
+                  onChange={Groupable => this.setState({ Groupable })}
+                />
+              </FormRow>
+              <FormRow label="Sortable">
+                <CheckBox
+                  checked={this.state.Sortable}
+                  onChange={Sortable => this.setState({ Sortable })}
+                />
+              </FormRow>
+              <FormRow label="Pivotable">
+                <CheckBox
+                  checked={this.state.Pivotable}
+                  onChange={Pivotable => this.setState({ Pivotable })}
+                />
+              </FormRow>
+              <FormRow label="Aggregatable">
+                <CheckBox
+                  checked={this.state.Aggregatable}
+                  onChange={Aggregatable => this.setState({ Aggregatable })}
+                />
+              </FormRow>
+            </FormLayout>
+          </Flex>
+        </Panel>
         {this.state.ErrorMessage ? (
           <ErrorBox marginTop={2}>{this.state.ErrorMessage}</ErrorBox>
         ) : null}

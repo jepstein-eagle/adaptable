@@ -62,6 +62,16 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     return menuItemShowPopup;
   }
 
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let alertDefinitions: AlertDefinition[] = this.adaptable.api.alertApi
+      .getAlertDefinitions()
+      .filter((ad: AlertDefinition) => ad.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)
+      ? alertDefinitions.length + ' Alerts'
+      : undefined;
+  }
+
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
     let alertDefinitions: AlertDefinition[] = this.getAlertDefinitionsForDataChange(
       dataChangedInfo

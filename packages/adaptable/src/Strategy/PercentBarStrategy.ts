@@ -132,4 +132,14 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       EditAction: PercentBarRedux.PercentBarEdit,
     };
   }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let percentBars: PercentBar[] = this.GetPercentBarState().PercentBars.filter(
+      (pb: PercentBar) => pb.ColumnId == specialColumnId
+    );
+
+    return ArrayExtensions.IsNotNullOrEmpty(percentBars)
+      ? percentBars.length + ' Percent Bars'
+      : undefined;
+  }
 }

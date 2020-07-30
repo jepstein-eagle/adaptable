@@ -9,6 +9,7 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import * as CellValidationRedux from '../Redux/ActionsReducers/CellValidationRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class CellValidationStrategy extends AdaptableStrategyBase
   implements ICellValidationStrategy {
@@ -50,5 +51,15 @@ export class CellValidationStrategy extends AdaptableStrategyBase
       AddAction: CellValidationRedux.CellValidationAdd,
       EditAction: CellValidationRedux.CellValidationEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let cellValidations: CellValidationRule[] = this.adaptable.api.cellValidationApi
+      .getAllCellValidation()
+      .filter((cvr: CellValidationRule) => cvr.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(cellValidations)
+      ? cellValidations.length + ' Cell Validations'
+      : undefined;
   }
 }

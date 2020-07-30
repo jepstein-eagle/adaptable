@@ -10,6 +10,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
@@ -67,6 +68,16 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
         }
       }
     }
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let flashingCells: FlashingCell[] = this.adaptable.api.flashingCellApi
+      .getAllFlashingCell()
+      .filter((fc: FlashingCell) => fc.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(flashingCells)
+      ? flashingCells.length + ' Flashing Cells'
+      : undefined;
   }
 
   public abstract initStyles(): void;

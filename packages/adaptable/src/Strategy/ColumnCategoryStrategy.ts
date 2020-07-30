@@ -31,4 +31,9 @@ export class ColumnCategoryStrategy extends AdaptableStrategyBase
       EditAction: ColumnCategoryRedux.ColumnCategoryEdit,
     };
   }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    // TODO:  aaaaaa
+    return undefined;
+  }
 }

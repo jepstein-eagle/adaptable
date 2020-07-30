@@ -150,4 +150,9 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
       EditAction: CalculatedColumnRedux.CalculatedColumnEdit,
     };
   }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    // TODO:  Need to be able to search expressions for this column, but worth holding off until they have all been updated!
+    return undefined;
+  }
 }

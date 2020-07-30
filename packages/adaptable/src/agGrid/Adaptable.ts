@@ -161,6 +161,7 @@ import FormatHelper from '../Utilities/Helpers/FormatHelper';
 import { isEqual } from 'lodash';
 import { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
+import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2071,11 +2072,23 @@ export class Adaptable implements IAdaptable {
     this.updateColumnsIntoStore();
   }
 
-  public removeCalculatedColumnFromGrid(calculatedColumnID: string) {
+  public removeCalculatedColumnFromGrid(calculatedColumnId: string): boolean {
+    let referencedText: string | undefined = '';
+    this.strategies.forEach(s => {
+      const strategyReference = s.getSpecialColumnReferences(calculatedColumnId);
+      if (StringExtensions.IsNotNullOrEmpty(strategyReference)) {
+        referencedText += ' ' + strategyReference;
+      }
+    });
+    if (StringExtensions.IsNotNullOrEmpty(referencedText)) {
+      alert('Cannot delete the column because it is referenced in' + referencedText);
+      return false;
+    }
+
     let foundColDef: boolean = false;
     const newColDefs = this.mapColumnDefs(
       (colDef: ColDef) => {
-        if (colDef.headerName === calculatedColumnID) {
+        if (colDef.headerName === calculatedColumnId) {
           foundColDef = true;
           return null;
         }
@@ -2088,11 +2101,12 @@ export class Adaptable implements IAdaptable {
       this.safeSetColDefs(newColDefs);
     }
     for (const columnList of this.calculatedColumnPathMap.values()) {
-      const index = columnList.indexOf(calculatedColumnID);
+      const index = columnList.indexOf(calculatedColumnId);
       if (index > -1) {
         columnList.splice(index, 1);
       }
     }
+    return true;
   }
 
   public addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn) {

@@ -634,7 +634,7 @@ export class ExamplesHelper {
   }
 
   protected getCountries(): string[] {
-    const newcountries = [
+    /* const newcountries = [
       '1',
       '2',
       '3',
@@ -652,7 +652,7 @@ export class ExamplesHelper {
       //    '15',
     ];
     return newcountries;
-
+*/
     const countries = [
       //  'Argentina',
       'Australia',
@@ -808,6 +808,7 @@ export class ExamplesHelper {
       },
       columnDefs: this.getTradeSchema().map(c => {
         // c.floatingFilter = true;
+        //  c.hide = true;
         return c;
       }),
       rowData,
@@ -1063,6 +1064,7 @@ export class ExamplesHelper {
       sortable: true,
       filter: true,
       resizable: true,
+      hide: false,
       // width: 500,
       // headerCheckboxSelection: true,
       //  checkboxSelection: true,
@@ -1090,7 +1092,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       aggFunc: 'sum',
-      // hide: true,
+      hide: true,
       //   agGroupCellRenderer
       // valueFormatter: notionalFormatter,
       cellClass: 'ab-cell--align-right',

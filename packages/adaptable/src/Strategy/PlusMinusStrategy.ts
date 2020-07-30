@@ -244,4 +244,14 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       EditAction: PlusMinusRedux.PlusMinusRuleEdit,
     };
   }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let plusMinusRules: PlusMinusRule[] = this.adaptable.api.plusMinusApi
+      .getAllPlusMinus()
+      .filter((pmr: PlusMinusRule) => pmr.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(plusMinusRules)
+      ? plusMinusRules.length + ' Plus Minus Rules'
+      : undefined;
+  }
 }

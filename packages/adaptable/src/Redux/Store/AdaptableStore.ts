@@ -2160,9 +2160,11 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
-            adaptable.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
-            let returnAction = next(action);
-            return returnAction;
+            if (adaptable.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId)) {
+              let returnAction = next(action);
+              return returnAction;
+            }
+            return null;
           }
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {

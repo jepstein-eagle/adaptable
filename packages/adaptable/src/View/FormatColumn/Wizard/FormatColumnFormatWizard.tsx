@@ -211,7 +211,9 @@ export class FormatColumnFormatWizard
   }
 
   renderDateFormat() {
-    if (this.state.DisplayFormat.Formatter !== 'DateFormatter') return null;
+    if (this.state.DisplayFormat.Formatter !== 'DateFormatter') {
+      return null;
+    }
     return (
       <>
         <Panel header="Format" margin={2}>

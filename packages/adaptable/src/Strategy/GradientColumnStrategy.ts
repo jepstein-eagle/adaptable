@@ -104,4 +104,14 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
       EditAction: GradientColumnRedux.GradientColumnEdit,
     };
   }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let gradientColumns: GradientColumn[] = this.adaptable.api.gradientColumnApi
+      .getAllGradientColumn()
+      .filter((gc: GradientColumn) => gc.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(gradientColumns)
+      ? gradientColumns.length + ' Gradient Columns'
+      : undefined;
+  }
 }

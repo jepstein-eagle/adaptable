@@ -28,6 +28,7 @@ export interface IStrategy {
   isStrategyAvailable(): boolean;
   getTeamSharingAction(): TeamSharingImportInfo<AdaptableObject> | undefined;
   AccessLevel: AccessLevel;
+  getSpecialColumnReferences(specialColumnId: string): string | undefined;
 }
 /**
  * An interface for those strategies which have sytles - e.g. Conditional Style, Format Column, Flashing Cell etc.

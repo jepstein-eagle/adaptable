@@ -66,117 +66,17 @@ async function InitAdaptableDemo() {
       },
     ],
     predefinedConfig: {
-      Theme: {
-        Revision: Date.now(),
-        // SystemThemes: [
-        //   {
-        //     Name: 'light',
-        //     Description: 'light theme',
-        //     VendorGridClassName: 'ag-theme-alpine',
-        //   },
-        //   {
-        //     Name: 'dark',
-        //     Description: 'dark theme',
-        //     VendorGridClassName: 'ag-theme-alpine-dark',
-        //   },
-        // ],
-      },
-      Dashboard: {
-        Revision: 141,
-        CanFloat: false,
-        Tabs: [
+      /*
+      Layout: {
+        CurrentLayout: 'Simple Layout',
+        Layouts: [
           {
-            Name: 'General',
-            Toolbars: ['Toolbar1', 'SmartEdit', 'CellSummary', 'Layout'],
-          },
-        ],
-        VisibleButtons: ['CellSummary', 'ColumnChooser'],
-        CustomToolbars: [
-          {
-            Name: 'Toolbar1',
-            Title: 'Demo Toolbar',
-            Glyph: 'advanced-search',
-            ToolbarButtons: [
-              {
-                Name: 'btnNewLayout',
-                Caption: 'New Layout',
-              },
-              {
-                Name: 'btnCopyLayout',
-                Caption: 'Copy Layout',
-              },
-              {
-                Name: 'btnCopyLayout',
-                Caption: 'Copy Layout',
-              },
-            ],
-          },
-        ],
-        ShowFunctionsDropdown: true,
-        //  HomeToolbarTitle: 'Hello world',
-        ShowQuickSearchInHeader: true,
-        IsInline: false, // making it false in Redux so we dont forget but true here for testing purposes
-      },
-      SystemStatus: {
-        Revision: 13,
-        DefaultStatusMessage: 'System Running Fine',
-        DefaultStatusType: 'Error',
-      },
-      AdvancedSearch: {
-        Revision: 4,
-        AdvancedSearches: [],
-      },
-      FormatColumn: {
-        FormatColumns: [
-          {
-            ColumnId: 'notional',
-            CellAlignment: 'Right',
+            Name: 'Simple Layout',
+            Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
           },
         ],
       },
-      QuickSearch: {
-        Revision: 11,
-        QuickSearchText: 'b',
-      },
-      Entitlements: {
-        Revision: 3,
-        DefaultAccessLevel: 'Full',
-        FunctionEntitlements: [
-          {
-            FunctionName: 'Layout',
-            AccessLevel: 'Full',
-          },
-          {
-            FunctionName: 'Dashboard',
-            AccessLevel: 'Full',
-          },
-        ],
-      },
-      PercentBar: {
-        Revision: 1,
-        PercentBars: [
-          {
-            ColumnId: 'changeOnYear',
-            PositiveValue: 200,
-            NegativeValue: -200,
-            NegativeColor: '#FF0000',
-            PositiveColor: '#008000',
-            ShowValue: false,
-          },
-        ],
-      },
-      Export: {
-        Revision: 5,
-        Reports: [
-          {
-            ReportColumnScope: 'CustomColumns',
-            ReportRowScope: 'CustomRows',
-            ColumnIds: ['Football', 'Testing'],
-            Name: 'My Custom Report',
-            CustomReportFunction: 'getDummyData',
-          },
-        ],
-      },
+      */
     },
   };
 
