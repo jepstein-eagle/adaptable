@@ -47,6 +47,7 @@ const columnSchema: ColDef[] = [
     field: 'identifier',
     filter: false,
     resizable: true,
+    hide: true,
     sortable: true,
     editable: false,
     type: 'abColDefNumber',

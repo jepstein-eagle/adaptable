@@ -75,26 +75,24 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       { Content: '', Size: 2 },
     ];
 
-    let LayoutRows = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT).map(
-      (x, index) => {
-        return (
-          <LayoutEntityRow
-            key={x.Uuid}
-            colItems={colItems}
-            api={this.props.Api}
-            IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
-            AdaptableObject={x}
-            onEdit={() => this.onEdit(x)}
-            onShare={description => this.props.onShare(x, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
-            canDelete={this.props.Layouts.length > 1}
-            onSelect={() => this.props.onSelectLayout(x.Name)}
-            AccessLevel={this.props.AccessLevel}
-          />
-        );
-      }
-    );
+    let LayoutRows = this.props.Layouts.map((x, index) => {
+      return (
+        <LayoutEntityRow
+          key={x.Uuid}
+          colItems={colItems}
+          api={this.props.Api}
+          IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
+          AdaptableObject={x}
+          onEdit={() => this.onEdit(x)}
+          onShare={description => this.props.onShare(x, description)}
+          TeamSharingActivated={this.props.TeamSharingActivated}
+          onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
+          canDelete={this.props.Layouts.length > 1}
+          onSelect={() => this.props.onSelectLayout(x.Name)}
+          AccessLevel={this.props.AccessLevel}
+        />
+      );
+    });
 
     let newSearchButton = (
       <SimpleButton

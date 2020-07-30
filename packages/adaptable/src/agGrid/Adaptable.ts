@@ -926,6 +926,8 @@ export class Adaptable implements IAdaptable {
     const allColumns: AdaptableColumn[] = [];
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllColumns();
 
+    // TODO sort the visible columns by layout order
+
     vendorCols.forEach(vendorColumn => {
       const colId: string = vendorColumn.getColId();
       if (!this.api.gridApi.isRowGroupColumn(colId)) {

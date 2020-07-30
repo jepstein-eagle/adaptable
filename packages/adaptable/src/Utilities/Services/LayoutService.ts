@@ -59,7 +59,7 @@ export class LayoutService implements ILayoutService {
       !!layoutState.Layouts.filter(layout => layout.Name === layoutName)[0];
 
     let defaultLayoutName = 'Default Layout';
-    let defaultLayoutColumns = gridState.Columns;
+    let defaultLayoutColumns = gridState.Columns.filter(column => column.Visible);
 
     const columnsMap = gridState.Columns.reduce((acc, col) => {
       acc[col.ColumnId] = col;
