@@ -35,11 +35,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
       this.props.Api.gridApi.getFriendlyNameFromColumn(x.ColumnId, x)
     );
 
-    const visibleColumnIds = this.props.Api.layoutApi
-      .getCurrentVisibleColumnIds()
-      .filter(columnId => {
-        return !this.props.Api.gridApi.isRowGroupColumn(columnId);
-      });
+    const visibleColumnIds = this.props.Api.layoutApi.getCurrentVisibleColumnIds();
 
     const selectedValues: string[] = this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
       visibleColumnIds
@@ -84,6 +80,7 @@ class ColumnChooserPopupComponent extends React.Component<ColumnChooserPopupProp
       .getColumnsFromFriendlyNames(columnList)
       .filter(c => c)
       .map(c => c.ColumnId);
+
     this.props.onNewColumnListOrder(colIds);
   }
 }

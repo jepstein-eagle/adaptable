@@ -216,8 +216,14 @@ export class GridApiImpl extends ApiBase implements GridApi {
     if (foundColumn) {
       return this.getFriendlyNameFromColumn(columnId, foundColumn);
     }
+    let result = columnId + GeneralConstants.MISSING_COLUMN;
+    const currentLayout = this.adaptable.api.layoutApi.getCurrentLayout();
+
+    if (this.isRowGroupColumn(columnId) && currentLayout?.GroupedColumns) {
+      result = `[Grouped column: ${currentLayout.GroupedColumns.join(', ')}]`;
+    }
     this.LogMissingColumnWarning(columnId);
-    return columnId + GeneralConstants.MISSING_COLUMN;
+    return result;
   }
 
   public getFriendlyNamesFromColumnIds(columnIds: string[]): string[] {

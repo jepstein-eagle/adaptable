@@ -92,7 +92,7 @@ export class LayoutSelectionWizard
   }
   public Next(): void {
     if (this.state.LayoutSource == LayoutSource.Existing) {
-      // need to popuplate the layout
+      // need to populate the layout
       let visibleColumns = this.props.Api.gridApi
         .getColumns()
         .filter(c => c.Visible)
