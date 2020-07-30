@@ -47,7 +47,7 @@ export class FreeTextColumnSettingsWizard
       <div style={{ height: '100%' }}>
         <WizardPanel>
           <FormLayout>
-            <FormRow label="Column ID">
+            <FormRow label="ColumnId">
               <Input
                 autoFocus={!inEdit}
                 value={this.state.ColumnId || ''}

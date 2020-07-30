@@ -20,7 +20,7 @@ export class CalculatedColumnSummaryWizard
   }
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Column ID', Value: this.props.Data.ColumnId },
+      { Key: 'Column Id', Value: this.props.Data.ColumnId },
       { Key: 'Column Name', Value: this.props.Data.FriendlyName },
       {
         Key: 'Expression',

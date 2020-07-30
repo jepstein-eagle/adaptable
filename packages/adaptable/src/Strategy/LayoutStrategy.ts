@@ -7,6 +7,7 @@ import { LayoutState, Layout } from '../PredefinedConfig/LayoutState';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import * as LayoutRedux from '../Redux/ActionsReducers/LayoutRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStrategy {
   public CurrentLayout: string;
@@ -32,5 +33,20 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
       AddAction: LayoutRedux.LayoutAdd,
       EditAction: LayoutRedux.LayoutSave,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let layouts: Layout[] = this.adaptable.api.layoutApi
+      .getAllLayout()
+      .filter((layout: Layout) => layout.Columns.includes(specialColumnId));
+
+    return ArrayExtensions.IsNotNullOrEmpty(layouts)
+      ? 'Layouts:' +
+          layouts
+            .map(l => {
+              return l.Name;
+            })
+            .join(',')
+      : undefined;
   }
 }
