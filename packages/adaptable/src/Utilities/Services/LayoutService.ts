@@ -83,13 +83,16 @@ export class LayoutService implements ILayoutService {
       }
 
       if (!layoutState.Layouts || !isLayoutDefined(defaultLayoutName)) {
-        let defaultLayout: Layout = ObjectFactory.CreateEmptyLayout({
-          ...(typeof layoutState.CreateDefaultLayout === 'object'
-            ? layoutState.CreateDefaultLayout
-            : null),
-          Name: defaultLayoutName,
-          Columns: defaultLayoutColumns.map(c => c.ColumnId),
-        });
+        let defaultLayout: Layout = ObjectFactory.CreateEmptyLayout(
+          {
+            ...(typeof layoutState.CreateDefaultLayout === 'object'
+              ? layoutState.CreateDefaultLayout
+              : null),
+            Name: defaultLayoutName,
+            Columns: defaultLayoutColumns.map(c => c.ColumnId),
+          },
+          gridState.Columns
+        );
         this.adaptable.api.layoutApi.saveLayout(defaultLayout);
 
         return defaultLayout;

@@ -14,6 +14,7 @@ import { AdaptableObject } from './AdaptableObject';
  */
 export interface AdaptableColumn extends AdaptableObject {
   ColumnId: string;
+  IsGrouped: boolean;
   FriendlyName: string;
   DataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
   Visible: boolean;

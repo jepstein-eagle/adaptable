@@ -313,6 +313,10 @@ export class agGridHelper {
       Filterable: this.isColumnFilterable(colDef),
       IsSparkline: this.adaptable.api.sparklineColumnApi.isSparklineColumn(colId),
       Groupable: this.isColumnGroupable(colDef),
+      IsGrouped: colDef.rowGroup || colDef.rowGroupIndex != null,
+
+      //TODO add IsPivoted
+      //TODO add IsAggregated
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
       SpecialColumn: false,

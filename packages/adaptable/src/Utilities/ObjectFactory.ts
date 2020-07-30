@@ -503,7 +503,10 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
   };
 }
 
-export function CreateEmptyLayout(layout?: Partial<Layout> & { Name: string }): Layout {
+export function CreateEmptyLayout(
+  layout?: Partial<Layout> & { Name: string },
+  adaptableColumns?: AdaptableColumn[]
+): Layout {
   return {
     ...layout,
     Uuid: createUuid(),
@@ -511,7 +514,9 @@ export function CreateEmptyLayout(layout?: Partial<Layout> & { Name: string }): 
     ColumnSorts: layout.ColumnSorts || [],
     ColumnFlexMap: layout.ColumnFlexMap || {},
     ColumnWidthMap: layout.ColumnWidthMap || {},
-    GroupedColumns: layout.GroupedColumns || [],
+    GroupedColumns:
+      layout.GroupedColumns ||
+      (adaptableColumns ? adaptableColumns.filter(c => c.IsGrouped).map(c => c.ColumnId) : []),
   };
 }
 
