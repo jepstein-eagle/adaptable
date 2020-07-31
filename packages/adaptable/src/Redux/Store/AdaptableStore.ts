@@ -2160,7 +2160,9 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
-            if (adaptable.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId)) {
+            if (
+              adaptable.tryRemoveCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId)
+            ) {
               let returnAction = next(action);
               return returnAction;
             }
@@ -2200,9 +2202,11 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
             const actionTyped = action as FreeTextColumnRedux.FreeTextColumnDeleteAction;
-            adaptable.removeFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId);
-            let returnAction = next(action);
-            return returnAction;
+            if (adaptable.tryRemoveFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId)) {
+              let returnAction = next(action);
+              return returnAction;
+            }
+            return null;
           }
 
           /*******************

@@ -1258,7 +1258,7 @@ export class ExamplesHelper {
       headerName: 'Currency',
       field: 'currency',
       editable: true,
-      rowGroup: true,
+      //  rowGroup: true,
       enableRowGroup: true,
       sortable: true,
       enablePivot: true,

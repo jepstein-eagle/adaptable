@@ -223,13 +223,13 @@ export interface IAdaptable {
   // FreeTextColumn
   addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn, _colDefs?: any[]): void;
   addFreeTextColumnsToGrid(freeTextColumns: FreeTextColumn[], colDefs?: any[]): void;
-  removeFreeTextColumnFromGrid(freeTextColumnId: string): void;
+  tryRemoveFreeTextColumnFromGrid(freeTextColumnId: string): boolean;
   editFreeTextColumnInGrid(freeTextColumn: FreeTextColumn): void;
 
   // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
   addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], _colDefs?: any[]): void;
-  removeCalculatedColumnFromGrid(calculatedColumnId: string): boolean;
+  tryRemoveCalculatedColumnFromGrid(calculatedColumnId: string): boolean;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // actionColumn
