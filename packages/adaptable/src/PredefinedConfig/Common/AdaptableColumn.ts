@@ -22,6 +22,8 @@ export interface AdaptableColumn extends AdaptableObject {
   Sortable: boolean;
   Filterable: boolean;
   IsSparkline: boolean;
+  Moveable: boolean;
+  Hideable: boolean;
   Groupable: boolean;
   Pivotable: boolean;
   Width?: number;

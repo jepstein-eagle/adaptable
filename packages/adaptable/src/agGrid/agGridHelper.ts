@@ -319,6 +319,9 @@ export class agGridHelper {
       //TODO add IsAggregated
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
+
+      Moveable: this.isColumnMoveable(colDef),
+      Hideable: this.isColumnHideable(colDef),
       SpecialColumn: false,
       IsExcludedFromQuickSearch: false,
     };
@@ -629,6 +632,29 @@ export class agGridHelper {
       return colDef.enableValue;
     }
     return false;
+  }
+
+  public isColumnMoveable(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.suppressMovable != null && colDef.suppressMovable == true) {
+      return false;
+    }
+    if (colDef.lockPosition != null && colDef.lockPosition == true) {
+      return false;
+    }
+    return true;
+  }
+
+  public isColumnHideable(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.lockVisible != null && colDef.lockVisible == true) {
+      return false;
+    }
+    return true;
   }
 
   public isColumnFilterable(colDef: ColDef): boolean {

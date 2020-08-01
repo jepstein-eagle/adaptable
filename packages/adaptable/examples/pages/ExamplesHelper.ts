@@ -1057,14 +1057,18 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
-      //    lockPosition: true,
-      //    lockVisible: true,
+      // lockPosition: true,
+      lockVisible: true,
+      //  suppressMovable: true,
       editable: true,
       type: ['hello', 'abColDefNumberx'],
       sortable: true,
       filter: true,
       resizable: true,
       hide: false,
+      enableValue: true,
+      // enablePivot: true,
+      aggFunc: 'avg',
       // width: 500,
       // headerCheckboxSelection: true,
       //  checkboxSelection: true,
@@ -1075,6 +1079,7 @@ export class ExamplesHelper {
       //    colId: 'hello',
       editable: false,
       filter: true,
+      rowGroup: true,
       enableRowGroup: true,
       valueGetter: (params: any) => {
         return params.data && params.data.stars && params.data.country
@@ -1136,9 +1141,11 @@ export class ExamplesHelper {
       resizable: true,
       editable: true,
       filter: true,
+      enablePivot: true,
+      pivot: true,
       // cellClass: 'number-cell',
       type: 'abColDefNumber',
-      enableValue: true,
+      enableValue: false,
     });
     schema.push({
       headerName: 'Counterparty',
@@ -1276,6 +1283,7 @@ export class ExamplesHelper {
       enableRowGroup: true,
       enablePivot: true,
       aggFunc: 'sum',
+
       //   pivotComparator: this.statusComparator,
       // pivot: true,
       type: 'abColDefString',

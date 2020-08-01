@@ -2308,7 +2308,10 @@ export class Adaptable implements IAdaptable {
           Groupable: this.agGridHelper.isColumnGroupable(vendorColDef),
           Pivotable: this.agGridHelper.isColumnPivotable(vendorColDef),
           Aggregatable: this.agGridHelper.isColumnAggregetable(vendorColDef),
+          Moveable: true,
+          Hideable: true,
           IsSparkline: dataType == DataType.NumberArray,
+          IsGrouped: false,
           SpecialColumn: true,
           IsExcludedFromQuickSearch: false,
         };
