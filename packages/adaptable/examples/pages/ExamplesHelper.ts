@@ -1057,15 +1057,16 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
-      // lockPosition: true,
-      lockVisible: true,
+      lockPosition: true,
+      //  lockVisible: true,
+      // pinned: true,
       //  suppressMovable: true,
       editable: true,
       type: ['hello', 'abColDefNumberx'],
       sortable: true,
       filter: true,
       resizable: true,
-      hide: false,
+      // hide: true,
       enableValue: true,
       // enablePivot: true,
       aggFunc: 'avg',
@@ -1076,10 +1077,13 @@ export class ExamplesHelper {
     });
     schema.push({
       headerName: 'Country-Stars',
-      //    colId: 'hello',
+      colId: 'countryStars',
       editable: false,
       filter: true,
-      rowGroup: true,
+      pinned: true,
+      enableValue: true,
+      aggFunc: 'sum',
+      //  rowGroup: true,
       enableRowGroup: true,
       valueGetter: (params: any) => {
         return params.data && params.data.stars && params.data.country
@@ -1089,6 +1093,32 @@ export class ExamplesHelper {
       },
       type: 'abColDefNumber',
     });
+
+    schema.push({
+      headerName: 'Counterparty',
+      field: 'counterparty',
+      editable: true,
+      rowGroup: true,
+      enableRowGroup: true,
+      //  enableValue: true,
+      enablePivot: true,
+      //  valueFormatter: this.raduFormatter,
+      //   valueGetter: (params: any) => {
+      //     return 'Hello';
+      //   },
+      valueFormatter: (params: any) => {
+        return params.value ? params.value.toLocaleString() : undefined;
+      },
+
+      //  rowGroup: true,
+      filter: 'agSetColumnFilter',
+      sortable: true,
+      type: 'abColDefString',
+      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
+      // resizable: true,
+      //  tooltipComponent: 'percentBarTooltip',
+    });
+
     schema.push({
       headerName: 'Notional',
       field: 'notional',
@@ -1146,29 +1176,6 @@ export class ExamplesHelper {
       // cellClass: 'number-cell',
       type: 'abColDefNumber',
       enableValue: false,
-    });
-    schema.push({
-      headerName: 'Counterparty',
-      field: 'counterparty',
-      editable: true,
-      enableRowGroup: true,
-      enableValue: true,
-      enablePivot: true,
-      //  valueFormatter: this.raduFormatter,
-      //   valueGetter: (params: any) => {
-      //     return 'Hello';
-      //   },
-      valueFormatter: (params: any) => {
-        return params.value ? params.value.toLocaleString() : undefined;
-      },
-
-      //  rowGroup: true,
-      filter: 'agSetColumnFilter',
-      sortable: true,
-      type: 'abColDefString',
-      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
-      // resizable: true,
-      //  tooltipComponent: 'percentBarTooltip',
     });
 
     schema.push({

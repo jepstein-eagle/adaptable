@@ -14,21 +14,24 @@ import { AdaptableObject } from './AdaptableObject';
  */
 export interface AdaptableColumn extends AdaptableObject {
   ColumnId: string;
-  IsGrouped: boolean;
+
   FriendlyName: string;
   DataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
-  Visible: boolean;
+  Width?: number;
+  Flex?: number;
   ReadOnly: boolean;
+  Visible: boolean;
   Sortable: boolean;
   Filterable: boolean;
-  IsSparkline: boolean;
   Moveable: boolean;
   Hideable: boolean;
   Groupable: boolean;
   Pivotable: boolean;
-  Width?: number;
-  Flex?: number;
   Aggregatable: boolean;
-  SpecialColumn: boolean;
+
+  IsGrouped: boolean;
+  IsFixed: boolean; // essentially is pinned in such a way it cannot be moved
+  IsSpecialColumn: boolean;
+  IsSparkline: boolean;
   IsExcludedFromQuickSearch: boolean;
 }

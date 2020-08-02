@@ -19,7 +19,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let popUpParams: StrategyParams = {
         columnId: column.ColumnId,
         source: 'ColumnMenu',

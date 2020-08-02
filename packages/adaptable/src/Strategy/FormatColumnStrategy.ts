@@ -39,7 +39,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'style')) {
+    if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId

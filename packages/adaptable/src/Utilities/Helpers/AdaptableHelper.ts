@@ -214,10 +214,11 @@ export function createAdaptableColumnFromColumnId(columnId: string): AdaptableCo
     Aggregatable: false,
     Moveable: true,
     Hideable: true,
-    SpecialColumn: false,
+    IsSpecialColumn: false,
     IsExcludedFromQuickSearch: false,
     IsSparkline: false,
     IsGrouped: false,
+    IsFixed: false,
   };
 }
 

@@ -40,7 +40,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

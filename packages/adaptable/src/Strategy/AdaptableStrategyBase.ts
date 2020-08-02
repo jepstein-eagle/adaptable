@@ -132,45 +132,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     return true;
   }
 
-  canCreateColumnMenuItem(
-    column: AdaptableColumn,
-    adaptable: IAdaptable,
-    minimumAccessLevel: AccessLevel,
-    functionType?:
-      | 'sort'
-      | 'editable'
-      | 'style'
-      | 'sparkline'
-      | 'columnfilter'
-      | 'quickfilter'
-      | 'numeric'
-  ): boolean {
-    if (!this.canCreateMenuItem(minimumAccessLevel)) {
-      return false;
-    }
-    if (!column) {
-      return false;
-    }
-    if (StringExtensions.IsNotNullOrEmpty(functionType)) {
-      if (functionType == 'sort' && !column.IsSparkline) {
-        return column.Sortable;
-      } else if (functionType == 'editable') {
-        return !column.ReadOnly;
-      } else if (functionType == 'style') {
-        return !column.IsSparkline;
-      } else if (functionType == 'sparkline') {
-        return column.IsSparkline;
-      } else if (functionType == 'numeric') {
-        return column.DataType == DataType.Number;
-      } else if (functionType == 'columnfilter') {
-        return column.Filterable;
-      } else if (functionType == 'quickfilter') {
-        return adaptable.adaptableOptions.filterOptions.useAdaptableQuickFilter;
-      }
-    }
-    return true;
-  }
-
   public getTeamSharingAction(): TeamSharingImportInfo<AdaptableObject> | undefined {
     return undefined;
   }

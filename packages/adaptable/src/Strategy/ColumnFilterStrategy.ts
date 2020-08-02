@@ -61,7 +61,10 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
     if (this.adaptable.isQuickFilterActive()) {
       const isFilterVisible: boolean = this.adaptable.api.gridApi.getGridState()
         .IsQuickFilterVisible;
-      if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'quickfilter')) {
+      if (
+        this.canCreateMenuItem('Full') &&
+        this.adaptable.adaptableOptions.filterOptions.useAdaptableQuickFilter
+      ) {
         baseMenuItems.push(
           this.createColumnMenuItemReduxAction(
             isFilterVisible ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
@@ -71,7 +74,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         );
       }
     }
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'columnfilter')) {
+    if (this.canCreateMenuItem('Full') && column.Filterable) {
       let existingColumnFilter = this.adaptable.api.columnFilterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);

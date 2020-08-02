@@ -44,39 +44,19 @@ async function InitAdaptableDemo() {
     generalOptions: {
       showMissingColumnsWarning: false,
     },
-    layoutOptions: {
-      autoSizeColumnsInDefaultLayout: false,
-    },
-    filterOptions: {
-      useVendorFilterFormStyle: true,
-      useAdaptableFilterForm: true,
-    },
-    userFunctions: [
-      {
-        type: 'CustomReportFunction',
-        name: 'getDummyData',
-        handler(reportName: string) {
-          let data = [
-            ['Eliana', 5],
-            ['Naftali', 9],
-            ['Sigal', 10],
-          ];
-          return data;
-        },
-      },
-    ],
+
     predefinedConfig: {
-      /*
       Layout: {
         CurrentLayout: 'Simple Layout',
+        /*
         Layouts: [
           {
             Name: 'Simple Layout',
-            Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+            Columns: ['country', 'currency', 'countryStars', 'tradeId', 'notional', 'counterparty'],
           },
         ],
+        */
       },
-      */
     },
   };
 

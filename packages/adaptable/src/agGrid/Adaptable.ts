@@ -2312,7 +2312,8 @@ export class Adaptable implements IAdaptable {
           Hideable: true,
           IsSparkline: dataType == DataType.NumberArray,
           IsGrouped: false,
-          SpecialColumn: true,
+          IsFixed: false,
+          IsSpecialColumn: true,
           IsExcludedFromQuickSearch: false,
         };
 

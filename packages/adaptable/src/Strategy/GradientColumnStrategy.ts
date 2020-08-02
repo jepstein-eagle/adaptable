@@ -30,7 +30,7 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let GradientColumnExists: boolean = ArrayExtensions.ContainsItem(
         this.GradientColumnState.GradientColumns.map(f => f.ColumnId),
         column.ColumnId

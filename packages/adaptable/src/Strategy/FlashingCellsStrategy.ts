@@ -29,42 +29,40 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      if (column.DataType == DataType.Number) {
-        if (
-          this.adaptable.api.calculatedColumnApi
-            .getAllCalculatedColumn()
-            .find(c => c.ColumnId == column.ColumnId) == null
-        ) {
-          let flashingCell = this.adaptable.api.flashingCellApi
-            .getAllFlashingCell()
-            .find(x => x.ColumnId == column.ColumnId);
-          if (flashingCell && flashingCell.IsLive) {
-            return [
-              this.createColumnMenuItemReduxAction(
-                'Turn Flashing Cell Off',
-                StrategyConstants.FlashingCellGlyph,
-                FlashingCellsRedux.FlashingCellSelect(flashingCell)
-              ),
-            ];
-          } else {
-            if (!flashingCell) {
-              let flashingCellState: FlashingCellState = this.adaptable.api.flashingCellApi.getFlashingCellState();
-              flashingCell = ObjectFactory.CreateDefaultFlashingCell(
-                column,
-                flashingCellState.DefaultUpColor,
-                flashingCellState.DefautDownColor,
-                flashingCellState.DefaultDuration
-              );
-            }
-            return [
-              this.createColumnMenuItemReduxAction(
-                'Turn Flashing Cell On',
-                StrategyConstants.FlashingCellGlyph,
-                FlashingCellsRedux.FlashingCellSelect(flashingCell)
-              ),
-            ];
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
+      if (
+        this.adaptable.api.calculatedColumnApi
+          .getAllCalculatedColumn()
+          .find(c => c.ColumnId == column.ColumnId) == null
+      ) {
+        let flashingCell = this.adaptable.api.flashingCellApi
+          .getAllFlashingCell()
+          .find(x => x.ColumnId == column.ColumnId);
+        if (flashingCell && flashingCell.IsLive) {
+          return [
+            this.createColumnMenuItemReduxAction(
+              'Turn Flashing Cell Off',
+              StrategyConstants.FlashingCellGlyph,
+              FlashingCellsRedux.FlashingCellSelect(flashingCell)
+            ),
+          ];
+        } else {
+          if (!flashingCell) {
+            let flashingCellState: FlashingCellState = this.adaptable.api.flashingCellApi.getFlashingCellState();
+            flashingCell = ObjectFactory.CreateDefaultFlashingCell(
+              column,
+              flashingCellState.DefaultUpColor,
+              flashingCellState.DefautDownColor,
+              flashingCellState.DefaultDuration
+            );
           }
+          return [
+            this.createColumnMenuItemReduxAction(
+              'Turn Flashing Cell On',
+              StrategyConstants.FlashingCellGlyph,
+              FlashingCellsRedux.FlashingCellSelect(flashingCell)
+            ),
+          ];
         }
       }
     }
