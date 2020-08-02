@@ -645,10 +645,7 @@ export class agGridHelper {
     if (colDef.suppressMovable != null && colDef.suppressMovable == true) {
       return false;
     }
-    if (colDef.lockPosition != null && colDef.lockPosition == true) {
-      return false;
-    }
-    if (colDef.lockPinned != null && colDef.lockPinned == true) {
+    if (this.isColumnFixed(colDef)) {
       return false;
     }
     return true;
@@ -674,6 +671,10 @@ export class agGridHelper {
     if (!colDef) {
       return false;
     }
+    if (colDef.lockPosition != null && colDef.lockPosition == true) {
+      return false;
+    }
+
     if (colDef.lockPinned != null && colDef.lockPinned == true) {
       return true;
     }

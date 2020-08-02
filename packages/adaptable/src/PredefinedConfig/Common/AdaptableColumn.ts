@@ -30,7 +30,7 @@ export interface AdaptableColumn extends AdaptableObject {
   Aggregatable: boolean;
 
   IsGrouped: boolean;
-  IsFixed: boolean; // essentially is pinned in such a way it cannot be moved
+  IsFixed: boolean; // essentially is pinned or locked in such a way other cols cannot precede it in order
   IsSpecialColumn: boolean;
   IsSparkline: boolean;
   IsExcludedFromQuickSearch: boolean;
