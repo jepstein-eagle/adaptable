@@ -26,7 +26,7 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'columnfilter')) {
+    if (this.canCreateMenuItem('Full') && column.Filterable) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

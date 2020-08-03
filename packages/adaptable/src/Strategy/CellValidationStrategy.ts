@@ -28,7 +28,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'editable')) {
+    if (this.canCreateMenuItem('Full') && !column.ReadOnly) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',

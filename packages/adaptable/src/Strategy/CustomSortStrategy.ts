@@ -40,7 +40,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'sort')) {
+    if (this.canCreateMenuItem('Full') && column.Sortable) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
 

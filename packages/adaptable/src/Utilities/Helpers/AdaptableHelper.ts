@@ -212,9 +212,13 @@ export function createAdaptableColumnFromColumnId(columnId: string): AdaptableCo
     Groupable: false,
     Pivotable: false,
     Aggregatable: false,
-    SpecialColumn: false,
+    Moveable: true,
+    Hideable: true,
+    IsSpecialColumn: false,
     IsExcludedFromQuickSearch: false,
     IsSparkline: false,
+    IsGrouped: false,
+    IsFixed: false,
   };
 }
 

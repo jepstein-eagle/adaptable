@@ -58,7 +58,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
         column.ColumnId

@@ -2082,16 +2082,8 @@ export class Adaptable implements IAdaptable {
     this.updateColumnsIntoStore();
   }
 
-  public removeCalculatedColumnFromGrid(calculatedColumnId: string): boolean {
-    let referencedText: string | undefined = '';
-    this.strategies.forEach(s => {
-      const strategyReference = s.getSpecialColumnReferences(calculatedColumnId);
-      if (StringExtensions.IsNotNullOrEmpty(strategyReference)) {
-        referencedText += ' ' + strategyReference;
-      }
-    });
-    if (StringExtensions.IsNotNullOrEmpty(referencedText)) {
-      alert('Cannot delete the column because it is referenced in' + referencedText);
+  public tryRemoveCalculatedColumnFromGrid(calculatedColumnId: string): boolean {
+    if (this.isSpecialColumnReferenced(calculatedColumnId)) {
       return false;
     }
 
@@ -2182,6 +2174,21 @@ export class Adaptable implements IAdaptable {
     });
   };
 
+  public isSpecialColumnReferenced(columnId: string): boolean {
+    let referencedText: string | undefined = '';
+    this.strategies.forEach(s => {
+      const strategyReference = s.getSpecialColumnReferences(columnId);
+      if (StringExtensions.IsNotNullOrEmpty(strategyReference)) {
+        referencedText += ' ' + strategyReference;
+      }
+    });
+    if (StringExtensions.IsNotNullOrEmpty(referencedText)) {
+      alert('Cannot delete the column because it is referenced in' + referencedText);
+      return true;
+    }
+    return false;
+  }
+
   public addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn, colDefs?: ColDef[]) {
     this.addFreeTextColumnsToGrid([freeTextColumn], colDefs);
   }
@@ -2216,7 +2223,11 @@ export class Adaptable implements IAdaptable {
     this.safeSetColDefs(colDefs);
   }
 
-  public removeFreeTextColumnFromGrid(freeTextColumnId: string): void {
+  public tryRemoveFreeTextColumnFromGrid(freeTextColumnId: string): boolean {
+    if (this.isSpecialColumnReferenced(freeTextColumnId)) {
+      return false;
+    }
+
     let foundColDef: boolean = false;
     const newColDefs = this.mapColumnDefs(
       (colDef: ColDef) => {
@@ -2232,6 +2243,7 @@ export class Adaptable implements IAdaptable {
     if (foundColDef) {
       this.safeSetColDefs(newColDefs);
     }
+    return true;
   }
 
   public editFreeTextColumnInGrid(freeTextColumn: FreeTextColumn): void {
@@ -2296,8 +2308,12 @@ export class Adaptable implements IAdaptable {
           Groupable: this.agGridHelper.isColumnGroupable(vendorColDef),
           Pivotable: this.agGridHelper.isColumnPivotable(vendorColDef),
           Aggregatable: this.agGridHelper.isColumnAggregetable(vendorColDef),
+          Moveable: true,
+          Hideable: true,
           IsSparkline: dataType == DataType.NumberArray,
-          SpecialColumn: true,
+          IsGrouped: false,
+          IsFixed: false,
+          IsSpecialColumn: true,
           IsExcludedFromQuickSearch: false,
         };
 

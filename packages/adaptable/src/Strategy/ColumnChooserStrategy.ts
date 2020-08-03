@@ -24,25 +24,34 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
+    let returnColumnMenuItems: AdaptableMenuItem[] = [];
     if (this.canCreateMenuItem('Full')) {
-      return [
+      returnColumnMenuItems.push(
         this.createColumnMenuItemShowPopup(
           'Show ' + StrategyConstants.ColumnChooserStrategyFriendlyName,
           ScreenPopups.ColumnChooserPopup,
           StrategyConstants.ColumnChooserGlyph
-        ),
-        this.createColumnMenuItemReduxAction(
-          'Hide Column',
-          'hide-column',
-          GridRedux.GridHideColumn(column.ColumnId)
-        ),
+        )
+      );
+      returnColumnMenuItems.push(
         this.createColumnMenuItemReduxAction(
           'Select Column',
           'tab-unselected',
           GridRedux.GridSelectColumn(column.ColumnId)
-        ),
-      ];
+        )
+      );
+      if (this.canCreateMenuItem('Full') && column.Hideable) {
+        returnColumnMenuItems.push(
+          this.createColumnMenuItemReduxAction(
+            'Hide Column',
+            'hide-column',
+            GridRedux.GridHideColumn(column.ColumnId)
+          )
+        );
+      }
     }
+
+    return returnColumnMenuItems;
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

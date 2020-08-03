@@ -309,17 +309,24 @@ export class agGridHelper {
       // Visible: !colDef.hide, // vendorColumn.isVisible(),
       Visible: vendorColumn.isVisible(),
       ReadOnly: this.isColumnReadonly(colDef),
+
       Sortable: this.isColumnSortable(colDef),
       Filterable: this.isColumnFilterable(colDef),
-      IsSparkline: this.adaptable.api.sparklineColumnApi.isSparklineColumn(colId),
+
       Groupable: this.isColumnGroupable(colDef),
-      IsGrouped: colDef.rowGroup || colDef.rowGroupIndex != null,
+      Pivotable: this.isColumnPivotable(colDef),
+      Aggregatable: this.isColumnAggregetable(colDef),
+      Moveable: this.isColumnMoveable(colDef),
+      Hideable: this.isColumnHideable(colDef),
+
+      IsGrouped: this.isColumnGrouped(colDef),
+      IsFixed: this.isColumnFixed(colDef),
 
       //TODO add IsPivoted
       //TODO add IsAggregated
-      Pivotable: this.isColumnPivotable(colDef),
-      Aggregatable: this.isColumnAggregetable(colDef),
-      SpecialColumn: false,
+      //TODO add IsPinned??
+      IsSparkline: this.adaptable.api.sparklineColumnApi.isSparklineColumn(colId),
+      IsSpecialColumn: false,
       IsExcludedFromQuickSearch: false,
     };
     // lets set this here one as the function cannot change the result so dont need to run it each time
@@ -631,9 +638,61 @@ export class agGridHelper {
     return false;
   }
 
+  public isColumnMoveable(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.suppressMovable != null && colDef.suppressMovable == true) {
+      return false;
+    }
+    if (this.isColumnFixed(colDef)) {
+      return false;
+    }
+    return true;
+  }
+
+  public isColumnHideable(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.lockVisible != null && colDef.lockVisible == true) {
+      return false;
+    }
+    return true;
+  }
+
   public isColumnFilterable(colDef: ColDef): boolean {
-    // follow agGrid logic which is that ONLY filterable if one explicitly set
+    // follow agGrid logic which is that ONLY filterable if explicitly set
     return colDef != null && colDef.filter != null && colDef.filter != false;
+  }
+
+  // used for ag-Grid when the column is FixedPinned, meaning it should never be unpinned
+  public isColumnFixed(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.lockPosition != null && colDef.lockPosition == true) {
+      return false;
+    }
+
+    if (colDef.lockPinned != null && colDef.lockPinned == true) {
+      return true;
+    }
+    return false;
+  }
+
+  public isColumnGrouped(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+
+    if (colDef.rowGroup != null && colDef.rowGroup == true) {
+      return true;
+    }
+    if (colDef.rowGroupIndex != null) {
+      return true;
+    }
+    return false;
   }
 
   public getColumnDataType(
