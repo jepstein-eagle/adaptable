@@ -131,7 +131,7 @@ export interface Layout extends AdaptableObject {
    *
    * Make sure that the column names supplied are groupable according to the vendor grid you are using (e.g. `enableRowGroup` in ag-Grid)
    */
-  GroupedColumns?: string[];
+  GroupedColumns?: string[]; //TODO rename as RowGroupedColumns
 
   PinnedColumnsMap?: { [colId: string]: 'left' | 'right' };
 
