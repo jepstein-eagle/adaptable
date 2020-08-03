@@ -24,6 +24,7 @@ export class ButtonShare extends React.Component<ButtonShareProps, ButtonShareSt
     return (
       <>
         <SimpleButton
+          data-name="share"
           tooltip="Share"
           variant="text"
           icon="team-share"

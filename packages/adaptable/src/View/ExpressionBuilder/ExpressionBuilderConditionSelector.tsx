@@ -393,6 +393,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         headerText={panelHeader}
         variant="default"
         button={clearButton}
+        className="ab-ExpressionBuilder__condition-selector"
         bodyScroll={false}
         bodyProps={{
           padding: 0,

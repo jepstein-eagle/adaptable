@@ -274,10 +274,12 @@ export class DualListBoxEditor extends React.Component<
       <Flex
         alignItems="stretch"
         flexDirection="row"
+        className="ab-DualListBoxEditor"
         style={{ ...this.props.style, maxHeight: '100%', width: '100%' }}
       >
         <Panel
           header={this.props.HeaderAvailable}
+          className="ab-DualListBoxEditor__source"
           bodyProps={{ padding: 0 }}
           marginRight={2}
           style={{ flex: '4 0 0%' }}
@@ -300,8 +302,13 @@ export class DualListBoxEditor extends React.Component<
           </SelectableList>
         </Panel>
 
-        <Flex flexDirection="column" justifyContent="center">
+        <Flex
+          flexDirection="column"
+          justifyContent="center"
+          className="ab-DualListBoxEditor__action-buttons"
+        >
           <ButtonDirection
+            data-name="add-all"
             marginBottom={2}
             icon="fast-forward"
             iconPosition="end"
@@ -311,6 +318,7 @@ export class DualListBoxEditor extends React.Component<
             Add All
           </ButtonDirection>
           <ButtonDirection
+            data-name="add"
             iconPosition="end"
             icon={'arrow-right'}
             marginBottom={3}
@@ -320,6 +328,7 @@ export class DualListBoxEditor extends React.Component<
             Add
           </ButtonDirection>
           <ButtonDirection
+            data-name="remove"
             icon={'arrow-left'}
             marginBottom={2}
             iconPosition="start"
@@ -329,6 +338,7 @@ export class DualListBoxEditor extends React.Component<
             Remove
           </ButtonDirection>
           <ButtonDirection
+            data-name="remove-all"
             marginBottom={2}
             icon="fast-backward"
             iconPosition="start"
@@ -341,6 +351,7 @@ export class DualListBoxEditor extends React.Component<
 
         <Panel
           header={this.props.HeaderSelected}
+          className="ab-DualListBoxEditor__destination"
           bodyScroll
           bodyProps={{
             padding: 0,
@@ -366,8 +377,13 @@ export class DualListBoxEditor extends React.Component<
           </SelectableList>
         </Panel>
 
-        <Flex flexDirection="column" justifyContent="center">
+        <Flex
+          flexDirection="column"
+          justifyContent="center"
+          className="ab-DualListBoxEditor__order-buttons"
+        >
           <ButtonDirection
+            data-name="top"
             marginBottom={2}
             iconPosition="start"
             icon="triangle-up"
@@ -377,6 +393,7 @@ export class DualListBoxEditor extends React.Component<
             Top
           </ButtonDirection>
           <ButtonDirection
+            data-name="up"
             marginBottom={2}
             iconPosition="start"
             icon="arrow-up"
@@ -386,6 +403,7 @@ export class DualListBoxEditor extends React.Component<
             Up
           </ButtonDirection>
           <ButtonDirection
+            data-name="down"
             marginBottom={2}
             icon="arrow-down"
             iconPosition="start"
@@ -395,6 +413,7 @@ export class DualListBoxEditor extends React.Component<
             Down
           </ButtonDirection>
           <ButtonDirection
+            data-name="bottom"
             marginBottom={2}
             icon="triangle-down"
             iconPosition="start"

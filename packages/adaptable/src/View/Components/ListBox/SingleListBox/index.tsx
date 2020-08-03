@@ -95,7 +95,7 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     );
 
     return (
-      <Flex flex={1} flexDirection="column" style={{ width: '100%' }}>
+      <Flex flex={1} flexDirection="column" style={{ width: '100%' }} className="ab-SingleListBox">
         {header}
         <SelectableList onSelectedChange={this.onSelectionChange} getItemId={this.getItemId}>
           <ListGroup marginTop={2} style={{ overflow: 'auto', flex: 1, ...this.props.listStyle }}>

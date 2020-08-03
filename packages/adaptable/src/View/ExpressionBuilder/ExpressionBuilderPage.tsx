@@ -59,6 +59,7 @@ export class ExpressionBuilderPage
 
     return (
       <PanelWithButton
+        className="ab-ExpressionBuilder"
         button={newButton}
         headerText=""
         variant="default"

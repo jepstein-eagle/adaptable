@@ -258,6 +258,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       <Flex style={{ flex: '1 0 0%' }} flexDirection="column">
         {this.props.ShowPanel && (
           <PanelWithButton
+            className="ab-ExpressionBuilder__preview"
             variant="default"
             style={{ flex: 1 }}
             bodyProps={{

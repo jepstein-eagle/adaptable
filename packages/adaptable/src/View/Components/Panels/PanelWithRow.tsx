@@ -37,7 +37,7 @@ export class PanelWithRow extends React.Component<PanelWithRowProps, {}> {
     );
 
     return (
-      <div style={this.props.style}>
+      <div style={this.props.style} className={this.props.className}>
         <Panel
           bodyScroll
           header={header}

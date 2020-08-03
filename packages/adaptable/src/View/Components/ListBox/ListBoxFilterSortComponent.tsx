@@ -20,6 +20,7 @@ export class ListBoxFilterSortComponent extends React.Component<
   render() {
     return (
       <FieldWrap
+        className="ab-SingleListBoxFilter"
         style={{
           borderTop: 0,
           borderRight: 0,

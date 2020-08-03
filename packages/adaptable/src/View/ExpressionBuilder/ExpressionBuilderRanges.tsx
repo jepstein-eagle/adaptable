@@ -70,9 +70,15 @@ export class ExpressionBuilderRanges extends React.Component<
       );
 
       return (
-        <Box padding={2} style={betweenDivStyle} key={index}>
+        <Box
+          padding={2}
+          style={betweenDivStyle}
+          key={index}
+          className="ab-ExpressionBuilder__range"
+        >
           <FieldWrap marginBottom={1}>
             <Dropdown
+              data-name="operator"
               placeholder="Select Operator"
               style={{ maxWidth: 'none' }}
               value={range.Operator}
@@ -81,6 +87,7 @@ export class ExpressionBuilderRanges extends React.Component<
               options={optionLeafOperators}
             />
             <SimpleButton
+              data-name="delete"
               tooltip="Delete"
               icon="trash"
               variant="text"
@@ -90,6 +97,7 @@ export class ExpressionBuilderRanges extends React.Component<
 
           <Flex flexDirection="row">
             <DropdownButton
+              data-name="operand1"
               marginRight={1}
               variant="raised"
               columns={['label']}
@@ -121,6 +129,7 @@ export class ExpressionBuilderRanges extends React.Component<
                 marginRight={1}
                 style={rangeOperatorStyle}
                 variant="raised"
+                data-name="operand2"
                 items={rangeMenuItemsOperand2}
               >
                 {range.Operand2Type}
@@ -147,7 +156,7 @@ export class ExpressionBuilderRanges extends React.Component<
     });
 
     return (
-      <Panel style={{ flex: 1 }} bodyScroll>
+      <Panel style={{ flex: 1 }} bodyScroll className="ab-ExpressionBuilder__ranges">
         {addButton}
         {rangesElement}
       </Panel>

@@ -13,7 +13,7 @@ const Grid = GridFactory<KeyValuePair>();
 
 export const WizardSummaryPage = (props: WizardSummaryPageProps) => {
   return (
-    <WizardPanel bodyProps={{ padding: 0 }}>
+    <WizardPanel bodyProps={{ padding: 0 }} className="ab-WizardSummary">
       <DataSource<KeyValuePair>
         data={props.KeyValuePairs}
         fields={['Key', 'Value']}
@@ -21,6 +21,7 @@ export const WizardSummaryPage = (props: WizardSummaryPageProps) => {
       >
         <Grid
           domProps={{
+            className: 'ab-WizardSummary__list',
             style: {
               height: '100%',
               margin: '10px',
