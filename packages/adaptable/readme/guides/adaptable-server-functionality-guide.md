@@ -195,11 +195,24 @@ export interface IServerColumnValues {
 Read more about the various options available in getting distinct column values in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
 
 ## Getting Data From the Server (infinite scrolling)
+
 ag-Grid provides a [Server Side Model](https://www.ag-grid.com/javascript-grid-server-side-model/) which: "allows applications to work with very large datasets by delegating grid operations such as grouping, sorting and pivoting to the server. The data is then lazy loaded from the server in blocks as the user browses through the data."
 
 AdapTable supports this - primarily by leveraging *Server Searching and Filtering* (see above).
 
 > It is still the responsibility of the developer to perform the actual searching on the server, including converting the AdapTable Expression JSON to something relevant to your tech stack.
+
+## FAQ
+
+**Can we swallow the Validation and return nothing?**
+
+Yes you can. You have the option in Server Validation of returning:
+
+- the original value - this will indicate that validation has succeeded
+
+- a replacement value - this new value will be used instead
+
+- nothing - the edit will persist in the Grid and presumably the user will update the DataSource in other ways - (perhaps via GridApi).
 
 
 ## Demos
