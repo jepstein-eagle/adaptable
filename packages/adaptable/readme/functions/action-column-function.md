@@ -80,4 +80,4 @@ As a result the convention in AdapTable is for the function name to be provided 
 
 - [Action Column Video](https://youtu.be/y0cDvtdmSKM)
 
-- [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html)
+- [User Functions](https://api.adaptabletools.com/modules/_src_adaptableoptions_userfunctions_.html)g

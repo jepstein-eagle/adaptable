@@ -2870,7 +2870,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             const defaultLayout = adaptable.LayoutService.createDefaultLayoutIfNeeded();
 
             let currentLayout: string = layoutState?.CurrentLayout || defaultLayout?.Name;
-            if (!adaptable.api.layoutApi.findLayoutByName(currentLayout)) {
+            if (!adaptable.api.layoutApi.getLayoutByName(currentLayout)) {
               currentLayout = defaultLayout ? defaultLayout.Name : layoutState.Layouts[0].Name;
             }
 

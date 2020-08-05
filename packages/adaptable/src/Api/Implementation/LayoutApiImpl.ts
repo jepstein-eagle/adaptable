@@ -3,13 +3,10 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
-
 import { LayoutApi } from '../LayoutApi';
 import { LayoutState, Layout } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-
 import ObjectFactory from '../../Utilities/ObjectFactory';
-
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 import Helper from '../../Utilities/Helpers/Helper';
 import { createUuid } from '../../PredefinedConfig/Uuid';
@@ -35,37 +32,29 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
   }
 
   public setLayout(layoutName: string): void {
-    if (this.isCorrectlyEntitled('Layout', 'ReadOnly', 'Select Layout')) {
-      if (
-        StringExtensions.IsNotNullOrEmpty(layoutName) &&
-        layoutName !== this.getCurrentLayoutName()
-      ) {
-        let layout: Layout = this.getAdaptableState().Layout.Layouts.find(
-          l => l.Name == layoutName
+    if (
+      StringExtensions.IsNotNullOrEmpty(layoutName) &&
+      layoutName !== this.getCurrentLayoutName()
+    ) {
+      let layout: Layout = this.getAdaptableState().Layout.Layouts.find(l => l.Name == layoutName);
+      if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)) {
+        this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
+
+        let columnStateChangedInfo: ColumnStateChangedInfo = {
+          currentLayout: layoutName,
+          adaptableApi: this.adaptable.api,
+        };
+        const columnStateChangedEventArgs: ColumnStateChangedEventArgs = AdaptableHelper.createFDC3Message(
+          'Column State Changed Args',
+          columnStateChangedInfo
         );
-        if (
-          this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)
-        ) {
-          this.dispatchAction(LayoutRedux.LayoutSelect(layoutName));
-
-          let columnStateChangedInfo: ColumnStateChangedInfo = {
-            currentLayout: layoutName,
-            adaptableApi: this.adaptable.api,
-          };
-          const columnStateChangedEventArgs: ColumnStateChangedEventArgs = AdaptableHelper.createFDC3Message(
-            'Column State Changed Args',
-            columnStateChangedInfo
-          );
-
-          this.adaptable.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
-        }
+        this.adaptable.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
       }
     }
   }
 
   public getCurrentLayout(): Layout {
     const state = this.getAdaptableState();
-
     if (state.Grid.CurrentLayout) {
       return state.Grid.CurrentLayout;
     }
@@ -81,9 +70,9 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     return this.getCurrentLayoutName() == DEFAULT_LAYOUT;
   }
 
-  public getLayoutByName(layoutName: string): Layout {
+  public getLayoutByName(layoutName: string): Layout | null {
     if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-      let layout: Layout = this.getAdaptableState().Layout.Layouts.find(l => l.Name == layoutName);
+      let layout: Layout = this.getAllLayout().find(l => l.Name == layoutName);
       if (this.checkItemExists(layout, layoutName, StrategyConstants.LayoutStrategyFriendlyName)) {
         return layout;
       }
@@ -115,19 +104,14 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     return existingLayout != null;
   }
 
-  findLayoutByName(layoutName: string): Layout | null {
-    return this.getAllLayout().find(l => l.Name == layoutName);
-  }
-
   public createAndSetLayout(layoutToCreate: Layout): Layout {
     if (this.createLayout(layoutToCreate)) {
       this.setLayout(layoutToCreate.Name);
-
       return layoutToCreate;
     }
   }
 
-  public createLayout(layoutToCreate: Layout): Layout {
+  public createLayout(layoutToCreate: Layout): Layout | undefined {
     if (this.doesLayoutExist(layoutToCreate)) {
       LoggingHelper.LogAdaptableError(
         "Cannot create layout with the Name: '" + layoutToCreate.Name + "' as it already exists"
@@ -135,9 +119,7 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       return;
     }
     const newLayout = ObjectFactory.CreateEmptyLayout({ ...layoutToCreate });
-
     this.dispatchAction(LayoutRedux.LayoutAdd(newLayout));
-
     return newLayout;
   }
 
@@ -149,7 +131,6 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       return;
     }
     this.cloneLayout(layoutToClone, layoutName);
-
     this.setLayout(layoutName);
   }
 
@@ -160,10 +141,10 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       );
       return;
     }
+
     const newLayout: Layout = Helper.cloneObject(layoutToClone);
     newLayout.Uuid = createUuid();
     newLayout.Name = layoutName;
-
     this.dispatchAction(LayoutRedux.LayoutAdd(newLayout));
   }
 
