@@ -34,7 +34,7 @@ export enum LeafExpressionOperator {
   StartsWith = 'StartsWith',
   EndsWith = 'EndsWith',
   Regex = 'Regex',
-  // Cell Validations
+  // Cell Validations and Alerts
   AnyChange = 'AnyChange',
   ValueChange = 'ValueChange',
   PercentChange = 'PercentChange',

@@ -19,6 +19,8 @@ export interface QueryOptions {
    *
    * Useful when datasource is very large with a huge number of distinct values for a column.
    *
+   * However the AdapTable UI components that list columns now use virtualisation so this is less vital than when the property was first offered.
+   *
    * Note: This value is also used when populating the Column Filter and when using Bulk Update.
    *
    * **Default Value: 2,000**
