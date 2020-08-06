@@ -28,6 +28,7 @@ export class CalendarsEntryRow extends React.Component<CalendarsEntryRowProps, {
       Size: 3,
       Content: (
         <SimpleButton
+          data-name="details"
           onClick={(e: React.SyntheticEvent) => {
             e.stopPropagation();
             this.props.onShowInformation(this.props.Calendar);

@@ -11,6 +11,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import { Flex, Box, Text } from 'rebass';
 import Dropdown from '../../components/Dropdown';
+import FormLayout, { FormRow } from '../../components/FormLayout';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
   SystemThemes: (AdaptableTheme | string)[];
@@ -60,24 +61,19 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
           glyphicon={StrategyConstants.ThemeGlyph}
           infoBody={infoBody}
         >
-          <>
-            <Flex flexDirection="row" alignItems="center" marginTop={3}>
-              <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
-                Current Theme:
-              </Text>
-              <Flex flex={7} flexDirection="row" alignItems="center">
-                <Dropdown
-                  style={{ width: '50%', minWidth: 200 }}
-                  placeholder="Select theme"
-                  showEmptyItem={false}
-                  showClearButton={false}
-                  value={this.props.CurrentTheme}
-                  onChange={(value: any) => this.onChangeTheme(value)}
-                  options={optionThemes}
-                />
-              </Flex>
-            </Flex>
-          </>
+          <FormLayout>
+            <FormRow label="Current Theme:">
+              <Dropdown
+                style={{ width: '50%', minWidth: 200 }}
+                placeholder="Select theme"
+                showEmptyItem={false}
+                showClearButton={false}
+                value={this.props.CurrentTheme}
+                onChange={(value: any) => this.onChangeTheme(value)}
+                options={optionThemes}
+              />
+            </FormRow>
+          </FormLayout>
         </PanelWithButton>
       </Flex>
     );

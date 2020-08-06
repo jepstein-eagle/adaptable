@@ -11,8 +11,10 @@ interface EditorButtonProps extends SimpleButtonProps {
 }
 
 function EditorButton(props: EditorButtonProps) {
+  const { textAreaRef, data, ...buttonProps } = props;
   return (
     <SimpleButton
+      data-name={props.data}
       variant="text"
       draggable={true}
       onDragStart={event => {
@@ -23,17 +25,17 @@ function EditorButton(props: EditorButtonProps) {
         }
 
         document.getSelection().empty();
-        event.dataTransfer.setData('text', props.data);
+        event.dataTransfer.setData('text', data);
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }}
       onClick={() => {
-        props.textAreaRef.current.focus();
-        document.execCommand('insertText', false, props.data);
+        textAreaRef.current.focus();
+        document.execCommand('insertText', false, data);
       }}
       style={{
         cursor: 'grab',
       }}
-      {...props}
+      {...buttonProps}
     />
   );
 }

@@ -52,7 +52,7 @@ export class AdaptablePopupAlert extends React.Component<AdaptablePopupAlertProp
                   <Text my={2}>{this.props.Header}</Text>
                 </div>
               )}
-              <Flex flexDirection="row" alignItems="center">
+              <Flex flexDirection="column" alignItems="flex-start">
                 {this.props.Msg.split('\n').map(function(item, index) {
                   return (
                     <Flex flexDirection="row" key={index}>
@@ -66,6 +66,7 @@ export class AdaptablePopupAlert extends React.Component<AdaptablePopupAlertProp
               </Flex>
               <Flex flexDirection="row" marginTop={2} alignItems="center" padding={2}>
                 <SimpleButton
+                  data-name="ok"
                   variant="raised"
                   tone={messageType.toLowerCase() as any}
                   onClick={() => this.props.onClose()}

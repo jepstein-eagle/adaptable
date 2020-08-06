@@ -232,6 +232,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               tone="accent"
               variant="raised"
               key={columnId + 'header'}
+              data-name="selected-column"
               onClick={() => this.onColumnHeaderSelected(columnId)}
             >
               <u>{columnFriendlyName}</u>

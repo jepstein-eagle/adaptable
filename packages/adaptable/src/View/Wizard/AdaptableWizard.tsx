@@ -123,6 +123,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             <SimpleButton
               tone="neutral"
               variant="text"
+              data-name="close"
               onClick={() => this.props.onHide()}
               tooltip="Close wizard"
               AccessLevel={'Full'}
@@ -131,6 +132,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             </SimpleButton>
             <div style={{ flex: 1 }} />
             <SimpleButton
+              data-name="back"
               variant="outlined"
               disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
               onClick={() => this.handleClickBack()}
@@ -141,6 +143,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             </SimpleButton>
             <SimpleButton
               variant="outlined"
+              data-name="next"
               disabled={!this.ActiveStep.canNext() || this.isLastStep()}
               onClick={() => this.handleClickNext()}
               icon="arrow-right"
@@ -153,6 +156,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             </SimpleButton>
             <SimpleButton
               tone="accent"
+              data-name="finish"
               variant="raised"
               disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}

@@ -166,6 +166,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
 
   const dataTableEditor = (
     <FormLayout
+      className="ab-ExpressionEditor__columns"
       gridColumnGap="var(--ab-space-1)"
       gridRowGap="var(--ab-space-1)"
       sizes={['auto', '130px']}
