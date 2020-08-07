@@ -49,6 +49,7 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
+import * as SharedExpressionRedux from '../ActionsReducers/SharedExpressionRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -254,6 +255,7 @@ This is the main store for Adaptable State
       ToolPanel: ToolPanelRedux.ToolPanelReducer,
       UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
       UserFilter: UserFilterRedux.UserFilterReducer,
+      SharedExpression: SharedExpressionRedux.SharedExpressionReducer,
     };
 
     // allow plugins to participate in the root reducer
@@ -492,8 +494,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
            ADVANCED SEARCH
           **********************
            */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
+          case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchChangeAction;
 
             let changedDetails: StatePropertyChangedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
@@ -502,7 +504,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
               diffInfo: diff,
               propertyName: CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
               oldValue: oldState.AdvancedSearch.CurrentAdvancedSearch,
-              newValue: actionTyped.selectedSearchName,
+              newValue: actionTyped.expression,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
@@ -1723,15 +1725,15 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
         // Note: not done custom sort as not sure how!
         // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
-          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
+          case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
+            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchChangeAction;
             let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(
-              as => as.Name == actionTyped.selectedSearchName
+              as => as.Name == actionTyped.expression
             );
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               action: action.type,
-              info: actionTyped.selectedSearchName,
+              info: actionTyped.expression,
               data: advancedSearch,
             };
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
@@ -2017,7 +2019,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
            * Use Case: User has selected an Advanced Search
            * Action: Apply Grid Filtering
            */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
+          case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
             let ret = next(action);
             adaptable.applyGridFiltering();
             return ret;
@@ -3067,7 +3069,7 @@ export function getFunctionAppliedReduxActions(): string[] {
 
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout
   return [
-    AdvancedSearchRedux.ADVANCED_SEARCH_SELECT,
+    AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE,
     CalendarRedux.CALENDAR_SELECT,
     ChartRedux.CHART_DEFINITION_SELECT,
     DataSourceRedux.DATA_SOURCE_SELECT,

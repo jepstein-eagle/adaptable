@@ -4,102 +4,185 @@ import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 import { Flex } from 'rebass';
-import Dropdown from '../../components/Dropdown';
-import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import Input from '../../components/Input';
+import DropdownButton from '../../components/DropdownButton';
+import SimpleButton from '../../components/SimpleButton';
+import { Icon } from '@mdi/react';
+import {
+  mdiViewColumn,
+  mdiContentSave,
+  mdiFolderOpen,
+  mdiClose,
+  mdiMagnify,
+  mdiArrowExpand,
+  mdiHistory,
+  mdiCheck,
+  mdiAlert,
+} from '@mdi/js';
+import FieldWrap from '../../components/FieldWrap';
+import * as parser from '../../parser/src';
+import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
-  CurrentAdvancedSearchName: string;
-  AdvancedSearches: AdvancedSearch[];
-  onSelectAdvancedSearch: (
-    advancedSearchName: string
-  ) => AdvancedSearchRedux.AdvancedSearchSelectAction;
-  onNewAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
-  onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
+  CurrentAdvancedSearch: string;
+  SharedExpressions: SharedExpression[];
+  onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
+  onNewSharedExpression: (value: string) => PopupRedux.PopupShowScreenAction;
+  onExpand: (value: string) => void;
+}
+
+interface AdvancedSearchToolbarControlComponentState {
+  expression: string;
+  history: {
+    expression: string;
+    time: Date;
+  }[];
 }
 
 class AdvancedSearchToolbarControlComponent extends React.Component<
   AdvancedSearchToolbarControlComponentProps,
-  {}
+  AdvancedSearchToolbarControlComponentState
 > {
+  constructor(props: AdvancedSearchToolbarControlComponentProps) {
+    super(props);
+    this.state = {
+      expression: this.props.CurrentAdvancedSearch || '',
+      history: [],
+    };
+  }
+  componentDidUpdate(prevProps: AdvancedSearchToolbarControlComponentProps) {
+    if (prevProps.CurrentAdvancedSearch !== this.props.CurrentAdvancedSearch) {
+      this.setState({
+        expression: this.props.CurrentAdvancedSearch,
+      });
+    }
+  }
   render() {
-    let savedSearch: AdvancedSearch = this.props.AdvancedSearches.find(
-      s => s.Name == this.props.CurrentAdvancedSearchName
-    );
+    const isExpressionValid = parser.validateBoolean(this.state.expression);
 
-    let sortedAdvancedSearches: AdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(
+    let sortedSharedExpressions: SharedExpression[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
-      this.props.AdvancedSearches,
+      this.props.SharedExpressions,
       'Name'
     );
 
-    let availableSearches: any[] = sortedAdvancedSearches.map((search, index) => {
+    let availableSearches: any[] = [
+      {
+        label: 'Save Query',
+        icon: <Icon size="1.1rem" path={mdiContentSave} />,
+        onClick: () => this.props.onNewSharedExpression(this.state.expression),
+      },
+      { separator: true },
+      ...sortedSharedExpressions.map(expression => {
+        return {
+          label: expression.Name,
+          icon:
+            expression.Expression === this.props.CurrentAdvancedSearch ? (
+              <Icon size="1.1rem" path={mdiCheck} />
+            ) : null,
+          onClick: () => this.runQuery(expression.Expression),
+        };
+      }),
+      ...(this.state.history.length ? [{ separator: true }] : []),
+      ...this.state.history
+        .slice(-5)
+        .reverse()
+        .map(item => ({
+          label: `Query at ${item.time.toLocaleTimeString('en-US')}`,
+          icon: <Icon size="1.1rem" path={mdiHistory} />,
+          onClick: () => this.props.onChangeAdvancedSearch(item.expression),
+        })),
+    ];
+
+    let availableColumns: any[] = this.props.Api.gridApi.getColumns().map(col => {
       return {
-        label: search.Name,
-        value: search.Name,
+        label: col.FriendlyName,
+        onClick: () => this.setState({ expression: this.state.expression + `[${col.ColumnId}]` }),
       };
     });
+
     let content = (
       <Flex
         flexDirection="row"
         alignItems="stretch"
         className="ab-DashboardToolbar__AdvancedSearch__wrap"
       >
-        <Dropdown
-          className="ab-DashboardToolbar__AdvancedSearch__select"
-          disabled={availableSearches.length == 0}
-          style={{ minWidth: 160 }}
-          options={availableSearches}
-          value={this.props.CurrentAdvancedSearchName}
-          placeholder="Select Search"
-          onChange={searchName => this.onSelectedSearchChanged(searchName)}
-          marginRight={2}
-        ></Dropdown>
-
-        <ButtonEdit
-          onClick={() => this.props.onEditAdvancedSearch()}
-          className="ab-DashboardToolbar__AdvancedSearch__edit"
-          tooltip="Edit Current Advanced Search"
-          disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
-          AccessLevel={this.props.AccessLevel}
-        />
-        <ButtonNew
+        <FieldWrap marginRight={1} width={600}>
+          <SimpleButton
+            variant="text"
+            tone="neutral"
+            onClick={() => this.props.onExpand(this.state.expression)}
+            tooltip="Expand"
+            marginLeft={1}
+          >
+            <Icon size="1.1rem" path={mdiArrowExpand} />
+          </SimpleButton>
+          <Input
+            type="text"
+            placeholder="Query"
+            spellCheck={false}
+            value={this.state.expression}
+            onChange={(x: any) => this.setState({ expression: x.target.value })}
+            style={{ fontFamily: 'monospace', fontSize: 12 }}
+            onKeyDown={(e: any) => {
+              if (e.key === 'Enter') {
+                this.runQuery();
+              }
+            }}
+          />
+          {this.props.CurrentAdvancedSearch !== '' && (
+            <SimpleButton
+              variant="text"
+              tone="neutral"
+              onClick={() => this.props.onChangeAdvancedSearch('')}
+              tooltip="Clear Query"
+            >
+              <Icon size="1.1rem" path={mdiClose} />
+            </SimpleButton>
+          )}
+          {isExpressionValid ? (
+            <SimpleButton
+              variant="text"
+              tone="neutral"
+              onClick={() => this.runQuery()}
+              tooltip="Run Query"
+              marginRight={1}
+            >
+              <Icon size="1.1rem" path={mdiMagnify} />
+            </SimpleButton>
+          ) : (
+            <SimpleButton variant="text" tone="neutral" tooltip="Invalid Query" marginRight={1}>
+              <Icon size="1.1rem" path={mdiAlert} />
+            </SimpleButton>
+          )}
+        </FieldWrap>
+        <DropdownButton
           variant="text"
-          tone="neutral"
-          className="ab-DashboardToolbar__AdvancedSearch__new"
-          onClick={() => this.props.onNewAdvancedSearch()}
-          tooltip="Create New Advanced Search"
-          AccessLevel={this.props.AccessLevel}
-          children={null}
-        />
-
-        <ButtonDelete
-          tooltip="Delete Advanced Search"
-          className="ab-DashboardToolbar__AdvancedSearch__delete"
-          disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
-          ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
-          ConfirmationMsg={
-            "Are you sure you want to delete '" + !savedSearch ? '' : savedSearch.Name + "'?"
-          }
-          ConfirmationTitle={'Delete Advanced Search'}
-          AccessLevel={this.props.AccessLevel}
-        />
+          items={availableColumns}
+          marginRight={1}
+          tooltip="Pick Columns"
+        >
+          <Icon size="1.1rem" path={mdiViewColumn} />
+        </DropdownButton>
+        <DropdownButton
+          variant="text"
+          items={availableSearches}
+          marginRight={1}
+          tooltip="Load Query"
+        >
+          <Icon size="1.1rem" path={mdiFolderOpen} />
+        </DropdownButton>
       </Flex>
     );
 
@@ -115,17 +198,33 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 
   onSelectedSearchChanged(searchName: string) {
-    this.props.onSelectAdvancedSearch(searchName);
+    this.props.onChangeAdvancedSearch(searchName);
+  }
+
+  runQuery(expression: string = this.state.expression) {
+    if (!parser.validateBoolean(expression)) {
+      return;
+    }
+
+    this.setState({
+      history: [
+        ...this.state.history,
+        {
+          expression: this.state.expression,
+          time: new Date(),
+        },
+      ],
+    });
+    this.props.onChangeAdvancedSearch(expression);
   }
 }
 
 function mapStateToProps(
-  state: AdaptableState,
-  ownProps: any
+  state: AdaptableState
 ): Partial<AdvancedSearchToolbarControlComponentProps> {
   return {
-    CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
-    AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
+    CurrentAdvancedSearch: state.AdvancedSearch.CurrentAdvancedSearch,
+    SharedExpressions: state.SharedExpression.SharedExpressions,
   };
 }
 
@@ -133,27 +232,31 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<AdvancedSearchToolbarControlComponentProps> {
   return {
-    onSelectAdvancedSearch: (advancedSearchName: string) =>
-      dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
-    onNewAdvancedSearch: () =>
+    onChangeAdvancedSearch: (expression: string) =>
+      dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
+    onNewSharedExpression: value =>
       dispatch(
         PopupRedux.PopupShowScreen(
-          StrategyConstants.AdvancedSearchStrategyId,
-          ScreenPopups.AdvancedSearchPopup,
+          StrategyConstants.SharedExpressionStrategyId,
+          ScreenPopups.SharedExpressionPopup,
           {
             action: 'New',
             source: 'Toolbar',
+            value,
           }
         )
       ),
-    onEditAdvancedSearch: () =>
+    onExpand: (value: string) =>
       dispatch(
         PopupRedux.PopupShowScreen(
           StrategyConstants.AdvancedSearchStrategyId,
-          ScreenPopups.AdvancedSearchPopup,
+          ScreenPopups.ExpandedQueryPopup,
           {
-            action: 'Edit',
             source: 'Toolbar',
+            value,
+          },
+          {
+            footer: null,
           }
         )
       ),

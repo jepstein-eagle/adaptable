@@ -3,6 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
+import * as SharedExpressionRedux from '../../Redux/ActionsReducers/SharedExpressionRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -27,18 +28,24 @@ import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import * as parser from '../../parser/src';
+import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
   ConditionalStyles: ConditionalStyle[];
   StyleClassNames: string[];
   ColumnCategories: ColumnCategory[];
+  SharedExpressions: SharedExpression[];
   onAddConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
+  onAddSharedExpression?: (
+    sharedExpression: SharedExpression
+  ) => SharedExpressionRedux.SharedExpressionAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -144,6 +151,8 @@ class ConditionalStylePopupComponent extends React.Component<
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
+              SharedExpressions={this.props.SharedExpressions}
+              onAddSharedExpression={this.props.onAddSharedExpression}
             />
           )}
         </PanelWithButton>
@@ -210,10 +219,22 @@ class ConditionalStylePopupComponent extends React.Component<
     ) {
       return false;
     }
-    return (
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
-      UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
-    );
+
+    if (
+      conditionalStyle.Expression.Type === 'Shared' &&
+      StringExtensions.IsNullOrEmpty(conditionalStyle.Expression.SharedExpressionId)
+    ) {
+      return false;
+    }
+
+    if (
+      conditionalStyle.Expression.Type === 'Custom' &&
+      !parser.validateBoolean(conditionalStyle.Expression.CustomExpression)
+    ) {
+      return false;
+    }
+
+    return UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
   }
 }
 
@@ -222,6 +243,7 @@ function mapStateToProps(state: AdaptableState): Partial<ConditionalStylePopupPr
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
+    SharedExpressions: state.SharedExpression.SharedExpressions,
   };
 }
 
@@ -233,6 +255,8 @@ function mapDispatchToProps(
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
+    onAddSharedExpression: (sharedExpression: SharedExpression) =>
+      dispatch(SharedExpressionRedux.SharedExpressionAdd(sharedExpression)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

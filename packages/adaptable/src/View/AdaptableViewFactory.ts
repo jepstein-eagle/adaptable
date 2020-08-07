@@ -14,10 +14,12 @@ import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarContr
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl';
 import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
+import { ExpandedQueryPopup } from './AdvancedSearch/ExpandedQueryPopup';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
+import { SharedExpressionPopup } from './SharedExpression/SharedExpressionPopup';
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup';
 import { ThemePopup } from './Theme/ThemePopup';
 import { ToolPanelPopup } from './Components/ToolPanel/ToolPanelPopup';
@@ -65,6 +67,7 @@ import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
   AdvancedSearchPopup,
+  ExpandedQueryPopup,
   AlertPopup,
   BulkUpdatePopup,
   CalculatedColumnPopup,
@@ -100,6 +103,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
+  SharedExpressionPopup,
 };
 
 // here we put the dashboard control for each strategy

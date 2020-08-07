@@ -25,7 +25,7 @@ export class SearchService implements ISearchService {
           eventName == AdvancedSearchRedux.ADVANCED_SEARCH_ADD ||
           eventName == AdvancedSearchRedux.ADVANCED_SEARCH_EDIT ||
           eventName == AdvancedSearchRedux.ADVANCED_SEARCH_DELETE ||
-          eventName == AdvancedSearchRedux.ADVANCED_SEARCH_SELECT
+          eventName == AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE
         ) {
           this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
         } else if (

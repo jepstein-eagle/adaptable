@@ -1,6 +1,6 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
-import { Expression } from './Common/Expression';
+import { NewExpression } from './Common/Expression';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 
 /**
@@ -110,7 +110,7 @@ export interface ConditionalStyle extends AdaptableObject {
   /**
    * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
    */
-  Expression?: Expression;
+  Expression?: NewExpression;
 
   /**
    * The Style to apply when the rule is matched.

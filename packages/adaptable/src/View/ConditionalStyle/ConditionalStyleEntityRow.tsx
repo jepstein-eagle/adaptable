@@ -29,14 +29,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     colItems[1].Content = (
       <EntityRowItem Content={<StyleVisualItem Style={conditionalStyle.Style} />} />
     );
-    colItems[2].Content = (
-      <EntityRowItem
-        Content={ExpressionHelper.ConvertExpressionToString(
-          conditionalStyle.Expression,
-          this.props.api
-        )}
-      />
-    );
+    colItems[2].Content = <EntityRowItem Content={JSON.stringify(conditionalStyle.Expression)} />;
     let buttons: any = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(conditionalStyle)}

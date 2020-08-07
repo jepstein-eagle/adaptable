@@ -8,10 +8,16 @@ import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
+import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
+import * as SharedExpressionRedux from '../../../Redux/ActionsReducers/SharedExpressionRedux';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   StyleClassNames: string[];
+  SharedExpressions: SharedExpression[];
+  onAddSharedExpression: (
+    sharedExpression: SharedExpression
+  ) => SharedExpressionRedux.SharedExpressionAddAction;
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -41,12 +47,23 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             {
               StepName: 'Query Builder',
               Index: 2,
-              Element: <ConditionalStyleExpressionWizard Api={this.props.Api} />,
+              Element: (
+                <ConditionalStyleExpressionWizard
+                  Api={this.props.Api}
+                  SharedExpressions={this.props.SharedExpressions}
+                  onAddSharedExpression={this.props.onAddSharedExpression}
+                />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <ConditionalStyleSummaryWizard Api={this.props.Api} />,
+              Element: (
+                <ConditionalStyleSummaryWizard
+                  Api={this.props.Api}
+                  SharedExpressions={this.props.SharedExpressions}
+                />
+              ),
             },
           ]}
           Data={this.props.EditedAdaptableObject}

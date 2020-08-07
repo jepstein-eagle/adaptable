@@ -47,6 +47,7 @@ export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
 export const ToolPanelStrategyId: AdaptableFunctionName = 'ToolPanel';
 export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
+export const SharedExpressionStrategyId: AdaptableFunctionName = 'SharedExpression';
 
 // Strategy Names - only used internally
 export const ActionColumnStrategyFriendlyName: string = 'Action Column';
@@ -95,6 +96,7 @@ export const TeamSharingStrategyFriendlyName: string = 'Team Sharing';
 export const ThemeStrategyFriendlyName: string = 'Theme';
 export const ToolPanelStrategyFriendlyName: string = 'Tool Panel';
 export const UserFilterStrategyFriendlyName: string = 'User Filter';
+export const SharedExpressionStrategyFriendlyName: string = 'Shared Expression';
 
 // Strategy Glyphs
 export const ActionColumnGlyph: string = 'advanced-search';
@@ -143,6 +145,7 @@ export const ThemeGlyph: string = 'theme';
 export const ToolPanelGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
 export const UserFilterGlyph: string = 'user-filter';
+export const SharedExpressionGlyph: string = 'shared-expression';
 
 export function getIdForStrategyFriendlyName(functionName: string): AdaptableFunctionName {
   switch (functionName) {
@@ -236,6 +239,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return ToolPanelStrategyId;
     case UserFilterStrategyFriendlyName:
       return UserFilterStrategyId;
+    case SharedExpressionStrategyFriendlyName:
+      return SharedExpressionStrategyId;
   }
 }
 
@@ -333,6 +338,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return ToolPanelStrategyFriendlyName;
     case UserFilterStrategyId:
       return UserFilterStrategyFriendlyName;
+    case SharedExpressionStrategyId:
+      return SharedExpressionStrategyFriendlyName;
   }
 }
 
@@ -424,5 +431,7 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return ToolPanelGlyph;
     case UserFilterStrategyId:
       return UserFilterGlyph;
+    case SharedExpressionStrategyId:
+      return SharedExpressionGlyph;
   }
 }

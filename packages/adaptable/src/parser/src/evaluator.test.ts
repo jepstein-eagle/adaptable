@@ -11,6 +11,8 @@ const context: Context = {
   },
   functions: defaultFunctions,
   variables: {},
+  filters: {},
+  value: null,
 };
 
 const t = (name: string, input: string, output: any) => {
@@ -51,7 +53,7 @@ describe('literal', () => {
   t('FALSE', 'FALSE', [false]);
   t('NUMBER', '1', [1]);
   t('STRING', '"A"', ['A']);
-  t('ARRAY', '[1, "A"]', [[1, 'A']]);
+  // t('ARRAY', '[1, "A"]', [[1, 'A']]);
 });
 
 describe('function', () => {
@@ -60,4 +62,9 @@ describe('function', () => {
 
 describe('variables', () => {
   t('VAR', 'VAR("X", 5)\nVAR("X") * 2', [undefined, 10]);
+});
+
+describe('IN operator', () => {
+  t('IN', '2 IN (1, 2, 3)', [true]);
+  t('IN', '4 IN (1, 2, 3)', [false]);
 });

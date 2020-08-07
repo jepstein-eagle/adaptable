@@ -92,6 +92,8 @@ import { ScheduleApiImpl } from './ScheduleApiImpl';
 import { GradientColumnApi } from '../GradientColumnApi';
 import { GradientColumnApiImpl } from './GradientColumnApiImpl';
 import { ApplicationApi } from '../ApplicationAPI';
+import { SharedExpressionApi } from '../SharedExpressionApi';
+import { SharedExpressionApiImpl } from './SharedExpressionApiImpl';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
@@ -138,6 +140,7 @@ export class AdaptableApiImpl implements AdaptableApi {
   public themeApi: ThemeApi;
   public userInterfaceApi: UserInterfaceApi;
   public userFilterApi: UserFilterApi;
+  public sharedExpressionApi: SharedExpressionApi;
   public namedFilterApi: NamedFilterApi;
   public toolPanelApi: ToolPanelApi;
 
@@ -186,6 +189,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.themeApi = new ThemeApiImpl(adaptable);
     this.userInterfaceApi = new UserInterfaceApiImpl(adaptable);
     this.userFilterApi = new UserFilterApiImpl(adaptable);
+    this.sharedExpressionApi = new SharedExpressionApiImpl(adaptable);
     this.namedFilterApi = new NamedFilterApiImpl(adaptable);
     this.toolPanelApi = new ToolPanelApiImpl(adaptable);
 

@@ -44,6 +44,7 @@ import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 import { ApplicationApi } from './ApplicationAPI';
+import { SharedExpressionApi } from './SharedExpressionApi';
 
 /**
  *
@@ -360,6 +361,8 @@ export interface AdaptableApi {
    * Provides access to the *User Filter* function, the *User Filter* object and [User Filter State](_src_predefinedconfig_configstate_userfilterstate_.userfilterstate.html).
    */
   userFilterApi: UserFilterApi;
+
+  sharedExpressionApi: SharedExpressionApi;
 
   /**
    * API methods used internally within AdapTable.

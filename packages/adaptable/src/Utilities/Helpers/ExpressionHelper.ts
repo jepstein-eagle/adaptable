@@ -11,6 +11,7 @@ import {
   ColumnValueExpression,
   RangeExpression,
   FilterExpression,
+  NewExpression,
 } from '../../PredefinedConfig/Common/Expression';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -25,6 +26,7 @@ import Helper from './Helper';
 import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
 import { AdaptableApi } from '../../Api/AdaptableApi';
+import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -675,6 +677,14 @@ export function CreateEmptyExpression(): Expression {
   return new Expression([], [], []);
 }
 
+export function CreateEmptyNewExpression(): NewExpression {
+  return {
+    Type: 'Shared',
+    SharedExpressionId: null,
+    CustomExpression: null,
+  };
+}
+
 export function CreateEmptyRange(): QueryRange {
   return {
     Operator: LeafExpressionOperator.None, // or null?
@@ -923,11 +933,29 @@ export const ExpressionHelper = {
   IsExpressionValid,
   IsEmptyRange,
   CreateEmptyExpression,
+  CreateEmptyNewExpression,
   CreateEmptyRange,
   GetRangeEvaluation,
   TestRangeEvaluation,
   ExpressionContainsFilter,
   OperatorRequiresValue,
   AddMissingProperties,
+  convertFilterToExpressionString,
 };
 export default ExpressionHelper;
+
+function convertFilterToExpressionString(filter: ColumnFilter) {
+  const expr: string[] = [];
+  filter.Filter.ColumnValueExpressions.forEach(x => {
+    x.ColumnRawValues.forEach(v => {
+      expr.push(`(COL("${filter.ColumnId}") = ${JSON.stringify(v)})`);
+    });
+  });
+  filter.Filter.FilterExpressions.forEach(x => {
+    x.Filters.forEach(f => {
+      expr.push(`FILTER("${f}", COL("${filter.ColumnId}"))`);
+    });
+  });
+
+  return expr.join(' OR ');
+}

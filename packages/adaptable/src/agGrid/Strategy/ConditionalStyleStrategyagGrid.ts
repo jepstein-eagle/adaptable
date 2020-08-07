@@ -11,6 +11,8 @@ import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { RowNode } from '@ag-grid-community/core';
+import * as parser from '../../parser/src';
+import { NewExpression } from '../../PredefinedConfig/Common/Expression';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -71,6 +73,22 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     }
   }
 
+  private evaluateExpression(expression: NewExpression, data: any) {
+    let expr;
+    if (expression.Type === 'Shared') {
+      const {
+        SharedExpressions,
+      } = this.adaptable.AdaptableStore.TheStore.getState().SharedExpression;
+      const se = SharedExpressions.find(item => item.Uuid === expression.SharedExpressionId);
+      if (!se) throw new Error('Shared Expression not found');
+      expr = se.Expression;
+    } else {
+      expr = expression.CustomExpression;
+    }
+
+    return parser.evaluate(expr, { data });
+  }
+
   // this initialises styles and creates the list of which columns have styles (will be used in onDataChanged)
   public initStyles(): void {
     let columns = this.adaptable.api.gridApi.getColumns();
@@ -95,14 +113,15 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
               )
             : cs.Style.ClassName;
           if (cs.ConditionalStyleScope == 'Column' && cs.ColumnId == column.ColumnId) {
-            cellClassRules[styleName] = function(params: any) {
+            cellClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return ExpressionHelper.checkForExpressionFromRowNode(
-                  cs.Expression,
-                  params.node,
-                  columns,
-                  theadaptable
-                );
+                return this.evaluateExpression(cs.Expression, params.node.data);
+                // return ExpressionHelper.checkForExpressionFromRowNode(
+                //   cs.Expression,
+                //   params.node,
+                //   columns,
+                //   theadaptable
+                // );
               }
             };
           } else if (cs.ConditionalStyleScope == 'ColumnCategory') {
@@ -111,14 +130,15 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
               .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
             if (columnCategory) {
               if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
-                cellClassRules[styleName] = function(params: any) {
+                cellClassRules[styleName] = (params: any) => {
                   if (shouldRunStyle(cs, theadaptable, params.node)) {
-                    return ExpressionHelper.checkForExpressionFromRowNode(
-                      cs.Expression,
-                      params.node,
-                      columns,
-                      theadaptable
-                    );
+                    return this.evaluateExpression(cs.Expression, params.node.data);
+                    // return ExpressionHelper.checkForExpressionFromRowNode(
+                    //   cs.Expression,
+                    //   params.node,
+                    //   columns,
+                    //   theadaptable
+                    // );
                   }
                 };
               }
@@ -141,14 +161,15 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             }
             */
           } else if (cs.ConditionalStyleScope == 'Row') {
-            rowClassRules[styleName] = function(params: any) {
+            rowClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return ExpressionHelper.checkForExpressionFromRowNode(
-                  cs.Expression,
-                  params.node,
-                  columns,
-                  theadaptable
-                );
+                return this.evaluateExpression(cs.Expression, params.node.data);
+                // return ExpressionHelper.checkForExpressionFromRowNode(
+                //   cs.Expression,
+                //   params.node,
+                //   columns,
+                //   theadaptable
+                // );
               }
             };
             theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
@@ -161,7 +182,8 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     //  create the list of columns that are in Expressions here so that we dont need to do it each time data updates
     let colList: string[] = [];
     conditionalStyles.forEach(x => {
-      let colsForCS: string[] = ExpressionHelper.GetColumnListFromExpression(x.Expression);
+      let colsForCS: string[] = [];
+      // let colsForCS: string[] = ExpressionHelper.GetColumnListFromExpression(x.Expression);
       colList.push(...colsForCS);
       this.columnsForConditionalStyles.set(x.Uuid, colsForCS);
     });

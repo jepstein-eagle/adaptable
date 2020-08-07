@@ -1,5 +1,6 @@
 export const GridInfoPopup: string = 'GridInfoPopup';
 export const AdvancedSearchPopup: string = 'AdvancedSearchPopup';
+export const ExpandedQueryPopup: string = 'ExpandedQueryPopup';
 export const AlertPopup: string = 'AlertPopup';
 export const ApplicationPopup: string = 'ApplicationPopup';
 export const BulkUpdatePopup: string = 'BulkUpdatePopup';
@@ -41,6 +42,7 @@ export const SchedulePopup: string = 'SchedulePopup';
 export const StateManagementPopup: string = 'StateManagementPopup';
 export const SystemStatusPopup: string = 'SystemStatusPopup';
 export const UserFilterPopup: string = 'UserFilterPopup';
+export const SharedExpressionPopup: string = 'SharedExpressionPopup';
 
 // Plugins
 export const OpenFinPopup: string = 'OpenFinPopup';

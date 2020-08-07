@@ -23,9 +23,7 @@ export class ConditionalStyleSharedEntity extends React.Component<
         <Flex flex={3}>
           <StyleVisualItem Style={conditionalStyle.Style} />
         </Flex>
-        <Flex flex={5}>
-          {ExpressionHelper.ConvertExpressionToString(conditionalStyle.Expression, this.props.Api)}
-        </Flex>
+        <Flex flex={5}>{JSON.stringify(conditionalStyle.Expression)}</Flex>
       </Flex>
     );
   }

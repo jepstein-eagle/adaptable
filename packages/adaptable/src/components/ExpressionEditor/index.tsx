@@ -4,7 +4,7 @@ import { AdaptableColumn } from '../../types';
 import { FunctionMap } from '../../parser/src/types';
 import useSelectionRange from '../utils/useSelectionRange';
 import { useState } from 'react';
-import { parse, findPathTo } from '../../parser/src';
+import * as parser from '../../parser/src';
 import OverlayTrigger from '../OverlayTrigger';
 import { Flex, Box } from 'rebass';
 import EditorButton from './EditorButton';
@@ -34,8 +34,8 @@ import ErrorBox from '../ErrorBox';
 import HelpBlock from '../HelpBlock';
 
 interface ExpressionEditorProps {
-  value?: string;
-  onChange?: (event: React.FormEvent) => void;
+  value: string;
+  onChange: (event: React.FormEvent) => void;
   initialData: { [key: string]: any };
   columns: AdaptableColumn[];
   functions: FunctionMap;
@@ -48,9 +48,9 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   let result, error, currentFunction;
 
   try {
-    const expr = parse(props.value);
+    const expr = parser.parse(props.value || '');
     result = expr.evaluate({ data });
-    const path = findPathTo(expr.ast, cursor);
+    const path = parser.findPathTo(expr.ast, cursor);
     currentFunction = path[0] ? path[0].type : null;
   } catch (e) {
     error = e;
@@ -138,6 +138,9 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       <EditorButton data="OR" textAreaRef={textAreaRef}>
         OR
       </EditorButton>
+      <EditorButton data="IN" textAreaRef={textAreaRef}>
+        IN
+      </EditorButton>
     </>
   );
 
@@ -179,7 +182,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               width="100%"
               height="100%"
               style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
-              data={`COL('${column.ColumnId}')`}
+              data={`[${column.ColumnId}]`}
               textAreaRef={textAreaRef}
             >
               <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
@@ -240,7 +243,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           </li>
           <li>
             <b>Columns</b> - Drag n Drop required columns from the right hand side - they will
-            resolve to 'Col([column-name])'
+            resolve to '[column-name]'
           </li>
           <li>
             <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
@@ -264,7 +267,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           </Flex>
           <Textarea
             ref={textAreaRefCallback}
-            value={props.value}
+            value={props.value || ''}
             placeholder="Enter expression"
             autoFocus
             spellCheck="false"

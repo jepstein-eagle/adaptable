@@ -1,4 +1,5 @@
 import { FunctionMap } from './types';
+import { evaluate } from '.';
 
 export const defaultFunctions: FunctionMap = {
   ADD: {
@@ -47,18 +48,21 @@ export const defaultFunctions: FunctionMap = {
       return Boolean(args[0] || args[1]);
     },
     hidden: true,
+    type: 'boolean',
   },
   AND: {
     handler(args) {
       return Boolean(args[0] && args[1]);
     },
     hidden: true,
+    type: 'boolean',
   },
   NOT: {
     handler(args) {
       return Boolean(!args[0]);
     },
     hidden: true,
+    type: 'boolean',
   },
   IF: {
     handler(args) {
@@ -72,36 +76,42 @@ export const defaultFunctions: FunctionMap = {
       return args[0] == args[1];
     },
     hidden: true,
+    type: 'boolean',
   },
   NEQ: {
     handler(args) {
       return args[0] != args[1];
     },
     hidden: true,
+    type: 'boolean',
   },
   LT: {
     handler(args) {
       return args[0] < args[1];
     },
     hidden: true,
+    type: 'boolean',
   },
   LTE: {
     handler(args) {
       return args[0] <= args[1];
     },
     hidden: true,
+    type: 'boolean',
   },
   GT: {
     handler(args) {
       return args[0] > args[1];
     },
     hidden: true,
+    type: 'boolean',
   },
   GTE: {
     handler(args) {
       return args[0] >= args[1];
     },
     hidden: true,
+    type: 'boolean',
   },
   //
   COL: {
@@ -146,6 +156,7 @@ export const defaultFunctions: FunctionMap = {
       if (typeof input !== 'number') throw Error('arg 1 should be a number');
       return input >= lower && input <= upper;
     },
+    type: 'boolean',
     docs: [
       {
         type: 'code',
@@ -153,5 +164,31 @@ export const defaultFunctions: FunctionMap = {
           'between(input: number, lower: number, upper: number): boolean',
       },
     ],
+  },
+  FILTER: {
+    handler([name, value], context) {
+      context.value = value;
+
+      const filter = context.filters[name];
+      if (filter === undefined) return true;
+
+      const result = evaluate(filter, context);
+
+      context.value = null;
+
+      return result;
+    },
+    type: 'boolean',
+  },
+  VALUE: {
+    handler(_, context) {
+      return context.value;
+    },
+  },
+  IN: {
+    handler([needle, haystack]) {
+      return haystack.includes(needle);
+    },
+    type: 'boolean',
   },
 };

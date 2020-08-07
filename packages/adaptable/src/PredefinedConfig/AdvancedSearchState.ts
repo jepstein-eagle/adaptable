@@ -137,4 +137,6 @@ export interface AdvancedSearch extends AdaptableObject {
    *
    */
   Expression: Expression;
+
+  NewExpression?: string;
 }

@@ -11,9 +11,12 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
 
 export interface ConditionalStyleSummaryWizardProps
-  extends AdaptableWizardStepProps<ConditionalStyle> {}
+  extends AdaptableWizardStepProps<ConditionalStyle> {
+  SharedExpressions: SharedExpression[];
+}
 
 export class ConditionalStyleSummaryWizard
   extends React.Component<ConditionalStyleSummaryWizardProps, {}>
@@ -28,11 +31,13 @@ export class ConditionalStyleSummaryWizard
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
       {
-        Key: 'Query',
-        Value: ExpressionHelper.ConvertExpressionToString(
-          this.props.Data.Expression,
-          this.props.Api
-        ),
+        Key: 'Expression',
+        Value: JSON.stringify(this.props.Data.Expression),
+        // this.props.Data.Expression.Type === 'Shared'
+        //   ? this.props.SharedExpressions.find(
+        //       item => item.Uuid === this.props.Data.Expression.SharedExpressionId
+        //     ).Name
+        //   : this.props.Data.Expression.CustomExpression,
       },
     ];
 

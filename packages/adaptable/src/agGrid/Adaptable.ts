@@ -156,6 +156,7 @@ import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
+import * as parser from '../parser/src';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2571,16 +2572,14 @@ export class Adaptable implements IAdaptable {
 
       // first we assess AdvancedSearch (if its running locally)
       if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
-        const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
-        if (currentSearch) {
+        const expression = this.api.advancedSearchApi.getCurrentAdvancedSearchExpression();
+
+        if (expression) {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
           if (
-            !ExpressionHelper.checkForExpressionFromRowNode(
-              currentSearch.Expression,
-              node,
-              columns,
-              this
-            )
+            !parser.evaluate(expression, {
+              data: node.data,
+            })
           ) {
             return false;
           }
@@ -2594,13 +2593,17 @@ export class Adaptable implements IAdaptable {
         const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
+            const expr = ExpressionHelper.convertFilterToExpressionString(columnFilter);
+            console.log('expr', expr);
+
             if (
-              !ExpressionHelper.checkForExpressionFromRowNode(
-                columnFilter.Filter,
-                node,
-                columns,
-                this
-              )
+              !parser.evaluate(expr, {
+                data: node.data,
+                filters: {
+                  Positive: 'VALUE() > 0',
+                  Negative: 'VALUE() < 0',
+                },
+              })
             ) {
               return false;
             }

@@ -19,7 +19,7 @@ var adaptableApi: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeData: any = examplesHelper.getTrades(500);
+  const tradeData: any = examplesHelper.getTrades(800);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
   const adaptableOptions: AdaptableOptions = {
@@ -40,23 +40,27 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['AdvancedSearch'],
   },
-
-  AdvancedSearch: {
-    AdvancedSearches: [
+  SharedExpression: {
+    SharedExpressions: [
       {
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnDisplayValues: ['Goldman Sachs', 'JP Morgan'],
-              ColumnId: 'counterparty',
-              ColumnRawValues: ['Goldman Sachs', 'JP Morgan'],
-            },
-          ],
-        },
-        Name: 'hello',
+        Name: 'US Banks',
+        Expression: "[counterparty] IN ('BAML', 'Citi')",
       },
     ],
-    CurrentAdvancedSearch: 'hello',
+  },
+  ConditionalStyle: {
+    ConditionalStyles: [
+      {
+        ConditionalStyleScope: 'Row',
+        Style: {
+          FontStyle: 'Italic',
+        },
+        Expression: {
+          Type: 'Custom',
+          CustomExpression: '1=1',
+        },
+      },
+    ],
   },
 };
 

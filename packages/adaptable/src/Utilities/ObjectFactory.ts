@@ -72,6 +72,7 @@ import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
+import { SharedExpression } from '../PredefinedConfig/SharedExpressionState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -138,6 +139,14 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
       Pivotable: true,
       Aggregatable: true,
     },
+  };
+}
+
+export function CreateEmptySharedExpression(expression?: string): SharedExpression {
+  return {
+    Uuid: createUuid(),
+    Name: EMPTY_STRING,
+    Expression: expression || EMPTY_STRING,
   };
 }
 
@@ -210,11 +219,12 @@ export function CreateInternalAlertDefinitionForMessages(
   };
 }
 
-export function CreateEmptyAdvancedSearch(): AdvancedSearch {
+export function CreateEmptyAdvancedSearch(value?: string): AdvancedSearch {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
     Expression: ExpressionHelper.CreateEmptyExpression(),
+    NewExpression: value,
   };
 }
 
@@ -479,7 +489,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     Style: CreateEmptyStyle(),
     ConditionalStyleScope: 'Row',
     ExcludeGroupedRows: false,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: ExpressionHelper.CreateEmptyNewExpression(),
   };
 }
 
@@ -686,6 +696,7 @@ export const ObjectFactory = {
   CreateEmptySparklinesChartDefinition,
   CreateEmptyCategoryChartDefinition,
   CreateEmptyCalculatedColumn,
+  CreateEmptySharedExpression,
   CreateEmptyPlusMinusRule,
   CreateEmptyAlert,
   CreateAlert,

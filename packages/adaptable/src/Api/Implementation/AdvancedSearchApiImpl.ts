@@ -50,12 +50,12 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
         StrategyConstants.AdvancedSearchStrategyFriendlyName
       )
     ) {
-      this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName));
+      this.dispatchAction(AdvancedSearchRedux.AdvancedSearchChange(advancedSearchName));
     }
   }
 
   public clearAdvancedSearch(): void {
-    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchSelect(''));
+    this.dispatchAction(AdvancedSearchRedux.AdvancedSearchChange(''));
   }
 
   public addAdvancedSearch(advancedSearch: AdvancedSearch): void {
@@ -88,6 +88,10 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
   }
 
   public getCurrentAdvancedSearchName(): string | undefined {
+    return this.getAdaptableState().AdvancedSearch.CurrentAdvancedSearch;
+  }
+
+  public getCurrentAdvancedSearchExpression(): string | undefined {
     return this.getAdaptableState().AdvancedSearch.CurrentAdvancedSearch;
   }
 

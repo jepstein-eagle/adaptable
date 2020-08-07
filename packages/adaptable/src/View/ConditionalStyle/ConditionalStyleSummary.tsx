@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
+import * as SharedExpressionRedux from '../../Redux/ActionsReducers/SharedExpressionRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
@@ -22,6 +23,8 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
+import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import * as parser from '../../parser/src';
 
 export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
@@ -29,12 +32,16 @@ export interface ConditionalStyleSummaryProps
   ColorPalette: string[];
   ColumnCategories: ColumnCategory[];
   StyleClassNames: string[];
+  SharedExpressions: SharedExpression[];
   onAddConditionalStyle: (
     conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
     conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
+  onAddSharedExpression?: (
+    sharedExpression: SharedExpression
+  ) => SharedExpressionRedux.SharedExpressionAddAction;
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<
@@ -78,7 +85,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CS' + index}
             Item1={<StyleVisualItem Style={item.Style} />}
-            Item2={ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Api)}
+            Item2={item.Expression}
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -106,6 +113,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
+            SharedExpressions={this.props.SharedExpressions}
+            onAddSharedExpression={this.props.onAddSharedExpression}
           />
         )}
       </div>
@@ -155,10 +164,24 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
+
+    if (
+      conditionalStyle.Expression.Type === 'Shared' &&
+      StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression.SharedExpressionId)
+    ) {
+      return false;
+    }
+
+    if (
+      conditionalStyle.Expression.Type === 'Custom' &&
+      !parser.validateBoolean(conditionalStyle.Expression.CustomExpression)
+    ) {
+      return false;
+    }
+
     return (
       (conditionalStyle.ConditionalStyleScope == 'Row' ||
         StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(conditionalStyle.Expression) &&
       UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     );
   }
@@ -172,6 +195,7 @@ function mapStateToProps(
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
+    SharedExpressions: state.SharedExpression.SharedExpressions,
   };
 }
 
@@ -183,6 +207,8 @@ function mapDispatchToProps(
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
+    onAddSharedExpression: (sharedExpression: SharedExpression) =>
+      dispatch(SharedExpressionRedux.SharedExpressionAdd(sharedExpression)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

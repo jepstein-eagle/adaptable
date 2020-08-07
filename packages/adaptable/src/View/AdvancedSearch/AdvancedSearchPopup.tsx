@@ -35,9 +35,9 @@ interface AdvancedSearchPopupProps extends StrategyViewPopupProps<AdvancedSearch
   onEditAdvancedSearch: (
     advancedSearch: AdvancedSearch
   ) => AdvancedSearchRedux.AdvancedSearchEditAction;
-  onSelectAdvancedSearch: (
+  onChangeAdvancedSearch: (
     SelectedSearchName: string
-  ) => AdvancedSearchRedux.AdvancedSearchSelectAction;
+  ) => AdvancedSearchRedux.AdvancedSearchChangeAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -58,7 +58,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     if (this.props.PopupParams) {
       if (this.props.PopupParams.action) {
         if (this.props.PopupParams.action == 'New') {
-          this.onNew();
+          this.onNew(this.props.PopupParams.value);
         }
         if (this.props.PopupParams.action == 'Edit') {
           let currentAdvancedSearch = this.props.AdvancedSearches.find(
@@ -107,7 +107,7 @@ class AdvancedSearchPopupComponent extends React.Component<
             onShare={description => this.props.onShare(advancedSearch, description)}
             TeamSharingActivated={this.props.TeamSharingActivated}
             onDeleteConfirm={AdvancedSearchRedux.AdvancedSearchDelete(advancedSearch)}
-            onSelect={() => this.props.onSelectAdvancedSearch(advancedSearch.Name)}
+            onSelect={() => this.props.onChangeAdvancedSearch(advancedSearch.Name)}
             AccessLevel={this.props.AccessLevel}
           />
         );
@@ -158,9 +158,9 @@ class AdvancedSearchPopupComponent extends React.Component<
     );
   }
 
-  onNew() {
+  onNew(value?: string) {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyAdvancedSearch(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyAdvancedSearch(value),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -220,7 +220,7 @@ class AdvancedSearchPopupComponent extends React.Component<
     ) {
       // it its new - make it the new search
       // or if we are editing the current search - but might have changed the name
-      this.props.onSelectAdvancedSearch(clonedObject.Name);
+      this.props.onChangeAdvancedSearch(clonedObject.Name);
     }
     this.shouldClosePopupOnFinishWizard = false;
   }
@@ -228,8 +228,7 @@ class AdvancedSearchPopupComponent extends React.Component<
   canFinishWizard() {
     let advancedSearch = this.state.EditedAdaptableObject as AdvancedSearch;
     return (
-      StringExtensions.IsNotNullOrEmpty(advancedSearch.Name) &&
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(advancedSearch.Expression)
+      StringExtensions.IsNotNullOrEmpty(advancedSearch.Name) && advancedSearch.NewExpression !== ''
     );
   }
 }
@@ -249,8 +248,8 @@ function mapDispatchToProps(
       dispatch(AdvancedSearchRedux.AdvancedSearchAdd(advancedSearch)),
     onEditAdvancedSearch: (advancedSearch: AdvancedSearch) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchEdit(advancedSearch)),
-    onSelectAdvancedSearch: (selectedSearchName: string) =>
-      dispatch(AdvancedSearchRedux.AdvancedSearchSelect(selectedSearchName)),
+    onChangeAdvancedSearch: (selectedSearchName: string) =>
+      dispatch(AdvancedSearchRedux.AdvancedSearchChange(selectedSearchName)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

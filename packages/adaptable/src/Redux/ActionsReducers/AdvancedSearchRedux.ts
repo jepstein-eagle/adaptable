@@ -6,7 +6,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 export const ADVANCED_SEARCH_ADD = 'ADVANCED_SEARCH_ADD';
 export const ADVANCED_SEARCH_EDIT = 'ADVANCED_SEARCH_EDIT';
 export const ADVANCED_SEARCH_DELETE = 'ADVANCED_SEARCH_DELETE';
-export const ADVANCED_SEARCH_SELECT = 'ADVANCED_SEARCH_SELECT';
+export const ADVANCED_SEARCH_CHANGE = 'ADVANCED_SEARCH_SELECT';
 
 export interface AdvancedSearchAction extends Redux.Action {
   advancedSearch: AdvancedSearch;
@@ -17,8 +17,8 @@ export interface AdvancedSearchEditAction extends AdvancedSearchAddAction {}
 
 export interface AdvancedSearchDeleteAction extends AdvancedSearchAddAction {}
 
-export interface AdvancedSearchSelectAction extends Redux.Action {
-  selectedSearchName: string;
+export interface AdvancedSearchChangeAction extends Redux.Action {
+  expression: string;
 }
 
 export const AdvancedSearchAdd = (advancedSearch: AdvancedSearch): AdvancedSearchAddAction => ({
@@ -38,9 +38,9 @@ export const AdvancedSearchDelete = (
   advancedSearch,
 });
 
-export const AdvancedSearchSelect = (selectedSearchName: string): AdvancedSearchSelectAction => ({
-  type: ADVANCED_SEARCH_SELECT,
-  selectedSearchName,
+export const AdvancedSearchChange = (expression: string): AdvancedSearchChangeAction => ({
+  type: ADVANCED_SEARCH_CHANGE,
+  expression,
 });
 
 const initialAdvancedSearchState: AdvancedSearchState = {
@@ -92,9 +92,9 @@ export const AdvancedSearchReducer: Redux.Reducer<AdvancedSearchState> = (
             : currentAdvancedSearchName,
       };
     }
-    case ADVANCED_SEARCH_SELECT:
+    case ADVANCED_SEARCH_CHANGE:
       return Object.assign({}, state, {
-        CurrentAdvancedSearch: (action as AdvancedSearchSelectAction).selectedSearchName,
+        CurrentAdvancedSearch: (action as AdvancedSearchChangeAction).expression,
       });
 
     default:

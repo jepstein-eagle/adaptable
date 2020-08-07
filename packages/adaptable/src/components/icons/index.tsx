@@ -13,6 +13,7 @@ import AttachFile from './attach-file';
 import Plus from './plus';
 import Clear from './clear';
 import AdvancedSearch from './advancedsearch';
+import SharedExpression from './shared-expression';
 import Info from './info';
 import Alert from './alert';
 import List from './list';
@@ -113,6 +114,7 @@ const allIcons = {
   theme: Theme, // original icon is color-fill
 
   // non toolbar strategy images
+  'shared-expression': SharedExpression, // original icon is search
   'calculated-column': CalculatedColumn, // original icon is phone-setup
   calendar: Calendar,
   'cell-validation': CellValidation, // original icon is flag,

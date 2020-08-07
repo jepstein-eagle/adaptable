@@ -192,4 +192,5 @@ export type AdaptableFunctionName =
   | 'Theme'
   | 'ToolPanel'
   | 'UpdatedRow'
-  | 'UserFilter';
+  | 'UserFilter'
+  | 'SharedExpression';

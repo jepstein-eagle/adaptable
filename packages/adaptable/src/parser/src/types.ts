@@ -23,6 +23,8 @@ export type Context = {
   data: { [key: string]: any };
   variables: { [key: string]: any };
   functions: FunctionMap;
+  filters: { [key: string]: string };
+  value: any;
 };
 
 export type FunctionMap = {
@@ -31,8 +33,9 @@ export type FunctionMap = {
 
 export type Function = {
   docs?: FunctionDocBlock[];
-  hidden?: boolean;
   handler: FunctionHandler;
+  hidden?: boolean;
+  type?: 'boolean';
 };
 
 export type FunctionDocBlock =

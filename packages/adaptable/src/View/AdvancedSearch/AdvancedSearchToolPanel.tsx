@@ -27,9 +27,7 @@ interface AdvancedSearchToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
   CurrentAdvancedSearchName: string;
   AdvancedSearches: AdvancedSearch[];
-  onSelectAdvancedSearch: (
-    advancedSearchName: string
-  ) => AdvancedSearchRedux.AdvancedSearchSelectAction;
+  onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
   onNewAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
   onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
 }
@@ -141,7 +139,7 @@ class AdvancedSearchToolPanelComponent extends React.Component<
   }
 
   onSelectedSearchChanged(searchName: string) {
-    this.props.onSelectAdvancedSearch(searchName);
+    this.props.onChangeAdvancedSearch(searchName);
   }
 }
 
@@ -159,8 +157,8 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<AdvancedSearchToolPanelComponentProps> {
   return {
-    onSelectAdvancedSearch: (advancedSearchName: string) =>
-      dispatch(AdvancedSearchRedux.AdvancedSearchSelect(advancedSearchName)),
+    onChangeAdvancedSearch: (expression: string) =>
+      dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
     onNewAdvancedSearch: () =>
       dispatch(
         PopupRedux.PopupShowScreen(

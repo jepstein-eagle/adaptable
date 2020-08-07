@@ -44,6 +44,7 @@ import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
 import { IPushPullState } from './IPushPullState';
 import { OpenFinState } from './OpenFinState';
+import { SharedExpressionState } from './SharedExpressionState';
 
 /**
  * The main state object that Adaptable persists
@@ -107,4 +108,5 @@ export interface AdaptableState {
   ToolPanel: ToolPanelState;
   UpdatedRow: UpdatedRowState;
   UserFilter: UserFilterState;
+  SharedExpression: SharedExpressionState;
 }

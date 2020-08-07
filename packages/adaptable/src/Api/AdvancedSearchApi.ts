@@ -98,6 +98,7 @@ export interface AdvancedSearchApi {
    * Returns the name of the currently selected Advanced Search
    */
   getCurrentAdvancedSearchName(): string | undefined;
+  getCurrentAdvancedSearchExpression(): string | undefined;
 
   /**
    * Returns the Advanced Search in the State which has the inputted uuid
