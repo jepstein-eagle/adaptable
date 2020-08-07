@@ -11,13 +11,11 @@ import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { LAYOUT_UPDATE_CURRENT_DRAFT, LayoutAction, LAYOUT_SELECT } from './LayoutRedux';
 import { Layout } from '../../types';
 
-export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
 export const GRID_ADD_COLUMNS = 'GRID_ADD_COLUMNS';
 export const GRID_REMOVE_COLUMN = 'GRID_REMOVE_COLUMN';
 export const GRID_EDIT_COLUMN = 'GRID_EDIT_COLUMN';
-export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SET_VALUE_LIKE_EDIT_BATCH = 'GRID_SET_VALUE_LIKE_EDIT_BATCH';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
@@ -50,9 +48,6 @@ export interface GridRemoveColumnAction extends Redux.Action {
 }
 export interface GridEditColumnAction extends Redux.Action {
   Column: AdaptableColumn;
-}
-export interface GridHideColumnAction extends Redux.Action {
-  ColumnId: string;
 }
 
 export interface GridSetValueLikeEditAction extends Redux.Action {
@@ -139,11 +134,6 @@ export const GridEditColumn = (Column: AdaptableColumn): GridEditColumnAction =>
   Column,
 });
 
-export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
-  type: GRID_HIDE_COLUMN,
-  ColumnId,
-});
-
 export const GridSetValueLikeEdit = (
   DataChangedInfo: DataChangedInfo
 ): GridSetValueLikeEditAction => ({
@@ -156,11 +146,6 @@ export const GridSetValueLikeEditBatch = (
 ): GridSetValueLikeEditBatchAction => ({
   type: GRID_SET_VALUE_LIKE_EDIT_BATCH,
   DataChangedInfoBatch,
-});
-
-export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
-  type: GRID_SELECT_COLUMN,
-  ColumnId,
 });
 
 export const GridSetSort = (ColumnSorts: ColumnSort[]): GridSetSortAction => ({

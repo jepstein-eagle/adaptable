@@ -2745,23 +2745,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          case GridRedux.GRID_HIDE_COLUMN: {
-            const actionTyped = action as GridRedux.GridHideColumnAction;
-            let columnIds = middlewareAPI
-              .getState()
-              .Grid.Columns.filter(c => c.Visible)
-              .map(c => c.ColumnId);
-
-            let columnIndex = columnIds.findIndex(colId => colId == actionTyped.ColumnId);
-            columnIds.splice(columnIndex, 1);
-            adaptable.setColumnOrder(columnIds);
-            return next(action);
-          }
-          case GridRedux.GRID_SELECT_COLUMN: {
-            const actionTyped = action as GridRedux.GridSelectColumnAction;
-            adaptable.selectColumn(actionTyped.ColumnId);
-            return next(action);
-          }
           case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
             let SelectedCellsStrategy = <ICellSummaryStrategy>(
               adaptable.strategies.get(StrategyConstants.CellSummaryStrategyId)
@@ -2935,11 +2918,10 @@ export function getNonPersistedReduxActions(): string[] {
 
     // SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
 
-    GridRedux.GRID_SELECT_COLUMN,
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
     GridRedux.GRID_EDIT_COLUMN,
-    GridRedux.GRID_HIDE_COLUMN,
+    //  GridRedux.GRID_HIDE_COLUMN,
     GridRedux.GRID_SET_VALUE_LIKE_EDIT,
     GridRedux.GRID_SET_SORT,
     GridRedux.GRID_SET_SELECTED_CELLS,

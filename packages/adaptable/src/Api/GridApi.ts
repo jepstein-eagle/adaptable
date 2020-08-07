@@ -173,6 +173,9 @@ export interface GridApi {
 
   selectColumn(columnId: string): void;
   selectColumns(columnIds: string[]): void;
+  selectAll(): void;
+
+  hideColumn(columnId: string): void;
 
   getFirstRowNode(): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];

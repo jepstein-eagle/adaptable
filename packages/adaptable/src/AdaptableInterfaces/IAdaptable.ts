@@ -160,6 +160,8 @@ export interface IAdaptable {
   getActiveCell(): GridCell;
   selectColumn(columnId: string): void;
   selectColumns(columnIds: string[]): void;
+  selectAll(): void;
+  hideColumn(columnId: string): void;
 
   // column related
   updateColumnsIntoStore(): void;

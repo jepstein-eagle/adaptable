@@ -130,8 +130,20 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.selectColumn(columnId);
   }
 
+  public selectAll(): void {
+    this.adaptable.selectAll();
+  }
+
   public selectColumns(columnIds: string[]): void {
     this.adaptable.selectColumns(columnIds);
+  }
+
+  public hideColumn(columnId: string): void {
+    //  let columnIds = this.getVisibleColumns().map(c => c.ColumnId);
+    //  let columnIndex = columnIds.findIndex(colId => colId == columnId);
+    //  columnIds.splice(columnIndex, 1);
+    //  this.adaptable.setColumnOrder(columnIds);
+    this.adaptable.hideColumn(columnId);
   }
 
   public getFirstRowNode(): any {
