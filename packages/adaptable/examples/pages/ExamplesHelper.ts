@@ -254,6 +254,7 @@ export class ExamplesHelper {
     const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
     const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
     const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+
     const tradeDate = this.generateRandomDate(-4, 5);
     const moodyRating = this.getRandomItem(this.getMoodysRatings());
     const tradeCurrency = currency || this.getRandomItem(this.getCurrencies());
@@ -1057,7 +1058,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
-      lockPosition: true,
+      //   lockPosition: true,
       //  lockVisible: true,
       // pinned: true,
       //  suppressMovable: true,
@@ -1080,7 +1081,7 @@ export class ExamplesHelper {
       colId: 'countryStars',
       editable: false,
       filter: true,
-      pinned: true,
+      //  pinned: true,
       enableValue: true,
       aggFunc: 'sum',
       //  rowGroup: true,
@@ -1098,7 +1099,7 @@ export class ExamplesHelper {
       headerName: 'Counterparty',
       field: 'counterparty',
       editable: true,
-      rowGroup: true,
+      //   rowGroup: true,
       enableRowGroup: true,
       //  enableValue: true,
       enablePivot: true,

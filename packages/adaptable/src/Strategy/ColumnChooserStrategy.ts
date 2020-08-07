@@ -34,19 +34,16 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
         )
       );
       returnColumnMenuItems.push(
-        this.createColumnMenuItemReduxAction(
-          'Select Column',
-          'tab-unselected',
-          GridRedux.GridSelectColumn(column.ColumnId)
-        )
+        this.createColumnMenuItemClickFunction('Select Column', 'tab-unselected', () => {
+          this.adaptable.api.gridApi.selectColumn(column.ColumnId);
+          //  this.adaptable.api.gridApi.selectAll();
+        })
       );
       if (this.canCreateMenuItem('Full') && column.Hideable) {
         returnColumnMenuItems.push(
-          this.createColumnMenuItemReduxAction(
-            'Hide Column',
-            'hide-column',
-            GridRedux.GridHideColumn(column.ColumnId)
-          )
+          this.createColumnMenuItemClickFunction('Hide Column', 'hide-column', () => {
+            this.adaptable.api.gridApi.hideColumn(column.ColumnId);
+          })
         );
       }
     }

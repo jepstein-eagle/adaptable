@@ -175,6 +175,9 @@ export class FilterService implements IFilterService {
       case TODAY_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date());
             return (
               today.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
@@ -185,6 +188,9 @@ export class FilterService implements IFilterService {
       case IN_PAST_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             return +dateToCheck < Date.now();
           },
         };
@@ -192,6 +198,9 @@ export class FilterService implements IFilterService {
       case IN_FUTURE_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             return +dateToCheck > Date.now();
           },
         };
@@ -199,6 +208,9 @@ export class FilterService implements IFilterService {
       case YESTERDAY_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date());
             return (
               yesterday.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
@@ -209,6 +221,9 @@ export class FilterService implements IFilterService {
       case TOMORROW_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date());
             return (
               tomorrow.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
@@ -219,6 +234,9 @@ export class FilterService implements IFilterService {
       case NEXT_WORKING_DAY_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             return (
               this.adaptable.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) ==
               new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
@@ -229,6 +247,9 @@ export class FilterService implements IFilterService {
       case PREVIOUS_WORKING_DAY_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             return (
               this.adaptable.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) ==
               new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
@@ -239,6 +260,9 @@ export class FilterService implements IFilterService {
       case THIS_YEAR_SYSTEM_FILTER: {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
+            if (dateToCheck == null || dateToCheck == undefined) {
+              return false;
+            }
             let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date());
             let todayyear: number = today.getFullYear();
             let datetocheckyear: number = dateToCheck.getFullYear();

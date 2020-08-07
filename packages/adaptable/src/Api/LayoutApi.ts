@@ -46,7 +46,7 @@ export interface LayoutApi {
   /**
    * Retrieves the Layout with the inputted name
    */
-  getLayoutByName(layoutName: string): Layout;
+  getLayoutByName(layoutName: string): Layout | null;
 
   /**
    * Retrieves all the Layouts in Adaptable State
@@ -68,7 +68,7 @@ export interface LayoutApi {
    * Creates the a new Layout in the state
    * @param layoutToCreate the Layout to create (the Api will create the identiifer automatically)
    */
-  createLayout(layoutToCreate: Layout): Layout;
+  createLayout(layoutToCreate: Layout): Layout | undefined;
 
   /**
    * Creates the given Layout and then loads it into the Grid
@@ -76,6 +76,7 @@ export interface LayoutApi {
    */
   createAndSetLayout(layoutToCreate: Layout): Layout;
 
+  // tslint:disable-next-line: adjacent-overload-signatures
   getCurrentVisibleColumnIdsMap(): { [key: string]: boolean };
 
   /**
@@ -97,8 +98,6 @@ export interface LayoutApi {
    * @param layout the Layout to check
    */
   doesLayoutExist(layout: Layout): boolean;
-
-  findLayoutByName(layoutName: string): Layout | null;
 
   /**
    * Opens the Layout popup screen

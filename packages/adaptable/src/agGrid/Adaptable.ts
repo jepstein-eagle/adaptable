@@ -3650,6 +3650,18 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.addCellRange(cellRangeParams);
   }
 
+  public selectAll(): void {
+    this.gridOptions.api!.selectAll();
+  }
+
+  public hideColumn(columnId: string) {
+    let vendorCol = this.gridOptions.columnApi!.getColumn(columnId);
+    if (vendorCol) {
+      this.gridOptions.columnApi.setColumnVisible(columnId, false);
+      this.updateColumnsIntoStore();
+    }
+  }
+
   public setColumnSort(columnSorts: ColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];
