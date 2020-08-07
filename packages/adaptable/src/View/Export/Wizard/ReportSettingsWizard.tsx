@@ -6,12 +6,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { ReportRowScope } from '../../../PredefinedConfig/Common/Enums';
+
 import WizardPanel from '../../../components/WizardPanel';
-import HelpBlock from '../../../components/HelpBlock';
 import Input from '../../../components/Input';
-import { Flex, Text } from 'rebass';
+import { Text } from 'rebass';
 import ErrorBox from '../../../components/ErrorBox';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
 
 export interface ReportSettingsWizardProps extends AdaptableWizardStepProps<Report> {
   Reports: Report[];
@@ -38,20 +38,23 @@ export class ReportSettingsWizard
 
     return (
       <WizardPanel>
-        <Flex flexDirection="row" alignItems="center">
-          <Text marginRight={2}>Enter Report Name:</Text>
+        <FormLayout columns={[1, 2]}>
+          <FormRow>
+            <Text marginRight={2}>Enter Report Name:</Text>
 
-          <Input
-            style={{ flex: 1 }}
-            type="text"
-            placeholder="Enter Report Name"
-            value={this.state.ReportName}
-            onChange={(e: any) => this.onReportNameChanged(e)}
-          />
-        </Flex>
-        {this.state.ErrorMessage ? (
-          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
-        ) : null}
+            <Input
+              width="100%"
+              type="text"
+              placeholder="Name"
+              value={this.state.ReportName}
+              onChange={(e: any) => this.onReportNameChanged(e)}
+            />
+          </FormRow>
+          <FormRow>
+            <></>
+            {this.state.ErrorMessage ? <ErrorBox>{this.state.ErrorMessage}</ErrorBox> : null}
+          </FormRow>
+        </FormLayout>
       </WizardPanel>
     );
   }

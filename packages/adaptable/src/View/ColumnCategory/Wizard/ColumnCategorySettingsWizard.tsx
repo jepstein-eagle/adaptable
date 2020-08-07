@@ -10,10 +10,10 @@ import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import WizardPanel from '../../../components/WizardPanel';
-import HelpBlock from '../../../components/HelpBlock';
-import { Flex, Box, Text } from 'rebass';
+import { Text } from 'rebass';
 import Input from '../../../components/Input';
 import ErrorBox from '../../../components/ErrorBox';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
 
 export interface ColumnCategorySettingsWizardProps
   extends AdaptableWizardStepProps<ColumnCategory> {
@@ -42,20 +42,22 @@ export class ColumnCategorySettingsWizard
 
     return (
       <WizardPanel>
-        <Flex flexDirection="row" alignItems="center">
-          <Text marginRight={3}>Name: </Text>
-
-          <Input
-            value={this.state.ColumnCategoryId}
-            style={{ flex: 1 }}
-            type="string"
-            placeholder="Enter name for Column Category"
-            onChange={(e: React.SyntheticEvent) => this.onColumnCategoryNameChange(e)}
-          />
-        </Flex>
-        {this.state.ErrorMessage ? (
-          <ErrorBox marginTop={3}>{this.state.ErrorMessage}</ErrorBox>
-        ) : null}
+        <FormLayout columns={[1, 2]}>
+          <FormRow>
+            <Text>Name:</Text>
+            <Input
+              value={this.state.ColumnCategoryId}
+              width="100%"
+              type="string"
+              placeholder="Enter name for Column Category"
+              onChange={(e: React.SyntheticEvent) => this.onColumnCategoryNameChange(e)}
+            />
+          </FormRow>
+          <FormRow>
+            <></>
+            {this.state.ErrorMessage ? <ErrorBox>{this.state.ErrorMessage}</ErrorBox> : null}
+          </FormRow>
+        </FormLayout>
       </WizardPanel>
     );
   }

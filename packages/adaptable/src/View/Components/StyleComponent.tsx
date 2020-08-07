@@ -13,6 +13,7 @@ import HelpBlock from '../../components/HelpBlock';
 import Dropdown from '../../components/Dropdown';
 import { CSSProperties } from 'react';
 import { AdaptableApi } from '../../Api/AdaptableApi';
+import FormLayout, { FormRow } from '../../components/FormLayout';
 
 export interface StyleComponentProps extends React.ClassAttributes<StyleComponent> {
   className?: string;
@@ -94,8 +95,8 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                   Set colours by ticking a checkbox and selecting from the dropdown; leave unchecked
                   to use cell's existing colours.
                 </HelpBlock>
-                <Flex flexDirection="column" margin={1}>
-                  <Flex flexDirection="row" alignItems="center">
+                <FormLayout columns={[1, 2]}>
+                  <FormRow>
                     <Checkbox
                       value="existing"
                       marginLeft={1}
@@ -106,16 +107,18 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                       Set Back Colour
                     </Checkbox>
 
-                    {this.state.myStyle.BackColor != null && (
+                    {this.state.myStyle.BackColor != null ? (
                       <ColorPicker
                         Api={this.props.api}
                         value={this.state.myStyle.BackColor}
                         onChange={(x: any) => this.onBackColorSelectChange(x)}
                       />
+                    ) : (
+                      <span />
                     )}
-                  </Flex>
+                  </FormRow>
 
-                  <Flex flexDirection="row" alignItems="center">
+                  <FormRow>
                     <Checkbox
                       marginLeft={1}
                       marginRight={3}
@@ -126,37 +129,42 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                       Set Fore Colour
                     </Checkbox>
 
-                    {this.state.myStyle.ForeColor != null && (
+                    {this.state.myStyle.ForeColor != null ? (
                       <ColorPicker
                         Api={this.props.api}
                         value={this.state.myStyle.ForeColor}
                         onChange={(x: any) => this.onForeColorSelectChange(x)}
                       />
+                    ) : (
+                      <span />
                     )}
-                  </Flex>
-                </Flex>
+                  </FormRow>
+                </FormLayout>
 
                 <HelpBlock marginTop={2}>Set the font properties of the Style.</HelpBlock>
-                <Flex flexDirection="column">
-                  <Checkbox
-                    marginLeft={1}
-                    value={FontWeight.Normal.toString()}
-                    checked={this.state.myStyle.FontWeight == FontWeight.Bold}
-                    onChange={checked => this.onFontWeightChange(checked)}
-                  >
-                    Bold
-                  </Checkbox>
 
-                  <Checkbox
-                    marginLeft={1}
-                    value={FontStyle.Normal.toString()}
-                    checked={this.state.myStyle.FontStyle == FontStyle.Italic}
-                    onChange={checked => this.onFontStyleChange(checked)}
-                  >
-                    Italic
-                  </Checkbox>
-
-                  <Box>
+                <FormLayout columns={[1]}>
+                  <FormRow>
+                    <Checkbox
+                      marginLeft={1}
+                      value={FontWeight.Normal.toString()}
+                      checked={this.state.myStyle.FontWeight == FontWeight.Bold}
+                      onChange={checked => this.onFontWeightChange(checked)}
+                    >
+                      Bold
+                    </Checkbox>
+                  </FormRow>
+                  <FormRow>
+                    <Checkbox
+                      marginLeft={1}
+                      value={FontStyle.Normal.toString()}
+                      checked={this.state.myStyle.FontStyle == FontStyle.Italic}
+                      onChange={checked => this.onFontStyleChange(checked)}
+                    >
+                      Italic
+                    </Checkbox>
+                  </FormRow>
+                  <FormRow>
                     <Checkbox
                       marginLeft={1}
                       checked={this.state.myStyle.FontSize ? true : false}
@@ -164,8 +172,8 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     >
                       Set Font Size
                     </Checkbox>
-                  </Box>
-                  <Box>
+                  </FormRow>
+                  <FormRow>
                     {/*we use the componentclass fieldset to indicate its not a new form...*/}
                     {this.state.myStyle.FontSize != null && (
                       <Flex flexDirection="row" alignItems="center">
@@ -184,8 +192,8 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                         />
                       </Flex>
                     )}
-                  </Box>
-                </Flex>
+                  </FormRow>
+                </FormLayout>
               </div>
             </Flex>
           </Flex>

@@ -253,12 +253,16 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
         <Box flex={1} mx={2}>
           <Flex
+            data-name="expression-toolbar"
             mb={2}
             p={2}
-            style={{
-              background: 'var(--ab-color-primarylight)',
-              borderRadius: 'var(--ab__border-radius)',
-            }}
+            style={
+              {
+                background: 'var(--ab-color-primarylight)',
+                borderRadius: 'var(--ab__border-radius)',
+                '--ab-overlay-horizontal-align': 'left',
+              } as React.CSSProperties
+            }
           >
             {functionsDropdown}
             {operatorButtons}

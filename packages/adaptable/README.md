@@ -175,6 +175,11 @@ import "@adaptabletools/adaptable/themes/dark.css"
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/guides/adaptable-theming-guide.md)
 
+
+### Overlay alignment
+
+By default, overlays (lists in dropdown buttons, tooltips) are aligned using a best guess algorithm, but you can modify the horizontal alignment of the overlay by specifying the CSS `--ab-overlay-horizontal-align` either on the overlay target or on one of its parents. Possible values for `--ab-overlay-horizontal-align` are `'left' | 'right' | 'center'`
+
 ## HTML Rendering
 
 The core version of AdapTable expects you to create in your HTML 2 `Div`s:
