@@ -25,8 +25,9 @@ export class CellValidationSharedEntity extends React.Component<
         </Flex>
         <Flex flex={4}>
           {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)
-            ? ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Api)
-            : 'No Expression'}
+            ? 'and Expression:' +
+              ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Api)
+            : ''}
         </Flex>
       </Flex>
     );
