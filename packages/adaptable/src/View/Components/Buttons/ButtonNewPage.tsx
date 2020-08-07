@@ -7,6 +7,7 @@ export class ButtonNewPage extends React.Component<NewPageButtonProps, {}> {
   render() {
     return (
       <SimpleButton
+        data-name="new-page"
         tooltip="New Page"
         iconSize={20}
         icon="newpage" // arrow-up

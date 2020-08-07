@@ -4,7 +4,14 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 export class ButtonUndo extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <SimpleButton iconSize={20} tooltip="Undo" icon={'undo'} variant="text" {...this.props} />
+      <SimpleButton
+        data-name="undo"
+        iconSize={20}
+        tooltip="Undo"
+        icon={'undo'}
+        variant="text"
+        {...this.props}
+      />
     );
   }
 }

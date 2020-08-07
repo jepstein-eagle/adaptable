@@ -9,6 +9,8 @@ export interface InfoButtonProps extends SimpleButtonProps {
 
 export class ButtonInfo extends React.Component<InfoButtonProps, {}> {
   render() {
-    return <SimpleButton iconSize={20} icon="info" variant="text" {...this.props} />;
+    return (
+      <SimpleButton data-name="info" iconSize={20} icon="info" variant="text" {...this.props} />
+    );
   }
 }

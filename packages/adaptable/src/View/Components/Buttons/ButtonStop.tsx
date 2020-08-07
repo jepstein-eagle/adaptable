@@ -5,6 +5,15 @@ export interface StopButtonProps extends SimpleButtonProps {}
 
 export class ButtonStop extends React.Component<StopButtonProps, {}> {
   render() {
-    return <SimpleButton tooltip="Stop" iconSize={20} icon="stop" variant="text" {...this.props} />;
+    return (
+      <SimpleButton
+        data-name="stop"
+        tooltip="Stop"
+        iconSize={20}
+        icon="stop"
+        variant="text"
+        {...this.props}
+      />
+    );
   }
 }

@@ -36,7 +36,11 @@ export class ColumnChooserStrategy extends AdaptableStrategyBase implements ICol
       returnColumnMenuItems.push(
         this.createColumnMenuItemClickFunction('Select Column', 'tab-unselected', () => {
           this.adaptable.api.gridApi.selectColumn(column.ColumnId);
-          //  this.adaptable.api.gridApi.selectAll();
+        })
+      );
+      returnColumnMenuItems.push(
+        this.createColumnMenuItemClickFunction('Select Whole Grid', 'tab-unselected', () => {
+          this.adaptable.api.gridApi.selectAll();
         })
       );
       if (this.canCreateMenuItem('Full') && column.Hideable) {
