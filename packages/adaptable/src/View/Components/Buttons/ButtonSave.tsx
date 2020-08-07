@@ -3,6 +3,15 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 
 export class ButtonSave extends React.Component<SimpleButtonProps, {}> {
   render() {
-    return <SimpleButton iconSize={20} icon="save" tooltip="Save" variant="text" {...this.props} />;
+    return (
+      <SimpleButton
+        data-name="save"
+        iconSize={20}
+        icon="save"
+        tooltip="Save"
+        variant="text"
+        {...this.props}
+      />
+    );
   }
 }

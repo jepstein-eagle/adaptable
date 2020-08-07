@@ -4,7 +4,14 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 export class ButtonClose extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
-      <SimpleButton tooltip="Close" iconSize={20} icon="clear" {...this.props} variant="text" />
+      <SimpleButton
+        data-name="close"
+        tooltip="Close"
+        iconSize={20}
+        icon="clear"
+        {...this.props}
+        variant="text"
+      />
     );
   }
 }
