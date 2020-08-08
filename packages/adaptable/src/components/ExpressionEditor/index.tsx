@@ -39,6 +39,7 @@ interface ExpressionEditorProps {
   initialData: { [key: string]: any };
   columns: AdaptableColumn[];
   functions: FunctionMap;
+  hideHelpBlock?: boolean;
 }
 
 function ExpressionEditor(props: ExpressionEditorProps) {
@@ -234,24 +235,26 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   return (
     <div>
       {' '}
-      <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
-        Create a Calculated Column 'Expression' using, as required, a mixture (and any number) of:
-        <ul>
-          <li>
-            <b>Functions</b>: Select from the functions dropdown or pick one displayed below; each
-            function is separately documented
-          </li>
-          <li>
-            <b>Columns</b> - Drag n Drop required columns from the right hand side - they will
-            resolve to '[column-name]'
-          </li>
-          <li>
-            <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
-          </li>{' '}
-        </ul>
-        The result of the Expression is displayed underneath the Editor - using the Test Data (taken
-        from first row of grid).
-      </HelpBlock>{' '}
+      {props.hideHelpBlock !== true && (
+        <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
+          Create a Calculated Column 'Expression' using, as required, a mixture (and any number) of:
+          <ul>
+            <li>
+              <b>Functions</b>: Select from the functions dropdown or pick one displayed below; each
+              function is separately documented
+            </li>
+            <li>
+              <b>Columns</b> - Drag n Drop required columns from the right hand side - they will
+              resolve to '[column-name]'
+            </li>
+            <li>
+              <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
+            </li>{' '}
+          </ul>
+          The result of the Expression is displayed underneath the Editor - using the Test Data
+          (taken from first row of grid).
+        </HelpBlock>
+      )}{' '}
       <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
         <Box flex={1} mx={2}>
           <Flex

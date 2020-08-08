@@ -30,6 +30,7 @@ import EmptyContent from '../../components/EmptyContent';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import * as parser from '../../parser/src';
 import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
@@ -43,7 +44,7 @@ interface ConditionalStylePopupProps
   onEditConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onAddSharedExpression?: (
+  onAddSharedExpression: (
     sharedExpression: SharedExpression
   ) => SharedExpressionRedux.SharedExpressionAddAction;
   onShare: (
@@ -54,7 +55,9 @@ interface ConditionalStylePopupProps
 
 class ConditionalStylePopupComponent extends React.Component<
   ConditionalStylePopupProps,
-  EditableConfigEntityState
+  EditableConfigEntityState & {
+    newSharedExpressionName?: string;
+  }
 > {
   constructor(props: ConditionalStylePopupProps) {
     super(props);
@@ -152,7 +155,11 @@ class ConditionalStylePopupComponent extends React.Component<
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
               SharedExpressions={this.props.SharedExpressions}
-              onAddSharedExpression={this.props.onAddSharedExpression}
+              onSetNewSharedExpressionName={newSharedExpressionName =>
+                this.setState({
+                  newSharedExpressionName,
+                })
+              }
             />
           )}
         </PanelWithButton>
@@ -191,6 +198,20 @@ class ConditionalStylePopupComponent extends React.Component<
 
   onFinishWizard() {
     const conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
+
+    if (this.state.newSharedExpressionName) {
+      const SharedExpressionId = createUuid();
+      this.props.onAddSharedExpression({
+        Uuid: SharedExpressionId,
+        Name: this.state.newSharedExpressionName,
+        Expression: conditionalStyle.Expression.CustomExpression,
+      });
+      conditionalStyle.Expression = {
+        Type: 'Shared',
+        SharedExpressionId,
+      };
+    }
+
     if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddConditionalStyle(conditionalStyle);
     } else if (this.state.WizardStatus == WizardStatus.Edit) {

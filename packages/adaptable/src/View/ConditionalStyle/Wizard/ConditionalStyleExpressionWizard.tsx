@@ -26,9 +26,7 @@ import { createUuid } from '../../../components/utils/uuid';
 export interface ConditionalStyleExpressionWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
   SharedExpressions: SharedExpression[];
-  onAddSharedExpression: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionAddAction;
+  onSetNewSharedExpressionName: (newSharedExpressionName: string) => void;
 }
 
 export interface ConditionalStyleExpressionWizardState {
@@ -130,6 +128,7 @@ export class ConditionalStyleExpressionWizard
               initialData={firstRow}
               columns={this.props.Api.gridApi.getColumns()}
               functions={parser.defaultFunctions}
+              hideHelpBlock={true}
             />
             <CheckBox
               checked={this.state.saveToSharedExpressions}
@@ -144,17 +143,19 @@ export class ConditionalStyleExpressionWizard
             >
               Save to Shared Expressions
             </CheckBox>
-            <Input
-              value={this.state.newSharedExpressionName}
-              onChange={(e: React.FormEvent) =>
-                this.setState(
-                  {
-                    newSharedExpressionName: (e.target as HTMLInputElement).value,
-                  },
-                  () => this.props.UpdateGoBackState()
-                )
-              }
-            />
+            {this.state.saveToSharedExpressions && (
+              <Input
+                value={this.state.newSharedExpressionName}
+                onChange={(e: React.FormEvent) =>
+                  this.setState(
+                    {
+                      newSharedExpressionName: (e.target as HTMLInputElement).value,
+                    },
+                    () => this.props.UpdateGoBackState()
+                  )
+                }
+              />
+            )}
           </div>
         )}
       </>
@@ -207,16 +208,7 @@ export class ConditionalStyleExpressionWizard
     this.props.Data.Expression = this.state.Expression;
 
     if (this.state.saveToSharedExpressions) {
-      const Uuid = createUuid();
-      this.props.onAddSharedExpression({
-        Uuid,
-        Name: this.state.newSharedExpressionName,
-        Expression: this.state.Expression.CustomExpression,
-      });
-      this.props.Data.Expression = {
-        Type: 'Shared',
-        SharedExpressionId: Uuid,
-      };
+      this.props.onSetNewSharedExpressionName(this.state.newSharedExpressionName);
     }
   }
 

@@ -114,7 +114,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
             SharedExpressions={this.props.SharedExpressions}
-            onAddSharedExpression={this.props.onAddSharedExpression}
+            onSetNewSharedExpressionName={() => {
+              throw 'unimplemented';
+            }}
           />
         )}
       </div>

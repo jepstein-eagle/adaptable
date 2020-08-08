@@ -15,9 +15,7 @@ export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   StyleClassNames: string[];
   SharedExpressions: SharedExpression[];
-  onAddSharedExpression: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionAddAction;
+  onSetNewSharedExpressionName: (newSharedExpressionName: string) => void;
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -51,7 +49,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
                 <ConditionalStyleExpressionWizard
                   Api={this.props.Api}
                   SharedExpressions={this.props.SharedExpressions}
-                  onAddSharedExpression={this.props.onAddSharedExpression}
+                  onSetNewSharedExpressionName={this.props.onSetNewSharedExpressionName}
                 />
               ),
             },
