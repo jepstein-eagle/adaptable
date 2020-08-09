@@ -18,12 +18,7 @@ export class EntitlementsApiImpl extends ApiBase implements EntitlementsApi {
   }
 
   public isFunctionFullEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean {
-    console.log(this.getEntitlementState());
-    let test =
-      this.getEntitlementAccessLevelByAdaptableFunctionName(adaptableFunctionName) == 'Full';
-    console.log(adaptableFunctionName);
-    console.log(test);
-    return test;
+    return this.getEntitlementAccessLevelByAdaptableFunctionName(adaptableFunctionName) == 'Full';
   }
 
   public isFunctionReadOnlyEntitlement(adaptableFunctionName: AdaptableFunctionName): boolean {
