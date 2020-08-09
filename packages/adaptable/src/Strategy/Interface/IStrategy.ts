@@ -27,6 +27,7 @@ export interface IStrategy {
   setStrategyEntitlement(): void;
   isStrategyAvailable(): boolean;
   getTeamSharingAction(): TeamSharingImportInfo<AdaptableObject> | undefined;
+  getSharedQueryReferences(sharedQueryId: string): string | undefined;
   AccessLevel: AccessLevel;
 }
 /**

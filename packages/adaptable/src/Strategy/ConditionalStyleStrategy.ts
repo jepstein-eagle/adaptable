@@ -11,6 +11,7 @@ import * as ConditionalStyleRedux from '../Redux/ActionsReducers/ConditionalStyl
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { ConditionalStyleSharedEntity } from '../View/ConditionalStyle/ConditionalStyleSharedEntity';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
@@ -55,6 +56,16 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
       AddAction: ConditionalStyleRedux.ConditionalStyleAdd,
       EditAction: ConditionalStyleRedux.ConditionalStyleEdit,
     };
+  }
+
+  public getSharedQueryReferences(sharedQueryId: string): string | undefined {
+    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
+      .getAllConditionalStyle()
+      .filter(cs => cs.Query == sharedQueryId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
+      ? conditionalStyles.length + ' Conditional Styles'
+      : undefined;
   }
 
   // Called when a single piece of data changes, ie. usually the result of an inline edit

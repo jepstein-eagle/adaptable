@@ -324,4 +324,6 @@ export interface IAdaptable {
   getExpandRowGroupsKeys(): any[];
 
   buildStandaloneColumnHeader(adaptableColumn: AdaptableColumn): AdaptableMenuItem[];
+
+  isSharedQueryReferenced(sharedQueryId: string): boolean;
 }

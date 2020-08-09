@@ -170,4 +170,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   public getTeamSharingAction(): TeamSharingImportInfo<AdaptableObject> | undefined {
     return undefined;
   }
+
+  public getSharedQueryReferences(sharedQueryId: string): string | undefined {
+    return undefined;
+  }
 }

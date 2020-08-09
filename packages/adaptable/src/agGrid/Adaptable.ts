@@ -3141,6 +3141,21 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public isSharedQueryReferenced(sharedQueryId: string): boolean {
+    let referencedText: string | undefined = '';
+    this.strategies.forEach(s => {
+      const strategyReference = s.getSharedQueryReferences(sharedQueryId);
+      if (StringExtensions.IsNotNullOrEmpty(strategyReference)) {
+        referencedText += ' ' + strategyReference;
+      }
+    });
+    if (StringExtensions.IsNotNullOrEmpty(referencedText)) {
+      alert('Cannot delete the Shared Query because it is referenced in' + referencedText);
+      return true;
+    }
+    return false;
+  }
+
   private onRowDataChanged({
     rowNode,
     oldData,

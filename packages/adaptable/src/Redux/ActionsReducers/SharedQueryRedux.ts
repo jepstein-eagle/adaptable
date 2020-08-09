@@ -3,9 +3,9 @@ import * as Redux from 'redux';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
-export const SHAREDQUERY_ADD = 'SHAREDQUERY_ADD';
-export const SHAREDQUERY_EDIT = 'SHAREDQUERY_EDIT';
-export const SHAREDQUERY_DELETE = 'SHAREDQUERY_DELETE';
+export const SHARED_QUERY_ADD = 'SHARED_QUERY_ADD';
+export const SHARED_QUERY_EDIT = 'SHARED_QUERY_EDIT';
+export const SHARED_QUERY_DELETE = 'SHARED_QUERY_DELETE';
 
 export interface SharedQueryAction extends Redux.Action {
   sharedQuery: SharedQuery;
@@ -18,17 +18,17 @@ export interface SharedQueryEditAction extends SharedQueryAction {}
 export interface SharedQueryDeleteAction extends SharedQueryAction {}
 
 export const SharedQueryAdd = (sharedQuery: SharedQuery): SharedQueryAddAction => ({
-  type: SHAREDQUERY_ADD,
+  type: SHARED_QUERY_ADD,
   sharedQuery,
 });
 
 export const SharedQueryEdit = (sharedQuery: SharedQuery): SharedQueryEditAction => ({
-  type: SHAREDQUERY_EDIT,
+  type: SHARED_QUERY_EDIT,
   sharedQuery,
 });
 
 export const SharedQueryDelete = (sharedQuery: SharedQuery): SharedQueryDeleteAction => ({
-  type: SHAREDQUERY_DELETE,
+  type: SHARED_QUERY_DELETE,
   sharedQuery,
 });
 
@@ -43,7 +43,7 @@ export const SharedQueryReducer: Redux.Reducer<SharedQueryState> = (
   let sharedQuerys: SharedQuery[];
 
   switch (action.type) {
-    case SHAREDQUERY_ADD: {
+    case SHARED_QUERY_ADD: {
       const actionSharedQuery: SharedQuery = (action as SharedQueryAction).sharedQuery;
 
       if (!actionSharedQuery.Uuid) {
@@ -54,7 +54,7 @@ export const SharedQueryReducer: Redux.Reducer<SharedQueryState> = (
       return { ...state, SharedQueries: sharedQuerys };
     }
 
-    case SHAREDQUERY_EDIT: {
+    case SHARED_QUERY_EDIT: {
       const actionSharedQuery: SharedQuery = (action as SharedQueryAction).sharedQuery;
       return {
         ...state,
@@ -64,7 +64,7 @@ export const SharedQueryReducer: Redux.Reducer<SharedQueryState> = (
       };
     }
 
-    case SHAREDQUERY_DELETE: {
+    case SHARED_QUERY_DELETE: {
       const actionSharedQuery: SharedQuery = (action as SharedQueryAction).sharedQuery;
       return {
         ...state,

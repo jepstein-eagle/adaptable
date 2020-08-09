@@ -513,7 +513,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           **********************
            */
 
-          case SharedQueryRedux.SHAREDQUERY_ADD: {
+          case SharedQueryRedux.SHARED_QUERY_ADD: {
             const actionTyped = action as SharedQueryRedux.SharedQueryAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.SharedQueryStrategyId,
@@ -526,7 +526,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case SharedQueryRedux.SHAREDQUERY_EDIT: {
+          case SharedQueryRedux.SHARED_QUERY_EDIT: {
             const actionTyped = action as SharedQueryRedux.SharedQueryEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.SharedQueryStrategyId,
@@ -539,7 +539,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case SharedQueryRedux.SHAREDQUERY_DELETE: {
+          case SharedQueryRedux.SHARED_QUERY_DELETE: {
             const actionTyped = action as SharedQueryRedux.SharedQueryDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.SharedQueryStrategyId,
@@ -2014,6 +2014,23 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
       return function(action: Redux.Action) {
         switch (action.type) {
           /*******************
+           * SHARED QUERY ACTIONS
+           *******************/
+
+          /**
+           * Use Case: User has deleted a Shared Query
+           * Action: Need to check whether it is referenced elsewhere
+           */
+          case SharedQueryRedux.SHARED_QUERY_DELETE: {
+            const actionTyped = action as SharedQueryRedux.SharedQueryDeleteAction;
+            let ret: any;
+            if (!adaptable.isSharedQueryReferenced(actionTyped.sharedQuery.Uuid)) {
+              ret = next(action);
+            }
+            return ret;
+          }
+
+          /*******************
            * ADVANCED SEARCH ACTIONS
            *******************/
 
@@ -2638,6 +2655,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
             return returnAction;
           }
+
           case TeamSharingRedux.TEAMSHARING_SHARE: {
             const actionTyped = action as TeamSharingRedux.TeamSharingShareAction;
             let returnAction = next(action);
