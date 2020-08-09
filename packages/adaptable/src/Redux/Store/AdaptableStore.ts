@@ -49,7 +49,7 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as SharedExpressionRedux from '../ActionsReducers/SharedExpressionRedux';
+import * as SharedQueryRedux from '../ActionsReducers/SharedQueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -255,7 +255,7 @@ This is the main store for Adaptable State
       ToolPanel: ToolPanelRedux.ToolPanelReducer,
       UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
       UserFilter: UserFilterRedux.UserFilterReducer,
-      SharedExpression: SharedExpressionRedux.SharedExpressionReducer,
+      SharedQuery: SharedQueryRedux.SharedQueryReducer,
     };
 
     // allow plugins to participate in the root reducer

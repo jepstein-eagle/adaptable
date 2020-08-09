@@ -5,30 +5,30 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 
-interface SharedExpressionEntityRowProps<SharedExpressionEntityRow>
-  extends SharedEntityRowProps<SharedExpressionEntityRow> {}
+interface SharedQueryEntityRowProps<SharedQueryEntityRow>
+  extends SharedEntityRowProps<SharedQueryEntityRow> {}
 
-export class SharedExpressionEntityRow extends React.Component<
-  SharedExpressionEntityRowProps<SharedExpressionEntityRow>,
+export class SharedQueryEntityRow extends React.Component<
+  SharedQueryEntityRowProps<SharedQueryEntityRow>,
   {}
 > {
   render(): any {
-    let sharedExpression: SharedExpression = this.props.AdaptableObject as SharedExpression;
+    let sharedQuery: SharedQuery = this.props.AdaptableObject as SharedQuery;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
-    colItems[0].Content = <EntityRowItem Content={sharedExpression.Name} />;
-    colItems[1].Content = <EntityRowItem Content={sharedExpression.Expression} />;
+    colItems[0].Content = <EntityRowItem Content={sharedQuery.Name} />;
+    colItems[1].Content = <EntityRowItem Content={sharedQuery.Expression} />;
 
     let buttons: any = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        editClick={() => this.props.onEdit(sharedExpression)}
+        editClick={() => this.props.onEdit(sharedQuery)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
-        EntityType={StrategyConstants.SharedExpressionStrategyFriendlyName}
+        EntityType={StrategyConstants.SharedQueryStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

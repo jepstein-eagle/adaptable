@@ -40,6 +40,7 @@ interface ExpressionEditorProps {
   columns: AdaptableColumn[];
   functions: FunctionMap;
   hideHelpBlock?: boolean;
+  isFullExpression?: boolean;
 }
 
 function ExpressionEditor(props: ExpressionEditorProps) {
@@ -237,22 +238,22 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       {' '}
       {props.hideHelpBlock !== true && (
         <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
-          Create a Calculated Column 'Expression' using, as required, a mixture (and any number) of:
+          Create an 'Expression' using, as required, a mixture (and any number) of:
           <ul>
             <li>
               <b>Functions</b>: Select from the functions dropdown or pick one displayed below; each
               function is separately documented
             </li>
             <li>
-              <b>Columns</b> - Drag n Drop required columns from the right hand side - they will
-              resolve to '[column-name]'
+              <b>Columns</b> - Drag n Drop columns from the right hand side - they will resolve to
+              '[column-name]'
             </li>
             <li>
               <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
             </li>{' '}
           </ul>
-          The result of the Expression is displayed underneath the Editor - using the Test Data
-          (taken from first row of grid).
+          The Expression result is displayed underneath the Editor (using Test Data taken from first
+          row). <br />
         </HelpBlock>
       )}{' '}
       <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
@@ -282,7 +283,12 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               fontSize: '1rem',
               padding: 'var(--ab-space-2)',
             }}
-          />
+          />{' '}
+          {props.isFullExpression !== true && (
+            <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
+              Expression must resolve to a <b>boolean </b>(i.e. true / false) value
+            </HelpBlock>
+          )}
           {error && <ErrorBox mt={2}>{error.message}</ErrorBox>}
           {result !== undefined && (
             <Box

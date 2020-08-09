@@ -72,7 +72,7 @@ import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
-import { SharedExpression } from '../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../PredefinedConfig/SharedQueryState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -142,7 +142,7 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
   };
 }
 
-export function CreateEmptySharedExpression(expression?: string): SharedExpression {
+export function CreateEmptySharedQuery(expression?: string): SharedQuery {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
@@ -489,7 +489,8 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     Style: CreateEmptyStyle(),
     ConditionalStyleScope: 'Row',
     ExcludeGroupedRows: false,
-    Expression: ExpressionHelper.CreateEmptyNewExpression(),
+    // Query: ExpressionHelper.CreateEmptyNewExpression(),
+    Query: EMPTY_STRING,
   };
 }
 
@@ -696,7 +697,7 @@ export const ObjectFactory = {
   CreateEmptySparklinesChartDefinition,
   CreateEmptyCategoryChartDefinition,
   CreateEmptyCalculatedColumn,
-  CreateEmptySharedExpression,
+  CreateEmptySharedQuery,
   CreateEmptyPlusMinusRule,
   CreateEmptyAlert,
   CreateAlert,

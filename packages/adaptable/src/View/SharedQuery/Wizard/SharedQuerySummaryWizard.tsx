@@ -6,13 +6,11 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 
-export interface SharedExpressionSummaryWizardProps
-  extends AdaptableWizardStepProps<SharedExpression> {}
+export interface SharedQuerySummaryWizardProps extends AdaptableWizardStepProps<SharedQuery> {}
 
-export class SharedExpressionSummaryWizard
-  extends React.Component<SharedExpressionSummaryWizardProps, {}>
+export class SharedQuerySummaryWizard extends React.Component<SharedQuerySummaryWizardProps, {}>
   implements AdaptableWizardStep {
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
@@ -26,7 +24,7 @@ export class SharedExpressionSummaryWizard
     return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.SharedExpressionStrategyFriendlyName}
+        header={StrategyConstants.SharedQueryStrategyFriendlyName}
       />
     );
   }

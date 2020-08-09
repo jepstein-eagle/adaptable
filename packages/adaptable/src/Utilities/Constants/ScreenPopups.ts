@@ -42,7 +42,7 @@ export const SchedulePopup: string = 'SchedulePopup';
 export const StateManagementPopup: string = 'StateManagementPopup';
 export const SystemStatusPopup: string = 'SystemStatusPopup';
 export const UserFilterPopup: string = 'UserFilterPopup';
-export const SharedExpressionPopup: string = 'SharedExpressionPopup';
+export const SharedQueryPopup: string = 'SharedQueryPopup';
 
 // Plugins
 export const OpenFinPopup: string = 'OpenFinPopup';

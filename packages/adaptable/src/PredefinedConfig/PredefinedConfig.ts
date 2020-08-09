@@ -36,7 +36,7 @@ import { NamedFilterState } from './NamedFilterState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
-import { SharedExpressionState } from './SharedExpressionState';
+import { SharedQueryState } from './SharedQueryState';
 
 /**
  * This is the main Predefined Config interface which developers will populate at design-time.
@@ -616,5 +616,5 @@ export interface PredefinedConfig {
    */
   UserInterface?: UserInterfaceState;
 
-  SharedExpression?: SharedExpressionState;
+  SharedQuery?: SharedQueryState;
 }

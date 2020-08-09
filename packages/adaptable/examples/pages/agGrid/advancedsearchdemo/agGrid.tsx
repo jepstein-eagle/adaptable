@@ -40,8 +40,8 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['AdvancedSearch'],
   },
-  SharedExpression: {
-    SharedExpressions: [
+  SharedQuery: {
+    SharedQueries: [
       {
         Name: 'US Banks',
         Expression: "[counterparty] IN ('BAML', 'Citi')",

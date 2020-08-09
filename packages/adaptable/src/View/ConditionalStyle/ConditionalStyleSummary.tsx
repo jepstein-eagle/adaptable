@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
-import * as SharedExpressionRedux from '../../Redux/ActionsReducers/SharedExpressionRedux';
+import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
@@ -23,7 +23,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import * as parser from '../../parser/src';
 
 export interface ConditionalStyleSummaryProps
@@ -32,16 +32,14 @@ export interface ConditionalStyleSummaryProps
   ColorPalette: string[];
   ColumnCategories: ColumnCategory[];
   StyleClassNames: string[];
-  SharedExpressions: SharedExpression[];
+  SharedQueries: SharedQuery[];
   onAddConditionalStyle: (
     conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
     conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onAddSharedExpression?: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionAddAction;
+  onAddSharedQuery?: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<
@@ -85,7 +83,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CS' + index}
             Item1={<StyleVisualItem Style={item.Style} />}
-            Item2={item.Expression}
+            Item2={item.Query}
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -113,8 +111,11 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            SharedExpressions={this.props.SharedExpressions}
-            onSetNewSharedExpressionName={() => {
+            SharedQueries={this.props.SharedQueries}
+            onSetNewSharedQueryName={() => {
+              throw 'unimplemented';
+            }}
+            onSetUseSharedQuery={() => {
               throw 'unimplemented';
             }}
           />
@@ -167,16 +168,14 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
 
-    if (
-      conditionalStyle.Expression.Type === 'Shared' &&
-      StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression.SharedExpressionId)
-    ) {
+    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Query)) {
       return false;
     }
 
+    // Not sure about when we do this...
     if (
-      conditionalStyle.Expression.Type === 'Custom' &&
-      !parser.validateBoolean(conditionalStyle.Expression.CustomExpression)
+      !conditionalStyle.Query.startsWith('SHARED') &&
+      !parser.validateBoolean(conditionalStyle.Query)
     ) {
       return false;
     }
@@ -197,7 +196,7 @@ function mapStateToProps(
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
-    SharedExpressions: state.SharedExpression.SharedExpressions,
+    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 
@@ -209,8 +208,8 @@ function mapDispatchToProps(
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onAddSharedExpression: (sharedExpression: SharedExpression) =>
-      dispatch(SharedExpressionRedux.SharedExpressionAdd(sharedExpression)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

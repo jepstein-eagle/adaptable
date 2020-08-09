@@ -8,14 +8,14 @@ import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
-import * as SharedExpressionRedux from '../../../Redux/ActionsReducers/SharedExpressionRedux';
+import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   StyleClassNames: string[];
-  SharedExpressions: SharedExpression[];
-  onSetNewSharedExpressionName: (newSharedExpressionName: string) => void;
+  SharedQueries: SharedQuery[];
+  onSetNewSharedQueryName: (newSharedQueryName: string) => void;
+  onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {
@@ -48,8 +48,9 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Element: (
                 <ConditionalStyleExpressionWizard
                   Api={this.props.Api}
-                  SharedExpressions={this.props.SharedExpressions}
-                  onSetNewSharedExpressionName={this.props.onSetNewSharedExpressionName}
+                  SharedQueries={this.props.SharedQueries}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
               ),
             },
@@ -59,7 +60,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Element: (
                 <ConditionalStyleSummaryWizard
                   Api={this.props.Api}
-                  SharedExpressions={this.props.SharedExpressions}
+                  SharedQueries={this.props.SharedQueries}
                 />
               ),
             },

@@ -86,7 +86,7 @@ import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants'
 import { clamp } from 'lodash';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
-import { SharedExpressionStrategy } from '../Strategy/SharedExpressionStrategy';
+import { SharedQueryStrategy } from '../Strategy/SharedQueryStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -188,10 +188,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
     strategies.set(StrategyConstants.HideColumnStrategyId, new HideColumnStrategy(adaptable));
     strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(adaptable));
-    strategies.set(
-      StrategyConstants.SharedExpressionStrategyId,
-      new SharedExpressionStrategy(adaptable)
-    );
+    strategies.set(StrategyConstants.SharedQueryStrategyId, new SharedQueryStrategy(adaptable));
 
     return strategies;
   }

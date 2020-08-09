@@ -9,9 +9,7 @@ import {
 } from '../../ExpressionBuilder/ExpressionBuilderPage';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { UIHelper } from '../../UIHelper';
-import { NewExpression } from '../../../PredefinedConfig/Common/Expression';
-import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
-import * as SharedExpressionRedux from '../../../Redux/ActionsReducers/SharedExpressionRedux';
+import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import ExpressionEditor from '../../../components/ExpressionEditor';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';
@@ -22,17 +20,20 @@ import CheckBox from '../../../components/CheckBox';
 import check from '../../../components/icons/check';
 import Input from '../../../components/Input';
 import { createUuid } from '../../../components/utils/uuid';
+import { TypeUuid } from '../../../PredefinedConfig/Uuid';
 
 export interface ConditionalStyleExpressionWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
-  SharedExpressions: SharedExpression[];
-  onSetNewSharedExpressionName: (newSharedExpressionName: string) => void;
+  SharedQueries: SharedQuery[];
+  onSetNewSharedQueryName: (newSharedQueryName: string) => void;
+  onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
 
 export interface ConditionalStyleExpressionWizardState {
-  Expression: NewExpression;
-  saveToSharedExpressions: boolean;
-  newSharedExpressionName: string;
+  Query: string | TypeUuid;
+  useSharedQuery: boolean;
+  saveToSharedQueries: boolean;
+  newSharedQueryName: string;
 }
 
 export class ConditionalStyleExpressionWizard
@@ -44,9 +45,10 @@ export class ConditionalStyleExpressionWizard
   constructor(props: ConditionalStyleExpressionWizardProps) {
     super(props);
     this.state = {
-      Expression: props.Data.Expression,
-      saveToSharedExpressions: false,
-      newSharedExpressionName: '',
+      Query: props.Data.Query,
+      useSharedQuery: this.props.Api.sharedQueryApi.isSharedQuery(props.Data.Query),
+      saveToSharedQueries: false,
+      newSharedQueryName: '',
     };
   }
 
@@ -63,14 +65,11 @@ export class ConditionalStyleExpressionWizard
           <Radio
             marginLeft={3}
             value="Shared"
-            checked={this.state.Expression.Type === 'Shared'}
+            checked={this.state.useSharedQuery == true}
             onChange={() =>
               this.setState(
                 {
-                  Expression: {
-                    ...this.state.Expression,
-                    Type: 'Shared',
-                  },
+                  useSharedQuery: !this.state.useSharedQuery,
                 },
                 () => this.props.UpdateGoBackState()
               )
@@ -81,14 +80,11 @@ export class ConditionalStyleExpressionWizard
           <Radio
             marginLeft={3}
             value="Custom"
-            checked={this.state.Expression.Type === 'Custom'}
+            checked={this.state.useSharedQuery == false}
             onChange={() =>
               this.setState(
                 {
-                  Expression: {
-                    ...this.state.Expression,
-                    Type: 'Custom',
-                  },
+                  useSharedQuery: !this.state.useSharedQuery,
                 },
                 () => this.props.UpdateGoBackState()
               )
@@ -97,33 +93,30 @@ export class ConditionalStyleExpressionWizard
             Use Custom Expression
           </Radio>
         </Flex>
-        {this.state.Expression.Type === 'Shared' && (
+        {this.state.useSharedQuery == true && (
           <div>
             <Dropdown
               placeholder="Select Shared Expression"
-              value={this.state.Expression.SharedExpressionId}
+              value={this.state.Query}
               onChange={(value: any) =>
                 this.setState(
                   {
-                    Expression: {
-                      ...this.state.Expression,
-                      SharedExpressionId: value,
-                    },
+                    Query: value,
                   },
                   () => this.props.UpdateGoBackState()
                 )
               }
-              options={this.props.SharedExpressions.map(item => ({
+              options={this.props.SharedQueries.map(item => ({
                 value: item.Uuid,
                 label: item.Name,
               }))}
             />
           </div>
         )}
-        {this.state.Expression.Type === 'Custom' && (
+        {this.state.useSharedQuery == false && (
           <div>
             <ExpressionEditor
-              value={this.state.Expression.CustomExpression}
+              value={this.state.Query}
               onChange={(e: React.SyntheticEvent) => this.handleCustomExpressionChange(e)}
               initialData={firstRow}
               columns={this.props.Api.gridApi.getColumns()}
@@ -131,11 +124,11 @@ export class ConditionalStyleExpressionWizard
               hideHelpBlock={true}
             />
             <CheckBox
-              checked={this.state.saveToSharedExpressions}
+              checked={this.state.saveToSharedQueries}
               onChange={checked =>
                 this.setState(
                   {
-                    saveToSharedExpressions: checked,
+                    saveToSharedQueries: checked,
                   },
                   () => this.props.UpdateGoBackState()
                 )
@@ -143,13 +136,13 @@ export class ConditionalStyleExpressionWizard
             >
               Save to Shared Expressions
             </CheckBox>
-            {this.state.saveToSharedExpressions && (
+            {this.state.saveToSharedQueries && (
               <Input
-                value={this.state.newSharedExpressionName}
+                value={this.state.newSharedQueryName}
                 onChange={(e: React.FormEvent) =>
                   this.setState(
                     {
-                      newSharedExpressionName: (e.target as HTMLInputElement).value,
+                      newSharedQueryName: (e.target as HTMLInputElement).value,
                     },
                     () => this.props.UpdateGoBackState()
                   )
@@ -166,34 +159,24 @@ export class ConditionalStyleExpressionWizard
     let e = event.target as HTMLInputElement;
     this.setState(
       {
-        Expression: {
-          ...this.state.Expression,
-          CustomExpression: e.value,
-        },
+        Query: e.value,
       },
       () => this.props.UpdateGoBackState()
     );
   }
 
   public canNext(): boolean {
-    if (
-      this.state.Expression.Type === 'Shared' &&
-      StringExtensions.IsNullOrEmpty(this.state.Expression.SharedExpressionId)
-    ) {
+    if (StringExtensions.IsNullOrEmpty(this.state.Query)) {
+      return false;
+    }
+
+    if (this.state.useSharedQuery == false && !parser.validateBoolean(this.state.Query)) {
       return false;
     }
 
     if (
-      this.state.Expression.Type === 'Custom' &&
-      (StringExtensions.IsNullOrEmpty(this.state.Expression.CustomExpression) ||
-        !parser.validateBoolean(this.state.Expression.CustomExpression))
-    ) {
-      return false;
-    }
-
-    if (
-      this.state.saveToSharedExpressions &&
-      StringExtensions.IsNullOrEmpty(this.state.newSharedExpressionName)
+      this.state.saveToSharedQueries &&
+      StringExtensions.IsNullOrEmpty(this.state.newSharedQueryName)
     ) {
       return false;
     }
@@ -205,10 +188,12 @@ export class ConditionalStyleExpressionWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.Expression = this.state.Expression;
+    this.props.Data.Query = this.state.Query;
 
-    if (this.state.saveToSharedExpressions) {
-      this.props.onSetNewSharedExpressionName(this.state.newSharedExpressionName);
+    this.props.onSetUseSharedQuery(this.state.useSharedQuery);
+
+    if (this.state.saveToSharedQueries) {
+      this.props.onSetNewSharedQueryName(this.state.newSharedQueryName);
     }
   }
 

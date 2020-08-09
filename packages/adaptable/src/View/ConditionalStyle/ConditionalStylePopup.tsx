@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
-import * as SharedExpressionRedux from '../../Redux/ActionsReducers/SharedExpressionRedux';
+import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -29,24 +29,23 @@ import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import * as parser from '../../parser/src';
-import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import { createUuid } from '../../PredefinedConfig/Uuid';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
   ConditionalStyles: ConditionalStyle[];
   StyleClassNames: string[];
   ColumnCategories: ColumnCategory[];
-  SharedExpressions: SharedExpression[];
+  SharedQueries: SharedQuery[];
   onAddConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
   onEditConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onAddSharedExpression: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionAddAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -56,7 +55,8 @@ interface ConditionalStylePopupProps
 class ConditionalStylePopupComponent extends React.Component<
   ConditionalStylePopupProps,
   EditableConfigEntityState & {
-    newSharedExpressionName?: string;
+    NewSharedQueryName?: string;
+    UseSharedQuery?: boolean;
   }
 > {
   constructor(props: ConditionalStylePopupProps) {
@@ -154,10 +154,15 @@ class ConditionalStylePopupComponent extends React.Component<
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
-              SharedExpressions={this.props.SharedExpressions}
-              onSetNewSharedExpressionName={newSharedExpressionName =>
+              SharedQueries={this.props.SharedQueries}
+              onSetNewSharedQueryName={newSharedQueryName =>
                 this.setState({
-                  newSharedExpressionName,
+                  NewSharedQueryName: newSharedQueryName,
+                })
+              }
+              onSetUseSharedQuery={useSharedQuery =>
+                this.setState({
+                  UseSharedQuery: useSharedQuery,
                 })
               }
             />
@@ -186,11 +191,7 @@ class ConditionalStylePopupComponent extends React.Component<
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
     }
@@ -198,18 +199,20 @@ class ConditionalStylePopupComponent extends React.Component<
 
   onFinishWizard() {
     const conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
-
-    if (this.state.newSharedExpressionName) {
-      const SharedExpressionId = createUuid();
-      this.props.onAddSharedExpression({
-        Uuid: SharedExpressionId,
-        Name: this.state.newSharedExpressionName,
-        Expression: conditionalStyle.Expression.CustomExpression,
+    // need some way of knowing that we have a new one
+    // if it is then we get a Uuid and make that the query
+    const isNewSharedQuery: boolean = StringExtensions.IsNotNullOrEmpty(
+      this.state.NewSharedQueryName
+    );
+    if (isNewSharedQuery) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.NewSharedQueryName,
+        Expression: conditionalStyle.Query,
       });
-      conditionalStyle.Expression = {
-        Type: 'Shared',
-        SharedExpressionId,
-      };
+
+      conditionalStyle.Query = SharedQueryId;
     }
 
     if (this.state.WizardStatus == WizardStatus.New) {
@@ -218,11 +221,7 @@ class ConditionalStylePopupComponent extends React.Component<
       this.props.onEditConditionalStyle(conditionalStyle);
     }
 
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     this.shouldClosePopupOnFinishWizard = false;
   }
 
@@ -241,21 +240,25 @@ class ConditionalStylePopupComponent extends React.Component<
       return false;
     }
 
-    if (
-      conditionalStyle.Expression.Type === 'Shared' &&
-      StringExtensions.IsNullOrEmpty(conditionalStyle.Expression.SharedExpressionId)
-    ) {
+    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Query)) {
       return false;
     }
 
-    if (
-      conditionalStyle.Expression.Type === 'Custom' &&
-      !parser.validateBoolean(conditionalStyle.Expression.CustomExpression)
-    ) {
+    if (!this.state.UseSharedQuery && !parser.validateBoolean(conditionalStyle.Query)) {
       return false;
     }
 
     return UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
+  }
+
+  resetState() {
+    this.setState({
+      EditedAdaptableObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+      NewSharedQueryName: EMPTY_STRING,
+      UseSharedQuery: false,
+    });
   }
 }
 
@@ -264,7 +267,7 @@ function mapStateToProps(state: AdaptableState): Partial<ConditionalStylePopupPr
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
-    SharedExpressions: state.SharedExpression.SharedExpressions,
+    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 
@@ -276,8 +279,8 @@ function mapDispatchToProps(
       dispatch(ConditionalStyleRedux.ConditionalStyleAdd(conditionalStyle)),
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
-    onAddSharedExpression: (sharedExpression: SharedExpression) =>
-      dispatch(SharedExpressionRedux.SharedExpressionAdd(sharedExpression)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

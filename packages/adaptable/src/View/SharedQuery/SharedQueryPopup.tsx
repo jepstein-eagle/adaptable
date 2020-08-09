@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as SharedExpressionRedux from '../../Redux/ActionsReducers/SharedExpressionRedux';
+import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -13,9 +13,9 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { SharedExpressionWizard } from './Wizard/SharedExpressionWizard';
+import { SharedQueryWizard } from './Wizard/SharedQueryWizard';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
-import { SharedExpressionEntityRow } from './SharedExpressionEntityRow';
+import { SharedQueryEntityRow } from './SharedQueryEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
   EditableConfigEntityState,
@@ -24,33 +24,28 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
-interface SharedExpressionPopupProps
-  extends StrategyViewPopupProps<SharedExpressionPopupComponent> {
-  onAddSharedExpression: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionAddAction;
-  onEditSharedExpression: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionEditAction;
-  SharedExpressions: Array<SharedExpression>;
-  SharedExpressionErrorMessage: string;
+interface SharedQueryPopupProps extends StrategyViewPopupProps<SharedQueryPopupComponent> {
+  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onEditSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryEditAction;
+  SharedQueries: Array<SharedQuery>;
+  SharedQueryErrorMessage: string;
   onShare: (
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class SharedExpressionPopupComponent extends React.Component<
-  SharedExpressionPopupProps,
+class SharedQueryPopupComponent extends React.Component<
+  SharedQueryPopupProps,
   EditableConfigEntityState
 > {
-  constructor(props: SharedExpressionPopupProps) {
+  constructor(props: SharedQueryPopupProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
@@ -72,25 +67,21 @@ class SharedExpressionPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let sharedExpressions = this.props.SharedExpressions.map(
-      (sharedExpression: SharedExpression, index) => {
-        // let index = this.props.SharedExpressions.indexOf(sharedExpression)
-
-        return (
-          <SharedExpressionEntityRow
-            colItems={colItems}
-            api={this.props.Api}
-            onShare={description => this.props.onShare(sharedExpression, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            AdaptableObject={sharedExpression}
-            key={sharedExpression.Uuid}
-            onEdit={sharedExpression => this.onEdit(sharedExpression as SharedExpression)}
-            onDeleteConfirm={SharedExpressionRedux.SharedExpressionDelete(sharedExpression)}
-            AccessLevel={this.props.AccessLevel}
-          />
-        );
-      }
-    );
+    let sharedQueries = this.props.SharedQueries.map((sharedQuery: SharedQuery, index) => {
+      return (
+        <SharedQueryEntityRow
+          colItems={colItems}
+          api={this.props.Api}
+          onShare={description => this.props.onShare(sharedQuery, description)}
+          TeamSharingActivated={this.props.TeamSharingActivated}
+          AdaptableObject={sharedQuery}
+          key={sharedQuery.Uuid}
+          onEdit={sharedQuery => this.onEdit(sharedQuery as SharedQuery)}
+          onDeleteConfirm={SharedQueryRedux.SharedQueryDelete(sharedQuery)}
+          AccessLevel={this.props.AccessLevel}
+        />
+      );
+    });
 
     let newButton = (
       <ButtonNew
@@ -104,25 +95,25 @@ class SharedExpressionPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.SharedExpressionStrategyFriendlyName}
+        headerText={StrategyConstants.SharedQueryStrategyFriendlyName}
         className="ab_main_popup"
         infoBody={infoBody}
         button={newButton}
         border="none"
         bodyProps={{ padding: 0 }}
-        glyphicon={StrategyConstants.SharedExpressionGlyph}
+        glyphicon={StrategyConstants.SharedQueryGlyph}
       >
-        {this.props.SharedExpressions.length > 0 ? (
-          <AdaptableObjectCollection colItems={colItems} items={sharedExpressions} />
+        {this.props.SharedQueries.length > 0 ? (
+          <AdaptableObjectCollection colItems={colItems} items={sharedQueries} />
         ) : (
           <EmptyContent>Click 'New' to create a new Shared Expression.</EmptyContent>
         )}
 
         {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
         {this.state.EditedAdaptableObject && (
-          <SharedExpressionWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as SharedExpression}
-            ConfigEntities={this.props.SharedExpressions}
+          <SharedQueryWizard
+            EditedAdaptableObject={this.state.EditedAdaptableObject as SharedQuery}
+            ConfigEntities={this.props.SharedQueries}
             ModalContainer={this.props.ModalContainer}
             Api={this.props.Api}
             WizardStartIndex={this.state.WizardStartIndex}
@@ -137,14 +128,14 @@ class SharedExpressionPopupComponent extends React.Component<
 
   onNew(value?: string) {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptySharedExpression(value),
+      EditedAdaptableObject: ObjectFactory.CreateEmptySharedQuery(value),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
   }
 
-  onEdit(sharedExpression: SharedExpression) {
-    let clonedObject = Helper.cloneObject(sharedExpression);
+  onEdit(sharedQuery: SharedQuery) {
+    let clonedObject = Helper.cloneObject(sharedQuery);
     this.setState({
       EditedAdaptableObject: clonedObject,
       WizardStartIndex: 0,
@@ -162,11 +153,11 @@ class SharedExpressionPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let sharedExpression: SharedExpression = Helper.cloneObject(this.state.EditedAdaptableObject);
+    let sharedQuery: SharedQuery = Helper.cloneObject(this.state.EditedAdaptableObject);
     if (this.state.WizardStatus == WizardStatus.Edit) {
-      this.props.onEditSharedExpression(sharedExpression);
+      this.props.onEditSharedQuery(sharedQuery);
     } else {
-      this.props.onAddSharedExpression(sharedExpression);
+      this.props.onAddSharedQuery(sharedQuery);
     }
     this.setState({
       EditedAdaptableObject: null,
@@ -176,44 +167,41 @@ class SharedExpressionPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let sharedExpression = this.state.EditedAdaptableObject as SharedExpression;
+    let sharedQuery = this.state.EditedAdaptableObject as SharedQuery;
     // TODO: validate expression
     return (
-      StringExtensions.IsNotNullOrEmpty(sharedExpression.Name) &&
-      StringExtensions.IsNotNullOrEmpty(sharedExpression.Expression)
+      StringExtensions.IsNotNullOrEmpty(sharedQuery.Name) &&
+      StringExtensions.IsNotNullOrEmpty(sharedQuery.Expression)
     );
   }
 }
 
-function mapStateToProps(
-  state: AdaptableState,
-  ownProps: any
-): Partial<SharedExpressionPopupProps> {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<SharedQueryPopupProps> {
   return {
-    SharedExpressions: state.SharedExpression.SharedExpressions,
+    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<SharedExpressionPopupProps> {
+): Partial<SharedQueryPopupProps> {
   return {
-    onAddSharedExpression: (sharedExpression: SharedExpression) =>
-      dispatch(SharedExpressionRedux.SharedExpressionAdd(sharedExpression)),
-    onEditSharedExpression: (sharedExpression: SharedExpression) =>
-      dispatch(SharedExpressionRedux.SharedExpressionEdit(sharedExpression)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+    onEditSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryEdit(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(
           entity,
-          StrategyConstants.SharedExpressionStrategyId,
+          StrategyConstants.SharedQueryStrategyId,
           description
         )
       ),
   };
 }
 
-export let SharedExpressionPopup = connect(
+export let SharedQueryPopup = connect(
   mapStateToProps,
   mapDispatchToProps
-)(SharedExpressionPopupComponent);
+)(SharedQueryPopupComponent);

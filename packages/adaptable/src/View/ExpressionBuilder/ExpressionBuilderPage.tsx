@@ -6,16 +6,13 @@ import ExpressionEditor from '../../components/ExpressionEditor';
 import * as parser from '../../parser/src';
 import Radio from '../../components/Radio';
 import { Flex } from 'rebass';
-import { NewExpression } from '../../PredefinedConfig/Common/Expression';
-import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
-import * as SharedExpressionRedux from '../../Redux/ActionsReducers/SharedExpressionRedux';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import * as ShareQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import Dropdown from '../../components/Dropdown';
 
 export interface ExpressionBuilderPageProps extends React.ClassAttributes<ExpressionBuilderPage> {
-  SharedExpressions: SharedExpression[];
-  onAddSharedExpression: (
-    sharedExpression: SharedExpression
-  ) => SharedExpressionRedux.SharedExpressionAddAction;
+  SharedQueries: SharedQuery[];
+  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
   // these all need to be ptional because of wizard compatibility - todo: fix...
   UpdateGoBackState?(finish?: boolean): void;
   StepName?: string;
@@ -23,7 +20,7 @@ export interface ExpressionBuilderPageProps extends React.ClassAttributes<Expres
   Api: AdaptableApi;
 }
 
-export type ExpressionBuilderPageState = NewExpression;
+export type ExpressionBuilderPageState = string;
 
 export class ExpressionBuilderPage
   extends React.Component<ExpressionBuilderPageProps, ExpressionBuilderPageState>
@@ -61,7 +58,7 @@ export class ExpressionBuilderPage
               placeholder="Select Shared Expression"
               value={this.state.SharedExpressionId}
               onChange={(value: any) => this.setState({ SharedExpressionId: value })}
-              options={this.props.SharedExpressions.map(item => ({
+              options={this.props.SharedQueries.map(item => ({
                 value: item.Uuid,
                 label: item.Name,
               }))}

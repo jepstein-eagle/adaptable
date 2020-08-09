@@ -193,4 +193,4 @@ export type AdaptableFunctionName =
   | 'ToolPanel'
   | 'UpdatedRow'
   | 'UserFilter'
-  | 'SharedExpression';
+  | 'SharedQuery';

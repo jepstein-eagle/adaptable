@@ -136,9 +136,3 @@ export interface QueryRange {
    */
   Operand2Type?: 'Value' | 'Column';
 }
-
-export interface NewExpression {
-  Type: 'Shared' | 'Custom';
-  SharedExpressionId?: string;
-  CustomExpression?: string;
-}

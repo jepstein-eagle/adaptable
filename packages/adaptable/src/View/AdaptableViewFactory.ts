@@ -10,6 +10,7 @@ import { UpdatedRowPopup } from './UpdatedRow/UpdatedRowPopup';
 import { CalendarsPopup } from './Calendars/CalendarsPopup';
 import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup';
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup';
+import { SharedQueryPopup } from './SharedQuery/SharedQueryPopup';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
 import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl';
 import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
@@ -19,7 +20,6 @@ import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToo
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
-import { SharedExpressionPopup } from './SharedExpression/SharedExpressionPopup';
 import { FormatColumnPopup } from './FormatColumn/FormatColumnPopup';
 import { ThemePopup } from './Theme/ThemePopup';
 import { ToolPanelPopup } from './Components/ToolPanel/ToolPanelPopup';
@@ -103,7 +103,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
-  SharedExpressionPopup,
+  SharedQueryPopup,
 };
 
 // here we put the dashboard control for each strategy

@@ -42,6 +42,7 @@ export class CalculatedColumnExpressionWizard
         initialData={firstRow}
         columns={this.props.Api.gridApi.getColumns()}
         functions={defaultFunctions}
+        isFullExpression={true}
       />
     );
     /* {validationState ? (

@@ -44,7 +44,7 @@ import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 import { ApplicationApi } from './ApplicationAPI';
-import { SharedExpressionApi } from './SharedExpressionApi';
+import { SharedQueryApi } from './SharedQueryApi';
 
 /**
  *
@@ -362,7 +362,7 @@ export interface AdaptableApi {
    */
   userFilterApi: UserFilterApi;
 
-  sharedExpressionApi: SharedExpressionApi;
+  sharedQueryApi: SharedQueryApi;
 
   /**
    * API methods used internally within AdapTable.

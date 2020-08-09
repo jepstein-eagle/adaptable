@@ -12,7 +12,6 @@ import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { RowNode } from '@ag-grid-community/core';
 import * as parser from '../../parser/src';
-import { NewExpression } from '../../PredefinedConfig/Common/Expression';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -73,18 +72,8 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     }
   }
 
-  private evaluateExpression(expression: NewExpression, data: any) {
-    let expr;
-    if (expression.Type === 'Shared') {
-      const {
-        SharedExpressions,
-      } = this.adaptable.AdaptableStore.TheStore.getState().SharedExpression;
-      const se = SharedExpressions.find(item => item.Uuid === expression.SharedExpressionId);
-      if (!se) throw new Error('Shared Expression not found');
-      expr = se.Expression;
-    } else {
-      expr = expression.CustomExpression;
-    }
+  private evaluateExpression(expression: string, data: any) {
+    let expr = this.adaptable.api.sharedQueryApi.getExpressionStringForQuery(expression);
 
     return parser.evaluate(expr, { data });
   }
@@ -115,7 +104,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           if (cs.ConditionalStyleScope == 'Column' && cs.ColumnId == column.ColumnId) {
             cellClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return this.evaluateExpression(cs.Expression, params.node.data);
+                return this.evaluateExpression(cs.Query, params.node.data);
                 // return ExpressionHelper.checkForExpressionFromRowNode(
                 //   cs.Expression,
                 //   params.node,
@@ -132,7 +121,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
               if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
                 cellClassRules[styleName] = (params: any) => {
                   if (shouldRunStyle(cs, theadaptable, params.node)) {
-                    return this.evaluateExpression(cs.Expression, params.node.data);
+                    return this.evaluateExpression(cs.Query, params.node.data);
                     // return ExpressionHelper.checkForExpressionFromRowNode(
                     //   cs.Expression,
                     //   params.node,
@@ -163,7 +152,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           } else if (cs.ConditionalStyleScope == 'Row') {
             rowClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return this.evaluateExpression(cs.Expression, params.node.data);
+                return this.evaluateExpression(cs.Query, params.node.data);
                 // return ExpressionHelper.checkForExpressionFromRowNode(
                 //   cs.Expression,
                 //   params.node,

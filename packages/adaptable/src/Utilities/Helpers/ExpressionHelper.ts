@@ -11,7 +11,6 @@ import {
   ColumnValueExpression,
   RangeExpression,
   FilterExpression,
-  NewExpression,
 } from '../../PredefinedConfig/Common/Expression';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -677,14 +676,6 @@ export function CreateEmptyExpression(): Expression {
   return new Expression([], [], []);
 }
 
-export function CreateEmptyNewExpression(): NewExpression {
-  return {
-    Type: 'Shared',
-    SharedExpressionId: null,
-    CustomExpression: null,
-  };
-}
-
 export function CreateEmptyRange(): QueryRange {
   return {
     Operator: LeafExpressionOperator.None, // or null?
@@ -933,7 +924,7 @@ export const ExpressionHelper = {
   IsExpressionValid,
   IsEmptyRange,
   CreateEmptyExpression,
-  CreateEmptyNewExpression,
+  //CreateEmptyNewExpression,
   CreateEmptyRange,
   GetRangeEvaluation,
   TestRangeEvaluation,

@@ -1,7 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
-import { NewExpression } from './Common/Expression';
 import { AdaptableStyle } from './Common/AdaptableStyle';
+import { TypeUuid } from './Uuid';
 
 /**
  * The Predefined Configuration for the Conditional Style function
@@ -108,9 +108,11 @@ export interface ConditionalStyle extends AdaptableObject {
   ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType'
 
   /**
-   * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
+   * When the Style should be applied.  Only rows that match the Expression will be styled.
    */
-  Expression?: NewExpression;
+  //Query?: AdaptableQuery;
+
+  Query?: string | TypeUuid;
 
   /**
    * The Style to apply when the rule is matched.

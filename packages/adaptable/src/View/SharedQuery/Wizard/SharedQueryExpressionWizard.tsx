@@ -5,25 +5,21 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import { defaultFunctions } from '../../../parser/src';
 import ExpressionEditor from '../../../components/ExpressionEditor';
 
-export interface SharedExpressionExpressionWizardProps
-  extends AdaptableWizardStepProps<SharedExpression> {}
+export interface SharedQueryExpressionWizardProps extends AdaptableWizardStepProps<SharedQuery> {}
 
-export interface SharedExpressionExpressionWizardState {
+export interface SharedQueryExpressionWizardState {
   Expression: string;
 }
 
-export class SharedExpressionExpressionWizard
-  extends React.Component<
-    SharedExpressionExpressionWizardProps,
-    SharedExpressionExpressionWizardState
-  >
+export class SharedQueryExpressionWizard
+  extends React.Component<SharedQueryExpressionWizardProps, SharedQueryExpressionWizardState>
   implements AdaptableWizardStep {
-  constructor(props: SharedExpressionExpressionWizardProps) {
+  constructor(props: SharedQueryExpressionWizardProps) {
     super(props);
     this.state = { Expression: this.props.Data.Expression };
   }

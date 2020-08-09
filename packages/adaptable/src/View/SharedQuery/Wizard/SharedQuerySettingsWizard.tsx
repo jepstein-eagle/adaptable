@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { SharedExpression } from '../../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 import ErrorBox from '../../../components/ErrorBox';
@@ -14,16 +14,16 @@ import Dropdown from '../../../components/Dropdown';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import CheckBox from '../../../components/CheckBox';
 
-export interface SharedExpressionSettingsWizardProps
-  extends AdaptableWizardStepProps<SharedExpression> {}
-export interface SharedExpressionSettingsWizardState {
+export interface SharedQuerySettingsWizardProps extends AdaptableWizardStepProps<SharedQuery> {}
+
+export interface SharedQuerySettingsWizardState {
   Name: string;
 }
 
-export class SharedExpressionSettingsWizard
-  extends React.Component<SharedExpressionSettingsWizardProps, SharedExpressionSettingsWizardState>
+export class SharedQuerySettingsWizard
+  extends React.Component<SharedQuerySettingsWizardProps, SharedQuerySettingsWizardState>
   implements AdaptableWizardStep {
-  constructor(props: SharedExpressionSettingsWizardProps) {
+  constructor(props: SharedQuerySettingsWizardProps) {
     super(props);
     this.state = {
       Name: this.props.Data.Name,

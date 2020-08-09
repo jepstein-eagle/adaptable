@@ -31,14 +31,14 @@ import {
 } from '@mdi/js';
 import FieldWrap from '../../components/FieldWrap';
 import * as parser from '../../parser/src';
-import { SharedExpression } from '../../PredefinedConfig/SharedExpressionState';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
   CurrentAdvancedSearch: string;
-  SharedExpressions: SharedExpression[];
+  SharedQueries: SharedQuery[];
   onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
-  onNewSharedExpression: (value: string) => PopupRedux.PopupShowScreenAction;
+  onNewSharedQuery: (value: string) => PopupRedux.PopupShowScreenAction;
   onExpand: (value: string) => void;
 }
 
@@ -71,9 +71,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   render() {
     const isExpressionValid = parser.validateBoolean(this.state.expression);
 
-    let sortedSharedExpressions: SharedExpression[] = ArrayExtensions.sortArrayWithProperty(
+    let sortedSharedQueries: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
-      this.props.SharedExpressions,
+      this.props.SharedQueries,
       'Name'
     );
 
@@ -81,10 +81,10 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       {
         label: 'Save Query',
         icon: <Icon size="1.1rem" path={mdiContentSave} />,
-        onClick: () => this.props.onNewSharedExpression(this.state.expression),
+        onClick: () => this.props.onNewSharedQuery(this.state.expression),
       },
       { separator: true },
-      ...sortedSharedExpressions.map(expression => {
+      ...sortedSharedQueries.map(expression => {
         return {
           label: expression.Name,
           icon:
@@ -224,7 +224,7 @@ function mapStateToProps(
 ): Partial<AdvancedSearchToolbarControlComponentProps> {
   return {
     CurrentAdvancedSearch: state.AdvancedSearch.CurrentAdvancedSearch,
-    SharedExpressions: state.SharedExpression.SharedExpressions,
+    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 
@@ -234,11 +234,11 @@ function mapDispatchToProps(
   return {
     onChangeAdvancedSearch: (expression: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
-    onNewSharedExpression: value =>
+    onNewSharedQuery: value =>
       dispatch(
         PopupRedux.PopupShowScreen(
-          StrategyConstants.SharedExpressionStrategyId,
-          ScreenPopups.SharedExpressionPopup,
+          StrategyConstants.SharedQueryStrategyId,
+          ScreenPopups.SharedQueryPopup,
           {
             action: 'New',
             source: 'Toolbar',
