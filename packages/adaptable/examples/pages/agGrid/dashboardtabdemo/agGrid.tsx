@@ -84,7 +84,6 @@ async function InitAdaptableDemo() {
 
       AdvancedSearch: {
         Revision: 4,
-        AdvancedSearches: [],
       },
       Entitlements: {
         Revision: 2,

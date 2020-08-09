@@ -20,7 +20,6 @@ import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
 import { CustomSortSharedEntity } from '../CustomSort/CustomSortSharedEntity';
 import { CalculatedColumnSharedEntity } from '../CalculatedColumn/CalculatedColumnSharedEntity';
 import { CellValidationSharedEntity } from '../CellValidation/CellValidationSharedEntity';
-import { AdvancedSearchSharedEntity } from '../AdvancedSearch/AdvancedSearchSharedEntity';
 import { ExportSharedEntity } from '../Export/ExportSharedEntity';
 import { ConditionalStyleSharedEntity } from '../ConditionalStyle/ConditionalStyleSharedEntity';
 import { FormatColumnSharedEntity } from '../FormatColumn/FormatColumnSharedEntity';
@@ -110,9 +109,6 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
   getSharedItemDetails(sharedEntity: SharedEntity) {
     switch (sharedEntity.FunctionName) {
-      case StrategyConstants.AdvancedSearchStrategyId: {
-        return <AdvancedSearchSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
-      }
       case StrategyConstants.CalculatedColumnStrategyId: {
         return <CalculatedColumnSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
       }

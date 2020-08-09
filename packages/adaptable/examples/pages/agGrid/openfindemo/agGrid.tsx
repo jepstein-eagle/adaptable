@@ -106,7 +106,6 @@ async function InitAdaptableDemo() {
       },
       AdvancedSearch: {
         Revision: 4,
-        AdvancedSearches: [],
       },
       FormatColumn: {
         FormatColumns: [
