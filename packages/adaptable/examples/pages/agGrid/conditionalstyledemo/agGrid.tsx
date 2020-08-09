@@ -71,7 +71,8 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   AdvancedSearch: {
-    CurrentAdvancedSearch: '123-456-789',
+    CurrentAdvancedSearch: '123-456-789', // this wil load and run teh Shared Query
+    //  CurrentAdvancedSearch: '[currency]="EUR"', // this wil load and run this Custom Query
   },
   ConditionalStyle: {
     ConditionalStyles: [

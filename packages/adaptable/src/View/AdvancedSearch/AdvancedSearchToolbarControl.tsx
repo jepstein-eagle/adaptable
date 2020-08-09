@@ -207,21 +207,22 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 
   runQuery(expression: string = this.state.expression) {
-    alert(expression);
     const query = this.props.Api.sharedQueryApi.getExpressionStringForQuery(expression);
     if (!parser.validateBoolean(query)) {
       return;
     }
 
-    this.setState({
-      history: [
-        ...this.state.history,
-        {
-          expression: this.state.expression,
-          time: new Date(),
-        },
-      ],
-    });
+    if (!this.props.Api.sharedQueryApi.isSharedQuery(expression)) {
+      this.setState({
+        history: [
+          ...this.state.history,
+          {
+            expression: this.state.expression,
+            time: new Date(),
+          },
+        ],
+      });
+    }
     this.props.onChangeAdvancedSearch(expression);
   }
 }
