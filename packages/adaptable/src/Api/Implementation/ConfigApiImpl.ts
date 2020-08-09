@@ -20,7 +20,7 @@ import { CalendarState } from '../../PredefinedConfig/CalendarState';
 import { CalculatedColumnState } from '../../PredefinedConfig/CalculatedColumnState';
 import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
-import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
+import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableStore';
@@ -441,8 +441,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetAdaptableSearchState(): AdaptableSearchState {
     const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
     const currentAdvancedSearch:
-      | AdvancedSearch
-      | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
+      | string
+      | undefined = this.adaptable.api.sharedQueryApi.getExpressionStringForQuery(
+      this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearchQuery()
+    );
 
     // lets get the searchstate
     const adaptableSearchState: AdaptableSearchState = {

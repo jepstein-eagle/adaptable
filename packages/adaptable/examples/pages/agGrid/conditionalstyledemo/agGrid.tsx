@@ -59,23 +59,37 @@ async function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleButtons: ['ConditionalStyle'],
+    VisibleToolbars: ['AdvancedSearch', 'Export'],
+  },
+  SharedQuery: {
+    SharedQueries: [
+      {
+        Uuid: '123-456-789',
+        Name: 'US Banks',
+        Expression: '[counterparty] IN("BAML", "Citi", "JP Morgan", "Goldman Sachs")',
+      },
+    ],
+  },
+  AdvancedSearch: {
+    CurrentAdvancedSearch: '123-456-789',
   },
   ConditionalStyle: {
     ConditionalStyles: [
+      {
+        Style: {
+          BackColor: '#ffffe0',
+        },
+        ConditionalStyleScope: 'Row',
+        Query: '123-456-789',
+        ExcludeGroupedRows: false,
+      },
       {
         ColumnId: 'changeOnYear',
         Style: {
           ForeColor: '#008000',
         },
         ConditionalStyleScope: 'Column',
-        Expression: {
-          FilterExpressions: [
-            {
-              ColumnId: 'changeOnYear',
-              Filters: ['Positive'],
-            },
-          ],
-        },
+        Query: '[changeOnYear] > 0',
       },
       {
         ColumnId: 'changeOnYear',
@@ -83,14 +97,7 @@ let demoConfig: PredefinedConfig = {
           ForeColor: '#ff0000',
         },
         ConditionalStyleScope: 'Column',
-        Expression: {
-          FilterExpressions: [
-            {
-              ColumnId: 'changeOnYear',
-              Filters: ['Negative'],
-            },
-          ],
-        },
+        Query: '[changeOnYear] < 0',
       },
       {
         Style: {
@@ -99,26 +106,13 @@ let demoConfig: PredefinedConfig = {
           ForeColor: '#000000',
         },
         ConditionalStyleScope: 'Row',
-        // ExcludeGroupedRows: false,
-        Expression: {
-          RangeExpressions: [
-            {
-              ColumnId: 'notional',
-              Ranges: [
-                {
-                  Operand1: '1400',
-                  Operand1Type: 'Value',
-                  Operator: 'GreaterThan',
-                },
-              ],
-            },
-          ],
-        },
+        Query: '[notional] > 1400',
       },
     ],
   },
+
   Layout: {
-    CurrentLayout: 'Grouping Layout',
+    //  CurrentLayout: 'Grouping Layout',
     Layouts: [
       {
         GroupedColumns: ['country'],

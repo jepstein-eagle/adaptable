@@ -41,7 +41,6 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
-import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
 import { VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
@@ -216,15 +215,6 @@ export function CreateInternalAlertDefinitionForMessages(
     AlertProperties: {
       ShowPopup: showPopup != null && showPopup != undefined ? showPopup : ALERT_DEFAULT_SHOW_POPUP,
     },
-  };
-}
-
-export function CreateEmptyAdvancedSearch(value?: string): AdvancedSearch {
-  return {
-    Uuid: createUuid(),
-    Name: EMPTY_STRING,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
-    NewExpression: value,
   };
 }
 
@@ -703,7 +693,6 @@ export const ObjectFactory = {
   CreateAlert,
   CreateEmptyAlertDefinition,
   CreateInternalAlertDefinitionForMessages,
-  CreateEmptyAdvancedSearch,
   CreateEmptyColumnCategory,
   CreateEmptyRange,
   CreateEmptyColumnSort,

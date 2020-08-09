@@ -57,14 +57,19 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   constructor(props: AdvancedSearchToolbarControlComponentProps) {
     super(props);
     this.state = {
-      expression: this.props.CurrentAdvancedSearch || '',
+      expression:
+        this.props.Api.sharedQueryApi.getExpressionStringForQuery(
+          this.props.CurrentAdvancedSearch
+        ) || '',
       history: [],
     };
   }
   componentDidUpdate(prevProps: AdvancedSearchToolbarControlComponentProps) {
     if (prevProps.CurrentAdvancedSearch !== this.props.CurrentAdvancedSearch) {
       this.setState({
-        expression: this.props.CurrentAdvancedSearch,
+        expression: this.props.Api.sharedQueryApi.getExpressionStringForQuery(
+          this.props.CurrentAdvancedSearch
+        ),
       });
     }
   }
@@ -91,7 +96,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
             expression.Expression === this.props.CurrentAdvancedSearch ? (
               <Icon size="1.1rem" path={mdiCheck} />
             ) : null,
-          onClick: () => this.runQuery(expression.Expression),
+          onClick: () => this.runQuery(expression.Uuid),
         };
       }),
       ...(this.state.history.length ? [{ separator: true }] : []),
@@ -202,7 +207,9 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 
   runQuery(expression: string = this.state.expression) {
-    if (!parser.validateBoolean(expression)) {
+    alert(expression);
+    const query = this.props.Api.sharedQueryApi.getExpressionStringForQuery(expression);
+    if (!parser.validateBoolean(query)) {
       return;
     }
 

@@ -1,6 +1,7 @@
 import { ConfigState } from './/ConfigState';
 import { Expression } from './Common/Expression';
 import { AdaptableObject } from './Common/AdaptableObject';
+import { TypeUuid } from './Uuid';
 
 /**
  * The Predefined Configuration for the Advanced Search function
@@ -90,15 +91,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  */
 export interface AdvancedSearchState extends ConfigState {
   /**
-   * A collection of `AdvancedSearch` objects
-   *
-   * These will appear in the dropdowns in the Advanced Search Toolbar and ToolPanel.
-   *
-   * **Default Value**:  Empty array
-   */
-  AdvancedSearches?: AdvancedSearch[];
-
-  /**
    * The name of the currently run Advanced Search
    *
    * It will be the selected value in the Advanced Search Toolbar and ToolPanel and AdapTable will apply it automatically.
@@ -109,34 +101,5 @@ export interface AdvancedSearchState extends ConfigState {
    *
    * **Default Value**:  Empty string
    */
-  CurrentAdvancedSearch?: string;
-}
-
-/**
- * The `AdvancedSearch` object used in the Advanced Search function.
- *
- *  See [Advanced Search State](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html) for full information on how to create Advanced Searches and links to other relevant AdapTable help resources.
- *
- */
-export interface AdvancedSearch extends AdaptableObject {
-  /**
-   * The name of the Advanced Search
-   *
-   * This is used for *external* identification purposes - please ensure it is unique
-   *
-   * It is the value that will appear in the dropdown in the Advanced Search Toolbar and ToolPanel.
-   */
-  Name: string;
-
-  /**
-   * The Expression (or Query) that the Advanced Search function evaluates each time it runs.
-   *
-   * Only rows that satisfy the Expression are displayed in AdapTable.
-   *
-   * See [Expression Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-expression-guide.md) for more information.
-   *
-   */
-  Expression: Expression;
-
-  NewExpression?: string;
+  CurrentAdvancedSearch?: string | TypeUuid;
 }

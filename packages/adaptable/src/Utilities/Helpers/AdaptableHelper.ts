@@ -86,8 +86,11 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
     const customizer = (value: any) => {
       // so whenever we clone a plain object,
       // we add a Uuid property
+      // jw added 9/8/20: unless there is on there already
       if (isPlainObject(value) && value != predefinedConfig) {
-        value.Uuid = createUuid();
+        if (value.Uuid == null || value.Uuid == undefined) {
+          value.Uuid = createUuid();
+        }
       }
     };
 

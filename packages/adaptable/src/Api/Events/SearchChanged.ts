@@ -1,6 +1,5 @@
 import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
@@ -79,7 +78,7 @@ export interface AdaptableSearchState {
   /**
    * Current Advanced Search (if any selected)
    */
-  advancedSearch: AdvancedSearch | undefined;
+  advancedSearch: string | undefined;
   /**
    * Current live Quick Search text. (Value can be null / empty)
    */

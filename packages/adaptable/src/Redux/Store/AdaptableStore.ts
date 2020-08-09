@@ -113,9 +113,6 @@ import IStorageEngine from './Interface/IStorageEngine';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import { Shortcut } from '../../PredefinedConfig/ShortcutState';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import {
   StatePropertyChangedDetails,
@@ -504,45 +501,52 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
               diffInfo: diff,
               propertyName: CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
               oldValue: oldState.AdvancedSearch.CurrentAdvancedSearch,
-              newValue: actionTyped.expression,
+              newValue: actionTyped.query,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_ADD: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchAddAction;
+
+          /*
+          **********************
+           SHARED QUERY
+          **********************
+           */
+
+          case SharedQueryRedux.SHAREDQUERY_ADD: {
+            const actionTyped = action as SharedQueryRedux.SharedQueryAddAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.SharedQueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.SharedQuery,
               diffInfo: diff,
-              objectChanged: actionTyped.advancedSearch,
+              objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_EDIT: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchEditAction;
+          case SharedQueryRedux.SHAREDQUERY_EDIT: {
+            const actionTyped = action as SharedQueryRedux.SharedQueryEditAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.SharedQueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.SharedQuery,
               diffInfo: diff,
-              objectChanged: actionTyped.advancedSearch,
+              objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchDeleteAction;
+          case SharedQueryRedux.SHAREDQUERY_DELETE: {
+            const actionTyped = action as SharedQueryRedux.SharedQueryDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.SharedQueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.SharedQuery,
               diffInfo: diff,
-              objectChanged: actionTyped.advancedSearch,
+              objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -1727,14 +1731,12 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
         switch (action.type) {
           case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
             const actionTyped = action as AdvancedSearchRedux.AdvancedSearchChangeAction;
-            let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(
-              as => as.Name == actionTyped.expression
-            );
+
             let functionAppliedDetails: FunctionAppliedDetails = {
               name: StrategyConstants.AdvancedSearchStrategyId,
               action: action.type,
-              info: actionTyped.expression,
-              data: advancedSearch,
+              info: actionTyped.query,
+              data: actionTyped.query,
             };
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -2022,21 +2024,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
             let ret = next(action);
             adaptable.applyGridFiltering();
-            return ret;
-          }
-
-          /**
-           * Use Case: User has deleted an Advanced Search
-           * Action: If the deleted Advanced Search was the currently selected one: Apply Grid Filtering
-           */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchDeleteAction;
-            let CurrentAdvancedSearch = middlewareAPI.getState().AdvancedSearch
-              .CurrentAdvancedSearch;
-            let ret = next(action);
-            if (CurrentAdvancedSearch == actionTyped.advancedSearch.Name) {
-              adaptable.applyGridFiltering();
-            }
             return ret;
           }
 

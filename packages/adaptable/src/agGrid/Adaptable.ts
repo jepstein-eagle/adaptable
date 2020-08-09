@@ -2572,16 +2572,19 @@ export class Adaptable implements IAdaptable {
 
       // first we assess AdvancedSearch (if its running locally)
       if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
-        const expression = this.api.advancedSearchApi.getCurrentAdvancedSearchExpression();
+        const currentAdvancedSearch = this.api.advancedSearchApi.getCurrentAdvancedSearchQuery();
 
-        if (expression) {
-          // See if our rowNode passes the Expression - using Expression Helper; if not then return false
-          if (
-            !parser.evaluate(expression, {
-              data: node.data,
-            })
-          ) {
-            return false;
+        if (currentAdvancedSearch) {
+          const query = this.api.sharedQueryApi.getExpressionStringForQuery(currentAdvancedSearch);
+          if (query) {
+            // See if our rowNode passes the Expression - using Expression Helper; if not then return false
+            if (
+              !parser.evaluate(query, {
+                data: node.data,
+              })
+            ) {
+              return false;
+            }
           }
         }
       }

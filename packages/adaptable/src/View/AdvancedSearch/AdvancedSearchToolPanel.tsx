@@ -16,7 +16,6 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 
 import { Flex } from 'rebass';
 import Dropdown from '../../components/Dropdown';
@@ -26,10 +25,7 @@ import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 interface AdvancedSearchToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
   CurrentAdvancedSearchName: string;
-  AdvancedSearches: AdvancedSearch[];
   onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
-  onNewAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
-  onEditAdvancedSearch: () => PopupRedux.PopupShowScreenAction;
 }
 
 interface AdvancedSearchToolPanelComponentState {
@@ -46,22 +42,6 @@ class AdvancedSearchToolPanelComponent extends React.Component<
   }
 
   render() {
-    let savedSearch: AdvancedSearch = this.props.AdvancedSearches.find(
-      s => s.Name == this.props.CurrentAdvancedSearchName
-    );
-
-    let sortedAdvancedSearches: AdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
-      this.props.AdvancedSearches,
-      'Name'
-    );
-
-    let availableSearches: any[] = sortedAdvancedSearches.map((search, index) => {
-      return {
-        label: search.Name,
-        value: search.Name,
-      };
-    });
     let content = (
       <Flex
         flexDirection="column"
@@ -73,52 +53,12 @@ class AdvancedSearchToolPanelComponent extends React.Component<
           flexDirection="row"
           alignItems="stretch"
           className="ab-ToolPanel__AdvancedSearch__wrap"
-        >
-          <Dropdown
-            className="ab-ToolPanel__AdvancedSearch__select"
-            disabled={availableSearches.length == 0}
-            style={{ minWidth: 170 }}
-            width="100%"
-            options={availableSearches}
-            value={this.props.CurrentAdvancedSearchName}
-            placeholder="Select Search"
-            onChange={searchName => this.onSelectedSearchChanged(searchName)}
-          ></Dropdown>
-        </Flex>
+        ></Flex>
         <Flex
           flexDirection="row"
           alignItems="stretch"
           className="ab-ToolPanel__AdvancedSearch__wrap"
-        >
-          <ButtonEdit
-            onClick={() => this.props.onEditAdvancedSearch()}
-            className="ab-ToolPanel__AdvancedSearch__edit"
-            tooltip="Edit Current Advanced Search"
-            disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
-            AccessLevel={this.props.AccessLevel}
-          />
-          <ButtonNew
-            variant="text"
-            tone="neutral"
-            className="ab-ToolPanel__AdvancedSearch__new"
-            onClick={() => this.props.onNewAdvancedSearch()}
-            tooltip="Create New Advanced Search"
-            AccessLevel={this.props.AccessLevel}
-            children={null}
-          ></ButtonNew>
-
-          <ButtonDelete
-            tooltip="Delete Advanced Search"
-            className="ab-ToolPanel__AdvancedSearch__delete"
-            disabled={StringExtensions.IsNullOrEmpty(this.props.CurrentAdvancedSearchName)}
-            ConfirmAction={AdvancedSearchRedux.AdvancedSearchDelete(savedSearch)}
-            ConfirmationMsg={
-              "Are you sure you want to delete '" + !savedSearch ? '' : savedSearch.Name + "'?"
-            }
-            ConfirmationTitle={'Delete Advanced Search'}
-            AccessLevel={this.props.AccessLevel}
-          />
-        </Flex>
+        ></Flex>
       </Flex>
     );
 
@@ -149,7 +89,6 @@ function mapStateToProps(
 ): Partial<AdvancedSearchToolPanelComponentProps> {
   return {
     CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
-    AdvancedSearches: state.AdvancedSearch.AdvancedSearches,
   };
 }
 
@@ -159,28 +98,7 @@ function mapDispatchToProps(
   return {
     onChangeAdvancedSearch: (expression: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
-    onNewAdvancedSearch: () =>
-      dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.AdvancedSearchStrategyId,
-          ScreenPopups.AdvancedSearchPopup,
-          {
-            action: 'New',
-            source: 'Toolbar',
-          }
-        )
-      ),
-    onEditAdvancedSearch: () =>
-      dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.AdvancedSearchStrategyId,
-          ScreenPopups.AdvancedSearchPopup,
-          {
-            action: 'Edit',
-            source: 'Toolbar',
-          }
-        )
-      ),
+
     onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
