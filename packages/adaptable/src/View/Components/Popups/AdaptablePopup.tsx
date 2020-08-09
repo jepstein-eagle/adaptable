@@ -51,9 +51,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
             this.props.onHide();
           }
         },
-        TeamSharingActivated: this.props.Adaptable.api.entitlementsApi.isFunctionFullEntitlement(
-          'TeamSharing'
-        ),
+        TeamSharingActivated: this.props.Adaptable.api.teamSharingApi.isTeamSharingActivated(),
         ModalContainer: modalContainer,
         AccessLevel: accessLevel,
         Api: this.props.Adaptable.api,

@@ -94,6 +94,8 @@ import { GradientColumnApiImpl } from './GradientColumnApiImpl';
 import { ApplicationApi } from '../ApplicationAPI';
 import { SharedQueryApi } from '../SharedQueryApi';
 import { SharedQueryApiImpl } from './SharedQueryApiImpl';
+import { TeamSharingApi } from '../TeamSharingApi';
+import { TeamSharingApiImpl } from './TeamSharingApiImpl';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
@@ -143,6 +145,7 @@ export class AdaptableApiImpl implements AdaptableApi {
   public sharedQueryApi: SharedQueryApi;
   public namedFilterApi: NamedFilterApi;
   public toolPanelApi: ToolPanelApi;
+  public teamSharingApi: TeamSharingApi;
 
   constructor(protected adaptable: IAdaptable) {
     this.adaptable = adaptable;
@@ -192,6 +195,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.sharedQueryApi = new SharedQueryApiImpl(adaptable);
     this.namedFilterApi = new NamedFilterApiImpl(adaptable);
     this.toolPanelApi = new ToolPanelApiImpl(adaptable);
+    this.teamSharingApi = new TeamSharingApiImpl(adaptable);
 
     this.internalApi = new InternalApiImpl(adaptable);
   }
