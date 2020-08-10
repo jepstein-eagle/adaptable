@@ -85,6 +85,13 @@ export interface LayoutState extends ConfigState {
    */
   Layouts?: Layout[];
 
+  /**
+   * Whether a Default Layout will be created **in addition to Layouts provided in Predefined Config**
+   *
+   * Note: If there are no Layouts in Predefined Config then the default layout will be created anyway and this property will be ignored.
+   *
+   * **Default Value**:  false
+   */
   CreateDefaultLayout?: boolean;
 }
 
@@ -130,66 +137,20 @@ export interface Layout extends AdaptableObject {
 
   PinnedColumnsMap?: { [colId: string]: 'left' | 'right' };
 
+  ExpandedRowGroupKeys?: any[];
   /**
-   * Whether pivoting should be applied to the Layout.
-   *
-   * The `PivotDetails` object contains 2 collections of Colummn Names:
-   *
-   * - `PivotColumns`: Which Columns will be **pivoted** (i.e. appear along the top)
-   *
-   * - `AggregationColumns`: Which Columns will be **aggregated** in the pivot
+   * Old, now deprecated, property that used to set pivoting - now superseded by PinnedColumnsMap
    *
    * @deprecated
    *
    */
   PivotDetails?: PivotDetails;
-
-  ExpandedRowGroupKeys?: any[];
 }
 
 /**
- * **Do not set use this property**
- *
- *  This is state saved automatically by AdapTable for internal use to manage layouts.
- *
- */
-export interface VendorGridInfo {
-  GroupState?: any;
-  ColumnState?: any;
-  ColumnGroupState?: any;
-  InPivotMode?: boolean;
-  ValueColumns?: string[];
-}
-
-/**
- * **Do not set use this property**
- *
- *  This is state saved automatically by AdapTable for internal use to manage layouts
- */
-export interface AdaptableGridInfo {
-  CurrentColumns?: string[];
-  CurrentColumnSorts?: ColumnSort[];
-  ExpandedRowGroupKeys?: any[];
-}
-
-/**
- * Defines how pivoting will be applied in a Layout.
- *
- *  Contains 2 collections of Column names:
- *
- * - `PivotColumns`: Which Columns will be pivoted (i.e. appear along the top when in pivot mode)
- *
- * - `AggregationColumns`: Which Columns will be aggregated inside the pivot
- *
+ * @deprecated
  */
 export interface PivotDetails {
-  /**
-   * Which Columns will be **pivoted** (i.e. appear along the top) when the Grid is in Pivot View
-   */
   PivotColumns?: string[];
-
-  /**
-   * Which Columns will be **aggregated** when the Grid is in Pivot View
-   */
   AggregationColumns?: string[];
 }

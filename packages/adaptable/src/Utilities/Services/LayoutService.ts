@@ -3,12 +3,7 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import {
-  Layout,
-  PivotDetails,
-  VendorGridInfo,
-  LayoutState,
-} from '../../PredefinedConfig/LayoutState';
+import { Layout, PivotDetails, LayoutState } from '../../PredefinedConfig/LayoutState';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 

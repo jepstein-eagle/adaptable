@@ -44,7 +44,7 @@ import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
-import { VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';

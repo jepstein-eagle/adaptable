@@ -117,7 +117,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
-import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
+import { Layout } from '../PredefinedConfig/LayoutState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid, createUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -3771,22 +3771,6 @@ export class Adaptable implements IAdaptable {
 
     if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout == true) {
       this.gridOptions.columnApi!.autoSizeAllColumns();
-    }
-  }
-
-  public setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void {
-    if (vendorGridInfo == null) {
-      if (this.LayoutService.isPivotedLayout(pivotDetails)) {
-        this.turnOnPivoting();
-      } else {
-        this.turnOffPivoting();
-      }
-    } else {
-      if (vendorGridInfo.InPivotMode && vendorGridInfo.InPivotMode == true) {
-        this.turnOnPivoting();
-      } else {
-        this.turnOffPivoting();
-      }
     }
   }
 

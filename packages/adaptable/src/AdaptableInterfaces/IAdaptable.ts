@@ -13,7 +13,7 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
-import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
+import { Layout } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -280,8 +280,6 @@ export interface IAdaptable {
 
   // layout
   setGroupedColumns(groupedCols: string[]): void;
-  // setPivotingDetails(pivotDetails: PivotDetails): void;
-  setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
   setLayout(layout: Layout): void;
 
   // vendor grid related
