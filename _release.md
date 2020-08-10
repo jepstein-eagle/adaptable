@@ -1,3 +1,7 @@
+## 7.0.0-canary.27
+
+Fixing today bug and Semantic class names
+
 ## 7.0.0-canary.26
 
 Custom Excel reports
