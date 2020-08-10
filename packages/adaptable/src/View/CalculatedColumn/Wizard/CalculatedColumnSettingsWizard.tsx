@@ -122,42 +122,51 @@ export class CalculatedColumnSettingsWizard
         </Panel>
         <Panel header="Column Properties" margin={2}>
           <Flex flexDirection="row">
-            <FormLayout>
-              <FormRow label="Filterable">
+            <FormLayout
+              style={{ width: '100%' }}
+              columns={[{ name: 'first', size: '30%' }, { name: 'second' }]}
+            >
+              <FormRow>
                 <CheckBox
                   checked={this.state.Filterable}
                   onChange={Filterable => this.setState({ Filterable })}
-                />
-              </FormRow>
-              <FormRow label="Resizable">
+                >
+                  Filterable
+                </CheckBox>
                 <CheckBox
                   checked={this.state.Resizable}
                   onChange={Resizable => this.setState({ Resizable })}
-                />
+                >
+                  Resizable
+                </CheckBox>
               </FormRow>
-              <FormRow label="Groupable">
+              <FormRow>
                 <CheckBox
                   checked={this.state.Groupable}
                   onChange={Groupable => this.setState({ Groupable })}
-                />
-              </FormRow>
-              <FormRow label="Sortable">
+                >
+                  Groupable
+                </CheckBox>
                 <CheckBox
                   checked={this.state.Sortable}
                   onChange={Sortable => this.setState({ Sortable })}
-                />
+                >
+                  Sortable
+                </CheckBox>
               </FormRow>
-              <FormRow label="Pivotable">
+              <FormRow>
                 <CheckBox
                   checked={this.state.Pivotable}
                   onChange={Pivotable => this.setState({ Pivotable })}
-                />
-              </FormRow>
-              <FormRow label="Aggregatable">
+                >
+                  Pivotable
+                </CheckBox>
                 <CheckBox
                   checked={this.state.Aggregatable}
                   onChange={Aggregatable => this.setState({ Aggregatable })}
-                />
+                >
+                  Aggregatable
+                </CheckBox>
               </FormRow>
             </FormLayout>
           </Flex>
