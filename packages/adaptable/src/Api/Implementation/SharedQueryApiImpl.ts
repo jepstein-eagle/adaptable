@@ -18,14 +18,9 @@ export class SharedQueryApiImpl extends ApiBase implements SharedQueryApi {
     return this.getAllSharedQuery().find(se => se.Uuid == sharedQueryId);
   }
 
-  public getExpressionStringForQuery(query: string | TypeUuid): string {
-    // first try to see if its a shared Uiid and return that; otherwise just return the expression
-    const sharedQuery: SharedQuery = this.getSharedQueryById(query);
-    if (sharedQuery) {
-      return sharedQuery.Expression;
-    } else {
-      return query;
-    }
+  public getExpressionForQuery(sharedQueryId: TypeUuid): string | undefined {
+    const sharedQuery: SharedQuery = this.getSharedQueryById(sharedQueryId);
+    return sharedQuery ? sharedQuery.Expression : undefined;
   }
 
   public isSharedQuery(query: string | TypeUuid): boolean {

@@ -101,5 +101,5 @@ export interface AdvancedSearchState extends ConfigState {
    *
    * **Default Value**:  Empty string
    */
-  CurrentAdvancedSearch?: string | TypeUuid;
+  CurrentAdvancedSearch?: string;
 }

@@ -209,10 +209,10 @@ class ConditionalStylePopupComponent extends React.Component<
       this.props.onAddSharedQuery({
         Uuid: SharedQueryId,
         Name: this.state.NewSharedQueryName,
-        Expression: conditionalStyle.Query,
+        Expression: conditionalStyle.Expression,
       });
 
-      conditionalStyle.Query = SharedQueryId;
+      conditionalStyle.Expression = SharedQueryId;
     }
 
     if (this.state.WizardStatus == WizardStatus.New) {
@@ -240,11 +240,11 @@ class ConditionalStylePopupComponent extends React.Component<
       return false;
     }
 
-    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Query)) {
+    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
       return false;
     }
 
-    if (!this.state.UseSharedQuery && !parser.validateBoolean(conditionalStyle.Query)) {
+    if (!this.state.UseSharedQuery && !parser.validateBoolean(conditionalStyle.Expression)) {
       return false;
     }
 

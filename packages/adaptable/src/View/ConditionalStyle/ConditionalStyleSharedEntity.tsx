@@ -24,7 +24,7 @@ export class ConditionalStyleSharedEntity extends React.Component<
           <StyleVisualItem Style={conditionalStyle.Style} />
         </Flex>
         <Flex flex={5}>
-          {this.props.Api.sharedQueryApi.getExpressionStringForQuery(conditionalStyle.Query)}
+          {this.props.Api.sharedQueryApi.getExpressionStringForQuery(conditionalStyle.Expression)}
         </Flex>
       </Flex>
     );

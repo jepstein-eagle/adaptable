@@ -17,7 +17,7 @@ export class AdvancedSearchApiImpl extends ApiBase implements AdvancedSearchApi 
     this.dispatchAction(AdvancedSearchRedux.AdvancedSearchChange(''));
   }
 
-  public getCurrentAdvancedSearchQuery(): string | undefined {
+  public getCurrentAdvancedSearch(): string | undefined {
     return this.getAdaptableState().AdvancedSearch.CurrentAdvancedSearch;
   }
 

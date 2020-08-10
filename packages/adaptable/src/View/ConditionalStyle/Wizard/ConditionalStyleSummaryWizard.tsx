@@ -12,6 +12,7 @@ import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleStat
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ConditionalStyleSummaryWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
@@ -26,19 +27,21 @@ export class ConditionalStyleSummaryWizard
   }
 
   render(): any {
+    let expression: string = StringExtensions.IsNotNullOrEmpty(this.props.Data.Expression)
+      ? this.props.Data.Expression
+      : this.props.Api.sharedQueryApi.getExpressionForQuery(this.props.Data.SharedQueryId);
+
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Scope', Value: this.getScope() },
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
       {
         Key: 'Query Type',
-        Value: this.props.Api.sharedQueryApi.isSharedQuery(this.props.Data.Query)
-          ? 'Shared'
-          : 'Custom',
+        Value: StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ? 'Shared' : 'Custom',
       },
       {
         Key: 'Expression',
-        Value: this.props.Api.sharedQueryApi.getExpressionStringForQuery(this.props.Data.Query),
+        Value: expression,
       },
     ];
 

@@ -3,7 +3,7 @@ import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState'
 import { EMPTY_STRING, EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid, TypeUuid } from '../../PredefinedConfig/Uuid';
 
-export const ADVANCED_SEARCH_CHANGE = 'ADVANCED_SEARCH_SELECT';
+export const ADVANCED_SEARCH_CHANGE = 'ADVANCED_SEARCH_CHANGE';
 
 export interface AdvancedSearchChangeAction extends Redux.Action {
   query: string | TypeUuid;

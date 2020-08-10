@@ -61,7 +61,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   public getSharedQueryReferences(sharedQueryId: string): string | undefined {
     const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
       .getAllConditionalStyle()
-      .filter(cs => cs.Query == sharedQueryId);
+      .filter(cs => cs.SharedQueryId == sharedQueryId);
 
     return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
       ? conditionalStyles.length + ' Conditional Styles'

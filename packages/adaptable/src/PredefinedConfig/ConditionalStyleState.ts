@@ -112,7 +112,9 @@ export interface ConditionalStyle extends AdaptableObject {
    */
   //Query?: AdaptableQuery;
 
-  Query?: string | TypeUuid;
+  Expression?: string;
+
+  SharedQueryId?: TypeUuid;
 
   /**
    * The Style to apply when the rule is matched.

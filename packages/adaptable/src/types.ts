@@ -39,7 +39,7 @@ export {
   ActionColumnRenderParams,
   ActionColumnRenderFunction,
 } from './PredefinedConfig/ActionColumnState';
-export { AdvancedSearchState, AdvancedSearch } from './PredefinedConfig/AdvancedSearchState';
+export { AdvancedSearchState } from './PredefinedConfig/AdvancedSearchState';
 export { AlertState, AlertDefinition, AlertProperties } from './PredefinedConfig/AlertState';
 export { ApplicationState, ApplicationDataEntry } from './PredefinedConfig/ApplicationState';
 export { BulkUpdateState } from './PredefinedConfig/BulkUpdateState';

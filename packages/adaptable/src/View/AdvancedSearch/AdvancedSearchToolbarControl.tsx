@@ -38,7 +38,7 @@ interface AdvancedSearchToolbarControlComponentProps
   CurrentAdvancedSearch: string;
   SharedQueries: SharedQuery[];
   onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
-  onNewSharedQuery: (value: string) => PopupRedux.PopupShowScreenAction;
+  onNewSharedExpression: (value: string) => PopupRedux.PopupShowScreenAction;
   onExpand: (value: string) => void;
 }
 
@@ -57,26 +57,21 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   constructor(props: AdvancedSearchToolbarControlComponentProps) {
     super(props);
     this.state = {
-      expression:
-        this.props.Api.sharedQueryApi.getExpressionStringForQuery(
-          this.props.CurrentAdvancedSearch
-        ) || '',
+      expression: this.props.CurrentAdvancedSearch || '',
       history: [],
     };
   }
   componentDidUpdate(prevProps: AdvancedSearchToolbarControlComponentProps) {
     if (prevProps.CurrentAdvancedSearch !== this.props.CurrentAdvancedSearch) {
       this.setState({
-        expression: this.props.Api.sharedQueryApi.getExpressionStringForQuery(
-          this.props.CurrentAdvancedSearch
-        ),
+        expression: this.props.CurrentAdvancedSearch,
       });
     }
   }
   render() {
     const isExpressionValid = parser.validateBoolean(this.state.expression);
 
-    let sortedSharedQueries: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
+    let sortedSharedExpressions: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Ascending,
       this.props.SharedQueries,
       'Name'
@@ -86,17 +81,17 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       {
         label: 'Save Query',
         icon: <Icon size="1.1rem" path={mdiContentSave} />,
-        onClick: () => this.props.onNewSharedQuery(this.state.expression),
+        onClick: () => this.props.onNewSharedExpression(this.state.expression),
       },
       { separator: true },
-      ...sortedSharedQueries.map(expression => {
+      ...sortedSharedExpressions.map(expression => {
         return {
           label: expression.Name,
           icon:
             expression.Expression === this.props.CurrentAdvancedSearch ? (
               <Icon size="1.1rem" path={mdiCheck} />
             ) : null,
-          onClick: () => this.runQuery(expression.Uuid),
+          onClick: () => this.runQuery(expression.Expression),
         };
       }),
       ...(this.state.history.length ? [{ separator: true }] : []),
@@ -207,22 +202,19 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 
   runQuery(expression: string = this.state.expression) {
-    const query = this.props.Api.sharedQueryApi.getExpressionStringForQuery(expression);
-    if (!parser.validateBoolean(query)) {
+    if (!parser.validateBoolean(expression)) {
       return;
     }
 
-    if (!this.props.Api.sharedQueryApi.isSharedQuery(expression)) {
-      this.setState({
-        history: [
-          ...this.state.history,
-          {
-            expression: this.state.expression,
-            time: new Date(),
-          },
-        ],
-      });
-    }
+    this.setState({
+      history: [
+        ...this.state.history,
+        {
+          expression: this.state.expression,
+          time: new Date(),
+        },
+      ],
+    });
     this.props.onChangeAdvancedSearch(expression);
   }
 }
@@ -242,7 +234,7 @@ function mapDispatchToProps(
   return {
     onChangeAdvancedSearch: (expression: string) =>
       dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
-    onNewSharedQuery: value =>
+    onNewSharedExpression: value =>
       dispatch(
         PopupRedux.PopupShowScreen(
           StrategyConstants.SharedQueryStrategyId,

@@ -480,7 +480,8 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     ConditionalStyleScope: 'Row',
     ExcludeGroupedRows: false,
     // Query: ExpressionHelper.CreateEmptyNewExpression(),
-    Query: EMPTY_STRING,
+    Expression: EMPTY_STRING,
+    SharedQueryId: EMPTY_STRING,
   };
 }
 

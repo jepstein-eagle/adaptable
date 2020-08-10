@@ -45,8 +45,8 @@ export class ConditionalStyleExpressionWizard
   constructor(props: ConditionalStyleExpressionWizardProps) {
     super(props);
     this.state = {
-      Query: props.Data.Query,
-      useSharedQuery: this.props.Api.sharedQueryApi.isSharedQuery(props.Data.Query),
+      Query: props.Data.Expression,
+      useSharedQuery: StringExtensions.IsNotNullOrEmpty(props.Data.SharedQueryId),
       saveToSharedQueries: false,
       newSharedQueryName: '',
     };
@@ -188,7 +188,7 @@ export class ConditionalStyleExpressionWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.Query = this.state.Query;
+    this.props.Data.Expression = this.state.Query;
 
     this.props.onSetUseSharedQuery(this.state.useSharedQuery);
 

@@ -15,7 +15,7 @@ export interface SharedQueryApi {
 
   getSharedQueryById(sharedQueryId: string): SharedQuery | undefined;
 
-  getExpressionStringForQuery(query: string | TypeUuid): string;
+  getExpressionForQuery(sharedQueryId: TypeUuid): string | undefined;
 
   isSharedQuery(query: string | TypeUuid): boolean;
 

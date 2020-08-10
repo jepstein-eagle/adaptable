@@ -828,7 +828,7 @@ export class agGridHelper {
           this.adaptable.api.quickSearchApi.getQuickSearchState().QuickSearchText
         ) ||
         StringExtensions.IsNotNullOrEmpty(
-          this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearchQuery()
+          this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch()
         ) ||
         ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.dataSourceApi.getAllDataSource())
       ) {

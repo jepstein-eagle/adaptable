@@ -35,7 +35,7 @@ export interface AdvancedSearchApi {
    */
   clearAdvancedSearch(): void;
 
-  getCurrentAdvancedSearchQuery(): string | undefined;
+  getCurrentAdvancedSearch(): string | undefined;
 
   /**
    * Opens the Advanced Search popup screen

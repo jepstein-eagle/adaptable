@@ -83,7 +83,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <StrategyDetail
             key={'CS' + index}
             Item1={<StyleVisualItem Style={item.Style} />}
-            Item2={item.Query}
+            Item2={item.Expression}
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}
@@ -168,14 +168,14 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
 
-    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Query)) {
+    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
       return false;
     }
 
     // Not sure about when we do this...
     if (
-      !conditionalStyle.Query.startsWith('SHARED') &&
-      !parser.validateBoolean(conditionalStyle.Query)
+      !conditionalStyle.Expression.startsWith('SHARED') &&
+      !parser.validateBoolean(conditionalStyle.Expression)
     ) {
       return false;
     }

@@ -442,9 +442,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
     const currentAdvancedSearch:
       | string
-      | undefined = this.adaptable.api.sharedQueryApi.getExpressionStringForQuery(
-      this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearchQuery()
-    );
+      | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
 
     // lets get the searchstate
     const adaptableSearchState: AdaptableSearchState = {

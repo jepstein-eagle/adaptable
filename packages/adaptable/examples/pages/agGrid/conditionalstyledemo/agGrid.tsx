@@ -71,8 +71,7 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   AdvancedSearch: {
-    CurrentAdvancedSearch: '123-456-789', // this wil load and run teh Shared Query
-    //  CurrentAdvancedSearch: '[currency]="EUR"', // this wil load and run this Custom Query
+    CurrentAdvancedSearch: '[currency]="EUR"', // this wil load and run this Custom Query
   },
   ConditionalStyle: {
     ConditionalStyles: [
@@ -81,7 +80,7 @@ let demoConfig: PredefinedConfig = {
           BackColor: '#ffffe0',
         },
         ConditionalStyleScope: 'Row',
-        Query: '123-456-789',
+        Expression: '123-456-789',
         ExcludeGroupedRows: false,
       },
       {
@@ -90,7 +89,7 @@ let demoConfig: PredefinedConfig = {
           ForeColor: '#008000',
         },
         ConditionalStyleScope: 'Column',
-        Query: '[changeOnYear] > 0',
+        Expression: '[changeOnYear] > 0',
       },
       {
         ColumnId: 'changeOnYear',
@@ -98,7 +97,7 @@ let demoConfig: PredefinedConfig = {
           ForeColor: '#ff0000',
         },
         ConditionalStyleScope: 'Column',
-        Query: '[changeOnYear] < 0',
+        Expression: '[changeOnYear] < 0',
       },
       {
         Style: {
@@ -107,7 +106,7 @@ let demoConfig: PredefinedConfig = {
           ForeColor: '#000000',
         },
         ConditionalStyleScope: 'Row',
-        Query: '[notional] > 1400',
+        Expression: '[notional] > 1400',
       },
     ],
   },
