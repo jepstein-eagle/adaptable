@@ -85,12 +85,7 @@ export interface LayoutState extends ConfigState {
    */
   Layouts?: Layout[];
 
-  CreateDefaultLayout?:
-    | boolean
-    | (Omit<Layout, 'Name' | 'Columns'> & {
-        Columns?: string[];
-        Name?: string;
-      });
+  CreateDefaultLayout?: boolean;
 }
 
 /**

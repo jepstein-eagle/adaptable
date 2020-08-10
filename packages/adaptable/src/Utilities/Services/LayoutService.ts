@@ -73,21 +73,9 @@ export class LayoutService implements ILayoutService {
     }
 
     if (shouldCreateDefaultLayout) {
-      if (typeof layoutState.CreateDefaultLayout === 'object') {
-        defaultLayoutName = layoutState.CreateDefaultLayout.Name || defaultLayoutName;
-        if (Array.isArray(layoutState.CreateDefaultLayout.Columns)) {
-          defaultLayoutColumns = layoutState.CreateDefaultLayout.Columns.map(colId => {
-            return columnsMap[colId];
-          });
-        }
-      }
-
       if (!layoutState.Layouts || !isLayoutDefined(defaultLayoutName)) {
         let defaultLayout: Layout = ObjectFactory.CreateEmptyLayout(
           {
-            ...(typeof layoutState.CreateDefaultLayout === 'object'
-              ? layoutState.CreateDefaultLayout
-              : null),
             Name: defaultLayoutName,
             Columns: defaultLayoutColumns.map(c => c.ColumnId),
           },

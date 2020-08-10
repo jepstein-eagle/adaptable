@@ -271,50 +271,50 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Layout: {
-    CreateDefaultLayout: {},
+    CreateDefaultLayout: true,
+    // },
+    // // Layout: {
+    //   CreateDefaultLayout: false,
+    Revision: 54,
+    // CurrentLayout: 'Simple Layout',
+    Layouts: [
+      {
+        Name: 'Simple Layout',
+        Columns: ['model', 'make', 'Multiply'],
+      },
+      {
+        Name: 'Pivot Layout',
+        Columns: [],
+        PivotDetails: {
+          PivotColumns: ['make'],
+          AggregationColumns: ['price'],
+        },
+      },
+      {
+        Name: 'Full Layout',
+        Columns: ['year', 'model', 'make', 'identifier'],
+        GroupedColumns: ['make', 'model'],
+        ColumnWidthMap: {
+          model: 600,
+          year: 400,
+        },
+        ColumnFlexMap: {
+          make: 1,
+        },
+        ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
+        PinnedColumnsMap: {
+          // year: 'left',
+          // model: 'right',
+        },
+        ColumnSorts: [
+          {
+            Column: 'model',
+            SortOrder: 'Descending',
+          },
+        ],
+      },
+    ],
   },
-  // Layout: {
-  //   CreateDefaultLayout: false,
-  //   Revision: 5,
-  //   CurrentLayout: 'Simple Layout',
-  //   Layouts: [
-  //     {
-  //       Name: 'Simple Layout',
-  //       Columns: ['model', 'make', 'Multiply'],
-  //     },
-  //     {
-  //       Name: 'Pivot Layout',
-  //       Columns: [],
-  //       PivotDetails: {
-  //         PivotColumns: ['make'],
-  //         AggregationColumns: ['price'],
-  //       },
-  //     },
-  //     {
-  //       Name: 'Full Layout',
-  //       Columns: ['year', 'model', 'make', 'identifier'],
-  //       GroupedColumns: ['make', 'model'],
-  //       ColumnWidthMap: {
-  //         model: 600,
-  //         year: 400,
-  //       },
-  //       ColumnFlexMap: {
-  //         make: 1,
-  //       },
-  //       ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
-  //       PinnedColumnsMap: {
-  //         // year: 'left',
-  //         // model: 'right',
-  //       },
-  //       ColumnSorts: [
-  //         {
-  //           Column: 'model',
-  //           SortOrder: 'Descending',
-  //         },
-  //       ],
-  //     },
-  // ],
-  // },
 };
 
 export default () => {
