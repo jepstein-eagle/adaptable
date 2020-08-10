@@ -39,7 +39,7 @@ export class SharedQuerySettingsWizard
               autoFocus
               width={300}
               type="text"
-              placeholder="Enter column name"
+              placeholder="Enter Shared Query Name"
               onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
             />
           </FormRow>

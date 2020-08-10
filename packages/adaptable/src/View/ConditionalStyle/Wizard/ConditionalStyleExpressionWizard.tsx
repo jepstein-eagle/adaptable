@@ -30,7 +30,8 @@ export interface ConditionalStyleExpressionWizardProps
 }
 
 export interface ConditionalStyleExpressionWizardState {
-  Query: string | TypeUuid;
+  expression?: string;
+  sharedQueryId?: TypeUuid;
   useSharedQuery: boolean;
   saveToSharedQueries: boolean;
   newSharedQueryName: string;
@@ -45,8 +46,9 @@ export class ConditionalStyleExpressionWizard
   constructor(props: ConditionalStyleExpressionWizardProps) {
     super(props);
     this.state = {
-      Query: props.Data.Expression,
+      expression: props.Data.Expression,
       useSharedQuery: StringExtensions.IsNotNullOrEmpty(props.Data.SharedQueryId),
+      sharedQueryId: props.Data.SharedQueryId,
       saveToSharedQueries: false,
       newSharedQueryName: '',
     };
@@ -97,11 +99,11 @@ export class ConditionalStyleExpressionWizard
           <div>
             <Dropdown
               placeholder="Select Shared Expression"
-              value={this.state.Query}
+              value={this.state.sharedQueryId}
               onChange={(value: any) =>
                 this.setState(
                   {
-                    Query: value,
+                    sharedQueryId: value,
                   },
                   () => this.props.UpdateGoBackState()
                 )
@@ -116,7 +118,7 @@ export class ConditionalStyleExpressionWizard
         {this.state.useSharedQuery == false && (
           <div>
             <ExpressionEditor
-              value={this.state.Query}
+              value={this.state.expression}
               onChange={(e: React.SyntheticEvent) => this.handleCustomExpressionChange(e)}
               initialData={firstRow}
               columns={this.props.Api.gridApi.getColumns()}
@@ -159,18 +161,28 @@ export class ConditionalStyleExpressionWizard
     let e = event.target as HTMLInputElement;
     this.setState(
       {
-        Query: e.value,
+        expression: e.value,
       },
       () => this.props.UpdateGoBackState()
     );
   }
 
   public canNext(): boolean {
-    if (StringExtensions.IsNullOrEmpty(this.state.Query)) {
+    if (
+      this.state.useSharedQuery == true &&
+      StringExtensions.IsNullOrEmpty(this.state.sharedQueryId)
+    ) {
       return false;
     }
 
-    if (this.state.useSharedQuery == false && !parser.validateBoolean(this.state.Query)) {
+    if (
+      this.state.useSharedQuery == false &&
+      StringExtensions.IsNullOrEmpty(this.state.expression)
+    ) {
+      return false;
+    }
+
+    if (this.state.useSharedQuery == false && !parser.validateBoolean(this.state.expression)) {
       return false;
     }
 
@@ -188,7 +200,13 @@ export class ConditionalStyleExpressionWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.Expression = this.state.Query;
+    if (this.state.useSharedQuery) {
+      this.props.Data.Expression = undefined;
+      this.props.Data.SharedQueryId = this.state.sharedQueryId;
+    } else {
+      this.props.Data.Expression = this.state.expression;
+      this.props.Data.SharedQueryId = undefined;
+    }
 
     this.props.onSetUseSharedQuery(this.state.useSharedQuery);
 

@@ -240,10 +240,16 @@ class ConditionalStylePopupComponent extends React.Component<
       return false;
     }
 
-    if (StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
+    if (
+      this.state.UseSharedQuery &&
+      StringExtensions.IsNullOrEmpty(conditionalStyle.SharedQueryId)
+    ) {
       return false;
     }
 
+    if (!this.state.UseSharedQuery && StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
+      return false;
+    }
     if (!this.state.UseSharedQuery && !parser.validateBoolean(conditionalStyle.Expression)) {
       return false;
     }

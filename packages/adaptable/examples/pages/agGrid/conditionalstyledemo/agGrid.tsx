@@ -71,7 +71,7 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   AdvancedSearch: {
-    CurrentAdvancedSearch: '[currency]="EUR"', // this wil load and run this Custom Query
+    CurrentAdvancedSearch: '[currency]="EUR"',
   },
   ConditionalStyle: {
     ConditionalStyles: [
@@ -80,7 +80,7 @@ let demoConfig: PredefinedConfig = {
           BackColor: '#ffffe0',
         },
         ConditionalStyleScope: 'Row',
-        Expression: '123-456-789',
+        SharedQueryId: '123-456-789',
         ExcludeGroupedRows: false,
       },
       {

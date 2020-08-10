@@ -27,6 +27,8 @@ export class ConditionalStyleSummaryWizard
   }
 
   render(): any {
+    console.log(this.props.Data);
+
     let expression: string = StringExtensions.IsNotNullOrEmpty(this.props.Data.Expression)
       ? this.props.Data.Expression
       : this.props.Api.sharedQueryApi.getExpressionForQuery(this.props.Data.SharedQueryId);
