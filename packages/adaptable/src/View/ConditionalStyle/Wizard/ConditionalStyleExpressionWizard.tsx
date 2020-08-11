@@ -17,9 +17,7 @@ import Dropdown from '../../../components/Dropdown';
 import * as parser from '../../../parser/src';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import CheckBox from '../../../components/CheckBox';
-import check from '../../../components/icons/check';
 import Input from '../../../components/Input';
-import { createUuid } from '../../../components/utils/uuid';
 import { TypeUuid } from '../../../PredefinedConfig/Uuid';
 
 export interface ConditionalStyleExpressionWizardProps
@@ -47,8 +45,8 @@ export class ConditionalStyleExpressionWizard
     super(props);
     this.state = {
       expression: props.Data.Expression,
-      useSharedQuery: StringExtensions.IsNotNullOrEmpty(props.Data.SharedQueryId),
       sharedQueryId: props.Data.SharedQueryId,
+      useSharedQuery: StringExtensions.IsNotNullOrEmpty(props.Data.SharedQueryId),
       saveToSharedQueries: false,
       newSharedQueryName: '',
     };

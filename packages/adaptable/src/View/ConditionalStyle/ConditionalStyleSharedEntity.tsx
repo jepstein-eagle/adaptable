@@ -5,6 +5,7 @@ import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class ConditionalStyleSharedEntity extends React.Component<
   SharedEntityComponent<ConditionalStyleSharedEntity>,
@@ -12,6 +13,10 @@ export class ConditionalStyleSharedEntity extends React.Component<
 > {
   render(): any {
     let conditionalStyle: ConditionalStyle = this.props.Entity as ConditionalStyle;
+
+    let expression: string = StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression)
+      ? conditionalStyle.Expression
+      : this.props.Api.sharedQueryApi.getExpressionForQuery(conditionalStyle.SharedQueryId);
 
     return (
       <Flex flexDirection="row" alignItems="center">
@@ -23,9 +28,7 @@ export class ConditionalStyleSharedEntity extends React.Component<
         <Flex flex={3}>
           <StyleVisualItem Style={conditionalStyle.Style} />
         </Flex>
-        <Flex flex={5}>
-          {this.props.Api.sharedQueryApi.getExpressionStringForQuery(conditionalStyle.Expression)}
-        </Flex>
+        <Flex flex={5}>{expression}</Flex>
       </Flex>
     );
   }

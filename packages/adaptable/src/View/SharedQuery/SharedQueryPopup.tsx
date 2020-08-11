@@ -109,7 +109,6 @@ class SharedQueryPopupComponent extends React.Component<
           <EmptyContent>Click 'New' to create a new Shared Expression.</EmptyContent>
         )}
 
-        {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
         {this.state.EditedAdaptableObject && (
           <SharedQueryWizard
             EditedAdaptableObject={this.state.EditedAdaptableObject as SharedQuery}

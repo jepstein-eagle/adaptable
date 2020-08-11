@@ -4,15 +4,10 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
-import ErrorBox from '../../../components/ErrorBox';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
-import Dropdown from '../../../components/Dropdown';
-import { DataType } from '../../../PredefinedConfig/Common/Enums';
-import CheckBox from '../../../components/CheckBox';
 
 export interface SharedQuerySettingsWizardProps extends AdaptableWizardStepProps<SharedQuery> {}
 
