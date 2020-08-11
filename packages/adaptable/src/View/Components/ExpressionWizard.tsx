@@ -2,32 +2,26 @@ import * as React from 'react';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
-} from '../../Wizard/Interface/IAdaptableWizard';
-import {
-  ExpressionBuilderPage,
-  ExpressionBuilderPageProps,
-} from '../../ExpressionBuilder/ExpressionBuilderPage';
-import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
-import { UIHelper } from '../../UIHelper';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
-import ExpressionEditor from '../../../components/ExpressionEditor';
-import Radio from '../../../components/Radio';
+} from '../Wizard/Interface/IAdaptableWizard';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import ExpressionEditor from '../../components/ExpressionEditor';
+import Radio from '../../components/Radio';
 import { Flex } from 'rebass';
-import Dropdown from '../../../components/Dropdown';
-import * as parser from '../../../parser/src';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import CheckBox from '../../../components/CheckBox';
-import Input from '../../../components/Input';
-import { TypeUuid } from '../../../PredefinedConfig/Uuid';
+import Dropdown from '../../components/Dropdown';
+import * as parser from '../../parser/src';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import CheckBox from '../../components/CheckBox';
+import Input from '../../components/Input';
+import { TypeUuid } from '../../PredefinedConfig/Uuid';
+import { QueryObject } from '../../PredefinedConfig/Common/QueryObject';
 
-export interface ConditionalStyleExpressionWizardProps
-  extends AdaptableWizardStepProps<ConditionalStyle> {
+export interface ExpressionWizardProps extends AdaptableWizardStepProps<QueryObject> {
   SharedQueries: SharedQuery[];
   onSetNewSharedQueryName: (newSharedQueryName: string) => void;
   onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
 
-export interface ConditionalStyleExpressionWizardState {
+export interface ExpressionWizardState {
   expression?: string;
   sharedQueryId?: TypeUuid;
   useSharedQuery: boolean;
@@ -35,14 +29,11 @@ export interface ConditionalStyleExpressionWizardState {
   newSharedQueryName: string;
 }
 
-export class ConditionalStyleExpressionWizard
-  extends React.Component<
-    ConditionalStyleExpressionWizardProps,
-    ConditionalStyleExpressionWizardState
-  >
+export class ExpressionWizard extends React.Component<ExpressionWizardProps, ExpressionWizardState>
   implements AdaptableWizardStep {
-  constructor(props: ConditionalStyleExpressionWizardProps) {
+  constructor(props: ExpressionWizardProps) {
     super(props);
+    console.log(props.Data);
     this.state = {
       expression: props.Data.Expression,
       sharedQueryId: props.Data.SharedQueryId,

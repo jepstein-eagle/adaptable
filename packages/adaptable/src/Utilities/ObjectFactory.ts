@@ -312,10 +312,11 @@ export function CreateEmptyReport(): Report {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    Expression: null,
     ColumnIds: null,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
+    Expression: EMPTY_STRING,
+    SharedQueryId: EMPTY_STRING,
   };
 }
 
@@ -649,7 +650,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: EMPTY_STRING,
+    SharedQueryId: EMPTY_STRING,
   });
 
   _systemReports.push({
@@ -658,7 +660,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.VisibleRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: EMPTY_STRING,
+    SharedQueryId: EMPTY_STRING,
   });
 
   _systemReports.push({
@@ -667,7 +670,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.SelectedCellColumns,
     ReportRowScope: ReportRowScope.SelectedCellRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: EMPTY_STRING,
+    SharedQueryId: EMPTY_STRING,
   });
 
   _systemReports.push({
@@ -676,7 +680,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.SelectedRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: EMPTY_STRING,
+    SharedQueryId: EMPTY_STRING,
   });
   return _systemReports;
 }

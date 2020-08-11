@@ -18,6 +18,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import {
   EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -54,10 +55,7 @@ interface ConditionalStylePopupProps
 
 class ConditionalStylePopupComponent extends React.Component<
   ConditionalStylePopupProps,
-  EditableConfigEntityState & {
-    NewSharedQueryName?: string;
-    UseSharedQuery?: boolean;
-  }
+  EditableExpressionConfigEntityState
 > {
   constructor(props: ConditionalStylePopupProps) {
     super(props);

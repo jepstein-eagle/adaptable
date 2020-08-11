@@ -26,6 +26,8 @@ import {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,
 } from '../Constants/GeneralConstants';
+import StringExtensions from '../Extensions/StringExtensions';
+import * as parser from '../../parser/src';
 
 export class ReportService implements IReportService {
   constructor(private adaptable: IAdaptable) {
@@ -64,19 +66,19 @@ export class ReportService implements IReportService {
     }
   }
 
-  public GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string {
-    if (this.IsSystemReport(Report)) {
-      if (Report.Name == ALL_DATA_REPORT) {
+  public GetReportExpressionDescription(report: Report, cols: AdaptableColumn[]): string {
+    if (this.IsSystemReport(report)) {
+      if (report.Name == ALL_DATA_REPORT) {
         return '[All Data]';
-      } else if (Report.Name == VISIBLE_DATA_REPORT) {
+      } else if (report.Name == VISIBLE_DATA_REPORT) {
         return '[All Visible Data]';
-      } else if (Report.Name == SELECTED_CELLS_REPORT) {
+      } else if (report.Name == SELECTED_CELLS_REPORT) {
         return '[Selected Cells Data]';
-      } else if (Report.Name == SELECTED_ROWS_REPORT) {
+      } else if (report.Name == SELECTED_ROWS_REPORT) {
         return '[Selected Rows Data]';
       }
     } else {
-      switch (Report.ReportRowScope) {
+      switch (report.ReportRowScope) {
         case ReportRowScope.AllRows:
           return '[All Rows]';
         case ReportRowScope.VisibleRows:
@@ -84,7 +86,12 @@ export class ReportService implements IReportService {
         case ReportRowScope.SelectedRows:
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
-          return ExpressionHelper.ConvertExpressionToString(Report.Expression, this.adaptable.api);
+          if (StringExtensions.IsNotNullOrEmpty(report.SharedQueryId)) {
+            return this.adaptable.api.sharedQueryApi.getExpressionForQuery(report.SharedQueryId);
+          } else if (StringExtensions.IsNotNullOrEmpty(report.Expression)) {
+            return report.Expression;
+          }
+          return undefined;
       }
     }
   }
@@ -163,15 +170,20 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: Expression = report.Expression;
-        this.adaptable.forAllRowNodesDo(row => {
+        let expressionToCheck: string;
+        if (StringExtensions.IsNotNullOrEmpty(report.SharedQueryId)) {
+          expressionToCheck = this.adaptable.api.sharedQueryApi.getExpressionForQuery(
+            report.SharedQueryId
+          );
+        } else if (StringExtensions.IsNotNullOrEmpty(report.Expression)) {
+          expressionToCheck = report.Expression;
+        }
+
+        this.adaptable.forAllRowNodesDo((row: any) => {
           if (
-            ExpressionHelper.checkForExpressionFromRowNode(
-              expressionToCheck,
-              row,
-              reportColumns,
-              this.adaptable
-            )
+            parser.evaluate(expressionToCheck, {
+              data: row.data,
+            })
           ) {
             let newRow = this.getRowValues(row, reportColumns, report);
             dataToExport.push(newRow);
@@ -259,16 +271,20 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: Expression = report.Expression;
+        let expressionToCheck: string;
+        if (StringExtensions.IsNotNullOrEmpty(report.SharedQueryId)) {
+          expressionToCheck = this.adaptable.api.sharedQueryApi.getExpressionForQuery(
+            report.SharedQueryId
+          );
+        } else if (StringExtensions.IsNotNullOrEmpty(report.Expression)) {
+          expressionToCheck = report.Expression;
+        }
 
-        this.adaptable.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo((row: any) => {
           if (
-            ExpressionHelper.checkForExpressionFromRowNode(
-              expressionToCheck,
-              row,
-              reportColumns,
-              this.adaptable
-            )
+            parser.evaluate(expressionToCheck, {
+              data: row.data,
+            })
           ) {
             let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(row);
             pkValues.push(pkValue);

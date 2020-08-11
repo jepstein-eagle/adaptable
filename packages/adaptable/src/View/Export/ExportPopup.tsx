@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
+import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -16,6 +16,7 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import {
   EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -31,6 +32,8 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import * as parser from '../../parser/src';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];
@@ -42,13 +45,20 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
+  SharedQueries: SharedQuery[];
+
+  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+
   onShare: (
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
+class ExportPopupComponent extends React.Component<
+  ExportPopupProps,
+  EditableExpressionConfigEntityState
+> {
   constructor(props: ExportPopupProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
@@ -141,6 +151,17 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.Reports}
             Api={this.props.Api}
+            SharedQueries={this.props.SharedQueries}
+            onSetNewSharedQueryName={(newSharedQueryName: string) =>
+              this.setState({
+                NewSharedQueryName: newSharedQueryName,
+              })
+            }
+            onSetUseSharedQuery={(useSharedQuery: boolean) =>
+              this.setState({
+                UseSharedQuery: useSharedQuery,
+              })
+            }
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -185,12 +206,19 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     if (StringExtensions.IsNullOrEmpty(report.Name)) {
       return false;
     }
-    if (
-      report.ReportRowScope == ReportRowScope.ExpressionRows &&
-      ExpressionHelper.IsNullOrEmptyExpression(report.Expression)
-    ) {
-      return false;
+    if (report.ReportRowScope == ReportRowScope.ExpressionRows) {
+      if (this.state.UseSharedQuery && StringExtensions.IsNullOrEmpty(report.SharedQueryId)) {
+        return false;
+      }
+
+      if (!this.state.UseSharedQuery && StringExtensions.IsNullOrEmpty(report.Expression)) {
+        return false;
+      }
+      if (!this.state.UseSharedQuery && !parser.validateBoolean(report.Expression)) {
+        return false;
+      }
     }
+
     if (
       report.ReportColumnScope == ReportColumnScope.BespokeColumns &&
       ArrayExtensions.IsNullOrEmpty(report.ColumnIds)
@@ -228,6 +256,7 @@ function mapStateToProps(state: AdaptableState): Partial<ExportPopupProps> {
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
     CurrentReport: state.Export.CurrentReport,
+    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 
@@ -239,6 +268,8 @@ function mapDispatchToProps(
       dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId, description)

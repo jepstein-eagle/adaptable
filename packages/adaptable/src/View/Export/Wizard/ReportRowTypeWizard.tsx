@@ -6,18 +6,14 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 
-import { AdaptablePopover } from '../../AdaptablePopover';
-import {
-  ReportRowScope,
-  MessageType,
-  ReportColumnScope,
-} from '../../../PredefinedConfig/Common/Enums';
+import { ReportRowScope, ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
+import { EMPTY_STRING } from '../../../Utilities/Constants/GeneralConstants';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ReportRowTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportRowsWizardState {
@@ -118,10 +114,12 @@ export class ReportRowTypeWizard
   public Next(): void {
     this.props.Data.ReportRowScope = this.state.ReportRowScope;
     if (
-      this.props.Data.Expression == null ||
+      StringExtensions.IsNullOrEmpty(this.props.Data.Expression) &&
+      StringExtensions.IsNullOrEmpty(this.props.Data.SharedQueryId) &&
       this.state.ReportRowScope != ReportRowScope.ExpressionRows
     ) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+      this.props.Data.Expression = EMPTY_STRING;
+      this.props.Data.SharedQueryId = EMPTY_STRING;
     }
   }
   public Back(): void {

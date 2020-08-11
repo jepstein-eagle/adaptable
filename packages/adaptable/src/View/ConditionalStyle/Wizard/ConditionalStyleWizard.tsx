@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard';
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';
-import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard';
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
+import { ExpressionWizard } from '../../Components/ExpressionWizard';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
@@ -46,7 +44,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               StepName: 'Query Builder',
               Index: 2,
               Element: (
-                <ConditionalStyleExpressionWizard
+                <ExpressionWizard
                   Api={this.props.Api}
                   SharedQueries={this.props.SharedQueries}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
