@@ -16,7 +16,6 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
-  EditableConfigEntityState,
   WizardStatus,
   EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';

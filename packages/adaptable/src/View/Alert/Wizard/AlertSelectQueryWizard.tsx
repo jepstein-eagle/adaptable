@@ -12,6 +12,7 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import CheckBox from '../../../components/CheckBox';
 import { Flex } from 'rebass';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSelectQueryWizardState {
@@ -24,7 +25,9 @@ export class AlertSelectQueryWizard
   constructor(props: AlertSelectQueryWizardProps) {
     super(props);
     this.state = {
-      HasExpression: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression),
+      HasExpression:
+        StringExtensions.IsNotNullOrEmpty(this.props.Data.Expression) ||
+        StringExtensions.IsNotNullOrEmpty(this.props.Data.SharedQueryId),
     };
   }
 
@@ -73,11 +76,9 @@ export class AlertSelectQueryWizard
   }
   public Next(): void {
     // if we have an expression and its null then create an empty one
-    if (
-      !this.state.HasExpression ||
-      (this.state.HasExpression && this.props.Data.Expression == null)
-    ) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    if (!this.state.HasExpression) {
+      this.props.Data.Expression = undefined;
+      this.props.Data.SharedQueryId = undefined;
     }
   }
 
