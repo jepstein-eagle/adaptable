@@ -2593,17 +2593,12 @@ export class Adaptable implements IAdaptable {
         const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
-            const expr = ExpressionHelper.convertFilterToExpressionString(columnFilter);
-            console.log('expr', expr);
-
             if (
-              !parser.evaluate(expr, {
-                data: node.data,
-                filters: {
-                  Positive: 'VALUE() > 0',
-                  Negative: 'VALUE() < 0',
-                },
-              })
+              !ExpressionHelper.evaluateColumnFilter(
+                columnFilter,
+                this.adaptableOptions.filterPredicates,
+                node.data
+              )
             ) {
               return false;
             }

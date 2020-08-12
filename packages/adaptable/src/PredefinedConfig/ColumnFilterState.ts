@@ -39,7 +39,14 @@ export interface ColumnFilterState extends ConfigState {
 
 export interface ColumnFilter extends AdaptableObject {
   ColumnId: string;
-  Filter: Expression;
+  Values?: any[];
+  Predicates?: ColumnFilterPredicate[];
+  Filter?: Expression;
+}
+
+export interface ColumnFilterPredicate {
+  Name: string;
+  Inputs?: any[];
 }
 
 /*

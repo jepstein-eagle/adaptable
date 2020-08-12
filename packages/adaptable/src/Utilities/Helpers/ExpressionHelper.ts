@@ -26,6 +26,7 @@ import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
 import { AdaptableApi } from '../../Api/AdaptableApi';
 import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
+import { FilterPredicate } from '../../AdaptableOptions/FilterPredicates';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -932,6 +933,7 @@ export const ExpressionHelper = {
   OperatorRequiresValue,
   AddMissingProperties,
   convertFilterToExpressionString,
+  evaluateColumnFilter,
 };
 export default ExpressionHelper;
 
@@ -949,4 +951,35 @@ function convertFilterToExpressionString(filter: ColumnFilter) {
   });
 
   return expr.join(' OR ');
+}
+
+function evaluateColumnFilter(
+  filter: ColumnFilter,
+  predicates: FilterPredicate[],
+  data: any
+): boolean {
+  const value = data[filter.ColumnId];
+
+  if (
+    ArrayExtensions.IsNullOrEmpty(filter.Values) &&
+    ArrayExtensions.IsNullOrEmpty(filter.Predicates)
+  ) {
+    return true;
+  }
+
+  if (filter.Values?.includes(value)) {
+    return true;
+  }
+
+  if (
+    filter.Predicates?.some(item => {
+      const predicate = predicates.find(p => p.name === item.Name);
+      if (!predicate) throw `Predicate not found: ${item.Name}`;
+      return predicate.handler(value, ...(item.Inputs || []));
+    })
+  ) {
+    return true;
+  }
+
+  return false;
 }
