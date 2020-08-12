@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface CellValidationSummaryWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -36,9 +34,7 @@ export class CellValidationSummaryWizard
       },
       {
         Key: 'Query',
-        Value: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression)
-          ? ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Api)
-          : 'None',
+        Value: this.setExpressionDescription(this.props.Data),
       },
     ];
 
@@ -48,6 +44,11 @@ export class CellValidationSummaryWizard
         header={StrategyConstants.CellValidationStrategyFriendlyName}
       />
     );
+  }
+
+  private setExpressionDescription(cellValidation: CellValidationRule): string {
+    let expression = this.props.Api.sharedQueryApi.getExpressionForQueryObject(cellValidation);
+    return expression ? expression : 'No Expression';
   }
 
   public canNext(): boolean {
@@ -69,6 +70,9 @@ export class CellValidationSummaryWizard
     return 1;
   }
   public GetIndexStepDecrement() {
-    return ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.Expression) ? 2 : 1;
+    return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.Data.SharedQueryId)
+      ? 2
+      : 1;
   }
 }

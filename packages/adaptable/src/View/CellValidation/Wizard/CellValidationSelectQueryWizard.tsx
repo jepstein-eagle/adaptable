@@ -1,19 +1,15 @@
 import * as React from 'react';
-
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-
 import { AdaptablePopover } from '../../AdaptablePopover';
-
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import WizardPanel from '../../../components/WizardPanel';
-
 import { Flex } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
 import Checkbox from '../../../components/CheckBox';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface CellValidationSelectQueryWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -30,7 +26,9 @@ export class CellValidationSelectQueryWizard
   constructor(props: CellValidationSelectQueryWizardProps) {
     super(props);
     this.state = {
-      HasExpression: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression),
+      HasExpression:
+        StringExtensions.IsNotNullOrEmpty(this.props.Data.Expression) ||
+        StringExtensions.IsNotNullOrEmpty(this.props.Data.SharedQueryId),
     };
   }
 
@@ -77,11 +75,9 @@ export class CellValidationSelectQueryWizard
     return true;
   }
   public Next(): void {
-    if (
-      !this.state.HasExpression ||
-      (this.state.HasExpression && this.props.Data.Expression == null)
-    ) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    if (!this.state.HasExpression) {
+      this.props.Data.Expression = undefined;
+      this.props.Data.SharedQueryId = undefined;
     }
   }
 

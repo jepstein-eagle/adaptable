@@ -8,6 +8,7 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
+import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationWizard } from './Wizard/CellValidationWizard';
@@ -19,6 +20,7 @@ import { CellValidationEntityRow } from './CellValidationEntityRow';
 import {
   EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
@@ -29,6 +31,9 @@ import SimpleButton from '../../components/SimpleButton';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: CellValidationRule[];
@@ -42,11 +47,12 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
 }
 
 class CellValidationPopupComponent extends React.Component<
   CellValidationPopupProps,
-  EditableConfigEntityState
+  EditableExpressionConfigEntityState
 > {
   constructor(props: CellValidationPopupProps) {
     super(props);
@@ -146,6 +152,16 @@ class CellValidationPopupComponent extends React.Component<
             ConfigEntities={null}
             Api={this.props.Api}
             ModalContainer={this.props.ModalContainer}
+            onSetNewSharedQueryName={(newSharedQueryName: string) =>
+              this.setState({
+                NewSharedQueryName: newSharedQueryName,
+              })
+            }
+            onSetUseSharedQuery={(useSharedQuery: boolean) =>
+              this.setState({
+                UseSharedQuery: useSharedQuery,
+              })
+            }
             WizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -179,11 +195,7 @@ class CellValidationPopupComponent extends React.Component<
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
 
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -195,30 +207,45 @@ class CellValidationPopupComponent extends React.Component<
       this.state.EditedAdaptableObject
     );
 
+    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.NewSharedQueryName,
+        Expression: cellValidationRule.Expression,
+      });
+      cellValidationRule.Expression = undefined;
+      cellValidationRule.SharedQueryId = SharedQueryId;
+    }
+
     if (this.state.WizardStatus == WizardStatus.New) {
       this.props.onAddCellValidation(cellValidationRule);
     } else {
       this.props.onEditCellValidation(cellValidationRule);
     }
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 5,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
     let cellValidationRule = this.state.EditedAdaptableObject as CellValidationRule;
-    return (
-      StringExtensions.IsNotNullOrEmpty(cellValidationRule.ColumnId) &&
-      ExpressionHelper.IsNullOrEmptyOrValidExpression(cellValidationRule.Expression) &&
-      StringExtensions.IsNotNullOrEmpty(
-        this.props.Api.internalApi
-          .getValidationService()
-          .createCellValidationDescription(cellValidationRule, this.props.Api.gridApi.getColumns())
-      )
-    );
+
+    if (StringExtensions.IsNullOrEmpty(cellValidationRule.ColumnId)) {
+      return false;
+    }
+    // need to do some validation around the Expression / Shared Query but leave for now
+
+    return true;
+  }
+
+  resetState() {
+    this.setState({
+      EditedAdaptableObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+      NewSharedQueryName: EMPTY_STRING,
+      UseSharedQuery: false,
+    });
   }
 }
 
@@ -236,6 +263,8 @@ function mapDispatchToProps(
       dispatch(CellValidationRedux.CellValidationAdd(cellValidationRule)),
     onEditCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

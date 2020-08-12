@@ -32,7 +32,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
           .getReportService()
           .GetReportExpressionDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
       },
-      //  { Key: 'Schedule', Value: scheduleDescription },
     ];
 
     return (

@@ -39,7 +39,6 @@ interface ConditionalStylePopupProps
   ConditionalStyles: ConditionalStyle[];
   StyleClassNames: string[];
   ColumnCategories: ColumnCategory[];
-  SharedQueries: SharedQuery[];
   onAddConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
@@ -152,7 +151,6 @@ class ConditionalStylePopupComponent extends React.Component<
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
-              SharedQueries={this.props.SharedQueries}
               onSetNewSharedQueryName={newSharedQueryName =>
                 this.setState({
                   NewSharedQueryName: newSharedQueryName,
@@ -197,12 +195,8 @@ class ConditionalStylePopupComponent extends React.Component<
 
   onFinishWizard() {
     const conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
-    // need some way of knowing that we have a new one
-    // if it is then we get a Uuid and make that the query
-    const isNewSharedQuery: boolean = StringExtensions.IsNotNullOrEmpty(
-      this.state.NewSharedQueryName
-    );
-    if (isNewSharedQuery) {
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
       const SharedQueryId = createUuid();
       this.props.onAddSharedQuery({
         Uuid: SharedQueryId,
@@ -210,7 +204,8 @@ class ConditionalStylePopupComponent extends React.Component<
         Expression: conditionalStyle.Expression,
       });
 
-      conditionalStyle.Expression = SharedQueryId;
+      conditionalStyle.Expression = undefined;
+      conditionalStyle.SharedQueryId = SharedQueryId;
     }
 
     if (this.state.WizardStatus == WizardStatus.New) {
@@ -271,7 +266,6 @@ function mapStateToProps(state: AdaptableState): Partial<ConditionalStylePopupPr
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
-    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 

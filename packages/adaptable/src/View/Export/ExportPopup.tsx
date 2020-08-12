@@ -34,6 +34,8 @@ import {
 import EmptyContent from '../../components/EmptyContent';
 import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import * as parser from '../../parser/src';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];
@@ -45,8 +47,6 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
-  SharedQueries: SharedQuery[];
-
   onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
 
   onShare: (
@@ -151,7 +151,6 @@ class ExportPopupComponent extends React.Component<
             ModalContainer={this.props.ModalContainer}
             ConfigEntities={this.props.Reports}
             Api={this.props.Api}
-            SharedQueries={this.props.SharedQueries}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
                 NewSharedQueryName: newSharedQueryName,
@@ -174,11 +173,7 @@ class ExportPopupComponent extends React.Component<
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
 
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -187,17 +182,25 @@ class ExportPopupComponent extends React.Component<
 
   onFinishWizard() {
     let report: Report = this.state.EditedAdaptableObject as Report;
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.NewSharedQueryName,
+        Expression: report.Expression,
+      });
+      report.Expression = undefined;
+      report.SharedQueryId = SharedQueryId;
+    }
+
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditReport(report);
     } else {
       this.props.onAddReport(report);
     }
 
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     this.shouldClosePopupOnFinishWizard = false;
   }
 
@@ -229,6 +232,16 @@ class ExportPopupComponent extends React.Component<
     return true;
   }
 
+  resetState() {
+    this.setState({
+      EditedAdaptableObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+      NewSharedQueryName: EMPTY_STRING,
+      UseSharedQuery: false,
+    });
+  }
+
   onNew() {
     this.setState({
       EditedAdaptableObject: ObjectFactory.CreateEmptyReport(),
@@ -256,7 +269,6 @@ function mapStateToProps(state: AdaptableState): Partial<ExportPopupProps> {
     Reports: state.Export.Reports,
     SystemReports: state.System.SystemReports,
     CurrentReport: state.Export.CurrentReport,
-    SharedQueries: state.SharedQuery.SharedQueries,
   };
 }
 

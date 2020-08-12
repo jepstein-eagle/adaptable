@@ -14,10 +14,6 @@ export class ConditionalStyleSharedEntity extends React.Component<
   render(): any {
     let conditionalStyle: ConditionalStyle = this.props.Entity as ConditionalStyle;
 
-    let expression: string = StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression)
-      ? conditionalStyle.Expression
-      : this.props.Api.sharedQueryApi.getExpressionForQuery(conditionalStyle.SharedQueryId);
-
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
@@ -28,7 +24,9 @@ export class ConditionalStyleSharedEntity extends React.Component<
         <Flex flex={3}>
           <StyleVisualItem Style={conditionalStyle.Style} />
         </Flex>
-        <Flex flex={5}>{expression}</Flex>
+        <Flex flex={5}>
+          {this.props.Api.sharedQueryApi.getExpressionForQueryObject(conditionalStyle)}
+        </Flex>
       </Flex>
     );
   }

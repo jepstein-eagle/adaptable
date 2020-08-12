@@ -3,7 +3,6 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../Wizard/Interface/IAdaptableWizard';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import ExpressionEditor from '../../components/ExpressionEditor';
 import Radio from '../../components/Radio';
 import { Flex } from 'rebass';
@@ -16,7 +15,6 @@ import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { QueryObject } from '../../PredefinedConfig/Common/QueryObject';
 
 export interface ExpressionWizardProps extends AdaptableWizardStepProps<QueryObject> {
-  SharedQueries: SharedQuery[];
   onSetNewSharedQueryName: (newSharedQueryName: string) => void;
   onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
@@ -97,7 +95,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                   () => this.props.UpdateGoBackState()
                 )
               }
-              options={this.props.SharedQueries.map(item => ({
+              options={this.props.Api.sharedQueryApi.getAllSharedQuery().map(item => ({
                 value: item.Uuid,
                 label: item.Name,
               }))}

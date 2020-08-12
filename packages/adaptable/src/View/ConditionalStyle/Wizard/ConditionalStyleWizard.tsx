@@ -5,13 +5,11 @@ import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   StyleClassNames: string[];
-  SharedQueries: SharedQuery[];
   onSetNewSharedQueryName: (newSharedQueryName: string) => void;
   onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
@@ -46,7 +44,6 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Element: (
                 <ExpressionWizard
                   Api={this.props.Api}
-                  SharedQueries={this.props.SharedQueries}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -55,12 +52,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             {
               StepName: 'Summary',
               Index: 3,
-              Element: (
-                <ConditionalStyleSummaryWizard
-                  Api={this.props.Api}
-                  SharedQueries={this.props.SharedQueries}
-                />
-              ),
+              Element: <ConditionalStyleSummaryWizard Api={this.props.Api} />,
             },
           ]}
           Data={this.props.EditedAdaptableObject}

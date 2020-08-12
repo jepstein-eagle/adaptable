@@ -1,5 +1,6 @@
 import { SharedQueryState, SharedQuery } from '../PredefinedConfig/SharedQueryState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
+import { QueryObject } from '../PredefinedConfig/Common/QueryObject';
 
 export interface SharedQueryApi {
   /**
@@ -15,7 +16,9 @@ export interface SharedQueryApi {
 
   getSharedQueryById(sharedQueryId: string): SharedQuery | undefined;
 
-  getExpressionForQuery(sharedQueryId: TypeUuid): string | undefined;
+  getExpressionForSharedQueryId(sharedQueryId: TypeUuid): string | undefined;
+
+  getExpressionForQueryObject(queryObject: QueryObject): string | undefined;
 
   isSharedQuery(query: string | TypeUuid): boolean;
 

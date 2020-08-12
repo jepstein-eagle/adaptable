@@ -86,12 +86,7 @@ export class ReportService implements IReportService {
         case ReportRowScope.SelectedRows:
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
-          if (StringExtensions.IsNotNullOrEmpty(report.SharedQueryId)) {
-            return this.adaptable.api.sharedQueryApi.getExpressionForQuery(report.SharedQueryId);
-          } else if (StringExtensions.IsNotNullOrEmpty(report.Expression)) {
-            return report.Expression;
-          }
-          return undefined;
+          return this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(report);
       }
     }
   }
@@ -170,14 +165,9 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: string;
-        if (StringExtensions.IsNotNullOrEmpty(report.SharedQueryId)) {
-          expressionToCheck = this.adaptable.api.sharedQueryApi.getExpressionForQuery(
-            report.SharedQueryId
-          );
-        } else if (StringExtensions.IsNotNullOrEmpty(report.Expression)) {
-          expressionToCheck = report.Expression;
-        }
+        let expressionToCheck: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+          report
+        );
 
         this.adaptable.forAllRowNodesDo((row: any) => {
           if (
@@ -271,14 +261,9 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: string;
-        if (StringExtensions.IsNotNullOrEmpty(report.SharedQueryId)) {
-          expressionToCheck = this.adaptable.api.sharedQueryApi.getExpressionForQuery(
-            report.SharedQueryId
-          );
-        } else if (StringExtensions.IsNotNullOrEmpty(report.Expression)) {
-          expressionToCheck = report.Expression;
-        }
+        let expressionToCheck: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+          report
+        );
 
         this.adaptable.forAllRowNodesDo((row: any) => {
           if (

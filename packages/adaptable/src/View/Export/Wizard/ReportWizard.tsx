@@ -13,7 +13,6 @@ import { ReportSettingsWizard } from './ReportSettingsWizard';
 
 export interface ReportWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ReportWizard> {
-  SharedQueries: SharedQuery[];
   onSetNewSharedQueryName: (newSharedQueryName: string) => void;
   onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
@@ -48,7 +47,6 @@ export class ReportWizard extends React.Component<ReportWizardProps, {}> {
               Element: (
                 <ExpressionWizard
                   Api={this.props.Api}
-                  SharedQueries={this.props.SharedQueries}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
