@@ -1,16 +1,14 @@
 import { ConfigState } from './ConfigState';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { Expression } from './Common/Expression';
+import { QueryObject } from './Common/QueryObject';
 
 export interface PlusMinusState extends ConfigState {
   PlusMinusRules?: PlusMinusRule[];
 }
 
-export interface PlusMinusRule extends AdaptableObject {
+export interface PlusMinusRule extends QueryObject {
   ColumnId: string;
   IsDefaultNudge: boolean;
   NudgeValue: number;
-  Expression?: Expression;
 }
 
 /*

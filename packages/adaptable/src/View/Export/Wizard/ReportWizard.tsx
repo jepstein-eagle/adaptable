@@ -8,14 +8,10 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import { ReportSettingsWizard } from './ReportSettingsWizard';
 
 export interface ReportWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ReportWizard> {
-  onSetNewSharedQueryName: (newSharedQueryName: string) => void;
-  onSetUseSharedQuery: (useSharedQuery: boolean) => void;
-}
+  extends AdaptableObjectExpressionAdaptableWizardProps<ReportWizard> {}
 
 export class ReportWizard extends React.Component<ReportWizardProps, {}> {
   render() {

@@ -10,10 +10,7 @@ import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Inte
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
 
 export interface CellValidationWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<CellValidationWizard> {
-  onSetNewSharedQueryName: (newSharedQueryName: string) => void;
-  onSetUseSharedQuery: (useSharedQuery: boolean) => void;
-}
+  extends AdaptableObjectExpressionAdaptableWizardProps<CellValidationWizard> {}
 
 export class CellValidationWizard extends React.Component<CellValidationWizardProps, {}> {
   render() {

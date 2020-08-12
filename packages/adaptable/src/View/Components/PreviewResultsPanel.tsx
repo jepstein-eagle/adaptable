@@ -114,19 +114,18 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     ) : null;
   }
 
-  private getValidationErrorMessage(CellValidations: CellValidationRule[]): string {
+  private getValidationErrorMessage(cellValidations: CellValidationRule[]): string {
     let columns = this.props.Api.gridApi.getColumns();
     let validationService: IValidationService = this.props.Api.internalApi.getValidationService();
     let returnString: string[] = [];
-    for (let CellValidation of CellValidations) {
-      let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
-        CellValidation.Expression
-      )
-        ? ' when ' +
-          ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Api)
-        : '';
+    for (let cellValidation of cellValidations) {
+      let expression:
+        | string
+        | undefined = this.props.Api.sharedQueryApi.getExpressionForQueryObject(cellValidation);
+
+      let expressionDescription: string = expression ? ' when ' + expression : '';
       returnString.push(
-        validationService.createCellValidationDescription(CellValidation, columns) +
+        validationService.createCellValidationDescription(cellValidation, columns) +
           expressionDescription
       );
     }

@@ -3,12 +3,12 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { PercentBarSelectColumnWizard } from '././PercentBarSelectColumnWizard';
 import { PercentBarSummaryWizard } from '././PercentBarSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { PercentBarSettingsWizard } from './PercentBarSettingsWizard';
 import { PercentBarRangesWizard } from './PercentBarRangesWizard';
 
 export interface PercentBarWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<PercentBarWizard> {}
+  extends AdaptableObjectAdaptableWizardProps<PercentBarWizard> {}
 
 export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}> {
   render() {

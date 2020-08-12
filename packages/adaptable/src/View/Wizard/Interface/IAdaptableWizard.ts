@@ -21,7 +21,8 @@ export interface AdaptableWizardStepProps<T> {
 // props for a wizard that wraps a config entity that contans an Expression
 export interface AdaptableObjectExpressionAdaptableWizardProps<View>
   extends AdaptableObjectAdaptableWizardProps<View> {
-  Api: AdaptableApi;
+  onSetNewSharedQueryName: (newSharedQueryName: string) => void;
+  onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
 
 // props for a basic wizard
@@ -37,4 +38,5 @@ export interface AdaptableWizardProps<View> extends React.ClassAttributes<View> 
 export interface AdaptableObjectAdaptableWizardProps<View> extends AdaptableWizardProps<View> {
   ConfigEntities: AdaptableObject[];
   EditedAdaptableObject: AdaptableObject;
+  Api: AdaptableApi;
 }

@@ -3,11 +3,11 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { DataSourceSettingsWizard } from './DataSourceSettingsWizard';
 import { DataSourceSummaryWizard } from './DataSourceSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataSource } from '../../../PredefinedConfig/DataSourceState';
 
 export interface DataSourceWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
+  extends AdaptableObjectAdaptableWizardProps<DataSourceWizard> {}
 
 export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}> {
   render() {

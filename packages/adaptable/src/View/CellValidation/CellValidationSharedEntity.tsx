@@ -15,6 +15,9 @@ export class CellValidationSharedEntity extends React.Component<
   render(): any {
     let cellVal: CellValidationRule = this.props.Entity as CellValidationRule;
 
+    let expression = this.props.Api.sharedQueryApi.getExpressionForQueryObject(cellVal);
+    let expressionString: string = expression ? expression : 'No Expression';
+
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>{this.props.Api.gridApi.getFriendlyNameFromColumnId(cellVal.ColumnId)}</Flex>
@@ -23,11 +26,7 @@ export class CellValidationSharedEntity extends React.Component<
             .getValidationService()
             .createCellValidationDescription(cellVal, this.props.Api.gridApi.getColumns())}
         </Flex>
-        <Flex flex={4}>
-          {ExpressionHelper.IsNotNullOrEmptyExpression(cellVal.Expression)
-            ? ExpressionHelper.ConvertExpressionToString(cellVal.Expression, this.props.Api)
-            : 'No Expression'}
-        </Flex>
+        <Flex flex={4}>{expressionString}</Flex>
       </Flex>
     );
   }

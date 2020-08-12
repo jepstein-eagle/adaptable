@@ -5,10 +5,10 @@ import { SharedQueryExpressionWizard } from './SharedQueryExpressionWizard';
 import { SharedQuerySettingsWizard } from './SharedQuerySettingsWizard';
 import { SharedQuerySummaryWizard } from './SharedQuerySummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface SharedQueryWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<SharedQueryWizard> {}
+  extends AdaptableObjectAdaptableWizardProps<SharedQueryWizard> {}
 
 export class SharedQueryWizard extends React.Component<SharedQueryWizardProps, {}> {
   render() {

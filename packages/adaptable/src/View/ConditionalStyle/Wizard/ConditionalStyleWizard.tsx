@@ -10,8 +10,6 @@ import { ExpressionWizard } from '../../Components/ExpressionWizard';
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
   StyleClassNames: string[];
-  onSetNewSharedQueryName: (newSharedQueryName: string) => void;
-  onSetUseSharedQuery: (useSharedQuery: boolean) => void;
 }
 
 export class ConditionalStyleWizard extends React.Component<ConditionalStyleWizardProps, {}> {

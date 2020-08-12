@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ScheduleSummaryWizard } from './ScheduleSummaryWizard';
 import { ScheduleSettingsWizard } from './ScheduleSettingsWizard';
 import { ScheduleScheduleWizard } from './ScheduleScheduleWizard';
 
-export interface ScheduleWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ScheduleWizard> {}
+export interface ScheduleWizardProps extends AdaptableObjectAdaptableWizardProps<ScheduleWizard> {}
 
 export class ScheduleWizard extends React.Component<ScheduleWizardProps, {}> {
   render() {

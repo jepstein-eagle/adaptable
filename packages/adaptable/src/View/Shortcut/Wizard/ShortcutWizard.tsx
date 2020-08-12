@@ -4,10 +4,9 @@ import { ShortcutSettingsWizard } from './ShortcutSettingsWizard';
 import { ShortcutSummaryWizard } from './ShortcutSummaryWizard';
 import { ShortcutTypeWizard } from './ShortcutTypeWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
-export interface ShortcutWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ShortcutWizard> {
+export interface ShortcutWizardProps extends AdaptableObjectAdaptableWizardProps<ShortcutWizard> {
   NumericKeysAvailable: Array<string>;
   DateKeysAvailable: Array<string>;
 }

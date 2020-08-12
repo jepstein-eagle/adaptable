@@ -6,11 +6,11 @@ import { FormatColumnStyleWizard } from './FormatColumnStyleWizard';
 import { FormatColumnSummaryWizard } from './FormatColumnSummaryWizard';
 import { FormatColumnFormatWizard } from './FormatColumnFormatWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { FormatColumnAlignmentWizard } from './FormatColumnAlignmentWizard';
 
 export interface FormatColumnWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<FormatColumnWizard> {
+  extends AdaptableObjectAdaptableWizardProps<FormatColumnWizard> {
   StyleClassNames: string[];
 }
 

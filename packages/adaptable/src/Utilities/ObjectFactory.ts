@@ -155,7 +155,8 @@ export function CreateEmptyPlusMinusRule(): PlusMinusRule {
     ColumnId: EMPTY_STRING,
     IsDefaultNudge: false,
     NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-    Expression: null,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 

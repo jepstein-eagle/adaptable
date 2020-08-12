@@ -65,9 +65,9 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     return <AdaptableObjectRow colItems={colItems} />;
   }
 
-  private wrapExpressionDescription(PlusMinusRule: PlusMinusRule): string {
-    return PlusMinusRule.IsDefaultNudge
+  private wrapExpressionDescription(plusMinusRule: PlusMinusRule): string {
+    return plusMinusRule.IsDefaultNudge
       ? '[Default Column Nudge Value]'
-      : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.api);
+      : this.props.api.sharedQueryApi.getExpressionForQueryObject(plusMinusRule);
   }
 }

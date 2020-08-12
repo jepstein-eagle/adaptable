@@ -99,9 +99,11 @@ export class ValidationService implements IValidationService {
             expressionRule
           );
 
-          let isSatisfiedExpression: boolean = parser.evaluate(expression, {
-            data: dataChangedInfo.RowNode.data,
-          });
+          let isSatisfiedExpression: boolean =
+            dataChangedInfo.RowNode != null &&
+            parser.evaluate(expression, {
+              data: dataChangedInfo.RowNode.data,
+            });
           if (
             isSatisfiedExpression &&
             this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo, columns)

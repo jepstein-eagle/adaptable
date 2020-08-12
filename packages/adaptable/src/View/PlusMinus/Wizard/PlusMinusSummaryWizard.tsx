@@ -30,7 +30,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
         Key: 'Custom Rule',
         Value: this.props.Data.IsDefaultNudge
           ? 'None'
-          : ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Api),
+          : this.props.Api.sharedQueryApi.getExpressionForQueryObject(this.props.Data),
       },
     ];
 

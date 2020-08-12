@@ -5,6 +5,7 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
+import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
@@ -17,6 +18,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import {
   EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
@@ -30,6 +32,9 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;
@@ -39,6 +44,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -47,7 +53,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
 
 class PlusMinusPopupComponent extends React.Component<
   PlusMinusPopupProps,
-  EditableConfigEntityState
+  EditableExpressionConfigEntityState
 > {
   constructor(props: PlusMinusPopupProps) {
     super(props);
@@ -146,6 +152,16 @@ class PlusMinusPopupComponent extends React.Component<
               WizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
               Api={this.props.Api}
+              onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                this.setState({
+                  NewSharedQueryName: newSharedQueryName,
+                })
+              }
+              onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                this.setState({
+                  UseSharedQuery: useSharedQuery,
+                })
+              }
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -174,11 +190,7 @@ class PlusMinusPopupComponent extends React.Component<
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
     }
@@ -186,16 +198,24 @@ class PlusMinusPopupComponent extends React.Component<
 
   onFinishWizard() {
     let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.NewSharedQueryName,
+        Expression: plusMinus.Expression,
+      });
+      plusMinus.Expression = undefined;
+      plusMinus.SharedQueryId = SharedQueryId;
+    }
+
     if (this.state.WizardStatus == WizardStatus.Edit) {
       this.props.onEditPlusMinusRule(plusMinus);
     } else {
       this.props.onAddPlusMinusRule(plusMinus);
     }
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     this.shouldClosePopupOnFinishWizard = false;
   }
 
@@ -205,8 +225,19 @@ class PlusMinusPopupComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
-        ExpressionHelper.IsNullOrEmptyOrValidExpression(plusMinus.Expression))
+        StringExtensions.IsNullOrEmpty(plusMinus.Expression) ||
+        StringExtensions.IsNullOrEmpty(plusMinus.SharedQueryId))
     );
+  }
+
+  resetState() {
+    this.setState({
+      EditedAdaptableObject: null,
+      WizardStartIndex: 0,
+      WizardStatus: WizardStatus.None,
+      NewSharedQueryName: EMPTY_STRING,
+      UseSharedQuery: false,
+    });
   }
 
   onColumnDefaultNudgeValueChange(plusMinusRule: PlusMinusRule, event: React.FormEvent<any>) {
@@ -276,6 +307,8 @@ function mapDispatchToProps(
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

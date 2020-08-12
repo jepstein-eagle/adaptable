@@ -10,7 +10,6 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
@@ -19,6 +18,7 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import * as parser from '../parser/src';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(adaptable: IAdaptable) {
@@ -111,21 +111,23 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
           }
           let newValue: GridCell;
           //we try to find a condition with an expression for that column that matches the record
-          let columnNudgesWithExpression = rulesForColumn.filter(x => !x.IsDefaultNudge);
-          for (let columnNudge of columnNudgesWithExpression) {
-            if (
-              ExpressionHelper.checkForExpression(
-                columnNudge.Expression,
-                selectedCell.primaryKeyValue,
-                columns,
-                this.adaptable
-              )
-            ) {
+          let plusMinusRulesWithExpression = rulesForColumn.filter(x => !x.IsDefaultNudge);
+          for (let plusMinusRule of plusMinusRulesWithExpression) {
+            const expression: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+              plusMinusRule
+            );
+
+            let rowNode = this.adaptable.getRowNodeForPrimaryKey(selectedCell.primaryKeyValue);
+            let isSatisfiedExpression: boolean = parser.evaluate(expression, {
+              data: rowNode.data,
+            });
+
+            if (isSatisfiedExpression) {
               newValue = {
                 primaryKeyValue: selectedCell.primaryKeyValue,
                 columnId: selectedCell.columnId,
-                rawValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
-                displayValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
+                rawValue: selectedCell.rawValue + plusMinusRule.NudgeValue * side,
+                displayValue: selectedCell.rawValue + plusMinusRule.NudgeValue * side,
               };
             }
           }
