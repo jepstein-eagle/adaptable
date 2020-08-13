@@ -94,7 +94,7 @@ export class ListBoxFilterForm extends React.Component<
       <AdaptableFormControlTextClear
         autoFocus={true}
         type="text"
-        placeholder="Search Filters"
+        placeholder="Search Column Values"
         value={this.state.FilterValue}
         OnTextChange={x => this.onUpdateFilterSearch(x)}
       />
