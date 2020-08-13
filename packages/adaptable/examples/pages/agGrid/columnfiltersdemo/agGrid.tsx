@@ -57,7 +57,15 @@ async function InitAdaptableDemo() {
     },
     {
       name: 'Contains',
-      handler: (value, input) => String(value).indexOf(String(input)) !== -1,
+      handler: (value, input) => {
+        const v = adaptableOptions.queryOptions?.ignoreCaseInQueries
+          ? String(value)
+          : String(value).toLocaleLowerCase();
+        const i = adaptableOptions.queryOptions?.ignoreCaseInQueries
+          ? String(input)
+          : String(input).toLocaleLowerCase();
+        return v.indexOf(i) !== -1;
+      },
       inputs: [{ type: 'text' }],
       scope: { DataType: 'String' },
     },
