@@ -953,11 +953,9 @@ function convertFilterToExpressionString(filter: ColumnFilter) {
   return expr.join(' OR ');
 }
 
-function evaluateColumnFilter(
-  filter: ColumnFilter,
-  predicates: FilterPredicate[],
-  data: any
-): boolean {
+function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any): boolean {
+  const adaptableOptions = api.internalApi.getAdaptableOptions();
+  const predicates = adaptableOptions.filterPredicates;
   const value = data[filter.ColumnId];
 
   if (
@@ -967,15 +965,28 @@ function evaluateColumnFilter(
     return true;
   }
 
+  if (value === null || value === undefined) {
+    return false;
+  }
+
   if (filter.Values?.includes(value)) {
     return true;
   }
 
   if (
     filter.Predicates?.some(item => {
-      const predicate = predicates.find(p => p.name === item.Name);
-      if (!predicate) throw `Predicate not found: ${item.Name}`;
-      return predicate.handler(value, ...(item.Inputs || []));
+      const predicate = predicates.find(p => p.id === item.PredicateId);
+      if (!predicate) throw `Predicate not found: ${item.PredicateId}`;
+      try {
+        return predicate.handler({
+          api,
+          value,
+          inputs: item.Inputs,
+        });
+      } catch (error) {
+        console.error(`Error in predicate ${item.PredicateId}`, error);
+        return false;
+      }
     })
   ) {
     return true;

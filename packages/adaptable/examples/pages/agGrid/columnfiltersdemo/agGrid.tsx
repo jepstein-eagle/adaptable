@@ -7,21 +7,26 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
 
-import { GridOptions, RowNode } from '@ag-grid-community/all-modules';
-import {
-  AdaptableOptions,
-  PredefinedConfig,
-  AdaptableApi,
-  SearchChangedEventArgs,
-} from '../../../../src/types';
+import { GridOptions } from '@ag-grid-community/all-modules';
+import { AdaptableOptions, PredefinedConfig, AdaptableApi } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { RangeSelectionModule } from '@ag-grid-enterprise/range-selection';
-import { MenuModule } from '@ag-grid-enterprise/menu';
-import { SideBarModule } from '@ag-grid-enterprise/side-bar';
-import { RowGroupingModule } from '@ag-grid-enterprise/row-grouping';
+import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../agGrid';
-import { AdaptableReadyInfo } from '../../../../src/Api/Events/AdaptableReady';
+import Helper from '../../../../src/Utilities/Helpers/Helper';
+import {
+  isToday,
+  isYesterday,
+  isTomorrow,
+  isFuture,
+  isPast,
+  isThisYear,
+  isThisQuarter,
+  isAfter,
+  isBefore,
+  isSameDay,
+} from 'date-fns';
+import { isThisWeek, isThisMonth } from 'date-fns/esm';
 
 var api: AdaptableApi;
 
@@ -38,7 +43,7 @@ async function InitAdaptableDemo() {
 
     vendorGrid: {
       ...gridOptions,
-      modules: [RangeSelectionModule, MenuModule, SideBarModule, RowGroupingModule],
+      modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
   };
@@ -49,48 +54,246 @@ async function InitAdaptableDemo() {
   adaptableOptions.userInterfaceOptions = {
     showAdaptableToolPanel: true,
   };
+  adaptableOptions.filterOptions = {
+    autoApplyFilter: true,
+  };
   adaptableOptions.filterPredicates = [
     {
-      name: 'Positive',
-      handler: value => Number(value) > 0,
+      id: 'Greater Than',
+      label: 'Greater Than',
       scope: { DataType: 'Number' },
-    },
-    {
-      name: 'Contains',
-      handler: (value, input) => {
-        const v = adaptableOptions.queryOptions?.ignoreCaseInQueries
-          ? String(value)
-          : String(value).toLocaleLowerCase();
-        const i = adaptableOptions.queryOptions?.ignoreCaseInQueries
-          ? String(input)
-          : String(input).toLocaleLowerCase();
-        return v.indexOf(i) !== -1;
-      },
-      inputs: [{ type: 'text' }],
-      scope: { DataType: 'String' },
-    },
-    {
-      name: 'Greater Than',
-      handler: (value, input) => Number(value) > Number(input),
       inputs: [{ type: 'number', default: 0 }],
-      scope: { DataType: 'Number' },
+      handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
     },
     {
-      name: 'Between',
-      handler: (value, min, max) => Number(value) > Number(min) && Number(value) < Number(max),
+      id: 'Less Than',
+      label: 'Less Than',
+      scope: { DataType: 'Number' },
+      inputs: [{ type: 'number', default: 0 }],
+      handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
+    },
+    {
+      id: 'Equals',
+      label: 'Equals',
+      scope: { DataType: 'Number' },
+      inputs: [{ type: 'number', default: 0 }],
+      handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
+    },
+    {
+      id: 'Not Equals',
+      label: 'Not Equals',
+      scope: { DataType: 'Number' },
+      inputs: [{ type: 'number', default: 0 }],
+      handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
+    },
+    {
+      id: 'Between',
+      label: 'Between',
+      scope: { DataType: 'Number' },
       inputs: [
         { type: 'number', default: 0 },
         { type: 'number', default: 0 },
       ],
-      scope: { DataType: 'Number' },
+      handler: ({ value, inputs }) =>
+        Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
     },
     {
-      name: 'Today',
-      handler: value => {
-        let today = new Date().setHours(0, 0, 0, 0);
-        return today == value.setHours(0, 0, 0, 0);
+      id: 'Not Between',
+      label: 'Not Between',
+      scope: { DataType: 'Number' },
+      inputs: [
+        { type: 'number', default: 0 },
+        { type: 'number', default: 0 },
+      ],
+      handler: ({ value, inputs }) =>
+        Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
+    },
+    {
+      id: 'Contains',
+      label: 'Contains',
+      scope: { DataType: 'String' },
+      inputs: [{ type: 'text' }],
+      handler: ({ value, inputs, api }) => {
+        const adaptableOptions = api.internalApi.getAdaptableOptions();
+        const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+        const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+        const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+        return v.indexOf(i) !== -1;
       },
+    },
+    {
+      id: 'Not Contains',
+      label: 'Not Contains',
+      scope: { DataType: 'String' },
+      inputs: [{ type: 'text' }],
+      handler: ({ value, inputs, api }) => {
+        const adaptableOptions = api.internalApi.getAdaptableOptions();
+        const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+        const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+        const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+        return v.indexOf(i) === -1;
+      },
+    },
+    {
+      id: 'Starts With',
+      label: 'Starts With',
+      scope: { DataType: 'String' },
+      inputs: [{ type: 'text' }],
+      handler: ({ value, inputs, api }) => {
+        const adaptableOptions = api.internalApi.getAdaptableOptions();
+        const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+        const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+        const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+        return v.startsWith(i);
+      },
+    },
+    {
+      id: 'Ends With',
+      label: 'Ends With',
+      scope: { DataType: 'String' },
+      inputs: [{ type: 'text' }],
+      handler: ({ value, inputs, api }) => {
+        const adaptableOptions = api.internalApi.getAdaptableOptions();
+        const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+        const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+        const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+        return v.endsWith(i);
+      },
+    },
+    {
+      id: 'Regex',
+      label: 'Regex',
+      scope: { DataType: 'String' },
+      inputs: [{ type: 'text' }],
+      handler: ({ value, inputs }) => {
+        return new RegExp(inputs[0]).test(value);
+      },
+    },
+    {
+      id: 'Positive',
+      label: 'Positive',
+      scope: { DataType: 'Number' },
+      handler: ({ value }) => Number(value) > 0,
+    },
+    {
+      id: 'Negative',
+      label: 'Negative',
+      scope: { DataType: 'Number' },
+      handler: ({ value }) => Number(value) < 0,
+    },
+    {
+      id: 'Zero',
+      label: 'Zero',
+      scope: { DataType: 'Number' },
+      handler: ({ value }) => Number(value) == 0,
+    },
+    {
+      id: 'True',
+      label: 'True',
+      scope: { DataType: 'Boolean' },
+      handler: ({ value }) => Boolean(value) === true,
+    },
+    {
+      id: 'False',
+      label: 'False',
+      scope: { DataType: 'Boolean' },
+      handler: ({ value }) => Boolean(value) === false,
+    },
+    {
+      id: 'Blanks',
+      label: 'Blanks',
+      handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
+    },
+    {
+      id: 'Non Blanks',
+      label: 'Non Blanks',
+      handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
+    },
+    {
+      id: 'Today',
+      label: 'Today',
       scope: { DataType: 'Date' },
+      handler: ({ value }) => isToday(value),
+    },
+    {
+      id: 'Yesterday',
+      label: 'Yesterday',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isYesterday(value),
+    },
+    {
+      id: 'Tomorrow',
+      label: 'Tomorrow',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isTomorrow(value),
+    },
+    {
+      id: 'This Week',
+      label: 'This Week',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isThisWeek(value),
+    },
+    {
+      id: 'This Month',
+      label: 'This Month',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isThisMonth(value),
+    },
+    {
+      id: 'This Quarter',
+      label: 'This Quarter',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isThisQuarter(value),
+    },
+    {
+      id: 'This Year',
+      label: 'This Year',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isThisYear(value),
+    },
+    {
+      id: 'In Past',
+      label: 'In Past',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isPast(value),
+    },
+    {
+      id: 'In Future',
+      label: 'In Future',
+      scope: { DataType: 'Date' },
+      handler: ({ value }) => isFuture(value),
+    },
+    {
+      id: 'After',
+      label: 'After',
+      scope: { DataType: 'Date' },
+      inputs: [{ type: 'date' }],
+      handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
+    },
+    {
+      id: 'Before',
+      label: 'Before',
+      scope: { DataType: 'Date' },
+      inputs: [{ type: 'date' }],
+      handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
+    },
+    {
+      id: 'Next Working Day',
+      label: 'Next Working Day',
+      scope: { DataType: 'Date' },
+      handler: ({ value, api }) => {
+        const adaptable = api.internalApi.getAdaptableInstance();
+        return isSameDay(value, adaptable.CalendarService.GetNextWorkingDay());
+      },
+    },
+    {
+      id: 'Previous Working Day',
+      label: 'Previous Working Day',
+      scope: { DataType: 'Date' },
+      handler: ({ value, api }) => {
+        const adaptable = api.internalApi.getAdaptableInstance();
+        return isSameDay(value, adaptable.CalendarService.GetPreviousWorkingDay());
+      },
     },
   ];
 

@@ -2,13 +2,20 @@ import { AdaptableApi } from '../Api/AdaptableApi';
 import { Scope } from '../PredefinedConfig/Common/Scope';
 
 export interface FilterPredicate {
-  name: string;
-  handler: (value: any, ...inputs: any[]) => boolean;
-  inputs?: FilterPredicateInput[];
+  id: string;
+  label: string;
   scope?: Scope;
+  inputs?: FilterPredicateInput[];
+  handler: (params: FilterPredicateParams) => boolean;
 }
 
 export interface FilterPredicateInput {
   type: 'number' | 'text' | 'date';
   default?: any;
+}
+
+export interface FilterPredicateParams {
+  value: any;
+  inputs: any[];
+  api: AdaptableApi;
 }

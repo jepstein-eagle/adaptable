@@ -45,7 +45,7 @@ export interface ColumnFilter extends AdaptableObject {
 }
 
 export interface ColumnFilterPredicate {
-  Name: string;
+  PredicateId: string;
   Inputs?: any[];
 }
 

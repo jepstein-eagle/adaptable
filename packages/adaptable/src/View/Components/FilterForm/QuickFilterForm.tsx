@@ -316,7 +316,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       return;
     }
 
-    this.setState(state as QuickFilterFormState);
+    // this.setState(state as QuickFilterFormState);
   }
 
   clearState(): void {

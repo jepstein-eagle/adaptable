@@ -333,7 +333,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
   private renderColumnPredicate(columnPredicate: FilterPredicate, index: number): JSX.Element {
     const predicate = this.state.editedColumnFilter.Predicates?.find(
-      item => item.Name === columnPredicate.name
+      item => item.PredicateId === columnPredicate.id
     );
     return (
       <Flex key={index}>
@@ -345,7 +345,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           checked={predicate !== undefined}
           onChange={checked => this.toggleColumnPredicate(checked, columnPredicate)}
         >
-          {columnPredicate.name}
+          {columnPredicate.id}
         </CheckBox>
         <Flex flex={1}>
           {predicate !== undefined &&
@@ -442,13 +442,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       editedColumnFilter.Predicates = [
         ...editedColumnFilter.Predicates,
         {
-          Name: predicate.name,
+          PredicateId: predicate.id,
           Inputs: (predicate.inputs || []).map(i => i.default ?? ''),
         },
       ];
     } else {
       editedColumnFilter.Predicates = editedColumnFilter.Predicates.filter(
-        p => p.Name !== predicate.name
+        p => p.PredicateId !== predicate.id
       );
     }
 
@@ -460,7 +460,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     const { value } = e.target as HTMLInputElement;
     const { editedColumnFilter } = this.state;
 
-    editedColumnFilter.Predicates.find(p => p.Name === predicate.name).Inputs[index] = value;
+    editedColumnFilter.Predicates.find(p => p.PredicateId === predicate.id).Inputs[index] = value;
 
     this.setState({ editedColumnFilter });
     this.props.onSetColumnFilter(editedColumnFilter);

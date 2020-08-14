@@ -2595,9 +2595,9 @@ export class Adaptable implements IAdaptable {
           for (const columnFilter of columnFilters) {
             if (
               !ExpressionHelper.evaluateColumnFilter(
+                this.api,
                 columnFilter,
-                this.adaptableOptions.filterPredicates,
-                node.data
+                node.data,
               )
             ) {
               return false;
