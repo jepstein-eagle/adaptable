@@ -1,6 +1,5 @@
 import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
-import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -295,7 +294,6 @@ export const SetLastAppliedShortcut = (
 const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
-  AvailableCalendars: CalendarHelper.getSystemCalendars(),
   IsValidSmartEditSelection: false,
   SmartEditPreviewInfo: null,
   BulkUpdateValidationResult: { IsValid: false, Column: null },

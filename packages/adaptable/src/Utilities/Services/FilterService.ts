@@ -220,7 +220,7 @@ export class FilterService implements IFilterService {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
             return (
-              this.adaptable.CalendarService.GetNextWorkingDay().setHours(0, 0, 0, 0) ==
+              this.adaptable.api.calendarApi.getNextWorkingDay().setHours(0, 0, 0, 0) ==
               new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
             );
           },
@@ -230,7 +230,7 @@ export class FilterService implements IFilterService {
         return {
           IsExpressionSatisfied: (dateToCheck: Date): boolean => {
             return (
-              this.adaptable.CalendarService.GetPreviousWorkingDay().setHours(0, 0, 0, 0) ==
+              this.adaptable.api.calendarApi.getPreviousWorkingDay().setHours(0, 0, 0, 0) ==
               new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
             );
           },

@@ -4,7 +4,6 @@ import { ChartVisibility } from './Common/ChartEnums';
 import { Expression, QueryRange } from './Common/Expression';
 import { InternalState } from './InternalState';
 import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
-import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
@@ -28,7 +27,6 @@ export { OpenFinReport };
 export interface SystemState extends InternalState, IPushPullState, Glue42State, OpenFinState {
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
-  AvailableCalendars: Calendar[];
   IsValidSmartEditSelection: boolean;
   SmartEditPreviewInfo: IPreviewInfo;
   BulkUpdateValidationResult: BulkUpdateValidationResult;

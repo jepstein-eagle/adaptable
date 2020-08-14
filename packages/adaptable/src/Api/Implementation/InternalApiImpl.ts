@@ -7,7 +7,6 @@ import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
-import { Calendar } from '../../PredefinedConfig/CalendarState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
@@ -39,10 +38,6 @@ import { IChartService } from '../../Utilities/Services/Interface/IChartService'
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public getSystemState(): SystemState {
     return this.getAdaptableState().System;
-  }
-
-  public getAvailableCalendars(): Calendar[] {
-    return this.getSystemState().AvailableCalendars;
   }
 
   public setChartData(chartData: ChartData): void {
