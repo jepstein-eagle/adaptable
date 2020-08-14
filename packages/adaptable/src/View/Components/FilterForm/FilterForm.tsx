@@ -211,29 +211,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   render(): any {
     let isFilterable: string = this.isFilterable();
 
-    // TODO extract to service
-    const columnPredicates = this.props.Adaptable.adaptableOptions.filterPredicates.filter(
-      predicate => {
-        if (predicate.scope === undefined) {
-          return true;
-        }
-
-        if (
-          predicate.scope.DataType &&
-          predicate.scope.DataType === this.props.CurrentColumn.DataType
-        ) {
-          return true;
-        }
-
-        if (
-          predicate.scope.ColumnIds &&
-          predicate.scope.ColumnIds.includes(this.props.CurrentColumn.ColumnId)
-        ) {
-          return true;
-        }
-
-        return false;
-      }
+    const columnPredicates = this.props.Adaptable.api.systemFilterApi.getSystemFilterPredicatesForColumn(
+      this.props.CurrentColumn
     );
 
     let uiSelectedColumnValues = this.state.editedColumnFilter?.Values || [];
@@ -345,7 +324,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           checked={predicate !== undefined}
           onChange={checked => this.toggleColumnPredicate(checked, columnPredicate)}
         >
-          {columnPredicate.id}
+          {columnPredicate.label}
         </CheckBox>
         <Flex flex={1}>
           {predicate !== undefined &&

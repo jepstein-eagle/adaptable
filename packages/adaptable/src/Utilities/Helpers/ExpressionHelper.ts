@@ -173,7 +173,7 @@ export function checkForExpression(
     adaptable.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
     adaptable.api.userFilterApi.getAllUserFilter(),
-    adaptable.api.systemFilterApi.getAllSystemFilter(),
+    null,
     adaptable.api.namedFilterApi.getAllNamedFilter(),
     adaptable
   );
@@ -195,7 +195,7 @@ export function checkForExpressionFromRowNode(
     adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
     adaptable.api.userFilterApi.getAllUserFilter(),
-    adaptable.api.systemFilterApi.getAllSystemFilter(),
+    null,
     adaptable.api.namedFilterApi.getAllNamedFilter(),
     adaptable,
     rowNode
@@ -954,8 +954,6 @@ function convertFilterToExpressionString(filter: ColumnFilter) {
 }
 
 function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any): boolean {
-  const adaptableOptions = api.internalApi.getAdaptableOptions();
-  const predicates = adaptableOptions.filterPredicates;
   const value = data[filter.ColumnId];
 
   if (
@@ -975,7 +973,7 @@ function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any
 
   if (
     filter.Predicates?.some(item => {
-      const predicate = predicates.find(p => p.id === item.PredicateId);
+      const predicate = api.systemFilterApi.getSystemFilterPredicateById(item.PredicateId);
       if (!predicate) throw `Predicate not found: ${item.PredicateId}`;
       try {
         return predicate.handler({

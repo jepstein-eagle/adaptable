@@ -118,4 +118,5 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     setSharedEntities: undefined,
     getSharedEntities: undefined,
   },
+  userFilterPredicates: {},
 };

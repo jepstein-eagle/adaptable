@@ -302,5 +302,5 @@ export interface AdaptableOptions {
    */
   userFunctions?: UserFunctions;
 
-  filterPredicates?: FilterPredicate[];
+  userFilterPredicates?: Record<string, FilterPredicate>;
 }

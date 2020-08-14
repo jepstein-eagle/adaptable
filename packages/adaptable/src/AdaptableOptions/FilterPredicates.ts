@@ -6,12 +6,16 @@ export interface FilterPredicate {
   label: string;
   scope?: Scope;
   inputs?: FilterPredicateInput[];
-  handler: (params: FilterPredicateParams) => boolean;
+  handler: FilterPredicateHandler;
 }
 
 export interface FilterPredicateInput {
   type: 'number' | 'text' | 'date';
   default?: any;
+}
+
+export interface FilterPredicateHandler {
+  (params: FilterPredicateParams): boolean;
 }
 
 export interface FilterPredicateParams {

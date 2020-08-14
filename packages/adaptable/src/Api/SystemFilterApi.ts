@@ -1,4 +1,6 @@
 import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
+import { FilterPredicate } from '../AdaptableOptions/FilterPredicates';
+import { AdaptableColumn } from '../types';
 
 /**
  * Provides run-time access to the System Filter section of Adaptable State.
@@ -29,12 +31,11 @@ export interface SystemFilterApi {
   /**
    * Gets all the System Filters currently in the System Filter State
    */
-  getAllSystemFilter(): string[];
+  getAllSystemFilterPredicates(): FilterPredicate[];
 
-  /**
-   * Gets all the System Filters which could be created by Adaptable
-   *
-   * If no System Filters have been set by the users then these will be all in the state
-   */
-  getAllPotentialSystemFilters(): string[];
+  getSystemFilterPredicateById(predicateId: string): FilterPredicate;
+
+  getSystemFilterPredicatesForColumn(column: AdaptableColumn): FilterPredicate[];
+
+  getSystemFilterPredicatesForColumnId(columnId: string): FilterPredicate[];
 }
