@@ -12,6 +12,7 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import Dropdown from '../../components/Dropdown';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
+import cellValidation from '../../components/icons/cell-validation';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityRowProps<CellValidationEntityRow> {
@@ -62,10 +63,9 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     return <AdaptableObjectRow colItems={colItems} />;
   }
 
-  setExpressionDescription(CellValidation: CellValidationRule): string {
-    return ExpressionHelper.IsNotNullOrEmptyExpression(CellValidation.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.api)
-      : 'No Expression';
+  setExpressionDescription(cellValidation: CellValidationRule): string {
+    let expression = this.props.api.sharedQueryApi.getExpressionForQueryObject(cellValidation);
+    return expression ? expression : 'No Expression';
   }
 
   private getColumnandRule(cellValidation: CellValidationRule): string {

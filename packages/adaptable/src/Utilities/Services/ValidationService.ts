@@ -30,6 +30,7 @@ import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
 import { EMPTY_STRING } from '../Constants/GeneralConstants';
 import { AdaptableFunctionName } from '../../types';
+import * as parser from '../../parser/src';
 
 export class ValidationService implements IValidationService {
   constructor(private adaptable: IAdaptable) {
@@ -67,8 +68,7 @@ export class ValidationService implements IValidationService {
             let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
               dataChangedInfo.ColumnId,
               range,
-              ActionMode.StopEdit,
-              ExpressionHelper.CreateEmptyExpression()
+              ActionMode.StopEdit
             );
             failedWarningRules.push(cellValidationRule);
           }
@@ -84,8 +84,10 @@ export class ValidationService implements IValidationService {
       let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
 
       // first check the rules which have expressions
-      let expressionRules: CellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
+      let expressionRules: CellValidationRule[] = editingRules.filter(
+        r =>
+          StringExtensions.IsNotNullOrEmpty(r.Expression) ||
+          StringExtensions.IsNotNullOrEmpty(r.SharedQueryId)
       );
 
       if (expressionRules.length > 0) {
@@ -93,12 +95,15 @@ export class ValidationService implements IValidationService {
         // if the expression is satisfied check if validation rule passes; if it fails then return immediately (if its prevent) or put the rule in return array (if its warning).
         // if expression isnt satisfied then we can ignore the rule but it means that we need subsequently to check all the rules with no expressions
         for (let expressionRule of expressionRules) {
-          let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
-            expressionRule.Expression,
-            dataChangedInfo.PrimaryKeyValue,
-            columns,
-            this.adaptable
+          let expression = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+            expressionRule
           );
+
+          let isSatisfiedExpression: boolean =
+            dataChangedInfo.RowNode != null &&
+            parser.evaluate(expression, {
+              data: dataChangedInfo.RowNode.data,
+            });
           if (
             isSatisfiedExpression &&
             this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo, columns)
@@ -123,8 +128,10 @@ export class ValidationService implements IValidationService {
       }
 
       // now check the rules without expressions
-      let noExpressionRules: CellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
+      let noExpressionRules: CellValidationRule[] = editingRules.filter(
+        r =>
+          StringExtensions.IsNullOrEmpty(r.Expression) &&
+          StringExtensions.IsNullOrEmpty(r.SharedQueryId)
       );
       for (let noExpressionRule of noExpressionRules) {
         if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
@@ -344,22 +351,19 @@ export class ValidationService implements IValidationService {
     };
   }
 
-  public CreateCellValidationMessage(CellValidation: CellValidationRule): string {
+  public CreateCellValidationMessage(cellValidation: CellValidationRule): string {
     let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
     let columnFriendlyName: string = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
-      CellValidation.ColumnId
+      cellValidation.ColumnId
     );
-    let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
-      CellValidation.Expression
-    )
-      ? ' when ' +
-        ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.adaptable.api)
-      : EMPTY_STRING;
-    return (
-      columnFriendlyName +
-      ': ' +
-      this.createCellValidationDescription(CellValidation, columns) +
-      expressionDescription
+    let returnMessage: string =
+      columnFriendlyName + ': ' + this.createCellValidationDescription(cellValidation, columns);
+    let expressionDescription: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+      cellValidation
     );
+    if (expressionDescription) {
+      returnMessage += ' when ' + expressionDescription;
+    }
+    return returnMessage;
   }
 }

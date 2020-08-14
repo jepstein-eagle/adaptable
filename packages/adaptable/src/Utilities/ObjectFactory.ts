@@ -155,7 +155,8 @@ export function CreateEmptyPlusMinusRule(): PlusMinusRule {
     ColumnId: EMPTY_STRING,
     IsDefaultNudge: false,
     NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-    Expression: null,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -312,10 +313,11 @@ export function CreateEmptyReport(): Report {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    Expression: null,
     ColumnIds: null,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -479,9 +481,8 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     Style: CreateEmptyStyle(),
     ConditionalStyleScope: 'Row',
     ExcludeGroupedRows: false,
-    // Query: ExpressionHelper.CreateEmptyNewExpression(),
-    Expression: EMPTY_STRING,
-    SharedQueryId: EMPTY_STRING,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -604,15 +605,15 @@ export function CreateRangeEvaluation(
 export function CreateCellValidationRule(
   columnId: string,
   range: QueryRange,
-  actionMode: ActionMode,
-  expression: Expression
+  actionMode: ActionMode
 ): CellValidationRule {
   return {
     Uuid: createUuid(),
     ColumnId: columnId,
     Range: range,
     ActionMode: actionMode,
-    Expression: expression,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -649,7 +650,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
 
   _systemReports.push({
@@ -658,7 +660,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.VisibleRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
 
   _systemReports.push({
@@ -667,7 +670,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.SelectedCellColumns,
     ReportRowScope: ReportRowScope.SelectedCellRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
 
   _systemReports.push({
@@ -676,7 +680,8 @@ export function CreateSystemReports(): Array<Report> {
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.SelectedRows,
     ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
   return _systemReports;
 }

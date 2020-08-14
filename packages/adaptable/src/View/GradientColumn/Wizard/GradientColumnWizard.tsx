@@ -3,13 +3,13 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { GradientColumnSelectColumnWizard } from './GradientColumnSelectColumnWizard';
 import { GradientColumnSummaryWizard } from './GradientColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { GradientColumnBaseValuesWizard } from './GradientColumnBaseValuesWizard';
 import { GradientColumnPositiveValuesWizard } from './GradientColumnPositiveValuesWizard';
 import { GradientColumnNegativeValuesWizard } from './GradientColumnNegativeValuesWizard';
 
 export interface GradientColumnWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<GradientColumnWizard> {}
+  extends AdaptableObjectAdaptableWizardProps<GradientColumnWizard> {}
 
 export class GradientColumnWizard extends React.Component<GradientColumnWizardProps, {}> {
   render() {

@@ -13,3 +13,8 @@ export interface EditableConfigEntityState {
   WizardStartIndex: number;
   WizardStatus: WizardStatus;
 }
+
+export interface EditableExpressionConfigEntityState extends EditableConfigEntityState {
+  NewSharedQueryName?: string;
+  UseSharedQuery?: boolean;
+}

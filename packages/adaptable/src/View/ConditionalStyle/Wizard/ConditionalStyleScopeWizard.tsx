@@ -9,7 +9,6 @@ import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { Box, Flex, Text } from 'rebass';

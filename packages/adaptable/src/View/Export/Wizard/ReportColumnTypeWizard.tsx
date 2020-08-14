@@ -1,15 +1,10 @@
 import { Report } from '../../../PredefinedConfig/ExportState';
 import * as React from 'react';
-
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-//import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportColumnScope, MessageType } from '../../../PredefinedConfig/Common/Enums';
-
+import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';

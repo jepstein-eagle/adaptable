@@ -73,7 +73,9 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   }
 
   private evaluateExpression(conditionalStyle: ConditionalStyle, data: any) {
-    let expression: string = this.getExpressionForConditionalStyle(conditionalStyle);
+    let expression: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+      conditionalStyle
+    );
     return parser.evaluate(expression, { data });
   }
 
@@ -190,15 +192,5 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
       return false;
     }
     return true;
-  }
-
-  private getExpressionForConditionalStyle(cs: ConditionalStyle): string | undefined {
-    if (StringExtensions.IsNotNullOrEmpty(cs.Expression)) {
-      return cs.Expression;
-    }
-
-    if (StringExtensions.IsNotNullOrEmpty(cs.SharedQueryId)) {
-      return this.adaptable.api.sharedQueryApi.getExpressionForQuery(cs.SharedQueryId);
-    }
   }
 }

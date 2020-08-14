@@ -111,7 +111,6 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            SharedQueries={this.props.SharedQueries}
             onSetNewSharedQueryName={() => {
               throw 'unimplemented';
             }}

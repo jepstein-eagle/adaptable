@@ -24,17 +24,17 @@ export class ConditionalStyleEntityRow extends React.Component<
         ? this.props.api.gridApi.getColumnFromId(conditionalStyle.ColumnId!)
         : undefined;
 
-    let expression: string = StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression)
-      ? conditionalStyle.Expression
-      : this.props.api.sharedQueryApi.getExpressionForQuery(conditionalStyle.SharedQueryId);
-
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={this.getScope(conditionalStyle)} />;
     colItems[1].Content = (
       <EntityRowItem Content={<StyleVisualItem Style={conditionalStyle.Style} />} />
     );
-    colItems[2].Content = <EntityRowItem Content={expression} />;
+    colItems[2].Content = (
+      <EntityRowItem
+        Content={this.props.api.sharedQueryApi.getExpressionForQueryObject(conditionalStyle)}
+      />
+    );
     let buttons: any = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(conditionalStyle)}

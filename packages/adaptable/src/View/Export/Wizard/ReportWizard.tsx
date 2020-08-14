@@ -2,18 +2,18 @@ import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { ReportColumnChooserWizard } from './ReportColumnChooserWizard';
 import { ReportColumnTypeWizard } from './ReportColumnTypeWizard';
-import { ReportExpressionWizard } from './ReportExpressionWizard';
-import { ReportSettingsWizard } from './ReportSettingsWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
+import { ExpressionWizard } from '../../Components/ExpressionWizard';
+import { ReportSettingsWizard } from './ReportSettingsWizard';
 
-export class ReportWizard extends React.Component<
-  AdaptableObjectExpressionAdaptableWizardProps<ReportWizard>,
-  {}
-> {
+export interface ReportWizardProps
+  extends AdaptableObjectExpressionAdaptableWizardProps<ReportWizard> {}
+
+export class ReportWizard extends React.Component<ReportWizardProps, {}> {
   render() {
     return (
       <div>
@@ -40,7 +40,13 @@ export class ReportWizard extends React.Component<
             {
               StepName: 'Rows',
               Index: 3,
-              Element: <ReportExpressionWizard Api={this.props.Api} />,
+              Element: (
+                <ExpressionWizard
+                  Api={this.props.Api}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
+                />
+              ),
             },
             {
               StepName: 'Settings',

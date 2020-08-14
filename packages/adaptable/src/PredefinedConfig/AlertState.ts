@@ -1,6 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression, QueryRange } from './Common/Expression';
+import { QueryObject } from './Common/QueryObject';
 
 /**
  * The Predefined Configuration for the Alert function
@@ -101,7 +102,7 @@ export interface AlertState extends ConfigState {
  *
  * See {@link AlertState|Alert State} for how to use this object.
  */
-export interface AlertDefinition extends AdaptableObject {
+export interface AlertDefinition extends QueryObject {
   /**
    * The Id (fieldname) of the column whose change will trigger the alert
    */
@@ -119,7 +120,7 @@ export interface AlertDefinition extends AdaptableObject {
    *
    * See Expression Object Config for more information.
    */
-  Expression?: Expression;
+  //Expression?: Expression;
 
   /**
    * The type of the Alert - will influence how the Alert is logged and also the colour and icon displayed.

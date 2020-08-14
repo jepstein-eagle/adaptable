@@ -60,10 +60,9 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     return <AdaptableObjectRow colItems={colItems} />;
   }
 
-  setExpressionDescription(Alert: AlertDefinition): string {
-    return ExpressionHelper.IsNotNullOrEmptyExpression(Alert.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.api)
-      : 'No Expression';
+  setExpressionDescription(alert: AlertDefinition): string {
+    let expression = this.props.api.sharedQueryApi.getExpressionForQueryObject(alert);
+    return expression ? expression : 'No Expression';
   }
 
   private getColumnandRule(Alert: AlertDefinition): string {

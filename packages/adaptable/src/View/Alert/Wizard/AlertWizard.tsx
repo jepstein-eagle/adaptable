@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { AlertSelectColumnWizard } from './AlertSelectColumnWizard';
-import { AlertExpressionWizard } from './AlertExpressionWizard';
 import { AlertRulesWizard } from './AlertRulesWizard';
 import { AlertSummaryWizard } from './AlertSummaryWizard';
 import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
@@ -9,6 +8,7 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from './AlertTypeWizard';
 import { AlertScopeWizard } from './AlertScopeWizard';
+import { ExpressionWizard } from '../../Components/ExpressionWizard';
 
 export interface AlertWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<AlertWizard> {}
@@ -50,7 +50,13 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
             {
               StepName: 'Query Builder',
               Index: 5,
-              Element: <AlertExpressionWizard Api={this.props.Api} />,
+              Element: (
+                <ExpressionWizard
+                  Api={this.props.Api}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
+                />
+              ),
             },
             {
               StepName: 'Summary',

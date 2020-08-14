@@ -1,7 +1,6 @@
 import { ConfigState } from './ConfigState';
-import { AdaptableObject } from './Common/AdaptableObject';
 import { AdaptableStyle } from './Common/AdaptableStyle';
-import { TypeUuid } from './Uuid';
+import { QueryObject } from './Common/QueryObject';
 
 /**
  * The Predefined Configuration for the Conditional Style function
@@ -91,7 +90,7 @@ export interface ConditionalStyleState extends ConfigState {
 /**
  * The ConditionalStyle object used in the Conditional Style function.
  */
-export interface ConditionalStyle extends AdaptableObject {
+export interface ConditionalStyle extends QueryObject {
   /**
    * The column which will be styled (if the scope is Column)
    */
@@ -106,15 +105,6 @@ export interface ConditionalStyle extends AdaptableObject {
    * Where the Conditional Style is applied:  Either at Column, Row or (if there are any) Column Category level.
    */
   ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType'
-
-  /**
-   * When the Style should be applied.  Only rows that match the Expression will be styled.
-   */
-  //Query?: AdaptableQuery;
-
-  Expression?: string;
-
-  SharedQueryId?: TypeUuid;
 
   /**
    * The Style to apply when the rule is matched.
@@ -134,20 +124,3 @@ export interface ConditionalStyle extends AdaptableObject {
 
   //  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
-
-/*
-A collection of Conditional Styles
-
-An IConditionalStyle consists of 5 properties: (see section below for more information).
-
-ColumnId: The column which will be styled (if there is one)
-
-ColumnCategoryId: The Column Category which will have all its columns styled.
-
-ConditionalStyleScope: Where the Style will be applied.  Possible values are: Column, Row, ColumnCategory
-
-Expression: When the Style should be applied.  Only rows that match the Expression will be styled.  See Expression Object Config for more details.
-
-Style: The style to apply.  See Style Object Config for more details.
-
-*/

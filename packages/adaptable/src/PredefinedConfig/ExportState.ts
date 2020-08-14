@@ -2,6 +2,7 @@ import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
 import { BaseSchedule } from './Common/Schedule';
+import { QueryObject } from './Common/QueryObject';
 
 /**
  * The Predefined Configuration for the Export function
@@ -120,7 +121,7 @@ export interface ExportState extends ConfigState {
   Reports?: Report[];
 }
 
-export interface Report extends AdaptableObject {
+export interface Report extends QueryObject {
   /**
    * The name of the Report - a mandatory property
    */
@@ -171,7 +172,7 @@ export interface Report extends AdaptableObject {
    *
    * This is only required if the `ReportRowScope` is 'ExpressionRows'
    */
-  Expression?: Expression;
+  // Expression?: Expression;
 }
 
 /**

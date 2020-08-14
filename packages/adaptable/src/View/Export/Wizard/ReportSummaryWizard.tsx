@@ -8,6 +8,7 @@ import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { UIHelper } from '../../UIHelper';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -17,8 +18,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     super(props);
   }
   render(): any {
-    // maybe add schedules later from getting them?
-
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       {
@@ -33,7 +32,6 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
           .getReportService()
           .GetReportExpressionDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
       },
-      //  { Key: 'Schedule', Value: scheduleDescription },
     ];
 
     return (

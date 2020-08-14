@@ -4,10 +4,10 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { FreeTextColumnSettingsWizard } from './FreeTextColumnSettingsWizard';
 import { FreeTextColumnSummaryWizard } from './FreeTextColumnSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface FreeTextColumnWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<FreeTextColumnWizard> {}
+  extends AdaptableObjectAdaptableWizardProps<FreeTextColumnWizard> {}
 
 export class FreeTextColumnWizard extends React.Component<FreeTextColumnWizardProps, {}> {
   render() {

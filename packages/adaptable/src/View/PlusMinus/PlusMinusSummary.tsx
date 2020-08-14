@@ -71,7 +71,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             key={'PM' + index}
             Item1={'Nudge Value: ' + item.NudgeValue}
             Item2={this.wrapExpressionDescription(
-              ExpressionHelper.ConvertExpressionToString(item.Expression, this.props.Api)
+              this.props.Api.sharedQueryApi.getExpressionForQueryObject(item)
             )}
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}
@@ -100,6 +100,12 @@ export class PlusMinusSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
+            onSetNewSharedQueryName={() => {
+              throw 'unimplemented';
+            }}
+            onSetUseSharedQuery={() => {
+              throw 'unimplemented';
+            }}
           />
         )}
       </div>
@@ -154,7 +160,8 @@ export class PlusMinusSummaryComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
-        ExpressionHelper.IsNullOrEmptyOrValidExpression(plusMinus.Expression))
+        StringExtensions.IsNullOrEmpty(plusMinus.Expression) ||
+          StringExtensions.IsNullOrEmpty(plusMinus.SharedQueryId))
     );
   }
 

@@ -10,6 +10,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
@@ -43,9 +44,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
       {
         Key: 'Query',
-        Value: ExpressionHelper.IsNotNullOrEmptyExpression(alertDefinition.Expression)
-          ? ExpressionHelper.ConvertExpressionToString(alertDefinition.Expression, this.props.Api)
-          : 'None',
+        Value: this.setExpressionDescription(this.props.Data),
       },
     ];
 
@@ -55,6 +54,11 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
         header={StrategyConstants.AlertStrategyFriendlyName}
       />
     );
+  }
+
+  private setExpressionDescription(alert: AlertDefinition): string {
+    let expression = this.props.Api.sharedQueryApi.getExpressionForQueryObject(alert);
+    return expression ? expression : 'No Expression';
   }
 
   public canNext(): boolean {
@@ -75,8 +79,11 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   public GetIndexStepIncrement() {
     return 1;
   }
+
   public GetIndexStepDecrement() {
-    let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
-    return ExpressionHelper.IsNullOrEmptyExpression(alertDefinition.Expression) ? 2 : 1;
+    return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.Data.SharedQueryId)
+      ? 2
+      : 1;
   }
 }

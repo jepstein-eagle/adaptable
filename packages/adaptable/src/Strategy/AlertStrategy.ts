@@ -15,6 +15,7 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
+import * as parser from '../parser/src';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(adaptable: IAdaptable) {
@@ -86,24 +87,28 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-
       // first check the rules which have expressions
-      let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
-        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
+      let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(
+        r => this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(r) != undefined
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(expressionAlertDefinitions)) {
         for (let expressionAlertDefinition of expressionAlertDefinitions) {
-          let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
-            expressionAlertDefinition.Expression,
-            dataChangedEvent.PrimaryKeyValue,
-            columns,
-            this.adaptable
+          let expression: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+            expressionAlertDefinition
           );
+
+          let rowNode: any = dataChangedEvent.RowNode;
+          if (!rowNode) {
+            rowNode = this.adaptable.getRowNodeForPrimaryKey(dataChangedEvent.PrimaryKeyValue);
+          }
+          let isSatisfiedExpression: boolean = parser.evaluate(expression, {
+            data: rowNode.data,
+          });
+
           if (
             isSatisfiedExpression &&
-            this.isAlertTriggered(expressionAlertDefinition, dataChangedEvent, columns)
+            this.isAlertTriggered(expressionAlertDefinition, dataChangedEvent)
           ) {
             triggeredAlerts.push(expressionAlertDefinition);
           }
@@ -111,11 +116,11 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       }
 
       // now check the rules without expressions//
-      let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
-        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
+      let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(
+        r => this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(r) == undefined
       );
       for (let noExpressionRule of noExpressionRules) {
-        if (this.isAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {
+        if (this.isAlertTriggered(noExpressionRule, dataChangedEvent)) {
           triggeredAlerts.push(noExpressionRule);
         }
       }
@@ -123,11 +128,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     return triggeredAlerts;
   }
 
-  private isAlertTriggered(
-    alert: AlertDefinition,
-    dataChangedEvent: DataChangedInfo,
-    columns: AdaptableColumn[]
-  ): boolean {
+  private isAlertTriggered(alert: AlertDefinition, dataChangedEvent: DataChangedInfo): boolean {
     // if its any change then alert triggers immediately
     if (alert.Range.Operator == LeafExpressionOperator.AnyChange) {
       return true;

@@ -7,17 +7,12 @@ import {
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
 import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ConditionalStyleSummaryWizardProps
-  extends AdaptableWizardStepProps<ConditionalStyle> {
-  SharedQueries: SharedQuery[];
-}
+  extends AdaptableWizardStepProps<ConditionalStyle> {}
 
 export class ConditionalStyleSummaryWizard
   extends React.Component<ConditionalStyleSummaryWizardProps, {}>
@@ -29,10 +24,6 @@ export class ConditionalStyleSummaryWizard
   render(): any {
     console.log(this.props.Data);
 
-    let expression: string = StringExtensions.IsNotNullOrEmpty(this.props.Data.Expression)
-      ? this.props.Data.Expression
-      : this.props.Api.sharedQueryApi.getExpressionForQuery(this.props.Data.SharedQueryId);
-
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Scope', Value: this.getScope() },
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
@@ -43,7 +34,7 @@ export class ConditionalStyleSummaryWizard
       },
       {
         Key: 'Expression',
-        Value: expression,
+        Value: this.props.Api.sharedQueryApi.getExpressionForQueryObject(this.props.Data),
       },
     ];
 

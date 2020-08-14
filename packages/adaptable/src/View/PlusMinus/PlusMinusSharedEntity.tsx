@@ -20,7 +20,7 @@ export class PlusMinusSharedEntity extends React.Component<
         </Flex>
         <Flex flex={3}>{plusMinusRule.NudgeValue.toString()}</Flex>
         <Flex flex={5}>
-          {ExpressionHelper.ConvertExpressionToString(plusMinusRule.Expression, this.props.Api)}
+          {this.props.Api.sharedQueryApi.getExpressionForQueryObject(plusMinusRule)}
         </Flex>
       </Flex>
     );

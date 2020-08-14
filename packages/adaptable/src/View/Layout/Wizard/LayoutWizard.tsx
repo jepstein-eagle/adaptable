@@ -7,7 +7,7 @@ import { LayoutSettingsWizard } from './LayoutSettingsWizard';
 import { LayoutGridSortWizard } from './LayoutGridSortWizard';
 import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { LayoutGroupedColumnWizard } from './LayoutGroupedColumnWizard';
 import { LayoutSetPivotingWizard } from './LayoutSetPivotingWizard';
@@ -15,8 +15,7 @@ import { LayoutPivotColumnWizard } from './LayoutPivotColumnWizard';
 import { LayoutAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
 import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 
-export interface LayoutWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<LayoutWizard> {
+export interface LayoutWizardProps extends AdaptableObjectAdaptableWizardProps<LayoutWizard> {
   ColumnSorts: ColumnSort[];
 }
 

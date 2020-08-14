@@ -4,11 +4,11 @@ import { ColumnCategorySettingsWizard } from './ColumnCategorySettingsWizard';
 import { ColumnCategoryColumnsWizard } from './ColumnCategoryColumnsWizard';
 import { ColumnCategorySummaryWizard } from './ColumnCategorySummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 
 export interface ColumnCategoryWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ColumnCategoryWizard> {
+  extends AdaptableObjectAdaptableWizardProps<ColumnCategoryWizard> {
   ColumnCategorys: ColumnCategory[];
 }
 
