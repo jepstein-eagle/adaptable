@@ -1,7 +1,6 @@
 import { AdaptableOptions, AdaptablePlugin, AdaptableMenuItem, MenuInfo } from '../types';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
-import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
@@ -108,7 +107,6 @@ export interface IAdaptable {
    *
    * Each takes an instance of Adaptable and is used when it is preferable to accessing a Strategy directly
    */
-  CalendarService: ICalendarService;
   DataService: IDataService;
   ValidationService: IValidationService;
   AuditLogService: IAuditLogService;

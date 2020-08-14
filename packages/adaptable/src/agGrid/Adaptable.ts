@@ -48,7 +48,6 @@ import { AdaptableStore, INIT_STATE } from '../Redux/Store/AdaptableStore';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 
 // services
-import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { StyleService } from '../Utilities/Services/StyleService';
@@ -56,7 +55,6 @@ import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
-import { CalendarService } from '../Utilities/Services/CalendarService';
 import { DataService } from '../Utilities/Services/DataService';
 import { ValidationService } from '../Utilities/Services/ValidationService';
 import { ChartService } from '../Utilities/Services/ChartService';
@@ -235,8 +233,6 @@ export class Adaptable implements IAdaptable {
 
   public vendorGridName: any;
 
-  public CalendarService: ICalendarService;
-
   public DataService: IDataService;
 
   public ValidationService: IValidationService;
@@ -410,7 +406,6 @@ export class Adaptable implements IAdaptable {
     this.initStore();
 
     // create the services
-    this.CalendarService = new CalendarService(this);
     this.ValidationService = new ValidationService(this);
     this.StyleService = new StyleService(this);
     this.ChartService = new ChartService(this);

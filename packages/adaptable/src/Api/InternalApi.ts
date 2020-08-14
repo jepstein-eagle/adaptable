@@ -30,7 +30,7 @@ import { IChartService } from '../Utilities/Services/Interface/IChartService';
 export interface InternalApi {
   // System Redux
   getSystemState(): SystemState;
-  getAvailableCalendars(): Calendar[];
+
   setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;
   getSystemReports(): Report[];

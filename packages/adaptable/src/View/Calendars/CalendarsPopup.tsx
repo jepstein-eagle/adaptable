@@ -21,7 +21,6 @@ import { CalculatedColumnSummaryProps } from '../CalculatedColumn/CalculatedColu
 
 interface CalendarsPopupProps extends StrategyViewPopupProps<CalendarsPopupComponent> {
   CurrentCalendar: string;
-  AvailableCalendars: Calendar[];
   onSelectCalendar: (selectedCalendar: Calendar) => CalendarsRedux.CalendarSelectAction;
 }
 
@@ -53,17 +52,19 @@ class CalendarsPopupComponent extends React.Component<
       { Content: 'Details', Size: 3 },
     ];
 
-    let allCalendars = this.props.AvailableCalendars.map((calendar: Calendar) => {
-      return (
-        <CalendarsEntryRow
-          Calendar={calendar}
-          key={calendar.Name}
-          onSelect={calendar => this.props.onSelectCalendar(calendar)}
-          onShowInformation={calendar => this.onShowInformation(calendar)}
-          CurrentCalendar={this.props.CurrentCalendar}
-        />
-      );
-    });
+    let allCalendars = this.props.Api.calendarApi
+      .getAvailableCalendars()
+      .map((calendar: Calendar) => {
+        return (
+          <CalendarsEntryRow
+            Calendar={calendar}
+            key={calendar.Name}
+            onSelect={calendar => this.props.onSelectCalendar(calendar)}
+            onShowInformation={calendar => this.onShowInformation(calendar)}
+            CurrentCalendar={this.props.CurrentCalendar}
+          />
+        );
+      });
 
     let calenderEntryColItems: IColItem[] = [
       { Content: 'Holiday Name', Size: 6 },
@@ -162,7 +163,6 @@ class CalendarsPopupComponent extends React.Component<
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<CalendarsPopupProps> {
   return {
     CurrentCalendar: state.Calendar.CurrentCalendar,
-    AvailableCalendars: state.System.AvailableCalendars,
   };
 }
 

@@ -83,7 +83,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
           if (activeShortcut) {
             // Date we ONLY replace so dont need to worry about replacing values
             if (activeShortcut.IsDynamic) {
-              valueToReplace = this.adaptable.CalendarService.GetDynamicDate(
+              valueToReplace = this.adaptable.api.calendarApi.getDynamicDate(
                 activeShortcut.ShortcutResult
               );
             } else {
