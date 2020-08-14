@@ -281,33 +281,17 @@ async function InitAdaptableDemo() {
       id: 'Next Working Day',
       label: 'Next Working Day',
       scope: { DataType: 'Date' },
-      handler: ({ value, api }) => {
-        const adaptable = api.internalApi.getAdaptableInstance();
-        return isSameDay(value, adaptable.CalendarService.GetNextWorkingDay());
-      },
+      handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
     },
     {
       id: 'Previous Working Day',
       label: 'Previous Working Day',
       scope: { DataType: 'Date' },
-      handler: ({ value, api }) => {
-        const adaptable = api.internalApi.getAdaptableInstance();
-        return isSameDay(value, adaptable.CalendarService.GetPreviousWorkingDay());
-      },
+      handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
     },
   ];
 
   api = await Adaptable.init(adaptableOptions);
-
-  setTimeout(() => {
-    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-      let nextworkingday = api.calendarApi.getNextWorkingDay();
-      let previousworkingday = api.calendarApi.getPreviousWorkingDay();
-
-      console.log(nextworkingday);
-      console.log(previousworkingday);
-    });
-  }, 3000);
 }
 
 let demoConfig: PredefinedConfig = {};
