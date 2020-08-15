@@ -42,10 +42,255 @@ export const THIS_YEAR_SYSTEM_FILTER = 'This Year';
 export const POSITIVE_SYSTEM_FILTER = 'Positive';
 export const NEGATIVE_SYSTEM_FILTER = 'Negative';
 export const ZERO_SYSTEM_FILTER = 'Zero';
+export const GREATER_THAN = 'GreaterThan';
+export const LESS_THAN = 'LessThan';
 
 // Boolean
 export const TRUE_SYSTEM_FILTER = 'True';
 export const FALSE_SYSTEM_FILTER = 'False';
+
+export const SystemFilterPredicates: FilterPredicate[] = [
+  {
+    id: 'Blanks',
+    label: 'Blanks',
+    handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
+  },
+  {
+    id: 'Non Blanks',
+    label: 'Non Blanks',
+    handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
+  },
+  // Numeric Filters
+  {
+    id: NUMBER_BLANKS,
+    label: 'Blanks',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
+  },
+  {
+    id: NUMBER_GREATER_THAN,
+    label: 'Greater Than',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
+  },
+  {
+    id: 'Number.LessThan',
+    label: 'Less Than',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
+  },
+  {
+    id: 'Equals',
+    label: 'Equals',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
+  },
+  {
+    id: 'Not Equals',
+    label: 'Not Equals',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
+  },
+  {
+    id: 'Between',
+    label: 'Between',
+    scope: { DataType: 'Number' },
+    inputs: [
+      { type: 'number', default: 0 },
+      { type: 'number', default: 0 },
+    ],
+    handler: ({ value, inputs }) =>
+      Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
+  },
+  {
+    id: 'Not Between',
+    label: 'Not Between',
+    scope: { DataType: 'Number' },
+    inputs: [
+      { type: 'number', default: 0 },
+      { type: 'number', default: 0 },
+    ],
+    handler: ({ value, inputs }) =>
+      Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
+  },
+  {
+    id: 'Contains',
+    label: 'Contains',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      return v.indexOf(i) !== -1;
+    },
+  },
+  {
+    id: 'Not Contains',
+    label: 'Not Contains',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      return v.indexOf(i) === -1;
+    },
+  },
+  {
+    id: 'Starts With',
+    label: 'Starts With',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      return v.startsWith(i);
+    },
+  },
+  {
+    id: 'Ends With',
+    label: 'Ends With',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
+      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      return v.endsWith(i);
+    },
+  },
+  {
+    id: 'Regex',
+    label: 'Regex',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
+  },
+  {
+    id: 'Positive',
+    label: 'Positive',
+    scope: { DataType: 'Number' },
+    handler: ({ value }) => Number(value) > 0,
+  },
+  {
+    id: 'Negative',
+    label: 'Negative',
+    scope: { DataType: 'Number' },
+    handler: ({ value }) => Number(value) < 0,
+  },
+  {
+    id: 'Zero',
+    label: 'Zero',
+    scope: { DataType: 'Number' },
+    handler: ({ value }) => Number(value) == 0,
+  },
+  {
+    id: 'True',
+    label: 'True',
+    scope: { DataType: 'Boolean' },
+    handler: ({ value }) => Boolean(value) === true,
+  },
+  {
+    id: 'False',
+    label: 'False',
+    scope: { DataType: 'Boolean' },
+    handler: ({ value }) => Boolean(value) === false,
+  },
+
+  {
+    id: 'Today',
+    label: 'Today',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isToday(value),
+  },
+  {
+    id: 'Yesterday',
+    label: 'Yesterday',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isYesterday(value),
+  },
+  {
+    id: 'Tomorrow',
+    label: 'Tomorrow',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isTomorrow(value),
+  },
+  {
+    id: 'This Week',
+    label: 'This Week',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isThisWeek(value),
+  },
+  {
+    id: 'This Month',
+    label: 'This Month',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isThisMonth(value),
+  },
+  {
+    id: 'This Quarter',
+    label: 'This Quarter',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isThisQuarter(value),
+  },
+  {
+    id: 'This Year',
+    label: 'This Year',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isThisYear(value),
+  },
+  {
+    id: 'In Past',
+    label: 'In Past',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isPast(value),
+  },
+  {
+    id: 'In Future',
+    label: 'In Future',
+    scope: { DataType: 'Date' },
+    handler: ({ value }) => isFuture(value),
+  },
+  {
+    id: 'After',
+    label: 'After',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
+  },
+  {
+    id: 'Before',
+    label: 'Before',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
+  },
+  {
+    id: 'Next Working Day',
+    label: 'Next Working Day',
+    scope: { DataType: 'Date' },
+    handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
+  },
+  {
+    id: 'Previous Working Day',
+    label: 'Previous Working Day',
+    scope: { DataType: 'Date' },
+    handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
+  },
+];
+
+export const SystemFilterPredicatesById = keyBy(SystemFilterPredicates, 'id');
 
 export class FilterService implements IFilterService {
   constructor(private adaptable: IAdaptable) {
@@ -363,237 +608,3 @@ export class FilterService implements IFilterService {
     return stringarr.join('; ');
   }
 }
-
-export const SystemFilterPredicates: FilterPredicate[] = [
-  {
-    id: 'Number.GreaterThan',
-    label: 'Greater Than',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
-    handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
-  },
-  {
-    id: 'Number.LessThan',
-    label: 'Less Than',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
-    handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
-  },
-  {
-    id: 'Equals',
-    label: 'Equals',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
-    handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
-  },
-  {
-    id: 'Not Equals',
-    label: 'Not Equals',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
-    handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
-  },
-  {
-    id: 'Between',
-    label: 'Between',
-    scope: { DataType: 'Number' },
-    inputs: [
-      { type: 'number', default: 0 },
-      { type: 'number', default: 0 },
-    ],
-    handler: ({ value, inputs }) =>
-      Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
-  },
-  {
-    id: 'Not Between',
-    label: 'Not Between',
-    scope: { DataType: 'Number' },
-    inputs: [
-      { type: 'number', default: 0 },
-      { type: 'number', default: 0 },
-    ],
-    handler: ({ value, inputs }) =>
-      Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
-  },
-  {
-    id: 'Contains',
-    label: 'Contains',
-    scope: { DataType: 'String' },
-    inputs: [{ type: 'text' }],
-    handler: ({ value, inputs, api }) => {
-      const adaptableOptions = api.internalApi.getAdaptableOptions();
-      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
-      return v.indexOf(i) !== -1;
-    },
-  },
-  {
-    id: 'Not Contains',
-    label: 'Not Contains',
-    scope: { DataType: 'String' },
-    inputs: [{ type: 'text' }],
-    handler: ({ value, inputs, api }) => {
-      const adaptableOptions = api.internalApi.getAdaptableOptions();
-      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
-      return v.indexOf(i) === -1;
-    },
-  },
-  {
-    id: 'Starts With',
-    label: 'Starts With',
-    scope: { DataType: 'String' },
-    inputs: [{ type: 'text' }],
-    handler: ({ value, inputs, api }) => {
-      const adaptableOptions = api.internalApi.getAdaptableOptions();
-      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
-      return v.startsWith(i);
-    },
-  },
-  {
-    id: 'Ends With',
-    label: 'Ends With',
-    scope: { DataType: 'String' },
-    inputs: [{ type: 'text' }],
-    handler: ({ value, inputs, api }) => {
-      const adaptableOptions = api.internalApi.getAdaptableOptions();
-      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
-      return v.endsWith(i);
-    },
-  },
-  {
-    id: 'Regex',
-    label: 'Regex',
-    scope: { DataType: 'String' },
-    inputs: [{ type: 'text' }],
-    handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
-  },
-  {
-    id: 'Positive',
-    label: 'Positive',
-    scope: { DataType: 'Number' },
-    handler: ({ value }) => Number(value) > 0,
-  },
-  {
-    id: 'Negative',
-    label: 'Negative',
-    scope: { DataType: 'Number' },
-    handler: ({ value }) => Number(value) < 0,
-  },
-  {
-    id: 'Zero',
-    label: 'Zero',
-    scope: { DataType: 'Number' },
-    handler: ({ value }) => Number(value) == 0,
-  },
-  {
-    id: 'True',
-    label: 'True',
-    scope: { DataType: 'Boolean' },
-    handler: ({ value }) => Boolean(value) === true,
-  },
-  {
-    id: 'False',
-    label: 'False',
-    scope: { DataType: 'Boolean' },
-    handler: ({ value }) => Boolean(value) === false,
-  },
-  {
-    id: 'Blanks',
-    label: 'Blanks',
-    handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
-  },
-  {
-    id: 'Non Blanks',
-    label: 'Non Blanks',
-    handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
-  },
-  {
-    id: 'Today',
-    label: 'Today',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isToday(value),
-  },
-  {
-    id: 'Yesterday',
-    label: 'Yesterday',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isYesterday(value),
-  },
-  {
-    id: 'Tomorrow',
-    label: 'Tomorrow',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isTomorrow(value),
-  },
-  {
-    id: 'This Week',
-    label: 'This Week',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isThisWeek(value),
-  },
-  {
-    id: 'This Month',
-    label: 'This Month',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isThisMonth(value),
-  },
-  {
-    id: 'This Quarter',
-    label: 'This Quarter',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isThisQuarter(value),
-  },
-  {
-    id: 'This Year',
-    label: 'This Year',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isThisYear(value),
-  },
-  {
-    id: 'In Past',
-    label: 'In Past',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isPast(value),
-  },
-  {
-    id: 'In Future',
-    label: 'In Future',
-    scope: { DataType: 'Date' },
-    handler: ({ value }) => isFuture(value),
-  },
-  {
-    id: 'After',
-    label: 'After',
-    scope: { DataType: 'Date' },
-    inputs: [{ type: 'date' }],
-    handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
-  },
-  {
-    id: 'Before',
-    label: 'Before',
-    scope: { DataType: 'Date' },
-    inputs: [{ type: 'date' }],
-    handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
-  },
-  {
-    id: 'Next Working Day',
-    label: 'Next Working Day',
-    scope: { DataType: 'Date' },
-    handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
-  },
-  {
-    id: 'Previous Working Day',
-    label: 'Previous Working Day',
-    scope: { DataType: 'Date' },
-    handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
-  },
-];
-
-export const SystemFilterPredicatesById = keyBy(SystemFilterPredicates, 'id');
