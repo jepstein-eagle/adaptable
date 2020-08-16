@@ -194,7 +194,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     if (columnFilter == null) {
       columnFilter = ObjectFactory.CreateColumnFilter(
         this.props.CurrentColumn.ColumnId,
-        expression
+        // was  expression but now that has changed so we pass null for now...
+        null,
+        null
       );
     } else {
       columnFilter.Filter = expression;

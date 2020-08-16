@@ -131,8 +131,6 @@ import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
-import { FilterService } from '../Utilities/Services/FilterService';
 import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
@@ -246,8 +244,6 @@ export class Adaptable implements IAdaptable {
   public LayoutService: ILayoutService;
 
   public StrategyService: IStrategyService;
-
-  public FilterService: IFilterService;
 
   public CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
 
@@ -414,7 +410,6 @@ export class Adaptable implements IAdaptable {
     this.SearchService = new SearchService(this);
     this.ReportService = new ReportService(this);
     this.LayoutService = new LayoutService(this);
-    this.FilterService = new FilterService(this);
     this.StrategyService = new StrategyService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this);
 
@@ -2588,7 +2583,7 @@ export class Adaptable implements IAdaptable {
         const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
-            if (!ExpressionHelper.evaluateColumnFilter(this.api, columnFilter, node.data)) {
+            if (!this.api.filterApi.evaluateColumnFilter(columnFilter, node.data)) {
               return false;
             }
           }

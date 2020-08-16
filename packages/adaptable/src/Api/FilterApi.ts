@@ -1,6 +1,10 @@
-import { FilterState, FilterPredicate, ColumnFilter } from '../PredefinedConfig/FilterState';
+import {
+  FilterState,
+  FilterPredicate,
+  ColumnFilter,
+  SystemFilterIds,
+} from '../PredefinedConfig/FilterState';
 import { AdaptableColumn } from '../types';
-import { SystemFilterIds } from '../Utilities/Services/FilterService';
 
 /**
  * Provides run-time access to the System Filter section of Adaptable State.
@@ -93,4 +97,9 @@ export interface FilterApi {
   getAllColumnFilterForColumn(column: string): ColumnFilter[];
 
   createColumnFilterForCell(column: string, primarykeyValues: any[]): void;
+
+  convertColumnFilterToString(columnFilter: ColumnFilter): string;
+  convertColumnFiltersToString(columnFilters: ColumnFilter[]): string;
+
+  evaluateColumnFilter(columnFilter: ColumnFilter, data: any): boolean;
 }

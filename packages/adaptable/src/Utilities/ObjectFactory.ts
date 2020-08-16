@@ -71,7 +71,7 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/SharedQueryState';
-import { ColumnFilter } from '../PredefinedConfig/FilterState';
+import { ColumnFilter, ColumnFilterPredicate } from '../PredefinedConfig/FilterState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -549,11 +549,16 @@ export function CreateEmptyPivotDetails(): PivotDetails {
   };
 }
 
-export function CreateColumnFilter(columnId: string, expression: Expression): ColumnFilter {
+export function CreateColumnFilter(
+  columnId: string,
+  values: any[],
+  predicates: ColumnFilterPredicate[]
+): ColumnFilter {
   return {
     Uuid: createUuid(),
     ColumnId: columnId,
-    Filter: expression,
+    Values: values,
+    Predicates: predicates,
   };
 }
 
@@ -565,7 +570,7 @@ export function CreateUserFilterFromColumnFilter(
     Uuid: createUuid(),
     Name: name,
     ColumnId: columnFilter.ColumnId,
-    Expression: columnFilter.Filter,
+    Expression: ExpressionHelper.CreateEmptyExpression(), // TODO:  need to get this from the column filter somehow now that its changed
   };
 }
 

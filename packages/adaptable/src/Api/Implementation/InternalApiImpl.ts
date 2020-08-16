@@ -29,7 +29,6 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { IAdaptable, AdaptableOptions } from '../../types';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 import { IStrategyService } from '../../Utilities/Services/StrategyService';
-import { IFilterService } from '../../Utilities/Services/Interface/IFilterService';
 import { IReportService } from '../../Utilities/Services/Interface/IReportService';
 import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -235,9 +234,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public getStrategyService(): IStrategyService {
     return this.adaptable.StrategyService;
   }
-  public getFilterService(): IFilterService {
-    return this.adaptable.FilterService;
-  }
+
   public getReportService(): IReportService {
     return this.adaptable.ReportService;
   }

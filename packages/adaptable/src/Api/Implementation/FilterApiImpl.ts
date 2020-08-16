@@ -2,14 +2,16 @@ import * as SystemFilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { ApiBase } from './ApiBase';
 import { FilterApi } from '../FilterApi';
-import { FilterState, FilterPredicate, ColumnFilter } from '../../PredefinedConfig/FilterState';
+import {
+  FilterState,
+  FilterPredicate,
+  ColumnFilter,
+  SystemFilterIds,
+} from '../../PredefinedConfig/FilterState';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../types';
-import {
-  SystemFilterPredicatesById,
-  SystemFilterIds,
-} from '../../Utilities/Services/FilterService';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { AdaptableApi } from '../AdaptableApi';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
@@ -160,5 +162,56 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       Values: displayValues,
     };
     this.setColumnFilter([filter]);
+  }
+
+  public convertColumnFilterToString(columnFilter: ColumnFilter): string {
+    return 'I need to do this !!!';
+  }
+
+  public convertColumnFiltersToString(columnFilters: ColumnFilter[]): string {
+    return 'I need to do this for all !!!';
+  }
+
+  public evaluateColumnFilter(columnFilter: ColumnFilter, data: any): boolean {
+    const value = data[columnFilter.ColumnId];
+
+    if (
+      ArrayExtensions.IsNullOrEmpty(columnFilter.Values) &&
+      ArrayExtensions.IsNullOrEmpty(columnFilter.Predicates)
+    ) {
+      return true;
+    }
+
+    if (value === null || value === undefined) {
+      return false;
+    }
+
+    if (columnFilter.Values?.includes(value)) {
+      return true;
+    }
+
+    if (
+      columnFilter.Predicates?.some(item => {
+        const predicate = this.getFilterPredicateById(item.PredicateId);
+        if (!predicate) {
+          throw `Predicate not found: ${item.PredicateId}`;
+        }
+        try {
+          const api: AdaptableApi = this.adaptable.api;
+          return predicate.handler({
+            api,
+            value,
+            inputs: item.Inputs,
+          });
+        } catch (error) {
+          console.error(`Error in predicate ${item.PredicateId}`, error);
+          return false;
+        }
+      })
+    ) {
+      return true;
+    }
+
+    return false;
   }
 }

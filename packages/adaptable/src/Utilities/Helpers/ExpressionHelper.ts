@@ -243,10 +243,7 @@ export function IsSatisfied(
       );
       if (filtersForColumn) {
         // first evaluate any user filters
-        let filteredUserFilters: UserFilter[] = adaptable.FilterService.GetUserFilters(
-          userFilters,
-          filtersForColumn.Filters
-        );
+        let filteredUserFilters: UserFilter[] = [];
         for (let userFilter of filteredUserFilters) {
           isColumnSatisfied = IsSatisfied(
             userFilter.Expression,
@@ -264,20 +261,6 @@ export function IsSatisfied(
         }
 
         // then evaluate any system filters
-        if (!isColumnSatisfied) {
-          let filteredSystemFilters: string[] = systemFilters.filter(
-            f => filtersForColumn.Filters.find(u => u == f) != null
-          );
-          for (let systemFilter of filteredSystemFilters) {
-            let satisfyFunction: any = adaptable.FilterService.GetFunctionForSystemFilter(
-              systemFilter
-            );
-            isColumnSatisfied = satisfyFunction.IsExpressionSatisfied(columnValue, adaptable);
-            if (isColumnSatisfied) {
-              break;
-            }
-          }
-        }
       }
     }
 
@@ -907,54 +890,5 @@ export const ExpressionHelper = {
   ExpressionContainsFilter,
   OperatorRequiresValue,
   AddMissingProperties,
-  // convertFilterToExpressionString,
-  evaluateColumnFilter,
-  convertColumnFilterToString,
 };
 export default ExpressionHelper;
-
-function convertColumnFilterToString(columnFilter: ColumnFilter): string {
-  return 'I need to do this !!!';
-}
-
-function evaluateColumnFilter(api: AdaptableApi, columnFilter: ColumnFilter, data: any): boolean {
-  const value = data[columnFilter.ColumnId];
-
-  if (
-    ArrayExtensions.IsNullOrEmpty(columnFilter.Values) &&
-    ArrayExtensions.IsNullOrEmpty(columnFilter.Predicates)
-  ) {
-    return true;
-  }
-
-  if (value === null || value === undefined) {
-    return false;
-  }
-
-  if (columnFilter.Values?.includes(value)) {
-    return true;
-  }
-
-  if (
-    columnFilter.Predicates?.some(item => {
-      const predicate = api.filterApi.getFilterPredicateById(item.PredicateId);
-      if (!predicate) {
-        throw `Predicate not found: ${item.PredicateId}`;
-      }
-      try {
-        return predicate.handler({
-          api,
-          value,
-          inputs: item.Inputs,
-        });
-      } catch (error) {
-        console.error(`Error in predicate ${item.PredicateId}`, error);
-        return false;
-      }
-    })
-  ) {
-    return true;
-  }
-
-  return false;
-}

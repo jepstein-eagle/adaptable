@@ -16,7 +16,6 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
-import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
@@ -94,7 +93,6 @@ export interface InternalApi {
 
   getValidationService(): IValidationService;
   getStrategyService(): IStrategyService;
-  getFilterService(): IFilterService;
   getReportService(): IReportService;
   getLayoutService(): ILayoutService;
   getChartService(): IChartService;

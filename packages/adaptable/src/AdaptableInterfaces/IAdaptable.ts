@@ -26,7 +26,6 @@ import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
-import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
@@ -118,7 +117,6 @@ export interface IAdaptable {
   StyleService: IStyleService;
   LayoutService: ILayoutService;
   StrategyService: IStrategyService;
-  FilterService: IFilterService;
 
   // These are private events only
   _on(eventName: 'CellsSelected', callback: () => void): () => void;

@@ -83,7 +83,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     if (!existingColumnFilter) {
       existingColumnFilter = ObjectFactory.CreateColumnFilter(
         this.props.CurrentColumn.ColumnId,
-        ExpressionHelper.CreateEmptyExpression()
+        null,
+        null
       );
     }
 
@@ -124,7 +125,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       if (!existingColumnFilter) {
         existingColumnFilter = ObjectFactory.CreateColumnFilter(
           this.props.CurrentColumn.ColumnId,
-          ExpressionHelper.CreateEmptyExpression()
+          null,
+          null
         );
       }
 

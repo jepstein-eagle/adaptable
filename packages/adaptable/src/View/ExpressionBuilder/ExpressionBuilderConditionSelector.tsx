@@ -326,20 +326,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
 
     // get filter names
     // first system filters
-    let availableSystemFilterNames: string[] = this.props.Api.internalApi
-      .getFilterService()
-      .GetSystemFiltersForColumn(selectedColumn, this.props.Api.filterApi.getAllSystemFilter())
-      .map(sf => {
-        return sf;
-      });
+    let availableSystemFilterNames: string[] = [];
 
     // then user filters
-    let availableUserFilterNames: string[] = this.props.Api.internalApi
-      .getFilterService()
-      .GetUserFiltersForColumn(selectedColumn, this.props.Api.userFilterApi.getAllUserFilter())
-      .map(uf => {
-        return uf.Name;
-      });
+    let availableUserFilterNames: string[] = [];
 
     // get the help descriptions
     let firstTimeText: string = 'Start creating the query by selecting a column';

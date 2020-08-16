@@ -1,6 +1,5 @@
-import { FilterState, ColumnFilter } from '../../PredefinedConfig/FilterState';
+import { FilterState, ColumnFilter, SystemFilterIdList } from '../../PredefinedConfig/FilterState';
 import * as Redux from 'redux';
-import { SystemFilterIdList } from '../../Utilities/Services/FilterService';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
 // System Filter constants

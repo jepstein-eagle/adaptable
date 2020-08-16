@@ -186,10 +186,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().ColumnCategory)
           : this.getAdaptableState().ColumnCategory;
-      case 'ColumnFilter':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().ColumnFilter)
-          : this.getAdaptableState().ColumnFilter;
 
       case 'ConditionalStyle':
         return returnJson
@@ -273,7 +269,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().SparklineColumn)
           : this.getAdaptableState().SparklineColumn;
-      case 'SystemFilter':
+      case 'Filter':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Filter)
           : this.getAdaptableState().Filter;

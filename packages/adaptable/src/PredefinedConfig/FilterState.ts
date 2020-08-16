@@ -1,9 +1,24 @@
 import { ConfigState } from './ConfigState';
-import { SystemFilterIds, SystemFilterId } from '../Utilities/Services/FilterService';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 import { Scope } from './Common/Scope';
 import { AdaptableApi } from '../types';
 import { AdaptableObject } from './Common/AdaptableObject';
+import Helper from '../Utilities/Helpers/Helper';
+import {
+  isToday,
+  isYesterday,
+  isTomorrow,
+  isThisWeek,
+  isThisMonth,
+  isThisQuarter,
+  isThisYear,
+  isPast,
+  isFuture,
+  isAfter,
+  isBefore,
+  isSameDay,
+} from 'date-fns';
+import { keyBy } from 'lodash';
 
 /**
  * The Predefined Configuration for Filters
@@ -84,6 +99,402 @@ export interface FilterState extends ConfigState {
   UserFilters?: string[];
   ColumnFilters?: ColumnFilter[];
 }
+
+export type SystemFilterIds = SystemFilterId[];
+
+export type SystemFilterId =
+  | 'Blanks'
+  | 'NonBlanks'
+  | 'Equals'
+  | 'NotEquals'
+  | 'GreaterThan'
+  | 'LessThan'
+  | 'Positive'
+  | 'Negative'
+  | 'Zero'
+  | 'Between'
+  | 'NotBetween'
+  | 'Is'
+  | 'IsNot'
+  | 'Contains'
+  | 'NotContains'
+  | 'StartsWith'
+  | 'EndsWith'
+  | 'Regex'
+  | 'Today'
+  | 'Yesterday'
+  | 'Tomorrow'
+  | 'ThisWeek'
+  | 'ThisMonth'
+  | 'ThisQuarter'
+  | 'ThisYear'
+  | 'InPast'
+  | 'InFuture'
+  | 'Before'
+  | 'After'
+  | 'On'
+  | 'NotOn'
+  | 'NextWorkDay'
+  | 'LastWorkDay'
+  | 'True'
+  | 'False';
+
+export const SystemFilterIdList: SystemFilterId[] = [
+  'Blanks',
+  'NonBlanks',
+  'Equals',
+  'NotEquals',
+  'GreaterThan',
+  'LessThan',
+  'Positive',
+  'Negative',
+  'Zero',
+  'Between',
+  'NotBetween',
+  'Is',
+  'IsNot',
+  'Contains',
+  'NotContains',
+  'StartsWith',
+  'EndsWith',
+  'Regex',
+  'Today',
+  'Yesterday',
+  'Tomorrow',
+  'ThisWeek',
+  'ThisMonth',
+  'ThisQuarter',
+  'ThisYear',
+  'InPast',
+  'InFuture',
+  'Before',
+  'After',
+  'On',
+  'NotOn',
+  'NextWorkDay',
+  'LastWorkDay',
+  'True',
+  'False',
+];
+
+export const SystemFilterPredicates: FilterPredicate[] = [
+  // All Column System Filters
+  {
+    id: 'Blanks',
+    name: 'Blanks',
+    type: 'FilterPredicate',
+    handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
+  },
+  {
+    id: 'NonBlanks',
+    name: 'Non Blanks',
+    type: 'FilterPredicate',
+    handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
+  },
+
+  // Numeric System Filters
+  {
+    id: 'GreaterThan',
+    name: 'Greater Than',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
+  },
+  {
+    id: 'LessThan',
+    name: 'Less Than',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
+  },
+  {
+    id: 'Positive',
+    name: 'Positive',
+    scope: { DataType: 'Number' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Number(value) > 0,
+  },
+  {
+    id: 'Negative',
+    name: 'Negative',
+    scope: { DataType: 'Number' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Number(value) < 0,
+  },
+  {
+    id: 'Zero',
+    name: 'Zero',
+    scope: { DataType: 'Number' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Number(value) == 0,
+  },
+
+  {
+    id: 'Equals',
+    name: 'Equals',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
+  },
+  {
+    id: 'NotEquals',
+    name: 'Not Equals',
+    scope: { DataType: 'Number' },
+    inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
+  },
+  {
+    id: 'Between',
+    name: 'Between',
+    scope: { DataType: 'Number' },
+    inputs: [
+      { type: 'number', default: 0 },
+      { type: 'number', default: 0 },
+    ],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) =>
+      Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
+  },
+  {
+    id: 'NotBetween',
+    name: 'Not Between',
+    scope: { DataType: 'Number' },
+    inputs: [
+      { type: 'number', default: 0 },
+      { type: 'number', default: 0 },
+    ],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) =>
+      Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
+  },
+
+  // String System Filters
+  {
+    id: 'Is',
+    name: 'Equals',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v == i;
+    },
+  },
+  {
+    id: 'IsNot',
+    name: 'Not Equals',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v != i;
+    },
+  },
+  {
+    id: 'Contains',
+    name: 'Contains',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v.indexOf(i) !== -1;
+    },
+  },
+  {
+    id: 'NotContains',
+    name: 'Not Contains',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v.indexOf(i) === -1;
+    },
+  },
+  {
+    id: 'StartsWith',
+    name: 'Starts With',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v.startsWith(i);
+    },
+  },
+  {
+    id: 'EndsWith',
+    name: 'Ends With',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v.endsWith(i);
+    },
+  },
+  {
+    id: 'Regex',
+    name: 'Regex',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
+  },
+
+  // Date System Filters
+  {
+    id: 'Today',
+    name: 'Today',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isToday(value),
+  },
+  {
+    id: 'Yesterday',
+    name: 'Yesterday',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isYesterday(value),
+  },
+  {
+    id: 'Tomorrow',
+    name: 'Tomorrow',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isTomorrow(value),
+  },
+  {
+    id: 'ThisWeek',
+    name: 'This Week',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isThisWeek(value),
+  },
+  {
+    id: 'ThisMonth',
+    name: 'This Month',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isThisMonth(value),
+  },
+  {
+    id: 'ThisQuarter',
+    name: 'This Quarter',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isThisQuarter(value),
+  },
+  {
+    id: 'ThisYear',
+    name: 'This Year',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isThisYear(value),
+  },
+  {
+    id: 'InPast',
+    name: 'In Past',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isPast(value),
+  },
+  {
+    id: 'InFuture',
+    name: 'In Future',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => isFuture(value),
+  },
+  {
+    id: 'After',
+    name: 'After',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
+  },
+  {
+    id: 'Before',
+    name: 'Before',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
+  },
+  {
+    id: 'On',
+    name: 'Equals',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => isSameDay(value, new Date(inputs[0])),
+  },
+  {
+    id: 'NotOn',
+    name: 'NotEquals',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => !isSameDay(value, new Date(inputs[0])),
+  },
+  {
+    id: 'NextWorkDay',
+    name: 'Next Work Day',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
+  },
+  {
+    id: 'LastWorkDay',
+    name: 'Last Work Day',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
+    handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
+  },
+
+  // Boolean System Filters
+  {
+    id: 'True',
+    name: 'True',
+    scope: { DataType: 'Boolean' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Boolean(value) === true,
+  },
+  {
+    id: 'False',
+    name: 'False',
+    scope: { DataType: 'Boolean' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Boolean(value) === false,
+  },
+];
+
+export const SystemFilterPredicatesById = keyBy(SystemFilterPredicates, 'id');
 
 export interface FilterPredicate extends BaseUserFunction {
   id: SystemFilterId | string;
