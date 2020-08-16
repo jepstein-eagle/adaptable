@@ -98,6 +98,8 @@ export interface FilterState extends ConfigState {
   SystemFilters?: SystemFilterIds;
   FilterPredicates?: string[];
   ColumnFilters?: ColumnFilter[];
+
+  // not sure about this?  Seems like a good idea but perhaps not
   UserFilters?: UserFilter[];
 }
 

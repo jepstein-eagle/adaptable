@@ -66,7 +66,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Gradient Column](./functions/gradient-column-function.md)
 - [Grid Info](./functions/grid-info-function.md)
 - [Layout](./functions/layout-function.md)
-- [Named Filter](./functions/named-filter-function.md)
 - [Percent Bar](./functions/percent-bar-function.md)
 - [Plus Minus](./functions/plus-minus-function.md)
 - [Quick Search](./functions/quick-search-function.md)

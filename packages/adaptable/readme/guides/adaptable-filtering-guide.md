@@ -56,12 +56,7 @@ There are 2 types of filter that you can apply:
 
         See the [User Filter Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
 
-    - **Named Filters**: filters created by developers at design-time and provided through Predefined Config.
-    
-        Named Filtes contain a Predicate function that will be run each time the filter is evaluated.
-
-        See the [Named Filter Read Me](../functions/named-filter-function.md) for more information on how to create Named Filters.
-
+   
     - **Column Values**: the distinct column values for that Column.  
 
         > Read [Showing Distinct Column Values FAQ](../faqs/adaptable-column-values-faq.md) to learn how AdapTable retrieves column values

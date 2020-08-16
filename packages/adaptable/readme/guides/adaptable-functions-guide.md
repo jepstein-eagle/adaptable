@@ -50,7 +50,6 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | [Gradient Column](../functions/gradient-column-function.md)      | Yes    | No      | No         | Yes         | Yes          |
 | [Grid Info](../functions/grid-info-function.md)                  | No     | No      | No         | Yes         | Yes          |
 | [Layout](../functions/layout-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
-| [Named Filter](../functions/named-filter-function.md)            | No     | No      | No         | No          | No           |
 | [Percent Bar](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
 | [Plus Minus](../functions/plus-minus-function.md)                | Yes    | No      | No         | Yes         | No           |
 | [Quick Search](../functions/quick-search-function.md)            | No     | Yes     | Yes        | No          | No           |
@@ -74,12 +73,12 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 
 ### Plugin-based AdapTableFunctions 
 
-| AdaptableFunction                                             | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
-| ------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
-| [ipushpull](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md)           | No     | Yes     | No         | No          | No           |
-| [Glue42](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md)            | No     | Yes      | No         | No         | No          |
-| [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md)          | No     | Yes      | No         | No         | No          |
-| [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) | No     | No      | No         | No         | No          |
+| AdaptableFunction                                                                                         | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
+| --------------------------------------------------------------------------------------------------------- | ------ | ------- | ---------- | ----------- | ------------ |
+| [ipushpull](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md) | No     | Yes     | No         | No          | No           |
+| [Glue42](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/glue42/README.md)       | No     | Yes     | No         | No          | No           |
+| [OpenFin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/openfin/README.md)     | No     | Yes     | No         | No          | No           |
+| [Finsemble](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/finsemble/README.md) | No     | No      | No         | No          | No           |
 
 ### Entitlements
 

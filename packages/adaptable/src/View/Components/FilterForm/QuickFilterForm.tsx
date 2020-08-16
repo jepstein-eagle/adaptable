@@ -32,7 +32,6 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
-  //  NamedFilters: NamedFilter[];
   ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
