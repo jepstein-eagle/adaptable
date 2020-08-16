@@ -10,7 +10,6 @@ import { CalendarState } from './CalendarState';
 import { CellSummaryState } from './CellSummaryState';
 import { CellValidationState } from './CellValidationState';
 import { ColumnCategoryState } from './ColumnCategoryState';
-import { ColumnFilterState } from './/ColumnFilterState';
 import { ConditionalStyleState } from './ConditionalStyleState';
 import { CustomSortState } from './CustomSortState';
 import { DashboardState } from './DashboardState';
@@ -157,7 +156,6 @@ import { SharedQueryState } from './SharedQueryState';
  *  | [CellSummary](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Yes 	              | Choose which summary operations to see for selected cells     |
  *  | [CellValidation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Yes 	              | Provide (complex) rules to validate cell edits                |
  *  | [ColumnCategory](_src_predefinedconfig_columncategorystate_.columncategorystate.html)       | Yes     	          | Group columns into category for easier column management      |
- *  | [ColumnFilter](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)             | Yes 	              | Supply your own filters for columns to findy your data easily |
  *  | [ConditionalStyle](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Yes 	              | Dynamically Style columns & rows according to rules provided  |
  *  | [CustomSort](_src_predefinedconfig_customsortstate_.customsortstate.html)                   | Yes 	              | Build your own sort orders for columns with non-standard sorts|
  *  | [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Yes 	              | Configure & populate the Dasboard area (abov the main grid)   |
@@ -176,7 +174,7 @@ import { SharedQueryState } from './SharedQueryState';
  *  | [Schedule](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Shortcut](_src_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
  *  | [SmartEdit](_src_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
- *  | [SystemFilter](_src_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
+ *  | [Filter](_src_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
  *  | [SystemStatus](_src_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
  *  | [Theme](_src_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
  *  | [ToolPanel](_src_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage AdapTable ToolPanel (the area to the right of grid)  |
@@ -456,11 +454,6 @@ export interface PredefinedConfig {
   ColumnCategory?: ColumnCategoryState;
 
   /**
-   * Supplies a collection of *ColumnFilter* objects to provide AdapTable with initial filtering.
-   */
-  ColumnFilter?: ColumnFilterState;
-
-  /**
    * Supplies a collection of *ConditionalStyle* objects to provides columns and rows with a particular style when the data matches a given rule.
    */
   ConditionalStyle?: ConditionalStyleState;
@@ -567,7 +560,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    */
-  SystemFilter?: FilterState;
+  Filter?: FilterState;
 
   /**
    * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.

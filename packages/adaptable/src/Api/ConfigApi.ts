@@ -12,7 +12,6 @@ import { DataSourceState } from '../PredefinedConfig/DataSourceState';
 import { DashboardState } from '../PredefinedConfig/DashboardState';
 import { CustomSortState } from '../PredefinedConfig/CustomSortState';
 import { ConditionalStyleState } from '../PredefinedConfig/ConditionalStyleState';
-import { ColumnFilterState } from '../PredefinedConfig/ColumnFilterState';
 import { CellValidationState } from '../PredefinedConfig/CellValidationState';
 import { CellSummaryState } from '../PredefinedConfig/CellSummaryState';
 import { CalendarState } from '../PredefinedConfig/CalendarState';
@@ -89,7 +88,6 @@ export interface ConfigApi {
   configGetCellValidationState(returnJson: boolean): CellValidationState;
   configGetChartState(returnJson: boolean): ChartState;
   configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState;
-  configGetColumnFilterState(returnJson: boolean): ColumnFilterState;
   configGetConditionalStyleState(returnJson: boolean): ConditionalStyleState;
   configGetCustomSortState(returnJson: boolean): CustomSortState;
   configGetDashboardState(returnJson: boolean): DashboardState;
@@ -109,7 +107,7 @@ export interface ConfigApi {
   configGetShortcutState(returnJson: boolean): ShortcutState;
   configGetSmartEditState(returnJson: boolean): SmartEditState;
   configGetSparklineColumnState(returnJson: boolean): SparklineColumnState;
-  configGetSystemFilterState(returnJson: boolean): FilterState;
+  configGetFilterState(returnJson: boolean): FilterState;
   configGetSystemStatusState(returnJson: boolean): SystemStatusState;
   configGetThemeState(returnJson: boolean): ThemeState;
   configGetToolPanelState(returnJson: boolean): ToolPanelState;

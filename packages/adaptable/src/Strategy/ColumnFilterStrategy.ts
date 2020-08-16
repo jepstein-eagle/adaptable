@@ -9,9 +9,9 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import * as ColumnFilterRedux from '../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../Redux/ActionsReducers/FilterRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
-import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
+import { ColumnFilter } from '../PredefinedConfig/FilterState';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(adaptable: IAdaptable) {
@@ -40,7 +40,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
             })
           : [menuInfo.GridCell.primaryKeyValue];
         let clickFunction = () => {
-          this.adaptable.api.columnFilterApi.createColumnFilterForCell(
+          this.adaptable.api.filterApi.createColumnFilterForCell(
             menuInfo.Column.ColumnId,
             pkValues
           );
@@ -72,7 +72,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
       }
     }
     if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'columnfilter')) {
-      let existingColumnFilter = this.adaptable.api.columnFilterApi
+      let existingColumnFilter = this.adaptable.api.filterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);
       if (existingColumnFilter) {
@@ -80,7 +80,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
           this.createColumnMenuItemReduxAction(
             'Clear Column Filter',
             StrategyConstants.ColumnFilterGlyph,
-            ColumnFilterRedux.ColumnFilterClear(existingColumnFilter)
+            FilterRedux.ColumnFilterClear(existingColumnFilter)
           )
         );
       }
@@ -92,9 +92,9 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
 
   public getTeamSharingAction(): TeamSharingImportInfo<ColumnFilter> {
     return {
-      FunctionEntities: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
-      AddAction: ColumnFilterRedux.ColumnFilterAdd,
-      EditAction: ColumnFilterRedux.ColumnFilterEdit,
+      FunctionEntities: this.adaptable.api.filterApi.getAllColumnFilter(),
+      AddAction: FilterRedux.ColumnFilterAdd,
+      EditAction: FilterRedux.ColumnFilterEdit,
     };
   }
 }

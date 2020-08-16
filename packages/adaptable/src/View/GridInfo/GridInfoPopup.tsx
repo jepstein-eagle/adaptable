@@ -366,7 +366,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     let columns: AdaptableColumn[] = this.props.Api.gridApi.getColumns();
     let columnFilterDescription: string = this.props.Api.internalApi
       .getFilterService()
-      .GetColumnFiltersDescription(this.props.Api.columnFilterApi.getAllColumnFilter(), columns);
+      .GetColumnFiltersDescription(this.props.Api.filterApi.getAllColumnFilter(), columns);
     let sorts: any = this.props.Api.gridApi.getColumnSorts().map(gs => {
       return this.props.Api.gridApi.getFriendlyNameFromColumnId(gs.Column) + ': ' + gs.SortOrder;
     });

@@ -1,5 +1,5 @@
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
-import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
@@ -24,11 +24,11 @@ export class SearchService implements ISearchService {
         if (eventName == AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE) {
           this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
         } else if (
-          eventName == ColumnFilterRedux.COLUMN_FILTER_ADD ||
-          eventName == ColumnFilterRedux.COLUMN_FILTER_EDIT ||
-          eventName == ColumnFilterRedux.COLUMN_FILTER_SET ||
-          eventName == ColumnFilterRedux.COLUMN_FILTER_CLEAR_ALL ||
-          eventName == ColumnFilterRedux.COLUMN_FILTER_CLEAR
+          eventName == FilterRedux.COLUMN_FILTER_ADD ||
+          eventName == FilterRedux.COLUMN_FILTER_EDIT ||
+          eventName == FilterRedux.COLUMN_FILTER_SET ||
+          eventName == FilterRedux.COLUMN_FILTER_CLEAR_ALL ||
+          eventName == FilterRedux.COLUMN_FILTER_CLEAR
         ) {
           setTimeout(() => this.adaptable.applyGridFiltering(), 5);
           this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);

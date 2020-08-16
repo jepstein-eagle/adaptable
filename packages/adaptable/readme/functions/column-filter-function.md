@@ -77,7 +77,7 @@ Yes you can - by creating a [User Filter](./user-filter-function.md).  Column Fi
 
 - [Column Filters State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)
 
-- [Column Filters Api](https://api.adaptabletools.com/interfaces/_src_api_columnfilterapi_.columnfilterapi.html)
+- [ Filters Api](https://api.adaptabletools.com/interfaces/_src_api_filterapi_.filterapi.html)
 
 - [Column Filters Demo](https://demo.adaptabletools.com/filters/aggridcolumnfiltersdemo)
 

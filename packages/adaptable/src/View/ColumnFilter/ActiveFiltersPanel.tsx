@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
@@ -12,6 +11,7 @@ import { PanelWithRow } from '../Components/Panels/PanelWithRow';
 import { Flex } from 'rebass';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { AdaptableApi } from '../../Api/AdaptableApi';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
   ColumnFilters: ColumnFilter[];

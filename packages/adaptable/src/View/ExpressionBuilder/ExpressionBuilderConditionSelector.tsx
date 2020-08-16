@@ -147,7 +147,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
               selectedColumnFilterExpressions.push(fe);
             }
             // if it is a system filter add it ot that list
-            let selectedSystemFilter: string = theProps.Api.systemFilterApi
+            let selectedSystemFilter: string = theProps.Api.filterApi
               .getAllSystemFilter()
               .find(sf => sf == fe);
             if (selectedSystemFilter) {
@@ -158,7 +158,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         let availableFilterExpressions: string[] = theProps.Api.userFilterApi
           .getAllUserFilter()
           .map(f => f.Name)
-          .concat(...theProps.Api.systemFilterApi.getAllSystemFilter().map(sf => sf));
+          .concat(...theProps.Api.filterApi.getAllSystemFilter().map(sf => sf));
 
         // get ranges
         let range: RangeExpression = null;
@@ -328,10 +328,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     // first system filters
     let availableSystemFilterNames: string[] = this.props.Api.internalApi
       .getFilterService()
-      .GetSystemFiltersForColumn(
-        selectedColumn,
-        this.props.Api.systemFilterApi.getAllSystemFilter()
-      )
+      .GetSystemFiltersForColumn(selectedColumn, this.props.Api.filterApi.getAllSystemFilter())
       .map(sf => {
         return sf;
       });

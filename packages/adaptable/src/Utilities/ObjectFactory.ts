@@ -56,7 +56,6 @@ import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
-import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { CellSummmary } from '../PredefinedConfig/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
@@ -72,6 +71,7 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/SharedQueryState';
+import { ColumnFilter } from '../PredefinedConfig/FilterState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };

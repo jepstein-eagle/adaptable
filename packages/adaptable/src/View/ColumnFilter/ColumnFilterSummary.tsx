@@ -8,19 +8,19 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { SummaryRowItem } from '../Components/StrategySummary/SummaryRowItem';
 import { StrategyProfile } from '../Components/StrategyProfile';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { UIHelper } from '../UIHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 export interface ColumnFilterSummaryProps
   extends StrategySummaryProps<ColumnFilterSummaryComponent> {
   ColumnFilters: ColumnFilter[];
-  onClearFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
+  onClearFilter: (columnfilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -82,7 +82,7 @@ function mapDispatchToProps(
 ): Partial<ColumnFilterSummaryProps> {
   return {
     onClearFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(

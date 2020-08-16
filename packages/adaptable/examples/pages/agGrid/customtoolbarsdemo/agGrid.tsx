@@ -118,7 +118,7 @@ async function InitAdaptableDemo() {
 
     if (toolbarButton.Name == 'btnClearButton') {
       api.dashboardApi.clearCustomToolbarButtons('Toolbar1');
-      api.columnFilterApi.clearColumnFilterByColumn('currency');
+      api.filterApi.clearColumnFilterByColumn('currency');
     }
   });
 

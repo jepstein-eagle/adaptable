@@ -8,7 +8,6 @@ import { CalculatedColumnState } from './CalculatedColumnState';
 import { CalendarState } from './CalendarState';
 import { CellValidationState } from './CellValidationState';
 import { ChartState } from './ChartState';
-import { ColumnFilterState } from './ColumnFilterState';
 import { ConditionalStyleState } from './ConditionalStyleState';
 import { CustomSortState } from './CustomSortState';
 import { DashboardState } from './DashboardState';
@@ -84,7 +83,6 @@ export interface AdaptableState {
   CellValidation: CellValidationState;
   Chart: ChartState;
   ColumnCategory: ColumnCategoryState;
-  ColumnFilter: ColumnFilterState;
   ConditionalStyle: ConditionalStyleState;
   CustomSort: CustomSortState;
   Dashboard: DashboardState;

@@ -18,7 +18,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [System Filter Demo](https://demo.adaptabletools.com/filters/aggridsystemfiltersdemo/)
  *
- * {@link SystemFilterApi|System Filter API}
+ * {@link FilterApi| Filter API}
  *
  * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *

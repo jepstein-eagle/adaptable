@@ -111,7 +111,6 @@ import { SearchService } from '../Utilities/Services/SearchService';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
-import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
 import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid, createUuid } from '../PredefinedConfig/Uuid';
@@ -155,6 +154,7 @@ import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
+import { ColumnFilter } from '../PredefinedConfig/FilterState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -2533,7 +2533,7 @@ export class Adaptable implements IAdaptable {
     // We plug our filter mechanism and if there is already something like external widgets... we save ref to the function
     const originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
     this.gridOptions.isExternalFilterPresent = () => {
-      const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
+      const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
       const isFilterActive = ArrayExtensions.IsNotNullOrEmpty(columnFilters);
       if (isFilterActive) {
         // used in particular at init time to show the filter icon correctly
@@ -2585,7 +2585,7 @@ export class Adaptable implements IAdaptable {
         this.adaptableOptions.searchOptions.serverSearchOption == 'None' ||
         this.adaptableOptions.searchOptions.serverSearchOption == 'AdvancedSearch'
       ) {
-        const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
+        const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
             if (!ExpressionHelper.evaluateColumnFilter(this.api, columnFilter, node.data)) {

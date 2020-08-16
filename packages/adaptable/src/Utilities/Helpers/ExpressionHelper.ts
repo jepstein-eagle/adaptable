@@ -936,7 +936,7 @@ function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any
 
   if (
     filter.Predicates?.some(item => {
-      const predicate = api.systemFilterApi.getFilterPredicateById(item.PredicateId);
+      const predicate = api.filterApi.getFilterPredicateById(item.PredicateId);
       if (!predicate) {
         throw `Predicate not found: ${item.PredicateId}`;
       }

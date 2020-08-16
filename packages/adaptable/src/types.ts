@@ -56,7 +56,6 @@ export {
 } from './PredefinedConfig/CellSummaryState';
 export { CellValidationState, CellValidationRule } from './PredefinedConfig/CellValidationState';
 export { ColumnCategoryState, ColumnCategory } from './PredefinedConfig/ColumnCategoryState';
-export { ColumnFilterState, ColumnFilter } from './PredefinedConfig/ColumnFilterState';
 export { ConditionalStyleState, ConditionalStyle } from './PredefinedConfig/ConditionalStyleState';
 export {
   CustomSortState,

@@ -28,7 +28,7 @@ export let FilterWrapperFactory = (adaptable: Adaptable) => {
     isFilterActive() {
       //make the small filter icon to appear when there is a filter
       return (
-        adaptable.api.columnFilterApi
+        adaptable.api.filterApi
           .getAllColumnFilter()
           .findIndex(x => x.ColumnId == this.params.column.getColId()) > -1
       );

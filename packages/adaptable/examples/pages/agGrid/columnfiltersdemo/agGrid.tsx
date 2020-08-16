@@ -98,7 +98,7 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  SystemFilter: {
+  Filter: {
     //  SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
     UserFilters: ['US_Banks'],
 

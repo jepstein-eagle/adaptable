@@ -12,7 +12,6 @@ import { CellValidationApi } from './CellValidationApi';
 import { ChartApi } from './ChartApi';
 import { ColumnCategoryApi } from './ColumnCategoryApi';
 import { ColumnChooserAPI } from './ColumnChooserAPI';
-import { ColumnFilterApi } from './ColumnFilterApi';
 import { ConfigApi } from './ConfigApi';
 import { ConditionalStyleApi } from './ConditionalStyleApi';
 import { CustomSortApi } from './CustomSortApi';
@@ -33,7 +32,7 @@ import { ReminderApi } from './ReminderApi';
 import { QuickSearchApi } from './QuickSearchApi';
 import { ShortcutApi } from './ShortcutApi';
 import { SmartEditApi } from './SmartEditApi';
-import { SystemFilterApi } from './SystemFilterApi';
+import { FilterApi } from './FilterApi';
 import { SystemStatusApi } from './SystemStatusApi';
 import { ThemeApi } from './ThemeApi';
 import { UserInterfaceApi } from './UserInterfaceApi';
@@ -89,7 +88,6 @@ import { TeamSharingApi } from './TeamSharingApi';
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
  *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
  *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
- *  | [columnFilterApi](#columnfilterapi)             | Manages [Column Filters](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html), allowing run-time code access to filtering|
  *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
  *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
  *  | [customSortApi](#customsortapi)                 | Manages {@link CustomSortState|Custom Sorts} allowing bespoke column sorting|
@@ -112,7 +110,7 @@ import { TeamSharingApi } from './TeamSharingApi';
  *  | [shortcutApi](#shortcutapi)                     | Deals with {@link ShortcutState|Shortcuts} for faster & safer data entry|
  *  | [smartEditApi](#smarteditapi)                   | Functions for managing the Smart Edit function to enable better editing|
  *  | [sparklineColumnApi](#sparklinecolumnapi)       | For {@link SparklineColumnState|Sparkline Columns} - ideal for historical or array-based data|
- *  | [systemFilterApi](#systemfilterapi)             | Fetches the System Filters (shipped by AdapTable)
+ *  | [filterApi](#filterapi)             | Manages various filters provided by AdapTable
  *  | [systemStatusApi](#systemstatusapi)             | Manages how the System Status function will display run-time messages|
  *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
  *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
@@ -188,11 +186,6 @@ export interface AdaptableApi {
    * Provides access to the *Column Chooser* function.
    */
   columnChooserApi: ColumnChooserAPI;
-
-  /**
-   * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_src_predefinedconfig_configstate_columnfilterstate_.columnfilterstate.html).
-   */
-  columnFilterApi: ColumnFilterApi;
 
   /**
    * Methods that give access to the [Predefined Config](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html), State and Store.
@@ -324,7 +317,7 @@ export interface AdaptableApi {
   /**
    * Provides access to [System Filter State](_src_predefinedconfig_configstate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
    */
-  systemFilterApi: SystemFilterApi;
+  filterApi: FilterApi;
 
   /**
    * Api methods related to the System Status function which displays information about the health of the application.

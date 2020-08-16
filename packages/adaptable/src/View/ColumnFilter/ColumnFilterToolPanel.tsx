@@ -7,12 +7,11 @@ import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as ColumnFilterRedux from '../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
@@ -23,6 +22,7 @@ import CheckBox from '../../components/CheckBox';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 interface ColumnFilterToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<ColumnFilterToolPanelComponent> {
@@ -133,11 +133,11 @@ class ColumnFilterToolPanelComponent extends React.Component<
   }
 
   private onClearFilters() {
-    this.props.Api.columnFilterApi.clearAllColumnFilter();
+    this.props.Api.filterApi.clearAllColumnFilter();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
-    this.props.Api.columnFilterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
+    this.props.Api.filterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {
@@ -155,7 +155,7 @@ function mapStateToProps(
   ownProps: any
 ): Partial<ColumnFilterToolPanelComponentProps> {
   return {
-    ColumnFilters: state.ColumnFilter.ColumnFilters,
+    ColumnFilters: state.Filter.ColumnFilters,
     IsQuickFilterVisible: state.Grid.IsQuickFilterVisible,
   };
 }

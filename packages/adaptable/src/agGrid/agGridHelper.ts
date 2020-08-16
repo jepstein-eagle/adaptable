@@ -812,13 +812,11 @@ export class agGridHelper {
   public checkShouldClearExistingFiltersOrSearches(): void {
     // if they have selected to clear column filters on startup then do it
     if (this.adaptable.adaptableOptions.filterOptions!.clearFiltersOnStartUp) {
-      if (
-        ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.columnFilterApi.getAllColumnFilter())
-      ) {
+      if (ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.filterApi.getAllColumnFilter())) {
         LoggingHelper.LogWarning(
           'Clearing existing Column Filters as "clearFiltersOnStartUp" is true'
         );
-        this.adaptable.api.columnFilterApi.clearAllColumnFilter();
+        this.adaptable.api.filterApi.clearAllColumnFilter();
       }
     }
     // if they have selected to clear searches on startup then do it

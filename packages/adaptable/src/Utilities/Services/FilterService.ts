@@ -1,11 +1,10 @@
-import { IAdaptable, FilterPredicate } from '../../types';
+import { IAdaptable, FilterPredicate, ColumnFilter } from '../../types';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import Helper from '../Helpers/Helper';
 import { IFilterService } from './Interface/IFilterService';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';

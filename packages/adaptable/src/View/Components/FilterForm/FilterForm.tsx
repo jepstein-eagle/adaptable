@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
-import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux';
 import * as GridRedux from '../../../Redux/ActionsReducers/GridRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
@@ -51,10 +51,10 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   ColumnFilters: ColumnFilter[];
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
-  onClearColumnFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
-  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
-  onSetColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterSetAction;
+  onClearColumnFilter: (columnfilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
+  onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
+  onSetColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterSetAction;
   onHideFilterForm: () => GridRedux.FilterFormHideAction;
   onMenuItemClick: (action: Redux.Action) => Redux.Action;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
@@ -208,7 +208,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   render(): any {
     let isFilterable: string = this.isFilterable();
 
-    const columnPredicates = this.props.Adaptable.api.systemFilterApi.getFilterPredicatesForColumn(
+    const columnPredicates = this.props.Adaptable.api.filterApi.getFilterPredicatesForColumn(
       this.props.CurrentColumn
     );
 
@@ -461,13 +461,13 @@ function mapDispatchToProps(
   return {
     onMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterEdit(columnFilter)),
     onSetColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterSet(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterSet(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideFilterForm: () => dispatch(GridRedux.FilterFormHide()),
   };

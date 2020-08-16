@@ -13,7 +13,6 @@ import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceSt
 import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import { CustomSortState } from '../../PredefinedConfig/CustomSortState';
 import { ConditionalStyleState } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnFilterState } from '../../PredefinedConfig/ColumnFilterState';
 import { CellValidationState } from '../../PredefinedConfig/CellValidationState';
 import { CellSummaryState } from '../../PredefinedConfig/CellSummaryState';
 import { CalendarState } from '../../PredefinedConfig/CalendarState';
@@ -93,7 +92,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'CellValidation',
       'Chart',
       'ColumnCategory',
-      'ColumnFilter',
       'ConditionalStyle',
       'CustomSort',
       'Dashboard',
@@ -114,7 +112,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'Shortcut',
       'SmartEdit',
       'SparklineColumn',
-      'SystemFilter',
+      'Filter',
       'SystemStatus',
       'Theme',
       'ToolPanel',
@@ -340,9 +338,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetChartState(returnJson: boolean = false): ChartState {
     return this.configGetUserStateByStateKey('Chart', returnJson) as ChartState;
   }
-  public configGetColumnFilterState(returnJson: boolean = false): ColumnFilterState {
-    return this.configGetUserStateByStateKey('ColumnFilter', returnJson) as ColumnFilterState;
-  }
+
   public configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState {
     return this.configGetUserStateByStateKey('ColumnCategory', returnJson) as ColumnCategoryState;
   }
@@ -407,8 +403,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetSparklineColumnState(returnJson: boolean = false): SparklineColumnState {
     return this.configGetUserStateByStateKey('SparklineColumn', returnJson) as SparklineColumnState;
   }
-  public configGetSystemFilterState(returnJson: boolean = false): FilterState {
-    return this.configGetUserStateByStateKey('SystemFilter', returnJson) as FilterState;
+  public configGetFilterState(returnJson: boolean = false): FilterState {
+    return this.configGetUserStateByStateKey('Filter', returnJson) as FilterState;
   }
   public configGetSystemStatusState(returnJson: boolean = false): SystemStatusState {
     return this.configGetUserStateByStateKey('SystemStatus', returnJson) as SystemStatusState;
@@ -440,7 +436,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       dataSource: currentDataSource == null ? undefined : currentDataSource,
       advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
       quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
-      columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
+      columnFilters: this.adaptable.api.filterApi.getAllColumnFilter(),
       userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
     };
     return adaptableSearchState;

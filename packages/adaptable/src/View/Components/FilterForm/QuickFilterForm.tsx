@@ -2,7 +2,7 @@ import * as DeepDiff from 'deep-diff';
 import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
-import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
@@ -35,9 +35,9 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   //  NamedFilters: NamedFilter[];
   ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
-  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
-  onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
+  onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
+  onClearColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
 }
 
 export interface QuickFilterFormState {
@@ -361,11 +361,11 @@ function mapDispatchToProps(
 ): Partial<QuickFilterFormProps> {
   return {
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterEdit(columnFilter)),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
   };
 }
 
