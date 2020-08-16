@@ -34,8 +34,6 @@ import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
-import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { AdaptableApi } from '../../types';
 
 export interface ExpressionBuilderConditionSelectorProps
@@ -342,18 +340,6 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     let availableUserFilterNames: string[] = this.props.Api.internalApi
       .getFilterService()
       .GetUserFiltersForColumn(selectedColumn, this.props.Api.userFilterApi.getAllUserFilter())
-      .map(uf => {
-        return uf.Name;
-      });
-
-    // then named filters
-    let availableNamedFilterNames: string[] = this.props.Api.internalApi
-      .getFilterService()
-      .GetNamedFiltersForColumn(
-        selectedColumn,
-        this.props.Api.namedFilterApi.getAllNamedFilter(),
-        this.props.Api.columnCategoryApi.getAllColumnCategory()
-      )
       .map(uf => {
         return uf.Name;
       });

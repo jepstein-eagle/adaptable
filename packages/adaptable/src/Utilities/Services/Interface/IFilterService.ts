@@ -1,11 +1,8 @@
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { DataType } from '../../../PredefinedConfig/Common/Enums';
-import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { KeyValuePair } from '../../Interface/KeyValuePair';
-import { IAdaptable } from '../../../types';
+import { IAdaptable, ColumnFilter } from '../../../types';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
 
 export interface IFilterService {
   GetAllSystemFilters(): string[];
@@ -15,12 +12,6 @@ export interface IFilterService {
   GetSystemFiltersForColumn(column: AdaptableColumn, systemFilters: string[]): string[];
 
   GetUserFiltersForColumn(column: AdaptableColumn, userFilters: UserFilter[]): UserFilter[];
-
-  GetNamedFiltersForColumn(
-    column: AdaptableColumn,
-    namedFilters: NamedFilter[],
-    columnCategories: ColumnCategory[]
-  ): NamedFilter[];
 
   ShowUserFilterForColumn(
     UserFilters: UserFilter[],

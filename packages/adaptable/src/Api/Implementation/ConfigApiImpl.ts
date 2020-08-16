@@ -33,9 +33,8 @@ import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnStat
 import { ColumnCategoryState } from '../../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
-import { NamedFilterState } from '../../PredefinedConfig/NamedFilterState';
 import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
-import { SystemFilterState } from '../../PredefinedConfig/SystemFilterState';
+import { FilterState } from '../../PredefinedConfig/FilterState';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
@@ -108,7 +107,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'GradientColumn',
       'IPushPull',
       'Layout',
-      'NamedFilter',
       'PercentBar',
       'PlusMinus',
       'QuickSearch',
@@ -247,10 +245,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Layout)
           : this.getAdaptableState().Layout;
-      case 'NamedFilter':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().NamedFilter)
-          : this.getAdaptableState().NamedFilter;
       case 'PercentBar':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().PercentBar)
@@ -283,8 +277,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
           : this.getAdaptableState().SparklineColumn;
       case 'SystemFilter':
         return returnJson
-          ? JSON.stringify(this.getAdaptableState().SystemFilter)
-          : this.getAdaptableState().SystemFilter;
+          ? JSON.stringify(this.getAdaptableState().Filter)
+          : this.getAdaptableState().Filter;
       case 'SystemStatus':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().SystemStatus)
@@ -385,9 +379,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetLayoutState(returnJson: boolean = false): LayoutState {
     return this.configGetUserStateByStateKey('Layout', returnJson) as LayoutState;
   }
-  public configGetNamedFilterState(returnJson: boolean = false): NamedFilterState {
-    return this.configGetUserStateByStateKey('NamedFilter', returnJson) as NamedFilterState;
-  }
 
   public configGetIPushPullState(returnJson: boolean = false): IPushPullState {
     return this.configGetUserStateByStateKey('IPushPull', returnJson) as IPushPullState;
@@ -416,8 +407,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetSparklineColumnState(returnJson: boolean = false): SparklineColumnState {
     return this.configGetUserStateByStateKey('SparklineColumn', returnJson) as SparklineColumnState;
   }
-  public configGetSystemFilterState(returnJson: boolean = false): SystemFilterState {
-    return this.configGetUserStateByStateKey('SystemFilter', returnJson) as SystemFilterState;
+  public configGetSystemFilterState(returnJson: boolean = false): FilterState {
+    return this.configGetUserStateByStateKey('SystemFilter', returnJson) as FilterState;
   }
   public configGetSystemStatusState(returnJson: boolean = false): SystemStatusState {
     return this.configGetUserStateByStateKey('SystemStatus', returnJson) as SystemStatusState;
@@ -451,7 +442,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
       columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
       userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
-      namedFilters: this.adaptable.api.namedFilterApi.getAllNamedFilter(),
     };
     return adaptableSearchState;
   }

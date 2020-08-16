@@ -30,9 +30,8 @@ import { AdaptableState } from '../PredefinedConfig/AdaptableState';
 import { ColumnCategoryState } from '../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../PredefinedConfig/FreeTextColumnState';
-import { NamedFilterState } from '../PredefinedConfig/NamedFilterState';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
-import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
+import { FilterState } from '../PredefinedConfig/FilterState';
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 import { TeamSharingState } from '../PredefinedConfig/TeamSharingState';
 import { ToolPanelState } from '../PredefinedConfig/ToolPanelState';
@@ -101,7 +100,6 @@ export interface ConfigApi {
   configGetFormatColumnState(returnJson: boolean): FormatColumnState;
   configGetFreeTextColumnState(returnJson: boolean): FreeTextColumnState;
   configGetLayoutState(returnJson: boolean): LayoutState;
-  configGetNamedFilterState(returnJson: boolean): NamedFilterState;
   configGetIPushPullState(returnJson: boolean): IPushPullState;
   configGetGlue42State(returnJson: boolean): Glue42State;
   configGetPercentBarState(returnJson: boolean): PercentBarState;
@@ -111,7 +109,7 @@ export interface ConfigApi {
   configGetShortcutState(returnJson: boolean): ShortcutState;
   configGetSmartEditState(returnJson: boolean): SmartEditState;
   configGetSparklineColumnState(returnJson: boolean): SparklineColumnState;
-  configGetSystemFilterState(returnJson: boolean): SystemFilterState;
+  configGetSystemFilterState(returnJson: boolean): FilterState;
   configGetSystemStatusState(returnJson: boolean): SystemStatusState;
   configGetThemeState(returnJson: boolean): ThemeState;
   configGetToolPanelState(returnJson: boolean): ToolPanelState;

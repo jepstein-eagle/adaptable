@@ -46,6 +46,42 @@ async function InitAdaptableDemo() {
       modules: AllEnterpriseModules,
     },
     predefinedConfig: demoConfig,
+    userFunctions: [
+      {
+        id: 'US_Banks',
+        type: 'FilterPredicate',
+        scope: { DataType: 'String' },
+        name: 'US Banks',
+        handler: ({ value, inputs }) => {
+          return value == 'Citi' || value == 'JP Morgan';
+        },
+      },
+      /*
+      {
+        type: 'FilterPredicate',
+        name: 'high',
+        handler(_record, _columnId, cellValue) {
+          let currency: string = _record.data.currency;
+          if (currency === 'USD') {
+            return cellValue > 1000;
+          } else if (currency === 'EUR') {
+            return cellValue > 30;
+          } else {
+            return cellValue > 10;
+          }
+        },
+      },
+      {
+        type: 'FilterPredicate',
+        name: 'bizYear',
+        handler(_record, _columnId, cellValue) {
+          let dateToTest = cellValue as Date;
+          let startBusinesssYear = new Date('2019-04-05');
+          return dateToTest > startBusinesssYear;
+        },
+      },
+      */
+    ],
   };
 
   adaptableOptions.layoutOptions = {
@@ -63,7 +99,21 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   SystemFilter: {
-    SystemFilters: ['Number.GreaterThan', 'Number.LessThan'],
+    //  SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
+    UserFilters: ['US_Banks'],
+
+    ColumnFilters: [
+      {
+        ColumnId: 'currency',
+        Values: ['CHF'],
+        Predicates: [
+          {
+            PredicateId: 'StartsWith',
+            Inputs: ['e'],
+          },
+        ],
+      },
+    ],
   },
 };
 

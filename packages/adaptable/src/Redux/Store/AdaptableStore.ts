@@ -28,7 +28,7 @@ import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux';
 import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux';
 import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux';
 import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux';
-import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
+import * as SystemFilterRedux from '../ActionsReducers/FilterRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as GradientColumnRedux from '../ActionsReducers/GradientColumnRedux';
@@ -37,7 +37,6 @@ import * as ApplicationRedux from '../ActionsReducers/ApplicationRedux';
 import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
-import * as NamedFilterRedux from '../ActionsReducers/NamedFilterRedux';
 import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux';
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
 import * as ToolPanelRedux from '../ActionsReducers/ToolPanelRedux';
@@ -112,7 +111,6 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import {
   StatePropertyChangedDetails,
@@ -134,6 +132,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -213,9 +212,8 @@ This is the main store for Adaptable State
 
       ActionColumn: ActionColumnRedux.ActionColumnReducer,
       Entitlements: EntitlementsRedux.EntitlementsReducer,
-      NamedFilter: NamedFilterRedux.NamedFilterReducer,
       SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
-      SystemFilter: SystemFilterRedux.SystemFilterReducer,
+      Filter: SystemFilterRedux.FilterReducer,
       UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 
       // not sure
@@ -286,9 +284,8 @@ This is the main store for Adaptable State
           state.Export = undefined;
           state.FlashingCell = undefined;
           state.FormatColumn = undefined;
-          state.ColumnFilter.ColumnFilters = [];
           state.UserFilter.UserFilters = [];
-          state.SystemFilter.SystemFilters = [];
+          state.Filter.SystemFilters = [];
           state.Grid = undefined;
           state.Layout = undefined;
           state.PlusMinus = undefined;
@@ -339,7 +336,6 @@ This is the main store for Adaptable State
       //  ConfigConstants.USER_INTERFACE,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.ACTION_COLUMN,
-      ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
     ];
 

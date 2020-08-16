@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import Panel from '../../components/Panel';
 import ListGroupItem from '../../components/List/ListGroupItem';
 import ListGroup from '../../components/List/ListGroup';

@@ -39,7 +39,6 @@ import { ThemeApi } from './ThemeApi';
 import { UserInterfaceApi } from './UserInterfaceApi';
 import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
-import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
@@ -105,7 +104,6 @@ import { TeamSharingApi } from './TeamSharingApi';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
- *  | [namedFilterApi](#namedfilterapi)               | Manages {@link NamedFilterState|Named Filers} - filter predicates provided at design-time|
  *  | [percentBarApi](#percentbarapi)                 | Aids creation and editing of visual {@link PercentBarState: Percent Bars} |
  *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
  *  | [quickSearchApi](#quicksearchapi)               | Functions for running and clearing Quick Search|
@@ -265,11 +263,6 @@ export interface AdaptableApi {
    * Provides access to the *Layout* function, the *Layout* object and [Layout State](_src_predefinedconfig_configstate_layoutstate_.layoutstate.html).
    */
   layoutApi: LayoutApi;
-
-  /**
-   * Provides access to the *Named Filter* function, the `NamedFilter` object and [NamedFilter State](_src_predefinedconfig_configstate_namedfilterstate_.namedfilterstate.html).
-   */
-  namedFilterApi: NamedFilterApi;
 
   /**
    * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_src_predefinedconfig_configstate_percentbarstate_.percentbarstate.html).

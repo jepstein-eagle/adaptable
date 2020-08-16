@@ -2588,13 +2588,7 @@ export class Adaptable implements IAdaptable {
         const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
-            if (
-              !ExpressionHelper.evaluateColumnFilter(
-                this.api,
-                columnFilter,
-                node.data,
-              )
-            ) {
+            if (!ExpressionHelper.evaluateColumnFilter(this.api, columnFilter, node.data)) {
               return false;
             }
           }

@@ -1,7 +1,12 @@
 import { ConfigState } from './ConfigState';
+import { SystemFilterIds, SystemFilterId } from '../Utilities/Services/FilterService';
+import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
+import { Scope } from './Common/Scope';
+import { AdaptableApi } from '../types';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
- * The Predefined Configuration for System Filters
+ * The Predefined Configuration for Filters
  *
  * This allows you to specify which of the filters shipped by Adaptable are available to the User.
  *
@@ -63,20 +68,11 @@ import { ConfigState } from './ConfigState';
  *
  *  --------------
  *
- *  AdapTable offers 4 types of Filters:
- *
- *  | Filter Type                                   | Usage
- *  | -----------                                   | -----------
- *  | {@link ColumnFilterState|Column}      | Filter a single Column using either a list of Column Values or a Range
- *  | {@link UserFilterState|User}          | Columm Filters which are saved & named; can therefore be re-used in multiple Functions
- *  | {@link NamedFilterState|Named}        | Filters which are provided at design-time together with a predicate function that is called each time it needs to be evaluated
- *  | {@link SystemFilterState|System}      | A predefined list of Filters shipped with AdapTable (e.g. 'Yesterday', 'Positive')
- *
  * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *
  */
 
-export interface SystemFilterState extends ConfigState {
+export interface FilterState extends ConfigState {
   /**
    * Which of the system's SystemFilters you wish to make available.
    *
@@ -84,5 +80,43 @@ export interface SystemFilterState extends ConfigState {
    *
    * If this property is not set then **all** the system filters are available.
    */
-  SystemFilters?: string[];
+  SystemFilters?: SystemFilterIds;
+  UserFilters?: string[];
+  ColumnFilters?: ColumnFilter[];
+}
+
+export interface FilterPredicate extends BaseUserFunction {
+  id: SystemFilterId | string;
+  type: 'FilterPredicate';
+  name: string;
+  scope?: Scope;
+  inputs?: FilterPredicateInput[];
+  handler: FilterPredicateHandler;
+}
+
+export interface FilterPredicateInput {
+  type: 'number' | 'text' | 'date';
+  default?: any;
+}
+
+export interface FilterPredicateHandler {
+  (params: FilterPredicateParams): boolean;
+}
+
+export interface FilterPredicateParams {
+  value: any;
+  inputs: any[];
+  api: AdaptableApi;
+}
+
+export interface ColumnFilter extends AdaptableObject {
+  ColumnId: string;
+  Values?: any[];
+  Predicates?: ColumnFilterPredicate[];
+  // Filter?: Expression;
+}
+
+export interface ColumnFilterPredicate {
+  PredicateId: SystemFilterId | string;
+  Inputs?: any[];
 }

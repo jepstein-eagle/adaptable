@@ -15,7 +15,6 @@ import {
   LeafExpressionOperator,
   ColumnMenuTab,
 } from '../../../PredefinedConfig/Common/Enums';
-import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
@@ -33,23 +32,21 @@ import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
-import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import AdaptableContext from '../../AdaptableContext';
-import { FilterPredicate } from '../../../AdaptableOptions/FilterPredicates';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import CheckBox from '../../../components/CheckBox';
 import { Flex } from 'rebass';
+import { ColumnFilter, FilterPredicate } from '../../../PredefinedConfig/FilterState';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableColumn;
   Adaptable: IAdaptable;
   Columns: AdaptableColumn[];
   SystemFilters: string[];
-  NamedFilters: NamedFilter[];
   ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   EmbedColumnMenu: boolean;
@@ -211,7 +208,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   render(): any {
     let isFilterable: string = this.isFilterable();
 
-    const columnPredicates = this.props.Adaptable.api.systemFilterApi.getSystemFilterPredicatesForColumn(
+    const columnPredicates = this.props.Adaptable.api.systemFilterApi.getFilterPredicatesForColumn(
       this.props.CurrentColumn
     );
 
@@ -324,7 +321,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           checked={predicate !== undefined}
           onChange={checked => this.toggleColumnPredicate(checked, columnPredicate)}
         >
-          {columnPredicate.label}
+          {columnPredicate.name}
         </CheckBox>
         <Flex flex={1}>
           {predicate !== undefined &&
@@ -451,10 +448,9 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterFo
     CurrentColumn: ownProps.CurrentColumn,
     Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
-    ColumnFilters: state.ColumnFilter.ColumnFilters,
+    ColumnFilters: state.Filter.ColumnFilters,
     ColumnCategories: state.ColumnCategory.ColumnCategories,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
+    SystemFilters: state.Filter.SystemFilters,
     ShowCloseButton: ownProps.ShowCloseButton,
   };
 }

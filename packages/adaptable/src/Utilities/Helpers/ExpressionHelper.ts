@@ -20,13 +20,11 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import Helper from './Helper';
 import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
 import { AdaptableApi } from '../../Api/AdaptableApi';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { FilterPredicate } from '../../AdaptableOptions/FilterPredicates';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -174,7 +172,7 @@ export function checkForExpression(
     columns,
     adaptable.api.userFilterApi.getAllUserFilter(),
     null,
-    adaptable.api.namedFilterApi.getAllNamedFilter(),
+  
     adaptable
   );
 }
@@ -196,8 +194,7 @@ export function checkForExpressionFromRowNode(
     columns,
     adaptable.api.userFilterApi.getAllUserFilter(),
     null,
-    adaptable.api.namedFilterApi.getAllNamedFilter(),
-    adaptable,
+     adaptable,
     rowNode
   );
 }
@@ -211,7 +208,6 @@ export function IsSatisfied(
   columnadaptableList: AdaptableColumn[],
   userFilters: UserFilter[],
   systemFilters: string[],
-  namedFilters: NamedFilter[],
   adaptable: IAdaptable,
   rowNode?: any
 ): boolean {
@@ -260,7 +256,6 @@ export function IsSatisfied(
             columnadaptableList,
             userFilters,
             systemFilters,
-            namedFilters,
             adaptable
           );
           if (isColumnSatisfied) {
@@ -284,25 +279,7 @@ export function IsSatisfied(
           }
         }
 
-        // then evaluate any named filters
-        if (!isColumnSatisfied) {
-          let filteredNamedFilters: NamedFilter[] = namedFilters.filter(f =>
-            filtersForColumn.Filters.find(u => u == f.Name)
-          );
-          for (let namedFilter of filteredNamedFilters) {
-            // see if there is a predicate function in the object itself - the new way
-            let satisfyFunction = adaptable.getUserFunctionHandler(
-              'NamedFilterPredicate',
-              namedFilter.FilterPredicate
-            );
-            if (satisfyFunction) {
-              isColumnSatisfied = satisfyFunction(rowNode, columnId, columnValue);
-              if (isColumnSatisfied) {
-                break;
-              }
-            }
-          }
-        }
+       
       }
     }
 
@@ -932,26 +909,12 @@ export const ExpressionHelper = {
   ExpressionContainsFilter,
   OperatorRequiresValue,
   AddMissingProperties,
-  convertFilterToExpressionString,
+ // convertFilterToExpressionString,
   evaluateColumnFilter,
 };
 export default ExpressionHelper;
 
-function convertFilterToExpressionString(filter: ColumnFilter) {
-  const expr: string[] = [];
-  filter.Filter.ColumnValueExpressions.forEach(x => {
-    x.ColumnRawValues.forEach(v => {
-      expr.push(`(COL("${filter.ColumnId}") = ${JSON.stringify(v)})`);
-    });
-  });
-  filter.Filter.FilterExpressions.forEach(x => {
-    x.Filters.forEach(f => {
-      expr.push(`FILTER("${f}", COL("${filter.ColumnId}"))`);
-    });
-  });
-
-  return expr.join(' OR ');
-}
+/
 
 function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any): boolean {
   const value = data[filter.ColumnId];
@@ -973,8 +936,10 @@ function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any
 
   if (
     filter.Predicates?.some(item => {
-      const predicate = api.systemFilterApi.getSystemFilterPredicateById(item.PredicateId);
-      if (!predicate) throw `Predicate not found: ${item.PredicateId}`;
+      const predicate = api.systemFilterApi.getFilterPredicateById(item.PredicateId);
+      if (!predicate) {
+        throw `Predicate not found: ${item.PredicateId}`;
+      }
       try {
         return predicate.handler({
           api,

@@ -1,8 +1,7 @@
-import { IAdaptable } from '../../types';
+import { IAdaptable, FilterPredicate } from '../../types';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
-import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import Helper from '../Helpers/Helper';
 import { IFilterService } from './Interface/IFilterService';
@@ -10,7 +9,6 @@ import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-import { FilterPredicate, FilterPredicateHandler } from '../../AdaptableOptions/FilterPredicates';
 import isToday from 'date-fns/isToday';
 import isYesterday from 'date-fns/isYesterday';
 import isThisWeek from 'date-fns/isThisWeek';
@@ -25,268 +23,397 @@ import isBefore from 'date-fns/isBefore';
 import isSameDay from 'date-fns/isSameDay';
 import { keyBy } from 'lodash';
 
-// String, Numeric and Date
-export const BLANKS_SYSTEM_FILTER = 'Blanks';
-export const NON_BLANKS_SYSTEM_FILTER = 'Non Blanks';
+export type SystemFilterIds = SystemFilterId[];
 
-// Date
-export const TODAY_SYSTEM_FILTER = 'Today';
-export const IN_PAST_SYSTEM_FILTER = 'In Past';
-export const IN_FUTURE_SYSTEM_FILTER = 'In Future';
-export const YESTERDAY_SYSTEM_FILTER = 'Yesterday';
-export const TOMORROW_SYSTEM_FILTER = 'Tomorrow';
-export const NEXT_WORKING_DAY_SYSTEM_FILTER = 'Next Working Day';
-export const PREVIOUS_WORKING_DAY_SYSTEM_FILTER = 'Previous Working Day';
-export const THIS_YEAR_SYSTEM_FILTER = 'This Year';
-// Numeric
-export const POSITIVE_SYSTEM_FILTER = 'Positive';
-export const NEGATIVE_SYSTEM_FILTER = 'Negative';
-export const ZERO_SYSTEM_FILTER = 'Zero';
-export const GREATER_THAN = 'GreaterThan';
-export const LESS_THAN = 'LessThan';
+export type SystemFilterId =
+  | 'Blanks'
+  | 'NonBlanks'
+  | 'Equals'
+  | 'NotEquals'
+  | 'GreaterThan'
+  | 'LessThan'
+  | 'Positive'
+  | 'Negative'
+  | 'Zero'
+  | 'Between'
+  | 'NotBetween'
+  | 'Is'
+  | 'IsNot'
+  | 'Contains'
+  | 'NotContains'
+  | 'StartsWith'
+  | 'EndsWith'
+  | 'Regex'
+  | 'Today'
+  | 'Yesterday'
+  | 'Tomorrow'
+  | 'ThisWeek'
+  | 'ThisMonth'
+  | 'ThisQuarter'
+  | 'ThisYear'
+  | 'InPast'
+  | 'InFuture'
+  | 'Before'
+  | 'After'
+  | 'On'
+  | 'NotOn'
+  | 'NextWorkDay'
+  | 'LastWorkDay'
+  | 'True'
+  | 'False';
 
-// Boolean
-export const TRUE_SYSTEM_FILTER = 'True';
-export const FALSE_SYSTEM_FILTER = 'False';
+export const SystemFilterIdList: SystemFilterId[] = [
+  'Blanks',
+  'NonBlanks',
+  'Equals',
+  'NotEquals',
+  'GreaterThan',
+  'LessThan',
+  'Positive',
+  'Negative',
+  'Zero',
+  'Between',
+  'NotBetween',
+  'Is',
+  'IsNot',
+  'Contains',
+  'NotContains',
+  'StartsWith',
+  'EndsWith',
+  'Regex',
+  'Today',
+  'Yesterday',
+  'Tomorrow',
+  'ThisWeek',
+  'ThisMonth',
+  'ThisQuarter',
+  'ThisYear',
+  'InPast',
+  'InFuture',
+  'Before',
+  'After',
+  'On',
+  'NotOn',
+  'NextWorkDay',
+  'LastWorkDay',
+  'True',
+  'False',
+];
 
 export const SystemFilterPredicates: FilterPredicate[] = [
+  // All Column System Filters
   {
     id: 'Blanks',
-    label: 'Blanks',
+    name: 'Blanks',
+    type: 'FilterPredicate',
     handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
   },
   {
-    id: 'Non Blanks',
-    label: 'Non Blanks',
+    id: 'NonBlanks',
+    name: 'Non Blanks',
+    type: 'FilterPredicate',
     handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
   },
-  // Numeric Filters
+
+  // Numeric System Filters
   {
-    id: NUMBER_BLANKS,
-    label: 'Blanks',
+    id: 'GreaterThan',
+    name: 'Greater Than',
     scope: { DataType: 'Number' },
     inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
   },
   {
-    id: NUMBER_GREATER_THAN,
-    label: 'Greater Than',
+    id: 'LessThan',
+    name: 'Less Than',
     scope: { DataType: 'Number' },
     inputs: [{ type: 'number', default: 0 }],
-    handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
-  },
-  {
-    id: 'Number.LessThan',
-    label: 'Less Than',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
   },
   {
+    id: 'Positive',
+    name: 'Positive',
+    scope: { DataType: 'Number' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Number(value) > 0,
+  },
+  {
+    id: 'Negative',
+    name: 'Negative',
+    scope: { DataType: 'Number' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Number(value) < 0,
+  },
+  {
+    id: 'Zero',
+    name: 'Zero',
+    scope: { DataType: 'Number' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Number(value) == 0,
+  },
+
+  {
     id: 'Equals',
-    label: 'Equals',
+    name: 'Equals',
     scope: { DataType: 'Number' },
     inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
   },
   {
-    id: 'Not Equals',
-    label: 'Not Equals',
+    id: 'NotEquals',
+    name: 'Not Equals',
     scope: { DataType: 'Number' },
     inputs: [{ type: 'number', default: 0 }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
   },
   {
     id: 'Between',
-    label: 'Between',
+    name: 'Between',
     scope: { DataType: 'Number' },
     inputs: [
       { type: 'number', default: 0 },
       { type: 'number', default: 0 },
     ],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) =>
       Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
   },
   {
-    id: 'Not Between',
-    label: 'Not Between',
+    id: 'NotBetween',
+    name: 'Not Between',
     scope: { DataType: 'Number' },
     inputs: [
       { type: 'number', default: 0 },
       { type: 'number', default: 0 },
     ],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) =>
       Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
   },
+
+  // String System Filters
   {
-    id: 'Contains',
-    label: 'Contains',
+    id: 'Is',
+    name: 'Equals',
     scope: { DataType: 'String' },
     inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
       const adaptableOptions = api.internalApi.getAdaptableOptions();
       const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v == i;
+    },
+  },
+  {
+    id: 'IsNot',
+    name: 'Not Equals',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
+      return v != i;
+    },
+  },
+  {
+    id: 'Contains',
+    name: 'Contains',
+    scope: { DataType: 'String' },
+    inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs, api }) => {
+      const adaptableOptions = api.internalApi.getAdaptableOptions();
+      const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.indexOf(i) !== -1;
     },
   },
   {
-    id: 'Not Contains',
-    label: 'Not Contains',
+    id: 'NotContains',
+    name: 'Not Contains',
     scope: { DataType: 'String' },
     inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
       const adaptableOptions = api.internalApi.getAdaptableOptions();
       const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.indexOf(i) === -1;
     },
   },
   {
-    id: 'Starts With',
-    label: 'Starts With',
+    id: 'StartsWith',
+    name: 'Starts With',
     scope: { DataType: 'String' },
     inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
       const adaptableOptions = api.internalApi.getAdaptableOptions();
       const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.startsWith(i);
     },
   },
   {
-    id: 'Ends With',
-    label: 'Ends With',
+    id: 'EndsWith',
+    name: 'Ends With',
     scope: { DataType: 'String' },
     inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
       const adaptableOptions = api.internalApi.getAdaptableOptions();
       const ignoreCase = adaptableOptions.queryOptions?.ignoreCaseInQueries;
-      const v = ignoreCase ? String(value) : String(value).toLocaleLowerCase();
-      const i = ignoreCase ? String(inputs[0]) : String(inputs[0]).toLocaleLowerCase();
+      const v = ignoreCase ? String(value).toLocaleLowerCase() : String(value);
+      const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.endsWith(i);
     },
   },
   {
     id: 'Regex',
-    label: 'Regex',
+    name: 'Regex',
     scope: { DataType: 'String' },
     inputs: [{ type: 'text' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
   },
-  {
-    id: 'Positive',
-    label: 'Positive',
-    scope: { DataType: 'Number' },
-    handler: ({ value }) => Number(value) > 0,
-  },
-  {
-    id: 'Negative',
-    label: 'Negative',
-    scope: { DataType: 'Number' },
-    handler: ({ value }) => Number(value) < 0,
-  },
-  {
-    id: 'Zero',
-    label: 'Zero',
-    scope: { DataType: 'Number' },
-    handler: ({ value }) => Number(value) == 0,
-  },
-  {
-    id: 'True',
-    label: 'True',
-    scope: { DataType: 'Boolean' },
-    handler: ({ value }) => Boolean(value) === true,
-  },
-  {
-    id: 'False',
-    label: 'False',
-    scope: { DataType: 'Boolean' },
-    handler: ({ value }) => Boolean(value) === false,
-  },
 
+  // Date System Filters
   {
     id: 'Today',
-    label: 'Today',
+    name: 'Today',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isToday(value),
   },
   {
     id: 'Yesterday',
-    label: 'Yesterday',
+    name: 'Yesterday',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isYesterday(value),
   },
   {
     id: 'Tomorrow',
-    label: 'Tomorrow',
+    name: 'Tomorrow',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isTomorrow(value),
   },
   {
-    id: 'This Week',
-    label: 'This Week',
+    id: 'ThisWeek',
+    name: 'This Week',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isThisWeek(value),
   },
   {
-    id: 'This Month',
-    label: 'This Month',
+    id: 'ThisMonth',
+    name: 'This Month',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isThisMonth(value),
   },
   {
-    id: 'This Quarter',
-    label: 'This Quarter',
+    id: 'ThisQuarter',
+    name: 'This Quarter',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isThisQuarter(value),
   },
   {
-    id: 'This Year',
-    label: 'This Year',
+    id: 'ThisYear',
+    name: 'This Year',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isThisYear(value),
   },
   {
-    id: 'In Past',
-    label: 'In Past',
+    id: 'InPast',
+    name: 'In Past',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isPast(value),
   },
   {
-    id: 'In Future',
-    label: 'In Future',
+    id: 'InFuture',
+    name: 'In Future',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value }) => isFuture(value),
   },
   {
     id: 'After',
-    label: 'After',
+    name: 'After',
     scope: { DataType: 'Date' },
     inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
   },
   {
     id: 'Before',
-    label: 'Before',
+    name: 'Before',
     scope: { DataType: 'Date' },
     inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
     handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
   },
   {
-    id: 'Next Working Day',
-    label: 'Next Working Day',
+    id: 'On',
+    name: 'Equals',
     scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => isSameDay(value, new Date(inputs[0])),
+  },
+  {
+    id: 'NotOn',
+    name: 'NotEquals',
+    scope: { DataType: 'Date' },
+    inputs: [{ type: 'date' }],
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => !isSameDay(value, new Date(inputs[0])),
+  },
+  {
+    id: 'NextWorkDay',
+    name: 'Next Work Day',
+    scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
   },
   {
-    id: 'Previous Working Day',
-    label: 'Previous Working Day',
+    id: 'LastWorkDay',
+    name: 'Last Work Day',
     scope: { DataType: 'Date' },
+    type: 'FilterPredicate',
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
+  },
+
+  // Boolean System Filters
+  {
+    id: 'True',
+    name: 'True',
+    scope: { DataType: 'Boolean' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Boolean(value) === true,
+  },
+  {
+    id: 'False',
+    name: 'False',
+    scope: { DataType: 'Boolean' },
+    type: 'FilterPredicate',
+    handler: ({ value }) => Boolean(value) === false,
   },
 ];
 
@@ -298,23 +425,7 @@ export class FilterService implements IFilterService {
   }
 
   public GetAllSystemFilters(): string[] {
-    return [
-      BLANKS_SYSTEM_FILTER,
-      NON_BLANKS_SYSTEM_FILTER,
-      TODAY_SYSTEM_FILTER,
-      IN_PAST_SYSTEM_FILTER,
-      IN_FUTURE_SYSTEM_FILTER,
-      YESTERDAY_SYSTEM_FILTER,
-      TOMORROW_SYSTEM_FILTER,
-      NEXT_WORKING_DAY_SYSTEM_FILTER,
-      PREVIOUS_WORKING_DAY_SYSTEM_FILTER,
-      THIS_YEAR_SYSTEM_FILTER,
-      POSITIVE_SYSTEM_FILTER,
-      NEGATIVE_SYSTEM_FILTER,
-      ZERO_SYSTEM_FILTER,
-      TRUE_SYSTEM_FILTER,
-      FALSE_SYSTEM_FILTER,
-    ];
+    return [];
   }
 
   public GetUserFilters(userFilters: UserFilter[], userFilterNames: string[]): UserFilter[] {
@@ -347,37 +458,6 @@ export class FilterService implements IFilterService {
       });
     }
     return appropriateUserFilters;
-  }
-
-  public GetNamedFiltersForColumn(
-    column: AdaptableColumn,
-    namedFilters: NamedFilter[],
-    columnCategories: ColumnCategory[]
-  ): NamedFilter[] {
-    if (!column) {
-      return [];
-    }
-    return namedFilters.filter(nf => {
-      if (nf.Scope.DataType && nf.Scope.DataType === column.DataType) {
-        return true;
-      }
-
-      if (nf.Scope.ColumnIds && nf.Scope.ColumnIds.includes(column.ColumnId)) {
-        return true;
-      }
-
-      if (nf.Scope.ColumnCategoryIds) {
-        const categoryPredicate = (cc: ColumnCategory) =>
-          nf.Scope.ColumnCategoryIds.includes(cc.ColumnCategoryId) &&
-          cc.ColumnIds.includes(column.ColumnId);
-
-        if (columnCategories.some(categoryPredicate)) {
-          return true;
-        }
-      }
-
-      return false;
-    });
   }
 
   public ShowUserFilterForColumn(
@@ -416,159 +496,11 @@ export class FilterService implements IFilterService {
   }
 
   public GetFunctionForSystemFilter(systemFilterName: string): any {
-    switch (systemFilterName) {
-      case BLANKS_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (itemToCheck: any): boolean => {
-            return Helper.IsInputNullOrEmpty(itemToCheck);
-          },
-        };
-      }
-      case NON_BLANKS_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (itemToCheck: any): boolean => {
-            return Helper.IsInputNotNullOrEmpty(itemToCheck);
-          },
-        };
-      }
-      case TODAY_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date());
-            return (
-              today.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
-            );
-          },
-        };
-      }
-      case IN_PAST_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            return +dateToCheck < Date.now();
-          },
-        };
-      }
-      case IN_FUTURE_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            return +dateToCheck > Date.now();
-          },
-        };
-      }
-      case YESTERDAY_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            let yesterday = ((d: Date) => new Date(d.setDate(d.getDate() - 1)))(new Date());
-            return (
-              yesterday.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
-            );
-          },
-        };
-      }
-      case TOMORROW_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            let tomorrow = ((d: Date) => new Date(d.setDate(d.getDate() + 1)))(new Date());
-            return (
-              tomorrow.setHours(0, 0, 0, 0) == new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
-            );
-          },
-        };
-      }
-      case NEXT_WORKING_DAY_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            return (
-              this.adaptable.api.calendarApi.getNextWorkingDay().setHours(0, 0, 0, 0) ==
-              new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
-            );
-          },
-        };
-      }
-      case PREVIOUS_WORKING_DAY_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            return (
-              this.adaptable.api.calendarApi.getPreviousWorkingDay().setHours(0, 0, 0, 0) ==
-              new Date(dateToCheck.getTime()).setHours(0, 0, 0, 0)
-            );
-          },
-        };
-      }
-      case THIS_YEAR_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (dateToCheck: Date): boolean => {
-            let today = ((d: Date) => new Date(d.setDate(d.getDate())))(new Date());
-            let todayyear: number = today.getFullYear();
-            let datetocheckyear: number = dateToCheck.getFullYear();
-            return todayyear == datetocheckyear;
-          },
-        };
-      }
-      case POSITIVE_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (numberToCheck: number): boolean => {
-            return numberToCheck > 0;
-          },
-        };
-      }
-      case NEGATIVE_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (numberToCheck: number): boolean => {
-            return numberToCheck < 0;
-          },
-        };
-      }
-      case ZERO_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (numberToCheck: number): boolean => {
-            return numberToCheck == 0;
-          },
-        };
-      }
-      case TRUE_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (boolToCheck: boolean): boolean => {
-            return boolToCheck;
-          },
-        };
-      }
-      case FALSE_SYSTEM_FILTER: {
-        return {
-          IsExpressionSatisfied: (boolToCheck: boolean): boolean => {
-            return !boolToCheck;
-          },
-        };
-      }
-    }
+    return undefined;
   }
 
   public GetDatatypeForSystemFilter(systemFilterName: string): DataType {
-    switch (systemFilterName) {
-      case BLANKS_SYSTEM_FILTER:
-      case NON_BLANKS_SYSTEM_FILTER: {
-        return DataType.All;
-      }
-      case TODAY_SYSTEM_FILTER:
-      case IN_PAST_SYSTEM_FILTER:
-      case IN_FUTURE_SYSTEM_FILTER:
-      case YESTERDAY_SYSTEM_FILTER:
-      case TOMORROW_SYSTEM_FILTER:
-      case NEXT_WORKING_DAY_SYSTEM_FILTER:
-      case PREVIOUS_WORKING_DAY_SYSTEM_FILTER:
-      case THIS_YEAR_SYSTEM_FILTER: {
-        return DataType.Date;
-      }
-      case POSITIVE_SYSTEM_FILTER:
-      case NEGATIVE_SYSTEM_FILTER:
-      case ZERO_SYSTEM_FILTER: {
-        return DataType.Number;
-      }
-      case TRUE_SYSTEM_FILTER:
-      case FALSE_SYSTEM_FILTER: {
-        return DataType.Boolean;
-      }
-    }
+    return DataType.Unknown;
   }
 
   public ConvertColumnFiltersToKVPArray(

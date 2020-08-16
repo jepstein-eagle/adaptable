@@ -1,6 +1,6 @@
 import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
-import { SystemFilterState } from './SystemFilterState';
+import { FilterState } from './FilterState';
 import { ApplicationState } from './ApplicationState';
 import { AdvancedSearchState } from './AdvancedSearchState';
 import { AlertState } from './AlertState';
@@ -32,7 +32,6 @@ import { UserFilterState } from './UserFilterState';
 import { ChartState } from './ChartState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
-import { NamedFilterState } from './NamedFilterState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
@@ -170,7 +169,6 @@ import { SharedQueryState } from './SharedQueryState';
  *  | [FreeTextColumn](_src_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Special free entry columns (e.g. Comments) saved with state   |
  *  | [GradientColumn](_src_predefinedconfig_gradientcolumnstate_.gradientcolumnstate.html)       | Yes 	              | Style columns so that back colour is in ratio to cell contents|
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
- *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
  *  | [Schedule](_src_predefinedconfig_schedulestate_.schedulestate.html)                         | Yes 	              | Set Functions (e.g. E|
  *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
@@ -524,15 +522,6 @@ export interface PredefinedConfig {
   Layout?: LayoutState;
 
   /**
-   *  Filters defined by Developers at Nowhich include a predicate function that is called by AdapTable each time the filter is evaluated.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Named Filter State can be updated via A`daptableApi` but these updates **will not be persisted**).
-   */
-  NamedFilter?: NamedFilterState;
-
-  /**
    * Supplies a collection of *PercentBar* objects which will display numeric columns as a coloured bar, the fill of which is bassed on the cell value.
    */
   PercentBar?: PercentBarState;
@@ -578,7 +567,7 @@ export interface PredefinedConfig {
    *
    * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
    */
-  SystemFilter?: SystemFilterState;
+  SystemFilter?: FilterState;
 
   /**
    * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.

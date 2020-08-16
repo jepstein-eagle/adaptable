@@ -17,20 +17,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * c. *cellValue* - the value being tested
  *
  * --------------
- *
- * **Further AdapTable Help Resources**
- *
- * [Named Filter Demo](https://demo.adaptabletools.com/filters/aggridnamedfiltersdemo)
- *
- * {@link NamedFilterApi|Named Filter API}
- *
- * [Named Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/named-filter-function.md)
- *
- * {@link UserFunctions|User Functions}
- *
- * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
- *
- * --------------
+
  *
  * **Named Filter Example**
  *
@@ -110,46 +97,3 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *
  */
-export interface NamedFilterState extends ConfigState {
-  /**
-   * A collection of Named Filters
-   */
-  NamedFilters?: NamedFilter[];
-}
-
-//export interface NamedFilterPredicate {
-//  (record: any, columnId: string, cellValue: any): boolean;
-//}
-
-/**
- * A Named Filter is a filter provided at design-time together with a Predicate Function that is evaluated each time the filter is run.
- */
-export interface NamedFilter extends AdaptableObject {
-  /**
-   * The name of the Named Filter that will be applied.
-   *
-   * This value will be shown everywhere the filter appears (e.g. in Column menu or in the Query Builder screen).
-   */
-  Name: string;
-
-  /**
-   * Where the Named Filter will be applied
-   *
-   * You can choose to run the Named Filter for particular columns, for a given DataType (e.g. Date, Numeric), or for given Column Categories.
-   */
-  Scope: Scope;
-
-  /**
-   * The name of the Predicate Function that will be run each time the Named Filter is applied.
-   */
-  FilterPredicate?: string;
-}
-
-/**
- * The predicate function provided by the User at design-time which is called each time a Named Filter is evaluated
- */
-export interface NamedFilterPredicate extends BaseUserFunction {
-  type: 'NamedFilterPredicate';
-  name: string;
-  handler: (record: any, columnId: string, cellValue: any) => boolean;
-}

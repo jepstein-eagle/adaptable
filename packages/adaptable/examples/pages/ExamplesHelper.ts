@@ -1103,6 +1103,17 @@ export class ExamplesHelper {
       },
     });
     schema.push({
+      headerName: 'Currency',
+      field: 'currency',
+      editable: true,
+      enableRowGroup: true,
+      sortable: true,
+      enablePivot: true,
+      filter: 'agTextColumnFilter',
+      type: 'abColDefString',
+      resizable: true,
+    });
+    schema.push({
       headerName: 'Change',
       field: 'changeOnYear',
       filter: true,
@@ -1252,17 +1263,6 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
     });
 
-    schema.push({
-      headerName: 'Currency',
-      field: 'currency',
-      editable: true,
-      enableRowGroup: true,
-      sortable: true,
-      enablePivot: true,
-      filter: 'agTextColumnFilter',
-      type: 'abColDefString',
-      resizable: true,
-    });
     schema.push({
       headerName: 'Status',
       field: 'status',

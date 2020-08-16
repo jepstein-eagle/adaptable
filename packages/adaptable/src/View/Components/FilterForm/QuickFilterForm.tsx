@@ -9,7 +9,6 @@ import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilter
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
 import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
@@ -19,12 +18,12 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import Input from '../../../components/Input';
-import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
 import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
+import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableColumn;
@@ -33,7 +32,7 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
   SystemFilters: string[];
-  NamedFilters: NamedFilter[];
+  //  NamedFilters: NamedFilter[];
   ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
@@ -352,9 +351,8 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFil
     Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
-    ColumnFilters: state.ColumnFilter.ColumnFilters,
+    SystemFilters: state.Filter.SystemFilters,
+    ColumnFilters: state.Filter.ColumnFilters,
   };
 }
 

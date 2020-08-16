@@ -1,10 +1,9 @@
 import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 /**
  * EventArgs sent as part of the on'SearchChanged' Event
@@ -91,10 +90,6 @@ export interface AdaptableSearchState {
    * Details of **all User Filters** in the Adaptable State
    */
   userFilters: UserFilter[] | undefined;
-  /**
-   * Details of **all Named Filters** in the Adaptable State
-   */
-  namedFilters: NamedFilter[] | undefined;
 }
 
 /**

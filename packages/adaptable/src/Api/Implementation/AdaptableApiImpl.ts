@@ -40,7 +40,6 @@ import { SystemStatusApiImpl } from './SystemStatusApiImpl';
 import { ThemeApiImpl } from './ThemeApiImpl';
 import { UserInterfaceApiImpl } from './UserInterfaceApiImpl';
 import { UserFilterApiImpl } from './UserFilterApiImpl';
-import { NamedFilterApiImpl } from './NamedFilterApiImpl';
 import { InternalApiImpl } from './InternalApiImpl';
 import { ColumnChooserApiImpl } from './ColumnChooserApiImpl';
 import { AdaptableApi } from '../../types';
@@ -84,7 +83,6 @@ import { SystemFilterApi } from '../SystemFilterApi';
 import { SystemStatusApi } from '../SystemStatusApi';
 import { UserInterfaceApi } from '../UserInterfaceApi';
 import { UserFilterApi } from '../UserFilterApi';
-import { NamedFilterApi } from '../NamedFilterApi';
 import { ThemeApi } from '../ThemeApi';
 import { GridApi } from '../GridApi';
 import { ScheduleApi } from '../ScheduleApi';
@@ -143,7 +141,6 @@ export class AdaptableApiImpl implements AdaptableApi {
   public userInterfaceApi: UserInterfaceApi;
   public userFilterApi: UserFilterApi;
   public sharedQueryApi: SharedQueryApi;
-  public namedFilterApi: NamedFilterApi;
   public toolPanelApi: ToolPanelApi;
   public teamSharingApi: TeamSharingApi;
 
@@ -193,7 +190,6 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.userInterfaceApi = new UserInterfaceApiImpl(adaptable);
     this.userFilterApi = new UserFilterApiImpl(adaptable);
     this.sharedQueryApi = new SharedQueryApiImpl(adaptable);
-    this.namedFilterApi = new NamedFilterApiImpl(adaptable);
     this.toolPanelApi = new ToolPanelApiImpl(adaptable);
     this.teamSharingApi = new TeamSharingApiImpl(adaptable);
 

@@ -32,10 +32,9 @@ import { UserFilterState } from './UserFilterState';
 import { ConfigState } from './ConfigState';
 import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
-import { SystemFilterState } from './SystemFilterState';
+import { FilterState } from './FilterState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
-import { NamedFilterState } from './NamedFilterState';
 import { Glue42State } from './Glue42State';
 import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
@@ -64,12 +63,11 @@ export interface AdaptableState {
   ActionColumn: ActionColumnState;
   Application: ApplicationState;
   Entitlements: EntitlementState;
-  NamedFilter: NamedFilterState;
   // Glue42: Glue42State;
   // IPushPull: IPushPullState;
   // OpenFin: OpenFinState;
   SparklineColumn: SparklineColumnState;
-  SystemFilter: SystemFilterState;
+  Filter: FilterState;
   SystemStatus: SystemStatusState;
   UserInterface: UserInterfaceState;
 

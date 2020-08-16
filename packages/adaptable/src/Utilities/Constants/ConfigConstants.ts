@@ -7,7 +7,6 @@ export const BULK_UPDATE = 'BulkUpdate';
 export const USER_INTERFACE = 'UserInterface';
 export const ENTITLEMENTS = 'Entitlements';
 export const APPLICATION = 'Application';
-export const NAMED_FILTER = 'NamedFilter';
 export const ACTION_COLUMN = 'ActionColumn';
 export const SPARKLINE_COLUMN = 'SparklineColumn';
 export const CELL_SUMMARY = 'CellSummary';

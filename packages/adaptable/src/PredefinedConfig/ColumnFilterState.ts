@@ -1,6 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Expression } from './Common/Expression';
+import { SystemFilterId } from '../Utilities/Services/FilterService';
 
 /**
  *
@@ -34,24 +35,5 @@ import { Expression } from './Common/Expression';
  *
  */
 export interface ColumnFilterState extends ConfigState {
-  ColumnFilters?: ColumnFilter[];
+  // ColumnFilters?: ColumnFilter[];
 }
-
-export interface ColumnFilter extends AdaptableObject {
-  ColumnId: string;
-  Values?: any[];
-  Predicates?: ColumnFilterPredicate[];
-  Filter?: Expression;
-}
-
-export interface ColumnFilterPredicate {
-  PredicateId: string;
-  Inputs?: any[];
-}
-
-/*
-
-
-A collection of ColumnFilter object. Each ColumnFilter contains a single column Expression (see Expression Object Config). However, the Expression can contain as many criteria as you want.
-
-*/

@@ -129,7 +129,6 @@ export type AdaptableStateKey =
   | 'GradientColumn'
   | 'IPushPull'
   | 'Layout'
-  | 'NamedFilter'
   | 'OpenFin'
   | 'PercentBar'
   | 'PlusMinus'
