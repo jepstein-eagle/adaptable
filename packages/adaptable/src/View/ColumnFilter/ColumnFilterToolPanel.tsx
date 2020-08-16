@@ -125,7 +125,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
-        onClose={() => this.props.onClose('ColumnFilter')}
+        onClose={() => this.props.onClose('Filter')}
       >
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>

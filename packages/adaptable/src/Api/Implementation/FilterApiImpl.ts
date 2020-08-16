@@ -7,6 +7,7 @@ import {
   FilterPredicate,
   ColumnFilter,
   SystemFilterIds,
+  SystemFilterPredicatesById,
 } from '../../PredefinedConfig/FilterState';
 import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../types';

@@ -34,10 +34,7 @@ export class ColumnFilterEntityRow extends React.Component<
     );
     colItems[1].Content = (
       <EntityRowItem
-        Content={ExpressionHelper.ConvertExpressionToString(
-          this.props.ColumnFilter.Filter,
-          this.props.api
-        )}
+        Content={this.props.api.filterApi.convertColumnFilterToString(this.props.ColumnFilter)}
       />
     );
     colItems[2].Content = (
@@ -47,7 +44,7 @@ export class ColumnFilterEntityRow extends React.Component<
           tooltip="Save as User Filter"
           disabled={
             this.props.ColumnFilter == null ||
-            ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Filter.FilterExpressions)
+            ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Values)
           }
           AccessLevel={this.props.AccessLevel}
         />

@@ -52,20 +52,14 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
     rowColItems[0].Content = this.props.Api.gridApi.getFriendlyNameFromColumnId(
       columnFilter.ColumnId
     );
-    rowColItems[1].Content = ExpressionHelper.ConvertExpressionToString(
-      columnFilter.Filter,
-      this.props.Api,
-      false
-    );
+    rowColItems[1].Content = this.props.Api.filterApi.convertColumnFilterToString(columnFilter);
+
     rowColItems[2].Content = (
       <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
         <ButtonSave
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
-          disabled={
-            columnFilter == null ||
-            ArrayExtensions.IsNotNullOrEmpty(columnFilter.Filter.FilterExpressions)
-          }
+          disabled={columnFilter == null || ArrayExtensions.IsNotNullOrEmpty(columnFilter.Values)}
           AccessLevel={this.props.AccessLevel}
         />{' '}
         <ButtonClear

@@ -68,12 +68,12 @@ export class ColumnFilterSummaryComponent extends React.Component<
     if (columnFilter == null) {
       return 'No Column Filter Active';
     }
-    return ExpressionHelper.ConvertExpressionToString(columnFilter.Filter, this.props.Api);
+    return this.props.Api.filterApi.convertColumnFilterToString(columnFilter);
   }
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnFilterSummaryProps> {
   return {
-    ColumnFilters: state.ColumnFilter.ColumnFilters,
+    ColumnFilters: state.Filter.ColumnFilters,
   };
 }
 
