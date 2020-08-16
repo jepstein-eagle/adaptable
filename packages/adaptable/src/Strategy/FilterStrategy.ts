@@ -22,7 +22,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
     if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({
         Label: StrategyConstants.FilterStrategyFriendlyName,
-        ComponentName: ScreenPopups.ColumnFilterPopup,
+        ComponentName: ScreenPopups.FilterPopup,
         Icon: StrategyConstants.FilterGlyph,
       });
     }
@@ -65,7 +65,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
         baseMenuItems.push(
           this.createColumnMenuItemReduxAction(
             isFilterVisible ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',
-            isFilterVisible ? GlyphConstants.OK_GLYPH : GlyphConstants.REMOVE_GLYPH,
+            isFilterVisible ? 'unchecked' : 'check',
             isFilterVisible ? GridRedux.QuickFilterBarHide() : GridRedux.QuickFilterBarShow()
           )
         );

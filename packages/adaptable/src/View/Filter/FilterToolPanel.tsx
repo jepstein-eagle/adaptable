@@ -171,10 +171,7 @@ function mapDispatchToProps(
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.FilterStrategyId,
-          ScreenPopups.ColumnFilterPopup
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.FilterStrategyId, ScreenPopups.FilterPopup)
       ),
   };
 }

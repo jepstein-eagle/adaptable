@@ -144,10 +144,7 @@ function mapDispatchToProps(
     onShowQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarShow()),
     onConfigure: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.FilterStrategyId,
-          ScreenPopups.ColumnFilterPopup
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.FilterStrategyId, ScreenPopups.FilterPopup)
       ),
   };
 }
