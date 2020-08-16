@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
@@ -22,15 +22,15 @@ import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollecti
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
-  onAddUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
+  onAddUserFilter: (userFilter: UserFilter) => FilterRedux.UserFilterAddAction;
+  onEditUserFilter: (userFilter: UserFilter) => FilterRedux.UserFilterEditAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -97,23 +97,21 @@ class UserFilterPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let UserFilterItems = this.props.Api.userFilterApi
-      .getAllUserFilter()
-      .map((userFilter, index) => {
-        return (
-          <UserFilterEntityRow
-            AdaptableObject={userFilter}
-            api={this.props.Api}
-            colItems={colItems}
-            key={'CS' + index}
-            onShare={description => this.props.onShare(userFilter, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            onEdit={() => this.onEdit(userFilter)}
-            onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
-            AccessLevel={this.props.AccessLevel}
-          />
-        );
-      });
+    let UserFilterItems = this.props.Api.filterApi.getAllUserFilter().map((userFilter, index) => {
+      return (
+        <UserFilterEntityRow
+          AdaptableObject={userFilter}
+          api={this.props.Api}
+          colItems={colItems}
+          key={'CS' + index}
+          onShare={description => this.props.onShare(userFilter, description)}
+          TeamSharingActivated={this.props.TeamSharingActivated}
+          onEdit={() => this.onEdit(userFilter)}
+          onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)}
+          AccessLevel={this.props.AccessLevel}
+        />
+      );
+    });
 
     let newButton = (
       <ButtonNew
@@ -211,9 +209,11 @@ class UserFilterPopupComponent extends React.Component<
   canFinishWizard() {
     let userFilter = this.state.EditedAdaptableObject as UserFilter;
     return (
-      StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
-      StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression)
+      //  StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
+      //  StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
+      //  ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression)
+
+      true // to do!
     );
   }
 }
@@ -226,10 +226,8 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<UserFilterPopupProps> {
   return {
-    onAddUserFilter: (userFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterAdd(userFilter)),
-    onEditUserFilter: (userFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterEdit(userFilter)),
+    onAddUserFilter: (userFilter: UserFilter) => dispatch(FilterRedux.UserFilterAdd(userFilter)),
+    onEditUserFilter: (userFilter: UserFilter) => dispatch(FilterRedux.UserFilterEdit(userFilter)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

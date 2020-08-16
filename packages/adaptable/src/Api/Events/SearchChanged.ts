@@ -2,7 +2,6 @@ import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './Ad
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 /**
@@ -40,7 +39,6 @@ export interface SearchChangedInfo extends AdaptableEventInfo {
     | 'AdvancedSearch'
     | 'QuickSearch'
     | 'Filter'
-    | 'UserFilter'
     | 'DataChange'
     | 'Sort';
 
@@ -86,10 +84,6 @@ export interface AdaptableSearchState {
    * Details of any column filters **currently applied**
    */
   columnFilters: ColumnFilter[] | undefined;
-  /**
-   * Details of **all User Filters** in the Adaptable State
-   */
-  userFilters: UserFilter[] | undefined;
 }
 
 /**

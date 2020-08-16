@@ -31,7 +31,6 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Waiting } from '../Components/FilterForm/Waiting';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Box, Flex } from 'rebass';
 import HelpBlock from '../../components/HelpBlock';
 import { AdaptableApi } from '../../types';
@@ -140,25 +139,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         if (filterExpression) {
           filterExpression.Filters.forEach((fe: string) => {
             // if its a userfilter add it to that list
-            let userFilter: UserFilter = theProps.Api.userFilterApi
-              .getAllUserFilter()
-              .find(uf => uf.Name == fe);
-            if (userFilter) {
-              selectedColumnFilterExpressions.push(fe);
-            }
             // if it is a system filter add it ot that list
-            let selectedSystemFilter: string = theProps.Api.filterApi
-              .getAllSystemFilter()
-              .find(sf => sf == fe);
-            if (selectedSystemFilter) {
-              selectedColumnFilterExpressions.push(fe);
-            }
           });
         }
-        let availableFilterExpressions: string[] = theProps.Api.userFilterApi
-          .getAllUserFilter()
-          .map(f => f.Name)
-          .concat(...theProps.Api.filterApi.getAllSystemFilter().map(sf => sf));
+        let availableFilterExpressions: string[] = [];
 
         // get ranges
         let range: RangeExpression = null;
@@ -469,7 +453,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
                       <ExpressionBuilderUserFilter
                         AvailableSystemFilterNames={availableSystemFilterNames}
                         AvailableUserFilterNames={availableUserFilterNames}
-                        AvailableNamedFilterNames={availableNamedFilterNames}
+                        AvailableNamedFilterNames={null}
                         SelectedFilterNames={this.state.SelectedFilterExpressions}
                         onFilterNameChange={selectedValues =>
                           this.onSelectedFiltersChanged(selectedValues)

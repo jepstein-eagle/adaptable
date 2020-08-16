@@ -19,7 +19,6 @@ import { LoggingHelper } from './LoggingHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../ObjectFactory';
 import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import Helper from './Helper';
 import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
@@ -170,7 +169,7 @@ export function checkForExpression(
     ), // this value display
     adaptable.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
-    adaptable.api.userFilterApi.getAllUserFilter(),
+    null,
     null,
 
     adaptable
@@ -192,7 +191,7 @@ export function checkForExpressionFromRowNode(
     ), // this value
     adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // other column value
     columns,
-    adaptable.api.userFilterApi.getAllUserFilter(),
+    null,
     null,
     adaptable,
     rowNode
@@ -206,7 +205,7 @@ export function IsSatisfied(
   getDisplayColumnValue: (columnId: string) => string,
   getOtherColumnValue: (columnId: string) => any,
   columnadaptableList: AdaptableColumn[],
-  userFilters: UserFilter[],
+  userFilters: any[],
   systemFilters: string[],
   adaptable: IAdaptable,
   rowNode?: any
@@ -243,7 +242,7 @@ export function IsSatisfied(
       );
       if (filtersForColumn) {
         // first evaluate any user filters
-        let filteredUserFilters: UserFilter[] = [];
+        let filteredUserFilters: any[] = [];
         for (let userFilter of filteredUserFilters) {
           isColumnSatisfied = IsSatisfied(
             userFilter.Expression,
@@ -811,7 +810,7 @@ export function TestRangeEvaluation(
   return false;
 }
 
-export function ExpressionContainsFilter(expression: Expression, filter: UserFilter): boolean {
+export function ExpressionContainsFilter(expression: Expression, filter: any): boolean {
   let hasFilter: boolean = false;
   if (expression != null && expression.FilterExpressions.length > 0) {
     expression.FilterExpressions.forEach(fe => {

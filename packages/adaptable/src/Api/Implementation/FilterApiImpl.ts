@@ -8,8 +8,8 @@ import {
   ColumnFilter,
   SystemFilterIds,
   SystemFilterPredicatesById,
+  UserFilter,
 } from '../../PredefinedConfig/FilterState';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableColumn } from '../../types';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { AdaptableApi } from '../AdaptableApi';
@@ -24,7 +24,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   public getAllUserFilterIds(): string[] {
-    return this.getSystemFilterState().UserFilters;
+    return this.getSystemFilterState().FilterPredicates;
   }
 
   public setSystemFilters(systemFilters: string[]): void {
@@ -214,5 +214,9 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     }
 
     return false;
+  }
+
+  public getAllUserFilter(): UserFilter[] {
+    return this.getSystemFilterState().UserFilters;
   }
 }

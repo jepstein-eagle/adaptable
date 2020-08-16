@@ -1,5 +1,4 @@
 import { ChartState } from '../PredefinedConfig/ChartState';
-import { UserFilterState } from '../PredefinedConfig/UserFilterState';
 import { ThemeState } from '../PredefinedConfig/ThemeState';
 import { SmartEditState } from '../PredefinedConfig/SmartEditState';
 import { ShortcutState } from '../PredefinedConfig/ShortcutState';
@@ -112,7 +111,6 @@ export interface ConfigApi {
   configGetThemeState(returnJson: boolean): ThemeState;
   configGetToolPanelState(returnJson: boolean): ToolPanelState;
   configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;
-  configGetUserFilterState(returnJson: boolean): UserFilterState;
   configGetUserInterfaceState(returnJson: boolean): UserInterfaceState;
 
   configGetAdaptableSearchState(): AdaptableSearchState;

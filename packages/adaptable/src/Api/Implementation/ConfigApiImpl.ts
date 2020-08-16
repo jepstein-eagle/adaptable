@@ -1,5 +1,4 @@
 import { ChartState } from '../../PredefinedConfig/ChartState';
-import { UserFilterState } from '../../PredefinedConfig/UserFilterState';
 import { ThemeState } from '../../PredefinedConfig/ThemeState';
 import { SmartEditState } from '../../PredefinedConfig/SmartEditState';
 import { ShortcutState } from '../../PredefinedConfig/ShortcutState';
@@ -33,7 +32,7 @@ import { ColumnCategoryState } from '../../PredefinedConfig/ColumnCategoryState'
 import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
 import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
-import { FilterState } from '../../PredefinedConfig/FilterState';
+import { FilterState, UserFilter } from '../../PredefinedConfig/FilterState';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
@@ -414,26 +413,21 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetUpdatedRowState(returnJson: boolean = false): UpdatedRowState {
     return this.configGetUserStateByStateKey('UpdatedRow', returnJson) as UpdatedRowState;
   }
-  public configGetUserFilterState(returnJson: boolean = false): UserFilterState {
-    return this.configGetUserStateByStateKey('UserFilter', returnJson) as UserFilterState;
-  }
+
   public configGetUserInterfaceState(returnJson: boolean = false): UserInterfaceState {
     return this.configGetUserStateByStateKey('UserInterface', returnJson) as UserInterfaceState;
   }
 
   public configGetAdaptableSearchState(): AdaptableSearchState {
     const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
-    const currentAdvancedSearch:
-      | string
-      | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
 
     // lets get the searchstate
     const adaptableSearchState: AdaptableSearchState = {
-      dataSource: currentDataSource == null ? undefined : currentDataSource,
-      advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
+      dataSource: this.adaptable.api.dataSourceApi.getCurrentDataSource(),
+      advancedSearch: this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch(),
       quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
       columnFilters: this.adaptable.api.filterApi.getAllColumnFilter(),
-      userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
+      // should we be be getting other Filter info or is it enough just to send the column filters?
     };
     return adaptableSearchState;
   }

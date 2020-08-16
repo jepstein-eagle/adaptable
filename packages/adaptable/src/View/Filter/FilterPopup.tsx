@@ -1,10 +1,8 @@
 import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -36,7 +34,7 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
 
   render() {
     let infoBody: any[] = [
-      'Column Filters are set using the filter dropdown in the column header menu.',
+      'Filters are set using the filter dropdown in the column header menu.',
       <br />,
       <br />,
       'This popup allows you to see which columns have filters applied with an option to clear them.',
@@ -92,7 +90,7 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
     let prompt: IUIPrompt = {
       Header: 'Enter name for User Filter',
       Msg: '',
-      ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, ''),
+      ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(columnFilter, ''),
     };
     this.props.onShowPrompt(prompt);
   }

@@ -36,7 +36,6 @@ import { FilterApi } from './FilterApi';
 import { SystemStatusApi } from './SystemStatusApi';
 import { ThemeApi } from './ThemeApi';
 import { UserInterfaceApi } from './UserInterfaceApi';
-import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
 import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
@@ -115,7 +114,6 @@ import { TeamSharingApi } from './TeamSharingApi';
  *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
  *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
  *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
- *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
  *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
  *  |
  */
@@ -343,11 +341,6 @@ export interface AdaptableApi {
    * Provides access to [User Interface State](_src_predefinedconfig_configstate_userinterfacestate_.userinterfacestate.html) which allows you to set up colours, permitted values etc.
    */
   userInterfaceApi: UserInterfaceApi;
-
-  /**
-   * Provides access to the *User Filter* function, the *User Filter* object and [User Filter State](_src_predefinedconfig_configstate_userfilterstate_.userfilterstate.html).
-   */
-  userFilterApi: UserFilterApi;
 
   sharedQueryApi: SharedQueryApi;
 

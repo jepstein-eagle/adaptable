@@ -27,7 +27,6 @@ import { ShortcutState } from './ShortcutState';
 import { SmartEditState } from './SmartEditState';
 import { TeamSharingState } from './TeamSharingState';
 import { ThemeState } from './ThemeState';
-import { UserFilterState } from './UserFilterState';
 import { ConfigState } from './ConfigState';
 import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
@@ -103,6 +102,5 @@ export interface AdaptableState {
   Theme: ThemeState;
   ToolPanel: ToolPanelState;
   UpdatedRow: UpdatedRowState;
-  UserFilter: UserFilterState;
   SharedQuery: SharedQueryState;
 }

@@ -8,7 +8,7 @@ import {
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
@@ -18,13 +18,13 @@ import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
-  onAddUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
+  onAddUserFilter: (UserFilter: UserFilter) => FilterRedux.UserFilterAddAction;
+  onEditUserFilter: (UserFilter: UserFilter) => FilterRedux.UserFilterEditAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -43,7 +43,7 @@ export class UserFilterSummaryComponent extends React.Component<
   render(): any {
     let strategySummaries: any = [];
 
-    let userFilters: UserFilter[] = this.props.Api.userFilterApi.getAllUserFilter();
+    let userFilters: UserFilter[] = this.props.Api.filterApi.getAllUserFilter();
 
     // title row
     let titleRow = (
@@ -73,7 +73,7 @@ export class UserFilterSummaryComponent extends React.Component<
             EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
-            onDelete={UserFilterRedux.UserFilterDelete(item)}
+            onDelete={FilterRedux.UserFilterDelete(item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -107,7 +107,7 @@ export class UserFilterSummaryComponent extends React.Component<
     }
 
     return Helper.ReturnItemCount(
-      this.props.Api.userFilterApi
+      this.props.Api.filterApi
         .getAllUserFilter()
         .filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId),
       StrategyConstants.UserFilterStrategyFriendlyName
@@ -194,10 +194,8 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<UserFilterSummaryProps> {
   return {
-    onAddUserFilter: (UserFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),
-    onEditUserFilter: (UserFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterEdit(UserFilter)),
+    onAddUserFilter: (UserFilter: UserFilter) => dispatch(FilterRedux.UserFilterAdd(UserFilter)),
+    onEditUserFilter: (UserFilter: UserFilter) => dispatch(FilterRedux.UserFilterEdit(UserFilter)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

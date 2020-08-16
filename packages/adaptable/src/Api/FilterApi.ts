@@ -3,6 +3,7 @@ import {
   FilterPredicate,
   ColumnFilter,
   SystemFilterIds,
+  UserFilter,
 } from '../PredefinedConfig/FilterState';
 import { AdaptableColumn } from '../types';
 
@@ -102,4 +103,6 @@ export interface FilterApi {
   convertColumnFiltersToString(columnFilters: ColumnFilter[]): string;
 
   evaluateColumnFilter(columnFilter: ColumnFilter, data: any): boolean;
+
+  getAllUserFilter(): UserFilter[];
 }

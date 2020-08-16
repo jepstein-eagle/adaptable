@@ -94,7 +94,6 @@ export {
   SharedEntity,
 } from './PredefinedConfig/TeamSharingState';
 export { UpdatedRowState } from './PredefinedConfig/UpdatedRowState';
-export { UserFilterState, UserFilter } from './PredefinedConfig/UserFilterState';
 export {
   UserInterfaceState,
   UserMenuItem,

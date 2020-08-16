@@ -14,7 +14,6 @@ import {
   RangeExpression,
   QueryRange,
 } from '../../PredefinedConfig/Common/Expression';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import {
   QueryTab,
   LeafExpressionOperator,

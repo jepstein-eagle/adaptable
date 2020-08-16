@@ -108,7 +108,7 @@ let demoConfig: PredefinedConfig = {
   },
   Filter: {
     //  SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
-    UserFilters: ['US_Banks'],
+    FilterPredicates: ['US_Banks'],
     ColumnFilters: [
       {
         ColumnId: 'currency',

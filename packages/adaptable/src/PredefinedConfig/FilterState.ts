@@ -96,8 +96,51 @@ export interface FilterState extends ConfigState {
    * If this property is not set then **all** the system filters are available.
    */
   SystemFilters?: SystemFilterIds;
-  UserFilters?: string[];
+  FilterPredicates?: string[];
   ColumnFilters?: ColumnFilter[];
+  UserFilters?: UserFilter[];
+}
+
+export interface FilterPredicate extends BaseUserFunction {
+  id: SystemFilterId | string;
+  type: 'FilterPredicate';
+  name: string;
+  scope?: Scope;
+  inputs?: FilterPredicateInput[];
+  handler: FilterPredicateHandler;
+}
+
+export interface FilterPredicateInput {
+  type: 'number' | 'text' | 'date';
+  default?: any;
+}
+
+export interface FilterPredicateHandler {
+  (params: FilterPredicateParams): boolean;
+}
+
+export interface FilterPredicateParams {
+  value: any;
+  inputs: any[];
+  api: AdaptableApi;
+}
+
+export interface ColumnFilter extends AdaptableObject {
+  ColumnId: string;
+  Values?: any[];
+  Predicates?: AdaptablePredicate[];
+}
+
+export interface UserFilter extends AdaptableObject {
+  Name: string;
+  Scope: Scope;
+  Values?: any[];
+  Predicates?: AdaptablePredicate[];
+}
+
+export interface AdaptablePredicate {
+  PredicateId: SystemFilterId | string;
+  Inputs?: any[];
 }
 
 export type SystemFilterIds = SystemFilterId[];
@@ -495,39 +538,3 @@ export const SystemFilterPredicates: FilterPredicate[] = [
 ];
 
 export const SystemFilterPredicatesById = keyBy(SystemFilterPredicates, 'id');
-
-export interface FilterPredicate extends BaseUserFunction {
-  id: SystemFilterId | string;
-  type: 'FilterPredicate';
-  name: string;
-  scope?: Scope;
-  inputs?: FilterPredicateInput[];
-  handler: FilterPredicateHandler;
-}
-
-export interface FilterPredicateInput {
-  type: 'number' | 'text' | 'date';
-  default?: any;
-}
-
-export interface FilterPredicateHandler {
-  (params: FilterPredicateParams): boolean;
-}
-
-export interface FilterPredicateParams {
-  value: any;
-  inputs: any[];
-  api: AdaptableApi;
-}
-
-export interface ColumnFilter extends AdaptableObject {
-  ColumnId: string;
-  Values?: any[];
-  Predicates?: ColumnFilterPredicate[];
-  // Filter?: Expression;
-}
-
-export interface ColumnFilterPredicate {
-  PredicateId: SystemFilterId | string;
-  Inputs?: any[];
-}

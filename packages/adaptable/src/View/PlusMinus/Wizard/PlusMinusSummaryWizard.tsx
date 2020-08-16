@@ -3,12 +3,9 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 
 export interface PlusMinusSummaryWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}

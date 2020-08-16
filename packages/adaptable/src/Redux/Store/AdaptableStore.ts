@@ -27,7 +27,6 @@ import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux';
 import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux';
 import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux';
 import * as FilterRedux from '../ActionsReducers/FilterRedux';
-import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux';
 import * as SystemFilterRedux from '../ActionsReducers/FilterRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
@@ -66,7 +65,6 @@ import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { Layout } from '../../PredefinedConfig/LayoutState';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
@@ -132,7 +130,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
-import { ColumnFilter } from '../../PredefinedConfig/FilterState';
+import { ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -248,7 +246,6 @@ This is the main store for Adaptable State
       Theme: ThemeRedux.ThemeReducer,
       ToolPanel: ToolPanelRedux.ToolPanelReducer,
       UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
-      UserFilter: UserFilterRedux.UserFilterReducer,
       SharedQuery: SharedQueryRedux.SharedQueryReducer,
     };
 
@@ -283,7 +280,6 @@ This is the main store for Adaptable State
           state.Export = undefined;
           state.FlashingCell = undefined;
           state.FormatColumn = undefined;
-          state.UserFilter.UserFilters = [];
           state.Filter.SystemFilters = [];
           state.Grid = undefined;
           state.Layout = undefined;
@@ -1636,8 +1632,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           USER FILTER
           **********************
            */
-          case UserFilterRedux.USER_FILTER_ADD: {
-            const actionTyped = action as UserFilterRedux.UserFilterAddAction;
+          case FilterRedux.USER_FILTER_ADD: {
+            const actionTyped = action as FilterRedux.UserFilterAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1649,8 +1645,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case UserFilterRedux.USER_FILTER_EDIT: {
-            const actionTyped = action as UserFilterRedux.UserFilterEditAction;
+          case FilterRedux.USER_FILTER_EDIT: {
+            const actionTyped = action as FilterRedux.UserFilterEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1662,8 +1658,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case UserFilterRedux.USER_FILTER_DELETE: {
-            const actionTyped = action as UserFilterRedux.UserFilterDeleteAction;
+          case FilterRedux.USER_FILTER_DELETE: {
+            const actionTyped = action as FilterRedux.UserFilterDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -2605,14 +2601,14 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           /*******************
            * USER FILTER ACTIONS
            *******************/
-          case UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
-            const actionTyped = action as UserFilterRedux.CreateUserFilterFromColumnFilterAction;
+          case FilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
+            const actionTyped = action as FilterRedux.CreateUserFilterFromColumnFilterAction;
             // first create a new user filter based on the column filter and input name
             let userFilter: UserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(
               actionTyped.ColumnFilter,
               actionTyped.InputText
             );
-            middlewareAPI.dispatch(UserFilterRedux.UserFilterAdd(userFilter));
+            middlewareAPI.dispatch(FilterRedux.UserFilterAdd(userFilter));
 
             // then update a new column filter from the user filter - so that it will display the user filter name
             let columnFilter: ColumnFilter = actionTyped.ColumnFilter;

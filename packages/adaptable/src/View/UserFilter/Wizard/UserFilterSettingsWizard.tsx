@@ -5,12 +5,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import ErrorBox from '../../../components/ErrorBox';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 import HelpBlock from '../../../components/HelpBlock';
+import { UserFilter } from '../../../PredefinedConfig/FilterState';
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSettingsWizardState {
@@ -67,7 +67,7 @@ export class UserFilterSettingsWizard
       {
         FilterName: e.value,
         ErrorMessage:
-          this.props.Api.userFilterApi
+          this.props.Api.filterApi
             .getAllUserFilter()
             .findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1
             ? 'A User Filter already exists with that name for column: ' +

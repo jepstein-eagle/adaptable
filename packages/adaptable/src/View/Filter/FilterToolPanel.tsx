@@ -2,12 +2,11 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
@@ -15,14 +14,13 @@ import { AdaptablePopover } from '../AdaptablePopover';
 import { ActiveFiltersPanel } from './ActiveFiltersPanel';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { Flex, Box, Text } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
-import { ColumnFilter } from '../../PredefinedConfig/FilterState';
+import { ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
 
 interface FilterToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<FilterToolPanelComponent> {
@@ -64,16 +62,12 @@ class FilterToolPanelComponent extends React.Component<
     );
 
     let content = (
-      <Flex
-        flexDirection="column"
-        alignItems="stretch"
-        className="ab-ToolPanel__ColumnFilter__wrap"
-      >
-        <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__BulkUpdate__wrap'}>
+      <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__Filter__wrap">
+        <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__Filter__wrap'}>
           {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilters) && (
             <>
               <AdaptablePopover
-                className="ab-ToolPanel__ColumnFilter__info"
+                className="ab-ToolPanel__Filter__info"
                 headerText=""
                 bodyText={[activeFiltersPanel]}
                 //  tooltipText={'Show Filter Details'}
@@ -85,7 +79,7 @@ class FilterToolPanelComponent extends React.Component<
               <ButtonClear
                 marginLeft={1}
                 marginBottom={0}
-                className="ab-ToolPanel__ColumnFilter__clear"
+                className="ab-ToolPanel__Filter__clear"
                 onClick={() => this.onClearFilters()}
                 tooltip="Clear Column Filters"
                 disabled={this.props.ColumnFilters.length == 0}
@@ -96,9 +90,9 @@ class FilterToolPanelComponent extends React.Component<
             </>
           )}
         </Flex>
-        <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__BulkUpdate__wrap'}>
+        <Flex flexDirection="row" alignItems="stretch" className={'ab-ToolPanel__Filter__wrap'}>
           <CheckBox
-            className="ab-ToolPanel__ColumnFilter__active-check"
+            className="ab-ToolPanel__Filter__active-check"
             disabled={
               this.props.Api.internalApi.isGridInPivotMode() ||
               !this.props.Api.internalApi.isQuickFilterActive()
@@ -120,7 +114,7 @@ class FilterToolPanelComponent extends React.Component<
 
     return (
       <PanelToolPanel
-        className="ab-ToolPanel__ColumnFilter"
+        className="ab-ToolPanel__Filter"
         headerText={StrategyConstants.FilterStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
@@ -144,7 +138,7 @@ class FilterToolPanelComponent extends React.Component<
     let prompt: IUIPrompt = {
       Header: 'Enter name for User Filter',
       Msg: '',
-      ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(columnFilter, ''),
+      ConfirmAction: FilterRedux.CreateUserFilterFromColumnFilter(columnFilter, ''),
     };
     this.props.onShowPrompt(prompt);
   }

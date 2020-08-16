@@ -46,7 +46,6 @@ import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
 import { VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
-import { UserFilter } from '../PredefinedConfig/UserFilterState';
 import { Report, ReportSchedule } from '../PredefinedConfig/ExportState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
@@ -71,7 +70,7 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/SharedQueryState';
-import { ColumnFilter, ColumnFilterPredicate } from '../PredefinedConfig/FilterState';
+import { ColumnFilter, AdaptablePredicate, UserFilter } from '../PredefinedConfig/FilterState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -304,8 +303,9 @@ export function CreateEmptyUserFilter(): UserFilter {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
+    // Expression: ExpressionHelper.CreateEmptyExpression(),
+    //  ColumnId: EMPTY_STRING,
   };
 }
 
@@ -552,7 +552,7 @@ export function CreateEmptyPivotDetails(): PivotDetails {
 export function CreateColumnFilter(
   columnId: string,
   values: any[],
-  predicates: ColumnFilterPredicate[]
+  predicates: AdaptablePredicate[]
 ): ColumnFilter {
   return {
     Uuid: createUuid(),
@@ -569,8 +569,8 @@ export function CreateUserFilterFromColumnFilter(
   return {
     Uuid: createUuid(),
     Name: name,
-    ColumnId: columnFilter.ColumnId,
-    Expression: ExpressionHelper.CreateEmptyExpression(), // TODO:  need to get this from the column filter somehow now that its changed
+    Scope: { ColumnIds: [columnFilter.ColumnId] },
+    //  Expression: ExpressionHelper.CreateEmptyExpression(), // TODO:  need to get this from the column filter somehow now that its changed
   };
 }
 

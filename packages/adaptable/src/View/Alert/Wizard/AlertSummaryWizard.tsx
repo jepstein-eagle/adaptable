@@ -6,10 +6,8 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}

@@ -7,7 +7,7 @@ import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 export class UserFilterEntityRow extends React.Component<
   SharedEntityRowProps<UserFilterEntityRow>,
@@ -18,17 +18,9 @@ export class UserFilterEntityRow extends React.Component<
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
-    colItems[0].Content = <EntityRowItem Content={userFilter.Name} />;
-    colItems[1].Content = (
-      <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumnId(userFilter.ColumnId)}
-      />
-    );
-    colItems[2].Content = (
-      <EntityRowItem
-        Content={ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.api)}
-      />
-    );
+    colItems[0].Content = <EntityRowItem Content={'TO DO'} />;
+    colItems[1].Content = <EntityRowItem Content={'TO DO'} />;
+    colItems[2].Content = <EntityRowItem Content={'TO DO'} />;
     colItems[3].Content = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(userFilter)}

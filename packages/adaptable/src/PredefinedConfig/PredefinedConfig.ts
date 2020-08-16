@@ -27,7 +27,6 @@ import { QuickSearchState } from './QuickSearchState';
 import { ShortcutState } from './ShortcutState';
 import { SmartEditState } from './SmartEditState';
 import { ThemeState } from './ThemeState';
-import { UserFilterState } from './UserFilterState';
 import { ChartState } from './ChartState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
@@ -581,11 +580,6 @@ export interface PredefinedConfig {
    * Sets whether rows should display differently when a value in the row updates.  A different color is used depending on the direction of the change.
    */
   UpdatedRow?: UpdatedRowState;
-
-  /**
-   * Supplies a collection of *UserFilter* objects which can be used to create Column Filters and in other Functions.
-   */
-  UserFilter?: UserFilterState;
 
   /**
    * State that manages UI elements in AdapTable e.g. which colours to put in the default palette.

@@ -1,8 +1,3 @@
-import { AdaptableObject } from './Common/AdaptableObject';
-import { Scope } from './Common/Scope';
-import { ConfigState } from './ConfigState';
-import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
-
 /**
  * The Predefined Configuration for Named Filters
  *

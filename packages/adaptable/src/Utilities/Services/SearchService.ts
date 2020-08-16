@@ -1,6 +1,5 @@
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
@@ -28,7 +27,11 @@ export class SearchService implements ISearchService {
           eventName == FilterRedux.COLUMN_FILTER_EDIT ||
           eventName == FilterRedux.COLUMN_FILTER_SET ||
           eventName == FilterRedux.COLUMN_FILTER_CLEAR_ALL ||
-          eventName == FilterRedux.COLUMN_FILTER_CLEAR
+          eventName == FilterRedux.COLUMN_FILTER_CLEAR ||
+          eventName == FilterRedux.USER_FILTER_ADD ||
+          eventName == FilterRedux.USER_FILTER_EDIT ||
+          eventName == FilterRedux.USER_FILTER_DELETE ||
+          eventName == FilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER
         ) {
           setTimeout(() => this.adaptable.applyGridFiltering(), 5);
           this.publishSearchChanged(SearchChangedTrigger.Filter);
@@ -57,14 +60,6 @@ export class SearchService implements ISearchService {
           this.adaptable.applyGridFiltering();
           this.adaptable.redraw();
           this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
-        } else if (
-          eventName == UserFilterRedux.USER_FILTER_ADD ||
-          eventName == UserFilterRedux.USER_FILTER_EDIT ||
-          eventName == UserFilterRedux.USER_FILTER_DELETE ||
-          eventName == UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER
-        ) {
-          setTimeout(() => this.adaptable.applyGridFiltering(), 5);
-          this.publishSearchChanged(SearchChangedTrigger.UserFilter);
         } else if (eventName == GridRedux.GRID_SET_SORT) {
           this.publishSearchChanged(SearchChangedTrigger.Sort);
         }
