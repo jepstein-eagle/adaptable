@@ -1,8 +1,10 @@
 # AdapTable Version 7 Upgrade Guide
 
-Version 7 of AdapTable will be released on Sunday 12 July.
+Version 7 of AdapTable will be officially released in August.
 
-This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of changes that will be of interest, including:
+However there is a fully working canary version (7.0.0-canary.27) for those who are unable to wait.
+
+This is a major version release (primarily to cater for changes in the new ag-Grid version) and has a number of updates that will be of interest, including:
 
 * Support for latest ag-Grid Version (23) including Alpine theme 
 
@@ -46,7 +48,7 @@ We removed `userInterfaceOptions.useDefaultVendorGridThemes` as it was no longer
 
 The `floatingFilter` property is deprecated in gridOptions - `gridOptions.floatingFilter` - you now have to specify it at column level (or in a default column definition).  
 
-Consequently, AdapTable will only show the Quick Filter bar if at least one column has this set to true - and will activate it only for those columns.
+Consequently, AdapTable will only show the Quick Filter bar **if at least one column** has this set to true - and will activate it only for those columns.
 
 ### Themes
 
