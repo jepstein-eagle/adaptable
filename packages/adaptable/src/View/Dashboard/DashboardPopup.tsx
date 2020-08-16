@@ -63,7 +63,7 @@ class DashboardPopupComponent extends React.Component<
       'BulkUpdate',
       'CellSummary',
       'Chart',
-      'ColumnFilter',
+      'Filter',
       'DataSource',
       'Export',
       'Glue42',

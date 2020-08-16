@@ -24,8 +24,8 @@ import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
-interface ColumnFilterToolPanelComponentProps
-  extends ToolPanelStrategyViewPopupProps<ColumnFilterToolPanelComponent> {
+interface FilterToolPanelComponentProps
+  extends ToolPanelStrategyViewPopupProps<FilterToolPanelComponent> {
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
@@ -36,15 +36,15 @@ interface ColumnFilterToolPanelComponentProps
   IsQuickFilterVisible: boolean;
 }
 
-interface ColumnFilterTToolPanelComponentState {
+interface FilterTToolPanelComponentState {
   IsMinimised: boolean;
 }
 
-class ColumnFilterToolPanelComponent extends React.Component<
-  ColumnFilterToolPanelComponentProps,
-  ColumnFilterTToolPanelComponentState
+class FilterToolPanelComponent extends React.Component<
+  FilterToolPanelComponentProps,
+  FilterTToolPanelComponentState
 > {
-  constructor(props: ColumnFilterToolPanelComponentProps) {
+  constructor(props: FilterToolPanelComponentProps) {
     super(props);
     this.state = { IsMinimised: true };
   }
@@ -153,7 +153,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
 function mapStateToProps(
   state: AdaptableState,
   ownProps: any
-): Partial<ColumnFilterToolPanelComponentProps> {
+): Partial<FilterToolPanelComponentProps> {
   return {
     ColumnFilters: state.Filter.ColumnFilters,
     IsQuickFilterVisible: state.Grid.IsQuickFilterVisible,
@@ -162,7 +162,7 @@ function mapStateToProps(
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<ColumnFilterToolPanelComponentProps> {
+): Partial<FilterToolPanelComponentProps> {
   return {
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
@@ -179,7 +179,4 @@ function mapDispatchToProps(
   };
 }
 
-export let ColumnFilterToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ColumnFilterToolPanelComponent);
+export let FilterToolPanel = connect(mapStateToProps, mapDispatchToProps)(FilterToolPanelComponent);

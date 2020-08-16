@@ -26,8 +26,8 @@ import CheckBox from '../../components/CheckBox';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
-interface ColumnFilterToolbarControlComponentProps
-  extends ToolbarStrategyViewPopupProps<ColumnFilterToolbarControlComponent> {
+interface FilterToolbarControlComponentProps
+  extends ToolbarStrategyViewPopupProps<FilterToolbarControlComponent> {
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
   onHideQuickFilterBar: () => GridRedux.QuickFilterBarHideAction;
   onShowQuickFilterBar: () => GridRedux.QuickFilterBarShowAction;
@@ -36,8 +36,8 @@ interface ColumnFilterToolbarControlComponentProps
   IsQuickFilterVisible: boolean;
 }
 
-class ColumnFilterToolbarControlComponent extends React.Component<
-  ColumnFilterToolbarControlComponentProps,
+class FilterToolbarControlComponent extends React.Component<
+  FilterToolbarControlComponentProps,
   {}
 > {
   render(): any {
@@ -128,7 +128,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
 function mapStateToProps(
   state: AdaptableState,
   ownProps: any
-): Partial<ColumnFilterToolbarControlComponentProps> {
+): Partial<FilterToolbarControlComponentProps> {
   return {
     ColumnFilters: state.Filter.ColumnFilters,
     IsQuickFilterVisible: state.Grid.IsQuickFilterVisible,
@@ -137,7 +137,7 @@ function mapStateToProps(
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<ColumnFilterToolbarControlComponentProps> {
+): Partial<FilterToolbarControlComponentProps> {
   return {
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideQuickFilterBar: () => dispatch(GridRedux.QuickFilterBarHide()),
@@ -152,7 +152,7 @@ function mapDispatchToProps(
   };
 }
 
-export let ColumnFilterToolbarControl = connect(
+export let FilterToolbarControl = connect(
   mapStateToProps,
   mapDispatchToProps
-)(ColumnFilterToolbarControlComponent);
+)(FilterToolbarControlComponent);

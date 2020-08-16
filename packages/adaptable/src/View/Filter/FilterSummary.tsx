@@ -17,8 +17,7 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { Entitlement } from '../../PredefinedConfig/EntitlementState';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
-export interface ColumnFilterSummaryProps
-  extends StrategySummaryProps<ColumnFilterSummaryComponent> {
+export interface FilterSummaryProps extends StrategySummaryProps<FilterSummaryComponent> {
   ColumnFilters: ColumnFilter[];
   onClearFilter: (columnfilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
   onShare: (
@@ -28,11 +27,11 @@ export interface ColumnFilterSummaryProps
   Entitlements: Entitlement[];
 }
 
-export class ColumnFilterSummaryComponent extends React.Component<
-  ColumnFilterSummaryProps,
+export class FilterSummaryComponent extends React.Component<
+  FilterSummaryProps,
   EditableConfigEntityState
 > {
-  constructor(props: ColumnFilterSummaryProps) {
+  constructor(props: FilterSummaryProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
@@ -71,7 +70,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
     return this.props.Api.filterApi.convertColumnFilterToString(columnFilter);
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnFilterSummaryProps> {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterSummaryProps> {
   return {
     ColumnFilters: state.Filter.ColumnFilters,
   };
@@ -79,7 +78,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnFi
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<ColumnFilterSummaryProps> {
+): Partial<FilterSummaryProps> {
   return {
     onClearFilter: (columnFilter: ColumnFilter) =>
       dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
@@ -91,7 +90,4 @@ function mapDispatchToProps(
   };
 }
 
-export let ColumnFilterSummary = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ColumnFilterSummaryComponent);
+export let FilterSummary = connect(mapStateToProps, mapDispatchToProps)(FilterSummaryComponent);

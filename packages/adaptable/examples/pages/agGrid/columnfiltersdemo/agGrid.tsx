@@ -98,6 +98,14 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
+  Dashboard: {
+    Tabs: [
+      {
+        Name: 'Test',
+        Toolbars: ['Filter'],
+      },
+    ],
+  },
   Filter: {
     //  SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
     UserFilters: ['US_Banks'],

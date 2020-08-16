@@ -9,7 +9,7 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { ColumnFilterEntityRow } from './ColumnFilterEntityRow';
+import { FilterEntityRow } from './FilterEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
@@ -18,7 +18,7 @@ import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import EmptyContent from '../../components/EmptyContent';
 
-interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopupComponent> {
+interface FilterPopupProps extends StrategyViewPopupProps<FilterPopupComponent> {
   ColumnFilters: ColumnFilter[];
   onClearColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
@@ -28,8 +28,8 @@ interface ColumnFilterPopupProps extends StrategyViewPopupProps<ColumnFilterPopu
   ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps, {}> {
-  constructor(props: ColumnFilterPopupProps) {
+class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
+  constructor(props: FilterPopupProps) {
     super(props);
     this.state = { EditedUserFilter: null, WizardStartIndex: 0 };
   }
@@ -49,7 +49,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
     ];
     let columnFilterItems = this.props.ColumnFilters.map((columnFilter, index) => {
       return (
-        <ColumnFilterEntityRow
+        <FilterEntityRow
           key={index}
           colItems={colItems}
           api={this.props.Api}
@@ -98,7 +98,7 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnFilterPopupProps> {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterPopupProps> {
   return {
     ColumnFilters: state.Filter.ColumnFilters,
   };
@@ -106,7 +106,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnFi
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<ColumnFilterPopupProps> {
+): Partial<FilterPopupProps> {
   return {
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
       dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
@@ -118,7 +118,4 @@ function mapDispatchToProps(
   };
 }
 
-export let ColumnFilterPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ColumnFilterPopupComponent);
+export let FilterPopup = connect(mapStateToProps, mapDispatchToProps)(FilterPopupComponent);

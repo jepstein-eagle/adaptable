@@ -12,7 +12,7 @@ import { CustomSortSummary } from '../CustomSort/CustomSortSummary';
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary';
 import { CellValidationSummary } from '../CellValidation/CellValidationSummary';
 import { UserFilterSummary } from '../UserFilter/UserFilterSummary';
-import { ColumnFilterSummary } from '../ColumnFilter/ColumnFilterSummary';
+import { FilterSummary } from '../Filter/FilterSummary';
 import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary';
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary';
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary';
@@ -194,7 +194,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
                 : ''
             }
           >
-            <ColumnFilterSummary
+            <FilterSummary
               key={StrategyConstants.FilterStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               TeamSharingActivated={this.props.TeamSharingActivated}

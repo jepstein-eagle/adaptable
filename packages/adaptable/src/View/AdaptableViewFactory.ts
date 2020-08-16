@@ -8,12 +8,11 @@ import { ExportPopup } from './Export/ExportPopup';
 import { FlashingCellsPopup } from './FlashingCells/FlashingCellsPopup';
 import { UpdatedRowPopup } from './UpdatedRow/UpdatedRowPopup';
 import { CalendarsPopup } from './Calendars/CalendarsPopup';
+import { FilterPopup } from './Filter/FilterPopup';
 import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup';
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup';
 import { SharedQueryPopup } from './SharedQuery/SharedQueryPopup';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
-import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl';
-import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
 import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
 import { ExpandedQueryPopup } from './AdvancedSearch/ExpandedQueryPopup';
 import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
@@ -33,12 +32,13 @@ import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
-import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnPopup } from './CalculatedColumn/CalculatedColumnPopup';
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
+import { FilterToolbarControl } from './Filter/FilterToolbarControl';
+import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
@@ -59,8 +59,8 @@ import { ThemeToolPanel } from './Theme/ThemeToolPanel';
 import { ExportToolPanel } from './Export/ExportToolPanel';
 import { SystemStatusToolPanel } from './SystemStatus/SystemStatusToolPanel';
 import { AlertToolPanel } from './Alert/AlertToolPanel';
-import { ColumnFilterToolPanel } from './ColumnFilter/ColumnFilterToolPanel';
 import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
+import { FilterToolPanel } from './Filter/FilterToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
@@ -74,7 +74,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CalendarsPopup,
   CellValidationPopup,
   ColumnChooserPopup,
-  ColumnFilterPopup,
+  FilterPopup,
   ColumnInfoPopup,
   ConditionalStylePopup,
   CustomSortPopup,
@@ -115,7 +115,7 @@ export const AdaptableDashboardFactory = new Map<
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
-  [StrategyConstants.FilterStrategyId, ColumnFilterToolbarControl],
+  [StrategyConstants.FilterStrategyId, FilterToolbarControl],
   [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
   [StrategyConstants.ExportStrategyId, ExportToolbarControl],
   [StrategyConstants.LayoutStrategyId, LayoutToolbarControl],
@@ -135,7 +135,7 @@ export const AdaptableToolPanelFactory = new Map<
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],
-  [StrategyConstants.FilterStrategyId, ColumnFilterToolPanel],
+  [StrategyConstants.FilterStrategyId, FilterToolPanel],
   [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
   [StrategyConstants.ExportStrategyId, ExportToolPanel],
   [StrategyConstants.LayoutStrategyId, LayoutToolPanel],

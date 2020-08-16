@@ -11,7 +11,7 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
-export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
+export interface FilterEntityRowProps<AdvancedSearchEntityRow>
   extends BaseEntityRowProps<AdvancedSearchEntityRow> {
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
@@ -19,10 +19,7 @@ export interface ColumnFilterEntityRowProps<AdvancedSearchEntityRow>
   AccessLevel: AccessLevel;
 }
 
-export class ColumnFilterEntityRow extends React.Component<
-  ColumnFilterEntityRowProps<ColumnFilterEntityRow>,
-  {}
-> {
+export class FilterEntityRow extends React.Component<FilterEntityRowProps<FilterEntityRow>, {}> {
   render(): any {
     let colItems: IColItem[] = [].concat(this.props.colItems);
     colItems[0].Content = (
