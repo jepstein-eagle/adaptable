@@ -153,7 +153,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
         return <SharedQuerySharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
       }
 
-      case StrategyConstants.ColumnFilterStrategyId: {
+      case StrategyConstants.FilterStrategyId: {
         return 'NEED TO DO  COLUMN FILTER'; // not sure actually
       }
       default:

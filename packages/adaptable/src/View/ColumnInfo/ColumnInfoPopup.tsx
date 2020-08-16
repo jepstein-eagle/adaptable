@@ -184,22 +184,22 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           </div>
         );
       }
-      if (this.isStrategyVisible(StrategyConstants.ColumnFilterStrategyId)) {
+      if (this.isStrategyVisible(StrategyConstants.FilterStrategyId)) {
         summaries.push(
           <div
-            key={StrategyConstants.ColumnFilterStrategyId}
+            key={StrategyConstants.FilterStrategyId}
             className={
-              this.isStrategyReadOnly(StrategyConstants.ColumnFilterStrategyId)
+              this.isStrategyReadOnly(StrategyConstants.FilterStrategyId)
                 ? GeneralConstants.READ_ONLY_STYLE
                 : ''
             }
           >
             <ColumnFilterSummary
-              key={StrategyConstants.ColumnFilterStrategyId}
+              key={StrategyConstants.FilterStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               TeamSharingActivated={this.props.TeamSharingActivated}
               getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ColumnFilterStrategyId)}
+              AccessLevel={this.getAccessLevel(StrategyConstants.FilterStrategyId)}
               Api={this.props.Api}
             />
           </div>

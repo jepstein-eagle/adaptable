@@ -44,7 +44,7 @@ export class ColumnFilterSummaryComponent extends React.Component<
     let description: string = this.getDescription(columnFilter);
     let summaryItems: any[] = [];
     summaryItems.push(
-      <b>{<StrategyProfile FunctionName={StrategyConstants.ColumnFilterStrategyId} />}</b>
+      <b>{<StrategyProfile FunctionName={StrategyConstants.FilterStrategyId} />}</b>
     );
     summaryItems.push(description);
     summaryItems.push(
@@ -86,11 +86,7 @@ function mapDispatchToProps(
     onClearPopupParams: () => dispatch(PopupRedux.PopupClearParam()),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ColumnFilterStrategyId,
-          description
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FilterStrategyId, description)
       ),
   };
 }

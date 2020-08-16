@@ -1,4 +1,4 @@
-import { IColumnFilterStrategy } from './Interface/IColumnFilterStrategy';
+import { IFilterStrategy } from './Interface/IFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
@@ -13,17 +13,17 @@ import * as FilterRedux from '../Redux/ActionsReducers/FilterRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { ColumnFilter } from '../PredefinedConfig/FilterState';
 
-export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
+export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ColumnFilterStrategyId, adaptable);
+    super(StrategyConstants.FilterStrategyId, adaptable);
   }
 
   public addFunctionMenuItem(): AdaptableMenuItem | undefined {
     if (this.canCreateMenuItem('ReadOnly')) {
       return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ColumnFilterStrategyFriendlyName,
+        Label: StrategyConstants.FilterStrategyFriendlyName,
         ComponentName: ScreenPopups.ColumnFilterPopup,
-        Icon: StrategyConstants.ColumnFilterGlyph,
+        Icon: StrategyConstants.FilterGlyph,
       });
     }
   }
@@ -47,7 +47,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         };
         menuItemClickFunction = this.createColumnMenuItemClickFunction(
           isMultiple ? 'Filter on Cell Values' : 'Filter on Cell Value',
-          StrategyConstants.ColumnFilterGlyph,
+          StrategyConstants.FilterGlyph,
           clickFunction
         );
       }
@@ -79,7 +79,7 @@ export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColu
         baseMenuItems.push(
           this.createColumnMenuItemReduxAction(
             'Clear Column Filter',
-            StrategyConstants.ColumnFilterGlyph,
+            StrategyConstants.FilterGlyph,
             FilterRedux.ColumnFilterClear(existingColumnFilter)
           )
         );

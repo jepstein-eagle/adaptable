@@ -66,10 +66,10 @@ class ColumnFilterPopupComponent extends React.Component<ColumnFilterPopupProps,
 
     return (
       <PanelWithImage
-        header={StrategyConstants.ColumnFilterStrategyFriendlyName}
+        header={StrategyConstants.FilterStrategyFriendlyName}
         variant="primary"
         infoBody={infoBody}
-        glyphicon={StrategyConstants.ColumnFilterGlyph}
+        glyphicon={StrategyConstants.FilterGlyph}
         style={{ flex: 1 }}
       >
         {columnFilterItems.length > 0 ? (
@@ -113,11 +113,7 @@ function mapDispatchToProps(
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.ColumnFilterStrategyId,
-          description
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.FilterStrategyId, description)
       ),
   };
 }

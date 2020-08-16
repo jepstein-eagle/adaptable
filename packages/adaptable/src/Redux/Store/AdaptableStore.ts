@@ -847,7 +847,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           case FilterRedux.COLUMN_FILTER_ADD: {
             const actionTyped = action as FilterRedux.ColumnFilterAddAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -860,7 +860,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           case FilterRedux.COLUMN_FILTER_EDIT: {
             const actionTyped = action as FilterRedux.ColumnFilterEditAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -872,7 +872,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           }
           case FilterRedux.COLUMN_FILTER_CLEAR: {
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -884,7 +884,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           }
           case FilterRedux.COLUMN_FILTER_CLEAR_ALL: {
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -1930,14 +1930,13 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
           case FilterRedux.COLUMN_FILTER_ADD: {
             const actionTyped = action as FilterRedux.ColumnFilterAddAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               action: action.type,
               info: 'Column Filter Applied',
               data: {
                 Column: actionTyped.columnFilter.ColumnId,
-                ColumnFilter: ExpressionHelper.ConvertExpressionToString(
-                  actionTyped.columnFilter.Filter,
-                  adaptable.api
+                ColumnFilter: ExpressionHelper.convertColumnFilterToString(
+                  actionTyped.columnFilter
                 ),
               },
             };
@@ -1947,14 +1946,13 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
           case FilterRedux.COLUMN_FILTER_EDIT: {
             const actionTyped = action as FilterRedux.ColumnFilterEditAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               action: action.type,
               info: 'Column Filter Updated',
               data: {
                 Column: actionTyped.columnFilter.ColumnId,
-                ColumnFilter: ExpressionHelper.ConvertExpressionToString(
-                  actionTyped.columnFilter.Filter,
-                  adaptable.api
+                ColumnFilter: ExpressionHelper.convertColumnFilterToString(
+                  actionTyped.columnFilter
                 ),
               },
             };
@@ -1967,7 +1965,7 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             const actionTyped = action as FilterRedux.ColumnFilterClearAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               action: action.type,
               info: 'Column Filter Cleared',
               data: {
@@ -2618,13 +2616,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
             // then update a new column filter from the user filter - so that it will display the user filter name
             let columnFilter: ColumnFilter = actionTyped.ColumnFilter;
-            columnFilter.Filter = ExpressionHelper.CreateSingleColumnExpression(
-              userFilter.ColumnId,
-              [],
-              [],
-              [userFilter.Name],
-              []
-            );
+            // TODO;: Need to create this properly
             middlewareAPI.dispatch(FilterRedux.ColumnFilterEdit(columnFilter));
 
             return next(action);

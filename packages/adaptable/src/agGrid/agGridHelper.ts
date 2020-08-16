@@ -25,7 +25,7 @@ import { CalendarStrategy } from '../Strategy/CalendarStrategy';
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
 
 import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
-import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
+import { FilterStrategy } from '../Strategy/FilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
 import { DashboardStrategy } from '../Strategy/DashboardStrategy';
@@ -137,7 +137,7 @@ export class agGridHelper {
     );
 
     strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
-    strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
+    strategies.set(StrategyConstants.FilterStrategyId, new FilterStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
       new ConditionalStyleStrategyagGrid(adaptable)

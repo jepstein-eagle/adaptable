@@ -121,7 +121,7 @@ class ColumnFilterToolPanelComponent extends React.Component<
     return (
       <PanelToolPanel
         className="ab-ToolPanel__ColumnFilter"
-        headerText={StrategyConstants.ColumnFilterStrategyFriendlyName}
+        headerText={StrategyConstants.FilterStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
@@ -172,7 +172,7 @@ function mapDispatchToProps(
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
-          StrategyConstants.ColumnFilterStrategyId,
+          StrategyConstants.FilterStrategyId,
           ScreenPopups.ColumnFilterPopup
         )
       ),

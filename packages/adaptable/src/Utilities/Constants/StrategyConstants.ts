@@ -12,7 +12,7 @@ export const CellValidationStrategyId: AdaptableFunctionName = 'CellValidation';
 export const ChartStrategyId: AdaptableFunctionName = 'Chart';
 export const ColumnCategoryStrategyId: AdaptableFunctionName = 'ColumnCategory';
 export const ColumnChooserStrategyId: AdaptableFunctionName = 'ColumnChooser';
-export const ColumnFilterStrategyId: AdaptableFunctionName = 'ColumnFilter';
+export const FilterStrategyId: AdaptableFunctionName = 'Filter';
 export const ColumnInfoStrategyId: AdaptableFunctionName = 'ColumnInfo';
 export const ConditionalStyleStrategyId: AdaptableFunctionName = 'ConditionalStyle';
 export const CustomSortStrategyId: AdaptableFunctionName = 'CustomSort';
@@ -61,7 +61,7 @@ export const CellValidationStrategyFriendlyName: string = 'Cell Validation';
 export const ChartStrategyFriendlyName: string = 'Chart';
 export const ColumnCategoryStrategyFriendlyName: string = 'Column Category';
 export const ColumnChooserStrategyFriendlyName: string = 'Column Chooser';
-export const ColumnFilterStrategyFriendlyName: string = 'Column Filter';
+export const FilterStrategyFriendlyName: string = 'Filter';
 export const ColumnInfoStrategyFriendlyName: string = 'Column Information';
 export const ConditionalStyleStrategyFriendlyName: string = 'Conditional Style';
 export const CustomSortStrategyFriendlyName: string = 'Custom Sort';
@@ -110,7 +110,7 @@ export const CellValidationGlyph: string = 'cell-validation';
 export const ChartGlyph: string = 'chart';
 export const ColumnCategoryGlyph: string = 'column-category';
 export const ColumnChooserGlyph: string = 'column-chooser';
-export const ColumnFilterGlyph: string = 'column-filter';
+export const FilterGlyph: string = 'column-filter';
 export const ColumnInfoGlyph: string = 'column-info';
 export const ConditionalStyleGlyph: string = 'conditional-style';
 export const CustomSortGlyph: string = 'custom-sort';
@@ -169,8 +169,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return ColumnCategoryStrategyId;
     case ColumnChooserStrategyFriendlyName:
       return ColumnChooserStrategyId;
-    case ColumnFilterStrategyFriendlyName:
-      return ColumnFilterStrategyId;
+    case FilterStrategyFriendlyName:
+      return FilterStrategyId;
     case ColumnInfoStrategyFriendlyName:
       return ColumnInfoStrategyId;
     case ConditionalStyleStrategyFriendlyName:
@@ -266,8 +266,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return ColumnCategoryStrategyFriendlyName;
     case ColumnChooserStrategyId:
       return ColumnChooserStrategyFriendlyName;
-    case ColumnFilterStrategyId:
-      return ColumnFilterStrategyFriendlyName;
+    case FilterStrategyId:
+      return FilterStrategyFriendlyName;
     case ColumnInfoStrategyId:
       return ColumnInfoStrategyFriendlyName;
     case ConditionalStyleStrategyId:
@@ -365,8 +365,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return ColumnCategoryGlyph;
     case ColumnChooserStrategyId:
       return ColumnChooserGlyph;
-    case ColumnFilterStrategyId:
-      return ColumnFilterGlyph;
+    case FilterStrategyId:
+      return FilterGlyph;
     case ColumnInfoStrategyId:
       return ColumnInfoGlyph;
     case ConditionalStyleStrategyId:

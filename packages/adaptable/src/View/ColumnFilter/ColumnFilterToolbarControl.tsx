@@ -99,7 +99,7 @@ class ColumnFilterToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-DashboardToolbar__ColumnFilter"
-        headerText={StrategyConstants.ColumnFilterStrategyFriendlyName}
+        headerText={StrategyConstants.FilterStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -145,7 +145,7 @@ function mapDispatchToProps(
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(
-          StrategyConstants.ColumnFilterStrategyId,
+          StrategyConstants.FilterStrategyId,
           ScreenPopups.ColumnFilterPopup
         )
       ),

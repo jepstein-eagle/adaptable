@@ -139,8 +139,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   public getAllColumnFilterForColumn(column: string): ColumnFilter[] {
-    let columnFilters: ColumnFilter[] | undefined = this.getAdaptableState().ColumnFilter
-      .ColumnFilters;
+    let columnFilters: ColumnFilter[] | undefined = this.getAllColumnFilter();
     if (columnFilters) {
       return columnFilters.filter(cf => cf.ColumnId == column);
     } else {
@@ -150,23 +149,15 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
   public createColumnFilterForCell(column: string, primarykeyValues: any[]): void {
     let displayValues: any[] = [];
-    let rawValues: any[] = [];
 
     primarykeyValues.forEach(pk => {
       let rowNode = this.adaptable.getRowNodeForPrimaryKey(pk);
       displayValues.push(this.adaptable.getDisplayValueFromRowNode(rowNode, column));
-      rawValues.push(this.adaptable.getRawValueFromRowNode(rowNode, column));
     });
 
     let filter: ColumnFilter = {
       ColumnId: column,
-      Filter: ExpressionHelper.CreateSingleColumnExpression(
-        column,
-        [...new Set(displayValues)],
-        [...new Set(rawValues)],
-        [],
-        []
-      ),
+      Values: displayValues,
     };
     this.setColumnFilter([filter]);
   }

@@ -172,7 +172,7 @@ export function checkForExpression(
     columns,
     adaptable.api.userFilterApi.getAllUserFilter(),
     null,
-  
+
     adaptable
   );
 }
@@ -194,7 +194,7 @@ export function checkForExpressionFromRowNode(
     columns,
     adaptable.api.userFilterApi.getAllUserFilter(),
     null,
-     adaptable,
+    adaptable,
     rowNode
   );
 }
@@ -278,8 +278,6 @@ export function IsSatisfied(
             }
           }
         }
-
-       
       }
     }
 
@@ -909,19 +907,22 @@ export const ExpressionHelper = {
   ExpressionContainsFilter,
   OperatorRequiresValue,
   AddMissingProperties,
- // convertFilterToExpressionString,
+  // convertFilterToExpressionString,
   evaluateColumnFilter,
+  convertColumnFilterToString,
 };
 export default ExpressionHelper;
 
-/
+function convertColumnFilterToString(columnFilter: ColumnFilter): string {
+  return 'I need to do this !!!';
+}
 
-function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any): boolean {
-  const value = data[filter.ColumnId];
+function evaluateColumnFilter(api: AdaptableApi, columnFilter: ColumnFilter, data: any): boolean {
+  const value = data[columnFilter.ColumnId];
 
   if (
-    ArrayExtensions.IsNullOrEmpty(filter.Values) &&
-    ArrayExtensions.IsNullOrEmpty(filter.Predicates)
+    ArrayExtensions.IsNullOrEmpty(columnFilter.Values) &&
+    ArrayExtensions.IsNullOrEmpty(columnFilter.Predicates)
   ) {
     return true;
   }
@@ -930,12 +931,12 @@ function evaluateColumnFilter(api: AdaptableApi, filter: ColumnFilter, data: any
     return false;
   }
 
-  if (filter.Values?.includes(value)) {
+  if (columnFilter.Values?.includes(value)) {
     return true;
   }
 
   if (
-    filter.Predicates?.some(item => {
+    columnFilter.Predicates?.some(item => {
       const predicate = api.filterApi.getFilterPredicateById(item.PredicateId);
       if (!predicate) {
         throw `Predicate not found: ${item.PredicateId}`;

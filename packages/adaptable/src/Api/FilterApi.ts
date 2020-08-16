@@ -86,7 +86,7 @@ export interface FilterApi {
   clearAndSetColumnFilter(columnFilters: ColumnFilter[]): void;
 
   /**
-   * Retrieves all the Column Filters in the Column Filter State (of Predefined Config) for a given Column
+   * Retrieves all the Column Filters for a given Column
    *
    * @param column the column to retrieve the Column Filters for
    */
