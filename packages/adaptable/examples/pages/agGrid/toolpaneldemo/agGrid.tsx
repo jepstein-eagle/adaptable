@@ -67,7 +67,7 @@ let demoConfig: PredefinedConfig = {
     StatusType: 'Info',
   },
   ToolPanel: {
-    //   VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
+    //   VisibleToolPanels: ['Export', 'Layout', 'Filter'],
     //ToolPanelTitle: 'Hello',
   },
 };

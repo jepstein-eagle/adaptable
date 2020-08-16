@@ -71,7 +71,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
         );
       }
     }
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'columnfilter')) {
+    if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'filter')) {
       let existingColumnFilter = this.adaptable.api.filterApi
         .getAllColumnFilter()
         .find(x => x.ColumnId == column.ColumnId);

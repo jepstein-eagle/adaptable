@@ -98,7 +98,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *                return 'Hidden';
  *
  *              case 'AdvancedSearch':
- *              case 'ColumnFilter':
+ *              case 'Filter':
  *              case 'UserFilter':
  *              case 'DataSource':
  *              case 'QuickSearch':

@@ -39,7 +39,7 @@ async function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Column Filters Demo',
+    adaptableId: 'Filters Demo',
 
     vendorGrid: {
       ...gridOptions,
@@ -107,7 +107,7 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Filter: {
-    //  SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
+    SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
     UserFilters: ['US_Banks'],
     ColumnFilters: [
       {

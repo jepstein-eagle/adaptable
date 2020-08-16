@@ -146,7 +146,7 @@ let demoConfig: PredefinedConfig = {
   },
   ToolPanel: {
     Revision: 2,
-    VisibleToolPanels: ['Export', 'AdvancedSearch', 'Layout', 'Chart', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'AdvancedSearch', 'Layout', 'Chart', 'Filter'],
   },
 };
 

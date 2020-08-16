@@ -160,7 +160,7 @@ const initialDashboardState: DashboardState = {
   CanFloat: true,
 
   // deprecated properties
-  VisibleToolbars: ['Layout', 'Export', 'ColumnFilter'],
+  VisibleToolbars: ['Layout', 'Export', 'Filter'],
   AvailableToolbars: undefined,
   DashboardVisibility: undefined,
   ShowColumnsDropdown: undefined,

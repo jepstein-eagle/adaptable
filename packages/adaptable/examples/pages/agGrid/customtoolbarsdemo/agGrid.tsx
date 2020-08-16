@@ -283,18 +283,11 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
-  ColumnFilter: {
+  Filter: {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        Filter: {
-          ColumnValueExpressions: [
-            {
-              ColumnId: 'currency',
-              ColumnDisplayValues: ['GBP', 'ZAR'],
-            },
-          ],
-        },
+        Values: ['GBP', 'ZAR'],
       },
     ],
   },

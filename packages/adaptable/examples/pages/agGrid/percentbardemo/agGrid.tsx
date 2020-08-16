@@ -58,7 +58,7 @@ let demoConfig: PredefinedConfig = {
     }, //
   },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'Filter'],
   },
 
   PercentBar: {

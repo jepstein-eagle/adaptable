@@ -137,7 +137,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
       | 'editable'
       | 'style'
       | 'sparkline'
-      | 'columnfilter'
+      | 'filter'
       | 'quickfilter'
       | 'numeric'
   ): boolean {
@@ -158,7 +158,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
         return column.IsSparkline;
       } else if (functionType == 'numeric') {
         return column.DataType == DataType.Number;
-      } else if (functionType == 'columnfilter') {
+      } else if (functionType == 'filter') {
         return column.Filterable;
       } else if (functionType == 'quickfilter') {
         return adaptable.adaptableOptions.filterOptions.useAdaptableQuickFilter;

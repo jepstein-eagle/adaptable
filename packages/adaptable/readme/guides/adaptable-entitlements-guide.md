@@ -103,7 +103,7 @@ export default {
                 return 'Hidden';
 
               case 'AdvancedSearch':
-              case 'ColumnFilter':
+              case 'Filter':
               case 'UserFilter':
               case 'DataSource':
               case 'QuickSearch':

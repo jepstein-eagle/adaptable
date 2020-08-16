@@ -48,7 +48,7 @@ async function InitAdaptableDemo() {
             case 'AdvancedSearch':
             case 'PercentBar':
             case 'Schedule':
-            case 'ColumnFilter':
+            case 'Filter':
             case 'UserFilter':
             case 'Export':
             case 'DataSource':
@@ -108,7 +108,7 @@ let demoConfig: PredefinedConfig = {
     //     AccessLevel: 'Full',
     //   },
     //   {
-    //     FunctionName: 'ColumnFilter',
+    //     FunctionName: 'Filter',
     //     AccessLevel: 'ReadOnly',
     //   },
     //   {

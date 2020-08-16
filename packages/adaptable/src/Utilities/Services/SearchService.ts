@@ -31,7 +31,7 @@ export class SearchService implements ISearchService {
           eventName == FilterRedux.COLUMN_FILTER_CLEAR
         ) {
           setTimeout(() => this.adaptable.applyGridFiltering(), 5);
-          this.publishSearchChanged(SearchChangedTrigger.ColumnFilter);
+          this.publishSearchChanged(SearchChangedTrigger.Filter);
         } else if (
           eventName == DataSourceRedux.DATA_SOURCE_SELECT ||
           eventName == DataSourceRedux.DATA_SOURCE_ADD ||

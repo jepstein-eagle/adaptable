@@ -165,7 +165,7 @@ export enum SearchChangedTrigger {
   DataSource = 'DataSource',
   AdvancedSearch = 'AdvancedSearch',
   QuickSearch = 'QuickSearch',
-  ColumnFilter = 'ColumnFilter',
+  Filter = 'Filter',
   UserFilter = 'UserFilter',
   DataChange = 'DataChange',
   Sort = 'Sort',

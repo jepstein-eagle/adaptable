@@ -116,7 +116,7 @@ let demoConfig: PredefinedConfig = {
     }, //
   },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'CellSummary', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'CellSummary', 'Filter'],
   },
   CellSummary: {
     CellSummaryOperationDefinitions: [

@@ -55,10 +55,7 @@ let demoConfig: PredefinedConfig = {
         Style: {
           FontStyle: 'Italic',
         },
-        Expression: {
-          Type: 'Custom',
-          CustomExpression: '1=1',
-        },
+        Expression: '1=1',
       },
     ],
   },

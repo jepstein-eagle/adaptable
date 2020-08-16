@@ -39,7 +39,7 @@ export interface SearchChangedInfo extends AdaptableEventInfo {
     | 'DataSource'
     | 'AdvancedSearch'
     | 'QuickSearch'
-    | 'ColumnFilter'
+    | 'Filter'
     | 'UserFilter'
     | 'DataChange'
     | 'Sort';
