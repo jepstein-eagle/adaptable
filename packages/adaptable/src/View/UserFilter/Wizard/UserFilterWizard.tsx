@@ -1,8 +1,6 @@
 import * as React from 'react';
-import { ExpressionMode } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { UserFilterSettingsWizard } from './UserFilterSettingsWizard';
-import { UserFilterExpressionWizard } from './UserFilterExpressionWizard';
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard';
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
@@ -27,16 +25,7 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
               Index: 0,
               Element: <UserFilterSelectColumnWizard Api={this.props.Api} />,
             },
-            {
-              StepName: 'Query Builder',
-              Index: 1,
-              Element: (
-                <UserFilterExpressionWizard
-                  ExpressionMode={ExpressionMode.SingleColumn}
-                  Api={this.props.Api}
-                />
-              ),
-            },
+
             {
               StepName: 'Settings',
               Index: 2,

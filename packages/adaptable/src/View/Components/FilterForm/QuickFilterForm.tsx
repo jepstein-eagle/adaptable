@@ -8,7 +8,6 @@ import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
@@ -23,11 +22,32 @@ import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
-import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
+import { ColumnFilter, UserFilter } from '../../../PredefinedConfig/FilterState';
+
+/*
+Rather than explain the code I will try to explain in an overview what this class is trying do.
+
+It replaces the ag-Grid Filter bar providing our own custom implementation with wildcards
+
+For current wildcards see: https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md
+
+The main idea is that a user can create a Column Filter by hand.
+
+By default it will be a 'Contains' Filter but we provide a number of wildcards (in the old Expression way of doing things, this was a Range Expression)
+
+We first create a number of KeyValue pairs so we an match the wildcard string to the operator and we update teh QuickFilter as we go.
+
+Note: The string is NOT saved and this is one way only. the Quick Filter bar does NOT show what is in the Filter - should it? Probably...
+
+Just checked: the ag-Grid behaviour is really weird: (https://www.ag-grid.com/javascript-grid-floating-filters/)
+a. if you do a Greater Than filter in the dropdown then the quick filter becomes greater than but there is no way to know
+b.  if you do an In Rnage in the dropdown then the quick filter does indicate that but it becomes disabled and you cannot clear the filter easily
+
+*/
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   CurrentColumn: AdaptableColumn;
-  Adaptable: IAdaptable;
+  //  Adaptable: IAdaptable;
   Api: AdaptableApi;
   Columns: AdaptableColumn[];
   UserFilters: UserFilter[];
@@ -349,7 +369,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFilterFormProps> {
   return {
     CurrentColumn: ownProps.CurrentColumn,
-    Adaptable: ownProps.Adaptable,
+    // Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
     UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.Filter.SystemFilters,

@@ -8,7 +8,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/FilterState';
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 
