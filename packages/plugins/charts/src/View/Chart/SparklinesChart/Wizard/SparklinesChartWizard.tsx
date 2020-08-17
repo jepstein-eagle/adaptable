@@ -4,10 +4,8 @@ import { AdaptableObjectExpressionAdaptableWizardProps } from '@adaptabletools/a
 import { ChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { AdaptableWizard } from '@adaptabletools/adaptable/src/View/Wizard/AdaptableWizard';
 import { SparklinesChartColumnWizard } from './SparklinesChartColumnWizard';
-import { SparklinesChartExpressionColumnWizard } from './SparklinesChartExpressionColumnWizard';
 import { SparklinesChartSummaryWizard } from './SparklinesChartSummaryWizard';
 import { SparklinesChartSettingsWizard } from './SparklinesChartSettingsWizard';
-import { ExpressionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 
 export interface SparklinesChartWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<SparklinesChartWizard> {}
@@ -28,6 +26,7 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
               Index: 0,
               Element: <SparklinesChartColumnWizard Api={this.props.Api} />,
             },
+            /*
             {
               StepName: 'Build Query',
               Index: 1,
@@ -38,6 +37,7 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
                 />
               ),
             },
+            */
             {
               StepName: 'Chart Settings',
               Index: 2,

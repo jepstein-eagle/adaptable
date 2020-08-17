@@ -131,28 +131,6 @@ export function getEmptyConfigState(): EditableConfigEntityState {
   };
 }
 
-export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
-  // add any missing arrays here to avoid issues later
-  ExpressionHelper.AddMissingProperties(expression);
-
-  return {
-    Expression: expression,
-    SelectedColumnId: '',
-    SelectedTab: null,
-  };
-}
-
-export function getExpressionBuilderStateWithColumn(
-  expression: Expression,
-  columnId: string
-): ExpressionBuilderPageState {
-  return {
-    Expression: expression,
-    SelectedColumnId: columnId,
-    SelectedTab: null,
-  };
-}
-
 export function getDescriptionForDataType(
   dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
 ) {
@@ -499,8 +477,6 @@ export const UIHelper = {
   getHexForName,
   getDefaultColors,
   getEmptyConfigState,
-  getExpressionBuilderState,
-  getExpressionBuilderStateWithColumn,
   getDescriptionForDataType,
   getPlaceHolderforDataType,
   getModalContainer,

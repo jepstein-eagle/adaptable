@@ -8,8 +8,6 @@ import {
 import { AdaptableWizard } from '@adaptabletools/adaptable/src/View/Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
 import { CategoryChartXAxisWizard } from './CategoryChartXAxisWizard';
-import { CategoryChartXAxisExpressionWizard } from './CategoryChartXAxisExpressionWizard';
-import { ExpressionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
 
@@ -37,6 +35,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
               Index: 1,
               Element: <CategoryChartXAxisWizard Api={this.props.Api} />,
             },
+            /*
             {
               StepName: 'X Axis',
               Index: 2,
@@ -47,6 +46,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
                 />
               ),
             },
+            */
             {
               StepName: 'Settings',
               Index: 5,
