@@ -107,9 +107,10 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Filter: {
-    //  SystemFilters: ['GreaterThan', 'LessThan', 'Positive'],
-    FilterPredicates: ['US_Banks'],
+    //   SystemFilters: ['GreaterThan', 'LessThan', 'Positive'], // implementation is in Adaptable
+    FilterPredicates: ['US_Banks'], // implementation is in UserFunctions
     ColumnFilters: [
+      // describes state
       {
         ColumnId: 'currency',
         Values: ['CHF'],

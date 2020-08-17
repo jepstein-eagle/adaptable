@@ -18,11 +18,45 @@ export function CreateValueRange(
     Operand2Type: 'Value',
   };
 }
+
+/* Current list of system filters
+ 'Blanks',   'NonBlanks',   'Equals',
+  'NotEquals',   'GreaterThan',   'LessThan',
+  'Positive',
+  'Negative',
+  'Zero',
+  'Between',
+  'NotBetween',
+  'Is',
+  'IsNot',
+  'Contains',
+  'NotContains',
+  'StartsWith',
+  'EndsWith',
+  'Regex',
+  'Today',
+  'Yesterday',
+  'Tomorrow',
+  'ThisWeek',
+  'ThisMonth',
+  'ThisQuarter',
+  'ThisYear',
+  'InPast',
+  'InFuture',
+  'Before',
+  'After',
+  'On',
+  'NotOn',
+  'NextWorkDay',
+  'LastWorkDay',
+  'True',
+  'False',
+  */
 export function GetNumberOperatorPairs(): KeyValuePair[] {
   return [
     { Key: '<>', Value: LeafExpressionOperator.NotEquals },
-    { Key: '>=', Value: LeafExpressionOperator.GreaterThanOrEqual },
-    { Key: '<=', Value: LeafExpressionOperator.LessThanOrEqual },
+    { Key: '>=', Value: LeafExpressionOperator.GreaterThanOrEqual }, // can go
+    { Key: '<=', Value: LeafExpressionOperator.LessThanOrEqual }, // can go
     { Key: '>', Value: LeafExpressionOperator.GreaterThan },
     { Key: '<', Value: LeafExpressionOperator.LessThan },
     { Key: '=', Value: LeafExpressionOperator.Equals },

@@ -18,7 +18,7 @@ export const COLUMN_FILTER_SET = 'COLUMN_FILTER_SET';
 export const COLUMN_FILTER_CLEAR_ALL = 'COLUMN_FILTER_CLEAR_ALL';
 export const COLUMN_FILTER_CLEAR = 'COLUMN_FILTER_CLEAR';
 
-// User Filter constants
+// User Filter constants - this is being used but we need to think about it
 export const USER_FILTER_ADD = 'USER_FILTER_ADD';
 export const USER_FILTER_EDIT = 'USER_FILTER_EDIT';
 export const USER_FILTER_DELETE = 'USER_FILTER_DELETE';

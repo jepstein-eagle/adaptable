@@ -22,7 +22,7 @@ import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
-import { ColumnFilter, UserFilter } from '../../../PredefinedConfig/FilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 
 /*
 Rather than explain the code I will try to explain in an overview what this class is trying do.
@@ -50,7 +50,7 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
   //  Adaptable: IAdaptable;
   Api: AdaptableApi;
   Columns: AdaptableColumn[];
-  UserFilters: UserFilter[];
+  // UserFilters: UserFilter[];
   SystemFilters: string[];
   ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
@@ -371,7 +371,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFil
     CurrentColumn: ownProps.CurrentColumn,
     // Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
-    UserFilters: state.UserFilter.UserFilters,
+    // UserFilters: state.UserFilter.UserFilters,
     SystemFilters: state.Filter.SystemFilters,
     ColumnFilters: state.Filter.ColumnFilters,
   };
