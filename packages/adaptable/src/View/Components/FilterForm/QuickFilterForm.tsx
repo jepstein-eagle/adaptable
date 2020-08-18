@@ -46,13 +46,8 @@ b.  if you do an In Rnage in the dropdown then the quick filter does indicate th
 */
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
-  CurrentColumn: AdaptableColumn;
-  //  Adaptable: IAdaptable;
   Api: AdaptableApi;
-  Columns: AdaptableColumn[];
-  // UserFilters: UserFilter[];
-  SystemFilters: string[];
-  ColumnCategories: ColumnCategory[];
+  CurrentColumn: AdaptableColumn;
   ColumnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
@@ -60,319 +55,87 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
 }
 
 export interface QuickFilterFormState {
-  quickFilterFormText: string;
-  filterExpression: Expression;
-  numberOperatorPairs: KeyValuePair[];
-  stringOperatorPairs: KeyValuePair[];
-  dateOperatorPairs: KeyValuePair[];
-  booleanOperatorPairs: KeyValuePair[];
-  placeholder: string;
+  filter: ColumnFilter;
 }
 
 class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, QuickFilterFormState> {
-  constructor(props: QuickFilterFormProps) {
-    super(props);
-    this.state = {
-      quickFilterFormText: '',
-      filterExpression: ExpressionHelper.CreateEmptyExpression(),
-      numberOperatorPairs: RangeHelper.GetNumberOperatorPairs(),
-      stringOperatorPairs: RangeHelper.GetStringOperatorPairs(),
-      dateOperatorPairs: RangeHelper.GetDateOperatorPairs(),
-      booleanOperatorPairs: RangeHelper.GetBooleanOperatorPairs(),
-      placeholder: '',
-    };
-  }
-
-  componentDidUpdate(prevProps: any, prevState: QuickFilterFormState) {
-    this.reconcileFilters();
-  }
-
-  componentDidMount() {
-    this.reconcileFilters();
-  }
-
-  reconcileFilters(): void {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-    if (existingColumnFilter) {
-      // first check to see if we have an expression
-      if (ExpressionHelper.IsEmptyExpression(this.state.filterExpression)) {
-        // if we have no placeholder then set one - together with the placeholder
-        let expressionDescription = ExpressionHelper.ConvertExpressionToString(
-          existingColumnFilter.Filter,
-          this.props.Api,
-          false
-        );
-        this.doUpdate({
-          filterExpression: existingColumnFilter.Filter,
-          placeholder: expressionDescription,
-        });
-      } else {
-        // we have an expression also - but if its not the same as the new one then update it to the new one
-        let diff = DeepDiff.diff(existingColumnFilter.Filter, this.state.filterExpression);
-        if (diff) {
-          let expressionDescription = ExpressionHelper.ConvertExpressionToString(
-            existingColumnFilter.Filter,
-            this.props.Api,
-            false
-          );
-          this.doUpdate({
-            filterExpression: existingColumnFilter.Filter,
-            placeholder: expressionDescription,
-            quickFilterFormText: '',
-          });
-        }
-      }
-    } else {
-      // no filter so make sure our stuff is clear
-      if (this.state.placeholder != 'TEMP') {
-        if (
-          ExpressionHelper.IsNotNullOrEmptyExpression(this.state.filterExpression) ||
-          StringExtensions.IsNotNullOrEmpty(this.state.placeholder) ||
-          StringExtensions.IsNotNullOrEmpty(this.state.quickFilterFormText)
-        ) {
-          this.clearState();
-        }
-      }
-    }
-  }
-
   render(): any {
-    let controlType: string =
-      this.props.CurrentColumn && this.props.CurrentColumn.DataType == DataType.Date
-        ? 'date'
-        : 'text';
-
-    // on chrome, date inputs do not behave correctly in terms
-    // of respecting width - this is one of those scenarios - width: 100%  is not respected
-    // so we need to set this extra styles
-    const extraStyle: CSSProperties =
-      controlType === 'date'
-        ? {
-            position: 'absolute',
-            transform: 'translate3d(0px, -50%, 0px)',
-            top: '50%',
-          }
-        : null;
-
-    return this.props.CurrentColumn &&
-      this.props.CurrentColumn.Filterable &&
-      this.props.CurrentColumn.DataType != DataType.Unknown ? (
-      <Input
-        style={{
-          width: '100%', // Starting aggrid 23, we no longer use this.props.ColumnWidth, but 100%
-          padding: 0,
-          margin: 'auto',
-
-          minHeight: 20,
-          maxHeight: 20,
-          fontSize: 'var(--ab-font-size-1)',
-          ...extraStyle,
-        }}
-        className="ab-QuickFilterFormInput"
-        autoFocus={false}
-        type={controlType}
-        placeholder={this.state.placeholder}
-        value={this.state.quickFilterFormText}
-        onChange={(x: any) => this.OnTextChange((x.target as HTMLInputElement).value)}
-      />
-    ) : null;
-  }
-
-  OnTextChange(searchText: string) {
-    // as soon as anything changes clear existing column filter
-    if (searchText.trim() != this.state.quickFilterFormText.trim()) {
-      //   this.clearExistingColumnFilter();
-    }
-
-    // if text is empty then clear our state
-    if (StringExtensions.IsNullOrEmpty(searchText.trim())) {
-      this.clearState();
-      this.clearExistingColumnFilter();
-      return;
-    }
-
-    // otherwise handle the change
-    this.handleFilterChange(searchText);
-  }
-
-  clearExistingColumnFilter(): void {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
+    const filter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
-    if (existingColumnFilter) {
-      this.props.onClearColumnFilter(existingColumnFilter);
-    }
-  }
 
-  createColumnFilter(expression: Expression, searchText: string): void {
-    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
+    const predicates = this.props.Api.filterApi.getFilterPredicatesForColumn(
+      this.props.CurrentColumn
+    );
+
+    const activePredicate = predicates.find(p => p.id === filter?.PredicateId);
+
+    return (
+      this.props.CurrentColumn &&
+      this.props.CurrentColumn.Filterable && (
+        <>
+          <select
+            value={filter?.PredicateId || 'None'}
+            onChange={e => this.selectColumnPredicate(e.target.value)}
+            style={activePredicate?.inputs?.length ? {} : { flex: 1 }}
+          >
+            <option key={'None'} value="None">
+              None
+            </option>
+            {predicates.map(p => (
+              <option key={p.id} value={p.id}>
+                {p.name}
+              </option>
+            ))}
+          </select>
+          {filter?.PredicateId === 'Values' && <div>{filter.Inputs.join(', ')}</div>}
+          {activePredicate?.inputs?.map((predicateInput, index) => (
+            <input
+              key={index}
+              type={predicateInput.type}
+              autoFocus={index === 0}
+              value={filter.Inputs[index]}
+              onChange={e => this.changeColumnPredicateInput(e, index)}
+              style={{ flex: 1, width: 0, minWidth: 0 }}
+            />
+          ))}
+        </>
+      )
+    );
+  }
+  selectColumnPredicate(predicateId: string) {
+    console.log('predicateId', predicateId);
+
+    const filter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
-    if (columnFilter == null) {
-      columnFilter = ObjectFactory.CreateColumnFilter(
-        this.props.CurrentColumn.ColumnId,
-        // was  expression but now that has changed so we pass null for now...
-        null,
-        null
-      );
-    } else {
-      columnFilter.Filter = expression;
-    }
+    const predicate = this.props.Api.filterApi.getFilterPredicateById(predicateId);
 
-    this.setState({
-      quickFilterFormText: searchText,
-      filterExpression: expression,
-      placeholder: '',
-    });
-    if (this.props.ColumnFilters.find(cf => cf.ColumnId == columnFilter.ColumnId)) {
-      this.props.onEditColumnFilter(columnFilter);
-    } else {
-      this.props.onAddColumnFilter(columnFilter);
+    this.props.onClearColumnFilter(filter);
+
+    if (predicate) {
+      this.props.onAddColumnFilter({
+        ColumnId: this.props.CurrentColumn.ColumnId,
+        PredicateId: predicateId,
+        Inputs: (predicate.inputs || []).map(i => i.default ?? ''),
+      });
     }
   }
 
-  createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
-    if (searchText.trim() == operatorKVP.Key) {
-      if (RangeHelper.IsStandaloneOperator(operatorKVP.Value)) {
-        let range: QueryRange = RangeHelper.CreateValueRange(
-          operatorKVP.Value,
-          undefined,
-          undefined
-        );
-        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-          this.props.CurrentColumn.ColumnId,
-          [],
-          [],
-          [],
-          [range]
-        );
-        this.createColumnFilter(expression, searchText);
-      } else {
-        // its operator only so do nothing (but set placeholder to ensure not wiped)
-        this.clearExpressionState(searchText);
-      }
-    } else {
-      let operand1 = searchText.replace(operatorKVP.Key, '');
-      let operand2 = null;
-      if (operatorKVP.Value == LeafExpressionOperator.Between) {
-        let values: any[] = searchText.trim().split(operatorKVP.Key);
-        if (!this.isValidBetweenValues(values)) {
-          this.clearExpressionState(searchText);
-          return;
-        }
-        operand1 = values[0];
-        operand2 = values[1];
-      }
-      let range: QueryRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
-      let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-        this.props.CurrentColumn.ColumnId,
-        [],
-        [],
-        [],
-        [range]
-      );
-      this.createColumnFilter(expression, searchText);
-    }
-  }
+  changeColumnPredicateInput(e: React.FormEvent, index: number) {
+    const { value } = e.target as HTMLInputElement;
+    const filter = this.props.ColumnFilters.find(
+      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+    );
+    filter.Inputs[index] = value;
 
-  handleFilterChange(searchText: string): void {
-    // first check for existing operators and handle those
-    let isRangeExpression: boolean = false;
-
-    let operators: KeyValuePair[];
-    switch (this.props.CurrentColumn.DataType) {
-      case DataType.Number:
-        operators = this.state.numberOperatorPairs;
-        break;
-      case DataType.String:
-        operators = this.state.stringOperatorPairs;
-        break;
-      case DataType.Date:
-        operators = this.state.dateOperatorPairs;
-        break;
-      case DataType.Boolean:
-        operators = this.state.booleanOperatorPairs;
-        break;
-      default:
-        operators = [];
-        break;
-    }
-
-    operators.forEach(op => {
-      if (!isRangeExpression) {
-        if (searchText.includes(op.Key)) {
-          this.createRangeExpression(op, searchText);
-          isRangeExpression = true; // set to true so dont do >= and then later >
-        }
-      }
-    });
-
-    if (!isRangeExpression) {
-      // next check to see if it has a ';' - if so then create an "In" for all values; not sure if raw or display...
-      if (searchText.includes(';')) {
-        let values: string[] = searchText.split(';').map(v => v.trim());
-        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-          this.props.CurrentColumn.ColumnId,
-          values,
-          [],
-          [],
-          []
-        );
-        this.createColumnFilter(expression, searchText);
-      } else {
-        // if just a single, non-operator, value then do an "Equals" range
-        let equalOperatorPair: KeyValuePair = this.state.numberOperatorPairs.find(
-          op => op.Value == LeafExpressionOperator.Contains
-        );
-        this.createRangeExpression(equalOperatorPair, searchText);
-      }
-    }
-  }
-
-  doUpdate(state: Partial<QuickFilterFormState>): void {
-    if (JSON.stringify(state) === JSON.stringify(this.state)) {
-      return;
-    }
-
-    // this.setState(state as QuickFilterFormState);
-  }
-
-  clearState(): void {
-    this.doUpdate({
-      quickFilterFormText: '',
-      filterExpression: ExpressionHelper.CreateEmptyExpression(),
-      placeholder: '',
-    });
-  }
-
-  clearExpressionState(searchText: string): void {
-    this.setState({
-      quickFilterFormText: searchText,
-      filterExpression: ExpressionHelper.CreateEmptyExpression(),
-      placeholder: 'TEMP',
-    });
-  }
-
-  isValidBetweenValues(values: any[]): boolean {
-    if (values.length != 2) {
-      return false;
-    }
-    if (StringExtensions.IsNullOrEmpty(values[0]) || StringExtensions.IsNullOrEmpty(values[1])) {
-      return false;
-    }
-    return true;
+    this.props.onEditColumnFilter(filter);
   }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFilterFormProps> {
   return {
     CurrentColumn: ownProps.CurrentColumn,
-    // Adaptable: ownProps.Adaptable,
-    Columns: state.Grid.Columns,
-    // UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.Filter.SystemFilters,
     ColumnFilters: state.Filter.ColumnFilters,
   };
 }

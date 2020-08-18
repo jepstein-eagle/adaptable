@@ -769,7 +769,7 @@ export class Adaptable implements IAdaptable {
     let vendorColDef: ColDef = this.gridOptions.api!.getColumnDef(col);
     if (vendorColDef) {
       vendorColDef.floatingFilterComponentParams = {
-        suppressFilterButton: false,
+        suppressFilterButton: true,
       };
       vendorColDef.floatingFilterComponent = FloatingFilterWrapperFactory(this);
     }

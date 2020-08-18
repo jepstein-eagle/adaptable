@@ -13,20 +13,6 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 
 import Adaptable from '../../../../agGrid';
-import Helper from '../../../../src/Utilities/Helpers/Helper';
-import {
-  isToday,
-  isYesterday,
-  isTomorrow,
-  isFuture,
-  isPast,
-  isThisYear,
-  isThisQuarter,
-  isAfter,
-  isBefore,
-  isSameDay,
-} from 'date-fns';
-import { isThisWeek, isThisMonth } from 'date-fns/esm';
 
 var api: AdaptableApi;
 
@@ -110,16 +96,10 @@ let demoConfig: PredefinedConfig = {
     //   SystemFilters: ['GreaterThan', 'LessThan', 'Positive'], // implementation is in Adaptable
     FilterPredicates: ['US_Banks'], // implementation is in UserFunctions
     ColumnFilters: [
-      // describes state
       {
         ColumnId: 'currency',
-        Values: ['CHF'],
-        Predicates: [
-          {
-            PredicateId: 'StartsWith',
-            Inputs: ['e'],
-          },
-        ],
+        PredicateId: 'StartsWith',
+        Inputs: ['e'],
       },
     ],
   },
