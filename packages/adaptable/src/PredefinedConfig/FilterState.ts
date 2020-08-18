@@ -129,8 +129,8 @@ export interface FilterPredicateParams {
 
 export interface ColumnFilter extends AdaptableObject {
   ColumnId: string;
-  Values?: any[];
-  Predicates?: AdaptablePredicate[];
+  PredicateId?: SystemFilterId | string;
+  Inputs?: any[];
 }
 
 export interface UserFilter extends AdaptableObject {
@@ -148,6 +148,7 @@ export interface AdaptablePredicate {
 export type SystemFilterIds = SystemFilterId[];
 
 export type SystemFilterId =
+  | 'Values'
   | 'Blanks'
   | 'NonBlanks'
   | 'Equals'
@@ -184,46 +185,14 @@ export type SystemFilterId =
   | 'True'
   | 'False';
 
-export const SystemFilterIdList: SystemFilterId[] = [
-  'Blanks',
-  'NonBlanks',
-  'Equals',
-  'NotEquals',
-  'GreaterThan',
-  'LessThan',
-  'Positive',
-  'Negative',
-  'Zero',
-  'Between',
-  'NotBetween',
-  'Is',
-  'IsNot',
-  'Contains',
-  'NotContains',
-  'StartsWith',
-  'EndsWith',
-  'Regex',
-  'Today',
-  'Yesterday',
-  'Tomorrow',
-  'ThisWeek',
-  'ThisMonth',
-  'ThisQuarter',
-  'ThisYear',
-  'InPast',
-  'InFuture',
-  'Before',
-  'After',
-  'On',
-  'NotOn',
-  'NextWorkDay',
-  'LastWorkDay',
-  'True',
-  'False',
-];
-
 export const SystemFilterPredicates: FilterPredicate[] = [
   // All Column System Filters
+  {
+    id: 'Values',
+    name: 'Values',
+    type: 'FilterPredicate',
+    handler: ({ value, inputs }) => inputs.includes(value),
+  },
   {
     id: 'Blanks',
     name: 'Blanks',
@@ -275,7 +244,6 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) == 0,
   },
-
   {
     id: 'Equals',
     name: 'Equals',
@@ -540,3 +508,4 @@ export const SystemFilterPredicates: FilterPredicate[] = [
 ];
 
 export const SystemFilterPredicatesById = keyBy(SystemFilterPredicates, 'id');
+export const SystemFilterIdList = SystemFilterPredicates.map(p => p.id);

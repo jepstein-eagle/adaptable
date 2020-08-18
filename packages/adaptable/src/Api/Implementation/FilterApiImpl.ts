@@ -13,6 +13,7 @@ import {
 import { AdaptableColumn } from '../../types';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { AdaptableApi } from '../AdaptableApi';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
@@ -160,7 +161,8 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
     let filter: ColumnFilter = {
       ColumnId: column,
-      Values: displayValues,
+      PredicateId: 'Values',
+      Inputs: displayValues,
     };
     this.setColumnFilter([filter]);
   }
@@ -176,10 +178,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   public evaluateColumnFilter(columnFilter: ColumnFilter, data: any): boolean {
     const value = data[columnFilter.ColumnId];
 
-    if (
-      ArrayExtensions.IsNullOrEmpty(columnFilter.Values) &&
-      ArrayExtensions.IsNullOrEmpty(columnFilter.Predicates)
-    ) {
+    if (StringExtensions.IsNullOrEmpty(columnFilter.PredicateId)) {
       return true;
     }
 
@@ -187,33 +186,18 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       return false;
     }
 
-    if (columnFilter.Values?.includes(value)) {
-      return true;
+    try {
+      const api: AdaptableApi = this.adaptable.api;
+      const predicate = this.getFilterPredicateById(columnFilter.PredicateId);
+      return predicate.handler({
+        api,
+        value,
+        inputs: columnFilter.Inputs,
+      });
+    } catch (error) {
+      console.error(`Error in predicate ${columnFilter.PredicateId}`, error);
+      return false;
     }
-
-    if (
-      columnFilter.Predicates?.some(item => {
-        const predicate = this.getFilterPredicateById(item.PredicateId);
-        if (!predicate) {
-          throw `Predicate not found: ${item.PredicateId}`;
-        }
-        try {
-          const api: AdaptableApi = this.adaptable.api;
-          return predicate.handler({
-            api,
-            value,
-            inputs: item.Inputs,
-          });
-        } catch (error) {
-          console.error(`Error in predicate ${item.PredicateId}`, error);
-          return false;
-        }
-      })
-    ) {
-      return true;
-    }
-
-    return false;
   }
 
   public getAllUserFilter(): UserFilter[] {
