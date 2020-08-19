@@ -63,7 +63,6 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       render={() => (
         <Flex
           flexDirection="column"
-          backgroundColor="white"
           p={2}
           style={{
             fontSize: 'var(--ab-font-size-2)',

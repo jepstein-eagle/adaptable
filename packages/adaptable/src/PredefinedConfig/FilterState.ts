@@ -19,6 +19,17 @@ import {
   isSameDay,
 } from 'date-fns';
 import { keyBy } from 'lodash';
+import {
+  mdiGreaterThan,
+  mdiLessThan,
+  mdiEqual,
+  mdiNotEqual,
+  mdiFormatTitle,
+  mdiFormatStrikethrough,
+  mdiFormatLetterStartsWith,
+  mdiRegex,
+  mdiCalendar,
+} from '@mdi/js';
 
 /**
  * The Predefined Configuration for Filters
@@ -110,6 +121,8 @@ export interface FilterPredicate extends BaseUserFunction {
   scope?: Scope;
   inputs?: FilterPredicateInput[];
   handler: FilterPredicateHandler;
+  iconPath?: string;
+  iconText?: string;
 }
 
 export interface FilterPredicateInput {
@@ -192,18 +205,21 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     name: 'Values',
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => inputs.includes(value),
+    iconText: 'IN',
   },
   {
     id: 'Blanks',
     name: 'Blanks',
     type: 'FilterPredicate',
     handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
+    iconText: 'B',
   },
   {
     id: 'NonBlanks',
     name: 'Non Blanks',
     type: 'FilterPredicate',
     handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
+    iconText: '!B',
   },
 
   // Numeric System Filters
@@ -214,6 +230,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'number', default: 0 }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
+    iconPath: mdiGreaterThan,
   },
   {
     id: 'LessThan',
@@ -222,6 +239,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'number', default: 0 }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
+    iconPath: mdiLessThan,
   },
   {
     id: 'Positive',
@@ -229,6 +247,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Number' },
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) > 0,
+    iconText: '>0',
   },
   {
     id: 'Negative',
@@ -236,6 +255,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Number' },
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) < 0,
+    iconText: '<0',
   },
   {
     id: 'Zero',
@@ -243,6 +263,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Number' },
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) == 0,
+    iconText: '=0',
   },
   {
     id: 'Equals',
@@ -251,6 +272,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'number', default: 0 }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
+    iconPath: mdiEqual,
   },
   {
     id: 'NotEquals',
@@ -259,6 +281,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'number', default: 0 }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
+    iconPath: mdiNotEqual,
   },
   {
     id: 'Between',
@@ -271,6 +294,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     type: 'FilterPredicate',
     handler: ({ value, inputs }) =>
       Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
+    iconText: 'BE',
   },
   {
     id: 'NotBetween',
@@ -283,6 +307,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     type: 'FilterPredicate',
     handler: ({ value, inputs }) =>
       Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
+    iconText: '!BE',
   },
 
   // String System Filters
@@ -299,6 +324,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v == i;
     },
+    iconPath: mdiEqual,
   },
   {
     id: 'IsNot',
@@ -313,6 +339,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v != i;
     },
+    iconPath: mdiNotEqual,
   },
   {
     id: 'Contains',
@@ -327,6 +354,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.indexOf(i) !== -1;
     },
+    iconPath: mdiFormatTitle,
   },
   {
     id: 'NotContains',
@@ -341,6 +369,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.indexOf(i) === -1;
     },
+    iconPath: mdiFormatStrikethrough,
   },
   {
     id: 'StartsWith',
@@ -355,6 +384,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.startsWith(i);
     },
+    iconPath: mdiFormatLetterStartsWith,
   },
   {
     id: 'EndsWith',
@@ -369,6 +399,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.endsWith(i);
     },
+    iconPath: mdiFormatLetterStartsWith,
   },
   {
     id: 'Regex',
@@ -377,6 +408,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
+    iconPath: mdiRegex,
   },
 
   // Date System Filters
@@ -386,6 +418,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isToday(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'Yesterday',
@@ -393,6 +426,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isYesterday(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'Tomorrow',
@@ -400,6 +434,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isTomorrow(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'ThisWeek',
@@ -407,6 +442,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisWeek(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'ThisMonth',
@@ -414,6 +450,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisMonth(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'ThisQuarter',
@@ -421,6 +458,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisQuarter(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'ThisYear',
@@ -428,6 +466,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisYear(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'InPast',
@@ -435,6 +474,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isPast(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'InFuture',
@@ -442,6 +482,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value }) => isFuture(value),
+    iconPath: mdiCalendar,
   },
   {
     id: 'After',
@@ -450,6 +491,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
+    iconPath: mdiGreaterThan,
   },
   {
     id: 'Before',
@@ -458,6 +500,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
+    iconPath: mdiLessThan,
   },
   {
     id: 'On',
@@ -466,6 +509,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => isSameDay(value, new Date(inputs[0])),
+    iconPath: mdiEqual,
   },
   {
     id: 'NotOn',
@@ -474,6 +518,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => !isSameDay(value, new Date(inputs[0])),
+    iconPath: mdiNotEqual,
   },
   {
     id: 'NextWorkDay',
@@ -481,6 +526,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
+    iconPath: mdiCalendar,
   },
   {
     id: 'LastWorkDay',
@@ -488,6 +534,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Date' },
     type: 'FilterPredicate',
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
+    iconPath: mdiCalendar,
   },
 
   // Boolean System Filters
@@ -497,6 +544,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Boolean' },
     type: 'FilterPredicate',
     handler: ({ value }) => Boolean(value) === true,
+    iconText: 'T',
   },
   {
     id: 'False',
@@ -504,6 +552,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     scope: { DataType: 'Boolean' },
     type: 'FilterPredicate',
     handler: ({ value }) => Boolean(value) === false,
+    iconText: 'F',
   },
 ];
 
