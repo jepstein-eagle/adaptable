@@ -7,7 +7,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
 import {
   EditableConfigEntityState,

@@ -205,7 +205,7 @@ class CellValidationPopupComponent extends React.Component<
       WizardStartIndex: 5,
       WizardStatus: WizardStatus.None,
     });
-    this.shouldClosePopupOnFinishWizard = false;
+    // this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

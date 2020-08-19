@@ -72,6 +72,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       this.shouldClosePopupOnFinishWizard =
         this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
     }
+    alert(this.shouldClosePopupOnFinishWizard);
   }
 
   render() {
@@ -152,14 +153,16 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   onCloseWizard() {
+    alert(1);
     this.props.onClearPopupParams();
     this.setState({
       EditedAdaptableObject: null,
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
-
+    alert(10);
     if (this.shouldClosePopupOnFinishWizard) {
+      alert(100);
       this.props.onClosePopup();
     }
   }
@@ -177,7 +180,6 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

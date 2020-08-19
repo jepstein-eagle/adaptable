@@ -222,7 +222,7 @@ class AdvancedSearchPopupComponent extends React.Component<
       // or if we are editing the current search - but might have changed the name
       this.props.onSelectAdvancedSearch(clonedObject.Name);
     }
-    this.shouldClosePopupOnFinishWizard = false;
+    //this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

@@ -346,7 +346,7 @@ class SchedulePopupComponent extends React.Component<
       WizardStatus: WizardStatus.None,
     });
 
-    this.shouldClosePopupOnFinishWizard = false;
+    //this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

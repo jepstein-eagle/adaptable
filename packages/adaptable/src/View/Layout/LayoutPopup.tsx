@@ -53,6 +53,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         if (this.props.PopupParams.action == 'New') {
           this.onNew();
         }
+        if (this.props.PopupParams.action == 'Edit') {
+          let currentLayout = this.props.Layouts.find(
+            as => as.Name == this.props.CurrentLayoutName
+          );
+          if (currentLayout) {
+            this.onEdit(currentLayout);
+          }
+        }
       }
 
       this.shouldClosePopupOnFinishWizard =
@@ -174,6 +182,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
+    console.log(clonedObject);
     const isNew = this.state.WizardStatus == WizardStatus.New;
     if (isNew) {
       this.props.onAddLayout(clonedObject);
@@ -194,7 +203,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
-    this.shouldClosePopupOnFinishWizard = false;
+    //this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
