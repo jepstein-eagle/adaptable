@@ -27,7 +27,7 @@ export class LayoutSummaryWizard extends React.Component<LayoutSummaryWizardProp
           .getLayoutService()
           .getColumnSort(this.props.Data.ColumnSorts, this.props.Api.gridApi.getColumns()),
       },
-      { Key: 'Grouped Columns', Value: this.getColumnNames(this.props.Data.GroupedColumns) },
+      { Key: 'Grouped Columns', Value: this.getColumnNames(this.props.Data.RowGroupedColumns) },
     ];
     let pivotKeyValuePairs: KeyValuePair[] = [];
     if (

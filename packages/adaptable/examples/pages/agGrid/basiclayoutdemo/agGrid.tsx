@@ -26,7 +26,9 @@ const columnSchema: ColDef[] = [
     filter: true,
     editable: false,
     resizable: true,
+    // lockPinned: true,
     enableRowGroup: true,
+    hide: true,
     enablePivot: true,
     sortable: true,
     type: 'abColDefString',
@@ -34,6 +36,7 @@ const columnSchema: ColDef[] = [
   {
     headerName: 'Model',
     field: 'model',
+
     enablePivot: true,
     enableRowGroup: true,
     filter: true,
@@ -53,16 +56,18 @@ const columnSchema: ColDef[] = [
     type: 'abColDefNumber',
   },
 
-  // {
-  //   headerName: 'Year',
-  //   field: 'year',
-  //   enableRowGroup: true,
-  //   filter: true,
-  //   resizable: true,
-  //   sortable: true,
-  //   editable: true,
-  //   type: 'abColDefNumber',
-  // },
+  {
+    headerName: 'Year',
+    field: 'year',
+    enableRowGroup: true,
+    lockVisible: true,
+    filter: true,
+    aggFunc: 'sum',
+    resizable: true,
+    sortable: true,
+    editable: true,
+    type: 'abColDefNumber',
+  },
   {
     headerName: 'Price',
     field: 'price',
@@ -121,7 +126,7 @@ async function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'identifier',
     userName: 'Demo User',
-    adaptableId: 'Basic Setup Demo Layout',
+    adaptableId: 'Basic Setup Demo Layout 1',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
     },
@@ -275,7 +280,7 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 54,
+    Revision: 55,
     // CurrentLayout: 'Simple Layout',
     Layouts: [
       {

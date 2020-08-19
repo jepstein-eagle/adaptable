@@ -22,9 +22,10 @@ export class LayoutSetPivotingWizard
   constructor(props: LayoutSetPivotingWizardProps) {
     super(props);
     this.state = {
-      IsPivotLayout: this.props.Api.internalApi
-        .getLayoutService()
-        .isPivotedLayout(this.props.Data.PivotDetails),
+      IsPivotLayout: false, //TODO
+      // IsPivotLayout: this.props.Api.internalApi
+      //   .getLayoutService()
+      //   .isPivotedLayout(this.props.Data.PivotDetails),
     };
   }
 
@@ -90,13 +91,13 @@ export class LayoutSetPivotingWizard
     return true;
   }
   public Next(): void {
-    if (this.state.IsPivotLayout) {
-      if (!this.props.Data.PivotDetails) {
-        this.props.Data.PivotDetails = ObjectFactory.CreateEmptyPivotDetails();
-      }
-    } else {
-      this.props.Data.PivotDetails = null;
-    }
+    // if (this.state.IsPivotLayout) {
+    //   if (!this.props.Data.PivotDetails) {
+    //     this.props.Data.PivotDetails = ObjectFactory.CreateEmptyPivotDetails();
+    //   }
+    // } else {
+    //   this.props.Data.PivotDetails = null;
+    // }
   }
 
   public Back(): void {

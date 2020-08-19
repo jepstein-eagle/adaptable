@@ -25,7 +25,7 @@ export class LayoutGroupedColumnWizard
     super(props);
     this.state = {
       SelectedColumns: this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
-        this.props.Data.GroupedColumns
+        this.props.Data.RowGroupedColumns
       ),
     };
   }
@@ -68,7 +68,7 @@ export class LayoutGroupedColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.GroupedColumns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
+    this.props.Data.RowGroupedColumns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns
     );
   }

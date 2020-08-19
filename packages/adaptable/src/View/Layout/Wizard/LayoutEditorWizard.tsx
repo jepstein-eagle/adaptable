@@ -1,0 +1,119 @@
+import * as React from 'react';
+import {
+  AdaptableWizardStep,
+  AdaptableWizardStepProps,
+} from '../../Wizard/Interface/IAdaptableWizard';
+
+import { Layout } from '../../../PredefinedConfig/LayoutState';
+import WizardPanel from '../../../components/WizardPanel';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
+import Input from '../../../components/Input';
+import { LayoutEditor } from './LayoutEditor';
+import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
+import ErrorBox from '../../../components/ErrorBox';
+
+export interface LayoutEditorWizardProps extends AdaptableWizardStepProps<Layout> {
+  Layouts: Layout[];
+}
+
+export interface LayoutEditorWizardState {
+  layoutName: string;
+  layout: Layout;
+  ErrorMessage: string;
+}
+
+export class LayoutEditorWizard
+  extends React.Component<LayoutEditorWizardProps, LayoutEditorWizardState>
+  implements AdaptableWizardStep {
+  constructor(props: LayoutEditorWizardProps) {
+    super(props);
+    this.state = {
+      layout: props.Data,
+      layoutName: props.Data.Name,
+      ErrorMessage: null,
+    };
+  }
+
+  render(): any {
+    return (
+      <WizardPanel>
+        <FormLayout columns={[1]}>
+          <FormRow>
+            <Input
+              value={this.state.layoutName + ' TO BE IMPLEMENTED'}
+              width="100%"
+              style={{ maxWidth: '25rem' }}
+              placeholder="Layout Name"
+              // xonChange={this.onLayoutNameChange}
+            ></Input>{' '}
+          </FormRow>
+
+          {this.state.ErrorMessage ? (
+            <FormRow>
+              <ErrorBox>{this.state.ErrorMessage}</ErrorBox>
+            </FormRow>
+          ) : null}
+          <FormRow>
+            <LayoutEditor
+              api={this.props.Api}
+              layout={this.state.layout}
+              onLayoutChange={this.onLayoutChange}
+            />
+          </FormRow>
+        </FormLayout>
+      </WizardPanel>
+    );
+  }
+
+  onLayoutNameChange = (event: React.FormEvent<any>) => {
+    const Name = (event.target as HTMLInputElement).value;
+
+    const Exists = ArrayExtensions.ContainsItem(
+      this.props.Layouts.map(l => l.Name),
+      Name
+    );
+
+    const ErrorMessage = Exists
+      ? 'A Layout already exists with that name'
+      : !Name
+      ? 'Layout name cannot be blank'
+      : null;
+
+    this.setState(
+      {
+        layoutName: Name,
+        ErrorMessage: ErrorMessage || null,
+      },
+      () => {
+        this.props.UpdateGoBackState();
+      }
+    );
+  };
+
+  onLayoutChange = (layout: Layout) => {
+    this.setState({ layout }, () => {
+      this.props.UpdateGoBackState();
+    });
+  };
+
+  public canNext(): boolean {
+    return !!this.state.layoutName && !this.state.ErrorMessage;
+  }
+  public canBack(): boolean {
+    return true;
+  }
+  public Next(): void {
+    Object.keys(this.props.Data).forEach(key => {
+      delete (this.props.Data as any)[key];
+    });
+
+    Object.assign(this.props.Data, this.state.layout);
+  }
+  public Back(): void {}
+  public GetIndexStepIncrement() {
+    return 1;
+  }
+  public GetIndexStepDecrement() {
+    return 1;
+  }
+}

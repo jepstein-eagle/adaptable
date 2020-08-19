@@ -38,7 +38,7 @@ export class LayoutService implements ILayoutService {
       ColumnSorts: [],
       ColumnFlexMap: {},
       ColumnWidthMap: {},
-      GroupedColumns: [],
+      RowGroupedColumns: [],
     };
     layout1 = { ...defaults, ...layout1 };
     layout2 = { ...defaults, ...layout2 };

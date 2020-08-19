@@ -24,13 +24,14 @@ export class LayoutAggregationColumnWizard
   constructor(props: LayoutAggregationColumnWizardProps) {
     super(props);
     // is this right?
-    if (this.props.Data.PivotDetails == null) {
-      this.props.Data.PivotDetails = ObjectFactory.CreateEmptyPivotDetails();
-    }
+    // if (this.props.Data.PivotDetails == null) {
+    //   this.props.Data.PivotDetails = ObjectFactory.CreateEmptyPivotDetails();
+    // }
     this.state = {
-      SelectedColumns: this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
-        this.props.Data.PivotDetails.AggregationColumns
-      ),
+      SelectedColumns: [],
+      // this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
+      //   this.props.Data.PivotDetails.AggregationColumns
+      // ),
     };
   }
 
@@ -65,9 +66,9 @@ export class LayoutAggregationColumnWizard
     return true;
   }
   public Next(): void {
-    this.props.Data.PivotDetails.AggregationColumns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
-      this.state.SelectedColumns
-    );
+    // this.props.Data.PivotDetails.AggregationColumns = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
+    //   this.state.SelectedColumns
+    // );
   }
   public Back(): void {
     // todo

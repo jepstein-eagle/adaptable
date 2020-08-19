@@ -1,15 +1,14 @@
 import { ReactElement, ReactNode, Dispatch, SetStateAction, CSSProperties, useRef } from 'react';
 import * as React from 'react';
-import usePropState from '../utils/usePropState';
+
 import useDraggable from '../utils/useDraggable';
-import SimpleButton from '../SimpleButton';
+
 import { DashboardTabProps } from './DashboardTab';
 import join from '../utils/join';
 import useProperty from '../utils/useProperty';
-import { Box } from 'rebass';
+
 import { DashboardToolbar } from './DashboardToolbar';
 import Dropdown from '../Dropdown';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export type DashboardPosition = {
   x: number;

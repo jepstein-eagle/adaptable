@@ -231,8 +231,8 @@ export class GridApiImpl extends ApiBase implements GridApi {
     let result = columnId + GeneralConstants.MISSING_COLUMN;
     const currentLayout = this.adaptable.api.layoutApi.getCurrentLayout();
 
-    if (this.isRowGroupColumn(columnId) && currentLayout?.GroupedColumns) {
-      result = `[Grouped column: ${currentLayout.GroupedColumns.join(', ')}]`;
+    if (this.isRowGroupColumn(columnId) && currentLayout?.RowGroupedColumns) {
+      result = `[Grouped column: ${currentLayout.RowGroupedColumns.join(', ')}]`;
     }
     this.LogMissingColumnWarning(columnId);
     return result;

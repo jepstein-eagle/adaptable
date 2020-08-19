@@ -35,3 +35,12 @@ export interface AdaptableColumn extends AdaptableObject {
   IsSparkline: boolean;
   IsExcludedFromQuickSearch: boolean;
 }
+
+export interface AdaptableColumnProperties {
+  Sortable: boolean;
+  Filterable: boolean;
+  Moveable: boolean;
+  Groupable: boolean;
+  Pivotable: boolean;
+  Aggregatable: boolean;
+}

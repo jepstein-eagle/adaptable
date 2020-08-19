@@ -154,7 +154,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
       EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
+      WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
   }
@@ -199,17 +199,17 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   canFinishWizard() {
     let layout = this.state.EditedAdaptableObject as Layout;
-    if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
-      let canFinish: boolean = true;
-      layout.ColumnSorts.forEach(gs => {
-        if (StringExtensions.IsNullOrEmpty(gs.Column)) {
-          canFinish = false;
-        }
-      });
-      if (!canFinish) {
-        return false;
-      }
-    }
+    // if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
+    //   let canFinish: boolean = true;
+    //   layout.ColumnSorts.forEach(gs => {
+    //     if (StringExtensions.IsNullOrEmpty(gs.Column)) {
+    //       canFinish = false;
+    //     }
+    //   });
+    //   if (!canFinish) {
+    //     return false;
+    //   }
+    // }
     return (
       StringExtensions.IsNotNullOrEmpty(layout.Name) &&
       ArrayExtensions.IsNotNullOrEmpty(layout.Columns)

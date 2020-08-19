@@ -373,7 +373,9 @@ export class Adaptable implements IAdaptable {
     delete adaptableInstances[adaptable._id];
   }
 
-  constructor() {}
+  constructor() {
+    // (global as any).adaptable = this;
+  }
 
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
@@ -1201,7 +1203,7 @@ export class Adaptable implements IAdaptable {
 
       return acc;
     }, {} as VendorColumnStateMap);
-    const groupedColumnsIndexesMap = (layout.GroupedColumns || []).reduce(
+    const groupedColumnsIndexesMap = (layout.RowGroupedColumns || []).reduce(
       (acc, colId: string, index) => {
         acc[colId] = index;
 
@@ -1213,17 +1215,15 @@ export class Adaptable implements IAdaptable {
     let pivotedColumnsIndexesMap: { [key: string]: number } = {};
     let aggregationFunctionsColumnsMap: { [key: string]: string | IAggFunc } = {};
 
-    if (layout.PivotDetails) {
-      pivotedColumnsIndexesMap = (layout.PivotDetails.PivotColumns || []).reduce(
-        (acc, colId: string, index) => {
-          acc[colId] = index;
+    if (layout.AggregationColumns && layout.AggregationColumns.length) {
+      // if (layout.PivotColumns || layout.AggregationColumns) {
+      //   pivotedColumnsIndexesMap = (layout.PivotColumns || []).reduce((acc, colId: string, index) => {
+      //     acc[colId] = index;
 
-          return acc;
-        },
-        {} as { [key: string]: number }
-      );
+      //     return acc;
+      //   }, {} as { [key: string]: number });
 
-      aggregationFunctionsColumnsMap = (layout.PivotDetails.AggregationColumns || []).reduce(
+      aggregationFunctionsColumnsMap = (layout.AggregationColumns || []).reduce(
         (acc, colId: string) => {
           const agGridCol = this.gridOptions.columnApi.getColumn(colId);
           const colAggFunc = agGridCol ? agGridCol.getAggFunc() : null;
@@ -1235,15 +1235,13 @@ export class Adaptable implements IAdaptable {
       );
     }
 
-    const columnsInPivot = [
-      ...(layout.PivotDetails?.PivotColumns || []),
-      ...(layout.PivotDetails?.AggregationColumns || []),
-    ];
-    const columnsToShow = columnsInPivot.length ? columnsInPivot : layout.Columns;
+    // const columnsInPivot = [...(layout.PivotColumns || []), ...(layout.AggregationColumns || [])];
+    // const columnsToShow = columnsInPivot.length ? columnsInPivot : layout.Columns;
+    const columnsToShow = layout.Columns;
 
-    if (columnsInPivot.length && layout.GroupedColumns) {
-      columnsInPivot.push(...layout.GroupedColumns);
-    }
+    // if (columnsInPivot.length && layout.RowGroupedColumns) {
+    //   columnsInPivot.push(...layout.RowGroupedColumns);
+    // }
 
     let isChanged = false;
 
@@ -1260,9 +1258,10 @@ export class Adaptable implements IAdaptable {
           newColState.width = layout.ColumnWidthMap[colId];
         }
 
-        if (groupedColumnsIndexesMap[colId] != null) {
-          newColState.rowGroupIndex = groupedColumnsIndexesMap[colId];
-        }
+        // if (groupedColumnsIndexesMap[colId] != null) {
+        newColState.rowGroupIndex =
+          groupedColumnsIndexesMap[colId] != null ? groupedColumnsIndexesMap[colId] : null;
+        // }
         const pinned = layout.PinnedColumnsMap ? layout.PinnedColumnsMap[colId] : false;
         if (pinned) {
           newColState.pinned = pinned;
@@ -1283,6 +1282,17 @@ export class Adaptable implements IAdaptable {
       })
       .filter(x => !!x);
 
+    if (!isChanged) {
+      // order changed
+      const toString = c =>
+        `${c.colId}-${c.rowGroupIndex}-${c.pivotIndex}-${c.aggFunc}-${c.pinned}-${c.width}-${c.hide}`;
+
+      const oldColStateString = columnsState.map(toString).join(',');
+      const newColStateString = newColState.map(toString).join(',');
+      console.log({ oldColStateString, newColStateString });
+      isChanged = newColStateString != oldColStateString;
+    }
+
     const oldSortModel = this.gridOptions.api.getSortModel();
 
     const sortModel = (layout.ColumnSorts ?? [])
@@ -1300,7 +1310,8 @@ export class Adaptable implements IAdaptable {
 
     const equalSortModel = isEqual(oldSortModel, sortModel);
 
-    const pivoted = !!columnsInPivot.length;
+    // const pivoted = !!columnsInPivot.length;
+    const pivoted = false; //!!columnsInPivot.length;
     const shouldUpdatePivoted = this.gridOptions.columnApi.isPivotMode() !== pivoted;
 
     isChanged = isChanged || !equalSortModel || shouldUpdatePivoted;
@@ -1321,7 +1332,7 @@ export class Adaptable implements IAdaptable {
         this.gridOptions.columnApi.setPivotMode(pivoted);
       }
       if (pivoted) {
-        this.gridOptions.columnApi.addValueColumns(layout.PivotDetails.AggregationColumns);
+        this.gridOptions.columnApi.addValueColumns(layout.AggregationColumns);
       }
       this.updateColumnsIntoStore();
     } else {
@@ -1402,15 +1413,12 @@ export class Adaptable implements IAdaptable {
 
     layout.Columns = columnOrder;
     layout.ColumnSorts = columnSorts;
-    layout.GroupedColumns = groupedColumns;
+    layout.RowGroupedColumns = groupedColumns;
 
-    layout.PivotDetails = null;
     if (this.gridOptions.columnApi.isPivotMode()) {
       if (pivotedColumns.length || pivotAggregatedColumns.length) {
-        layout.PivotDetails = {
-          PivotColumns: pivotedColumns,
-          AggregationColumns: pivotAggregatedColumns,
-        };
+        layout.PivotColumns = pivotedColumns;
+        layout.AggregationColumns = pivotAggregatedColumns;
       }
     }
 

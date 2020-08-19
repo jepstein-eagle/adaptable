@@ -133,24 +133,12 @@ export interface Layout extends AdaptableObject {
    *
    * Make sure that the column names supplied are groupable according to the vendor grid you are using (e.g. `enableRowGroup` in ag-Grid)
    */
-  GroupedColumns?: string[]; //TODO rename as RowGroupedColumns
+  RowGroupedColumns?: string[];
 
   PinnedColumnsMap?: { [colId: string]: 'left' | 'right' };
 
   ExpandedRowGroupKeys?: any[];
-  /**
-   * Old, now deprecated, property that used to set pivoting - now superseded by PinnedColumnsMap
-   *
-   * @deprecated
-   *
-   */
-  PivotDetails?: PivotDetails;
-}
 
-/**
- * @deprecated
- */
-export interface PivotDetails {
+  AggregationColumns?: string[]; // TODO change to map?
   PivotColumns?: string[];
-  AggregationColumns?: string[];
 }

@@ -514,8 +514,8 @@ export function CreateEmptyLayout(
     ColumnSorts: layout.ColumnSorts || [],
     ColumnFlexMap: layout.ColumnFlexMap || {},
     ColumnWidthMap: layout.ColumnWidthMap || {},
-    GroupedColumns:
-      layout.GroupedColumns ||
+    RowGroupedColumns:
+      layout.RowGroupedColumns ||
       (adaptableColumns ? adaptableColumns.filter(c => c.IsGrouped).map(c => c.ColumnId) : []),
   };
 }
