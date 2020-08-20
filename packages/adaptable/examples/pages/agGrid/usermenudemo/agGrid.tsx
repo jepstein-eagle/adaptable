@@ -69,9 +69,9 @@ let demoConfig: PredefinedConfig = {
             Label: 'Column Sub Menu 1',
           },
           {
-            Label: 'Open Column Chooser',
+            Label: 'Open Lahout',
             UserMenuItemClickedFunction: () => {
-              adaptableApi.columnChooserApi.showColumnChooserPopup();
+              adaptableApi.layoutApi.showLayoutPopup();
             },
             Icon: '<img src="./test.png"/>',
           },

@@ -107,7 +107,7 @@ async function InitAdaptableDemo() {
     //showAdaptableContextMenu: false,
 
     showAdaptableContextMenu: (menuItem: AdaptableMenuItem) => {
-      if (menuItem.FunctionName === 'ColumnChooser' || menuItem.FunctionName === 'SmartEdit') {
+      if (menuItem.FunctionName === 'Layout' || menuItem.FunctionName === 'SmartEdit') {
         return false;
       }
       return true;

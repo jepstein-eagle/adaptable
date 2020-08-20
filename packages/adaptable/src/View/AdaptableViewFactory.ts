@@ -2,7 +2,6 @@ import { CustomSortPopup } from './CustomSort/CustomSortPopup';
 import { SmartEditPopup } from './SmartEdit/SmartEditPopup';
 import { ShortcutPopup } from './Shortcut/ShortcutPopup';
 import { PlusMinusPopup } from './PlusMinus/PlusMinusPopup';
-import { ColumnChooserPopup } from './ColumnChooser/ColumnChooserPopup';
 import { ColumnInfoPopup } from './ColumnInfo/ColumnInfoPopup';
 import { ExportPopup } from './Export/ExportPopup';
 import { FlashingCellsPopup } from './FlashingCells/FlashingCellsPopup';
@@ -70,7 +69,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   CalculatedColumnPopup,
   CalendarsPopup,
   CellValidationPopup,
-  ColumnChooserPopup,
   ColumnFilterPopup,
   ColumnInfoPopup,
   ConditionalStylePopup,

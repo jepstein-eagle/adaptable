@@ -11,7 +11,6 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
  * Most strategies map to their own Reducer (e.g. QuickSearchStrategy => QuickSearchReducer)
  * However these strategies DONT store any State:
  * Application
- * Columnchooser
  * ColumnInfo
  * StateManagement
  * Piechart

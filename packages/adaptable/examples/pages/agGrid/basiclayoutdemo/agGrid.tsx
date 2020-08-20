@@ -240,7 +240,7 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Layout'],
 
-    VisibleButtons: ['FreeTextColumn', 'ColumnChooser', 'CalculatedColumn'],
+    VisibleButtons: ['FreeTextColumn', 'Layout', 'CalculatedColumn'],
     Revision: 5,
   },
 

@@ -179,7 +179,7 @@ export interface DashboardState extends ConfigState {
    *
    * Each button is connected to a Function in AdapTable and opens the relevant popup screen.
    *
-   * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
+   * **Default Value**: 'SystemStatus', 'GridInfo', 'Layout', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
 

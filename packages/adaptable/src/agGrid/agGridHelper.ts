@@ -23,8 +23,6 @@ import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
-
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
@@ -133,7 +131,6 @@ export class agGridHelper {
       new CellValidationStrategy(adaptable)
     );
 
-    strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
     strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
