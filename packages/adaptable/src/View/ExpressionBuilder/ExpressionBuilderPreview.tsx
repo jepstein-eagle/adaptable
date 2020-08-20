@@ -218,7 +218,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         });
       }
 
-      let columnFriendlyName = this.props.Api.gridApi.getFriendlyNameFromColumnId(columnId);
+      let columnFriendlyName = this.props.Api.columnApi.getFriendlyNameFromColumnId(columnId);
 
       return (
         <div

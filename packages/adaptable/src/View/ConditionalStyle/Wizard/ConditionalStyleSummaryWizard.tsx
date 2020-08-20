@@ -50,7 +50,7 @@ export class ConditionalStyleSummaryWizard
         return 'Row';
       case 'Column':
         return (
-          'Column:' + this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
+          'Column:' + this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
         );
       //  case 'DataType':
       //     return this.props.Data.DataType + ' Columns';

@@ -24,7 +24,7 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
             Index: 0,
             Element: (
               <CustomSortColumnWizard
-                SortedColumns={this.props.Api.gridApi
+                SortedColumns={this.props.Api.columnApi
                   .getColumns()
                   .filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))}
                 CustomSorts={customSorts}

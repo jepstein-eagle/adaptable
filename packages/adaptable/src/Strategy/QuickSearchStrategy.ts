@@ -40,7 +40,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
       // we just create expressions for the visible columns that are not excluded from quick search - in Adaptable we will check for those missing;
       // we dont keep this updated - just set once as good for majority of use cases
       let quickSearchVisibleColumnExpressions: Expression[] = [];
-      for (let column of this.adaptable.api.gridApi.getVisibleColumns()) {
+      for (let column of this.adaptable.api.columnApi.getVisibleColumns()) {
         if (
           !column.IsExcludedFromQuickSearch &&
           RangeHelper.IsColumnAppropriateForRange(quickSearchRange, column)

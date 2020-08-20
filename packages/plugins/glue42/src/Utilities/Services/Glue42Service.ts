@@ -250,7 +250,7 @@ export class Glue42Service implements IGlue42Service {
       doneCallback: () => void,
       delta: any[]
     ) => {
-      let primaryKeyColumnFriendlyName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      let primaryKeyColumnFriendlyName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(
         this.adaptable.adaptableOptions.primaryKey
       );
 

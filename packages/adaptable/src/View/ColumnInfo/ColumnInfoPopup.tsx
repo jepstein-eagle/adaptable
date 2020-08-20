@@ -54,7 +54,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   UNSAFE_componentWillMount() {
     if (this.props.PopupParams) {
       if (this.props.PopupParams.columnId) {
-        let column = this.props.Api.gridApi.getColumnFromId(this.props.PopupParams.columnId);
+        let column = this.props.Api.columnApi.getColumnFromId(this.props.PopupParams.columnId);
         this.setState({ SelectedColumn: column, ShowSelector: false });
       }
     }
@@ -386,7 +386,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <Box flex={1} marginLeft={2}>
               <ColumnSelector
                 SelectedColumnIds={[selectedColumnId]}
-                ColumnList={this.props.Api.gridApi.getColumns()}
+                ColumnList={this.props.Api.columnApi.getColumns()}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single}
               />

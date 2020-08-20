@@ -22,7 +22,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
       { Key: 'Name', Value: this.props.Data.Name },
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
       {
         Key: 'Query',

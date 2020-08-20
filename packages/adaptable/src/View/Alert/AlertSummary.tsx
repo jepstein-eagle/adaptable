@@ -67,7 +67,7 @@ export class AlertSummaryComponent extends React.Component<
             Item1={'something here?'}
             Item2={this.props.Api.internalApi
               .getStrategyService()
-              .createAlertDescription(item, this.props.Api.gridApi.getColumns())}
+              .createAlertDescription(item, this.props.Api.columnApi.getColumns())}
             ConfigEnity={item}
             EntityType={StrategyConstants.AlertStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}

@@ -68,7 +68,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
     let updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (updatedRowState.EnableUpdatedRow) {
-      let colsToRefresh: Array<string> = this.adaptable.api.gridApi
+      let colsToRefresh: Array<string> = this.adaptable.api.columnApi
         .getColumns()
         .map(c => c.ColumnId);
 
@@ -97,7 +97,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
       return ChangeDirection.Neutral;
     }
 
-    let columnDataType = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+    let columnDataType = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
       dataChangedInfo.ColumnId
     );
 

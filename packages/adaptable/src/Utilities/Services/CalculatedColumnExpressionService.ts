@@ -28,7 +28,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
   public IsExpressionValid(expression: string): { IsValid: Boolean; ErrorMsg?: string } {
     try {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
       let cleanedExpression: string = this.CleanExpressionColumnNames(expression, columns);
       let firstRecord = this.adaptable.getFirstRowNode();
       evaluate(cleanedExpression, {
@@ -75,10 +75,10 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       let columnId: any = match[1];
 
       // check if its a column name
-      let col: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(columnId);
+      let col: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(columnId);
       if (!col) {
         // no column so lets see if they are using FriendlyName
-        col = this.adaptable.api.gridApi.getColumnFromFriendlyName(columnId);
+        col = this.adaptable.api.columnApi.getColumnFromFriendlyName(columnId);
         if (col) {
           columnNameList.push(columnId);
         }
@@ -88,7 +88,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
 
     columnNameList.forEach(c => {
       let stringToReplace: string = 'Col("' + c + '")';
-      let columnId = this.adaptable.api.gridApi.getColumnIdFromFriendlyName(c);
+      let columnId = this.adaptable.api.columnApi.getColumnIdFromFriendlyName(c);
       let newString: string = 'Col("' + columnId + '")';
       newExpression = newExpression.replace(stringToReplace, newString);
     });
@@ -100,7 +100,7 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     let columnIds: string[] = this.GetColumnListFromExpression(cleanExpression);
     columnIds.forEach(c => {
       let stringToReplace: string = 'Col("' + c + '")';
-      let columnFriendName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(c);
+      let columnFriendName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(c);
       let newString: string = '[' + columnFriendName + ']';
       cleanExpression = cleanExpression.replace(stringToReplace, newString);
     });

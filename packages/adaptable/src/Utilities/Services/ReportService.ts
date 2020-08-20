@@ -58,7 +58,7 @@ export class ReportService implements IReportService {
       case ReportColumnScope.SelectedCellColumns:
         return '[Selected Columns]';
       case ReportColumnScope.BespokeColumns:
-        return this.adaptable.api.gridApi
+        return this.adaptable.api.columnApi
           .getFriendlyNamesFromColumnIds(report.ColumnIds)
           .join(', ');
       case ReportColumnScope.CustomColumns:
@@ -107,7 +107,7 @@ export class ReportService implements IReportService {
 
   private getReportColumnsForReport(report: Report): AdaptableColumn[] {
     let reportColumns: AdaptableColumn[] = [];
-    let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let gridColumns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
 
     // first get the cols depending on the Column Scope
     switch (report.ReportColumnScope) {

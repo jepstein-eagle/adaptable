@@ -40,18 +40,18 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
       );
       returnColumnMenuItems.push(
         this.createColumnMenuItemClickFunction('Select Column', 'tab-unselected', () => {
-          this.adaptable.api.gridApi.selectColumn(column.ColumnId);
+          this.adaptable.api.columnApi.selectColumn(column.ColumnId);
         })
       );
       returnColumnMenuItems.push(
         this.createColumnMenuItemClickFunction('Select Whole Grid', 'tab-unselected', () => {
-          this.adaptable.api.gridApi.selectAll();
+          this.adaptable.api.columnApi.selectAll();
         })
       );
       if (this.canCreateMenuItem('Full') && column.Hideable) {
         returnColumnMenuItems.push(
           this.createColumnMenuItemClickFunction('Hide Column', 'hide-column', () => {
-            this.adaptable.api.gridApi.hideColumn(column.ColumnId);
+            this.adaptable.api.columnApi.hideColumn(column.ColumnId);
           })
         );
       }

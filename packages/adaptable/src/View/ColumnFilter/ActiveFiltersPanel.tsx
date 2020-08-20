@@ -49,7 +49,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
   private createRow(colItems: IColItem[], columnFilter: ColumnFilter): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
-    rowColItems[0].Content = this.props.Api.gridApi.getFriendlyNameFromColumnId(
+    rowColItems[0].Content = this.props.Api.columnApi.getFriendlyNameFromColumnId(
       columnFilter.ColumnId
     );
     rowColItems[1].Content = ExpressionHelper.ConvertExpressionToString(

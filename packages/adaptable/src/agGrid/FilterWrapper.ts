@@ -52,7 +52,7 @@ export let FilterWrapperFactory = (adaptable: Adaptable) => {
     afterGuiAttached?(params?: { hidePopup?: Function }): void {
       //we always unmount first so the autofocus from the form works... in other grids we unmount when hidden
       ReactDOM.unmountComponentAtNode(this.filterContainer);
-      let column: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(this.column.getColId());
+      let column: AdaptableColumn = adaptable.api.columnApi.getColumnFromId(this.column.getColId());
       let filterContext: IColumnFilterContext = {
         Column: column,
         Adaptable: adaptable,

@@ -73,7 +73,7 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = this.props.Api.gridApi.getColumnFromId(alertDefinition.ColumnId);
+      let column = this.props.Api.columnApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}

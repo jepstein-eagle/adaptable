@@ -81,7 +81,7 @@ class SparklineColumnPopupComponent extends React.Component<
     ];
 
     let SparklineItems = this.props.SparklineColumns.map((sparklineColumn: SparklineColumn) => {
-      let column = this.props.Api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+      let column = this.props.Api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
       return (
         <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}

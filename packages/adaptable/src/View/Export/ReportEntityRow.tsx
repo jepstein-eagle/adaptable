@@ -44,14 +44,14 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       <EntityRowItem
         Content={this.props.api.internalApi
           .getReportService()
-          .GetReportColumnsDescription(report, this.props.api.gridApi.getColumns())}
+          .GetReportColumnsDescription(report, this.props.api.columnApi.getColumns())}
       />
     );
     colItems[2].Content = (
       <EntityRowItem
         Content={this.props.api.internalApi
           .getReportService()
-          .GetReportExpressionDescription(report, this.props.api.gridApi.getColumns())}
+          .GetReportExpressionDescription(report, this.props.api.columnApi.getColumns())}
       />
     );
 

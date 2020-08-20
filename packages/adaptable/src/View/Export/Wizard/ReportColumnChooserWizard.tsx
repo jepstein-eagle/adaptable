@@ -22,8 +22,8 @@ export class ReportColumnChooserWizard
     super(props);
 
     this.state = {
-      AllColumnValues: this.props.Api.gridApi.getColumns().map(c => c.FriendlyName),
-      SelectedColumnValues: this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
+      AllColumnValues: this.props.Api.columnApi.getColumns().map(c => c.FriendlyName),
+      SelectedColumnValues: this.props.Api.columnApi.getFriendlyNamesFromColumnIds(
         this.props.Data.ColumnIds
       ),
     };
@@ -65,7 +65,7 @@ export class ReportColumnChooserWizard
   }
   public Next(): void {
     this.props.Data.ColumnIds = this.state.SelectedColumnValues.map(
-      c => this.props.Api.gridApi.getColumns().find(col => col.FriendlyName == c).ColumnId
+      c => this.props.Api.columnApi.getColumns().find(col => col.FriendlyName == c).ColumnId
     );
   }
   public Back(): void {

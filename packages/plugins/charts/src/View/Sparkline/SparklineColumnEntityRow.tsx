@@ -34,7 +34,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumn(
           sparklineColumn.ColumnId,
           this.props.Column
         )}

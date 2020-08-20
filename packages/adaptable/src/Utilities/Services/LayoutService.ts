@@ -97,7 +97,7 @@ export class LayoutService implements ILayoutService {
     let returnString: string = '';
     columnSorts.forEach((gs: ColumnSort) => {
       returnString +=
-        this.adaptable.api.gridApi.getFriendlyNameFromColumnId(gs.Column) +
+        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.Column) +
         this.getSortOrder(gs.SortOrder);
     });
     return returnString;

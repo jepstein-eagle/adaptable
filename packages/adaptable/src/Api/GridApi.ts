@@ -2,10 +2,8 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
-import { DataType, SortOrder } from '../PredefinedConfig/Common/Enums';
-import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
+import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
-import { ColumnCategory } from '../types';
 
 /**
  * Provides access to important elements of Adaptable like columns, sorting, selected cells etc.
@@ -79,56 +77,6 @@ export interface GridApi {
    */
   setCellValue(columnId: string, newValue: any, primaryKeyValue: any, forceFilter: boolean): void;
 
-  /** Returns all the columns in Adaptable
-   *
-   * Each column has a number of properties such as Visiblity and Data Type
-   */
-  getColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all the visible columns in Adaptable
-   */
-  getVisibleColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all the numeric columns in Adaptable
-   */
-  getNumericColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all the Date columns in Adaptable
-   */
-  getDateColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all the string columns in Adaptable
-   */
-  getStringColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all the boolean columns in Adaptable
-   */
-  getBooleanColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all the numeric array columns in Adaptable
-   */
-  getNumericArrayColumns(): AdaptableColumn[];
-
-  /**
-   * Returns all Columns in the State that have a given DataType
-   *
-   * @param dataType the DataType of the Columns to retrieve
-   */
-  getColumnsOfType(dataType: DataType): AdaptableColumn[];
-
-  /**
-   * Returns all the current Column Sort information in Adaptable
-   */
-  getColumnSorts(): ColumnSort[];
-
-  setColumnSorts(columnSorts: ColumnSort[]): void;
-
   /**
    * Returns all the current Selected Ceslls in Adaptable
    */
@@ -149,11 +97,6 @@ export interface GridApi {
   getVendorGrid(): any;
 
   /**
-   * Returns Adaptable Options object passed into Adaptable at the start
-   */
-  getadaptableOptions(): AdaptableOptions;
-
-  /**
    * Retrieves the value in the cell which is in the given Column and in the Row that contains that given Primary Key Value
    *
    * @param id the primaryKeyValue of the row (ie. the value in the Column defined as the Primary Key Column)
@@ -161,6 +104,13 @@ export interface GridApi {
    * @param columnId the name of the Column which contains the cell
    */
   getCellDisplayValue(primaryKeyValue: any, columnId: string): string;
+
+  /**
+   * Returns all the current Column Sort information in Adaptable
+   */
+  getColumnSorts(): ColumnSort[];
+
+  setColumnSorts(columnSorts: ColumnSort[]): void;
 
   hideFilterForm(): void;
   applyGridFiltering(): void;
@@ -171,13 +121,6 @@ export interface GridApi {
   selectNodes(rowNodes: any[]): void;
   selectNode(rowNode: any): void;
 
-  selectColumn(columnId: string): void;
-  selectColumns(columnIds: string[]): void;
-  selectAll(): void;
-
-  hideColumn(columnId: string): void;
-  showColumn(columnId: string): void;
-
   getFirstRowNode(): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
@@ -186,30 +129,6 @@ export interface GridApi {
   closeAllRowGroups(): void;
   getExpandRowGroupsKeys(): any[];
   expandRowGroupsForValues(columnValues: any[]): void;
-
-  isRowGroupColumn(columnId: string): boolean;
-  isCalculatedColumn(columnId: string): boolean;
-  isFreeTextColumn(columnId: string): boolean;
-  isActionColumn(columnId: string): boolean;
-
-  isNumericColumn(column: AdaptableColumn): boolean;
-  getColumnDataTypeFromColumnId(
-    columnId: string
-  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
-  getFriendlyNameFromColumn(columnId: string, column: AdaptableColumn): string;
-  getFriendlyNameFromColumnId(columnId: string): string;
-  getFriendlyNamesFromColumnIds(columnIds: string[]): string[];
-  getColumnFromFriendlyName(columnName: string): AdaptableColumn;
-  getColumnIdFromFriendlyName(friendlyName: string): string;
-  getColumnIdsFromFriendlyNames(friendlyNames: string[]): string[];
-  getColumnsFromFriendlyNames(friendlyNames: string[]): AdaptableColumn[];
-  getColumnsFromIds(columnIds: string[]): AdaptableColumn[];
-  getColumnFromId(columnId: string, logWarning?: boolean): AdaptableColumn;
-
-  getSortableColumns(): AdaptableColumn[];
-  getGroupableColumns(): AdaptableColumn[];
-  getPivotableColumns(): AdaptableColumn[];
-  getAggregetableColumns(): AdaptableColumn[];
 
   isGridPivotable(): boolean;
   isGridGroupable(): boolean;

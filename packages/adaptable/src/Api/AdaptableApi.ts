@@ -43,6 +43,7 @@ import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 import { ApplicationApi } from './ApplicationAPI';
+import { ColumnApi } from './ColumnApi';
 
 /**
  *
@@ -186,6 +187,8 @@ export interface AdaptableApi {
    * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_src_predefinedconfig_configstate_columnfilterstate_.columnfilterstate.html).
    */
   columnFilterApi: ColumnFilterApi;
+
+  columnApi: ColumnApi;
 
   /**
    * Methods that give access to the [Predefined Config](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html), State and Store.

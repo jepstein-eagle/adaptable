@@ -27,7 +27,7 @@ export class ColumnFilterEntityRow extends React.Component<
     let colItems: IColItem[] = [].concat(this.props.colItems);
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumnId(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumnId(
           this.props.ColumnFilter.ColumnId
         )}
       />

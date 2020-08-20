@@ -87,7 +87,7 @@ export function createDefaultYAxisTitle(
   api: AdaptableApi
 ): string {
   return chartDefinition.YAxisColumnIds.map(c => {
-    return api.gridApi.getFriendlyNameFromColumnId(c);
+    return api.columnApi.getFriendlyNameFromColumnId(c);
   }).join(', ');
 }
 
@@ -95,7 +95,7 @@ export function createDefaultXAxisTitle(
   chartDefinition: CategoryChartDefinition,
   api: AdaptableApi
 ): string {
-  return api.gridApi.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId);
+  return api.columnApi.getFriendlyNameFromColumnId(chartDefinition.XAxisColumnId);
 }
 
 export function setDefaultChartDisplayPopupState(): CategoryChartComponentState {

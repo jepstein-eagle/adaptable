@@ -41,7 +41,7 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
       <EntityRowItem
         Content={this.props.api.internalApi
           .getLayoutService()
-          .getLayoutDescription(layout, this.props.api.gridApi.getColumns())}
+          .getLayoutDescription(layout, this.props.api.columnApi.getColumns())}
       />
     );
 

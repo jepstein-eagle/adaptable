@@ -47,7 +47,7 @@ export class PieChartPrimaryColumnWizard
 
           <ColumnSelector
             SelectedColumnIds={[this.state.PrimaryColumnId]}
-            ColumnList={this.props.Api.gridApi.getColumns()}
+            ColumnList={this.props.Api.columnApi.getColumns()}
             onColumnChange={columns => this.onPrimaryColumnChanged(columns)}
             SelectionMode={SelectionMode.Single}
           />

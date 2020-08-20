@@ -43,7 +43,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     //   if (cc.CalculatedColumnSettings == null || cc.CalculatedColumnSettings.DataType == null) {
     //     const cleanedExpression: string = this.adaptable.CalculatedColumnExpressionService.CleanExpressionColumnNames(
     //       cc.ColumnExpression,
-    //       this.adaptable.api.gridApi.getColumns()
+    //       this.adaptable.api.columnApi.getColumns()
     //     );
     //     dataType = this.adaptable.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
     //       cleanedExpression

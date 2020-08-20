@@ -384,7 +384,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   private GetColumnState(): AdaptableColumn[] {
-    return this.adaptable.api.gridApi.getColumns();
+    return this.adaptable.api.columnApi.getColumns();
   }
 
   private GetCurrentChartDefinition(): ChartDefinition {

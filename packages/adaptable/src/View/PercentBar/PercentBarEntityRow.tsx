@@ -23,7 +23,7 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumn(
           PercentBar.ColumnId,
           this.props.Column
         )}

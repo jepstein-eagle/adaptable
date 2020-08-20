@@ -91,7 +91,7 @@ class PlusMinusPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
     let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-      let column = this.props.Api.gridApi.getColumnFromId(x.ColumnId);
+      let column = this.props.Api.columnApi.getColumnFromId(x.ColumnId);
 
       return (
         <PlusMinusEntityRow

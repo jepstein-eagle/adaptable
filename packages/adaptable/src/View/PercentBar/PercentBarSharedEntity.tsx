@@ -28,7 +28,7 @@ export class PercentBarSharedEntity extends React.Component<
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={3}>
-          {'Column: ' + this.props.Api.gridApi.getFriendlyNameFromColumnId(percentBar.ColumnId)}
+          {'Column: ' + this.props.Api.columnApi.getFriendlyNameFromColumnId(percentBar.ColumnId)}
         </Flex>
         <Flex flex={3}>{ranges}</Flex>
       </Flex>

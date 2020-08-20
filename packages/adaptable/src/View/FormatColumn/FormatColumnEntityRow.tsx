@@ -20,7 +20,7 @@ export class FormatColumnEntityRow extends React.Component<
     let formatColumn = this.props.AdaptableObject as FormatColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
-    let adaptableColumn: AdaptableColumn = this.props.api.gridApi.getColumnFromId(
+    let adaptableColumn: AdaptableColumn = this.props.api.columnApi.getColumnFromId(
       formatColumn.ColumnId
     );
     if (adaptableColumn) {

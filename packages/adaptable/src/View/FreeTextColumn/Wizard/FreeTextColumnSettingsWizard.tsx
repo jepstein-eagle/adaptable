@@ -130,7 +130,7 @@ export class FreeTextColumnSettingsWizard
       {
         ColumnId: e.value,
         ErrorMessage: ArrayExtensions.ContainsItem(
-          this.props.Api.gridApi.getColumns().map(c => c.ColumnId),
+          this.props.Api.columnApi.getColumns().map(c => c.ColumnId),
           e.value
         )
           ? 'A Column already exists with that id'

@@ -28,7 +28,7 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumn(
           plusMinusRule.ColumnId,
           this.props.Column
         )}

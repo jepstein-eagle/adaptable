@@ -174,7 +174,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
   ];
 
   const onSetColumnVisibility = (name: string) => {
-    let changedColumn: AdaptableColumn = props.Adaptable.api.gridApi.getColumnFromId(name);
+    let changedColumn: AdaptableColumn = props.Adaptable.api.columnApi.getColumnFromId(name);
 
     let columns: AdaptableColumn[] = [].concat(props.Columns);
     changedColumn = Object.assign({}, changedColumn, {

@@ -43,7 +43,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (!activeCell) {
       return;
     }
-    let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    let selectedColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       activeCell.columnId
     );
     if (activeCell && !selectedColumn.ReadOnly) {

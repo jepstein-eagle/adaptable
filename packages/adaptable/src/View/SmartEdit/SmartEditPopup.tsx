@@ -67,7 +67,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let col: AdaptableColumn;
     if (this.props.PreviewInfo) {
-      col = this.props.Api.gridApi.getColumnFromId(this.props.PreviewInfo.ColumnId);
+      col = this.props.Api.columnApi.getColumnFromId(this.props.PreviewInfo.ColumnId);
     }
 
     let globalValidationMessage: string = PreviewHelper.GetValidationMessage(

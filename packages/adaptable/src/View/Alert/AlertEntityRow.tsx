@@ -67,7 +67,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   }
 
   private getColumnandRule(Alert: AlertDefinition): string {
-    let columnInfo: string = this.props.api.gridApi.getFriendlyNameFromColumn(
+    let columnInfo: string = this.props.api.columnApi.getFriendlyNameFromColumn(
       Alert.ColumnId,
       this.props.Column
     );
@@ -75,7 +75,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
       ': ' +
       this.props.api.internalApi
         .getStrategyService()
-        .createAlertDescription(Alert, this.props.api.gridApi.getColumns());
+        .createAlertDescription(Alert, this.props.api.columnApi.getColumns());
     return columnInfo;
   }
 

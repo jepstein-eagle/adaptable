@@ -15,7 +15,7 @@ export class FormatColumnSharedEntity extends React.Component<
 
     return (
       <Flex flexDirection="row" alignItems="center">
-        <Flex flex={4}>{this.props.Api.gridApi.getFriendlyNameFromColumnId(fc.ColumnId)}</Flex>
+        <Flex flex={4}>{this.props.Api.columnApi.getFriendlyNameFromColumnId(fc.ColumnId)}</Flex>
         <Flex flex={8}>
           <StyleVisualItem Style={fc.Style} />
         </Flex>

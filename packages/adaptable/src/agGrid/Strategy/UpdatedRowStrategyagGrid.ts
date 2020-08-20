@@ -12,7 +12,7 @@ export class UpdatedRowStrategyagGrid extends UpdatedRowStrategy implements IUpd
   }
 
   public initStyles(): void {
-    let columns = this.adaptable.api.gridApi.getColumns();
+    let columns = this.adaptable.api.columnApi.getColumns();
     let theadaptable = this.adaptable as Adaptable;
     let updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (ArrayExtensions.IsNotNullOrEmpty(columns) && updatedRowState.EnableUpdatedRow) {

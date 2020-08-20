@@ -933,7 +933,7 @@ export class Adaptable implements IAdaptable {
 
     vendorCols.forEach(vendorColumn => {
       const colId: string = vendorColumn.getColId();
-      if (!this.api.gridApi.isRowGroupColumn(colId)) {
+      if (!this.api.columnApi.isRowGroupColumn(colId)) {
         allColumns.push(this.createAdaptableColumn(vendorColumn));
       }
     });
@@ -972,7 +972,7 @@ export class Adaptable implements IAdaptable {
 
     const quickSearchClassName = this.getQuickSearchClassName();
     if (abColumn == null) {
-      abColumn = this.api.gridApi.getColumnFromId(vendorColumn.getColId());
+      abColumn = this.api.columnApi.getColumnFromId(vendorColumn.getColId());
     }
     if (abColumn) {
       this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
@@ -986,7 +986,7 @@ export class Adaptable implements IAdaptable {
 
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     vendorCols.forEach((vendorColumn: Column) => {
-      let abColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(vendorColumn.getColId());
+      let abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(vendorColumn.getColId());
       this.applyStylingToColumn(vendorColumn, abColumn);
     });
   }
@@ -1455,7 +1455,7 @@ export class Adaptable implements IAdaptable {
           for (const column of rangeSelection.columns) {
             if (column != null) {
               const colId: string = column.getColId();
-              const selectedColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(colId);
+              const selectedColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(colId);
               if (
                 selectedColumn &&
                 columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null
@@ -1538,7 +1538,7 @@ export class Adaptable implements IAdaptable {
       | 'Boolean'
       | 'Date'
       | 'Object'
-      | 'Unknown' = this.api.gridApi.getColumnDataTypeFromColumnId(dataChangedInfo.ColumnId);
+      | 'Unknown' = this.api.columnApi.getColumnDataTypeFromColumnId(dataChangedInfo.ColumnId);
     newValue =
       dataType == DataType.Number ? Number(dataChangedInfo.NewValue) : dataChangedInfo.NewValue;
 
@@ -2049,7 +2049,7 @@ export class Adaptable implements IAdaptable {
 
     const cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
-      this.api.gridApi.getColumns()
+      this.api.columnApi.getColumns()
     );
 
     if (calculatedColumn.CalculatedColumnSettings) {
@@ -2110,7 +2110,7 @@ export class Adaptable implements IAdaptable {
   public addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], colDefs?: ColDef[]) {
     colDefs = colDefs || this.getColumnDefs();
 
-    const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
+    const cols: AdaptableColumn[] = this.api.columnApi.getColumns();
     const newColDefs: ColDef[] = calculatedColumns.map(calculatedColumn => {
       const cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
         calculatedColumn.ColumnExpression,
@@ -2365,7 +2365,7 @@ export class Adaptable implements IAdaptable {
         headerFontStyle: 'normal',
         headerFontWeight: '400',
         height: 65,
-        Columns: this.api.gridApi.getColumns().map(col => {
+        Columns: this.api.columnApi.getColumns().map(col => {
           return {
             columnFriendlyName: col.FriendlyName,
             width: 200,
@@ -2382,7 +2382,7 @@ export class Adaptable implements IAdaptable {
         fontStyle: 'normal',
         fontWeight: '400',
         height: 30,
-        Columns: this.api.gridApi.getColumns().map(col => {
+        Columns: this.api.columnApi.getColumns().map(col => {
           return {
             columnFriendlyName: col.FriendlyName,
             width: 200,
@@ -2637,7 +2637,7 @@ export class Adaptable implements IAdaptable {
         let column = params.column;
         // for numeric columns we want to make sure its a numeric update in case they have aggregation
         if (column) {
-          let abColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(column.colId);
+          let abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(column.colId);
           if (abColumn && abColumn.DataType == DataType.Number) {
             let shouldUpdateNumberEdit: boolean = true;
             if (ArrayExtensions.IsNotNullOrEmpty(this.api.shortcutApi.getAllShortcut())) {
@@ -2856,7 +2856,7 @@ export class Adaptable implements IAdaptable {
     };
     const originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
-      const columns = this.api.gridApi.getColumns();
+      const columns = this.api.columnApi.getColumns();
 
       // first we assess AdvancedSearch (if its running locally)
       if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
@@ -2956,7 +2956,7 @@ export class Adaptable implements IAdaptable {
       }
       colMenuItems.push('separator');
 
-      const adaptableColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(colId);
+      const adaptableColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(colId);
       if (adaptableColumn != null) {
         let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
         // First get all the Strategy based Adaptable Menu Items
@@ -3009,7 +3009,7 @@ export class Adaptable implements IAdaptable {
       const adaptableMenuItems: AdaptableMenuItem[] = [];
       const agGridColumn: Column = params.column;
       if (agGridColumn) {
-        const adaptableColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(
+        const adaptableColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(
           agGridColumn.getColId()
         );
 
@@ -3273,7 +3273,7 @@ export class Adaptable implements IAdaptable {
       sparklineColumn.LineColor = DefaultSparklinesChartProperties.Brush;
     }
 
-    const renderedColumn = this.api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
 
     if (renderedColumn) {
       const cellRendererComp: any = this.agGridHelper.createSparklineCellRendererComp(
@@ -3297,7 +3297,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
-    const renderedColumn = this.api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
     if (renderedColumn) {
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
         sparklineColumn.ColumnId
@@ -3347,7 +3347,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public addPercentBar(pcr: PercentBar): void {
-    const renderedColumn = this.api.gridApi.getColumnFromId(pcr.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(pcr.ColumnId);
     if (renderedColumn) {
       const cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(
         pcr,
@@ -3385,7 +3385,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public removePercentBar(pcr: PercentBar): void {
-    const renderedColumn = this.api.gridApi.getColumnFromId(pcr.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(pcr.ColumnId);
     if (renderedColumn) {
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       // note we dont get it from the original (but I guess it will be applied next time you run...)
@@ -3513,7 +3513,7 @@ export class Adaptable implements IAdaptable {
     const newColumnSorts: ColumnSort[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(sortModel)) {
       sortModel.forEach(sm => {
-        if (this.api.gridApi.isRowGroupColumn(sm.colId)) {
+        if (this.api.columnApi.isRowGroupColumn(sm.colId)) {
           this.agGridHelper.createGroupedColumnCustomSort();
         }
         const columnSort: ColumnSort = {
@@ -3706,7 +3706,7 @@ export class Adaptable implements IAdaptable {
         quickSearchState.DisplayAction != DisplayAction.HighlightCell &&
         StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
       ) {
-        const column: AdaptableColumn = this.api.gridApi.getColumnFromId(columnId);
+        const column: AdaptableColumn = this.api.columnApi.getColumnFromId(columnId);
         if (!column.IsExcludedFromQuickSearch) {
           const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
 
@@ -3739,13 +3739,13 @@ export class Adaptable implements IAdaptable {
     let groupedColumns: Column[] = this.gridOptions.columnApi.getRowGroupColumns();
     if (ArrayExtensions.IsNotNullOrEmpty(groupedColumns)) {
       let groupedColumn: Column = groupedColumns[0];
-      return this.api.gridApi.getColumnFromId(groupedColumn.getColId());
+      return this.api.columnApi.getColumnFromId(groupedColumn.getColId());
     }
   }
 
   private checkColumnsDataTypeSet(): any {
     // check that we have no unknown columns - if we do then ok
-    const firstCol = this.api.gridApi.getColumns()[0];
+    const firstCol = this.api.columnApi.getColumns()[0];
     if (firstCol && firstCol.DataType == DataType.Unknown) {
       this.updateColumnsIntoStore();
     }

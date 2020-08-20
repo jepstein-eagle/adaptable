@@ -57,7 +57,7 @@ class LayoutToolPanelComponent extends React.Component<
     );
 
     let isManualSaveLayout: boolean =
-      this.props.Api.gridApi.getadaptableOptions().layoutOptions!.autoSaveLayouts == false;
+      this.props.Api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
       return {

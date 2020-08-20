@@ -94,7 +94,7 @@ const ColumnLabels = (props: AdaptableColumnProperties) => {
 
 export const LayoutEditor = (props: LayoutEditorProps) => {
   const { api } = props;
-  const allColumns = React.useMemo(() => api.gridApi.getColumns(), []);
+  const allColumns = React.useMemo(() => api.columnApi.getColumns(), []);
 
   const initialState = React.useMemo(() => getInitialState(props.layout), []);
 

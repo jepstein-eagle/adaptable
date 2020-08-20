@@ -20,7 +20,7 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
 
       { Key: 'Values', Value: this.props.Data.SortedValues.join(', ') },

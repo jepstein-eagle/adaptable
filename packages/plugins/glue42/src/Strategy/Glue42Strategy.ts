@@ -229,7 +229,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
 
     if (report) {
       let data: any[] = this.ConvertReportToArray(report);
-      let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      let gridColumns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
       // for glue42 we need to pass in the pk values of the data also
       let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(report);
       try {

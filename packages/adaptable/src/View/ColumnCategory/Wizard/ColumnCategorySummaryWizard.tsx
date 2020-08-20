@@ -34,7 +34,7 @@ export class ColumnCategorySummaryWizard
   }
 
   private getColumnNames(): string {
-    return this.props.Api.gridApi
+    return this.props.Api.columnApi
       .getFriendlyNamesFromColumnIds(this.props.Data.ColumnIds)
       .join(', ');
   }

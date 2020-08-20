@@ -105,7 +105,7 @@ class PercentBarPopupComponent extends React.Component<
     ];
 
     let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar) => {
-      let column = this.props.Api.gridApi.getColumnFromId(percentBar.ColumnId);
+      let column = this.props.Api.columnApi.getColumnFromId(percentBar.ColumnId);
       return (
         <PercentBarEntityRow
           key={percentBar.Uuid}

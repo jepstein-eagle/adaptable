@@ -62,7 +62,7 @@ export class StrategyService implements IStrategyService {
       | 'Boolean'
       | 'Date'
       | 'Object'
-      | 'Unknown' = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+      | 'Unknown' = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
       alertDefinition.ColumnId
     );
     let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(

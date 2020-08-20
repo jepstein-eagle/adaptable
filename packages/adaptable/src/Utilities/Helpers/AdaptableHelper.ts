@@ -97,7 +97,7 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
 }
 
 export function isValidPrimaryKey(adaptable: IAdaptable): boolean {
-  const pkColumn: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(
+  const pkColumn: AdaptableColumn = adaptable.api.columnApi.getColumnFromId(
     adaptable.adaptableOptions.primaryKey
   );
 

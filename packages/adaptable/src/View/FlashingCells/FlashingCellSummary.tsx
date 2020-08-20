@@ -69,7 +69,7 @@ export class FlashingCellSummaryComponent extends React.Component<
       let flashingCellState: FlashingCellState = this.props.Api.configApi.configGetFlashingCellState(
         false
       );
-      let col: AdaptableColumn = this.props.Api.gridApi.getColumnFromId(
+      let col: AdaptableColumn = this.props.Api.columnApi.getColumnFromId(
         this.props.SummarisedColumn.ColumnId
       );
       existingfc = ObjectFactory.CreateDefaultFlashingCell(

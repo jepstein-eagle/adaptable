@@ -21,7 +21,7 @@ export class UserFilterEntityRow extends React.Component<
     colItems[0].Content = <EntityRowItem Content={userFilter.Name} />;
     colItems[1].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumnId(userFilter.ColumnId)}
+        Content={this.props.api.columnApi.getFriendlyNameFromColumnId(userFilter.ColumnId)}
       />
     );
     colItems[2].Content = (

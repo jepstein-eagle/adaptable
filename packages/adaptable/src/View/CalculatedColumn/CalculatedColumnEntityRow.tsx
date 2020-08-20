@@ -27,7 +27,7 @@ export class CalculatedColumnEntityRow extends React.Component<
           .getCalculatedColumnExpressionService()
           .GetExpressionString(
             calculatedColumn.ColumnExpression,
-            this.props.api.gridApi.getColumns()
+            this.props.api.columnApi.getColumns()
           )}
       />
     );

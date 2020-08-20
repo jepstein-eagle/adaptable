@@ -22,7 +22,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Name',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
       { Key: 'Nudge Value', Value: this.props.Data.NudgeValue },
       { Key: 'Is Column Default', Value: this.props.Data.IsDefaultNudge ? 'True' : 'False' },

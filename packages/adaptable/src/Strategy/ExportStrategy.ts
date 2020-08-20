@@ -120,7 +120,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         return AdaptableHelper.createAdaptableColumnFromColumnId(c);
       });
     } else {
-      cols = this.adaptable.api.gridApi.getColumnsFromFriendlyNames(reportCols);
+      cols = this.adaptable.api.columnApi.getColumnsFromFriendlyNames(reportCols);
     }
     this.adaptable.api.exportApi.exportDataToExcel(
       cols.map(c => c.FriendlyName),

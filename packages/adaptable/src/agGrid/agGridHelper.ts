@@ -716,7 +716,7 @@ export class agGridHelper {
     }
     let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    const existingColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       column.getId(),
       logWarning
     );
@@ -868,7 +868,7 @@ export class agGridHelper {
         if (
           !this.adaptable.api.gridApi
             .getColumnSorts()
-            .find((gs: ColumnSort) => this.adaptable.api.gridApi.isRowGroupColumn(gs.Column))
+            .find((gs: ColumnSort) => this.adaptable.api.columnApi.isRowGroupColumn(gs.Column))
         ) {
           const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId
@@ -993,7 +993,7 @@ export class agGridHelper {
         headerFontStyle: headerColStyle.fontStyle,
         headerFontWeight: headerColStyle.fontWeight,
         height: Number(headerColStyle.height.replace('px', '')),
-        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+        Columns: this.adaptable.api.columnApi.getColumns().map(col => {
           const headerColumn: HTMLElement = document.querySelector(
             `.ag-header-cell[col-id='${col.ColumnId}']`
           ) as HTMLElement;
@@ -1014,7 +1014,7 @@ export class agGridHelper {
         fontStyle: firstRowStyle.fontStyle,
         fontWeight: firstRowStyle.fontWeight,
         height: Number(firstRowStyle.height.replace('px', '')),
-        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+        Columns: this.adaptable.api.columnApi.getColumns().map(col => {
           const cellElement: HTMLElement = document.querySelector(
             `.ag-cell[col-id='${col.ColumnId}']`
           ) as HTMLElement;

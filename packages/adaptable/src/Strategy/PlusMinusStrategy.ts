@@ -90,7 +90,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
     let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
@@ -102,7 +102,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(rulesForColumn)) {
-        let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+        let selectedColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
           selectedCell.columnId
         );
         if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {

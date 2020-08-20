@@ -90,6 +90,8 @@ import { ScheduleApiImpl } from './ScheduleApiImpl';
 import { GradientColumnApi } from '../GradientColumnApi';
 import { GradientColumnApiImpl } from './GradientColumnApiImpl';
 import { ApplicationApi } from '../ApplicationAPI';
+import { ColumnApiImpl } from './ColumnApiImpl';
+import { ColumnApi } from '../ColumnApi';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
@@ -103,6 +105,7 @@ export class AdaptableApiImpl implements AdaptableApi {
   public cellSummaryApi: CellSummaryApi;
   public cellValidationApi: CellValidationApi;
   public chartApi: ChartApi;
+  public columnApi: ColumnApi;
   public columnCategoryApi: ColumnCategoryApi;
   public columnFilterApi: ColumnFilterApi;
   public conditionalStyleApi: ConditionalStyleApi;
@@ -152,6 +155,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.cellSummaryApi = new CellSummaryApiImpl(adaptable);
     this.cellValidationApi = new CellValidationApiImpl(adaptable);
     this.chartApi = new ChartApiImpl(adaptable);
+    this.columnApi = new ColumnApiImpl(adaptable);
     this.columnCategoryApi = new ColumnCategoryApiImpl(adaptable);
     this.columnFilterApi = new ColumnFilterApiImpl(adaptable);
     this.conditionalStyleApi = new ConditionalStyleApiImpl(adaptable);

@@ -73,11 +73,11 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
       alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
         this.adaptable.api.alertApi.showAlert(
-          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(alertDefintion.ColumnId),
+          this.adaptable.api.columnApi.getFriendlyNameFromColumnId(alertDefintion.ColumnId),
           this.adaptable.StrategyService.createAlertDescription(alertDefintion, columns),
           alertDefintion,
           dataChangedInfo
@@ -92,7 +92,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
 
       // first check the rules which have expressions
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
@@ -139,7 +139,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       dataChangedEvent.ColumnId
     );
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(

@@ -342,7 +342,7 @@ export class FilterService implements IFilterService {
   ): KeyValuePair[] {
     let infoBody: KeyValuePair[] = [];
     columnFilters.forEach(x => {
-      let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(x.ColumnId);
+      let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(x.ColumnId);
       if (column) {
         let expression: string = ExpressionHelper.ConvertExpressionToString(
           x.Filter,
@@ -350,7 +350,7 @@ export class FilterService implements IFilterService {
           false
         );
         infoBody.push({
-          Key: this.adaptable.api.gridApi.getFriendlyNameFromColumnId(x.ColumnId),
+          Key: this.adaptable.api.columnApi.getFriendlyNameFromColumnId(x.ColumnId),
           Value: expression,
         });
       }

@@ -2,7 +2,6 @@ import * as LayoutRedux from '../../Redux/ActionsReducers/LayoutRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
-import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 import { LayoutApi } from '../LayoutApi';
 import { LayoutState, Layout } from '../../PredefinedConfig/LayoutState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
@@ -64,10 +63,6 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
 
   public getCurrentLayoutName(): string {
     return this.getAdaptableState().Layout.CurrentLayout;
-  }
-
-  public isDefaultLayout(): boolean {
-    return this.getCurrentLayoutName() == DEFAULT_LAYOUT;
   }
 
   public getLayoutByName(layoutName: string): Layout | null {

@@ -16,7 +16,7 @@ export class PlusMinusSharedEntity extends React.Component<
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {this.props.Api.gridApi.getFriendlyNameFromColumnId(plusMinusRule.ColumnId)}
+          {this.props.Api.columnApi.getFriendlyNameFromColumnId(plusMinusRule.ColumnId)}
         </Flex>
         <Flex flex={3}>{plusMinusRule.NudgeValue.toString()}</Flex>
         <Flex flex={5}>

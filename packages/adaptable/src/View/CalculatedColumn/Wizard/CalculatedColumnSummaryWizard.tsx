@@ -28,7 +28,7 @@ export class CalculatedColumnSummaryWizard
           .getCalculatedColumnExpressionService()
           .GetExpressionString(
             this.props.Data.ColumnExpression,
-            this.props.Api.gridApi.getColumns()
+            this.props.Api.columnApi.getColumns()
           ),
       },
       { Key: 'DataType', Value: this.props.Data.CalculatedColumnSettings.DataType },

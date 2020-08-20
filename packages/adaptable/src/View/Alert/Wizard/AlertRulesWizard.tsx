@@ -49,7 +49,7 @@ export class AlertRulesWizard
       };
     });
 
-    let columnFriendlyName: string = this.props.Api.gridApi.getFriendlyNameFromColumnId(
+    let columnFriendlyName: string = this.props.Api.columnApi.getFriendlyNameFromColumnId(
       this.props.Data.ColumnId
     );
 
@@ -215,7 +215,7 @@ export class AlertRulesWizard
     | 'Date'
     | 'Object'
     | 'Unknown' {
-    return this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId);
+    return this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId);
   }
 
   private checkOperator(operator: LeafExpressionOperator): boolean {

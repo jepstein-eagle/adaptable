@@ -49,12 +49,12 @@ export class CellValidationRulesWizard
         value: operator.toString(),
         label: ExpressionHelper.OperatorToLongFriendlyString(
           operator,
-          this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)
+          this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)
         ),
       };
     });
 
-    let columnFriendlyName: string = this.props.Api.gridApi.getFriendlyNameFromColumnId(
+    let columnFriendlyName: string = this.props.Api.columnApi.getFriendlyNameFromColumnId(
       this.props.Data.ColumnId
     );
 
@@ -117,7 +117,7 @@ export class CellValidationRulesWizard
             !this.checkOperator(LeafExpressionOperator.IsPositive) &&
             !this.checkOperator(LeafExpressionOperator.IsNegative) &&
             !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
-            this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
+            this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
               DataType.Number && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -142,7 +142,7 @@ export class CellValidationRulesWizard
           {/* if  date then show a date control */}
           {this.state.Operator != null &&
             !this.checkOperator(LeafExpressionOperator.AnyChange) &&
-            this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
+            this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
               DataType.Date && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -169,7 +169,7 @@ export class CellValidationRulesWizard
             !this.checkOperator(LeafExpressionOperator.AnyChange) &&
             !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
             !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
-            this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
+            this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
               DataType.String && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -228,7 +228,7 @@ export class CellValidationRulesWizard
   }
 
   private getAvailableOperators(): LeafExpressionOperator[] {
-    switch (this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)) {
+    switch (this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)) {
       case DataType.Boolean:
         return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
       case DataType.String:
