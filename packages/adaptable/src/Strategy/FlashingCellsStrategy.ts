@@ -15,17 +15,13 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
   implements IFlashingCellsStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.FlashingCellsStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.FlashingCellsStrategyFriendlyName,
-        ComponentName: ScreenPopups.FlashingCellsPopup,
-        Icon: StrategyConstants.FlashingCellGlyph,
-      });
-    }
+    super(
+      StrategyConstants.FlashingCellsStrategyId,
+      StrategyConstants.FlashingCellsStrategyFriendlyName,
+      StrategyConstants.FlashingCellGlyph,
+      ScreenPopups.FlashingCellsPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

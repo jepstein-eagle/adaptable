@@ -96,7 +96,7 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleButtons: ['CalculatedColumn', 'ColumnChooser'],
+    VisibleButtons: ['CalculatedColumn', 'Layout'],
   },
   CalculatedColumn: {
     CalculatedColumns: [

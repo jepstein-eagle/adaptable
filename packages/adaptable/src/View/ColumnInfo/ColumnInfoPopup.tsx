@@ -91,10 +91,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             }
           >
             <ColumnCategorySummary
-              key={StrategyConstants.ColumnChooserStrategyId}
+              key={StrategyConstants.ColumnCategoryStrategyId}
               SummarisedColumn={this.state.SelectedColumn}
               TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ColumnChooserStrategyId)}
+              AccessLevel={this.getAccessLevel(StrategyConstants.ColumnCategoryStrategyId)}
               Api={this.props.Api}
             />
           </div>

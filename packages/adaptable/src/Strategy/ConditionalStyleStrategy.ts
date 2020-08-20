@@ -16,20 +16,16 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ConditionalStyleStrategyId, adaptable);
+    super(
+      StrategyConstants.ConditionalStyleStrategyId,
+      StrategyConstants.ConditionalStyleStrategyFriendlyName,
+      StrategyConstants.ConditionalStyleGlyph,
+      ScreenPopups.ConditionalStylePopup,
+      adaptable
+    );
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
-        ComponentName: ScreenPopups.ConditionalStylePopup,
-        Icon: StrategyConstants.ConditionalStyleGlyph,
-      });
-    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

@@ -1,5 +1,5 @@
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { Layout, PivotDetails } from '../../../PredefinedConfig/LayoutState';
+import { Layout } from '../../../PredefinedConfig/LayoutState';
 import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 export interface ILayoutService {
   getLayoutDescription(layout: Layout, columns: AdaptableColumn[]): string;
@@ -8,7 +8,6 @@ export interface ILayoutService {
 
   areEqual(layout1: Layout, layout2: Layout): boolean;
   createDefaultLayoutIfNeeded(): Layout | null;
-  isPivotedLayout(pivotDetails: PivotDetails): boolean;
 
   getSortsForLayout(layout: Layout): ColumnSort[];
 }

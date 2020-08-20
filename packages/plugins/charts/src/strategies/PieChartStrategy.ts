@@ -14,17 +14,13 @@ import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/
 
 export class PieChartStrategy extends AdaptableStrategyBase implements IPieChartStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.PieChartStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.PieChartStrategyFriendlyName,
-        ComponentName: ScreenPopups.PieChartPopup,
-        Icon: StrategyConstants.PieChartGlyph,
-      });
-    }
+    super(
+      StrategyConstants.PieChartStrategyId,
+      StrategyConstants.PieChartStrategyFriendlyName,
+      StrategyConstants.PieChartGlyph,
+      ScreenPopups.PieChartPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

@@ -19,24 +19,25 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.PlusMinusStrategyId, adaptable);
+    super(
+      StrategyConstants.PlusMinusStrategyId,
+      StrategyConstants.PlusMinusStrategyFriendlyName,
+      StrategyConstants.PlusMinusGlyph,
+      ScreenPopups.PlusMinusPopup,
+      adaptable
+    );
 
     this.adaptable._on('KeyDown', keyDownEvent => {
       this.handleKeyDown(keyDownEvent);
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.PlusMinusStrategyFriendlyName,
-        ComponentName: ScreenPopups.PlusMinusPopup,
-        Icon: StrategyConstants.PlusMinusGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

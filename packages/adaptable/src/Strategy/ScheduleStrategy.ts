@@ -7,18 +7,14 @@ import { IScheduleStrategy } from './Interface/IScheduleStrategy';
 
 export class ScheduleStrategy extends AdaptableStrategyBase implements IScheduleStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ScheduleStrategyId, adaptable);
+    super(
+      StrategyConstants.ScheduleStrategyId,
+      StrategyConstants.ScheduleStrategyFriendlyName,
+      StrategyConstants.ScheduleGlyph,
+      ScreenPopups.SchedulePopup,
+      adaptable
+    );
 
     this.adaptable._on('GridReloaded', () => {});
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ScheduleStrategyFriendlyName,
-        ComponentName: ScreenPopups.SchedulePopup,
-        Icon: StrategyConstants.ScheduleGlyph,
-      });
-    }
   }
 }

@@ -79,7 +79,7 @@ export {
   FreeTextStoredValue,
 } from './PredefinedConfig/FreeTextColumnState';
 export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
-export { LayoutState, Layout, PivotDetails } from './PredefinedConfig/LayoutState';
+export { LayoutState, Layout } from './PredefinedConfig/LayoutState';
 export {
   NamedFilterState,
   NamedFilter,

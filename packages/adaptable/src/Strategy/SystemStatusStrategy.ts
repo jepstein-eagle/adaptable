@@ -15,7 +15,13 @@ import Helper from '../Utilities/Helpers/Helper';
 export class SystemStatusStrategy extends AdaptableStrategyBase implements ISystemStatusStrategy {
   private systemStatusState: SystemStatusState;
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.SystemStatusStrategyId, adaptable);
+    super(
+      StrategyConstants.SystemStatusStrategyId,
+      StrategyConstants.SystemStatusStrategyFriendlyName,
+      StrategyConstants.SystemStatusGlyph,
+      ScreenPopups.SystemStatusPopup,
+      adaptable
+    );
 
     adaptable.AdaptableStore.onAny((eventName: string) => {
       if (
@@ -65,16 +71,6 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
           this.systemStatusState.DefaultStatusType
         );
       }
-    }
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.SystemStatusStrategyFriendlyName,
-        ComponentName: ScreenPopups.SystemStatusPopup,
-        Icon: StrategyConstants.SystemStatusGlyph,
-      });
     }
   }
 

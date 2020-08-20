@@ -13,20 +13,20 @@ import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { CellSummaryOperationDefinition } from '../PredefinedConfig/CellSummaryState';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class CellSummaryStrategy extends AdaptableStrategyBase implements ICellSummaryStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CellSummaryStrategyId, adaptable);
+    super(
+      StrategyConstants.CellSummaryStrategyId,
+      StrategyConstants.CellSummaryStrategyFriendlyName,
+      StrategyConstants.CellSummaryGlyph,
+      ScreenPopups.CellSummaryPopup,
+      adaptable
+    );
   }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CellSummaryStrategyFriendlyName,
-        ComponentName: ScreenPopups.CellSummaryPopup,
-        Icon: StrategyConstants.CellSummaryGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

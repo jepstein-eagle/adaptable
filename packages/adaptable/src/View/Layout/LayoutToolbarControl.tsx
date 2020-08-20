@@ -21,12 +21,14 @@ import join from '../../components/utils/join';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { isEqual } from 'lodash';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
+  onEditLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
   CurrentDraftLayout: Layout;
   CanSave: boolean;
@@ -85,6 +87,13 @@ class LayoutToolbarControlComponent extends React.Component<
               AccessLevel={this.props.AccessLevel}
             />
           )}
+
+          <ButtonEdit
+            onClick={() => this.props.onEditLayout()}
+            tooltip="Edit Layout"
+            className="ab-DashboardToolbar__Layout__edit"
+            AccessLevel={this.props.AccessLevel}
+          />
 
           <ButtonNew
             children={null}
@@ -160,6 +169,13 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
           action: 'New',
+          source: 'Toolbar',
+        })
+      ),
+    onEditLayout: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
+          action: 'Edit',
           source: 'Toolbar',
         })
       ),

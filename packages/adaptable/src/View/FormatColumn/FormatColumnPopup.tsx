@@ -188,7 +188,7 @@ class FormatColumnPopupComponent extends React.Component<
       this.props.onAddFormatColumn(formatColumn);
     }
     this.setState({ EditedAdaptableObject: null, WizardStartIndex: 0 });
-    this.shouldClosePopupOnFinishWizard = false;
+    //this.shouldClosePopupOnFinishWizard = false;
   }
   canFinishWizard() {
     let formatColumn = this.state.EditedAdaptableObject as FormatColumn;

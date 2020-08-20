@@ -7,16 +7,12 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class CalendarStrategy extends AdaptableStrategyBase implements ICalendarStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CalendarStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CalendarStrategyFriendlyName,
-        ComponentName: ScreenPopups.CalendarsPopup,
-        Icon: StrategyConstants.CalendarGlyph,
-      });
-    }
+    super(
+      StrategyConstants.CalendarStrategyId,
+      StrategyConstants.CalendarStrategyFriendlyName,
+      StrategyConstants.CalendarGlyph,
+      ScreenPopups.CalendarsPopup,
+      adaptable
+    );
   }
 }

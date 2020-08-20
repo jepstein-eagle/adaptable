@@ -126,18 +126,17 @@ let demoConfig: PredefinedConfig = {
         //   },
         // ],
         //  GroupedColumns: ['currency', 'country'],
-        GroupedColumns: ['currency'],
+        RowGroupedColumns: ['currency'],
         Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Grouping Layout',
       },
       {
         Columns: ['bid', 'ask'],
         Name: 'Pivoted Layout',
-        GroupedColumns: ['currency'],
-        PivotDetails: {
-          PivotColumns: ['status', 'stars'],
-          AggregationColumns: ['bid', 'ask'],
-        },
+        RowGroupedColumns: ['currency'],
+
+        PivotColumns: ['status', 'stars'],
+        AggregationColumns: { bid: true, ask: true },
       },
     ],
   },

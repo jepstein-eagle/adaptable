@@ -49,14 +49,33 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
+      // if we come in from a function then open the current layout
+      if (this.props.PopupParams.source == 'FunctionButton') {
+        let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName);
+        if (currentLayout) {
+          this.onEdit(currentLayout);
+        }
+      }
+
       if (this.props.PopupParams.action) {
         if (this.props.PopupParams.action == 'New') {
           this.onNew();
         }
+        if (this.props.PopupParams.action == 'Edit') {
+          let currentLayout = this.props.Layouts.find(
+            as => as.Name == this.props.CurrentLayoutName
+          );
+          if (currentLayout) {
+            this.onEdit(currentLayout);
+          }
+        }
       }
 
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.PopupParams.source &&
+        (this.props.PopupParams.source == 'Toolbar' ||
+          this.props.PopupParams.source == 'FunctionButton' ||
+          this.props.PopupParams.source == 'ColumnMenu');
     }
   }
 
@@ -154,7 +173,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
       EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
+      WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
   }
@@ -194,22 +213,22 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
-    this.shouldClosePopupOnFinishWizard = false;
+    //this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
     let layout = this.state.EditedAdaptableObject as Layout;
-    if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
-      let canFinish: boolean = true;
-      layout.ColumnSorts.forEach(gs => {
-        if (StringExtensions.IsNullOrEmpty(gs.Column)) {
-          canFinish = false;
-        }
-      });
-      if (!canFinish) {
-        return false;
-      }
-    }
+    // if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
+    //   let canFinish: boolean = true;
+    //   layout.ColumnSorts.forEach(gs => {
+    //     if (StringExtensions.IsNullOrEmpty(gs.Column)) {
+    //       canFinish = false;
+    //     }
+    //   });
+    //   if (!canFinish) {
+    //     return false;
+    //   }
+    // }
     return (
       StringExtensions.IsNotNullOrEmpty(layout.Name) &&
       ArrayExtensions.IsNotNullOrEmpty(layout.Columns)

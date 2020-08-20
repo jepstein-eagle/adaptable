@@ -151,7 +151,7 @@ const initialDashboardState: DashboardState = {
   IsFloating: false,
   IsInline: false,
   FloatingPosition: { x: 100, y: 100 },
-  VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
+  VisibleButtons: ['SystemStatus', 'GridInfo', 'Layout', 'ConditionalStyle'],
   CustomButtons: EMPTY_ARRAY,
   CustomToolbars: EMPTY_ARRAY,
   ShowQuickSearchInHeader: true,

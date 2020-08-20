@@ -15,21 +15,17 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.UpdatedRowStrategyId, adaptable);
+    super(
+      StrategyConstants.UpdatedRowStrategyId,
+      StrategyConstants.UpdatedRowStrategyFriendlyName,
+      StrategyConstants.UpdatedRowGlyph,
+      ScreenPopups.UpdatedRowPopup,
+      adaptable
+    );
 
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.UpdatedRowStrategyFriendlyName,
-        ComponentName: ScreenPopups.UpdatedRowPopup,
-        Icon: StrategyConstants.UpdatedRowGlyph,
-      });
-    }
   }
 
   public addColumnMenuItems(): AdaptableMenuItem[] | undefined {

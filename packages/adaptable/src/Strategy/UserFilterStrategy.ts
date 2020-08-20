@@ -12,17 +12,13 @@ import { UserFilter } from '../PredefinedConfig/UserFilterState';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.UserFilterStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.UserFilterStrategyFriendlyName,
-        ComponentName: ScreenPopups.UserFilterPopup,
-        Icon: StrategyConstants.UserFilterGlyph,
-      });
-    }
+    super(
+      StrategyConstants.UserFilterStrategyId,
+      StrategyConstants.UserFilterStrategyFriendlyName,
+      StrategyConstants.UserFilterGlyph,
+      ScreenPopups.UserFilterPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

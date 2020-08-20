@@ -26,7 +26,9 @@ const columnSchema: ColDef[] = [
     filter: true,
     editable: false,
     resizable: true,
+    // lockPinned: true,
     enableRowGroup: true,
+    hide: true,
     enablePivot: true,
     sortable: true,
     type: 'abColDefString',
@@ -34,6 +36,7 @@ const columnSchema: ColDef[] = [
   {
     headerName: 'Model',
     field: 'model',
+
     enablePivot: true,
     enableRowGroup: true,
     filter: true,
@@ -53,25 +56,49 @@ const columnSchema: ColDef[] = [
     type: 'abColDefNumber',
   },
 
-  // {
-  //   headerName: 'Year',
-  //   field: 'year',
-  //   enableRowGroup: true,
-  //   filter: true,
-  //   resizable: true,
-  //   sortable: true,
-  //   editable: true,
-  //   type: 'abColDefNumber',
-  // },
+  {
+    headerName: 'Year',
+    field: 'year',
+    enableRowGroup: true,
+    lockVisible: true,
+    filter: true,
+    aggFunc: 'sum',
+    resizable: true,
+    sortable: true,
+    editable: true,
+    type: 'abColDefNumber',
+  },
+  {
+    headerName: 'Year2',
+    field: 'year',
+    enableRowGroup: true,
+    lockVisible: true,
+    filter: true,
+    aggFunc: 'sum',
+    resizable: true,
+    sortable: true,
+    editable: true,
+    type: 'abColDefNumber',
+  },
   {
     headerName: 'Price',
     field: 'price',
-    aggFunc: 'avg',
+    aggFunc: 'min',
     enableRowGroup: true,
-
     enableValue: true,
     filter: true,
     resizable: true,
+    sortable: true,
+    editable: true,
+    type: 'abColDefNumber',
+  },
+  {
+    headerName: 'Rating',
+    field: 'rating',
+    enableRowGroup: true,
+    filter: true,
+    resizable: true,
+    suppressMovable: true,
     sortable: true,
     editable: true,
     type: 'abColDefNumber',
@@ -87,15 +114,15 @@ const rowData: any[] = [
     year: 2010,
     identifier: 11,
   },
-  { make: 'Toyota', model: 'Yaris', price: 40000, identifier: 12, year: 2011 },
-  { make: 'Toyota', model: 'Corolla', price: 28000, identifier: 13, year: 2010 },
-  { make: 'Ford', model: 'Mondeo', price: 32000, identifier: 14, year: 2010 },
-  { make: 'Ford', model: 'Mondeo', price: 35000, identifier: 15, year: 2017 },
-  { make: 'Ford', model: 'Focus', price: 26750, identifier: 16, year: 2016 },
-  { make: 'Ford', model: 'Galaxy', price: 41000, identifier: 17, year: 2017 },
-  { make: 'Porsche', model: 'Boxter', price: 72500, identifier: 18, year: 2011 },
-  { make: 'Porsche', model: 'Mission', price: 81000, identifier: 19, year: 2010 },
-  { make: 'Mitsubbishi', model: 'Outlander', price: 97800, identifier: 110, year: 2011 },
+  { make: 'Toyota', model: 'Yaris', price: 10, identifier: 12, year: 2011, rating: 1 },
+  { make: 'Toyota', model: 'Corolla', price: 20, identifier: 13, year: 2010, rating: 2 },
+  { make: 'Ford', model: 'Mondeo', price: 30, identifier: 14, year: 2010, rating: 3 },
+  { make: 'Ford', model: 'Mondeo', price: 40, identifier: 15, year: 2017, rating: 4 },
+  { make: 'Ford', model: 'Focus', price: 50, identifier: 16, year: 2016, rating: 5 },
+  { make: 'Ford', model: 'Galaxy', price: 60, identifier: 17, year: 2017, rating: 6 },
+  { make: 'Porsche', model: 'Boxter', price: 70, identifier: 18, year: 2011, rating: 7 },
+  { make: 'Porsche', model: 'Mission', price: 80, identifier: 19, year: 2010, rating: 8 },
+  { make: 'Mitsubbishi', model: 'Outlander', price: 90, identifier: 110, year: 2011, rating: 9 },
 ];
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -121,7 +148,7 @@ async function InitAdaptableDemo() {
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'identifier',
     userName: 'Demo User',
-    adaptableId: 'Basic Setup Demo Layout',
+    adaptableId: 'Basic Setup Demo Layout 1',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
     },
@@ -215,6 +242,9 @@ async function InitAdaptableDemo() {
     setTimeout(() => {
       vendorGrid.api?.setRowData(rowData);
     }, 500);
+    setTimeout(() => {
+      adaptableApi.gridApi.showColumn('rating');
+    }, 3000);
   });
 }
 
@@ -222,7 +252,7 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Layout'],
 
-    VisibleButtons: ['FreeTextColumn', 'ColumnChooser', 'CalculatedColumn'],
+    VisibleButtons: ['FreeTextColumn', 'Layout', 'CalculatedColumn'],
     Revision: 5,
   },
 
@@ -275,25 +305,32 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 54,
-    // CurrentLayout: 'Simple Layout',
+    Revision: 65,
+    CurrentLayout: 'Simple Layout',
     Layouts: [
       {
         Name: 'Simple Layout',
-        Columns: ['model', 'make', 'Multiply'],
+        Columns: ['price', 'model', 'make', 'Multiply'],
+        RowGroupedColumns: ['year', 'make'],
+        EnablePivot: true,
+        AggregationColumns: {
+          price: 'avg',
+        },
+        PivotColumns: ['make', 'model'],
       },
       {
         Name: 'Pivot Layout',
         Columns: [],
-        PivotDetails: {
-          PivotColumns: ['make'],
-          AggregationColumns: ['price'],
-        },
+        //    PivotDetails: {
+        //      PivotColumns: ['make'],
+        //     AggregationColumns: ['price'],
+        //   },
       },
       {
         Name: 'Full Layout',
-        Columns: ['year', 'model', 'make', 'identifier'],
-        GroupedColumns: ['make', 'model'],
+        Columns: ['year', 'model', 'make', 'identifier', 'price'],
+        RowGroupedColumns: ['make'],
+        // GroupedColumns: ['make', 'model'],
         ColumnWidthMap: {
           model: 600,
           year: 400,
@@ -301,7 +338,7 @@ let demoConfig: PredefinedConfig = {
         ColumnFlexMap: {
           make: 1,
         },
-        ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
+        //  ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
         PinnedColumnsMap: {
           // year: 'left',
           // model: 'right',

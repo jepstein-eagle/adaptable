@@ -5,20 +5,21 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableHelper } from '../Utilities/Helpers/AdaptableHelper';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { IStateManagementStrategy } from './Interface/IStateManagementStrategy';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class StateManagementStrategy extends AdaptableStrategyBase
   implements IStateManagementStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.StateManagementStrategyId, adaptable);
+    super(
+      StrategyConstants.StateManagementStrategyId,
+      StrategyConstants.StateManagementStrategyFriendlyName,
+      StrategyConstants.StateManagementGlyph,
+      ScreenPopups.StateManagementPopup,
+      adaptable
+    );
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.StateManagementStrategyFriendlyName,
-        ComponentName: ScreenPopups.StateManagementPopup,
-        Icon: StrategyConstants.StateManagementGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 }

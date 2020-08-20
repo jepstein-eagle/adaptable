@@ -23,8 +23,6 @@ import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
-
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
 import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
@@ -133,7 +131,6 @@ export class agGridHelper {
       new CellValidationStrategy(adaptable)
     );
 
-    strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
     strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
@@ -316,6 +313,8 @@ export class agGridHelper {
       Groupable: this.isColumnGroupable(colDef),
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
+      AvailableAggregationFunctions: null,
+      AggregationFunction: null,
       Moveable: this.isColumnMoveable(colDef),
       Hideable: this.isColumnHideable(colDef),
 
@@ -329,6 +328,13 @@ export class agGridHelper {
       IsSpecialColumn: false,
       IsExcludedFromQuickSearch: false,
     };
+
+    if (abColumn.Aggregatable) {
+      abColumn.AvailableAggregationFunctions = this.getColumnAggregationFunctions(colDef);
+      if (typeof colDef.aggFunc === 'string') {
+        abColumn.AggregationFunction = colDef.aggFunc;
+      }
+    }
     // lets set this here one as the function cannot change the result so dont need to run it each time
     let excludeColumnFromQuickSearch = this.adaptable.adaptableOptions.searchOptions!
       .excludeColumnFromQuickSearch;
@@ -636,6 +642,10 @@ export class agGridHelper {
       return colDef.enableValue;
     }
     return false;
+  }
+
+  public getColumnAggregationFunctions(colDef: ColDef): string[] {
+    return colDef.allowedAggFuncs || ['sum', 'min', 'max', 'count', 'avg', 'first', 'last']; // those are the default fns aggrid supports out-of-the-box
   }
 
   public isColumnMoveable(colDef: ColDef): boolean {

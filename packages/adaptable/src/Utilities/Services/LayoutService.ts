@@ -3,17 +3,11 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { Layout, PivotDetails, LayoutState } from '../../PredefinedConfig/LayoutState';
-import AdaptableHelper from '../Helpers/AdaptableHelper';
+import { Layout, LayoutState } from '../../PredefinedConfig/LayoutState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
 
 import { ILayoutService } from './Interface/ILayoutService';
-import {
-  ColumnStateChangedEventArgs,
-  ColumnStateChangedInfo,
-} from '../../Api/Events/ColumnStateChanged';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import { AG_GRID_GROUPED_COLUMN } from '../Constants/GeneralConstants';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { isEqual } from 'lodash';
 
@@ -38,7 +32,7 @@ export class LayoutService implements ILayoutService {
       ColumnSorts: [],
       ColumnFlexMap: {},
       ColumnWidthMap: {},
-      GroupedColumns: [],
+      RowGroupedColumns: [],
     };
     layout1 = { ...defaults, ...layout1 };
     layout2 = { ...defaults, ...layout2 };
@@ -111,13 +105,5 @@ export class LayoutService implements ILayoutService {
 
   public getSortOrder(sortOrder: 'Ascending' | 'Descending'): string {
     return sortOrder == SortOrder.Ascending ? ' [asc] ' : ' [desc] ';
-  }
-
-  public isPivotedLayout(pivotDetails: PivotDetails): boolean {
-    return (
-      pivotDetails != null &&
-      (ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotColumns) ||
-        ArrayExtensions.IsNotNullOrEmpty(pivotDetails.AggregationColumns))
-    );
   }
 }
