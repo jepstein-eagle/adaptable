@@ -27,8 +27,11 @@ import {
   mdiFormatTitle,
   mdiFormatStrikethrough,
   mdiFormatLetterStartsWith,
+  mdiFormatLetterEndsWith,
   mdiRegex,
   mdiCalendar,
+  mdiCheckboxBlankCircleOutline,
+  mdiCheckboxBlankCircle,
 } from '@mdi/js';
 
 /**
@@ -123,6 +126,7 @@ export interface FilterPredicate extends BaseUserFunction {
   handler: FilterPredicateHandler;
   iconPath?: string;
   iconText?: string;
+  order?: number;
 }
 
 export interface FilterPredicateInput {
@@ -212,14 +216,14 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     name: 'Blanks',
     type: 'FilterPredicate',
     handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
-    iconText: 'B',
+    iconPath: mdiCheckboxBlankCircleOutline,
   },
   {
     id: 'NonBlanks',
     name: 'Non Blanks',
     type: 'FilterPredicate',
     handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
-    iconText: '!B',
+    iconPath: mdiCheckboxBlankCircle,
   },
 
   // Numeric System Filters
@@ -295,6 +299,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     handler: ({ value, inputs }) =>
       Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
     iconText: 'BE',
+    order: 2,
   },
   {
     id: 'NotBetween',
@@ -308,6 +313,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     handler: ({ value, inputs }) =>
       Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
     iconText: '!BE',
+    order: 1,
   },
 
   // String System Filters
@@ -399,7 +405,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.endsWith(i);
     },
-    iconPath: mdiFormatLetterStartsWith,
+    iconPath: mdiFormatLetterEndsWith,
   },
   {
     id: 'Regex',

@@ -24,8 +24,8 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
 
     afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
       // todo: consider theme
-      this.filterContainer.parentElement.style.margin = '0 -10px';
       this.filterContainer.parentElement.style.overflow = 'visible';
+      this.filterContainer.parentElement.parentElement.style.padding = '0 2px';
     }
 
     private filterContainer: HTMLSpanElement;

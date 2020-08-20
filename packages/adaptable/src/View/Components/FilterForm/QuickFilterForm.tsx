@@ -121,19 +121,20 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               </Flex>
             )}
           >
-            <SimpleButton variant="text">{this.renderPredicateIcon(activePredicate)}</SimpleButton>
+            <SimpleButton>{this.renderPredicateIcon(activePredicate)}</SimpleButton>
           </OverlayTrigger>
-          {filter?.PredicateId === 'Values' && <div>{filter.Inputs.join(', ')}</div>}
+          {filter?.PredicateId === undefined && this.renderEmptyFilter()}
+          {filter?.PredicateId === 'Values' && this.renderValuesDropdown(filter)}
           {filter?.PredicateId !== 'Values' &&
             activePredicate &&
             activePredicate?.inputs === undefined && <Box p={1}>{activePredicate.name}</Box>}
           {activePredicate?.inputs?.map((predicateInput, index) => (
-            <input
+            <Input
               key={index}
-              type={predicateInput.type}
+              type={predicateInput.type === 'number' ? 'text' : predicateInput.type}
               autoFocus={index === 0}
               value={filter.Inputs[index]}
-              onChange={e => this.changeColumnPredicateInput(e, index)}
+              onChange={(e: React.FormEvent) => this.changeColumnPredicateInput(e, index)}
               style={{ flex: 1, width: 0, minWidth: 0 }}
             />
           ))}
@@ -141,6 +142,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       )
     );
   }
+
   renderPredicateIcon(predicate: FilterPredicate) {
     return predicate?.iconText ? (
       <span>{predicate?.iconText}</span>
@@ -148,6 +150,61 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       <Icon size="1rem" path={predicate?.iconPath || mdiFilterOutline} />
     );
   }
+
+  renderEmptyFilter() {
+    const defaultPredicateIds: Record<string, string> = {
+      [DataType.String]: 'Contains',
+      [DataType.Number]: 'Equals',
+    };
+    const defaultPredicateId = defaultPredicateIds[this.props.CurrentColumn.DataType];
+
+    return (
+      defaultPredicateId && (
+        <Input
+          key={0}
+          type={'text'}
+          onChange={(e: React.FormEvent) => {
+            const { value } = e.target as HTMLInputElement;
+            this.props.onAddColumnFilter({
+              ColumnId: this.props.CurrentColumn.ColumnId,
+              PredicateId: defaultPredicateId,
+              Inputs: [value],
+            });
+          }}
+          style={{ flex: 1, width: 0, minWidth: 0 }}
+        />
+      )
+    );
+  }
+
+  renderValuesDropdown(filter: ColumnFilter) {
+    return (
+      <OverlayTrigger
+        showEvent="click"
+        hideEvent="blur"
+        render={() => (
+          <Flex
+            p={2}
+            flexDirection="column"
+            style={{
+              fontSize: 'var(--ab-font-size-2)',
+              border: '1px solid var(--ab-color-primarydark)',
+              borderRadius: 'var(--ab__border-radius)',
+              background: 'var(--ab-color-primarylight)',
+              zIndex: 1000,
+            }}
+          >
+            Distinct values
+          </Flex>
+        )}
+      >
+        <SimpleButton style={{ flex: 1 }}>
+          {filter.Inputs.join(', ') || 'Select Values'}
+        </SimpleButton>
+      </OverlayTrigger>
+    );
+  }
+
   selectColumnPredicate(predicateId: string) {
     console.log('predicateId', predicateId);
 

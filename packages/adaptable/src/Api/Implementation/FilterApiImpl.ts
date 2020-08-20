@@ -87,7 +87,15 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     if (ArrayExtensions.IsNotNullOrEmpty(userFilters)) {
       filterPredicates.push(...userFilters.map(uf => this.getFilterPredicateById(uf)));
     }
-    return filterPredicates;
+    return filterPredicates.sort((a, z) => {
+      if (a.order === undefined || a.order > z.order) {
+        return 1;
+      }
+      if (z.order === undefined || a.order < z.order) {
+        return -1;
+      }
+      return 0;
+    });
   }
 
   public getAllColumnFilter(): ColumnFilter[] {
