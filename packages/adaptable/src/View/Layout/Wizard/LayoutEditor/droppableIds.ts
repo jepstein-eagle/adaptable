@@ -3,4 +3,5 @@ export enum LayoutEditorDroppableIds {
   ColumnList = 'ColumnList',
   ColumnSortList = 'ColumnSortList',
   RowGroupsList = 'RowGroupsList',
+  PivotList = 'PivotList',
 }

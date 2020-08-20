@@ -5,6 +5,7 @@ export type LayoutEditorState = {
   dropDisabledOnColumns: boolean;
   dropDisabledOnSort: boolean;
   dropDisabledOnRowGroups: boolean;
+  dropDisabledOnPivot: boolean;
   dragSource: LayoutEditorDroppableIds;
   layout: Layout;
 };
@@ -14,6 +15,7 @@ export const getInitialState = (layout: Layout) => {
     dropDisabledOnColumns: false,
     dropDisabledOnSort: false,
     dropDisabledOnRowGroups: false,
+    dropDisabledOnPivot: false,
     dragSource: LayoutEditorDroppableIds.None,
     layout,
   };
@@ -50,6 +52,13 @@ export const reducer = (
     };
   }
 
+  if (action.type === LayoutEditorActions.SET_DROP_DISABLED_ON_PIVOT) {
+    return {
+      ...state,
+      dropDisabledOnPivot: action.payload,
+    };
+  }
+
   if (action.type === LayoutEditorActions.SET_LAYOUT) {
     return {
       ...state,
@@ -66,4 +75,5 @@ export enum LayoutEditorActions {
   SET_DROP_DISABLED_ON_COLUMNS = 'SET_DROP_DISABLED_ON_COLUMNS',
   SET_DROP_DISABLED_ON_SORT = 'SET_DROP_DISABLED_ON_SORT',
   SET_DROP_DISABLED_ON_ROW_GROUPS = 'SET_DROP_DISABLED_ON_ROW_GROUPS',
+  SET_DROP_DISABLED_ON_PIVOT = 'SET_DROP_DISABLED_ON_PIVOT',
 }

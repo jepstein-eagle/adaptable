@@ -21,6 +21,7 @@ import { useRef, useCallback } from 'react';
 import { getItemStyle } from './getItemStyle';
 import { reducer, LayoutEditorActions, getInitialState } from './reducer';
 import DropdownButton from '../../../../components/DropdownButton';
+import { PivotList } from './PivotList';
 
 export interface LayoutEditorProps {
   api: AdaptableApi;
@@ -170,10 +171,12 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
     columnList: OnDragEnd;
     columnSortList: OnDragEnd;
     rowGroupsList: OnDragEnd;
+    pivotList: OnDragEnd;
   }>({
     columnList: () => {},
     columnSortList: () => {},
     rowGroupsList: () => {},
+    pivotList: () => {},
   });
 
   const onDragEnd = useCallback<OnDragEnd>(
@@ -192,6 +195,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
       onDragEndRef.current.columnList(result);
       onDragEndRef.current.columnSortList(result);
       onDragEndRef.current.rowGroupsList(result);
+      onDragEndRef.current.pivotList(result);
     },
     [columnList]
   );
@@ -252,6 +256,23 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
         type: LayoutEditorActions.SET_DROP_DISABLED_ON_ROW_GROUPS,
         payload: !!disableDropOnRowGroups,
       });
+
+      const columnAlreadyPivoted =
+        column && layout.PivotColumns
+          ? !!layout.PivotColumns.filter(colId => colId === column.ColumnId)[0]
+          : false;
+
+      const invalidSourceForPivot =
+        dragSource !== LayoutEditorDroppableIds.ColumnList &&
+        dragSource !== LayoutEditorDroppableIds.PivotList;
+
+      const disableDropOnPivot =
+        invalidSourceForPivot || columnAlreadyPivoted || (column && !column.Pivotable);
+
+      dispatch({
+        type: LayoutEditorActions.SET_DROP_DISABLED_ON_PIVOT,
+        payload: !!disableDropOnPivot,
+      });
     },
     [state, layout]
   );
@@ -283,6 +304,16 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
       setLayout({
         ...layout,
         RowGroupedColumns,
+      });
+    },
+    [layout]
+  );
+
+  const onPivotColumnsChange = useCallback(
+    (PivotColumns: string[]) => {
+      setLayout({
+        ...layout,
+        PivotColumns,
       });
     },
     [layout]
@@ -468,7 +499,13 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             />
           </Panel>
 
-          <Panel style={verticalPanelStyle} ml={2} header="Row Groups" bodyProps={{ padding: 0 }}>
+          <Panel
+            style={verticalPanelStyle}
+            ml={2}
+            mb={2}
+            header="Row Groups"
+            bodyProps={{ padding: 0 }}
+          >
             <RowGroupsList
               rowGroups={layout.RowGroupedColumns}
               onRowGroupsChange={onRowGroupsChange}
@@ -515,7 +552,77 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             />
           </Panel>
 
-          {/*<Panel ml={2} header="Pivot" bodyProps={{ padding: 0 }}></Panel>*/}
+          <Panel
+            style={verticalPanelStyle}
+            ml={2}
+            header={
+              <Flex
+                width="100%"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                <Text>Pivoted Columns</Text>
+                <CheckBox
+                  checked={layout.EnablePivot}
+                  onChange={checked => {
+                    setLayout({
+                      ...layout,
+                      EnablePivot: checked,
+                    });
+                  }}
+                >
+                  Enable
+                </CheckBox>
+              </Flex>
+            }
+            bodyProps={{ padding: 0 }}
+          >
+            <PivotList
+              pivotColumns={layout.PivotColumns}
+              onPivotColumnsChange={onPivotColumnsChange}
+              isDropDisabled={state.dropDisabledOnPivot}
+              onReady={dragEnd => {
+                onDragEndRef.current.pivotList = dragEnd;
+              }}
+              renderItem={(colId: string, clear) => {
+                const column: AdaptableColumn = allColumnsMap[colId];
+                return (
+                  <Flex flexDirection="row" alignItems="center">
+                    <Box ml={2} mr={3}>
+                      <Icon name="drag" size={30} />
+                    </Box>
+                    <Flex flexDirection="row" alignItems="center" flex={1}>
+                      {column.FriendlyName}
+                    </Flex>
+
+                    <SimpleButton
+                      variant="text"
+                      onClick={e => {
+                        e.stopPropagation();
+                        clear();
+                      }}
+                    >
+                      <Icon name="clear" />
+                    </SimpleButton>
+                  </Flex>
+                );
+              }}
+              getItemStyle={(
+                columnId,
+                snapshot: { isDragging: boolean; draggingOver?: string },
+                draggableStyle
+              ): CSSProperties => {
+                return getItemStyle(
+                  allColumnsMap[columnId],
+                  layout,
+                  state.dragSource,
+                  snapshot,
+                  draggableStyle
+                );
+              }}
+            />
+          </Panel>
         </Flex>
       </Flex>
     </DragDropContext>

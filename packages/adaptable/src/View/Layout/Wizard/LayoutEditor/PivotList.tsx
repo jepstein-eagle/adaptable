@@ -9,11 +9,11 @@ import HelpBlock from '../../../../components/HelpBlock';
 import { OnDragEnd } from './ColumnList';
 import { LayoutEditorDroppableIds } from './droppableIds';
 
-export interface RowGroupsListProps {
-  rowGroups?: string[];
+export interface PivotListProps {
+  pivotColumns?: string[];
   isDropDisabled?: boolean;
   onReady?: (onDragEnd: OnDragEnd) => void;
-  onRowGroupsChange: (rowGroups: string[]) => void;
+  onPivotColumnsChange: (rowGroups: string[]) => void;
 
   getItemStyle?: (
     columnId: string,
@@ -28,10 +28,10 @@ const getListStyle = (isDraggingOver: boolean) => ({
   height: '100%',
 });
 
-export const RowGroupsList = (props: RowGroupsListProps) => {
-  const rowGroups = props.rowGroups || [];
-  const setRowGroups = (rowGroups: string[]) => {
-    props.onRowGroupsChange(rowGroups);
+export const PivotList = (props: PivotListProps) => {
+  const pivotColumns = props.pivotColumns || [];
+  const setPivotColumns = (pivotColumns: string[]) => {
+    props.onPivotColumnsChange(pivotColumns);
   };
 
   const onDragEnd = React.useCallback<OnDragEnd>(
@@ -42,47 +42,48 @@ export const RowGroupsList = (props: RowGroupsListProps) => {
       }
       const columnDrag =
         source.droppableId === LayoutEditorDroppableIds.ColumnList &&
-        destination.droppableId === LayoutEditorDroppableIds.RowGroupsList;
+        destination.droppableId === LayoutEditorDroppableIds.PivotList;
 
-      const rowGroupsDrag =
-        source.droppableId === LayoutEditorDroppableIds.RowGroupsList &&
-        destination.droppableId === LayoutEditorDroppableIds.RowGroupsList;
+      const pivotDrag =
+        source.droppableId === LayoutEditorDroppableIds.PivotList &&
+        destination.droppableId === LayoutEditorDroppableIds.PivotList;
 
-      const valid = columnDrag || rowGroupsDrag;
+      const valid = columnDrag || pivotDrag;
 
       if (!valid) {
         return;
       }
 
-      if (rowGroupsDrag) {
+      if (pivotDrag) {
         if (destination.index === source.index) {
           return;
         }
 
-        const newRowGroups: string[] = reorder(rowGroups, source.index, destination.index);
+        const newPivotColumns: string[] = reorder(pivotColumns, source.index, destination.index);
 
-        setRowGroups(newRowGroups);
+        setPivotColumns(newPivotColumns);
+
         return;
       }
 
       if (columnDrag) {
-        if (!source.column.Groupable) {
+        if (!source.column.Pivotable) {
           return;
         }
 
-        if (rowGroups.filter(colId => colId === source.columnId)[0]) {
+        if (pivotColumns.filter(colId => colId === source.columnId)[0]) {
           return false;
         }
-        const newRowGroups: string[] = [...rowGroups];
+        const newPivotColumns: string[] = [...pivotColumns];
 
-        newRowGroups.splice(destination.index, 0, source.columnId);
+        newPivotColumns.splice(destination.index, 0, source.columnId);
 
-        setRowGroups(newRowGroups);
+        setPivotColumns(newPivotColumns);
 
         return;
       }
     },
-    [rowGroups, setRowGroups, props.onRowGroupsChange]
+    [pivotColumns, setPivotColumns, props.onPivotColumnsChange]
   );
 
   useEffect(() => {
@@ -94,32 +95,32 @@ export const RowGroupsList = (props: RowGroupsListProps) => {
   const renderItem = React.useCallback(
     (colId: string) => {
       return props.renderItem(colId, () => {
-        setRowGroups(rowGroups.filter(rowGroup => rowGroup !== colId));
+        setPivotColumns(pivotColumns.filter(pivotColId => pivotColId !== colId));
       });
     },
     [props.renderItem]
   );
 
   return (
-    <Droppable droppableId="RowGroupsList" isDropDisabled={props.isDropDisabled}>
+    <Droppable droppableId="PivotList" isDropDisabled={props.isDropDisabled}>
       {(provided, snapshot) => (
         <div
-          className={`ab-RowGroupsList ${!rowGroups.length ? 'ab-RowGroupsList--empty' : ''}`}
+          className={`ab-PivotList ${!pivotColumns.length ? 'ab-PivotList--empty' : ''}`}
           {...provided.droppableProps}
           ref={provided.innerRef}
           style={getListStyle(snapshot.isDraggingOver)}
         >
-          {!rowGroups.length ? <HelpBlock>Drag columns to create row groups</HelpBlock> : null}
-          {rowGroups.map((colId: string, index) => {
+          {!pivotColumns.length ? <HelpBlock>Drag columns to pivot</HelpBlock> : null}
+          {pivotColumns.map((colId: string, index) => {
             return (
-              <Draggable key={colId} draggableId={`${colId}-rowGroup`} index={index}>
+              <Draggable key={colId} draggableId={`${colId}-pivot`} index={index}>
                 {(provided, snapshot) => {
                   return (
                     <div
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="ab-RowGroupsList__column"
+                      className="ab-PivotList__column"
                       style={props.getItemStyle(colId, snapshot, provided.draggableProps.style)}
                     >
                       {renderItem(colId)}

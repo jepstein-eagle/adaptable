@@ -140,5 +140,8 @@ export interface Layout extends AdaptableObject {
   ExpandedRowGroupKeys?: any[];
 
   AggregationColumns?: Record<string, string | true>;
+
+  EnablePivot?: boolean;
+
   PivotColumns?: string[];
 }

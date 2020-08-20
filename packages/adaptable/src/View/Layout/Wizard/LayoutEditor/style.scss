@@ -4,6 +4,7 @@
   background: var(--ab-color-defaultbackground);
 }
 
+.ab-PivotList--empty,
 .ab-RowGroupsList--empty,
 .ab-ColumnSortList--empty {
   display: flex;
@@ -12,6 +13,7 @@
   justify-content: center;
 
 }
+.ab-PivotList__column,
 .ab-RowGroupsList__column,
 .ab-ColumnSortList__column,
 .ab-ColumnList__column {

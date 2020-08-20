@@ -302,16 +302,18 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 59,
+    Revision: Date.now(),
     CurrentLayout: 'Simple Layout',
     Layouts: [
       {
         Name: 'Simple Layout',
         Columns: ['price', 'model', 'make', 'Multiply'],
-        RowGroupedColumns: ['make'],
+        RowGroupedColumns: ['year', 'make'],
+        EnablePivot: true,
         AggregationColumns: {
-          price: 'max',
+          price: 'avg',
         },
+        PivotColumns: ['make', 'model'],
       },
       {
         Name: 'Pivot Layout',
