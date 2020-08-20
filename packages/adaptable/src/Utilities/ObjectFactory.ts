@@ -44,7 +44,7 @@ import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
-import { Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { Layout } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { UserFilter } from '../PredefinedConfig/UserFilterState';
@@ -520,13 +520,6 @@ export function CreateEmptyLayout(
   };
 }
 
-export function CreateEmptyPivotDetails(): PivotDetails {
-  return {
-    PivotColumns: [],
-    AggregationColumns: [],
-  };
-}
-
 export function CreateColumnFilter(columnId: string, expression: Expression): ColumnFilter {
   return {
     Uuid: createUuid(),
@@ -701,7 +694,6 @@ export const ObjectFactory = {
   CreateEmptyFreeTextColumn,
 
   CreateEmptyLayout,
-  CreateEmptyPivotDetails,
   CreateColumnFilter,
   CreateUserFilterFromColumnFilter,
   CreateRange,

@@ -58,16 +58,16 @@ let demoConfig: PredefinedConfig = {
       {
         Name: 'Not Pivot Layout',
         Columns: ['deskId', 'country', 'currency', 'bid', 'ask', 'notional', 'counterparty'],
-        GroupedColumns: ['currency'],
+        RowGroupedColumns: ['currency'],
       },
       {
         ColumnSorts: [],
         Columns: [],
-        GroupedColumns: ['country', 'currency'],
-        PivotDetails: {
-          PivotColumns: ['status'],
-          AggregationColumns: ['notional', 'price'],
-        },
+        RowGroupedColumns: ['country', 'currency'],
+
+        PivotColumns: ['status'],
+        AggregationColumns: { notional: true, price: true },
+
         Name: 'Pivot Layout',
       },
       {

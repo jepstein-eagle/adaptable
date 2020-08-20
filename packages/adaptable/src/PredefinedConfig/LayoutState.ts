@@ -46,11 +46,10 @@ import { ColumnSort } from './Common/ColumnSort';
  *      {
  *        Name: 'Pivoted Layout',
  *        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
- *        GroupedColumns: ['currency'],
- *        PivotDetails: {
- *          PivotColumns: ['status', 'stars'],
- *          AggregationColumns: ['bid', 'ask'],
- *        },
+ *        RowGroupedColumns: ['currency'],
+ *        PivotColumns: ['status', 'stars'],
+ *        AggregationColumns: {'bid':'avg', 'ask':'avg'},
+ *
  *      },
  *    ],
  *  }

@@ -1,21 +1,10 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
-import { LayoutSelectionWizard } from './LayoutSelectionWizard';
-import { LayoutColumnWizard } from './LayoutColumnWizard';
-import { LayoutSettingsWizard } from './LayoutSettingsWizard';
-import { LayoutGridSortWizard } from './LayoutGridSortWizard';
-import { LayoutSummaryWizard } from './LayoutSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { Layout } from '../../../PredefinedConfig/LayoutState';
-import { LayoutGroupedColumnWizard } from './LayoutGroupedColumnWizard';
-import { LayoutSetPivotingWizard } from './LayoutSetPivotingWizard';
-import { LayoutPivotColumnWizard } from './LayoutPivotColumnWizard';
-import { LayoutAggregationColumnWizard } from './LayoutPivotAggregationColumnWizard';
 import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
 
-import { LayoutEditor } from './LayoutEditor';
 import { LayoutEditorWizard } from './LayoutEditorWizard';
 
 export interface LayoutWizardProps
