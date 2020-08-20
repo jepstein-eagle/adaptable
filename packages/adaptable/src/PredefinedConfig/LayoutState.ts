@@ -139,6 +139,6 @@ export interface Layout extends AdaptableObject {
 
   ExpandedRowGroupKeys?: any[];
 
-  AggregationColumns?: string[]; // TODO change to map?
+  AggregationColumns?: Record<string, string | true>;
   PivotColumns?: string[];
 }

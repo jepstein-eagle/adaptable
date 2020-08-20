@@ -36,15 +36,15 @@ export class LayoutEditorWizard
 
   render(): any {
     return (
-      <WizardPanel>
-        <FormLayout columns={[1]}>
+      <WizardPanel pb={2}>
+        <FormLayout columns={[1]} mb={2}>
           <FormRow>
             <Input
               value={this.state.layoutName + ' TO BE IMPLEMENTED'}
               width="100%"
-              style={{ maxWidth: '25rem' }}
+              style={{ maxWidth: '20rem' }}
               placeholder="Layout Name"
-              // xonChange={this.onLayoutNameChange}
+              onChange={this.onLayoutNameChange}
             ></Input>{' '}
           </FormRow>
 
@@ -53,19 +53,20 @@ export class LayoutEditorWizard
               <ErrorBox>{this.state.ErrorMessage}</ErrorBox>
             </FormRow>
           ) : null}
-          <FormRow>
-            <LayoutEditor
-              api={this.props.Api}
-              layout={this.state.layout}
-              onLayoutChange={this.onLayoutChange}
-            />
-          </FormRow>
         </FormLayout>
+
+        <LayoutEditor
+          api={this.props.Api}
+          layout={this.state.layout}
+          onLayoutChange={this.onLayoutChange}
+        />
       </WizardPanel>
     );
   }
 
   onLayoutNameChange = (event: React.FormEvent<any>) => {
+    //TODO continue here
+    return;
     const Name = (event.target as HTMLInputElement).value;
 
     const Exists = ArrayExtensions.ContainsItem(

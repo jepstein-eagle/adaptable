@@ -69,9 +69,21 @@ const columnSchema: ColDef[] = [
     type: 'abColDefNumber',
   },
   {
+    headerName: 'Year2',
+    field: 'year',
+    enableRowGroup: true,
+    lockVisible: true,
+    filter: true,
+    aggFunc: 'sum',
+    resizable: true,
+    sortable: true,
+    editable: true,
+    type: 'abColDefNumber',
+  },
+  {
     headerName: 'Price',
     field: 'price',
-    aggFunc: 'avg',
+    aggFunc: 'min',
     enableRowGroup: true,
     enableValue: true,
     filter: true,
@@ -298,7 +310,11 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         Name: 'Simple Layout',
-        Columns: ['model', 'make', 'Multiply'],
+        Columns: ['price', 'model', 'make', 'Multiply'],
+        RowGroupedColumns: ['make'],
+        AggregationColumns: {
+          //   price: 'max',
+        },
       },
       {
         Name: 'Pivot Layout',

@@ -20,6 +20,7 @@ import { LayoutEditorDroppableIds } from './droppableIds';
 import { useRef, useCallback } from 'react';
 import { getItemStyle } from './getItemStyle';
 import { reducer, LayoutEditorActions, getInitialState } from './reducer';
+import DropdownButton from '../../../../components/DropdownButton';
 
 export interface LayoutEditorProps {
   api: AdaptableApi;
@@ -27,10 +28,11 @@ export interface LayoutEditorProps {
   onLayoutChange?: (layout: Layout) => void;
 }
 
+const verticalPanelStyle = { minHeight: 300, flex: '1 0 auto' };
 const ColumnLabels = (props: AdaptableColumnProperties) => {
   const labelNames = [
     'Aggregatable',
-    'Filterable',
+    // 'Filterable',
     'Groupable',
     'Moveable',
     'Pivotable',
@@ -38,8 +40,8 @@ const ColumnLabels = (props: AdaptableColumnProperties) => {
   ];
   const labels = labelNames.map(name => ((props as any)[name] ? name.charAt(0) : ''));
   return (
-    <Flex flexDirection="row" alignItems="center">
-      <Text fontSize={2} mr={2}>
+    <Flex flexDirection="row" alignItems="center" width="100%">
+      <Text mr={2} style={{ flex: 1 }}>
         Attributes:
       </Text>
       {labels.map((l, index) => {
@@ -50,7 +52,7 @@ const ColumnLabels = (props: AdaptableColumnProperties) => {
           <Flex
             width={'20px'}
             height={'20px'}
-            marginRight={2}
+            marginLeft={2}
             alignItems="center"
             justifyContent="center"
             fontSize={2}
@@ -106,7 +108,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
     }, {} as Record<string, AdaptableColumn | null>);
   }, [allColumns]);
 
-  const tmpMap = {};
+  const tmpMap: Record<string, AdaptableColumn> = {};
   const [columnList, setColumnList] = React.useState<AdaptableColumn[]>(
     layout.Columns.map(colId => {
       const col = allColumnsMap[colId];
@@ -145,11 +147,16 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
   }, [layout, allColumns]);
 
   const aggregationColumnsMap = React.useMemo(() => {
-    return (layout.AggregationColumns || []).reduce((acc, colId) => {
-      acc[colId] = allColumnsMap[colId];
+    return Object.keys(layout.AggregationColumns || {}).reduce((acc, colId) => {
+      let fn = layout.AggregationColumns[colId];
+      if (typeof fn === 'boolean') {
+        fn = allColumnsMap[colId].AggregationFunction;
+      }
+
+      acc[colId] = fn;
       return acc;
-    }, {} as Record<string, AdaptableColumn | null>);
-  }, [allColumnsMap, layout.AggregationColumns]);
+    }, {} as Record<string, string>);
+  }, [allColumnsMap, layout]);
 
   const setColumnVisibility = (c: AdaptableColumn, visible: boolean) => {
     const newLayout = visible
@@ -300,6 +307,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             onColumnOrderChange={onColumnOrderChange}
             renderItem={c => {
               const visible = !!visibleColumnsMap[c.ColumnId];
+              const aggregate = !!aggregationColumnsMap[c.ColumnId];
               return (
                 <Flex flexDirection="row" alignItems="center">
                   <Box ml={2} mr={3}>
@@ -308,48 +316,20 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                   <Flex
                     flexDirection="column"
                     alignItems="flex-start"
+                    flex={1}
                     justifyContent="space-between"
                   >
-                    <Flex
-                      mb={3}
-                      flexDirection="row"
-                      justifyContent="space-between"
-                      alignItems="center"
-                      width="100%"
+                    <CheckBox
+                      title="Visible"
+                      readOnly={!c.Hideable && visible}
+                      checked={visible}
+                      style={{
+                        whiteSpace: 'nowrap',
+                      }}
+                      onChange={setColumnVisibility.bind(null, c)}
                     >
-                      <CheckBox
-                        title="Visible"
-                        disabled={!c.Hideable && visible}
-                        checked={visible}
-                        style={{
-                          whiteSpace: 'nowrap',
-                        }}
-                        onChange={setColumnVisibility.bind(null, c)}
-                      >
-                        {c.FriendlyName}
-                      </CheckBox>
-
-                      {c.Aggregatable ? (
-                        <CheckBox
-                          disabled={!layout.RowGroupedColumns || !layout.RowGroupedColumns.length}
-                          onChange={checked => {
-                            const aggCols = new Set(layout.AggregationColumns);
-                            if (checked) {
-                              aggCols.add(c.ColumnId);
-                            } else {
-                              aggCols.delete(c.ColumnId);
-                            }
-                            setLayout({
-                              ...layout,
-                              AggregationColumns: [...aggCols],
-                            });
-                          }}
-                          checked={!!aggregationColumnsMap[c.ColumnId]}
-                        >
-                          Aggregate
-                        </CheckBox>
-                      ) : null}
-                    </Flex>
+                      {c.FriendlyName}
+                    </CheckBox>
 
                     <ColumnLabels
                       Sortable={c.Sortable}
@@ -359,6 +339,64 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                       Groupable={c.Groupable}
                       Aggregatable={c.Aggregatable}
                     ></ColumnLabels>
+                    {c.Aggregatable &&
+                    c.AvailableAggregationFunctions &&
+                    c.AvailableAggregationFunctions.length ? (
+                      <CheckBox
+                        disabled={!layout.RowGroupedColumns || !layout.RowGroupedColumns.length}
+                        onChange={checked => {
+                          let aggCols: null | Record<string, string | true> =
+                            layout.AggregationColumns || {};
+                          // const aggCols = new Set(layout.AggregationColumns);
+                          if (checked) {
+                            let aggFunc = c.AggregationFunction;
+                            if (!aggFunc && c.AvailableAggregationFunctions) {
+                              aggFunc = c.AvailableAggregationFunctions[0];
+                            }
+                            aggCols[c.ColumnId] = aggFunc;
+                          } else {
+                            delete aggCols[c.ColumnId];
+
+                            if (!Object.keys(aggCols).length) {
+                              aggCols = null;
+                            }
+                          }
+                          setLayout({
+                            ...layout,
+                            AggregationColumns: aggCols,
+                          });
+                        }}
+                        checked={aggregate}
+                      >
+                        Aggregate
+                        <DropdownButton
+                          style={{
+                            visibility: aggregate ? 'visible' : 'hidden',
+                          }}
+                          columns={['label']}
+                          ml={2}
+                          variant="text"
+                          items={c.AvailableAggregationFunctions.map(fnName => {
+                            return {
+                              label: fnName,
+                              onClick: () => {
+                                const aggCols = layout.AggregationColumns;
+                                if (!aggCols) {
+                                  return;
+                                }
+                                aggCols[c.ColumnId] = fnName;
+                                setLayout({
+                                  ...layout,
+                                  AggregationColumns: aggCols,
+                                });
+                              },
+                            };
+                          })}
+                        >
+                          {aggregationColumnsMap[c.ColumnId]}
+                        </DropdownButton>
+                      </CheckBox>
+                    ) : null}
                   </Flex>
                 </Flex>
               );
@@ -366,111 +404,119 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
           />
         </Panel>
 
-        <Panel ml={2} header="Sorting" bodyProps={{ padding: 0 }}>
-          <ColumnSortList
-            columnSorts={layout.ColumnSorts}
-            onColumnSortsChange={onColumnSortsChange}
-            isDropDisabled={state.dropDisabledOnSort}
-            onReady={dragEnd => {
-              onDragEndRef.current.columnSortList = dragEnd;
-            }}
-            getItemStyle={(
-              columnId,
-              snapshot: { isDragging: boolean; draggingOver?: string },
-              draggableStyle
-            ): CSSProperties => {
-              return getItemStyle(
-                allColumnsMap[columnId],
-                layout,
-                state.dragSource,
-                snapshot,
+        <Flex flexDirection="column">
+          <Panel
+            ml={2}
+            header="Sorting"
+            bodyProps={{ padding: 0 }}
+            mb={2}
+            style={verticalPanelStyle}
+          >
+            <ColumnSortList
+              columnSorts={layout.ColumnSorts}
+              onColumnSortsChange={onColumnSortsChange}
+              isDropDisabled={state.dropDisabledOnSort}
+              onReady={dragEnd => {
+                onDragEndRef.current.columnSortList = dragEnd;
+              }}
+              getItemStyle={(
+                columnId,
+                snapshot: { isDragging: boolean; draggingOver?: string },
                 draggableStyle
-              );
-            }}
-            renderItem={(c: ColumnSort, clear, toggleSort) => {
-              const column: AdaptableColumn = allColumnsMap[c.Column];
-              return (
-                <Flex flexDirection="row" alignItems="center">
-                  <Box ml={2} mr={3}>
-                    <Icon name="drag" size={30} />
-                  </Box>
-                  <Flex flex="1" flexDirection="row" alignItems="center">
-                    {column.FriendlyName}
+              ): CSSProperties => {
+                return getItemStyle(
+                  allColumnsMap[columnId],
+                  layout,
+                  state.dragSource,
+                  snapshot,
+                  draggableStyle
+                );
+              }}
+              renderItem={(c: ColumnSort, clear, toggleSort) => {
+                const column: AdaptableColumn = allColumnsMap[c.Column];
+                return (
+                  <Flex flexDirection="row" alignItems="center">
+                    <Box ml={2} mr={3}>
+                      <Icon name="drag" size={30} />
+                    </Box>
+                    <Flex flex="1" flexDirection="row" alignItems="center">
+                      {column.FriendlyName} [{c.SortOrder}]
+                    </Flex>
+                    <SimpleButton
+                      variant="raised"
+                      style={{ cursor: 'pointer' }}
+                      mr={3}
+                      onClick={e => {
+                        e.stopPropagation();
+                        toggleSort();
+                      }}
+                    >
+                      <Icon name={c.SortOrder === 'Ascending' ? 'sort-asc' : 'sort-desc'} />
+                    </SimpleButton>
+                    <SimpleButton
+                      variant="text"
+                      onClick={e => {
+                        e.stopPropagation();
+                        clear();
+                      }}
+                    >
+                      <Icon name="clear" />
+                    </SimpleButton>
                   </Flex>
-                  <SimpleButton
-                    variant="raised"
-                    style={{ cursor: 'pointer' }}
-                    mr={3}
-                    onClick={e => {
-                      e.stopPropagation();
-                      toggleSort();
-                    }}
-                  >
-                    <Icon name={c.SortOrder === 'Ascending' ? 'sort-asc' : 'sort-desc'} />
-                  </SimpleButton>
-                  <SimpleButton
-                    variant="text"
-                    onClick={e => {
-                      e.stopPropagation();
-                      clear();
-                    }}
-                  >
-                    <Icon name="clear" />
-                  </SimpleButton>
-                </Flex>
-              );
-            }}
-          />
-        </Panel>
+                );
+              }}
+            />
+          </Panel>
 
-        <Panel ml={2} header="Row Groups" bodyProps={{ padding: 0 }}>
-          <RowGroupsList
-            rowGroups={layout.RowGroupedColumns}
-            onRowGroupsChange={onRowGroupsChange}
-            isDropDisabled={state.dropDisabledOnRowGroups}
-            onReady={dragEnd => {
-              onDragEndRef.current.rowGroupsList = dragEnd;
-            }}
-            getItemStyle={(
-              columnId,
-              snapshot: { isDragging: boolean; draggingOver?: string },
-              draggableStyle
-            ): CSSProperties => {
-              return getItemStyle(
-                allColumnsMap[columnId],
-                layout,
-                state.dragSource,
-                snapshot,
+          <Panel style={verticalPanelStyle} ml={2} header="Row Groups" bodyProps={{ padding: 0 }}>
+            <RowGroupsList
+              rowGroups={layout.RowGroupedColumns}
+              onRowGroupsChange={onRowGroupsChange}
+              isDropDisabled={state.dropDisabledOnRowGroups}
+              onReady={dragEnd => {
+                onDragEndRef.current.rowGroupsList = dragEnd;
+              }}
+              getItemStyle={(
+                columnId,
+                snapshot: { isDragging: boolean; draggingOver?: string },
                 draggableStyle
-              );
-            }}
-            renderItem={(colId: string, clear) => {
-              const column: AdaptableColumn = allColumnsMap[colId];
-              return (
-                <Flex flexDirection="row" alignItems="center">
-                  <Box ml={2} mr={3}>
-                    <Icon name="drag" size={30} />
-                  </Box>
-                  <Flex flexDirection="row" alignItems="center" flex={1}>
-                    {column.FriendlyName}
+              ): CSSProperties => {
+                return getItemStyle(
+                  allColumnsMap[columnId],
+                  layout,
+                  state.dragSource,
+                  snapshot,
+                  draggableStyle
+                );
+              }}
+              renderItem={(colId: string, clear) => {
+                const column: AdaptableColumn = allColumnsMap[colId];
+                return (
+                  <Flex flexDirection="row" alignItems="center">
+                    <Box ml={2} mr={3}>
+                      <Icon name="drag" size={30} />
+                    </Box>
+                    <Flex flexDirection="row" alignItems="center" flex={1}>
+                      {column.FriendlyName}
+                    </Flex>
+
+                    <SimpleButton
+                      variant="text"
+                      onClick={e => {
+                        e.stopPropagation();
+                        clear();
+                      }}
+                    >
+                      <Icon name="clear" />
+                    </SimpleButton>
                   </Flex>
+                );
+              }}
+            />
+          </Panel>
 
-                  <SimpleButton
-                    variant="text"
-                    onClick={e => {
-                      e.stopPropagation();
-                      clear();
-                    }}
-                  >
-                    <Icon name="clear" />
-                  </SimpleButton>
-                </Flex>
-              );
-            }}
-          />
-        </Panel>
-
-        {/*<Panel ml={2} header="Pivot" bodyProps={{ padding: 0 }}></Panel>*/}
+          {/*<Panel ml={2} header="Pivot" bodyProps={{ padding: 0 }}></Panel>*/}
+        </Flex>
       </Flex>
     </DragDropContext>
   );

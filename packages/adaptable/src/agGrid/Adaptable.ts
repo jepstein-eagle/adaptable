@@ -1213,27 +1213,28 @@ export class Adaptable implements IAdaptable {
     );
 
     let pivotedColumnsIndexesMap: { [key: string]: number } = {};
-    let aggregationFunctionsColumnsMap: { [key: string]: string | IAggFunc } = {};
+    let aggregationFunctionsColumnsMap: { [key: string]: string | true } =
+      layout.AggregationColumns;
 
-    if (layout.AggregationColumns && layout.AggregationColumns.length) {
-      // if (layout.PivotColumns || layout.AggregationColumns) {
-      //   pivotedColumnsIndexesMap = (layout.PivotColumns || []).reduce((acc, colId: string, index) => {
-      //     acc[colId] = index;
+    // if (layout.AggregationColumns && layout.AggregationColumns.length) {
+    //   // if (layout.PivotColumns || layout.AggregationColumns) {
+    //   //   pivotedColumnsIndexesMap = (layout.PivotColumns || []).reduce((acc, colId: string, index) => {
+    //   //     acc[colId] = index;
 
-      //     return acc;
-      //   }, {} as { [key: string]: number });
+    //   //     return acc;
+    //   //   }, {} as { [key: string]: number });
 
-      aggregationFunctionsColumnsMap = (layout.AggregationColumns || []).reduce(
-        (acc, colId: string) => {
-          const agGridCol = this.gridOptions.columnApi.getColumn(colId);
-          const colAggFunc = agGridCol ? agGridCol.getAggFunc() : null;
-          acc[colId] = colAggFunc || 'sum';
+    //   aggregationFunctionsColumnsMap = (layout.AggregationColumns || []).reduce(
+    //     (acc, colId: string) => {
+    //       const agGridCol = this.gridOptions.columnApi.getColumn(colId);
+    //       const colAggFunc = agGridCol ? agGridCol.getAggFunc() : null;
+    //       acc[colId] = colAggFunc || 'sum';
 
-          return acc;
-        },
-        {} as { [key: string]: string | IAggFunc }
-      );
-    }
+    //       return acc;
+    //     },
+    //     {} as { [key: string]: string | IAggFunc }
+    //   );
+    // }
 
     // const columnsInPivot = [...(layout.PivotColumns || []), ...(layout.AggregationColumns || [])];
     // const columnsToShow = columnsInPivot.length ? columnsInPivot : layout.Columns;
@@ -1272,8 +1273,11 @@ export class Adaptable implements IAdaptable {
           newColState.pivotIndex = pivotedColumnsIndexesMap[colId];
         }
         newColState.aggFunc = null;
-        if (aggregationFunctionsColumnsMap[colId] != null) {
-          newColState.aggFunc = aggregationFunctionsColumnsMap[colId];
+        if (aggregationFunctionsColumnsMap && aggregationFunctionsColumnsMap[colId] != null) {
+          newColState.aggFunc =
+            aggregationFunctionsColumnsMap[colId] === true
+              ? colDef.aggFunc
+              : (aggregationFunctionsColumnsMap[colId] as string);
         }
 
         isChanged = isChanged || !isEqual(newColState, oldColState);
@@ -1284,12 +1288,12 @@ export class Adaptable implements IAdaptable {
 
     if (!isChanged) {
       // order changed
-      const toString = c =>
+      const toString = (c: any) =>
         `${c.colId}-${c.rowGroupIndex}-${c.pivotIndex}-${c.aggFunc}-${c.pinned}-${c.width}-${c.hide}`;
 
       const oldColStateString = columnsState.map(toString).join(',');
       const newColStateString = newColState.map(toString).join(',');
-      console.log({ oldColStateString, newColStateString });
+
       isChanged = newColStateString != oldColStateString;
     }
 
@@ -1332,7 +1336,7 @@ export class Adaptable implements IAdaptable {
         this.gridOptions.columnApi.setPivotMode(pivoted);
       }
       if (pivoted) {
-        this.gridOptions.columnApi.addValueColumns(layout.AggregationColumns);
+        // this.gridOptions.columnApi.addValueColumns(layout.AggregationColumns);
       }
       this.updateColumnsIntoStore();
     } else {
@@ -1367,6 +1371,7 @@ export class Adaptable implements IAdaptable {
     let pivotedColumns = [...new Array(columnState.length)];
 
     const pivotAggregatedColumns: string[] = [];
+    const aggregatedColumns: Record<string, string> = {};
 
     const columnWidths = columnState.reduce((acc, colDef) => {
       const { colId } = colDef;
@@ -1393,9 +1398,9 @@ export class Adaptable implements IAdaptable {
       if (colDef.pivotIndex != null) {
         pivotedColumns[colDef.pivotIndex] = colId;
       }
-      // if (colDef.aggFunc) {
-      //   pivotAggregatedColumns.push(colId);
-      // }
+      if (colDef.aggFunc && typeof colDef.aggFunc === 'string') {
+        aggregatedColumns[colId] = colDef.aggFunc;
+      }
 
       return acc;
     }, {} as { [key: string]: number });
@@ -1414,13 +1419,16 @@ export class Adaptable implements IAdaptable {
     layout.Columns = columnOrder;
     layout.ColumnSorts = columnSorts;
     layout.RowGroupedColumns = groupedColumns;
-
-    if (this.gridOptions.columnApi.isPivotMode()) {
-      if (pivotedColumns.length || pivotAggregatedColumns.length) {
-        layout.PivotColumns = pivotedColumns;
-        layout.AggregationColumns = pivotAggregatedColumns;
-      }
+    if (Object.keys(aggregatedColumns).length) {
+      layout.AggregationColumns = aggregatedColumns;
     }
+
+    // if (this.gridOptions.columnApi.isPivotMode()) {
+    //   if (pivotedColumns.length || pivotAggregatedColumns.length) {
+    //     layout.PivotColumns = pivotedColumns;
+    //     layout.AggregationColumns = pivotAggregatedColumns;
+    //   }
+    // }
 
     if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
       layout.ExpandedRowGroupKeys = this.getExpandRowGroupsKeys();
