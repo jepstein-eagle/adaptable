@@ -7,20 +7,21 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class ColumnChooserStrategy extends AdaptableStrategyBase implements IColumnChooserStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ColumnChooserStrategyId, adaptable);
+    super(
+      StrategyConstants.ColumnChooserStrategyId,
+      StrategyConstants.ColumnChooserStrategyFriendlyName,
+      StrategyConstants.ColumnChooserGlyph,
+      ScreenPopups.ColumnChooserPopup,
+      adaptable
+    );
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ColumnChooserStrategyFriendlyName,
-        ComponentName: ScreenPopups.ColumnChooserPopup,
-        Icon: StrategyConstants.ColumnChooserGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

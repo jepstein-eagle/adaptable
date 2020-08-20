@@ -9,17 +9,13 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export class GridInfoStrategy extends AdaptableStrategyBase implements IGridInfoStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.GridInfoStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.GridInfoStrategyFriendlyName,
-        ComponentName: ScreenPopups.GridInfoPopup,
-        Icon: StrategyConstants.GridInfoGlyph,
-      });
-    }
+    super(
+      StrategyConstants.GridInfoStrategyId,
+      StrategyConstants.GridInfoStrategyFriendlyName,
+      StrategyConstants.GridInfoGlyph,
+      ScreenPopups.GridInfoPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

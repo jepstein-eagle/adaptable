@@ -12,17 +12,13 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 export class ColumnCategoryStrategy extends AdaptableStrategyBase
   implements IColumnCategoryStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ColumnCategoryStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ColumnCategoryStrategyFriendlyName,
-        ComponentName: ScreenPopups.ColumnCategoryPopup,
-        Icon: StrategyConstants.ColumnCategoryGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ColumnCategoryStrategyId,
+      StrategyConstants.ColumnCategoryStrategyFriendlyName,
+      StrategyConstants.ColumnCategoryGlyph,
+      ScreenPopups.ColumnCategoryPopup,
+      adaptable
+    );
   }
 
   public getTeamSharingAction(): TeamSharingImportInfo<ColumnCategory> {

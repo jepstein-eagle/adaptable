@@ -27,7 +27,8 @@ export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
 export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
 export const GRID_REFRESH_CELLS = 'GRID_REFRESH_CELLS';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
-export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
+export const SET_FUNCTION_DROPDOWN_MENUITEMS = 'SET_FUNCTION_DROPDOWN_MENUITEMS';
+export const SET_FUNCTION_BUTTON_MENUITEMS = 'SET_FUNCTION_BUTTON_MENUITEMS';
 
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
@@ -95,7 +96,11 @@ export interface QuickFilterBarHideAction extends Redux.Action {}
 
 export interface FilterFormHideAction extends Redux.Action {}
 
-export interface SetMainMenuItemsAction extends Redux.Action {
+export interface SetFunctionDropdownMenuItemsAction extends Redux.Action {
+  MenuItems: AdaptableMenuItem[];
+}
+
+export interface SetFunctionButtonMenuItemsAction extends Redux.Action {
   MenuItems: AdaptableMenuItem[];
 }
 
@@ -210,8 +215,17 @@ export const SetTreeModeOff = (): SetTreeModeOffAction => ({
   type: SET_TREE_MODE_OFF,
 });
 
-export const SetMainMenuItems = (MenuItems: AdaptableMenuItem[]): SetMainMenuItemsAction => ({
-  type: SET_MAIN_MENUITEMS,
+export const SetFunctionDropdownMenuItems = (
+  MenuItems: AdaptableMenuItem[]
+): SetFunctionDropdownMenuItemsAction => ({
+  type: SET_FUNCTION_DROPDOWN_MENUITEMS,
+  MenuItems,
+});
+
+export const SetFunctionButtonMenuItems = (
+  MenuItems: AdaptableMenuItem[]
+): SetFunctionButtonMenuItemsAction => ({
+  type: SET_FUNCTION_BUTTON_MENUITEMS,
   MenuItems,
 });
 
@@ -223,7 +237,8 @@ const initialGridState: GridState = {
   SelectedRowInfo: null,
   CellSummary: null,
   IsQuickFilterVisible: false,
-  MainMenuItems: EMPTY_ARRAY,
+  FunctionDropdownMenuItems: EMPTY_ARRAY,
+  FunctionButtonMenuItems: EMPTY_ARRAY,
   IsGridInPivotMode: false,
   IsGridInTreeMode: false,
 };
@@ -283,12 +298,19 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsQuickFilterVisible: true });
     case GRID_QUICK_FILTER_BAR_HIDE:
       return Object.assign({}, state, { IsQuickFilterVisible: false });
-    case SET_MAIN_MENUITEMS: {
-      const actionTyped = action as SetMainMenuItemsAction;
+    case SET_FUNCTION_DROPDOWN_MENUITEMS: {
+      const actionTyped = action as SetFunctionDropdownMenuItemsAction;
       const menuItems = actionTyped.MenuItems.sort((a: AdaptableMenuItem, b: AdaptableMenuItem) =>
         a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
       );
-      return Object.assign({}, state, { MainMenuItems: menuItems });
+      return Object.assign({}, state, { FunctionDropdownMenuItems: menuItems });
+    }
+    case SET_FUNCTION_BUTTON_MENUITEMS: {
+      const actionTyped = action as SetFunctionButtonMenuItemsAction;
+      const menuItems = actionTyped.MenuItems.sort((a: AdaptableMenuItem, b: AdaptableMenuItem) =>
+        a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
+      );
+      return Object.assign({}, state, { FunctionButtonMenuItems: menuItems });
     }
 
     case LAYOUT_UPDATE_CURRENT_DRAFT: {

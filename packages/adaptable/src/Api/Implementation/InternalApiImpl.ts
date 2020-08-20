@@ -94,8 +94,12 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.GridSetColumns(columns));
   }
 
-  public setMainMenuItems(menuItems: AdaptableMenuItem[]): void {
-    this.dispatchAction(GridRedux.SetMainMenuItems(menuItems));
+  public setFunctionDropdownMenuItems(menuItems: AdaptableMenuItem[]): void {
+    this.dispatchAction(GridRedux.SetFunctionDropdownMenuItems(menuItems));
+  }
+
+  public setFunctionButtonMenuItems(menuItems: AdaptableMenuItem[]): void {
+    this.dispatchAction(GridRedux.SetFunctionButtonMenuItems(menuItems));
   }
 
   public setSelectedCells(selectedCellInfo: SelectedCellInfo): void {

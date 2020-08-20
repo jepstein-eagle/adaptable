@@ -17,7 +17,13 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 export class CalculatedColumnStrategy extends AdaptableStrategyBase
   implements ICalculatedColumnStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CalculatedColumnStrategyId, adaptable);
+    super(
+      StrategyConstants.CalculatedColumnStrategyId,
+      StrategyConstants.CalculatedColumnStrategyFriendlyName,
+      StrategyConstants.CalculatedColumnGlyph,
+      ScreenPopups.CalculatedColumnPopup,
+      adaptable
+    );
   }
 
   public addCalculatedColumnsToGrid(): void {
@@ -106,16 +112,6 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     this.adaptable.addCalculatedColumnsToGrid(
       this.adaptable.api.calculatedColumnApi.getAllCalculatedColumn()
     );
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CalculatedColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.CalculatedColumnPopup,
-        Icon: StrategyConstants.CalculatedColumnGlyph,
-      });
-    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

@@ -33,7 +33,13 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   private throttleSetChartData: (() => void) & _.Cancelable;
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ChartStrategyId, adaptable);
+    super(
+      StrategyConstants.ChartStrategyId,
+      StrategyConstants.ChartStrategyFriendlyName,
+      StrategyConstants.ChartGlyph,
+      ScreenPopups.ChartPopup,
+      adaptable
+    );
 
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       setTimeout(() => {
@@ -51,16 +57,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     let refreshRate: number = this.GetChartState().RefreshRate * 1000;
     this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ChartStrategyFriendlyName,
-        ComponentName: ScreenPopups.ChartPopup,
-        Icon: StrategyConstants.ChartGlyph,
-      });
-    }
   }
 
   protected InitState() {

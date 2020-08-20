@@ -20,7 +20,10 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 export interface IStrategy {
   Id: AdaptableFunctionName;
-  addFunctionMenuItem(): AdaptableMenuItem | undefined;
+  FriendlyName: string;
+  Glyph: string;
+  Popup: string;
+  addStrategyMenuItem(source: 'FunctionMenu' | 'FunctionButton'): AdaptableMenuItem | undefined;
   initializeWithRedux(): void;
   addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;

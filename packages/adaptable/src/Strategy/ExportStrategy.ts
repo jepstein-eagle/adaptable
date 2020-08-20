@@ -22,17 +22,13 @@ import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ExportStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ExportStrategyFriendlyName,
-        ComponentName: ScreenPopups.ExportPopup,
-        Icon: StrategyConstants.ExportGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ExportStrategyId,
+      StrategyConstants.ExportStrategyFriendlyName,
+      StrategyConstants.ExportGlyph,
+      ScreenPopups.ExportPopup,
+      adaptable
+    );
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

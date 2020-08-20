@@ -47,7 +47,13 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
   }
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.IPushPullStrategyId, adaptable);
+    super(
+      StrategyConstants.IPushPullStrategyId,
+      StrategyConstants.IPushPullStrategyFriendlyName,
+      StrategyConstants.IPushPullGlyph,
+      ScreenPopups.IPushPullPopup,
+      adaptable
+    );
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
@@ -120,16 +126,6 @@ export class PushPullStrategy extends AdaptableStrategyBase implements IPushPull
     }
 
     return this.ippService;
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.IPushPullStrategyFriendlyName,
-        ComponentName: ScreenPopups.IPushPullPopup,
-        Icon: StrategyConstants.IPushPullGlyph,
-      });
-    }
   }
 
   private sendNewLiveData() {

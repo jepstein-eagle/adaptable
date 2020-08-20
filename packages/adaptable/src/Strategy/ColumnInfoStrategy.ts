@@ -10,17 +10,13 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 
 export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumnInfoStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ColumnInfoStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ColumnInfoStrategyFriendlyName,
-        ComponentName: ScreenPopups.ColumnInfoPopup,
-        Icon: StrategyConstants.ColumnInfoGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ColumnInfoStrategyId,
+      StrategyConstants.ColumnInfoStrategyFriendlyName,
+      StrategyConstants.ColumnInfoGlyph,
+      ScreenPopups.ColumnInfoPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

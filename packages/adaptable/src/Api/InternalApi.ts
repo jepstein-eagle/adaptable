@@ -52,7 +52,9 @@ export interface InternalApi {
 
   setColumns(columns: AdaptableColumn[]): void;
 
-  setMainMenuItems(menuItems: AdaptableMenuItem[]): void;
+  setFunctionDropdownMenuItems(menuItems: AdaptableMenuItem[]): void;
+
+  setFunctionButtonMenuItems(menuItems: AdaptableMenuItem[]): void;
 
   setSelectedCells(selectedCellInfo: SelectedCellInfo): void;
 

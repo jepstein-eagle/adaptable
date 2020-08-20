@@ -47,7 +47,13 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
   }
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.OpenFinStrategyId, adaptable);
+    super(
+      StrategyConstants.OpenFinStrategyId,
+      StrategyConstants.OpenFinStrategyFriendlyName,
+      StrategyConstants.OpenFinGlyph,
+      ScreenPopups.OpenFinPopup,
+      adaptable
+    );
 
     this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
       () => this.sendNewLiveData(),
@@ -115,16 +121,6 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
     }
 
     return this.openFinService;
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.OpenFinStrategyFriendlyName,
-        ComponentName: ScreenPopups.OpenFinPopup,
-        Icon: StrategyConstants.OpenFinGlyph,
-      });
-    }
   }
 
   private workAroundOpenfinExcelDataDimension: Map<string, { x: number; y: number }> = new Map();

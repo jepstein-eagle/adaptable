@@ -2862,7 +2862,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // do this now so it sets strategy entitlements
             adaptable.StrategyService.setStrategiesEntitlements();
             // create the functions menu (for use in the dashboard and the toolpanel)
-            adaptable.StrategyService.createStrategyFunctionMenu();
+            adaptable.StrategyService.createStrategyFunctionMenus();
 
             return returnAction;
           }
@@ -2932,7 +2932,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.FILTER_FORM_HIDE,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
-    GridRedux.SET_MAIN_MENUITEMS,
+    GridRedux.SET_FUNCTION_DROPDOWN_MENUITEMS,
 
     GridRedux.SET_PIVOT_MODE_ON,
     GridRedux.SET_PIVOT_MODE_OFF,

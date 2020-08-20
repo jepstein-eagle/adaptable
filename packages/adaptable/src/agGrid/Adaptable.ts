@@ -3670,6 +3670,14 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public showColumn(columnId: string) {
+    let vendorCol = this.gridOptions.columnApi!.getColumn(columnId);
+    if (vendorCol) {
+      this.gridOptions.columnApi.setColumnVisible(columnId, true);
+      this.updateColumnsIntoStore();
+    }
+  }
+
   public setColumnSort(columnSorts: ColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];

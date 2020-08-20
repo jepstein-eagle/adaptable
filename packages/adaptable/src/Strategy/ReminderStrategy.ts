@@ -10,17 +10,13 @@ import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 
 export class ReminderStrategy extends AdaptableStrategyBase implements IReminderStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ReminderStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ReminderStrategyFriendlyName,
-        ComponentName: ScreenPopups.ReminderPopup,
-        Icon: StrategyConstants.ReminderGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ReminderStrategyId,
+      StrategyConstants.ReminderStrategyFriendlyName,
+      StrategyConstants.ReminderGlyph,
+      ScreenPopups.ReminderPopup,
+      adaptable
+    );
   }
 
   public getTeamSharingAction(): TeamSharingImportInfo<ReminderSchedule> {
