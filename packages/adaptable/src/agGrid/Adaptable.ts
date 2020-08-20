@@ -1406,12 +1406,6 @@ export class Adaptable implements IAdaptable {
 
     layout.EnablePivot = this.gridOptions.columnApi.isPivotMode();
     layout.PivotColumns = pivotColumns;
-    // if (layout.EnablePivot) {
-    //   if (pivotedColumns.length || pivotAggregatedColumns.length) {
-    //     layout.PivotColumns = pivotedColumns;
-    //     layout.AggregationColumns = pivotAggregatedColumns;
-    //   }
-    // }
 
     if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
       layout.ExpandedRowGroupKeys = this.getExpandRowGroupsKeys();
