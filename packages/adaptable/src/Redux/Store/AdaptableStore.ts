@@ -2345,7 +2345,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // this is a horrible hack and fix for a weird issue
             // we really need to do smart edit and bulk update better
             // but this fixes it for now
-            if (popup.ComponentName != ScreenPopups.ColumnChooserPopup) {
+            if (popup.ComponentName != ScreenPopups.LayoutPopup) {
               if (apiReturn.Alert) {
                 // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
                 if (popup.ComponentName == ScreenPopups.SmartEditPopup) {
@@ -2425,7 +2425,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // this is a horrible hack and fix for a weird issue
             // we really need to do smart edit and bulk update better
             // but this fixes it for now
-            if (popup.ComponentName != ScreenPopups.ColumnChooserPopup) {
+            if (popup.ComponentName != ScreenPopups.LayoutPopup) {
               if (apiReturn.Alert) {
                 // check if BulkUpdate is showing as popup
                 if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
@@ -2862,7 +2862,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // do this now so it sets strategy entitlements
             adaptable.StrategyService.setStrategiesEntitlements();
             // create the functions menu (for use in the dashboard and the toolpanel)
-            adaptable.StrategyService.createStrategyFunctionMenu();
+            adaptable.StrategyService.createStrategyFunctionMenus();
 
             return returnAction;
           }
@@ -2932,7 +2932,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.FILTER_FORM_HIDE,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
-    GridRedux.SET_MAIN_MENUITEMS,
+    GridRedux.SET_FUNCTION_DROPDOWN_MENUITEMS,
 
     GridRedux.SET_PIVOT_MODE_ON,
     GridRedux.SET_PIVOT_MODE_OFF,

@@ -13,17 +13,13 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuickSearchStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.QuickSearchStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.QuickSearchStrategyFriendlyName,
-        ComponentName: ScreenPopups.QuickSearchPopup,
-        Icon: StrategyConstants.QuickSearchGlyph,
-      });
-    }
+    super(
+      StrategyConstants.QuickSearchStrategyId,
+      StrategyConstants.QuickSearchStrategyFriendlyName,
+      StrategyConstants.QuickSearchGlyph,
+      ScreenPopups.QuickSearchPopup,
+      adaptable
+    );
   }
 
   public createQuickSearchRange() {

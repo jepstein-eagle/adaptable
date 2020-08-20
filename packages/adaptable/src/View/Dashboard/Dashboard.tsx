@@ -194,7 +194,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
 
     if (shortcutsArray) {
       shortcuts = shortcutsArray.map(x => {
-        let menuItem = this.props.GridState.MainMenuItems.find(
+        let menuItem = this.props.GridState.FunctionButtonMenuItems.find(
           y => y.IsVisible && y.FunctionName == x
         );
         if (menuItem) {
@@ -258,7 +258,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     let strategyKeys: string[] = [
       ...this.props.Api.internalApi.getAdaptableInstance().strategies.keys(),
     ];
-    let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.MainMenuItems.filter(
+    let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.FunctionDropdownMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
     );
     // function menu items

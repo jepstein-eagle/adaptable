@@ -100,10 +100,6 @@ let demoConfig: PredefinedConfig = {
     //     AccessLevel: 'Full',
     //   },
     //   {
-    //     FunctionName: 'ColumnChooser',
-    //     AccessLevel: 'Full',
-    //   },
-    //   {
     //     FunctionName: 'Export',
     //     AccessLevel: 'Full',
     //   },

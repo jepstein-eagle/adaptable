@@ -49,6 +49,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
+      // if we come in from a function then open the current layout
+      if (this.props.PopupParams.source == 'FunctionButton') {
+        let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName);
+        if (currentLayout) {
+          this.onEdit(currentLayout);
+        }
+      }
+
       if (this.props.PopupParams.action) {
         if (this.props.PopupParams.action == 'New') {
           this.onNew();
@@ -64,7 +72,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       }
 
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.PopupParams.source &&
+        (this.props.PopupParams.source == 'Toolbar' ||
+          this.props.PopupParams.source == 'FunctionButton' ||
+          this.props.PopupParams.source == 'ColumnMenu');
     }
   }
 
@@ -182,7 +193,6 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
-    console.log(clonedObject);
     const isNew = this.state.WizardStatus == WizardStatus.New;
     if (isNew) {
       this.props.onAddLayout(clonedObject);

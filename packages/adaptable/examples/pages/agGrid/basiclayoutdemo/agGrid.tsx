@@ -242,6 +242,9 @@ async function InitAdaptableDemo() {
     setTimeout(() => {
       vendorGrid.api?.setRowData(rowData);
     }, 500);
+    setTimeout(() => {
+      adaptableApi.gridApi.showColumn('rating');
+    }, 3000);
   });
 }
 
@@ -249,7 +252,7 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleToolbars: ['Layout'],
 
-    VisibleButtons: ['FreeTextColumn', 'ColumnChooser', 'CalculatedColumn'],
+    VisibleButtons: ['FreeTextColumn', 'Layout', 'CalculatedColumn'],
     Revision: 5,
   },
 
@@ -302,7 +305,7 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: Date.now(),
+    Revision: 65,
     CurrentLayout: 'Simple Layout',
     Layouts: [
       {
@@ -325,7 +328,7 @@ let demoConfig: PredefinedConfig = {
       },
       {
         Name: 'Full Layout',
-        Columns: ['year', 'model', 'make', 'identifier', 'rating', 'price'],
+        Columns: ['year', 'model', 'make', 'identifier', 'price'],
         RowGroupedColumns: ['make'],
         // GroupedColumns: ['make', 'model'],
         ColumnWidthMap: {

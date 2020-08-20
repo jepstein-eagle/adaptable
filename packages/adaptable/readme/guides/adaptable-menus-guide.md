@@ -36,9 +36,8 @@ The full list (as of July 2020) is:
 | ---------------------------- | --------------------------------------------------------------- | --------------------- |
 | Edit Calculated Column       | [Calculated Column](../functions/calculated-column-function.md) | Calculated Columns    |
 | Create Cell Validation Rule  | [Cell Validation](../functions/cell-validation-function.md)     | All                   |
-| Show Column Chooser          | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
-| Hide Column                  | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
-| Select Column                | [Column Chooser](../functions/column-chooser-function.md)       | All                   |
+| Hide Column                  | [Layout](../functions/layout-function.md)                       | All                   |
+| Select Column                | [Layout](../functions/layout-function.md)                       | All                   |
 | Show / Hide Quick Filter Bar | [Column Filter](../functions/column-filter-function.md)         | All                   |
 | Clear Column Filter          | [Column Filter](../functions/column-filter-function.md)         | Currently Filtered    |
 | Column Info                  | [Column Info](../functions/column-info-function.md)             | All                   |
@@ -114,7 +113,7 @@ The full list (as of July 2020) is:
 | Clear Alert             | [Alert](../functions/alert-function.md)                     | If any live Alerts                       |
 | Apply Bulk Update       | [Bulk Update](../functions/bulk-update-function.md)         | Single, editable column selected         |
 | See Cell Summary        | [Cell Summary](../functions/cell-summary-function.md)       | Any cells selected                       |
-| Show Column Chooser     | [Column Chooser](../functions/column-chooser-function.md)   | Always                                   |
+| Edit Layout             | [Layout](../functions/layout-function.md)                   | Always                                   |
 | Filter on Cell Value(s) | [Column Filter](../functions/column-filter-function.md)     | Always                                   |
 | Show Column Info        | [Column Info](../functions/column-info-function.md)         | Single column selected                   |
 | Export Selected Cells   | [Export](../functions/export-function.md)                   | Any cells selected                       |

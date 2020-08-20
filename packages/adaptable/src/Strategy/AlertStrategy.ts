@@ -18,23 +18,19 @@ import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.AlertStrategyId, adaptable);
+    super(
+      StrategyConstants.AlertStrategyId,
+      StrategyConstants.AlertStrategyFriendlyName,
+      StrategyConstants.AlertGlyph,
+      ScreenPopups.AlertPopup,
+      adaptable
+    );
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
   }
 
   public abstract initStyles(): void;
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.AlertStrategyFriendlyName,
-        ComponentName: ScreenPopups.AlertPopup,
-        Icon: StrategyConstants.AlertGlyph,
-      });
-    }
-  }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;

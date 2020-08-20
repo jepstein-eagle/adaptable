@@ -15,17 +15,13 @@ import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 
 export class ColumnFilterStrategy extends AdaptableStrategyBase implements IColumnFilterStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ColumnFilterStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ColumnFilterStrategyFriendlyName,
-        ComponentName: ScreenPopups.ColumnFilterPopup,
-        Icon: StrategyConstants.ColumnFilterGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ColumnFilterStrategyId,
+      StrategyConstants.ColumnFilterStrategyFriendlyName,
+      StrategyConstants.ColumnFilterGlyph,
+      ScreenPopups.ColumnFilterPopup,
+      adaptable
+    );
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

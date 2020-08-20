@@ -11,7 +11,6 @@ import { CellSummaryApi } from './CellSummaryApi';
 import { CellValidationApi } from './CellValidationApi';
 import { ChartApi } from './ChartApi';
 import { ColumnCategoryApi } from './ColumnCategoryApi';
-import { ColumnChooserAPI } from './ColumnChooserAPI';
 import { ColumnFilterApi } from './ColumnFilterApi';
 import { ConfigApi } from './ConfigApi';
 import { ConditionalStyleApi } from './ConditionalStyleApi';
@@ -87,7 +86,6 @@ import { ApplicationApi } from './ApplicationAPI';
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
  *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
- *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
  *  | [columnFilterApi](#columnfilterapi)             | Manages [Column Filters](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html), allowing run-time code access to filtering|
  *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
  *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
@@ -183,11 +181,6 @@ export interface AdaptableApi {
    * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html).
    */
   columnCategoryApi: ColumnCategoryApi;
-
-  /**
-   * Provides access to the *Column Chooser* function.
-   */
-  columnChooserApi: ColumnChooserAPI;
 
   /**
    * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_src_predefinedconfig_configstate_columnfilterstate_.columnfilterstate.html).

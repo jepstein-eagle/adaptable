@@ -334,7 +334,7 @@ function mapStateToProps(state: AdaptableState) {
     ShowFunctionsDropdown: state.ToolPanel.ShowFunctionsDropdown,
     ShowColumnsDropdown: state.ToolPanel.ShowColumnsDropdown,
     ShowToolPanelsDropdown: state.ToolPanel.ShowToolPanelsDropdown,
-    MainMenuItems: state.Grid.MainMenuItems,
+    MainMenuItems: state.Grid.FunctionDropdownMenuItems,
     Columns: state.Grid.Columns,
   };
 }

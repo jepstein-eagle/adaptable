@@ -8,7 +8,13 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 
 export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamSharingStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.TeamSharingStrategyId, adaptable);
+    super(
+      StrategyConstants.TeamSharingStrategyId,
+      StrategyConstants.TeamSharingStrategyFriendlyName,
+      StrategyConstants.TeamSharingGlyph,
+      ScreenPopups.TeamSharingPopup,
+      adaptable
+    );
   }
 
   public isStrategyAvailable(): boolean {
@@ -19,17 +25,5 @@ export class TeamSharingStrategy extends AdaptableStrategyBase implements ITeamS
       !!this.adaptable.adaptableOptions.teamSharingOptions.getSharedEntities &&
       !!this.adaptable.adaptableOptions.teamSharingOptions.setSharedEntities
     );
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.isStrategyAvailable()) {
-      if (this.canCreateMenuItem('ReadOnly')) {
-        return this.createMainMenuItemShowPopup({
-          Label: StrategyConstants.TeamSharingStrategyFriendlyName,
-          ComponentName: ScreenPopups.TeamSharingPopup,
-          Icon: StrategyConstants.TeamSharingGlyph,
-        });
-      }
-    }
   }
 }

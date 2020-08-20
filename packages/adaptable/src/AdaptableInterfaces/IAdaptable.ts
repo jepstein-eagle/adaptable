@@ -162,6 +162,7 @@ export interface IAdaptable {
   selectColumns(columnIds: string[]): void;
   selectAll(): void;
   hideColumn(columnId: string): void;
+  showColumn(columnId: string): void;
 
   // column related
   updateColumnsIntoStore(): void;

@@ -2478,19 +2478,7 @@ export class Adaptable implements IAdaptable {
     ];
     this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
-        // bit messy but better than alternative which was calling setColumnIntoStore for every single column
-        const popupState = this.getState().Popup.ScreenPopup;
-        if (
-          popupState.ShowScreenPopup &&
-          (popupState.ComponentName == ScreenPopups.ColumnChooserPopup ||
-            ScreenPopups.CalculatedColumnPopup)
-        ) {
-          // ignore
-        } else {
-          // set the column into the store
-          this.debouncedSetColumnIntoStore();
-        }
-        // refilter the grid if required
+        this.debouncedSetColumnIntoStore(); // refilter the grid if required
         this.debouncedFilterGrid();
       }
     });
@@ -3657,6 +3645,14 @@ export class Adaptable implements IAdaptable {
     let vendorCol = this.gridOptions.columnApi!.getColumn(columnId);
     if (vendorCol) {
       this.gridOptions.columnApi.setColumnVisible(columnId, false);
+      this.updateColumnsIntoStore();
+    }
+  }
+
+  public showColumn(columnId: string) {
+    let vendorCol = this.gridOptions.columnApi!.getColumn(columnId);
+    if (vendorCol) {
+      this.gridOptions.columnApi.setColumnVisible(columnId, true);
       this.updateColumnsIntoStore();
     }
   }

@@ -19,17 +19,13 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
   protected SparklinesState: SparklineColumnState;
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.SparklineColumnStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.SparklineColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.SparklineColumnPopup,
-        Icon: StrategyConstants.SparklineColumnGlyph,
-      });
-    }
+    super(
+      StrategyConstants.SparklineColumnStrategyId,
+      StrategyConstants.SparklineColumnStrategyFriendlyName,
+      StrategyConstants.SparklineColumnGlyph,
+      ScreenPopups.SparklineColumnPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

@@ -19,20 +19,21 @@ import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class SmartEditStrategy extends AdaptableStrategyBase implements ISmartEditStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.SmartEditStrategyId, adaptable);
+    super(
+      StrategyConstants.SmartEditStrategyId,
+      StrategyConstants.SmartEditStrategyFriendlyName,
+      StrategyConstants.SmartEditGlyph,
+      ScreenPopups.SmartEditPopup,
+      adaptable
+    );
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.SmartEditStrategyFriendlyName,
-        ComponentName: ScreenPopups.SmartEditPopup,
-        Icon: StrategyConstants.SmartEditGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

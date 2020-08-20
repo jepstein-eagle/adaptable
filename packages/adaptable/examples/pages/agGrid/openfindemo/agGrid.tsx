@@ -76,7 +76,7 @@ async function InitAdaptableDemo() {
             Toolbars: ['Toolbar1', 'SmartEdit', 'CellSummary', 'Layout', 'OpenFin'],
           },
         ],
-        VisibleButtons: ['CellSummary', 'ColumnChooser'],
+        VisibleButtons: ['CellSummary', 'Layout'],
         CustomToolbars: [
           {
             Name: 'Toolbar1',

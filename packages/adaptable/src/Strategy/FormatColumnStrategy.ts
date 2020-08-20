@@ -14,7 +14,13 @@ import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.FormatColumnStrategyId, adaptable);
+    super(
+      StrategyConstants.FormatColumnStrategyId,
+      StrategyConstants.FormatColumnStrategyFriendlyName,
+      StrategyConstants.FormatColumnGlyph,
+      ScreenPopups.FormatColumnPopup,
+      adaptable
+    );
 
     adaptable.AdaptableStore.onAny((eventName: string) => {
       if (
@@ -26,16 +32,6 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
         this.adaptable.redraw();
       }
     });
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.FormatColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.FormatColumnPopup,
-        Icon: StrategyConstants.FormatColumnGlyph,
-      });
-    }
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
