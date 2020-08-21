@@ -265,7 +265,6 @@ class GradientColumnPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
-    // this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard(): boolean {

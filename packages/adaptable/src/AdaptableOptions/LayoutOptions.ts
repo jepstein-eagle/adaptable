@@ -14,11 +14,7 @@
  */
 export interface LayoutOptions {
   /**
-   * Whether the Layout should include vendor grid related state.
-   *
-   * Note: this option is currently only available in ag-Grid
-   *
-   * **Default Value: true**
+   * @deprecated
    */
   includeVendorStateInLayouts?: boolean; //TODO remove
 

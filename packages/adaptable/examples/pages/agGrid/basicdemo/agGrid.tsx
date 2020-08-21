@@ -44,19 +44,24 @@ async function InitAdaptableDemo() {
     generalOptions: {
       showMissingColumnsWarning: false,
     },
+    layoutOptions: {
+      autoSizeColumnsInDefaultLayout: false,
+    },
 
     predefinedConfig: {
+      /*
       Layout: {
         CurrentLayout: 'Simple Layout',
-        /*
+        
         Layouts: [
           {
             Name: 'Simple Layout',
             Columns: ['country', 'currency', 'countryStars', 'tradeId', 'notional', 'counterparty'],
           },
         ],
-        */
+        
       },
+      */
     },
   };
 

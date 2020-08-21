@@ -280,7 +280,7 @@ export interface IAdaptable {
   getVisibleColumnCount(): number;
 
   // layout
-  setGroupedColumns(groupedCols: string[]): void;
+  //setGroupedColumns(groupedCols: string[]): void;
   setLayout(layout: Layout): void;
 
   // vendor grid related

@@ -214,26 +214,13 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
-    //this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
     let layout = this.state.EditedAdaptableObject as Layout;
-    // if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
-    //   let canFinish: boolean = true;
-    //   layout.ColumnSorts.forEach(gs => {
-    //     if (StringExtensions.IsNullOrEmpty(gs.Column)) {
-    //       canFinish = false;
-    //     }
-    //   });
-    //   if (!canFinish) {
-    //     return false;
-    //   }
-    // }
     return (
-      //   StringExtensions.IsNotNullOrEmpty(layout.Name) &&
-      //    ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
-      true
+      StringExtensions.IsNotNullOrEmpty(layout.Name) &&
+      ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
     );
   }
 }

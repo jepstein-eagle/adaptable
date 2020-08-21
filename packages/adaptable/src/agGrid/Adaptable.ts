@@ -3751,26 +3751,6 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public setGroupedColumns(groupedCols: string[]): void {
-    if (ArrayExtensions.IsNotNullOrEmpty(groupedCols)) {
-      this.gridOptions.columnApi!.setRowGroupColumns(groupedCols);
-    } else {
-      this.gridOptions.columnApi!.setRowGroupColumns([]);
-    }
-
-    if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout == true) {
-      this.gridOptions.columnApi!.autoSizeAllColumns();
-    }
-  }
-
-  private turnOnPivoting(): void {
-    this.gridOptions.columnApi!.setPivotMode(true);
-  }
-
-  private turnOffPivoting(): void {
-    this.gridOptions.columnApi!.setPivotMode(false);
-  }
-
   public setCustomSort(columnId: string, comparer: AdaptableComparerFunction): void {
     const sortModel = this.gridOptions.api!.getSortModel();
     const columnDef = this.gridOptions.api!.getColumnDef(columnId);

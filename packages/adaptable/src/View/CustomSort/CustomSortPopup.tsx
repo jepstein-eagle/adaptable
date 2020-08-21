@@ -196,7 +196,6 @@ class CustomSortPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
-    // this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
