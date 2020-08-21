@@ -29,7 +29,7 @@ export class CustomSortColumnWizard
   }
   render(): any {
     let existingCols = this.props.CustomSorts.map(cs => cs.ColumnId);
-    let sortableCols = this.props.Api.gridApi
+    let sortableCols = this.props.Api.columnApi
       .getSortableColumns()
       .filter(c => ArrayExtensions.NotContainsItem(existingCols, c.ColumnId));
     return (

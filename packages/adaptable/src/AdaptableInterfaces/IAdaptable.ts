@@ -12,7 +12,7 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
 import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
-import { VendorGridInfo, PivotDetails, Layout } from '../PredefinedConfig/LayoutState';
+import { Layout } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
@@ -37,54 +37,17 @@ import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
  *
  *  Contains all the properties and methods that each implemenation must include
  *
- *  Each implemenation has a constructor that contains an AdaptableOptions object.
- *
- *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
- *
- *  It also contains an api property which gives access to Adaptable API - this is the ONLY way that developers should access Adaptable methods.
+ * Should only be used internally as all external access is via the Api
  */
 export interface IAdaptable {
-  /**
-   * The api - the main way to access our store in a way that ensures that things stay immutable.
-   *
-   * Ideally ALL access to and from the Store should be via api methods.
-   *
-   * Likewise ALL access to methods in Adaptable by external developers should be via the API
-   */
   api: AdaptableApi;
 
-  /**
-   * The main configuration object which contains all the options that users needs to set up Adaptable.
-   *
-   * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
-   *
-   * Adaptable's static constructor receives AdaptableOptions object.
-   *
-   * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
-   */
   adaptableOptions: AdaptableOptions;
 
-  /**
-   * The redux store that we use to manage state
-   *
-   * Ideally all access to and from the store should be via Adaptable API and this store should NOT be accessed directly.
-   */
-  AdaptableStore: IAdaptableStore;
+  adaptableStore: IAdaptableStore;
 
-  /**
-   * Each set of functionality in Adaptable is called a strategy (e.g. Quick Search, Export)
-   *
-   * There are about 30 strategies in total
-   *
-   * Users are able to set through Predefined Config which ones are available (default), ReadOnly or Hidden
-   *
-   * Each strategy currently manages the State relevant to it and reacts to any changes (this might change?)
-   */
   strategies: IStrategyCollection;
 
-  /**
-   * The name of the underlying vendor grid - only used in the about page
-   */
   vendorGridName: 'agGrid' | 'Hypergrid';
 
   /**
@@ -124,17 +87,12 @@ export interface IAdaptable {
   _on(eventName: 'SearchApplied', callback: () => void): () => void;
   _on(eventName: 'GridRefreshed', callback: () => void): () => void;
   _on(eventName: 'GridFiltered', callback: () => void): () => void;
-  _on(eventName: 'GridReloaded', callback: () => void): () => void;
   _on(eventName: 'SortChanged', callback: (columnSorts: ColumnSort[]) => void): () => void;
   _on(eventName: 'SpecialColumnAdded', callback: () => void): () => void;
   _on(eventName: 'ColumnResized', callback: (colId: string) => void): () => void;
   _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;
 
-  // onAny(callback: EmitterCallback): () => void;
-  //emit(eventName: string, data?: any): Promise<any>;
-
   // General
-  reloadGrid(): void;
   redraw(): void;
   redrawRow(rowNode: any): void;
   refreshCells(rowNodes: any[], columnIds: string[]): void;
@@ -156,10 +114,13 @@ export interface IAdaptable {
   getActiveCell(): GridCell;
   selectColumn(columnId: string): void;
   selectColumns(columnIds: string[]): void;
+  selectAll(): void;
+  hideColumn(columnId: string): void;
+  showColumn(columnId: string): void;
 
   // column related
-  setColumnIntoStore(): void;
-  setNewColumnListOrder(visibleColumnList: Array<AdaptableColumn>): void;
+  updateColumnsIntoStore(): void;
+  setColumnOrder(visibleColumnList: string[]): void;
 
   // getting rowNode and keys
   getPrimaryKeyValueFromRowNode(rowNode: any): any;
@@ -217,17 +178,19 @@ export interface IAdaptable {
   //sortLayout(layout: Layout):void;
 
   // FreeTextColumn
-  addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn): void;
-  removeFreeTextColumnFromGrid(freeTextColumnId: string): void;
+  addFreeTextColumnToGrid(freeTextColumn: FreeTextColumn, _colDefs?: any[]): void;
+  addFreeTextColumnsToGrid(freeTextColumns: FreeTextColumn[], colDefs?: any[]): void;
+  tryRemoveFreeTextColumnFromGrid(freeTextColumnId: string): boolean;
   editFreeTextColumnInGrid(freeTextColumn: FreeTextColumn): void;
 
   // CalculatedColumn
   addCalculatedColumnToGrid(calculatedColumn: CalculatedColumn): void;
-  removeCalculatedColumnFromGrid(calculatedColumnId: string): void;
+  addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], _colDefs?: any[]): void;
+  tryRemoveCalculatedColumnFromGrid(calculatedColumnId: string): boolean;
   editCalculatedColumnInGrid(calculatedColumn: CalculatedColumn): void;
 
   // actionColumn
-  addActionColumnToGrid(actionColumn: ActionColumn): void;
+  addActionColumnsToGrid(actionColumns: ActionColumn[]): void;
 
   // formatolumn
   applyFormatColumnDisplayFormats(): void;
@@ -255,7 +218,7 @@ export interface IAdaptable {
 
   // Reports
   canExportToExcel(): boolean;
-  exportToExcel(report: Report, columns: AdaptableColumn[], data: any[]): void;
+  exportToExcel(columnNames: string[], data: any[], fileName: string): void;
   exportVisibleToClipboard(report: Report): void;
   exportVisibleToExcel(report: Report): void;
   exportVisibleToCsv(report: Report): void;
@@ -271,12 +234,6 @@ export interface IAdaptable {
   getVisibleColumnCount(): number;
 
   // layout
-  getVendorGridLayoutInfo(visibleCols: string[]): VendorGridInfo;
-  getVendorGridDefaultLayoutInfo(): VendorGridInfo;
-  setVendorGridLayoutInfo(vendorGridInfo: VendorGridInfo): void;
-  setGroupedColumns(groupedCols: string[]): void;
-  setPivotingDetails(pivotDetails: PivotDetails): void;
-  setPivotMode(pivotDetails: PivotDetails, vendorGridInfo: VendorGridInfo): void;
   setLayout(layout: Layout): void;
 
   // vendor grid related

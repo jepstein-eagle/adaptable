@@ -43,7 +43,7 @@ import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
-import { VendorGridInfo, Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { Layout } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { Report, ReportSchedule } from '../PredefinedConfig/ExportState';
@@ -239,7 +239,7 @@ export function CreateEmptyRange(): QueryRange {
 export function CreateEmptyColumnSort(): ColumnSort {
   return {
     Column: EMPTY_STRING,
-    SortOrder: SortOrder.Ascending,
+    SortOrder: SortOrder.Asc,
   };
 }
 
@@ -268,7 +268,7 @@ export function CreateEmptyPercentBar(): PercentBar {
     PositiveColor: getHexForName(DARK_GREEN),
     NegativeColor: getHexForName(RED),
     ShowValue: false,
-    ShowToolTip: true,
+    ShowToolTip: false,
     PositiveValueColumnId: undefined,
     NegativeValueColumnId: undefined,
     Ranges: [],
@@ -506,59 +506,20 @@ export function CreateEmptyFreeTextColumn(): FreeTextColumn {
   };
 }
 
-export function CreateEmptyLayout(): Layout {
-  return {
-    Uuid: createUuid(),
-    Columns: [],
-    ColumnSorts: [],
-    GroupedColumns: null,
-    PivotDetails: null,
-    Name: '',
-    VendorGridInfo: null,
-    AdaptableGridInfo: null,
-  };
-}
-
-export function CreateDefaultLayout(
-  columns: AdaptableColumn[],
-  columnSorts: ColumnSort[],
-  vendorGridInfo: VendorGridInfo,
-  name: string
+export function CreateEmptyLayout(
+  layout?: Partial<Layout> & { Name: string },
+  adaptableColumns?: AdaptableColumn[]
 ): Layout {
-  let columnIds: string[] = columns ? columns.filter(x => x.Visible).map(x => x.ColumnId) : [];
   return {
+    ...layout,
     Uuid: createUuid(),
-    Columns: columnIds,
-    ColumnSorts: columnSorts,
-    GroupedColumns: null,
-    PivotDetails: null,
-    Name: name,
-    VendorGridInfo: vendorGridInfo,
-    AdaptableGridInfo: {
-      CurrentColumns: columnIds,
-      CurrentColumnSorts: columnSorts,
-      ExpandedRowGroupKeys: undefined,
-    },
-  };
-}
-
-export function CreateEmptyPivotDetails(): PivotDetails {
-  return {
-    PivotColumns: [],
-    AggregationColumns: [],
-  };
-}
-
-export function CreateColumnFilter(
-  columnId: string,
-  values: any[],
-  predicates: AdaptablePredicate[]
-): ColumnFilter {
-  return {
-    Uuid: createUuid(),
-    ColumnId: columnId,
-    Values: values,
-    Predicates: predicates,
+    Columns: layout.Columns || [],
+    ColumnSorts: layout.ColumnSorts || [],
+    ColumnFlexMap: layout.ColumnFlexMap || {},
+    ColumnWidthMap: layout.ColumnWidthMap || {},
+    RowGroupedColumns:
+      layout.RowGroupedColumns ||
+      (adaptableColumns ? adaptableColumns.filter(c => c.IsGrouped).map(c => c.ColumnId) : []),
   };
 }
 
@@ -731,9 +692,6 @@ export const ObjectFactory = {
   CreateEmptyFormatColumn,
   CreateEmptyFreeTextColumn,
   CreateEmptyLayout,
-  CreateDefaultLayout,
-  CreateEmptyPivotDetails,
-  CreateColumnFilter,
   CreateUserFilterFromColumnFilter,
   CreateRange,
   CreateRangeEvaluation,

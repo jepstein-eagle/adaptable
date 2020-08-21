@@ -16,7 +16,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Percent Bar Demo](https://demo.adaptabletools.com/style/aggridpercentbardemo)
  *
- * {@link PercentBarApi|Percent Bar API}
+ * {@link PercentBarApi|Percent Bar Api}
  *
  * --------------
  *
@@ -58,13 +58,13 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * ```
  *
- * In this example we have created 3 Percent Bars:
+ * In this example we have created Percent Bars for 3 Columns:
  *
- * - One on the 'InvoicedCost' Column - has 3 Ranges (0-500 Red, 500-1000 Orange, 1000-3000 Green)
+ * - 'InvoicedCost': has 3 Ranges (0-500 Red, 500-1000 Orange, 1000-3000 Green)
  *
- * - One on the 'ItemCost' Column - has 1 Range, shows both the Cell Value and the equivalent Percent Value and has a back colour.
+ * - 'ItemCost': has 1 Range, shows both the Cell Value and the equivalent Percent Value and has a back colour.
  *
- * - One on the 'ItemCount' Column - has 1 Range and shows the Cell Value as a tooltip.
+ * - 'ItemCount': has 1 Range and shows the Cell Value as a tooltip.
  *
  */
 export interface PercentBarState extends ConfigState {
@@ -74,7 +74,7 @@ export interface PercentBarState extends ConfigState {
 /**
  * The `PercentBar` object used in the PercentBar function.
  *
- *  See [Percent Bar State](_src_predefinedconfig_percentbarstate_.percentbarstate.html) for full information on how to create Percent Bars and links to other relevant AdapTable help resources.
+ *  See {@link PercentBarState|Percent Bar State} for full information on how to create Percent Bars and links to other relevant AdapTable help resources.
  *
  */
 export interface PercentBar extends AdaptableObject {
@@ -100,7 +100,7 @@ export interface PercentBar extends AdaptableObject {
   /**
    * Whether to display a tooltip when the mouse hovers over a cell in the Percent Bar
    *
-   *  Default Value: true
+   *  Default Value: false
    */
   ShowToolTip?: boolean;
 
@@ -128,45 +128,45 @@ export interface PercentBar extends AdaptableObject {
   BackColor?: string;
 
   /**
-   * Deprecated property - no longer used
+   * @deprecated
    *
    * Has been replaced with a `PercentBarRamge`
    */
   NegativeValue?: number;
+
   /**
-   * Deprecated property - no longer used
+   * @deprecated
    *
    * Has been replaced with a `PercentBarRamge`
    */
-
   PositiveValue?: number;
+
   /**
-   * Deprecated property - no longer used
+   * @deprecated
    *
    * Has been replaced with a `PercentBarRamge`
    */
-
   NegativeColor?: string;
+
   /**
-   * Deprecated property - no longer used
+   * @deprecated
    *
    * Has been replaced with a `PercentBarRamge`
    */
-
   PositiveColor?: string;
+
   /**
-   * Deprecated property - no longer used
+   * @deprecated
    *
    * Has been replaced with a `PercentBarRamge`
    */
-
   PositiveValueColumnId?: string;
+
   /**
-   * Deprecated property - no longer used
+   * @deprecated
    *
    * Has been replaced with a `PercentBarRamge`
    */
-
   NegativeValueColumnId?: string;
 }
 

@@ -5,6 +5,7 @@ import { SelectionMode, SortOrder } from '../../../PredefinedConfig/Common/Enums
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import Dropdown from '../../../components/Dropdown';
+import FormLayout, { FormRow } from '../../../components/FormLayout';
 
 export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
   ColumnList: AdaptableColumn[];
@@ -19,7 +20,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
   render() {
     const sortedColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.ColumnList,
       'FriendlyName'
     );
@@ -37,28 +38,30 @@ export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
       this.props.SelectedColumnIds.filter(x => StringExtensions.IsNotNullOrEmpty(x)).length == 0;
 
     return (
-      <div style={{ flex: 1, ...this.props.style }}>
-        <Dropdown
-          style={{ maxWidth: 'none' }}
-          showClearButton={this.props.showClearButton}
-          placeholder={placeHolder}
-          multiple={this.props.SelectionMode == SelectionMode.Multi}
-          options={sortedColumns.map(c => ({
-            value: c.ColumnId,
-            label: c.FriendlyName,
-          }))}
-          disabled={this.props.disabled}
-          value={selectedColumnIds[0] || null}
-          onChange={(value: any) => {
-            const selected = sortedColumns.filter(c => c.ColumnId === value);
-            if (!selected.length) {
-              this.onClearButton();
-            } else {
-              this.onColumnChange(selected, isEmptySelectedColumnIds);
-            }
-          }}
-        />
-      </div>
+      <FormLayout columns={[1]} style={this.props.style}>
+        <FormRow>
+          <Dropdown
+            style={{ maxWidth: 'none' }}
+            showClearButton={this.props.showClearButton}
+            placeholder={placeHolder}
+            multiple={this.props.SelectionMode == SelectionMode.Multi}
+            options={sortedColumns.map(c => ({
+              value: c.ColumnId,
+              label: c.FriendlyName,
+            }))}
+            disabled={this.props.disabled}
+            value={selectedColumnIds[0] || null}
+            onChange={(value: any) => {
+              const selected = sortedColumns.filter(c => c.ColumnId === value);
+              if (!selected.length) {
+                this.onClearButton();
+              } else {
+                this.onColumnChange(selected, isEmptySelectedColumnIds);
+              }
+            }}
+          />
+        </FormRow>
+      </FormLayout>
     );
   }
 

@@ -6,7 +6,7 @@ import { CSSProperties } from 'react';
  *
  * It is hosted in a Cuatom Toolbar
  *
- * When a Custom Toolbar Button is clicked, Adaptable will fire an *ToolbarButtonClicked* event to which you can subscribe via the Event API.
+ * When a Custom Toolbar Button is clicked, Adaptable will fire an *ToolbarButtonClicked* event to which you can subscribe via the Event Api.
  */
 export interface ToolbarButton extends AdaptableObject {
   /**

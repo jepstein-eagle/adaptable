@@ -23,6 +23,7 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
           textOverflow: 'ellipsis',
           overflow: 'hidden',
         }}
+        data-name="list-group-cell"
         paddingLeft={1}
         paddingRight={1}
       >
@@ -32,18 +33,18 @@ export class AdaptableObjectRow extends React.Component<AdaptableObjectRowProps,
 
     return (
       <div className="ab-AdaptableObjectRow" onClick={this.props.onClick} style={this.props.style}>
-        <Box padding={2} className="list-group-item">
-          <Flex
-            alignItems="center"
-            padding={0}
-            margin={0}
-            style={{
-              overflowY: 'visible',
-            }}
-          >
-            {colItems}
-          </Flex>
-        </Box>
+        <Flex
+          data-name="list-group-item"
+          className="list-group-item"
+          alignItems="center"
+          padding={2}
+          margin={0}
+          style={{
+            overflowY: 'visible',
+          }}
+        >
+          {colItems}
+        </Flex>
       </div>
     );
   }

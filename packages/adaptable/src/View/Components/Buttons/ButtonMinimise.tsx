@@ -6,6 +6,7 @@ export class ButtonMinimise extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
       <SimpleButton
+        data-name="minimise"
         iconSize={20}
         tooltip="Minimise"
         {...this.props}

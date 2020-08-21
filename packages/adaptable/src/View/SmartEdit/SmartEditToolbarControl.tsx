@@ -74,7 +74,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     let statusColour: StatusColour = this.getStatusColour();
 
     let selectedColumn = StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)
-      ? this.props.Api.gridApi.getColumnFromId(this.state.SelectedColumnId)
+      ? this.props.Api.columnApi.getColumnFromId(this.state.SelectedColumnId)
       : null;
 
     let previewPanel = (

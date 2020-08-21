@@ -82,13 +82,7 @@ export class ScheduleService implements IScheduleService {
       }, 2000);
     });
 
-    // useful for when grid reloads (e.g. at midnight);
-    // not sure if right place...
-    this.adaptable._on('GridReloaded', () => {
-      this.adaptable.applyGridFiltering();
-    });
-
-    this.adaptable.AdaptableStore.onAny((eventName: string) => {
+    this.adaptable.adaptableStore.onAny((eventName: string) => {
       if (this.adaptable.isInitialised) {
         if (
           eventName == ScheduleRedux.REMINDER_SCHEDULE_ADD ||

@@ -33,6 +33,7 @@ interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> 
   Layouts: Layout[];
   CurrentLayoutName: string;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
+  onAddLayout: (layout: Layout) => LayoutRedux.LayoutAddAction;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
   onShare: (
     entity: AdaptableObject,
@@ -48,14 +49,33 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.PopupParams) {
+      // if we come in from a function then open the current layout
+      if (this.props.PopupParams.source == 'FunctionButton') {
+        let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName);
+        if (currentLayout) {
+          this.onEdit(currentLayout);
+        }
+      }
+
       if (this.props.PopupParams.action) {
         if (this.props.PopupParams.action == 'New') {
           this.onNew();
         }
+        if (this.props.PopupParams.action == 'Edit') {
+          let currentLayout = this.props.Layouts.find(
+            as => as.Name == this.props.CurrentLayoutName
+          );
+          if (currentLayout) {
+            this.onEdit(currentLayout);
+          }
+        }
       }
 
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.PopupParams.source &&
+        (this.props.PopupParams.source == 'Toolbar' ||
+          this.props.PopupParams.source == 'FunctionButton' ||
+          this.props.PopupParams.source == 'ColumnMenu');
     }
   }
 
@@ -74,25 +94,24 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       { Content: '', Size: 2 },
     ];
 
-    let LayoutRows = this.props.Layouts.filter(l => l.Name != GeneralConstants.DEFAULT_LAYOUT).map(
-      (x, index) => {
-        return (
-          <LayoutEntityRow
-            key={x.Uuid}
-            colItems={colItems}
-            api={this.props.Api}
-            IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
-            AdaptableObject={x}
-            onEdit={() => this.onEdit(x)}
-            onShare={description => this.props.onShare(x, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
-            onSelect={() => this.props.onSelectLayout(x.Name)}
-            AccessLevel={this.props.AccessLevel}
-          />
-        );
-      }
-    );
+    let LayoutRows = this.props.Layouts.map((x, index) => {
+      return (
+        <LayoutEntityRow
+          key={x.Uuid}
+          colItems={colItems}
+          api={this.props.Api}
+          IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
+          AdaptableObject={x}
+          onEdit={() => this.onEdit(x)}
+          onShare={description => this.props.onShare(x, description)}
+          TeamSharingActivated={this.props.TeamSharingActivated}
+          onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
+          canDelete={this.props.Layouts.length > 1}
+          onSelect={() => this.props.onSelectLayout(x.Name)}
+          AccessLevel={this.props.AccessLevel}
+        />
+      );
+    });
 
     let newSearchButton = (
       <SimpleButton
@@ -142,7 +161,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout(),
+      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout({
+        Name: '',
+      }),
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.New,
     });
@@ -152,7 +173,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
       EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
+      WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
   }
@@ -172,11 +193,16 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
-    this.props.onSaveLayout(clonedObject);
+    //   console.log('in on finish', clonedObject);
+    const isNew = this.state.WizardStatus == WizardStatus.New;
+    if (isNew) {
+      this.props.onAddLayout(clonedObject);
+    } else {
+      this.props.onSaveLayout(clonedObject);
+    }
 
     let currentLayout = this.props.Layouts.find(l => l.Name == this.props.CurrentLayoutName);
-    let shouldChangeLayout: boolean =
-      this.state.WizardStatus == WizardStatus.New || currentLayout.Uuid == clonedObject.Uuid;
+    let shouldChangeLayout: boolean = isNew || currentLayout.Uuid == clonedObject.Uuid;
 
     this.setState({
       EditedAdaptableObject: null,
@@ -188,22 +214,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
     let layout = this.state.EditedAdaptableObject as Layout;
-    if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
-      let canFinish: boolean = true;
-      layout.ColumnSorts.forEach(gs => {
-        if (StringExtensions.IsNullOrEmpty(gs.Column)) {
-          canFinish = false;
-        }
-      });
-      if (!canFinish) {
-        return false;
-      }
-    }
     return (
       StringExtensions.IsNotNullOrEmpty(layout.Name) &&
       ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
@@ -223,6 +237,7 @@ function mapDispatchToProps(
 ): Partial<LayoutPopupProps> {
   return {
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onAddLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutAdd(layout)),
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
 

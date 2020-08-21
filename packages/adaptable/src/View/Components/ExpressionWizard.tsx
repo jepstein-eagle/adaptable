@@ -108,7 +108,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               value={this.state.expression}
               onChange={(e: React.SyntheticEvent) => this.handleCustomExpressionChange(e)}
               initialData={firstRow}
-              columns={this.props.Api.gridApi.getColumns()}
+              columns={this.props.Api.columnApi.getColumns()}
               functions={parser.defaultFunctions}
               hideHelpBlock={true}
             />

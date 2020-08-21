@@ -21,7 +21,7 @@ export class ConditionalStyleEntityRow extends React.Component<
 
     let column: AdaptableColumn | undefined =
       conditionalStyle.ConditionalStyleScope == 'Column'
-        ? this.props.api.gridApi.getColumnFromId(conditionalStyle.ColumnId!)
+        ? this.props.api.columnApi.getColumnFromId(conditionalStyle.ColumnId!)
         : undefined;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
@@ -56,7 +56,7 @@ export class ConditionalStyleEntityRow extends React.Component<
       case 'Row':
         return 'Row';
       case 'Column':
-        return this.props.api.gridApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId);
+        return this.props.api.columnApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId);
       //   case 'DataType':
       //     return conditionalStyle.DataType + ' Columns';
       case 'ColumnCategory':

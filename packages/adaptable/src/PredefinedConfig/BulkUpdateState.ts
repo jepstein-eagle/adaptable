@@ -12,7 +12,7 @@ import { ConfigState } from './/ConfigState';
  *
  * [Bulk Update Demo](https://demo.adaptabletools.com/edit/aggridbulkupdatedemo/)
  *
- * {@link BulkUpdateApi|Bulk Update API}
+ * {@link BulkUpdateApi|Bulk Update Api}
  *
  * [Bulk Update Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/bulk-update-function.md)
  *

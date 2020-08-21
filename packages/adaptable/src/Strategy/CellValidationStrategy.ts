@@ -9,25 +9,22 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import * as CellValidationRedux from '../Redux/ActionsReducers/CellValidationRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class CellValidationStrategy extends AdaptableStrategyBase
   implements ICellValidationStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CellValidationStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CellValidationStrategyFriendlyName,
-        ComponentName: ScreenPopups.CellValidationPopup,
-        Icon: StrategyConstants.CellValidationGlyph,
-      });
-    }
+    super(
+      StrategyConstants.CellValidationStrategyId,
+      StrategyConstants.CellValidationStrategyFriendlyName,
+      StrategyConstants.CellValidationGlyph,
+      ScreenPopups.CellValidationPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'editable')) {
+    if (this.canCreateMenuItem('Full') && !column.ReadOnly) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
@@ -50,5 +47,15 @@ export class CellValidationStrategy extends AdaptableStrategyBase
       AddAction: CellValidationRedux.CellValidationAdd,
       EditAction: CellValidationRedux.CellValidationEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let cellValidations: CellValidationRule[] = this.adaptable.api.cellValidationApi
+      .getAllCellValidation()
+      .filter((cvr: CellValidationRule) => cvr.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(cellValidations)
+      ? cellValidations.length + ' Cell Validations'
+      : undefined;
   }
 }

@@ -15,21 +15,17 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   implements IUpdatedRowStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.UpdatedRowStrategyId, adaptable);
+    super(
+      StrategyConstants.UpdatedRowStrategyId,
+      StrategyConstants.UpdatedRowStrategyFriendlyName,
+      StrategyConstants.UpdatedRowGlyph,
+      ScreenPopups.UpdatedRowPopup,
+      adaptable
+    );
 
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.UpdatedRowStrategyFriendlyName,
-        ComponentName: ScreenPopups.UpdatedRowPopup,
-        Icon: StrategyConstants.UpdatedRowGlyph,
-      });
-    }
   }
 
   public addColumnMenuItems(): AdaptableMenuItem[] | undefined {
@@ -72,7 +68,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
     let updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (updatedRowState.EnableUpdatedRow) {
-      let colsToRefresh: Array<string> = this.adaptable.api.gridApi
+      let colsToRefresh: Array<string> = this.adaptable.api.columnApi
         .getColumns()
         .map(c => c.ColumnId);
 
@@ -101,7 +97,7 @@ export abstract class UpdatedRowStrategy extends AdaptableStrategyBase
       return ChangeDirection.Neutral;
     }
 
-    let columnDataType = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+    let columnDataType = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
       dataChangedInfo.ColumnId
     );
 

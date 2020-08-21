@@ -13,7 +13,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
   }
 
   public initStyles(): void {
-    let allColumns = this.adaptable.api.gridApi.getColumns();
+    let allColumns = this.adaptable.api.columnApi.getColumns();
     let theAdaptableInstance = this.adaptable as Adaptable;
 
     let alertDefsWithHighlightCells: AlertDefinition[] = this.adaptable.api.alertApi

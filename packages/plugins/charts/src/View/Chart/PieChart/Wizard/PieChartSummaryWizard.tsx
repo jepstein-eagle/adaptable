@@ -17,14 +17,14 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
     super(props);
   }
   render(): any {
-    let primaryColumnFriendlyName: string = this.props.Api.gridApi.getFriendlyNameFromColumnId(
+    let primaryColumnFriendlyName: string = this.props.Api.columnApi.getFriendlyNameFromColumnId(
       this.props.Data.PrimaryColumnId
     );
     let seondaryColumnFriendlyName: string = StringExtensions.IsNullOrEmpty(
       this.props.Data.SecondaryColumnId
     )
       ? '[None]'
-      : this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.SecondaryColumnId);
+      : this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.SecondaryColumnId);
 
     let seondaryColumnOperation: string = StringExtensions.IsNullOrEmpty(
       this.props.Data.SecondaryColumnId

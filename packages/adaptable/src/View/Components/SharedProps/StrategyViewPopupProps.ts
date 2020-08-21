@@ -17,5 +17,5 @@ export interface StrategyParams {
   action?: 'New' | 'Edit';
   value?: any;
   primaryKeyValues?: any[];
-  source: 'Toolbar' | 'FunctionMenu' | 'ColumnMenu' | 'ContextMenu' | 'Other'; // api??
+  source: 'Toolbar' | 'FunctionMenu' | 'ColumnMenu' | 'ContextMenu' | 'FunctionButton' | 'Other'; // api??
 }

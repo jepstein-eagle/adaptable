@@ -65,8 +65,8 @@
     "@types/react": "^16.8.10",
     "@zeit/next-sass": "^1.0.1",
     "chalk": "^3.0.0",
-    "@ag-grid-community/all-modules": "23.2.0",
-    "@ag-grid-community/react": "23.2.0",
+    "@ag-grid-community/all-modules": "23.2.1",
+    "@ag-grid-community/react": "23.2.1",
     "babel-eslint": "^10.0.1",
     "colors": "^1.1.2",
     "commitizen": "^2.9.6",
@@ -103,8 +103,8 @@
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
-    "@ag-grid-community/all-modules": "^23.2.0",
-    "@ag-grid-community/react": "^23.2.0"
+    "@ag-grid-community/all-modules": "^23.2.1",
+    "@ag-grid-community/react": "^23.2.1"
   },
   "scripts": {
     "pretty": "prettier --write \"packages/**/*.{js,jsx,ts,tsx,json,css,scss}\" --fix",

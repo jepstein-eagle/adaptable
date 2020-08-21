@@ -98,7 +98,7 @@ class CustomSortPopupComponent extends React.Component<
           TeamSharingActivated={this.props.TeamSharingActivated}
           onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-          ColumnLabel={this.props.Api.gridApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
+          ColumnLabel={this.props.Api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -196,7 +196,6 @@ class CustomSortPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.Edit,
     });
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

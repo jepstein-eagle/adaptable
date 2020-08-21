@@ -10,7 +10,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_src_api_entitlementsapi_.entitlementsapi.html)
+ * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements Api](_src_api_entitlementsapi_.entitlementsapi.html)
  *
  *  Entitlements work at the `AdaptableFunction Level`.  Each Entitlement has 3 potential `AccessLevel` values:
  *

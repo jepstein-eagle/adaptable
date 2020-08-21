@@ -18,7 +18,7 @@ import { AdaptableFormat } from './Common/AdaptableFormat';
  *
  * ### Further Information
  *
- * - {@link FormatColumnApi|Format Column API}
+ * - {@link FormatColumnApi|Format Column Api}
  *
  * - [Format Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/format-column-function.md)
  *

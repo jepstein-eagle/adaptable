@@ -214,7 +214,6 @@ class ConditionalStylePopupComponent extends React.Component<
     }
 
     this.resetState();
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

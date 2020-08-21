@@ -77,7 +77,7 @@ class DashboardPopupComponent extends React.Component<
 
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
-      let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
+      let menuItem = this.props.GridState.FunctionDropdownMenuItems.find(m => m.FunctionName == x);
       if (menuItem != null && menuItem.IsVisible) {
         selectedValues.push(StrategyConstants.getFriendlyNameForStrategyId(x));
       }
@@ -110,7 +110,7 @@ class DashboardPopupComponent extends React.Component<
       return { ...tab, Toolbars };
     });
 
-    let availableValues = this.props.GridState.MainMenuItems.filter(
+    let availableValues = this.props.GridState.FunctionDropdownMenuItems.filter(
       x => x.IsVisible && selectedValues.indexOf(x.Label) == -1
     ).map(x => x.Label);
 

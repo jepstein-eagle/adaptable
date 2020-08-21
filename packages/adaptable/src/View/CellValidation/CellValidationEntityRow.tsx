@@ -69,7 +69,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
   }
 
   private getColumnandRule(cellValidation: CellValidationRule): string {
-    let columnInfo: string = this.props.api.gridApi.getFriendlyNameFromColumn(
+    let columnInfo: string = this.props.api.columnApi.getFriendlyNameFromColumn(
       cellValidation.ColumnId,
       this.props.Column
     );
@@ -77,7 +77,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
       ': ' +
       this.props.ValidationService.createCellValidationDescription(
         cellValidation,
-        this.props.api.gridApi.getColumns()
+        this.props.api.columnApi.getColumns()
       );
     return columnInfo;
   }

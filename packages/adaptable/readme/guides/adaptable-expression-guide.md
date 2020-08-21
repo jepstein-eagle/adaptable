@@ -121,7 +121,7 @@ The following demos all contain Expressions:
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
 - [Cell Validation Demo](https://demo.adaptabletools.com/edit/aggridcellvalidationdemo)
 - [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo)
-- [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+- [Export Demos](https://demo.adaptabletools.com/export)
 - [Plus / Minus Demo](https://demo.adaptabletools.com/edit/aggridplusminusdemo)
 - [User Filter Demo](https://demo.adaptabletools.com/filters/aggriduserfiltersdemo)
 

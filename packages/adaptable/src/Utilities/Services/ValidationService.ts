@@ -81,7 +81,7 @@ export class ValidationService implements IValidationService {
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
 
       // first check the rules which have expressions
       let expressionRules: CellValidationRule[] = editingRules.filter(
@@ -215,7 +215,7 @@ export class ValidationService implements IValidationService {
       return true;
     }
     // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       dataChangedEvent.ColumnId
     );
     let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
@@ -304,13 +304,13 @@ export class ValidationService implements IValidationService {
       .Operator as LeafExpressionOperator;
     let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
       operator,
-      this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId)
+      this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId)
     );
 
     if (!ExpressionHelper.OperatorRequiresValue(operator)) {
       return valueDescription;
     }
-    let dataType = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+    let dataType = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
       cellValidationRule.ColumnId
     );
     let operand1Text: string =
@@ -352,8 +352,8 @@ export class ValidationService implements IValidationService {
   }
 
   public CreateCellValidationMessage(cellValidation: CellValidationRule): string {
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-    let columnFriendlyName: string = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
+    let columnFriendlyName: string = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(
       cellValidation.ColumnId
     );
     let returnMessage: string =

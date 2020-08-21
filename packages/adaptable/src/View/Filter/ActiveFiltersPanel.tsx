@@ -2,7 +2,7 @@ import * as React from 'react';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -49,7 +49,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
   private createRow(colItems: IColItem[], columnFilter: ColumnFilter): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
-    rowColItems[0].Content = this.props.Api.gridApi.getFriendlyNameFromColumnId(
+    rowColItems[0].Content = this.props.Api.columnApi.getFriendlyNameFromColumnId(
       columnFilter.ColumnId
     );
     rowColItems[1].Content = this.props.Api.filterApi.convertColumnFilterToString(columnFilter);
@@ -59,7 +59,9 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
         <ButtonSave
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
-          disabled={columnFilter == null || ArrayExtensions.IsNotNullOrEmpty(columnFilter.Values)}
+          disabled={
+            columnFilter == null || StringExtensions.IsNotNullOrEmpty(columnFilter.PredicateId)
+          }
           AccessLevel={this.props.AccessLevel}
         />{' '}
         <ButtonClear

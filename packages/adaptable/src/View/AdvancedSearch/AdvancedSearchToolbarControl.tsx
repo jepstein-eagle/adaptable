@@ -6,11 +6,14 @@ import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearch
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
+import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
-
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 
 import { Flex } from 'rebass';
@@ -32,6 +35,7 @@ import {
 import FieldWrap from '../../components/FieldWrap';
 import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import Dropdown from '../../components/Dropdown';
 
 interface AdvancedSearchToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
@@ -72,7 +76,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
     const isExpressionValid = parser.validateBoolean(this.state.expression);
 
     let sortedSharedExpressions: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.SharedQueries,
       'Name'
     );
@@ -105,7 +109,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
         })),
     ];
 
-    let availableColumns: any[] = this.props.Api.gridApi.getColumns().map(col => {
+    let availableColumns: any[] = this.props.Api.columnApi.getColumns().map(col => {
       return {
         label: col.FriendlyName,
         onClick: () => this.setState({ expression: this.state.expression + `[${col.ColumnId}]` }),

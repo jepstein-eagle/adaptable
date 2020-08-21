@@ -21,8 +21,17 @@ import { AdaptableObject } from '../PredefinedConfig/Common/AdaptableObject';
  * Each strategy is reponsible for managing state (through InitState())
  */
 export abstract class AdaptableStrategyBase implements IStrategy {
-  constructor(public Id: AdaptableFunctionName, protected adaptable: IAdaptable) {
+  constructor(
+    public Id: AdaptableFunctionName,
+    public FriendlyName: string,
+    public Glyph: string,
+    public Popup: string,
+    protected adaptable: IAdaptable
+  ) {
     this.Id = Id;
+    this.FriendlyName = FriendlyName;
+    this.Glyph = Glyph;
+    this.Popup = Popup;
     this.adaptable = adaptable;
   }
 
@@ -30,7 +39,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   public initializeWithRedux() {
     this.InitState();
-    this.adaptable.AdaptableStore.TheStore.subscribe(() => this.InitState());
+    this.adaptable.adaptableStore.TheStore.subscribe(() => this.InitState());
   }
 
   public setStrategyEntitlement(): void {
@@ -55,7 +64,34 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
+  public getSpecialColumnReferences(specialColumnId: string): string {
+    return undefined;
+  }
+
+  public addStrategyMenuItem(
+    source: 'FunctionMenu' | 'FunctionButton'
+  ): AdaptableMenuItem | undefined {
+    if (this.isStrategyAvailable()) {
+      if (this.canCreateMenuItem(this.getMinimumAccessLevelForMenu())) {
+        const strategyParams: StrategyParams = {
+          source: source,
+        };
+
+        return this.createMainMenuItemShowPopup({
+          Label: this.FriendlyName,
+          ComponentName: this.Popup,
+          Icon: this.Glyph,
+          PopupParams: strategyParams,
+        });
+      }
+    }
+  }
+
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'ReadOnly';
+  }
+
+  public addFunctionButtonMenuItem(): AdaptableMenuItem | undefined {
     // base class implementation which is empty
     return undefined;
   }
@@ -82,11 +118,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     Icon: string;
     PopupParams?: StrategyParams;
   }): MenuItemShowPopup {
-    if (!PopupParams) {
-      PopupParams = {
-        source: 'FunctionMenu',
-      };
-    }
     return new MenuItemShowPopup(Label, this.Id, ComponentName, Icon, true, PopupParams);
   }
 

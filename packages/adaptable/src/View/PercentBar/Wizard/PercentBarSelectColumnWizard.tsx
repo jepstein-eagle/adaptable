@@ -33,7 +33,7 @@ export class PercentBarSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.gridApi.getNumericColumns()}
+          ColumnList={this.props.Api.columnApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

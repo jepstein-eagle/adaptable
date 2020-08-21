@@ -28,6 +28,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
 - [Team Sharing Guide](./guides/adaptable-team-sharing-guide.md)
 - [Server Functionality Guide](./guides/adaptable-server-functionality-guide.md)
+- [Menus Guide](./guides/adaptable-menus-guide.md)
 - [ag-Grid Guide](./guides/adaptable-aggrid-guide.md)
 
 ## FAQs
@@ -52,7 +53,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Cell Summary](./functions/cell-summary-function.md)
 - [Cell Validation](./functions/cell-validation-function.md)
 - [Column Category](./functions/column-category-function.md)
-- [Column Chooser](./functions/column-chooser-function.md)
 - [Column Filter](./functions/column-filter-function.md)
 - [Column Info](./functions/column-info-function.md)
 - [Conditional Style](./functions/conditional-style-function.md)  

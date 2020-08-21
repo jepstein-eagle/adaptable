@@ -189,3 +189,5 @@ You can and the change will persist.
 - [Calculated Column Api](https://api.adaptabletools.com/interfaces/_src_api_calculatedcolumnapi_.calculatedcolumnapi.html)
 
 - [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo)
+
+- [Calculated Column Vidoo](https://youtu.be/mk_KpFLzV-c)

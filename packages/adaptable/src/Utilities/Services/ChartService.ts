@@ -43,7 +43,7 @@ export class ChartService implements IChartService {
     // and then set chart.includedProperties to array of strings that contain selected data columns:
     // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
 
-    let xAxisColumnName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+    let xAxisColumnName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(
       chartDefinition.XAxisColumnId
     );
     let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
@@ -66,7 +66,7 @@ export class ChartService implements IChartService {
           columns,
           showAverageTotal
         );
-        let colName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(colID);
+        let colName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(colID);
         if (yAxisColumnNames.indexOf(colName) < 0) {
           yAxisColumnNames.push(colName);
         }
@@ -341,7 +341,7 @@ export class ChartService implements IChartService {
 
     let dataItems: PieChartDataItem[] = [];
 
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
     let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
 
@@ -470,10 +470,10 @@ export class ChartService implements IChartService {
   ): boolean {
     let returnValue: boolean = false;
     if (dataCounter.size > 15) {
-      let primaryColumn = this.adaptable.api.gridApi.getColumnFromId(
+      let primaryColumn = this.adaptable.api.columnApi.getColumnFromId(
         chartDefinition.PrimaryColumnId
       );
-      let primaryColumnIsNumeric: boolean = this.adaptable.api.gridApi.isNumericColumn(
+      let primaryColumnIsNumeric: boolean = this.adaptable.api.columnApi.isNumericColumn(
         primaryColumn
       );
 

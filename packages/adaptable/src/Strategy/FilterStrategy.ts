@@ -2,7 +2,6 @@ import { IFilterStrategy } from './Interface/IFilterStrategy';
 import { AdaptableStrategyBase } from './AdaptableStrategyBase';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
-import * as GlyphConstants from '../Utilities/Constants/GlyphConstants';
 import * as GridRedux from '../Redux/ActionsReducers/GridRedux';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
@@ -15,17 +14,13 @@ import { ColumnFilter } from '../PredefinedConfig/FilterState';
 
 export class FilterStrategy extends AdaptableStrategyBase implements IFilterStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.FilterStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.FilterStrategyFriendlyName,
-        ComponentName: ScreenPopups.FilterPopup,
-        Icon: StrategyConstants.FilterGlyph,
-      });
-    }
+    super(
+      StrategyConstants.FilterStrategyId,
+      StrategyConstants.FilterStrategyFriendlyName,
+      StrategyConstants.FilterGlyph,
+      ScreenPopups.FilterPopup,
+      adaptable
+    );
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
@@ -61,7 +56,10 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
     if (this.adaptable.isQuickFilterActive()) {
       const isFilterVisible: boolean = this.adaptable.api.gridApi.getGridState()
         .IsQuickFilterVisible;
-      if (this.canCreateColumnMenuItem(column, this.adaptable, 'ReadOnly', 'quickfilter')) {
+      if (
+        this.canCreateMenuItem('Full') &&
+        this.adaptable.adaptableOptions.filterOptions.useAdaptableQuickFilter
+      ) {
         baseMenuItems.push(
           this.createColumnMenuItemReduxAction(
             isFilterVisible ? 'Hide Quick Filter Bar' : 'Show Quick Filter Bar',

@@ -1,12 +1,14 @@
 import { CSSProperties } from 'react';
 import getAvailableSizeInfo, { BoundingClientRect } from '../utils/getAvailableSizeInfo';
 
+export type OverlayHorizontalAlign = 'center' | 'left' | 'right' | 'auto';
 interface OverlayStyleParam {
   targetRect: BoundingClientRect;
   constrainRect: BoundingClientRect;
   maxSizeOffset?: number;
 
   anchor: 'vertical' | 'horizontal';
+  alignHorizontal?: OverlayHorizontalAlign;
   targetOffset?: number;
 }
 
@@ -22,7 +24,9 @@ const getOverlayStyle = ({
   constrainRect,
   anchor,
   targetOffset,
+  alignHorizontal,
 }: OverlayStyleParam): CSSProperties => {
+  alignHorizontal = alignHorizontal || 'center';
   const sizeInfo = getAvailableSizeInfo({ targetRect, constrainRect });
   const overlayStyle: CSSProperties = {
     maxWidth: sizeInfo.maxWidth,
@@ -52,8 +56,16 @@ const getOverlayStyle = ({
       overlayStyle.top += (globalObject as any).scrollY;
     }
 
-    overlayStyle.left = targetRect.left + targetRect.width / 2 + (globalObject as any).scrollX;
-    overlayStyle.transform = 'translate3d(-50%, 0px, 0px)';
+    if (alignHorizontal === 'center') {
+      overlayStyle.left = targetRect.left + targetRect.width / 2 + (globalObject as any).scrollX;
+      overlayStyle.transform = 'translate3d(-50%, 0px, 0px)';
+    }
+    if (alignHorizontal === 'left') {
+      overlayStyle.left = targetRect.left + (globalObject as any).scrollX;
+    }
+    if (alignHorizontal === 'right') {
+      overlayStyle.right = windowSize.width - targetRect.right + (globalObject as any).scrollX;
+    }
     delete overlayStyle.maxWidth;
   }
 

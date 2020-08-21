@@ -20,11 +20,13 @@ export class CellValidationSharedEntity extends React.Component<
 
     return (
       <Flex flexDirection="row" alignItems="center">
-        <Flex flex={4}>{this.props.Api.gridApi.getFriendlyNameFromColumnId(cellVal.ColumnId)}</Flex>
+        <Flex flex={4}>
+          {this.props.Api.columnApi.getFriendlyNameFromColumnId(cellVal.ColumnId)}
+        </Flex>
         <Flex flex={4}>
           {this.props.Api.internalApi
             .getValidationService()
-            .createCellValidationDescription(cellVal, this.props.Api.gridApi.getColumns())}
+            .createCellValidationDescription(cellVal, this.props.Api.columnApi.getColumns())}
         </Flex>
         <Flex flex={4}>{expressionString}</Flex>
       </Flex>

@@ -115,7 +115,7 @@ let demoConfig: PredefinedConfig = {
     //  CurrentLayout: 'Grouping Layout',
     Layouts: [
       {
-        GroupedColumns: ['country'],
+        RowGroupedColumns: ['country'],
         Columns: ['notional', 'country', 'currency', 'tradeId', 'counterparty'],
         Name: 'Grouping Layout',
       },

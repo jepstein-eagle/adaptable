@@ -23,7 +23,7 @@ export interface IStrategyService {
 
   setStrategiesEntitlements(): void;
 
-  createStrategyFunctionMenu(): void;
+  createStrategyFunctionMenus(): void;
 
   getTeamSharingAction(
     adaptableFunctionName: AdaptableFunctionName
@@ -62,7 +62,7 @@ export class StrategyService implements IStrategyService {
       | 'Boolean'
       | 'Date'
       | 'Object'
-      | 'Unknown' = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
+      | 'Unknown' = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
       alertDefinition.ColumnId
     );
     let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
@@ -105,18 +105,34 @@ export class StrategyService implements IStrategyService {
     });
   }
 
-  public createStrategyFunctionMenu(): void {
-    const menuItems: AdaptableMenuItem[] = [];
+  public createStrategyFunctionMenus(): void {
+    const dropdownMenuItems: AdaptableMenuItem[] = [];
+    const butonnMenuItems: AdaptableMenuItem[] = [];
     this.adaptable.strategies.forEach((strat: IStrategy) => {
-      const menuItem: AdaptableMenuItem | undefined = strat.addFunctionMenuItem();
-      if (Helper.objectExists(menuItem)) {
-        if (menuItems.findIndex(m => m.FunctionName == menuItem.FunctionName) == -1) {
-          menuItems.push(menuItem);
+      const dropdownMenuItem: AdaptableMenuItem | undefined = strat.addStrategyMenuItem(
+        'FunctionMenu'
+      );
+      if (Helper.objectExists(dropdownMenuItem)) {
+        if (
+          dropdownMenuItems.findIndex(m => m.FunctionName == dropdownMenuItem.FunctionName) == -1
+        ) {
+          dropdownMenuItems.push(dropdownMenuItem);
+        }
+      }
+
+      const butonnMenuItem: AdaptableMenuItem | undefined = strat.addStrategyMenuItem(
+        'FunctionButton'
+      );
+      if (Helper.objectExists(butonnMenuItem)) {
+        if (butonnMenuItems.findIndex(m => m.FunctionName == butonnMenuItem.FunctionName) == -1) {
+          butonnMenuItems.push(butonnMenuItem);
         }
       }
     });
+
     // store the main menu as we will re-use (and it never changes)
-    this.adaptable.api.internalApi.setMainMenuItems(menuItems);
+    this.adaptable.api.internalApi.setFunctionDropdownMenuItems(dropdownMenuItems);
+    this.adaptable.api.internalApi.setFunctionButtonMenuItems(butonnMenuItems);
   }
 
   public isStrategyAvailable(adaptableFunctionName: AdaptableFunctionName): boolean {

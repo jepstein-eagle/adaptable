@@ -92,7 +92,7 @@ export class ConditionalStyleScopeWizard
             <Box marginBottom={2}>
               <ColumnSelector
                 SelectedColumnIds={[this.state.ColumnId]}
-                ColumnList={this.props.Api.gridApi.getColumns()}
+                ColumnList={this.props.Api.columnApi.getColumns()}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single}
               />

@@ -18,7 +18,7 @@ export class ConditionalStyleSharedEntity extends React.Component<
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
           {conditionalStyle.ConditionalStyleScope == 'Column'
-            ? this.props.Api.gridApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId)
+            ? this.props.Api.columnApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId)
             : 'Whole Row'}
         </Flex>
         <Flex flex={3}>

@@ -95,7 +95,7 @@ class CellValidationPopupComponent extends React.Component<
     ];
 
     let CellValidationItems = this.props.CellValidations.map((cellValidationRule, index) => {
-      let column = this.props.Api.gridApi.getColumnFromId(cellValidationRule.ColumnId);
+      let column = this.props.Api.columnApi.getColumnFromId(cellValidationRule.ColumnId);
       return (
         <CellValidationEntityRow
           key={index}
@@ -224,7 +224,6 @@ class CellValidationPopupComponent extends React.Component<
       this.props.onEditCellValidation(cellValidationRule);
     }
     this.resetState();
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {

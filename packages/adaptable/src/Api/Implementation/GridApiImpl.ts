@@ -6,7 +6,7 @@ import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { AdaptableOptions } from '../../types';
+import { AdaptableOptions, Layout } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
@@ -59,20 +59,12 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.api.internalApi.setGridCell(gridCell, forceFilter, false);
   }
 
-  public getColumns(): AdaptableColumn[] {
-    return this.getGridState().Columns;
-  }
-
   public getSelectedCellInfo(): SelectedCellInfo {
     return this.getGridState().SelectedCellInfo;
   }
 
   public getSelectedRowInfo(): SelectedRowInfo {
     return this.getGridState().SelectedRowInfo;
-  }
-
-  public getVisibleColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.Visible);
   }
 
   public getCellDisplayValue(primaryKeyValue: any, columnId: string): string {
@@ -91,20 +83,16 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.clearGridFiltering();
   }
 
+  public getVendorGrid(): any {
+    return this.adaptable.adaptableOptions.vendorGrid;
+  }
+
   public setColumnSorts(columnSorts: ColumnSort[]): void {
     this.dispatchAction(GridRedux.GridSetSort(columnSorts));
   }
 
   public getColumnSorts(): ColumnSort[] {
     return this.getAdaptableState().Grid.ColumnSorts;
-  }
-
-  public getVendorGrid(): any {
-    return this.adaptable.adaptableOptions.vendorGrid;
-  }
-
-  public getadaptableOptions(): AdaptableOptions {
-    return this.adaptable.adaptableOptions;
   }
 
   public sortAdaptable(columnSorts: ColumnSort[]): void {
@@ -118,14 +106,6 @@ export class GridApiImpl extends ApiBase implements GridApi {
 
   public selectNode(rowNode: any): void {
     this.adaptable.selectNode(rowNode);
-  }
-
-  public selectColumn(columnId: string): void {
-    this.adaptable.selectColumn(columnId);
-  }
-
-  public selectColumns(columnIds: string[]): void {
-    this.adaptable.selectColumns(columnIds);
   }
 
   public getFirstRowNode(): any {
@@ -155,204 +135,6 @@ export class GridApiImpl extends ApiBase implements GridApi {
     this.adaptable.expandRowGroupsForValues(columnValues);
   }
 
-  public isSpecialColumn(columnId: string): boolean {
-    return columnId == AG_GRID_GROUPED_COLUMN;
-  }
-
-  public isCalculatedColumn(columnId: string): boolean {
-    return (
-      this.adaptable.api.calculatedColumnApi
-        .getAllCalculatedColumn()
-        .find(cc => cc.ColumnId == columnId) != null
-    );
-  }
-
-  public isFreeTextColumn(columnId: string): boolean {
-    return (
-      this.adaptable.api.freeTextColumnApi
-        .getAllFreeTextColumn()
-        .find(cc => cc.ColumnId == columnId) != null
-    );
-  }
-
-  public isActionColumn(columnId: string): boolean {
-    return (
-      this.adaptable.api.actionColumnApi.getAllActionColumn().find(cc => cc.ColumnId == columnId) !=
-      null
-    );
-  }
-
-  public isNumericColumn(column: AdaptableColumn): boolean {
-    return column.DataType == DataType.Number;
-  }
-
-  public getColumnDataTypeFromColumnId(
-    columnId: string
-  ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
-    return this.getColumns().find(c => c.ColumnId == columnId).DataType;
-  }
-
-  public getFriendlyNameFromColumn(columnId: string, column: AdaptableColumn): string {
-    if (columnId.includes(GeneralConstants.MISSING_COLUMN)) {
-      return columnId;
-    }
-    if (column) {
-      return column.FriendlyName;
-    }
-    this.LogMissingColumnWarning(columnId);
-    return columnId + GeneralConstants.MISSING_COLUMN;
-  }
-
-  public getFriendlyNameFromColumnId(columnId: string): string {
-    const foundColumn: AdaptableColumn | undefined = this.getColumns().find(
-      c => c.ColumnId == columnId
-    );
-    if (foundColumn) {
-      return this.getFriendlyNameFromColumn(columnId, foundColumn);
-    }
-    this.LogMissingColumnWarning(columnId);
-    return columnId + GeneralConstants.MISSING_COLUMN;
-  }
-
-  public getFriendlyNamesFromColumnIds(columnIds: string[]): string[] {
-    const friendlyNames: string[] = [];
-    if (ArrayExtensions.IsNullOrEmpty(columnIds)) {
-      return friendlyNames;
-    }
-    columnIds.forEach(c => {
-      friendlyNames.push(this.getFriendlyNameFromColumnId(c));
-    });
-    return friendlyNames;
-  }
-
-  public getColumnIdFromFriendlyName(friendlyName: string): string {
-    if (friendlyName.includes(GeneralConstants.MISSING_COLUMN)) {
-      return friendlyName.replace(GeneralConstants.MISSING_COLUMN, ''); // Ids should stay "pure"
-    }
-    const foundColumn: AdaptableColumn | undefined = this.getColumns().find(
-      c => c.FriendlyName == friendlyName
-    );
-    if (foundColumn) {
-      return foundColumn.ColumnId;
-    }
-    this.LogMissingColumnWarning(friendlyName);
-    return friendlyName + GeneralConstants.MISSING_COLUMN;
-  }
-
-  public getColumnIdsFromFriendlyNames(friendlyNames: string[]): string[] {
-    const columnIds: string[] = [];
-    if (ArrayExtensions.IsNullOrEmpty(friendlyNames)) {
-      return columnIds;
-    }
-    friendlyNames.forEach(c => {
-      columnIds.push(this.getColumnIdFromFriendlyName(c));
-    });
-    return columnIds;
-  }
-
-  public getColumnsFromFriendlyNames(friendlyNames: string[]): AdaptableColumn[] {
-    // not sure if this is right as might ignore bad cols
-    return friendlyNames.map(friendlyName =>
-      this.getColumns().find(x => x.FriendlyName == friendlyName)
-    );
-  }
-
-  public getColumnsFromIds(columnIds: string[], logWarning = true): AdaptableColumn[] {
-    let returnCols: AdaptableColumn[] = [];
-    columnIds.forEach(c => {
-      returnCols.push(this.getColumnFromId(c, logWarning));
-    });
-
-    return returnCols;
-  }
-
-  public getColumnFromId(columnId: string, logWarning = true): AdaptableColumn {
-    // just return null if no columns rather than logging a warning - otherwise get lots at startup
-    if (ArrayExtensions.IsNullOrEmpty(this.getColumns())) {
-      return null;
-    }
-    const foundColumn: AdaptableColumn = this.getColumns().find(c => c.ColumnId == columnId);
-    if (foundColumn) {
-      return foundColumn;
-    }
-    if (logWarning) {
-      this.LogMissingColumnWarning(columnId);
-    }
-    return null;
-  }
-
-  public getColumnFromFriendlyName(columnName: string, logWarning = true): AdaptableColumn {
-    // just return null if no columns rather than logging a warning - otherwise get lots at startup
-    if (ArrayExtensions.IsNullOrEmpty(this.getColumns())) {
-      return null;
-    }
-    const foundColumn: AdaptableColumn = this.getColumns().find(c => c.FriendlyName == columnName);
-    if (foundColumn) {
-      return foundColumn;
-    }
-    if (logWarning) {
-      this.LogMissingColumnWarning(columnName);
-    }
-    return null;
-  }
-
-  public getColumnsOfType(dataType: DataType): AdaptableColumn[] {
-    switch (dataType) {
-      case DataType.All:
-        return this.getColumns();
-      case DataType.Boolean:
-        return this.getBooleanColumns();
-      case DataType.Date:
-        return this.getDateColumns();
-      case DataType.Number:
-        return this.getNumericColumns();
-      case DataType.NumberArray:
-        return this.getNumericArrayColumns();
-      case DataType.String:
-        return this.getStringColumns();
-      default:
-        return this.getColumns();
-    }
-  }
-
-  public getNumericColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.DataType == DataType.Number);
-  }
-
-  public getNumericArrayColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.DataType == DataType.NumberArray);
-  }
-
-  public getStringColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.DataType == DataType.String);
-  }
-
-  public getDateColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.DataType == DataType.Date);
-  }
-
-  public getBooleanColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.DataType == DataType.Boolean);
-  }
-
-  public getSortableColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.Sortable);
-  }
-
-  public getGroupableColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.Groupable);
-  }
-
-  public getPivotableColumns(): AdaptableColumn[] {
-    return this.getColumns().filter(c => c.Pivotable);
-  }
-
-  public getAggregetableColumns(): AdaptableColumn[] {
-    return this.getColumns()
-      .filter(c => c.Aggregatable)
-      .filter(c => c.DataType == DataType.Number);
-  }
-
   public isGridPivotable(): boolean {
     return this.adaptable.isPivotable();
   }
@@ -360,20 +142,12 @@ export class GridApiImpl extends ApiBase implements GridApi {
     return this.adaptable.isGroupable();
   }
 
-  private LogMissingColumnWarning(columnId: string): void {
-    if (
-      this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning &&
-      this.adaptable.adaptableOptions.generalOptions.showMissingColumnsWarning === true
-    ) {
-      if (
-        !this.isSpecialColumn(columnId) &&
-        !this.isCalculatedColumn(columnId) &&
-        !this.isFreeTextColumn(columnId) &&
-        !this.isActionColumn(columnId)
-      ) {
-        LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);
-      }
-    }
+  public showQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarShow());
+  }
+
+  public hideQuickFilterBar(): void {
+    this.dispatchAction(GridRedux.QuickFilterBarHide());
   }
 
   public destroy() {

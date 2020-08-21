@@ -41,7 +41,6 @@
  *  };
  * ```
  */
-
 export interface IPushPullPluginOptions {
   /**
    * The config required to run ipushpull

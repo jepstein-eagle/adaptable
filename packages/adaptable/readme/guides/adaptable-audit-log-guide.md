@@ -20,48 +20,49 @@ Likewise, AdapTable has no ability to access Audit Log messages: they are only v
 
 Audit Log is set up via the [Audit Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_auditoptions_.auditoptions.html) section of Adaptable Options.
 
-Each Audit Log message is essentially a combination of 3 things, packaged as a simple JSON object:
+Each Audit Log message is essentially a combination of 3 elements, packaged as a simple JSON object:
 
 - an `AuditMessage` - a description of the actual Audit Event
 - an `AuditTrigger` - what caused the Audit Event to happen
 - an `AuditDestination` - the location(s) to which an Audit Message can be dispatched
 
-There are 5 AuditTriggers and 4 AuditDestinations.
+There are 5 available AuditTriggers and 4 available AuditDestinations.
 
 As many AuditTriggers can be set as required, and for each `AuditTrigger`, as many AuditDestinations can be selected as needed.
 
 > If no AuditTriggers are set, then AuditLog will be turned off.
 
-
-### Audit Triggers
+## Audit Triggers
 
 Audit Triggers are the 'events' in AdapTable that cause an Audit Log Message to be created and dispatched.
 
 The 5 Audit Triggers are:
 
-- **CellEdit**: whenever a cell in AdapTable is changed as a result of user action
+- **CellEdit**: a cell in AdapTable is changed as a result of user action
 
-- **TickingDataUpdate**: whenever the data in AdapTable is updated as a result of external action
+- **TickingDataUpdate**: the data in AdapTable is updated as a result of external action
 
-- **FunctionEvent**: whenever an AdapTable function is run (e.g. Quick Search, Smart Edit, Export etc.)
+- **FunctionEvent**: an AdapTable function is run (e.g. Quick Search, Smart Edit, Export etc.)
 
-- **UserStateChange**: whenever a change is made to the User's state (e.g. selected a new layout)
+- **UserStateChange**: a change is made to the User's state (e.g. selected a new layout)
 
-- **InternalStateChange**: whenever a change is made to AdapTable's internal state (e.g. new cells selected, a popup displayed). Note that this can be quite verbose.
+- **InternalStateChange**: a change is made to AdapTable's internal state (e.g. new cells selected, a popup displayed). Note that this can be quite verbose.
 
-### Audit Triggers
+## Audit Triggers
 
 Audit Destinations are the locations to which an Audit Message can be dispatched.
 
 The 4 available Audit Destinations are:
 
-- **Http Channel**: If you choose this then you need to set up the channel, on which you can subsequently listen to Audit messages using your own internal reporting software (e.g. the Elastic Stack).  You can also, optionally, set the name of the Http Channel (or use the default of '/auditlog').
+- **Http Channel**: an HTTP channel set up by clients, enabling them to listen to Audit messages using your own internal reporting software (e.g. the Elastic Stack)
+  
+  > It is the responsiblity of each dev team to set up the HTTP channel.  They can, optionally, set the name of the Http Channel via the `httpChannel` property (or use the default of '/auditlog').
 
 - **Console**: Audits messages to the console - useful for testing, support and debug purposes
 
 - **Alert**: If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
 
-- **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event API](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html)
+- **Event**: If selected, you will be able to listen to the the `Audit Event` using the [Audit Event Api](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html)
 
 > **The default for each option for each Audit Type is false** - meaning that audit is*only triggered** if you set at least one destination for one trigger to `true`.
 
@@ -95,7 +96,6 @@ auditTickingDataUpdates:{
 };
 
 ```
-
 
 ## FAQ
 

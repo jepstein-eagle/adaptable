@@ -19,7 +19,7 @@ export class AdaptableObjectCollection extends React.Component<AdaptableObjectCo
     const allowOverflow: any = this.props.allowOverflow ? 'visible' : 'auto';
 
     return (
-      <div style={{ ...this.props.style }}>
+      <div style={{ ...this.props.style }} className="ab-ObjectCollection">
         <PanelWithRow
           border="none"
           colItems={this.props.colItems}

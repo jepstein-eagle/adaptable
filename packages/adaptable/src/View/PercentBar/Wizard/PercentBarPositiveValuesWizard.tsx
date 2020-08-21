@@ -91,7 +91,7 @@ export class PercentBarPositiveValuesWizard
               ) : (
                 <ColumnSelector
                   SelectedColumnIds={[this.state.PositiveValueColumnId]}
-                  ColumnList={this.props.Api.gridApi.getColumns()}
+                  ColumnList={this.props.Api.columnApi.getColumns()}
                   onColumnChange={columns => this.onPositiveColumnSelectedChanged(columns)}
                   SelectionMode={SelectionMode.Single}
                 />

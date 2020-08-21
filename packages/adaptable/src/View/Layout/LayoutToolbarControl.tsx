@@ -20,15 +20,19 @@ import { Flex } from 'rebass';
 import join from '../../components/utils/join';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import { isEqual } from 'lodash';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onRestoreLayout: (layout: Layout) => LayoutRedux.LayoutRestoreAction;
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
+  onEditLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
-  CurrentLayout: string;
+  CurrentDraftLayout: Layout;
+  CanSave: boolean;
+  CurrentLayoutName: string;
 }
 
 class LayoutToolbarControlComponent extends React.Component<
@@ -36,23 +40,14 @@ class LayoutToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let nonDefaultLayouts = this.props.Layouts.filter(
-      l => l.Name != GeneralConstants.DEFAULT_LAYOUT
+    let layoutEntity = this.props.Layouts.find(
+      x => x.Name == this.props.CurrentLayoutName || x.Uuid == this.props.CurrentLayoutName
     );
-    let layoutEntity = nonDefaultLayouts.find(
-      x => x.Name == this.props.CurrentLayout || x.Uuid == this.props.CurrentLayout
-    );
-    // this is wrong at the moment an always returning true
-    // but not going to worry until we test with non autosavelayouts (that dont think anyone uses)
-    // but worth fixing and then making that save button enabled depending on whether this is true
-    let isModifiedLayout: boolean = this.props.Api.internalApi
-      .getLayoutService()
-      .isLayoutModified(layoutEntity);
 
     let isManualSaveLayout: boolean =
       this.props.Api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
 
-    let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
+    let availableLayoutOptions: any = this.props.Layouts.map((layout, index) => {
       return {
         ...layout,
         label: layout.Name,
@@ -67,18 +62,13 @@ class LayoutToolbarControlComponent extends React.Component<
           style={{ minWidth: 160 }}
           marginRight={2}
           className="ab-DashboardToolbar__Layout__select"
-          placeholder="Select Layout"
+          showEmptyItem={false}
           value={layoutEntity ? layoutEntity.Name : null}
           options={availableLayoutOptions}
           onChange={(layoutName: any) => {
-            this.onSelectedLayoutChanged(layoutName);
+            this.props.onSelectLayout(layoutName);
           }}
-          clearButtonProps={{
-            tooltip: 'Clear layout',
-            disabled: this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT,
-            AccessLevel: this.props.AccessLevel,
-          }}
-          showClearButton={this.props.CurrentLayout !== GeneralConstants.DEFAULT_LAYOUT}
+          showClearButton={false}
         />
 
         <Flex
@@ -93,10 +83,17 @@ class LayoutToolbarControlComponent extends React.Component<
               className="ab-DashboardToolbar__Layout__save"
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
-              disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
+              disabled={!this.props.CanSave}
               AccessLevel={this.props.AccessLevel}
             />
           )}
+
+          <ButtonEdit
+            onClick={() => this.props.onEditLayout()}
+            tooltip="Edit Layout"
+            className="ab-DashboardToolbar__Layout__edit"
+            AccessLevel={this.props.AccessLevel}
+          />
 
           <ButtonNew
             children={null}
@@ -108,26 +105,14 @@ class LayoutToolbarControlComponent extends React.Component<
             AccessLevel={this.props.AccessLevel}
           />
 
-          <ButtonUndo
-            className="ab-DashboardToolbar__Layout__undo"
-            onClick={() =>
-              isManualSaveLayout
-                ? this.onSelectedLayoutChanged(this.props.CurrentLayout)
-                : this.onRestoreLayout()
-            }
-            disabled={
-              this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT //|| !isModifiedLayout
-            }
-            tooltip={isManualSaveLayout ? 'Undo Layout Changes' : 'Restore Layout'}
-            AccessLevel={this.props.AccessLevel}
-          />
-
           <ButtonDelete
             tooltip="Delete Layout"
+            disabled={this.props.Layouts.length <= 1}
             className="ab-DashboardToolbar__Layout__delete"
-            disabled={this.props.CurrentLayout == GeneralConstants.DEFAULT_LAYOUT}
             ConfirmAction={LayoutRedux.LayoutDelete(layoutEntity)}
-            ConfirmationMsg={"Are you sure you want to delete '" + this.props.CurrentLayout + "'?"}
+            ConfirmationMsg={
+              "Are you sure you want to delete '" + this.props.CurrentLayoutName + "'?"
+            }
             ConfirmationTitle={'Delete Layout'}
             AccessLevel={this.props.AccessLevel}
           />
@@ -146,44 +131,11 @@ class LayoutToolbarControlComponent extends React.Component<
     );
   }
 
-  private onSelectedLayoutChanged(layoutName: string): any {
-    if (StringExtensions.IsNotNullOrEmpty(layoutName)) {
-      this.props.onSelectLayout(layoutName);
-    } else {
-      this.props.onSelectLayout(GeneralConstants.DEFAULT_LAYOUT);
-    }
-  }
-
   private onSaveLayout() {
-    let currentLayoutObject: Layout | undefined = this.props.Layouts.find(
-      l => l.Name == this.props.CurrentLayout
-    );
-    if (currentLayoutObject) {
-      let gridState: any = currentLayoutObject ? currentLayoutObject.VendorGridInfo : null;
+    const currentLayoutObject: Layout | null = this.props.CurrentDraftLayout;
 
-      let visibleColumns = this.props.Api.gridApi.getColumns().filter(c => c.Visible);
-      let layoutToSave: Layout = {
-        Uuid: currentLayoutObject.Uuid,
-        Name: this.props.CurrentLayout,
-        Columns: currentLayoutObject.Columns,
-        ColumnSorts: currentLayoutObject.ColumnSorts,
-        VendorGridInfo: gridState,
-        AdaptableGridInfo: {
-          CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-          CurrentColumnSorts: this.props.Api.gridApi.getColumnSorts(),
-          ExpandedRowGroupKeys: this.props.Api.gridApi.getExpandRowGroupsKeys(),
-        },
-      };
-      this.props.onSaveLayout(layoutToSave);
-    }
-  }
-
-  private onRestoreLayout() {
-    let currentLayoutObject: Layout | undefined = this.props.Layouts.find(
-      l => l.Name == this.props.CurrentLayout
-    );
     if (currentLayoutObject) {
-      this.props.onRestoreLayout(currentLayoutObject);
+      this.props.onSaveLayout(currentLayoutObject);
     }
   }
 }
@@ -192,9 +144,17 @@ function mapStateToProps(
   state: AdaptableState,
   ownProps: any
 ): Partial<LayoutToolbarControlComponentProps> {
+  const CurrentLayoutName = state.Layout.CurrentLayout;
+  const Layouts = state.Layout.Layouts || [];
+  const selectedLayout = Layouts.find(l => l.Name === CurrentLayoutName);
+
   return {
-    CurrentLayout: state.Layout.CurrentLayout,
-    Layouts: state.Layout.Layouts,
+    CurrentLayoutName,
+    CurrentDraftLayout: state.Grid.CurrentLayout || selectedLayout,
+    Layouts,
+    CanSave: !ownProps.Api.internalApi
+      .getLayoutService()
+      .areEqual(selectedLayout, state.Grid.CurrentLayout),
   };
 }
 
@@ -204,11 +164,18 @@ function mapDispatchToProps(
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
     onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
-    onRestoreLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutRestore(layout)),
+
     onNewLayout: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
           action: 'New',
+          source: 'Toolbar',
+        })
+      ),
+    onEditLayout: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
+          action: 'Edit',
           source: 'Toolbar',
         })
       ),

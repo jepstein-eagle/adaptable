@@ -18,7 +18,6 @@ import Info from './info';
 import Alert from './alert';
 import List from './list';
 import SmartEdit from './smart-edit';
-import ColumnChooser from './column-chooser';
 import Home from './home';
 import Justify from './justify';
 import Err from './error';
@@ -119,7 +118,6 @@ const allIcons = {
   calendar: Calendar,
   'cell-validation': CellValidation, // original icon is flag,
   'column-category': ColumnCategory, // original icon was table-chart
-  'column-chooser': ColumnChooser, // original icon was view-columns
   'conditional-style': ConditionalStyle,
   'column-info': ColumnInformation,
   'custom-sort': CustomSort, // was swap-vert

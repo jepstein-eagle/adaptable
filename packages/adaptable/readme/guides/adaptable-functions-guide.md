@@ -18,7 +18,7 @@ There are a number of different ways in which end-Users will interact with AdapT
 
 - AdapTableFunctions which offer objects that can be created / edited / deleted do so via **AdapTableFunction Wizards**.  These provide a step-by-step way to edit the sometimes complex objects that can be created.
 
-- Many AdapTableFunctions also provide Menu Items for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells).
+- Many AdapTableFunctions also provide Menu Entries for both the **Column Menu** (available through clicking a Column Header) and **Context Menu** (available through right-clicking on a grid cell, or group of cells). See more at [Adaptable Menus](adaptable-menus-guide.md).
 
 This table lists all the AdapTableFunctions and which UI elements they support.
 
@@ -36,7 +36,6 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          |
 | [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           |
 | [Column Category](../functions/column-category-function.md)      | Yes    | No      | No         | No          | No           |
-| [Column Chooser](../functions/column-chooser-function.md)        | No     | No      | No         | Yes         | Yes          |
 | [Column Filter](../functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
 | [Column Info](../functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          |
 | [Conditional Style](../functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           |

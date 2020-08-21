@@ -65,7 +65,7 @@ export const ShortcutReducer: Redux.Reducer<ShortcutState> = (
 
   switch (action.type) {
     case SHORTCUT_APPLY:
-      //we apply logic in the middleware since it's an API call
+      //we apply logic in the middleware since it's an Api call
       return Object.assign({}, state);
 
     case SHORTCUT_ADD: {

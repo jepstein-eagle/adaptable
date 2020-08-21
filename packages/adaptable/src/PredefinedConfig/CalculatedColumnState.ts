@@ -18,7 +18,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo/)
  *
- * {@link CalculatedColumnApi|Calculated Column API}
+ * {@link CalculatedColumnApi|Calculated Column Api}
  *
  * [Calculated Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
  *
@@ -39,6 +39,8 @@ export interface CalculatedColumn extends AdaptableObject {
    * This is how it will appear in the Column Header (as caption).
    */
   ColumnId: string;
+
+  FriendlyName?: string;
 
   /**
    * An **Expression** which will retrieve the value to display in the Column and is re-evaluated each time cells in the columns in the expression change.

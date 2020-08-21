@@ -79,13 +79,14 @@ class CalculatedColumnPopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
+      { Content: 'Column Id', Size: 3 },
       { Content: 'Column Name', Size: 3 },
       { Content: 'Column Expression', Size: 7 },
       { Content: '', Size: 2 },
     ];
 
     let propCalculatedColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.CalculatedColumns,
       'ColumnId'
     );

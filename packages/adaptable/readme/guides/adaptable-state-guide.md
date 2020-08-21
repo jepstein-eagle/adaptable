@@ -153,7 +153,7 @@ Among many other advantages, the Adaptable Api provides full, programmatic, read
 
 ### Listening to State Changes
 
-The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventAPI](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html) section of Adaptable API. 
+The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventApi](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html) section of Adaptable Api.
 
 
 ## FAQs
@@ -328,7 +328,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
            'OrderDate',
            'CustomerReference',
            'CompanyName',
-          'ContactName',
+           'ContactName',
            'InvoicedCost',
            'ChangeLastOrder',
            'OrderCost',

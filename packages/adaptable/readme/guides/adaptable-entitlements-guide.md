@@ -1,6 +1,6 @@
 # AdapTable Entitlements Guide
 
-AdapTable enables developers to manage permissions, i.e. which Adaptable Functions are available for which users and in which form.
+AdapTable enables developers to manage permissions, i.e. which Adaptable Functions are available **in the UI** for which users and in which form.
 
 This is done through the `Entitlements` section of Predefined Config (in [Adaptable State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_entitlementstate_.entitlementstate.html)).
 
@@ -19,6 +19,7 @@ Each Entitlement has 3 potential `AccessLevel` values:
 >ReadOnly is designed for when developers want to let users access the reports or layouts they have pre-configured but not to be allowed to create their own.  As a result it is typically used for AdaptableFunctions which can pre-load objects like 'AdavancedSearch', 'Export', 'ConditionalStyle' etc.
 
 ## Default Access Level
+
 By default every AdaptableFunction has the Entitlement of **Full**.  
 
 However this behaviour can be changed through setting the `DefaultAccessLevel` property.  
@@ -112,6 +113,7 @@ export default {
       },
     ],
  ```
+
  In this example we have set:
 
  - All Ediiting-related AdaptableFunctions to be Hidden (e.g. we have a ReadOnly grid)
@@ -131,7 +133,21 @@ These are usually supplied in Predefined Config or Adaptable Options.  These inc
 - **glue42**: the glue42 Predefined Config must contain the glue42 object
 
 - **ipushpull**: the ipushpull Predefined Config must contain the ipushpull object
- 
+
+## Entitlements Scope
+
+Entitlements worka at the **UI Level only**.  This means that AdapTable will ensure that the user cannot see or access - through AdapTable UI elements like menus, toolbars, popups etc. - Functions to which he is not entitled.
+
+However **the Adaptable AApiPI does not take notice of Entitlements**, so anything that is managed programatically through code will ignore the User's entitlements.
+
+> To ensure that the Adaptable Api is not called for functions to which the user has no access, wrap those calls inside relevant EntitlementApi methods e.g. 
+
+```ts
+ if (entitlementApi.isFunctionFullEntitlement('Layout')){
+   layoutApi.doSomething....
+ } 
+ ```
+
 ## Demos
 
 Visit the [AdapTable Demo Site](https://demo.adaptabletools.com/entitlements) to see a number of entitlement-related demos

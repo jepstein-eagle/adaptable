@@ -358,7 +358,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                   style={{ flex: 1 }}
                   SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
                   SelectionMode={SelectionMode.Single}
-                  ColumnList={this.props.Api.gridApi.getColumns()}
+                  ColumnList={this.props.Api.columnApi.getColumns()}
                   onColumnChange={columns => this.onDataGroupColumnChanged(columns)}
                 />
               </Flex>

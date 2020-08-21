@@ -254,6 +254,7 @@ export class ExamplesHelper {
     const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
     const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
     const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+
     const tradeDate = this.generateRandomDate(-4, 5);
     const moodyRating = this.getRandomItem(this.getMoodysRatings());
     const tradeCurrency = currency || this.getRandomItem(this.getCurrencies());
@@ -634,7 +635,7 @@ export class ExamplesHelper {
   }
 
   protected getCountries(): string[] {
-    const newcountries = [
+    /* const newcountries = [
       '1',
       '2',
       '3',
@@ -652,7 +653,7 @@ export class ExamplesHelper {
       //    '15',
     ];
     return newcountries;
-
+*/
     const countries = [
       //  'Argentina',
       'Australia',
@@ -808,6 +809,7 @@ export class ExamplesHelper {
       },
       columnDefs: this.getTradeSchema().map(c => {
         // c.floatingFilter = true;
+        //  c.hide = true;
         return c;
       }),
       rowData,
@@ -1056,13 +1058,19 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
-      //    lockPosition: true,
-      //    lockVisible: true,
+      //   lockPosition: true,
+      //  lockVisible: true,
+      // pinned: true,
+      //  suppressMovable: true,
       editable: true,
       type: ['hello', 'abColDefNumberx'],
       sortable: true,
       filter: true,
       resizable: true,
+      // hide: true,
+      enableValue: true,
+      // enablePivot: true,
+      aggFunc: 'avg',
       // width: 500,
       // headerCheckboxSelection: true,
       //  checkboxSelection: true,
@@ -1070,9 +1078,13 @@ export class ExamplesHelper {
     });
     schema.push({
       headerName: 'Country-Stars',
-      //    colId: 'hello',
+      colId: 'countryStars',
       editable: false,
       filter: true,
+      //  pinned: true,
+      enableValue: true,
+      aggFunc: 'sum',
+      //  rowGroup: true,
       enableRowGroup: true,
       valueGetter: (params: any) => {
         return params.data && params.data.stars && params.data.country
@@ -1082,6 +1094,32 @@ export class ExamplesHelper {
       },
       type: 'abColDefNumber',
     });
+
+    schema.push({
+      headerName: 'Counterparty',
+      field: 'counterparty',
+      editable: true,
+      //   rowGroup: true,
+      enableRowGroup: true,
+      //  enableValue: true,
+      enablePivot: true,
+      //  valueFormatter: this.raduFormatter,
+      //   valueGetter: (params: any) => {
+      //     return 'Hello';
+      //   },
+      valueFormatter: (params: any) => {
+        return params.value ? params.value.toLocaleString() : undefined;
+      },
+
+      //  rowGroup: true,
+      filter: 'agSetColumnFilter',
+      sortable: true,
+      type: 'abColDefString',
+      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
+      // resizable: true,
+      //  tooltipComponent: 'percentBarTooltip',
+    });
+
     schema.push({
       headerName: 'Notional',
       field: 'notional',
@@ -1090,7 +1128,7 @@ export class ExamplesHelper {
       editable: true,
       sortable: true,
       aggFunc: 'sum',
-      // hide: true,
+      hide: true,
       //   agGroupCellRenderer
       // valueFormatter: notionalFormatter,
       cellClass: 'ab-cell--align-right',
@@ -1145,32 +1183,11 @@ export class ExamplesHelper {
       resizable: true,
       editable: true,
       filter: true,
+      enablePivot: true,
+      pivot: true,
       // cellClass: 'number-cell',
       type: 'abColDefNumber',
-      enableValue: true,
-    });
-    schema.push({
-      headerName: 'Counterparty',
-      field: 'counterparty',
-      editable: true,
-      enableRowGroup: true,
-      enableValue: true,
-      enablePivot: true,
-      //  valueFormatter: this.raduFormatter,
-      //   valueGetter: (params: any) => {
-      //     return 'Hello';
-      //   },
-      valueFormatter: (params: any) => {
-        return params.value ? params.value.toLocaleString() : undefined;
-      },
-
-      //  rowGroup: true,
-      filter: 'agSetColumnFilter',
-      sortable: true,
-      type: 'abColDefString',
-      //   cellRenderer: 'agAnimateShowChangeCellRenderer',
-      // resizable: true,
-      //  tooltipComponent: 'percentBarTooltip',
+      enableValue: false,
     });
 
     schema.push({
@@ -1264,13 +1281,28 @@ export class ExamplesHelper {
     });
 
     schema.push({
+      headerName: 'Currency',
+      field: 'currency',
+      editable: true,
+      //  rowGroup: true,
+      enableRowGroup: true,
+      sortable: true,
+      enablePivot: true,
+      filter: 'agTextColumnFilter',
+      type: 'abColDefString',
+      resizable: true,
+    });
+    schema.push({
       headerName: 'Status',
       field: 'status',
       editable: true,
       filter: true,
       sortable: true,
+      pivot: true,
       enableRowGroup: true,
       enablePivot: true,
+      aggFunc: 'sum',
+
       //   pivotComparator: this.statusComparator,
       // pivot: true,
       type: 'abColDefString',

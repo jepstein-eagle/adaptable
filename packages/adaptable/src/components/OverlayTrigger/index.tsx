@@ -8,7 +8,7 @@ import selectParent from '../utils/selectParent';
 
 import useProperty from '../utils/useProperty';
 import Overlay from './Overlay';
-import getOverlayStyle from './getOverlayStyle';
+import getOverlayStyle, { OverlayHorizontalAlign } from './getOverlayStyle';
 import join from '../utils/join';
 import usePrevious from '../utils/usePrevious';
 import { getDocRect, getRect } from './utils';
@@ -47,6 +47,7 @@ export interface OverlayTriggerProps extends React.HTMLAttributes<HTMLElement> {
   targetOffset?: number;
   defaultZIndex?: number;
   anchor: 'vertical' | 'horizontal';
+  alignHorizontal?: OverlayHorizontalAlign;
   constrainTo?: ConstrainToType;
 }
 
@@ -66,7 +67,7 @@ const ensurePortalElement = () => {
 };
 
 const OverlayTrigger = (props: OverlayTriggerProps) => {
-  const {
+  let {
     visible: _,
     showTriangle,
     showEvent,
@@ -77,6 +78,7 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
     anchor,
     opacityTransitionDuration,
     onVisibleChange,
+    alignHorizontal,
     constrainTo,
     ...domProps
   } = props;
@@ -144,11 +146,20 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
   const adaptable = useAdaptable();
 
   if (targetRect) {
+    const overlayTarget = targetRef.current as HTMLElement;
+
+    alignHorizontal =
+      alignHorizontal ||
+      (getComputedStyle(overlayTarget)
+        .getPropertyValue('--ab-overlay-horizontal-align')
+        .trim() as OverlayHorizontalAlign);
+
     let overlayStyle = getOverlayStyle({
-      constrainRect: getConstrainRect(targetRef.current as HTMLElement, constrainTo),
+      constrainRect: getConstrainRect(overlayTarget, constrainTo),
       targetRect,
       targetOffset,
       anchor,
+      alignHorizontal,
     });
 
     overlayStyle.transition = `opacity ${opacityTransitionDuration}`;

@@ -15,7 +15,13 @@ import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux';
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
   protected PercentBarState: PercentBarState;
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.PercentBarStrategyId, adaptable);
+    super(
+      StrategyConstants.PercentBarStrategyId,
+      StrategyConstants.PercentBarStrategyFriendlyName,
+      StrategyConstants.PercentBarGlyph,
+      ScreenPopups.PercentBarPopup,
+      adaptable
+    );
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       const percentBars = this.adaptable.api.percentBarApi.getAllPercentBar();
@@ -47,18 +53,8 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.PercentBarStrategyFriendlyName,
-        ComponentName: ScreenPopups.PercentBarPopup,
-        Icon: StrategyConstants.PercentBarGlyph,
-      });
-    }
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
         this.PercentBarState.PercentBars.map(f => f.ColumnId),
         column.ColumnId
@@ -131,5 +127,15 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       AddAction: PercentBarRedux.PercentBarAdd,
       EditAction: PercentBarRedux.PercentBarEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let percentBars: PercentBar[] = this.GetPercentBarState().PercentBars.filter(
+      (pb: PercentBar) => pb.ColumnId == specialColumnId
+    );
+
+    return ArrayExtensions.IsNotNullOrEmpty(percentBars)
+      ? percentBars.length + ' Percent Bars'
+      : undefined;
   }
 }

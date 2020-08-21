@@ -26,7 +26,7 @@ var api: AdaptableApi;
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeCount: number = 100;
+  const tradeCount: number = 20;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -47,109 +47,21 @@ async function InitAdaptableDemo() {
     layoutOptions: {
       autoSizeColumnsInDefaultLayout: false,
     },
-    filterOptions: {
-      useVendorFilterFormStyle: true,
-      useAdaptableFilterForm: true,
-    },
+
     predefinedConfig: {
-      Theme: {
-        Revision: Date.now(),
-        // SystemThemes: [
-        //   {
-        //     Name: 'light',
-        //     Description: 'light theme',
-        //     VendorGridClassName: 'ag-theme-alpine',
-        //   },
-        //   {
-        //     Name: 'dark',
-        //     Description: 'dark theme',
-        //     VendorGridClassName: 'ag-theme-alpine-dark',
-        //   },
-        // ],
-      },
-      Dashboard: {
-        Revision: 141,
-        CanFloat: false,
-        Tabs: [
+      /*
+      Layout: {
+        CurrentLayout: 'Simple Layout',
+
+        Layouts: [
           {
-            Name: 'General',
-            Toolbars: ['Toolbar1', 'SmartEdit', 'CellSummary', 'Layout'],
+            Name: 'Simple Layout',
+            Columns: ['country', 'currency', 'countryStars', 'tradeId', 'notional', 'counterparty'],
           },
         ],
-        VisibleButtons: ['ConditionalStyle', 'CellSummary', 'ColumnChooser'],
-        CustomToolbars: [
-          {
-            Name: 'Toolbar1',
-            Title: 'Demo Toolbar',
-            Glyph: 'advanced-search',
-            ToolbarButtons: [
-              {
-                Name: 'btnNewLayout',
-                Caption: 'New Layout',
-              },
-              {
-                Name: 'btnCopyLayout',
-                Caption: 'Copy Layout',
-              },
-              {
-                Name: 'btnCopyLayout',
-                Caption: 'Copy Layout',
-              },
-            ],
-          },
-        ],
-        ShowFunctionsDropdown: true,
-        //  HomeToolbarTitle: 'Hello world',
-        ShowQuickSearchInHeader: true,
-        IsInline: false, // making it false in Redux so we dont forget but true here for testing purposes
+
       },
-      SystemStatus: {
-        Revision: 13,
-        DefaultStatusMessage: 'System Running Fine',
-        DefaultStatusType: 'Error',
-      },
-      AdvancedSearch: {
-        Revision: 4,
-      },
-      FormatColumn: {
-        FormatColumns: [
-          {
-            ColumnId: 'notional',
-            CellAlignment: 'Right',
-          },
-        ],
-      },
-      QuickSearch: {
-        Revision: 11,
-        QuickSearchText: 'b',
-      },
-      Entitlements: {
-        Revision: 3,
-        DefaultAccessLevel: 'Full',
-        FunctionEntitlements: [
-          {
-            FunctionName: 'Layout',
-            AccessLevel: 'Full',
-          },
-          {
-            FunctionName: 'Dashboard',
-            AccessLevel: 'Full',
-          },
-        ],
-      },
-      PercentBar: {
-        Revision: 1,
-        PercentBars: [
-          {
-            ColumnId: 'changeOnYear',
-            PositiveValue: 200,
-            NegativeValue: -200,
-            NegativeColor: '#FF0000',
-            PositiveColor: '#008000',
-            ShowValue: false,
-          },
-        ],
-      },
+      */
     },
   };
 
@@ -165,8 +77,20 @@ async function InitAdaptableDemo() {
         Columns: ['bid', 'currency', 'counterparty'],
         GroupedColumns: ['country'],
       };
-      api.layoutApi.createAndSetLayout(newLayout);
+      // api.layoutApi.createAndSetLayout(newLayout);
+      api.gridApi.showQuickFilterBar();
     } else if (toolbarButton.Name == 'btnCopyLayout') {
+      api.gridApi.hideQuickFilterBar();
+
+      let cols: string[] = ['Person', 'How much loves Dad'];
+
+      let data = [
+        ['Eliana', 5],
+        ['Naftali', 9],
+        ['Sigal', 10],
+      ];
+
+      api.exportApi.exportDataToExcel(cols, data, 'Test Report');
       //   let currentLayout = api.layoutApi.getCurrentLayout();
       //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
 

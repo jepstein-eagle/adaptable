@@ -66,7 +66,6 @@ export class Glue42Service implements IGlue42Service {
         return;
       }
       if (!this.glueInstance) {
-        let glue42State: Glue42State | undefined = glue42Api.getGlue42State();
         if (this.options.glue && this.options.glue4Office) {
           glue42Api.setGlue42AvailableOn();
           if (
@@ -251,7 +250,7 @@ export class Glue42Service implements IGlue42Service {
       doneCallback: () => void,
       delta: any[]
     ) => {
-      let primaryKeyColumnFriendlyName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+      let primaryKeyColumnFriendlyName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(
         this.adaptable.adaptableOptions.primaryKey
       );
 
@@ -315,7 +314,7 @@ export class Glue42Service implements IGlue42Service {
         }
       });
       dataChangedInfos.forEach(dc => {
-        // I think we should be using one of our API methods here as that might give us the server validation we need...
+        // I think we should be using one of our Api methods here as that might give us the server validation we need...
         this.adaptable.setValue(dc, false);
       });
 

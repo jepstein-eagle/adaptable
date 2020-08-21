@@ -7,7 +7,7 @@ import Helper from '../../Utilities/Helpers/Helper';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
-// Base class for the API - provides checking dispatching methods
+// Base class for the Api - provides checking dispatching methods
 export abstract class ApiBase {
   /**
    * Constructor for all the api classes which simply takes and assigns an instance of Adaptable
@@ -35,7 +35,7 @@ export abstract class ApiBase {
 
   protected checkArrayExists(array: any): boolean {
     if (!Array.isArray(array)) {
-      LoggingHelper.LogAdaptableError(`Item passed to API function was not an array`);
+      LoggingHelper.LogAdaptableError(`Item passed to Api function was not an array`);
       return false;
     }
     return true;
@@ -79,7 +79,7 @@ export abstract class ApiBase {
    * @param action the Redux Action to be dispatched
    */
   protected dispatchAction(action: Action): void {
-    this.adaptable.AdaptableStore.TheStore.dispatch(action);
+    this.adaptable.adaptableStore.TheStore.dispatch(action);
   }
 
   /**
@@ -88,6 +88,6 @@ export abstract class ApiBase {
    * This is a simple *getState()* call
    */
   public getAdaptableState(): AdaptableState {
-    return this.adaptable.AdaptableStore.TheStore.getState();
+    return this.adaptable.adaptableStore.TheStore.getState();
   }
 }

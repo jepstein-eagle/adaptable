@@ -175,6 +175,11 @@ import "@adaptabletools/adaptable/themes/dark.css"
 
 To find out how to your write your custom themes, provide custom icons - and about AdapTable styling generally - please read the [Adaptable Theming and Styling Guide](../../packages/adaptable/readme/guides/adaptable-theming-guide.md)
 
+
+### Overlay alignment
+
+By default, overlays (lists in dropdown buttons, tooltips) are aligned using a best guess algorithm, but you can modify the horizontal alignment of the overlay by specifying the CSS `--ab-overlay-horizontal-align` either on the overlay target or on one of its parents. Possible values for `--ab-overlay-horizontal-align` are `'left' | 'right' | 'center'`
+
 ## HTML Rendering
 
 The core version of AdapTable expects you to create in your HTML 2 `Div`s:
@@ -209,7 +214,7 @@ For more information please read the [Adaptable State Guide](../../packages/adap
 
 You create an instance of AdapTable by providing the aysnc static constructor with an [AdaptableOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_adaptableoptions_.adaptableoptions.html) object.
 
-The constructor will return a Promise containning an [Adaptable API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
+The constructor will return a Promise containning an [Adaptable Api](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi) object that you can use to access all features of AdapTable at runtime:
 
 ```ts
 const api: AdaptableApi = await Adaptable.init(adaptableOptions)
@@ -298,7 +303,7 @@ const gridOptions: GridOptions=  {
   // Instantiate AdapTable with AdaptableOptions and recieve an AdaptableApi object (via a Promise) for later use
   const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
   
-  // We can now use the API to manage AdapTable and listen to Adaptable events, e.g.
+  // We can now use the Api to manage AdapTable and listen to Adaptable events, e.g.
  api.eventApi.on('AdaptableReady', () => {
     // perform anything you need to do when AdapTable is ready
   });

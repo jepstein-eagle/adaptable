@@ -32,7 +32,7 @@ export class PercentBarRangesWizard
     return (
       <Panel header={'Ranges'} margin={2}>
         {this.state.Ranges.map((range, index) => (
-          <Flex key={index} mb={2}>
+          <Flex key={index} mb={2} data-name="percent-bar-range">
             <Input
               type="number"
               value={range.Min}
@@ -64,7 +64,9 @@ export class PercentBarRangesWizard
             <SimpleButton icon="delete" onClick={() => this.removeRange(index)} />
           </Flex>
         ))}
-        <SimpleButton onClick={() => this.addRange()}>Add New Range</SimpleButton>
+        <SimpleButton data-name="add" onClick={() => this.addRange()}>
+          Add New Range
+        </SimpleButton>
       </Panel>
     );
   }

@@ -34,7 +34,7 @@ export enum LeafExpressionOperator {
   StartsWith = 'StartsWith',
   EndsWith = 'EndsWith',
   Regex = 'Regex',
-  // Cell Validations
+  // Cell Validations and Alerts
   AnyChange = 'AnyChange',
   ValueChange = 'ValueChange',
   PercentChange = 'PercentChange',
@@ -75,6 +75,7 @@ export enum ReportColumnScope {
   VisibleColumns = 'VisibleColumns',
   SelectedCellColumns = 'SelectedCellColumns',
   BespokeColumns = 'BespokeColumns',
+  CustomColumns = 'CustomColumns',
 }
 
 export enum ReportRowScope {
@@ -83,6 +84,7 @@ export enum ReportRowScope {
   SelectedCellRows = 'SelectedCellRows',
   SelectedRows = 'SelectedRows',
   ExpressionRows = 'ExpressionRows',
+  CustomRows = 'CustomRows',
 }
 
 export enum ExportDestination {
@@ -103,8 +105,8 @@ export enum ScheduleType {
 }
 
 export enum SortOrder {
-  Ascending = 'Ascending',
-  Descending = 'Descending',
+  Asc = 'Asc',
+  Desc = 'Desc',
 }
 
 export enum DisplayAction {

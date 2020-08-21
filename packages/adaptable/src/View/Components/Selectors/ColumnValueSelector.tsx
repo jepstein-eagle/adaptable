@@ -87,7 +87,7 @@ export class ColumnValueSelector extends React.Component<
             );
 
             sortedColumnValues = ArrayExtensions.sortArrayWithProperty(
-              SortOrder.Ascending,
+              SortOrder.Asc,
               columnDisplayValuePairs,
               'RawValue'
             );

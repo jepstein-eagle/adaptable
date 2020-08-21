@@ -13,7 +13,7 @@ import { ConfigState } from './ConfigState';
  *
  * - [Application Demo](https://demo.adaptabletools.com/adaptablestate/aggridapplicationdataentriesdemo)
  *
- * - {@link ApplicationApi|Application API}
+ * - {@link ApplicationApi|Application Api}
  *
  * - [Application Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/application-function.md)
  *

@@ -13,7 +13,6 @@ import {
 } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
-import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
 import { Expression } from '../PredefinedConfig/Common/Expression';
 
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';

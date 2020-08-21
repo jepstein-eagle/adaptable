@@ -69,12 +69,12 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     let flashingCellDurations: number[] = [250, 500, 750, 1000];
 
     let calculatedColumns: string[] = this.props.CalculatedColumns.map(c => c.ColumnId);
-    let numericColumns = this.props.Api.gridApi.getNumericColumns();
+    let numericColumns = this.props.Api.columnApi.getNumericColumns();
     let numericNonCalcColumns = numericColumns.filter(c =>
       ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId)
     );
     numericNonCalcColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       numericNonCalcColumns,
       'FriendlyName'
     );

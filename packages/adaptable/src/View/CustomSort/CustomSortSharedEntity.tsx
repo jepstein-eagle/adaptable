@@ -15,7 +15,7 @@ export class CustomSortSharedEntity extends React.Component<
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {this.props.Api.gridApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
+          {this.props.Api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
         </Flex>
         <Flex flex={8}>{this.getCustomSortedValues(customSort)}</Flex>
       </Flex>

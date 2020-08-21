@@ -1,5 +1,5 @@
 /*
-This page includes frequently used typed - particularly helpful for State and API where we can strongly type stuff
+This page includes frequently used typed - particularly helpful for State and Api where we can strongly type stuff
 */
 
 /**
@@ -69,7 +69,6 @@ export type AdaptableFunctionButton =
   | 'CellValidation'
   | 'Chart'
   | 'ColumnCategory'
-  | 'ColumnChooser'
   | 'Filter'
   | 'ColumnInfo'
   | 'ConditionalStyle'
@@ -155,7 +154,6 @@ export type AdaptableFunctionName =
   | 'CellValidation'
   | 'Chart'
   | 'ColumnCategory'
-  | 'ColumnChooser'
   | 'Filter'
   | 'ColumnInfo'
   | 'ConditionalStyle'
@@ -169,7 +167,6 @@ export type AdaptableFunctionName =
   | 'Glue42'
   | 'GradientColumn'
   | 'GridInfo'
-  | 'HideColumn'
   | 'IPushPull'
   | 'Layout'
   | 'OpenFin'
@@ -179,7 +176,6 @@ export type AdaptableFunctionName =
   | 'QuickSearch'
   | 'Reminder'
   | 'Schedule'
-  | 'SelectColumn'
   | 'Shortcut'
   | 'SmartEdit'
   | 'SparklineColumn'

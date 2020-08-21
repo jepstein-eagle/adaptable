@@ -16,24 +16,20 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ConditionalStyleStrategyId, adaptable);
+    super(
+      StrategyConstants.ConditionalStyleStrategyId,
+      StrategyConstants.ConditionalStyleStrategyFriendlyName,
+      StrategyConstants.ConditionalStyleGlyph,
+      ScreenPopups.ConditionalStylePopup,
+      adaptable
+    );
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
-        ComponentName: ScreenPopups.ConditionalStylePopup,
-        Icon: StrategyConstants.ConditionalStyleGlyph,
-      });
-    }
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'style')) {
+    if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
@@ -62,6 +58,16 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
       .getAllConditionalStyle()
       .filter(cs => cs.SharedQueryId == sharedQueryId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
+      ? conditionalStyles.length + ' Conditional Styles'
+      : undefined;
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
+      .getAllConditionalStyle()
+      .filter((cs: ConditionalStyle) => cs.ColumnId == specialColumnId);
 
     return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
       ? conditionalStyles.length + ' Conditional Styles'

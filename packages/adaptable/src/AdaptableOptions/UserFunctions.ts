@@ -11,6 +11,7 @@ import {
   UserMenuItemLabelFunction,
 } from '../PredefinedConfig/UserInterfaceState';
 import { FilterPredicate } from '../PredefinedConfig/FilterState';
+import { CustomReportFunction } from '../PredefinedConfig/ExportState';
 
 /**
  * The actual implementations of functions that users reference in Predefined Config.
@@ -42,6 +43,7 @@ import { FilterPredicate } from '../PredefinedConfig/FilterState';
  *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	    |
  *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item               |
  *  | `UserMenuItemLabelFunction`         | Retrieves a distinct value for the label of a Menu Item |
+ *  | `CustomReportFunction`              | Runs a Custom Report                                    |
  *
  */
 export type UserFunction =
@@ -53,7 +55,8 @@ export type UserFunction =
   | FilterPredicate
   | UserMenuItemClickedFunction
   | UserMenuItemShowPredicate
-  | UserMenuItemLabelFunction;
+  | UserMenuItemLabelFunction
+  | CustomReportFunction;
 
 /**
  * Type which wraps an array of `UserFunction`

@@ -1732,6 +1732,18 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
+          case ActionColumnRedux.ACTION_COLUMN_APPLY: {
+            const actionTyped = action as ActionColumnRedux.ActionColumnApplyAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.ActionColumnStrategyId,
+              action: action.type,
+              info: actionTyped.actionColumnClickedInfo,
+              data: actionTyped.actionColumnClickedInfo.actionColumn,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
           case CalculatedColumnRedux.CALCULATEDCOLUMN_ADD: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnAddAction;
 
@@ -2143,15 +2155,20 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnDeleteAction;
-            adaptable.removeCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId);
-            let returnAction = next(action);
-            return returnAction;
+            if (
+              adaptable.tryRemoveCalculatedColumnFromGrid(actionTyped.calculatedColumn.ColumnId)
+            ) {
+              let returnAction = next(action);
+              return returnAction;
+            }
+            return null;
           }
 
           case CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT: {
             const actionTyped = action as CalculatedColumnRedux.CalculatedColumnEditAction;
             adaptable.editCalculatedColumnInGrid(actionTyped.calculatedColumn);
             let returnAction = next(action);
+            adaptable.redraw();
             return returnAction;
           }
 
@@ -2171,17 +2188,20 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           }
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
-            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnEditAction;
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddAction;
             adaptable.editFreeTextColumnInGrid(actionTyped.freeTextColumn);
             let returnAction = next(action);
+            adaptable.redraw();
             return returnAction;
           }
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_DELETE: {
             const actionTyped = action as FreeTextColumnRedux.FreeTextColumnDeleteAction;
-            adaptable.removeFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId);
-            let returnAction = next(action);
-            return returnAction;
+            if (adaptable.tryRemoveFreeTextColumnFromGrid(actionTyped.freeTextColumn.ColumnId)) {
+              let returnAction = next(action);
+              return returnAction;
+            }
+            return null;
           }
 
           /*******************
@@ -2262,136 +2282,36 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           /*******************
            * LAYOUT ACTIONS
            *******************/
+          // layout delete can trigger a new layout selection
+          case LayoutRedux.LAYOUT_DELETE:
           case LayoutRedux.LAYOUT_SELECT: {
             let returnAction = next(action);
             let layoutState = middlewareAPI.getState().Layout;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
 
             if (currentLayout) {
-              const isNewLayout: boolean = currentLayout.AdaptableGridInfo == null;
-              if (isNewLayout) {
-                currentLayout.AdaptableGridInfo = {
-                  CurrentColumns: currentLayout.Columns,
-                  CurrentColumnSorts: adaptable.LayoutService.getSortsForLayout(currentLayout),
-                  ExpandedRowGroupKeys: adaptable.api.gridApi.getExpandRowGroupsKeys(),
-                };
-              }
-
-              let hasNoVendorGridInfo: boolean = currentLayout.VendorGridInfo == null;
-              if (hasNoVendorGridInfo) {
-                adaptable.setGroupedColumns(currentLayout.GroupedColumns);
-                adaptable.setPivotingDetails(currentLayout.PivotDetails);
-              }
-
-              let gridState: GridState = middlewareAPI.getState().Grid;
-              // set columns
-              let adaptableColumns: AdaptableColumn[] = [];
-              currentLayout.AdaptableGridInfo.CurrentColumns.forEach(c => {
-                let column = adaptable.api.gridApi.getColumnFromId(c);
-                if (column) {
-                  adaptableColumns.push(column);
-                } else {
-                  LoggingHelper.LogAdaptableWarning(
-                    "Column '" + c + "' not found while selecting layout: " + currentLayout
-                  );
-                }
-              });
-              middlewareAPI.dispatch(SystemRedux.SetNewColumnListOrder(adaptableColumns));
-              // set sort
-              middlewareAPI.dispatch(
-                GridRedux.GridSetSort(currentLayout.AdaptableGridInfo.CurrentColumnSorts)
-              );
-              adaptable.setColumnSort(currentLayout.AdaptableGridInfo.CurrentColumnSorts);
-
-              // set pivot mode
-              adaptable.setPivotMode(currentLayout.PivotDetails, currentLayout.VendorGridInfo);
-
-              // set vendor specific info
-              adaptable.setVendorGridLayoutInfo(currentLayout.VendorGridInfo);
-              //  adaptable.reloadGrid();
-              if (hasNoVendorGridInfo) {
-                let currentGridVendorInfo =
-                  currentLayout.Name == DEFAULT_LAYOUT
-                    ? adaptable.getVendorGridDefaultLayoutInfo()
-                    : adaptable.getVendorGridLayoutInfo(
-                        currentLayout.AdaptableGridInfo.CurrentColumns
-                      );
-
-                currentLayout.VendorGridInfo = currentGridVendorInfo;
-                middlewareAPI.dispatch(LayoutRedux.LayoutSave(currentLayout));
-              }
-
               // tell grid the layout has been selected
               adaptable.setLayout(currentLayout);
             }
-            return returnAction;
-          }
 
-          case LayoutRedux.LAYOUT_DELETE: {
-            let returnAction = next(action);
-            let layoutState = middlewareAPI.getState().Layout;
-            let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
-            if (!currentLayout) {
-              // we have deleted the current layout (allowed) so lets make the layout default
-              middlewareAPI.dispatch(LayoutRedux.LayoutSelect(DEFAULT_LAYOUT));
+            if (!adaptable.adaptableOptions.layoutOptions?.autoSaveLayouts) {
+              middlewareAPI.dispatch(LayoutRedux.LayoutUpdateCurrentDraft(currentLayout));
             }
             return returnAction;
           }
+          case LayoutRedux.LAYOUT_ADD:
           case LayoutRedux.LAYOUT_SAVE: {
             let returnAction = next(action);
-            const actionTyped = action as LayoutRedux.LayoutSaveAction;
-            let layout: Layout = Helper.cloneObject(actionTyped.layout);
-            if (layout.AdaptableGridInfo == null) {
-              layout.AdaptableGridInfo = {
-                CurrentColumns: layout.Columns,
-                CurrentColumnSorts: layout.ColumnSorts,
-                ExpandedRowGroupKeys: adaptable.api.gridApi.getExpandRowGroupsKeys(),
-              };
-            }
-            if (layout.VendorGridInfo == null) {
-              adaptable.setGroupedColumns(layout.GroupedColumns);
-              adaptable.setPivotingDetails(layout.PivotDetails);
-            }
+            const actionTyped = action as LayoutRedux.LayoutUpdateCurrentDraftAction;
 
-            let layouts: Layout[] = adaptable.api.layoutApi.getAllLayout();
-            let isExistingLayout: boolean = layouts.find(l => l.Uuid == layout.Uuid) != null;
-
-            // if its default layout then we need to use the id for that one to prevent 2 layouts being created
-            // - this is all a bit messy and needs refactoring
-            if (layout.Name == DEFAULT_LAYOUT) {
-              let currentDefaultLayout = layouts.find(l => l.Name == DEFAULT_LAYOUT);
-              if (currentDefaultLayout) {
-                layout.Uuid = currentDefaultLayout.Uuid;
-                isExistingLayout = true;
+            // if autosave is false
+            if (!adaptable.adaptableOptions.layoutOptions?.autoSaveLayouts) {
+              const layoutState = middlewareAPI.getState().Layout;
+              // and the current layout is saved, make sure we also update the draft
+              if (actionTyped.layout.Name === layoutState.CurrentLayout) {
+                middlewareAPI.dispatch(LayoutRedux.LayoutUpdateCurrentDraft(actionTyped.layout));
               }
             }
-            if (isExistingLayout) {
-              let currentGridVendorInfo =
-                layout.Name == DEFAULT_LAYOUT
-                  ? adaptable.getVendorGridDefaultLayoutInfo()
-                  : adaptable.getVendorGridLayoutInfo(layout.AdaptableGridInfo.CurrentColumns);
-
-              layout.VendorGridInfo = currentGridVendorInfo;
-              middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
-            } else {
-              middlewareAPI.dispatch(LayoutRedux.LayoutAdd(layout));
-            }
-            return returnAction;
-          }
-          case LayoutRedux.LAYOUT_RESTORE: {
-            let returnAction = next(action);
-            const actionTyped = action as LayoutRedux.LayoutRestoreAction;
-            let layout: Layout = Helper.cloneObject(actionTyped.layout);
-            layout.VendorGridInfo = null;
-            layout.AdaptableGridInfo = null;
-            if (layout.GroupedColumns == null) {
-              layout.GroupedColumns = [];
-            }
-            adaptable.setGroupedColumns(layout.GroupedColumns);
-            adaptable.setPivotingDetails(layout.PivotDetails);
-
-            middlewareAPI.dispatch(LayoutRedux.LayoutEdit(layout));
-            middlewareAPI.dispatch(LayoutRedux.LayoutSelect(layout.Name));
             return returnAction;
           }
 
@@ -2420,7 +2340,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // this is a horrible hack and fix for a weird issue
             // we really need to do smart edit and bulk update better
             // but this fixes it for now
-            if (popup.ComponentName != ScreenPopups.ColumnChooserPopup) {
+            if (popup.ComponentName != ScreenPopups.LayoutPopup) {
               if (apiReturn.Alert) {
                 // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
                 if (popup.ComponentName == ScreenPopups.SmartEditPopup) {
@@ -2500,7 +2420,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // this is a horrible hack and fix for a weird issue
             // we really need to do smart edit and bulk update better
             // but this fixes it for now
-            if (popup.ComponentName != ScreenPopups.ColumnChooserPopup) {
+            if (popup.ComponentName != ScreenPopups.LayoutPopup) {
               if (apiReturn.Alert) {
                 // check if BulkUpdate is showing as popup
                 if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
@@ -2794,7 +2714,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
           case SystemRedux.SET_NEW_COLUMN_LIST_ORDER:
             const actionTyped = action as SystemRedux.SetNewColumnListOrderAction;
-            adaptable.setNewColumnListOrder(actionTyped.VisibleColumnList);
+            adaptable.setColumnOrder(actionTyped.VisibleColumnList);
             return next(action);
 
           /*******************
@@ -2815,21 +2735,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          case GridRedux.GRID_HIDE_COLUMN: {
-            const actionTyped = action as GridRedux.GridHideColumnAction;
-            let columnList = [].concat(
-              middlewareAPI.getState().Grid.Columns.filter(c => c.Visible)
-            );
-            let columnIndex = columnList.findIndex(x => x.ColumnId == actionTyped.ColumnId);
-            columnList.splice(columnIndex, 1);
-            adaptable.setNewColumnListOrder(columnList);
-            return next(action);
-          }
-          case GridRedux.GRID_SELECT_COLUMN: {
-            const actionTyped = action as GridRedux.GridSelectColumnAction;
-            adaptable.selectColumn(actionTyped.ColumnId);
-            return next(action);
-          }
           case GridRedux.GRID_CREATE_CELLS_SUMMARY: {
             let SelectedCellsStrategy = <ICellSummaryStrategy>(
               adaptable.strategies.get(StrategyConstants.CellSummaryStrategyId)
@@ -2906,25 +2811,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           case RESET_STATE: {
             let returnAction = next(action);
 
-            //we set the column list from the datasource
-            adaptable.setColumnIntoStore();
-
-            let gridState: GridState = middlewareAPI.getState().Grid;
-            let layoutState: LayoutState = middlewareAPI.getState().Layout;
-
-            //create the default layout (if not there) so we can revert to it if needed
-            let currentLayout = DEFAULT_LAYOUT;
-            let defaultLayout: Layout = ObjectFactory.CreateDefaultLayout(
-              gridState.Columns,
-              [],
-              adaptable.getVendorGridDefaultLayoutInfo(),
-              DEFAULT_LAYOUT
-            );
-            middlewareAPI.dispatch(LayoutRedux.LayoutSave(defaultLayout));
-            if (layoutState.Layouts.length > 0) {
-              currentLayout = layoutState.CurrentLayout;
-            }
-
             //Create all calculated columns which have stored in Adaptable State to be vendor Columns
             // do this before we load the layout
             let calculatedColumnStrategy = <ICalculatedColumnStrategy>(
@@ -2950,15 +2836,23 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               actionColumnStrategy.addActionColumnsToGrid();
             }
 
-            //load the default layout if its current
-            if (currentLayout == DEFAULT_LAYOUT) {
-              middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
+            // make sure we have the grid columns in state, before we do any layout work
+            adaptable.updateColumnsIntoStore();
+
+            const layoutState: LayoutState | undefined = middlewareAPI.getState().Layout;
+            const defaultLayout = adaptable.LayoutService.createDefaultLayoutIfNeeded();
+
+            let currentLayout: string = layoutState?.CurrentLayout || defaultLayout?.Name;
+            if (!adaptable.api.layoutApi.getLayoutByName(currentLayout)) {
+              currentLayout = defaultLayout ? defaultLayout.Name : layoutState.Layouts[0].Name;
             }
+
+            middlewareAPI.dispatch(LayoutRedux.LayoutSelect(currentLayout));
 
             // do this now so it sets strategy entitlements
             adaptable.StrategyService.setStrategiesEntitlements();
             // create the functions menu (for use in the dashboard and the toolpanel)
-            adaptable.StrategyService.createStrategyFunctionMenu();
+            adaptable.StrategyService.createStrategyFunctionMenus();
 
             return returnAction;
           }
@@ -3012,13 +2906,12 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
     SystemRedux.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS,
 
-    SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
+    // SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
 
-    GridRedux.GRID_SELECT_COLUMN,
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
     GridRedux.GRID_EDIT_COLUMN,
-    GridRedux.GRID_HIDE_COLUMN,
+    //  GridRedux.GRID_HIDE_COLUMN,
     GridRedux.GRID_SET_VALUE_LIKE_EDIT,
     GridRedux.GRID_SET_SORT,
     GridRedux.GRID_SET_SELECTED_CELLS,
@@ -3029,7 +2922,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.FILTER_FORM_HIDE,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
-    GridRedux.SET_MAIN_MENUITEMS,
+    GridRedux.SET_FUNCTION_DROPDOWN_MENUITEMS,
 
     GridRedux.SET_PIVOT_MODE_ON,
     GridRedux.SET_PIVOT_MODE_OFF,
@@ -3052,11 +2945,12 @@ export function getNonPersistedReduxActions(): string[] {
 
 export function getFunctionAppliedReduxActions(): string[] {
   // NOTE: We have an issue with how we have built Smart Edit and Bulk Update that we are not able to capture the Apply
-  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the API)
+  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the Api)
   // As few users currently audit functions and few have editable grids its not an urgent problem but one that we should fix
 
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout
   return [
+    ActionColumnRedux.ACTION_COLUMN_APPLY,
     AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE,
     CalendarRedux.CALENDAR_SELECT,
     ChartRedux.CHART_DEFINITION_SELECT,

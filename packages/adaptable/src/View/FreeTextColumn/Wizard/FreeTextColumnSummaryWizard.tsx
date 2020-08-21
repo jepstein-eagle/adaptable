@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
+
 import { FreeTextColumn } from '../../../PredefinedConfig/FreeTextColumnState';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
@@ -23,7 +23,8 @@ export class FreeTextColumnSummaryWizard
 
   render() {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.ColumnId },
+      { Key: 'Column Id', Value: this.props.Data.ColumnId },
+      { Key: 'Column Name', Value: this.props.Data.FriendlyName },
       {
         Key: 'Default Value',
         Value: StringExtensions.IsNullOrEmpty(this.props.Data.DefaultValue)

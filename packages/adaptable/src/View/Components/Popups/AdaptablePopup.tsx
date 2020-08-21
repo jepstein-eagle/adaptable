@@ -4,6 +4,7 @@ import { AdaptableViewFactory } from '../../AdaptableViewFactory';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { StrategyViewPopupProps, StrategyParams } from '../SharedProps/StrategyViewPopupProps';
 import * as GeneralConstants from '../../../Utilities/Constants/GeneralConstants';
+import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableHelper } from '../../../Utilities/Helpers/AdaptableHelper';
 import { UIHelper } from '../../UIHelper';
 import SimpleButton from '../../../components/SimpleButton';
@@ -12,6 +13,7 @@ import { PopupWithFooter } from '../../../components/PopupWithFooter';
 import PopupContext from './PopupContext';
 import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
+import { ITeamSharingStrategy } from '../../../Strategy/Interface/ITeamSharingStrategy';
 
 /**
  * This is the main popup that we use - so all function popups will appear here.
@@ -40,6 +42,10 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
 
     if (this.props.ComponentName) {
       let bodyElement: any = AdaptableViewFactory[this.props.ComponentName];
+
+      let teamsharingStrategy: ITeamSharingStrategy = this.props.Adaptable.strategies.get(
+        StrategyConstants.TeamSharingStrategyId
+      );
 
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {

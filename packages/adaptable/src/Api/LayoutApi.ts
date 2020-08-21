@@ -19,16 +19,19 @@ export interface LayoutApi {
   setLayout(layoutName: string): void;
 
   /**
-   * Clears the currently selected Layout
-   *
-   * This will make the initial 'default' Layout appear.
-   */
-  clearLayout(): void;
-
-  /**
    * Retrieves the current Layout
    */
   getCurrentLayout(): Layout;
+
+  /**
+   * Retrieves a map with visible columns in the current layout. The col ids are the keys, and the values are `true`
+   */
+  getCurrentVisibleColumnIdsMap(): { [key: string]: boolean };
+
+  /**
+   * Retrieves an array of visible column ids in the current layout.
+   */
+  getCurrentVisibleColumnIds(): string[];
 
   /**
    * Retrieves the name of the current Layout
@@ -36,14 +39,9 @@ export interface LayoutApi {
   getCurrentLayoutName(): string;
 
   /**
-   * Returns true if the current Layout is the default Layout
-   */
-  isDefaultLayout(): boolean;
-
-  /**
    * Retrieves the Layout with the inputted name
    */
-  getLayoutByName(layoutName: string): Layout;
+  getLayoutByName(layoutName: string): Layout | null;
 
   /**
    * Retrieves all the Layouts in Adaptable State
@@ -65,13 +63,13 @@ export interface LayoutApi {
    * Creates the a new Layout in the state
    * @param layoutToCreate the Layout to create (the Api will create the identiifer automatically)
    */
-  createLayout(layoutToCreate: Layout): void;
+  createLayout(layoutToCreate: Layout): Layout | undefined;
 
   /**
    * Creates the given Layout and then loads it into the Grid
    * @param layoutToCreate the Layout to create (the Api will create the identiifer automatically)
    */
-  createAndSetLayout(layoutToCreate: Layout): void;
+  createAndSetLayout(layoutToCreate: Layout): Layout;
 
   /**
    * Clones the given Layout by creating a new one with the same properties but with a new name (using the one provided)
@@ -92,14 +90,6 @@ export interface LayoutApi {
    * @param layout the Layout to check
    */
   doesLayoutExist(layout: Layout): boolean;
-
-  /**
-   * Restores the given layout
-   *
-   * Reloads it according to initial definition with all vendor grid state removed.
-   * @param layoutToRestore the Layout to restore (the Layout needs already to exist)
-   */
-  restorelayout(layoutToRestore: Layout): void;
 
   /**
    * Opens the Layout popup screen

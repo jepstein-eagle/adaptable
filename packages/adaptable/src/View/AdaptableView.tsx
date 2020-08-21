@@ -146,7 +146,7 @@ function mapDispatchToProps(
 let AdaptableWrapper = connect(mapStateToProps, mapDispatchToProps)(AdaptableView);
 
 export const AdaptableApp = ({ Adaptable }: { Adaptable: IAdaptable }) => (
-  <Provider store={Adaptable.AdaptableStore.TheStore}>
+  <Provider store={Adaptable.adaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={Adaptable}>
         <AdaptableWrapper Adaptable={Adaptable} />

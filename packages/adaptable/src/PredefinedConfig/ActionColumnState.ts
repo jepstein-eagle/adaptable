@@ -11,7 +11,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - *RenderFunction*: provides details of what the button will look like.  If not provided then a standard button is shown
  *
- *  - *ShouldRenderPredicate*: a function which will evaluate for each row if the button should be rendered
+ * - *ShouldRenderPredicate*: a function which will evaluate for each row if the button should be rendered
  *
  * When the button is clicked, Adaptable fires an `ActionColumnClicked` event (see [Event Api](https://api.adaptabletools.com/interfaces/_src_api_eventapi_.eventapi.html)) which contains full details of the column and the row.
  *
@@ -21,7 +21,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - {@link ActionColumnApi|Action Column API}
+ * - {@link ActionColumnApi|Action Column Api}
  *
  * - [Action Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
@@ -33,7 +33,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * In this example we create a column called 'Delete Trade'.
  *
- * We provide an implementation for `ShouldRenderPredicate` to specify that we render only in rows where the value in the 'tradeDate' column is before today.
+ * We provide an implementation for `ShouldRenderPredicate` to specify that we render only in rows where the Counterparty Column's value is not 'BAML'.
  *
  * We also provide our own `RenderFunction` implementation which renders the column differently for rows where the currency is 'USD'.
  *
@@ -78,7 +78,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *      },
  *     ],
  *
- *  // we listen to the `ActionColumnClicked` event (via the eventAPI in Adaptable API) and then act accordingly
+ *  // we listen to the `ActionColumnClicked` event (via the eventApi in Adaptable Api) and then act accordingly
  *    api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
  *      // do stuff...
  *  });

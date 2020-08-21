@@ -19,7 +19,7 @@ export class ColumnCategoryEntityRow extends React.Component<
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
     let columnNames: string[] = ColumnCategory.ColumnIds.map(ci => {
-      return this.props.api.gridApi.getFriendlyNameFromColumnId(ci);
+      return this.props.api.columnApi.getFriendlyNameFromColumnId(ci);
     });
 
     colItems[0].Content = <EntityRowItem Content={ColumnCategory.ColumnCategoryId} />;

@@ -20,6 +20,7 @@ export class ListBoxFilterSortComponent extends React.Component<
   render() {
     return (
       <FieldWrap
+        className="ab-SingleListBoxFilter"
         style={{
           borderTop: 0,
           borderRight: 0,
@@ -41,7 +42,7 @@ export class ListBoxFilterSortComponent extends React.Component<
           variant="text"
         ></SimpleButton>
 
-        {this.props.SortOrder == SortOrder.Ascending ? (
+        {this.props.SortOrder == SortOrder.Asc ? (
           <SimpleButton
             disabled={this.props.DisableSort}
             onClick={() => this.props.sortColumnValues()}

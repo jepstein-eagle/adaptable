@@ -29,6 +29,7 @@ class ButtonDeleteComponent extends React.Component<DeleteButtonProps, {}> {
     } = this.props;
     return (
       <SimpleButton
+        data-name="delete"
         tooltip="Delete"
         variant="text"
         icon="trash"

@@ -217,7 +217,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         });
       }
 
-      let columnFriendlyName = this.props.Api.gridApi.getFriendlyNameFromColumnId(columnId);
+      let columnFriendlyName = this.props.Api.columnApi.getFriendlyNameFromColumnId(columnId);
 
       return (
         <div
@@ -231,6 +231,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
               tone="accent"
               variant="raised"
               key={columnId + 'header'}
+              data-name="selected-column"
               onClick={() => this.onColumnHeaderSelected(columnId)}
             >
               <u>{columnFriendlyName}</u>
@@ -257,6 +258,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
       <Flex style={{ flex: '1 0 0%' }} flexDirection="column">
         {this.props.ShowPanel && (
           <PanelWithButton
+            className="ab-ExpressionBuilder__preview"
             variant="default"
             style={{ flex: 1 }}
             bodyProps={{

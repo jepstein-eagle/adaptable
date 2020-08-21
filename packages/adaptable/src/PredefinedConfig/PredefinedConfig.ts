@@ -337,7 +337,7 @@ import { SharedQueryState } from './SharedQueryState';
  *           'OrderDate',
  *           'CustomerReference',
  *           'CompanyName',
- *          'ContactName',
+ *           'ContactName',
  *           'InvoicedCost',
  *           'ChangeLastOrder',
  *           'OrderCost',

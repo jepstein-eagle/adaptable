@@ -18,7 +18,13 @@ import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 export class CustomSortStrategy extends AdaptableStrategyBase implements ICustomSortStrategy {
   private CustomSorts: CustomSort[];
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CustomSortStrategyId, adaptable);
+    super(
+      StrategyConstants.CustomSortStrategyId,
+      StrategyConstants.CustomSortStrategyFriendlyName,
+      StrategyConstants.CustomSortGlyph,
+      ScreenPopups.CustomSortPopup,
+      adaptable
+    );
   }
 
   protected InitState() {
@@ -29,18 +35,8 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
     }
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CustomSortStrategyFriendlyName,
-        ComponentName: ScreenPopups.CustomSortPopup,
-        Icon: StrategyConstants.CustomSortGlyph,
-      });
-    }
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'sort')) {
+    if (this.canCreateMenuItem('Full') && column.Sortable) {
       let customSort = this.CustomSorts.find(x => x.ColumnId == column.ColumnId);
       let label = customSort ? 'Edit ' : 'Create ';
 

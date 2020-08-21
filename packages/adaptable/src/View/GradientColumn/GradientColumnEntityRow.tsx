@@ -28,7 +28,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumn(
           GradientColumn.ColumnId,
           this.props.Column
         )}

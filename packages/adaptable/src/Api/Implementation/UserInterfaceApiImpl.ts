@@ -53,7 +53,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     }
 
     if (typeof permittedValuesColumn.PermittedValues === 'function') {
-      let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+      let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
         permittedValuesColumn.ColumnId
       );
       return permittedValuesColumn.PermittedValues(column);
@@ -93,7 +93,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     }
 
     if (typeof editLookUpColumn.LookUpValues === 'function') {
-      let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+      let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
         editLookUpColumn.ColumnId
       );
       return editLookUpColumn.LookUpValues(column);

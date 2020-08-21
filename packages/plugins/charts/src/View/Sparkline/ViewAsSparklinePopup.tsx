@@ -200,7 +200,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
               showClearButton={false}
               SelectedColumnIds={[this.state.SparklinesChartDefinition.ColumnId]}
               SelectionMode={SelectionMode.Single}
-              ColumnList={this.props.Api.gridApi.getNumericColumns()}
+              ColumnList={this.props.Api.columnApi.getNumericColumns()}
               onColumnChange={columns => this.onDataColumnChanged(columns)}
             />
           </Flex>
@@ -245,7 +245,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
 
     let chartData: ChartData = this.props.Api.internalApi
       .getChartService()
-      .BuildSparklinesChartData(sparklinesChartDefinition, this.props.Api.gridApi.getColumns());
+      .BuildSparklinesChartData(sparklinesChartDefinition, this.props.Api.columnApi.getColumns());
     let dataSource: number[] = chartData.Data;
     let errorMessage: string = chartData.ErrorMessage;
 

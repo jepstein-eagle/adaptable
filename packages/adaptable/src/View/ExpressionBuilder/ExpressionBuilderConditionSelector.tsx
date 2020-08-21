@@ -209,7 +209,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           false
         );
         columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
+          SortOrder.Asc,
           columnValuePairs,
           DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
         );
@@ -261,7 +261,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             false
           );
           columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-            SortOrder.Ascending,
+            SortOrder.Asc,
             columnValuePairs,
             DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
           );
@@ -350,6 +350,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         headerText={panelHeader}
         variant="default"
         button={clearButton}
+        className="ab-ExpressionBuilder__condition-selector"
         bodyScroll={false}
         bodyProps={{
           padding: 0,

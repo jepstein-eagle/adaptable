@@ -81,13 +81,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     let existingColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
-    if (!existingColumnFilter) {
-      existingColumnFilter = ObjectFactory.CreateColumnFilter(
-        this.props.CurrentColumn.ColumnId,
-        null,
-        null
-      );
-    }
+    // if (!existingColumnFilter) {
+    //   existingColumnFilter = ObjectFactory.CreateColumnFilter(
+    //     this.props.CurrentColumn.ColumnId,
+    //     null,
+    //     null
+    //   );
+    // }
 
     this.state = {
       ColumnValuePairs: [],
@@ -123,13 +123,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       let existingColumnFilter = this.props.ColumnFilters.find(
         cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
       );
-      if (!existingColumnFilter) {
-        existingColumnFilter = ObjectFactory.CreateColumnFilter(
-          this.props.CurrentColumn.ColumnId,
-          null,
-          null
-        );
-      }
+      // if (!existingColumnFilter) {
+      //   existingColumnFilter = ObjectFactory.CreateColumnFilter(
+      //     this.props.CurrentColumn.ColumnId,
+      //     null,
+      //     null
+      //   );
+      // }
 
       if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
@@ -144,7 +144,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 false
               );
               columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                SortOrder.Ascending,
+                SortOrder.Asc,
                 columnValuePairs,
                 DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
               );
@@ -194,7 +194,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           false
         );
         columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
+          SortOrder.Asc,
           columnValuePairs,
           DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
         );
@@ -471,7 +471,7 @@ function mapDispatchToProps(
 export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.adaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <FilterForm

@@ -23,8 +23,6 @@ import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
-
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
 import { FilterStrategy } from '../Strategy/FilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
@@ -79,8 +77,6 @@ import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
-import { HideColumnStrategy } from '../Strategy/HideColumnStrategy';
-import { SelectColumnStrategy } from '../Strategy/SelectColumnStrategy';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants';
 import { clamp } from 'lodash';
@@ -136,7 +132,6 @@ export class agGridHelper {
       new CellValidationStrategy(adaptable)
     );
 
-    strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
     strategies.set(StrategyConstants.FilterStrategyId, new FilterStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
@@ -186,8 +181,6 @@ export class agGridHelper {
     strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
-    strategies.set(StrategyConstants.HideColumnStrategyId, new HideColumnStrategy(adaptable));
-    strategies.set(StrategyConstants.SelectColumnStrategyId, new SelectColumnStrategy(adaptable));
     strategies.set(StrategyConstants.SharedQueryStrategyId, new SharedQueryStrategy(adaptable));
 
     return strategies;
@@ -299,22 +292,51 @@ export class agGridHelper {
   public createAdaptableColumnFromVendorColumn(vendorColumn: Column): AdaptableColumn {
     const colId: string = vendorColumn.getColId();
     const colDef: ColDef = vendorColumn.getColDef();
+
+    const FriendlyName = this.gridOptions.columnApi!.getDisplayNameForColumn(
+      vendorColumn,
+      'header'
+    );
+
+    const ColumnId = colId;
+
     const abColumn: AdaptableColumn = {
       Uuid: createUuid(),
-      ColumnId: colId,
-      FriendlyName: this.gridOptions.columnApi!.getDisplayNameForColumn(vendorColumn, 'header'),
-      DataType: this.getColumnDataType(vendorColumn),
+      ColumnId,
+      FriendlyName,
+      DataType: this.getColumnDataType(vendorColumn, false),
+      // Visible: !colDef.hide, // vendorColumn.isVisible(),
       Visible: vendorColumn.isVisible(),
       ReadOnly: this.isColumnReadonly(colDef),
+
       Sortable: this.isColumnSortable(colDef),
       Filterable: this.isColumnFilterable(colDef),
-      IsSparkline: this.adaptable.api.sparklineColumnApi.isSparklineColumn(colId),
+
       Groupable: this.isColumnGroupable(colDef),
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
-      SpecialColumn: false,
+      AvailableAggregationFunctions: null,
+      AggregationFunction: null,
+      Moveable: this.isColumnMoveable(colDef),
+      Hideable: this.isColumnHideable(colDef),
+
+      IsGrouped: this.isColumnGrouped(colDef),
+      IsFixed: this.isColumnFixed(colDef),
+
+      //TODO add IsPivoted
+      //TODO add IsAggregated
+      //TODO add IsPinned??
+      IsSparkline: this.adaptable.api.sparklineColumnApi.isSparklineColumn(colId),
+      IsSpecialColumn: false,
       IsExcludedFromQuickSearch: false,
     };
+
+    if (abColumn.Aggregatable) {
+      abColumn.AvailableAggregationFunctions = this.getColumnAggregationFunctions(colDef);
+      if (typeof colDef.aggFunc === 'string') {
+        abColumn.AggregationFunction = colDef.aggFunc;
+      }
+    }
     // lets set this here one as the function cannot change the result so dont need to run it each time
     let excludeColumnFromQuickSearch = this.adaptable.adaptableOptions.searchOptions!
       .excludeColumnFromQuickSearch;
@@ -624,13 +646,70 @@ export class agGridHelper {
     return false;
   }
 
+  public getColumnAggregationFunctions(colDef: ColDef): string[] {
+    return colDef.allowedAggFuncs || ['sum', 'min', 'max', 'count', 'avg', 'first', 'last']; // those are the default fns aggrid supports out-of-the-box
+  }
+
+  public isColumnMoveable(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.suppressMovable != null && colDef.suppressMovable == true) {
+      return false;
+    }
+    if (this.isColumnFixed(colDef)) {
+      return false;
+    }
+    return true;
+  }
+
+  public isColumnHideable(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.lockVisible != null && colDef.lockVisible == true) {
+      return false;
+    }
+    return true;
+  }
+
   public isColumnFilterable(colDef: ColDef): boolean {
-    // follow agGrid logic which is that ONLY filterable if one explicitly set
+    // follow agGrid logic which is that ONLY filterable if explicitly set
     return colDef != null && colDef.filter != null && colDef.filter != false;
   }
 
+  // used for ag-Grid when the column is FixedPinned, meaning it should never be unpinned
+  public isColumnFixed(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+    if (colDef.lockPosition != null && colDef.lockPosition == true) {
+      return false;
+    }
+
+    if (colDef.lockPinned != null && colDef.lockPinned == true) {
+      return true;
+    }
+    return false;
+  }
+
+  public isColumnGrouped(colDef: ColDef): boolean {
+    if (!colDef) {
+      return false;
+    }
+
+    if (colDef.rowGroup != null && colDef.rowGroup == true) {
+      return true;
+    }
+    if (colDef.rowGroupIndex != null) {
+      return true;
+    }
+    return false;
+  }
+
   public getColumnDataType(
-    column: Column
+    column: Column,
+    logWarning = true
   ): 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown' {
     // Some columns can have no ID or Title. we return string as a consequence but it needs testing
     if (!column) {
@@ -639,8 +718,9 @@ export class agGridHelper {
     }
     let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
-      column.getId()
+    const existingColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
+      column.getId(),
+      logWarning
     );
     if (existingColumn && existingColumn.DataType != DataType.Unknown) {
       return existingColumn.DataType;
@@ -736,6 +816,8 @@ export class agGridHelper {
           return DataType.String;
         case 'abColDefBoolean':
           return DataType.Boolean;
+        case 'abColDefActionColumn':
+          return DataType.Object;
         case 'abColDefDate':
           return DataType.Date;
         case 'abColDefObject':
@@ -788,7 +870,7 @@ export class agGridHelper {
         if (
           !this.adaptable.api.gridApi
             .getColumnSorts()
-            .find((gs: ColumnSort) => this.adaptable.api.gridApi.isSpecialColumn(gs.Column))
+            .find((gs: ColumnSort) => this.adaptable.api.columnApi.isRowGroupColumn(gs.Column))
         ) {
           const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId
@@ -911,7 +993,7 @@ export class agGridHelper {
         headerFontStyle: headerColStyle.fontStyle,
         headerFontWeight: headerColStyle.fontWeight,
         height: Number(headerColStyle.height.replace('px', '')),
-        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+        Columns: this.adaptable.api.columnApi.getColumns().map(col => {
           const headerColumn: HTMLElement = document.querySelector(
             `.ag-header-cell[col-id='${col.ColumnId}']`
           ) as HTMLElement;
@@ -932,7 +1014,7 @@ export class agGridHelper {
         fontStyle: firstRowStyle.fontStyle,
         fontWeight: firstRowStyle.fontWeight,
         height: Number(firstRowStyle.height.replace('px', '')),
-        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+        Columns: this.adaptable.api.columnApi.getColumns().map(col => {
           const cellElement: HTMLElement = document.querySelector(
             `.ag-cell[col-id='${col.ColumnId}']`
           ) as HTMLElement;

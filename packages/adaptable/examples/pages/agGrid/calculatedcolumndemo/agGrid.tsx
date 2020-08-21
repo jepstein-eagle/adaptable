@@ -96,7 +96,7 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleButtons: ['CalculatedColumn', 'ColumnChooser'],
+    VisibleButtons: ['CalculatedColumn', 'Layout'],
   },
   CalculatedColumn: {
     CalculatedColumns: [
@@ -125,7 +125,6 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         Columns: ['tradeId', 'country', 'notional', 'Dob Notional', 'currency'],
-        //   GroupedColumns: ['currency'],
         ColumnSorts: [],
         Name: 'with calc cols',
       },

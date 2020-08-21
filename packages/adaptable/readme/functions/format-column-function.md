@@ -2,16 +2,16 @@
 
 The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given any (or all) of a particular **Style** (i.e. colours, font size etc), **Display Format** or **Cell Alignment** which **all cells** in the Column will display.
 
-### Style
+## Style
 
-Users can set the style for the Column by simply selecting the fore and back colours and any font properties as appropriate.
+Users can set the style for the Column by selecting the fore (i.e. font) and back colours and any font properties as appropriate.
 
-> Format Column differs from the [Conditional Styles Function](./conditional-style-function.md) because the latter only applies the style when a particular condition is met.  However Format Column will always style the column irrespective of the data contained in the cell.
+> Format Column differs from the [Conditional Styles Function](./conditional-style-function.md) because the latter only applies the style when a particular condition is met.  However Format Column will **always style the column** irrespective of the data contained in the cell.
 
 The style in a Format Column has lowest last level of style-application preference, so any Flashing Cells, Quick Search highlights or Conditional Styles will be applied ahead of it.
 
 
-### Display Format
+## Display Format
 
 The Display Format sets how the value in the column will be formatted, so it matches the precise requirements of users.  
 
@@ -23,7 +23,7 @@ Display Formats can be set for:
 
 - **Date Columns**: users can set their own date pattern or select from one of the presets.  The full list of the available patterns is [here](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
 
-### Cell Alignment
+## Cell Alignment
 
 The Format Column can be set so that contents in the cells will align to the *left*, *right* or be placed in the *center*.
 
@@ -78,6 +78,10 @@ Yes. Create a prefix (or suffix) as appropriate
 
 Yes. Check the *Parentheses* checkbox in the Display Format stage of the wizard.
 
+**Can we show percentages?**
+
+Yes, this is a common requirement which is typically done by setting the *Multiplier* property to 100 and the *Suffix* to '%'
+
 **Can we see just the time portion of a Date?**
 
 Yes. Set the Display Format to show the time portion only (e.g. see the 'HH:mm:ss' preset which displays the time using a 24 hour clock)
@@ -87,7 +91,7 @@ Yes. Set the Display Format to show the time portion only (e.g. see the 'HH:mm:s
 
 - [Format Column State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)
 
-- [Format Column API](https://api.adaptabletools.com/interfaces/_src_api_formatcolumnapi_.formatcolumnapi.html)
+- [Format Column Api](https://api.adaptabletools.com/interfaces/_src_api_formatcolumnapi_.formatcolumnapi.html)
 
 - [Format Column Demo](https://demo.adaptabletools.com/style/aggridformatcolumndemo)
 

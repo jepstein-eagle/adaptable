@@ -31,7 +31,7 @@ export class SharedQueryExpressionWizard
         value={this.state.Expression}
         onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
         initialData={firstRow}
-        columns={this.props.Api.gridApi.getColumns()}
+        columns={this.props.Api.columnApi.getColumns()}
         functions={defaultFunctions}
       />
     );

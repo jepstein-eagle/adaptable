@@ -14,9 +14,15 @@ import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.FormatColumnStrategyId, adaptable);
+    super(
+      StrategyConstants.FormatColumnStrategyId,
+      StrategyConstants.FormatColumnStrategyFriendlyName,
+      StrategyConstants.FormatColumnGlyph,
+      ScreenPopups.FormatColumnPopup,
+      adaptable
+    );
 
-    adaptable.AdaptableStore.onAny((eventName: string) => {
+    adaptable.adaptableStore.onAny((eventName: string) => {
       if (
         eventName == FormatColumnRedux.FORMAT_COLUMN_ADD ||
         eventName == FormatColumnRedux.FORMAT_COLUMN_EDIT ||
@@ -28,18 +34,8 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.FormatColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.FormatColumnPopup,
-        Icon: StrategyConstants.FormatColumnGlyph,
-      });
-    }
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'style')) {
+    if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
       let formatExists: boolean = ArrayExtensions.ContainsItem(
         this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
         column.ColumnId
@@ -69,6 +65,16 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       AddAction: FormatColumnRedux.FormatColumnAdd,
       EditAction: FormatColumnRedux.FormatColumnEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let formatColumns: FormatColumn[] = this.adaptable.api.formatColumnApi
+      .getAllFormatColumn()
+      .filter((fc: FormatColumn) => fc.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(formatColumns)
+      ? formatColumns.length + ' Format Columns'
+      : undefined;
   }
 
   public abstract initStyles(): void;

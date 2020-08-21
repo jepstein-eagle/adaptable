@@ -31,7 +31,7 @@ export class AlertSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.gridApi.getColumns()}
+          ColumnList={this.props.Api.columnApi.getColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

@@ -27,7 +27,12 @@ export class WizardLegend extends React.Component<WizardLegendProps, {}> {
 
       let lastStep: boolean = index == count;
       return (
-        <div key={index} style={{ display: 'inline-block' }}>
+        <div
+          className="ab-WizardLegend__step"
+          data-name={s}
+          key={index}
+          style={{ display: 'inline-block' }}
+        >
           <SimpleButton
             variant={isActiveStep ? 'raised' : 'outlined'}
             tone={isActiveStep ? 'accent' : 'neutral'}

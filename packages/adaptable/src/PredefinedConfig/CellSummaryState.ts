@@ -16,7 +16,7 @@ import { SelectedCellInfo } from '../types';
  *
  * [Cell Summary Demo](https://demo.adaptabletools.com/gridmanagement/aggridcellsummarydemo/)
  *
- * {@link CellSummaryApi|Cell Summary API}
+ * {@link CellSummaryApi|Cell Summary Api}
  *
  * [Cell Summary Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/cell-summary-function.md)
  *

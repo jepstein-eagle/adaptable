@@ -31,7 +31,7 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleButtons: ['FreeTextColumn', 'ColumnChooser'],
+    VisibleButtons: ['FreeTextColumn'],
   },
   FreeTextColumn: {
     FreeTextColumns: [
@@ -47,7 +47,7 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         Columns: ['tradeId', 'country', 'notional', 'Comments'],
-        GroupedColumns: ['currency'],
+        RowGroupedColumns: ['currency'],
         ColumnSorts: [],
         Name: 'with freetext cols',
       },

@@ -78,8 +78,8 @@ export {
   FreeTextStoredValue,
 } from './PredefinedConfig/FreeTextColumnState';
 export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
-export { LayoutState, Layout, PivotDetails } from './PredefinedConfig/LayoutState';
 export { FilterState as SystemFilterState, FilterPredicate } from './PredefinedConfig/FilterState';
+export { LayoutState, Layout } from './PredefinedConfig/LayoutState';
 export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
 export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';
 export { QuickSearchState } from './PredefinedConfig/QuickSearchState';

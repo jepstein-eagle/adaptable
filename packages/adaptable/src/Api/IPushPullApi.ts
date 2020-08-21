@@ -4,11 +4,25 @@ import { IPushPullDomain, IPushPullSchedule } from '../PredefinedConfig/IPushPul
 /**
  * Provides full and comprehensive run-time access to the ipushpull Plugin.
  *
- * Use the API to find out if ipushpull is available or running and much else.
+ * Use the Api to find out if ipushpull is available or running and much else.
+ *
+ * Note: as its part of a Plugin you need to access the Api as follows:
+ *
+ * ```ts
+ * const ippApi = adaptableApi.pluginsApi.getPluginApi('ipushpull');
+ * ```
+ *
+ * --------------
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/)
+ * - [Demo Site](https://demo.adaptabletools.com/partners/ipushpulldemo/)
+ *
+ * - [ipushpull Plugin](https://github.com/AdaptableTools/adaptable/blob/master/packages/plugins/ipushpull/README.md)
+ *
+ * - [ipushpull Integration Example](https://github.com/AdaptableTools/example-adaptable-ipushpull-integration)
+ *
+ * --------------
  *
  * Note: Some of these methods are intended for internal use only - and have been noted as such.
  */

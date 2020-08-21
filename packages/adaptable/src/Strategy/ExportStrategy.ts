@@ -10,22 +10,49 @@ import { Report } from '../PredefinedConfig/ExportState';
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { VISIBLE_DATA_REPORT } from '../Utilities/Constants/GeneralConstants';
-import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
+import {
+  VISIBLE_DATA_REPORT,
+  SELECTED_CELLS_REPORT,
+} from '../Utilities/Constants/GeneralConstants';
+import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
+import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
+import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
+import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
+import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ExportStrategyId, adaptable);
+    super(
+      StrategyConstants.ExportStrategyId,
+      StrategyConstants.ExportStrategyFriendlyName,
+      StrategyConstants.ExportGlyph,
+      ScreenPopups.ExportPopup,
+      adaptable
+    );
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
+  public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
+    let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
     if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ExportStrategyFriendlyName,
-        ComponentName: ScreenPopups.ExportPopup,
-        Icon: StrategyConstants.ExportGlyph,
-      });
+      if (
+        ArrayExtensions.IsNotNullOrEmpty(menuInfo.SelectedCellInfo.Columns) &&
+        ArrayExtensions.IsNotNullOrEmpty(menuInfo.SelectedCellInfo.GridCells)
+      ) {
+        let selectedCellReport: Report = this.adaptable.api.exportApi.getReportByName(
+          SELECTED_CELLS_REPORT
+        );
+        let clickFunction = () => {
+          this.export(selectedCellReport, ExportDestination.Excel);
+        };
+        menuItemClickFunction = this.createColumnMenuItemClickFunction(
+          'Export Selected Cells',
+          StrategyConstants.ExportGlyph,
+          clickFunction
+        );
+      }
     }
+
+    return menuItemClickFunction;
   }
 
   public export(report: Report, exportDestination: ExportDestination): void {
@@ -87,11 +114,19 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     let reportCols = reportAsArray.shift();
 
-    let cols: AdaptableColumn[] = this.adaptable.api.gridApi.getColumnsFromFriendlyNames(
-      reportCols
+    let cols: AdaptableColumn[];
+    if (report.ReportColumnScope == 'CustomColumns') {
+      cols = report.ColumnIds.map(c => {
+        return AdaptableHelper.createAdaptableColumnFromColumnId(c);
+      });
+    } else {
+      cols = this.adaptable.api.columnApi.getColumnsFromFriendlyNames(reportCols);
+    }
+    this.adaptable.api.exportApi.exportDataToExcel(
+      cols.map(c => c.FriendlyName),
+      reportAsArray,
+      report.Name
     );
-
-    this.adaptable.exportToExcel(report, cols, reportAsArray);
   }
 
   private copyToClipboard(report: Report) {
@@ -133,5 +168,13 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       AddAction: ExportRedux.ReportAdd,
       EditAction: ExportRedux.ReportEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let reports: Report[] = this.adaptable.api.exportApi
+      .getAllReports()
+      .filter((r: Report) => r.ColumnIds.includes(specialColumnId));
+
+    return ArrayExtensions.IsNotNullOrEmpty(reports) ? reports.length + ' Reports' : undefined;
   }
 }

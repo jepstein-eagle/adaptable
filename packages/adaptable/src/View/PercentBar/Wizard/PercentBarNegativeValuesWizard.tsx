@@ -90,7 +90,7 @@ export class PercentBarNegativeValuesWizard
               ) : (
                 <ColumnSelector
                   SelectedColumnIds={[this.state.NegativeValueColumnId]}
-                  ColumnList={this.props.Api.gridApi.getColumns()}
+                  ColumnList={this.props.Api.columnApi.getColumns()}
                   onColumnChange={columns => this.onColumnMinValueSelectedChanged(columns)}
                   SelectionMode={SelectionMode.Single}
                 />

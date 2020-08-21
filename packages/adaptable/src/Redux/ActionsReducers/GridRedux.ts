@@ -8,12 +8,14 @@ import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInf
 import { AdaptableMenuItem } from '../../PredefinedConfig/Common/Menu';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
+import { LAYOUT_UPDATE_CURRENT_DRAFT, LayoutAction, LAYOUT_SELECT } from './LayoutRedux';
+import { Layout } from '../../types';
 
-export const GRID_SELECT_COLUMN = 'GRID_SELECT_COLUMN';
 export const GRID_SET_COLUMNS = 'GRID_SET_COLUMNS';
 export const GRID_ADD_COLUMN = 'GRID_ADD_COLUMN';
+export const GRID_ADD_COLUMNS = 'GRID_ADD_COLUMNS';
+export const GRID_REMOVE_COLUMN = 'GRID_REMOVE_COLUMN';
 export const GRID_EDIT_COLUMN = 'GRID_EDIT_COLUMN';
-export const GRID_HIDE_COLUMN = 'GRID_HIDE_COLUMN';
 export const GRID_SET_VALUE_LIKE_EDIT = 'GRID_SET_VALUE_LIKE_EDIT';
 export const GRID_SET_VALUE_LIKE_EDIT_BATCH = 'GRID_SET_VALUE_LIKE_EDIT_BATCH';
 export const GRID_SET_SORT = 'GRID_SET_SORT';
@@ -25,7 +27,8 @@ export const GRID_QUICK_FILTER_BAR_SHOW = 'GRID_QUICK_FILTER_BAR_SHOW';
 export const GRID_QUICK_FILTER_BAR_HIDE = 'GRID_QUICK_FILTER_BAR_HIDE';
 export const GRID_REFRESH_CELLS = 'GRID_REFRESH_CELLS';
 export const FILTER_FORM_HIDE = 'FILTER_FORM_HIDE';
-export const SET_MAIN_MENUITEMS = 'SET_MAIN_MENUITEMS';
+export const SET_FUNCTION_DROPDOWN_MENUITEMS = 'SET_FUNCTION_DROPDOWN_MENUITEMS';
+export const SET_FUNCTION_BUTTON_MENUITEMS = 'SET_FUNCTION_BUTTON_MENUITEMS';
 
 export const SET_PIVOT_MODE_ON = 'SET_PIVOT_MODE_ON';
 export const SET_PIVOT_MODE_OFF = 'SET_PIVOT_MODE_OFF';
@@ -38,11 +41,14 @@ export interface GridSetColumnsAction extends Redux.Action {
 export interface GridAddColumnAction extends Redux.Action {
   Column: AdaptableColumn;
 }
-export interface GridEditColumnAction extends Redux.Action {
+export interface GridAddColumnsAction extends Redux.Action {
+  Columns: AdaptableColumn[];
+}
+export interface GridRemoveColumnAction extends Redux.Action {
   Column: AdaptableColumn;
 }
-export interface GridHideColumnAction extends Redux.Action {
-  ColumnId: string;
+export interface GridEditColumnAction extends Redux.Action {
+  Column: AdaptableColumn;
 }
 
 export interface GridSetValueLikeEditAction extends Redux.Action {
@@ -90,7 +96,11 @@ export interface QuickFilterBarHideAction extends Redux.Action {}
 
 export interface FilterFormHideAction extends Redux.Action {}
 
-export interface SetMainMenuItemsAction extends Redux.Action {
+export interface SetFunctionDropdownMenuItemsAction extends Redux.Action {
+  MenuItems: AdaptableMenuItem[];
+}
+
+export interface SetFunctionButtonMenuItemsAction extends Redux.Action {
   MenuItems: AdaptableMenuItem[];
 }
 
@@ -115,15 +125,18 @@ export const GridAddColumn = (Column: AdaptableColumn): GridAddColumnAction => (
   type: GRID_ADD_COLUMN,
   Column,
 });
+export const GridAddColumns = (Columns: AdaptableColumn[]): GridAddColumnsAction => ({
+  type: GRID_ADD_COLUMNS,
+  Columns,
+});
+export const GridRemoveColumn = (Column: AdaptableColumn): GridRemoveColumnAction => ({
+  type: GRID_REMOVE_COLUMN,
+  Column,
+});
 
 export const GridEditColumn = (Column: AdaptableColumn): GridEditColumnAction => ({
   type: GRID_EDIT_COLUMN,
   Column,
-});
-
-export const GridHideColumn = (ColumnId: string): GridHideColumnAction => ({
-  type: GRID_HIDE_COLUMN,
-  ColumnId,
 });
 
 export const GridSetValueLikeEdit = (
@@ -138,11 +151,6 @@ export const GridSetValueLikeEditBatch = (
 ): GridSetValueLikeEditBatchAction => ({
   type: GRID_SET_VALUE_LIKE_EDIT_BATCH,
   DataChangedInfoBatch,
-});
-
-export const GridSelectColumn = (ColumnId: string): GridSelectColumnAction => ({
-  type: GRID_SELECT_COLUMN,
-  ColumnId,
 });
 
 export const GridSetSort = (ColumnSorts: ColumnSort[]): GridSetSortAction => ({
@@ -207,19 +215,30 @@ export const SetTreeModeOff = (): SetTreeModeOffAction => ({
   type: SET_TREE_MODE_OFF,
 });
 
-export const SetMainMenuItems = (MenuItems: AdaptableMenuItem[]): SetMainMenuItemsAction => ({
-  type: SET_MAIN_MENUITEMS,
+export const SetFunctionDropdownMenuItems = (
+  MenuItems: AdaptableMenuItem[]
+): SetFunctionDropdownMenuItemsAction => ({
+  type: SET_FUNCTION_DROPDOWN_MENUITEMS,
+  MenuItems,
+});
+
+export const SetFunctionButtonMenuItems = (
+  MenuItems: AdaptableMenuItem[]
+): SetFunctionButtonMenuItemsAction => ({
+  type: SET_FUNCTION_BUTTON_MENUITEMS,
   MenuItems,
 });
 
 const initialGridState: GridState = {
   Columns: EMPTY_ARRAY,
+  CurrentLayout: null,
   ColumnSorts: EMPTY_ARRAY,
   SelectedCellInfo: null,
   SelectedRowInfo: null,
   CellSummary: null,
   IsQuickFilterVisible: false,
-  MainMenuItems: EMPTY_ARRAY,
+  FunctionDropdownMenuItems: EMPTY_ARRAY,
+  FunctionButtonMenuItems: EMPTY_ARRAY,
   IsGridInPivotMode: false,
   IsGridInTreeMode: false,
 };
@@ -238,6 +257,14 @@ export const GridReducer: Redux.Reducer<GridState> = (
       let columns = [].concat(state.Columns);
       columns.push(actionTypedAdd.Column);
       return Object.assign({}, state, { Columns: columns });
+
+    case GRID_ADD_COLUMNS:
+      const actionTypedAddMany = action as GridAddColumnsAction;
+
+      return Object.assign({}, state, {
+        Columns: [...state.Columns, ...actionTypedAddMany.Columns],
+      });
+
     case GRID_EDIT_COLUMN:
       const actioncolumn: AdaptableColumn = (action as GridEditColumnAction).Column;
       return {
@@ -245,6 +272,12 @@ export const GridReducer: Redux.Reducer<GridState> = (
         Columns: state.Columns.map(abObject =>
           abObject.Uuid === actioncolumn.Uuid ? actioncolumn : abObject
         ),
+      };
+    case GRID_REMOVE_COLUMN:
+      const removeColumn: AdaptableColumn = (action as GridRemoveColumnAction).Column;
+      return {
+        ...state,
+        Columns: state.Columns.filter(abObject => abObject.Uuid !== removeColumn.Uuid),
       };
 
     case GRID_SET_SORT:
@@ -265,12 +298,26 @@ export const GridReducer: Redux.Reducer<GridState> = (
       return Object.assign({}, state, { IsQuickFilterVisible: true });
     case GRID_QUICK_FILTER_BAR_HIDE:
       return Object.assign({}, state, { IsQuickFilterVisible: false });
-    case SET_MAIN_MENUITEMS: {
-      const actionTyped = action as SetMainMenuItemsAction;
+    case SET_FUNCTION_DROPDOWN_MENUITEMS: {
+      const actionTyped = action as SetFunctionDropdownMenuItemsAction;
       const menuItems = actionTyped.MenuItems.sort((a: AdaptableMenuItem, b: AdaptableMenuItem) =>
         a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
       );
-      return Object.assign({}, state, { MainMenuItems: menuItems });
+      return Object.assign({}, state, { FunctionDropdownMenuItems: menuItems });
+    }
+    case SET_FUNCTION_BUTTON_MENUITEMS: {
+      const actionTyped = action as SetFunctionButtonMenuItemsAction;
+      const menuItems = actionTyped.MenuItems.sort((a: AdaptableMenuItem, b: AdaptableMenuItem) =>
+        a.Label < b.Label ? -1 : a.Label > b.Label ? 1 : 0
+      );
+      return Object.assign({}, state, { FunctionButtonMenuItems: menuItems });
+    }
+
+    case LAYOUT_UPDATE_CURRENT_DRAFT: {
+      const currentDraftLayout: Layout = (action as LayoutAction).layout;
+      return Object.assign({}, state, {
+        CurrentLayout: currentDraftLayout,
+      });
     }
 
     case SET_PIVOT_MODE_ON:

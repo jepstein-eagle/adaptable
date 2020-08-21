@@ -2,21 +2,53 @@ import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { Layout, PivotDetails, VendorGridInfo } from '../../PredefinedConfig/LayoutState';
-import AdaptableHelper from '../Helpers/AdaptableHelper';
+import { ObjectFactory } from '../../Utilities/ObjectFactory';
+import { Layout, LayoutState } from '../../PredefinedConfig/LayoutState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-
 import { ILayoutService } from './Interface/ILayoutService';
-import {
-  ColumnStateChangedEventArgs,
-  ColumnStateChangedInfo,
-} from '../../Api/Events/ColumnStateChanged';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import { AG_GRID_GROUPED_COLUMN } from '../Constants/GeneralConstants';
+import { GridState } from '../../PredefinedConfig/GridState';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
     this.adaptable = adaptable;
+  }
+
+  public createDefaultLayoutIfNeeded(): Layout | null {
+    let gridState: GridState = this.adaptable.api.gridApi.getGridState();
+    let layoutState: LayoutState = this.adaptable.api.layoutApi.getLayoutState();
+
+    const isLayoutDefined = (layoutName: string) =>
+      !!layoutState.Layouts.filter(layout => layout.Name === layoutName)[0];
+
+    let defaultLayoutName = 'Default Layout';
+    let defaultLayoutColumns = gridState.Columns.filter(column => column.Visible);
+
+    const columnsMap = gridState.Columns.reduce((acc, col) => {
+      acc[col.ColumnId] = col;
+      return acc;
+    }, {} as { [key: string]: AdaptableColumn });
+
+    let shouldCreateDefaultLayout = layoutState.CreateDefaultLayout;
+
+    if (!layoutState.Layouts || !layoutState.Layouts.length) {
+      shouldCreateDefaultLayout = true;
+    }
+
+    if (shouldCreateDefaultLayout) {
+      if (!layoutState.Layouts || !isLayoutDefined(defaultLayoutName)) {
+        let defaultLayout: Layout = ObjectFactory.CreateEmptyLayout(
+          {
+            Name: defaultLayoutName,
+            Columns: defaultLayoutColumns.map(c => c.ColumnId),
+          },
+          gridState.Columns
+        );
+        this.adaptable.api.layoutApi.saveLayout(defaultLayout);
+
+        return defaultLayout;
+      }
+    }
   }
 
   public getLayoutDescription(layout: Layout, columns: AdaptableColumn[]): string {
@@ -27,11 +59,7 @@ export class LayoutService implements ILayoutService {
     return returnString;
   }
 
-  public getSortsForLayout(layout: Layout): ColumnSort[] {
-    return layout.ColumnSorts;
-  }
-
-  public getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
+  private getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
     if (ArrayExtensions.IsNullOrEmpty(columnSorts)) {
       return 'None';
     }
@@ -39,106 +67,10 @@ export class LayoutService implements ILayoutService {
     let returnString: string = '';
     columnSorts.forEach((gs: ColumnSort) => {
       returnString +=
-        this.adaptable.api.gridApi.getFriendlyNameFromColumnId(gs.Column) +
-        this.getSortOrder(gs.SortOrder);
+        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.Column) + SortOrder.Asc
+          ? ' [asc] '
+          : ' [desc] ';
     });
     return returnString;
-  }
-
-  public getSortOrder(sortOrder: 'Ascending' | 'Descending'): string {
-    return sortOrder == SortOrder.Ascending ? ' [asc] ' : ' [desc] ';
-  }
-
-  public autoSaveLayout(): void {
-    let currentLayoutName: string = this.adaptable.api.layoutApi.getCurrentLayoutName();
-    if (this.adaptable.isInitialised && currentLayoutName != GeneralConstants.DEFAULT_LAYOUT) {
-      if (
-        this.adaptable.adaptableOptions.layoutOptions != null &&
-        this.adaptable.adaptableOptions.layoutOptions.autoSaveLayouts != null &&
-        this.adaptable.adaptableOptions.layoutOptions.autoSaveLayouts
-      ) {
-        let layout = this.adaptable.api.layoutApi.getCurrentLayout();
-        if (layout != null) {
-          let visibleColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getVisibleColumns();
-
-          let currentGridVendorInfo: VendorGridInfo = this.adaptable.getVendorGridLayoutInfo(
-            visibleColumns.map(vc => vc.ColumnId)
-          );
-
-          let layoutToSave: Layout = {
-            Uuid: layout.Uuid,
-            Name: currentLayoutName,
-            Columns: layout.Columns,
-            ColumnSorts: layout.ColumnSorts,
-            GroupedColumns: layout.GroupedColumns,
-            PivotDetails: layout.PivotDetails,
-            VendorGridInfo: currentGridVendorInfo,
-            AdaptableGridInfo: {
-              CurrentColumns: visibleColumns ? visibleColumns.map(x => x.ColumnId) : [],
-              CurrentColumnSorts: this.adaptable.api.gridApi.getColumnSorts(),
-              ExpandedRowGroupKeys:
-                layout.AdaptableGridInfo == null || this.adaptable.getRowCount() > 0
-                  ? this.adaptable.api.gridApi.getExpandRowGroupsKeys()
-                  : layout.AdaptableGridInfo!.ExpandedRowGroupKeys,
-            },
-          };
-          this.adaptable.api.layoutApi.saveLayout(layoutToSave);
-        }
-      }
-
-      let columnStateChangedInfo: ColumnStateChangedInfo = {
-        currentLayout: currentLayoutName,
-        adaptableApi: this.adaptable.api,
-      };
-      const columnStateChangedEventArgs: ColumnStateChangedEventArgs = AdaptableHelper.createFDC3Message(
-        'Column State Changed Args',
-        columnStateChangedInfo
-      );
-
-      this.adaptable.api.eventApi.emit('ColumnStateChanged', columnStateChangedEventArgs);
-    }
-  }
-
-  public isPivotedLayout(pivotDetails: PivotDetails): boolean {
-    return (
-      pivotDetails != null &&
-      (ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotColumns) ||
-        ArrayExtensions.IsNotNullOrEmpty(pivotDetails.AggregationColumns))
-    );
-  }
-
-  public isLayoutModified(layoutEntity: Layout): boolean {
-    if (layoutEntity) {
-      if (!layoutEntity.VendorGridInfo) {
-        return true;
-      }
-
-      if (layoutEntity.AdaptableGridInfo) {
-        if (
-          ArrayExtensions.IsNotNull(layoutEntity.Columns) &&
-          ArrayExtensions.IsNotNull(layoutEntity.AdaptableGridInfo.CurrentColumns) &&
-          !ArrayExtensions.areArraysEqualWithOrder(
-            layoutEntity.Columns,
-            layoutEntity.AdaptableGridInfo.CurrentColumns
-          )
-        ) {
-          return true;
-        }
-
-        if (
-          ArrayExtensions.IsNotNull(layoutEntity.ColumnSorts) &&
-          ArrayExtensions.IsNotNull(layoutEntity.AdaptableGridInfo.CurrentColumnSorts) &&
-          !ArrayExtensions.areArraysEqualWithOrderandProperties(
-            layoutEntity.ColumnSorts,
-            layoutEntity.AdaptableGridInfo.CurrentColumnSorts
-          )
-        ) {
-          return true;
-        }
-
-        // do ExpandedRowGroupKeys?
-      }
-    }
-    return true;
   }
 }

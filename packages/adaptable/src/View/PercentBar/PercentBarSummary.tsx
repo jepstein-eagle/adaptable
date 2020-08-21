@@ -108,8 +108,11 @@ export class PercentBarSummaryComponent extends React.Component<
       .getStrategyService()
       .getDistinctColumnValues(this.props.SummarisedColumn.ColumnId);
 
-    configEntity.NegativeValue = Math.min(...distinctColumnsValues);
-    configEntity.PositiveValue = Math.max(...distinctColumnsValues);
+    configEntity.Ranges.push({
+      Min: Math.min(...distinctColumnsValues),
+      Max: Math.max(...distinctColumnsValues),
+      Color: configEntity.PositiveColor, // GREEN - but probably wrong
+    });
 
     this.setState({
       EditedAdaptableObject: configEntity,

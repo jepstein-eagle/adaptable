@@ -37,7 +37,9 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           if (ArrayExtensions.ContainsItem(colList, dataChangedEvent.ColumnId)) {
             switch (cs.ConditionalStyleScope) {
               case 'Row':
-                colsToRefresh.push(...this.adaptable.api.gridApi.getColumns().map(c => c.ColumnId));
+                colsToRefresh.push(
+                  ...this.adaptable.api.columnApi.getColumns().map(c => c.ColumnId)
+                );
                 break;
 
               case 'ColumnCategory':
@@ -81,7 +83,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
   // this initialises styles and creates the list of which columns have styles (will be used in onDataChanged)
   public initStyles(): void {
-    let columns = this.adaptable.api.gridApi.getColumns();
+    let columns = this.adaptable.api.columnApi.getColumns();
     let theadaptable = this.adaptable as Adaptable;
     let shouldRunStyle = this.shouldRunStyle;
     let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();

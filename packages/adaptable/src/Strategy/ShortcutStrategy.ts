@@ -13,24 +13,25 @@ import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcutStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ShortcutStrategyId, adaptable);
+    super(
+      StrategyConstants.ShortcutStrategyId,
+      StrategyConstants.ShortcutStrategyFriendlyName,
+      StrategyConstants.ShortcutGlyph,
+      ScreenPopups.ShortcutPopup,
+      adaptable
+    );
 
     this.adaptable._on('KeyDown', keyDownEvent => {
       this.handleKeyDown(keyDownEvent);
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ShortcutStrategyFriendlyName,
-        ComponentName: ScreenPopups.ShortcutPopup,
-        Icon: StrategyConstants.ShortcutGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   private handleKeyDown(keyEvent: KeyboardEvent | any) {
@@ -42,7 +43,7 @@ export class ShortcutStrategy extends AdaptableStrategyBase implements IShortcut
     if (!activeCell) {
       return;
     }
-    let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    let selectedColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       activeCell.columnId
     );
     if (activeCell && !selectedColumn.ReadOnly) {

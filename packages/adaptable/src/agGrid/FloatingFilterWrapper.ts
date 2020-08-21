@@ -37,7 +37,7 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
       this.filterContainer.style.display = 'flex';
       this.filterContainer.style.flex = '1';
       this.filterContainer.style.alignItems = 'center';
-      const column: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(colId);
+      const column: AdaptableColumn = adaptable.api.columnApi.getColumnFromId(colId);
 
       const filterContext: IColumnFilterContext = {
         Column: column,

@@ -36,17 +36,17 @@ export class CategoryChartYAxisWizard
     };
   }
   render(): any {
-    let numericColumnIds = this.props.Api.gridApi.getNumericColumns().map(c => {
+    let numericColumnIds = this.props.Api.columnApi.getNumericColumns().map(c => {
       return c.ColumnId;
     });
     let availableColumns: string[] = numericColumnIds
       .filter(c => ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c))
       .map(ac => {
-        return this.props.Api.gridApi.getFriendlyNameFromColumnId(ac);
+        return this.props.Api.columnApi.getFriendlyNameFromColumnId(ac);
       });
 
     let existingColumns: string[] = this.state.YAxisColumnIds.map(ec => {
-      return this.props.Api.gridApi.getFriendlyNameFromColumnId(ec);
+      return this.props.Api.columnApi.getFriendlyNameFromColumnId(ec);
     });
 
     return (

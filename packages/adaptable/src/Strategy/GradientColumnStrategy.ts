@@ -16,21 +16,17 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
   implements IGradientColumnStrategy {
   protected GradientColumnState: GradientColumnState;
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.GradientColumnStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.GradientColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.GradientColumnPopup,
-        Icon: StrategyConstants.GradientColumnGlyph,
-      });
-    }
+    super(
+      StrategyConstants.GradientColumnStrategyId,
+      StrategyConstants.GradientColumnStrategyFriendlyName,
+      StrategyConstants.GradientColumnGlyph,
+      ScreenPopups.GradientColumnPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let GradientColumnExists: boolean = ArrayExtensions.ContainsItem(
         this.GradientColumnState.GradientColumns.map(f => f.ColumnId),
         column.ColumnId
@@ -103,5 +99,15 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
       AddAction: GradientColumnRedux.GradientColumnAdd,
       EditAction: GradientColumnRedux.GradientColumnEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let gradientColumns: GradientColumn[] = this.adaptable.api.gradientColumnApi
+      .getAllGradientColumn()
+      .filter((gc: GradientColumn) => gc.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(gradientColumns)
+      ? gradientColumns.length + ' Gradient Columns'
+      : undefined;
   }
 }

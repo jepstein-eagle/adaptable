@@ -8,16 +8,12 @@ import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 export class AdvancedSearchStrategy extends AdaptableStrategyBase
   implements IAdvancedSearchStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.AdvancedSearchStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.AdvancedSearchStrategyFriendlyName,
-        ComponentName: ScreenPopups.AdvancedSearchPopup,
-        Icon: StrategyConstants.AdvancedSearchGlyph,
-      });
-    }
+    super(
+      StrategyConstants.AdvancedSearchStrategyId,
+      StrategyConstants.AdvancedSearchStrategyFriendlyName,
+      StrategyConstants.AdvancedSearchGlyph,
+      ScreenPopups.AdvancedSearchPopup,
+      adaptable
+    );
   }
 }

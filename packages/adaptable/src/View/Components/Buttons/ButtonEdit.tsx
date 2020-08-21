@@ -4,6 +4,15 @@ import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButto
 
 export class ButtonEdit extends React.Component<SimpleButtonProps, {}> {
   render() {
-    return <SimpleButton tooltip="Edit" variant="text" icon="edit" iconSize={20} {...this.props} />;
+    return (
+      <SimpleButton
+        data-name="edit"
+        tooltip="Edit"
+        variant="text"
+        icon="edit"
+        iconSize={20}
+        {...this.props}
+      />
+    );
   }
 }

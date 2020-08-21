@@ -18,7 +18,7 @@ export class SearchService implements ISearchService {
   constructor(adaptable: IAdaptable) {
     this.adaptable = adaptable;
 
-    this.adaptable.AdaptableStore.onAny((eventName: string) => {
+    this.adaptable.adaptableStore.onAny((eventName: string) => {
       if (this.adaptable.isInitialised) {
         if (eventName == AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE) {
           this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);

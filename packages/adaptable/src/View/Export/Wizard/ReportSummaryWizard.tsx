@@ -24,13 +24,13 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
         Key: 'Columns',
         Value: this.props.Api.internalApi
           .getReportService()
-          .GetReportColumnsDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
+          .GetReportColumnsDescription(this.props.Data, this.props.Api.columnApi.getColumns()),
       },
       {
         Key: 'Rows',
         Value: this.props.Api.internalApi
           .getReportService()
-          .GetReportExpressionDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
+          .GetReportExpressionDescription(this.props.Data, this.props.Api.columnApi.getColumns()),
       },
     ];
 

@@ -21,12 +21,12 @@ Demo that shows how we can use the api 'externally' via textboxes and buttons
 var adaptableApi: AdaptableApi;
 
 //  NOTE:  this is not currently being able to be called by index.tsx
-export function runQuickSearchViaAPI() {
+export function runQuickSearchViaApi() {
   const element: any = document.getElementById('txtQuickSearchText');
   adaptableApi.quickSearchApi.applyQuickSearch(element.value);
 }
 
-export function clearQuickSearchViaAPI() {
+export function clearQuickSearchViaApi() {
   const element: any = document.getElementById('txtQuickSearchText');
   element.value = '';
   adaptableApi.quickSearchApi.clearQuickSearch();
@@ -82,16 +82,16 @@ export default () => {
     <div>
       <br />
       &nbsp;
-      <label>Quick Search (from client application via Adaptable API): </label>
+      <label>Quick Search (from client application via Adaptable Api): </label>
       &nbsp;
       <input type="text" id="txtQuickSearchText" />
       <button
         style={{ marginLeft: '5px', marginRight: '5px' }}
-        onClick={() => runQuickSearchViaAPI()}
+        onClick={() => runQuickSearchViaApi()}
       >
         Run
       </button>
-      <button onClick={() => clearQuickSearchViaAPI()}>Clear</button>
+      <button onClick={() => clearQuickSearchViaApi()}>Clear</button>
       <button onClick={() => setDarkTheme()}>Set Dark Theme</button>
       <button onClick={() => setLightTheme()}>Set Light Theme</button>
       <button onClick={() => setCustomTheme()}>Set Custom Theme</button>

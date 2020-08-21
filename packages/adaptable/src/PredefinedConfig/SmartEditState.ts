@@ -14,11 +14,13 @@ import { MathOperation } from './Common/Enums';
  *
  * [Smart Edit Demo](https://demo.adaptabletools.com/edit/aggridsmarteditdemo/)
  *
- * {@link SmartEditApi|Smart Edit API}
+ * {@link SmartEditApi|Smart Edit Api}
  *
  * [Smart Edit Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/smart-edit-function.md)
  *
  * --------------
+ *
+ *  **Smart Edit Example**
  *
  * ```ts
  * export default {

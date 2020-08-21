@@ -10,6 +10,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export interface FilterEntityRowProps<AdvancedSearchEntityRow>
   extends BaseEntityRowProps<AdvancedSearchEntityRow> {
@@ -24,7 +25,7 @@ export class FilterEntityRow extends React.Component<FilterEntityRowProps<Filter
     let colItems: IColItem[] = [].concat(this.props.colItems);
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumnId(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumnId(
           this.props.ColumnFilter.ColumnId
         )}
       />
@@ -41,7 +42,7 @@ export class FilterEntityRow extends React.Component<FilterEntityRowProps<Filter
           tooltip="Save as User Filter"
           disabled={
             this.props.ColumnFilter == null ||
-            ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.Values)
+            StringExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.PredicateId)
           }
           AccessLevel={this.props.AccessLevel}
         />

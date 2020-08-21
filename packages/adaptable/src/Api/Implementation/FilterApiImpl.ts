@@ -73,7 +73,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   public getFilterPredicatesForColumnId(columnId: string): FilterPredicate[] {
-    const column = this.adaptable.api.gridApi.getColumnFromId(columnId);
+    const column = this.adaptable.api.columnApi.getColumnFromId(columnId);
     return this.getFilterPredicatesForColumn(column);
   }
 

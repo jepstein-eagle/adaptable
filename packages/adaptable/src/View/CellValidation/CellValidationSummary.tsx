@@ -76,7 +76,7 @@ export class CellValidationSummaryComponent extends React.Component<
             Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
             Item2={this.props.Api.internalApi
               .getValidationService()
-              .createCellValidationDescription(item, this.props.Api.gridApi.getColumns())}
+              .createCellValidationDescription(item, this.props.Api.columnApi.getColumns())}
             ConfigEnity={item}
             EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
             showShare={this.props.TeamSharingActivated}

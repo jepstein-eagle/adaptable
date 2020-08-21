@@ -1,9 +1,7 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 import { AdaptableApi } from '../../../Api/AdaptableApi';

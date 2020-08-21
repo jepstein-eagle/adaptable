@@ -24,13 +24,14 @@ Shortcut includes the following UI Elements:
 - **Wizard** - A series of steps facilitating the creation and editing of Shortcuts.
 
 ## Entitlements
+
 Shortcut supports these Entitlement Rules:
 
-- **Full**: Everything is available to the User
+- **Full**: Everything is available to the User - they can create and edit Shortcuts
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: N/A
+- **ReadOnly**: Users can use pre-existing Shortcuts but not create or edit their own
 
 ## FAQ
 
@@ -53,6 +54,3 @@ Numeric shortcuts perform a calculation based on existing values in the cell (e.
 - [Shortcut Api](https://api.adaptabletools.com/interfaces/_src_api_shortcutapi_.shortcutapi.html)
 
 - [Shortcut Demo](https://demo.adaptabletools.com/edit/aggridshortcutdemo)
-
-
-

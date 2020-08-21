@@ -12,7 +12,7 @@ import { ExportState, Report, ReportSchedule } from '../PredefinedConfig/ExportS
  *
  * **Further AdapTable Help Resources**
  *
- * [Export Demo](https://demo.adaptabletools.com/gridmanagement/aggridexportdemo)
+ * [Export Demos](https://demo.adaptabletools.com/export)
  *
  * {@link ExportState|Export State}
  *
@@ -68,6 +68,8 @@ export interface ExportApi {
    * If false, then the Export to Excel will not be visible in the Export Toolbar or ToolPanel
    */
   canExportToExcel(): boolean;
+
+  exportDataToExcel(columnIds: string[], data: any[], fileName: string): void;
 
   /**
    * Opens the Export popup screen

@@ -6,7 +6,14 @@ export interface PauseButtonProps extends SimpleButtonProps {}
 export class ButtonPause extends React.Component<PauseButtonProps, {}> {
   render() {
     return (
-      <SimpleButton tooltip="Pause" iconSize={20} icon="pause" variant="text" {...this.props} />
+      <SimpleButton
+        data-name="pause"
+        tooltip="Pause"
+        iconSize={20}
+        icon="pause"
+        variant="text"
+        {...this.props}
+      />
     );
   }
 }

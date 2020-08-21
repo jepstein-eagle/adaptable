@@ -5,6 +5,7 @@ export class ButtonShowChart extends React.Component<SimpleButtonProps, {}> {
   render() {
     return (
       <SimpleButton
+        data-name="show-chart"
         tooltip="Show Chart"
         iconSize={20}
         icon="chart"

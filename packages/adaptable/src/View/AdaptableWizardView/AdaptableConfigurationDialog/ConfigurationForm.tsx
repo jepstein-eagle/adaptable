@@ -236,18 +236,6 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         margin={2}
         columns={[{ name: 'children' }, { name: 'label', style: { textAlign: 'start' } }]}
       >
-        <FormRow label="Include Vendor State In Layouts">
-          <CheckBox
-            checked={layoutOptions.includeVendorStateInLayouts}
-            onChange={(includeVendorStateInLayouts: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.layoutOptions = { ...abOptions.layoutOptions };
-              abOptions.layoutOptions.includeVendorStateInLayouts = includeVendorStateInLayouts;
-
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
         <FormRow label="Auto Save Layouts">
           <CheckBox
             checked={layoutOptions.autoSaveLayouts}
@@ -262,11 +250,11 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         </FormRow>
         <FormRow label="Auto Size Columns In Default Layout">
           <CheckBox
-            checked={layoutOptions.autoSizeColumnsInLayout}
-            onChange={(autoSizeColumnsInLayout: boolean) => {
+            checked={layoutOptions.autoSizeColumnsInDefaultLayout}
+            onChange={(autoSizeColumnsInDefaultLayout: boolean) => {
               abOptions = { ...abOptions };
               abOptions.layoutOptions = { ...abOptions.layoutOptions };
-              abOptions.layoutOptions.autoSizeColumnsInLayout = autoSizeColumnsInLayout;
+              abOptions.layoutOptions.autoSizeColumnsInDefaultLayout = autoSizeColumnsInDefaultLayout;
 
               props.onChangeadaptableOptions(abOptions);
             }}

@@ -35,7 +35,7 @@ class FilterToolbarControlComponent extends React.Component<
   render(): any {
     let activeFiltersPanel = (
       <ActiveFiltersPanel
-        Columns={this.props.Api.gridApi.getColumns()}
+        Columns={this.props.Api.columnApi.getColumns()}
         Api={this.props.Api}
         ColumnFilters={this.props.ColumnFilters}
         AccessLevel={this.props.AccessLevel}

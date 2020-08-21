@@ -54,7 +54,7 @@ async function InitAdaptableDemo() {
         handler(menuInfo) {
           let customSort: ColumnSort = {
             Column: menuInfo.Column.ColumnId,
-            SortOrder: 'Ascending',
+            SortOrder: 'Asc',
           };
           menuInfo.AdaptableApi.gridApi.sortAdaptable([customSort]);
         },
@@ -107,7 +107,7 @@ async function InitAdaptableDemo() {
     //showAdaptableContextMenu: false,
 
     showAdaptableContextMenu: (menuItem: AdaptableMenuItem) => {
-      if (menuItem.FunctionName === 'ColumnChooser' || menuItem.FunctionName === 'SmartEdit') {
+      if (menuItem.FunctionName === 'Layout' || menuItem.FunctionName === 'SmartEdit') {
         return false;
       }
       return true;

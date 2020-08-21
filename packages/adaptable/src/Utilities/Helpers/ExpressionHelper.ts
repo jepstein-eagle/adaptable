@@ -24,6 +24,7 @@ import RangeHelper from './RangeHelper';
 import Adaptable from '../../agGrid';
 import { AdaptableApi } from '../../Api/AdaptableApi';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
+import { range } from 'lodash';
 
 export interface IRangeEvaluation {
   operand1: any;
@@ -76,7 +77,7 @@ export function ConvertExpressionToString(
 
   let columnList = GetColumnListFromExpression(Expression);
   for (let columnId of columnList) {
-    let columnFriendlyName: string = api.gridApi.getFriendlyNameFromColumnId(columnId);
+    let columnFriendlyName: string = api.columnApi.getFriendlyNameFromColumnId(columnId);
     let columnToString = '';
 
     // Column Display Values
@@ -117,7 +118,7 @@ export function ConvertExpressionToString(
         if (columnToString != '') {
           columnToString += ' OR ';
         }
-        let columns = api.gridApi.getColumns();
+        let columns = api.columnApi.getColumns();
         columnToString += RangesToString(
           columnRange,
           columnFriendlyName,
@@ -545,7 +546,7 @@ function getOperandValue(
   if (rangeOperandType == 'Value') {
     return operand;
   } else {
-    return '[' + api.gridApi.getFriendlyNameFromColumnId(operand) + ']';
+    return '[' + api.columnApi.getFriendlyNameFromColumnId(operand) + ']';
   }
 }
 

@@ -28,7 +28,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/dashboard) | [API](_src_api_dashboardapi_.dashboardapi.html) | [ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/dashboard_function.md)
+ * [Demo Site](https://demo.adaptabletools.com/dashboard) | [Api](_src_api_dashboardapi_.dashboardapi.html) | [ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/dashboard_function.md)
  *
  *  --------------
  *
@@ -179,7 +179,7 @@ export interface DashboardState extends ConfigState {
    *
    * Each button is connected to a Function in AdapTable and opens the relevant popup screen.
    *
-   * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
+   * **Default Value**: 'SystemStatus', 'GridInfo', 'Layout', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
 
@@ -280,7 +280,7 @@ export interface DashboardState extends ConfigState {
  *
  * **Rendering Bespoke Content**
  *
- * AdapTable provides the [dashboardAPI](_src_api_dashboardapi_.dashboardapi.html#getcustomtoolbarcontentsdiv) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
+ * AdapTable provides the [dashboardApi](_src_api_dashboardapi_.dashboardapi.html#getcustomtoolbarcontentsdiv) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
  *
  * You can listen to the **ToolbarVisibilityChanged** event published by AdapTable which provides the name of relevant toolbar (and the Tab in which it is contained).
  *

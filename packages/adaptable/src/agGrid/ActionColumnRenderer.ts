@@ -66,12 +66,7 @@ export class ActionColumnRenderer implements ICellRendererComp {
           rowData: params.data,
           adaptableApi: adaptable.api,
         };
-        const actionColumnClickedEventArgs: ActionColumnClickedEventArgs = AdaptableHelper.createFDC3Message(
-          'Action Column Clicked Args',
-          actionColumnClickedInfo
-        );
-
-        adaptable.api.eventApi.emit('ActionColumnClicked', actionColumnClickedEventArgs);
+        adaptable.api.actionColumnApi.fireActionColumnButtonClickedEvent(actionColumnClickedInfo);
       };
       this.eGui.addEventListener('click', this.eventListener);
     }

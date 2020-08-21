@@ -115,7 +115,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
   }
 
   private getValidationErrorMessage(cellValidations: CellValidationRule[]): string {
-    let columns = this.props.Api.gridApi.getColumns();
+    let columns = this.props.Api.columnApi.getColumns();
     let validationService: IValidationService = this.props.Api.internalApi.getValidationService();
     let returnString: string[] = [];
     for (let cellValidation of cellValidations) {

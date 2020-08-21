@@ -71,7 +71,7 @@ export class UserFilterSettingsWizard
             .getAllUserFilter()
             .findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1
             ? 'A User Filter already exists with that name for column: ' +
-              this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
+              this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
             : null,
       } as UserFilterSettingsWizardState,
       () => this.props.UpdateGoBackState()

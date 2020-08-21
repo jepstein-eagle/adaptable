@@ -88,7 +88,7 @@ let demoConfig: PredefinedConfig = {
     ActionColumns: [
       {
         ColumnId: 'Test',
-        ButtonText: 'Test with API',
+        ButtonText: 'Test with Api',
       },
     ],
   },

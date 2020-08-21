@@ -19,28 +19,29 @@ import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopup
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import * as parser from '../parser/src';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.PlusMinusStrategyId, adaptable);
+    super(
+      StrategyConstants.PlusMinusStrategyId,
+      StrategyConstants.PlusMinusStrategyFriendlyName,
+      StrategyConstants.PlusMinusGlyph,
+      ScreenPopups.PlusMinusPopup,
+      adaptable
+    );
 
     this.adaptable._on('KeyDown', keyDownEvent => {
       this.handleKeyDown(keyDownEvent);
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.PlusMinusStrategyFriendlyName,
-        ComponentName: ScreenPopups.PlusMinusPopup,
-        Icon: StrategyConstants.PlusMinusGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
-    if (this.canCreateColumnMenuItem(column, this.adaptable, 'Full', 'numeric')) {
+    if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let popupParam: StrategyParams = {
         columnId: column.ColumnId,
         action: 'New',
@@ -89,7 +90,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
     let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
@@ -101,7 +102,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(rulesForColumn)) {
-        let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+        let selectedColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
           selectedCell.columnId
         );
         if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
@@ -245,5 +246,15 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       AddAction: PlusMinusRedux.PlusMinusRuleAdd,
       EditAction: PlusMinusRedux.PlusMinusRuleEdit,
     };
+  }
+
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    let plusMinusRules: PlusMinusRule[] = this.adaptable.api.plusMinusApi
+      .getAllPlusMinus()
+      .filter((pmr: PlusMinusRule) => pmr.ColumnId == specialColumnId);
+
+    return ArrayExtensions.IsNotNullOrEmpty(plusMinusRules)
+      ? plusMinusRules.length + ' Plus Minus Rules'
+      : undefined;
   }
 }

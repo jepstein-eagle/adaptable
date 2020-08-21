@@ -100,7 +100,7 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
 }
 
 export function isValidPrimaryKey(adaptable: IAdaptable): boolean {
-  const pkColumn: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(
+  const pkColumn: AdaptableColumn = adaptable.api.columnApi.getColumnFromId(
     adaptable.adaptableOptions.primaryKey
   );
 
@@ -199,6 +199,32 @@ export function runAdaptableComparerFunction(
   };
 }
 
+/*
+Not a very nice function but it does the trick for Custom Reports
+It takes a column id and returns an AdaptableColumn - this is needed for elsewhere in reporting but its a bit hacky
+*/
+export function createAdaptableColumnFromColumnId(columnId: string): AdaptableColumn {
+  return {
+    ColumnId: columnId,
+    FriendlyName: columnId,
+    Filterable: false,
+    DataType: 'String',
+    ReadOnly: true,
+    Sortable: false,
+    Visible: false,
+    Groupable: false,
+    Pivotable: false,
+    Aggregatable: false,
+    Moveable: true,
+    Hideable: true,
+    IsSpecialColumn: false,
+    IsExcludedFromQuickSearch: false,
+    IsSparkline: false,
+    IsGrouped: false,
+    IsFixed: false,
+  };
+}
+
 export const AdaptableHelper = {
   assignadaptableOptions,
   isValidPrimaryKey,
@@ -206,5 +232,6 @@ export const AdaptableHelper = {
   CheckadaptableOptions,
   createFDC3Message,
   runAdaptableComparerFunction,
+  createAdaptableColumnFromColumnId,
 };
 export default AdaptableHelper;

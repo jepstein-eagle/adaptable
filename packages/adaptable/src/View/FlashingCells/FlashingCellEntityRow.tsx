@@ -35,7 +35,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
     }
 
     let isDisabled = false; // TODO:  need to get from Entitlements !  flashingCell.IsReadOnly
-    let column = this.props.api.gridApi.getColumnFromId(flashingCell.ColumnId);
+    let column = this.props.api.columnApi.getColumnFromId(flashingCell.ColumnId);
     if (!column) {
       return null;
     }

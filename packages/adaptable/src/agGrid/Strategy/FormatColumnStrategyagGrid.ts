@@ -12,7 +12,7 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
   }
 
   public initStyles(): void {
-    let columns = this.adaptable.api.gridApi.getColumns();
+    let columns = this.adaptable.api.columnApi.getColumns();
     let formatColumns = this.adaptable.api.formatColumnApi.getAllFormatColumn();
     let theadaptable = this.adaptable as Adaptable;
 

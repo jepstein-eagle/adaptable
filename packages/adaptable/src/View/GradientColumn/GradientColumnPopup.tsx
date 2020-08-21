@@ -109,7 +109,7 @@ class GradientColumnPopupComponent extends React.Component<
 
     let GradientColumnItems = this.props.GradientColumns.map(
       (gradientColumn: GradientColumn, index) => {
-        let column = this.props.Api.gridApi.getColumnFromId(gradientColumn.ColumnId);
+        let column = this.props.Api.columnApi.getColumnFromId(gradientColumn.ColumnId);
         return (
           <GradientColumnEntityRow
             key={gradientColumn.Uuid}
@@ -265,7 +265,6 @@ class GradientColumnPopupComponent extends React.Component<
       WizardStartIndex: 0,
       WizardStatus: WizardStatus.None,
     });
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard(): boolean {

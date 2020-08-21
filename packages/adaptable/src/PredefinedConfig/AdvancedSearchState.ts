@@ -16,7 +16,7 @@ import { TypeUuid } from './Uuid';
  *
  * - [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo/)
  *
- * - {@link AdvancedSearchApi|Advanced Search API}
+ * - {@link AdvancedSearchApi|Advanced Search Api}
  *
  * - {@link SearchOptions|Search Options}
  *

@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
-import { Flex } from 'rebass';
+import { Flex, Box } from 'rebass';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
+import { StyleVisualItem } from '../Components/StyleVisualItem';
 
 export class PercentBarSharedEntity extends React.Component<
   SharedEntityComponent<PercentBarSharedEntity>,
@@ -10,38 +11,26 @@ export class PercentBarSharedEntity extends React.Component<
   render(): any {
     let percentBar: PercentBar = this.props.Entity as PercentBar;
 
+    let ranges: any = percentBar.Ranges.map((r, i) => (
+      <Flex key={i} alignItems="center" mr={3}>
+        <Box mr={1}>
+          {r.Min} to {r.Max}{' '}
+        </Box>
+        <StyleVisualItem
+          Style={{
+            BackColor: r.Color,
+            ForeColor: r.Color,
+          }}
+        />
+      </Flex>
+    ));
+
     return (
       <Flex flexDirection="row" alignItems="center">
-        <Flex flex={3}>{'Postive Value: ' + percentBar.PositiveValue}</Flex>
-        <Flex flex={3}>{'Negative Value: ' + percentBar.NegativeValue}</Flex>
         <Flex flex={3}>
-          {
-            <div
-              style={{
-                textAlign: 'center',
-                margin: '2px',
-                padding: '0px',
-                background: percentBar.PositiveColor,
-              }}
-            >
-              Pos Colour
-            </div>
-          }
+          {'Column: ' + this.props.Api.columnApi.getFriendlyNameFromColumnId(percentBar.ColumnId)}
         </Flex>
-        <Flex flex={3}>
-          {
-            <div
-              style={{
-                textAlign: 'center',
-                margin: '2px',
-                padding: '0px',
-                background: percentBar.NegativeColor,
-              }}
-            >
-              Neg Colour
-            </div>
-          }
-        </Flex>
+        <Flex flex={3}>{ranges}</Flex>
       </Flex>
     );
   }

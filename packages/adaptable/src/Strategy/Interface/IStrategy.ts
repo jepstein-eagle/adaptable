@@ -11,7 +11,6 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
  * Most strategies map to their own Reducer (e.g. QuickSearchStrategy => QuickSearchReducer)
  * However these strategies DONT store any State:
  * Application
- * Columnchooser
  * ColumnInfo
  * StateManagement
  * Piechart
@@ -20,7 +19,10 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 export interface IStrategy {
   Id: AdaptableFunctionName;
-  addFunctionMenuItem(): AdaptableMenuItem | undefined;
+  FriendlyName: string;
+  Glyph: string;
+  Popup: string;
+  addStrategyMenuItem(source: 'FunctionMenu' | 'FunctionButton'): AdaptableMenuItem | undefined;
   initializeWithRedux(): void;
   addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined;
   addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined;
@@ -29,6 +31,7 @@ export interface IStrategy {
   getTeamSharingAction(): TeamSharingImportInfo<AdaptableObject> | undefined;
   getSharedQueryReferences(sharedQueryId: string): string | undefined;
   AccessLevel: AccessLevel;
+  getSpecialColumnReferences(specialColumnId: string): string | undefined;
 }
 /**
  * An interface for those strategies which have sytles - e.g. Conditional Style, Format Column, Flashing Cell etc.

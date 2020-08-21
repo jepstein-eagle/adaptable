@@ -51,9 +51,7 @@ interface AdaptableToolPanelProps {
   Columns: AdaptableColumn[];
   // wondering if this shoudl take some base props like others?  though i know we dont like that...
   onClick: (action: Redux.Action) => Redux.Action;
-  onNewColumnListOrder: (
-    VisibleColumnList: AdaptableColumn[]
-  ) => SystemRedux.SetNewColumnListOrderAction;
+  onNewColumnListOrder: (VisibleColumnList: string[]) => SystemRedux.SetNewColumnListOrderAction;
   onSetToolPanelVisibility: (
     toolPanels: AdaptableToolPanels
   ) => ToolPanelRedux.ToolPanelSetToolPanelsAction;
@@ -176,7 +174,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
   ];
 
   const onSetColumnVisibility = (name: string) => {
-    let changedColumn: AdaptableColumn = props.Adaptable.api.gridApi.getColumnFromId(name);
+    let changedColumn: AdaptableColumn = props.Adaptable.api.columnApi.getColumnFromId(name);
 
     let columns: AdaptableColumn[] = [].concat(props.Columns);
     changedColumn = Object.assign({}, changedColumn, {
@@ -184,7 +182,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
     });
     let index = columns.findIndex(x => x.ColumnId == name);
     columns[index] = changedColumn;
-    props.onNewColumnListOrder(columns.filter(c => c.Visible));
+    props.onNewColumnListOrder(columns.filter(c => c.Visible).map(c => c.ColumnId));
   };
 
   const onSetToolPanelVisibility = (name: string, checked: boolean) => {
@@ -336,7 +334,7 @@ function mapStateToProps(state: AdaptableState) {
     ShowFunctionsDropdown: state.ToolPanel.ShowFunctionsDropdown,
     ShowColumnsDropdown: state.ToolPanel.ShowColumnsDropdown,
     ShowToolPanelsDropdown: state.ToolPanel.ShowToolPanelsDropdown,
-    MainMenuItems: state.Grid.MainMenuItems,
+    MainMenuItems: state.Grid.FunctionDropdownMenuItems,
     Columns: state.Grid.Columns,
   };
 }
@@ -344,7 +342,7 @@ function mapStateToProps(state: AdaptableState) {
 function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>) {
   return {
     onClick: (action: Redux.Action) => dispatch(action),
-    onNewColumnListOrder: (VisibleColumnList: AdaptableColumn[]) =>
+    onNewColumnListOrder: (VisibleColumnList: string[]) =>
       dispatch(SystemRedux.SetNewColumnListOrder(VisibleColumnList)),
     onSetToolPanelVisibility: (toolPanels: AdaptableToolPanels) =>
       dispatch(ToolPanelRedux.ToolPanelSetToolPanels(toolPanels)),

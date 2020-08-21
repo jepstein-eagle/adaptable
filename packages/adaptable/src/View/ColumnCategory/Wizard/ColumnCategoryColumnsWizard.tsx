@@ -26,7 +26,7 @@ export class ColumnCategoryColumnsWizard
   constructor(props: ColumnCategoryColumnsWizardProps) {
     super(props);
 
-    let selectedFriendlyColumns = this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
+    let selectedFriendlyColumns = this.props.Api.columnApi.getFriendlyNamesFromColumnIds(
       this.props.Data.ColumnIds
     );
     let currentlyColumnCategorys: string[] = [];
@@ -34,7 +34,7 @@ export class ColumnCategoryColumnsWizard
       currentlyColumnCategorys.push(...lk.ColumnIds);
     });
 
-    let allColumns: string[] = this.props.Api.gridApi.getColumns().map(c => c.ColumnId);
+    let allColumns: string[] = this.props.Api.columnApi.getColumns().map(c => c.ColumnId);
     let availableColumns: string[] = [];
     allColumns.forEach(c => {
       if (ArrayExtensions.NotContainsItem(currentlyColumnCategorys, c)) {
@@ -42,7 +42,7 @@ export class ColumnCategoryColumnsWizard
       }
     });
 
-    let availableFriendlyColumns = this.props.Api.gridApi.getFriendlyNamesFromColumnIds(
+    let availableFriendlyColumns = this.props.Api.columnApi.getFriendlyNamesFromColumnIds(
       availableColumns
     );
     selectedFriendlyColumns.forEach(sc => availableFriendlyColumns.push(sc));
@@ -86,7 +86,7 @@ export class ColumnCategoryColumnsWizard
     return !this.state.IsEdit;
   }
   public Next(): void {
-    this.props.Data.ColumnIds = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(
+    this.props.Data.ColumnIds = this.props.Api.columnApi.getColumnIdsFromFriendlyNames(
       this.state.SelectedColumns
     );
   }

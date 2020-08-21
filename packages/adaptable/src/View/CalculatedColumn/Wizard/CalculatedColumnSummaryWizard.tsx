@@ -20,14 +20,15 @@ export class CalculatedColumnSummaryWizard
   }
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.ColumnId },
+      { Key: 'Column Id', Value: this.props.Data.ColumnId },
+      { Key: 'Column Name', Value: this.props.Data.FriendlyName },
       {
         Key: 'Expression',
         Value: this.props.Api.internalApi
           .getCalculatedColumnExpressionService()
           .GetExpressionString(
             this.props.Data.ColumnExpression,
-            this.props.Api.gridApi.getColumns()
+            this.props.Api.columnApi.getColumns()
           ),
       },
       { Key: 'DataType', Value: this.props.Data.CalculatedColumnSettings.DataType },

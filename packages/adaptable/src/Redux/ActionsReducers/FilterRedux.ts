@@ -113,7 +113,7 @@ export const CreateUserFilterFromColumnFilter = (
 });
 
 const initialFilterState: FilterState = {
-  SystemFilters: SystemFilterIdList,
+  SystemFilters: SystemFilterIdList as any,
   FilterPredicates: [],
   ColumnFilters: [],
   UserFilters: [],

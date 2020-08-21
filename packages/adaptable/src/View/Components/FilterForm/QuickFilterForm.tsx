@@ -266,7 +266,7 @@ function mapDispatchToProps(
 export let QuickFilterForm = connect(mapStateToProps, mapDispatchToProps)(QuickFilterFormComponent);
 
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.adaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <QuickFilterForm

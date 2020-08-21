@@ -8,6 +8,7 @@ import Dialog from '../../components/Dialog';
 import SimpleButton from '../../components/SimpleButton';
 import Panel from '../../components/Panel';
 import { AdaptableApi } from '../../types';
+import { CSSProperties } from 'react';
 
 export interface IWizardStepInfo {
   StepName: string;
@@ -24,6 +25,8 @@ export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWiz
   FriendlyName?: string;
   ModalContainer: HTMLElement;
   canFinishWizard: Function;
+  style?: CSSProperties;
+  showStepsLegend?: Boolean;
   Api: AdaptableApi;
 }
 
@@ -92,7 +95,13 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       >
         <Flex
           flexDirection="column"
-          style={{ height: '100%', width: '70vw', maxWidth: 800, maxHeight: '80vh' }}
+          style={{
+            height: '100%',
+            width: '70vw',
+            maxWidth: 1000,
+            maxHeight: '80vh',
+            ...this.props.style,
+          }}
         >
           <Panel
             header={this.props.FriendlyName}
@@ -102,14 +111,17 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             variant="primary"
             style={{ flex: 'none' }}
           >
-            <WizardLegend
-              StepNames={wizardStepNames}
-              ActiveStepName={this.stepName}
-              FriendlyName={''}
-              CanShowAllSteps={this.canFinishWizard()}
-              onStepButtonClicked={s => this.onStepButtonClicked(s)}
-            />
+            {this.props.showStepsLegend === false ? null : (
+              <WizardLegend
+                StepNames={wizardStepNames}
+                ActiveStepName={this.stepName}
+                FriendlyName={''}
+                CanShowAllSteps={this.canFinishWizard()}
+                onStepButtonClicked={s => this.onStepButtonClicked(s)}
+              />
+            )}
           </Panel>
+
           <Flex style={{ flex: 1, overflow: 'auto' }} flexDirection="column">
             {this.state.ActiveState}
           </Flex>
@@ -123,6 +135,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             <SimpleButton
               tone="neutral"
               variant="text"
+              data-name="close"
               onClick={() => this.props.onHide()}
               tooltip="Close wizard"
               AccessLevel={'Full'}
@@ -131,6 +144,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             </SimpleButton>
             <div style={{ flex: 1 }} />
             <SimpleButton
+              data-name="back"
               variant="outlined"
               disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
               onClick={() => this.handleClickBack()}
@@ -141,6 +155,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             </SimpleButton>
             <SimpleButton
               variant="outlined"
+              data-name="next"
               disabled={!this.ActiveStep.canNext() || this.isLastStep()}
               onClick={() => this.handleClickNext()}
               icon="arrow-right"
@@ -153,6 +168,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
             </SimpleButton>
             <SimpleButton
               tone="accent"
+              data-name="finish"
               variant="raised"
               disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}

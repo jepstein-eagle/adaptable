@@ -58,6 +58,7 @@ export class PanelWithButton extends React.Component<PanelWithButtonProps & Pane
     return (
       <Panel
         flex={1}
+        className={this.props.className}
         bodyScroll={this.props.bodyScroll != null ? this.props.bodyScroll : true}
         bodyProps={this.props.bodyProps}
         variant={this.props.variant || 'primary'}

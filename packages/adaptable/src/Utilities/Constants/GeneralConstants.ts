@@ -10,7 +10,7 @@ import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 import { LIGHT_YELLOW, BLACK, getHexForName } from '../../View/UIHelper';
 
 export const MISSING_COLUMN: string = ' [MISSING]';
-export const DEFAULT_LAYOUT: string = 'Ab_Default_Layout';
+export const DEFAULT_LAYOUT: string = 'Default Layout';
 export const LIGHT_THEME: string = 'light';
 export const DARK_THEME: string = 'dark';
 
