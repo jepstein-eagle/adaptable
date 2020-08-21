@@ -328,7 +328,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
            'OrderDate',
            'CustomerReference',
            'CompanyName',
-          'ContactName',
+           'ContactName',
            'InvoicedCost',
            'ChangeLastOrder',
            'OrderCost',

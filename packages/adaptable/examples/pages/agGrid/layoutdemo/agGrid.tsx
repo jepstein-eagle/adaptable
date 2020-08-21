@@ -95,7 +95,7 @@ let demoConfig: PredefinedConfig = {
     CurrentLayout: 'Sorting Layout',
     Layouts: [
       {
-        GroupedColumns: ['currency'],
+        RowGroupedColumns: ['currency'],
         Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Basic Group Layout',
       },

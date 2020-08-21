@@ -341,7 +341,7 @@ import { GradientColumnState } from './GradientColumnState';
  *           'OrderDate',
  *           'CustomerReference',
  *           'CompanyName',
- *          'ContactName',
+ *           'ContactName',
  *           'InvoicedCost',
  *           'ChangeLastOrder',
  *           'OrderCost',
