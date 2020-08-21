@@ -69,9 +69,13 @@ export class UserFilterSettingsWizard
         ErrorMessage:
           this.props.Api.filterApi
             .getAllUserFilter()
-            .findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1
+            .findIndex(
+              x => x.Name == e.value && x.Scope.ColumnIds[0] == this.props.Data.Scope.ColumnIds[0]
+            ) > -1
             ? 'A User Filter already exists with that name for column: ' +
-              this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
+              this.props.Api.columnApi.getFriendlyNameFromColumnId(
+                this.props.Data.Scope.ColumnIds[0]
+              )
             : null,
       } as UserFilterSettingsWizardState,
       () => this.props.UpdateGoBackState()

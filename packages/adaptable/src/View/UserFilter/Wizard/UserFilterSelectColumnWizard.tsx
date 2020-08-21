@@ -9,9 +9,9 @@ import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
+import { UserFilter } from '../../../PredefinedConfig/FilterState';
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSelectColumnWizardState {
@@ -24,7 +24,7 @@ export class UserFilterSelectColumnWizard
   constructor(props: UserFilterSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: props.Data.ColumnId,
+      ColumnId: props.Data.Scope.ColumnIds[0],
     };
   }
 
@@ -61,10 +61,10 @@ export class UserFilterSelectColumnWizard
     return true;
   }
   public Next(): void {
-    if (this.props.Data.ColumnId != this.state.ColumnId) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    if (this.props.Data.Scope.ColumnIds[0] != this.state.ColumnId) {
+      // this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
     }
-    this.props.Data.ColumnId = this.state.ColumnId;
+    this.props.Data.Scope.ColumnIds[0] = this.state.ColumnId;
   }
 
   public Back(): void {

@@ -8,6 +8,7 @@ import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { ILayoutService } from './Interface/ILayoutService';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridState } from '../../PredefinedConfig/GridState';
+import { isEqual } from 'lodash';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {

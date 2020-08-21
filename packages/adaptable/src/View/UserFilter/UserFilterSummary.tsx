@@ -61,7 +61,7 @@ export class UserFilterSummaryComponent extends React.Component<
 
     // existing items
     userFilters.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+      if (item.Scope.ColumnIds[0] == this.props.SummarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
@@ -95,6 +95,12 @@ export class UserFilterSummaryComponent extends React.Component<
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
+            onSetNewSharedQueryName={() => {
+              throw 'unimplemented';
+            }}
+            onSetUseSharedQuery={() => {
+              throw 'unimplemented';
+            }}
           />
         )}
       </div>
@@ -109,7 +115,7 @@ export class UserFilterSummaryComponent extends React.Component<
     return Helper.ReturnItemCount(
       this.props.Api.filterApi
         .getAllUserFilter()
-        .filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId),
+        .filter(uf => uf.Scope.ColumnIds[0] == this.props.SummarisedColumn.ColumnId),
       StrategyConstants.UserFilterStrategyFriendlyName
     );
   }
@@ -119,7 +125,7 @@ export class UserFilterSummaryComponent extends React.Component<
       return 'Column is not filterable';
     }
 
-    return ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Api);
+    return 'Need to do do this';
   }
 
   isFilterable(): boolean {
@@ -138,7 +144,7 @@ export class UserFilterSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.Scope.ColumnIds[0] = this.props.SummarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -181,8 +187,7 @@ export class UserFilterSummaryComponent extends React.Component<
     let userFilter = this.state.EditedAdaptableObject as UserFilter;
     return (
       StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
-      StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression)
+      StringExtensions.IsNotEmpty(userFilter.Scope.ColumnIds[0])
     );
   }
 }

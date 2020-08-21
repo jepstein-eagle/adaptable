@@ -18,7 +18,6 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
 import {
-  EditableConfigEntityState,
   WizardStatus,
   EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';

@@ -51,7 +51,7 @@ class UserFilterPopupComponent extends React.Component<
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
         if (this.props.PopupParams.action == 'New') {
           let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-          userFilter.ColumnId = this.props.PopupParams.columnId;
+          userFilter.Scope = { ColumnIds: [this.props.PopupParams.columnId] };
           this.setState({
             EditedAdaptableObject: userFilter,
             WizardStartIndex: 1,
@@ -80,7 +80,7 @@ class UserFilterPopupComponent extends React.Component<
     let selectedColumnId: string = '';
     if (this.state.EditedAdaptableObject != null) {
       let filter: UserFilter = this.state.EditedAdaptableObject as UserFilter;
-      let editedColumn: string = filter.ColumnId;
+      let editedColumn: string = filter.Scope.ColumnIds[0];
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
       } else if (this.props.PopupParams) {
@@ -154,6 +154,12 @@ class UserFilterPopupComponent extends React.Component<
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
+              onSetNewSharedQueryName={() => {
+                throw 'unimplemented';
+              }}
+              onSetUseSharedQuery={() => {
+                throw 'unimplemented';
+              }}
             />
           )}
         </PanelWithButton>

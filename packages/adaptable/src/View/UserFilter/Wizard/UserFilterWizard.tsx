@@ -4,10 +4,10 @@ import { UserFilterSettingsWizard } from './UserFilterSettingsWizard';
 import { UserFilterSelectColumnWizard } from './UserFilterSelectColumnWizard';
 import { UserFilterSummaryWizard } from './UserFilterSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
 export interface UserFilterWizardProps
-  extends AdaptableObjectAdaptableWizardProps<UserFilterWizard> {
+  extends AdaptableObjectExpressionAdaptableWizardProps<UserFilterWizard> {
   SelectedColumnId: string;
 }
 

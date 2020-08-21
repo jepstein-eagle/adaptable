@@ -4,6 +4,7 @@ import { StrategySummaryProps } from '../Components/SharedProps/StrategySummaryP
 import {
   EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -44,7 +45,7 @@ export interface ConditionalStyleSummaryProps
 
 export class ConditionalStyleSummaryComponent extends React.Component<
   ConditionalStyleSummaryProps,
-  EditableConfigEntityState
+  EditableExpressionConfigEntityState
 > {
   constructor(props: ConditionalStyleSummaryProps) {
     super(props);
