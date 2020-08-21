@@ -1,4 +1,3 @@
-import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
@@ -8,6 +7,7 @@ import ArrayExtensions from '../Extensions/ArrayExtensions';
 import { ILayoutService } from './Interface/ILayoutService';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridState } from '../../PredefinedConfig/GridState';
+import { isEqual } from 'lodash';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
