@@ -270,7 +270,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
         invalidSourceForPivot || columnAlreadyPivoted || (column && !column.Pivotable);
 
       dispatch({
-        type: LayoutEditorActions.SET_DROP_DISABLED_ON_PIVOT,
+        type: LayoutEditorActions.SET_DROP_DISABLED_ON_SORT,
         payload: !!disableDropOnPivot,
       });
     },
