@@ -368,7 +368,7 @@ export const getAdaptableToolPanelAgGridComponent = (adaptable?: IAdaptable) => 
       this.gui.style.width = '100%';
       this.gui.style.overflow = 'auto';
       render(
-        <Provider store={Adaptable.AdaptableStore.TheStore}>
+        <Provider store={Adaptable.adaptableStore.TheStore}>
           <ThemeProvider theme={theme}>
             <AdaptableContext.Provider value={Adaptable}>
               <ConnectedAdaptableToolPanel

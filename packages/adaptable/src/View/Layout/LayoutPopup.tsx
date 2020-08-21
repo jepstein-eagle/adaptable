@@ -218,9 +218,11 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   canFinishWizard() {
     let layout = this.state.EditedAdaptableObject as Layout;
+    // Need a name and EITHER columns or Pivot Columns
     return (
       StringExtensions.IsNotNullOrEmpty(layout.Name) &&
-      ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
+      (ArrayExtensions.IsNotNullOrEmpty(layout.Columns) ||
+        ArrayExtensions.IsNotNullOrEmpty(layout.PivotColumns))
     );
   }
 }

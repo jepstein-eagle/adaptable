@@ -14,6 +14,30 @@ export class LayoutService implements ILayoutService {
     this.adaptable = adaptable;
   }
 
+  public areEqual(layout1: Layout, layout2: Layout): boolean {
+    // ColumnSorts: [],
+    // ColumnFlexMap: {},
+    // ColumnWidthMap: {},
+    // GroupedColumns: [],
+    if (!layout1 && !layout2) {
+      return true;
+    }
+    if (!layout1 || !layout2) {
+      return false;
+    }
+
+    const defaults: Partial<Layout> = {
+      ColumnSorts: [],
+      ColumnFlexMap: {},
+      ColumnWidthMap: {},
+      RowGroupedColumns: [],
+    };
+    layout1 = { ...defaults, ...layout1 };
+    layout2 = { ...defaults, ...layout2 };
+
+    return isEqual(layout1, layout2);
+  }
+
   public createDefaultLayoutIfNeeded(): Layout | null {
     let gridState: GridState = this.adaptable.api.gridApi.getGridState();
     let layoutState: LayoutState = this.adaptable.api.layoutApi.getLayoutState();
