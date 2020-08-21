@@ -1,11 +1,8 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { GridState } from '../PredefinedConfig/GridState';
-import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
-import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 /**
+ * Provides access to a suite of column-related functions in AdapTable
  */
 export interface ColumnApi {
   /** Returns all the columns in Adaptable

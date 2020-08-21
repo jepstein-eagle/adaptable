@@ -1,12 +1,10 @@
-import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
-import { DataType } from '../PredefinedConfig/Common/Enums';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 
 /**
- * Provides access to important elements of Adaptable like columns, sorting, selected cells etc.
+ * Provides access to important elements of the Adaptable Grid like sorting, selected cells etc.
  *
  * It also provides a set of useful methods to add / edit / delete rows in the Grid and, indeed, to reset the DataSource.
  *
