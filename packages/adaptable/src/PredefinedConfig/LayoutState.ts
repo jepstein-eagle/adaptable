@@ -29,11 +29,11 @@ import { ColumnSort } from './Common/ColumnSort';
  *        ColumnSorts: [
  *          {
  *            Column: 'counterparty',
- *            SortOrder: 'Descending',
+ *            SortOrder: 'Desc',
  *          },
  *          {
  *            Column: 'currency',
- *            SortOrder: 'Descending',
+ *            SortOrder: 'Desc',
  *          },
  *        ],
  *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
@@ -123,7 +123,7 @@ export interface Layout extends AdaptableObject {
   /**
    * What sorting wil be applied in the Layout.
    *
-   * A `ColumnSort` takes a Column name and a Sort Order (e.g. 'Ascending' or 'Descending')
+   * A `ColumnSort` takes a Column name and a Sort Order (e.g. 'Asc' or 'Desc')
    */
   ColumnSorts?: ColumnSort[];
 

@@ -141,7 +141,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 false
               );
               columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                SortOrder.Ascending,
+                SortOrder.Asc,
                 columnValuePairs,
                 DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
               );
@@ -191,7 +191,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           false
         );
         columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
+          SortOrder.Asc,
           columnValuePairs,
           DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
         );

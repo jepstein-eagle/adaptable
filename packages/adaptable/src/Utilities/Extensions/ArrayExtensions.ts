@@ -189,7 +189,7 @@ export function sortArrayWithProperty(
   if (sortProperty) {
     let newValues = [].concat(values);
     let direction = 1;
-    if (sortOrder == SortOrder.Descending) {
+    if (sortOrder == SortOrder.Desc) {
       direction = -1;
     }
     return newValues.sort((a, b) => {
@@ -209,10 +209,10 @@ export function sortArrayWithProperty(
     return sortArray(values, sortOrder);
   }
 }
-export function sortArray(values: any[], sortOrder: SortOrder = SortOrder.Ascending): any[] {
+export function sortArray(values: any[], sortOrder: SortOrder = SortOrder.Asc): any[] {
   let newValues = [].concat(values);
   let direction = 1;
-  if (sortOrder == SortOrder.Descending) {
+  if (sortOrder == SortOrder.Desc) {
     direction = -1;
   }
   return newValues.sort((a, b) => (a < b ? -1 * direction : a > b ? 1 * direction : 0));

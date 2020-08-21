@@ -42,7 +42,7 @@ export class ListBoxFilterSortComponent extends React.Component<
           variant="text"
         ></SimpleButton>
 
-        {this.props.SortOrder == SortOrder.Ascending ? (
+        {this.props.SortOrder == SortOrder.Asc ? (
           <SimpleButton
             disabled={this.props.DisableSort}
             onClick={() => this.props.sortColumnValues()}

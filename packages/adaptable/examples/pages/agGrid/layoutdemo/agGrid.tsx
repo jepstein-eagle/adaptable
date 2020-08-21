@@ -108,11 +108,11 @@ let demoConfig: PredefinedConfig = {
         ColumnSorts: [
           // {
           //   Column: 'counterparty',
-          //   SortOrder: 'Descending',
+          //   SortOrder: 'Desc',
           // },
           {
             Column: 'currency',
-            SortOrder: 'Ascending',
+            SortOrder: 'Asc',
           },
         ],
         Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
@@ -122,7 +122,7 @@ let demoConfig: PredefinedConfig = {
         // ColumnSorts: [
         //   {
         //     Column: 'currency',
-        //     SortOrder: 'Descending',
+        //     SortOrder: 'Desc',
         //   },
         // ],
         //  GroupedColumns: ['currency', 'country'],

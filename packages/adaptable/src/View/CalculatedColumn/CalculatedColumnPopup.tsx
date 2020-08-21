@@ -86,7 +86,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     ];
 
     let propCalculatedColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.CalculatedColumns,
       'ColumnId'
     );

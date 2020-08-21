@@ -40,7 +40,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
     );
 
     let sortedAdvancedSearches: AdvancedSearch[] = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.AdvancedSearches,
       'Name'
     );

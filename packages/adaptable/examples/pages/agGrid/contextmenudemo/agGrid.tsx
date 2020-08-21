@@ -54,7 +54,7 @@ async function InitAdaptableDemo() {
         handler(menuInfo) {
           let customSort: ColumnSort = {
             Column: menuInfo.Column.ColumnId,
-            SortOrder: 'Ascending',
+            SortOrder: 'Asc',
           };
           menuInfo.AdaptableApi.gridApi.sortAdaptable([customSort]);
         },

@@ -239,7 +239,7 @@ export function CreateEmptyRange(): QueryRange {
 export function CreateEmptyColumnSort(): ColumnSort {
   return {
     Column: EMPTY_STRING,
-    SortOrder: SortOrder.Ascending,
+    SortOrder: SortOrder.Asc,
   };
 }
 

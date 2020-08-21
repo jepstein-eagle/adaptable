@@ -85,7 +85,7 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
         const newColumnSorts: ColumnSort[] = [...columnSorts];
 
         newColumnSorts.splice(destination.index, 0, {
-          SortOrder: 'Ascending',
+          SortOrder: 'Asc',
           Column: source.columnId,
         });
 
@@ -105,7 +105,7 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
     setColumnSorts(
       columnSorts.map(sort => {
         if (sort.Column === c.Column) {
-          sort = { ...sort, SortOrder: c.SortOrder === 'Ascending' ? 'Descending' : 'Ascending' };
+          sort = { ...sort, SortOrder: c.SortOrder === 'Asc' ? 'Desc' : 'Asc' };
         }
 
         return sort;

@@ -482,7 +482,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                         toggleSort();
                       }}
                     >
-                      <Icon name={c.SortOrder === 'Ascending' ? 'sort-asc' : 'sort-desc'} />
+                      <Icon name={c.SortOrder === 'Asc' ? 'sort-asc' : 'sort-desc'} />
                     </SimpleButton>
                     <SimpleButton
                       variant="text"

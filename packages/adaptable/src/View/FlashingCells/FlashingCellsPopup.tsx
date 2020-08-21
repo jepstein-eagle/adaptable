@@ -74,7 +74,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
       ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId)
     );
     numericNonCalcColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       numericNonCalcColumns,
       'FriendlyName'
     );

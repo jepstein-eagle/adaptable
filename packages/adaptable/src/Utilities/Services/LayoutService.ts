@@ -103,7 +103,7 @@ export class LayoutService implements ILayoutService {
     return returnString;
   }
 
-  public getSortOrder(sortOrder: 'Ascending' | 'Descending'): string {
-    return sortOrder == SortOrder.Ascending ? ' [asc] ' : ' [desc] ';
+  public getSortOrder(sortOrder: 'Asc' | 'Desc'): string {
+    return sortOrder == SortOrder.Asc ? ' [asc] ' : ' [desc] ';
   }
 }

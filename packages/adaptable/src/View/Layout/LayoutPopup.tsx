@@ -193,6 +193,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onFinishWizard() {
     let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
+    //   console.log('in on finish', clonedObject);
     const isNew = this.state.WizardStatus == WizardStatus.New;
     if (isNew) {
       this.props.onAddLayout(clonedObject);
@@ -230,8 +231,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     //   }
     // }
     return (
-      StringExtensions.IsNotNullOrEmpty(layout.Name) &&
-      ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
+      //   StringExtensions.IsNotNullOrEmpty(layout.Name) &&
+      //    ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
+      true
     );
   }
 }

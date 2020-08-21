@@ -94,15 +94,15 @@ export class DualListBoxEditor extends React.Component<
       SelectedValues: this.props.SelectedValues,
       AvailableValues: this.createAvailableValuesList(
         availableValues,
-        SortOrder.Ascending,
+        SortOrder.Asc,
         this.props.SortMember
       ),
       UiSelectedSelectedValues: [],
       UiSelectedAvailableValues: [],
       FilterValue: '',
       SelectedValuesFilterValue: '',
-      SortOrder: SortOrder.Ascending,
-      SelectedValuesSortOrder: SortOrder.Ascending,
+      SortOrder: SortOrder.Asc,
+      SelectedValuesSortOrder: SortOrder.Asc,
       AllValues: this.props.AvailableValues,
       MasterValues: this.buildMasterValues(this.props.MasterChildren),
     };
@@ -1052,45 +1052,45 @@ export class DualListBoxEditor extends React.Component<
   }
 
   sortColumnValues() {
-    if (this.state.SortOrder == SortOrder.Ascending) {
+    if (this.state.SortOrder == SortOrder.Asc) {
       this.setState({
         AvailableValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Descending,
+          SortOrder.Desc,
           this.state.AvailableValues,
           this.props.SortMember
         ),
-        SortOrder: SortOrder.Descending,
+        SortOrder: SortOrder.Desc,
       } as DualListBoxEditorState);
     } else {
       this.setState({
         AvailableValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
+          SortOrder.Asc,
           this.state.AvailableValues,
           this.props.SortMember
         ),
-        SortOrder: SortOrder.Ascending,
+        SortOrder: SortOrder.Asc,
       } as DualListBoxEditorState);
     }
   }
 
   sortSelectedColumnValues() {
-    if (this.state.SelectedValuesSortOrder == SortOrder.Ascending) {
+    if (this.state.SelectedValuesSortOrder == SortOrder.Asc) {
       this.setState({
         SelectedValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Descending,
+          SortOrder.Desc,
           this.state.SelectedValues,
           this.props.SortMember
         ),
-        SelectedValuesSortOrder: SortOrder.Descending,
+        SelectedValuesSortOrder: SortOrder.Desc,
       } as DualListBoxEditorState);
     } else {
       this.setState({
         SelectedValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
+          SortOrder.Asc,
           this.state.SelectedValues,
           this.props.SortMember
         ),
-        SelectedValuesSortOrder: SortOrder.Ascending,
+        SelectedValuesSortOrder: SortOrder.Asc,
       } as DualListBoxEditorState);
     }
   }

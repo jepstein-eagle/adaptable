@@ -1289,7 +1289,7 @@ export class Adaptable implements IAdaptable {
         }
         return {
           colId,
-          sort: customSort.SortOrder === 'Ascending' ? 'asc' : 'desc',
+          sort: customSort.SortOrder === 'Asc' ? 'asc' : 'desc',
         };
       })
       .filter(x => !!x);
@@ -1343,7 +1343,7 @@ export class Adaptable implements IAdaptable {
     }[] = this.gridOptions.api.getSortModel();
 
     const columnSorts: ColumnSort[] = sortModel.map(({ colId, sort }) => {
-      return { Column: colId, SortOrder: sort === 'asc' ? 'Ascending' : 'Descending' };
+      return { Column: colId, SortOrder: sort === 'asc' ? 'Asc' : 'Desc' };
     });
 
     const columnState = this.gridOptions.columnApi.getColumnState();
@@ -3518,7 +3518,7 @@ export class Adaptable implements IAdaptable {
         }
         const columnSort: ColumnSort = {
           Column: sm.colId,
-          SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
+          SortOrder: sm.sort == 'asc' ? SortOrder.Asc : SortOrder.Desc,
         };
         newColumnSorts.push(columnSort);
       });
@@ -3656,7 +3656,7 @@ export class Adaptable implements IAdaptable {
     const sortModel: any[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(columnSorts)) {
       columnSorts.forEach(gs => {
-        const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
+        const sortDescription: string = gs.SortOrder == SortOrder.Asc ? 'asc' : 'desc';
         sortModel.push({ colId: gs.Column, sort: sortDescription });
       });
     }

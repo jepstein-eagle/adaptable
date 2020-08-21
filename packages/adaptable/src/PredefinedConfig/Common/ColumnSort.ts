@@ -15,7 +15,7 @@ export interface ColumnSort {
   Column: string;
 
   /**
-   * How the column will be sorted (i.e. either 'Ascending' or 'Descending')
+   * How the column will be sorted (i.e. either 'Asc' or 'Desc')
    */
-  SortOrder: 'Ascending' | 'Descending';
+  SortOrder: 'Asc' | 'Desc';
 }

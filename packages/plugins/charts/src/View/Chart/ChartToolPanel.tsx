@@ -71,7 +71,7 @@ class ChartToolPanelComponent extends React.Component<
         : this.props.CurrentChartDefinition.ChartType;
 
     let sortedChartDefinitions: ChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.ChartDefinitions,
       'Title'
     );

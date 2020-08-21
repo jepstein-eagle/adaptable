@@ -346,7 +346,7 @@ let demoConfig: PredefinedConfig = {
         ColumnSorts: [
           {
             Column: 'model',
-            SortOrder: 'Descending',
+            SortOrder: 'Desc',
           },
         ],
       },

@@ -40,7 +40,7 @@ export class LayoutEditorWizard
         <FormLayout columns={[1]} mb={2}>
           <FormRow>
             <Input
-              value={this.state.layoutName + ' TO BE IMPLEMENTED'}
+              value={this.state.layoutName}
               width="100%"
               style={{ maxWidth: '20rem' }}
               placeholder="Layout Name"
@@ -65,10 +65,10 @@ export class LayoutEditorWizard
   }
 
   onLayoutNameChange = (event: React.FormEvent<any>) => {
-    //TODO continue here
-    return;
+    //TODO continue here when Radu returns
+    // Jonny uncommented return so could do initial testing
+    // return;
     const Name = (event.target as HTMLInputElement).value;
-
     const Exists = ArrayExtensions.ContainsItem(
       this.props.Layouts.map(l => l.Name),
       Name
@@ -107,6 +107,8 @@ export class LayoutEditorWizard
     Object.keys(this.props.Data).forEach(key => {
       delete (this.props.Data as any)[key];
     });
+    // TODO: Radu to fix properly but Jonny added this temporarily so could create new layouts and edit for testing!
+    this.state.layout.Name = this.state.layoutName;
 
     Object.assign(this.props.Data, this.state.layout);
   }

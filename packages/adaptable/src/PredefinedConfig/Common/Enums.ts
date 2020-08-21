@@ -105,8 +105,8 @@ export enum ScheduleType {
 }
 
 export enum SortOrder {
-  Ascending = 'Ascending',
-  Descending = 'Descending',
+  Asc = 'Asc',
+  Desc = 'Desc',
 }
 
 export enum DisplayAction {
