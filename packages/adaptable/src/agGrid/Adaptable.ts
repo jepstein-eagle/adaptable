@@ -248,7 +248,7 @@ export class Adaptable implements IAdaptable {
 
   public strategies: IStrategyCollection;
 
-  public AdaptableStore: IAdaptableStore;
+  public adaptableStore: IAdaptableStore;
 
   public adaptableOptions: AdaptableOptions;
 
@@ -471,7 +471,7 @@ export class Adaptable implements IAdaptable {
       }
 
       // Load the store
-      this.AdaptableStore.Load.then(
+      this.adaptableStore.Load.then(
         () => this.strategies.forEach(strat => strat.initializeWithRedux()),
         e => {
           LoggingHelper.LogAdaptableError('Failed to Init AdaptableStore : ', e);
@@ -574,14 +574,14 @@ export class Adaptable implements IAdaptable {
   };
 
   private initStore() {
-    this.AdaptableStore = new AdaptableStore(this);
+    this.adaptableStore = new AdaptableStore(this);
 
-    this.AdaptableStore.onAny(
+    this.adaptableStore.onAny(
       (
         eventName: string,
         data: { action: Redux.Action; state: AdaptableState; newState: AdaptableState }
       ) => {
-        this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
+        this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.adaptableStore));
 
         if (eventName == INIT_STATE) {
           // and reset state also?
@@ -828,10 +828,6 @@ export class Adaptable implements IAdaptable {
       };
       vendorColDef.floatingFilterComponent = FloatingFilterWrapperFactory(this);
     }
-  }
-
-  public reloadGrid(): void {
-    this._emit('GridReloaded');
   }
 
   public applyGridFiltering() {
@@ -3723,7 +3719,7 @@ export class Adaptable implements IAdaptable {
                 this.getState().System.QuickSearchVisibleColumnExpressions
               );
               quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
-              this.AdaptableStore.TheStore.dispatch(
+              this.adaptableStore.TheStore.dispatch(
                 SystemRedux.QuickSearchSetVisibleColumnExpressions(
                   quickSearchVisibleColumnExpressions
                 )
@@ -4084,7 +4080,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
   // A couple of state management functions
   private getState(): AdaptableState {
-    return this.AdaptableStore.TheStore.getState();
+    return this.adaptableStore.TheStore.getState();
   }
 
   private getGridOptionsApi(): GridApi {

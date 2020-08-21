@@ -5,7 +5,6 @@ import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { Layout, LayoutState } from '../../PredefinedConfig/LayoutState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-
 import { ILayoutService } from './Interface/ILayoutService';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridState } from '../../PredefinedConfig/GridState';
@@ -14,30 +13,6 @@ import { isEqual } from 'lodash';
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
     this.adaptable = adaptable;
-  }
-
-  public areEqual(layout1: Layout, layout2: Layout): boolean {
-    // ColumnSorts: [],
-    // ColumnFlexMap: {},
-    // ColumnWidthMap: {},
-    // GroupedColumns: [],
-    if (!layout1 && !layout2) {
-      return true;
-    }
-    if (!layout1 || !layout2) {
-      return false;
-    }
-
-    const defaults: Partial<Layout> = {
-      ColumnSorts: [],
-      ColumnFlexMap: {},
-      ColumnWidthMap: {},
-      RowGroupedColumns: [],
-    };
-    layout1 = { ...defaults, ...layout1 };
-    layout2 = { ...defaults, ...layout2 };
-
-    return isEqual(layout1, layout2);
   }
 
   public createDefaultLayoutIfNeeded(): Layout | null {
@@ -85,11 +60,7 @@ export class LayoutService implements ILayoutService {
     return returnString;
   }
 
-  public getSortsForLayout(layout: Layout): ColumnSort[] {
-    return layout.ColumnSorts;
-  }
-
-  public getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
+  private getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
     if (ArrayExtensions.IsNullOrEmpty(columnSorts)) {
       return 'None';
     }
@@ -97,13 +68,10 @@ export class LayoutService implements ILayoutService {
     let returnString: string = '';
     columnSorts.forEach((gs: ColumnSort) => {
       returnString +=
-        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.Column) +
-        this.getSortOrder(gs.SortOrder);
+        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.Column) + SortOrder.Asc
+          ? ' [asc] '
+          : ' [desc] ';
     });
     return returnString;
-  }
-
-  public getSortOrder(sortOrder: 'Asc' | 'Desc'): string {
-    return sortOrder == SortOrder.Asc ? ' [asc] ' : ' [desc] ';
   }
 }

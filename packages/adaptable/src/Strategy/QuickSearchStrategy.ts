@@ -25,15 +25,15 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
   public createQuickSearchRange() {
     // if searchText is empty then set clear both types, otherwise set them
     if (StringExtensions.IsNullOrEmpty(this.adaptable.api.quickSearchApi.getQuickSearchValue())) {
-      this.adaptable.AdaptableStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
-      this.adaptable.AdaptableStore.TheStore.dispatch(
+      this.adaptable.adaptableStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
+      this.adaptable.adaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchClearVisibleColumnExpressions()
       );
     } else {
       let quickSearchRange: QueryRange = RangeHelper.CreateValueRangeFromOperand(
         this.adaptable.api.quickSearchApi.getQuickSearchValue()
       );
-      this.adaptable.AdaptableStore.TheStore.dispatch(
+      this.adaptable.adaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetRange(quickSearchRange)
       );
 
@@ -55,7 +55,7 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
           quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
         }
       }
-      this.adaptable.AdaptableStore.TheStore.dispatch(
+      this.adaptable.adaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions)
       );
     }

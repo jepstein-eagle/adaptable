@@ -22,7 +22,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       adaptable
     );
 
-    adaptable.AdaptableStore.onAny((eventName: string) => {
+    adaptable.adaptableStore.onAny((eventName: string) => {
       if (
         eventName == FormatColumnRedux.FORMAT_COLUMN_ADD ||
         eventName == FormatColumnRedux.FORMAT_COLUMN_EDIT ||

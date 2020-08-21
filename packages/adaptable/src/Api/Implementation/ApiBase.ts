@@ -79,7 +79,7 @@ export abstract class ApiBase {
    * @param action the Redux Action to be dispatched
    */
   protected dispatchAction(action: Action): void {
-    this.adaptable.AdaptableStore.TheStore.dispatch(action);
+    this.adaptable.adaptableStore.TheStore.dispatch(action);
   }
 
   /**
@@ -88,6 +88,6 @@ export abstract class ApiBase {
    * This is a simple *getState()* call
    */
   public getAdaptableState(): AdaptableState {
-    return this.adaptable.AdaptableStore.TheStore.getState();
+    return this.adaptable.adaptableStore.TheStore.getState();
   }
 }

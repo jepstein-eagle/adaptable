@@ -39,7 +39,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   public initializeWithRedux() {
     this.InitState();
-    this.adaptable.AdaptableStore.TheStore.subscribe(() => this.InitState());
+    this.adaptable.adaptableStore.TheStore.subscribe(() => this.InitState());
   }
 
   public setStrategyEntitlement(): void {

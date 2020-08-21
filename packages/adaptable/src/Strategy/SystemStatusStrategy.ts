@@ -23,7 +23,7 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
       adaptable
     );
 
-    adaptable.AdaptableStore.onAny((eventName: string) => {
+    adaptable.adaptableStore.onAny((eventName: string) => {
       if (
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_UPDATE ||
         eventName == SystemStatusRedux.SYSTEM_SYSTEM_SET_SHOW_ALERT ||

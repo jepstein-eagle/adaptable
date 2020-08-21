@@ -14,7 +14,5 @@ export class ScheduleStrategy extends AdaptableStrategyBase implements ISchedule
       ScreenPopups.SchedulePopup,
       adaptable
     );
-
-    this.adaptable._on('GridReloaded', () => {});
   }
 }

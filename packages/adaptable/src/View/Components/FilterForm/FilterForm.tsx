@@ -566,7 +566,7 @@ function mapDispatchToProps(
 export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.adaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <FilterForm
