@@ -14,7 +14,7 @@ import { ReportSchedule } from '../types';
  *
  *  ### Further AdapTable Help Resources
  *
- * - {@link ScheduleApi|Schedule API}
+ * - {@link ScheduleApi|Schedule Api}
  *
  * - [Schedule Demo](https://demo.adaptabletools.com/alertsmessages/aggridschedulesdemo)
  *

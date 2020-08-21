@@ -167,7 +167,7 @@ Obviously each server is different so AdapTable cannot provide an out of the box
 ### Returning Search Results
 Once the AdapTable JSON has been parsed into a query format that matches the particular server setup and the search has been run, then the data needs to be returned to AdapTable and displayed accordingly.
 
-There are a number of different Adaptable API methods you can use but the most common is perhaps [`setGridData`](https://api.adaptabletools.com/interfaces/_src_api_gridapi_.gridapi.html#setgriddata) in GridApi.
+There are a number of different Adaptable Api methods you can use but the most common is perhaps [`setGridData`](https://api.adaptabletools.com/interfaces/_src_api_gridapi_.gridapi.html#setgriddata) in GridApi.
 
 >  Once the data is sent back, AdapTable will automatically make any changes to your sorting, styles etc as required.
 

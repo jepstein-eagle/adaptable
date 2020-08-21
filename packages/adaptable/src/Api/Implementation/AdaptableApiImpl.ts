@@ -89,7 +89,7 @@ import { ScheduleApi } from '../ScheduleApi';
 import { ScheduleApiImpl } from './ScheduleApiImpl';
 import { GradientColumnApi } from '../GradientColumnApi';
 import { GradientColumnApiImpl } from './GradientColumnApiImpl';
-import { ApplicationApi } from '../ApplicationAPI';
+import { ApplicationApi } from '../ApplicationApi';
 import { ColumnApiImpl } from './ColumnApiImpl';
 import { ColumnApi } from '../ColumnApi';
 

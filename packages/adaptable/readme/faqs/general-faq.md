@@ -34,7 +34,7 @@ Anyone who has to manage large data sets and would benefit from the searching, s
 
 **Do I still have access to the underlying grid control if I use AdapTable?**
 
-Yes AdapTable doesn't hide the underlying grid. So you still have full access to the full API and can code against it just as if AdapTable was not being used.
+Yes AdapTable doesn't hide the underlying grid. So you still have full access to the full Api and can code against it just as if AdapTable was not being used.
 
 **Do you include licences for the underlying grid?**
 
@@ -136,7 +136,7 @@ It is best that you use your own Redux store. Although generally the advice is t
 
 Yes, you can subscribe to our Redux store, and react to changes as appropriate.
 
-> While the above option is valid we would strongly advise you to listen to the Adaptable API Events and Audit Events which will give you the same information - and more - in a more structured and safe way.
+> While the above option is valid we would strongly advise you to listen to the Adaptable Api Events and Audit Events which will give you the same information - and more - in a more structured and safe way.
 
 **Which JavaScript frameworks are you compatible with?**
 

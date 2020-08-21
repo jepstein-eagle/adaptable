@@ -19,7 +19,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * [Export Demos](https://demo.adaptabletools.com/export)
  *
- * {@link ExportApi|Export API}
+ * {@link ExportApi|Export Api}
  *
  * [Export Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/export-function.md)
  *

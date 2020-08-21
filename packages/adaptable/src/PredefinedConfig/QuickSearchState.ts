@@ -14,7 +14,7 @@ import { ConfigState } from './ConfigState';
  *
  * - [Quick Search Demo](https://demo.adaptabletools.com/search/aggridquicksearchdemo/)
  *
- * - {@link QuickSearchApi|Quick Search API}
+ * - {@link QuickSearchApi|Quick Search Api}
  *
  * - {@link SearchOptions|Search Options}
  *

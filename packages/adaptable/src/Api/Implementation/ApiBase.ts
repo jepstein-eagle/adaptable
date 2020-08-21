@@ -7,7 +7,7 @@ import Helper from '../../Utilities/Helpers/Helper';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 
-// Base class for the API - provides checking dispatching methods
+// Base class for the Api - provides checking dispatching methods
 export abstract class ApiBase {
   /**
    * Constructor for all the api classes which simply takes and assigns an instance of Adaptable
@@ -35,7 +35,7 @@ export abstract class ApiBase {
 
   protected checkArrayExists(array: any): boolean {
     if (!Array.isArray(array)) {
-      LoggingHelper.LogAdaptableError(`Item passed to API function was not an array`);
+      LoggingHelper.LogAdaptableError(`Item passed to Api function was not an array`);
       return false;
     }
     return true;

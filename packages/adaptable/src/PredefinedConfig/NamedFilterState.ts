@@ -22,7 +22,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * [Named Filter Demo](https://demo.adaptabletools.com/filters/aggridnamedfiltersdemo)
  *
- * {@link NamedFilterApi|Named Filter API}
+ * {@link NamedFilterApi|Named Filter Api}
  *
  * [Named Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/named-filter-function.md)
  *

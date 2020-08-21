@@ -17,7 +17,7 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * - [Alert Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
  *
- * - {@link AlertApi|Alert API}
+ * - {@link AlertApi|Alert Api}
  *
  * - [Alert Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
  *

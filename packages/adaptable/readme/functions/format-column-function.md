@@ -91,7 +91,7 @@ Yes. Set the Display Format to show the time portion only (e.g. see the 'HH:mm:s
 
 - [Format Column State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)
 
-- [Format Column API](https://api.adaptabletools.com/interfaces/_src_api_formatcolumnapi_.formatcolumnapi.html)
+- [Format Column Api](https://api.adaptabletools.com/interfaces/_src_api_formatcolumnapi_.formatcolumnapi.html)
 
 - [Format Column Demo](https://demo.adaptabletools.com/style/aggridformatcolumndemo)
 

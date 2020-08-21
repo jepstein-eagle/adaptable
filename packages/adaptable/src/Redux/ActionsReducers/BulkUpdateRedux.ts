@@ -33,7 +33,7 @@ export const BulkUpdateReducer: Redux.Reducer<BulkUpdateState> = (
 ): BulkUpdateState => {
   switch (action.type) {
     case BULK_UPDATE_APPLY:
-      //we apply logic in the middleware since it's an API call
+      //we apply logic in the middleware since it's an Api call
       return Object.assign({}, state, { PreviewInfo: null });
     case BULK_UPDATE_CHANGE_VALUE:
       return Object.assign({}, state, {

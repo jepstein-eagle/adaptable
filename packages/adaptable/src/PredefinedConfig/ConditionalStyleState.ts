@@ -14,7 +14,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  *
  * [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo/)
  *
- * [Conditional Style API](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
+ * [Conditional Style Api](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
  *
  * [Conditional Style Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/conditional-style-function.md)
  *

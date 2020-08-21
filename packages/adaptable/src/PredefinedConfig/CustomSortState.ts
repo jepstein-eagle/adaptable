@@ -24,7 +24,7 @@ import { AdaptableComparerFunction } from './Common/AdaptableComparerFunction';
  *
  * [Custom Sort Demo](https://demo.adaptabletools.com/gridmanagement/aggridcustomsortdemo/)
  *
- * {@link CustomSortApi|Custom Sort API}
+ * {@link CustomSortApi|Custom Sort Api}
  *
  * --------------
  *

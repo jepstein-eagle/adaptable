@@ -43,7 +43,7 @@ import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
  *
  *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
  *
- *  It also contains an api property which gives access to Adaptable API - this is the ONLY way that developers should access Adaptable methods.
+ *  It also contains an api property which gives access to Adaptable Api - this is the ONLY way that developers should access Adaptable methods.
  */
 export interface IAdaptable {
   /**
@@ -51,7 +51,7 @@ export interface IAdaptable {
    *
    * Ideally ALL access to and from the Store should be via api methods.
    *
-   * Likewise ALL access to methods in Adaptable by external developers should be via the API
+   * Likewise ALL access to methods in Adaptable by external developers should be via the Api
    */
   api: AdaptableApi;
 
@@ -69,7 +69,7 @@ export interface IAdaptable {
   /**
    * The redux store that we use to manage state
    *
-   * Ideally all access to and from the store should be via Adaptable API and this store should NOT be accessed directly.
+   * Ideally all access to and from the store should be via Adaptable Api and this store should NOT be accessed directly.
    */
   AdaptableStore: IAdaptableStore;
 

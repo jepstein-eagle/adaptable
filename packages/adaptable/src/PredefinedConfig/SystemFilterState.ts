@@ -13,7 +13,7 @@ import { ConfigState } from './ConfigState';
  *
  * [System Filter Demo](https://demo.adaptabletools.com/filters/aggridsystemfiltersdemo/)
  *
- * {@link SystemFilterApi|System Filter API}
+ * {@link SystemFilterApi|System Filter Api}
  *
  * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *

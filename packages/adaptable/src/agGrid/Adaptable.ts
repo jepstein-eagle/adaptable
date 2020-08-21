@@ -3438,7 +3438,7 @@ export class Adaptable implements IAdaptable {
 
         // we cannot check here for cell validation as it will be too late
         // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
-        // if we have gone through AdaptableAPI we will be fine but not if they update ag-Grid directly
+        // if we have gone through AdaptableApi we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
         // probably wrong but seems agGrid is doing it for us
         this.performPostEditChecks(dataChangedInfo, false, false);

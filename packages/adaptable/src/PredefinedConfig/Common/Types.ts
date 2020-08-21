@@ -1,5 +1,5 @@
 /*
-This page includes frequently used typed - particularly helpful for State and API where we can strongly type stuff
+This page includes frequently used typed - particularly helpful for State and Api where we can strongly type stuff
 */
 
 /**

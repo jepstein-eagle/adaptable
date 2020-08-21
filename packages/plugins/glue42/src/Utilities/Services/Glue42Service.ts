@@ -314,7 +314,7 @@ export class Glue42Service implements IGlue42Service {
         }
       });
       dataChangedInfos.forEach(dc => {
-        // I think we should be using one of our API methods here as that might give us the server validation we need...
+        // I think we should be using one of our Api methods here as that might give us the server validation we need...
         this.adaptable.setValue(dc, false);
       });
 

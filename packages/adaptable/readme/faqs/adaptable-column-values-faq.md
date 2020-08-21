@@ -34,7 +34,7 @@ The object is straightforward; it contains 2 properties: 'column' (string) and p
 
 These can be set at design-time via Predefined Config.
 
-Alternatively they can be set at run-time via the UserInterfaceAPI section of AdaptableAPI.
+Alternatively they can be set at run-time via the UserInterfaceApi section of AdaptableApi.
 
 This method takes the name of the column and an array of column values as the 2 parameters.  
 

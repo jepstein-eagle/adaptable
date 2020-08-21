@@ -13,7 +13,7 @@ import { Expression } from './Common/Expression';
  *
  * [User Filter Demo](https://demo.adaptabletools.com/filters/aggriduserfiltersdemo/)
  *
- * {@link UserFilterApi|User Filter API}
+ * {@link UserFilterApi|User Filter Api}
  *
  * [User Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/user-filter-function.md)
  *

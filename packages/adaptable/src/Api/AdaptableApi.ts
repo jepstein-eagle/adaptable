@@ -42,7 +42,7 @@ import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
-import { ApplicationApi } from './ApplicationAPI';
+import { ApplicationApi } from './ApplicationApi';
 import { ColumnApi } from './ColumnApi';
 
 /**
@@ -55,7 +55,7 @@ import { ColumnApi } from './ColumnApi';
  *
  * It also allows them to bypass the UI screens altogether if they so wish.
  *
- * `The AdaptableAPI is essentially just a wrapper around the AdapTable Store but provides additional error-checking, logging, and auditing. And it also ensures that the immutable "purity" of the store is maintained.`
+ * `The AdaptableApiApi is essentially just a wrapper around the AdapTable Store but provides additional error-checking, logging, and auditing. And it also ensures that the immutable "purity" of the store is maintained.`
  *
  * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented, please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
  *
@@ -65,17 +65,15 @@ import { ColumnApi } from './ColumnApi';
  *
  * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_src_api_eventapi_.eventapi.html) event.
  *
- * ### API functions
+ * ### Api functions
  *
  * `AdaptableApi` consists of over 50 sets of properties.
  *
- * Most of these properties are each a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. `AuditEventApi`)
+ * Most of these properties are each a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `AdvancedSearchApi`) or type (e.g. `AuditEventApi`)
  *
  * In addition there are a few api classes designed primarily for internal use which deal with how AdapTable itself works (e.g. `gridApi`, `columnApi`, `gridApi`)
  *
- * The full list is:
- *
- * **Function-Related Api classes**
+ * ####Function-Related Api classes
  *
  *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
@@ -116,7 +114,7 @@ import { ColumnApi } from './ColumnApi';
  *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
  *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
  *
- * **General Api classes**
+ * ####General Api classes
  *
  *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
@@ -371,7 +369,7 @@ export interface AdaptableApi {
   userFilterApi: UserFilterApi;
 
   /**
-   * API methods used *internally* within AdapTable.
+   * Api methods used *internally* within AdapTable.
    *
    * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable at runtime through code**
    *

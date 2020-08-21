@@ -138,9 +138,9 @@ These are usually supplied in Predefined Config or Adaptable Options.  These inc
 
 Entitlements worka at the **UI Level only**.  This means that AdapTable will ensure that the user cannot see or access - through AdapTable UI elements like menus, toolbars, popups etc. - Functions to which he is not entitled.
 
-However **the Adaptable API does not take notice of Entitlements**, so anything that is managed programatically through code will ignore the User's entitlements.
+However **the Adaptable AApiPI does not take notice of Entitlements**, so anything that is managed programatically through code will ignore the User's entitlements.
 
-> To ensure that the Adaptable API is not called for functions to which the user has no access, wrap those calls inside relevant EntitlementApi methods e.g. 
+> To ensure that the Adaptable Api is not called for functions to which the user has no access, wrap those calls inside relevant EntitlementApi methods e.g. 
 
 ```ts
  if (entitlementApi.isFunctionFullEntitlement('Layout')){

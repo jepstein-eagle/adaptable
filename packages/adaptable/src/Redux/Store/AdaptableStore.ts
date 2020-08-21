@@ -2955,7 +2955,7 @@ export function getNonPersistedReduxActions(): string[] {
 
 export function getFunctionAppliedReduxActions(): string[] {
   // NOTE: We have an issue with how we have built Smart Edit and Bulk Update that we are not able to capture the Apply
-  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the API)
+  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the Api)
   // As few users currently audit functions and few have editable grids its not an urgent problem but one that we should fix
 
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout

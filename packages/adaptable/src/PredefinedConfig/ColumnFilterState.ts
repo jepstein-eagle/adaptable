@@ -13,7 +13,7 @@ import { Expression } from './Common/Expression';
  *
  * [Column Filter Demo](https://demo.adaptabletools.com/filters/aggridcolumnfiltersdemo/)
  *
- * {@link ColumnFilterApi|Column Filter API}
+ * {@link ColumnFilterApi|Column Filter Api}
  *
  * [Column Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/column-filter-function.md)
  *

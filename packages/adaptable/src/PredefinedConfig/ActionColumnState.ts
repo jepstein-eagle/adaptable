@@ -21,7 +21,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - [Action Column Demo](https://demo.adaptabletools.com/column/aggridactioncolumnsdemo/)
  *
- * - {@link ActionColumnApi|Action Column API}
+ * - {@link ActionColumnApi|Action Column Api}
  *
  * - [Action Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/action-column-function.md)
  *
@@ -78,7 +78,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *      },
  *     ],
  *
- *  // we listen to the `ActionColumnClicked` event (via the eventAPI in Adaptable API) and then act accordingly
+ *  // we listen to the `ActionColumnClicked` event (via the eventApi in Adaptable Api) and then act accordingly
  *    api.eventApi.on('ActionColumnClicked', (args: ActionColumnClickedEventArgs) => {
  *      // do stuff...
  *  });
