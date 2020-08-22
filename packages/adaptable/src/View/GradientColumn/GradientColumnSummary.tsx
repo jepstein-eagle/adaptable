@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface GradientColumnSummaryProps
@@ -109,9 +109,9 @@ export class GradientColumnSummaryComponent extends React.Component<
     let configEntity: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.internalApi
-      .getStrategyService()
-      .getDistinctColumnValues(this.props.SummarisedColumn.ColumnId);
+    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+      this.props.SummarisedColumn.ColumnId
+    );
 
     configEntity.NegativeValue = Math.min(...distinctColumnsValues);
     configEntity.PositiveValue = Math.max(...distinctColumnsValues);

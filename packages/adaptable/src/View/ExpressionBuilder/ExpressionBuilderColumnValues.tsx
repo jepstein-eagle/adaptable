@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SingleListBox } from '../Components/ListBox/SingleListBox';
-import { DistinctCriteriaPairValue, SelectionMode } from '../../PredefinedConfig/Common/Enums';
+import { CellValueType, SelectionMode } from '../../PredefinedConfig/Common/Enums';
 
 export interface ExpressionBuilderColumnValuesProps
   extends React.ClassAttributes<ExpressionBuilderColumnValues> {
@@ -18,9 +18,9 @@ export class ExpressionBuilderColumnValues extends React.Component<
       <SingleListBox
         Values={this.props.ColumnValues}
         UiSelectedValues={this.props.SelectedValues}
-        DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-        ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-        SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
+        DisplayMember={CellValueType[CellValueType.DisplayValue]}
+        ValueMember={CellValueType[CellValueType.DisplayValue]}
+        SortMember={CellValueType[CellValueType.RawValue]}
         onSelectedChange={list => this.props.onColumnValuesChange(list)}
         SelectionMode={SelectionMode.Multi}
         listStyle={{

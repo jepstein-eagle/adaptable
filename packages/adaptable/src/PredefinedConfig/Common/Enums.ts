@@ -126,7 +126,7 @@ export enum SelectionMode {
 }
 
 // make sure enum items match IRawValueDisplayValuePair
-export enum DistinctCriteriaPairValue {
+export enum CellValueType {
   RawValue = 'RawValue',
   DisplayValue = 'DisplayValue',
 }

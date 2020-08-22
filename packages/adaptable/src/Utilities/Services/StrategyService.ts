@@ -2,7 +2,7 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   DataType,
   LeafExpressionOperator,
-  DistinctCriteriaPairValue,
+  CellValueType,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
@@ -16,8 +16,6 @@ import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 
 export interface IStrategyService {
   createAlertDescription(alertDefinition: AlertDefinition, columns: AdaptableColumn[]): string;
-
-  getDistinctColumnValues(columnId: string): number[];
 
   isStrategyAvailable(adaptableFunctionName: AdaptableFunctionName): boolean;
 
@@ -33,22 +31,6 @@ export interface IStrategyService {
 export class StrategyService implements IStrategyService {
   constructor(private adaptable: IAdaptable) {
     this.adaptable = adaptable;
-  }
-
-  public getDistinctColumnValues(columnId: string): number[] {
-    let distinctColumnsValues: number[] = this.adaptable
-      .getColumnValueDisplayValuePairDistinctList(
-        columnId,
-        DistinctCriteriaPairValue.RawValue,
-        false
-      )
-      .map(pair => {
-        return pair.RawValue;
-      });
-
-    // filter out any undefined or nulls
-    distinctColumnsValues = distinctColumnsValues.filter(i => i);
-    return distinctColumnsValues;
   }
 
   public createAlertDescription(

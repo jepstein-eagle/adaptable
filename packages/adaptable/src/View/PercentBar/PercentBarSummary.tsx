@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
@@ -104,9 +104,9 @@ export class PercentBarSummaryComponent extends React.Component<
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.internalApi
-      .getStrategyService()
-      .getDistinctColumnValues(this.props.SummarisedColumn.ColumnId);
+    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+      this.props.SummarisedColumn.ColumnId
+    );
 
     configEntity.Ranges.push({
       Min: Math.min(...distinctColumnsValues),

@@ -1,7 +1,7 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { Expression, ColumnValueExpression } from '../../PredefinedConfig/Common/Expression';
@@ -257,16 +257,11 @@ export class ChartService implements IChartService {
   ): string[] {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
-      xAxisColValues = this.adaptable
-        .getColumnValueDisplayValuePairDistinctList(
-          chartDefinition.XAxisColumnId,
-          DistinctCriteriaPairValue.DisplayValue,
-          chartDefinition.VisibleRowsOnly
-        )
-        .filter(cv => Helper.objectExists(cv.RawValue))
-        .map(cv => {
-          return cv.DisplayValue;
-        });
+      xAxisColValues = chartDefinition.VisibleRowsOnly
+        ? this.adaptable.api.columnApi.getDistinctVisibleValuesForColumn(
+            chartDefinition.XAxisColumnId
+          )
+        : this.adaptable.api.columnApi.getDistinctValuesForColumn(chartDefinition.XAxisColumnId);
     } else {
       if (chartDefinition.VisibleRowsOnly) {
         this.adaptable.forAllVisibleRowNodesDo(row => {
@@ -295,10 +290,7 @@ export class ChartService implements IChartService {
         this.adaptable
       )
     ) {
-      let columnValue = this.adaptable.getDisplayValueFromRowNode(
-        row,
-        chartDefinition.XAxisColumnId
-      );
+      let columnValue = this.adaptable.getValueFromRowNode(row, chartDefinition.XAxisColumnId);
       ArrayExtensions.AddItem(xAxisColValues, columnValue);
     }
   }

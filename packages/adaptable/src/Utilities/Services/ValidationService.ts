@@ -8,7 +8,7 @@ import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import {
-  DistinctCriteriaPairValue,
+  CellValueType,
   LeafExpressionOperator,
   RangeOperandType,
   ActionMode,
@@ -49,14 +49,10 @@ export class ValidationService implements IValidationService {
     if (dataChangedInfo.ColumnId == this.adaptable.adaptableOptions.primaryKey) {
       if (this.adaptable.adaptableOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
         if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
-          let displayValuePair: IRawValueDisplayValuePair[] = this.adaptable.getColumnValueDisplayValuePairDistinctList(
-            dataChangedInfo.ColumnId,
-            DistinctCriteriaPairValue.DisplayValue,
-            false
+          let displayValuePair: any[] = this.adaptable.api.columnApi.getDistinctValuesForColumn(
+            dataChangedInfo.ColumnId
           );
-          let existingItem = displayValuePair.find(
-            dv => dv.DisplayValue == dataChangedInfo.NewValue
-          );
+          let existingItem = displayValuePair.find(dv => dv == dataChangedInfo.NewValue);
           if (existingItem) {
             let range = ObjectFactory.CreateRange(
               LeafExpressionOperator.PrimaryKeyDuplicate,

@@ -4,7 +4,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../../../PredefinedConfig/Common/Enums';
 
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
@@ -28,11 +28,7 @@ export class CustomSortValuesWizard
     let adaptable: IAdaptable = props.Api.internalApi.getAdaptableInstance();
     super(props);
     this.state = {
-      ColumnValues: adaptable.getColumnValueDisplayValuePairDistinctList(
-        this.props.Data.ColumnId,
-        DistinctCriteriaPairValue.DisplayValue,
-        false
-      ),
+      ColumnValues: adaptable.api.columnApi.getDistinctValuesForColumn(this.props.Data.ColumnId),
       SelectedValues: this.props.Data.SortedValues,
       IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.Data.SortedValues),
     };
@@ -52,9 +48,6 @@ export class CustomSortValuesWizard
           SelectedValues={this.state.SelectedValues}
           HeaderAvailable="Column Values"
           HeaderSelected="Custom Sort Order"
-          DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-          SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-          ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />

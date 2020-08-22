@@ -2,11 +2,11 @@ import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
-import { DataType } from '../../PredefinedConfig/Common/Enums';
+import { DataType, CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { AdaptableOptions, Layout } from '../../types';
+import { AdaptableOptions, Layout, PercentBar } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
@@ -14,6 +14,7 @@ import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstants';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnApi } from '../ColumnApi';
+import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
 
 export class ColumnApiImpl extends ApiBase implements ColumnApi {
   public getColumns(): AdaptableColumn[] {
@@ -75,6 +76,25 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
       this.adaptable.api.actionColumnApi.getAllActionColumn().find(cc => cc.ColumnId == columnId) !=
       null
     );
+  }
+
+  public isSpecialRenderedColumn(columnId: string): boolean {
+    const percentBars: PercentBar[] = this.adaptable.api.percentBarApi.getAllPercentBar();
+    if (ArrayExtensions.IsNotNullOrEmpty(percentBars)) {
+      return ArrayExtensions.ContainsItem(
+        percentBars.map(pb => pb.ColumnId),
+        columnId
+      );
+    }
+
+    const gradientColumns: GradientColumn[] = this.adaptable.api.gradientColumnApi.getAllGradientColumn();
+    if (ArrayExtensions.IsNotNullOrEmpty(gradientColumns)) {
+      return ArrayExtensions.ContainsItem(
+        percentBars.map(pb => pb.ColumnId),
+        columnId
+      );
+    }
+    return false;
   }
 
   public isNumericColumn(column: AdaptableColumn): boolean {
@@ -268,5 +288,88 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
         LoggingHelper.LogAdaptableWarning(`No column found named '${columnId}'`);
       }
     }
+  }
+
+  public getDistinctValuesForColumn(columnId: string): any[] {
+    // we dont deal with server stuff!
+
+    /*
+     if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
+        this.setState({ ShowWaitingMessage: true });
+        this.props.Adaptable.adaptableOptions.queryOptions
+          .getColumnValues(this.props.CurrentColumn.ColumnId)
+          .then(result => {
+            if (result == null) {
+              // if nothing returned then default to normal
+              distinctColumnValues = this.props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+                this.props.CurrentColumn.ColumnId
+              );
+              distinctColumnValues = ArrayExtensions.sortArrayWithProperty(
+                SortOrder.Asc,
+                distinctColumnValues,
+               );
+              this.setState({
+                DistinctValues: distinctColumnValues,
+                ShowWaitingMessage: false,
+                DistinctCriteriaPairValue: CellValueType.DisplayValue,
+                editedColumnFilter: existingColumnFilter,
+              });
+            } else {
+              // get the distinct items and make sure within max items that can be displayed
+              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
+                0,
+                this.props.Adaptable.adaptableOptions.queryOptions.maxColumnValueItemsDisplayed
+              );
+              distinctItems.forEach(distinctItem => {
+                let displayValue =
+                  result.DistinctCriteriaPairValue == CellValueType.DisplayValue
+                    ? this.props.Adaptable.getDisplayValueFromRawValue(
+                        this.props.CurrentColumn.ColumnId,
+                        distinctItem
+                      )
+                    : distinctItem;
+                distinctColumnValues.push(displayValue );
+              });
+              let distinctCriteriaPairValue: CellValueType =
+                result.DistinctCriteriaPairValue == CellValueType.RawValue
+                  ? CellValueType.RawValue
+                  : CellValueType.DisplayValue;
+              this.setState({
+                DistinctValues: distinctColumnValues,
+                ShowWaitingMessage: false,
+                DistinctCriteriaPairValue: distinctCriteriaPairValue,
+                editedColumnFilter: existingColumnFilter,
+              });
+              // set the UIPermittedValues for this column to what has been sent
+              this.props.Adaptable.api.userInterfaceApi.setColumnPermittedValues(
+                this.props.CurrentColumn.ColumnId,
+                distinctItems
+              );
+            }
+          });
+      } else {
+        distinctColumnValues = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
+          this.props.CurrentColumn.ColumnId,
+          false
+        );
+        distinctColumnValues = ArrayExtensions.sortArrayWithProperty(
+          SortOrder.Asc,
+          distinctColumnValues,
+         );
+        this.setState({
+          DistinctValues: distinctColumnValues,
+          ShowWaitingMessage: false,
+          DistinctCriteriaPairValue: CellValueType.DisplayValue,
+          editedColumnFilter: existingColumnFilter,
+        });
+      }
+      */
+    let values: any[] = this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, false);
+
+    console.log('returnvalues', values);
+    return values;
+  }
+  public getDistinctVisibleValuesForColumn(columnId: string): any[] {
+    return this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, true);
   }
 }

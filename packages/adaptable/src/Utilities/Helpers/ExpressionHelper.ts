@@ -1,7 +1,7 @@
 import {
   LeafExpressionOperator,
   DataType,
-  DistinctCriteriaPairValue,
+  CellValueType,
   RangeOperandType,
 } from '../../PredefinedConfig/Common/Enums';
 
@@ -163,12 +163,9 @@ export function checkForExpression(
 ): boolean {
   return IsSatisfied(
     Expression,
-    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // this value raw
-    adaptable.getRowNodeIsSatisfiedFunction(
-      identifierValue,
-      DistinctCriteriaPairValue.DisplayValue
-    ), // this value display
-    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, DistinctCriteriaPairValue.RawValue), // other column value
+    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, CellValueType.RawValue), // this value raw
+    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, CellValueType.DisplayValue), // this value display
+    adaptable.getRowNodeIsSatisfiedFunction(identifierValue, CellValueType.RawValue), // other column value
     columns,
     null,
     null,
@@ -185,12 +182,9 @@ export function checkForExpressionFromRowNode(
 ): boolean {
   return IsSatisfied(
     Expression,
-    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // this value
-    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(
-      rowNode,
-      DistinctCriteriaPairValue.DisplayValue
-    ), // this value
-    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, DistinctCriteriaPairValue.RawValue), // other column value
+    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, CellValueType.RawValue), // this value
+    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, CellValueType.DisplayValue), // this value
+    adaptable.getRowNodeIsSatisfiedFunctionFromRowNode(rowNode, CellValueType.RawValue), // other column value
     columns,
     null,
     null,
@@ -850,14 +844,10 @@ export function AddMissingProperties(expression: Expression): void {
 }
 
 function getExistingItem(adaptable: IAdaptable, rangeEvaluation: IRangeEvaluation): any {
-  let displayValuePairs: IRawValueDisplayValuePair[] = adaptable.getColumnValueDisplayValuePairDistinctList(
-    rangeEvaluation.columnId,
-    DistinctCriteriaPairValue.DisplayValue,
-    false
+  let displayValuePairs: any[] = adaptable.api.columnApi.getDistinctValuesForColumn(
+    rangeEvaluation.columnId
   );
-  let existingItem = displayValuePairs.find(
-    dv => dv.DisplayValue.toLowerCase() == rangeEvaluation.newValue
-  );
+  let existingItem = displayValuePairs.find(dv => dv.toLowerCase() == rangeEvaluation.newValue);
   return existingItem;
 }
 

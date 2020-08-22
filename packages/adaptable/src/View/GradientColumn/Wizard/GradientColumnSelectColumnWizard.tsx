@@ -50,9 +50,9 @@ export class GradientColumnSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Api.internalApi
-        .getStrategyService()
-        .getDistinctColumnValues(columns[0].ColumnId);
+      let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+        columns[0].ColumnId
+      );
 
       let smallestValue = Math.min(...distinctColumnsValues);
 

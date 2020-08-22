@@ -11,7 +11,7 @@ import SimpleButton from '../../components/SimpleButton';
 import {
   DataType,
   ExpressionMode,
-  DistinctCriteriaPairValue,
+  CellValueType,
   SelectionMode,
   QueryBuildStatus,
   QueryTab,
@@ -203,15 +203,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         newState = { ShowWaitingMessage: true };
       } else {
         // the developer hasnt given us a property that we need to invoke to get column values, so lets get the distinct values for the column instead
-        columnValuePairs = props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-          props.SelectedColumnId,
-          DistinctCriteriaPairValue.DisplayValue,
-          false
+        columnValuePairs = props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+          props.SelectedColumnId
         );
         columnValuePairs = ArrayExtensions.sortArrayWithProperty(
           SortOrder.Asc,
           columnValuePairs,
-          DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
+          CellValueType[CellValueType.RawValue]
         );
         newState = {
           ...newState,
@@ -255,15 +253,13 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         // we have got the result back from the function we've invoked; if the return value is null then lets get distinct values instead
         if (result == null) {
           //  nothing returned so get the distinct column values via Adaptable method
-          columnValuePairs = props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-            props.SelectedColumnId,
-            DistinctCriteriaPairValue.DisplayValue,
-            false
+          columnValuePairs = props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+            props.SelectedColumnId
           );
           columnValuePairs = ArrayExtensions.sortArrayWithProperty(
             SortOrder.Asc,
             columnValuePairs,
-            DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
+            CellValueType[CellValueType.RawValue]
           );
           newState = {
             ...newState,

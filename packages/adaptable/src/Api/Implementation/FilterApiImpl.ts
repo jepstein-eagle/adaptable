@@ -164,7 +164,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
     primarykeyValues.forEach(pk => {
       let rowNode = this.adaptable.getRowNodeForPrimaryKey(pk);
-      displayValues.push(this.adaptable.getDisplayValueFromRowNode(rowNode, column));
+      displayValues.push(this.adaptable.getValueFromRowNode(rowNode, column));
     });
 
     let filter: ColumnFilter = {

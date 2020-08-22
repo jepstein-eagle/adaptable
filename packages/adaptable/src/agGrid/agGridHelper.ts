@@ -276,12 +276,7 @@ export class agGridHelper {
     return String(value) || '';
   }
 
-  public getRenderedValue(percentBars: PercentBar[], colDef: ColDef, valueToRender: any): any {
-    const isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
-    if (isRenderedColumn) {
-      return valueToRender;
-    }
-
+  public getRenderedValue(colDef: ColDef, valueToRender: any): any {
     const render: any = colDef.cellRenderer;
     if (typeof render === 'string') {
       return this.getCleanValue(valueToRender);
@@ -519,7 +514,7 @@ export class agGridHelper {
     let clickedCell: GridCell = {
       columnId: colId,
       rawValue: params.value,
-      displayValue: this.adaptable.getDisplayValueFromRowNode(params.node, colId),
+      displayValue: this.adaptable.getValueFromRowNode(params.node, colId),
       primaryKeyValue: primaryKeyValue,
     };
     let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();

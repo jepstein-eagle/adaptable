@@ -75,7 +75,7 @@ async function InitAdaptableDemo() {
       let newLayout: Layout = {
         Name: 'test',
         Columns: ['bid', 'currency', 'counterparty'],
-        GroupedColumns: ['country'],
+        //  GroupedColumns: ['country'],
       };
       // api.layoutApi.createAndSetLayout(newLayout);
       api.gridApi.showQuickFilterBar();
@@ -99,7 +99,8 @@ async function InitAdaptableDemo() {
       //  api.customSortApi.addCustomSort()
 
       console.log('here world');
-      const gridOptions: GridOptions = api.gridApi.getadaptableOptions().vendorGrid as GridOptions;
+      const gridOptions: GridOptions = api.internalApi.getAdaptableOptions()
+        .vendorGrid as GridOptions;
       console.log(gridOptions);
       let bbgBid: ColDef = {
         headerName: 'Bbg Bid',

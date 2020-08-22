@@ -166,13 +166,9 @@ export function runAdaptableComparerFunction(
     nodeA?: any,
     nodeB?: any
   ): number {
-    let firstElementValueString = nodeA
-      ? adaptable.getDisplayValueFromRowNode(nodeA, columnId)
-      : valueA;
+    let firstElementValueString = nodeA ? adaptable.getValueFromRowNode(nodeA, columnId) : valueA;
 
-    let secondElementValueString = nodeB
-      ? adaptable.getDisplayValueFromRowNode(nodeB, columnId)
-      : valueB;
+    let secondElementValueString = nodeB ? adaptable.getValueFromRowNode(nodeB, columnId) : valueB;
 
     let indexFirstElement = columnValues.indexOf(firstElementValueString);
     let containsFirstElement = indexFirstElement >= 0;

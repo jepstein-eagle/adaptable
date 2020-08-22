@@ -59,6 +59,7 @@ export interface ColumnApi {
   isCalculatedColumn(columnId: string): boolean;
   isFreeTextColumn(columnId: string): boolean;
   isActionColumn(columnId: string): boolean;
+  isSpecialRenderedColumn(columnId: string): boolean;
 
   isNumericColumn(column: AdaptableColumn): boolean;
   getColumnDataTypeFromColumnId(
@@ -78,4 +79,7 @@ export interface ColumnApi {
   getGroupableColumns(): AdaptableColumn[];
   getPivotableColumns(): AdaptableColumn[];
   getAggregetableColumns(): AdaptableColumn[];
+
+  getDistinctValuesForColumn(columnId: string): any[];
+  getDistinctVisibleValuesForColumn(columnId: string): any[];
 }

@@ -341,7 +341,7 @@ export class ReportService implements IReportService {
       if (useRawValue) {
         columnValue = this.adaptable.getRawValueFromRowNode(rowNode, col.ColumnId);
       } else {
-        columnValue = this.adaptable.getDisplayValueFromRowNode(rowNode, col.ColumnId);
+        columnValue = this.adaptable.getValueFromRowNode(rowNode, col.ColumnId);
       }
       newRow.push(columnValue);
     });

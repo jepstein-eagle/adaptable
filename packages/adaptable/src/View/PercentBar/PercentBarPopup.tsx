@@ -53,9 +53,9 @@ class PercentBarPopupComponent extends React.Component<
       if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
         let columnId: string = this.props.PopupParams.columnId;
         if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Api.internalApi
-            .getStrategyService()
-            .getDistinctColumnValues(columnId);
+          let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+            columnId
+          );
 
           let newPercentRender: PercentBar = ObjectFactory.CreateEmptyPercentBar();
           newPercentRender.ColumnId = columnId;

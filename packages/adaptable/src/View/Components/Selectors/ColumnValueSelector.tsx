@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { SortOrder, DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
+import { SortOrder, CellValueType } from '../../../PredefinedConfig/Common/Enums';
 import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
@@ -54,7 +54,7 @@ export class ColumnValueSelector extends React.Component<
     }
   }
   render() {
-    let sortedColumnValues: IRawValueDisplayValuePair[] = [];
+    let sortedColumnValues: any[] = [];
 
     let placeholderText = 'Select value';
     let allowNew = this.props.AllowNew != null ? this.props.AllowNew : true;
@@ -74,26 +74,16 @@ export class ColumnValueSelector extends React.Component<
           this.onSelectedValueChange([{ RawValue: selected }]);
         }}
         options={() => {
-          let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
-          if (
-            this.props.SelectedColumn != null &&
-            adaptable != null &&
-            adaptable.getColumnValueDisplayValuePairDistinctList != null
-          ) {
-            let columnDisplayValuePairs: IRawValueDisplayValuePair[] = adaptable.getColumnValueDisplayValuePairDistinctList(
-              this.props.SelectedColumn.ColumnId,
-              DistinctCriteriaPairValue.DisplayValue,
-              false
+          //  let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+          if (this.props.SelectedColumn != null) {
+            let columnDisplayValuePairs: any[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+              this.props.SelectedColumn.ColumnId
             );
 
-            sortedColumnValues = ArrayExtensions.sortArrayWithProperty(
-              SortOrder.Asc,
-              columnDisplayValuePairs,
-              'RawValue'
-            );
+            sortedColumnValues = ArrayExtensions.sortArray(columnDisplayValuePairs, SortOrder.Asc);
             return sortedColumnValues.map(v => ({
-              label: v.DisplayValue,
-              value: v.RawValue,
+              label: v,
+              value: v,
             }));
           }
           return [];

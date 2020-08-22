@@ -11,7 +11,7 @@ import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../PredefinedConfig/Common/Enums';
 import { Layout } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
@@ -128,22 +128,18 @@ export interface IAdaptable {
     columnId: string,
     visibleRowsOnly: boolean,
     onlyIncludeIds?: { [key: string]: boolean }
-  ): Array<IRawValueDisplayValuePair>;
-  getColumnValueDisplayValuePairDistinctList(
-    columnId: string,
-    distinctCriteria: DistinctCriteriaPairValue,
-    visibleRowsOnly: boolean
-  ): Array<IRawValueDisplayValuePair>;
+  ): any[];
+  getColumnValueDisplayValuePairDistinctList(columnId: string, visibleRowsOnly: boolean): any[];
   getDisplayValue(id: any, columnId: string): string;
-  getDisplayValueFromRowNode(rowwNode: any, columnId: string): string;
+  getValueFromRowNode(rowwNode: any, columnId: string): string;
   getRawValueFromRowNode(rowwNode: any, columnId: string): any;
   getRowNodeIsSatisfiedFunction(
     id: any,
-    distinctCriteria: DistinctCriteriaPairValue
+    distinctCriteria: CellValueType
   ): (columnId: string) => any;
   getRowNodeIsSatisfiedFunctionFromRowNode(
     rowNode: any,
-    distinctCriteria: DistinctCriteriaPairValue
+    distinctCriteria: CellValueType
   ): (columnId: string) => any;
   getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
   getDataRowFromRowNode(rowNode: any): any;

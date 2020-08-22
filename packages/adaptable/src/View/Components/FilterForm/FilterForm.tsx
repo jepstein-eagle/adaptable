@@ -11,7 +11,7 @@ import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import {
   DataType,
   SortOrder,
-  DistinctCriteriaPairValue,
+  CellValueType,
   LeafExpressionOperator,
   ColumnMenuTab,
 } from '../../../PredefinedConfig/Common/Enums';
@@ -62,10 +62,10 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
 }
 
 export interface FilterFormState {
-  ColumnValuePairs: Array<IRawValueDisplayValuePair>;
+  DistinctColumnValues: any[];
   ShowWaitingMessage: boolean;
   SelectedTab: ColumnMenuTab;
-  DistinctCriteriaPairValue: DistinctCriteriaPairValue;
+  // DistinctCriteriaPairValue: CellValueType;
   editedColumnFilter: ColumnFilter | undefined;
   currentTab: 'values' | 'predicates';
 }
@@ -90,10 +90,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     // }
 
     this.state = {
-      ColumnValuePairs: [],
+      DistinctColumnValues: [],
       ShowWaitingMessage: false,
       SelectedTab: ColumnMenuTab.Filter,
-      DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
       editedColumnFilter: existingColumnFilter,
       currentTab: 'values',
     };
@@ -118,11 +117,20 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
   componentDidMount() {
     if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-      let columnValuePairs: IRawValueDisplayValuePair[] = [];
-
       let existingColumnFilter = this.props.ColumnFilters.find(
         cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
       );
+
+      let distinctColumnValues: any[] = this.props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+        this.props.CurrentColumn.ColumnId
+      );
+      distinctColumnValues = ArrayExtensions.sortArray(distinctColumnValues, SortOrder.Asc);
+
+      this.setState({
+        DistinctColumnValues: distinctColumnValues,
+        ShowWaitingMessage: false,
+        editedColumnFilter: existingColumnFilter,
+      });
       // if (!existingColumnFilter) {
       //   existingColumnFilter = ObjectFactory.CreateColumnFilter(
       //     this.props.CurrentColumn.ColumnId,
@@ -130,81 +138,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       //     null
       //   );
       // }
-
-      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
-        this.setState({ ShowWaitingMessage: true });
-        this.props.Adaptable.adaptableOptions.queryOptions
-          .getColumnValues(this.props.CurrentColumn.ColumnId)
-          .then(result => {
-            if (result == null) {
-              // if nothing returned then default to normal
-              columnValuePairs = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-                this.props.CurrentColumn.ColumnId,
-                DistinctCriteriaPairValue.DisplayValue,
-                false
-              );
-              columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                SortOrder.Asc,
-                columnValuePairs,
-                DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-              );
-              this.setState({
-                ColumnValuePairs: columnValuePairs,
-                ShowWaitingMessage: false,
-                DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
-                editedColumnFilter: existingColumnFilter,
-              });
-            } else {
-              // get the distinct items and make sure within max items that can be displayed
-              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
-                0,
-                this.props.Adaptable.adaptableOptions.queryOptions.maxColumnValueItemsDisplayed
-              );
-              distinctItems.forEach(distinctItem => {
-                let displayValue =
-                  result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue
-                    ? this.props.Adaptable.getDisplayValueFromRawValue(
-                        this.props.CurrentColumn.ColumnId,
-                        distinctItem
-                      )
-                    : distinctItem;
-                columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
-              });
-              let distinctCriteriaPairValue: DistinctCriteriaPairValue =
-                result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.RawValue
-                  ? DistinctCriteriaPairValue.RawValue
-                  : DistinctCriteriaPairValue.DisplayValue;
-              this.setState({
-                ColumnValuePairs: columnValuePairs,
-                ShowWaitingMessage: false,
-                DistinctCriteriaPairValue: distinctCriteriaPairValue,
-                editedColumnFilter: existingColumnFilter,
-              });
-              // set the UIPermittedValues for this column to what has been sent
-              this.props.Adaptable.api.userInterfaceApi.setColumnPermittedValues(
-                this.props.CurrentColumn.ColumnId,
-                distinctItems
-              );
-            }
-          });
-      } else {
-        columnValuePairs = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-          this.props.CurrentColumn.ColumnId,
-          DistinctCriteriaPairValue.DisplayValue,
-          false
-        );
-        columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Asc,
-          columnValuePairs,
-          DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-        );
-        this.setState({
-          ColumnValuePairs: columnValuePairs,
-          ShowWaitingMessage: false,
-          DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
-          editedColumnFilter: existingColumnFilter,
-        });
-      }
     }
   }
 
@@ -220,7 +153,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         ? this.state.editedColumnFilter.Inputs
         : [];
 
-    let isEmptyFilter: boolean = this.state.editedColumnFilter.PredicateId === undefined;
+    let isEmptyFilter: boolean =
+      this.state.editedColumnFilter === undefined ||
+      this.state.editedColumnFilter.PredicateId === undefined;
 
     let closeButton = (
       <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} AccessLevel={'Full'} />
@@ -285,9 +220,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                       <ListBoxFilterForm
                         CurrentColumn={this.props.CurrentColumn}
                         Columns={this.props.Columns}
-                        ColumnValuePairs={this.state.ColumnValuePairs}
+                        ColumnDistinctValues={this.state.DistinctColumnValues}
                         DataType={this.props.CurrentColumn.DataType}
-                        DistinctCriteriaPairValue={this.state.DistinctCriteriaPairValue}
                         UiSelectedColumnValues={uiSelectedColumnValues}
                         useVendorStyle={useVendorStyle}
                         onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
