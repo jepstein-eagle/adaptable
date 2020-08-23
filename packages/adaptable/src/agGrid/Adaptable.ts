@@ -1602,31 +1602,27 @@ export class Adaptable implements IAdaptable {
     columnId: string,
     visibleRowsOnly: boolean
   ): any[] {
-    const returnValues: any[] = [];
+    let returnValues: any[] = [];
 
     // this function does NOT look up for server values but actually it should...
     // that is currently commented out in the column api function (previously in filter form)
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
-    // but that is only something used by a chart so not a big problem
-    const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
-      columnId
-    );
-    if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
-      permittedValuesForColumn.forEach(pv => {
-        returnValues.push(pv);
-      });
-    }
-
-    if (visibleRowsOnly) {
-      this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
-        returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
-      });
+    // but that is only something used by a chart so not a big problem but one day... TODO
+    const permittedValues: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(columnId);
+    if (ArrayExtensions.IsNotNull(permittedValues)) {
+      returnValues.push(...permittedValues);
     } else {
-      this.gridOptions.api!.forEachNode(rowNode => {
-        returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
-      });
+      if (visibleRowsOnly) {
+        this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
+          returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
+        });
+      } else {
+        this.gridOptions.api!.forEachNode(rowNode => {
+          returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
+        });
+      }
     }
     return _.uniq(returnValues).slice(
       0,
@@ -3975,10 +3971,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
               };
             } else {
               colDef.cellEditorParams = {
-                values: this.getColumnValueDisplayValuePairDistinctList(
-                  editLookUpColumn.ColumnId,
-                  false
-                ),
+                values: this.api.columnApi.getDistinctValuesForColumn(editLookUpColumn.ColumnId),
               };
             }
           }

@@ -13,6 +13,7 @@ import {
   AdaptableApi,
   AdaptableReadyInfo,
   SearchChangedEventArgs,
+  AdaptableColumn,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
@@ -45,10 +46,49 @@ async function InitAdaptableDemo() {
       autoSizeColumnsInDefaultLayout: false,
       includeExpandedRowGroups: true,
     },
+    userFunctions: [
+      {
+        name: 'PermittedValuesForCountry',
+        type: 'PermittedValuesFetchFunction',
+        handler(column: AdaptableColumn) {
+          return ['uk', 'israel', 'jordan', 'malawi'];
+        },
+      },
+    ],
 
     predefinedConfig: {
+      // this is for testing distinct values
+      // we have made the function better but its stil per column and not a promise
+      // so it doubles up with the server values promise we have
+
+      UserInterface: {
+        Revision: 6,
+        PermittedValuesItems: [
+          // for counterparty we will get a hard-coded list
+          {
+            Scope: {
+              ColumnIds: ['counterparty'],
+            },
+            PermittedValues: ['first', 'second', 'third'],
+          },
+          // for country we will call a function
+          {
+            Scope: {
+              ColumnIds: ['country'],
+            },
+            PermittedValuesFetchFunction: 'PermittedValuesForCountry',
+          },
+          {
+            Scope: {
+              DataType: 'Date',
+            },
+            PermittedValues: [],
+          },
+        ],
+      },
+
       Layout: {
-        Revision: 23,
+        Revision: 24,
         CurrentLayout: 'Sigal',
         CreateDefaultLayout: true,
         Layouts: [

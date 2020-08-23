@@ -3,8 +3,9 @@ import {
   EditLookUpColumn,
   RowStyle,
   UserMenuItem,
-  PermittedValuesColumn,
+  PermittedValuesItem,
 } from '../PredefinedConfig/UserInterfaceState';
+import { Scope } from '../PredefinedConfig/Common/Scope';
 
 export interface UserInterfaceApi {
   /**
@@ -44,21 +45,19 @@ export interface UserInterfaceApi {
    * Sets (and replaces any existing) Permitted Values for a given column
    *
    * **note:  This replaces any existing permitted values for the column.  It is ​​not​​ an additive function.**
-   * @param column
+   * @param scope
    * @param permittedValues
    */
-  setColumnPermittedValues(column: string, permittedValues: string[]): void;
+  setPermittedValuesItem(scope: Scope, permittedValues: string[]): void;
 
   /**
    * If this function is called the column will revert to default behaviour
    * which is t show current distinct values for the column in filters, searches etc
-   * @param column
+   * @param permittedValuesItem
    */
-  clearColumnPermittedValues(column: string): void;
+  deletePermittedValuesItem(permittedValuesItem: PermittedValuesItem): void;
 
-  getAllPermittedValuesColumns(): any[];
-
-  getPermittedValuesColumnForColumn(columnId: string): PermittedValuesColumn;
+  getAllPermittedValuesItems(): any[];
 
   getPermittedValuesForColumn(columnId: string): any[];
 

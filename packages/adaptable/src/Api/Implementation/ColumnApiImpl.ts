@@ -287,8 +287,7 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
   }
 
   public getDistinctValuesForColumn(columnId: string): any[] {
-    // we dont deal with server stuff!
-
+    return this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, false);
     /*
      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
@@ -360,8 +359,6 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
         });
       }
       */
-    let values: any[] = this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, false);
-    return values;
   }
   public getDistinctVisibleValuesForColumn(columnId: string): any[] {
     return this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, true);

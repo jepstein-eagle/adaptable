@@ -3,6 +3,8 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
 import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
+import { Scope } from './Common/Scope';
+import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
  * The **User Interface section** of Predefined Configuration
@@ -130,8 +132,10 @@ export interface UserInterfaceState extends ConfigState {
    *
    * In this example we have set Permitted Values for the 'Status' and 'Counterparty' columns using a hard-coded list and a function respectively.
    *
+   * August: Note the order of evaluation of Scope is first ColumnIds and then DataType.
+   *
    */
-  PermittedValuesColumns?: PermittedValuesColumn[];
+  PermittedValuesItems?: PermittedValuesItem[];
 
   /**
    * A list of Columns which, when being edited, will automatically display a Dropdown allowing the user easily to select a value.
@@ -492,16 +496,21 @@ export interface UserInterfaceState extends ConfigState {
  *
  * The values listed are those that will be shown in any Dropdown, in the filter for the Column and when using that Column in a Query.
  */
-export interface PermittedValuesColumn {
+export interface PermittedValuesItem extends AdaptableObject {
   /**
-   * Which Column has the Permitted Values
+   * The Scopeb
    */
-  ColumnId: string;
+  Scope: Scope;
 
   /**
-   * The Permitted Values that will be shown in the Column Filter and when building a Query.
+   * Hardcoded list of Permitted Values that will be shown in the Column Filter and when building a Query.
    */
-  PermittedValues?: any[] | ((column: AdaptableColumn) => any[]);
+  PermittedValues?: any[];
+
+  /**
+   * A function which will run each time Permitted values are required.
+   */
+  PermittedValuesFetchFunction?: string;
 }
 
 /**
@@ -657,4 +666,10 @@ export interface UserMenuItemLabelFunction extends BaseUserFunction {
   type: 'UserMenuItemLabelFunction';
   name: string;
   handler: (menuInfo: MenuInfo) => string;
+}
+
+export interface PermittedValuesFetchFunction extends BaseUserFunction {
+  type: 'PermittedValuesFetchFunction';
+  name: string;
+  handler: (column: AdaptableColumn) => any[];
 }

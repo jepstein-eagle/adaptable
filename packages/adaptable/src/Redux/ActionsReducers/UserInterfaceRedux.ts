@@ -3,7 +3,7 @@ import {
   UserInterfaceState,
   RowStyle,
   UserMenuItem,
-  PermittedValuesColumn,
+  PermittedValuesItem,
 } from '../../PredefinedConfig/UserInterfaceState';
 import { UIHelper } from '../../View/UIHelper';
 import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
@@ -30,11 +30,11 @@ export interface StyleClassNameAddAction extends Redux.Action {
 }
 
 export interface PermittedValuesColumnSetAction extends Redux.Action {
-  PermittedValuesColumn: PermittedValuesColumn;
+  PermittedValuesColumn: PermittedValuesItem;
 }
 
 export interface PermittedValuesColumnDeleteAction extends Redux.Action {
-  Column: string;
+  permittedValuesItem: PermittedValuesItem;
 }
 
 export interface RowStylesClearAction extends Redux.Action {}
@@ -63,15 +63,17 @@ export const StyleClassNamesAdd = (StyleClassNames: string[]): StyleClassNameAdd
 });
 
 export const PermittedValuesColumnSet = (
-  PermittedValuesColumn: PermittedValuesColumn
+  PermittedValuesColumn: PermittedValuesItem
 ): PermittedValuesColumnSetAction => ({
   type: PERMITTED_VALUES_COLUMN_SET,
   PermittedValuesColumn,
 });
 
-export const PermittedValuesColumnDelete = (Column: string): PermittedValuesColumnDeleteAction => ({
+export const PermittedValuesColumnDelete = (
+  permittedValuesItem: PermittedValuesItem
+): PermittedValuesColumnDeleteAction => ({
   type: PERMITTED_VALUES_COLUMN_DELETE,
-  Column,
+  permittedValuesItem,
 });
 
 export const RowStylesClear = (): RowStylesClearAction => ({
@@ -91,7 +93,7 @@ export const ContextMenuItemAdd = (contextMenuItem: UserMenuItem): ContextMenuIt
 const initialUserInterfaceState: UserInterfaceState = {
   ColorPalette: UIHelper.getDefaultColors(),
   StyleClassNames: EMPTY_ARRAY,
-  PermittedValuesColumns: EMPTY_ARRAY,
+  PermittedValuesItems: EMPTY_ARRAY,
   EditLookUpColumns: EMPTY_ARRAY,
   RowStyles: EMPTY_ARRAY,
   ColumnMenuItems: EMPTY_ARRAY,
@@ -102,7 +104,7 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
   state: UserInterfaceState = initialUserInterfaceState,
   action: Redux.Action
 ): UserInterfaceState => {
-  let permittedValuesColumns: PermittedValuesColumn[];
+  let permittedValuesColumns: PermittedValuesItem[];
   switch (action.type) {
     case COLOR_PALETTE_SET:
       return Object.assign({}, state, {
@@ -124,24 +126,18 @@ export const UserInterfaceStateReducer: Redux.Reducer<UserInterfaceState> = (
       return Object.assign({}, state, { StyleClassNames: existingStyleNames });
     case PERMITTED_VALUES_COLUMN_SET:
       const actionTypedSetColumnValues = action as PermittedValuesColumnSetAction;
-      permittedValuesColumns = [].concat(state.PermittedValuesColumns);
-      let existingPermittedColumnValues: PermittedValuesColumn = permittedValuesColumns.find(
-        pcv => pcv.ColumnId == actionTypedSetColumnValues.PermittedValuesColumn.ColumnId
-      );
-      if (existingPermittedColumnValues) {
-        existingPermittedColumnValues.PermittedValues =
-          actionTypedSetColumnValues.PermittedValuesColumn.PermittedValues;
-      } else {
-        permittedValuesColumns.push(actionTypedSetColumnValues.PermittedValuesColumn);
-      }
+      permittedValuesColumns = [].concat(state.PermittedValuesItems);
+
+      permittedValuesColumns.push(actionTypedSetColumnValues.PermittedValuesColumn);
+
       return Object.assign({}, state, {
         PermittedValuesColumns: permittedValuesColumns,
       });
     case PERMITTED_VALUES_COLUMN_DELETE:
       const actionTypedDeleteColumnValues = action as PermittedValuesColumnDeleteAction;
-      permittedValuesColumns = [].concat(state.PermittedValuesColumns);
+      permittedValuesColumns = [].concat(state.PermittedValuesItems);
       let index: number = permittedValuesColumns.findIndex(
-        pcv => pcv.ColumnId == actionTypedDeleteColumnValues.Column
+        pcv => pcv.Uuid == actionTypedDeleteColumnValues.permittedValuesItem.Uuid
       );
       permittedValuesColumns.splice(index, 1);
       return Object.assign({}, state, {

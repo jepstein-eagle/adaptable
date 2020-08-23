@@ -60,7 +60,7 @@ let demoConfig: PredefinedConfig = {
         ColumnId: 'status',
       },
     ],
-    PermittedValuesColumns: [
+    PermittedValuesItems: [
       {
         ColumnId: 'status',
         // PermittedValues: ['Rejected', 'Pending'],

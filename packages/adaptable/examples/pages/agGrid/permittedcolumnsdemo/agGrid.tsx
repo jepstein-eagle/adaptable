@@ -44,7 +44,7 @@ let demoConfig: PredefinedConfig = {
     VisibleToolbars: ['AdvancedSearch'],
   },
   UserInterface: {
-    PermittedValuesColumns: [
+    PermittedValuesItems: [
       {
         ColumnId: 'status',
         PermittedValues: ['Rejected', 'Pending'],

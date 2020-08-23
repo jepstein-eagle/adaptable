@@ -9,6 +9,7 @@ import {
   UserMenuItemClickedFunction,
   UserMenuItemShowPredicate,
   UserMenuItemLabelFunction,
+  PermittedValuesFetchFunction,
 } from '../PredefinedConfig/UserInterfaceState';
 import { FilterPredicate } from '../PredefinedConfig/FilterState';
 import { CustomReportFunction } from '../PredefinedConfig/ExportState';
@@ -39,10 +40,11 @@ import { CustomReportFunction } from '../PredefinedConfig/ExportState';
  *  | `ActionColumnRenderFunction`        | Render an Action Column in a non-standard way           |
  *  | `ActionColumnShouldRenderPredicate` | Whether or not to render an Acton Column	              |
  *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	    |
- *  | `FilterPredicate`                   | Runs each time a user-supplied Filter is applied          	  |
+ *  | `FilterPredicate`                   | Runs each time a user-supplied Filter is applied        |
  *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	    |
  *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item               |
  *  | `UserMenuItemLabelFunction`         | Retrieves a distinct value for the label of a Menu Item |
+ *  | `PermittedValuesFetchFunction`      | Get Permitted Values for Column dropdown / editing      |
  *  | `CustomReportFunction`              | Runs a Custom Report                                    |
  *
  */
@@ -56,6 +58,7 @@ export type UserFunction =
   | UserMenuItemClickedFunction
   | UserMenuItemShowPredicate
   | UserMenuItemLabelFunction
+  | PermittedValuesFetchFunction
   | CustomReportFunction;
 
 /**

@@ -288,10 +288,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             SelectedColumnId: props.SelectedColumnId,
           };
           // set the UIPermittedValues for this column to what has been sent
-          props.Api.userInterfaceApi.setColumnPermittedValues(
-            props.SelectedColumnId,
-            distinctItems
-          );
+          //     props.Api.userInterfaceApi.setColumnPermittedValues(
+          //       props.SelectedColumnId,
+          //        distinctItems
+          //     );
         }
         return newState;
       });

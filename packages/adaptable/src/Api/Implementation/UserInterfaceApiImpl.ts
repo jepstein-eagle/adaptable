@@ -7,9 +7,11 @@ import {
   EditLookUpColumn,
   RowStyle,
   UserMenuItem,
-  PermittedValuesColumn,
+  PermittedValuesItem,
 } from '../../PredefinedConfig/UserInterfaceState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { Scope } from '../../PredefinedConfig/Common/Scope';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {
@@ -32,46 +34,73 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     this.dispatchAction(UserInterfaceRedux.StyleClassNamesAdd(styleClassNames));
   }
 
-  public getAllPermittedValuesColumns(): PermittedValuesColumn[] {
-    return this.getAdaptableState().UserInterface.PermittedValuesColumns;
+  public getAllPermittedValuesItems(): PermittedValuesItem[] {
+    return this.getAdaptableState().UserInterface.PermittedValuesItems;
   }
 
-  public getPermittedValuesColumnForColumn(columnId: string): PermittedValuesColumn {
-    let permittedValues: PermittedValuesColumn[] = this.getAllPermittedValuesColumns();
-    if (ArrayExtensions.IsNotNullOrEmpty(permittedValues)) {
-      return permittedValues.find(pc => pc.ColumnId == columnId);
+  private getPermittedValuesForScope(column: AdaptableColumn): PermittedValuesItem | undefined {
+    let permittedValuesItem: PermittedValuesItem;
+    // first we get any for the column as that is lower level
+    permittedValuesItem = this.getAllPermittedValuesItems().find(
+      pv =>
+        ArrayExtensions.IsNotNullOrEmpty(pv.Scope.ColumnIds) &&
+        pv.Scope.ColumnIds.includes(column.ColumnId)
+    );
+    if (permittedValuesItem) {
+      return permittedValuesItem;
+    }
+    // then we get any for the scope
+    permittedValuesItem = this.getAllPermittedValuesItems().find(
+      pv => pv.Scope.DataType === column.DataType
+    );
+    if (permittedValuesItem) {
+      console.log('this one', permittedValuesItem);
+      return permittedValuesItem;
+    }
+
+    return undefined;
+  }
+
+  public getPermittedValuesForColumn(columnId: string): any[] | undefined {
+    if (ArrayExtensions.IsNullOrEmpty(this.getAllPermittedValuesItems())) {
+      return undefined;
+    }
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(columnId);
+    let permittedValuesColumn: PermittedValuesItem = this.getPermittedValuesForScope(abColumn);
+    if (!permittedValuesColumn) {
+      return undefined;
+    }
+
+    // return any hard-coded permitted values if they have been set
+    if (ArrayExtensions.IsNotNull(permittedValuesColumn.PermittedValues)) {
+      return permittedValuesColumn.PermittedValues;
+    }
+
+    // then try the function if that has been set
+    if (StringExtensions.IsNotNullOrEmpty(permittedValuesColumn.PermittedValuesFetchFunction)) {
+      if (abColumn) {
+        const fn = this.adaptable.getUserFunctionHandler(
+          'PermittedValuesFetchFunction',
+          permittedValuesColumn.PermittedValuesFetchFunction
+        );
+        console.log('fn', fn);
+        let values = fn(abColumn);
+        return values;
+      }
     }
     return undefined;
   }
 
-  public getPermittedValuesForColumn(columnId: string): any[] {
-    let permittedValuesColumn: PermittedValuesColumn = this.getPermittedValuesColumnForColumn(
-      columnId
-    );
-    if (!permittedValuesColumn) {
-      return [];
-    }
-
-    if (typeof permittedValuesColumn.PermittedValues === 'function') {
-      let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
-        permittedValuesColumn.ColumnId
-      );
-      return permittedValuesColumn.PermittedValues(column);
-    } else {
-      return permittedValuesColumn.PermittedValues;
-    }
-  }
-
-  public setColumnPermittedValues(column: string, permittedValues: string[]): void {
-    let permittedColumnValues: PermittedValuesColumn = {
-      ColumnId: column,
+  public setPermittedValuesItem(scope: Scope, permittedValues: string[]): void {
+    let permittedColumnValues: PermittedValuesItem = {
+      Scope: scope,
       PermittedValues: permittedValues,
     };
     this.dispatchAction(UserInterfaceRedux.PermittedValuesColumnSet(permittedColumnValues));
   }
 
-  public clearColumnPermittedValues(column: string): void {
-    this.dispatchAction(UserInterfaceRedux.PermittedValuesColumnDelete(column));
+  public deletePermittedValuesItem(permittedValuesItem: PermittedValuesItem): void {
+    this.dispatchAction(UserInterfaceRedux.PermittedValuesColumnDelete(permittedValuesItem));
   }
 
   public getAllEditLookUpColumns(): EditLookUpColumn[] {
