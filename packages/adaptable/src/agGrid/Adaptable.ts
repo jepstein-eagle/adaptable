@@ -1628,7 +1628,10 @@ export class Adaptable implements IAdaptable {
         returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
       });
     }
-    return returnValues.slice(0, this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed);
+    return _.uniq(returnValues).slice(
+      0,
+      this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed
+    );
   }
 
   public getColumnValueDisplayValuePairList(
@@ -2841,7 +2844,7 @@ export class Adaptable implements IAdaptable {
         const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
         if (columnFilters.length > 0) {
           for (const columnFilter of columnFilters) {
-            if (!this.api.filterApi.evaluateColumnFilter(columnFilter, node.data)) {
+            if (!this.api.filterApi.evaluateColumnFilter(columnFilter, node)) {
               return false;
             }
           }

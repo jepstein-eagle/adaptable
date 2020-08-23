@@ -183,8 +183,10 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     return 'I need to do this for all !!!';
   }
 
-  public evaluateColumnFilter(columnFilter: ColumnFilter, data: any): boolean {
-    const value = data[columnFilter.ColumnId];
+  public evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean {
+    // this doesnt work as it wont include calc columns or those provided via value getters (i.e. not in actual data set)
+    // const value = node.data[columnFilter.ColumnId];
+    const value = this.adaptable.getRawValueFromRowNode(node, columnFilter.ColumnId);
 
     if (StringExtensions.IsNullOrEmpty(columnFilter.PredicateId)) {
       return true;

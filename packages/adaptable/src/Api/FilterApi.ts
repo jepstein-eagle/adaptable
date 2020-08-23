@@ -102,7 +102,7 @@ export interface FilterApi {
   convertColumnFilterToString(columnFilter: ColumnFilter): string;
   convertColumnFiltersToString(columnFilters: ColumnFilter[]): string;
 
-  evaluateColumnFilter(columnFilter: ColumnFilter, data: any): boolean;
+  evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean;
 
   getAllUserFilter(): UserFilter[];
 }

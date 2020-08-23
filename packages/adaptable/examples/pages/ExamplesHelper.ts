@@ -253,7 +253,7 @@ export class ExamplesHelper {
     const price = this.getMeaningfulDouble();
     const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
     const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
-    const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
+    const bid = undefined; //this.roundTo4Dp(price - bidOfferSpread / 2);
 
     const tradeDate = this.generateRandomDate(-4, 5);
     const moodyRating = this.getRandomItem(this.getMoodysRatings());
