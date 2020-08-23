@@ -261,7 +261,7 @@ export class Glue42Service implements IGlue42Service {
         if (deltaItem.action === 'modified') {
           deltaItem.row.forEach((change: any, changeIndex: number) => {
             if (change !== null) {
-              const column = this.adaptable.api.gridApi.getColumnFromFriendlyName(
+              const column = this.adaptable.api.columnApi.getColumnFromFriendlyName(
                 exportColumns[changeIndex]
               );
 

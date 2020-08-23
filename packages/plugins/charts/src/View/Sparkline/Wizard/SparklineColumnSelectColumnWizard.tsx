@@ -35,7 +35,7 @@ export class SparklineColumnSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.gridApi.getNumericArrayColumns()}
+          ColumnList={this.props.Api.columnApi.getNumericArrayColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />

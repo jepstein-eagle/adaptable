@@ -167,6 +167,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
+                onSetNewSharedQueryName={() => {
+                  throw 'unimplemented';
+                }}
+                onSetUseSharedQuery={() => {
+                  throw 'unimplemented';
+                }}
               />
             ) : null}
             {editedChartDefinition.ChartType === ChartType.PieChart ? (
@@ -179,6 +185,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
+                onSetNewSharedQueryName={() => {
+                  throw 'unimplemented';
+                }}
+                onSetUseSharedQuery={() => {
+                  throw 'unimplemented';
+                }}
               />
             ) : null}
 
@@ -192,6 +204,12 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
+                onSetNewSharedQueryName={() => {
+                  throw 'unimplemented';
+                }}
+                onSetUseSharedQuery={() => {
+                  throw 'unimplemented';
+                }}
               />
             ) : null}
           </div>

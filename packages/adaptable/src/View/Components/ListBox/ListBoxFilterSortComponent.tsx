@@ -10,7 +10,6 @@ export interface ListBoxFilterSortComponentProps
   SortOrder: SortOrder;
   handleChangeFilterValue: (value: string) => void;
   sortColumnValues: () => void;
-  DisableSort: boolean;
 }
 
 export class ListBoxFilterSortComponent extends React.Component<
@@ -44,14 +43,12 @@ export class ListBoxFilterSortComponent extends React.Component<
 
         {this.props.SortOrder == SortOrder.Asc ? (
           <SimpleButton
-            disabled={this.props.DisableSort}
             onClick={() => this.props.sortColumnValues()}
             icon="sort-asc"
             variant="text"
           ></SimpleButton>
         ) : (
           <SimpleButton
-            disabled={this.props.DisableSort}
             onClick={() => this.props.sortColumnValues()}
             icon="sort-desc"
             variant="text"

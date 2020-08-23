@@ -90,7 +90,6 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         sortColumnValues={() => this.sortColumnValues()}
         SortOrder={this.state.SortOrder}
         handleChangeFilterValue={e => this.handleChangeFilterValue(e)}
-        DisableSort={false}
       />
     );
 

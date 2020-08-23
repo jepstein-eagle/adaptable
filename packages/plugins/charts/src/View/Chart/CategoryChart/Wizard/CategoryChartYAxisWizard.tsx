@@ -101,7 +101,7 @@ export class CategoryChartYAxisWizard
   }
 
   OnSelectedValuesChange(newValues: Array<string>) {
-    let yAxisColumnIds = this.props.Api.gridApi.getColumnIdsFromFriendlyNames(newValues);
+    let yAxisColumnIds = this.props.Api.columnApi.getColumnIdsFromFriendlyNames(newValues);
     this.setState({ YAxisColumnIds: yAxisColumnIds } as CategoryChartYAxisWizardState, () =>
       this.props.UpdateGoBackState()
     );

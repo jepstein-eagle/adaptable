@@ -4,8 +4,6 @@ import * as ReactDOM from 'react-dom';
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { IMasterChildren } from '../../../Utilities/Interface/IMasterChildren';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import Checkbox from '../../../components/CheckBox';
 import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
@@ -19,11 +17,6 @@ export enum DisplaySize {
   Small,
   XSmall,
 }
-export interface IMasterValue {
-  value: string;
-  isOpen: boolean;
-  isAvailable: boolean;
-}
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
   SelectedValues: Array<any>;
@@ -33,9 +26,7 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
   HeaderSelected: string;
 
   style?: React.CSSProperties;
-  //  SortMember?: string;
   DisplaySize?: DisplaySize;
-  MasterChildren?: IMasterChildren[];
 }
 
 export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -48,7 +39,6 @@ export interface DualListBoxEditorState extends React.ClassAttributes<DualListBo
   SortOrder: SortOrder;
   SelectedValuesSortOrder: SortOrder;
   AllValues: Array<any>;
-  MasterValues: Array<IMasterValue>;
 }
 
 const ButtonDirection = (props: SimpleButtonProps) => (
@@ -92,7 +82,6 @@ export class DualListBoxEditor extends React.Component<
       SortOrder: SortOrder.Asc,
       SelectedValuesSortOrder: SortOrder.Asc,
       AllValues: this.props.AvailableValues,
-      MasterValues: this.buildMasterValues(this.props.MasterChildren),
     };
   }
 
@@ -117,7 +106,6 @@ export class DualListBoxEditor extends React.Component<
       UiSelectedSelectedValues: uiSelectedSelected,
       FilterValue: this.state.FilterValue,
       SortOrder: this.state.SortOrder,
-      MasterValues: this.buildMasterValues(nextProps.MasterChildren),
     });
   }
   render() {
@@ -159,43 +147,22 @@ export class DualListBoxEditor extends React.Component<
       return result;
     });
 
-    // build available elements - might have master/children
+    // build available elements
     let availableElements = this.state.AvailableValues.map((x, index) => {
       let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
       let value = x;
-      let masterValue: IMasterValue = this.state.MasterValues.find(mv => mv.value == x);
-      let isMasterElement = masterValue != null;
 
       if (this.isValueFilteredOut(x)) {
         return null;
       } else {
-        return isMasterElement ? (
-          <ListGroupItem
-            key={`${value}-master`}
-            className="Available"
-            index={index}
-            selectionId={value}
-            style={listGroupItemStyle}
-            active={isActive}
-            draggable={false}
-            value={value}
-          >
-            <Checkbox
-              key={masterValue.value}
-              checked={masterValue.isOpen}
-              onChange={(checked: boolean) => this.onMasterValueCheckChanged(checked, x)}
-            >
-              {x}
-            </Checkbox>
-          </ListGroupItem>
-        ) : (
+        return (
           <ListGroupItem
             className="Available"
             style={listGroupItemStyle}
             active={isActive}
             index={index}
             draggable={true}
-            key={`${value}-not-master`}
+            key={`${value}-item`}
             onDragStart={event => this.DragAvailableStart(event, x)}
             onDragEnd={() => this.DragAvailableEnd()}
             value={value}
@@ -212,7 +179,6 @@ export class DualListBoxEditor extends React.Component<
         sortColumnValues={() => this.sortColumnValues()}
         SortOrder={this.state.SortOrder}
         handleChangeFilterValue={e => this.handleChangeFilterValue(e)}
-        DisableSort={ArrayExtensions.IsNotEmpty(this.state.MasterValues)}
       />
     );
 
@@ -222,7 +188,6 @@ export class DualListBoxEditor extends React.Component<
         sortColumnValues={() => this.sortSelectedColumnValues()}
         SortOrder={this.state.SelectedValuesSortOrder}
         handleChangeFilterValue={e => this.handleChangeSelectedValuesFilterValue(e)}
-        DisableSort={ArrayExtensions.IsNotEmpty(this.state.MasterValues)}
       />
     );
 
@@ -383,72 +348,9 @@ export class DualListBoxEditor extends React.Component<
     );
   }
 
-  buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[] {
-    if (ArrayExtensions.IsNullOrEmpty(masterChildren)) {
-      return [];
-    }
-    return this.props.MasterChildren.map(mc => {
-      return { value: mc.Master, isAvailable: false, isOpen: true };
-    });
-  }
-
-  onMasterValueCheckChanged(checked: boolean, item: any): void {
-    let masterValues = [].concat(this.state.MasterValues);
-    let currentMasterValue: IMasterValue = masterValues.find(mv => mv.value == item);
-
-    currentMasterValue.isOpen = checked;
-    let newArray = [...this.state.UiSelectedAvailableValues];
-
-    let index = this.state.UiSelectedAvailableValues.indexOf(item);
-    if (index >= 0) {
-      let newArray = [...this.state.UiSelectedAvailableValues];
-      newArray.splice(index, 1);
-    }
-
-    this.setState({
-      MasterValues: masterValues,
-      UiSelectedAvailableValues: newArray,
-    } as DualListBoxEditorState);
-  }
-
   createAvailableValuesList(availableValues: any[], sortOrder: SortOrder): any[] {
-    // if there are no master / children then sort the values
-    if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-      let valstoReturn: any[] = ArrayExtensions.sortArray(availableValues, sortOrder);
-      return valstoReturn;
-    }
-
-    // we do have master / children
-    let returnValues: any[] = [];
-
-    // first add any orphans = that are not masters or are not children
-    availableValues.forEach(av => {
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(
-        mc => mc.Master == av || ArrayExtensions.ContainsItem(mc.Children, av)
-      );
-      if (!masterChildren) {
-        returnValues.push(av);
-      }
-    });
-
-    // now add all the Master Children
-    this.props.MasterChildren.forEach(mc => {
-      let availableChildren: any[] = [];
-
-      mc.Children.forEach(c => {
-        if (ArrayExtensions.ContainsItem(availableValues, c)) {
-          availableChildren.push(c);
-        }
-      });
-      // only add the item if there are available children
-      if (ArrayExtensions.IsNotEmpty(availableChildren)) {
-        returnValues.push(mc.Master);
-        availableChildren.forEach(c => {
-          returnValues.push(c);
-        });
-      }
-    });
-    return returnValues;
+    let valstoReturn: any[] = ArrayExtensions.sortArray(availableValues, sortOrder);
+    return valstoReturn;
   }
 
   isValueFilteredOut = (
@@ -456,65 +358,9 @@ export class DualListBoxEditor extends React.Component<
     FilterValue: string = this.state.FilterValue,
     Values: Array<any> = this.state.AvailableValues
   ): boolean => {
-    // if not master child then simply filter on the value
-    if (ArrayExtensions.IsNullOrEmpty(this.state.MasterValues)) {
-      return (
-        FilterValue != '' && item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0
-      );
-    }
-
-    let masterNames = this.state.MasterValues.map(mv => {
-      return mv.value;
-    });
-    let isFilterMode: boolean = StringExtensions.IsNotEmpty(FilterValue);
-
-    if (ArrayExtensions.ContainsItem(masterNames, item)) {
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == item);
-      let filterMaster: boolean = true;
-      if (masterChildren) {
-        // so we are dealing with a Master
-
-        masterChildren.Children.forEach(c => {
-          if (ArrayExtensions.ContainsItem(Values, c)) {
-            // we need the child to be present to show the master
-            if (isFilterMode) {
-              // if there is a filter then the child needs to pass that in order to display the Master
-              if (c.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) >= 0) {
-                filterMaster = false;
-              }
-            } else {
-              // if no filter, then always show the Master
-              filterMaster = false;
-            }
-          }
-        });
-      }
-      return filterMaster;
-    } else {
-      // its a child - so first check that the Master is open
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc =>
-        ArrayExtensions.ContainsItem(mc.Children, item)
-      );
-      if (masterChildren) {
-        let masterValue: IMasterValue = this.state.MasterValues.find(
-          mv => mv.value == masterChildren.Master
-        );
-        if (!masterValue.isOpen) {
-          // no open Master so always filter
-          return true;
-        } else {
-          // if there is a filter then check on that, otherwise return false
-          if (isFilterMode) {
-            return item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0;
-          } else {
-            return false;
-          }
-        }
-      } else {
-        // for orphans filter as normal
-        return item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0;
-      }
-    }
+    return (
+      FilterValue != '' && item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0
+    );
   };
 
   canGoTopOrUp(): boolean {
@@ -639,44 +485,12 @@ export class DualListBoxEditor extends React.Component<
     let newSelectedValues = [].concat(this.state.SelectedValues);
     let valuesToAdd = this.getValuesToAdd(this.state.AvailableValues);
     valuesToAdd.forEach(x => {
-      if (ArrayExtensions.NotContainsItem(this.state.MasterValues, x)) {
-        newSelectedValues.push(x);
-      }
+      newSelectedValues.push(x);
     });
-
-    let newAvailableValues: string[] = [];
-
-    this.setState(
-      {
-        UiSelectedSelectedValues: [],
-        UiSelectedAvailableValues: [],
-        SelectedValues: newSelectedValues,
-        AvailableValues: newAvailableValues,
-      } as DualListBoxEditorState,
-      () => this.raiseOnChange()
-    );
   }
 
   getValuesToAdd(addedValues: any[]): any[] {
-    if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-      return addedValues;
-    }
-
-    let newAvailableValues: any[] = [];
-
-    addedValues.forEach(av => {
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == av);
-      if (masterChildren) {
-        masterChildren.Children.forEach(c => {
-          if (ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
-            ArrayExtensions.AddItem(newAvailableValues, c);
-          }
-        });
-      } else {
-        ArrayExtensions.AddItem(newAvailableValues, av);
-      }
-    });
-    return newAvailableValues;
+    return addedValues;
   }
 
   RemoveAll() {
