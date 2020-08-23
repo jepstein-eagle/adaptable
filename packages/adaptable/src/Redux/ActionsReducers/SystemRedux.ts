@@ -56,10 +56,6 @@ export const CALCULATEDCOLUMN_IS_EXPRESSION_VALID = 'CALCULATEDCOLUMN_IS_EXPRESS
 // Quick Search
 export const QUICK_SEARCH_SET_RANGE = 'QUICK_SEARCH_SET_RANGE';
 export const QUICK_SEARCH_CLEAR_RANGE = 'QUICK_SEARCH_CLEAR_RANGE';
-export const QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS =
-  'QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS';
-export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS =
-  'QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS';
 
 // Columns
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
@@ -148,10 +144,6 @@ export interface QuickSearchSetRangeAction extends Redux.Action {
   QueryRange: QueryRange;
 }
 export interface QuickSearchClearRangeAction extends Redux.Action {}
-export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Action {
-  Expressions: Expression[];
-}
-export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {}
 
 export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: string[];
@@ -266,16 +258,6 @@ export const QuickSearchSetRange = (QueryRange: QueryRange): QuickSearchSetRange
 export const QuickSearchClearRange = (): QuickSearchClearRangeAction => ({
   type: QUICK_SEARCH_CLEAR_RANGE,
 });
-export const QuickSearchSetVisibleColumnExpressions = (
-  Expressions: Expression[]
-): QuickSearchSetVisibleColumnExpressionsAction => ({
-  type: QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
-  Expressions,
-});
-
-export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisibleColumnExpressionsAction => ({
-  type: QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS,
-});
 
 export const SetNewColumnListOrder = (
   VisibleColumnList: string[]
@@ -304,7 +286,6 @@ const initialSystemState: SystemState = {
   SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
   QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
-  QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
   LastAppliedShortCut: null,
 };
 
@@ -407,15 +388,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
     }
     case QUICK_SEARCH_CLEAR_RANGE: {
       return Object.assign({}, state, { QuickSearchRange: ExpressionHelper.CreateEmptyRange() });
-    }
-    case QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS: {
-      return Object.assign({}, state, {
-        QuickSearchVisibleColumnExpressions: (action as QuickSearchSetVisibleColumnExpressionsAction)
-          .Expressions,
-      });
-    }
-    case QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS: {
-      return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: EMPTY_ARRAY });
     }
 
     case SET_LAST_APPLIED_SHORTCUT: {

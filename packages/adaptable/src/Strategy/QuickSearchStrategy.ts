@@ -26,37 +26,12 @@ export class QuickSearchStrategy extends AdaptableStrategyBase implements IQuick
     // if searchText is empty then set clear both types, otherwise set them
     if (StringExtensions.IsNullOrEmpty(this.adaptable.api.quickSearchApi.getQuickSearchValue())) {
       this.adaptable.adaptableStore.TheStore.dispatch(SystemRedux.QuickSearchClearRange());
-      this.adaptable.adaptableStore.TheStore.dispatch(
-        SystemRedux.QuickSearchClearVisibleColumnExpressions()
-      );
     } else {
       let quickSearchRange: QueryRange = RangeHelper.CreateValueRangeFromOperand(
         this.adaptable.api.quickSearchApi.getQuickSearchValue()
       );
       this.adaptable.adaptableStore.TheStore.dispatch(
         SystemRedux.QuickSearchSetRange(quickSearchRange)
-      );
-
-      // we just create expressions for the visible columns that are not excluded from quick search - in Adaptable we will check for those missing;
-      // we dont keep this updated - just set once as good for majority of use cases
-      let quickSearchVisibleColumnExpressions: Expression[] = [];
-      for (let column of this.adaptable.api.columnApi.getVisibleColumns()) {
-        if (
-          !column.IsExcludedFromQuickSearch &&
-          RangeHelper.IsColumnAppropriateForRange(quickSearchRange, column)
-        ) {
-          let quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-            column.ColumnId,
-            null,
-            null,
-            null,
-            [quickSearchRange]
-          );
-          quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
-        }
-      }
-      this.adaptable.adaptableStore.TheStore.dispatch(
-        SystemRedux.QuickSearchSetVisibleColumnExpressions(quickSearchVisibleColumnExpressions)
       );
     }
   }

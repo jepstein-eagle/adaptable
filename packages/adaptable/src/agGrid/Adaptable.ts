@@ -1270,7 +1270,7 @@ export class Adaptable implements IAdaptable {
 
     const sortModel = (layout.ColumnSorts ?? [])
       .map(customSort => {
-        const colId = customSort.Column;
+        const colId = customSort.ColumnId;
         if (!layoutColumnsMap[colId]) {
           return null;
         }
@@ -1289,10 +1289,10 @@ export class Adaptable implements IAdaptable {
     isChanged = isChanged || !equalSortModel || shouldUpdatePivoted;
 
     if (
-      ArrayExtensions.IsNotNullOrEmpty(layout.ExpandedRowGroupKeys) &&
-      this.adaptableOptions.layoutOptions.includeOpenedRowGroups
+      ArrayExtensions.IsNotNullOrEmpty(layout.ExpandedRowGroupValues) &&
+      this.adaptableOptions.layoutOptions.includeExpandedRowGroups
     ) {
-      this.expandRowGroupsForValues(layout.ExpandedRowGroupKeys);
+      this.expandRowGroupsForValues(layout.ExpandedRowGroupValues);
     }
 
     if (isChanged) {
@@ -1330,7 +1330,7 @@ export class Adaptable implements IAdaptable {
     }[] = this.gridOptions.api.getSortModel();
 
     const columnSorts: ColumnSort[] = sortModel.map(({ colId, sort }) => {
-      return { Column: colId, SortOrder: sort === 'asc' ? 'Asc' : 'Desc' };
+      return { ColumnId: colId, SortOrder: sort === 'asc' ? 'Asc' : 'Desc' };
     });
 
     const columnState = this.gridOptions.columnApi.getColumnState();
@@ -1394,8 +1394,8 @@ export class Adaptable implements IAdaptable {
     layout.EnablePivot = this.gridOptions.columnApi.isPivotMode();
     layout.PivotColumns = pivotColumns;
 
-    if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
-      layout.ExpandedRowGroupKeys = this.getExpandRowGroupsKeys();
+    if (this.adaptableOptions.layoutOptions.includeExpandedRowGroups) {
+      layout.ExpandedRowGroupValues = this.getExpandRowGroupsKeys();
     }
     this.persistLayout(layout);
   }
@@ -2415,12 +2415,6 @@ export class Adaptable implements IAdaptable {
       gridContainerElement.addEventListener('keydown', event => this._emit('KeyDown', event));
     }
 
-    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
-      if (params.visible && params.column) {
-        this.updateQuickSearchRangeVisibleColumn(params.column.colId);
-      }
-    });
-
     // we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
     // since there are many events and we want them to behave the same
     const columnEventsThatTriggersStateChange = [
@@ -2497,7 +2491,7 @@ export class Adaptable implements IAdaptable {
 
     // doing this seperately as wont always be wanted
     this.gridOptions.api!.addEventListener(Events.EVENT_ROW_GROUP_OPENED, (params: any) => {
-      if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
+      if (this.adaptableOptions.layoutOptions.includeExpandedRowGroups) {
         this.debouncedSaveGridLayout();
       }
     });
@@ -2844,9 +2838,6 @@ export class Adaptable implements IAdaptable {
           if (StringExtensions.IsNullOrEmpty(quickSearchState.QuickSearchText)) {
             return true;
           }
-          const quickSearchVisibleColumnExpresssions: Expression[] = this.getState().System
-            .QuickSearchVisibleColumnExpressions;
-
           let quickSearchRange = this.getState().System.QuickSearchRange;
           if (quickSearchRange == null) {
             // might not have created so lets do it here
@@ -2855,10 +2846,17 @@ export class Adaptable implements IAdaptable {
             );
           }
           if (quickSearchRange != null) {
+            // we create this every time - is that sensible or should we do it once?
+            // lets wait until we do the new parser and we can see what makes sense
+            // I think we should make one single expression once for all visible columns but Andrei can decide when he comes to this
             const visibleCols = columns.filter(c => c.Visible && !c.IsExcludedFromQuickSearch);
             for (const column of visibleCols) {
-              const expression = quickSearchVisibleColumnExpresssions.find(
-                exp => exp.RangeExpressions[0].ColumnId == column.ColumnId
+              const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
+                column.ColumnId,
+                null,
+                null,
+                null,
+                [quickSearchRange]
               );
               if (expression) {
                 if (
@@ -3474,7 +3472,7 @@ export class Adaptable implements IAdaptable {
           this.agGridHelper.createGroupedColumnCustomSort();
         }
         const columnSort: ColumnSort = {
-          Column: sm.colId,
+          ColumnId: sm.colId,
           SortOrder: sm.sort == 'asc' ? SortOrder.Asc : SortOrder.Desc,
         };
         newColumnSorts.push(columnSort);
@@ -3532,7 +3530,7 @@ export class Adaptable implements IAdaptable {
 
   public getExpandRowGroupsKeys(): any[] {
     let returnValues: any[] = [];
-    if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
+    if (this.adaptableOptions.layoutOptions.includeExpandedRowGroups) {
       this.gridOptions.api.forEachNode((node: RowNode) => {
         if (node.group && node.expanded) {
           let current = node;
@@ -3614,7 +3612,7 @@ export class Adaptable implements IAdaptable {
     if (ArrayExtensions.IsNotNullOrEmpty(columnSorts)) {
       columnSorts.forEach(gs => {
         const sortDescription: string = gs.SortOrder == SortOrder.Asc ? 'asc' : 'desc';
-        sortModel.push({ colId: gs.Column, sort: sortDescription });
+        sortModel.push({ colId: gs.ColumnId, sort: sortDescription });
       });
     }
     if (!this.gridOptions.api) {
@@ -3653,43 +3651,6 @@ export class Adaptable implements IAdaptable {
 
   public deleteRows(dataRows: any[]): void {
     this.gridOptions.api!.applyTransaction({ remove: dataRows });
-  }
-
-  private updateQuickSearchRangeVisibleColumn(columnId: string): void {
-    if (this.isInitialised) {
-      const quickSearchState: QuickSearchState = this.api.quickSearchApi.getQuickSearchState();
-      // only update if quick search is not highlight and is set - rare use case...
-      if (
-        quickSearchState.DisplayAction != DisplayAction.HighlightCell &&
-        StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-      ) {
-        const column: AdaptableColumn = this.api.columnApi.getColumnFromId(columnId);
-        if (!column.IsExcludedFromQuickSearch) {
-          const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
-
-          if (quickSearchRange != null) {
-            if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange, column)) {
-              const quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                column.ColumnId,
-                null,
-                null,
-                null,
-                [quickSearchRange]
-              );
-              const quickSearchVisibleColumnExpressions: Expression[] = [].concat(
-                this.getState().System.QuickSearchVisibleColumnExpressions
-              );
-              quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
-              this.adaptableStore.TheStore.dispatch(
-                SystemRedux.QuickSearchSetVisibleColumnExpressions(
-                  quickSearchVisibleColumnExpressions
-                )
-              );
-            }
-          }
-        }
-      }
-    }
   }
 
   public getFirstGroupedColumn(): AdaptableColumn | undefined {

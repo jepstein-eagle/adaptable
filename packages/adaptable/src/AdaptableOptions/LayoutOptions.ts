@@ -19,13 +19,13 @@ export interface LayoutOptions {
   includeVendorStateInLayouts?: boolean; //TODO remove
 
   /**
-   * Whether layouts should include details of which grouped rows when they save.
+   * Whether layouts should include details of which grouped rows are expanded when they save.
    *
    * If set to true, when the Load next loads it will automatically open those grouped rows which were open when it was last displayed
    *
    * **Default Value: false**
    */
-  includeOpenedRowGroups?: boolean;
+  includeExpandedRowGroups?: boolean;
 
   /**
    * Whether layouts should save whenever the Grid's column order or sort information changes.

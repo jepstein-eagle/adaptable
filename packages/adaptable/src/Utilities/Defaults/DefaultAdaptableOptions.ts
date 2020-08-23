@@ -52,7 +52,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     chartContainer: undefined,
   },
   layoutOptions: {
-    includeOpenedRowGroups: false,
+    includeExpandedRowGroups: false,
     autoSaveLayouts: true,
     autoSizeColumnsInLayout: false,
     autoSizeColumnsInDefaultLayout: true,

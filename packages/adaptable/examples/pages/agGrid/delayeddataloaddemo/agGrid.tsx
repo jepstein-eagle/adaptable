@@ -44,7 +44,7 @@ async function InitAdaptableDemo() {
 
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
-    includeOpenedRowGroups: true,
+    includeExpandedRowGroups: true,
   };
 
   adaptableApi = await Adaptable.init(adaptableOptions);

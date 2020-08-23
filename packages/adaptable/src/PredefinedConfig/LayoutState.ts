@@ -113,11 +113,11 @@ export interface Layout extends AdaptableObject {
   Columns: string[];
 
   ColumnWidthMap?: {
-    [key: string]: number;
+    [columnId: string]: number;
   };
 
   ColumnFlexMap?: {
-    [key: string]: number;
+    [columnId: string]: number;
   };
 
   /**
@@ -134,13 +134,13 @@ export interface Layout extends AdaptableObject {
    */
   RowGroupedColumns?: string[];
 
-  PinnedColumnsMap?: { [colId: string]: 'left' | 'right' };
-
-  ExpandedRowGroupKeys?: any[];
+  ExpandedRowGroupValues?: any[];
 
   AggregationColumns?: Record<string, string | true>;
 
   EnablePivot?: boolean;
 
   PivotColumns?: string[];
+
+  PinnedColumnsMap?: { [columnId: string]: 'left' | 'right' };
 }

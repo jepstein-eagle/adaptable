@@ -2903,8 +2903,6 @@ export function getNonPersistedReduxActions(): string[] {
 
     SystemRedux.QUICK_SEARCH_SET_RANGE,
     SystemRedux.QUICK_SEARCH_CLEAR_RANGE,
-    SystemRedux.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
-    SystemRedux.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS,
 
     // SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
 

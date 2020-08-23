@@ -155,7 +155,7 @@ async function InitAdaptableDemo() {
 
     layoutOptions: {
       autoSaveLayouts: true,
-      includeOpenedRowGroups: true,
+      includeExpandedRowGroups: true,
     },
     userFunctions: [
       {
@@ -345,7 +345,7 @@ let demoConfig: PredefinedConfig = {
         },
         ColumnSorts: [
           {
-            Column: 'model',
+            ColumnId: 'model',
             SortOrder: 'Desc',
           },
         ],

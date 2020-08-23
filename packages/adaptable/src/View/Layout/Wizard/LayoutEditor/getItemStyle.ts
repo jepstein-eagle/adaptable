@@ -41,7 +41,7 @@ export const getItemStyle: LayoutGetItemStyle = (
       //if col not sortable or is already in the sort order
       (!column.Sortable ||
         (layout.ColumnSorts &&
-          layout.ColumnSorts.filter(sort => sort.Column === column.ColumnId)[0]))
+          layout.ColumnSorts.filter(sort => sort.ColumnId === column.ColumnId)[0]))
     ) {
       result.background = '';
       result.color = '';

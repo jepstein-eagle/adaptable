@@ -865,7 +865,7 @@ export class agGridHelper {
         if (
           !this.adaptable.api.gridApi
             .getColumnSorts()
-            .find((gs: ColumnSort) => this.adaptable.api.columnApi.isRowGroupColumn(gs.Column))
+            .find((gs: ColumnSort) => this.adaptable.api.columnApi.isRowGroupColumn(gs.ColumnId))
         ) {
           const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId

@@ -253,7 +253,7 @@ export class ExamplesHelper {
     const price = this.getMeaningfulDouble();
     const bidOfferSpread = this.getRandomItem(this.getBidOfferSpreads());
     const ask = this.roundTo4Dp(price + bidOfferSpread / 2);
-    const bid = undefined; //this.roundTo4Dp(price - bidOfferSpread / 2);
+    const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
 
     const tradeDate = this.generateRandomDate(-4, 5);
     const moodyRating = this.getRandomItem(this.getMoodysRatings());
@@ -803,6 +803,7 @@ export class ExamplesHelper {
     return {
       defaultColDef: {
         floatingFilter: true,
+        sortable: true,
         //   valueGetter: (params: any) => {
         //      return 'hello';
         //   },
@@ -1081,6 +1082,7 @@ export class ExamplesHelper {
       colId: 'countryStars',
       editable: false,
       filter: true,
+
       //  pinned: true,
       enableValue: true,
       aggFunc: 'sum',
@@ -1280,18 +1282,6 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
     });
 
-    schema.push({
-      headerName: 'Currency',
-      field: 'currency',
-      editable: true,
-      //  rowGroup: true,
-      enableRowGroup: true,
-      sortable: true,
-      enablePivot: true,
-      filter: 'agTextColumnFilter',
-      type: 'abColDefString',
-      resizable: true,
-    });
     schema.push({
       headerName: 'Status',
       field: 'status',

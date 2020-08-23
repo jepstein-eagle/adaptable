@@ -92,7 +92,7 @@ export class LayoutService implements ILayoutService {
     let returnString: string = '';
     columnSorts.forEach((gs: ColumnSort) => {
       returnString +=
-        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.Column) + SortOrder.Asc
+        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.ColumnId) + SortOrder.Asc
           ? ' [asc] '
           : ' [desc] ';
     });

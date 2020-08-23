@@ -236,13 +236,6 @@ export function CreateEmptyRange(): QueryRange {
   };
 }
 
-export function CreateEmptyColumnSort(): ColumnSort {
-  return {
-    Column: EMPTY_STRING,
-    SortOrder: SortOrder.Asc,
-  };
-}
-
 export function CreateEmptyCellValidation(): CellValidationRule {
   return {
     Uuid: createUuid(),
@@ -667,7 +660,6 @@ export const ObjectFactory = {
   CreateInternalAlertDefinitionForMessages,
   CreateEmptyColumnCategory,
   CreateEmptyRange,
-  CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
   CreateEmptyGradientColumn,

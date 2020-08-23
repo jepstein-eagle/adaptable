@@ -79,14 +79,14 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
           return;
         }
 
-        if (columnSorts.filter(c => c.Column === source.columnId)[0]) {
+        if (columnSorts.filter(c => c.ColumnId === source.columnId)[0]) {
           return false;
         }
         const newColumnSorts: ColumnSort[] = [...columnSorts];
 
         newColumnSorts.splice(destination.index, 0, {
           SortOrder: 'Asc',
-          Column: source.columnId,
+          ColumnId: source.columnId,
         });
 
         setColumnSorts(newColumnSorts);
@@ -104,7 +104,7 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
   const toggleSort = (c: ColumnSort) => {
     setColumnSorts(
       columnSorts.map(sort => {
-        if (sort.Column === c.Column) {
+        if (sort.ColumnId === c.ColumnId) {
           sort = { ...sort, SortOrder: c.SortOrder === 'Asc' ? 'Desc' : 'Asc' };
         }
 
@@ -123,7 +123,7 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
     return props.renderItem(
       c,
       () => {
-        setColumnSorts(props.columnSorts.filter(sort => sort.Column !== c.Column));
+        setColumnSorts(props.columnSorts.filter(sort => sort.ColumnId !== c.ColumnId));
       },
       () => {
         toggleSort(c);
@@ -143,7 +143,7 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
           {!columnSorts.length ? <HelpBlock>Drag columns to create sort order</HelpBlock> : null}
           {columnSorts.map((c: ColumnSort, index) => {
             return (
-              <Draggable key={c.Column} draggableId={`${c.Column}-sort`} index={index}>
+              <Draggable key={c.ColumnId} draggableId={`${c.ColumnId}-sort`} index={index}>
                 {(provided, snapshot) => {
                   return (
                     <div
@@ -151,7 +151,11 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                       className="ab-ColumnSortList__column"
-                      style={props.getItemStyle(c.Column, snapshot, provided.draggableProps.style)}
+                      style={props.getItemStyle(
+                        c.ColumnId,
+                        snapshot,
+                        provided.draggableProps.style
+                      )}
                     >
                       {renderItem(c)}
                     </div>

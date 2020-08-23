@@ -111,7 +111,7 @@ let demoConfig: PredefinedConfig = {
           //   SortOrder: 'Desc',
           // },
           {
-            Column: 'currency',
+            ColumnId: 'currency',
             SortOrder: 'Asc',
           },
         ],

@@ -226,7 +226,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
       const columnAlreadySorted =
         column &&
         layout.ColumnSorts &&
-        !!layout.ColumnSorts.filter(c => c.Column === column.ColumnId)[0];
+        !!layout.ColumnSorts.filter(c => c.ColumnId === column.ColumnId)[0];
 
       const invalidSourceForSort =
         dragSource !== LayoutEditorDroppableIds.ColumnList &&
@@ -464,7 +464,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                 );
               }}
               renderItem={(c: ColumnSort, clear, toggleSort) => {
-                const column: AdaptableColumn = allColumnsMap[c.Column];
+                const column: AdaptableColumn = allColumnsMap[c.ColumnId];
                 return (
                   <Flex flexDirection="row" alignItems="center">
                     <Box ml={2} mr={3}>
