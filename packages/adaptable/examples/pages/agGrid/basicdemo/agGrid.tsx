@@ -26,7 +26,7 @@ var api: AdaptableApi;
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
   const tickingDataHelper = new TickingDataHelper();
-  const tradeCount: number = 3;
+  const tradeCount: number = 5;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -115,12 +115,12 @@ async function InitAdaptableDemo() {
     }
   });
 
-  // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
+  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
 
   setTimeout(() => {
     api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
       console.log('READY');
-      // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
+      //  api.gridApi.setCellValue('changeOnYear', 300, 1, true);
       /*
     setTimeout(() => {
       api.dashboardApi.floatDashboard();
@@ -136,7 +136,7 @@ async function InitAdaptableDemo() {
     }, 8000); */
       //  info.adaptableApi.flashingCellApi.showFlashingCellPopup();
     });
-  }, 3000);
+  }, 10000);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
     //  console.log('search changed');

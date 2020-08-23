@@ -1,14 +1,7 @@
 import { ApiBase } from './ApiBase';
-import { GridApi } from '../GridApi';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { GridState } from '../../PredefinedConfig/GridState';
-import { DataType, CellValueType } from '../../PredefinedConfig/Common/Enums';
-import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
-import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
-import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { AdaptableOptions, Layout, PercentBar } from '../../types';
-import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
+import { Layout, PercentBar } from '../../types';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstants';
@@ -365,8 +358,6 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
       }
       */
     let values: any[] = this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, false);
-
-    console.log('returnvalues', values);
     return values;
   }
   public getDistinctVisibleValuesForColumn(columnId: string): any[] {

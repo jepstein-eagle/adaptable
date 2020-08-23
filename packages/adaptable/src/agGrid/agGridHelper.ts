@@ -212,7 +212,7 @@ export class agGridHelper {
     return this.adaptable.lookupPlugins('sparklineColumnRenderer', sparkline);
   }
 
-  public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {
+  public createPercentBarCellRendererFunc(pcr: PercentBar): ICellRendererFunc {
     if (pcr.Ranges === undefined) {
       return;
     }

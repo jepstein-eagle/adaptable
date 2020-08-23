@@ -20,7 +20,7 @@ export class TickingDataHelper {
     adaptableApi: AdaptableApi,
     tickingFrequency: number,
     tradeCount: number,
-    notionalOnly: boolean = false
+    notionalOnly: boolean = true
   ) {
     if (gridOptions != null && gridOptions.api != null) {
       console.log('here');
@@ -45,16 +45,17 @@ export class TickingDataHelper {
         const bid = this.roundTo4Dp(price - bidOfferSpread / 2);
         const bloombergAsk = this.roundTo4Dp(ask + directionToAdd);
         const bloombergBid = this.roundTo4Dp(bid - directionToAdd);
-        const notional = trade.notional + this.generateRandomInt(-100, 100); // this.getRandomItem(examplesHelper.getNotionals());
+        const notional = this.generateRandomInt(1, 5); // trade.notional + this.generateRandomInt(-100, 100); // this.getRandomItem(examplesHelper.getNotionals());
         const changeOnYear = examplesHelper.getMeaningfulDouble();
 
         if (useadaptableApiUpdateGridData) {
           if (notionalOnly) {
-            if (randomInt == 1) {
-              trade.notional = 1200;
-            } else {
-              trade.notional = notional;
-            }
+            //   if (randomInt == 1) {
+            //    trade.notional = 1200;
+            //   } else {
+            trade.notional = notional;
+            trade.changeOnYear = changeOnYear;
+            //    }
           } else {
             console.log(4);
             trade.price = price;
@@ -88,21 +89,6 @@ export class TickingDataHelper {
             callback: test,
           };
           adaptableApi.gridApi.updateGridData([trade], config);
-        }
-
-        if (gridOptionsUpdateRowData) {
-          if (notionalOnly) {
-            trade.notional = notional;
-          } else {
-            trade.price = price;
-            trade.bid = bid;
-            trade.ask = ask;
-            trade.bloombergAsk = bloombergAsk;
-            trade.bloombergBid = bloombergBid;
-            trade.notional = notional;
-            trade.changeOnYear = changeOnYear;
-          }
-          gridOptions.api!.applyTransaction({ update: [trade] });
         }
 
         if (useadaptableApiSetCellValue) {
@@ -153,6 +139,21 @@ export class TickingDataHelper {
             }
             rowNode.setData(data);
           }
+        }
+
+        if (gridOptionsUpdateRowData) {
+          if (notionalOnly) {
+            trade.notional = notional;
+          } else {
+            trade.price = price;
+            trade.bid = bid;
+            trade.ask = ask;
+            trade.bloombergAsk = bloombergAsk;
+            trade.bloombergBid = bloombergBid;
+            trade.notional = notional;
+            trade.changeOnYear = changeOnYear;
+          }
+          gridOptions.api!.applyTransaction({ update: [trade] });
         }
       }, tickingFrequency);
     }

@@ -31,7 +31,6 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
   implements AdaptableWizardStep {
   constructor(props: ExpressionWizardProps) {
     super(props);
-    console.log(props.Data);
     this.state = {
       expression: props.Data.Expression,
       sharedQueryId: props.Data.SharedQueryId,

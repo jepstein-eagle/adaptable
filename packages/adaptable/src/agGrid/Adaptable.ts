@@ -2624,6 +2624,7 @@ export class Adaptable implements IAdaptable {
 
     // this handles ticking data
     // except it doesnt handle when data has been added to ag-Grid using applyTransaction
+    // not sure if we need any of this tbh - needs looking at
     this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
@@ -2640,7 +2641,8 @@ export class Adaptable implements IAdaptable {
           };
            this.DataService.CreateDataChangedEvent(dataChangedInfo);
        */
-          const colId: string | undefined = params.colDef.field;
+          //    const colId: string | undefined = params.colDef.field;
+          /*
           if (colId) {
             // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             // so we manually raise.
@@ -2662,25 +2664,12 @@ export class Adaptable implements IAdaptable {
               });
             }
 
-            // see if we need to refresh any percent bars
-            this.api.percentBarApi.getAllPercentBar().forEach(pb => {
-              refreshColumnList.forEach(changedColId => {
-                if (
-                  StringExtensions.IsNotNullOrEmpty(pb.PositiveValueColumnId) &&
-                  pb.PositiveValueColumnId == changedColId
-                ) {
-                  ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                }
-                if (
-                  StringExtensions.IsNotNullOrEmpty(pb.NegativeValueColumnId) &&
-                  pb.NegativeValueColumnId == changedColId
-                ) {
-                  ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                }
-              });
-            });
+            // see if we need to refresh any Special Rendered Columns
+            if (this.api.columnApi.isSpecialRenderedColumn(colId)) {
+              ArrayExtensions.AddItem(refreshColumnList, colId);
+            }
           }
-
+*/
           // this is new  - giving users ability to filter on external data changes
           this.filterOnExternalDataChange([params.node]);
         }
@@ -3304,8 +3293,7 @@ export class Adaptable implements IAdaptable {
     const renderedColumn = this.api.columnApi.getColumnFromId(pcr.ColumnId);
     if (renderedColumn) {
       const cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(
-        pcr,
-        this.adaptableOptions!.adaptableId!
+        pcr
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       const colDef: ColDef = vendorGridColumn.getColDef();

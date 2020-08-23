@@ -22,8 +22,6 @@ export class ConditionalStyleSummaryWizard
   }
 
   render(): any {
-    console.log(this.props.Data);
-
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Scope', Value: this.getScope() },
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
