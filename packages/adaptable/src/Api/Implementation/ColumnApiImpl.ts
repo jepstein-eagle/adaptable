@@ -45,7 +45,10 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
   }
 
   public isRowGroupColumn(columnId: string): boolean {
-    return columnId == AG_GRID_GROUPED_COLUMN;
+    // put this here as there might be other indicators we are not aware of
+    // perhaps with non auto groups ?
+    //https://www.ag-grid.com/javascript-grid-grouping/
+    return columnId === AG_GRID_GROUPED_COLUMN;
   }
 
   public isCalculatedColumn(columnId: string): boolean {

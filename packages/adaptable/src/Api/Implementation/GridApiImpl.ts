@@ -1,18 +1,11 @@
 import { ApiBase } from './ApiBase';
 import { GridApi } from '../GridApi';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { GridState } from '../../PredefinedConfig/GridState';
-import { DataType } from '../../PredefinedConfig/Common/Enums';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInfo';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { AdaptableOptions, Layout } from '../../types';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstants';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {

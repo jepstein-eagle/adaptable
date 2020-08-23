@@ -262,8 +262,6 @@ export function CreateEmptyPercentBar(): PercentBar {
     NegativeColor: getHexForName(RED),
     ShowValue: false,
     ShowToolTip: false,
-    PositiveValueColumnId: undefined,
-    NegativeValueColumnId: undefined,
     Ranges: [],
     BackColor: getHexForName(GRAY),
   };

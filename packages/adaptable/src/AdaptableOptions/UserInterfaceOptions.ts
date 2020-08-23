@@ -73,4 +73,13 @@ export interface UserInterfaceOptions {
   showAdaptableColumnMenu?:
     | boolean
     | ((menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => boolean);
+
+  /**
+   * Creates a Column Menu item in a grouped column that allows the user to ungroup.
+   *
+   * Offered as a convenience option as often its hard to find which columns are currently grouped if user wants to ungroup.
+   *
+   * **Default Value: true**
+   */
+  showUngroupColumnMenuItem?: boolean;
 }

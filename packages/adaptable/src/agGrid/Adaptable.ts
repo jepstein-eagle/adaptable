@@ -1137,10 +1137,10 @@ export class Adaptable implements IAdaptable {
         const originalIndex1 = columnsStateIndexes[colId1];
         const originalIndex2 = columnsStateIndexes[colId2];
 
-        if (colId1 === AG_GRID_GROUPED_COLUMN) {
+        if (this.api.columnApi.isRowGroupColumn(colId1)) {
           return -1;
         }
-        if (colId2 === AG_GRID_GROUPED_COLUMN) {
+        if (this.api.columnApi.isRowGroupColumn(colId2)) {
           return 1;
         }
 
@@ -2895,37 +2895,54 @@ export class Adaptable implements IAdaptable {
       } else {
         colMenuItems = params.defaultItems.slice(0);
       }
-      colMenuItems.push('separator');
 
-      const adaptableColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(colId);
-      if (adaptableColumn != null) {
-        let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
-        // First get all the Strategy based Adaptable Menu Items
-        const adaptableMenuItems: AdaptableMenuItem[] = this.getAdaptableMenuItemsColumnHeader(
-          adaptableColumn,
-          menuInfo
-        );
-
-        // And then convert them into Menu Item Defs
-        adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+      if (this.api.columnApi.isRowGroupColumn(colId)) {
+        if (this.adaptableOptions.userInterfaceOptions.showUngroupColumnMenuItem) {
+          colMenuItems.push('separator');
+          let groupedCols = this.gridOptions.columnApi.getRowGroupColumns();
+          let ungroupMenuItem: AdaptableMenuItem = {
+            Label: groupedCols.length == 1 ? 'Ungroup Column' : 'Ungroup All',
+            ClickFunction: () => this.gridOptions.columnApi.setRowGroupColumns([]),
+            IsVisible: true,
+            Icon: 'undo',
+          };
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-            adaptableMenuItem
+            ungroupMenuItem
           );
           colMenuItems.push(menuItem);
-        });
+        }
+      } else {
+        colMenuItems.push('separator');
+        const adaptableColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(colId);
+        if (adaptableColumn != null) {
+          let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
+          // First get all the Strategy based Adaptable Menu Items
+          const adaptableMenuItems: AdaptableMenuItem[] = this.getAdaptableMenuItemsColumnHeader(
+            adaptableColumn,
+            menuInfo
+          );
 
-        // Next get all the User Menu Items
-        let userColumnMenuItems: KeyValuePair[] = this.getUserMenuItemsColumnHeader(menuInfo);
-        if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-          userColumnMenuItems.forEach((kvp: KeyValuePair) => {
-            // And then convert them into Menu Item Defs
-            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUserMenu(
-              kvp.Key,
-              kvp.Value,
-              menuInfo
+          // And then convert them into Menu Item Defs
+          adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+              adaptableMenuItem
             );
             colMenuItems.push(menuItem);
           });
+
+          // Next get all the User Menu Items
+          let userColumnMenuItems: KeyValuePair[] = this.getUserMenuItemsColumnHeader(menuInfo);
+          if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+            userColumnMenuItems.forEach((kvp: KeyValuePair) => {
+              // And then convert them into Menu Item Defs
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUserMenu(
+                kvp.Key,
+                kvp.Value,
+                menuInfo
+              );
+              colMenuItems.push(menuItem);
+            });
+          }
         }
       }
       return colMenuItems;

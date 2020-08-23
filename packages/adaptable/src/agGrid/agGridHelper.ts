@@ -549,6 +549,20 @@ export class agGridHelper {
     };
   }
 
+  public createRemoveGroupsMenuItem(x: AdaptableMenuItem): MenuItemDef {
+    return {
+      name: x.Label,
+      action: x.ClickFunction
+        ? x.ClickFunction
+        : () => this.adaptable.api.internalApi.dispatchReduxAction(x.ReduxAction),
+      icon: iconToString(x.Icon, {
+        style: {
+          fill: 'var(--ab-color-text-on-primary)',
+        },
+      }),
+    };
+  }
+
   public createAgGridMenuDefFromAdaptableMenu(x: AdaptableMenuItem): MenuItemDef {
     return {
       name: x.Label,

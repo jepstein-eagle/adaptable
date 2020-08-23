@@ -32,6 +32,7 @@ async function InitAdaptableDemo() {
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
       showAdaptableToolPanel: true,
+      //showUngroupColumnMenuItem: false,
     },
     vendorGrid: {
       ...gridOptions,
@@ -84,10 +85,10 @@ async function InitAdaptableDemo() {
             },
             //   EnablePivot: true,
             //    PivotColumns: ['country', 'status'],
-            PinnedColumnsMap: {
-              country: 'right',
-              currency: 'left',
-            },
+            //    PinnedColumnsMap: {
+            //     country: 'right',
+            //      currency: 'left',
+            //    },
           },
         ],
       },

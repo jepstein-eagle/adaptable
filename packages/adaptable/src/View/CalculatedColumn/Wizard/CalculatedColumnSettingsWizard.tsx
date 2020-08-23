@@ -57,21 +57,21 @@ export class CalculatedColumnSettingsWizard
     const inEdit = !!this.props.Data.ColumnId;
     return (
       <WizardPanel>
-        <Panel header="Column Name" margin={2}>
+        <Panel header="Column Details" margin={2}>
           <Flex flexDirection="row">
             <FormLayout>
-              <FormRow label="Column Id">
+              <FormRow label="Id">
                 <Input
                   value={this.state.ColumnId || ''}
                   width={300}
                   autoFocus={!inEdit}
                   disabled={inEdit}
                   type="text"
-                  placeholder="Enter an id"
+                  placeholder="Enter an Id for the column"
                   onChange={(e: React.SyntheticEvent) => this.handleColumnIdChange(e)}
                 />
               </FormRow>
-              <FormRow label="Column Name">
+              <FormRow label="Name">
                 <Input
                   autoFocus={inEdit}
                   onFocus={() => {
@@ -95,7 +95,7 @@ export class CalculatedColumnSettingsWizard
                   onChange={(e: React.SyntheticEvent) => this.handleColumnNameChange(e)}
                 />
               </FormRow>
-              <FormRow label="Column Type">
+              <FormRow label="Type">
                 <Dropdown
                   value={this.state.DataType}
                   onChange={DataType => this.setState({ DataType })}

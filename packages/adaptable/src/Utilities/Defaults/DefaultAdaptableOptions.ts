@@ -104,6 +104,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     showAdaptableToolPanel: false,
     showAdaptableContextMenu: true,
     adaptableToolPanelTitle: GeneralConstants.ADAPTABLE,
+    showUngroupColumnMenuItem: true,
   },
   exportOptions: {
     exportColumnRawValue: undefined,
@@ -117,5 +118,4 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     setSharedEntities: undefined,
     getSharedEntities: undefined,
   },
-  userFilterPredicates: {},
 };
