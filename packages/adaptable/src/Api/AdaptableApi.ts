@@ -71,7 +71,7 @@ import { ApplicationApi } from './AppApi';
  *
  * In addition there are a few api classes designed primarily for internal use which deal with how AdapTable itself works (e.g. `gridApi`, `columnApi`, `gridApi`)
  *
- * ####Function-Related Api classes
+ * #### Function-Related Api classes
  *
  *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
@@ -89,7 +89,7 @@ import { ApplicationApi } from './AppApi';
  *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
  *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
  *  | [customSortApi](#customsortapi)                 | Manages {@link CustomSortState|Custom Sorts} allowing bespoke column sorting|
- *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of the Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
+ *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
  *  | [dataSourceApi](#datasourceapi)                 | Deals with [Data Sources](_src_predefinedconfig_datasourcestate_.datasourcestate.html) used in Server Searching|
  *  | [exportApi](#exportapi)                         | Run reports either manually or at scheduled times|
  *  | [flashingCellApi](#flashingcellapi)             | Manages the [Flashing Cell](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_flashingcellstate_.flashingcellstate.html) |
@@ -110,11 +110,11 @@ import { ApplicationApi } from './AppApi';
  *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
  *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
  *
- * ####General Api classes
+ * #### General Api classes
  *
  *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
- *  | [columnApi](#columnapi)                         | Series of column related functions|
+ *  | [columnApi](#columnapi)                         | Large number of column-related functions|
  *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
  *  | [entitlementsApi](#entitlementsapi)             | Manages User {@link EntitlementState|Entitlements} (essentially Permissions)|
  *  | [eventApi](#eventapi)                           | Subscribe to some of the many Events that AdapTable fires|
