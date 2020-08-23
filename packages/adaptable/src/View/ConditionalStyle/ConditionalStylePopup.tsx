@@ -23,7 +23,6 @@ import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
@@ -37,7 +36,6 @@ interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
   ConditionalStyles: ConditionalStyle[];
   StyleClassNames: string[];
-  ColumnCategories: ColumnCategory[];
   onAddConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleAddAction;
@@ -224,12 +222,6 @@ class ConditionalStylePopupComponent extends React.Component<
     ) {
       return false;
     }
-    if (
-      conditionalStyle.ConditionalStyleScope == 'ColumnCategory' &&
-      StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnCategoryId)
-    ) {
-      return false;
-    }
 
     if (
       this.state.UseSharedQuery &&
@@ -263,7 +255,6 @@ function mapStateToProps(state: AdaptableState): Partial<ConditionalStylePopupPr
   return {
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
-    ColumnCategories: state.ColumnCategory.ColumnCategories,
   };
 }
 

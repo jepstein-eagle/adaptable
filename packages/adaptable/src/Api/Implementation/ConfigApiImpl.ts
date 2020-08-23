@@ -28,7 +28,6 @@ import { ActionColumnState } from '../../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnState';
-import { ColumnCategoryState } from '../../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
 import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
@@ -90,7 +89,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'CellSummary',
       'CellValidation',
       'Chart',
-      'ColumnCategory',
       'ConditionalStyle',
       'CustomSort',
       'Dashboard',
@@ -181,10 +179,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Chart)
           : this.getAdaptableState().Chart;
-      case 'ColumnCategory':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().ColumnCategory)
-          : this.getAdaptableState().ColumnCategory;
 
       case 'ConditionalStyle':
         return returnJson
@@ -334,9 +328,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     return this.configGetUserStateByStateKey('Chart', returnJson) as ChartState;
   }
 
-  public configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState {
-    return this.configGetUserStateByStateKey('ColumnCategory', returnJson) as ColumnCategoryState;
-  }
   public configGetConditionalStyleState(returnJson: boolean = false): ConditionalStyleState {
     return this.configGetUserStateByStateKey(
       'ConditionalStyle',

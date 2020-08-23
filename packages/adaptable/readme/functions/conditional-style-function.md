@@ -12,8 +12,7 @@ When create a Conditional Style you will select the:
   - a single **Column** 
   
   - an entire **Row**
-  
-   - a **Column Category** (if are any defined)
+
    
   > There is an option to exclude grouped rows from having the style applied.
 
@@ -31,9 +30,6 @@ Conditional Styles allow you to set the look and feel of your rows and / or colu
 When create a Conditional Style you will select the:
 
 Scope: whether the style is applied for a single column or an entire row
-
-Tip
-If you are using Column Categories then you can also apply a style just to the columns in a single category
 
 Colours and Font Properties: used to create the style that suits your needs by selecting the fore and back colours and font elements that you require. Just select those elements that you wish to change from the default setting.
 

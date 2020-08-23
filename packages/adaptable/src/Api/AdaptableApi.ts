@@ -10,7 +10,6 @@ import { CalendarApi } from './CalendarApi';
 import { CellSummaryApi } from './CellSummaryApi';
 import { CellValidationApi } from './CellValidationApi';
 import { ChartApi } from './ChartApi';
-import { ColumnCategoryApi } from './ColumnCategoryApi';
 import { ConfigApi } from './ConfigApi';
 import { ConditionalStyleApi } from './ConditionalStyleApi';
 import { CustomSortApi } from './CustomSortApi';
@@ -87,7 +86,6 @@ import { ColumnApi } from './ColumnApi';
  *  | [cellSummaryApi](#cellsummaryapi)               | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
  *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
  *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
  *  | [customSortApi](#customsortapi)                 | Manages {@link CustomSortState|Custom Sorts} allowing bespoke column sorting|
@@ -185,17 +183,12 @@ export interface AdaptableApi {
   chartApi: ChartApi;
 
   /**
-   * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html).
-   */
-  columnCategoryApi: ColumnCategoryApi;
-
-  /**
    * Provides a number of column-related methods
    */
   columnApi: ColumnApi;
 
   /**
-   * Methods that give access to the [Predefined Config](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html), State and Store.
+   * Methods that give access to the Adaptable State and Store.
    */
   configApi: ConfigApi;
 

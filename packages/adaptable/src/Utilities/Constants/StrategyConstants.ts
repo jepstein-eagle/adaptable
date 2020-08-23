@@ -10,7 +10,6 @@ export const CalendarStrategyId: AdaptableFunctionName = 'Calendar';
 export const CellSummaryStrategyId: AdaptableFunctionName = 'CellSummary';
 export const CellValidationStrategyId: AdaptableFunctionName = 'CellValidation';
 export const ChartStrategyId: AdaptableFunctionName = 'Chart';
-export const ColumnCategoryStrategyId: AdaptableFunctionName = 'ColumnCategory';
 export const FilterStrategyId: AdaptableFunctionName = 'Filter';
 export const ColumnInfoStrategyId: AdaptableFunctionName = 'ColumnInfo';
 export const ConditionalStyleStrategyId: AdaptableFunctionName = 'ConditionalStyle';
@@ -56,7 +55,6 @@ export const CalendarStrategyFriendlyName: string = 'Calendar';
 export const CellSummaryStrategyFriendlyName: string = 'Cell Summary';
 export const CellValidationStrategyFriendlyName: string = 'Cell Validation';
 export const ChartStrategyFriendlyName: string = 'Chart';
-export const ColumnCategoryStrategyFriendlyName: string = 'Column Category';
 export const ColumnChooserStrategyFriendlyName: string = 'Column Chooser';
 export const FilterStrategyFriendlyName: string = 'Filter';
 export const ColumnFilterStrategyFriendlyName: string = 'Column Filter';
@@ -104,7 +102,6 @@ export const CalendarGlyph: string = 'calendar';
 export const CellSummaryGlyph: string = 'cell-summary';
 export const CellValidationGlyph: string = 'cell-validation';
 export const ChartGlyph: string = 'chart';
-export const ColumnCategoryGlyph: string = 'column-category';
 export const ColumnChooserGlyph: string = 'column-chooser';
 export const FilterGlyph: string = 'column-filter';
 export const ColumnFilterGlyph: string = 'column-filter';
@@ -161,8 +158,6 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return CellValidationStrategyId;
     case ChartStrategyFriendlyName:
       return ChartStrategyId;
-    case ColumnCategoryStrategyFriendlyName:
-      return ColumnCategoryStrategyId;
     case FilterStrategyFriendlyName:
       return FilterStrategyId;
     case ColumnInfoStrategyFriendlyName:
@@ -252,8 +247,6 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return CellValidationStrategyFriendlyName;
     case ChartStrategyId:
       return ChartStrategyFriendlyName;
-    case ColumnCategoryStrategyId:
-      return ColumnCategoryStrategyFriendlyName;
     case FilterStrategyId:
       return FilterStrategyFriendlyName;
     case ColumnInfoStrategyId:
@@ -345,8 +338,6 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return CellValidationGlyph;
     case ChartStrategyId:
       return ChartGlyph;
-    case ColumnCategoryStrategyId:
-      return ColumnCategoryGlyph;
     case FilterStrategyId:
       return FilterGlyph;
     case ColumnInfoStrategyId:

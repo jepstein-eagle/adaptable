@@ -17,7 +17,6 @@ import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import Input from '../../../components/Input';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';

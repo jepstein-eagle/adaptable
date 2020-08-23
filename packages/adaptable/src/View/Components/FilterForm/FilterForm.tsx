@@ -32,7 +32,6 @@ import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
@@ -48,7 +47,6 @@ interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   Adaptable: IAdaptable;
   Columns: AdaptableColumn[];
   SystemFilters: string[];
-  ColumnCategories: ColumnCategory[];
   ColumnFilters: ColumnFilter[];
   EmbedColumnMenu: boolean;
   ShowCloseButton: boolean;
@@ -378,7 +376,6 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterFo
     Adaptable: ownProps.Adaptable,
     Columns: state.Grid.Columns,
     ColumnFilters: state.Filter.ColumnFilters,
-    ColumnCategories: state.ColumnCategory.ColumnCategories,
     SystemFilters: state.Filter.SystemFilters,
     ShowCloseButton: ownProps.ShowCloseButton,
   };

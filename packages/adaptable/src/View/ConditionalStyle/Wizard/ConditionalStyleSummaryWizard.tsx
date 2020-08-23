@@ -54,9 +54,6 @@ export class ConditionalStyleSummaryWizard
         );
       //  case 'DataType':
       //     return this.props.Data.DataType + ' Columns';
-
-      case 'ColumnCategory':
-        return 'Category: ' + this.props.Data.ColumnCategoryId;
     }
   }
 

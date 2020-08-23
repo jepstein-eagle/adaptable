@@ -52,7 +52,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Calendar](./functions/calendar-function.md)
 - [Cell Summary](./functions/cell-summary-function.md)
 - [Cell Validation](./functions/cell-validation-function.md)
-- [Column Category](./functions/column-category-function.md)
 - [Column Filter](./functions/column-filter-function.md)
 - [Column Info](./functions/column-info-function.md)
 - [Conditional Style](./functions/conditional-style-function.md)  

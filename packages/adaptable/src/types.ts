@@ -55,7 +55,6 @@ export {
   CellSummaryOperationDefinition,
 } from './PredefinedConfig/CellSummaryState';
 export { CellValidationState, CellValidationRule } from './PredefinedConfig/CellValidationState';
-export { ColumnCategoryState, ColumnCategory } from './PredefinedConfig/ColumnCategoryState';
 export { ConditionalStyleState, ConditionalStyle } from './PredefinedConfig/ConditionalStyleState';
 export {
   CustomSortState,

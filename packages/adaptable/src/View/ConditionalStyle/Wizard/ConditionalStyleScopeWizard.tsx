@@ -24,8 +24,7 @@ export interface ConditionalStyleScopeWizardProps
 
 export interface ConditionalStyleScopeWizardState {
   ColumnId: string;
-  ColumnCategoryId: string;
-  ConditionalStyleScope: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType';
+  ConditionalStyleScope: 'Column' | 'Row'; //| 'DataType';
   ExcludeGroupedRows: boolean;
   // DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
@@ -37,9 +36,6 @@ export class ConditionalStyleScopeWizard
     super(props);
     this.state = {
       ColumnId: StringExtensions.IsNull(this.props.Data.ColumnId) ? '' : this.props.Data.ColumnId,
-      ColumnCategoryId: StringExtensions.IsNull(this.props.Data.ColumnCategoryId)
-        ? ''
-        : this.props.Data.ColumnCategoryId,
       ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
       ExcludeGroupedRows: this.props.Data.ExcludeGroupedRows,
       //  DataType: this.props.Data.DataType,
@@ -51,13 +47,6 @@ export class ConditionalStyleScopeWizard
       return {
         value: cc,
         label: cc,
-      };
-    });
-
-    let optionColumnCategorys = this.props.Api.columnCategoryApi.getAllColumnCategory().map(cc => {
-      return {
-        value: cc.ColumnCategoryId,
-        label: cc.ColumnCategoryId,
       };
     });
 
@@ -133,47 +122,6 @@ export class ConditionalStyleScopeWizard
             </Box>
           )}
 */}
-          {ArrayExtensions.IsNotNullOrEmpty(
-            this.props.Api.columnCategoryApi.getAllColumnCategory()
-          ) && (
-            <Box>
-              <HelpBlock marginBottom={2}>
-                Apply the Conditional Style to all the columns in a Column Category
-              </HelpBlock>
-
-              <Radio
-                marginLeft={3}
-                value="ColumnCategory"
-                checked={this.state.ConditionalStyleScope == 'ColumnCategory'}
-                onChange={(checked: boolean, e: React.SyntheticEvent) =>
-                  this.onScopeSelectChanged(e)
-                }
-              >
-                Column Category
-              </Radio>
-            </Box>
-          )}
-
-          {ArrayExtensions.IsNotNullOrEmpty(
-            this.props.Api.columnCategoryApi.getAllColumnCategory()
-          ) &&
-            this.state.ConditionalStyleScope == 'ColumnCategory' && (
-              <Box>
-                <Dropdown
-                  placeholder="Select a Column Category"
-                  value={this.state.ColumnCategoryId}
-                  showEmptyItem={false}
-                  onChange={(value: any) => this.onColumnCategorySelectedChanged(value)}
-                  options={[
-                    {
-                      label: 'Select',
-                      value: 'select',
-                    },
-                    ...optionColumnCategorys,
-                  ]}
-                />
-              </Box>
-            )}
 
           <Box>
             <HelpBlock marginBottom={2}>
@@ -210,26 +158,7 @@ export class ConditionalStyleScopeWizard
           </Box>
 
          
-          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) && (
-             <HelpBlock marginBottom={2}>
-            Pick the Column Category from the list below to apply the conditional style to all Column Categorys.
-             </HelpBlock>
-            <Box >
-             {' '}
-              <AdaptablePopover
-               
-                headerText={'Conditional Style: Column Categorys'}
-                bodyText={[
-                  'Pick the Column Category from the list below to apply the conditional style to all Column Categorys.',
-                ]}
-              />
-            </Box>
-          )}
-          {ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategories) &&
-            this.state.ConditionalStyleScope == 'ColumnCategory' && (
-              
-            )}
-        </WizardPanel>
+               </WizardPanel>
       </div>
       */
     );
@@ -241,12 +170,6 @@ export class ConditionalStyleScopeWizard
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',
       } as ConditionalStyleScopeWizardState,
       () => this.props.UpdateGoBackState()
-    );
-  }
-
-  private onColumnCategorySelectedChanged(value: any) {
-    this.setState({ ColumnCategoryId: value } as ConditionalStyleScopeWizardState, () =>
-      this.props.UpdateGoBackState()
     );
   }
 
@@ -264,13 +187,7 @@ export class ConditionalStyleScopeWizard
       this.setState({ ConditionalStyleScope: 'Column' } as ConditionalStyleScopeWizardState, () =>
         this.props.UpdateGoBackState()
       );
-    } else if (e.value == 'ColumnCategory') {
-      this.setState(
-        {
-          ConditionalStyleScope: 'ColumnCategory',
-        } as ConditionalStyleScopeWizardState,
-        () => this.props.UpdateGoBackState()
-      );
+
       /*
     } else if (e.value == 'DataType') {
       this.setState(
@@ -313,12 +230,7 @@ export class ConditionalStyleScopeWizard
     //   ) {
     //     return false;
     //   }
-    if (
-      this.state.ConditionalStyleScope == 'ColumnCategory' &&
-      StringExtensions.IsEmpty(this.state.ColumnCategoryId)
-    ) {
-      return false;
-    }
+
     return true;
   }
 
@@ -327,7 +239,6 @@ export class ConditionalStyleScopeWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.ColumnCategoryId = this.state.ColumnCategoryId;
     this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
     this.props.Data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
     //  this.props.Data.DataType =

@@ -9,7 +9,6 @@ import { CalculatedColumnState } from './CalculatedColumnState';
 import { CalendarState } from './CalendarState';
 import { CellSummaryState } from './CellSummaryState';
 import { CellValidationState } from './CellValidationState';
-import { ColumnCategoryState } from './ColumnCategoryState';
 import { ConditionalStyleState } from './ConditionalStyleState';
 import { CustomSortState } from './CustomSortState';
 import { DashboardState } from './DashboardState';
@@ -154,7 +153,6 @@ import { SharedQueryState } from './SharedQueryState';
  *  | [Calendar](_src_predefinedconfig_calendarstate_.calendar.html)   	                          | Yes 	              | Select or provide your own calendar for dealing with holidays |
  *  | [CellSummary](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Yes 	              | Choose which summary operations to see for selected cells     |
  *  | [CellValidation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Yes 	              | Provide (complex) rules to validate cell edits                |
- *  | [ColumnCategory](_src_predefinedconfig_columncategorystate_.columncategorystate.html)       | Yes     	          | Group columns into category for easier column management      |
  *  | [ConditionalStyle](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Yes 	              | Dynamically Style columns & rows according to rules provided  |
  *  | [CustomSort](_src_predefinedconfig_customsortstate_.customsortstate.html)                   | Yes 	              | Build your own sort orders for columns with non-standard sorts|
  *  | [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Yes 	              | Configure & populate the Dasboard area (abov the main grid)   |
@@ -446,11 +444,6 @@ export interface PredefinedConfig {
    * Supplies a collection of *Chart* objects to enable seeing grid data visually in chart format.
    */
   Chart?: ChartState;
-
-  /**
-   * Supplies a collection of *ColumnCategory* objects to enable the logical grouping of columns (used in the Column Chooser).
-   */
-  ColumnCategory?: ColumnCategoryState;
 
   /**
    * Supplies a collection of *ConditionalStyle* objects to provides columns and rows with a particular style when the data matches a given rule.

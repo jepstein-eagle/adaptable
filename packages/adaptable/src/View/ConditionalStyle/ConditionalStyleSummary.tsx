@@ -22,7 +22,6 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import * as parser from '../../parser/src';
@@ -31,7 +30,6 @@ export interface ConditionalStyleSummaryProps
   extends StrategySummaryProps<ConditionalStyleSummaryComponent> {
   ConditionalStyles: ConditionalStyle[];
   ColorPalette: string[];
-  ColumnCategories: ColumnCategory[];
   StyleClassNames: string[];
   SharedQueries: SharedQuery[];
   onAddConditionalStyle: (
@@ -195,7 +193,6 @@ function mapStateToProps(
   return {
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
-    ColumnCategories: state.ColumnCategory.ColumnCategories,
     SharedQueries: state.SharedQuery.SharedQueries,
   };
 }

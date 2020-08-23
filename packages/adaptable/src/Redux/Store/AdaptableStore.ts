@@ -36,7 +36,6 @@ import * as ApplicationRedux from '../ActionsReducers/ApplicationRedux';
 import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
-import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux';
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
 import * as ToolPanelRedux from '../ActionsReducers/ToolPanelRedux';
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
@@ -226,7 +225,6 @@ This is the main store for Adaptable State
       Calendar: CalendarRedux.CalendarReducer,
       CellValidation: CellValidationRedux.CellValidationReducer,
       Chart: ChartRedux.ChartReducer,
-      ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
       ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
       CustomSort: CustomSortRedux.CustomSortReducer,
       Dashboard: DashboardRedux.DashboardReducer,
@@ -791,50 +789,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /*
-          **********************
-          COLUMN CATEGORY
-          **********************
-           */
-          case ColumnCategoryRedux.COLUMN_CATEGORY_ADD: {
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryAddAction;
-            let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnCategoryStrategyId,
-              actionType: action.type,
-              state: newState.ColumnCategory,
-              diffInfo: diff,
-              objectChanged: actionTyped.columnCategory,
-              stateObjectChangeType: StateObjectChangeType.Created,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
-          case ColumnCategoryRedux.COLUMN_CATEGORY_EDIT: {
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryEditAction;
-            let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnCategoryStrategyId,
-              actionType: action.type,
-              state: newState.ColumnCategory,
-              diffInfo: diff,
-              objectChanged: actionTyped.columnCategory,
-              stateObjectChangeType: StateObjectChangeType.Updated,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
-          case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryDeleteAction;
-            let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnCategoryStrategyId,
-              actionType: action.type,
-              state: newState.ColumnCategory,
-              diffInfo: diff,
-              objectChanged: actionTyped.columnCategory,
-              stateObjectChangeType: StateObjectChangeType.Deleted,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
+
           /*
           **********************
           COLUMN FILTER
@@ -2202,28 +2157,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               return returnAction;
             }
             return null;
-          }
-
-          /*******************
-           * COLUMN CATEGORY ACTIONS
-           *******************/
-
-          /**
-           * Use Case: User deletes a Column Category (and there might be conditional styles that reference it)
-           * Action (1):  Get all condiitonal styles from state
-           * Action (2):  Delete any (without currently showing a warning) that reference this Column Category
-           */
-          case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
-            let returnAction = next(action);
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryDeleteAction;
-            let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
-            conditionalStyleState.ConditionalStyles.forEach((cs: ConditionalStyle) => {
-              if (cs.ColumnCategoryId == actionTyped.columnCategory.ColumnCategoryId) {
-                // some warning?
-                middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(cs));
-              }
-            });
-            return returnAction;
           }
 
           /*******************

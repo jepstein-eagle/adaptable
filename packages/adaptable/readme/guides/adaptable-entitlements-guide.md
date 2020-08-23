@@ -46,11 +46,11 @@ There are 2 ways to provide Entitlements in Predefined Config:
  export default {
  Entitlements: {
    FunctionEntitlements: [
-     {
-       FunctionName: 'ColumnCategory',
-       AccessLevel: 'Hidden',
-    },
-    {
+       {
+        FunctionName: 'PercentBar',
+        AccessLevel: 'Hidden',
+      },
+       {
         FunctionName: 'AdvancedSearch',
         AccessLevel: 'Hidden',
       },
@@ -70,7 +70,7 @@ There are 2 ways to provide Entitlements in Predefined Config:
 
  - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
 
- - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
+ - **2 Hidden Entitlements**: Percent Bar and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
 
  --------------
 

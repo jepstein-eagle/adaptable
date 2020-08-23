@@ -25,7 +25,6 @@ import { ApplicationState } from '../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
-import { ColumnCategoryState } from '../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../PredefinedConfig/FreeTextColumnState';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
@@ -86,7 +85,6 @@ export interface ConfigApi {
   configGetCellSummaryState(returnJson: boolean): CellSummaryState;
   configGetCellValidationState(returnJson: boolean): CellValidationState;
   configGetChartState(returnJson: boolean): ChartState;
-  configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState;
   configGetConditionalStyleState(returnJson: boolean): ConditionalStyleState;
   configGetCustomSortState(returnJson: boolean): CustomSortState;
   configGetDashboardState(returnJson: boolean): DashboardState;

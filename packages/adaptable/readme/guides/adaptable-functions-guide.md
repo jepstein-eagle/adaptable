@@ -35,7 +35,6 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | [Calendar](../functions/calendar-function.md)                    | No     | No      | No         | No          | No           |
 | [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          |
 | [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           |
-| [Column Category](../functions/column-category-function.md)      | Yes    | No      | No         | No          | No           |
 | [Column Filter](../functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
 | [Column Info](../functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          |
 | [Conditional Style](../functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           |

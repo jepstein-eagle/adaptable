@@ -24,7 +24,6 @@ import { ToolPanelPopup } from './Components/ToolPanel/ToolPanelPopup';
 import { CellValidationPopup } from './CellValidation/CellValidationPopup';
 import { GradientColumnPopup } from './GradientColumn/GradientColumnPopup';
 import { LayoutPopup } from './Layout/LayoutPopup';
-import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
 import { GridInfoPopup } from './GridInfo/GridInfoPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
@@ -86,7 +85,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FreeTextColumnPopup,
   GridInfoPopup,
   LayoutPopup,
-  ColumnCategoryPopup,
   PercentBarPopup,
   GradientColumnPopup,
   PlusMinusPopup,

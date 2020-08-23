@@ -7,7 +7,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { RowNode } from '@ag-grid-community/core';
@@ -40,15 +39,6 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 colsToRefresh.push(
                   ...this.adaptable.api.columnApi.getColumns().map(c => c.ColumnId)
                 );
-                break;
-
-              case 'ColumnCategory':
-                let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
-                  .getAllColumnCategory()
-                  .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
-                if (columnCategory) {
-                  colsToRefresh.push(...columnCategory.ColumnIds);
-                }
                 break;
 
               case 'Column':
@@ -116,42 +106,6 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 // );
               }
             };
-          } else if (cs.ConditionalStyleScope == 'ColumnCategory') {
-            let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
-              .getAllColumnCategory()
-              .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
-            if (columnCategory) {
-              if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
-                cellClassRules[styleName] = (params: any) => {
-                  if (shouldRunStyle(cs, theadaptable, params.node)) {
-                    return this.evaluateExpression(cs, params.node.data);
-                    // return ExpressionHelper.checkForExpressionFromRowNode(
-                    //   cs.Expression,
-                    //   params.node,
-                    //   columns,
-                    //   theadaptable
-                    // );
-                  }
-                };
-              }
-            }
-            /*
-          } else if (cs.ConditionalStyleScope == 'DataType') {
-            let dataType: 'String' | 'Number' | 'Boolean' | 'Date' = cs.DataType;
-
-            if (dataType) {
-              if (column.DataType == dataType) {
-                cellClassRules[styleName] = function(params: any) {
-                  return ExpressionHelper.checkForExpressionFromRowNode(
-                    cs.Expression,
-                    params.node,
-                    columns,
-                    theadaptable
-                  );
-                };
-              }
-            }
-            */
           } else if (cs.ConditionalStyleScope == 'Row') {
             rowClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {

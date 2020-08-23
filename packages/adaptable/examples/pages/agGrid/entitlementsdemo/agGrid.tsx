@@ -95,10 +95,7 @@ let demoConfig: PredefinedConfig = {
     DefaultAccessLevel: 'Hidden',
     EntitlementLookUpFunction: 'serverLookUp',
     // FunctionEntitlements: [
-    //   {
-    //     FunctionName: 'ColumnCategory',
-    //     AccessLevel: 'Full',
-    //   },
+    //
     //   {
     //     FunctionName: 'Export',
     //     AccessLevel: 'Full',

@@ -23,18 +23,15 @@ import { IColItem, IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnCategorySummary } from '../ColumnCategory/ColumnCategorySummary';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { GradientColumnSummary } from '../GradientColumn/GradientColumnSummary';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
-  ColumnCategory: ColumnCategory[];
 }
 
 export interface ColumnInfoState {
@@ -75,26 +72,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 
     let summaries: any[] = [];
     if (this.state.SelectedColumn) {
-      if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategory)) {
-        summaries.push(
-          <div
-            key={StrategyConstants.ColumnCategoryStrategyId}
-            className={
-              this.isStrategyReadOnly(StrategyConstants.ColumnCategoryStrategyId)
-                ? GeneralConstants.READ_ONLY_STYLE
-                : ''
-            }
-          >
-            <ColumnCategorySummary
-              key={StrategyConstants.ColumnCategoryStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ColumnCategoryStrategyId)}
-              Api={this.props.Api}
-            />
-          </div>
-        );
-      }
       if (this.isStrategyVisible(StrategyConstants.CustomSortStrategyId)) {
         summaries.push(
           <div
@@ -415,7 +392,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnInfoPopupProps> {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-    ColumnCategory: state.ColumnCategory.ColumnCategories,
   };
 }
 

@@ -46,7 +46,6 @@ import { ReactComponentLike } from 'prop-types';
 import CalculatedColumn from './calculated-column';
 import CellSummary from './cell-summary';
 import CellValidation from './cell-validation';
-import ColumnCategory from './column-category';
 import ColumnFilter from './column-filter';
 import ColumnInformation from './column-info';
 import CustomSort from './custom-sort';
@@ -117,7 +116,6 @@ const allIcons = {
   'calculated-column': CalculatedColumn, // original icon is phone-setup
   calendar: Calendar,
   'cell-validation': CellValidation, // original icon is flag,
-  'column-category': ColumnCategory, // original icon was table-chart
   'conditional-style': ConditionalStyle,
   'column-info': ColumnInformation,
   'custom-sort': CustomSort, // was swap-vert

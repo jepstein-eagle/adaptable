@@ -34,7 +34,6 @@ import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGr
 import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
 import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
-import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
@@ -158,12 +157,7 @@ export class agGridHelper {
       new GradientColumnStrategy(adaptable)
     );
     strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(adaptable));
-    strategies.set(
-      StrategyConstants.ColumnCategoryStrategyId,
-      new ColumnCategoryStrategy(adaptable)
-    );
     strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(adaptable));
-
     strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(adaptable));
     strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(adaptable));
     strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(adaptable));

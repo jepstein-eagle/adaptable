@@ -178,28 +178,6 @@ export class StyleService implements IStyleService {
         );
       });
     conditionalStyles
-      .filter(x => x.ConditionalStyleScope == 'ColumnCategory')
-      .forEach(element => {
-        const styleName = this.CreateUniqueStyleName(
-          StrategyConstants.ConditionalStyleStrategyId,
-          element
-        );
-        this.addCSSRule(
-          `.${styleName}`,
-          `background-color: ${element.Style.BackColor} !important;color: ${
-            element.Style.ForeColor
-          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
-            element.Style.FontStyle
-          } !important;${
-            element.Style.FontSize
-              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                  element.Style.FontSize
-                )} !important`
-              : ''
-          }`
-        );
-      });
-    conditionalStyles
       .filter(cs => cs.ConditionalStyleScope == 'Column')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(

@@ -13,7 +13,6 @@ export const ColumnChooserPopup: string = 'ColumnChooserPopup';
 export const FilterPopup: string = 'FilterPopup';
 export const ColumnFilterPopup: string = 'ColumnFilterPopup';
 export const ColumnInfoPopup: string = 'ColumnInfoPopup';
-export const ColumnCategoryPopup: string = 'ColumnCategoryPopup';
 export const ConditionalStylePopup: string = 'ConditionalStylePopup';
 export const CustomSortPopup: string = 'CustomSortPopup';
 export const DashboardPopup: string = 'DashboardPopup';

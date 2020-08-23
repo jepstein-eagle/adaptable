@@ -42,7 +42,6 @@ import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
 import { Layout } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
@@ -215,14 +214,6 @@ export function CreateInternalAlertDefinitionForMessages(
     AlertProperties: {
       ShowPopup: showPopup != null && showPopup != undefined ? showPopup : ALERT_DEFAULT_SHOW_POPUP,
     },
-  };
-}
-
-export function CreateEmptyColumnCategory(): ColumnCategory {
-  return {
-    Uuid: createUuid(),
-    ColumnCategoryId: EMPTY_STRING,
-    ColumnIds: [],
   };
 }
 
@@ -468,7 +459,6 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
     ColumnId: undefined,
-    ColumnCategoryId: undefined,
     Style: CreateEmptyStyle(),
     ConditionalStyleScope: 'Row',
     ExcludeGroupedRows: false,
@@ -656,7 +646,6 @@ export const ObjectFactory = {
   CreateAlert,
   CreateEmptyAlertDefinition,
   CreateInternalAlertDefinitionForMessages,
-  CreateEmptyColumnCategory,
   CreateEmptyRange,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,

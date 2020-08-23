@@ -59,8 +59,6 @@ export class ConditionalStyleEntityRow extends React.Component<
         return this.props.api.columnApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId);
       //   case 'DataType':
       //     return conditionalStyle.DataType + ' Columns';
-      case 'ColumnCategory':
-        return 'Category: ' + conditionalStyle.ColumnCategoryId;
     }
   }
 }

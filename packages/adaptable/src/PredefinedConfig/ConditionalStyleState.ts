@@ -97,14 +97,9 @@ export interface ConditionalStyle extends QueryObject {
   ColumnId?: string;
 
   /**
-   * The Column Category which will have all its set of columns styled identically (if the scope is ColumnCategory)
+   * Where the Conditional Style is applied:  Either at Column or Row level.
    */
-  ColumnCategoryId?: string;
-
-  /**
-   * Where the Conditional Style is applied:  Either at Column, Row or (if there are any) Column Category level.
-   */
-  ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType'
+  ConditionalStyleScope?: 'Column' | 'Row'; //| 'DataType'
 
   /**
    * The Style to apply when the rule is matched.

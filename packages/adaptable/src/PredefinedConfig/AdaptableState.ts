@@ -17,7 +17,6 @@ import { FlashingCellState } from './FlashingCellState';
 import { FormatColumnState } from './FormatColumnState';
 import { FreeTextColumnState } from './FreeTextColumnState';
 import { LayoutState } from './LayoutState';
-import { ColumnCategoryState } from './ColumnCategoryState';
 import { PercentBarState } from './PercentBarState';
 import { ScheduleState } from './ScheduleState';
 import { PlusMinusState } from './PlusMinusState';
@@ -78,7 +77,6 @@ export interface AdaptableState {
 
   CellValidation: CellValidationState;
   Chart: ChartState;
-  ColumnCategory: ColumnCategoryState;
   ConditionalStyle: ConditionalStyleState;
   CustomSort: CustomSortState;
   Dashboard: DashboardState;
