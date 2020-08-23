@@ -1,5 +1,4 @@
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { ApplicationApiImpl } from './ApplicationApiImpl';
 import { ActionColumnApiImpl } from './ActionColumnApiImpl';
 import { AdvancedSearchApiImpl } from './AdvancedSearchApiImpl';
 import { AlertApiImpl } from './AlertApiImpl';
@@ -85,9 +84,10 @@ import { SharedQueryApi } from '../SharedQueryApi';
 import { SharedQueryApiImpl } from './SharedQueryApiImpl';
 import { TeamSharingApi } from '../TeamSharingApi';
 import { TeamSharingApiImpl } from './TeamSharingApiImpl';
-import { ApplicationApi } from '../ApplicationApi';
 import { ColumnApiImpl } from './ColumnApiImpl';
 import { ColumnApi } from '../ColumnApi';
+import { ApplicationApi } from '../ApplicationApi';
+import { ApplicationApiImpl } from './ApplicationApiImpl';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;

@@ -40,8 +40,8 @@ import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
 import { SharedQueryApi } from './SharedQueryApi';
 import { TeamSharingApi } from './TeamSharingApi';
-import { ApplicationApi } from './ApplicationApi';
 import { ColumnApi } from './ColumnApi';
+import { ApplicationApi } from './ApplicationApi';
 
 /**
  *
