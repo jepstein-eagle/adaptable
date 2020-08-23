@@ -41,7 +41,7 @@ import { GradientColumnApi } from './GradientColumnApi';
 import { SharedQueryApi } from './SharedQueryApi';
 import { TeamSharingApi } from './TeamSharingApi';
 import { ColumnApi } from './ColumnApi';
-import { ApplicationApi } from './ApplicationApi';
+import { ApplicationApi } from './AppApi';
 
 /**
  *

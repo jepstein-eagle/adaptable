@@ -1,5 +1,5 @@
 import { ApiBase } from './ApiBase';
-import { ApplicationApi } from '../ApplicationApi';
+import { ApplicationApi } from '../AppApi';
 import { ApplicationState, ApplicationDataEntry } from '../../types';
 import * as ApplicationRedux from '../../Redux/ActionsReducers/ApplicationRedux';
 

@@ -86,7 +86,7 @@ import { TeamSharingApi } from '../TeamSharingApi';
 import { TeamSharingApiImpl } from './TeamSharingApiImpl';
 import { ColumnApiImpl } from './ColumnApiImpl';
 import { ColumnApi } from '../ColumnApi';
-import { ApplicationApi } from '../ApplicationApi';
+import { ApplicationApi } from '../AppApi';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
 
 export class AdaptableApiImpl implements AdaptableApi {
