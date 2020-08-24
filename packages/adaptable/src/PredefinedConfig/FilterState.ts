@@ -1,7 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 import { Scope } from './Common/Scope';
-import { AdaptableApi } from '../types';
+import { AdaptableApi, AdaptableColumn } from '../types';
 import { AdaptableObject } from './Common/AdaptableObject';
 import Helper from '../Utilities/Helpers/Helper';
 import {
@@ -126,12 +126,12 @@ export interface FilterPredicate extends BaseUserFunction {
   handler: FilterPredicateHandler;
   iconPath?: string;
   iconText?: string;
-  order?: number;
+  shortcuts?: string[];
 }
 
 export interface FilterPredicateInput {
   type: 'number' | 'text' | 'date';
-  default?: any;
+  defaultValue?: any;
 }
 
 export interface FilterPredicateHandler {
@@ -140,7 +140,9 @@ export interface FilterPredicateHandler {
 
 export interface FilterPredicateParams {
   value: any;
+  displayValue: string;
   inputs: any[];
+  column: AdaptableColumn;
   api: AdaptableApi;
 }
 
@@ -208,8 +210,9 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     id: 'Values',
     name: 'Values',
     type: 'FilterPredicate',
-    handler: ({ value, inputs }) => inputs.includes(value),
+    handler: ({ displayValue, inputs }) => inputs.includes(displayValue),
     iconText: 'IN',
+    shortcuts: ['in', 'IN'],
   },
   {
     id: 'Blanks',
@@ -230,25 +233,27 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'GreaterThan',
     name: 'Greater Than',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
+    scope: { DataTypes: ['Number'] },
+    inputs: [{ type: 'number' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
     iconPath: mdiGreaterThan,
+    shortcuts: ['>'],
   },
   {
     id: 'LessThan',
     name: 'Less Than',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
+    scope: { DataTypes: ['Number'] },
+    inputs: [{ type: 'number' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
     iconPath: mdiLessThan,
+    shortcuts: ['<'],
   },
   {
     id: 'Positive',
     name: 'Positive',
-    scope: { DataType: 'Number' },
+    scope: { DataTypes: ['Number'] },
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) > 0,
     iconText: '>0',
@@ -256,7 +261,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Negative',
     name: 'Negative',
-    scope: { DataType: 'Number' },
+    scope: { DataTypes: ['Number'] },
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) < 0,
     iconText: '<0',
@@ -264,7 +269,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Zero',
     name: 'Zero',
-    scope: { DataType: 'Number' },
+    scope: { DataTypes: ['Number'] },
     type: 'FilterPredicate',
     handler: ({ value }) => Number(value) == 0,
     iconText: '=0',
@@ -272,55 +277,51 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Equals',
     name: 'Equals',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
+    scope: { DataTypes: ['Number'] },
+    inputs: [{ type: 'number' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
     iconPath: mdiEqual,
+    shortcuts: ['='],
   },
   {
     id: 'NotEquals',
     name: 'Not Equals',
-    scope: { DataType: 'Number' },
-    inputs: [{ type: 'number', default: 0 }],
+    scope: { DataTypes: ['Number'] },
+    inputs: [{ type: 'number' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
     iconPath: mdiNotEqual,
+    shortcuts: ['!='],
   },
   {
     id: 'Between',
     name: 'Between',
-    scope: { DataType: 'Number' },
-    inputs: [
-      { type: 'number', default: 0 },
-      { type: 'number', default: 0 },
-    ],
+    scope: { DataTypes: ['Number'] },
+    inputs: [{ type: 'number' }, { type: 'number' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) =>
       Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
     iconText: 'BE',
-    order: 2,
+    shortcuts: [':'],
   },
   {
     id: 'NotBetween',
     name: 'Not Between',
-    scope: { DataType: 'Number' },
-    inputs: [
-      { type: 'number', default: 0 },
-      { type: 'number', default: 0 },
-    ],
+    scope: { DataTypes: ['Number'] },
+    inputs: [{ type: 'number' }, { type: 'number' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) =>
       Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
     iconText: '!BE',
-    order: 1,
+    shortcuts: ['!:'],
   },
 
   // String System Filters
   {
     id: 'Is',
     name: 'Equals',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
@@ -331,11 +332,12 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       return v == i;
     },
     iconPath: mdiEqual,
+    shortcuts: ['='],
   },
   {
     id: 'IsNot',
     name: 'Not Equals',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
@@ -346,11 +348,12 @@ export const SystemFilterPredicates: FilterPredicate[] = [
       return v != i;
     },
     iconPath: mdiNotEqual,
+    shortcuts: ['!='],
   },
   {
     id: 'Contains',
     name: 'Contains',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
@@ -365,7 +368,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'NotContains',
     name: 'Not Contains',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
@@ -380,7 +383,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'StartsWith',
     name: 'Starts With',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
@@ -395,7 +398,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'EndsWith',
     name: 'Ends With',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs, api }) => {
@@ -410,7 +413,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Regex',
     name: 'Regex',
-    scope: { DataType: 'String' },
+    scope: { DataTypes: ['String'] },
     inputs: [{ type: 'text' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
@@ -421,7 +424,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Today',
     name: 'Today',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isToday(value),
     iconPath: mdiCalendar,
@@ -429,7 +432,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Yesterday',
     name: 'Yesterday',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isYesterday(value),
     iconPath: mdiCalendar,
@@ -437,7 +440,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Tomorrow',
     name: 'Tomorrow',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isTomorrow(value),
     iconPath: mdiCalendar,
@@ -445,7 +448,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'ThisWeek',
     name: 'This Week',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisWeek(value),
     iconPath: mdiCalendar,
@@ -453,7 +456,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'ThisMonth',
     name: 'This Month',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisMonth(value),
     iconPath: mdiCalendar,
@@ -461,7 +464,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'ThisQuarter',
     name: 'This Quarter',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisQuarter(value),
     iconPath: mdiCalendar,
@@ -469,7 +472,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'ThisYear',
     name: 'This Year',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isThisYear(value),
     iconPath: mdiCalendar,
@@ -477,7 +480,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'InPast',
     name: 'In Past',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isPast(value),
     iconPath: mdiCalendar,
@@ -485,7 +488,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'InFuture',
     name: 'In Future',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value }) => isFuture(value),
     iconPath: mdiCalendar,
@@ -493,7 +496,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'After',
     name: 'After',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
@@ -502,7 +505,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'Before',
     name: 'Before',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
@@ -511,7 +514,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'On',
     name: 'Equals',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => isSameDay(value, new Date(inputs[0])),
@@ -520,7 +523,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'NotOn',
     name: 'NotEquals',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     inputs: [{ type: 'date' }],
     type: 'FilterPredicate',
     handler: ({ value, inputs }) => !isSameDay(value, new Date(inputs[0])),
@@ -529,7 +532,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'NextWorkDay',
     name: 'Next Work Day',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
     iconPath: mdiCalendar,
@@ -537,7 +540,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'LastWorkDay',
     name: 'Last Work Day',
-    scope: { DataType: 'Date' },
+    scope: { DataTypes: ['Date'] },
     type: 'FilterPredicate',
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
     iconPath: mdiCalendar,
@@ -547,7 +550,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'True',
     name: 'True',
-    scope: { DataType: 'Boolean' },
+    scope: { DataTypes: ['Boolean'] },
     type: 'FilterPredicate',
     handler: ({ value }) => Boolean(value) === true,
     iconText: 'T',
@@ -555,7 +558,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
   {
     id: 'False',
     name: 'False',
-    scope: { DataType: 'Boolean' },
+    scope: { DataTypes: ['Boolean'] },
     type: 'FilterPredicate',
     handler: ({ value }) => Boolean(value) === false,
     iconText: 'F',

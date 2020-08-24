@@ -60,7 +60,7 @@ async function InitAdaptableDemo() {
       // this is for testing distinct values
       // we have made the function better but its stil per column and not a promise
       // so it doubles up with the server values promise we have
-      /*
+
       UserInterface: {
         Revision: 6,
         PermittedValuesItems: [
@@ -86,7 +86,7 @@ async function InitAdaptableDemo() {
           },
         ],
       },
-*/
+
       Layout: {
         Revision: 25,
         CurrentLayout: 'Sigal',

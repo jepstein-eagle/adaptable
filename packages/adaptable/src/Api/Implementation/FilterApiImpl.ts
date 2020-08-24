@@ -45,6 +45,10 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     }
   }
 
+  public findFilterPredicateByShortcut(shortcut: string, column: AdaptableColumn): FilterPredicate {
+    return this.getFilterPredicatesForColumn(column).find(i => i.shortcuts?.includes(shortcut));
+  }
+
   private getSystemFilterPredicateById(predicateId: string): FilterPredicate {
     return SystemFilterPredicatesById[predicateId];
   }
@@ -60,11 +64,11 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
         return true;
       }
 
-      if (predicate.scope.DataType && predicate.scope.DataType === column.DataType) {
+      if (predicate.scope.DataTypes?.includes(column.DataType as any)) {
         return true;
       }
 
-      if (predicate.scope.ColumnIds && predicate.scope.ColumnIds.includes(column.ColumnId)) {
+      if (predicate.scope.ColumnIds?.includes(column.ColumnId)) {
         return true;
       }
 
@@ -87,15 +91,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     if (ArrayExtensions.IsNotNullOrEmpty(userFilters)) {
       filterPredicates.push(...userFilters.map(uf => this.getFilterPredicateById(uf)));
     }
-    return filterPredicates.sort((a, z) => {
-      if (a.order === undefined || a.order > z.order) {
-        return 1;
-      }
-      if (z.order === undefined || a.order < z.order) {
-        return -1;
-      }
-      return 0;
-    });
+    return filterPredicates;
   }
 
   public getAllColumnFilter(): ColumnFilter[] {
@@ -187,6 +183,8 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     // this doesnt work as it wont include calc columns or those provided via value getters (i.e. not in actual data set)
     // const value = node.data[columnFilter.ColumnId];
     const value = this.adaptable.getRawValueFromRowNode(node, columnFilter.ColumnId);
+    const displayValue = this.adaptable.getDisplayValueFromRawValue(columnFilter.ColumnId, value);
+    const column = this.adaptable.api.columnApi.getColumnFromId(columnFilter.ColumnId);
 
     if (StringExtensions.IsNullOrEmpty(columnFilter.PredicateId)) {
       return true;
@@ -202,6 +200,8 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       return predicate.handler({
         api,
         value,
+        displayValue,
+        column,
         inputs: columnFilter.Inputs,
       });
     } catch (error) {

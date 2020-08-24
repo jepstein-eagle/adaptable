@@ -1,4 +1,6 @@
 export interface Scope {
-  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
+  DataTypes?: ScopeDataTypes[];
   ColumnIds?: string[];
 }
+
+export type ScopeDataTypes = 'String' | 'Number' | 'Boolean' | 'Date';
