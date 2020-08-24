@@ -69,7 +69,12 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/SharedQueryState';
-import { ColumnFilter, AdaptablePredicate, UserFilter } from '../PredefinedConfig/FilterState';
+import {
+  ColumnFilter,
+  AdaptablePredicate,
+  UserFilter,
+  SystemFilterId,
+} from '../PredefinedConfig/FilterState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -516,6 +521,19 @@ export function CreateUserFilterFromColumnFilter(
   };
 }
 
+export function CreateColumnFilter(
+  columnId: string,
+  predicateId: SystemFilterId,
+  inputs: any[]
+): ColumnFilter {
+  return {
+    Uuid: createUuid(),
+    ColumnId: columnId,
+    PredicateId: predicateId,
+    Inputs: inputs,
+  };
+}
+
 export function CreateRange(
   operator: LeafExpressionOperator,
   operand1?: any,
@@ -672,6 +690,7 @@ export const ObjectFactory = {
   CreateEmptyFreeTextColumn,
   CreateEmptyLayout,
   CreateUserFilterFromColumnFilter,
+  CreateColumnFilter,
   CreateRange,
   CreateRangeEvaluation,
   CreateCellValidationRule,

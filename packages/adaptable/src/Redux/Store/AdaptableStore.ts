@@ -2788,11 +2788,6 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
     SystemRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID,
 
-    SystemRedux.QUICK_SEARCH_SET_RANGE,
-    SystemRedux.QUICK_SEARCH_CLEAR_RANGE,
-
-    // SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
-
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
     GridRedux.GRID_EDIT_COLUMN,

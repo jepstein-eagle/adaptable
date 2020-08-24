@@ -153,7 +153,7 @@ import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
 import { isEqual } from 'lodash';
-import { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
+import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
 import { ColumnFilter } from '../PredefinedConfig/FilterState';
@@ -999,29 +999,21 @@ export class Adaptable implements IAdaptable {
             return false;
           }
 
-          // in the very rare use case where there is no column id and we have a value
-          // then lets try to find the column via the ColumnHeader and do it that way
-          if (columnId == null) {
-            if (params.columnApi) {
-              let allCols: Column[] = params.columnApi.getAllColumns();
-              if (ArrayExtensions.IsNotNullOrEmpty(allCols)) {
-                let currentColumn: Column = allCols.find(
-                  c => c.getColDef().headerName == params.colDef.headerName
-                );
-                if (currentColumn) {
-                  columnId = currentColumn.getColId();
-                }
-              }
-            }
-            // if that fails then we should do a basic comparison (but without creating a range)
-            if (columnId == null && params.value) {
-              return String(params.value)
-                .toLowerCase()
-                .includes(quickSearchState.QuickSearchText);
-            }
-          }
-
           if (columnId != null) {
+            // what we need to do here is to create a column filter as a pure contains
+            // and then later we can potentially adds StartsWith , but Im not sure that is needed
+            // for now just going to test
+            let columnFilter: ColumnFilter = ObjectFactory.CreateColumnFilter(
+              columnId,
+              'Contains',
+              [quickSearchState.QuickSearchText]
+            );
+            if (columnFilter) {
+              console.log(columnFilter);
+              return this.api.filterApi.evaluateColumnFilter(columnFilter, params.node);
+            }
+            /*
+            
             const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
             if (range) {
               // not right but just checking...
@@ -1045,6 +1037,8 @@ export class Adaptable implements IAdaptable {
                 }
               }
             }
+
+            */
           }
         }
       }

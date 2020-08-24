@@ -37,6 +37,5 @@ export interface SystemState extends InternalState, IPushPullState, Glue42State,
 
   SystemReports: Report[];
   ReportErrorMessage: string;
-  QuickSearchRange: QueryRange;
   LastAppliedShortCut: GridCell | undefined;
 }
