@@ -105,4 +105,6 @@ export interface FilterApi {
   evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean;
 
   getAllUserFilter(): UserFilter[];
+
+  findFilterPredicateByShortcut(shortcut: string, column: AdaptableColumn): FilterPredicate;
 }

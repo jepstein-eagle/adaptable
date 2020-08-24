@@ -79,13 +79,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     let existingColumnFilter = this.props.ColumnFilters.find(
       cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
     );
-    // if (!existingColumnFilter) {
-    //   existingColumnFilter = ObjectFactory.CreateColumnFilter(
-    //     this.props.CurrentColumn.ColumnId,
-    //     null,
-    //     null
-    //   );
-    // }
+
+    if (!existingColumnFilter) {
+      existingColumnFilter = ObjectFactory.CreateColumnFilter(
+        this.props.CurrentColumn.ColumnId,
+        null,
+        null
+      );
+    }
 
     this.state = {
       DistinctColumnValues: [],
@@ -96,29 +97,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     };
   }
 
-  // TODO impl and call this to sync when column filters are cleared (eg: from toolbar)
-  // syncColumnFilter() {
-  //   let existingColumnFilter = this.props.ColumnFilters.find(
-  //     cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-  //   );
-  //   if (!existingColumnFilter) {
-  //     existingColumnFilter = ObjectFactory.CreateColumnFilter(
-  //       this.props.CurrentColumn.ColumnId,
-  //       ExpressionHelper.CreateEmptyExpression()
-  //     );
-  //   }
-
-  //   this.setState({
-  //     editedColumnFilter: existingColumnFilter,
-  //   });
-  // }
-
   componentDidMount() {
     if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-      let existingColumnFilter = this.props.ColumnFilters.find(
-        cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-      );
-
       let distinctColumnValues: any[] = this.props.Adaptable.api.columnApi.getDistinctValuesForColumn(
         this.props.CurrentColumn.ColumnId
       );
@@ -127,15 +107,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       this.setState({
         DistinctColumnValues: distinctColumnValues,
         ShowWaitingMessage: false,
-        editedColumnFilter: existingColumnFilter,
       });
-      // if (!existingColumnFilter) {
-      //   existingColumnFilter = ObjectFactory.CreateColumnFilter(
-      //     this.props.CurrentColumn.ColumnId,
-      //     null,
-      //     null
-      //   );
-      // }
     }
   }
 
@@ -308,7 +280,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     const { editedColumnFilter } = this.state;
 
     //delete if empty
-    if (editedColumnFilter.PredicateId === 'Values' && editedColumnFilter.Inputs.length === 0) {
+    if (
+      editedColumnFilter.PredicateId === undefined ||
+      (editedColumnFilter.PredicateId === 'Values' && editedColumnFilter.Inputs.length === 0)
+    ) {
       this.props.onClearColumnFilter(editedColumnFilter);
     } else {
       if (this.props.Adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
@@ -353,7 +328,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     const { editedColumnFilter } = this.state;
 
     editedColumnFilter.PredicateId = predicate.id;
-    editedColumnFilter.Inputs = (predicate.inputs || []).map(i => i.default ?? '');
+    editedColumnFilter.Inputs = (predicate.inputs ?? []).map(i => i.defaultValue ?? '');
 
     this.setState({ editedColumnFilter });
     this.persistFilter();

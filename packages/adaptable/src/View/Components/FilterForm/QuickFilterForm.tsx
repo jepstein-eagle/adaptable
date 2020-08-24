@@ -64,10 +64,36 @@ export interface QuickFilterFormState {
 }
 
 class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, QuickFilterFormState> {
+  constructor(props: QuickFilterFormProps) {
+    super(props);
+    this.state = {
+      filter: this.getFilterFromProps(props),
+    };
+  }
+  UNSAFE_componentWillReceiveProps(nextProps: QuickFilterFormProps) {
+    this.setState({
+      filter: this.getFilterFromProps(nextProps),
+    });
+  }
+  getFilterFromProps(props: QuickFilterFormProps) {
+    const filter = props.ColumnFilters.find(cf => cf.ColumnId == props.CurrentColumn.ColumnId);
+
+    if (filter) return filter;
+
+    if (!filter && props.CurrentColumn.DataType === 'Number') {
+      return ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, 'Equals', ['']);
+    }
+
+    if (!filter && props.CurrentColumn.DataType === 'String') {
+      return ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, 'Contains', ['']);
+    }
+
+    if (!filter && props.CurrentColumn.DataType === 'Date') {
+      return ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, 'On', ['']);
+    }
+  }
   render(): any {
-    const filter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
+    const { filter } = this.state;
 
     const predicates = this.props.Api.filterApi.getFilterPredicatesForColumn(
       this.props.CurrentColumn
@@ -75,70 +101,75 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
     const activePredicate = predicates.find(p => p.id === filter?.PredicateId);
 
+    if (!this.props.CurrentColumn || !this.props.CurrentColumn.Filterable) {
+      return null;
+    }
+
     return (
-      this.props.CurrentColumn &&
-      this.props.CurrentColumn.Filterable && (
-        <>
-          <OverlayTrigger
-            showEvent="click"
-            hideEvent="blur"
-            render={() => (
-              <Flex
-                flexDirection="column"
-                style={{
-                  fontSize: 'var(--ab-font-size-2)',
-                  border: '1px solid var(--ab-color-primarydark)',
-                  borderRadius: 'var(--ab__border-radius)',
-                  background: 'var(--ab-color-primarylight)',
-                  zIndex: 1000,
-                }}
-              >
-                {filter?.PredicateId && (
-                  <>
-                    <SimpleButton p={2} variant="text" onClick={() => this.clearColumnPredicate()}>
-                      <span style={{ width: 20, marginRight: 10 }}>
-                        <Icon size="1rem" path={mdiClose} />
-                      </span>
-                      Clear
-                    </SimpleButton>
-                  </>
-                )}
-                {predicates.map(p => (
-                  <SimpleButton
-                    key={p.id}
-                    p={2}
-                    variant="text"
-                    tone={filter?.PredicateId === p.id ? 'info' : 'none'}
-                    onClick={() => this.selectColumnPredicate(p.id)}
-                  >
+      <>
+        <OverlayTrigger
+          showEvent="click"
+          hideEvent="blur"
+          render={() => (
+            <Flex
+              flexDirection="column"
+              style={{
+                fontSize: 'var(--ab-font-size-2)',
+                border: '1px solid var(--ab-color-primarydark)',
+                borderRadius: 'var(--ab__border-radius)',
+                background: 'var(--ab-color-primarylight)',
+                zIndex: 1000,
+              }}
+            >
+              {filter?.PredicateId && (
+                <>
+                  <SimpleButton p={2} variant="text" onClick={() => this.clearFilter()}>
                     <span style={{ width: 20, marginRight: 10 }}>
-                      {this.renderPredicateIcon(p)}
+                      <Icon size="1rem" path={mdiClose} />
                     </span>
-                    {p.name}
+                    Clear
                   </SimpleButton>
-                ))}
-              </Flex>
-            )}
-          >
-            <SimpleButton>{this.renderPredicateIcon(activePredicate)}</SimpleButton>
-          </OverlayTrigger>
-          {filter?.PredicateId === undefined && this.renderEmptyFilter()}
-          {filter?.PredicateId === 'Values' && this.renderValuesDropdown(filter)}
-          {filter?.PredicateId !== 'Values' &&
-            activePredicate &&
-            activePredicate?.inputs === undefined && <Box p={1}>{activePredicate.name}</Box>}
-          {activePredicate?.inputs?.map((predicateInput, index) => (
-            <Input
-              key={index}
-              type={predicateInput.type === 'number' ? 'text' : predicateInput.type}
-              autoFocus={index === 0}
-              value={filter.Inputs[index]}
-              onChange={(e: React.FormEvent) => this.changeColumnPredicateInput(e, index)}
-              style={{ flex: 1, width: 0, minWidth: 0 }}
-            />
-          ))}
-        </>
-      )
+                </>
+              )}
+              {predicates.map(p => (
+                <SimpleButton
+                  key={p.id}
+                  p={2}
+                  variant="text"
+                  tone={filter?.PredicateId === p.id ? 'info' : 'none'}
+                  onClick={() => this.selectColumnPredicate(p.id)}
+                >
+                  <span style={{ width: 20, marginRight: 10 }}>{this.renderPredicateIcon(p)}</span>
+                  {p.name}
+                </SimpleButton>
+              ))}
+            </Flex>
+          )}
+        >
+          <SimpleButton>{this.renderPredicateIcon(activePredicate)}</SimpleButton>
+        </OverlayTrigger>
+        {filter?.PredicateId === 'Values' && this.renderValuesDropdown(filter)}
+        {filter?.PredicateId !== 'Values' &&
+          activePredicate &&
+          activePredicate?.inputs === undefined && <Box p={1}>{activePredicate.name}</Box>}
+        {activePredicate?.inputs?.map((predicateInput, index) => (
+          <Input
+            key={index}
+            type={predicateInput.type === 'number' ? 'text' : predicateInput.type}
+            autoFocus={index === 0}
+            value={filter.Inputs[index]}
+            onChange={(e: React.FormEvent) => this.changeColumnPredicateInput(e, index)}
+            onKeyDownCapture={(e: React.KeyboardEvent) => {
+              if (e.nativeEvent.key === 'Escape') {
+                e.nativeEvent.preventDefault();
+                e.nativeEvent.stopPropagation();
+                this.clearFilter();
+              }
+            }}
+            style={{ flex: 1, width: 0, minWidth: 0 }}
+          />
+        ))}
+      </>
     );
   }
 
@@ -147,32 +178,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       <span>{predicate?.iconText}</span>
     ) : (
       <Icon size="1rem" path={predicate?.iconPath || mdiFilterOutline} />
-    );
-  }
-
-  renderEmptyFilter() {
-    const defaultPredicateIds: Record<string, string> = {
-      [DataType.String]: 'Contains',
-      [DataType.Number]: 'Equals',
-    };
-    const defaultPredicateId = defaultPredicateIds[this.props.CurrentColumn.DataType];
-
-    return (
-      defaultPredicateId && (
-        <Input
-          key={0}
-          type={'text'}
-          onChange={(e: React.FormEvent) => {
-            const { value } = e.target as HTMLInputElement;
-            this.props.onAddColumnFilter({
-              ColumnId: this.props.CurrentColumn.ColumnId,
-              PredicateId: defaultPredicateId,
-              Inputs: [value],
-            });
-          }}
-          style={{ flex: 1, width: 0, minWidth: 0 }}
-        />
-      )
     );
   }
 
@@ -205,40 +210,48 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   selectColumnPredicate(predicateId: string) {
-    console.log('predicateId', predicateId);
-
-    const filter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
+    const { filter } = this.state;
     const predicate = this.props.Api.filterApi.getFilterPredicateById(predicateId);
 
-    this.props.onClearColumnFilter(filter);
+    filter.PredicateId = predicateId;
+    filter.Inputs = (predicate.inputs ?? []).map(i => i.defaultValue ?? '');
 
-    if (predicate) {
-      this.props.onAddColumnFilter({
-        ColumnId: this.props.CurrentColumn.ColumnId,
-        PredicateId: predicateId,
-        Inputs: (predicate.inputs || []).map(i => i.default ?? ''),
-      });
-    }
+    this.updateFilter(filter);
   }
 
-  clearColumnPredicate() {
-    const filter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
+  private updateFilter(filter: ColumnFilter) {
+    this.setState({ filter });
 
-    this.props.onClearColumnFilter(filter);
+    if (filter.Uuid) {
+      // TODO debounce here?
+      this.props.onEditColumnFilter(filter);
+    } else {
+      // TODO debounce here?
+      this.props.onAddColumnFilter(filter);
+    }
   }
 
   changeColumnPredicateInput(e: React.FormEvent, index: number) {
     const { value } = e.target as HTMLInputElement;
-    const filter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-    filter.Inputs[index] = value;
+    const predicateId = this.getPredicateIdForShortcutValue(value);
 
-    this.props.onEditColumnFilter(filter);
+    if (predicateId) {
+      this.selectColumnPredicate(predicateId);
+    } else {
+      const { filter } = this.state;
+      filter.Inputs[index] = value;
+      this.updateFilter(filter);
+    }
+  }
+
+  getPredicateIdForShortcutValue(value: string) {
+    return this.props.Api.filterApi.findFilterPredicateByShortcut(value, this.props.CurrentColumn)
+      ?.id;
+  }
+
+  clearFilter() {
+    const { filter } = this.state;
+    this.props.onClearColumnFilter(filter);
   }
 }
 

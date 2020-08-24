@@ -50,8 +50,8 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
       return permittedValuesItem;
     }
     // then we get any for the scope
-    permittedValuesItem = this.getAllPermittedValuesItems().find(
-      pv => pv.Scope.DataType === column.DataType
+    permittedValuesItem = this.getAllPermittedValuesItems().find(pv =>
+      pv.Scope.DataTypes?.includes(column.DataType as any)
     );
     if (permittedValuesItem) {
       console.log('this one', permittedValuesItem);

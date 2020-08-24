@@ -633,6 +633,18 @@ export function CreateSystemReports(): Array<Report> {
   return _systemReports;
 }
 
+export function CreateColumnFilter(
+  ColumnId: string,
+  PredicateId: string,
+  Inputs: any[]
+): ColumnFilter {
+  return {
+    ColumnId,
+    PredicateId,
+    Inputs,
+  };
+}
+
 export const ObjectFactory = {
   CreateEmptyCustomSort,
   CreateEmptyDataSource,
@@ -680,5 +692,6 @@ export const ObjectFactory = {
   CreateSystemReports,
   CreateEmptyGlue42Schedule,
   CreateEmptyGlue42Report,
+  CreateColumnFilter,
 };
 export default ObjectFactory;
