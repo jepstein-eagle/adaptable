@@ -156,7 +156,7 @@ import { isEqual } from 'lodash';
 import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
-import { ColumnFilter } from '../PredefinedConfig/FilterState';
+import { ColumnFilter, SystemFilterId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 
 ModuleRegistry.registerModules(AllCommunityModules);
@@ -990,27 +990,23 @@ export class Adaptable implements IAdaptable {
     const api = this.api;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
-      if (col.IsExcludedFromQuickSearch) {
+      if (col.IsExcludedFromQuickSearch || !col.Visible) {
         return false;
       }
       if (params.node && !params.node.group) {
-        let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
+        let quickSearchValue = api.quickSearchApi.getQuickSearchValue();
+        if (StringExtensions.IsNotNullOrEmpty(quickSearchValue)) {
+          const quickSearchPredicate = api.internalApi.getQuickSearchPredicate();
+          const quickSearchInputs = api.internalApi.getQuickSearchInputs();
 
-        const quickSearchState = api.quickSearchApi.getQuickSearchState();
-        if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
-          if (columnId != null) {
-            // what we need to do here is to create a column filter as a pure contains
-            // and then later we can potentially adds StartsWith , but Im not sure that is needed
-            // for now just going to test
-            let columnFilter: ColumnFilter = ObjectFactory.CreateColumnFilter(
-              columnId,
-              'Contains',
-              [quickSearchState.QuickSearchText]
-            );
-            if (columnFilter) {
-              return api.filterApi.evaluateColumnFilter(columnFilter, params.node);
-            }
-          }
+          const columnFilter: ColumnFilter = ObjectFactory.CreateColumnFilter(
+            col.ColumnId,
+            quickSearchPredicate,
+            quickSearchInputs
+          );
+
+          console.log('colFilter', columnFilter);
+          return api.filterApi.evaluateColumnFilter(columnFilter, params.node);
         }
       }
       return false;

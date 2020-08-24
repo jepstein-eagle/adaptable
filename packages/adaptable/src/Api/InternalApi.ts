@@ -22,6 +22,7 @@ import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interf
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { Layout } from '../PredefinedConfig/LayoutState';
+import { SystemFilterId } from '../PredefinedConfig/FilterState';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *
@@ -100,6 +101,9 @@ export interface InternalApi {
   getLayoutService(): ILayoutService;
   getChartService(): IChartService;
   getCalculatedColumnExpressionService(): ICalculatedColumnExpressionService;
+
+  getQuickSearchPredicate(): SystemFilterId | undefined;
+  getQuickSearchInputs(): any[] | undefined;
 
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;

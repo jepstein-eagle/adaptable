@@ -110,7 +110,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
-import { ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
+import { ColumnFilter, UserFilter, SystemFilterId } from '../../PredefinedConfig/FilterState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -1991,6 +1991,42 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               }
             });
 
+            return ret;
+          }
+
+          /*******************
+           * QUICK SEARCH ACTIONS
+           *******************/
+
+          /**
+           * Use Case: User appliced Quick Search
+           * Action: Set (and save) the PredicateId and changed value (prevents needing to do it for every column)
+           * Then redraw all rows
+           */
+          case QuickSearchRedux.QUICK_SEARCH_APPLY: {
+            const actionTyped = action as QuickSearchRedux.QuickSearchApplyAction;
+            let predicateId: SystemFilterId;
+            let inputs: any[];
+            let quickSearchText = actionTyped.quickSearchText;
+            if (StringExtensions.IsNotNullOrEmpty(quickSearchText)) {
+              if (quickSearchText.includes('*')) {
+                predicateId = 'StartsWith';
+                inputs = [quickSearchText.replace('*', '')];
+              } else if (quickSearchText.includes('=')) {
+                predicateId = 'Is';
+                inputs = [quickSearchText.replace('=', '')];
+              } else {
+                predicateId = 'Contains';
+                inputs = [quickSearchText];
+              }
+            } else {
+              predicateId = undefined;
+              inputs = undefined;
+            }
+            middlewareAPI.dispatch(SystemRedux.QuickSearchSetPredicate(predicateId));
+            middlewareAPI.dispatch(SystemRedux.QuickSearchSetInputs(inputs));
+            let ret = next(action);
+            adaptable.redraw();
             return ret;
           }
 

@@ -1,6 +1,6 @@
 # QuickSearch (AdaptableFunction)
 
-The QuickSearch([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `QuickSearch`) Function  enables users to quickly find all instances of a specific value across all visible columns in the Grid.
+The `QuickSearch` Function performs a **text search** enabling users to quickly find all instances of a specific value across all visible columns in the Grid.
 
 ### Setting Highlight Style
 
@@ -84,10 +84,6 @@ Yes it does. Like Advanced Search and Filters, Quick Search is reapplied as data
 | %      | Contains (the default) | Text, Number | 'S' or 'S%' |
 | =      | Equals                 | Text, Number | '=15'       |
 | <>     | Not Equals             | Number       | '<> 23'     |
-| >=     | Greater Than or Equals | Number       | '>= 49'     |
-| >      | Greater Than           | Number       | '> 5'       |
-| <=     | Less Than or Equals    | Number       | '<= 49'     |
-| <      | Less Than              | Number       | '<5'        |
 | *      | Starts With            | Text, Number | 'd*'        |
 | !      | Doesn't Contain        | Text, Number | '!he'       |
 

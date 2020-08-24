@@ -42,13 +42,6 @@ export class SearchService implements ISearchService {
           this.publishSearchChanged(SearchChangedTrigger.DataSource);
         } else if (eventName == GridRedux.GRID_SET_SORT) {
           this.publishSearchChanged(SearchChangedTrigger.Sort);
-        } else if (
-          eventName == QuickSearchRedux.QUICK_SEARCH_APPLY ||
-          eventName == QuickSearchRedux.QUICK_SEARCH_SET_STYLE
-        ) {
-          // not sure if this is the best way but anyway doing it here - redrawing grid when quick search changes
-          // perhaps after a debounce?
-          this.adaptable.redraw();
         }
       }
     });

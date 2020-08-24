@@ -8,15 +8,13 @@ import {
   EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { Expression, QueryRange } from '../../PredefinedConfig/Common/Expression';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
+import { SystemFilterId } from '../../PredefinedConfig/FilterState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
@@ -58,6 +56,10 @@ export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
 
 // Shortcut
 export const SET_LAST_APPLIED_SHORTCUT = 'SET_LAST_APPLIED_SHORTCUT';
+
+// Quick Search
+export const QUICK_SEARCH_SET_PREDICATE = 'QUICK_SEARCH_SET_PREDICATE';
+export const QUICK_SEARCH_SET_INPUTS = 'QUICK_SEARCH_SET_INPUTS';
 
 export interface SystemAlertAddAction extends Redux.Action {
   Alert: AdaptableAlert;
@@ -142,6 +144,14 @@ export interface SetNewColumnListOrderAction extends Redux.Action {
 
 export interface SetLastAppliedShortcutAction extends Redux.Action {
   gridCell: GridCell | undefined;
+}
+
+export interface QuickSearchSetPredicateAction extends Redux.Action {
+  quickSearchPredicate: SystemFilterId;
+}
+
+export interface QuickSearchSetInputsAction extends Redux.Action {
+  quickSearchInputs: any[];
 }
 
 export const SystemAlertAdd = (Alert: AdaptableAlert, MaxAlerts: number): SystemAlertAddAction => ({
@@ -255,6 +265,18 @@ export const SetLastAppliedShortcut = (
   gridCell,
 });
 
+export const QuickSearchSetPredicate = (
+  quickSearchPredicate: SystemFilterId
+): QuickSearchSetPredicateAction => ({
+  type: QUICK_SEARCH_SET_PREDICATE,
+  quickSearchPredicate,
+});
+
+export const QuickSearchSetInputs = (quickSearchInputs: any[]): QuickSearchSetInputsAction => ({
+  type: QUICK_SEARCH_SET_INPUTS,
+  quickSearchInputs,
+});
+
 const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
@@ -268,6 +290,8 @@ const initialSystemState: SystemState = {
   SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
   LastAppliedShortCut: null,
+  QuickSearchPredicate: undefined,
+  QuickSearchInputs: EMPTY_ARRAY,
 };
 
 export const SystemReducer: Redux.Reducer<SystemState> = (
@@ -367,6 +391,16 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
         LastAppliedShortCut: (action as SetLastAppliedShortcutAction).gridCell,
       });
     }
+
+    case QUICK_SEARCH_SET_PREDICATE:
+      return Object.assign({}, state, {
+        QuickSearchPredicate: (action as QuickSearchSetPredicateAction).quickSearchPredicate,
+      });
+
+    case QUICK_SEARCH_SET_INPUTS:
+      return Object.assign({}, state, {
+        QuickSearchInputs: (action as QuickSearchSetInputsAction).quickSearchInputs,
+      });
 
     default:
       return state;

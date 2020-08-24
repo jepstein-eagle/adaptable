@@ -34,6 +34,7 @@ import { IReportService } from '../../Utilities/Services/Interface/IReportServic
 import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IChartService } from '../../Utilities/Services/Interface/IChartService';
+import { SystemFilterId } from '../../PredefinedConfig/FilterState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public getSystemState(): SystemState {
@@ -260,6 +261,14 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   }
   public getCalculatedColumnExpressionService(): ICalculatedColumnExpressionService {
     return this.adaptable.CalculatedColumnExpressionService;
+  }
+
+  public getQuickSearchPredicate(): SystemFilterId | undefined {
+    return this.getSystemState().QuickSearchPredicate;
+  }
+
+  public getQuickSearchInputs(): any[] | undefined {
+    return this.getSystemState().QuickSearchInputs;
   }
 
   // General way to get to store from inside Adaptable...

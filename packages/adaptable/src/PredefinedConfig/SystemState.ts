@@ -11,6 +11,7 @@ import { GridCell } from '../types';
 import { IPushPullState, IPushPullReport, IPushPullDomain } from './IPushPullState';
 import { Glue42State, Glue42Report } from './Glue42State';
 import { OpenFinState, OpenFinReport } from './OpenFinState';
+import { SystemFilterId } from './FilterState';
 
 export { IPushPullReport, IPushPullDomain };
 
@@ -38,4 +39,8 @@ export interface SystemState extends InternalState, IPushPullState, Glue42State,
   SystemReports: Report[];
   ReportErrorMessage: string;
   LastAppliedShortCut: GridCell | undefined;
+
+  // used internally to manage creating quick search items faster
+  QuickSearchPredicate?: SystemFilterId;
+  QuickSearchInputs?: any[];
 }

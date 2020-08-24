@@ -1,5 +1,6 @@
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { ConfigState } from './ConfigState';
+import { SystemFilterId } from './FilterState';
 
 /**
  * The Predefined Configuration for the Quick Search function
