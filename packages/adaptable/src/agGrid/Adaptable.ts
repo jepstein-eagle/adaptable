@@ -987,18 +987,17 @@ export class Adaptable implements IAdaptable {
   }
 
   private addQuickSearchStyleToColumn(col: AdaptableColumn, quickSearchClassName: string): void {
-    const adaptable = this;
+    const api = this.api;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
+      if (col.IsExcludedFromQuickSearch) {
+        return false;
+      }
       if (params.node && !params.node.group) {
         let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
 
-        const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
+        const quickSearchState = api.quickSearchApi.getQuickSearchState();
         if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
-          if (col.IsExcludedFromQuickSearch) {
-            return false;
-          }
-
           if (columnId != null) {
             // what we need to do here is to create a column filter as a pure contains
             // and then later we can potentially adds StartsWith , but Im not sure that is needed
@@ -1009,36 +1008,8 @@ export class Adaptable implements IAdaptable {
               [quickSearchState.QuickSearchText]
             );
             if (columnFilter) {
-              console.log(columnFilter);
-              return this.api.filterApi.evaluateColumnFilter(columnFilter, params.node);
+              return api.filterApi.evaluateColumnFilter(columnFilter, params.node);
             }
-            /*
-            
-            const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
-            if (range) {
-              // not right but just checking...
-              if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
-                const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                  columnId,
-                  null,
-                  null,
-                  null,
-                  [range]
-                );
-                if (
-                  ExpressionHelper.checkForExpressionFromRowNode(
-                    expression,
-                    params.node,
-                    [col],
-                    adaptable
-                  )
-                ) {
-                  return true;
-                }
-              }
-            }
-
-            */
           }
         }
       }

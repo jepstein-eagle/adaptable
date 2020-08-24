@@ -2,6 +2,7 @@ import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearch
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
+import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { ISearchService } from './Interface/ISearchService';
 import { SearchChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
@@ -41,6 +42,13 @@ export class SearchService implements ISearchService {
           this.publishSearchChanged(SearchChangedTrigger.DataSource);
         } else if (eventName == GridRedux.GRID_SET_SORT) {
           this.publishSearchChanged(SearchChangedTrigger.Sort);
+        } else if (
+          eventName == QuickSearchRedux.QUICK_SEARCH_APPLY ||
+          eventName == QuickSearchRedux.QUICK_SEARCH_SET_STYLE
+        ) {
+          // not sure if this is the best way but anyway doing it here - redrawing grid when quick search changes
+          // perhaps after a debounce?
+          this.adaptable.redraw();
         }
       }
     });

@@ -521,19 +521,6 @@ export function CreateUserFilterFromColumnFilter(
   };
 }
 
-export function CreateColumnFilter(
-  columnId: string,
-  predicateId: SystemFilterId,
-  inputs: any[]
-): ColumnFilter {
-  return {
-    Uuid: createUuid(),
-    ColumnId: columnId,
-    PredicateId: predicateId,
-    Inputs: inputs,
-  };
-}
-
 export function CreateRange(
   operator: LeafExpressionOperator,
   operand1?: any,
@@ -711,6 +698,5 @@ export const ObjectFactory = {
   CreateSystemReports,
   CreateEmptyGlue42Schedule,
   CreateEmptyGlue42Report,
-  CreateColumnFilter,
 };
 export default ObjectFactory;
