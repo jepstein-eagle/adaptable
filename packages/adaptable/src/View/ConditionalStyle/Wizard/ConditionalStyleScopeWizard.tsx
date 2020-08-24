@@ -36,7 +36,7 @@ export class ConditionalStyleScopeWizard
     super(props);
     this.state = {
       ColumnId: StringExtensions.IsNull(this.props.Data.ColumnId) ? '' : this.props.Data.ColumnId,
-      ConditionalStyleScope: this.props.Data.ConditionalStyleScope,
+      ConditionalStyleScope: this.props.Data.StyleApplied,
       ExcludeGroupedRows: this.props.Data.ExcludeGroupedRows,
       //  DataType: this.props.Data.DataType,
     };
@@ -239,7 +239,7 @@ export class ConditionalStyleScopeWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.ConditionalStyleScope = this.state.ConditionalStyleScope;
+    this.props.Data.StyleApplied = this.state.ConditionalStyleScope;
     this.props.Data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
     //  this.props.Data.DataType =
     //    this.state.ConditionalStyleScope == 'DataType' ? this.state.DataType : undefined;

@@ -210,8 +210,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
   },
   QuickSearch: {
      QuickSearchText: 'g*',
-     DisplayAction: 'ShowRowAndHighlightCell',
-     Style: {
+      Style: {
        BackColor: '#ffff00',
        ForeColor: '#8b0000',
      },

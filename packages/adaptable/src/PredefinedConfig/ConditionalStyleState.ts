@@ -99,7 +99,7 @@ export interface ConditionalStyle extends QueryObject {
   /**
    * Where the Conditional Style is applied:  Either at Column or Row level.
    */
-  ConditionalStyleScope?: 'Column' | 'Row'; //| 'DataType'
+  StyleApplied?: 'Column' | 'Row'; //| 'DataType'
 
   /**
    * The Style to apply when the rule is matched.

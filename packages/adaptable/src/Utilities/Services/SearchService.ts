@@ -1,12 +1,9 @@
 import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
-import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { ISearchService } from './Interface/ISearchService';
-import * as StrategyConstants from '../Constants/StrategyConstants';
-import { SearchChangedTrigger, DisplayAction } from '../../PredefinedConfig/Common/Enums';
-import { IQuickSearchStrategy } from '../../Strategy/Interface/IQuickSearchStrategy';
+import { SearchChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import { SearchChangedInfo } from '../../Api/Events/SearchChanged';
@@ -42,24 +39,6 @@ export class SearchService implements ISearchService {
           eventName == DataSourceRedux.DATA_SOURCE_DELETE
         ) {
           this.publishSearchChanged(SearchChangedTrigger.DataSource);
-        } else if (
-          eventName == QuickSearchRedux.QUICK_SEARCH_APPLY ||
-          eventName == QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY ||
-          eventName == QuickSearchRedux.QUICK_SEARCH_SET_STYLE
-        ) {
-          // if not highlighting cell then lets tell quick search strategy to create a range
-          if (
-            this.adaptable.api.quickSearchApi.getQuickSearchDisplayAction() !=
-            DisplayAction.HighlightCell
-          ) {
-            const quickSearchStrategy = this.adaptable.strategies.get(
-              StrategyConstants.QuickSearchStrategyId
-            ) as IQuickSearchStrategy;
-            quickSearchStrategy.createQuickSearchRange();
-          }
-          this.adaptable.applyGridFiltering();
-          this.adaptable.redraw();
-          this.publishSearchChanged(SearchChangedTrigger.QuickSearch);
         } else if (eventName == GridRedux.GRID_SET_SORT) {
           this.publishSearchChanged(SearchChangedTrigger.Sort);
         }

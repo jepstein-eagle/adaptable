@@ -2,29 +2,31 @@
 
 The QuickSearch([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `QuickSearch`) Function  enables users to quickly find all instances of a specific value across all visible columns in the Grid.
 
-### Quick Search Settings
-There are 3 main settings:
-
-- highlight any matching cells
-- filter the grid so that it only shows those rows that have matching cells
-- filter the grid so that it only shows those rows that have matching cells and highlight those cells
-
-> Quick Search is a 'constant operation' - so, like with Advanced Search or Column Filters, it will run both when a new Quick Search is applied but also when data ticks or the visible columns change.
-
 ### Setting Highlight Style
+
 The Quick Search UI allows users to set the Back Colour and Fore (i.e. font) colour of a matched cell.  
 
 An alternative to setting the properties individually, is to set a css style classname for Quick Search (make sure to include the css style being referenced in your application code).
 
-### Wildcards
+### Wildcard
+
 You can use many of the same wildcards as in the Quick Filter Bar to refine your quick search.  
 
 For example, '> 500' will return any cell that has a number greater than 500.  Or 't*' will return any cell that starts with t.  
 
 See the Appendix at the bottom for more information on using wildcards.
 
+### Filtering
+
+Quick Search does **not filter** the Grid - it merely hightlights matching text in the current visible rows and columns.
+
+Previous versions of AdapTable did enable filtering as an option for Quick Search but with the improved functionality around Queries and Column Filters, this was no longer rquired.
+
+> Quick Search is a 'constant operation' - so, like with Advanced Search or Column Filters, it will run both when a new Quick Search is applied but also when data ticks or the visible columns change.
+
 
 ## UI Elements
+
 Quick Search includes the following UI Elements:
 
 - **Popup** - Allows you to perform a Quick Search operation.  It also includes properties for setting Quick Search (e.g. colours for highlighted cells and whether to display rows with no matching cells)
@@ -39,6 +41,7 @@ Quick Search includes the following UI Elements:
     
 
 ## Entitlements
+
 Quick Search supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
@@ -76,17 +79,17 @@ Yes it does. Like Advanced Search and Filters, Quick Search is reapplied as data
 
 ### Quick Search Wildcards
 
-| Symbol 	 | Value                    | Columns   | Example      |
-| --------   | ------                   | ------        | ------       | 
-| % 	     | Contains (the default)   | Text, Number  | 'S' or 'S%'  | 
-| = 	     | Equals                   | Text, Number  | '=15'        | 
-|<> 	     | Not Equals               | Number        | '<> 23'      | 
-|>= 	     | Greater Than or Equals   | Number        | '>= 49'      | 
-|> 	         | Greater Than             | Number        | '> 5'        | 
-|<= 	     | Less Than or Equals      | Number        | '<= 49'      | 
-|< 	         | Less Than                | Number        | '<5'         | 
-|*	         | Starts With              | Text, Number  | 'd*'         | 
-|!	         | Doesn't Contain          | Text, Number  | '!he'        | 
+| Symbol | Value                  | Columns      | Example     |
+| ------ | ---------------------- | ------------ | ----------- |
+| %      | Contains (the default) | Text, Number | 'S' or 'S%' |
+| =      | Equals                 | Text, Number | '=15'       |
+| <>     | Not Equals             | Number       | '<> 23'     |
+| >=     | Greater Than or Equals | Number       | '>= 49'     |
+| >      | Greater Than           | Number       | '> 5'       |
+| <=     | Less Than or Equals    | Number       | '<= 49'     |
+| <      | Less Than              | Number       | '<5'        |
+| *      | Starts With            | Text, Number | 'd*'        |
+| !      | Doesn't Contain        | Text, Number | '!he'       |
 
 
 ### Further Information
@@ -100,4 +103,3 @@ Yes it does. Like Advanced Search and Filters, Quick Search is reapplied as data
 - [Filtering Guide](../guides/adaptable-filtering-guide.md)
 
 - [Server Functionality Guide](../guides/adaptable-server-functionality-guide.md)
-

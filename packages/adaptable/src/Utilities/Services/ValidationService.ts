@@ -3,16 +3,13 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import {
-  CellValueType,
   LeafExpressionOperator,
   RangeOperandType,
   ActionMode,
-  DisplayAction,
   DataType,
   MessageType,
 } from '../../PredefinedConfig/Common/Enums';
@@ -23,12 +20,9 @@ import {
 } from '../../PredefinedConfig/CellValidationState';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
-import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
+import { IUIConfirmation } from '../Interface/IMessage';
 import { ValidationResult } from '../../AdaptableOptions/EditOptions';
-import LoggingHelper from '../Helpers/LoggingHelper';
-import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
-import { EMPTY_STRING } from '../Constants/GeneralConstants';
 import { AdaptableFunctionName } from '../../types';
 import * as parser from '../../parser/src';
 
@@ -102,7 +96,7 @@ export class ValidationService implements IValidationService {
             });
           if (
             isSatisfiedExpression &&
-            this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo, columns)
+            this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo)
           ) {
             // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
             if (expressionRule.ActionMode == 'Stop Edit') {
@@ -130,7 +124,7 @@ export class ValidationService implements IValidationService {
           StringExtensions.IsNullOrEmpty(r.SharedQueryId)
       );
       for (let noExpressionRule of noExpressionRules) {
-        if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
+        if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo)) {
           if (noExpressionRule.ActionMode == 'Stop Edit') {
             this.logAuditValidationEvent(
               StrategyConstants.CellValidationStrategyId,
@@ -203,8 +197,7 @@ export class ValidationService implements IValidationService {
 
   private IsCellValidationRuleBroken(
     cellValidationRule: CellValidationRule,
-    dataChangedEvent: DataChangedInfo,
-    columns: AdaptableColumn[]
+    dataChangedEvent: DataChangedInfo
   ): boolean {
     // if its any change then validation fails immediately
     if (cellValidationRule.Range.Operator == LeafExpressionOperator.AnyChange) {

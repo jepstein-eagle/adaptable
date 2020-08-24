@@ -45,7 +45,7 @@ export class ConditionalStyleSummaryWizard
   }
 
   private getScope(): string {
-    switch (this.props.Data.ConditionalStyleScope) {
+    switch (this.props.Data.StyleApplied) {
       case 'Row':
         return 'Row';
       case 'Column':

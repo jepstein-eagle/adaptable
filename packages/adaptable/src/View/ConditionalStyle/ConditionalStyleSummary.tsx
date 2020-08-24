@@ -60,8 +60,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
         StrategySummary={Helper.ReturnItemCount(
           this.props.ConditionalStyles.filter(
             item =>
-              item.ColumnId == this.props.SummarisedColumn.ColumnId &&
-              item.ConditionalStyleScope == 'Column'
+              item.ColumnId == this.props.SummarisedColumn.ColumnId && item.StyleApplied == 'Column'
           ),
           StrategyConstants.ConditionalStyleStrategyFriendlyName
         )}
@@ -74,10 +73,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
     // existing items
     this.props.ConditionalStyles.map((item, index) => {
-      if (
-        item.ColumnId == this.props.SummarisedColumn.ColumnId &&
-        item.ConditionalStyleScope == 'Column'
-      ) {
+      if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.StyleApplied == 'Column') {
         let detailRow = (
           <StrategyDetail
             key={'CS' + index}
@@ -125,7 +121,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   onNew() {
     let configEntity: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-    configEntity.ConditionalStyleScope = 'Column';
+    configEntity.StyleApplied = 'Column';
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -179,7 +175,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     }
 
     return (
-      (conditionalStyle.ConditionalStyleScope == 'Row' ||
+      (conditionalStyle.StyleApplied == 'Row' ||
         StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
       UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
     );

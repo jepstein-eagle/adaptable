@@ -34,7 +34,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
         conditionalStyles.forEach(cs => {
           let colList = this.columnsForConditionalStyles.get(cs.Uuid);
           if (ArrayExtensions.ContainsItem(colList, dataChangedEvent.ColumnId)) {
-            switch (cs.ConditionalStyleScope) {
+            switch (cs.StyleApplied) {
               case 'Row':
                 colsToRefresh.push(
                   ...this.adaptable.api.columnApi.getColumns().map(c => c.ColumnId)
@@ -94,7 +94,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 cs
               )
             : cs.Style.ClassName;
-          if (cs.ConditionalStyleScope == 'Column' && cs.ColumnId == column.ColumnId) {
+          if (cs.StyleApplied == 'Column' && cs.ColumnId == column.ColumnId) {
             cellClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {
                 return this.evaluateExpression(cs, params.node.data);
@@ -106,7 +106,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
                 // );
               }
             };
-          } else if (cs.ConditionalStyleScope == 'Row') {
+          } else if (cs.StyleApplied == 'Row') {
             rowClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {
                 return this.evaluateExpression(cs, params.node.data);

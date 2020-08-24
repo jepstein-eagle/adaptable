@@ -156,7 +156,7 @@ export class StyleService implements IStyleService {
     // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
     const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
     conditionalStyles
-      .filter(x => x.ConditionalStyleScope == 'Row')
+      .filter(x => x.StyleApplied == 'Row')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -178,7 +178,7 @@ export class StyleService implements IStyleService {
         );
       });
     conditionalStyles
-      .filter(cs => cs.ConditionalStyleScope == 'Column')
+      .filter(cs => cs.StyleApplied == 'Column')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -301,9 +301,6 @@ export class StyleService implements IStyleService {
   // I suspsect it is so we dont have lots of bits of state being stored and compared
   private setUpStoreListeners() {
     //  Quick Search - no need to set up styles for Quick Search as done in AB not the Strategy = need to test!!!
-    this.adaptable.adaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
-      this.createAdaptableFunctionStyles();
-    });
     this.adaptable.adaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
       this.createAdaptableFunctionStyles();
     });

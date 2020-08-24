@@ -109,12 +109,6 @@ export enum SortOrder {
   Desc = 'Desc',
 }
 
-export enum DisplayAction {
-  HighlightCell = 'HighlightCell',
-  ShowRow = 'ShowRow',
-  ShowRowAndHighlightCell = 'ShowRowAndHighlightCell',
-}
-
 export enum RangeOperandType {
   Column = 'Column',
   Value = 'Value',
@@ -166,7 +160,6 @@ export enum QueryBuildStatus {
 export enum SearchChangedTrigger {
   DataSource = 'DataSource',
   AdvancedSearch = 'AdvancedSearch',
-  QuickSearch = 'QuickSearch',
   Filter = 'Filter',
   DataChange = 'DataChange',
   Sort = 'Sort',

@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
 import { ColorPicker } from '../ColorPicker';
@@ -15,7 +14,6 @@ import {
   QUICK_SEARCH_DEFAULT_BACK_COLOR,
   QUICK_SEARCH_DEFAULT_FORE_COLOR,
 } from '../../Utilities/Constants/GeneralConstants';
-import { DisplayAction } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 
 import Checkbox from '../../components/CheckBox';
@@ -28,13 +26,9 @@ import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableForm
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
-  DisplayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
   QuickSearchStyle: AdaptableStyle;
 
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
-  onSetSearchDisplayType: (
-    DisplayAction: DisplayAction
-  ) => QuickSearchRedux.QuickSearchSetDisplayAction;
   onSetStyle: (style: AdaptableStyle) => QuickSearchRedux.QuickSearchSetStyleAction;
 }
 
@@ -67,10 +61,6 @@ class QuickSearchPopupComponent extends React.Component<
   handleQuickSearchTextChange(text: string) {
     this.setState({ EditedQuickSearchText: text });
     this.debouncedRunQuickSearch();
-  }
-
-  onDisplayTypeChange(value: any) {
-    this.props.onSetSearchDisplayType(value as DisplayAction);
   }
 
   private onUseBackColorCheckChange(checked: boolean) {
@@ -144,44 +134,6 @@ class QuickSearchPopupComponent extends React.Component<
         </FormLayout>
 
         <Panel
-          header="Quick Search Behaviour"
-          style={{ height: 'auto' }}
-          variant="default"
-          borderRadius="none"
-          marginTop={3}
-        >
-          <HelpBlock marginBottom={1}>
-            Choose what happens to those cells that match the Quick Search text:
-          </HelpBlock>
-
-          <Flex flexDirection="column" padding={2}>
-            <Radio
-              value="HighlightCell"
-              checked={this.props.DisplayAction == DisplayAction.HighlightCell}
-              onChange={() => this.onDisplayTypeChange(DisplayAction.HighlightCell)}
-            >
-              Highlight any matching cells in the Grid
-            </Radio>
-
-            <Radio
-              value="ShowRow"
-              checked={this.props.DisplayAction == DisplayAction.ShowRow}
-              onChange={() => this.onDisplayTypeChange(DisplayAction.ShowRow)}
-            >
-              Only display rows which contain matching cells
-            </Radio>
-
-            <Radio
-              value="ShowRowAndHighlightCell"
-              checked={this.props.DisplayAction == DisplayAction.ShowRowAndHighlightCell}
-              onChange={() => this.onDisplayTypeChange(DisplayAction.ShowRowAndHighlightCell)}
-            >
-              Highlight any matching cells and only display rows that contain them
-            </Radio>
-          </Flex>
-        </Panel>
-
-        <Panel
           header="Quick Search Options"
           style={{ height: 'auto' }}
           variant="default"
@@ -230,23 +182,11 @@ class QuickSearchPopupComponent extends React.Component<
       </PanelWithImage>
     );
   }
-
-  private getTextForDisplayAction(displayAction: DisplayAction): string {
-    switch (displayAction) {
-      case DisplayAction.HighlightCell:
-        return 'Highlight Cells Only';
-      case DisplayAction.ShowRow:
-        return 'Show Matching Rows Only';
-      case DisplayAction.ShowRowAndHighlightCell:
-        return 'Highlight Cells & Show Matching Rows';
-    }
-  }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickSearchPopupProps> {
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
-    DisplayAction: state.QuickSearch.DisplayAction,
     QuickSearchStyle: state.QuickSearch.Style,
   };
 }
@@ -257,8 +197,6 @@ function mapDispatchToProps(
   return {
     onRunQuickSearch: (quickSearchText: string) =>
       dispatch(QuickSearchRedux.QuickSearchApply(quickSearchText)),
-    onSetSearchDisplayType: (searchDisplayType: DisplayAction) =>
-      dispatch(QuickSearchRedux.QuickSearchSetDisplay(searchDisplayType)),
     onSetStyle: (style: AdaptableStyle) => dispatch(QuickSearchRedux.QuickSearchSetStyle(style)),
   };
 }

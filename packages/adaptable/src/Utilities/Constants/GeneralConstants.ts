@@ -1,5 +1,4 @@
 import {
-  DisplayAction,
   MathOperation,
   LeafExpressionOperator,
   CellSummaryOperation,
@@ -43,7 +42,6 @@ export const CALENDAR_DEFAULT_CURRENT_CALENDER: string = 'United States';
 // Charts
 export const CHART_DEFAULT_REFRESH_RATE: number = 3; // refresh the chart every 3 seconds if stuff chnanges
 // Quick Search
-export const QUICK_SEARCH_DEFAULT_DISPLAY_ACTION: DisplayAction = DisplayAction.HighlightCell;
 export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = getHexForName(LIGHT_YELLOW);
 export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = getHexForName(BLACK);
 // Flashing Cells
@@ -96,7 +94,6 @@ export const FLASHING_CELL_DEFAULT_DOWN_COLOR_STATE_PROPERTY: string = 'DefautDo
 export const FLASHING_CELL_DEFAULT_DURATION_STATE_PROPERTY: string = 'DefaultDuration';
 export const CURRENT_THEME_STATE_PROPERTY: string = 'CurrentTheme';
 export const QUICK_SEARCH_TEXT_STATE_PROPERTY: string = 'QuickSearchText';
-export const QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY: string = 'DisplayAction';
 export const QUICK_SEARCH_STYLE_STATE_PROPERTY: string = 'Style';
 export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
 export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';

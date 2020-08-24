@@ -71,7 +71,6 @@ import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 import {
   DataType,
   SortOrder,
-  DisplayAction,
   CellValueType,
   FilterOnDataChangeOptions,
 } from '../PredefinedConfig/Common/Enums';
@@ -995,11 +994,7 @@ export class Adaptable implements IAdaptable {
         let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
 
         const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
-        if (
-          StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
-          (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
-            quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)
-        ) {
+        if (StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)) {
           if (col.IsExcludedFromQuickSearch) {
             return false;
           }
@@ -2827,47 +2822,6 @@ export class Adaptable implements IAdaptable {
               return false;
             }
           }
-        }
-        // we next assess quicksearch
-        const quickSearchState: QuickSearchState = this.api.quickSearchApi.getQuickSearchState();
-        if (quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-          if (StringExtensions.IsNullOrEmpty(quickSearchState.QuickSearchText)) {
-            return true;
-          }
-          let quickSearchRange = this.getState().System.QuickSearchRange;
-          if (quickSearchRange == null) {
-            // might not have created so lets do it here
-            quickSearchRange = RangeHelper.CreateValueRangeFromOperand(
-              quickSearchState.QuickSearchText
-            );
-          }
-          if (quickSearchRange != null) {
-            // we create this every time - is that sensible or should we do it once?
-            // lets wait until we do the new parser and we can see what makes sense
-            // I think we should make one single expression once for all visible columns but Andrei can decide when he comes to this
-            const visibleCols = columns.filter(c => c.Visible && !c.IsExcludedFromQuickSearch);
-            for (const column of visibleCols) {
-              const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                column.ColumnId,
-                null,
-                null,
-                null,
-                [quickSearchRange]
-              );
-              if (expression) {
-                if (
-                  ExpressionHelper.checkForExpressionFromRowNode(expression, node, [column], this)
-                ) {
-                  return originaldoesExternalFilterPass
-                    ? originaldoesExternalFilterPass(node)
-                    : true;
-                }
-              }
-            }
-          } else {
-            return true; // is this right????
-          }
-          return false;
         }
       }
       return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;

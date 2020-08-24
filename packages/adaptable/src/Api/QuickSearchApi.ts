@@ -56,20 +56,6 @@ export interface QuickSearchApi {
   getQuickSearchStyle(): AdaptableStyle;
 
   /**
-   *  Retrieves the current Quick Search display action
-   */
-  getQuickSearchDisplayAction(): 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
-
-  /**
-   * Sets the display action for Quick Search
-   * Will effect whether or not rows with no matching cells are displayed
-   * @param displayAction the display action to use
-   */
-  setQuickSearchDisplayAction(
-    displayAction: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell'
-  ): void;
-
-  /**
    * Sets the style for Quick Search
    * This style can be the name of a css style (which you must provide)
    * @param style the style to use

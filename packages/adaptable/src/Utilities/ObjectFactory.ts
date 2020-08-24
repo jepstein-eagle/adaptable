@@ -460,7 +460,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     Uuid: createUuid(),
     ColumnId: undefined,
     Style: CreateEmptyStyle(),
-    ConditionalStyleScope: 'Row',
+    StyleApplied: 'Row',
     ExcludeGroupedRows: false,
     Expression: undefined,
     SharedQueryId: undefined,

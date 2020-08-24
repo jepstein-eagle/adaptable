@@ -66,7 +66,7 @@ class ConditionalStylePopupComponent extends React.Component<
         if (this.props.PopupParams.action == 'New') {
           let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
           _editedConditionalStyle.ColumnId = columnId;
-          _editedConditionalStyle.ConditionalStyleScope = 'Column';
+          _editedConditionalStyle.StyleApplied = 'Column';
           this.setState({
             EditedAdaptableObject: _editedConditionalStyle,
             WizardStartIndex: 1,
@@ -217,7 +217,7 @@ class ConditionalStylePopupComponent extends React.Component<
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
     if (
-      conditionalStyle.ConditionalStyleScope == 'Column' &&
+      conditionalStyle.StyleApplied == 'Column' &&
       StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)
     ) {
       return false;

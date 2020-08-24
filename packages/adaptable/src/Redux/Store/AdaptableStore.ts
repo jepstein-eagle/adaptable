@@ -2,7 +2,6 @@ import { MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums'
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createEngine as createEngineRemote } from './AdaptableReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableReduxLocalStorageEngine';
 import { mergeReducer } from './AdaptableReduxMerger';
 
@@ -59,25 +58,16 @@ import { IAdaptableStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
 import { LayoutState } from '../../PredefinedConfig/LayoutState';
-import { GridState } from '../../PredefinedConfig/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
-import { Layout } from '../../PredefinedConfig/LayoutState';
-import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { Report } from '../../PredefinedConfig/ExportState';
-import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
-  DEFAULT_LAYOUT,
   CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
   BULK_UPDATE_VALUE_STATE_PROPERTY,
   CURRENT_CALENDAR_STATE_PROPERTY,
   SUMMARY_OPERATION_STATE_PROPERTY,
   CURRENT_LAYOUT_STATE_PROPERTY,
   QUICK_SEARCH_TEXT_STATE_PROPERTY,
-  QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY,
   QUICK_SEARCH_STYLE_STATE_PROPERTY,
   CURRENT_DATA_SOURCE_STATE_PROPERTY,
   SMART_EDIT_MATH_OPERATION_STATE_PROPERTY,
@@ -90,24 +80,15 @@ import {
   CURRENT_REPORT_STATE_PROPERTY,
   EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
 import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
-import {
-  IUIConfirmation,
-  InputAction,
-  AdaptableAlert,
-  IUIPrompt,
-} from '../../Utilities/Interface/IMessage';
+import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import {
   StatePropertyChangedDetails,
@@ -123,7 +104,7 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
+import { TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
@@ -1410,20 +1391,6 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
-            const actionTyped = action as QuickSearchRedux.QuickSearchSetDisplayAction;
-            let changedDetails: StatePropertyChangedDetails = {
-              name: StrategyConstants.QuickSearchStrategyId,
-              actionType: action.type,
-              state: newState.QuickSearch,
-              diffInfo: diff,
-              propertyName: QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY,
-              oldValue: oldState.QuickSearch.DisplayAction,
-              newValue: actionTyped.DisplayAction,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
             const actionTyped = action as QuickSearchRedux.QuickSearchSetStyleAction;
             let changedDetails: StatePropertyChangedDetails = {
@@ -1833,19 +1800,6 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
               name: StrategyConstants.QuickSearchStrategyId,
               action: action.type,
               info: actionTyped.quickSearchText,
-              data: state.QuickSearch,
-            };
-
-            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
-            return next(action);
-          }
-          case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
-            const actionTyped = action as QuickSearchRedux.QuickSearchSetDisplayAction;
-
-            let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.QuickSearchStrategyId,
-              action: action.type,
-              info: actionTyped.DisplayAction,
               data: state.QuickSearch,
             };
 
@@ -2891,7 +2845,6 @@ export function getFunctionAppliedReduxActions(): string[] {
     FlashingCellsRedux.FLASHING_CELL_SELECT,
     FlashingCellsRedux.FLASHING_CELL_SELECT_ALL,
     QuickSearchRedux.QUICK_SEARCH_APPLY,
-    QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY,
     QuickSearchRedux.QUICK_SEARCH_SET_STYLE,
     PlusMinusRedux.PLUS_MINUS_APPLY,
     ThemeRedux.THEME_SELECT,

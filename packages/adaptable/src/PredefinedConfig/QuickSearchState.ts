@@ -29,7 +29,6 @@ import { ConfigState } from './ConfigState';
  * export default {
  *  QuickSearch: {
  *      QuickSearchText: 'j*',
- *      DisplayAction: 'ShowRowAndHighlightCell',
  *      Style: {
  *        BackColor: '#ffff00',
  *        ForeColor: '#8b0000',
@@ -49,13 +48,6 @@ export interface QuickSearchState extends ConfigState {
    * Its very rare to set this property in config
    */
   QuickSearchText?: string;
-
-  /**
-   * How AdapTable will show the Quick Search results
-   *
-   * Can either highight matching cells, filter matching rows or both
-   */
-  DisplayAction?: 'HighlightCell' | 'ShowRow' | 'ShowRowAndHighlightCell';
 
   /**
    * The style to use for Quick Search - uses the standard `AdaptableStyle` Object.

@@ -20,7 +20,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     let conditionalStyle: ConditionalStyle = this.props.AdaptableObject as ConditionalStyle;
 
     let column: AdaptableColumn | undefined =
-      conditionalStyle.ConditionalStyleScope == 'Column'
+      conditionalStyle.StyleApplied == 'Column'
         ? this.props.api.columnApi.getColumnFromId(conditionalStyle.ColumnId!)
         : undefined;
 
@@ -40,7 +40,7 @@ export class ConditionalStyleEntityRow extends React.Component<
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
-        overrideDisableEdit={!column && conditionalStyle.ConditionalStyleScope == 'Column'}
+        overrideDisableEdit={!column && conditionalStyle.StyleApplied == 'Column'}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
@@ -52,7 +52,7 @@ export class ConditionalStyleEntityRow extends React.Component<
   }
 
   private getScope(conditionalStyle: ConditionalStyle): string {
-    switch (conditionalStyle.ConditionalStyleScope) {
+    switch (conditionalStyle.StyleApplied) {
       case 'Row':
         return 'Row';
       case 'Column':
