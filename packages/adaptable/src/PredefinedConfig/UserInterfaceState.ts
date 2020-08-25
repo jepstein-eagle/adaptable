@@ -17,7 +17,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in Adaptable should look.
  *
- * - [EditLookupItemss](#editlookupitems): Columns which will display a Dropdown when being edited.
+ * - [EditLookupItems](#editlookupitems): Columns which will display a Dropdown when being edited.
  *
  * - [ColorPalette](#colorpalette): Colours available by default im style-related functions (e.g. Conditional Style)
  *
@@ -142,9 +142,9 @@ export interface UserInterfaceState extends ConfigState {
    *
    * The values which will be displayed in the dropdown will be shown according to the following logic:
    *
-   * 1. **LookUpValues**: You can, optionally, provide a list of `LookUpValues` that will be displayed in the Dropdown.  This list can be either 'hardcoded' or returned from a function.
+   * 1. **LookUpValues**: You can provide a list of `LookUpValues` that will be displayed in the Dropdown.  This list can be either 'hardcoded' or returned from a function.
    *
-   * 2. **PermittedColumnValues**:  If no LookUpValues are provided, Adaptable will show a list of [PermittedColumnValues](#permittedcolumnvalues) (if one has been provided).
+   * 2. **PermittedValues**:  If no LookUpValues are provided, Adaptable will show a list of [PermittedValues](#permittedvalues) (if one has been provided).
    *
    * 3. **Distinct Column Values**: Otherwise, Adaptable will fetch all the distinct values in the Column and populate the Dropdown with them.
    *
