@@ -252,10 +252,6 @@ export function CreateEmptyPercentBar(): PercentBar {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    PositiveValue: undefined,
-    NegativeValue: undefined,
-    PositiveColor: getHexForName(DARK_GREEN),
-    NegativeColor: getHexForName(RED),
     ShowValue: false,
     ShowToolTip: false,
     Ranges: [],

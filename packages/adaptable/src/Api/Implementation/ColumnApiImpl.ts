@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { DataType } from '../../PredefinedConfig/Common/Enums';
+import { DataType, CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { Layout, PercentBar } from '../../types';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
@@ -286,8 +286,8 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
     }
   }
 
-  public getDistinctValuesForColumn(columnId: string): any[] {
-    return this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, false);
+  public getDistinctDisplayValuesForColumn(columnId: string): any[] {
+    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.DisplayValue, false);
     /*
      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
@@ -360,7 +360,13 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
       }
       */
   }
-  public getDistinctVisibleValuesForColumn(columnId: string): any[] {
-    return this.adaptable.getColumnValueDisplayValuePairDistinctList(columnId, true);
+  public getDistinctVisibleDisplayValuesForColumn(columnId: string): any[] {
+    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.DisplayValue, true);
+  }
+  public getDistinctRawValuesForColumn(columnId: string): any[] {
+    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.RawValue, false);
+  }
+  public getDistinctVisibleRawValuesForColumn(columnId: string): any[] {
+    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.RawValue, true);
   }
 }

@@ -31,7 +31,7 @@ interface SmartEditToolPanelComponentProps
   MathOperation: MathOperation | undefined;
   IsValidSelection: boolean;
   PreviewInfo: IPreviewInfo;
-
+  InPivotMode: Boolean;
   onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
   onSmartEditOperationChange: (
     MathOperation: MathOperation
@@ -104,7 +104,7 @@ class SmartEditToolPanelComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
-      this.props.Api.internalApi.isGridInPivotMode();
+      this.props.InPivotMode == true;
 
     let content = (
       <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
@@ -236,6 +236,7 @@ function mapStateToProps(
     MathOperation: state.SmartEdit.MathOperation,
     IsValidSelection: state.System.IsValidSmartEditSelection,
     PreviewInfo: state.System.SmartEditPreviewInfo,
+    InPivotMode: state.Grid.IsGridInPivotMode,
   };
 }
 

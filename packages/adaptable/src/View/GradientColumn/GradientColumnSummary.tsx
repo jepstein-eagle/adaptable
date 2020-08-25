@@ -109,7 +109,7 @@ export class GradientColumnSummaryComponent extends React.Component<
     let configEntity: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
       this.props.SummarisedColumn.ColumnId
     );
 

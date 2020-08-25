@@ -99,7 +99,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
   componentDidMount() {
     if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-      let distinctColumnValues: any[] = this.props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+      let distinctColumnValues: any[] = this.props.Adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
         this.props.CurrentColumn.ColumnId
       );
       distinctColumnValues = ArrayExtensions.sortArray(distinctColumnValues, SortOrder.Asc);

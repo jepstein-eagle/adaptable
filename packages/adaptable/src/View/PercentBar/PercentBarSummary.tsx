@@ -104,7 +104,7 @@ export class PercentBarSummaryComponent extends React.Component<
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
     configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
       this.props.SummarisedColumn.ColumnId
     );
 

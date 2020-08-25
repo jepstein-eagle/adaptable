@@ -33,7 +33,7 @@ interface BulkUpdateToolbarControlComponentProps
   BulkUpdateValue: string;
   BulkUpdateValidationResult: BulkUpdateValidationResult;
   PreviewInfo: IPreviewInfo;
-
+  InPivotMode: Boolean;
   onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
   onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
   onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
@@ -78,10 +78,11 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       />
     );
 
+    console.log('pivot mode', this.props.Api.internalApi.isGridInPivotMode());
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
       !this.props.BulkUpdateValidationResult.IsValid ||
-      this.props.Api.internalApi.isGridInPivotMode();
+      this.props.InPivotMode == true;
 
     const applyStyle = {
       color: statusColour,
@@ -205,6 +206,7 @@ function mapStateToProps(
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
     PreviewInfo: state.System.BulkUpdatePreviewInfo,
+    InPivotMode: state.Grid.IsGridInPivotMode,
   };
 }
 

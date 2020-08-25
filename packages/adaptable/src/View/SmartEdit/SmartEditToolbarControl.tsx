@@ -33,7 +33,7 @@ interface SmartEditToolbarControlComponentProps
   MathOperation: MathOperation;
   IsValidSelection: boolean;
   PreviewInfo: IPreviewInfo;
-
+  InPivotMode: Boolean;
   onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
   onSmartEditOperationChange: (
     MathOperation: MathOperation
@@ -104,7 +104,7 @@ class SmartEditToolbarControlComponent extends React.Component<
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
-      this.props.Api.internalApi.isGridInPivotMode();
+      this.props.InPivotMode == true;
 
     let content = (
       <Flex alignItems="stretch" className={shouldDisable ? GeneralConstants.READ_ONLY_STYLE : ''}>
@@ -225,6 +225,7 @@ function mapStateToProps(
     MathOperation: state.SmartEdit.MathOperation,
     IsValidSelection: state.System.IsValidSmartEditSelection,
     PreviewInfo: state.System.SmartEditPreviewInfo,
+    InPivotMode: state.Grid.IsGridInPivotMode,
   };
 }
 

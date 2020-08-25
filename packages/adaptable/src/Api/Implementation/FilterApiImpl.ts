@@ -14,6 +14,7 @@ import { AdaptableColumn } from '../../types';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { AdaptableApi } from '../AdaptableApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
@@ -160,7 +161,9 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
     primarykeyValues.forEach(pk => {
       let rowNode = this.adaptable.getRowNodeForPrimaryKey(pk);
-      displayValues.push(this.adaptable.getValueFromRowNode(rowNode, column));
+      displayValues.push(
+        this.adaptable.getValueFromRowNode(rowNode, column, CellValueType.DisplayValue)
+      );
     });
 
     let filter: ColumnFilter = {
@@ -183,7 +186,11 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     // this doesnt work as it wont include calc columns or those provided via value getters (i.e. not in actual data set)
     // const value = node.data[columnFilter.ColumnId];
     const value = this.adaptable.getRawValueFromRowNode(node, columnFilter.ColumnId);
-    const displayValue = this.adaptable.getDisplayValueFromRawValue(columnFilter.ColumnId, value);
+    const displayValue = this.adaptable.getValueFromRowNode(
+      node,
+      columnFilter.ColumnId,
+      CellValueType.DisplayValue
+    );
     const column = this.adaptable.api.columnApi.getColumnFromId(columnFilter.ColumnId);
 
     if (StringExtensions.IsNullOrEmpty(columnFilter.PredicateId)) {

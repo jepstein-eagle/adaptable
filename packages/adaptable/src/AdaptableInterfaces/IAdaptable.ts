@@ -129,19 +129,15 @@ export interface IAdaptable {
     visibleRowsOnly: boolean,
     onlyIncludeIds?: { [key: string]: boolean }
   ): any[];
-  getColumnValueDisplayValuePairDistinctList(columnId: string, visibleRowsOnly: boolean): any[];
+  getDistinctValuesForColumn(
+    columnId: string,
+    cellValueType: CellValueType,
+    visibleRowsOnly: boolean
+  ): any[];
   getDisplayValue(id: any, columnId: string): string;
-  getValueFromRowNode(rowwNode: any, columnId: string): string;
+  getValueFromRowNode(rowwNode: any, columnId: string, cellValueType: CellValueType): string;
   getRawValueFromRowNode(rowwNode: any, columnId: string): any;
-  getRowNodeIsSatisfiedFunction(
-    id: any,
-    distinctCriteria: CellValueType
-  ): (columnId: string) => any;
-  getRowNodeIsSatisfiedFunctionFromRowNode(
-    rowNode: any,
-    distinctCriteria: CellValueType
-  ): (columnId: string) => any;
-  getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
+
   getDataRowFromRowNode(rowNode: any): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;

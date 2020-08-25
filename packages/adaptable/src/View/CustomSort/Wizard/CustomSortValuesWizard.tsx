@@ -28,7 +28,9 @@ export class CustomSortValuesWizard
     let adaptable: IAdaptable = props.Api.internalApi.getAdaptableInstance();
     super(props);
     this.state = {
-      ColumnValues: adaptable.api.columnApi.getDistinctValuesForColumn(this.props.Data.ColumnId),
+      ColumnValues: adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+        this.props.Data.ColumnId
+      ),
       SelectedValues: this.props.Data.SortedValues,
       IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.Data.SortedValues),
     };

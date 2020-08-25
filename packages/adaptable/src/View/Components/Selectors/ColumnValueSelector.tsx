@@ -76,7 +76,7 @@ export class ColumnValueSelector extends React.Component<
         options={() => {
           //  let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
           if (this.props.SelectedColumn != null) {
-            let columnDisplayValuePairs: any[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+            let columnDisplayValuePairs: any[] = this.props.Api.columnApi.getDistinctDisplayValuesForColumn(
               this.props.SelectedColumn.ColumnId
             );
 

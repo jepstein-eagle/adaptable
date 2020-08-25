@@ -80,6 +80,8 @@ export interface ColumnApi {
   getPivotableColumns(): AdaptableColumn[];
   getAggregetableColumns(): AdaptableColumn[];
 
-  getDistinctValuesForColumn(columnId: string): any[];
-  getDistinctVisibleValuesForColumn(columnId: string): any[];
+  getDistinctDisplayValuesForColumn(columnId: string): any[];
+  getDistinctVisibleDisplayValuesForColumn(columnId: string): any[];
+  getDistinctRawValuesForColumn(columnId: string): any[];
+  getDistinctVisibleRawValuesForColumn(columnId: string): any[];
 }

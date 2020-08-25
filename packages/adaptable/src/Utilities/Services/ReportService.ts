@@ -7,6 +7,7 @@ import {
   MessageType,
   ReportRowScope,
   ExportDestination,
+  CellValueType,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -341,7 +342,11 @@ export class ReportService implements IReportService {
       if (useRawValue) {
         columnValue = this.adaptable.getRawValueFromRowNode(rowNode, col.ColumnId);
       } else {
-        columnValue = this.adaptable.getValueFromRowNode(rowNode, col.ColumnId);
+        columnValue = this.adaptable.getValueFromRowNode(
+          rowNode,
+          col.ColumnId,
+          CellValueType.DisplayValue
+        );
       }
       newRow.push(columnValue);
     });

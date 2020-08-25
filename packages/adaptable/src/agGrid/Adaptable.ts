@@ -1055,7 +1055,11 @@ export class Adaptable implements IAdaptable {
           columnId: activeCell.column.getColId(),
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(rowNode),
           rawValue: this.getRawValueFromRowNode(rowNode, activeCell.column.getColId()),
-          displayValue: this.getValueFromRowNode(rowNode, activeCell.column.getColId()),
+          displayValue: this.getValueFromRowNode(
+            rowNode,
+            activeCell.column.getColId(),
+            CellValueType.DisplayValue
+          ),
         };
       }
     }
@@ -1417,7 +1421,11 @@ export class Adaptable implements IAdaptable {
                   const selectedCell: GridCell = {
                     columnId: colId,
                     rawValue: this.getRawValueFromRowNode(rowNode, colId),
-                    displayValue: this.getValueFromRowNode(rowNode, colId),
+                    displayValue: this.getValueFromRowNode(
+                      rowNode,
+                      colId,
+                      CellValueType.DisplayValue
+                    ),
                     primaryKeyValue: primaryKey,
                   };
                   selectedCells.push(selectedCell);
@@ -1520,42 +1528,9 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.stopEditing(true);
   }
 
-  public getRowNodeIsSatisfiedFunction(
-    id: any,
-    distinctCriteria: CellValueType
-  ): (columnId: string) => any {
-    if (distinctCriteria == CellValueType.RawValue) {
-      let rowNode: RowNode;
-      if (this.useRowNodeLookUp) {
-        rowNode = this.gridOptions.api!.getRowNode(id);
-      } else {
-        let foundRow: boolean = false;
-        this.gridOptions.api!.getModel().forEachNode(node => {
-          if (!foundRow && id == this.getPrimaryKeyValueFromRowNode(node)) {
-            rowNode = node;
-            foundRow = true;
-          }
-        });
-      }
-      return (columnId: string) => this.gridOptions.api!.getValue(columnId, rowNode);
-    }
-    return (columnId: string) => this.getDisplayValue(id, columnId);
-  }
-
-  public getRowNodeIsSatisfiedFunctionFromRowNode(
-    rowwNode: RowNode,
-    distinctCriteria: CellValueType
-  ): (columnId: string) => any {
-    if (distinctCriteria == CellValueType.RawValue) {
-      let testreturnvalue: any = (columnId: string) =>
-        this.gridOptions.api!.getValue(columnId, rowwNode);
-      return testreturnvalue;
-    }
-    return (columnId: string) => this.getValueFromRowNode(rowwNode, columnId);
-  }
-
-  public getColumnValueDisplayValuePairDistinctList(
+  public getDistinctValuesForColumn(
     columnId: string,
+    cellValueType: CellValueType,
     visibleRowsOnly: boolean
   ): any[] {
     let returnValues: any[] = [];
@@ -1572,11 +1547,11 @@ export class Adaptable implements IAdaptable {
     } else {
       if (visibleRowsOnly) {
         this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
-          returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
+          returnValues.push(this.addDistinctColumnValue(rowNode, columnId, cellValueType));
         });
       } else {
         this.gridOptions.api!.forEachNode(rowNode => {
-          returnValues.push(this.addDistinctColumnValue(rowNode, columnId));
+          returnValues.push(this.addDistinctColumnValue(rowNode, columnId, cellValueType));
         });
       }
     }
@@ -1614,7 +1589,7 @@ export class Adaptable implements IAdaptable {
         const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
         const displayValue = useRawValue
           ? Helper.StringifyValue(rawValue)
-          : this.getValueFromRowNode(rowNode, columnId);
+          : this.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue);
 
         let allowed = !permittedMap || permittedMap.has(displayValue);
         if (allowed && onlyIncludeIds) {
@@ -1640,11 +1615,15 @@ export class Adaptable implements IAdaptable {
     return returnArray.slice(0, this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed);
   }
 
-  private addDistinctColumnValue(rowNode: RowNode, columnId: string): string {
+  private addDistinctColumnValue(
+    rowNode: RowNode,
+    columnId: string,
+    cellValueType: CellValueType
+  ): string {
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
     if (rowNode && !this.isGroupRowNode(rowNode)) {
-      return this.getValueFromRowNode(rowNode, columnId);
+      return this.getValueFromRowNode(rowNode, columnId, cellValueType);
     }
   }
 
@@ -1667,12 +1646,12 @@ export class Adaptable implements IAdaptable {
 
     if (this.useRowNodeLookUp) {
       const rowNode: RowNode = this.gridOptions.api!.getRowNode(id);
-      returnValue = this.getValueFromRowNode(rowNode, columnId);
+      returnValue = this.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue);
     } else {
       let foundRow: boolean = false;
       this.gridOptions.api!.getModel().forEachNode(rowNode => {
         if (!foundRow && id == this.getPrimaryKeyValueFromRowNode(rowNode)) {
-          returnValue = this.getValueFromRowNode(rowNode, columnId);
+          returnValue = this.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue);
           foundRow = true;
         }
       });
@@ -1680,19 +1659,18 @@ export class Adaptable implements IAdaptable {
     return returnValue;
   }
 
-  // Always returns a display value unless told not to...
-  public getValueFromRowNode(row: RowNode, columnId: string): string {
+  public getValueFromRowNode(row: RowNode, columnId: string, cellValueType: CellValueType): string {
     if (row == null) {
       return '';
     }
     const rawValue = this.getRawValueFromRowNode(row, columnId);
-    if (this.shouldUseRawValueForColumn(columnId)) {
+    if (cellValueType == CellValueType.RawValue || this.shouldUseRawValueForColumn(columnId)) {
       return Helper.StringifyValue(rawValue);
     }
     return this.getDisplayValueFromRawValue(columnId, rawValue);
   }
 
-  public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
+  private getDisplayValueFromRawValue(columnId: string, rawValue: any): string {
     const isRenderedColumn = this.api.columnApi.isSpecialRenderedColumn(columnId);
     if (isRenderedColumn) {
       return this.agGridHelper.getCleanValue(rawValue);
@@ -3886,7 +3864,9 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
               };
             } else {
               colDef.cellEditorParams = {
-                values: this.api.columnApi.getDistinctValuesForColumn(editLookUpColumn.ColumnId),
+                values: this.api.columnApi.getDistinctDisplayValuesForColumn(
+                  editLookUpColumn.ColumnId
+                ),
               };
             }
           }

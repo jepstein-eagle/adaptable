@@ -43,7 +43,7 @@ export class PercentBarSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctValuesForColumn(
+      let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
         columns[0].ColumnId
       );
 

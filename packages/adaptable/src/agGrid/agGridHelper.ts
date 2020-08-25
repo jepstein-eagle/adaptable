@@ -61,7 +61,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { iconToString } from '../components/icons';
-import { DataType } from '../PredefinedConfig/Common/Enums';
+import { DataType, CellValueType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
@@ -508,7 +508,11 @@ export class agGridHelper {
     let clickedCell: GridCell = {
       columnId: colId,
       rawValue: params.value,
-      displayValue: this.adaptable.getValueFromRowNode(params.node, colId),
+      displayValue: this.adaptable.getValueFromRowNode(
+        params.node,
+        colId,
+        CellValueType.DisplayValue
+      ),
       primaryKeyValue: primaryKeyValue,
     };
     let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();

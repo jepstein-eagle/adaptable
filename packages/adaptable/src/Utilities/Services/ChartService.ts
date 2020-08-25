@@ -258,10 +258,12 @@ export class ChartService implements IChartService {
     let xAxisColValues: string[] = [];
     if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
       xAxisColValues = chartDefinition.VisibleRowsOnly
-        ? this.adaptable.api.columnApi.getDistinctVisibleValuesForColumn(
+        ? this.adaptable.api.columnApi.getDistinctVisibleDisplayValuesForColumn(
             chartDefinition.XAxisColumnId
           )
-        : this.adaptable.api.columnApi.getDistinctValuesForColumn(chartDefinition.XAxisColumnId);
+        : this.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+            chartDefinition.XAxisColumnId
+          );
     } else {
       if (chartDefinition.VisibleRowsOnly) {
         this.adaptable.forAllVisibleRowNodesDo(row => {
@@ -290,7 +292,11 @@ export class ChartService implements IChartService {
         this.adaptable
       )
     ) {
-      let columnValue = this.adaptable.getValueFromRowNode(row, chartDefinition.XAxisColumnId);
+      let columnValue = this.adaptable.getValueFromRowNode(
+        row,
+        chartDefinition.XAxisColumnId,
+        CellValueType.DisplayValue
+      );
       ArrayExtensions.AddItem(xAxisColValues, columnValue);
     }
   }

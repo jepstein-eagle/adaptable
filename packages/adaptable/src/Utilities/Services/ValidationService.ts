@@ -43,10 +43,10 @@ export class ValidationService implements IValidationService {
     if (dataChangedInfo.ColumnId == this.adaptable.adaptableOptions.primaryKey) {
       if (this.adaptable.adaptableOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
         if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
-          let displayValuePair: any[] = this.adaptable.api.columnApi.getDistinctValuesForColumn(
+          let distinctValues: any[] = this.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
             dataChangedInfo.ColumnId
           );
-          let existingItem = displayValuePair.find(dv => dv == dataChangedInfo.NewValue);
+          let existingItem = distinctValues.find(dv => dv == dataChangedInfo.NewValue);
           if (existingItem) {
             let range = ObjectFactory.CreateRange(
               LeafExpressionOperator.PrimaryKeyDuplicate,

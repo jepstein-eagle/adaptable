@@ -203,7 +203,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         newState = { ShowWaitingMessage: true };
       } else {
         // the developer hasnt given us a property that we need to invoke to get column values, so lets get the distinct values for the column instead
-        columnValuePairs = props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+        columnValuePairs = props.Adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
           props.SelectedColumnId
         );
         columnValuePairs = ArrayExtensions.sortArrayWithProperty(
@@ -253,7 +253,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
         // we have got the result back from the function we've invoked; if the return value is null then lets get distinct values instead
         if (result == null) {
           //  nothing returned so get the distinct column values via Adaptable method
-          columnValuePairs = props.Adaptable.api.columnApi.getDistinctValuesForColumn(
+          columnValuePairs = props.Adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
             props.SelectedColumnId
           );
           columnValuePairs = ArrayExtensions.sortArrayWithProperty(
@@ -275,11 +275,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
             props.Api.internalApi.getAdaptableOptions().queryOptions.maxColumnValueItemsDisplayed
           );
           distinctItems.forEach(di => {
-            let displayValue = props.Adaptable.getDisplayValueFromRawValue(
-              props.SelectedColumnId,
-              di
-            );
-            columnValuePairs.push({ RawValue: di, DisplayValue: displayValue });
+            columnValuePairs.push({ RawValue: di, DisplayValue: '' });
           });
           newState = {
             ...newState,
