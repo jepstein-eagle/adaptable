@@ -36,7 +36,7 @@ async function InitAdaptableDemo() {
       {
         id: 'US_Banks',
         type: 'FilterPredicate',
-        scope: { DataType: 'String' },
+        scope: { DataTypes: ['String'] },
         name: 'US Banks',
         handler: ({ value, inputs }) => {
           return value == 'Citi' || value == 'JP Morgan';
