@@ -1002,8 +1002,6 @@ export class Adaptable implements IAdaptable {
             'Contains',
             [quickSearchValue]
           );
-
-          console.log('colFilter', columnFilter);
           return api.filterApi.evaluateColumnFilter(columnFilter, params.node);
         }
       }
