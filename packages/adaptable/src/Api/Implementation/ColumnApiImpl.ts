@@ -8,6 +8,7 @@ import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstan
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnApi } from '../ColumnApi';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
+import { Scope } from '../../PredefinedConfig/Common/Scope';
 
 export class ColumnApiImpl extends ApiBase implements ColumnApi {
   public getColumns(): AdaptableColumn[] {
@@ -368,5 +369,20 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
   }
   public getDistinctVisibleRawValuesForColumn(columnId: string): any[] {
     return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.RawValue, true);
+  }
+  public isColumnInScope(column: AdaptableColumn, scope: Scope | undefined) {
+    if (scope === undefined) {
+      return true;
+    }
+
+    if ('DataTypes' in scope && scope.DataTypes.includes(column.DataType as any)) {
+      return true;
+    }
+
+    if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
+      return true;
+    }
+
+    return false;
   }
 }
