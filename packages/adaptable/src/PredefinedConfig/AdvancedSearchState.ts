@@ -1,7 +1,4 @@
 import { ConfigState } from './/ConfigState';
-import { Expression } from './Common/Expression';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { TypeUuid } from './Uuid';
 
 /**
  * The Predefined Configuration for the Advanced Search function

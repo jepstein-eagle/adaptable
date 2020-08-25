@@ -201,7 +201,7 @@ export class StyleService implements IStyleService {
       });
     /*
     conditionalStyles
-      .filter(cs => cs.ConditionalStyleScope == 'DataType')
+      .filter(cs => cs.StyleApplied == 'DataType')
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,

@@ -267,7 +267,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
          Style: {
            ForeColor: '#008000',
          },
-         ConditionalStyleScope: 'Column',
+         StyleApplied: 'Column',
          Expression: {
             FilterExpressions: [
              {
@@ -282,7 +282,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
          Style: {
            ForeColor: '#ff0000',
          },
-         ConditionalStyleScope: 'Column',
+         StyleApplied: 'Column',
          Expression: {
            FilterExpressions: [
              {
@@ -298,7 +298,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
            FontStyle: 'Italic',
            ForeColor: '#000000',
          },
-         ConditionalStyleScope: 'Row',
+         StyleApplied: 'Row',
          Expression: {
            RangeExpressions: [
              {

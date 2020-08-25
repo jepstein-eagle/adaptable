@@ -51,7 +51,7 @@ let demoConfig: PredefinedConfig = {
   ConditionalStyle: {
     ConditionalStyles: [
       {
-        ConditionalStyleScope: 'Row',
+        StyleApplied: 'Row',
         Style: {
           FontStyle: 'Italic',
         },

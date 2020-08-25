@@ -28,7 +28,7 @@ import { QueryObject } from './Common/QueryObject';
  *       Style: {
  *         ForeColor: '#008000',
  *       },
- *       ConditionalStyleScope: 'Column',
+ *       StyleApplied: 'Column',
  *       Expression: {
  *         FilterExpressions: [
  *           {
@@ -43,7 +43,7 @@ import { QueryObject } from './Common/QueryObject';
  *       Style: {
  *        ForeColor: '#ff0000',
  *       },
- *       ConditionalStyleScope: 'Column',
+ *       StyleApplied: 'Column',
  *       Expression: {
  *         FilterExpressions: [
  *           {
@@ -59,7 +59,7 @@ import { QueryObject } from './Common/QueryObject';
  *         FontStyle: 'Italic',
  *         ForeColor: '#000000',
  *       },
- *       ConditionalStyleScope: 'Row',
+ *       StyleApplied: 'Row',
  *       Expression: {
  *         RangeExpressions: [
  *           {
@@ -111,7 +111,7 @@ export interface ConditionalStyle extends QueryObject {
   /**
    * Whether to show the Style for Grouped Rows
    *
-   * Only applies where the `ConditionalStyleScope` is Row.
+   * Only applies where the `StyleApplied` is Row.
    *
    * If unset, will default to false.
    */

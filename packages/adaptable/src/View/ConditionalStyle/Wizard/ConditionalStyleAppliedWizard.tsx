@@ -19,24 +19,24 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import CheckBox from '../../../components/CheckBox';
 
-export interface ConditionalStyleScopeWizardProps
+export interface ConditionalStyleAppliedWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {}
 
-export interface ConditionalStyleScopeWizardState {
+export interface ConditionalStyleAppliedWizardState {
   ColumnId: string;
-  ConditionalStyleScope: 'Column' | 'Row'; //| 'DataType';
+  StyleApplied: 'Column' | 'Row'; //| 'DataType';
   ExcludeGroupedRows: boolean;
   // DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
-export class ConditionalStyleScopeWizard
-  extends React.Component<ConditionalStyleScopeWizardProps, ConditionalStyleScopeWizardState>
+export class ConditionalStyleAppliedWizard
+  extends React.Component<ConditionalStyleAppliedWizardProps, ConditionalStyleAppliedWizardState>
   implements AdaptableWizardStep {
-  constructor(props: ConditionalStyleScopeWizardProps) {
+  constructor(props: ConditionalStyleAppliedWizardProps) {
     super(props);
     this.state = {
       ColumnId: StringExtensions.IsNull(this.props.Data.ColumnId) ? '' : this.props.Data.ColumnId,
-      ConditionalStyleScope: this.props.Data.StyleApplied,
+      StyleApplied: this.props.Data.StyleApplied,
       ExcludeGroupedRows: this.props.Data.ExcludeGroupedRows,
       //  DataType: this.props.Data.DataType,
     };
@@ -60,7 +60,7 @@ export class ConditionalStyleScopeWizard
           <Radio
             marginLeft={3}
             value="Row"
-            checked={this.state.ConditionalStyleScope == 'Row'}
+            checked={this.state.StyleApplied == 'Row'}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
           >
             Whole Row
@@ -71,13 +71,13 @@ export class ConditionalStyleScopeWizard
           <Radio
             marginLeft={3}
             value="Column"
-            checked={this.state.ConditionalStyleScope == 'Column'}
+            checked={this.state.StyleApplied == 'Column'}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
           >
             Column
           </Radio>
 
-          {this.state.ConditionalStyleScope == 'Column' && (
+          {this.state.StyleApplied == 'Column' && (
             <Box marginBottom={2}>
               <ColumnSelector
                 SelectedColumnIds={[this.state.ColumnId]}
@@ -98,13 +98,13 @@ export class ConditionalStyleScopeWizard
           <Radio
             marginLeft={3}
             value="DataType"
-            checked={this.state.ConditionalStyleScope == 'DataType'}
+            checked={this.state.ConditionalStyleApplied == 'DataType'}
             onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
           >
             Data Type
           </Radio>
 
-          {this.state.ConditionalStyleScope == 'DataType' && (
+          {this.state.ConditionalStyleApplied == 'DataType' && (
             <Box>
               <Dropdown
                 placeholder="Select a Data Type"
@@ -149,7 +149,7 @@ export class ConditionalStyleScopeWizard
             <Radio
              
               value="Column"
-              checked={this.state.ConditionalStyleScope == 'Column'}
+              checked={this.state.ConditionalStyleApplied == 'Column'}
               onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
             >
               Column
@@ -168,14 +168,14 @@ export class ConditionalStyleScopeWizard
     this.setState(
       {
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',
-      } as ConditionalStyleScopeWizardState,
+      } as ConditionalStyleAppliedWizardState,
       () => this.props.UpdateGoBackState()
     );
   }
 
   /*
   private onDataTypeSelectedChanged(value: any) {
-    this.setState({ DataType: value } as ConditionalStyleScopeWizardState, () =>
+    this.setState({ DataType: value } as ConditionalStyleAppliedWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -184,7 +184,7 @@ export class ConditionalStyleScopeWizard
   private onScopeSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     if (e.value == 'Column') {
-      this.setState({ ConditionalStyleScope: 'Column' } as ConditionalStyleScopeWizardState, () =>
+      this.setState({ StyleApplied: 'Column' } as ConditionalStyleAppliedWizardState, () =>
         this.props.UpdateGoBackState()
       );
 
@@ -192,40 +192,37 @@ export class ConditionalStyleScopeWizard
     } else if (e.value == 'DataType') {
       this.setState(
         {
-          ConditionalStyleScope: 'DataType',
-        } as ConditionalStyleScopeWizardState,
+          ConditionalStyleApplied: 'DataType',
+        } as ConditionalStyleAppliedWizardState,
         () => this.props.UpdateGoBackState()
       );
       */
     } else {
       this.setState(
         {
-          ConditionalStyleScope: 'Row',
+          StyleApplied: 'Row',
           ColumnId: '',
-        } as ConditionalStyleScopeWizardState,
+        } as ConditionalStyleAppliedWizardState,
         () => this.props.UpdateGoBackState()
       );
     }
   }
 
   private onExludeGroupedRowsChanged(checked: boolean) {
-    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleScopeWizardState, () =>
+    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleAppliedWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
 
   public canNext(): boolean {
-    if (!this.state.ConditionalStyleScope == null) {
+    if (!this.state.StyleApplied == null) {
       return false;
     }
-    if (
-      this.state.ConditionalStyleScope == 'Column' &&
-      StringExtensions.IsEmpty(this.state.ColumnId)
-    ) {
+    if (this.state.StyleApplied == 'Column' && StringExtensions.IsEmpty(this.state.ColumnId)) {
       return false;
     }
     //   if (
-    //     this.state.ConditionalStyleScope == 'DataType' &&
+    //     this.state.ConditionalStyleApplied == 'DataType' &&
     //     StringExtensions.IsNullOrEmpty(this.state.DataType)
     //   ) {
     //     return false;
@@ -239,10 +236,10 @@ export class ConditionalStyleScopeWizard
   }
   public Next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.StyleApplied = this.state.ConditionalStyleScope;
+    this.props.Data.StyleApplied = this.state.StyleApplied;
     this.props.Data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
     //  this.props.Data.DataType =
-    //    this.state.ConditionalStyleScope == 'DataType' ? this.state.DataType : undefined;
+    //    this.state.ConditionalStyleApplied == 'DataType' ? this.state.DataType : undefined;
   }
 
   public Back(): void {

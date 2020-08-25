@@ -79,7 +79,7 @@ let demoConfig: PredefinedConfig = {
         Style: {
           BackColor: '#ffffe0',
         },
-        ConditionalStyleScope: 'Row',
+        StyleApplied: 'Row',
         SharedQueryId: '123-456-789',
         ExcludeGroupedRows: false,
       },
@@ -88,7 +88,7 @@ let demoConfig: PredefinedConfig = {
         Style: {
           ForeColor: '#008000',
         },
-        ConditionalStyleScope: 'Column',
+        StyleApplied: 'Column',
         Expression: '[changeOnYear] > 0',
       },
       {
@@ -96,7 +96,7 @@ let demoConfig: PredefinedConfig = {
         Style: {
           ForeColor: '#ff0000',
         },
-        ConditionalStyleScope: 'Column',
+        StyleApplied: 'Column',
         Expression: '[changeOnYear] < 0',
       },
       {
@@ -105,7 +105,7 @@ let demoConfig: PredefinedConfig = {
           FontStyle: 'Italic',
           ForeColor: '#000000',
         },
-        ConditionalStyleScope: 'Row',
+        StyleApplied: 'Row',
         Expression: '[notional] > 1400',
       },
     ],

@@ -20,7 +20,7 @@ export default {
           FontSize: undefined,
           ClassName: '',
         },
-        ConditionalStyleScope: 'Row',
+        StyleApplied: 'Row',
         Expression: {
           ColumnValueExpressions: [
             {

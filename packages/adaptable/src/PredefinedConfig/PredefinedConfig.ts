@@ -274,7 +274,7 @@ import { SharedQueryState } from './SharedQueryState';
  *         Style: {
  *           ForeColor: '#008000',
  *         },
- *         ConditionalStyleScope: 'Column',
+ *         StyleApplied: 'Column',
  *         Expression: {
  *            FilterExpressions: [
  *             {
@@ -289,7 +289,7 @@ import { SharedQueryState } from './SharedQueryState';
  *         Style: {
  *           ForeColor: '#ff0000',
  *         },
- *         ConditionalStyleScope: 'Column',
+ *         StyleApplied: 'Column',
  *         Expression: {
  *           FilterExpressions: [
  *             {
@@ -305,7 +305,7 @@ import { SharedQueryState } from './SharedQueryState';
  *           FontStyle: 'Italic',
  *           ForeColor: '#000000',
  *         },
- *         ConditionalStyleScope: 'Row',
+ *         StyleApplied: 'Row',
  *         Expression: {
  *           RangeExpressions: [
  *             {

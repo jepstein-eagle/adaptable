@@ -110,22 +110,6 @@ let demoConfig: PredefinedConfig = {
     StatusType: 'Error',
   },
 
-  ConditionalStyle: {
-    ConditionalStyles: [
-      {
-        ConditionalStyleScope: 'Column', // 'DataType',
-        ColumnId: 'moodysRating',
-        // DataType: 'Number',
-        Style: {
-          BackColor: '#32cd32',
-        },
-        Expression: {
-          FilterExpressions: [{ ColumnId: 'notional', Filters: ['Positive', 'Negative'] }],
-        },
-      },
-    ],
-  },
-
   Layout: {
     Layouts: [
       {
