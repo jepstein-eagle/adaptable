@@ -1,6 +1,6 @@
 # Cell Validation (AdaptableFunction)
 
-The Cell Validation ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellValidation`) Function enables you to validate proposed cell edits through the creation of custom rules.
+The Cell Validation Function enables you to validate proposed cell edits through the creation of custom rules.
 
 There are 2 types of cell validation rule:
 

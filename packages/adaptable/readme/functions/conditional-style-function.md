@@ -1,6 +1,6 @@
 # Conditional Style (AdaptableFunction)
 
-The Conditional Style ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ConditionalStyle`) Function enables cells and rows to be given a distinctive style / look and feel when they contain data that matches a bespoke rule.
+The Conditional Style Function enables cells and rows to be given a distinctive style / look and feel when they contain data that matches a bespoke rule.
 
 ## Conditional Style Rules
 

@@ -1,4 +1,5 @@
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
+import { v1 } from 'uuid';
 
 export function GetLength(arrayToCheck: any[]): number {
   return IsNotNull(arrayToCheck) ? arrayToCheck.length : 0;
@@ -210,12 +211,29 @@ export function sortArrayWithProperty(
   }
 }
 export function sortArray(values: any[], sortOrder: SortOrder = SortOrder.Asc): any[] {
-  let newValues = [].concat(values);
-  let direction = 1;
-  if (sortOrder == SortOrder.Desc) {
-    direction = -1;
-  }
+  const newValues = [].concat(values);
+  const direction = sortOrder == SortOrder.Asc ? 1 : -1;
   return newValues.sort((a, b) => (a < b ? -1 * direction : a > b ? 1 * direction : 0));
+}
+export function sortArrayNumeric(values: any[], sortOrder: SortOrder = SortOrder.Asc): any[] {
+  const direction = sortOrder == SortOrder.Asc ? 1 : -1;
+  const newValues = [].concat(values);
+  return newValues.sort((a, b) => {
+    const valueAAsNumber = Number(a);
+    const valueBAsNumber = Number(b);
+    if (isNaN(valueAAsNumber)) {
+      return 0;
+    }
+    if (isNaN(valueBAsNumber)) {
+      return 0;
+    }
+
+    return valueAAsNumber < valueBAsNumber
+      ? -1 * direction
+      : valueAAsNumber > valueBAsNumber
+      ? 1 * direction
+      : 0;
+  });
 }
 
 export function groupArrayBy(array: Array<any>, prop: string): Array<any> {
@@ -254,6 +272,7 @@ export const ArrayExtensions = {
   areArraysEqualWithOrder,
   areArraysEqualWithOrderandProperties,
   sortArray,
+  sortArrayNumeric,
   sortArrayWithProperty,
   createCommaSeparatedString,
 };

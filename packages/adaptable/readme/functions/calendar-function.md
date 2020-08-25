@@ -1,6 +1,6 @@
 # Calendar (AdaptableFunction)
 
-The Calendar([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Calendar`) Function allows you to provide your own Calendar - useful for Date-related filters.
+The Calendar Function allows you to provide your own Calendar - useful for Date-related filters.
 
 
 ## UI Elements

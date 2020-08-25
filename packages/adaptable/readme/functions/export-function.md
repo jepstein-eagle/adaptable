@@ -1,6 +1,6 @@
 # Export (AdaptableFunction)
 
-The Export([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Export`) Function provides a way to send data from AdapTable via 'Reports'.
+The Export Function provides a way to send data from AdapTable via 'Reports'.
 
 ## How Export Works
 

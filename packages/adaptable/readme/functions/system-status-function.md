@@ -1,6 +1,6 @@
 # System Status (AdaptableFunction)
 
-The System Status ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `SystemStatus`) Function is designed to help keep End Users updated with vital information about the system.
+The System Status Function is designed to help keep End Users updated with vital information about the system.
 
 It allows you to display a `StatusMessage` to the user containing important information.
 

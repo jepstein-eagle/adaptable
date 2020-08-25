@@ -24,7 +24,7 @@ export class UserFilterSelectColumnWizard
   constructor(props: UserFilterSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: props.Data.Scope.ColumnIds[0],
+      ColumnId: '', //props.Data.Scope.ColumnIds[0],
     };
   }
 
@@ -61,10 +61,10 @@ export class UserFilterSelectColumnWizard
     return true;
   }
   public Next(): void {
-    if (this.props.Data.Scope.ColumnIds[0] != this.state.ColumnId) {
-      // this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
-    }
-    this.props.Data.Scope.ColumnIds[0] = this.state.ColumnId;
+    // if (this.props.Data.Scope.ColumnIds[0] != this.state.ColumnId) {
+    // this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    // }
+    //  this.props.Data.Scope.ColumnIds[0] = this.state.ColumnId;
   }
 
   public Back(): void {

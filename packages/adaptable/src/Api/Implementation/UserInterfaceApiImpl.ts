@@ -38,23 +38,42 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     return this.getAdaptableState().UserInterface.PermittedValuesItems;
   }
 
+  private getPermittedValuesItemsWithColumnScope(): PermittedValuesItem[] | undefined {
+    return this.getAllPermittedValuesItems().filter(pv => {
+      return 'ColumnIds' in pv.Scope == true;
+    });
+  }
+
+  private getPermittedValuesItemsWithDataTypeScope(): PermittedValuesItem[] | undefined {
+    return this.getAllPermittedValuesItems().filter(pv => {
+      return 'DataTypes' in pv.Scope == true;
+    });
+  }
+
   private getPermittedValuesForScope(column: AdaptableColumn): PermittedValuesItem | undefined {
     let permittedValuesItem: PermittedValuesItem;
-    // first we get any for the column as that is lower level
-    permittedValuesItem = this.getAllPermittedValuesItems().find(
-      pv =>
-        ArrayExtensions.IsNotNullOrEmpty(pv.Scope.ColumnIds) &&
-        pv.Scope.ColumnIds.includes(column.ColumnId)
-    );
+
+    this.getPermittedValuesItemsWithColumnScope().forEach(pv => {
+      if (!permittedValuesItem) {
+        if (this.adaptable.api.columnApi.isColumnInScope(column, pv.Scope)) {
+          permittedValuesItem = pv;
+        }
+      }
+    });
+
     if (permittedValuesItem) {
       return permittedValuesItem;
     }
-    // then we get any for the scope
-    permittedValuesItem = this.getAllPermittedValuesItems().find(pv =>
-      pv.Scope.DataTypes?.includes(column.DataType as any)
-    );
+
+    this.getPermittedValuesItemsWithDataTypeScope().forEach(pv => {
+      if (!permittedValuesItem) {
+        if (this.adaptable.api.columnApi.isColumnInScope(column, pv.Scope)) {
+          permittedValuesItem = pv;
+        }
+      }
+    });
+
     if (permittedValuesItem) {
-      console.log('this one', permittedValuesItem);
       return permittedValuesItem;
     }
 
@@ -111,22 +130,30 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     let editLookUpItem: EditLookUpItem;
     let editLookUpItems: EditLookUpItem[] = this.getAllEditLookUpItems();
 
-    editLookUpItem = editLookUpItems.find(
-      pv =>
-        ArrayExtensions.IsNotNullOrEmpty(pv.Scope.ColumnIds) &&
-        pv.Scope.ColumnIds.includes(abColumn.ColumnId)
-    );
+    // first we get any for the column as that is lower level
+    editLookUpItem = editLookUpItems
+      .filter(pv => {
+        return 'ColumnIds' in pv.Scope == true;
+      })
+      .find(pv => {
+        this.adaptable.api.columnApi.isColumnInScope(abColumn, pv.Scope);
+      });
     if (editLookUpItem) {
       return editLookUpItem;
     }
-    // then we get any for the scope
-    editLookUpItem = editLookUpItems.find(el =>
-      el.Scope.DataTypes?.includes(abColumn.DataType as any)
-    );
+
+    // then we get any for the DataType
+    editLookUpItem = editLookUpItems
+      .filter(pv => {
+        return 'DataTypes' in pv.Scope == true;
+      })
+      .find(pv => {
+        this.adaptable.api.columnApi.isColumnInScope(abColumn, pv.Scope);
+      });
     if (editLookUpItem) {
-      console.log('this one', editLookUpItem);
       return editLookUpItem;
     }
+
     return undefined;
   }
 

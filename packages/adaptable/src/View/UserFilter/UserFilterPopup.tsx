@@ -80,7 +80,7 @@ class UserFilterPopupComponent extends React.Component<
     let selectedColumnId: string = '';
     if (this.state.EditedAdaptableObject != null) {
       let filter: UserFilter = this.state.EditedAdaptableObject as UserFilter;
-      let editedColumn: string = filter.Scope.ColumnIds[0];
+      let editedColumn: string = ''; //filter.Scope.ColumnIds[0];
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
       } else if (this.props.PopupParams) {

@@ -61,7 +61,7 @@ export class UserFilterSummaryComponent extends React.Component<
 
     // existing items
     userFilters.map((item, index) => {
-      if (item.Scope.ColumnIds[0] == this.props.SummarisedColumn.ColumnId) {
+      if (this.props.Api.columnApi.isColumnInScope(this.props.SummarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
@@ -112,12 +112,7 @@ export class UserFilterSummaryComponent extends React.Component<
       return 'Column is not filterable';
     }
 
-    return Helper.ReturnItemCount(
-      this.props.Api.filterApi
-        .getAllUserFilter()
-        .filter(uf => uf.Scope.ColumnIds[0] == this.props.SummarisedColumn.ColumnId),
-      StrategyConstants.UserFilterStrategyFriendlyName
-    );
+    return '5';
   }
 
   getDescription(userFilter: UserFilter): string {
@@ -144,7 +139,7 @@ export class UserFilterSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-    configEntity.Scope.ColumnIds[0] = this.props.SummarisedColumn.ColumnId;
+    // configEntity.Scope.ColumnIds[0] = this.props.SummarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -185,10 +180,8 @@ export class UserFilterSummaryComponent extends React.Component<
 
   canFinishWizard() {
     let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    return (
-      StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
-      StringExtensions.IsNotEmpty(userFilter.Scope.ColumnIds[0])
-    );
+    return StringExtensions.IsNotNullOrEmpty(userFilter.Name); //&&
+    // StringExtensions.IsNotEmpty(userFilter.Scope.ColumnIds[0])
   }
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<UserFilterSummaryProps> {

@@ -1,6 +1,6 @@
 # Plus / Minus (AdaptableFunction)
 
-The Plus / Minus([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `PlusMinus`) Function enables the creation of 'Nudge Rules' which react to the '+' or '-' keys being pressed in numeric cells.
+The Plus / Minus Function enables the creation of 'Nudge Rules' which react to the '+' or '-' keys being pressed in numeric cells.
 
 AdapTable allows you to use the + and - keys on the keyboard to increment or decrement the value of numerical cells in those columns which you have identified as having a nudge value.
 

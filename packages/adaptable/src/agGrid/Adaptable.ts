@@ -1619,7 +1619,10 @@ export class Adaptable implements IAdaptable {
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
     if (rowNode && !this.isGroupRowNode(rowNode)) {
-      return this.getValueFromRowNode(rowNode, columnId, cellValueType);
+      const returnValue = this.getValueFromRowNode(rowNode, columnId, cellValueType);
+      if (Helper.objectExists(returnValue)) {
+        return returnValue;
+      }
     }
   }
 
@@ -2751,8 +2754,11 @@ export class Adaptable implements IAdaptable {
         this.adaptableOptions.searchOptions.serverSearchOption == 'AdvancedSearch'
       ) {
         const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
+
         if (columnFilters.length > 0) {
+          //  console.log('assessing');
           for (const columnFilter of columnFilters) {
+            //   console.log('filter', columnFilter);
             if (!this.api.filterApi.evaluateColumnFilter(columnFilter, node)) {
               return false;
             }

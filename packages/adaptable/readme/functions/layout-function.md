@@ -1,6 +1,6 @@
 # Layout (AdaptableFunction)
 
-The Layout([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Layout`) Function facilities creating Layouts (a.k.a. Views) - **sets of column visibility and order** designed to enable users easily to switch between different 'views' of their grid
+The Layout Function facilities creating Layouts (a.k.a. Views) - **sets of column visibility and order** designed to enable users easily to switch between different 'views' of their grid
 
 Layouts can also include column sorting, grouping and pivoting information and can save automatially when changed.
 

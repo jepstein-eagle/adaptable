@@ -1,6 +1,6 @@
 # Cell Summary (AdaptableFunction)
 
-The Cell Summary ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CellSummary`) Function allows you to see - at a glance - summary information about the cells (and rows) you have selected in AdapTable.
+The Cell Summary Function allows you to see - at a glance - summary information about the cells (and rows) you have selected in AdapTable.
 
 Simply select a group of cells and you can see the summary information about those cells in the Cell Summary Toolbar and / or Tool Panel
 

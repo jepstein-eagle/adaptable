@@ -1,6 +1,6 @@
 # Data Source (AdaptableFunction)
 
-The Data Source([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `DataSource`) Function provides a way to provide an entirely new Data Set to AdapTable based on user selection.
+The Data Source Function provides a way to provide an entirely new Data Set to AdapTable based on user selection.
 
 It is designed for those scenarios when there is too much data to send to the client at start-up, and developers want to provide an option for users to switch between different "data sources", with the result that the grid is populated with different data sets.
 

@@ -121,7 +121,7 @@ The [Demo Site's filter section](https://demo.adaptabletools.com/filters) contai
 
 The System Filters shipped by AdapTable are:
 
-| System Filter   	      | Columns              |
+| System Filter           | Columns              |
 | --------  	          | ------               | 
 | Blanks                  | Number, Date, Text   | 
 | Non Blanks              | Number, Date, Text   | 

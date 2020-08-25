@@ -1,6 +1,6 @@
 # Column Filter (AdaptableFunction)
 
-The Column Filter ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnFilter`) Function facilitates creating powerful, dynamic filters for any column in AdapTable.
+The Column Filter  Function facilitates creating powerful, dynamic filters for any column in AdapTable.
 
 It also provides a way for users to see at a glance which columns have filters applied to them, together with an option to clear them (or turn them into reusable [User Filters](./user-filter-function.md)).
 
@@ -41,6 +41,7 @@ When this is used, AdapTable will create a Column Filter behind the scenes that 
 See the [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md) for more details.
 
 ## UI Elements
+
 Column Filters includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Column Filters with *Save as User Filter* and *Delete* buttons.  

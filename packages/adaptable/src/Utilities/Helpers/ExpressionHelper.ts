@@ -850,11 +850,11 @@ export function AddMissingProperties(expression: Expression): void {
 }
 
 function getExistingItem(adaptable: IAdaptable, rangeEvaluation: IRangeEvaluation): any {
-  let displayValuePairs: any[] = adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
-    rangeEvaluation.columnId
-  );
-  let existingItem = displayValuePairs.find(dv => dv.toLowerCase() == rangeEvaluation.newValue);
-  return existingItem;
+  // let displayValuePairs: any[] = adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+  //  rangeEvaluation.columnId
+  // );
+  // let existingItem = displayValuePairs.find(dv => dv.toLowerCase() == rangeEvaluation.newValue);
+  //return existingItem;
 }
 
 export const ExpressionHelper = {

@@ -1,6 +1,6 @@
 # Advanced Search (AdaptableFunction)
 
-The Advanced Search Function ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `AdvancedSearch`) enables you to build complex searches using [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries)
+The Advanced Search Function enables you to build complex searches using [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries)
 
 These searches can include a very wide variety of *Search Criteria* and run across multiple columns.
 

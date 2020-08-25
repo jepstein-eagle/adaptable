@@ -23,7 +23,7 @@ var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 100000;
+  const tradeCount: number = 20;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -45,6 +45,12 @@ async function InitAdaptableDemo() {
     layoutOptions: {
       autoSizeColumnsInDefaultLayout: false,
       includeExpandedRowGroups: true,
+    },
+    filterOptions: {
+      autoApplyFilter: false,
+    },
+    queryOptions: {
+      maxColumnValueItemsDisplayed: 100000,
     },
     userFunctions: [
       {
@@ -70,6 +76,25 @@ async function InitAdaptableDemo() {
 
       UserInterface: {
         PermittedValuesItems: [
+          /*
+          // testing order
+          // first one for all numbers
+          {
+            Scope: {
+              DataTypes: ['Number'],
+            },
+            PermittedValues: [1, 2, 3],
+          },
+
+          // then one just for notional
+          {
+            Scope: {
+              ColumnIds: ['notional'],
+            },
+            PermittedValues: [4, 5, 6],
+          },
+          */
+
           // for counterparty we will get a hard-coded list
           {
             Scope: {
@@ -181,11 +206,11 @@ async function InitAdaptableDemo() {
     api.eventApi.on('AdaptableReady', () => {
       console.log('READY');
     });
-  }, 10000);
+  }, 1000);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //   console.log('search changed');
+    //   console.log(searchChangedArgs.data[0].id);
   });
 }
 

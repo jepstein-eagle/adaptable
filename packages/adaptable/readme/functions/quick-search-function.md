@@ -8,19 +8,14 @@ The Quick Search UI allows users to set the Back Colour and Fore (i.e. font) col
 
 An alternative to setting the properties individually, is to set a css style classname for Quick Search (make sure to include the css style being referenced in your application code).
 
-### Wildcard
-
-You can use many of the same wildcards as in the Quick Filter Bar to refine your quick search.  
-
-For example, '> 500' will return any cell that has a number greater than 500.  Or 't*' will return any cell that starts with t.  
-
-See the Appendix at the bottom for more information on using wildcards.
 
 ### Filtering
 
 Quick Search does **not filter** the Grid - it merely hightlights matching text in the current visible rows and columns.
 
 Previous versions of AdapTable did enable filtering as an option for Quick Search but with the improved functionality around Queries and Column Filters, this was no longer rquired.
+
+Similarly, Quick Search from v.7 onwards no longer offers 'wildcard' functionality - this is unnecesary as it's now provided by Column Filters.
 
 > Quick Search is a 'constant operation' - so, like with Advanced Search or Column Filters, it will run both when a new Quick Search is applied but also when data ticks or the visible columns change.
 
@@ -58,7 +53,7 @@ Yes. There are options to highlight matching cells, just return matching rows, o
 
 **Is it possible to do free style quick search (e.g. '> 50')**
 
-Yes, you can use a number of shortcuts in the Quick Search. These are similar to the ones that you can use in the Floating Filter.
+No, this was possible in previous versions but as column filters now provide that functionality, it was removed from Quick Search which is a simple text search on 'contains'
 
 **Can we limit Quick Search to particular columns or column data types?**
 
@@ -74,18 +69,7 @@ If you have a large number of columns so that some are not visible in the curren
 
 **Does Quick Search update in real time as the data changes**
 
-Yes it does. Like Advanced Search and Filters, Quick Search is reapplied as data changes.
-
-
-### Quick Search Wildcards
-
-| Symbol | Value                  | Columns      | Example     |
-| ------ | ---------------------- | ------------ | ----------- |
-| %      | Contains (the default) | Text, Number | 'S' or 'S%' |
-| =      | Equals                 | Text, Number | '=15'       |
-| <>     | Not Equals             | Number       | '<> 23'     |
-| *      | Starts With            | Text, Number | 'd*'        |
-| !      | Doesn't Contain        | Text, Number | '!he'       |
+Yes it does. Like Advanced Search and Column Filters, Quick Search is reapplied as data changes.
 
 
 ### Further Information

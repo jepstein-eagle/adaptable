@@ -263,7 +263,7 @@ export class ExamplesHelper {
       history: [...new Array(this.generateRandomInt(5, 20))].map(_ =>
         this.generateRandomInt(1, 30)
       ),
-      notional: this.generateRandomInt(1000, 1500), // this.getRandomItem(this.getNotionals()),
+      notional: this.getRandomItem(this.getNotionals()), //this.generateRandomInt(1000, 1500), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -551,14 +551,16 @@ export class ExamplesHelper {
     return ary[this.generateRandomInt(0, ary.length - 1)];
   }
 
-  public getNotionals(): number[] {
+  public getNotionals(): (number | undefined | null)[] {
     let notionals = [
       1000000,
       2000000,
       5000000,
       7500000,
       10000000,
-      //  (undefined as unknown) as number,
+      (undefined as unknown) as number,
+      undefined,
+      null,
     ];
     return notionals;
   }

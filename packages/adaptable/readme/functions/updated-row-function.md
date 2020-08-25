@@ -1,6 +1,6 @@
 # Updated Row (AdaptableFunction)
 
-The Updated Row[AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `UpdatedRow`) Function allows users to specify how rows will appear visually if / when the contents of one of the cells in the row changes.
+The Updated Row Function allows users to specify how rows will appear visually if / when the contents of one of the cells in the row changes.
 
 > The function is designed for those use cases when the grid wil update fairly irregularly so that users have the opportunity see the update.  For faster updates use the [Flashing Cell](./flashing-cell-function.md) Function.
 

@@ -1,6 +1,6 @@
 # Theme (AdaptableFunction)
 
-The Theme([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Theme`) Function allows users to select between one of AdapTable's shipped Themes ('Light' and 'Dark') and for developers to create their own.
+The Theme Function allows users to select between one of AdapTable's shipped Themes ('Light' and 'Dark') and for developers to create their own.
 
 Users can change the Theme at run-time (subject to Entitlements) by selecting the theme they want from the Dropdown in the Theme Toolbar, Tool Panel or Popup.
 

@@ -1,6 +1,6 @@
 # Application (AdaptableFunction)
 
-The Application ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Application`) Function enables Developers to add extra information to the Adaptable State stored as Key / Value pairs.
+The Application Function enables Developers to add extra information to the Adaptable State stored as Key / Value pairs.
 
 ## Application Data Entries
 

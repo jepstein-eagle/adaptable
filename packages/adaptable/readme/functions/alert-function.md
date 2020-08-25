@@ -1,6 +1,6 @@
 # Alert (AdaptableFunction)
 
-The Alert ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Alert`) Function enables the creation of powerful and flexible Alerts that can respond to a wide variety of different events.
+The Alert Function enables the creation of powerful and flexible Alerts that can respond to a wide variety of different events.
 
 Alerts can be provided at design-time (through `AlertDefinitions` in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)) or at run-time through the UI (if Entitlements allow).
 

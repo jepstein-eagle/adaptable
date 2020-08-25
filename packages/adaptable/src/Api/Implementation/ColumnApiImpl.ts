@@ -1,6 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { DataType, CellValueType } from '../../PredefinedConfig/Common/Enums';
+import { DataType, CellValueType, SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { Layout, PercentBar } from '../../types';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
@@ -288,7 +288,13 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
   }
 
   public getDistinctDisplayValuesForColumn(columnId: string): any[] {
-    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.DisplayValue, false);
+    const returnValues = this.adaptable.getDistinctValuesForColumn(
+      columnId,
+      CellValueType.DisplayValue,
+      false
+    );
+    console.log('called for', columnId);
+    return this.sortDistinctValues(returnValues, columnId);
     /*
      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
@@ -361,15 +367,46 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
       }
       */
   }
-  public getDistinctVisibleDisplayValuesForColumn(columnId: string): any[] {
-    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.DisplayValue, true);
+  public getDistinctVisibleDisplayValuesForColumn(
+    columnId: string,
+    sortColumns: boolean = false
+  ): any[] {
+    const returnValues = this.adaptable.getDistinctValuesForColumn(
+      columnId,
+      CellValueType.DisplayValue,
+      true
+    );
+    return this.sortDistinctValues(returnValues, columnId);
   }
+
   public getDistinctRawValuesForColumn(columnId: string): any[] {
-    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.RawValue, false);
+    const returnValues = this.adaptable.getDistinctValuesForColumn(
+      columnId,
+      CellValueType.RawValue,
+      false
+    );
+    return this.sortDistinctValues(returnValues, columnId);
   }
+
   public getDistinctVisibleRawValuesForColumn(columnId: string): any[] {
-    return this.adaptable.getDistinctValuesForColumn(columnId, CellValueType.RawValue, true);
+    const returnValues = this.adaptable.getDistinctValuesForColumn(
+      columnId,
+      CellValueType.RawValue,
+      true
+    );
+    return this.sortDistinctValues(returnValues, columnId);
   }
+
+  private sortDistinctValues(returnValues: any[], columnId: string): any[] {
+    const abColumn: AdaptableColumn = this.getColumnFromId(columnId);
+    if (this.isNumericColumn(abColumn)) {
+      returnValues = ArrayExtensions.sortArrayNumeric(returnValues, SortOrder.Asc);
+    } else {
+      returnValues = ArrayExtensions.sortArray(returnValues, SortOrder.Asc);
+    }
+    return returnValues;
+  }
+
   public isColumnInScope(column: AdaptableColumn, scope: Scope | undefined) {
     if (scope === undefined) {
       return true;

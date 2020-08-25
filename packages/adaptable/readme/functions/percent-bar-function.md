@@ -1,6 +1,6 @@
 # Percent Bar (AdaptableFunction)
 
-The Percent Bar([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `PercentBar`) Function enables numeric columns to be viewed as a 'bar' where each cell is filled as a % of its value against the maximum value for the column.
+The Percent Bar Function enables numeric columns to be viewed as a 'bar' where each cell is filled as a % of its value against the maximum value for the column.
 
 In other words, the width of the bar is proportional to the value in the column.
 

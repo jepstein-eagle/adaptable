@@ -1,6 +1,6 @@
 # Calculated Column (AdaptableFunction)
 
-The Calculated Column ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CalculatedColumn`) enables the creation of special 'user-defined' columns which contain a custom 'Expression' which is evaluated at design-time per row.
+The Calculated Column Function enables the creation of special 'user-defined' columns which contain a custom 'Expression' which is evaluated at design-time per row.
 
 > Calculated Columns can either be provided at design-time (through `CalculatedColumns` in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html)) or at run-time through the UI (if Entitlements allow).
 

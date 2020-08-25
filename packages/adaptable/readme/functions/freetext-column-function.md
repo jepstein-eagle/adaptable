@@ -1,6 +1,6 @@
 # FreeText Column (AdaptableFunction)
 
-The FreeText Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FreeTextColumn`) Function enables the creation of 'special columns' for users to save comments and other text that is not part of the main data source.
+The FreeText Column Function enables the creation of 'special columns' for users to save comments and other text that is not part of the main data source.
 
 FreeText columns are similar to calculated columns in that they are not part of the Grid's datasource but are created by Users and stored with the Adaptable State for that user.
 

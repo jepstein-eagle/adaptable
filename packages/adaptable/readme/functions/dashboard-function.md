@@ -1,6 +1,6 @@
 # Dashboard (AdaptableFunction)
 
-The Dashboard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dashboard`) is the area above the Grid that contains tabs, toolbars, frequently used buttons and search box.
+The Dashboard is the area above the Grid that contains tabs, toolbars, frequently used buttons and search box.
 
 The Dashboard can be heavily customised so that it fits your needs both in terms of contents and visibility.
 

@@ -193,7 +193,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     let distinctColumnValues: any[] = this.props.Api.columnApi.getDistinctDisplayValuesForColumn(
       this.props.CurrentColumn.ColumnId
     );
-    distinctColumnValues = ArrayExtensions.sortArray(distinctColumnValues, SortOrder.Asc);
 
     return (
       <OverlayTrigger
