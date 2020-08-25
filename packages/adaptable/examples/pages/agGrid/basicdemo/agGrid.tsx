@@ -49,9 +49,16 @@ async function InitAdaptableDemo() {
     userFunctions: [
       {
         name: 'PermittedValuesForCountry',
-        type: 'PermittedValuesFetchFunction',
+        type: 'GetColumnValuesFunction',
         handler(column: AdaptableColumn) {
           return ['uk', 'israel', 'jordan', 'malawi'];
+        },
+      },
+      {
+        name: 'LookupValuesForCounterparty',
+        type: 'GetColumnValuesFunction',
+        handler(column: AdaptableColumn) {
+          return ['BAML', 'Nomura', 'UBS'];
         },
       },
     ],
@@ -62,7 +69,6 @@ async function InitAdaptableDemo() {
       // so it doubles up with the server values promise we have
 
       UserInterface: {
-        Revision: 6,
         PermittedValuesItems: [
           // for counterparty we will get a hard-coded list
           {
@@ -71,22 +77,54 @@ async function InitAdaptableDemo() {
             },
             PermittedValues: ['first', 'second', 'third'],
           },
+          // for status we will get a hard-coded list
+          {
+            Scope: {
+              ColumnIds: ['status'],
+            },
+            PermittedValues: ['pending', 'mistaken'],
+          },
           // for country we will call a function
           {
             Scope: {
               ColumnIds: ['country'],
             },
-            PermittedValuesFetchFunction: 'PermittedValuesForCountry',
+            GetColumnValuesFunction: 'PermittedValuesForCountry',
           },
           {
             Scope: {
-              DataType: 'Date',
+              DataTypes: ['Date'],
             },
             PermittedValues: [],
           },
         ],
-      },
 
+        EditLookUpItems: [
+          {
+            Scope: {
+              ColumnIds: ['country'],
+            },
+            LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
+          },
+          {
+            Scope: {
+              ColumnIds: ['counterparty'],
+            },
+            GetColumnValuesFunction: 'LookupValuesForCounterparty',
+          },
+
+          {
+            Scope: {
+              ColumnIds: ['status'],
+            },
+          },
+          {
+            Scope: {
+              ColumnIds: ['currency'],
+            },
+          },
+        ],
+      },
       Layout: {
         Revision: 25,
         CurrentLayout: 'Sigal',
@@ -145,9 +183,9 @@ async function InitAdaptableDemo() {
     });
   }, 10000);
 
-  api.eventApi.on('SearchChanged', () => {
-    //  console.log('search changed');
-    //  console.log(searchChangedArgs.data[0].id);
+  api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
   });
 }
 

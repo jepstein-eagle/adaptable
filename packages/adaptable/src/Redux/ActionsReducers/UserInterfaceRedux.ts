@@ -94,7 +94,7 @@ const initialUserInterfaceState: UserInterfaceState = {
   ColorPalette: UIHelper.getDefaultColors(),
   StyleClassNames: EMPTY_ARRAY,
   PermittedValuesItems: EMPTY_ARRAY,
-  EditLookUpColumns: EMPTY_ARRAY,
+  EditLookUpItems: EMPTY_ARRAY,
   RowStyles: EMPTY_ARRAY,
   ColumnMenuItems: EMPTY_ARRAY,
   ContextMenuItems: EMPTY_ARRAY,

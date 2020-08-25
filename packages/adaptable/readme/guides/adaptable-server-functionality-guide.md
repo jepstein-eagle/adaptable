@@ -19,6 +19,7 @@ However there are frequent cases where our users want to perform some actions on
 What AdapTable can do for each of these use cases is detailed below in turn.
 
 ## Server Validation
+
 AdapTable provides a powerful [Cell Validation](../functions/cell-validation-function.md) function which allows for the creation of Validation Rules that run each time a propsosed edit is made and disallow those which break a rule.
 
 But sometimes users require more sophisticated rules that run on the Server that contain complicated calculated or external lookups.
@@ -32,7 +33,7 @@ This includes a return value which can be:
 - nothing (either the edit works - or you want to 'swallow' it)
 - the old value (validation failed) 
 - a differnt value altogether (in advanced scenarios). 
-    
+
 The Promise can additionally include an optional Validation Message which, if present, will be displayed to the user.
 
 ### Server Validation Example
@@ -93,7 +94,7 @@ The items in Adaptable State that contain functions include:
 - Cell Summary
 - Custom Sort
 - Column and Context Menus
-- Named Filters
+- User Filters
 - Entitlements
 
 One consequence of this is that AdapTable, therefore, also enables developers to write functions that 'hand off' implementation to the server. 
@@ -138,9 +139,9 @@ The property can take one of 4 values:
 
 - **None** - the default; all searching and filtering will take place on the client.
 
-- **AdvancedSearch** - runs just the [`AdvancedSearch` Function](../functions/advanced-search-function.md) on the server but all other search (e.g. Quick Search) and filter (e.g. Column Filters) related Functions on the client. (This is a popular option).
+- **AdvancedSearch** - runs just the [`AdvancedSearch` Function](../functions/advanced-search-function.md) on the server but filtering will take place on the client. (This is a popular option).
 
-- **AllSearch** - runs all search and filtering functions on the server (i.e. Advanced Search, Quick Search, Column Filters etc)
+- **AllSearch** - runs all search and filtering functions on the server (i.e. Advanced Search, Column Filters etc)
 
 - **AllSearchandSort** - runs all search and filtering functions on the server and will also run all sorting on the server.
 

@@ -98,8 +98,8 @@ export {
   UserMenuItem,
   UserMenuItemShowPredicate,
   UserMenuItemClickedFunction,
-  PermittedValuesItem as PermittedValuesColumn,
-  EditLookUpColumn,
+  PermittedValuesItem,
+  EditLookUpItem,
   RowStyle,
 } from './PredefinedConfig/UserInterfaceState';
 

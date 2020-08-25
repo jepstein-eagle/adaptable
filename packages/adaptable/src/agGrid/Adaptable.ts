@@ -114,7 +114,7 @@ import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { Layout } from '../PredefinedConfig/LayoutState';
-import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
+import { EditLookUpItem, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid, createUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
@@ -3848,30 +3848,23 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??
-    const editLookUpCols:
-      | EditLookUpColumn[]
-      | undefined = this.api.userInterfaceApi.getUserInterfaceState().EditLookUpColumns;
-    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
+    const editLookUpItems:
+      | EditLookUpItem[]
+      | undefined = this.api.userInterfaceApi.getAllEditLookUpItems();
+    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpItems)) {
       const colDefs: (ColDef | ColGroupDef)[] = this.mapColumnDefs((colDef: ColDef) => {
-        editLookUpCols!.forEach((editLookUpColumn: EditLookUpColumn) => {
-          if (colDef.field === editLookUpColumn.ColumnId) {
-            colDef.cellEditor = 'agRichSelectCellEditor';
-            if (editLookUpColumn.LookUpValues) {
-              colDef.cellEditorParams = {
-                values: this.api.userInterfaceApi.getEditLookUpValuesForColumn(
-                  editLookUpColumn.ColumnId
-                ),
-              };
-            } else {
-              colDef.cellEditorParams = {
-                values: this.api.columnApi.getDistinctDisplayValuesForColumn(
-                  editLookUpColumn.ColumnId
-                ),
-              };
-            }
-          }
-        });
-
+        const editLookUpItem: EditLookUpItem = this.api.userInterfaceApi.getEditLookUpItemForColumnId(
+          colDef.colId
+        ); // need field?
+        if (editLookUpItem) {
+          colDef.cellEditor = 'agRichSelectCellEditor';
+          colDef.cellEditorParams = {
+            values: this.api.userInterfaceApi.getEditLookUpValuesForEditLookUpItem(
+              editLookUpItem,
+              colDef.colId
+            ),
+          };
+        }
         return colDef;
       });
 

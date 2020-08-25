@@ -416,7 +416,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     const adaptableSearchState: AdaptableSearchState = {
       dataSource: this.adaptable.api.dataSourceApi.getCurrentDataSource(),
       advancedSearch: this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch(),
-      quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
       columnFilters: this.adaptable.api.filterApi.getAllColumnFilter(),
       // should we be be getting other Filter info or is it enough just to send the column filters?
     };

@@ -1,6 +1,6 @@
 import {
   UserInterfaceState,
-  EditLookUpColumn,
+  EditLookUpItem,
   RowStyle,
   UserMenuItem,
   PermittedValuesItem,
@@ -61,13 +61,14 @@ export interface UserInterfaceApi {
 
   getPermittedValuesForColumn(columnId: string): any[];
 
-  getAllEditLookUpColumns(): EditLookUpColumn[];
+  getAllEditLookUpItems(): EditLookUpItem[];
 
-  getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn;
+  getEditLookUpItemForColumnId(columnId: string): EditLookUpItem | undefined;
 
-  getEditLookUpValuesForColumn(columnId: string): any[];
-
-  isEditLookUpColumn(columnId: string): boolean;
+  getEditLookUpValuesForEditLookUpItem(
+    editLookUpItem: EditLookUpItem,
+    columnId: string
+  ): any[] | undefined;
 
   clearRowStyles(): void;
 

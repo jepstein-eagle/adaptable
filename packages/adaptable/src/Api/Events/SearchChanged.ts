@@ -77,10 +77,6 @@ export interface AdaptableSearchState {
    */
   advancedSearch: string | undefined;
   /**
-   * Current live Quick Search text. (Value can be null / empty)
-   */
-  quickSearch: string | undefined;
-  /**
    * Details of any column filters **currently applied**
    */
   columnFilters: ColumnFilter[] | undefined;

@@ -13,11 +13,11 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * These include:
  *
- * - [PermittedValuesColumns](#permittedvaluescolumns): List of allowed values to show in a given column's filter (or Query Builder).
+ * - [PermittedValuesItems](#permittedvaluesitems): List of allowed values to show in a given column's filter (or Query Builder).
  *
  * - [RowStyles](#rowstyles): Defines how alternating (or all) rows in Adaptable should look.
  *
- * - [EditLookupColumns](#editlookupcolumns): Columns which will display a Dropdown when being edited.
+ * - [EditLookupItemss](#editlookupitems): Columns which will display a Dropdown when being edited.
  *
  * - [ColorPalette](#colorpalette): Colours available by default im style-related functions (e.g. Conditional Style)
  *
@@ -153,7 +153,7 @@ export interface UserInterfaceState extends ConfigState {
    * ```ts
    * export default {
    *  UserInterface: {
-   *     EditLookUpColumns: [
+   *     EditLookUpItems: [
    *     {
    *        ColumnId: 'country',
    *        LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
@@ -193,7 +193,7 @@ export interface UserInterfaceState extends ConfigState {
    *
    *  **Default Value**:  Empty array
    */
-  EditLookUpColumns?: EditLookUpColumn[];
+  EditLookUpItems?: EditLookUpItem[];
 
   /**
    * A list of RowStyles which allow you to specifiy how Adaptable should look.
@@ -492,13 +492,15 @@ export interface UserInterfaceState extends ConfigState {
 }
 
 /**
- * Interface that allows users to stipulate which values are allowed for a particular column.
+ * Interface that allows users to stipulate which values are allowed for a particular set of columns.
+ *
+ * Uses the `Scope` object to work out which columns are included.
  *
  * The values listed are those that will be shown in any Dropdown, in the filter for the Column and when using that Column in a Query.
  */
 export interface PermittedValuesItem extends AdaptableObject {
   /**
-   * The Scopeb
+   * The Scope
    */
   Scope: Scope;
 
@@ -510,7 +512,7 @@ export interface PermittedValuesItem extends AdaptableObject {
   /**
    * A function which will run each time Permitted values are required.
    */
-  PermittedValuesFetchFunction?: string;
+  GetColumnValuesFunction?: string;
 }
 
 /**
@@ -521,18 +523,20 @@ export interface PermittedValuesItem extends AdaptableObject {
  * However if Permitted Values have been set for that column then they will be displayed in the Dropdown instead.
  *
  */
-export interface EditLookUpColumn {
+export interface EditLookUpItem {
   /**
-   * Which Column will show the Edit Lookup
+   * Which Column(s) will show the Edit Lookup - those match Scope
    */
-  ColumnId: string;
+  Scope: Scope;
 
   /**
    * Any particular values to show in the Lookup - the list can be either hard-coded or returned by a function.
    *
    * If this is left empty then Adaptable will first get any Permitted Values if any, and failiing that will dynamically get the distinct values for the column.
    */
-  LookUpValues?: any[] | ((column: AdaptableColumn) => any[]);
+  LookUpValues?: any[];
+
+  GetColumnValuesFunction?: string;
 }
 
 /**
@@ -661,15 +665,14 @@ export interface UserMenuItemShowPredicate extends BaseUserFunction {
  * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
  *
  * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
- */
-export interface UserMenuItemLabelFunction extends BaseUserFunction {
+ */ export interface UserMenuItemLabelFunction extends BaseUserFunction {
   type: 'UserMenuItemLabelFunction';
   name: string;
   handler: (menuInfo: MenuInfo) => string;
 }
 
-export interface PermittedValuesFetchFunction extends BaseUserFunction {
-  type: 'PermittedValuesFetchFunction';
+export interface GetColumnValuesFunction extends BaseUserFunction {
+  type: 'GetColumnValuesFunction';
   name: string;
   handler: (column: AdaptableColumn) => any[];
 }

@@ -4,7 +4,7 @@ import { UserInterfaceApi } from '../UserInterfaceApi';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import {
   UserInterfaceState,
-  EditLookUpColumn,
+  EditLookUpItem,
   RowStyle,
   UserMenuItem,
   PermittedValuesItem,
@@ -77,13 +77,12 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     }
 
     // then try the function if that has been set
-    if (StringExtensions.IsNotNullOrEmpty(permittedValuesColumn.PermittedValuesFetchFunction)) {
+    if (StringExtensions.IsNotNullOrEmpty(permittedValuesColumn.GetColumnValuesFunction)) {
       if (abColumn) {
         const fn = this.adaptable.getUserFunctionHandler(
-          'PermittedValuesFetchFunction',
-          permittedValuesColumn.PermittedValuesFetchFunction
+          'GetColumnValuesFunction',
+          permittedValuesColumn.GetColumnValuesFunction
         );
-        console.log('fn', fn);
         let values = fn(abColumn);
         return values;
       }
@@ -103,37 +102,63 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     this.dispatchAction(UserInterfaceRedux.PermittedValuesColumnDelete(permittedValuesItem));
   }
 
-  public getAllEditLookUpColumns(): EditLookUpColumn[] {
-    return this.getAdaptableState().UserInterface.EditLookUpColumns;
+  public getAllEditLookUpItems(): EditLookUpItem[] {
+    return this.getAdaptableState().UserInterface.EditLookUpItems;
   }
 
-  public getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn {
-    let editLookUpColumns: EditLookUpColumn[] = this.getAllEditLookUpColumns();
-    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpColumns)) {
-      return editLookUpColumns.find(pc => pc.ColumnId == columnId);
+  public getEditLookUpItemForColumnId(columnId: string): EditLookUpItem | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(columnId);
+    let editLookUpItem: EditLookUpItem;
+    let editLookUpItems: EditLookUpItem[] = this.getAllEditLookUpItems();
+
+    editLookUpItem = editLookUpItems.find(
+      pv =>
+        ArrayExtensions.IsNotNullOrEmpty(pv.Scope.ColumnIds) &&
+        pv.Scope.ColumnIds.includes(abColumn.ColumnId)
+    );
+    if (editLookUpItem) {
+      return editLookUpItem;
+    }
+    // then we get any for the scope
+    editLookUpItem = editLookUpItems.find(el =>
+      el.Scope.DataTypes?.includes(abColumn.DataType as any)
+    );
+    if (editLookUpItem) {
+      console.log('this one', editLookUpItem);
+      return editLookUpItem;
     }
     return undefined;
   }
 
-  public getEditLookUpValuesForColumn(columnId: string): any[] {
-    let editLookUpColumn: EditLookUpColumn = this.getEditLookUpColumnForColumn(columnId);
-    if (!editLookUpColumn) {
-      return [];
+  public getEditLookUpValuesForEditLookUpItem(
+    editLookUpItem: EditLookUpItem,
+    columnId: string
+  ): any[] | undefined {
+    if (!editLookUpItem) {
+      return undefined;
     }
 
-    if (typeof editLookUpColumn.LookUpValues === 'function') {
-      let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
-        editLookUpColumn.ColumnId
-      );
-      return editLookUpColumn.LookUpValues(column);
-    } else {
-      return editLookUpColumn.LookUpValues;
+    // return any hard-coded look up values if they have been set
+    if (ArrayExtensions.IsNotNull(editLookUpItem.LookUpValues)) {
+      return editLookUpItem.LookUpValues;
     }
-  }
 
-  public isEditLookUpColumn(columnId: string): boolean {
-    let editLookUpColumnIds: string[] = this.getAllEditLookUpColumns().map(c => c.ColumnId);
-    return ArrayExtensions.ContainsItem(editLookUpColumnIds, columnId);
+    // then call the function if that has been set
+    if (StringExtensions.IsNotNullOrEmpty(editLookUpItem.GetColumnValuesFunction)) {
+      const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(columnId);
+      if (abColumn) {
+        const fn = this.adaptable.getUserFunctionHandler(
+          'GetColumnValuesFunction',
+          editLookUpItem.GetColumnValuesFunction
+        );
+        let values = fn(abColumn);
+        return values;
+      }
+    }
+
+    // if no hard-coded values or function provided then just get the distinct values for the column
+    // this will use the columnapi method that first looks for permitted values and then distinct values
+    return this.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(columnId);
   }
 
   public clearRowStyles(): void {

@@ -9,7 +9,7 @@ import {
   UserMenuItemClickedFunction,
   UserMenuItemShowPredicate,
   UserMenuItemLabelFunction,
-  PermittedValuesFetchFunction,
+  GetColumnValuesFunction,
 } from '../PredefinedConfig/UserInterfaceState';
 import { FilterPredicate } from '../PredefinedConfig/FilterState';
 import { CustomReportFunction } from '../PredefinedConfig/ExportState';
@@ -44,7 +44,7 @@ import { CustomReportFunction } from '../PredefinedConfig/ExportState';
  *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	    |
  *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item               |
  *  | `UserMenuItemLabelFunction`         | Retrieves a distinct value for the label of a Menu Item |
- *  | `PermittedValuesFetchFunction`      | Get Permitted Values for Column dropdown / editing      |
+ *  | `GetColumnValuesFunction`           | Get Columns Values (used in Lookups & Permitted Values)|
  *  | `CustomReportFunction`              | Runs a Custom Report                                    |
  *
  */
@@ -58,7 +58,7 @@ export type UserFunction =
   | UserMenuItemClickedFunction
   | UserMenuItemShowPredicate
   | UserMenuItemLabelFunction
-  | PermittedValuesFetchFunction
+  | GetColumnValuesFunction
   | CustomReportFunction;
 
 /**
