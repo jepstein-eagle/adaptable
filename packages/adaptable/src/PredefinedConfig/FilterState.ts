@@ -210,7 +210,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     id: 'Values',
     name: 'Values',
     type: 'FilterPredicate',
-    handler: ({ displayValue, inputs }) => inputs.includes(displayValue),
+    handler: ({ displayValue, inputs }) => inputs.length === 0 || inputs.includes(displayValue),
     iconText: 'IN',
     shortcuts: ['in', 'IN'],
   },

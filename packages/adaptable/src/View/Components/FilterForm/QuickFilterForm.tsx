@@ -12,7 +12,11 @@ import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Express
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
-import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
+import {
+  DataType,
+  LeafExpressionOperator,
+  SortOrder,
+} from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
@@ -28,6 +32,8 @@ import SimpleButton from '../../../components/SimpleButton';
 import Icon from '@mdi/react';
 import { mdiFilterOutline, mdiClose } from '@mdi/js';
 import { Flex, Box } from 'rebass';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { ListBoxFilterForm } from './ListBoxFilterForm';
 
 /*
 Rather than explain the code I will try to explain in an overview what this class is trying do.
@@ -61,6 +67,7 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
 
 export interface QuickFilterFormState {
   filter: ColumnFilter;
+  valuesDropdownVisible: boolean;
 }
 
 class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, QuickFilterFormState> {
@@ -68,6 +75,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     super(props);
     this.state = {
       filter: this.getFilterFromProps(props),
+      valuesDropdownVisible: false,
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps: QuickFilterFormProps) {
@@ -182,10 +190,14 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   renderValuesDropdown(filter: ColumnFilter) {
+    let distinctColumnValues: any[] = this.props.Api.columnApi.getDistinctDisplayValuesForColumn(
+      this.props.CurrentColumn.ColumnId
+    );
+    distinctColumnValues = ArrayExtensions.sortArray(distinctColumnValues, SortOrder.Asc);
+
     return (
       <OverlayTrigger
-        showEvent="click"
-        hideEvent="blur"
+        visible={this.state.valuesDropdownVisible}
         render={() => (
           <Flex
             p={2}
@@ -194,19 +206,56 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               fontSize: 'var(--ab-font-size-2)',
               border: '1px solid var(--ab-color-primarydark)',
               borderRadius: 'var(--ab__border-radius)',
-              background: 'var(--ab-color-primarylight)',
+              background: 'white',
               zIndex: 1000,
             }}
           >
-            Distinct values
+            <Flex mb={2}>
+              <SimpleButton
+                onClick={() => {
+                  this.setState({ valuesDropdownVisible: !this.state.valuesDropdownVisible });
+                }}
+              >
+                Close
+              </SimpleButton>
+              <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
+            </Flex>
+            <ListBoxFilterForm
+              CurrentColumn={this.props.CurrentColumn}
+              Columns={[]}
+              ColumnDistinctValues={distinctColumnValues}
+              DataType={this.props.CurrentColumn.DataType}
+              UiSelectedColumnValues={this.state.filter.Inputs}
+              useVendorStyle={true}
+              onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
+            />
           </Flex>
         )}
       >
-        <SimpleButton style={{ flex: 1 }}>
+        <SimpleButton
+          style={{
+            flex: 1,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+          onClick={() => {
+            this.setState({ valuesDropdownVisible: !this.state.valuesDropdownVisible });
+          }}
+        >
           {filter.Inputs.join(', ') || 'Select Values'}
         </SimpleButton>
       </OverlayTrigger>
     );
+  }
+
+  onColumnValuesChange(columnValues: any[]) {
+    const { filter } = this.state;
+
+    filter.PredicateId = 'Values';
+    filter.Inputs = columnValues;
+
+    this.updateFilter(filter);
   }
 
   selectColumnPredicate(predicateId: string) {
@@ -217,6 +266,10 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     filter.Inputs = (predicate.inputs ?? []).map(i => i.defaultValue ?? '');
 
     this.updateFilter(filter);
+
+    if (predicateId === 'Values') {
+      this.setState({ valuesDropdownVisible: true });
+    }
   }
 
   private updateFilter(filter: ColumnFilter) {
