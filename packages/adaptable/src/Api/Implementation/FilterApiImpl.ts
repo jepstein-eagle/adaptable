@@ -60,21 +60,9 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   public getFilterPredicatesForColumn(column: AdaptableColumn): FilterPredicate[] {
-    return this.getAllFilterPredicates().filter(predicate => {
-      if (predicate.scope === undefined) {
-        return true;
-      }
-
-      if (predicate.scope.DataTypes?.includes(column.DataType as any)) {
-        return true;
-      }
-
-      if (predicate.scope.ColumnIds?.includes(column.ColumnId)) {
-        return true;
-      }
-
-      return false;
-    });
+    return this.getAllFilterPredicates().filter(predicate =>
+      this.adaptable.api.columnApi.isColumnInScope(column, predicate.scope)
+    );
   }
 
   public getFilterPredicatesForColumnId(columnId: string): FilterPredicate[] {
