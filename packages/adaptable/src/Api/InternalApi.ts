@@ -102,9 +102,6 @@ export interface InternalApi {
   getChartService(): IChartService;
   getCalculatedColumnExpressionService(): ICalculatedColumnExpressionService;
 
-  getQuickSearchPredicate(): SystemFilterId | undefined;
-  getQuickSearchInputs(): any[] | undefined;
-
   // for general store accessibilty - not sure that this is right but...
   dispatchReduxAction(action: Action): void;
 }

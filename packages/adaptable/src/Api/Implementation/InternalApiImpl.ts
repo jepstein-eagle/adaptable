@@ -263,14 +263,6 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     return this.adaptable.CalculatedColumnExpressionService;
   }
 
-  public getQuickSearchPredicate(): SystemFilterId | undefined {
-    return this.getSystemState().QuickSearchPredicate;
-  }
-
-  public getQuickSearchInputs(): any[] | undefined {
-    return this.getSystemState().QuickSearchInputs;
-  }
-
   // General way to get to store from inside Adaptable...
   public dispatchReduxAction(action: Action): void {
     this.dispatchAction(action);

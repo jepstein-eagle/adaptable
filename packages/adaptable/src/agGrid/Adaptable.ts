@@ -995,14 +995,12 @@ export class Adaptable implements IAdaptable {
       }
       if (params.node && !params.node.group) {
         let quickSearchValue = api.quickSearchApi.getQuickSearchValue();
-        if (StringExtensions.IsNotNullOrEmpty(quickSearchValue)) {
-          const quickSearchPredicate = api.internalApi.getQuickSearchPredicate();
-          const quickSearchInputs = api.internalApi.getQuickSearchInputs();
 
+        if (StringExtensions.IsNotNullOrEmpty(quickSearchValue)) {
           const columnFilter: ColumnFilter = ObjectFactory.CreateColumnFilter(
             col.ColumnId,
-            quickSearchPredicate,
-            quickSearchInputs
+            'Contains',
+            [quickSearchValue]
           );
 
           console.log('colFilter', columnFilter);

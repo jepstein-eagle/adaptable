@@ -39,8 +39,4 @@ export interface SystemState extends InternalState, IPushPullState, Glue42State,
   SystemReports: Report[];
   ReportErrorMessage: string;
   LastAppliedShortCut: GridCell | undefined;
-
-  // used internally to manage creating quick search items faster
-  QuickSearchPredicate?: SystemFilterId;
-  QuickSearchInputs?: any[];
 }
