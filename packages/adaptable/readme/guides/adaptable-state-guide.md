@@ -263,11 +263,9 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
    ConditionalStyle: {
      ConditionalStyles: [
        {
-         ColumnId: 'ChangeLastOrder',
          Style: {
            ForeColor: '#008000',
          },
-         StyleApplied: 'Column',
          Expression: {
             FilterExpressions: [
              {
@@ -278,11 +276,9 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
          },
        },
        {
-         ColumnId: 'ChangeLastOrder',
          Style: {
            ForeColor: '#ff0000',
          },
-         StyleApplied: 'Column',
          Expression: {
            FilterExpressions: [
              {
@@ -298,7 +294,6 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
            FontStyle: 'Italic',
            ForeColor: '#000000',
          },
-         StyleApplied: 'Row',
          Expression: {
            RangeExpressions: [
              {

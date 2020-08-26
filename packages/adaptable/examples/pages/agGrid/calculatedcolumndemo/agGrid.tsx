@@ -157,7 +157,6 @@ let demoConfig: PredefinedConfig = {
           FontSize: undefined,
           ClassName: '',
         },
-        StyleApplied: 'Row',
         Expression: {
           ColumnValueExpressions: [
             {

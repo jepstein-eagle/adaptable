@@ -61,7 +61,6 @@ And we have supplied the detail grid Adaptable Options in the plugins section.  
                   Style: {
                     BackColor: '#ffffe0',
                   },
-                  StyleApplied: 'Row',
                   Expression: {
                     RangeExpressions: [
                       {

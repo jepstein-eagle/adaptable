@@ -79,24 +79,19 @@ let demoConfig: PredefinedConfig = {
         Style: {
           BackColor: '#ffffe0',
         },
-        StyleApplied: 'Row',
         SharedQueryId: '123-456-789',
         ExcludeGroupedRows: false,
       },
       {
-        ColumnId: 'changeOnYear',
         Style: {
           ForeColor: '#008000',
         },
-        StyleApplied: 'Column',
         Expression: '[changeOnYear] > 0',
       },
       {
-        ColumnId: 'changeOnYear',
         Style: {
           ForeColor: '#ff0000',
         },
-        StyleApplied: 'Column',
         Expression: '[changeOnYear] < 0',
       },
       {
@@ -105,7 +100,6 @@ let demoConfig: PredefinedConfig = {
           FontStyle: 'Italic',
           ForeColor: '#000000',
         },
-        StyleApplied: 'Row',
         Expression: '[notional] > 1400',
       },
     ],

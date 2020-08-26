@@ -31,7 +31,6 @@ import { TypeUuid } from './Uuid';
  *       Style: {
  *         ForeColor: '#008000',
  *       },
- *       StyleApplied: 'Column',
  *       Expression: {
  *         FilterExpressions: [
  *           {
@@ -42,11 +41,9 @@ import { TypeUuid } from './Uuid';
  *       },
  *     },
  *     {
- *       ColumnId: 'ChangeLastOrder',
  *       Style: {
  *        ForeColor: '#ff0000',
  *       },
- *       StyleApplied: 'Column',
  *       Expression: {
  *         FilterExpressions: [
  *           {
@@ -62,7 +59,6 @@ import { TypeUuid } from './Uuid';
  *         FontStyle: 'Italic',
  *         ForeColor: '#000000',
  *       },
- *       StyleApplied: 'Row',
  *       Expression: {
  *         RangeExpressions: [
  *           {
@@ -115,7 +111,7 @@ export interface ConditionalStyle extends QueryObject {
   /**
    * Whether to show the Style for Grouped Rows
    *
-   * Only applies where the `StyleApplied` is Row.
+   * Only applies where the `Scope` is undefined (i.e. 'Row').
    *
    * If unset, will default to false.
    */

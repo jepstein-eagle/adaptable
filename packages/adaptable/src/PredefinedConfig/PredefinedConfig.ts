@@ -270,11 +270,9 @@ import { SharedQueryState } from './SharedQueryState';
  *   ConditionalStyle: {
  *     ConditionalStyles: [
  *       {
- *         ColumnId: 'ChangeLastOrder',
  *         Style: {
  *           ForeColor: '#008000',
  *         },
- *         StyleApplied: 'Column',
  *         Expression: {
  *            FilterExpressions: [
  *             {
@@ -285,11 +283,9 @@ import { SharedQueryState } from './SharedQueryState';
  *         },
  *       },
  *       {
- *         ColumnId: 'ChangeLastOrder',
  *         Style: {
  *           ForeColor: '#ff0000',
  *         },
- *         StyleApplied: 'Column',
  *         Expression: {
  *           FilterExpressions: [
  *             {
@@ -305,7 +301,6 @@ import { SharedQueryState } from './SharedQueryState';
  *           FontStyle: 'Italic',
  *           ForeColor: '#000000',
  *         },
- *         StyleApplied: 'Row',
  *         Expression: {
  *           RangeExpressions: [
  *             {

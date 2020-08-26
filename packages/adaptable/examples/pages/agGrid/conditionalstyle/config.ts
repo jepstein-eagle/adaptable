@@ -20,7 +20,6 @@ export default {
           FontSize: undefined,
           ClassName: '',
         },
-        StyleApplied: 'Row',
         Expression: {
           ColumnValueExpressions: [
             {
