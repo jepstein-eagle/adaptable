@@ -5,7 +5,6 @@ import { EditableConfigEntityState } from '../Components/SharedProps/EditableCon
 import { connect } from 'react-redux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';

@@ -21,11 +21,9 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {

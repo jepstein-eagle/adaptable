@@ -16,7 +16,6 @@ import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInf
 import { GridRow } from '../../PredefinedConfig/Selection/GridRow';
 import ObjectFactory from '../ObjectFactory';
 import { IReportService } from './Interface/IReportService';
-import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';

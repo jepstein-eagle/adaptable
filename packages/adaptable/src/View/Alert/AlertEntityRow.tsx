@@ -2,7 +2,6 @@ import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';

@@ -21,12 +21,10 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import { createUuid } from '../../PredefinedConfig/Uuid';
@@ -65,8 +63,10 @@ class ConditionalStylePopupComponent extends React.Component<
         let columnId: string = this.props.PopupParams.columnId;
         if (this.props.PopupParams.action == 'New') {
           let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
-          _editedConditionalStyle.ColumnId = columnId;
-          _editedConditionalStyle.StyleApplied = 'Column';
+          _editedConditionalStyle.Scope = {
+            ColumnIds: [columnId],
+          };
+
           this.setState({
             EditedAdaptableObject: _editedConditionalStyle,
             WizardStartIndex: 1,
@@ -88,9 +88,9 @@ class ConditionalStylePopupComponent extends React.Component<
     ];
 
     let colItems: IColItem[] = [
-      { Content: 'Scope', Size: 2 },
+      { Content: 'Scope', Size: 4 },
       { Content: 'Style', Size: 2 },
-      { Content: 'Query', Size: 6 },
+      { Content: 'Query', Size: 4 },
       { Content: '', Size: 2 },
     ];
     let conditionalStyles = this.props.ConditionalStyles.map(
@@ -216,12 +216,6 @@ class ConditionalStylePopupComponent extends React.Component<
 
   canFinishWizard() {
     let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
-    if (
-      conditionalStyle.StyleApplied == 'Column' &&
-      StringExtensions.IsNullOrEmpty(conditionalStyle.ColumnId)
-    ) {
-      return false;
-    }
 
     if (
       this.state.UseSharedQuery &&

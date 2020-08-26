@@ -13,7 +13,6 @@ import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -161,7 +160,7 @@ export class PlusMinusSummaryComponent extends React.Component<
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
         StringExtensions.IsNullOrEmpty(plusMinus.Expression) ||
-          StringExtensions.IsNullOrEmpty(plusMinus.SharedQueryId))
+        StringExtensions.IsNullOrEmpty(plusMinus.SharedQueryId))
     );
   }
 

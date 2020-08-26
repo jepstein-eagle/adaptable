@@ -3,7 +3,6 @@ import { EntityListActionButtons } from '../Components/Buttons/EntityListActionB
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';

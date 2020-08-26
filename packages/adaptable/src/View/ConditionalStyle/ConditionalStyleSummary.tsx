@@ -14,7 +14,6 @@ import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
@@ -58,9 +57,8 @@ export class ConditionalStyleSummaryComponent extends React.Component<
         key={StrategyConstants.ConditionalStyleStrategyFriendlyName}
         FunctionName={StrategyConstants.ConditionalStyleStrategyId}
         StrategySummary={Helper.ReturnItemCount(
-          this.props.ConditionalStyles.filter(
-            item =>
-              item.ColumnId == this.props.SummarisedColumn.ColumnId && item.StyleApplied == 'Column'
+          this.props.ConditionalStyles.filter(item =>
+            this.props.Api.scopeApi.isColumnInScopeColumns(this.props.SummarisedColumn, item.Scope)
           ),
           StrategyConstants.ConditionalStyleStrategyFriendlyName
         )}
@@ -73,7 +71,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
     // existing items
     this.props.ConditionalStyles.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId && item.StyleApplied == 'Column') {
+      if (this.props.Api.scopeApi.isColumnInScopeColumns(this.props.SummarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={'CS' + index}
@@ -120,8 +118,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
-    configEntity.StyleApplied = 'Column';
+    configEntity.Scope = {
+      ColumnIds: [this.props.SummarisedColumn.ColumnId],
+    };
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -174,11 +173,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
       return false;
     }
 
-    return (
-      (conditionalStyle.StyleApplied == 'Row' ||
-        StringExtensions.IsNotNullOrEmpty(conditionalStyle.ColumnId)) &&
-      UIHelper.IsNotEmptyStyle(conditionalStyle.Style)
-    );
+    return UIHelper.IsNotEmptyStyle(conditionalStyle.Style);
   }
 }
 

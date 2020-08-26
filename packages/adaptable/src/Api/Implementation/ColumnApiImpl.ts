@@ -8,7 +8,7 @@ import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstan
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnApi } from '../ColumnApi';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
-import { Scope } from '../../PredefinedConfig/Common/Scope';
+import { Scope, ScopeDataType } from '../../PredefinedConfig/Common/Scope';
 
 export class ColumnApiImpl extends ApiBase implements ColumnApi {
   public getColumns(): AdaptableColumn[] {
@@ -293,7 +293,6 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
       CellValueType.DisplayValue,
       false
     );
-    console.log('called for', columnId);
     return this.sortDistinctValues(returnValues, columnId);
     /*
      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
@@ -409,6 +408,7 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
 
   public isColumnInScope(column: AdaptableColumn, scope: Scope | undefined) {
     if (scope === undefined) {
+      // keeping this for now ...
       return true;
     }
 
@@ -417,9 +417,56 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
     }
 
     if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
+      //   console.log('match', column.ColumnId);
       return true;
     }
 
     return false;
+  }
+
+  public getColumnsForScope(scope: Scope): AdaptableColumn[] {
+    return this.getColumns().filter(c => {
+      this.isColumnInScope(c, scope);
+    });
+  }
+
+  public scopeIsEmpty(scope: Scope): boolean {
+    return scope === undefined;
+  }
+  public scopeHasDataType(scope: Scope): boolean {
+    return scope !== undefined && 'DataTypes' in scope;
+  }
+  public scopeHasColumns(scope: Scope): boolean {
+    return scope !== undefined && 'ColumnIds' in scope;
+  }
+
+  public isColumnInScopeColumns(column: AdaptableColumn, scope: Scope): boolean {
+    return this.scopeHasColumns(scope) && this.isColumnInScope(column, scope);
+  }
+
+  public getScopeToString(scope: Scope): string {
+    if (scope == undefined) {
+      return 'All (row)';
+    }
+    if ('DataTypes' in scope) {
+      return 'DataTypes: ' + scope.DataTypes.join(',');
+    }
+    if ('ColumnIds' in scope) {
+      return 'Columns: ' + this.getFriendlyNamesFromColumnIds(scope.ColumnIds).join(',');
+    }
+  }
+
+  public getColumnIdsInScope(scope: Scope): string[] | undefined {
+    if (scope !== undefined && 'ColumnIds' in scope) {
+      return scope.ColumnIds;
+    }
+    return undefined;
+  }
+
+  public getDataTypesInScope(scope: Scope): ScopeDataType[] | undefined {
+    if (scope !== undefined && 'DataTypes' in scope) {
+      return scope.DataTypes;
+    }
+    return undefined;
   }
 }

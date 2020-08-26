@@ -55,7 +55,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
 
     this.getPermittedValuesItemsWithColumnScope().forEach(pv => {
       if (!permittedValuesItem) {
-        if (this.adaptable.api.columnApi.isColumnInScope(column, pv.Scope)) {
+        if (this.adaptable.api.scopeApi.isColumnInScope(column, pv.Scope)) {
           permittedValuesItem = pv;
         }
       }
@@ -67,7 +67,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
 
     this.getPermittedValuesItemsWithDataTypeScope().forEach(pv => {
       if (!permittedValuesItem) {
-        if (this.adaptable.api.columnApi.isColumnInScope(column, pv.Scope)) {
+        if (this.adaptable.api.scopeApi.isColumnInScope(column, pv.Scope)) {
           permittedValuesItem = pv;
         }
       }
@@ -136,7 +136,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
         return 'ColumnIds' in pv.Scope == true;
       })
       .find(pv => {
-        this.adaptable.api.columnApi.isColumnInScope(abColumn, pv.Scope);
+        this.adaptable.api.scopeApi.isColumnInScope(abColumn, pv.Scope);
       });
     if (editLookUpItem) {
       return editLookUpItem;
@@ -148,7 +148,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
         return 'DataTypes' in pv.Scope == true;
       })
       .find(pv => {
-        this.adaptable.api.columnApi.isColumnInScope(abColumn, pv.Scope);
+        this.adaptable.api.scopeApi.isColumnInScope(abColumn, pv.Scope);
       });
     if (editLookUpItem) {
       return editLookUpItem;

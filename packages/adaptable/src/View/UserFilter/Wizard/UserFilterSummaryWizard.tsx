@@ -1,10 +1,8 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';

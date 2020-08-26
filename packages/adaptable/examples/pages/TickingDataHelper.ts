@@ -25,9 +25,9 @@ export class TickingDataHelper {
     if (gridOptions != null && gridOptions.api != null) {
       console.log('here');
       const examplesHelper = new ExamplesHelper();
-      let useadaptableApiUpdateGridData: boolean = true;
+      let useadaptableApiUpdateGridData: boolean = false;
       let useadaptableApiUpdateGridDataBatch: boolean = false;
-      let useadaptableApiSetCellValue: boolean = false;
+      let useadaptableApiSetCellValue: boolean = true;
       let useRowNodeSetDataValue: boolean = false;
       let useRowNodeSetData: boolean = false;
       let gridOptionsUpdateRowData: boolean = false;
@@ -54,7 +54,7 @@ export class TickingDataHelper {
             //    trade.notional = 1200;
             //   } else {
             trade.notional = notional;
-            trade.changeOnYear = changeOnYear;
+            trade.currency = 'GBP';
             //    }
           } else {
             console.log(4);
@@ -75,6 +75,7 @@ export class TickingDataHelper {
           };
           if (notionalOnly) {
             trade.notional = notional;
+            trade.currency = 'GBP';
           } else {
             trade.price = price;
             trade.bid = bid;
@@ -94,6 +95,7 @@ export class TickingDataHelper {
         if (useadaptableApiSetCellValue) {
           if (notionalOnly) {
             adaptableApi.gridApi.setCellValue('notional', notional, tradeId, true);
+            adaptableApi.gridApi.setCellValue('currency', 'GBP', tradeId, true);
           } else {
             adaptableApi.gridApi.setCellValue('price', price, tradeId, true);
             adaptableApi.gridApi.setCellValue('bid', bid, tradeId, true);
@@ -110,6 +112,7 @@ export class TickingDataHelper {
           if (rowNode) {
             if (notionalOnly) {
               rowNode.setDataValue('notional', notional);
+              rowNode.setDataValue('currency', 'GBP');
             } else {
               rowNode.setDataValue('price', price);
               rowNode.setDataValue('bid', bid);
@@ -128,6 +131,7 @@ export class TickingDataHelper {
             const data = rowNode.data;
             if (notionalOnly) {
               data.notional = notional;
+              data.currency = 'GBP';
             } else {
               data.price = price;
               data.bid = bid;
@@ -144,6 +148,7 @@ export class TickingDataHelper {
         if (gridOptionsUpdateRowData) {
           if (notionalOnly) {
             trade.notional = notional;
+            trade.currency = 'GBP';
           } else {
             trade.price = price;
             trade.bid = bid;

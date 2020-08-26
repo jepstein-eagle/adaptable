@@ -8,7 +8,6 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -16,7 +15,6 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import {
-  EditableConfigEntityState,
   WizardStatus,
   EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
@@ -24,14 +22,12 @@ import { PlusMinusEntityRow } from './PlusMinusEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';

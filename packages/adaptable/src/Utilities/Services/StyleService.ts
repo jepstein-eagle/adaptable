@@ -155,53 +155,10 @@ export class StyleService implements IStyleService {
 
     // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
     const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
-    conditionalStyles
-      .filter(x => x.StyleApplied == 'Row')
-      .forEach(element => {
-        const styleName = this.CreateUniqueStyleName(
-          StrategyConstants.ConditionalStyleStrategyId,
-          element
-        );
-        this.addCSSRule(
-          `.${styleName}`,
-          `background-color: ${element.Style.BackColor} !important;color: ${
-            element.Style.ForeColor
-          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
-            element.Style.FontStyle
-          } !important;${
-            element.Style.FontSize
-              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                  element.Style.FontSize
-                )} !important`
-              : ''
-          }`
-        );
-      });
-    conditionalStyles
-      .filter(cs => cs.StyleApplied == 'Column')
-      .forEach(element => {
-        const styleName = this.CreateUniqueStyleName(
-          StrategyConstants.ConditionalStyleStrategyId,
-          element
-        );
-        this.addCSSRule(
-          `.${styleName}`,
-          `background-color: ${element.Style.BackColor} !important;color: ${
-            element.Style.ForeColor
-          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
-            element.Style.FontStyle
-          } !important;${
-            element.Style.FontSize
-              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                  element.Style.FontSize
-                )} !important`
-              : ''
-          }`
-        );
-      });
+    // lets worry about row ones later - need to get cols working first..
     /*
     conditionalStyles
-      .filter(cs => cs.StyleApplied == 'DataType')
+      .filter(x => x.Scope == undefined) // what is currently a row...
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -222,9 +179,29 @@ export class StyleService implements IStyleService {
           }`
         );
       });
-      */
+     */
+    conditionalStyles.forEach(cs => {
+      const styleName = this.CreateUniqueStyleName(
+        StrategyConstants.ConditionalStyleStrategyId,
+        cs
+      );
+      this.addCSSRule(
+        `.${styleName}`,
+        `background-color: ${cs.Style.BackColor} !important;color: ${
+          cs.Style.ForeColor
+        } !important;font-weight: ${cs.Style.FontWeight} !important;font-style: ${
+          cs.Style.FontStyle
+        } !important;${
+          cs.Style.FontSize
+            ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                cs.Style.FontSize
+              )} !important`
+            : ''
+        }`
+      );
+    });
 
-    // next we do Updated Rows - still not quite sure how this will work...
+    //Updated Rows - still not quite sure how this will work...
     const updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (updatedRowState.EnableUpdatedRow) {
       this.addCSSRule(
@@ -320,6 +297,7 @@ export class StyleService implements IStyleService {
     });
 
     // Conditional Style
+
     this.adaptable.adaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();

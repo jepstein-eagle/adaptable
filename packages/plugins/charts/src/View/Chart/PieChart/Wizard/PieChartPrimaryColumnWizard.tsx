@@ -7,8 +7,6 @@ import {
   CategoryChartDefinition,
   PieChartDefinition,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '@adaptabletools/adaptable/src/View/Components/Selectors/ColumnSelector';
 import { SelectionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';

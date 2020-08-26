@@ -23,7 +23,7 @@ export class ConditionalStyleSummaryWizard
 
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Scope', Value: this.getScope() },
+      { Key: 'Scope', Value: this.props.Api.scopeApi.getScopeToString(this.props.Data.Scope) },
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
       {
@@ -42,19 +42,6 @@ export class ConditionalStyleSummaryWizard
         header={StrategyConstants.ConditionalStyleStrategyFriendlyName}
       />
     );
-  }
-
-  private getScope(): string {
-    switch (this.props.Data.StyleApplied) {
-      case 'Row':
-        return 'Row';
-      case 'Column':
-        return (
-          'Column:' + this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
-        );
-      //  case 'DataType':
-      //     return this.props.Data.DataType + ' Columns';
-    }
   }
 
   private getExcludedGroupedRows(): string {

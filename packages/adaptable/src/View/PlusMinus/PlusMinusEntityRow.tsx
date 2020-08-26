@@ -6,8 +6,6 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from '../UIInterfaces';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { EntityRowItem } from '../Components/EntityRowItem';

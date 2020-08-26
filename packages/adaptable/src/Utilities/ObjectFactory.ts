@@ -39,7 +39,7 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
-import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
+import { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { Layout } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
@@ -457,9 +457,8 @@ export function CreateEmptyShortcut(): Shortcut {
 export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
-    ColumnId: undefined,
+    Scope: undefined, // will be row
     Style: CreateEmptyStyle(),
-    StyleApplied: 'Row',
     ExcludeGroupedRows: false,
     Expression: undefined,
     SharedQueryId: undefined,

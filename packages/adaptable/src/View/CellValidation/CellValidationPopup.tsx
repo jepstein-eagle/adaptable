@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -14,7 +13,6 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationWizard } from './Wizard/CellValidationWizard';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { CellValidationEntityRow } from './CellValidationEntityRow';
 import {
@@ -23,16 +21,13 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import SimpleButton from '../../components/SimpleButton';
-import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
-import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
   CellValidations: CellValidationRule[];

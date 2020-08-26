@@ -61,7 +61,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
   public getFilterPredicatesForColumn(column: AdaptableColumn): FilterPredicate[] {
     return this.getAllFilterPredicates().filter(predicate =>
-      this.adaptable.api.columnApi.isColumnInScope(column, predicate.scope)
+      this.adaptable.api.scopeApi.isColumnInScope(column, predicate.scope)
     );
   }
 

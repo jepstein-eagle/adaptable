@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';

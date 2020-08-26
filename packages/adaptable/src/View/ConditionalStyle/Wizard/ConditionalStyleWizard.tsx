@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard';
-import { ConditionalStyleAppliedWizard } from './ConditionalStyleAppliedWizard';
+import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
@@ -24,7 +24,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             {
               StepName: 'Scope',
               Index: 0,
-              Element: <ConditionalStyleAppliedWizard Api={this.props.Api} />,
+              Element: <ConditionalStyleScopeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Style',

@@ -80,18 +80,10 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-// Helpers
-
-import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper, LogAdaptableError } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
-
-// ag-Grid
-// if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
-import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableApiImpl } from '../Api/Implementation/AdaptableApiImpl';

@@ -1,6 +1,5 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StyleVisualItem } from '../Components/StyleVisualItem';
@@ -9,8 +8,6 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class ConditionalStyleEntityRow extends React.Component<
   SharedEntityRowProps<ConditionalStyleEntityRow>,
@@ -19,14 +16,11 @@ export class ConditionalStyleEntityRow extends React.Component<
   render(): any {
     let conditionalStyle: ConditionalStyle = this.props.AdaptableObject as ConditionalStyle;
 
-    let column: AdaptableColumn | undefined =
-      conditionalStyle.StyleApplied == 'Column'
-        ? this.props.api.columnApi.getColumnFromId(conditionalStyle.ColumnId!)
-        : undefined;
-
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
-    colItems[0].Content = <EntityRowItem Content={this.getScope(conditionalStyle)} />;
+    colItems[0].Content = (
+      <EntityRowItem Content={this.props.api.scopeApi.getScopeToString(conditionalStyle.Scope)} />
+    );
     colItems[1].Content = (
       <EntityRowItem Content={<StyleVisualItem Style={conditionalStyle.Style} />} />
     );
@@ -40,7 +34,6 @@ export class ConditionalStyleEntityRow extends React.Component<
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
-        overrideDisableEdit={!column && conditionalStyle.StyleApplied == 'Column'}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
@@ -49,16 +42,5 @@ export class ConditionalStyleEntityRow extends React.Component<
     colItems[3].Content = buttons;
 
     return <AdaptableObjectRow colItems={colItems} />;
-  }
-
-  private getScope(conditionalStyle: ConditionalStyle): string {
-    switch (conditionalStyle.StyleApplied) {
-      case 'Row':
-        return 'Row';
-      case 'Column':
-        return this.props.api.columnApi.getFriendlyNameFromColumnId(conditionalStyle.ColumnId);
-      //   case 'DataType':
-      //     return conditionalStyle.DataType + ' Columns';
-    }
   }
 }

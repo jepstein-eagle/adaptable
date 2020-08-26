@@ -33,6 +33,7 @@ import {
   mdiCheckboxBlankCircleOutline,
   mdiCheckboxBlankCircle,
 } from '@mdi/js';
+import { StyleScope } from './ConditionalStyleState';
 
 /**
  * The Predefined Configuration for Filters

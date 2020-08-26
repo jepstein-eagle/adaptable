@@ -1,6 +1,9 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { QueryObject } from './Common/QueryObject';
+import { Scope, ScopeColumnIds, ScopeDataTypes } from './Common/Scope';
+import { AdaptableObject } from './Common/AdaptableObject';
+import { TypeUuid } from './Uuid';
 
 /**
  * The Predefined Configuration for the Conditional Style function
@@ -87,26 +90,27 @@ export interface ConditionalStyleState extends ConfigState {
   ExcludeGroupedRows?: boolean;
 }
 
+export interface StyleScope {
+  ColumnIds?: string[];
+  DataTypes?: 'String' | 'Number' | 'Boolean' | 'Date';
+}
+
+export interface Test {
+  Result: string;
+}
+
 /**
  * The ConditionalStyle object used in the Conditional Style function.
  */
 export interface ConditionalStyle extends QueryObject {
-  /**
-   * The column which will be styled (if the scope is Column)
-   */
-  ColumnId?: string;
-
-  /**
-   * Where the Conditional Style is applied:  Either at Column or Row level.
-   */
-  StyleApplied?: 'Column' | 'Row'; //| 'DataType'
+  Scope?: Scope; // though later we should make mandatory with an alll!
 
   /**
    * The Style to apply when the rule is matched.
    *
    * The Style object defines fore and back colours, font size and other basic style properties.  See [Style](_src_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
-  Style?: AdaptableStyle;
+  Style: AdaptableStyle;
 
   /**
    * Whether to show the Style for Grouped Rows

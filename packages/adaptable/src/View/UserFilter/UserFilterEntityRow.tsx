@@ -1,6 +1,5 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';

@@ -12,7 +12,6 @@ import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
@@ -61,7 +60,7 @@ export class UserFilterSummaryComponent extends React.Component<
 
     // existing items
     userFilters.map((item, index) => {
-      if (this.props.Api.columnApi.isColumnInScope(this.props.SummarisedColumn, item.Scope)) {
+      if (this.props.Api.scopeApi.isColumnInScope(this.props.SummarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}

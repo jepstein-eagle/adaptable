@@ -1,12 +1,9 @@
 import * as React from 'react';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { BaseEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { IColItem } from '../UIInterfaces';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-
 import { EntityRowItem } from '../Components/EntityRowItem';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';

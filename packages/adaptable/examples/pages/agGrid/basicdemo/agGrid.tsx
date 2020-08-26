@@ -23,9 +23,10 @@ var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 20;
+  const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  const tickingDataHelper = new TickingDataHelper();
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
@@ -70,10 +71,65 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      Filter: {
+        Revision: 4,
+        UserFilters: [
+          {
+            Name: 'hello',
+            Scope: {
+              ColumnIds: ['currency'],
+            },
+          },
+        ],
+      },
       // this is for testing distinct values
       // we have made the function better but its stil per column and not a promise
       // so it doubles up with the server values promise we have
-
+      ConditionalStyle: {
+        Revision: 27,
+        ConditionalStyles: [
+          {
+            Style: {
+              BackColor: '#228B22',
+              ForeColor: undefined,
+              FontWeight: 'Bold',
+              FontStyle: 'Italic',
+              FontSize: undefined,
+              ClassName: '',
+            },
+            Expression: '[currency]="GBP"',
+          },
+          {
+            Scope: {
+              //  ColumnIds: ['notional', 'country', 'bid'],
+              DataTypes: ['String'],
+            },
+            Style: {
+              BackColor: '#0000ff',
+              ForeColor: '#228B22',
+              FontWeight: 'Bold',
+              FontStyle: 'Italic',
+              FontSize: undefined,
+              ClassName: '',
+            },
+            Expression: '[country]="Canada"',
+          },
+          {
+            Scope: {
+              ColumnIds: ['notional', 'country', 'bid'],
+            },
+            Style: {
+              BackColor: '#0000ff',
+              ForeColor: '#228B22',
+              FontWeight: 'Bold',
+              FontStyle: 'Italic',
+              FontSize: undefined,
+              ClassName: '',
+            },
+            Expression: '[currency]="USD"',
+          },
+        ],
+      },
       UserInterface: {
         PermittedValuesItems: [
           /*
@@ -200,7 +256,7 @@ async function InitAdaptableDemo() {
 
   api = await Adaptable.init(adaptableOptions);
 
-  //  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
+  //  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 1000, tradeCount);
 
   setTimeout(() => {
     api.eventApi.on('AdaptableReady', () => {
@@ -209,8 +265,8 @@ async function InitAdaptableDemo() {
   }, 1000);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    //   console.log('search changed');
-    //   console.log(searchChangedArgs.data[0].id);
+    console.log('search changed');
+    console.log(searchChangedArgs.data[0].id);
   });
 }
 

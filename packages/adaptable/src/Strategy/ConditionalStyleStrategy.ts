@@ -23,9 +23,6 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
       ScreenPopups.ConditionalStylePopup,
       adaptable
     );
-    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
-      this.handleDataSourceChanged(dataChangedInfo);
-    });
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
@@ -65,17 +62,17 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
       .getAllConditionalStyle()
-      .filter((cs: ConditionalStyle) => cs.ColumnId == specialColumnId);
+      .filter((cs: ConditionalStyle) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, cs.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
       ? conditionalStyles.length + ' Conditional Styles'
       : undefined;
   }
-
-  // Called when a single piece of data changes, ie. usually the result of an inline edit
-  protected abstract handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void;
 
   public abstract initStyles(): void;
 }

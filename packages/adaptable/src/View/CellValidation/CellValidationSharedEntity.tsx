@@ -1,6 +1,5 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import { Flex } from 'rebass';

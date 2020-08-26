@@ -1,7 +1,5 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { Flex } from 'rebass';

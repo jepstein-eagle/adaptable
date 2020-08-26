@@ -42,6 +42,7 @@ import { SharedQueryApi } from './SharedQueryApi';
 import { TeamSharingApi } from './TeamSharingApi';
 import { ColumnApi } from './ColumnApi';
 import { ApplicationApi } from './AppApi';
+import { ScopeApi } from './ScopeApi';
 
 /**
  *
@@ -121,8 +122,9 @@ import { ApplicationApi } from './AppApi';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
+ *  | [scopeApi](#scopeapiapi)                        | Many methods to manage the {@link Scope|Scope} object|
  *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
- *  |
+ *
  */
 export interface AdaptableApi {
   /**
@@ -347,6 +349,8 @@ export interface AdaptableApi {
   sharedQueryApi: SharedQueryApi;
 
   teamSharingApi: TeamSharingApi;
+
+  scopeApi: ScopeApi;
 
   /**
    * Api methods used *internally* within AdapTable.

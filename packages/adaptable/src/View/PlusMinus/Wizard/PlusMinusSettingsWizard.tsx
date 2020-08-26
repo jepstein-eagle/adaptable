@@ -4,9 +4,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';

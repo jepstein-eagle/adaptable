@@ -1,6 +1,6 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { Scope } from '../PredefinedConfig/Common/Scope';
+import { Scope, ScopeDataType } from '../PredefinedConfig/Common/Scope';
 
 /**
  * Provides access to a suite of column-related functions in AdapTable
@@ -85,6 +85,4 @@ export interface ColumnApi {
   getDistinctVisibleDisplayValuesForColumn(columnId: string): any[];
   getDistinctRawValuesForColumn(columnId: string): any[];
   getDistinctVisibleRawValuesForColumn(columnId: string): any[];
-
-  isColumnInScope(column: AdaptableColumn, scope: Scope): boolean;
 }

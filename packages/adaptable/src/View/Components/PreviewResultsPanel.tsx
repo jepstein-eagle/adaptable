@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';

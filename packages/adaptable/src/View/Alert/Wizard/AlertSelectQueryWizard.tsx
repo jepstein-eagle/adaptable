@@ -5,8 +5,6 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { AdaptablePopover } from '../../AdaptablePopover';
-
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';

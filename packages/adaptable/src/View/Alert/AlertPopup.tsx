@@ -22,7 +22,6 @@ import {
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
