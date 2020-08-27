@@ -74,7 +74,6 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['SmartEdit', 'Export', 'SystemStatus', 'BulkUpdate', 'QuickSearch', 'Query'],
     VisibleButtons: ['SmartEdit', 'Export', 'SystemStatus', 'BulkUpdate', 'QuickSearch', 'Query'],
   },
   Entitlements: {

@@ -4,8 +4,6 @@ The Dashboard is the area above the Grid that contains tabs, toolbars, frequentl
 
 The Dashboard can be heavily customised so that it fits your needs both in terms of contents and visibility.
 
-**Note**: In v.6.1 (March 2020) the Dashboard was signficantly updated and improved with some previous properties now deprecated.  
-
 >To facilitate this upgrade for existing users, a default Tab is created when AdapTable first loads after the upgrade, containing the Visible toolbars in the Adaptable State.
 
 ## Dashboard Visiblity Modes
@@ -41,7 +39,7 @@ The Dashboard contains the following elements:
 
 - **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
   
-    > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the (now deprecated) `VisibleToolbars`collection curently in Dashboard State; if there is none, then it will use the default set.
+    > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' containing the default set of toolbars (assuming the user's Entitlements grant access).
 
 - **Custom Buttons** - a group of buttons (of type `ToolbarButton`) which when clicked will trigger the `DashboardButtonClicked` event
   

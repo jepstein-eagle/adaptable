@@ -65,11 +65,7 @@ async function InitAdaptableDemo() {
   });
 }
 
-let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['CellSummary'],
-  },
-};
+let demoConfig: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

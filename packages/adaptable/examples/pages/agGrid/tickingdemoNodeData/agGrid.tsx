@@ -39,9 +39,6 @@ async function InitAdaptableDemo() {
 }
 
 let json: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Alert'],
-  },
   FlashingCell: {
     FlashingCells: [
       {

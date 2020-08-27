@@ -111,9 +111,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'SystemStatus'],
-  },
   SystemStatus: {
     ShowAlert: false,
   },

@@ -81,9 +81,6 @@ function listenToSearchChange(
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['DataSource'],
-  },
   DataSource: {
     DataSources: [
       {

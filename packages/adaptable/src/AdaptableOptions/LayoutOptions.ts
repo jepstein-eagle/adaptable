@@ -7,17 +7,11 @@
  *
  * ```ts
  * layoutOptions = {
- *  includeVendorStateInLayouts: true,
  *  autoSaveLayouts: false
  *};
  * ```
  */
 export interface LayoutOptions {
-  /**
-   * @deprecated
-   */
-  includeVendorStateInLayouts?: boolean; //TODO remove
-
   /**
    * Whether layouts should include details of which grouped rows are expanded when they save.
    *

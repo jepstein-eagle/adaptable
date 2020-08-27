@@ -78,9 +78,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout'],
-  },
   Application: {
     ApplicationDataEntries: [
       {

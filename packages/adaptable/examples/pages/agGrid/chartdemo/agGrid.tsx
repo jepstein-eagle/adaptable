@@ -46,9 +46,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Export', 'Layout', 'Chart'],
-  },
   ToolPanel: {
     VisibleToolPanels: ['Export', 'Layout', 'Chart'],
   },

@@ -37,9 +37,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Query'],
-  },
   Query: {
     SharedQueries: [
       {

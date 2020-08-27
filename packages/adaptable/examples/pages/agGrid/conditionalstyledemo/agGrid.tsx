@@ -59,7 +59,6 @@ async function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleButtons: ['ConditionalStyle'],
-    VisibleToolbars: ['Query', 'Export'],
   },
   Query: {
     SharedQueries: [

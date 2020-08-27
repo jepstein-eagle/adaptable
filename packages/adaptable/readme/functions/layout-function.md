@@ -10,12 +10,6 @@ Layouts are primarily sets of column visibility and order; they **do not include
 
 However Layouts can, optionally, also include column sorting, grouping and pivoting information in their definitions which will be included in the [Layout](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layout.html).
 
-#### Vendor Grid Info
-Layouts can also include underlying information about the Grid which will be automatically re-applied when the Layout loads.  
-
-This is done by setting the  `includeVendorStateInLayouts` property to true in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#includevendorstateinlayouts)
-
-> Vendor Layout Information is not available for all underlying grids.
 
 
 ### Creating Layouts
@@ -27,7 +21,6 @@ When creating a Layout in the UI, the Layout Wizard provides 2 choices:
 
 Alternatively Layouts can be defined in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html) - with the ability to provide full sorting, grouping and pivoting details
 
-> If providing a [Layout](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layout.html) in Predefined Config, make sure **not to populate** the `AdaptableGridInfo` and `VendorGridInfo` properties as these are for internal use only.
 
 
 ### Saving and Restoring Layouts
@@ -104,7 +97,7 @@ Yes. If the underlying grid supports multiple sorts, then the layout will as wel
 
 **Does a layout include information about column widths or pinning?**
 
-Yes - if the `includeVendorStateInLayouts` property is set to true in LayoutOptions in AdaptableOptions.  
+Yes - this can be provided in the Config and it will be saved automatically as the Layout changes.  
 
 **Can I copy what is currently in my grid as a layout?**
 

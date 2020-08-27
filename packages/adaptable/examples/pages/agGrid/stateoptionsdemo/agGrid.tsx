@@ -67,11 +67,7 @@ async function InitAdaptableDemo() {
   adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
-let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
-  },
-};
+let demoConfig: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

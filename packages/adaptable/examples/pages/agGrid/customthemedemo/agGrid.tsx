@@ -70,9 +70,6 @@ function listenToThemeChanged(args: ThemeChangedEventArgs) {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Theme'],
-  },
   Theme: {
     // if all 3 are commented out then we see both light theme and dark theme
     //  SystemThemes: ['dark'], // just dark

@@ -2,7 +2,6 @@ import { PredefinedConfig } from '../../../../src/types';
 
 export default {
   Dashboard: {
-    VisibleToolbars: [],
     VisibleButtons: ['ConditionalStyle'],
   },
   DataSource: {

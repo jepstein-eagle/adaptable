@@ -55,9 +55,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Theme'],
-  },
   Theme: {
     UserThemes: [
       {

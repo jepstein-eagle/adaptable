@@ -46,14 +46,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'Query'],
-    HomeToolbarTitle: 'working',
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
   Entitlements: {
     FunctionEntitlements: [
       {

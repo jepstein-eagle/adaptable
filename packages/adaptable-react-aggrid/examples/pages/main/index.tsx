@@ -313,7 +313,6 @@ const App = () => {
     },
 
     layoutOptions: {
-      includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
     },
     queryOptions: {

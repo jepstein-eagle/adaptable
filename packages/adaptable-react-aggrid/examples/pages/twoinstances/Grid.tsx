@@ -84,7 +84,6 @@ export default function Grid({}: GridProps) {
       adaptableToolPanelTitle: 'Grid Management',
     },
     layoutOptions: {
-      includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
     },
     filterOptions: {

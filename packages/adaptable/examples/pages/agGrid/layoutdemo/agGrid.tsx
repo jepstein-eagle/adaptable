@@ -50,7 +50,6 @@ async function InitAdaptableDemo() {
       },
     ],
     layoutOptions: {
-      includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
       //  autoSizeColumnsInLayout: true,
       autoSizeColumnsInPivotLayout: true,
@@ -75,7 +74,6 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout'],
     IsInline: true,
     Revision: 455,
   },

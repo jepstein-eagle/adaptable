@@ -141,7 +141,6 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     Revision: 8,
     CanFloat: false,
-    VisibleToolbars: ['Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
     IsInline: false,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
     CustomButtons: [
@@ -287,7 +286,8 @@ let demoConfig: PredefinedConfig = {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        Values: ['GBP', 'ZAR'],
+        PredicateId: 'In',
+        Inputs: ['GBP', 'ZAR'],
       },
     ],
   },

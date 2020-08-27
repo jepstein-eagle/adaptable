@@ -168,27 +168,6 @@ class PercentBarPopupComponent extends React.Component<
     );
   }
 
-  onMinimumValueChanged(percentBar: PercentBar, minimumValue: number): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.NegativeValue = minimumValue;
-    this.props.onEditPercentBar(clonedPercentBar);
-  }
-  onMaximumValueChanged(percentBar: PercentBar, maximumValue: number): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.PositiveValue = maximumValue;
-    this.props.onEditPercentBar(clonedPercentBar);
-  }
-  onPositiveColorChanged(percentBar: PercentBar, positiveColor: string): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.PositiveColor = positiveColor;
-    this.props.onEditPercentBar(clonedPercentBar);
-  }
-  onNegativeColorChanged(percentBar: PercentBar, negativeColor: string): void {
-    let clonedPercentBar: PercentBar = Helper.cloneObject(percentBar);
-    clonedPercentBar.NegativeColor = negativeColor;
-    this.props.onEditPercentBar(clonedPercentBar);
-  }
-
   onNewFromColumn(percentBar: PercentBar) {
     this.setState({
       EditedAdaptableObject: percentBar,

@@ -54,10 +54,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
-  },
-
   UserFilter: {
     UserFilters: [
       {

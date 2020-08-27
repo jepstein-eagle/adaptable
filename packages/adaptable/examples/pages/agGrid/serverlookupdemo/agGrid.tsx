@@ -55,11 +55,7 @@ async function InitAdaptableDemo() {
   adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
-let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout', 'Filter'],
-  },
-};
+let demoConfig: PredefinedConfig = {};
 
 function getValuesForColumn(columnName: string): IServerColumnValues | undefined {
   let returnVals: string[] = [];
