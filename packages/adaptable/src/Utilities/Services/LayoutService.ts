@@ -1,4 +1,3 @@
-import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
