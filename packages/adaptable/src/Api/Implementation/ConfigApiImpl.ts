@@ -18,7 +18,6 @@ import { CalendarState } from '../../PredefinedConfig/CalendarState';
 import { CalculatedColumnState } from '../../PredefinedConfig/CalculatedColumnState';
 import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
-import { AdvancedSearchState } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableStore';
@@ -41,6 +40,7 @@ import { Glue42State } from '../../PredefinedConfig/Glue42State';
 import { AdaptableSearchState, ScheduleState } from '../../types';
 import { AdaptableSortState } from '../Events/SearchChanged';
 import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { QueryState } from '../../PredefinedConfig/QueryState';
 
 export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configInit(): void {
@@ -80,7 +80,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   private getUserStateKeys() {
     return [
       'ActionColumn',
-      'AdvancedSearch',
+      'Query',
       'Alert',
       'Application',
       'BulkUpdate',
@@ -143,10 +143,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().ActionColumn)
           : this.getAdaptableState().ActionColumn;
-      case 'AdvancedSearch':
+      case 'Query':
         return returnJson
-          ? JSON.stringify(this.getAdaptableState().AdvancedSearch)
-          : this.getAdaptableState().AdvancedSearch;
+          ? JSON.stringify(this.getAdaptableState().Query)
+          : this.getAdaptableState().Query;
       case 'Alert':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Alert)
@@ -297,8 +297,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     return this.configGetUserStateByStateKey('ActionColumn', returnJson) as ActionColumnState;
   }
 
-  public configGetAdvancedSearchState(returnJson: boolean = false): AdvancedSearchState {
-    return this.configGetUserStateByStateKey('AdvancedSearch', returnJson) as AdvancedSearchState;
+  public configGetQueryState(returnJson: boolean = false): QueryState {
+    return this.configGetUserStateByStateKey('Query', returnJson) as QueryState;
   }
   public configGetAlertState(returnJson: boolean = false): AlertState {
     return this.configGetUserStateByStateKey('Alert', returnJson) as AlertState;
@@ -415,7 +415,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     // lets get the searchstate
     const adaptableSearchState: AdaptableSearchState = {
       dataSource: this.adaptable.api.dataSourceApi.getCurrentDataSource(),
-      advancedSearch: this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch(),
+      currentQuery: this.adaptable.api.queryApi.getCurrentQuery(),
       columnFilters: this.adaptable.api.filterApi.getAllColumnFilter(),
       // should we be be getting other Filter info or is it enough just to send the column filters?
     };

@@ -29,7 +29,7 @@ async function InitAdaptableDemo() {
     },
     primaryKey: 'tradeId',
     userName: 'demo user',
-    adaptableId: 'advanced search demo',
+    adaptableId: 'current query demo',
   };
   adaptableOptions.predefinedConfig = demoConfig;
 
@@ -38,9 +38,9 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['AdvancedSearch'],
+    VisibleToolbars: ['Query'],
   },
-  SharedQuery: {
+  Query: {
     SharedQueries: [
       {
         Name: 'US Banks',

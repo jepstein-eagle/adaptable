@@ -47,7 +47,7 @@ export class CellValidationSummaryWizard
   }
 
   private setExpressionDescription(cellValidation: CellValidationRule): string {
-    let expression = this.props.Api.sharedQueryApi.getExpressionForQueryObject(cellValidation);
+    let expression = this.props.Api.queryApi.getExpressionForQueryObject(cellValidation);
     return expression ? expression : 'No Expression';
   }
 

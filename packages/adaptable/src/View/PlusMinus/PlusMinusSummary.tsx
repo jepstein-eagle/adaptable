@@ -70,7 +70,7 @@ export class PlusMinusSummaryComponent extends React.Component<
             key={'PM' + index}
             Item1={'Nudge Value: ' + item.NudgeValue}
             Item2={this.wrapExpressionDescription(
-              this.props.Api.sharedQueryApi.getExpressionForQueryObject(item)
+              this.props.Api.queryApi.getExpressionForQueryObject(item)
             )}
             ConfigEnity={item}
             showShare={this.props.TeamSharingActivated}

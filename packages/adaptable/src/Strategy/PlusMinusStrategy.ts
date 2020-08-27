@@ -114,7 +114,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
           //we try to find a condition with an expression for that column that matches the record
           let plusMinusRulesWithExpression = rulesForColumn.filter(x => !x.IsDefaultNudge);
           for (let plusMinusRule of plusMinusRulesWithExpression) {
-            const expression: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+            const expression: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
               plusMinusRule
             );
 

@@ -1,19 +1,20 @@
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { SharedQueryApi } from '../SharedQueryApi';
-import { SharedQueryState, SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { QueryApi } from '../QueryApi';
+import { QueryState, SharedQuery } from '../../PredefinedConfig/QueryState';
 import { ApiBase } from './ApiBase';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { QueryObject } from '../../PredefinedConfig/Common/QueryObject';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 
-export class SharedQueryApiImpl extends ApiBase implements SharedQueryApi {
-  public getSharedQueryState(): SharedQueryState {
-    return this.getAdaptableState().SharedQuery;
+export class QueryApiImpl extends ApiBase implements QueryApi {
+  public getQueryState(): QueryState {
+    return this.getAdaptableState().Query;
   }
 
   public getAllSharedQuery(): SharedQuery[] {
-    return this.getSharedQueryState().SharedQueries;
+    return this.getQueryState().SharedQueries;
   }
 
   public getSharedQueryById(sharedQueryId: string): SharedQuery | undefined {
@@ -43,10 +44,22 @@ export class SharedQueryApiImpl extends ApiBase implements SharedQueryApi {
     return sharedQuery != null && sharedQuery != undefined;
   }
 
-  public showSharedQueryPopup(): void {
+  public showQueryPopup(): void {
     this.adaptable.api.internalApi.showPopupScreen(
-      StrategyConstants.SharedQueryStrategyId,
-      ScreenPopups.SharedQueryPopup
+      StrategyConstants.QueryStrategyId,
+      ScreenPopups.QueryPopup
     );
+  }
+
+  public setCurrentQuery(query: string): void {
+    this.dispatchAction(QueryRedux.CurrentQueryChange(query));
+  }
+
+  public clearCurrentQuery(): void {
+    this.dispatchAction(QueryRedux.CurrentQueryChange(''));
+  }
+
+  public getCurrentQuery(): string | undefined {
+    return this.getAdaptableState().Query.CurrentQuery;
   }
 }

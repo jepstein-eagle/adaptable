@@ -10,11 +10,9 @@ import { CalendarsPopup } from './Calendars/CalendarsPopup';
 import { FilterPopup } from './Filter/FilterPopup';
 import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup';
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup';
-import { SharedQueryPopup } from './SharedQuery/SharedQueryPopup';
+import { QueryPopup } from './Query/QueryPopup';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
-import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
-import { ExpandedQueryPopup } from './AdvancedSearch/ExpandedQueryPopup';
-import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
+import { ExpandedQueryPopup } from './Query/ExpandedQueryPopup';
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
@@ -49,7 +47,6 @@ import { ReminderPopup } from './Reminder/ReminderPopup';
 import { SchedulePopup } from './Schedule/SchedulePopup';
 import { SystemStatusPopup } from './SystemStatus/SystemStatusPopup';
 import { ConnectedComponent } from 'react-redux';
-import { AdvancedSearchToolPanel } from './AdvancedSearch/AdvancedSearchToolPanel';
 import { QuickSearchToolPanel } from './QuickSearch/QuickSearchToolPanel';
 import { DashboardToolPanel } from './Dashboard/DashboardToolPanel';
 import { LayoutToolPanel } from './Layout/LayoutToolPanel';
@@ -62,9 +59,10 @@ import { FilterToolPanel } from './Filter/FilterToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import { QueryToolbarControl } from './Query/QueryToolbarControl';
+import { QueryToolPanel } from './Query/QueryToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
-  AdvancedSearchPopup,
   ExpandedQueryPopup,
   AlertPopup,
   BulkUpdatePopup,
@@ -99,7 +97,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
-  SharedQueryPopup,
+  SharedQueryPopup: QueryPopup,
 };
 
 // here we put the dashboard control for each strategy
@@ -107,7 +105,7 @@ export const AdaptableDashboardFactory = new Map<
   AdaptableFunctionName,
   ConnectedComponent<any, any>
 >([
-  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyConstants.QueryStrategyId, QueryToolbarControl],
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
@@ -127,7 +125,7 @@ export const AdaptableToolPanelFactory = new Map<
   AdaptableFunctionName,
   ConnectedComponent<any, any>
 >([
-  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolPanel],
+  [StrategyConstants.QueryStrategyId, QueryToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],

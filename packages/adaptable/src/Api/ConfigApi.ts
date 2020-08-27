@@ -17,7 +17,6 @@ import { CalendarState } from '../PredefinedConfig/CalendarState';
 import { CalculatedColumnState } from '../PredefinedConfig/CalculatedColumnState';
 import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../PredefinedConfig/AlertState';
-import { AdvancedSearchState } from '../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../PredefinedConfig/ConfigState';
 import { PlusMinusState } from '../PredefinedConfig/PlusMinusState';
 import { ActionColumnState } from '../PredefinedConfig/ActionColumnState';
@@ -38,6 +37,7 @@ import { IPushPullState } from '../PredefinedConfig/IPushPullState';
 import { Glue42State } from '../PredefinedConfig/Glue42State';
 import { AdaptableSearchState, ScheduleState } from '../types';
 import { AdaptableSortState } from './Events/SearchChanged';
+import { QueryState } from '../PredefinedConfig/QueryState';
 
 export interface ConfigApi {
   configInit(): void;
@@ -76,7 +76,7 @@ export interface ConfigApi {
   ): ConfigState | string;
 
   configGetActionColumnState(returnJson: boolean): ActionColumnState;
-  configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
+  configGetQueryState(returnJson: boolean): QueryState;
   configGetAlertState(returnJson: boolean): AlertState;
   configGetApplicationState(returnJson: boolean): ApplicationState;
   configGetBulkUpdateState(returnJson: boolean): BulkUpdateState;

@@ -18,7 +18,7 @@ This ensures that users wont see an empty AdapTable instance but, rather, one fu
 
 ### Predefined Config Contents
 
-Predefined Config consists of a series of (nullable) properties that themselves each implement Config State (e.g. `AdvancedSearch`, `Layouts` etc.
+Predefined Config consists of a series of (nullable) properties that themselves each implement Config State (e.g. `ConditionalStyle`, `Layouts` etc.
 
 Users only need to provide config for those properties which they want intial state; within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
 
@@ -193,7 +193,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
     Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+            Toolbars: ['QuickSearch', 'DataSource', 'Query'],
           },
           {
             Name: 'Edit',

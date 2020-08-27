@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -30,7 +30,7 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import * as parser from '../../parser/src';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
@@ -45,7 +45,7 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
-  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
 
   onShare: (
     entity: AdaptableObject,
@@ -281,7 +281,7 @@ function mapDispatchToProps(
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId, description)

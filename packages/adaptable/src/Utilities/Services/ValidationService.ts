@@ -85,9 +85,7 @@ export class ValidationService implements IValidationService {
         // if the expression is satisfied check if validation rule passes; if it fails then return immediately (if its prevent) or put the rule in return array (if its warning).
         // if expression isnt satisfied then we can ignore the rule but it means that we need subsequently to check all the rules with no expressions
         for (let expressionRule of expressionRules) {
-          let expression = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
-            expressionRule
-          );
+          let expression = this.adaptable.api.queryApi.getExpressionForQueryObject(expressionRule);
 
           let isSatisfiedExpression: boolean =
             dataChangedInfo.RowNode != null &&
@@ -347,7 +345,7 @@ export class ValidationService implements IValidationService {
     );
     let returnMessage: string =
       columnFriendlyName + ': ' + this.createCellValidationDescription(cellValidation, columns);
-    let expressionDescription: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+    let expressionDescription: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
       cellValidation
     );
     if (expressionDescription) {

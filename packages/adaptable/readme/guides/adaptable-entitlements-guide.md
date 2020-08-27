@@ -51,7 +51,7 @@ There are 2 ways to provide Entitlements in Predefined Config:
         AccessLevel: 'Hidden',
       },
        {
-        FunctionName: 'AdvancedSearch',
+        FunctionName: 'Query',
         AccessLevel: 'Hidden',
       },
       {
@@ -70,7 +70,7 @@ There are 2 ways to provide Entitlements in Predefined Config:
 
  - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
 
- - **2 Hidden Entitlements**: Percent Bar and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
+ - **2 Hidden Entitlements**: Percent Bar and Query.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
 
  --------------
 
@@ -103,7 +103,7 @@ export default {
               case 'Shortcut':
                 return 'Hidden';
 
-              case 'AdvancedSearch':
+              case 'Query':
               case 'Filter':
               case 'UserFilter':
               case 'DataSource':

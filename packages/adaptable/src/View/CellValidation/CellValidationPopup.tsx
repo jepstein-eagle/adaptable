@@ -7,7 +7,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as CellValidationRedux from '../../Redux/ActionsReducers/CellValidationRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { CellValidationWizard } from './Wizard/CellValidationWizard';
@@ -26,7 +26,7 @@ import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import SimpleButton from '../../components/SimpleButton';
 import EmptyContent from '../../components/EmptyContent';
 import { createUuid } from '../../PredefinedConfig/Uuid';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidationPopupComponent> {
@@ -41,7 +41,7 @@ interface CellValidationPopupProps extends StrategyViewPopupProps<CellValidation
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
-  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
 }
 
 class CellValidationPopupComponent extends React.Component<
@@ -257,7 +257,7 @@ function mapDispatchToProps(
     onEditCellValidation: (cellValidationRule: CellValidationRule) =>
       dispatch(CellValidationRedux.CellValidationEdit(cellValidationRule)),
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

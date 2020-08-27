@@ -7,7 +7,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AlertWizard } from './Wizard/AlertWizard';
@@ -26,7 +26,7 @@ import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
@@ -34,7 +34,7 @@ interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
-  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -232,7 +232,7 @@ function mapDispatchToProps(
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId, description)

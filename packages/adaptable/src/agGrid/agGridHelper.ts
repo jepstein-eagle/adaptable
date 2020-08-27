@@ -18,7 +18,6 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
@@ -81,7 +80,7 @@ import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants'
 import { clamp } from 'lodash';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
-import { SharedQueryStrategy } from '../Strategy/SharedQueryStrategy';
+import { QueryStrategy } from '../Strategy/QueryStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -116,10 +115,6 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(adaptable));
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(adaptable));
     strategies.set(StrategyConstants.ActionColumnStrategyId, new ActionColumnStrategy(adaptable));
-    strategies.set(
-      StrategyConstants.AdvancedSearchStrategyId,
-      new AdvancedSearchStrategy(adaptable)
-    );
     strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(adaptable));
     strategies.set(
       StrategyConstants.CalculatedColumnStrategyId,
@@ -175,7 +170,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
-    strategies.set(StrategyConstants.SharedQueryStrategyId, new SharedQueryStrategy(adaptable));
+    strategies.set(StrategyConstants.QueryStrategyId, new QueryStrategy(adaptable));
 
     return strategies;
   }
@@ -914,14 +909,12 @@ export class agGridHelper {
         StringExtensions.IsNotNullOrEmpty(
           this.adaptable.api.quickSearchApi.getQuickSearchState().QuickSearchText
         ) ||
-        StringExtensions.IsNotNullOrEmpty(
-          this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch()
-        ) ||
+        StringExtensions.IsNotNullOrEmpty(this.adaptable.api.queryApi.getCurrentQuery()) ||
         ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.dataSourceApi.getAllDataSource())
       ) {
         LoggingHelper.LogWarning('Clearing existing Searches as "clearSearchesOnStartUp" is true');
         this.adaptable.api.quickSearchApi.clearQuickSearch();
-        this.adaptable.api.advancedSearchApi.clearAdvancedSearch();
+        this.adaptable.api.queryApi.clearCurrentQuery();
         this.adaptable.api.dataSourceApi.clearDataSource();
       }
     }

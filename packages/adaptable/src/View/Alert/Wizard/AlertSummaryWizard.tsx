@@ -55,7 +55,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   }
 
   private setExpressionDescription(alert: AlertDefinition): string {
-    let expression = this.props.Api.sharedQueryApi.getExpressionForQueryObject(alert);
+    let expression = this.props.Api.queryApi.getExpressionForQueryObject(alert);
     return expression ? expression : 'No Expression';
   }
 

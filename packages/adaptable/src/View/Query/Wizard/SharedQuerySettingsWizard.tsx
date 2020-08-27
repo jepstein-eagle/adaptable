@@ -4,7 +4,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../../PredefinedConfig/QueryState';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 import FormLayout, { FormRow } from '../../../components/FormLayout';

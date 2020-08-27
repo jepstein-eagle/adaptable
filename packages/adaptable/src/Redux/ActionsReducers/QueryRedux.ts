@@ -1,11 +1,12 @@
-import { SharedQueryState, SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { QueryState, SharedQuery } from '../../PredefinedConfig/QueryState';
 import * as Redux from 'redux';
-import { EMPTY_ARRAY } from '../../Utilities/Constants/GeneralConstants';
-import { createUuid } from '../../PredefinedConfig/Uuid';
+import { EMPTY_ARRAY, EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid, TypeUuid } from '../../PredefinedConfig/Uuid';
 
 export const SHARED_QUERY_ADD = 'SHARED_QUERY_ADD';
 export const SHARED_QUERY_EDIT = 'SHARED_QUERY_EDIT';
 export const SHARED_QUERY_DELETE = 'SHARED_QUERY_DELETE';
+export const CURRENT_QUERY_CHANGE = 'CURRENT_QUERY_CHANGE';
 
 export interface SharedQueryAction extends Redux.Action {
   sharedQuery: SharedQuery;
@@ -16,6 +17,10 @@ export interface SharedQueryAddAction extends SharedQueryAction {}
 export interface SharedQueryEditAction extends SharedQueryAction {}
 
 export interface SharedQueryDeleteAction extends SharedQueryAction {}
+
+export interface CurrentQueryChangeAction extends Redux.Action {
+  query: string | TypeUuid;
+}
 
 export const SharedQueryAdd = (sharedQuery: SharedQuery): SharedQueryAddAction => ({
   type: SHARED_QUERY_ADD,
@@ -32,14 +37,20 @@ export const SharedQueryDelete = (sharedQuery: SharedQuery): SharedQueryDeleteAc
   sharedQuery,
 });
 
-const initialSharedQueryState: SharedQueryState = {
+export const CurrentQueryChange = (query: string | TypeUuid): CurrentQueryChangeAction => ({
+  type: CURRENT_QUERY_CHANGE,
+  query,
+});
+
+const initialSharedQueryState: QueryState = {
   SharedQueries: EMPTY_ARRAY,
+  CurrentQuery: EMPTY_STRING,
 };
 
-export const SharedQueryReducer: Redux.Reducer<SharedQueryState> = (
-  state: SharedQueryState = initialSharedQueryState,
+export const QueryReducer: Redux.Reducer<QueryState> = (
+  state: QueryState = initialSharedQueryState,
   action: Redux.Action
-): SharedQueryState => {
+): QueryState => {
   let sharedQuerys: SharedQuery[];
 
   switch (action.type) {
@@ -73,7 +84,10 @@ export const SharedQueryReducer: Redux.Reducer<SharedQueryState> = (
         ),
       };
     }
-
+    case CURRENT_QUERY_CHANGE:
+      return Object.assign({}, state, {
+        CurrentQuery: (action as CurrentQueryChangeAction).query,
+      });
     default:
       return state;
   }

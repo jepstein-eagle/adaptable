@@ -110,7 +110,7 @@ class QuickSearchPopupComponent extends React.Component<
       <br />,
       <br />,
       'For a more powerful, multi-column, saveable search with a wide range of options, use ',
-      <i>Advanced Search</i>,
+      <i>Query</i>,
       '.',
     ];
 

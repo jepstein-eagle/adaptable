@@ -14,7 +14,7 @@ export class ExportSharedEntity extends React.Component<
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>{report.Name}</Flex>
-        <Flex flex={8}>{this.props.Api.sharedQueryApi.getExpressionForQueryObject(report)}</Flex>
+        <Flex flex={8}>{this.props.Api.queryApi.getExpressionForQueryObject(report)}</Flex>
       </Flex>
     );
   }

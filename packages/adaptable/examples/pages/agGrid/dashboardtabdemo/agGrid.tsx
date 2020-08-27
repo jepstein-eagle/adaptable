@@ -56,7 +56,7 @@ async function InitAdaptableDemo() {
             Toolbars: [
               'QuickSearch',
               'DataSource',
-              'AdvancedSearch',
+              'Query',
               'Deal Info (Detailed)',
               'Deal Info (Default)',
             ], //shouldnt see last one cos of entitlements
@@ -82,15 +82,12 @@ async function InitAdaptableDemo() {
         ],
       },
 
-      AdvancedSearch: {
-        Revision: 4,
-      },
       Entitlements: {
         Revision: 2,
         DefaultAccessLevel: 'Full',
         FunctionEntitlements: [
           {
-            FunctionName: 'AdvancedSearch',
+            FunctionName: 'Query',
             AccessLevel: 'Hidden',
           },
         ],

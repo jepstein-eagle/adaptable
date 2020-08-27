@@ -18,7 +18,7 @@ import { CustomToolbarConfiguredEventArgs } from './Events/CustomToolbarConfigur
  *
  * **AdapTable Events**
  *
- * - **SearchChanged** - fired when the state changes in any of the Search-related functions (e.g. Advanced Search, Quick Search, Filters, Data Source etc.)
+ * - **SearchChanged** - fired when the state changes in any of the Search-related functions (e.g. Current Query, Quick Search, Filters, Data Source etc.)
  *
  * - **SelectionChanged** - fired whenever the user changes the Cell or Rows selection
  *

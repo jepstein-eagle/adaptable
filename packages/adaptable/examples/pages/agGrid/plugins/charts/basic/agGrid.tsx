@@ -69,13 +69,13 @@ let demoConfig: PredefinedConfig = {
     Tabs: [
       {
         Name: 'Charting',
-        Toolbars: ['Chart', 'AdvancedSearch'],
+        Toolbars: ['Chart', 'Query'],
       },
     ],
   },
   ToolPanel: {
     Revision: 2,
-    VisibleToolPanels: ['Export', 'AdvancedSearch', 'Layout', 'Chart', 'Filter'],
+    VisibleToolPanels: ['Export', 'Query', 'Layout', 'Chart', 'Filter'],
   },
   SystemStatus: {
     // ShowAlert: false,

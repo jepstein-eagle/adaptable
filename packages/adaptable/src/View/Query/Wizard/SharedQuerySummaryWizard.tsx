@@ -6,7 +6,7 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../../PredefinedConfig/QueryState';
 
 export interface SharedQuerySummaryWizardProps extends AdaptableWizardStepProps<SharedQuery> {}
 
@@ -24,7 +24,7 @@ export class SharedQuerySummaryWizard extends React.Component<SharedQuerySummary
     return (
       <WizardSummaryPage
         KeyValuePairs={keyValuePairs}
-        header={StrategyConstants.SharedQueryStrategyFriendlyName}
+        header={StrategyConstants.QueryStrategyFriendlyName}
       />
     );
   }

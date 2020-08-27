@@ -5,7 +5,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { EntityRowItem } from '../Components/EntityRowItem';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 
 interface SharedQueryEntityRowProps<SharedQueryEntityRow>
   extends SharedEntityRowProps<SharedQueryEntityRow> {}
@@ -28,7 +28,7 @@ export class SharedQueryEntityRow extends React.Component<
         editClick={() => this.props.onEdit(sharedQuery)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.TeamSharingActivated}
-        EntityType={StrategyConstants.SharedQueryStrategyFriendlyName}
+        EntityType={StrategyConstants.QueryStrategyFriendlyName}
         AccessLevel={this.props.AccessLevel}
       />
     );

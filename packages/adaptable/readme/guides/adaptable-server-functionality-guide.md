@@ -139,7 +139,7 @@ The property can take one of 4 values:
 
 - **None** - the default; all searching and filtering will take place on the client.
 
-- **AdvancedSearch** - runs just the [`AdvancedSearch` Function](../functions/advanced-search-function.md) on the server but filtering will take place on the client. (This is a popular option).
+- **Query** - runs just the [`Query` Function](../functions/query-function.md) on the server but filtering will take place on the client. (This is a popular option).
 
 - **AllSearch** - runs all search and filtering functions on the server (i.e. Advanced Search, Column Filters etc)
 

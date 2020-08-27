@@ -1,8 +1,9 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 
-export interface SharedQueryState extends ConfigState {
+export interface QueryState extends ConfigState {
   SharedQueries?: SharedQuery[];
+  CurrentQuery?: string; // can it be a type?  perhaps it should be both?
 }
 
 export interface SharedQuery extends AdaptableObject {

@@ -73,7 +73,7 @@ These are the following AdapTable Functions that use Expressions - together with
 
 | Function  	      | Result                                                                                       |
 | --------  	      | ------                                                                                       | 
-| Advanced Search   | AdapTable displays only those rows that match the Advanced Search's Conditions and Criteria  | 
+| CurrentQuery      | AdapTable displays only those rows that match the Advanced Search's Conditions and Criteria  | 
 | Alerts 	          | The Alert is only triggered if the data change matches the Expression's Critieria.           | 
 | Cell Validation	  | Cell Validation Rule will be applied if Cell being edited matches the Expression's Critieria | 
 | Conditional Style | Style is only applied to Cells and Rows in Grid that that match the Expression's Critieria   | 
@@ -117,7 +117,7 @@ Not at the moment. But we might add this functionality in future releases.
 
 The following demos all contain Expressions:
 
-- [Advanced Search Demo](https://demo.adaptabletools.com/search/aggridadvancedsearchdemo)
+- [Current Query Demo](https://demo.adaptabletools.com/search/aggridcurrentquerydemo)
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
 - [Cell Validation Demo](https://demo.adaptabletools.com/edit/aggridcellvalidationdemo)
 - [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo)

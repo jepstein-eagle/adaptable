@@ -48,7 +48,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *   Tabs: [
  *          {
  *            Name: 'Search',
- *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *            Toolbars: ['QuickSearch', 'DataSource', 'Query'],
  *          },
  *          {
  *            Name: 'Edit',
@@ -284,7 +284,7 @@ export interface DashboardState extends ConfigState {
  *
  * You can listen to the **ToolbarVisibilityChanged** event published by AdapTable which provides the name of relevant toolbar (and the Tab in which it is contained).
  *
- * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
+ * The list of potential values for the Toolbar name are: "Alert", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "Query", "QuickSearch" and "Theme"
  *
  * **Custom Toolbar Rendering Example** (Using React)
  *

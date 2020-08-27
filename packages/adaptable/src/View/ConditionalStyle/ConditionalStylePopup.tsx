@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -26,7 +26,7 @@ import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 import * as parser from '../../parser/src';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
@@ -40,7 +40,7 @@ interface ConditionalStylePopupProps
   onEditConditionalStyle: (
     condiditionalStyleCondition: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -261,7 +261,7 @@ function mapDispatchToProps(
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

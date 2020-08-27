@@ -1,13 +1,13 @@
-import { SharedQueryState, SharedQuery } from '../PredefinedConfig/SharedQueryState';
+import { QueryState, SharedQuery } from '../PredefinedConfig/QueryState';
 import { TypeUuid } from '../PredefinedConfig/Uuid';
 import { QueryObject } from '../PredefinedConfig/Common/QueryObject';
 
-export interface SharedQueryApi {
+export interface QueryApi {
   /**
    * Retrieves the Shared Query section from Adaptable State
    *
    */
-  getSharedQueryState(): SharedQueryState;
+  getQueryState(): QueryState;
 
   /**
    * Gets all the Shared Query objects in Adaptable State
@@ -25,5 +25,11 @@ export interface SharedQueryApi {
   /**
    * Opens the Shared Query popup screen
    */
-  showSharedQueryPopup(): void;
+  showQueryPopup(): void;
+
+  setCurrentQuery(query: string): void;
+
+  clearCurrentQuery(): void;
+
+  getCurrentQuery(): string | undefined;
 }

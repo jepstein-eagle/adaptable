@@ -59,7 +59,7 @@ The Dashboard contains the following elements:
 
 AdapTable ships with a number of Function Toolbars.
 
-These are essentially collections of controls which provide easy and quick access a single Function (e.g. the 'Advanced Search' Toolbar contains a dropdown showing all Advanced Searches together with buttons to add / edit / delete them).
+These are essentially collections of controls which provide easy and quick access a single Function (e.g. the 'Export' Toolbar contains a dropdown showing all Reports together with buttons to add / edit / delete them).
 
 Toolbars are grouped into Tabs to give users full control over which Toolbars are visible.
 
@@ -100,7 +100,7 @@ Dashboard: {
   Tabs: [
     {
       Name: 'Search',
-      Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+      Toolbars: ['QuickSearch', 'DataSource', 'Query'],
     },
     {
       Name: 'Edit',

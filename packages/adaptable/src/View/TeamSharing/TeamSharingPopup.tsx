@@ -28,7 +28,7 @@ import { PlusMinusSharedEntity } from '../PlusMinus/PlusMinusSharedEntity';
 import { ShortcutSharedEntity } from '../Shortcut/ShortcutSharedEntity';
 import { UserFilterSharedEntity } from '../UserFilter/UserFilterSharedEntity';
 import { PercentBarSharedEntity } from '../PercentBar/PercentBarSharedEntity';
-import { SharedQuerySharedEntity } from '../SharedQuery/SharedQuerySharedEntity';
+import { SharedQuerySharedEntity } from '../Query/SharedQuerySharedEntity';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
@@ -149,7 +149,7 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
       case StrategyConstants.UserFilterStrategyId: {
         return <UserFilterSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
       }
-      case StrategyConstants.SharedQueryStrategyId: {
+      case StrategyConstants.QueryStrategyId: {
         return <SharedQuerySharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
       }
 

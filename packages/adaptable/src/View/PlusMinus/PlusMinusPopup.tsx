@@ -5,7 +5,7 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -28,7 +28,7 @@ import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 
@@ -40,7 +40,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
-  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -303,7 +303,7 @@ function mapDispatchToProps(
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

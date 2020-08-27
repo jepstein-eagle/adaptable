@@ -27,7 +27,7 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
         Key: 'Custom Rule',
         Value: this.props.Data.IsDefaultNudge
           ? 'None'
-          : this.props.Api.sharedQueryApi.getExpressionForQueryObject(this.props.Data),
+          : this.props.Api.queryApi.getExpressionForQueryObject(this.props.Data),
       },
     ];
 

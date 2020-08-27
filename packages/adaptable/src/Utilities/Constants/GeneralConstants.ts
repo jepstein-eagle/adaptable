@@ -81,7 +81,7 @@ export const ALERT_DEFAULT_HIGHLIGHT_ROW: boolean = true;
 /**
  * Constants for State (primarily for audit property events) - good idea?
  */
-export const CURRENT_ADVANCED_SEARCH_STATE_PROPERTY: string = 'CurrentAdvancedSearch';
+export const CURRENT_SHARED_QUERY_STATE_PROPERTY: string = 'CurrentSharedQuery';
 export const CURRENT_CHART_NAME_STATE_PROPERTY: string = 'CurrentChartName';
 export const BULK_UPDATE_VALUE_STATE_PROPERTY: string = 'BulkUpdateValue';
 export const CURRENT_CALENDAR_STATE_PROPERTY: string = 'CurrentCalendar';

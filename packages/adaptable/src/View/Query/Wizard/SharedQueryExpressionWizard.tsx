@@ -5,7 +5,7 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SharedQuery } from '../../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../../PredefinedConfig/QueryState';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import { defaultFunctions } from '../../../parser/src';
 import ExpressionEditor from '../../../components/ExpressionEditor';

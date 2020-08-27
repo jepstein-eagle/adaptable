@@ -59,9 +59,9 @@ async function InitAdaptableDemo() {
 let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleButtons: ['ConditionalStyle'],
-    VisibleToolbars: ['AdvancedSearch', 'Export'],
+    VisibleToolbars: ['Query', 'Export'],
   },
-  SharedQuery: {
+  Query: {
     SharedQueries: [
       {
         Uuid: '123-456-789',
@@ -70,9 +70,7 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
-  AdvancedSearch: {
-    CurrentAdvancedSearch: '[currency]="EUR"',
-  },
+
   ConditionalStyle: {
     ConditionalStyles: [
       {

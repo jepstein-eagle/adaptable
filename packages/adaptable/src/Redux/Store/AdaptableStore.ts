@@ -23,7 +23,6 @@ import * as UpdatedRowRedux from '../ActionsReducers/UpdatedRowRedux';
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux';
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux';
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux';
-import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux';
 import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux';
 import * as FilterRedux from '../ActionsReducers/FilterRedux';
 import * as SystemFilterRedux from '../ActionsReducers/FilterRedux';
@@ -45,7 +44,7 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
-import * as SharedQueryRedux from '../ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../ActionsReducers/QueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -62,7 +61,6 @@ import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import {
-  CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
   BULK_UPDATE_VALUE_STATE_PROPERTY,
   CURRENT_CALENDAR_STATE_PROPERTY,
   SUMMARY_OPERATION_STATE_PROPERTY,
@@ -79,6 +77,7 @@ import {
   CURRENT_CHART_NAME_STATE_PROPERTY,
   CURRENT_REPORT_STATE_PROPERTY,
   EMPTY_STRING,
+  CURRENT_SHARED_QUERY_STATE_PROPERTY,
 } from '../../Utilities/Constants/GeneralConstants';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
 import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
@@ -198,7 +197,6 @@ This is the main store for Adaptable State
       CellSummary: CellSummaryRedux.CellSummaryReducer,
 
       // Reducers for Persisted State
-      AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
       Alert: AlertRedux.AlertReducer,
       Application: ApplicationRedux.ApplicationReducer,
       BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
@@ -225,7 +223,7 @@ This is the main store for Adaptable State
       Theme: ThemeRedux.ThemeReducer,
       ToolPanel: ToolPanelRedux.ToolPanelReducer,
       UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
-      SharedQuery: SharedQueryRedux.SharedQueryReducer,
+      Query: QueryRedux.QueryReducer,
     };
 
     // allow plugins to participate in the root reducer
@@ -243,7 +241,7 @@ This is the main store for Adaptable State
       switch (action.type) {
         case RESET_STATE:
           //This trigger the persist of the state with nothing
-          state.AdvancedSearch = undefined;
+          state.Query = undefined;
           state.Alert = undefined;
           state.BulkUpdate = undefined;
           state.CalculatedColumn = undefined;
@@ -458,37 +456,31 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
         switch (action.type) {
           /*
           **********************
-           ADVANCED SEARCH
+           SHARED QUERY
           **********************
            */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchChangeAction;
+          case QueryRedux.CURRENT_QUERY_CHANGE: {
+            const actionTyped = action as QueryRedux.CurrentQueryChangeAction;
 
             let changedDetails: StatePropertyChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.Query,
               diffInfo: diff,
-              propertyName: CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
-              oldValue: oldState.AdvancedSearch.CurrentAdvancedSearch,
+              propertyName: CURRENT_SHARED_QUERY_STATE_PROPERTY,
+              oldValue: oldState.Query.CurrentQuery,
               newValue: actionTyped.query,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
 
-          /*
-          **********************
-           SHARED QUERY
-          **********************
-           */
-
-          case SharedQueryRedux.SHARED_QUERY_ADD: {
-            const actionTyped = action as SharedQueryRedux.SharedQueryAddAction;
+          case QueryRedux.SHARED_QUERY_ADD: {
+            const actionTyped = action as QueryRedux.SharedQueryAddAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.SharedQueryStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.SharedQuery,
+              state: newState.Query,
               diffInfo: diff,
               objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Created,
@@ -496,12 +488,12 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case SharedQueryRedux.SHARED_QUERY_EDIT: {
-            const actionTyped = action as SharedQueryRedux.SharedQueryEditAction;
+          case QueryRedux.SHARED_QUERY_EDIT: {
+            const actionTyped = action as QueryRedux.SharedQueryEditAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.SharedQueryStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.SharedQuery,
+              state: newState.Query,
               diffInfo: diff,
               objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Updated,
@@ -509,12 +501,12 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case SharedQueryRedux.SHARED_QUERY_DELETE: {
-            const actionTyped = action as SharedQueryRedux.SharedQueryDeleteAction;
+          case QueryRedux.SHARED_QUERY_DELETE: {
+            const actionTyped = action as QueryRedux.SharedQueryDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.SharedQueryStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.SharedQuery,
+              state: newState.Query,
               diffInfo: diff,
               objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Deleted,
@@ -1620,7 +1612,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
 // this function is responsible for sending any  user-action functions to the audit
 // there are relatively few - primarily relating to search and edit functions
 // note it does not capture when something happens automatically as the result of a function (e.g. if a conditional style gets applied because a value has changed)
-// e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
+// e.g. this should say when the current Shared Query has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
 var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
@@ -1642,11 +1634,11 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
         // Note: not done custom sort as not sure how!
         // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
-          case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchChangeAction;
+          case QueryRedux.CURRENT_QUERY_CHANGE: {
+            const actionTyped = action as QueryRedux.CurrentQueryChangeAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               action: action.type,
               info: actionTyped.query,
               data: actionTyped.query,
@@ -1931,26 +1923,12 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
            * Use Case: User has deleted a Shared Query
            * Action: Need to check whether it is referenced elsewhere
            */
-          case SharedQueryRedux.SHARED_QUERY_DELETE: {
-            const actionTyped = action as SharedQueryRedux.SharedQueryDeleteAction;
+          case QueryRedux.SHARED_QUERY_DELETE: {
+            const actionTyped = action as QueryRedux.SharedQueryDeleteAction;
             let ret: any;
             if (!adaptable.isSharedQueryReferenced(actionTyped.sharedQuery.Uuid)) {
               ret = next(action);
             }
-            return ret;
-          }
-
-          /*******************
-           * ADVANCED SEARCH ACTIONS
-           *******************/
-
-          /**
-           * Use Case: User has selected an Advanced Search
-           * Action: Apply Grid Filtering
-           */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE: {
-            let ret = next(action);
-            adaptable.applyGridFiltering();
             return ret;
           }
 
@@ -2845,7 +2823,7 @@ export function getFunctionAppliedReduxActions(): string[] {
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout
   return [
     ActionColumnRedux.ACTION_COLUMN_APPLY,
-    AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE,
+    QueryRedux.CURRENT_QUERY_CHANGE,
     CalendarRedux.CALENDAR_SELECT,
     ChartRedux.CHART_DEFINITION_SELECT,
     DataSourceRedux.DATA_SOURCE_SELECT,

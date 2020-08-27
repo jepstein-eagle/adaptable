@@ -91,7 +91,7 @@ export interface AuditOptions {
   /**
    * Whether to audit function events in Adaptable.
    *
-   * These are events that happen when a Function does something (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)
+   * These are events that happen when a Function does something (e.g. 'Current Query Changed', 'Smart Edit Applied' etc.)
    *
    * **Default Value: all destinations are false**
    */

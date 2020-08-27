@@ -494,7 +494,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
         colItems,
         'auditFunctionEvents',
         options.auditOptions.auditFunctionEvents == true ? 'Yes' : 'No',
-        " Whether to audit function events in Adaptable (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)"
+        " Whether to audit function events in Adaptable (e.g. 'Current Query Changed', 'Smart Edit Applied' etc.)"
       )
     );
     returnRows.push(

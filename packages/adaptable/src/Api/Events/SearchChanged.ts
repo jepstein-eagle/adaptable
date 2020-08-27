@@ -36,7 +36,7 @@ export interface SearchChangedInfo extends AdaptableEventInfo {
    */
   searchChangedTrigger:
     | 'DataSource'
-    | 'AdvancedSearch'
+    | 'CurrentQuery'
     | 'QuickSearch'
     | 'Filter'
     | 'DataChange'
@@ -73,9 +73,9 @@ export interface AdaptableSearchState {
    */
   dataSource: DataSource | undefined;
   /**
-   * Current Advanced Search (if any selected)
+   * Current Query
    */
-  advancedSearch: string | undefined;
+  currentQuery: string | undefined;
   /**
    * Details of any column filters **currently applied**
    */

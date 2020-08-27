@@ -58,7 +58,7 @@ class DashboardPopupComponent extends React.Component<
   render() {
     // this should be elswhere but we shouldnt use state as the property is deprecated but still could be used.
     const availableToolbars: any[] = [
-      'AdvancedSearch',
+      'Query',
       'Alert',
       'BulkUpdate',
       'CellSummary',

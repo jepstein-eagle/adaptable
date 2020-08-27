@@ -107,7 +107,7 @@ Once built AdapTable will save the state as it does for developer-built instance
 
 For use when ag-Grid has been set to Master / Detail mode.
 
-It allows each individual detail grid to be an instance of AdapTable and for them all to share AdapTable objects (e.g. Advanced Searches or Conditional Styles).
+It allows each individual detail grid to be an instance of AdapTable and for them all to share AdapTable objects (e.g. Reports or Conditional Styles).
 
 ## ipushpull Plugin
 

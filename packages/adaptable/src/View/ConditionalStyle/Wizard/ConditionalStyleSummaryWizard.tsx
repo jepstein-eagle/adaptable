@@ -32,7 +32,7 @@ export class ConditionalStyleSummaryWizard
       },
       {
         Key: 'Expression',
-        Value: this.props.Api.sharedQueryApi.getExpressionForQueryObject(this.props.Data),
+        Value: this.props.Api.queryApi.getExpressionForQueryObject(this.props.Data),
       },
     ];
 

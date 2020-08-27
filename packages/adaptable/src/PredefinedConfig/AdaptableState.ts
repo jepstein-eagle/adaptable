@@ -1,7 +1,6 @@
 import { PopupState } from './PopupState';
 import { GridState } from './GridState';
 import { SystemState } from './SystemState';
-import { AdvancedSearchState } from './AdvancedSearchState';
 import { AlertState } from './AlertState';
 import { BulkUpdateState } from './BulkUpdateState';
 import { CalculatedColumnState } from './CalculatedColumnState';
@@ -37,7 +36,7 @@ import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
-import { SharedQueryState } from './SharedQueryState';
+import { QueryState } from './QueryState';
 
 /**
  * The main state object that Adaptable persists
@@ -69,7 +68,6 @@ export interface AdaptableState {
   CellSummary: CellSummaryState;
 
   // Set at design time and / or run time => only state which is persisted
-  AdvancedSearch: AdvancedSearchState;
   Alert: AlertState;
   BulkUpdate: BulkUpdateState;
   CalculatedColumn: CalculatedColumnState;
@@ -97,5 +95,5 @@ export interface AdaptableState {
   Theme: ThemeState;
   ToolPanel: ToolPanelState;
   UpdatedRow: UpdatedRowState;
-  SharedQuery: SharedQueryState;
+  Query: QueryState;
 }

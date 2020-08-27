@@ -33,7 +33,7 @@ To Do
 
 **Can a User Filter include more than one column?**
 
-No.  A User Filter references just one column so that it can then be re-used in other queries and made available in the Column Filter dropdown.  You can create multi-column queries but they are Advanced Searches.
+No.  A User Filter references just one column so that it can then be re-used in other queries and made available in the Column Filter dropdown.  You can create multi-column queries but they are Queries.
 
 Can we ship with our own User Filters?****
 

@@ -5,14 +5,14 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
-import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import SimpleButton from '../../components/SimpleButton';
 import ExpressionEditor from '../../components/ExpressionEditor';
 import * as parser from '../../parser/src';
 
 interface ExpandedQueryPopupComponentProps
   extends StrategyViewPopupProps<ExpandedQueryPopupComponent> {
-  onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
+  onChangeCurrentQuery: (expression: string) => QueryRedux.CurrentQueryChangeAction;
 }
 
 export interface ExpandedQueryPopupState {
@@ -63,7 +63,7 @@ class ExpandedQueryPopupComponent extends React.Component<
           padding={2}
           margin={2}
           onClick={() => {
-            this.props.onChangeAdvancedSearch(this.state.expression);
+            this.props.onChangeCurrentQuery(this.state.expression);
             this.props.onClosePopup();
           }}
           disabled={!isExpressionValid}
@@ -85,8 +85,8 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<ExpandedQueryPopupComponentProps> {
   return {
-    onChangeAdvancedSearch: (expression: string) =>
-      dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
+    onChangeCurrentQuery: (expression: string) =>
+      dispatch(QueryRedux.CurrentQueryChange(expression)),
   };
 }
 

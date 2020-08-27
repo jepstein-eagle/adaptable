@@ -9,8 +9,7 @@ import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
-export interface FilterEntityRowProps<AdvancedSearchEntityRow>
-  extends BaseEntityRowProps<AdvancedSearchEntityRow> {
+export interface FilterEntityRowProps<FilterEntityRow> extends BaseEntityRowProps<FilterEntityRow> {
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
   ColumnFilter: ColumnFilter;

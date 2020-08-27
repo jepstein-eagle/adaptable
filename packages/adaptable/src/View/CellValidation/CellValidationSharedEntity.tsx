@@ -14,7 +14,7 @@ export class CellValidationSharedEntity extends React.Component<
   render(): any {
     let cellVal: CellValidationRule = this.props.Entity as CellValidationRule;
 
-    let expression = this.props.Api.sharedQueryApi.getExpressionForQueryObject(cellVal);
+    let expression = this.props.Api.queryApi.getExpressionForQueryObject(cellVal);
     let expressionString: string = expression ? expression : 'No Expression';
 
     return (

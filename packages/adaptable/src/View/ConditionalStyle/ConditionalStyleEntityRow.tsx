@@ -26,7 +26,7 @@ export class ConditionalStyleEntityRow extends React.Component<
     );
     colItems[2].Content = (
       <EntityRowItem
-        Content={this.props.api.sharedQueryApi.getExpressionForQueryObject(conditionalStyle)}
+        Content={this.props.api.queryApi.getExpressionForQueryObject(conditionalStyle)}
       />
     );
     let buttons: any = (

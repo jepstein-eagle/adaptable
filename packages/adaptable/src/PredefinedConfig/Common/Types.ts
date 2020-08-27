@@ -13,7 +13,7 @@ export type AdaptableDashboardToolbars = AdaptableDashboardToolbar[];
  * List of all the Toolbars that Adaptable provides
  */
 export type AdaptableDashboardToolbar =
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CellSummary'
@@ -33,7 +33,7 @@ export type AdaptableDashboardToolbar =
 export type AdaptableToolPanels = AdaptableToolPanel[];
 
 export type AdaptableToolPanel =
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CellSummary'
@@ -60,7 +60,7 @@ export type AdaptableFunctionButtons = AdaptableFunctionButton[];
  * Essentially it is a list of all the Functions in Adaptable as each Function has a popup for which this is a shortcut button.
  */
 export type AdaptableFunctionButton =
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CalculatedColumn'
@@ -103,7 +103,7 @@ export type AdaptableStateKeys = AdaptableStateKey[];
 
 export type AdaptableStateKey =
   | 'ActionColumn'
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'Application'
   | 'BulkUpdate'
@@ -143,7 +143,7 @@ export type AdaptableStateKey =
 
 export type AdaptableFunctionName =
   | 'ActionColumn'
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CalculatedColumn'
@@ -183,5 +183,4 @@ export type AdaptableFunctionName =
   | 'Theme'
   | 'ToolPanel'
   | 'UpdatedRow'
-  | 'UserFilter'
-  | 'SharedQuery';
+  | 'UserFilter';

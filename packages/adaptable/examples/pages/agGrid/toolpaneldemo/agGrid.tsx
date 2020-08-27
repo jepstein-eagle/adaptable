@@ -47,7 +47,7 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout', 'AdvancedSearch'],
+    VisibleToolbars: ['Layout', 'Query'],
     HomeToolbarTitle: 'working',
     MinimisedHomeToolbarButtonStyle: {
       Variant: 'text',
@@ -57,7 +57,7 @@ let demoConfig: PredefinedConfig = {
   Entitlements: {
     FunctionEntitlements: [
       {
-        FunctionName: 'AdvancedSearch',
+        FunctionName: 'Query',
         AccessLevel: 'Hidden',
       },
     ],

@@ -12,8 +12,7 @@ import Check from './check';
 import AttachFile from './attach-file';
 import Plus from './plus';
 import Clear from './clear';
-import AdvancedSearch from './advancedsearch';
-import SharedQuery from './shared-query';
+import Query from './query';
 import Info from './info';
 import Alert from './alert';
 import List from './list';
@@ -97,7 +96,6 @@ import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
   // toolbars
-  'advanced-search': AdvancedSearch, // original icon is search
   application: Application, // original icon is   laptop,
   alert: Alert,
   'bulk-update': BulkUpdate, // original icon is update,
@@ -112,7 +110,7 @@ const allIcons = {
   theme: Theme, // original icon is color-fill
 
   // non toolbar strategy images
-  'shared-query': SharedQuery, // original icon is search
+  query: Query, // original icon is search
   'calculated-column': CalculatedColumn, // original icon is phone-setup
   calendar: Calendar,
   'cell-validation': CellValidation, // original icon is flag,

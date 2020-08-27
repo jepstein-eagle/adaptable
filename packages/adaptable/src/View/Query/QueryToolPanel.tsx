@@ -2,7 +2,7 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
@@ -22,21 +22,21 @@ import Dropdown from '../../components/Dropdown';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 
-interface AdvancedSearchToolPanelComponentProps
-  extends ToolPanelStrategyViewPopupProps<AdvancedSearchToolPanelComponent> {
-  CurrentAdvancedSearchName: string;
-  onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
+interface QueryToolPanelComponentProps
+  extends ToolPanelStrategyViewPopupProps<QueryToolPanelComponent> {
+  CurrentQuery: string;
+  onChangeCurrentQuery: (expression: string) => QueryRedux.CurrentQueryChangeAction;
 }
 
-interface AdvancedSearchToolPanelComponentState {
+interface QueryToolPanelComponentState {
   IsMinimised: boolean;
 }
 
-class AdvancedSearchToolPanelComponent extends React.Component<
-  AdvancedSearchToolPanelComponentProps,
-  AdvancedSearchToolPanelComponentState
+class QueryToolPanelComponent extends React.Component<
+  QueryToolPanelComponentProps,
+  QueryToolPanelComponentState
 > {
-  constructor(props: AdvancedSearchToolPanelComponentProps) {
+  constructor(props: QueryToolPanelComponentProps) {
     super(props);
     this.state = { IsMinimised: true };
   }
@@ -47,29 +47,19 @@ class AdvancedSearchToolPanelComponent extends React.Component<
         flexDirection="column"
         alignItems="stretch"
         width="100%"
-        className="ab-ToolPanel__AdvancedSearch__wrap"
+        className="ab-ToolPanel__Query__wrap"
       >
-        <Flex
-          flexDirection="row"
-          alignItems="stretch"
-          className="ab-ToolPanel__AdvancedSearch__wrap"
-        ></Flex>
-        <Flex
-          flexDirection="row"
-          alignItems="stretch"
-          className="ab-ToolPanel__AdvancedSearch__wrap"
-        ></Flex>
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Query__wrap"></Flex>
+        <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Query__wrap"></Flex>
       </Flex>
     );
 
     return (
       <PanelToolPanel
-        className="ab-ToolPanel__AdvancedSearch"
-        headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName}
-        // glyphicon={StrategyConstants.AdvancedSearchGlyph}
-        //  onClose={() => this.props.onClose(StrategyConstants.AdvancedSearchStrategyId)}
+        className="ab-ToolPanel__Query"
+        headerText={StrategyConstants.QueryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
-        onClose={() => this.props.onClose('AdvancedSearch')}
+        onClose={() => this.props.onClose('Query')}
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
       >
@@ -79,39 +69,33 @@ class AdvancedSearchToolPanelComponent extends React.Component<
   }
 
   onSelectedSearchChanged(searchName: string) {
-    this.props.onChangeAdvancedSearch(searchName);
+    this.props.onChangeCurrentQuery(searchName);
   }
 }
 
 function mapStateToProps(
   state: AdaptableState,
   ownProps: any
-): Partial<AdvancedSearchToolPanelComponentProps> {
+): Partial<QueryToolPanelComponentProps> {
   return {
-    CurrentAdvancedSearchName: state.AdvancedSearch.CurrentAdvancedSearch,
+    CurrentQuery: state.Query.CurrentQuery,
   };
 }
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<AdvancedSearchToolPanelComponentProps> {
+): Partial<QueryToolPanelComponentProps> {
   return {
-    onChangeAdvancedSearch: (expression: string) =>
-      dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
+    onChangeCurrentQuery: (expression: string) =>
+      dispatch(QueryRedux.CurrentQueryChange(expression)),
 
     onClose: (toolPanel: AdaptableToolPanel) =>
       dispatch(ToolPanelRedux.ToolPanelHideToolPanel(toolPanel)),
     onConfigure: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.AdvancedSearchStrategyId,
-          ScreenPopups.AdvancedSearchPopup
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.QueryStrategyId, ScreenPopups.QueryPopup)
       ),
   };
 }
 
-export let AdvancedSearchToolPanel = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AdvancedSearchToolPanelComponent);
+export let QueryToolPanel = connect(mapStateToProps, mapDispatchToProps)(QueryToolPanelComponent);

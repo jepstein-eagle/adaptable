@@ -94,7 +94,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                   () => this.props.UpdateGoBackState()
                 )
               }
-              options={this.props.Api.sharedQueryApi.getAllSharedQuery().map(item => ({
+              options={this.props.Api.queryApi.getAllSharedQuery().map(item => ({
                 value: item.Uuid,
                 label: item.Name,
               }))}

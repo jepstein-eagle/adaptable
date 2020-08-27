@@ -66,7 +66,7 @@ import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
-import { SharedQuery } from '../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../PredefinedConfig/QueryState';
 import {
   ColumnFilter,
   AdaptablePredicate,

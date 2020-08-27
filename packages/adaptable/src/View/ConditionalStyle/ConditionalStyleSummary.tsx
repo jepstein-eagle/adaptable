@@ -10,7 +10,7 @@ import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { ConditionalStyleWizard } from './Wizard/ConditionalStyleWizard';
 import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
@@ -22,7 +22,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import * as parser from '../../parser/src';
 
 export interface ConditionalStyleSummaryProps
@@ -37,7 +37,7 @@ export interface ConditionalStyleSummaryProps
   onEditConditionalStyle: (
     conditionalStyle: ConditionalStyle
   ) => ConditionalStyleRedux.ConditionalStyleEditAction;
-  onAddSharedQuery?: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
+  onAddSharedQuery?: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
 }
 
 export class ConditionalStyleSummaryComponent extends React.Component<
@@ -184,7 +184,7 @@ function mapStateToProps(
   return {
     ConditionalStyles: state.ConditionalStyle.ConditionalStyles,
     StyleClassNames: state.UserInterface.StyleClassNames,
-    SharedQueries: state.SharedQuery.SharedQueries,
+    SharedQueries: state.Query.SharedQueries,
   };
 }
 
@@ -197,7 +197,7 @@ function mapDispatchToProps(
     onEditConditionalStyle: (conditionalStyle: ConditionalStyle) =>
       dispatch(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle)),
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

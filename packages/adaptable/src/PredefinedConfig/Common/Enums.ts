@@ -159,7 +159,7 @@ export enum QueryBuildStatus {
 
 export enum SearchChangedTrigger {
   DataSource = 'DataSource',
-  AdvancedSearch = 'AdvancedSearch',
+  CurrentQuery = 'CurrentQuery',
   Filter = 'Filter',
   DataChange = 'DataChange',
   Sort = 'Sort',

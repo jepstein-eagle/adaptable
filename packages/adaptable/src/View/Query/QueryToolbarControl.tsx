@@ -2,20 +2,14 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
-
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import DropdownButton from '../../components/DropdownButton';
@@ -34,19 +28,19 @@ import {
 } from '@mdi/js';
 import FieldWrap from '../../components/FieldWrap';
 import * as parser from '../../parser/src';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import Dropdown from '../../components/Dropdown';
 
-interface AdvancedSearchToolbarControlComponentProps
-  extends ToolbarStrategyViewPopupProps<AdvancedSearchToolbarControlComponent> {
-  CurrentAdvancedSearch: string;
+interface QueryToolbarControlComponentProps
+  extends ToolbarStrategyViewPopupProps<QueryToolbarControlComponent> {
+  CurrentQuery: string;
   SharedQueries: SharedQuery[];
-  onChangeAdvancedSearch: (expression: string) => AdvancedSearchRedux.AdvancedSearchChangeAction;
-  onNewSharedExpression: (value: string) => PopupRedux.PopupShowScreenAction;
+  onChangeCurrentQuery: (expression: string) => QueryRedux.CurrentQueryChangeAction;
+  onShowSharedQueries: (value: string) => PopupRedux.PopupShowScreenAction;
   onExpand: (value: string) => void;
 }
 
-interface AdvancedSearchToolbarControlComponentState {
+interface QueryToolbarControlComponentState {
   expression: string;
   history: {
     expression: string;
@@ -54,21 +48,21 @@ interface AdvancedSearchToolbarControlComponentState {
   }[];
 }
 
-class AdvancedSearchToolbarControlComponent extends React.Component<
-  AdvancedSearchToolbarControlComponentProps,
-  AdvancedSearchToolbarControlComponentState
+class QueryToolbarControlComponent extends React.Component<
+  QueryToolbarControlComponentProps,
+  QueryToolbarControlComponentState
 > {
-  constructor(props: AdvancedSearchToolbarControlComponentProps) {
+  constructor(props: QueryToolbarControlComponentProps) {
     super(props);
     this.state = {
-      expression: this.props.CurrentAdvancedSearch || '',
+      expression: this.props.CurrentQuery || '',
       history: [],
     };
   }
-  componentDidUpdate(prevProps: AdvancedSearchToolbarControlComponentProps) {
-    if (prevProps.CurrentAdvancedSearch !== this.props.CurrentAdvancedSearch) {
+  componentDidUpdate(prevProps: QueryToolbarControlComponentProps) {
+    if (prevProps.CurrentQuery !== this.props.CurrentQuery) {
       this.setState({
-        expression: this.props.CurrentAdvancedSearch,
+        expression: this.props.CurrentQuery,
       });
     }
   }
@@ -85,14 +79,14 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
       {
         label: 'Save Query',
         icon: <Icon size="1.1rem" path={mdiContentSave} />,
-        onClick: () => this.props.onNewSharedExpression(this.state.expression),
+        onClick: () => this.props.onShowSharedQueries(this.state.expression),
       },
       { separator: true },
       ...sortedSharedExpressions.map(expression => {
         return {
           label: expression.Name,
           icon:
-            expression.Expression === this.props.CurrentAdvancedSearch ? (
+            expression.Expression === this.props.CurrentQuery ? (
               <Icon size="1.1rem" path={mdiCheck} />
             ) : null,
           onClick: () => this.runQuery(expression.Expression),
@@ -105,7 +99,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
         .map(item => ({
           label: `Query at ${item.time.toLocaleTimeString('en-US')}`,
           icon: <Icon size="1.1rem" path={mdiHistory} />,
-          onClick: () => this.props.onChangeAdvancedSearch(item.expression),
+          onClick: () => this.props.onChangeCurrentQuery(item.expression),
         })),
     ];
 
@@ -117,11 +111,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
     });
 
     let content = (
-      <Flex
-        flexDirection="row"
-        alignItems="stretch"
-        className="ab-DashboardToolbar__AdvancedSearch__wrap"
-      >
+      <Flex flexDirection="row" alignItems="stretch" className="ab-DashboardToolbar__Query__wrap">
         <FieldWrap marginRight={1} width={600}>
           <SimpleButton
             variant="text"
@@ -145,11 +135,11 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
               }
             }}
           />
-          {this.props.CurrentAdvancedSearch !== '' && (
+          {this.props.CurrentQuery !== '' && (
             <SimpleButton
               variant="text"
               tone="neutral"
-              onClick={() => this.props.onChangeAdvancedSearch('')}
+              onClick={() => this.props.onChangeCurrentQuery('')}
               tooltip="Clear Query"
             >
               <Icon size="1.1rem" path={mdiClose} />
@@ -192,8 +182,8 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
 
     return (
       <PanelDashboard
-        className="ab-DashboardToolbar__AdvancedSearch"
-        headerText={StrategyConstants.AdvancedSearchStrategyFriendlyName}
+        className="ab-DashboardToolbar__Query"
+        headerText={StrategyConstants.QueryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
       >
         {content}
@@ -202,7 +192,7 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
   }
 
   onSelectedSearchChanged(searchName: string) {
-    this.props.onChangeAdvancedSearch(searchName);
+    this.props.onChangeCurrentQuery(searchName);
   }
 
   runQuery(expression: string = this.state.expression) {
@@ -219,41 +209,35 @@ class AdvancedSearchToolbarControlComponent extends React.Component<
         },
       ],
     });
-    this.props.onChangeAdvancedSearch(expression);
+    this.props.onChangeCurrentQuery(expression);
   }
 }
 
-function mapStateToProps(
-  state: AdaptableState
-): Partial<AdvancedSearchToolbarControlComponentProps> {
+function mapStateToProps(state: AdaptableState): Partial<QueryToolbarControlComponentProps> {
   return {
-    CurrentAdvancedSearch: state.AdvancedSearch.CurrentAdvancedSearch,
-    SharedQueries: state.SharedQuery.SharedQueries,
+    CurrentQuery: state.Query.CurrentQuery,
+    SharedQueries: state.Query.SharedQueries,
   };
 }
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<AdvancedSearchToolbarControlComponentProps> {
+): Partial<QueryToolbarControlComponentProps> {
   return {
-    onChangeAdvancedSearch: (expression: string) =>
-      dispatch(AdvancedSearchRedux.AdvancedSearchChange(expression)),
-    onNewSharedExpression: value =>
+    onChangeCurrentQuery: (expression: string) =>
+      dispatch(QueryRedux.CurrentQueryChange(expression)),
+    onShowSharedQueries: value =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.SharedQueryStrategyId,
-          ScreenPopups.SharedQueryPopup,
-          {
-            action: 'New',
-            source: 'Toolbar',
-            value,
-          }
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.QueryStrategyId, ScreenPopups.QueryPopup, {
+          action: 'New',
+          source: 'Toolbar',
+          value,
+        })
       ),
     onExpand: (value: string) =>
       dispatch(
         PopupRedux.PopupShowScreen(
-          StrategyConstants.AdvancedSearchStrategyId,
+          StrategyConstants.QueryStrategyId,
           ScreenPopups.ExpandedQueryPopup,
           {
             source: 'Toolbar',
@@ -266,15 +250,12 @@ function mapDispatchToProps(
       ),
     onConfigure: () =>
       dispatch(
-        PopupRedux.PopupShowScreen(
-          StrategyConstants.AdvancedSearchStrategyId,
-          ScreenPopups.AdvancedSearchPopup
-        )
+        PopupRedux.PopupShowScreen(StrategyConstants.QueryStrategyId, ScreenPopups.QueryPopup)
       ),
   };
 }
 
-export let AdvancedSearchToolbarControl = connect(
+export let QueryToolbarControl = connect(
   mapStateToProps,
   mapDispatchToProps
-)(AdvancedSearchToolbarControlComponent);
+)(QueryToolbarControlComponent);

@@ -2706,9 +2706,7 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
-      const isSearchActive = StringExtensions.IsNotNullOrEmpty(
-        this.api.advancedSearchApi.getAdvancedSearchState().CurrentAdvancedSearch
-      );
+      const isSearchActive = StringExtensions.IsNotNullOrEmpty(this.api.queryApi.getCurrentQuery());
       const isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(
         this.api.quickSearchApi.getQuickSearchValue()
       );
@@ -2725,14 +2723,14 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
       const columns = this.api.columnApi.getColumns();
 
-      // first we assess AdvancedSearch (if its running locally)
+      // first we assess Query (if its running locally)
       if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
-        const currentAdvancedSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
+        const currentQuery = this.api.queryApi.getCurrentQuery();
 
-        if (currentAdvancedSearch) {
+        if (currentQuery) {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
           if (
-            !parser.evaluate(currentAdvancedSearch, {
+            !parser.evaluate(currentQuery, {
               data: node.data,
             })
           ) {
@@ -2743,7 +2741,7 @@ export class Adaptable implements IAdaptable {
       // we then assess filters
       if (
         this.adaptableOptions.searchOptions.serverSearchOption == 'None' ||
-        this.adaptableOptions.searchOptions.serverSearchOption == 'AdvancedSearch'
+        this.adaptableOptions.searchOptions.serverSearchOption == 'Query'
       ) {
         const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
 

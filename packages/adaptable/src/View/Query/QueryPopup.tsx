@@ -3,7 +3,7 @@ import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as SharedQueryRedux from '../../Redux/ActionsReducers/SharedQueryRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -24,15 +24,15 @@ import {
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 interface SharedQueryPopupProps extends StrategyViewPopupProps<SharedQueryPopupComponent> {
-  onAddSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryAddAction;
-  onEditSharedQuery: (sharedQuery: SharedQuery) => SharedQueryRedux.SharedQueryEditAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
+  onEditSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryEditAction;
   SharedQueries: Array<SharedQuery>;
   SharedQueryErrorMessage: string;
   onShare: (
@@ -77,7 +77,7 @@ class SharedQueryPopupComponent extends React.Component<
           AdaptableObject={sharedQuery}
           key={sharedQuery.Uuid}
           onEdit={sharedQuery => this.onEdit(sharedQuery as SharedQuery)}
-          onDeleteConfirm={SharedQueryRedux.SharedQueryDelete(sharedQuery)}
+          onDeleteConfirm={QueryRedux.SharedQueryDelete(sharedQuery)}
           AccessLevel={this.props.AccessLevel}
         />
       );
@@ -95,13 +95,13 @@ class SharedQueryPopupComponent extends React.Component<
 
     return (
       <PanelWithButton
-        headerText={StrategyConstants.SharedQueryStrategyFriendlyName}
+        headerText={StrategyConstants.QueryStrategyFriendlyName}
         className="ab_main_popup"
         infoBody={infoBody}
         button={newButton}
         border="none"
         bodyProps={{ padding: 0 }}
-        glyphicon={StrategyConstants.SharedQueryGlyph}
+        glyphicon={StrategyConstants.QueryGlyph}
       >
         {this.props.SharedQueries.length > 0 ? (
           <AdaptableObjectCollection colItems={colItems} items={sharedQueries} />
@@ -177,7 +177,7 @@ class SharedQueryPopupComponent extends React.Component<
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<SharedQueryPopupProps> {
   return {
-    SharedQueries: state.SharedQuery.SharedQueries,
+    SharedQueries: state.Query.SharedQueries,
   };
 }
 
@@ -186,21 +186,14 @@ function mapDispatchToProps(
 ): Partial<SharedQueryPopupProps> {
   return {
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryAdd(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onEditSharedQuery: (sharedQuery: SharedQuery) =>
-      dispatch(SharedQueryRedux.SharedQueryEdit(sharedQuery)),
+      dispatch(QueryRedux.SharedQueryEdit(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
-        TeamSharingRedux.TeamSharingShare(
-          entity,
-          StrategyConstants.SharedQueryStrategyId,
-          description
-        )
+        TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.QueryStrategyId, description)
       ),
   };
 }
 
-export let SharedQueryPopup = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SharedQueryPopupComponent);
+export let QueryPopup = connect(mapStateToProps, mapDispatchToProps)(SharedQueryPopupComponent);

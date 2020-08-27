@@ -2,7 +2,6 @@ import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
 import { FilterState } from './FilterState';
 import { ApplicationState } from './ApplicationState';
-import { AdvancedSearchState } from './AdvancedSearchState';
 import { AlertState } from './AlertState';
 import { BulkUpdateState } from './BulkUpdateState';
 import { CalculatedColumnState } from './CalculatedColumnState';
@@ -32,7 +31,7 @@ import { SparklineColumnState } from './SparklineColumnState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
-import { SharedQueryState } from './SharedQueryState';
+import { QueryState } from './QueryState';
 
 /**
  * This is the main Predefined Config interface which developers will populate at design-time.
@@ -145,7 +144,6 @@ import { SharedQueryState } from './SharedQueryState';
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
  *  | [ActionColumn](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)   	        | No	                | Create dynamic columns with Buttons that fire events 	        |
- *  | [AdvancedSearch](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)   	  | Yes 	              | Create saveable multi-column searches with multiple criteria  |
  *  | [Alert](_src_predefinedconfig_alertstate_.alertstate.html)   	                              | Yes 	              | Provide Alert Definitions which will trigger run-time alerts  |
  *  | [Application](_src_predefinedconfig_applicationstate_.applicationstate.html)   	            | No	                | Save your own state as key / value pairs 	                    |
  *  | [BulkUpdate](_src_predefinedconfig__bulkupdatestate_.bulkupdatestate.html)   	              | Yes 	              | Update multiple cells in a column to contain a new value      |
@@ -168,6 +166,7 @@ import { SharedQueryState } from './SharedQueryState';
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
  *  | [Schedule](_src_predefinedconfig_schedulestate_.schedulestate.html)                         | Yes 	              | Set Functions (e.g. E|
  *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
+ *  | [Query](_src_predefinedconfig_querystate_.querystate.html)   	  | Yes 	              | Create saveable multi-column searches with multiple criteria  |
  *  | [QuickSearch](_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Schedule](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Shortcut](_src_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
@@ -200,7 +199,7 @@ import { SharedQueryState } from './SharedQueryState';
  *    Tabs: [
  *          {
  *            Name: 'Search',
- *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *            Toolbars: ['QuickSearch', 'DataSource', 'Query'],
  *          },
  *          {
  *            Name: 'Edit',
@@ -391,11 +390,6 @@ export interface PredefinedConfig {
   ActionColumn?: ActionColumnState;
 
   /**
-   * Supplies a collection of *AdvancedSearch* objects, to provide saveable cross-column searching, and the selection of the Current Advanced Search.
-   */
-  AdvancedSearch?: AdvancedSearchState;
-
-  /**
    * Supplies a collection of *Alert Definition* objects which will fire when their definition is triggered, and where Alerts are displayed.
    */
   Alert?: AlertState;
@@ -579,5 +573,5 @@ export interface PredefinedConfig {
    */
   UserInterface?: UserInterfaceState;
 
-  SharedQuery?: SharedQueryState;
+  Query?: QueryState;
 }

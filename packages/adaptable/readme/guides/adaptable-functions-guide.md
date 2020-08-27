@@ -4,13 +4,13 @@ AdapTable ships with 40 **AdapTableFunctions** - each relating to a discrete 'ac
 
 Most End-User action in AdapTable will be via AdaptableFunctions.
 
-Many AdapTableFunctions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. AdvancedSearch, ConditionalStyle, PercentBars etc.
+Many AdapTableFunctions contain an array of Objects that users can create, edit or delete (if their Entitlements allow), e.g. ConditionalStyle, PercentBars etc.
 
 ## Functions UI
 
 There are a number of different ways in which end-Users will interact with AdapTableFunctions in the AdapTable UI:
 
-- Most AdapTableFunctions have a dedicated **popup screen**.  AdapTableFunctions that contain an array of items (e.g. AdvancedSearch) will typically display these in a table with buttons to add / edit.  AdapTableFunctions which perform actions (e.g SmartEdit, BulkUpdate) will contain UI controls to allow the AdapTableFunction to be used.
+- Most AdapTableFunctions have a dedicated **popup screen**.  AdapTableFunctions that contain an array of items (e.g. `ConditionalStyle`) will typically display these in a table with buttons to add / edit.  AdapTableFunctions which perform actions (e.g SmartEdit, BulkUpdate) will contain UI controls to allow the AdapTableFunction to be used.
 
 - Some AdapTableFunctions provide **Toolbars** which can be displayed in the Dashboard (via Tabs).  These provide easy access to commonly used AdapTableFunctions e.g. Layouts, Reports, Quick Search.  You are able to stipulate which Toolbars are visible through the *Dashboard* AdapTableFunction.
 
@@ -27,7 +27,6 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | AdaptableFunction                                                | Wizard | Toolbar | Tool Panel | Column Menu | Context Menu |
 | --------  	                                                   | ------ | ------- | ---------  | ----------- | ------------ |
 | [Action Column](../functions/action-column-function.md)          | No     | No      | No         | No          | No           |
-| [Advanced Search](../functions/advanced-search-function.md)      | Yes    | Yes     | Yes        | No          | No           |
 | [Alert](../functions/alert-function.md)                          | Yes    | Yes     | Yes        | No          | Yes          |
 | [Application](../functions/application-function.md)              | No     | No      | No         | No          | No           |
 | [Bulk Update](../functions/bulk-update-function.md)              | No     | Yes     | Yes        | No          | Yes          |
@@ -50,6 +49,7 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | [Layout](../functions/layout-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
 | [Percent Bar](../functions/percent-bar-function.md)             | Yes    | No      | No         | Yes         | Yes          |
 | [Plus Minus](../functions/plus-minus-function.md)                | Yes    | No      | No         | Yes         | No           |
+| [Query](../functions/query-function.md)                          | Yes    | Yes     | Yes        | No          | No           |
 | [Quick Search](../functions/quick-search-function.md)            | No     | Yes     | Yes        | No          | No           |
 | [Reminder](../functions/reminder-function.md)                    | No     | No      | No         | No          | No           |
 | [Schedule](../functions/schedule-function.md)                    | Yes    | No      | No         | No          | No           |

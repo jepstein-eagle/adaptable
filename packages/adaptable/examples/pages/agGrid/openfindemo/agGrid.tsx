@@ -81,7 +81,7 @@ async function InitAdaptableDemo() {
           {
             Name: 'Toolbar1',
             Title: 'Demo Toolbar',
-            Glyph: 'advanced-search',
+            Glyph: 'aquery',
             ToolbarButtons: [
               {
                 Name: 'btnNewLayout',
@@ -104,9 +104,7 @@ async function InitAdaptableDemo() {
         DefaultStatusMessage: 'System Running Fine',
         DefaultStatusType: 'Error',
       },
-      AdvancedSearch: {
-        Revision: 4,
-      },
+
       FormatColumn: {
         FormatColumns: [
           {

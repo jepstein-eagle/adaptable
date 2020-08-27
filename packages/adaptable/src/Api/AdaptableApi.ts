@@ -1,6 +1,5 @@
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
-import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
 import { PluginsApi } from './PluginsApi';
 import { AuditEventApi } from './AuditEventApi';
@@ -38,7 +37,7 @@ import { InternalApi } from './InternalApi';
 import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
-import { SharedQueryApi } from './SharedQueryApi';
+import { QueryApi } from './QueryApi';
 import { TeamSharingApi } from './TeamSharingApi';
 import { ColumnApi } from './ColumnApi';
 import { ApplicationApi } from './AppApi';
@@ -68,7 +67,7 @@ import { ScopeApi } from './ScopeApi';
  *
  * `AdaptableApi` consists of over 50 sets of properties.
  *
- * Most of these properties are each a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `AdvancedSearchApi`) or type (e.g. `AuditEventApi`)
+ * Most of these properties are each a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `ConditionalStyleApi`) or type (e.g. `AuditEventApi`)
  *
  * In addition there are a few api classes designed primarily for internal use which deal with how AdapTable itself works (e.g. `gridApi`, `columnApi`, `gridApi`)
  *
@@ -77,7 +76,7 @@ import { ScopeApi } from './ScopeApi';
  *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
  *  | [actionColumnApi](#actioncolumnapi)             | Manages {@link ActionColumnState|Action Columns} which contain buttons with bespoke click logic	    |
- *  | [advancedSearchApi](#advancedsearchapi)         | Functions relating to the saveable, cross-column {@link AdvancedSearchState|Advanced Searches}  |
+ *  | [queryApi](#queryapi)         | Functions relating to the saveable, cross-column Queries  |
  *  | [alertApi](#alertapi)                           | {@link AlertState|Adaptable Alerts} provide bespoke notifications and messages                                 |
  *  | [applicationApi](#applicationapi)               | Use {@link ApplicationState|Application Data Entries} to manage custom state and data |
  *  | [auditEventApi](#auditeventapi)                 | Listen to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
@@ -131,11 +130,6 @@ export interface AdaptableApi {
    * Provides access to the Action Column functionality, the *ActionColumn* object.
    */
   actionColumnApi: ActionColumnApi;
-
-  /**
-   * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_src_predefinedconfig_configstate_advancedsearchstate_.advancedsearchstate.html).
-   */
-  advancedSearchApi: AdvancedSearchApi;
 
   /**
    * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_src_predefinedconfig_configstate_alertstate_.alertstate.html).
@@ -346,7 +340,7 @@ export interface AdaptableApi {
    */
   userInterfaceApi: UserInterfaceApi;
 
-  sharedQueryApi: SharedQueryApi;
+  queryApi: QueryApi;
 
   teamSharingApi: TeamSharingApi;
 

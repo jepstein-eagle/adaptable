@@ -2,7 +2,6 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 // Strategy Ids used in Config so have made it a type of AdaptableFunctionName
 export const ActionColumnStrategyId: AdaptableFunctionName = 'ActionColumn';
-export const AdvancedSearchStrategyId: AdaptableFunctionName = 'AdvancedSearch';
 export const AlertStrategyId: AdaptableFunctionName = 'Alert';
 export const BulkUpdateStrategyId: AdaptableFunctionName = 'BulkUpdate';
 export const CalculatedColumnStrategyId: AdaptableFunctionName = 'CalculatedColumn';
@@ -43,11 +42,10 @@ export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
 export const ToolPanelStrategyId: AdaptableFunctionName = 'ToolPanel';
 export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
-export const SharedQueryStrategyId: AdaptableFunctionName = 'SharedQuery';
+export const QueryStrategyId: AdaptableFunctionName = 'Query';
 
 // Strategy Names - only used internally
 export const ActionColumnStrategyFriendlyName: string = 'Action Column';
-export const AdvancedSearchStrategyFriendlyName: string = 'Advanced Search';
 export const AlertStrategyFriendlyName: string = 'Alert';
 export const BulkUpdateStrategyFriendlyName: string = 'Bulk Update';
 export const CalculatedColumnStrategyFriendlyName: string = 'Calculated Column';
@@ -90,11 +88,10 @@ export const TeamSharingStrategyFriendlyName: string = 'Team Sharing';
 export const ThemeStrategyFriendlyName: string = 'Theme';
 export const ToolPanelStrategyFriendlyName: string = 'Tool Panel';
 export const UserFilterStrategyFriendlyName: string = 'User Filter';
-export const SharedQueryStrategyFriendlyName: string = 'Shared Query';
+export const QueryStrategyFriendlyName: string = 'Query';
 
 // Strategy Glyphs
-export const ActionColumnGlyph: string = 'advanced-search';
-export const AdvancedSearchGlyph: string = 'advanced-search';
+export const ActionColumnGlyph: string = 'alert';
 export const AlertGlyph: string = 'alert';
 export const BulkUpdateGlyph: string = 'bulk-update';
 export const CalculatedColumnGlyph: string = 'calculated-column';
@@ -138,14 +135,12 @@ export const ThemeGlyph: string = 'theme';
 export const ToolPanelGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
 export const UserFilterGlyph: string = 'user-filter';
-export const SharedQueryGlyph: string = 'shared-query';
+export const QueryGlyph: string = 'shared-query';
 
 export function getIdForStrategyFriendlyName(functionName: string): AdaptableFunctionName {
   switch (functionName) {
     case ActionColumnStrategyFriendlyName:
       return ActionColumnStrategyId;
-    case AdvancedSearchStrategyFriendlyName:
-      return AdvancedSearchStrategyId;
     case AlertStrategyFriendlyName:
       return AlertStrategyId;
     case BulkUpdateStrategyFriendlyName:
@@ -224,8 +219,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return ToolPanelStrategyId;
     case UserFilterStrategyFriendlyName:
       return UserFilterStrategyId;
-    case SharedQueryStrategyFriendlyName:
-      return SharedQueryStrategyId;
+    case QueryStrategyFriendlyName:
+      return QueryStrategyId;
   }
 }
 
@@ -233,8 +228,6 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
   switch (functionName) {
     case ActionColumnStrategyId:
       return ActionColumnStrategyFriendlyName;
-    case AdvancedSearchStrategyId:
-      return AdvancedSearchStrategyFriendlyName;
     case AlertStrategyId:
       return AlertStrategyFriendlyName;
     case BulkUpdateStrategyId:
@@ -315,8 +308,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return ToolPanelStrategyFriendlyName;
     case UserFilterStrategyId:
       return UserFilterStrategyFriendlyName;
-    case SharedQueryStrategyId:
-      return SharedQueryStrategyFriendlyName;
+    case QueryStrategyId:
+      return QueryStrategyFriendlyName;
   }
 }
 
@@ -324,8 +317,6 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
   switch (functionName) {
     case ActionColumnStrategyId:
       return ActionColumnGlyph;
-    case AdvancedSearchStrategyId:
-      return AdvancedSearchGlyph;
     case AlertStrategyId:
       return AlertGlyph;
     case BulkUpdateStrategyId:
@@ -400,7 +391,7 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return ToolPanelGlyph;
     case UserFilterStrategyId:
       return UserFilterGlyph;
-    case SharedQueryStrategyId:
-      return SharedQueryGlyph;
+    case QueryStrategyId:
+      return QueryGlyph;
   }
 }

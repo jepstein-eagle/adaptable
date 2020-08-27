@@ -50,7 +50,7 @@ async function InitAdaptableDemo() {
         Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'CustomToolbar'], //shouldnt see last one cos of entitlements
+            Toolbars: ['QuickSearch', 'DataSource', 'Query', 'CustomToolbar'], //shouldnt see last one cos of entitlements
           },
           {
             Name: 'Edit',

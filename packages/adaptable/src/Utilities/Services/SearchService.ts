@@ -1,8 +1,7 @@
-import * as AdvancedSearchRedux from '../../Redux/ActionsReducers/AdvancedSearchRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as DataSourceRedux from '../../Redux/ActionsReducers/DataSourceRedux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
-import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { ISearchService } from './Interface/ISearchService';
 import { SearchChangedTrigger } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
@@ -18,8 +17,9 @@ export class SearchService implements ISearchService {
 
     this.adaptable.adaptableStore.onAny((eventName: string) => {
       if (this.adaptable.isInitialised) {
-        if (eventName == AdvancedSearchRedux.ADVANCED_SEARCH_CHANGE) {
-          this.publishSearchChanged(SearchChangedTrigger.AdvancedSearch);
+        if (eventName == QueryRedux.CURRENT_QUERY_CHANGE) {
+          setTimeout(() => this.adaptable.applyGridFiltering(), 5);
+          this.publishSearchChanged(SearchChangedTrigger.CurrentQuery);
         } else if (
           eventName == FilterRedux.COLUMN_FILTER_ADD ||
           eventName == FilterRedux.COLUMN_FILTER_EDIT ||
@@ -48,7 +48,7 @@ export class SearchService implements ISearchService {
   }
 
   /**
-   * Each time any of the objects that make up search are changed (e.g. filters, quick search, advanced search, data sources etc.) we fire an event
+   * Each time any of the objects that make up search are changed (e.g. filters, quick search, current query, data sources etc.) we fire an event
    * This is primarily to help users who want to run search on the server and so need to know what has changed
    * @param searchChangedTrigger function that triggered the event
    */

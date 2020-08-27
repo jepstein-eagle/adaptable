@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
-import { SharedQuery } from '../../PredefinedConfig/SharedQueryState';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { Flex } from 'rebass';
 
 export class SharedQuerySharedEntity extends React.Component<

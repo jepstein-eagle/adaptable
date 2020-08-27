@@ -15,7 +15,7 @@ export class SharedQueryWizard extends React.Component<SharedQueryWizardProps, {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.SharedQueryStrategyFriendlyName}
+          FriendlyName={StrategyConstants.QueryStrategyFriendlyName}
           ModalContainer={this.props.ModalContainer}
           Api={this.props.Api}
           Steps={[

@@ -17,7 +17,7 @@ Previous versions of AdapTable did enable filtering as an option for Quick Searc
 
 Similarly, Quick Search from v.7 onwards no longer offers 'wildcard' functionality - this is unnecesary as it's now provided by Column Filters.
 
-> Quick Search is a 'constant operation' - so, like with Advanced Search or Column Filters, it will run both when a new Quick Search is applied but also when data ticks or the visible columns change.
+> Quick Search is a 'constant operation' - so, like with Column Filters, it will run both when a new Quick Search is applied but also when data ticks or the visible columns change.
 
 
 ## UI Elements
@@ -69,7 +69,7 @@ If you have a large number of columns so that some are not visible in the curren
 
 **Does Quick Search update in real time as the data changes**
 
-Yes it does. Like Advanced Search and Column Filters, Quick Search is reapplied as data changes.
+Yes it does. Like Column Filters, Quick Search is reapplied as data changes.
 
 
 ### Further Information

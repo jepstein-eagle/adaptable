@@ -67,7 +67,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   }
 
   private evaluateExpression(conditionalStyle: ConditionalStyle, data: any): boolean {
-    let expression: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+    let expression: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
       conditionalStyle
     );
     return parser.evaluate(expression, { data });

@@ -45,7 +45,7 @@ async function InitAdaptableDemo() {
             case 'SmartEdit':
             case 'Shortcut':
               return 'ReadOnly';
-            case 'AdvancedSearch':
+            case 'Query':
             case 'PercentBar':
             case 'Schedule':
             case 'Filter':
@@ -74,22 +74,8 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: [
-      'SmartEdit',
-      'Export',
-      'SystemStatus',
-      'BulkUpdate',
-      'QuickSearch',
-      'AdvancedSearch',
-    ],
-    VisibleButtons: [
-      'SmartEdit',
-      'Export',
-      'SystemStatus',
-      'BulkUpdate',
-      'QuickSearch',
-      'AdvancedSearch',
-    ],
+    VisibleToolbars: ['SmartEdit', 'Export', 'SystemStatus', 'BulkUpdate', 'QuickSearch', 'Query'],
+    VisibleButtons: ['SmartEdit', 'Export', 'SystemStatus', 'BulkUpdate', 'QuickSearch', 'Query'],
   },
   Entitlements: {
     DefaultAccessLevel: 'Hidden',

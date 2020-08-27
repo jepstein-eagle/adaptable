@@ -63,7 +63,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
   }
 
   setExpressionDescription(cellValidation: CellValidationRule): string {
-    let expression = this.props.api.sharedQueryApi.getExpressionForQueryObject(cellValidation);
+    let expression = this.props.api.queryApi.getExpressionForQueryObject(cellValidation);
     return expression ? expression : 'No Expression';
   }
 

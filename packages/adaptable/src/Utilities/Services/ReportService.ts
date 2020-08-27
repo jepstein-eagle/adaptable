@@ -88,7 +88,7 @@ export class ReportService implements IReportService {
         case ReportRowScope.SelectedRows:
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
-          return this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(report);
+          return this.adaptable.api.queryApi.getExpressionForQueryObject(report);
         case ReportRowScope.CustomRows:
           return '[Custom Rows]';
       }
@@ -176,7 +176,7 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+        let expressionToCheck: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
           report
         );
 
@@ -280,7 +280,7 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: string = this.adaptable.api.sharedQueryApi.getExpressionForQueryObject(
+        let expressionToCheck: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
           report
         );
 

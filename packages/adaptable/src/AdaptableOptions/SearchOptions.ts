@@ -11,7 +11,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
  *
  * ```ts
  * searchOptions = {
- *  serverSearchOption: 'AdvancedSearch',
+ *  serverSearchOption: 'Query',
  *  clearSearchesOnStartUp: true,
  *  excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
  *      if (column.ColumnId === 'country' || column.ReadOnly) {
@@ -22,7 +22,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
  *};
  * ```
  *
- * In this example we will: perform `AdvancedSearch` on the server; clear any previously running Searches (from the last session) at startup; and exclude the 'country' column, and all ReadOnly columns, from Quick Search.
+ * In this example we will: perform `Query` on the server; clear any previously running Searches (from the last session) at startup; and exclude the 'country' column, and all ReadOnly columns, from Quick Search.
  *
  */
 export interface SearchOptions {
@@ -62,17 +62,17 @@ export interface SearchOptions {
    *
    *  **Note: Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 150-200,000 records that you need filtering.**
    *
-   * AdapTable allows you to perform a mixture of client and server searching e.g. you can run Column Filters on the client but Advanced Search on the server.
+   * AdapTable allows you to perform a mixture of client and server searching e.g. you can run Column Filters on the client but Query on the server.
    *
    * There are 4 options available:
    *
    * - `None` - the default. All searching and filtering will take place on the client (use this option if you have fewer than 150,000 rows).
    *
-   * - `AdvancedSearch` - runs just {@link AdvancedSearch|Advanced Search} on the server and all other search (e.g. Quick Search) and filtering (e.g. Column Filters) on the client.  (This is a popular option).
+   * - `Query` - runs the query the server and all other search (e.g. Quick Search) and filtering (e.g. Column Filters) on the client.  (This is a popular option).
    *
-   * - `AllSearch` - runs all search and filtering functions on the server (i.e. Advanced Search, Quick Search, Column Filters etc)
+   * - `AllSearch` - runs all search and filtering functions on the server (i.e.Current Query, Quick Search, Column Filters etc)
    *
-   * - `AllSearchandSort` - runs all search and filtering functions on the server (i.e. Advanced Search, Quick Search, Column Filters etc) and will also run all sorting on the server.
+   * - `AllSearchandSort` - runs all search and filtering functions on the server (i.e. Current Query, Quick Search, Column Filters etc) and will also run all sorting on the server.
    *
    * ### SearchChanged Event
    *
@@ -102,7 +102,7 @@ export interface SearchOptions {
    * **Default Value: None**
    *
    */
-  serverSearchOption?: 'None' | 'AdvancedSearch' | 'AllSearch' | 'AllSearchandSort';
+  serverSearchOption?: 'None' | 'Query' | 'AllSearch' | 'AllSearchandSort';
 
   /**
    * Whether to clear all searches when AdapTable loads.

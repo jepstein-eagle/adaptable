@@ -26,7 +26,7 @@ Any active column filters when the system closes are immediately re-applied on s
 
 If you don't want this then you can set it.
 
-Column Filters cannot be saved for re-use.  In order to save - and then re-use - Column Filters in other functions (e.g. Advanced Search), click the save button in the top of the Filter Form which will convert the Column Filter into a named - and re-usable [User Filter](./user-filter-function.md).
+Column Filters cannot be saved for re-use.  In order to save - and then re-use - Column Filters in other functions (e.g. Export), click the save button in the top of the Filter Form which will convert the Column Filter into a named - and re-usable [User Filter](./user-filter-function.md).
 
 > If you dont want to use AdapTable's Filter Form and prefer to use that provided by the underlying vendor grid, then set the useAdaptableFilterForm property to false in Filter Options.
 

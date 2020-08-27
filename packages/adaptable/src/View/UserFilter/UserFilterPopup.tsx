@@ -69,7 +69,7 @@ class UserFilterPopupComponent extends React.Component<
       "Once created, User Filters are available in the column's filter dropdown as if a single colum value.",
       <br />,
       <br />,
-      'Additionally they are available when creating other Queries (e.g. for Advanced Search)',
+      'Additionally they are available when creating other Queries (e.g. for Reports)',
       <br />,
       <br />,
       'A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required.',
@@ -136,7 +136,7 @@ class UserFilterPopupComponent extends React.Component<
               <p />
               <p>
                 Once created, user filters are accessible both when filtering columns and creating
-                queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).
+                queries (e.g. Export, Plus / Minus, Conditional Style etc.).
               </p>
             </EmptyContent>
           )}

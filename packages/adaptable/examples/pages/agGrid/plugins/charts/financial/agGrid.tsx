@@ -108,7 +108,7 @@ let demoConfig: PredefinedConfig = {
     Tabs: [
       {
         Name: 'Charting',
-        Toolbars: ['Chart', 'AdvancedSearch'],
+        Toolbars: ['Chart', 'Query'],
       },
     ],
   },
@@ -146,7 +146,7 @@ let demoConfig: PredefinedConfig = {
   },
   ToolPanel: {
     Revision: 2,
-    VisibleToolPanels: ['Export', 'AdvancedSearch', 'Layout', 'Chart', 'Filter'],
+    VisibleToolPanels: ['Export', 'Query', 'Layout', 'Chart', 'Filter'],
   },
 };
 
