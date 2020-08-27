@@ -8,8 +8,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * The Dashboard is the area above the grid which contains buttons, tabs, toolbars and Quick Search.
  *
- * **Note**: In v.6.1 (March 2020) the Dashboard has been signficantly updated and improved with some previous properties now deprecated.
- *
  * The Dashboard comprises 2 sections:
  *
  * - **Dashboard Header**: contains the Home Dropdown, Function Buttons and Quick Search
@@ -224,48 +222,6 @@ export interface DashboardState extends ConfigState {
    * **Default Value**: the `adaptableId` property in Adaptable Options
    */
   HomeToolbarTitle?: string;
-
-  /**
-   * *Depracated Property; instead create Tabs which include a `Toolbars` property*
-   *
-   * Note: in 6.1 any VisibleToolbars will be automatically added to a new Tab (which can then be edited by you)
-   */
-  VisibleToolbars?: AdaptableDashboardToolbars | string[];
-
-  /**
-   * *Depracated Property; instead any toolbar for an 'entitled' Function is available*
-   */
-  AvailableToolbars?: AdaptableDashboardToolbars;
-
-  /**
-   * *Depracated Property; instead select columns through the Column Chooser*
-   */
-  ShowColumnsDropdown?: boolean;
-
-  /**
-   * *Depracated Property; instead select toolbars and tabs through configuring the Dashboard*
-   */
-  ShowToolbarsDropdown?: boolean;
-
-  /**
-   * *Depracated Property*
-   */
-  MinimisedHomeToolbarButtonStyle?: ButtonStyle;
-
-  /**
-   * *Depracated Property; instead use the `IsCollapsed` and `IsFloating` properties*
-   */
-  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
-
-  /**
-   * *Depracated Property; instead please make sure that 'SystemStatus' is included in the Visible Buttons collection*
-   */
-  ShowSystemStatusButton?: boolean;
-
-  /**
-   * *Depracated Property; instead please make sure that 'GridInfo' is included in Visible Buttons collection*
-   */
-  ShowGridInfoButton?: boolean;
 }
 
 /**
@@ -433,13 +389,6 @@ export interface CustomToolbar extends AdaptableObject {
    * When the button is clicked AdapTable will fire the `CustomToolbarConfigured` event.
    */
   ShowConfigureButton?: boolean;
-
-  /**
-   * An (optional) Glyph to display in the Custom Toolbar
-   *
-   * Since V.6 (Feb 2020) **this property has been deprecated** and is no longer used or applied
-   */
-  Glyph?: string;
 }
 
 export interface DashboardTab extends AdaptableObject {

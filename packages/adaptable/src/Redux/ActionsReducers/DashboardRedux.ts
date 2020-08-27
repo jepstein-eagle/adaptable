@@ -228,7 +228,7 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_CREATE_DEFAULT_TAB: {
       return {
         ...state,
-        Tabs: [{ Name: 'Toolbars', Toolbars: state.VisibleToolbars }],
+        Tabs: [{ Name: 'Toolbars', Toolbars: ['Query', 'Layout', 'Export', 'Filter'] }],
       };
     }
 
