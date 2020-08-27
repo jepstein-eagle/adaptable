@@ -97,7 +97,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
-  SharedQueryPopup: QueryPopup,
+  QueryPopup,
 };
 
 // here we put the dashboard control for each strategy

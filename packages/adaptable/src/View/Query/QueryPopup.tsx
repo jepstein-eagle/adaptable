@@ -30,7 +30,7 @@ import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
-interface SharedQueryPopupProps extends StrategyViewPopupProps<SharedQueryPopupComponent> {
+interface QueryPopupProps extends StrategyViewPopupProps<QueryPopupComponent> {
   onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
   onEditSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryEditAction;
   SharedQueries: Array<SharedQuery>;
@@ -41,11 +41,8 @@ interface SharedQueryPopupProps extends StrategyViewPopupProps<SharedQueryPopupC
   ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class SharedQueryPopupComponent extends React.Component<
-  SharedQueryPopupProps,
-  EditableConfigEntityState
-> {
-  constructor(props: SharedQueryPopupProps) {
+class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfigEntityState> {
+  constructor(props: QueryPopupProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
@@ -175,7 +172,7 @@ class SharedQueryPopupComponent extends React.Component<
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<SharedQueryPopupProps> {
+function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QueryPopupProps> {
   return {
     SharedQueries: state.Query.SharedQueries,
   };
@@ -183,7 +180,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<SharedQu
 
 function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
-): Partial<SharedQueryPopupProps> {
+): Partial<QueryPopupProps> {
   return {
     onAddSharedQuery: (sharedQuery: SharedQuery) =>
       dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
@@ -196,4 +193,4 @@ function mapDispatchToProps(
   };
 }
 
-export let QueryPopup = connect(mapStateToProps, mapDispatchToProps)(SharedQueryPopupComponent);
+export let QueryPopup = connect(mapStateToProps, mapDispatchToProps)(QueryPopupComponent);

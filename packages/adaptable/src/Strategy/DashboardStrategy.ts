@@ -24,8 +24,8 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
     );
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      // create the default Dashboard tab - this is for jump from 6 to 6.1
-      //   this.adaptable.api.internalApi.setDefaultDashboardTab();
+      // create a default Dashboard tab if one not provided
+      this.adaptable.api.internalApi.setDefaultDashboardTab();
       this.prepareToolbarVisibilityChangedEvent();
     });
 

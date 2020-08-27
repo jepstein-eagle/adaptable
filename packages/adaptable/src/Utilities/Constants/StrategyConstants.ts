@@ -135,7 +135,7 @@ export const ThemeGlyph: string = 'theme';
 export const ToolPanelGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
 export const UserFilterGlyph: string = 'user-filter';
-export const QueryGlyph: string = 'shared-query';
+export const QueryGlyph: string = 'query';
 
 export function getIdForStrategyFriendlyName(functionName: string): AdaptableFunctionName {
   switch (functionName) {
