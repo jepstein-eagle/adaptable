@@ -158,14 +158,6 @@ const initialDashboardState: DashboardState = {
   ShowFunctionsDropdown: true,
   HomeToolbarTitle: '',
   CanFloat: true,
-
-  // deprecated properties
-  VisibleToolbars: ['Layout', 'Export', 'Filter'],
-  AvailableToolbars: undefined,
-  DashboardVisibility: undefined,
-  ShowColumnsDropdown: undefined,
-  ShowToolbarsDropdown: undefined,
-  MinimisedHomeToolbarButtonStyle: undefined,
 };
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (
