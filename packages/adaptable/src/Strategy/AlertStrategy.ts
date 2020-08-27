@@ -10,7 +10,7 @@ import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
-import { AlertDefinition } from '../PredefinedConfig/AlertState';
+import { AlertDefinition, AlertPredicatesDefs } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -137,23 +137,17 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   }
 
   private isAlertTriggered(alert: AlertDefinition, dataChangedEvent: DataChangedInfo): boolean {
-    // if its any change then alert triggers immediately
-    if (alert.Range.Operator == LeafExpressionOperator.AnyChange) {
-      return true;
-    }
-    // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
-      dataChangedEvent.ColumnId
+    const currentPredicateDef = this.adaptable.api.alertApi.getAlertPredicateDefById(
+      alert.Predicate.Id
     );
-    let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
-      alert.Range,
-      dataChangedEvent.NewValue,
-      dataChangedEvent.OldValue,
-      column,
-      this.adaptable,
-      null
-    );
-    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
+
+    return currentPredicateDef.handler({
+      newValue: dataChangedEvent.NewValue,
+      oldValue: dataChangedEvent.OldValue,
+      inputs: alert.Predicate.Inputs,
+      api: this.adaptable.api,
+      column: this.adaptable.api.columnApi.getColumnFromId(alert.ColumnId),
+    });
   }
 
   public getTeamSharingAction(): TeamSharingImportInfo<AlertDefinition> {

@@ -6,13 +6,21 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertApi } from '../AlertApi';
-import { AlertState, AlertDefinition, AlertProperties } from '../../PredefinedConfig/AlertState';
+import {
+  AlertState,
+  AlertDefinition,
+  AlertProperties,
+  AlertPredicatesDefsById,
+  AlertPredicateDef,
+  AlertPredicatesDefs,
+} from '../../PredefinedConfig/AlertState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
+import { Scope } from '../../PredefinedConfig/Common/Scope';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {
@@ -131,6 +139,20 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     this.adaptable.api.internalApi.showPopupScreen(
       StrategyConstants.AlertStrategyId,
       ScreenPopups.AlertPopup
+    );
+  }
+
+  public getAlertPredicateDefs(): AlertPredicateDef[] {
+    return AlertPredicatesDefs;
+  }
+
+  public getAlertPredicateDefById(predicateId: string): AlertPredicateDef {
+    return AlertPredicatesDefsById[predicateId];
+  }
+
+  public getAlertPredicateDefsForScope(scope: Scope): AlertPredicateDef[] {
+    return this.getAlertPredicateDefs().filter(predicateDef =>
+      this.adaptable.api.columnApi.isScopeInScope(scope, predicateDef.scope)
     );
   }
 }

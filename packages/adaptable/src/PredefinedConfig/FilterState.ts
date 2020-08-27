@@ -213,7 +213,7 @@ export const SystemFilterPredicates: FilterPredicate[] = [
     type: 'FilterPredicate',
     handler: ({ displayValue, inputs }) => inputs.length === 0 || inputs.includes(displayValue),
     iconText: 'IN',
-    shortcuts: ['in', 'IN'],
+    shortcuts: ['#', '['],
   },
   {
     id: 'Blanks',

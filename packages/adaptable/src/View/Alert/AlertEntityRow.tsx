@@ -65,16 +65,19 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   }
 
   private getColumnandRule(Alert: AlertDefinition): string {
-    let columnInfo: string = this.props.api.columnApi.getFriendlyNameFromColumn(
-      Alert.ColumnId,
-      this.props.Column
-    );
-    columnInfo +=
-      ': ' +
-      this.props.api.internalApi
-        .getStrategyService()
-        .createAlertDescription(Alert, this.props.api.columnApi.getColumns());
-    return columnInfo;
+    return this.props.api.internalApi
+      .getStrategyService()
+      .createAlertDescription(Alert, this.props.api.columnApi.getColumns());
+    // let columnInfo: string = this.props.api.columnApi.getFriendlyNameFromColumn(
+    //   Alert.ColumnId,
+    //   this.props.Column
+    // );
+    // columnInfo +=
+    //   ': ' +
+    //   this.props.api.internalApi
+    //     .getStrategyService()
+    //     .createAlertDescription(Alert, this.props.api.columnApi.getColumns());
+    // return columnInfo;
   }
 
   onMessageTypeChanged(alertDefinition: AlertDefinition, value: MessageType) {

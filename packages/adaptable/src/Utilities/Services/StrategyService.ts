@@ -5,7 +5,7 @@ import {
   CellValueType,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { AlertDefinition } from '../../PredefinedConfig/AlertState';
+import { AlertDefinition, AlertPredicatesDefs } from '../../PredefinedConfig/AlertState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, AdaptableMenuItem } from '../../types';
@@ -33,52 +33,11 @@ export class StrategyService implements IStrategyService {
     this.adaptable = adaptable;
   }
 
-  public createAlertDescription(
-    alertDefinition: AlertDefinition,
-    columns: AdaptableColumn[]
-  ): string {
-    let dataType:
-      | 'String'
-      | 'Number'
-      | 'NumberArray'
-      | 'Boolean'
-      | 'Date'
-      | 'Object'
-      | 'Unknown' = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
-      alertDefinition.ColumnId
-    );
-    let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-      alertDefinition.Range.Operator as LeafExpressionOperator,
-      dataType
-    );
+  public createAlertDescription(alert: AlertDefinition, columns: AdaptableColumn[]): string {
+    const predicateDef = this.adaptable.api.alertApi.getAlertPredicateDefById(alert.Predicate.Id);
+    const column = this.adaptable.api.columnApi.getColumnFromId(alert.ColumnId);
 
-    if (
-      !ExpressionHelper.OperatorRequiresValue(
-        alertDefinition.Range.Operator as LeafExpressionOperator
-      )
-    ) {
-      return valueDescription;
-    }
-
-    let operand1Text: string =
-      dataType == DataType.Boolean || dataType == DataType.Number
-        ? alertDefinition.Range.Operand1
-        : "'" + alertDefinition.Range.Operand1 + "'";
-
-    valueDescription = valueDescription + operand1Text;
-
-    if (alertDefinition.Range.Operator == LeafExpressionOperator.PercentChange) {
-      valueDescription = valueDescription + '%';
-    }
-
-    if (StringExtensions.IsNotNullOrEmpty(alertDefinition.Range.Operand2)) {
-      let operand2Text: string =
-        dataType == DataType.Number
-          ? ' and ' + alertDefinition.Range.Operand2
-          : " and '" + alertDefinition.Range.Operand2 + "'";
-      valueDescription = valueDescription + operand2Text;
-    }
-    return valueDescription;
+    return predicateDef.toString({ alert, column });
   }
 
   public setStrategiesEntitlements(): void {

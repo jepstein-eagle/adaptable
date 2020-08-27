@@ -1,6 +1,7 @@
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
-import { AlertState, AlertDefinition } from '../PredefinedConfig/AlertState';
+import { AlertState, AlertDefinition, AlertPredicateDef } from '../PredefinedConfig/AlertState';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
+import { Scope } from '../PredefinedConfig/Common/Scope';
 
 /**
  * Provides full and comprehensive run-time access to the Alert function and {@link AlertState|Alert State}.
@@ -85,4 +86,8 @@ export interface AlertApi {
    * Opens the Alert popup screen
    */
   showAlertPopup(): void;
+
+  getAlertPredicateDefs(): AlertPredicateDef[];
+  getAlertPredicateDefById(predicateId: string): AlertPredicateDef;
+  getAlertPredicateDefsForScope(scope: Scope): AlertPredicateDef[];
 }

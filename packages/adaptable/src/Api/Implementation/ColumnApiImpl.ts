@@ -469,4 +469,50 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
     }
     return undefined;
   }
+
+  /*
+    Scope A     | Scope B     | Result
+    ===========================================================================
+    All           *             true
+    *             All           true
+    DataTypes     DataTypes     all DataTypes from A should be in B
+    ColumnIds     ColumnIds     all ColumnIds from A should be in B
+    ColumnIds     DataTypes     all DataTypes of ColumnIds from A should be in B
+    DataTypes     ColumnIds     false
+  */
+  public isScopeInScope(a: Scope, b: Scope): boolean {
+    console.log('ab', a, b);
+
+    if ('All' in a || 'All' in b) {
+      return true;
+    }
+
+    if (
+      'DataTypes' in a &&
+      'DataTypes' in b &&
+      a.DataTypes.every(type => b.DataTypes.includes(type))
+    ) {
+      return true;
+    }
+
+    if (
+      'ColumnIds' in a &&
+      'ColumnIds' in b &&
+      a.ColumnIds.every(columnId => b.ColumnIds.includes(columnId))
+    ) {
+      return true;
+    }
+
+    if (
+      'ColumnIds' in a &&
+      'DataTypes' in b &&
+      a.ColumnIds.every(columnId =>
+        b.DataTypes.includes(this.getColumnFromId(columnId).DataType as any)
+      )
+    ) {
+      return true;
+    }
+
+    return false;
+  }
 }

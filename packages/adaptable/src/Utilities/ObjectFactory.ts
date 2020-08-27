@@ -189,13 +189,7 @@ export function CreateEmptyAlertDefinition(): AlertDefinition {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    Range: {
-      Operator: ALERT_DEFAULT_OPERATOR,
-      Operand1: EMPTY_STRING,
-      Operand2: EMPTY_STRING,
-      Operand1Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
-      Operand2Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
-    },
+    Predicate: { Id: 'Any' },
     Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
     AlertProperties: {
@@ -211,7 +205,7 @@ export function CreateInternalAlertDefinitionForMessages(
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    Range: null,
+    Predicate: null,
     Expression: null,
     MessageType: messageType,
     AlertProperties: {

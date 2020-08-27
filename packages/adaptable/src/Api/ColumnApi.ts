@@ -85,4 +85,6 @@ export interface ColumnApi {
   getDistinctVisibleDisplayValuesForColumn(columnId: string): any[];
   getDistinctRawValuesForColumn(columnId: string): any[];
   getDistinctVisibleRawValuesForColumn(columnId: string): any[];
+
+  isScopeInScope(a: Scope, b: Scope): boolean;
 }

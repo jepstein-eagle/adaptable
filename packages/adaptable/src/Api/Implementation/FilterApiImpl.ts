@@ -53,6 +53,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   private getSystemFilterPredicateById(predicateId: string): FilterPredicate {
     return SystemFilterPredicatesById[predicateId];
   }
+
   public getUserFilterPredicateById(predicateId: string): FilterPredicate {
     return this.adaptable.adaptableOptions.userFunctions.find(
       uf => uf.type === 'FilterPredicate' && uf.id === predicateId

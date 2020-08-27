@@ -116,8 +116,8 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     return (
       <>
         <OverlayTrigger
-          showEvent="click"
-          hideEvent="blur"
+          showEvent="mouseenter"
+          hideEvent="mouseleave"
           render={() => (
             <Flex
               flexDirection="column"
