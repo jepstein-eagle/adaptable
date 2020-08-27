@@ -65,7 +65,8 @@ export class ConditionalStyleScopeWizard
         {' '}
         <Flex flexDirection="column" padding={2}>
           <HelpBlock marginBottom={1}>
-            Apply Conditional Style to whole row, one or more columns or one or more data types.
+            Scope: Apply Conditional Style to: whole Row, or one or more Columns, or one or more
+            Data Types
           </HelpBlock>{' '}
           <Flex flexDirection="row" padding={2}>
             <Radio
