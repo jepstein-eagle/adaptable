@@ -18,4 +18,6 @@ export interface ScopeApi {
 
   getColumnIdsInScope(scope: Scope): string[] | undefined;
   getDataTypesInScope(scope: Scope): ScopeDataType[] | undefined;
+
+  isScopeInScope(a: Scope, b: Scope): boolean;
 }
