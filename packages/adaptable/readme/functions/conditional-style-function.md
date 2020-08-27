@@ -1,46 +1,35 @@
 # Conditional Style (AdaptableFunction)
 
-The Conditional Style Function enables cells and rows to be given a distinctive style / look and feel when they contain data that matches a bespoke rule.
+The Conditional Style Function enables cells and rows to be given a distinctive style / look and feel when they contain data that matches a `Query`.
 
-## Conditional Style Rules
+## Conditional Style Properties
 
-A Conditional Style *Rule* is written using a standard Adaptable Expression (Query).
+A Conditional Style contains 3 main elements:
 
-When create a Conditional Style you will select the:
+### Scope
 
-- **Scope**: where the style is applied.  Options are:
-  - a single **Column** 
-  
-  - an entire **Row**
+This defines where the style is applied.  Options are:
 
-   
-  > There is an option to exclude grouped rows from having the style applied.
+- one (or more) **Columns**
 
-- **Colours and Font Properties**: used to create the style required; fore and back colours and font elements can be selected. Only those elements which differ from the default setting need to be set.
+- one (or more) **DataTypes** (e.g. String, Number, Date etc)
 
-  > There is an option to select the name of a pre-existing CSS style instead of creating the style individually - if the css style has been referenced in User Interface Predefined Config.
+- an entire **Row**
 
-- **Query**: a standard Adaptable Expression which determines **where** the style will be applied. 
+> There is an option to exclude grouped rows from having the style applied.
 
-  > Conditional Styles will only be applied when the cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
+### Style
+
+These are the the colours and font properties used to create the style required; fore and back colours and font elements can be selected. Only those elements which differ from the default setting need to be set.
+
+> There is an option to select the name of a pre-existing CSS style instead of creating the style individually - if the css style has been referenced in User Interface Predefined Config.
 
 
-Conditional Styles allow you to set the look and feel of your rows and / or columns based on a set of rules that you specify (using a Query).
+### Query
 
-When create a Conditional Style you will select the:
+This is a standard Adaptable Query (either Shared or bespoke) which determines **where** the style will be applied.
 
-Scope: whether the style is applied for a single column or an entire row
-
-Colours and Font Properties: used to create the style that suits your needs by selecting the fore and back colours and font elements that you require. Just select those elements that you wish to change from the default setting.
-
-Tip
-If you don't want to create the style yourself then there is an option to select the name of a pre-existing CSS style instead.  Note: this is not available for all underlying grids.. See User Interface Config for more details.
-
-Query: determines when the style will be applied. For more information on building and editing Queries using multiple Conditions and Criteria see Queries
-
-Note
-The conditional styles you create will be applied to your grid when a row's values match ALL the criteria you have set. If a row's values do not match the criteria, the default styles will be used instead.
-
+> Conditional Styles will only be applied when the cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
 
 ## UI Elements
 
@@ -67,7 +56,7 @@ Conditional Style supports these Entitlement Rules:
 
 This is not possible unfortunately because each underlying grid needs then to implement that style separately (and not all are DOM based and won't use CSS). If you would like to add extra properties to Conditional Styles that are not currently present please provide us with the details and we will try to add them in a future release.
 
-C**an we provide the name of a css style instead of building it?**
+**Can we provide the name of a css style instead of building it?**
 
 Yes, you can do that. When you create a predefined Conditional Style there is a StyleName property which you can use to provide the name of the css style. If you do that, then its your responsibility to ensure that style is available in your css. 
 
@@ -75,11 +64,11 @@ Additionally, you can provide a list of styles in `User Interface Predefined Con
 
 **Can we add gradient style to a Conditional Style so the colour transparency changes depending on the value?**
 
-Not currently but we plan to add this in a future release. We do have the Percent Bar and Gradient Column functions that both dosomething similar but for **all** cells in a column.
+Not currently but we plan to add this in a future release. We do have the [Percent Bar](percent-bar-function.md) and [Gradient Column](gradient-column-function.md) functions that both do something similar but for **all** cells in a column.
 
 **Can we add a style that is always applied, i.e. is not based on a condition?**
 
-Yes - this is done through the Format Column function. Format Column uses the same style as a Style Condition but without an accompanying rule (e.g. if a user wants a particular column always to have a certain back colour).
+Yes - this is done through the [Format Column function](format-column-function.md). This uses the same style as a Style Condition but without an accompanying rule (e.g. if a user wants a particular column always to have a certain back colour).
 
 ### Further Information
 
@@ -88,4 +77,3 @@ Yes - this is done through the Format Column function. Format Column uses the sa
 - [Conditional Style Api](https://api.adaptabletools.com/interfaces/_src_api_conditionalstyleapi_.conditionalstyleapi.html)
 
 - [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo)
-
