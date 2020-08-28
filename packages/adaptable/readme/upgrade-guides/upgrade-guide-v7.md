@@ -14,6 +14,18 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * New Calculated Column Expression Editor and Syntax
 
+* Queries and Shared Queries
+
+* Merged Filters
+
+* Layout Changes
+
+* Column Chooser removed
+
+* Column Category removed
+
+* Scope - Conditional Styles
+
 * Schedule State Changes
 
 * Percent Bars Improvements
@@ -197,6 +209,10 @@ The required syntax is very similar to previous versions of AdapTable, and in mo
 
 For more information see the [Calculated Column ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
 
+## Layout Changes
+
+TODO
+
 ## Schedule State Changes
 
 In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of Adaptable State (e.g. Export, Reminder, ipushpull etc).
@@ -223,7 +239,6 @@ For full information on all these changes see the [Percent Bar ReadMe](https://g
 
 ## Config Server Removed
 
-Since Version 5 of AdapTable, Config Server (which enabled remote storage of Adaptable State) has been deprecated in favour of the more powerful and flexible [StateOptions](../../../adaptable/src/AdaptableOptions/StateOptions.ts) functions.  
 
 In Version 7 Config Server has finally been removed.
 

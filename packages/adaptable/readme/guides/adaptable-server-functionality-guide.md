@@ -141,14 +141,14 @@ The property can take one of 4 values:
 
 - **Query** - runs just the [`Query` Function](../functions/query-function.md) on the server but filtering will take place on the client. (This is a popular option).
 
-- **AllSearch** - runs all search and filtering functions on the server (i.e. Advanced Search, Column Filters etc)
+- **AllSearch** - runs all search and filtering functions on the server (i.e. Query, Column Filters etc)
 
 - **AllSearchandSort** - runs all search and filtering functions on the server and will also run all sorting on the server.
 
 > If a search function has been selected to be run on the Server then AdapTable will not do any relevant searching or filtering when the function runs.
 
 ### SearchChanged Event
-Whenever the search criteria in AdapTable change (e.g. a new Advanced Search has been selected, or a Column Filter has been applied) the [SearchChanged](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedeventargs.html) event is fired.
+Whenever the search criteria in AdapTable change (e.g. a new Query has been run, or a Column Filter has been applied) the [SearchChanged](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedeventargs.html) event is fired.
 
 The event includes a [`SearchChangedInfo`](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedinfo.html) property which contains 3 important properties:
 

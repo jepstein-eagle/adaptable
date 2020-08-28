@@ -8,6 +8,7 @@ import { ILayoutService } from './Interface/ILayoutService';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { isEqual } from 'lodash';
+import { DEFAULT_LAYOUT } from '../Constants/GeneralConstants';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
@@ -45,7 +46,6 @@ export class LayoutService implements ILayoutService {
     const isLayoutDefined = (layoutName: string) =>
       !!layoutState.Layouts.filter(layout => layout.Name === layoutName)[0];
 
-    let defaultLayoutName = 'Default Layout';
     let defaultLayoutColumns = gridState.Columns.filter(column => column.Visible);
 
     const columnsMap = gridState.Columns.reduce((acc, col) => {
@@ -60,10 +60,10 @@ export class LayoutService implements ILayoutService {
     }
 
     if (shouldCreateDefaultLayout) {
-      if (!layoutState.Layouts || !isLayoutDefined(defaultLayoutName)) {
+      if (!layoutState.Layouts || !isLayoutDefined(DEFAULT_LAYOUT)) {
         let defaultLayout: Layout = ObjectFactory.CreateEmptyLayout(
           {
-            Name: defaultLayoutName,
+            Name: DEFAULT_LAYOUT,
             Columns: defaultLayoutColumns.map(c => c.ColumnId),
           },
           gridState.Columns

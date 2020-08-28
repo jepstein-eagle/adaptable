@@ -89,7 +89,7 @@ export interface LayoutState extends ConfigState {
    *
    * Note: If there are no Layouts in Predefined Config then the default layout will be created anyway and this property will be ignored.
    *
-   * **Default Value**:  false
+   * **Default Value**: false
    */
   CreateDefaultLayout?: boolean;
 }

@@ -76,7 +76,6 @@ import { ScopeApi } from './ScopeApi';
  *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
  *  | [actionColumnApi](#actioncolumnapi)             | Manages {@link ActionColumnState|Action Columns} which contain buttons with bespoke click logic	    |
- *  | [queryApi](#queryapi)         | Functions relating to the saveable, cross-column Queries  |
  *  | [alertApi](#alertapi)                           | {@link AlertState|Adaptable Alerts} provide bespoke notifications and messages                                 |
  *  | [applicationApi](#applicationapi)               | Use {@link ApplicationState|Application Data Entries} to manage custom state and data |
  *  | [auditEventApi](#auditeventapi)                 | Listen to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
@@ -92,18 +91,19 @@ import { ScopeApi } from './ScopeApi';
  *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
  *  | [dataSourceApi](#datasourceapi)                 | Deals with [Data Sources](_src_predefinedconfig_datasourcestate_.datasourcestate.html) used in Server Searching|
  *  | [exportApi](#exportapi)                         | Run reports either manually or at scheduled times|
+ *  | [filterApi](#filterapi)             | Manages various filters provided by AdapTable
  *  | [flashingCellApi](#flashingcellapi)             | Manages the [Flashing Cell](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_flashingcellstate_.flashingcellstate.html) |
  *  | [freeTextColumnApi](#freetextcolumnapi)         | Configures {@link FreeTextColumnState|FreeText Columns} - special columns containing bespoke data|
  *  | [gradientColumnApi](#gradientcolumnapi)         | Aids creation of visual {@link GradientColumnState|Gradient Columns} |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
  *  | [percentBarApi](#percentbarapi)                 | Aids creation and editing of visual {@link PercentBarState: Percent Bars} |
+ *  | [queryApi](#queryapi)                           | Functions relating to the saveable, cross-column Queries  |
  *  | [quickSearchApi](#quicksearchapi)               | Functions for running and clearing Quick Search|
  *  | [reminderApi](#reminderapi)                     | Manages Reminders (scheduled Alerts) |
  *  | [scheduleApi](#scheduleapi)                     | Supports {@link ScheduleState|Schedules} for running Actions at set time|
  *  | [shortcutApi](#shortcutapi)                     | Deals with {@link ShortcutState|Shortcuts} for faster & safer data entry|
  *  | [smartEditApi](#smarteditapi)                   | Functions for managing the Smart Edit function to enable better editing|
  *  | [sparklineColumnApi](#sparklinecolumnapi)       | For {@link SparklineColumnState|Sparkline Columns} - ideal for historical or array-based data|
- *  | [filterApi](#filterapi)             | Manages various filters provided by AdapTable
  *  | [systemStatusApi](#systemstatusapi)             | Manages how the System Status function will display run-time messages|
  *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
  *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
@@ -224,6 +224,11 @@ export interface AdaptableApi {
   exportApi: ExportApi;
 
   /**
+   * Provides access to [System Filter State](_src_predefinedconfig_configstate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
+   */
+  filterApi: FilterApi;
+
+  /**
    * Provides access to the *Flashing Cell* function, the *Flashing Cell* object and [Flashing Cell State](_src_predefinedconfig_configstate_flashingcellstate_.flashingcellstate.html).
    */
   flashingCellApi: FlashingCellApi;
@@ -279,6 +284,10 @@ export interface AdaptableApi {
   pluginsApi: PluginsApi;
 
   /**
+   * Provides access to functions related to a `Query` - a cross-column search.
+   */
+  queryApi: QueryApi;
+  /**
    * Provides access to the *Quick Search* function, the *Quick Search* object and [Quick Search State](_src_predefinedconfig_configstate_quicksearchstate_.quicksearchstate.html).
    */
   quickSearchApi: QuickSearchApi;
@@ -311,11 +320,6 @@ export interface AdaptableApi {
   sparklineColumnApi: SparklineColumnApi;
 
   /**
-   * Provides access to [System Filter State](_src_predefinedconfig_configstate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
-   */
-  filterApi: FilterApi;
-
-  /**
    * Api methods related to the System Status function which displays information about the health of the application.
    */
   systemStatusApi: SystemStatusApi;
@@ -340,10 +344,14 @@ export interface AdaptableApi {
    */
   userInterfaceApi: UserInterfaceApi;
 
-  queryApi: QueryApi;
-
+  /**
+   * Functions related to team-sharing whereby users can create and share objects at run-time with colleagues
+   */
   teamSharingApi: TeamSharingApi;
 
+  /**
+   * Manages the `Scope` object - used in many functions to determine where an object is applied
+   */
   scopeApi: ScopeApi;
 
   /**

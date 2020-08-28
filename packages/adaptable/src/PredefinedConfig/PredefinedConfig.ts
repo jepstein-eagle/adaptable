@@ -430,6 +430,8 @@ export interface PredefinedConfig {
 
   /**
    * Supplies a collection of *Chart* objects to enable seeing grid data visually in chart format.
+   *
+   * Requires the Chart Plugin to be enabled.
    */
   Chart?: ChartState;
 
@@ -470,6 +472,17 @@ export interface PredefinedConfig {
   Export?: ExportState;
 
   /**
+   * Provides details of which Filters should be available / running at start-up.  It includes
+   *
+   * - System Filters - users can provide a list of which System Filters should be available (if no values are listed, then all will be).
+   *
+   *  - Filter Predicates  - A set of bespoke User Predicates that have been created at design-timee.
+   *
+   * - Column Filters - which column filters should be applied at start-up
+   */
+  Filter?: FilterState;
+
+  /**
    * Supplies a collection of *FlashingCell* objects to set up which columns should flash when their contents change and how.  Also includes default values to facilitiate creating new flashing cell columns.
    */
   FlashingCell?: FlashingCellState;
@@ -500,19 +513,26 @@ export interface PredefinedConfig {
   PercentBar?: PercentBarState;
 
   /**
-   * Supplies a collection of *Schedule* objects.
-   */
-  Schedule?: ScheduleState;
-
-  /**
    * Supplies a collection of *PlusMinus* rule objects to stipulate what happens when the user clicks '+' or '-' in a numeric cell.
    */
   PlusMinus?: PlusMinusState;
 
   /**
+   * Lists any Shared Queries which should be available for use across all AdapTable functions.
+   *
+   * Also includes `CurrentQuery` - an Expression that will be run at start-up.
+   */
+  Query?: QueryState;
+
+  /**
    * Configues how Quick Search will run i.e. how and whether to highlight matching cells and to filter out non-matching rows.
    */
   QuickSearch?: QuickSearchState;
+
+  /**
+   * Supplies a collection of *Schedule* objects.
+   */
+  Schedule?: ScheduleState;
 
   /**
    * Supplies a collection of *Shortcut* objects to aid data entry and prevent 'fat finger' issues.
@@ -532,15 +552,6 @@ export interface PredefinedConfig {
    * (Note: Sparkline Column State can be updated via `AdaptableApi`` but these updates **will not be persisted**).
    */
   SparklineColumn?: SparklineColumnState;
-
-  /**
-   * List of which System Filters should be available to users.
-   *
-   * If no values are listed, then **all System Filters** are available.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   */
-  Filter?: FilterState;
 
   /**
    * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.
@@ -572,6 +583,4 @@ export interface PredefinedConfig {
    * (Note: User Interface State can be updated via `AdaptableApi` but these updates **will not be persisted**).
    */
   UserInterface?: UserInterfaceState;
-
-  Query?: QueryState;
 }

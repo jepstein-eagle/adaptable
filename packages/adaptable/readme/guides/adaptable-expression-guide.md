@@ -73,7 +73,7 @@ These are the following AdapTable Functions that use Expressions - together with
 
 | Function  	      | Result                                                                                       |
 | --------  	      | ------                                                                                       | 
-| CurrentQuery      | AdapTable displays only those rows that match the Advanced Search's Conditions and Criteria  | 
+| CurrentQuery      | AdapTable displays only those rows that match the Query's 'Expression'  | 
 | Alerts 	          | The Alert is only triggered if the data change matches the Expression's Critieria.           | 
 | Cell Validation	  | Cell Validation Rule will be applied if Cell being edited matches the Expression's Critieria | 
 | Conditional Style | Style is only applied to Cells and Rows in Grid that that match the Expression's Critieria   | 
@@ -93,13 +93,9 @@ Additionally, if the Query is built at design time and shipped with the product 
 
 Yes.  The AdaptableOptions object has a getColumnValues property; this property is a function called each time column values are required.  It returns a Promise of a string array.
 
-**Can we re-use the same query in different Functions - e.g. create a Query in Plus / Minus and use it also in Advanced Search?**
+**Can we re-use the same query in different Functions - e.g. create a Query in Plus / Minus and use it also in Report?**
 
-At present no. Each Query is tied to a single Adaptable Object and Function. We might in the future allow you to re-use Queries, but experience form Adaptable Blotter.NET shows that this easily leads to complications if not well managed. You can create User Filters and re-use them in Queries but you cannot re-use Queries themselves.
-
-**I want to show details of a Search in my own control. How can I do that?**
-
-You can access the Advanced Search Adaptable Object from our store and have full visibility over its contents including the Query that it contains.
+Yes - by using a Shared Query.
 
 **Can we add our own filters to the list shown in a query?**
 
