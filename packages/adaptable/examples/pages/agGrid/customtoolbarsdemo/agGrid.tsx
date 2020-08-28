@@ -286,8 +286,7 @@ let demoConfig: PredefinedConfig = {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        PredicateId: 'In',
-        Inputs: ['GBP', 'ZAR'],
+        Predicate: { Id: 'In', Inputs: ['GBP', 'ZAR'] },
       },
     ],
   },

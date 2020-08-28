@@ -1,12 +1,8 @@
-import {
-  FilterState,
-  ColumnFilter,
-  SystemFilterIdList,
-  UserFilter,
-} from '../../PredefinedConfig/FilterState';
+import { FilterState, ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
 import * as Redux from 'redux';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { InputAction } from '../../Utilities/Interface/IMessage';
+import { SystemFilterPredicateIds } from '../../PredefinedConfig/Common/Predicate';
 
 // System Filter constants
 export const SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';
@@ -113,7 +109,7 @@ export const CreateUserFilterFromColumnFilter = (
 });
 
 const initialFilterState: FilterState = {
-  SystemFilters: SystemFilterIdList as any,
+  SystemFilters: SystemFilterPredicateIds as any,
   FilterPredicates: [],
   ColumnFilters: [],
   UserFilters: [],

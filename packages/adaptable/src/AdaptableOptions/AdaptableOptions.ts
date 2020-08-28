@@ -14,7 +14,6 @@ import { SearchOptions } from './SearchOptions';
 import { ExportOptions } from './ExportOptions';
 import { UserFunctions } from './UserFunctions';
 import { TeamSharingOptions } from './TeamSharingOptions';
-import { FilterPredicate } from '../types';
 
 /**
  * `AdaptableOptions` provides all the layout, DataGrid, config and other information required to ensure a full, rich user experience.

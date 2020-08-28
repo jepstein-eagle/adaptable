@@ -67,12 +67,7 @@ import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/QueryState';
-import {
-  ColumnFilter,
-  AdaptablePredicate,
-  UserFilter,
-  SystemFilterId,
-} from '../PredefinedConfig/FilterState';
+import { ColumnFilter, UserFilter } from '../PredefinedConfig/FilterState';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -632,8 +627,10 @@ export function CreateColumnFilter(
 ): ColumnFilter {
   return {
     ColumnId,
-    PredicateId,
-    Inputs,
+    Predicate: {
+      Id: PredicateId,
+      Inputs,
+    },
   };
 }
 

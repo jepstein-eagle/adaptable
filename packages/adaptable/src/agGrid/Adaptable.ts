@@ -148,7 +148,7 @@ import { isEqual } from 'lodash';
 import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
-import { ColumnFilter, SystemFilterId } from '../PredefinedConfig/FilterState';
+import { ColumnFilter, SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 
 ModuleRegistry.registerModules(AllCommunityModules);

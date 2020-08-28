@@ -25,7 +25,7 @@ import { ThemeProvider, CSSProperties } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
-import { ColumnFilter, FilterPredicate } from '../../../PredefinedConfig/FilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import DropdownButton from '../../../components/DropdownButton';
 import OverlayTrigger from '../../../components/OverlayTrigger';
 import SimpleButton from '../../../components/SimpleButton';
@@ -34,6 +34,7 @@ import { mdiFilterOutline, mdiClose } from '@mdi/js';
 import { Flex, Box } from 'rebass';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
+import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
 
 /*
 Rather than explain the code I will try to explain in an overview what this class is trying do.
@@ -103,11 +104,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   render(): any {
     const { filter } = this.state;
 
-    const predicates = this.props.Api.filterApi.getFilterPredicatesForColumn(
+    const predicateDefs = this.props.Api.filterApi.getFilterPredicateDefsForColumn(
       this.props.CurrentColumn
     );
 
-    const activePredicate = predicates.find(p => p.id === filter?.PredicateId);
+    const activePredicateDef = this.props.Api.predicateApi.getPredicateDefById(
+      filter?.Predicate.Id
+    );
 
     if (!this.props.CurrentColumn || !this.props.CurrentColumn.Filterable) {
       return null;
@@ -129,7 +132,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
                 zIndex: 1000,
               }}
             >
-              {filter?.PredicateId && (
+              {filter?.Predicate.Id && (
                 <>
                   <SimpleButton p={2} variant="text" onClick={() => this.clearFilter()}>
                     <span style={{ width: 20, marginRight: 10 }}>
@@ -139,12 +142,12 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
                   </SimpleButton>
                 </>
               )}
-              {predicates.map(p => (
+              {predicateDefs.map(p => (
                 <SimpleButton
                   key={p.id}
                   p={2}
                   variant="text"
-                  tone={filter?.PredicateId === p.id ? 'info' : 'none'}
+                  tone={filter?.Predicate.Id === p.id ? 'info' : 'none'}
                   onClick={() => this.selectColumnPredicate(p.id)}
                 >
                   <span style={{ width: 20, marginRight: 10 }}>{this.renderPredicateIcon(p)}</span>
@@ -154,18 +157,18 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             </Flex>
           )}
         >
-          <SimpleButton>{this.renderPredicateIcon(activePredicate)}</SimpleButton>
+          <SimpleButton>{this.renderPredicateIcon(activePredicateDef)}</SimpleButton>
         </OverlayTrigger>
-        {filter?.PredicateId === 'Values' && this.renderValuesDropdown(filter)}
-        {filter?.PredicateId !== 'Values' &&
-          activePredicate &&
-          activePredicate?.inputs === undefined && <Box p={1}>{activePredicate.name}</Box>}
-        {activePredicate?.inputs?.map((predicateInput, index) => (
+        {filter?.Predicate.Id === 'Values' && this.renderValuesDropdown(filter)}
+        {filter?.Predicate.Id !== 'Values' &&
+          activePredicateDef &&
+          activePredicateDef?.inputs === undefined && <Box p={1}>{activePredicateDef.name}</Box>}
+        {activePredicateDef?.inputs?.map((predicateInput, index) => (
           <Input
             key={index}
             type={predicateInput.type === 'number' ? 'text' : predicateInput.type}
             autoFocus={index === 0}
-            value={filter.Inputs[index]}
+            value={filter.Predicate.Inputs[index]}
             onChange={(e: React.FormEvent) => this.changeColumnPredicateInput(e, index)}
             onKeyDownCapture={(e: React.KeyboardEvent) => {
               if (e.nativeEvent.key === 'Escape') {
@@ -181,12 +184,16 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     );
   }
 
-  renderPredicateIcon(predicate: FilterPredicate) {
-    return predicate?.iconText ? (
-      <span>{predicate?.iconText}</span>
-    ) : (
-      <Icon size="1rem" path={predicate?.iconPath || mdiFilterOutline} />
-    );
+  renderPredicateIcon(predicateDef: PredicateDef) {
+    if (!predicateDef) {
+      return <Icon size="1rem" path={mdiFilterOutline} />;
+    }
+    if ('text' in predicateDef.icon) {
+      return <span>{predicateDef.icon.text}</span>;
+    }
+    if ('path' in predicateDef.icon) {
+      return <Icon size="1rem" path={predicateDef.icon.path} />;
+    }
   }
 
   renderValuesDropdown(filter: ColumnFilter) {
@@ -224,7 +231,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               Columns={[]}
               ColumnDistinctValues={distinctColumnValues}
               DataType={this.props.CurrentColumn.DataType}
-              UiSelectedColumnValues={this.state.filter.Inputs}
+              UiSelectedColumnValues={this.state.filter.Predicate.Inputs}
               useVendorStyle={true}
               onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
             />
@@ -242,7 +249,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             this.setState({ valuesDropdownVisible: !this.state.valuesDropdownVisible });
           }}
         >
-          {filter.Inputs.join(', ') || 'Select Values'}
+          {filter.Predicate.Inputs.join(', ') || 'Select Values'}
         </SimpleButton>
       </OverlayTrigger>
     );
@@ -251,18 +258,19 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   onColumnValuesChange(columnValues: any[]) {
     const { filter } = this.state;
 
-    filter.PredicateId = 'Values';
-    filter.Inputs = columnValues;
+    filter.Predicate = { Id: 'Values', Inputs: columnValues };
 
     this.updateFilter(filter);
   }
 
   selectColumnPredicate(predicateId: string) {
     const { filter } = this.state;
-    const predicate = this.props.Api.filterApi.getFilterPredicateById(predicateId);
+    const predicateDef = this.props.Api.predicateApi.getPredicateDefById(predicateId);
 
-    filter.PredicateId = predicateId;
-    filter.Inputs = (predicate.inputs ?? []).map(i => i.defaultValue ?? '');
+    filter.Predicate = {
+      Id: predicateId,
+      Inputs: (predicateDef.inputs ?? []).map(i => i.defaultValue ?? ''),
+    };
 
     this.updateFilter(filter);
 
@@ -274,7 +282,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   private updateFilter(filter: ColumnFilter) {
     this.setState({ filter });
 
-    if (filter.Inputs?.some(input => StringExtensions.IsNullOrEmpty(input))) {
+    if (filter.Predicate.Inputs?.some(input => StringExtensions.IsNullOrEmpty(input))) {
       return;
     }
 
@@ -295,14 +303,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       this.selectColumnPredicate(predicateId);
     } else {
       const { filter } = this.state;
-      filter.Inputs[index] = value;
+      filter.Predicate.Inputs[index] = value;
       this.updateFilter(filter);
     }
   }
 
   getPredicateIdForShortcutValue(value: string) {
-    return this.props.Api.filterApi.findFilterPredicateByShortcut(value, this.props.CurrentColumn)
-      ?.id;
+    return this.props.Api.filterApi.findPredicateDefByShortcut(value, this.props.CurrentColumn)?.id;
   }
 
   clearFilter() {

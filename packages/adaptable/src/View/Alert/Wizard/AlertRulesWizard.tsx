@@ -10,7 +10,7 @@ import {
 } from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import { AlertDefinition, AlertPredicatesDefs } from '../../../PredefinedConfig/AlertState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
 import { Box, Flex } from 'rebass';
@@ -51,7 +51,7 @@ export class AlertRulesWizard
         };
       });
 
-    const currentPredicateDef = this.props.Api.alertApi.getAlertPredicateDefById(this.state.Id);
+    const currentPredicateDef = this.props.Api.predicateApi.getPredicateDefById(this.state.Id);
 
     return (
       <WizardPanel>
@@ -78,12 +78,12 @@ export class AlertRulesWizard
   }
 
   private onPredicateChange(Id: string) {
-    const predicateDef = this.props.Api.alertApi.getAlertPredicateDefById(Id);
+    const predicateDef = this.props.Api.predicateApi.getPredicateDefById(Id);
 
     this.setState(
       {
         Id,
-        Inputs: (predicateDef.inputs ?? []).map(input => input.defaultValue ?? ''),
+        Inputs: (predicateDef?.inputs ?? []).map(input => input.defaultValue ?? ''),
       },
       () => this.props.UpdateGoBackState()
     );

@@ -11,7 +11,7 @@ import { GridCell } from '../types';
 import { IPushPullState, IPushPullReport, IPushPullDomain } from './IPushPullState';
 import { Glue42State, Glue42Report } from './Glue42State';
 import { OpenFinState, OpenFinReport } from './OpenFinState';
-import { SystemFilterId } from './FilterState';
+import { SystemFilterPredicateId } from './FilterState';
 
 export { IPushPullReport, IPushPullDomain };
 

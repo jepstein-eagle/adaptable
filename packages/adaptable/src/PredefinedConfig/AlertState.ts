@@ -5,6 +5,7 @@ import { QueryObject } from './Common/QueryObject';
 import { Scope } from './Common/Scope';
 import { AdaptableColumn, AdaptableApi } from '../types';
 import { keyBy } from 'lodash';
+import { Predicate } from './Common/Predicate';
 
 /**
  * The Predefined Configuration for the Alert function
@@ -111,7 +112,7 @@ export interface AlertDefinition extends QueryObject {
    */
   ColumnId?: string;
 
-  Predicate?: AlertPredicate;
+  Predicate?: Predicate;
 
   /**
    * An (optional) Expression (or Query).
@@ -168,58 +169,3 @@ export interface AlertProperties {
    */
   ShowInDiv?: boolean;
 }
-
-export interface AlertPredicate {
-  Id: string;
-  Inputs?: any[];
-}
-
-export interface AlertPredicateDef {
-  id: string;
-  name: string;
-  scope: Scope;
-  inputs?: AlertPredicateDefInput[];
-  handler: (params: AlertPredicateDefHandlerParams) => boolean;
-  toString: (params: AlertPredicateDefToStringParams) => string;
-}
-
-export interface AlertPredicateDefInput {
-  type: 'number' | 'text' | 'date';
-  defaultValue?: any;
-}
-
-export interface AlertPredicateDefHandlerParams {
-  newValue: any;
-  oldValue: any;
-  inputs: any[];
-  column: AdaptableColumn;
-  api: AdaptableApi;
-}
-
-export interface AlertPredicateDefToStringParams {
-  alert: AlertDefinition;
-  column: AdaptableColumn;
-}
-
-export const AlertPredicatesDefs: AlertPredicateDef[] = [
-  {
-    id: 'Any',
-    name: 'Any Change',
-    scope: { All: true },
-    handler: ({ newValue, oldValue }) => newValue !== oldValue,
-    toString: ({ column }) => `${column.FriendlyName} Changed`,
-  },
-  {
-    id: 'PercentChange',
-    name: 'Percent Change',
-    scope: { DataTypes: ['Number'] },
-    inputs: [{ type: 'number' }],
-    handler: ({ newValue, oldValue, inputs }) =>
-      (Math.abs(Number(newValue) - Number(oldValue)) / Number(newValue)) * 100 > Number(inputs[0]),
-    toString: ({ alert, column }) =>
-      `${column.FriendlyName} Changed by > ${alert.Predicate.Inputs[0]}%`,
-  },
-];
-
-export const AlertPredicatesDefsById = keyBy(AlertPredicatesDefs, 'id');
-export const AlertPredicatesDefsIdList = AlertPredicatesDefs.map(p => p.id);

@@ -58,9 +58,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
         <ButtonSave
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
-          disabled={
-            columnFilter == null || StringExtensions.IsNotNullOrEmpty(columnFilter.PredicateId)
-          }
+          disabled={columnFilter == null || columnFilter.Predicate === undefined}
           AccessLevel={this.props.AccessLevel}
         />{' '}
         <ButtonClear

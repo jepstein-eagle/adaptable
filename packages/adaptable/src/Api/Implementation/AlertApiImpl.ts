@@ -6,14 +6,7 @@ import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { AlertApi } from '../AlertApi';
-import {
-  AlertState,
-  AlertDefinition,
-  AlertProperties,
-  AlertPredicatesDefsById,
-  AlertPredicateDef,
-  AlertPredicatesDefs,
-} from '../../PredefinedConfig/AlertState';
+import { AlertState, AlertDefinition, AlertProperties } from '../../PredefinedConfig/AlertState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
@@ -21,6 +14,7 @@ import ObjectFactory from '../../Utilities/ObjectFactory';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
 import { Scope } from '../../PredefinedConfig/Common/Scope';
+import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {
@@ -142,17 +136,13 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     );
   }
 
-  public getAlertPredicateDefs(): AlertPredicateDef[] {
-    return AlertPredicatesDefs;
+  public getAlertPredicateDefs(): PredicateDef[] {
+    return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('alert');
   }
 
-  public getAlertPredicateDefById(predicateId: string): AlertPredicateDef {
-    return AlertPredicatesDefsById[predicateId];
-  }
-
-  public getAlertPredicateDefsForScope(scope: Scope): AlertPredicateDef[] {
+  public getAlertPredicateDefsForScope(scope: Scope): PredicateDef[] {
     return this.getAlertPredicateDefs().filter(predicateDef =>
-      this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.scope)
+      this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
     );
   }
 }

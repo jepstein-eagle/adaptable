@@ -98,8 +98,7 @@ let demoConfig: PredefinedConfig = {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        PredicateId: 'StartsWith',
-        Inputs: ['e'],
+        Predicate: { Id: 'StartsWith', Inputs: ['e'] },
       },
     ],
   },

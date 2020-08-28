@@ -4,10 +4,8 @@ import { ApiBase } from './ApiBase';
 import { FilterApi } from '../FilterApi';
 import {
   FilterState,
-  FilterPredicate,
   ColumnFilter,
-  SystemFilterIds,
-  SystemFilterPredicatesById,
+  SystemFilterPredicateIds,
   UserFilter,
 } from '../../PredefinedConfig/FilterState';
 import { AdaptableColumn } from '../../types';
@@ -15,13 +13,14 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { AdaptableApi } from '../AdaptableApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
+import { PredicateDef, SystemPredicateDefsById } from '../../PredefinedConfig/Common/Predicate';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
     return this.getAdaptableState().Filter;
   }
 
-  public getAllSystemFilterIds(): SystemFilterIds {
+  public getAllSystemFilterIds(): SystemFilterPredicateIds {
     return this.getSystemFilterState().SystemFilters;
   }
 
@@ -37,50 +36,39 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
   }
 
-  public getFilterPredicateById(predicateId: string): FilterPredicate {
-    const filterPredicate: FilterPredicate = this.getSystemFilterPredicateById(predicateId);
-    if (filterPredicate) {
-      return filterPredicate;
-    } else {
-      return this.getUserFilterPredicateById(predicateId);
-    }
+  public findPredicateDefByShortcut(shortcut: string, column: AdaptableColumn): PredicateDef {
+    return this.getFilterPredicateDefsForColumn(column).find(i => i.shortcuts?.includes(shortcut));
   }
 
-  public findFilterPredicateByShortcut(shortcut: string, column: AdaptableColumn): FilterPredicate {
-    return this.getFilterPredicatesForColumn(column).find(i => i.shortcuts?.includes(shortcut));
-  }
+  // public getUserFilterPredicateById(predicateId: string): PredicateDef {
+  //   return this.adaptable.adaptableOptions.userFunctions.find(
+  //     uf => uf.type === 'FilterPredicate' && uf.id === predicateId
+  //   ) as FilterPredicate;
+  // }
 
-  private getSystemFilterPredicateById(predicateId: string): FilterPredicate {
-    return SystemFilterPredicatesById[predicateId];
-  }
-
-  public getUserFilterPredicateById(predicateId: string): FilterPredicate {
-    return this.adaptable.adaptableOptions.userFunctions.find(
-      uf => uf.type === 'FilterPredicate' && uf.id === predicateId
-    ) as FilterPredicate;
-  }
-
-  public getFilterPredicatesForColumn(column: AdaptableColumn): FilterPredicate[] {
+  public getFilterPredicateDefsForColumn(column: AdaptableColumn): PredicateDef[] {
     return this.getAllFilterPredicates().filter(predicate =>
-      this.adaptable.api.scopeApi.isColumnInScope(column, predicate.scope)
+      this.adaptable.api.scopeApi.isColumnInScope(column, predicate.columnScope)
     );
   }
 
-  public getFilterPredicatesForColumnId(columnId: string): FilterPredicate[] {
+  public getFilterPredicateDefsForColumnId(columnId: string): PredicateDef[] {
     const column = this.adaptable.api.columnApi.getColumnFromId(columnId);
-    return this.getFilterPredicatesForColumn(column);
+    return this.getFilterPredicateDefsForColumn(column);
   }
 
-  private getAllFilterPredicates(): FilterPredicate[] {
-    let filterPredicates: FilterPredicate[] = [];
+  private getAllFilterPredicates(): PredicateDef[] {
+    let filterPredicates: PredicateDef[] = [];
     let systemFilters = this.getAllSystemFilterIds();
     if (ArrayExtensions.IsNotNullOrEmpty(systemFilters)) {
-      filterPredicates.push(...systemFilters.map(sf => this.getFilterPredicateById(sf)));
+      filterPredicates.push(
+        ...systemFilters.map(sf => this.adaptable.api.predicateApi.getPredicateDefById(sf))
+      );
     }
-    let userFilters = this.getAllUserFilterIds();
-    if (ArrayExtensions.IsNotNullOrEmpty(userFilters)) {
-      filterPredicates.push(...userFilters.map(uf => this.getFilterPredicateById(uf)));
-    }
+    // let userFilters = this.getAllUserFilterIds();
+    // if (ArrayExtensions.IsNotNullOrEmpty(userFilters)) {
+    //   filterPredicates.push(...userFilters.map(uf => this.getPredicateDefById(uf)));
+    // }
     return filterPredicates;
   }
 
@@ -157,8 +145,10 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
     let filter: ColumnFilter = {
       ColumnId: column,
-      PredicateId: 'Values',
-      Inputs: displayValues,
+      Predicate: {
+        Id: 'Values',
+        Inputs: displayValues,
+      },
     };
     this.setColumnFilter([filter]);
   }
@@ -172,17 +162,9 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   public evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean {
-    // this doesnt work as it wont include calc columns or those provided via value getters (i.e. not in actual data set)
-    // const value = node.data[columnFilter.ColumnId];
     const value = this.adaptable.getRawValueFromRowNode(node, columnFilter.ColumnId);
-    const displayValue = this.adaptable.getValueFromRowNode(
-      node,
-      columnFilter.ColumnId,
-      CellValueType.DisplayValue
-    );
-    const column = this.adaptable.api.columnApi.getColumnFromId(columnFilter.ColumnId);
 
-    if (StringExtensions.IsNullOrEmpty(columnFilter.PredicateId)) {
+    if (!columnFilter.Predicate) {
       return true;
     }
 
@@ -190,20 +172,19 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       return false;
     }
 
-    try {
-      const api: AdaptableApi = this.adaptable.api;
-      const predicate = this.getFilterPredicateById(columnFilter.PredicateId);
-      return predicate.handler({
-        api,
-        value,
-        displayValue,
-        column,
-        inputs: columnFilter.Inputs,
-      });
-    } catch (error) {
-      console.error(`Error in predicate ${columnFilter.PredicateId}`, error);
-      return false;
-    }
+    const displayValue = this.adaptable.getValueFromRowNode(
+      node,
+      columnFilter.ColumnId,
+      CellValueType.DisplayValue
+    );
+    const column = this.adaptable.api.columnApi.getColumnFromId(columnFilter.ColumnId);
+
+    return this.adaptable.api.predicateApi.handlePredicate(columnFilter.Predicate, {
+      value,
+      oldValue: null,
+      displayValue,
+      column,
+    });
   }
 
   public getAllUserFilter(): UserFilter[] {

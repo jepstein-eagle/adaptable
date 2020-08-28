@@ -34,7 +34,7 @@ import { IReportService } from '../../Utilities/Services/Interface/IReportServic
 import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IChartService } from '../../Utilities/Services/Interface/IChartService';
-import { SystemFilterId } from '../../PredefinedConfig/FilterState';
+import { SystemFilterPredicateId } from '../../PredefinedConfig/FilterState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public getSystemState(): SystemState {

@@ -10,7 +10,7 @@ import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
-import { AlertDefinition, AlertPredicatesDefs } from '../PredefinedConfig/AlertState';
+import { AlertDefinition } from '../PredefinedConfig/AlertState';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
@@ -137,15 +137,11 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   }
 
   private isAlertTriggered(alert: AlertDefinition, dataChangedEvent: DataChangedInfo): boolean {
-    const currentPredicateDef = this.adaptable.api.alertApi.getAlertPredicateDefById(
-      alert.Predicate.Id
-    );
-
-    return currentPredicateDef.handler({
-      newValue: dataChangedEvent.NewValue,
+    return this.adaptable.api.predicateApi.handlePredicate(alert.Predicate, {
+      value: dataChangedEvent.NewValue,
       oldValue: dataChangedEvent.OldValue,
-      inputs: alert.Predicate.Inputs,
-      api: this.adaptable.api,
+      // TODO send real display value
+      displayValue: null,
       column: this.adaptable.api.columnApi.getColumnFromId(alert.ColumnId),
     });
   }

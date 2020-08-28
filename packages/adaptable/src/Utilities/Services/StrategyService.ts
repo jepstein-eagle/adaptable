@@ -5,7 +5,7 @@ import {
   CellValueType,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { AlertDefinition, AlertPredicatesDefs } from '../../PredefinedConfig/AlertState';
+import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import ExpressionHelper from '../Helpers/ExpressionHelper';
 import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, AdaptableMenuItem } from '../../types';
@@ -34,10 +34,10 @@ export class StrategyService implements IStrategyService {
   }
 
   public createAlertDescription(alert: AlertDefinition, columns: AdaptableColumn[]): string {
-    const predicateDef = this.adaptable.api.alertApi.getAlertPredicateDefById(alert.Predicate.Id);
+    const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(alert.Predicate.Id);
     const column = this.adaptable.api.columnApi.getColumnFromId(alert.ColumnId);
 
-    return predicateDef.toString({ alert, column });
+    return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
   }
 
   public setStrategiesEntitlements(): void {

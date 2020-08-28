@@ -39,8 +39,9 @@ import AdaptableContext from '../../AdaptableContext';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import CheckBox from '../../../components/CheckBox';
 import { Flex } from 'rebass';
-import { ColumnFilter, FilterPredicate } from '../../../PredefinedConfig/FilterState';
+import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import Radio from '../../../components/Radio';
+import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   CurrentColumn: AdaptableColumn;
@@ -113,18 +114,18 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   render(): any {
     let isFilterable: string = this.isFilterable();
 
-    const columnPredicates = this.props.Adaptable.api.filterApi.getFilterPredicatesForColumn(
+    const predicateDefs = this.props.Adaptable.api.filterApi.getFilterPredicateDefsForColumn(
       this.props.CurrentColumn
     );
 
     let uiSelectedColumnValues =
-      this.state.editedColumnFilter?.PredicateId === 'Values'
-        ? this.state.editedColumnFilter.Inputs
+      this.state.editedColumnFilter?.Predicate.Id === 'Values'
+        ? this.state.editedColumnFilter.Predicate.Inputs
         : [];
 
     let isEmptyFilter: boolean =
       this.state.editedColumnFilter === undefined ||
-      this.state.editedColumnFilter.PredicateId === undefined;
+      this.state.editedColumnFilter.Predicate === undefined;
 
     let closeButton = (
       <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} AccessLevel={'Full'} />
@@ -200,8 +201,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 )}
                 {this.state.currentTab === 'predicates' && (
                   <div>
-                    {columnPredicates.map((columnPredicate, index) =>
-                      this.renderColumnPredicate(columnPredicate, index)
+                    {predicateDefs.map((predicateDef, index) =>
+                      this.renderColumnPredicate(predicateDef, index)
                     )}
                   </div>
                 )}
@@ -215,9 +216,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     );
   }
 
-  private renderColumnPredicate(columnPredicate: FilterPredicate, index: number): JSX.Element {
+  private renderColumnPredicate(predicateDef: PredicateDef, index: number): JSX.Element {
     const { editedColumnFilter } = this.state;
-    const checked = editedColumnFilter.PredicateId === columnPredicate.id;
+    const checked = editedColumnFilter.Predicate.Id === predicateDef.id;
 
     return (
       <Flex key={index}>
@@ -226,19 +227,19 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           margin={1}
           flex={1}
           checked={checked}
-          onChange={() => this.selectColumnPredicate(columnPredicate)}
+          onChange={() => this.selectColumnPredicate(predicateDef)}
         >
-          {columnPredicate.name}
+          {predicateDef.name}
         </Radio>
         <Flex flex={1}>
           {checked &&
-            columnPredicate.inputs &&
-            columnPredicate.inputs.map((predicateInput, index) => (
+            predicateDef.inputs &&
+            predicateDef.inputs.map((predicateInput, index) => (
               <input
                 key={index}
                 type={predicateInput.type}
                 autoFocus={index === 0}
-                value={editedColumnFilter.Inputs[index]}
+                value={editedColumnFilter.Predicate.Inputs[index]}
                 onChange={e => this.changeColumnPredicateInput(e, index)}
                 style={{ flex: 1, width: 0, minWidth: 0 }}
               />
@@ -268,8 +269,10 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   onColumnValuesChange(columnValues: any[]) {
     const { editedColumnFilter } = this.state;
 
-    editedColumnFilter.PredicateId = 'Values';
-    editedColumnFilter.Inputs = columnValues;
+    editedColumnFilter.Predicate = {
+      Id: 'Values',
+      Inputs: columnValues,
+    };
 
     this.setState({ editedColumnFilter });
     this.persistFilter();
@@ -280,8 +283,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
     //delete if empty
     if (
-      editedColumnFilter.PredicateId === undefined ||
-      (editedColumnFilter.PredicateId === 'Values' && editedColumnFilter.Inputs.length === 0)
+      editedColumnFilter.Predicate === undefined ||
+      (editedColumnFilter.Predicate.Id === 'Values' &&
+        editedColumnFilter.Predicate.Inputs.length === 0)
     ) {
       this.props.onClearColumnFilter(editedColumnFilter);
     } else {
@@ -294,8 +298,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   onClearFilter() {
     const { editedColumnFilter } = this.state;
 
-    editedColumnFilter.PredicateId = undefined;
-    editedColumnFilter.Inputs = undefined;
+    editedColumnFilter.Predicate = undefined;
 
     this.setState({ editedColumnFilter });
     this.persistFilter();
@@ -323,11 +326,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.props.onHideFilterForm();
   }
 
-  selectColumnPredicate(predicate: FilterPredicate) {
+  selectColumnPredicate(predicateDef: PredicateDef) {
     const { editedColumnFilter } = this.state;
 
-    editedColumnFilter.PredicateId = predicate.id;
-    editedColumnFilter.Inputs = (predicate.inputs ?? []).map(i => i.defaultValue ?? '');
+    editedColumnFilter.Predicate = {
+      Id: predicateDef.id,
+      Inputs: (predicateDef.inputs ?? []).map(i => i.defaultValue ?? ''),
+    };
 
     this.setState({ editedColumnFilter });
     this.persistFilter();
@@ -337,7 +342,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     const { value } = e.target as HTMLInputElement;
     const { editedColumnFilter } = this.state;
 
-    editedColumnFilter.Inputs[index] = value;
+    editedColumnFilter.Predicate.Inputs[index] = value;
 
     this.setState({ editedColumnFilter });
     this.props.onSetColumnFilter(editedColumnFilter);

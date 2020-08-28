@@ -42,6 +42,7 @@ import { TeamSharingApi } from './TeamSharingApi';
 import { ColumnApi } from './ColumnApi';
 import { ApplicationApi } from './AppApi';
 import { ScopeApi } from './ScopeApi';
+import { PredicateApi } from './PredicateApi';
 
 /**
  *
@@ -135,6 +136,7 @@ export interface AdaptableApi {
    * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_src_predefinedconfig_configstate_alertstate_.alertstate.html).
    */
   alertApi: AlertApi;
+  predicateApi: PredicateApi;
 
   /**
    * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).

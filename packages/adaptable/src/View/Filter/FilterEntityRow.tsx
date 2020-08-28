@@ -37,8 +37,7 @@ export class FilterEntityRow extends React.Component<FilterEntityRowProps<Filter
           onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
           tooltip="Save as User Filter"
           disabled={
-            this.props.ColumnFilter == null ||
-            StringExtensions.IsNotNullOrEmpty(this.props.ColumnFilter.PredicateId)
+            this.props.ColumnFilter == null || this.props.ColumnFilter.Predicate === undefined
           }
           AccessLevel={this.props.AccessLevel}
         />

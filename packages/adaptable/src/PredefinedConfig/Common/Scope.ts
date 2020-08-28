@@ -13,3 +13,5 @@ export type ScopeColumnIds = {
 };
 
 export type Scope = ScopeAll | ScopeDataTypes | ScopeColumnIds;
+
+export type FunctionScope = 'filter' | 'alert' | 'validation';

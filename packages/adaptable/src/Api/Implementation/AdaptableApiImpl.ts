@@ -1,6 +1,7 @@
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ActionColumnApiImpl } from './ActionColumnApiImpl';
 import { AlertApiImpl } from './AlertApiImpl';
+import { PredicateApiImpl } from './PredicateApiImpl';
 import { PluginsApiImpl } from './PluginsApiImpl';
 import { AuditEventApiImpl } from './AuditEventApiImpl';
 import { BulkUpdateApiImpl } from './BulkUpdateApiImpl';
@@ -88,11 +89,13 @@ import { ApplicationApi } from '../AppApi';
 import { ApplicationApiImpl } from './ApplicationApiImpl';
 import { ScopeApi } from '../ScopeApi';
 import { ScopeApiImpl } from './ScopeApiImpl';
+import { PredicateApi } from '../PredicateApi';
 
 export class AdaptableApiImpl implements AdaptableApi {
   public actionColumnApi: ActionColumnApi;
   public applicationApi: ApplicationApi;
   public alertApi: AlertApi;
+  public predicateApi: PredicateApi;
   public auditEventApi: AuditEventApi;
   public bulkUpdateApi: BulkUpdateApi;
   public calendarApi: CalendarApi;
@@ -140,6 +143,7 @@ export class AdaptableApiImpl implements AdaptableApi {
     this.actionColumnApi = new ActionColumnApiImpl(adaptable);
     this.applicationApi = new ApplicationApiImpl(adaptable);
     this.alertApi = new AlertApiImpl(adaptable);
+    this.predicateApi = new PredicateApiImpl(adaptable);
     this.pluginsApi = new PluginsApiImpl(adaptable);
     this.auditEventApi = new AuditEventApiImpl(adaptable);
     this.bulkUpdateApi = new BulkUpdateApiImpl(adaptable);

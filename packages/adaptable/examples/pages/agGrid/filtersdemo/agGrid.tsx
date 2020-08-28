@@ -112,13 +112,10 @@ let demoConfig: PredefinedConfig = {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        Values: ['CHF'],
-        Predicates: [
-          {
-            PredicateId: 'StartsWith',
-            Inputs: ['e'],
-          },
-        ],
+        Predicate: {
+          Id: 'Values',
+          Inputs: ['CHF'],
+        },
       },
     ],
   },

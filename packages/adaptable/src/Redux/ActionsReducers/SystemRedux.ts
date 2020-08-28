@@ -14,7 +14,6 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { BulkUpdateValidationResult } from '../../Strategy/Interface/IBulkUpdateStrategy';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
-import { SystemFilterId } from '../../PredefinedConfig/FilterState';
 
 /*
 Bit of a mixed bag of actions but essentially its those that are related to Strategies but where we DONT want to persist state
