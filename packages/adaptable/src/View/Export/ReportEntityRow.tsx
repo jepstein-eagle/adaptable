@@ -44,7 +44,7 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       <EntityRowItem
         Content={this.props.api.internalApi
           .getReportService()
-          .GetReportColumnsDescription(report, this.props.api.columnApi.getColumns())}
+          .GetReportColumnScopeShortDescription(report)}
       />
     );
     colItems[2].Content = (

@@ -103,7 +103,7 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
         {this.props.SharedQueries.length > 0 ? (
           <AdaptableObjectCollection colItems={colItems} items={sharedQueries} />
         ) : (
-          <EmptyContent>Click 'New' to create a new Shared Expression.</EmptyContent>
+          <EmptyContent>Click 'New' to create a new Shared Query.</EmptyContent>
         )}
 
         {this.state.EditedAdaptableObject && (

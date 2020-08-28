@@ -130,6 +130,6 @@ export class ReportRowTypeWizard
   }
 
   public GetIndexStepDecrement() {
-    return this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns ? 1 : 2;
+    return this.props.Data.ReportColumnScope == ReportColumnScope.ScopeColumns ? 1 : 2;
   }
 }

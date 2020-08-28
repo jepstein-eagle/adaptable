@@ -13,12 +13,10 @@ import {
 } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
-import { Expression } from '../PredefinedConfig/Common/Expression';
 
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { AdaptableOptions } from '../types';
 

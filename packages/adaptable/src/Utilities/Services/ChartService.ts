@@ -4,7 +4,6 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { Expression, ColumnValueExpression } from '../../PredefinedConfig/Common/Expression';
 import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
@@ -23,6 +22,7 @@ import {
   FinancialChartDefinition,
 } from '../../PredefinedConfig/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
+import * as parser from '../../parser/src';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -139,12 +139,9 @@ export class ChartService implements IChartService {
       values = [];
       const forEach = (row: any) => {
         if (
-          ExpressionHelper.checkForExpressionFromRowNode(
-            chartDefinition.Expression,
-            row,
-            columns,
-            this.adaptable
-          )
+          parser.evaluate(chartDefinition.Expression, {
+            data: row,
+          })
         ) {
           let columnValue = this.adaptable.getRawValueFromRowNode(row, chartDefinition.ColumnId);
           values.push(columnValue);
@@ -194,6 +191,8 @@ export class ChartService implements IChartService {
     columns: AdaptableColumn[],
     showAverageTotal: boolean
   ): number {
+    /*
+    // think we need this to help me work out what is being evaluated here!
     let columnValueExpressions: ColumnValueExpression[] = kvps.map(kvp => {
       return {
         ColumnId: kvp.Key,
@@ -208,6 +207,12 @@ export class ChartService implements IChartService {
       FilterExpressions: [],
       RangeExpressions: [],
     };
+    */
+
+    // need here to create a 'completedExpresson' based on the kvp passed in
+    // but for now lets just create an empty one
+    // TODO - to fix!!!!
+    let completedExpressionTemp: string = '';
 
     let finalTotal: number = 0;
     let returnedRecordCount: number = 0;
@@ -215,12 +220,9 @@ export class ChartService implements IChartService {
     if (chartDefinition.VisibleRowsOnly) {
       this.adaptable.forAllVisibleRowNodesDo(row => {
         if (
-          ExpressionHelper.checkForExpressionFromRowNode(
-            completedExpression,
-            row,
-            columns,
-            this.adaptable
-          )
+          parser.evaluate(completedExpressionTemp, {
+            data: row,
+          })
         ) {
           returnedRecordCount++;
           let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
@@ -230,12 +232,9 @@ export class ChartService implements IChartService {
     } else {
       this.adaptable.forAllRowNodesDo(row => {
         if (
-          ExpressionHelper.checkForExpressionFromRowNode(
-            completedExpression,
-            row,
-            columns,
-            this.adaptable
-          )
+          parser.evaluate(completedExpressionTemp, {
+            data: row,
+          })
         ) {
           returnedRecordCount++;
           let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
@@ -256,7 +255,7 @@ export class ChartService implements IChartService {
     columns: AdaptableColumn[]
   ): string[] {
     let xAxisColValues: string[] = [];
-    if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
+    if (StringExtensions.IsNullOrEmpty(chartDefinition.XAxisExpression)) {
       xAxisColValues = chartDefinition.VisibleRowsOnly
         ? this.adaptable.api.columnApi.getDistinctVisibleDisplayValuesForColumn(
             chartDefinition.XAxisColumnId
@@ -285,12 +284,9 @@ export class ChartService implements IChartService {
     xAxisColValues: string[]
   ): void {
     if (
-      ExpressionHelper.checkForExpressionFromRowNode(
-        chartDefinition.XAxisExpression,
-        row,
-        columns,
-        this.adaptable
-      )
+      parser.evaluate(chartDefinition.XAxisExpression, {
+        data: row,
+      })
     ) {
       let columnValue = this.adaptable.getValueFromRowNode(
         row,

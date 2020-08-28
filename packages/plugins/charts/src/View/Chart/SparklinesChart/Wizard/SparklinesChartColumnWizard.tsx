@@ -14,8 +14,6 @@ import WizardPanel from '@adaptabletools/adaptable/src/components/WizardPanel';
 
 import FormLayout, { FormRow } from '@adaptabletools/adaptable/src/components/FormLayout';
 import Radio from '@adaptabletools/adaptable/src/components/Radio';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartColumnWizardProps
   extends AdaptableWizardStepProps<SparklinesChartDefinition> {
@@ -25,7 +23,7 @@ export interface SparklinesChartColumnWizardProps
 export interface SparklinesChartColumnWizardState {
   ColumnId: string;
   Filtered: boolean;
-  Expression?: Expression;
+  Expression?: string;
 }
 
 export class SparklinesChartColumnWizard
@@ -34,7 +32,7 @@ export class SparklinesChartColumnWizard
   constructor(props: SparklinesChartColumnWizardProps) {
     super(props);
     this.state = {
-      Filtered: ExpressionHelper.IsNotNullOrEmptyExpression(props.Data.Expression),
+      Filtered: StringExtensions.IsNotNullOrEmpty(props.Data.Expression),
       Expression: props.Data.Expression,
       ColumnId: props.Data.ColumnId,
     };
@@ -84,12 +82,12 @@ export class SparklinesChartColumnWizard
     const state = {
       Filtered,
     } as SparklinesChartColumnWizardState;
-
-    let Expression: Expression = this.state.Expression;
-    if (Filtered && ExpressionHelper.IsNullOrEmptyExpression(this.state.Expression)) {
-      Expression = ExpressionHelper.CreateEmptyExpression();
-      state.Expression = Expression;
-    }
+    // TODO: FIX THIS!!!!
+    //  let Expression: Expression = this.state.Expression;
+    //   if (Filtered && ExpressionHelper.IsNullOrEmptyExpression(this.state.Expression)) {
+    //    Expression = ExpressionHelper.CreateEmptyExpression();
+    //    state.Expression = Expression;
+    //  }
 
     this.setState(state);
   };

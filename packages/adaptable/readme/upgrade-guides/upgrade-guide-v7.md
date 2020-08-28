@@ -14,9 +14,11 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * New Calculated Column Expression Editor and Syntax
 
-* Queries and Shared Queries
+* Queries (and Shared Queries)
 
-* Merged Filters
+* Predicates and Merged Filter Functions
+
+* Quick Search - no wildcards
 
 * Layout Changes
 
@@ -25,6 +27,12 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 * Column Category removed
 
 * Scope - Conditional Styles
+
+* Alerts and Validation!
+
+* Custom Reports
+
+* Reports - Scope
 
 * Schedule State Changes
 
@@ -37,6 +45,8 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 * Support for Master / Detail grids
 
 * Additional CSS Variables
+  
+* Semantic Class Names
 
 > For details of the previous Version see [Version 6 Upgrade Guide](upgrade-guide-v6.md).
 

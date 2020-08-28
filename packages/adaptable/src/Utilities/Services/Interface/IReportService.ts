@@ -8,7 +8,9 @@ export interface IReportService {
 
   IsSystemReportActive(report: Report): boolean;
 
-  GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string;
+  GetReportColumnScopeShortDescription(report: Report): string;
+
+  GetReportColumnScopeLongDescription(report: Report): string;
 
   GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string;
 

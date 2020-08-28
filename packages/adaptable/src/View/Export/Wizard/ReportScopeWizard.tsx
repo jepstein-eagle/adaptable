@@ -3,41 +3,38 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
-import { Box, Flex } from 'rebass';
-import Radio from '../../../components/Radio';
+import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
+import { Report } from '../../../PredefinedConfig/ExportState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
-import CheckBox from '../../../components/CheckBox';
 import { ScopeDataType } from '../../../PredefinedConfig/Common/Scope';
-import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
+import { Flex, Box } from 'rebass';
+import Radio from '../../../components/Radio';
 import Panel from '../../../components/Panel';
+import CheckBox from '../../../components/CheckBox';
 
-export interface ConditionalStyleScopeWizardProps
-  extends AdaptableWizardStepProps<ConditionalStyle> {}
-
-export interface ConditionalStyleScopeWizardState {
-  ExcludeGroupedRows: boolean;
+export interface ReportScopeWizardProps extends AdaptableWizardStepProps<Report> {}
+export interface ReportScopeWizardState {
   ScopeChoice: 'All' | 'Column' | 'DataType';
   ColumnIds: string[];
   DataTypes: ScopeDataType[];
 }
 
-export class ConditionalStyleScopeWizard
-  extends React.Component<ConditionalStyleScopeWizardProps, ConditionalStyleScopeWizardState>
+export class ReportScopeWizard
+  extends React.Component<ReportScopeWizardProps, ReportScopeWizardState>
   implements AdaptableWizardStep {
-  constructor(props: ConditionalStyleScopeWizardProps) {
+  constructor(props: ReportScopeWizardProps) {
     super(props);
-    let scopeChoice: 'All' | 'Column' | 'DataType' = this.props.Api.scopeApi.scopeIsAll(
-      this.props.Data.Scope
-    )
-      ? 'All'
-      : this.props.Api.scopeApi.scopeHasColumns(this.props.Data.Scope)
-      ? 'Column'
-      : 'DataType';
+
+    let scopeChoice: 'All' | 'Column' | 'DataType' =
+      this.props.Data.Scope == undefined ||
+      this.props.Api.scopeApi.scopeIsAll(this.props.Data.Scope)
+        ? 'All'
+        : this.props.Api.scopeApi.scopeHasColumns(this.props.Data.Scope)
+        ? 'Column'
+        : 'DataType';
     this.state = {
       ScopeChoice: scopeChoice,
-      ExcludeGroupedRows: this.props.Data.ExcludeGroupedRows,
       ColumnIds: this.props.Api.scopeApi.getColumnIdsInScope(this.props.Data.Scope),
       DataTypes: this.props.Api.scopeApi.getDataTypesInScope(this.props.Data.Scope),
     };
@@ -49,17 +46,16 @@ export class ConditionalStyleScopeWizard
         {' '}
         <Flex flexDirection="column" padding={2}>
           <HelpBlock marginBottom={1}>
-            Scope: Apply Conditional Style to: whole Row, or one or more Columns, or one or more
-            Data Types
+            Scope: Include either All Columns, a selection of Columns, or one or more Data Types
           </HelpBlock>{' '}
           <Flex flexDirection="row" padding={2}>
             <Radio
               marginLeft={3}
-              value="Row"
+              value="All"
               checked={this.state.ScopeChoice == 'All'}
               onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
             >
-              Whole Row
+              All Columns
             </Radio>{' '}
             <Radio
               marginLeft={3}
@@ -89,7 +85,7 @@ export class ConditionalStyleScopeWizard
                   this.state.ColumnIds
                 )}
                 HeaderAvailable="Columns"
-                HeaderSelected="Columns In Style"
+                HeaderSelected="Columns In Report"
                 onChange={SelectedValues => this.onColumnsSelectedChanged(SelectedValues)}
                 DisplaySize={DisplaySize.Small}
               />
@@ -138,19 +134,6 @@ export class ConditionalStyleScopeWizard
               </Flex>{' '}
             </Panel>
           )}
-          <Box>
-            <HelpBlock marginBottom={2}>
-              Exclude any cells in a Grouped Row from applying the Style
-            </HelpBlock>
-
-            <CheckBox
-              marginLeft={3}
-              onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
-              checked={this.state.ExcludeGroupedRows}
-            >
-              Exclude Grouped Rows
-            </CheckBox>
-          </Box>
         </Flex>
       </WizardPanel>
     );
@@ -160,7 +143,7 @@ export class ConditionalStyleScopeWizard
     this.setState(
       {
         ColumnIds: this.props.Api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
-      } as ConditionalStyleScopeWizardState,
+      } as ReportScopeWizardState,
       () => this.props.UpdateGoBackState()
     );
   }
@@ -168,20 +151,19 @@ export class ConditionalStyleScopeWizard
   private onScopeSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     if (e.value == 'Column') {
-      this.setState(
-        { ScopeChoice: 'Column', ColumnIds: [] } as ConditionalStyleScopeWizardState,
-        () => this.props.UpdateGoBackState()
+      this.setState({ ScopeChoice: 'Column', ColumnIds: [] } as ReportScopeWizardState, () =>
+        this.props.UpdateGoBackState()
       );
     } else if (e.value == 'DataType') {
       this.setState(
         {
           ScopeChoice: 'DataType',
           DataTypes: [],
-        } as ConditionalStyleScopeWizardState,
+        } as ReportScopeWizardState,
         () => this.props.UpdateGoBackState()
       );
     } else {
-      this.setState({ ScopeChoice: 'All' } as ConditionalStyleScopeWizardState, () =>
+      this.setState({ ScopeChoice: 'All' } as ReportScopeWizardState, () =>
         this.props.UpdateGoBackState()
       );
     }
@@ -197,13 +179,7 @@ export class ConditionalStyleScopeWizard
         dataTypes.splice(index, 1);
       }
     }
-    this.setState({ DataTypes: dataTypes } as ConditionalStyleScopeWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  }
-
-  private onExludeGroupedRowsChanged(checked: boolean) {
-    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleScopeWizardState, () =>
+    this.setState({ DataTypes: dataTypes } as ReportScopeWizardState, () =>
       this.props.UpdateGoBackState()
     );
   }
@@ -211,10 +187,10 @@ export class ConditionalStyleScopeWizard
   public canNext(): boolean {
     return true;
   }
-
   public canBack(): boolean {
-    return false;
+    return true;
   }
+
   public Next(): void {
     if (this.state.ScopeChoice == 'All') {
       this.props.Data.Scope = {
@@ -224,18 +200,16 @@ export class ConditionalStyleScopeWizard
       this.props.Data.Scope = {
         ColumnIds: this.state.ColumnIds,
       };
-    } else {
+    } else if (this.state.ScopeChoice == 'DataType') {
       this.props.Data.Scope = {
         DataTypes: this.state.DataTypes,
       };
     }
-    this.props.Data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
   }
 
   public Back(): void {
-    // todo
+    //todo
   }
-
   public GetIndexStepIncrement() {
     return 1;
   }

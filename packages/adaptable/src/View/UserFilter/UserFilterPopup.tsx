@@ -211,13 +211,7 @@ class UserFilterPopupComponent extends React.Component<
 
   canFinishWizard() {
     let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    return (
-      //  StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
-      //  StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
-      //  ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression)
-
-      true // to do!
-    );
+    return true; // to do!
   }
 }
 

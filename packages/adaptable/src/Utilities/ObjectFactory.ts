@@ -288,7 +288,7 @@ export function CreateEmptyReport(): Report {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    ColumnIds: null,
+    Scope: undefined,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
     Expression: undefined,
@@ -588,7 +588,6 @@ export function CreateSystemReports(): Array<Report> {
     Name: ALL_DATA_REPORT,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
-    ColumnIds: [],
     Expression: undefined,
     SharedQueryId: undefined,
   });
@@ -598,7 +597,6 @@ export function CreateSystemReports(): Array<Report> {
     Name: VISIBLE_DATA_REPORT,
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.VisibleRows,
-    ColumnIds: [],
     Expression: undefined,
     SharedQueryId: undefined,
   });
@@ -606,9 +604,8 @@ export function CreateSystemReports(): Array<Report> {
   _systemReports.push({
     Uuid: createUuid(),
     Name: SELECTED_CELLS_REPORT,
-    ReportColumnScope: ReportColumnScope.SelectedCellColumns,
+    ReportColumnScope: ReportColumnScope.SelectedColumns,
     ReportRowScope: ReportRowScope.SelectedCellRows,
-    ColumnIds: [],
     Expression: undefined,
     SharedQueryId: undefined,
   });
@@ -618,7 +615,6 @@ export function CreateSystemReports(): Array<Report> {
     Name: SELECTED_ROWS_REPORT,
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.SelectedRows,
-    ColumnIds: [],
     Expression: undefined,
     SharedQueryId: undefined,
   });

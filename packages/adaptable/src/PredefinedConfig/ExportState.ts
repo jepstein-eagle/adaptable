@@ -1,9 +1,8 @@
 import { ConfigState } from './ConfigState';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { Expression } from './Common/Expression';
 import { BaseSchedule } from './Common/Schedule';
 import { QueryObject } from './Common/QueryObject';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
+import { Scope } from './Common/Scope';
 
 /**
  * The Predefined Configuration for the Export function
@@ -35,30 +34,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *   CurrentReport: 'My Team Big Invoice',
  *   Reports: [
  *     {
- *       Expression: {
- *         ColumnValueExpressions: [
- *           {
- *             ColumnId: 'Employee',
- *             ColumnDisplayValues: [
- *               'Robert King',
- *               'Margaret Peacock',
- *               'Anne Dodsworth',
- *             ],
- *           },
- *         ],
- *         RangeExpressions: [
- *           {
- *             ColumnId: 'InvoicedCost',
- *             Ranges: [
- *               {
- *                 Operator: 'GreaterThan',
- *                 Operand1: '1000',
- *                 Operand1Type: 'Value',
- *               },
- *             ],
- *           },
- *         ],
- *       },
+ *       Expression: '[currency]="EUR',
  *       Name: 'My Team Big Invoice',
  *       ReportColumnScope: 'AllColumns',
  *       ReportRowScope: 'ExpressionRows',
@@ -138,12 +114,14 @@ export interface Report extends QueryObject {
    * - SelectedColumns - all columns which are currently selected (only available in Vendor Grids where multiple columns can be selected)
    *
    * - BespokeColumns - a list of Columns to be provided by you; if the Report is built using the UI Wizard a separate page appears to facilitate this column selection
+   *
+   * - CustomColumns - only used when you want to run a report externally (and not through AdapTable)
    */
   ReportColumnScope:
     | 'AllColumns'
     | 'VisibleColumns'
-    | 'SelectedCellColumns'
-    | 'BespokeColumns'
+    | 'SelectedColumns'
+    | 'ScopeColumns'
     | 'CustomColumns';
 
   /**
@@ -170,9 +148,9 @@ export interface Report extends QueryObject {
   /**
    * Which columns to include in the report.
    *
-   * This is only required if the `ReportColumnScope` is 'BespokeColumns'
+   * This is only required if the `ReportColumnScope` is 'ScopedColumns' or 'CustomColumns'
    */
-  ColumnIds?: string[];
+  Scope?: Scope;
 
   /**
    * Function that is invoked when running a Custom Report.

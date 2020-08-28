@@ -86,11 +86,14 @@ async function InitAdaptableDemo() {
       // we have made the function better but its stil per column and not a promise
       // so it doubles up with the server values promise we have
       ConditionalStyle: {
-        Revision: 27,
+        Revision: 35,
         ConditionalStyles: [
           {
+            Scope: {
+              All: true,
+            },
             Style: {
-              BackColor: '#228B22',
+              BackColor: 'yellow',
               ForeColor: undefined,
               FontWeight: 'Bold',
               FontStyle: 'Italic',
@@ -99,6 +102,7 @@ async function InitAdaptableDemo() {
             },
             Expression: '[currency]="GBP"',
           },
+
           {
             Scope: {
               //  ColumnIds: ['notional', 'country', 'bid'],

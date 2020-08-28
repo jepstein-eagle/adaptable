@@ -116,9 +116,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     let cols: AdaptableColumn[];
     if (report.ReportColumnScope == 'CustomColumns') {
-      cols = report.ColumnIds.map(c => {
-        return AdaptableHelper.createAdaptableColumnFromColumnId(c);
-      });
+      cols = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
     } else {
       cols = this.adaptable.api.columnApi.getColumnsFromFriendlyNames(reportCols);
     }
@@ -171,9 +169,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
-    let reports: Report[] = this.adaptable.api.exportApi
-      .getAllReports()
-      .filter((r: Report) => r.ColumnIds.includes(specialColumnId));
+    let reports: Report[] = this.adaptable.api.exportApi.getAllReports().filter((r: Report) =>
+      this.adaptable.api.scopeApi
+        .getColumnsForScope(r.Scope)
+        .map(c => {
+          return c.ColumnId;
+        })
+        .includes(specialColumnId)
+    );
 
     return ArrayExtensions.IsNotNullOrEmpty(reports) ? reports.length + ' Reports' : undefined;
   }

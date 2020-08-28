@@ -78,7 +78,6 @@ class BulkUpdateToolbarControlComponent extends React.Component<
       />
     );
 
-    console.log('pivot mode', this.props.Api.internalApi.isGridInPivotMode());
     let shouldDisable: boolean =
       this.props.AccessLevel == 'ReadOnly' ||
       !this.props.BulkUpdateValidationResult.IsValid ||

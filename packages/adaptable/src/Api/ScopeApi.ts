@@ -10,6 +10,7 @@ export interface ScopeApi {
   getColumnsForScope(scope: Scope): AdaptableColumn[];
 
   scopeIsEmpty(scope: Scope): boolean;
+  scopeIsAll(scope: Scope): boolean;
   scopeHasDataType(scope: Scope): boolean;
   scopeHasColumns(scope: Scope): boolean;
   getScopeToString(scope: Scope): string;
@@ -20,4 +21,6 @@ export interface ScopeApi {
   getDataTypesInScope(scope: Scope): ScopeDataType[] | undefined;
 
   isScopeInScope(a: Scope, b: Scope): boolean;
+
+  getScopeDescription(scope: Scope): string;
 }

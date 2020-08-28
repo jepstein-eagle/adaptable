@@ -5,7 +5,6 @@ import {
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { CategoryChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import WizardPanel from '@adaptabletools/adaptable/src/components/WizardPanel';
 import { Flex, Text } from 'rebass';
@@ -147,6 +146,6 @@ export class CategoryChartSettingsWizard
     return 1;
   }
   public GetIndexStepDecrement() {
-    return ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.XAxisExpression) ? 2 : 1;
+    return StringExtensions.IsNullOrEmpty(this.props.Data.XAxisExpression) ? 2 : 1;
   }
 }

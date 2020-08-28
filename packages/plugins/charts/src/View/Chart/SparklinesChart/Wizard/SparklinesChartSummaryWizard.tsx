@@ -8,8 +8,6 @@ import {
 import { SparklinesChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { WizardSummaryPage } from '@adaptabletools/adaptable/src/View/Components/WizardSummaryPage';
 import { KeyValuePair } from '@adaptabletools/adaptable/src/Utilities/Interface/KeyValuePair';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import ExpressionHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartSummaryWizardProps
   extends AdaptableWizardStepProps<SparklinesChartDefinition> {}
@@ -28,7 +26,7 @@ export class SparklinesChartSummaryWizard
         Key: 'Column',
         Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
-      { Key: 'Values', Value: this.getExpressionString(this.props.Data.Expression) },
+      { Key: 'Values', Value: this.props.Data.Expression },
     ];
 
     return (
@@ -37,13 +35,6 @@ export class SparklinesChartSummaryWizard
         header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
-  }
-  private getExpressionString(expression: Expression): string {
-    if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
-      return '[All Column Values]';
-    } else {
-      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Api, false);
-    }
   }
 
   public canNext(): boolean {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
-import { ReportColumnChooserWizard } from './ReportColumnChooserWizard';
+import { ReportScopeWizard } from './ReportScopeWizard';
 import { ReportColumnTypeWizard } from './ReportColumnTypeWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
@@ -30,7 +30,7 @@ export class ReportWizard extends React.Component<ReportWizardProps, {}> {
             {
               StepName: 'Columns',
               Index: 1,
-              Element: <ReportColumnChooserWizard Api={this.props.Api} />,
+              Element: <ReportScopeWizard Api={this.props.Api} />,
             },
             {
               StepName: 'Rows',

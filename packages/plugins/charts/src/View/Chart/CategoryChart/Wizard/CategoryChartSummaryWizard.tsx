@@ -7,8 +7,6 @@ import {
 import { CategoryChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { KeyValuePair } from '@adaptabletools/adaptable/src/Utilities/Interface/KeyValuePair';
 import { WizardSummaryPage } from '@adaptabletools/adaptable/src/View/Components/WizardSummaryPage';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 export interface CategoryChartSummaryWizardProps
   extends AdaptableWizardStepProps<CategoryChartDefinition> {}
@@ -31,7 +29,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
         Key: 'X Axis Column',
         Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId),
       },
-      { Key: 'X Axis Values', Value: this.getExpressionString(this.props.Data.XAxisExpression) },
+      { Key: 'X Axis Values', Value: this.props.Data.XAxisExpression },
     ];
 
     return (
@@ -40,14 +38,6 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
         header={StrategyConstants.ChartStrategyFriendlyName}
       />
     );
-  }
-
-  private getExpressionString(expression: Expression): string {
-    if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
-      return '[All Column Values]';
-    } else {
-      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Api, false);
-    }
   }
 
   public canNext(): boolean {

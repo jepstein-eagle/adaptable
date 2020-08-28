@@ -2,11 +2,18 @@ import { ApiBase } from './ApiBase';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Scope, ScopeDataType } from '../../PredefinedConfig/Common/Scope';
 import { ScopeApi } from '../ScopeApi';
+import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class ScopeApiImpl extends ApiBase implements ScopeApi {
   public isColumnInScope(column: AdaptableColumn, scope: Scope | undefined) {
     if (scope === undefined) {
-      // keeping this for now ...
+      // keeping this for now but this should be removed once we update teh filter predicates...
+      LogAdaptableWarning('we should update this to be ALL instead of using null..');
+      return true;
+    }
+
+    if ('All' in scope) {
+      // do we need a true check here?
       return true;
     }
 
@@ -15,7 +22,6 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     }
 
     if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
-      //   console.log('match', column.ColumnId);
       return true;
     }
 
@@ -24,12 +30,50 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
 
   public getColumnsForScope(scope: Scope): AdaptableColumn[] {
     return this.adaptable.api.columnApi.getColumns().filter(c => {
-      this.isColumnInScope(c, scope);
+      if ('All' in scope) {
+        // do we need a true check here?
+        return true;
+      }
+
+      if ('DataTypes' in scope && scope.DataTypes.includes(c.DataType as any)) {
+        return true;
+      }
+
+      if ('ColumnIds' in scope && scope.ColumnIds.includes(c.ColumnId)) {
+        return true;
+      }
+      return false;
     });
+  }
+
+  public getScopeDescription(scope: Scope): string {
+    if (scope === undefined) {
+      return 'Nothing';
+    }
+    if ('All' in scope) {
+      // do we need a true check here?
+      return 'All';
+    }
+
+    if ('DataTypes' in scope) {
+      return 'DataType(s): ' + scope.DataTypes.join(', ');
+    }
+
+    if ('ColumnIds' in scope) {
+      return (
+        'Columns(s): ' +
+        scope.ColumnIds.map(c => this.adaptable.api.columnApi.getFriendlyNameFromColumnId(c)).join(
+          ', '
+        )
+      );
+    }
   }
 
   public scopeIsEmpty(scope: Scope): boolean {
     return scope === undefined;
+  }
+  public scopeIsAll(scope: Scope): boolean {
+    return scope !== undefined && 'All' in scope;
   }
   public scopeHasDataType(scope: Scope): boolean {
     return scope !== undefined && 'DataTypes' in scope;
@@ -43,8 +87,8 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
   }
 
   public getScopeToString(scope: Scope): string {
-    if (scope == undefined) {
-      return 'All (row)';
+    if ('All' in scope) {
+      return 'All';
     }
     if ('DataTypes' in scope) {
       return 'DataTypes: ' + scope.DataTypes.join(',');

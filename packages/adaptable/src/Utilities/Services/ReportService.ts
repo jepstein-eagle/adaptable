@@ -1,5 +1,4 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { Expression } from '../../PredefinedConfig/Common/Expression';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
@@ -51,18 +50,30 @@ export class ReportService implements IReportService {
     return true;
   }
 
-  public GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string {
+  public GetReportColumnScopeShortDescription(report: Report): string {
     switch (report.ReportColumnScope) {
       case ReportColumnScope.AllColumns:
         return '[All Columns]';
       case ReportColumnScope.VisibleColumns:
         return '[Visible Columns]';
-      case ReportColumnScope.SelectedCellColumns:
+      case ReportColumnScope.SelectedColumns:
         return '[Selected Columns]';
-      case ReportColumnScope.BespokeColumns:
-        return this.adaptable.api.columnApi
-          .getFriendlyNamesFromColumnIds(report.ColumnIds)
-          .join(', ');
+      case ReportColumnScope.ScopeColumns:
+        return '[Bespoke Columns]';
+      case ReportColumnScope.CustomColumns:
+        return '[Custom Columns]';
+    }
+  }
+  public GetReportColumnScopeLongDescription(report: Report): string {
+    switch (report.ReportColumnScope) {
+      case ReportColumnScope.AllColumns:
+        return '[All Columns]';
+      case ReportColumnScope.VisibleColumns:
+        return '[Visible Columns]';
+      case ReportColumnScope.SelectedColumns:
+        return '[Selected Columns]';
+      case ReportColumnScope.ScopeColumns:
+        return this.adaptable.api.scopeApi.getScopeDescription(report.Scope);
       case ReportColumnScope.CustomColumns:
         return '[Custom Columns]';
     }
@@ -119,21 +130,14 @@ export class ReportService implements IReportService {
       case ReportColumnScope.VisibleColumns:
         reportColumns = gridColumns.filter(c => c.Visible);
         break;
-      case ReportColumnScope.SelectedCellColumns:
-        let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
-
-        // otherwise get columns
-        reportColumns = selectedCellInfo.Columns;
+      case ReportColumnScope.SelectedColumns:
+        reportColumns = this.adaptable.api.gridApi.getSelectedCellInfo().Columns;
         break;
-      case ReportColumnScope.BespokeColumns:
-        reportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
+      case ReportColumnScope.ScopeColumns:
+        reportColumns = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
         break;
       case ReportColumnScope.CustomColumns:
-        // Need to turn these into Adaptable Columns
-        // Bit overkill but it allows us then to keep things neater for other report types (and this is rare)
-        reportColumns = report.ColumnIds.map(c => {
-          return AdaptableHelper.createAdaptableColumnFromColumnId(c);
-        });
+        reportColumns = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
         break;
     }
     return reportColumns;

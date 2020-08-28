@@ -73,8 +73,8 @@ export enum LayoutSource {
 export enum ReportColumnScope {
   AllColumns = 'AllColumns',
   VisibleColumns = 'VisibleColumns',
-  SelectedCellColumns = 'SelectedCellColumns',
-  BespokeColumns = 'BespokeColumns',
+  SelectedColumns = 'SelectedColumns',
+  ScopeColumns = 'ScopeColumns',
   CustomColumns = 'CustomColumns',
 }
 

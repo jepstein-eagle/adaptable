@@ -50,6 +50,12 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     });
   }
 
+  private getPermittedValuesItemsWithAllScope(): PermittedValuesItem[] | undefined {
+    return this.getAllPermittedValuesItems().filter(pv => {
+      return 'All' in pv.Scope == true;
+    });
+  }
+
   private getPermittedValuesForScope(column: AdaptableColumn): PermittedValuesItem | undefined {
     let permittedValuesItem: PermittedValuesItem;
 
@@ -66,6 +72,18 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     }
 
     this.getPermittedValuesItemsWithDataTypeScope().forEach(pv => {
+      if (!permittedValuesItem) {
+        if (this.adaptable.api.scopeApi.isColumnInScope(column, pv.Scope)) {
+          permittedValuesItem = pv;
+        }
+      }
+    });
+
+    if (permittedValuesItem) {
+      return permittedValuesItem;
+    }
+
+    this.getPermittedValuesItemsWithAllScope().forEach(pv => {
       if (!permittedValuesItem) {
         if (this.adaptable.api.scopeApi.isColumnInScope(column, pv.Scope)) {
           permittedValuesItem = pv;
@@ -146,6 +164,17 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     editLookUpItem = editLookUpItems
       .filter(pv => {
         return 'DataTypes' in pv.Scope == true;
+      })
+      .find(pv => {
+        this.adaptable.api.scopeApi.isColumnInScope(abColumn, pv.Scope);
+      });
+    if (editLookUpItem) {
+      return editLookUpItem;
+    }
+    // then we get any for All
+    editLookUpItem = editLookUpItems
+      .filter(pv => {
+        return 'All' in pv.Scope == true;
       })
       .find(pv => {
         this.adaptable.api.scopeApi.isColumnInScope(abColumn, pv.Scope);
