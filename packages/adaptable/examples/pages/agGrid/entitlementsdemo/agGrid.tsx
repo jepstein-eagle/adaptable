@@ -114,12 +114,7 @@ let demoConfig: PredefinedConfig = {
   Export: {
     Reports: [
       {
-        ColumnIds: [],
-        Expression: {
-          ColumnValueExpressions: [],
-          FilterExpressions: [],
-          RangeExpressions: [],
-        },
+        Expression: '[currency]="EUR',
         Name: 'Test',
         ReportColumnScope: 'AllColumns',
         ReportRowScope: 'AllRows',

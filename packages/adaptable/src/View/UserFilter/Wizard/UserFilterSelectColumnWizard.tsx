@@ -59,12 +59,7 @@ export class UserFilterSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    // if (this.props.Data.Scope.ColumnIds[0] != this.state.ColumnId) {
-    // this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
-    // }
-    //  this.props.Data.Scope.ColumnIds[0] = this.state.ColumnId;
-  }
+  public Next(): void {}
 
   public Back(): void {
     //

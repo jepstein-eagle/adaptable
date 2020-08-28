@@ -57,20 +57,22 @@ let demoConfig: PredefinedConfig = {
     Reports: [
       {
         Name: 'End of Day',
-        ColumnIds: [
-          'bid',
-          'changeOnYear',
-          'counterparty',
-          'country',
-          'currency',
-          'tradeDate',
-          'settlementDate',
-          'ask',
-          'moodysRating',
-          'bloombergBid',
-          'bloombergAsk',
-        ],
-        ReportColumnScope: 'BespokeColumns',
+        Scope: {
+          ColumnIds: [
+            'bid',
+            'changeOnYear',
+            'counterparty',
+            'country',
+            'currency',
+            'tradeDate',
+            'settlementDate',
+            'ask',
+            'moodysRating',
+            'bloombergBid',
+            'bloombergAsk',
+          ],
+        },
+        ReportColumnScope: 'ScopedColumns',
         ReportRowScope: 'VisibleRows',
         /*
         AutoExport: {

@@ -7,8 +7,6 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UIHelper } from '../../UIHelper';
-import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -21,13 +19,13 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
       {
-        Key: 'Columns',
+        Key: 'Column Scope',
         Value: this.props.Api.internalApi
           .getReportService()
-          .GetReportColumnsDescription(this.props.Data, this.props.Api.columnApi.getColumns()),
+          .GetReportColumnScopeLongDescription(this.props.Data),
       },
       {
-        Key: 'Rows',
+        Key: 'Row Scope',
         Value: this.props.Api.internalApi
           .getReportService()
           .GetReportExpressionDescription(this.props.Data, this.props.Api.columnApi.getColumns()),

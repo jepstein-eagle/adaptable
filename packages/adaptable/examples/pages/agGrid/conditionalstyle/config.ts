@@ -19,15 +19,7 @@ export default {
           FontSize: undefined,
           ClassName: '',
         },
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnId: 'CompanyName',
-              ColumnDisplayValues: ["La maison d'Asie"],
-              ColumnRawValues: ["La maison d'Asie"],
-            },
-          ],
-        },
+        Expression: '[currency]="EUR',
       },
     ],
   },

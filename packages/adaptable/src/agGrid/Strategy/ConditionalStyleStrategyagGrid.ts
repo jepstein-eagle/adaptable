@@ -41,7 +41,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
               )
             : cs.Style.ClassName;
 
-          if (cs.Scope == undefined) {
+          if (theadaptable.api.scopeApi.scopeIsAll(cs.Scope)) {
             // for the moment we assume that an undefined scope is all columns (i.e. whole row)
             rowClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(cs, theadaptable, params.node)) {

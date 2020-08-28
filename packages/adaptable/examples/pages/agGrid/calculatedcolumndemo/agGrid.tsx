@@ -157,15 +157,7 @@ let demoConfig: PredefinedConfig = {
           FontSize: undefined,
           ClassName: '',
         },
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnId: 'country',
-              ColumnDisplayValues: ['France', 'China'],
-              ColumnRawValues: ['France', 'China'],
-            },
-          ],
-        },
+        Expression: '[currency]="EUR',
       },
     ],
   },

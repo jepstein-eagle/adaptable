@@ -22,10 +22,8 @@ import {
   ChartVisibility,
   ChartType,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
-import { AdaptableMenuItem } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Menu';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
@@ -182,18 +180,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
       return true;
     }
 
-    if (
-      ExpressionHelper.ConvertExpressionToString(
-        cd1.XAxisExpression,
-
-        this.adaptable.api
-      ) !=
-      ExpressionHelper.ConvertExpressionToString(
-        cd2.XAxisExpression,
-
-        this.adaptable.api
-      )
-    ) {
+    if (cd1.XAxisExpression != cd2.XAxisExpression) {
       return true;
     }
     return false;

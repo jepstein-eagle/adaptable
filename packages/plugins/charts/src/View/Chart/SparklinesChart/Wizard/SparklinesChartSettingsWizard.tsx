@@ -14,7 +14,6 @@ import Radio from '@adaptabletools/adaptable/src/components/Radio';
 import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 import { CategoryChartSettingsWizardState } from '../../CategoryChart/Wizard/CategoryChartSettingsWizard';
 import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartSettingsWizardProps
   extends AdaptableWizardStepProps<SparklinesChartDefinition> {
@@ -143,6 +142,6 @@ export class SparklinesChartSettingsWizard
     return 1;
   }
   public GetIndexStepDecrement() {
-    return ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.Expression) ? 2 : 1;
+    return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ? 2 : 1;
   }
 }

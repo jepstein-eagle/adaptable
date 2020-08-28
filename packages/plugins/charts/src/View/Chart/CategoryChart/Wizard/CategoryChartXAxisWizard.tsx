@@ -4,8 +4,6 @@ import {
   AdaptableWizardStep,
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 import { ColumnSelector } from '@adaptabletools/adaptable/src/View/Components/Selectors/ColumnSelector';
 import { SelectionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
@@ -23,7 +21,7 @@ export interface CategoryChartXAxisWizardProps
 export interface CategoryChartXAxisWizardState {
   XAxisColumnId: string;
   UseAllXAsisColumnValues: boolean;
-  XAxisExpression?: Expression;
+  XAxisExpression?: string;
 }
 
 export class CategoryChartXAxisWizard
@@ -33,9 +31,7 @@ export class CategoryChartXAxisWizard
     super(props);
     this.state = {
       XAxisColumnId: props.Data.XAxisColumnId,
-      UseAllXAsisColumnValues: ExpressionHelper.IsNullOrEmptyExpression(
-        this.props.Data.XAxisExpression
-      ),
+      UseAllXAsisColumnValues: StringExtensions.IsNullOrEmpty(this.props.Data.XAxisExpression),
       XAxisExpression: this.props.Data.XAxisExpression,
     };
   }
@@ -92,10 +88,11 @@ export class CategoryChartXAxisWizard
   private onUseAllColumnValuesChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let showAll: boolean = e.value == 'All';
-    let expression: Expression = this.state.XAxisExpression;
-    if (!showAll && ExpressionHelper.IsNullOrEmptyExpression(expression)) {
-      expression = ExpressionHelper.CreateEmptyExpression();
-    }
+    let expression: string = this.state.XAxisExpression;
+    //   if (!showAll && ExpressionHelper.IsNullOrEmptyExpression(expression)) {
+    //    expression = ExpressionHelper.CreateEmptyExpression();
+    //   }
+    // TODO: FIX THIS!!!!
     this.setState(
       {
         UseAllXAsisColumnValues: showAll,

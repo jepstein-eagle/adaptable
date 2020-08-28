@@ -54,40 +54,7 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  UserFilter: {
-    UserFilters: [
-      {
-        Name: 'Europe',
-        ColumnId: 'country',
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnDisplayValues: ['France', 'Germany', 'Italy'],
-              ColumnId: 'country',
-            },
-          ],
-        },
-      },
-      {
-        Name: 'Small Notionals',
-        ColumnId: 'notional',
-        Expression: {
-          RangeExpressions: [
-            {
-              ColumnId: 'notional',
-              Ranges: [
-                {
-                  Operand1: '1200',
-                  Operand1Type: 'Value',
-                  Operator: 'LessThan',
-                },
-              ],
-            },
-          ],
-        },
-      },
-    ],
-  },
+  // Need to provide something here!!!
 };
 
 export default () => {

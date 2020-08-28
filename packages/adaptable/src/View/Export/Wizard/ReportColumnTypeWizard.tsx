@@ -58,7 +58,7 @@ export class ReportColumnTypeWizard
           <Radio
             value="Bespoke"
             marginRight={3}
-            checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns}
+            checked={this.state.ReportColumnScope == ReportColumnScope.ScopeColumns}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
           >
             Bespoke Columns
@@ -89,7 +89,7 @@ export class ReportColumnTypeWizard
       );
     } else {
       this.setState(
-        { ReportColumnScope: ReportColumnScope.BespokeColumns } as ReportColumnsWizardState,
+        { ReportColumnScope: ReportColumnScope.ScopeColumns } as ReportColumnsWizardState,
         () => this.props.UpdateGoBackState()
       );
     }
@@ -99,7 +99,7 @@ export class ReportColumnTypeWizard
     return (
       this.state.ReportColumnScope == ReportColumnScope.AllColumns ||
       this.state.ReportColumnScope == ReportColumnScope.VisibleColumns ||
-      this.state.ReportColumnScope == ReportColumnScope.BespokeColumns
+      this.state.ReportColumnScope == ReportColumnScope.ScopeColumns
     );
   }
   public canBack(): boolean {
@@ -107,15 +107,15 @@ export class ReportColumnTypeWizard
   }
   public Next(): void {
     this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
-    if (this.state.ReportColumnScope != ReportColumnScope.BespokeColumns) {
-      this.props.Data.ColumnIds = [];
+    if (this.state.ReportColumnScope != ReportColumnScope.ScopeColumns) {
+      this.props.Data.Scope = undefined;
     }
   }
   public Back(): void {
     //todo
   }
   public GetIndexStepIncrement() {
-    return this.state.ReportColumnScope == ReportColumnScope.BespokeColumns ? 1 : 2;
+    return this.state.ReportColumnScope == ReportColumnScope.ScopeColumns ? 1 : 2;
   }
   public GetIndexStepDecrement() {
     return 1;
