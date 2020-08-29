@@ -70,7 +70,7 @@ class GradientColumnPopupComponent extends React.Component<
           // work out the base value
           if (smallestValue > 0) {
             newGradientColumn.BaseValue = smallestValue;
-            newGradientColumn.NegativeColor = undefined;
+            //   newGradientColumn.NegativeColor = undefined;
           } else {
             let positiveValues: number[] = distinctColumnsValues.filter(f => f > 0);
             newGradientColumn.BaseValue = Math.min(...positiveValues);

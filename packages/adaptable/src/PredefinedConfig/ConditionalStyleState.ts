@@ -99,7 +99,7 @@ export interface Test {
  * The ConditionalStyle object used in the Conditional Style function.
  */
 export interface ConditionalStyle extends QueryObject {
-  Scope: Scope; // though later we should make mandatory with an alll!
+  Scope: Scope;
 
   /**
    * The Style to apply when the rule is matched.

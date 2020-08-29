@@ -98,12 +98,6 @@ export class GradientColumnSelectColumnWizard
     this.props.Data.NegativeValue = this.state.NegativeValue;
     this.props.Data.PositiveValue = this.state.PositiveValue;
     this.props.Data.BaseValue = this.state.BaseValue;
-    if (!this.state.NegativeValue) {
-      this.props.Data!.NegativeColor = undefined;
-    }
-    if (!this.state.PositiveValue) {
-      this.props.Data!.PositiveColor = undefined;
-    }
   }
 
   public Back(): void {

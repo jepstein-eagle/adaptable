@@ -1061,7 +1061,7 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
-      //   lockPosition: true,
+      lockPosition: true,
       //  lockVisible: true,
       // pinned: true,
       //  suppressMovable: true,
