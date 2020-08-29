@@ -1,7 +1,11 @@
+.ab-LayoutEditor{
+  overflow: auto;
+  &,& * {
+    box-sizing: border-box;
+  }
+}
 .ab-ColumnList {
-
-  padding: var(--ab-space-2);
-  background: var(--ab-color-defaultbackground);
+  display: block;
 }
 
 .ab-PivotList--empty,
@@ -13,6 +17,13 @@
   justify-content: center;
 
 }
+
+.ab-PivotList,
+.ab-RowGroupsList,
+.ab-ColumnSortList {
+  padding-top: var(--ab-space-2);
+
+}
 .ab-PivotList__column,
 .ab-RowGroupsList__column,
 .ab-ColumnSortList__column,
@@ -20,5 +31,12 @@
   background: var(--ab-color-primary);
   color: var(--ab-color-text-on-primary);
   margin: 0 0 var(--ab-space-2) 0;
-  padding: var(--ab-space-2);
+
+}
+
+.ab-PivotList__column,
+.ab-RowGroupsList__column,
+.ab-ColumnSortList__column {
+  padding-top: var(--ab-space-2);
+  padding-bottom: var(--ab-space-2);
 }

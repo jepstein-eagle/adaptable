@@ -2,12 +2,12 @@ import * as React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { CSSProperties } from 'react';
-import { useState, useEffect } from 'react';
-import { ColumnSort } from '../../../../PredefinedConfig/Common/ColumnSort';
+import { useEffect } from 'react';
 import { reorder } from './reorder';
 import HelpBlock from '../../../../components/HelpBlock';
 import { OnDragEnd } from './ColumnList';
 import { LayoutEditorDroppableIds } from './droppableIds';
+import { getListStyle } from './utils';
 
 export interface RowGroupsListProps {
   rowGroups?: string[];
@@ -22,11 +22,6 @@ export interface RowGroupsListProps {
   ) => CSSProperties;
   renderItem?: (columnId: string, clear: () => void) => React.ReactNode;
 }
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  width: 300,
-  height: '100%',
-});
 
 export const RowGroupsList = (props: RowGroupsListProps) => {
   const rowGroups = props.rowGroups || [];
@@ -101,13 +96,16 @@ export const RowGroupsList = (props: RowGroupsListProps) => {
   );
 
   return (
-    <Droppable droppableId="RowGroupsList" isDropDisabled={props.isDropDisabled}>
+    <Droppable
+      droppableId={LayoutEditorDroppableIds.RowGroupsList}
+      isDropDisabled={props.isDropDisabled}
+    >
       {(provided, snapshot) => (
         <div
           className={`ab-RowGroupsList ${!rowGroups.length ? 'ab-RowGroupsList--empty' : ''}`}
           {...provided.droppableProps}
           ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
+          style={getListStyle(snapshot)}
         >
           {!rowGroups.length ? <HelpBlock>Drag columns to create row groups</HelpBlock> : null}
           {rowGroups.map((colId: string, index) => {

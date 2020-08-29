@@ -2,12 +2,13 @@ import * as React from 'react';
 import { Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { CSSProperties } from 'react';
-import { useState, useEffect } from 'react';
-import { ColumnSort } from '../../../../PredefinedConfig/Common/ColumnSort';
+import { useEffect } from 'react';
+
 import { reorder } from './reorder';
 import HelpBlock from '../../../../components/HelpBlock';
 import { OnDragEnd } from './ColumnList';
 import { LayoutEditorDroppableIds } from './droppableIds';
+import { getListStyle } from './utils';
 
 export interface PivotListProps {
   pivotColumns?: string[];
@@ -22,11 +23,6 @@ export interface PivotListProps {
   ) => CSSProperties;
   renderItem?: (columnId: string, clear: () => void) => React.ReactNode;
 }
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  width: 300,
-  height: '100%',
-});
 
 export const PivotList = (props: PivotListProps) => {
   const pivotColumns = props.pivotColumns || [];
@@ -102,13 +98,16 @@ export const PivotList = (props: PivotListProps) => {
   );
 
   return (
-    <Droppable droppableId="PivotList" isDropDisabled={props.isDropDisabled}>
+    <Droppable
+      droppableId={LayoutEditorDroppableIds.PivotList}
+      isDropDisabled={props.isDropDisabled}
+    >
       {(provided, snapshot) => (
         <div
           className={`ab-PivotList ${!pivotColumns.length ? 'ab-PivotList--empty' : ''}`}
           {...provided.droppableProps}
           ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
+          style={getListStyle(snapshot)}
         >
           {!pivotColumns.length ? <HelpBlock>Drag columns to pivot</HelpBlock> : null}
           {pivotColumns.map((colId: string, index) => {

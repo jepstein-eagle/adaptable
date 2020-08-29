@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { DragDropContext } from 'react-beautiful-dnd';
 import {
   AdaptableColumn,
   AdaptableColumnProperties,
@@ -7,7 +7,7 @@ import {
 import { Layout } from '../../../../PredefinedConfig/LayoutState';
 import { AdaptableApi } from '../../../../Api/AdaptableApi';
 import { Flex, Text, Box } from 'rebass';
-import Panel from '../../../../components/Panel';
+import Panel, { PanelProps } from '../../../../components/Panel';
 import { CSSProperties } from 'react';
 import { ColumnList, OnDragEnd } from './ColumnList';
 import CheckBox from '../../../../components/CheckBox';
@@ -29,7 +29,16 @@ export interface LayoutEditorProps {
   onLayoutChange?: (layout: Layout) => void;
 }
 
-const verticalPanelStyle = { minHeight: 300, flex: '1 0 auto' };
+const verticalPanelStyle = { minHeight: 150, flex: '1 0 auto', overflow: 'auto' };
+
+const ListPanel = (props: PanelProps) => (
+  <Panel
+    variant="modern"
+    bodyProps={{ padding: 0 }}
+    style={{ ...verticalPanelStyle, ...props.style }}
+    {...props}
+  />
+);
 const ColumnLabels = (props: AdaptableColumnProperties) => {
   const labelNames = [
     'Aggregatable',
@@ -42,9 +51,7 @@ const ColumnLabels = (props: AdaptableColumnProperties) => {
   const labels = labelNames.map(name => ((props as any)[name] ? name.charAt(0) : ''));
   return (
     <Flex flexDirection="row" alignItems="center" width="100%">
-      <Text mr={2} style={{ flex: 1 }}>
-        Attributes:
-      </Text>
+      <Text mr={2}>Attributes:</Text>
       {labels.map((l, index) => {
         const enabled = !!l;
         const labelName = labelNames[index];
@@ -192,10 +199,18 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
         source.columnId = source.column.ColumnId;
       }
 
-      onDragEndRef.current.columnList(result);
-      onDragEndRef.current.columnSortList(result);
-      onDragEndRef.current.rowGroupsList(result);
-      onDragEndRef.current.pivotList(result);
+      if (destination.droppableId === LayoutEditorDroppableIds.ColumnList) {
+        onDragEndRef.current.columnList(result);
+      }
+      if (destination.droppableId === LayoutEditorDroppableIds.ColumnSortList) {
+        onDragEndRef.current.columnSortList(result);
+      }
+      if (destination.droppableId === LayoutEditorDroppableIds.RowGroupsList) {
+        onDragEndRef.current.rowGroupsList(result);
+      }
+      if (destination.droppableId === LayoutEditorDroppableIds.PivotList) {
+        onDragEndRef.current.pivotList(result);
+      }
     },
     [columnList]
   );
@@ -205,10 +220,14 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
       const { source, draggableId } = snapshot;
 
       const dragSource = source.droppableId;
+
       const column =
         dragSource === LayoutEditorDroppableIds.ColumnList ? allColumnsMap[draggableId] : null;
 
-      const dropDisabledOnColumns = !column || !column.Moveable;
+      const invalidSourceForColumns = source.droppableId !== LayoutEditorDroppableIds.ColumnList;
+
+      const dropDisabledOnColumns = !column || !column.Moveable || invalidSourceForColumns;
+
       dispatch({
         type: LayoutEditorActions.SET_DROP_DISABLED_ON_COLUMNS,
         payload: dropDisabledOnColumns,
@@ -217,10 +236,6 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
       dispatch({
         type: LayoutEditorActions.SET_DRAG_SOURCE,
         payload: dragSource,
-      });
-      dispatch({
-        type: LayoutEditorActions.SET_DROP_DISABLED_ON_COLUMNS,
-        payload: source.droppableId !== LayoutEditorDroppableIds.ColumnList,
       });
 
       const columnAlreadySorted =
@@ -270,7 +285,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
         invalidSourceForPivot || columnAlreadyPivoted || (column && !column.Pivotable);
 
       dispatch({
-        type: LayoutEditorActions.SET_DROP_DISABLED_ON_SORT,
+        type: LayoutEditorActions.SET_DROP_DISABLED_ON_PIVOT,
         payload: !!disableDropOnPivot,
       });
     },
@@ -318,10 +333,16 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
     },
     [layout]
   );
+
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-      <Flex flexDirection="row">
-        <Panel header="Columns" bodyProps={{ padding: 0 }}>
+      <Flex flexDirection="row" flex={1} className="ab-LayoutEditor">
+        <ListPanel
+          header="Columns"
+          bodyScroll
+          style={{ flex: 'none' }}
+          bodyProps={{ style: { display: 'flex' }, px: 0 }}
+        >
           <ColumnList
             onReady={onDragEnd => {
               onDragEndRef.current.columnList = onDragEnd;
@@ -340,28 +361,35 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
               const visible = !!visibleColumnsMap[c.ColumnId];
               const aggregate = !!aggregationColumnsMap[c.ColumnId];
               return (
-                <Flex flexDirection="row" alignItems="center">
-                  <Box ml={2} mr={3}>
-                    <Icon name="drag" size={30} />
-                  </Box>
+                <Flex flexDirection="column" alignItems="stretch">
                   <Flex
-                    flexDirection="column"
-                    alignItems="flex-start"
-                    flex={1}
-                    justifyContent="space-between"
+                    flexDirection="row"
+                    alignItems="center"
+                    backgroundColor="text-on-primary"
+                    color="text-on-secondary"
                   >
+                    <Flex flex={1} alignItems="center">
+                      <Box ml={2} mr={2}>
+                        <Icon name="drag" size={30} />
+                      </Box>
+
+                      {c.FriendlyName}
+                    </Flex>
                     <CheckBox
                       title="Visible"
                       readOnly={!c.Hideable && visible}
                       checked={visible}
+                      mx={2}
                       style={{
                         whiteSpace: 'nowrap',
                       }}
                       onChange={setColumnVisibility.bind(null, c)}
                     >
-                      {c.FriendlyName}
+                      Visibility
                     </CheckBox>
+                  </Flex>
 
+                  <Flex padding={2} flexDirection="column">
                     <ColumnLabels
                       Sortable={c.Sortable}
                       Filterable={c.Filterable}
@@ -433,16 +461,10 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
               );
             }}
           />
-        </Panel>
+        </ListPanel>
 
-        <Flex flexDirection="column">
-          <Panel
-            ml={2}
-            header="Sorting"
-            bodyProps={{ padding: 0 }}
-            mb={2}
-            style={verticalPanelStyle}
-          >
+        <Flex flexDirection="column" style={{ overflow: 'auto' }}>
+          <ListPanel ml={2} header="Sorting" mb={2}>
             <ColumnSortList
               columnSorts={layout.ColumnSorts}
               onColumnSortsChange={onColumnSortsChange}
@@ -497,15 +519,9 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                 );
               }}
             />
-          </Panel>
+          </ListPanel>
 
-          <Panel
-            style={verticalPanelStyle}
-            ml={2}
-            mb={2}
-            header="Row Groups"
-            bodyProps={{ padding: 0 }}
-          >
+          <ListPanel ml={2} mb={2} header="Row Groups">
             <RowGroupsList
               rowGroups={layout.RowGroupedColumns}
               onRowGroupsChange={onRowGroupsChange}
@@ -550,10 +566,9 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                 );
               }}
             />
-          </Panel>
+          </ListPanel>
 
-          <Panel
-            style={verticalPanelStyle}
+          <ListPanel
             ml={2}
             header={
               <Flex
@@ -564,6 +579,8 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
               >
                 <Text>Pivoted Columns</Text>
                 <CheckBox
+                  mt={0}
+                  mb={0}
                   checked={layout.EnablePivot}
                   onChange={checked => {
                     setLayout({
@@ -622,7 +639,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                 );
               }}
             />
-          </Panel>
+          </ListPanel>
         </Flex>
       </Flex>
     </DragDropContext>

@@ -1,10 +1,15 @@
 import * as React from 'react';
-import { Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
 import { AdaptableColumn } from '../../../../PredefinedConfig/Common/AdaptableColumn';
-import { CSSProperties } from 'react';
+
+import { CSSProperties, useEffect } from 'react';
 import { useState, useCallback } from 'react';
 import { reorder } from './reorder';
 import { LayoutEditorDroppableIds } from './droppableIds';
+
+import Input from '../../../../components/Input';
+import { getListStyle } from './utils';
+import { Box } from 'rebass';
 
 export type OnDragEnd = (result: {
   destination?: { index: number; droppableId: string };
@@ -24,12 +29,9 @@ export interface ColumnListProps {
   renderItem?: (c: AdaptableColumn) => React.ReactNode;
 }
 
-const getListStyle = (isDraggingOver: boolean) => ({
-  width: 300,
-});
-
 export const ColumnList = (props: ColumnListProps) => {
   const [columns, setColumns] = useState(props.columns);
+  const [search, setSearch] = useState('');
 
   const onDragEnd = React.useCallback<OnDragEnd>(
     result => {
@@ -43,6 +45,9 @@ export const ColumnList = (props: ColumnListProps) => {
       ) {
         return;
       }
+      if (!source.column || !source.column.Moveable) {
+        return;
+      }
       if (destination.index === source.index) {
         return;
       }
@@ -51,6 +56,10 @@ export const ColumnList = (props: ColumnListProps) => {
 
       const newDropIndex = newColumns.indexOf(source.column);
 
+      if (search && source.droppableId === LayoutEditorDroppableIds.ColumnList) {
+        // cannot drop on this list while searching
+        return;
+      }
       if (!source.column.IsFixed && newColumns.slice(newDropIndex).filter(c => c.IsFixed).length) {
         // there are fixed cols after this one, so it's an invalid drop
         return;
@@ -62,14 +71,10 @@ export const ColumnList = (props: ColumnListProps) => {
         props.onColumnOrderChange(newColumns);
       }
     },
-    [columns, setColumns, props.onColumnOrderChange]
+    [columns, setColumns, props.onColumnOrderChange, search]
   );
 
-  // React.useEffect(() => {
-  //   setColumns(props.columns);
-  // }, [props.columns]);
-
-  React.useEffect(() => {
+  useEffect(() => {
     if (props.onReady) {
       props.onReady(onDragEnd);
     }
@@ -86,38 +91,62 @@ export const ColumnList = (props: ColumnListProps) => {
   );
 
   return (
-    <Droppable droppableId="ColumnList" isDropDisabled={props.isDropDisabled}>
-      {(provided, snapshot) => (
-        <div
-          className="ab-ColumnList"
-          {...provided.droppableProps}
-          ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
-        >
-          {columns.map((c: AdaptableColumn, index) => {
-            return (
-              <Draggable key={`${c.ColumnId}-column`} draggableId={c.ColumnId} index={index}>
-                {(provided, snapshot) => {
-                  return (
-                    <>
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                        className="ab-ColumnList__column"
-                        style={props.getItemStyle(c, snapshot, provided.draggableProps.style)}
-                      >
-                        {renderColumn(c)}
-                      </div>
-                    </>
-                  );
+    <Droppable
+      droppableId={LayoutEditorDroppableIds.ColumnList}
+      isDropDisabled={search ? true : props.isDropDisabled}
+    >
+      {(provided, snapshot) => {
+        return (
+          <div
+            className="ab-ColumnList"
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            style={getListStyle(snapshot)}
+          >
+            <Box px={2}>
+              <Input
+                placeholder="Search a column"
+                mb={2}
+                width="100%"
+                onChange={(e: React.FormEvent<HTMLInputElement>) => {
+                  setSearch((e.target as HTMLInputElement).value);
                 }}
-              </Draggable>
-            );
-          })}
-          {provided.placeholder}
-        </div>
-      )}
+              />
+            </Box>
+            {columns.map((c: AdaptableColumn, index) => {
+              return (
+                <Draggable key={`${c.ColumnId}-column`} draggableId={c.ColumnId} index={index}>
+                  {(provided, snapshot) => {
+                    const style = props.getItemStyle(c, snapshot, provided.draggableProps.style);
+                    style.padding = 0;
+
+                    if (
+                      search &&
+                      c.FriendlyName.toLowerCase().indexOf(search.toLowerCase()) == -1
+                    ) {
+                      style.display = 'none';
+                    }
+                    return (
+                      <>
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="ab-ColumnList__column"
+                          style={style}
+                        >
+                          {renderColumn(c)}
+                        </div>
+                      </>
+                    );
+                  }}
+                </Draggable>
+              );
+            })}
+            {provided.placeholder}
+          </div>
+        );
+      }}
     </Droppable>
   );
 };

@@ -16,7 +16,7 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
     let layouts: Layout[] = this.props.ConfigEntities as Layout[];
     return (
       <AdaptableWizard
-        style={{ maxWidth: '' }}
+        style={{ maxWidth: '', height: '80vh' }}
         FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
         ModalContainer={this.props.ModalContainer}
         Api={this.props.Api}

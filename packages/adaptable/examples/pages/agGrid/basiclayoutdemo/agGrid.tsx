@@ -71,6 +71,7 @@ const columnSchema: ColDef[] = [
   {
     headerName: 'Year2',
     field: 'year',
+    colId: 'year2',
     enableRowGroup: true,
     lockVisible: true,
     filter: true,
@@ -242,9 +243,9 @@ async function InitAdaptableDemo() {
     setTimeout(() => {
       vendorGrid.api?.setRowData(rowData);
     }, 500);
-    setTimeout(() => {
-      adaptableApi.gridApi.showColumn('rating');
-    }, 3000);
+    // setTimeout(() => {
+    // adaptableApi.gridApi.showColumn('rating');
+    // }, 3000);
   });
 }
 
@@ -303,14 +304,14 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 65,
+    Revision: 71,
     CurrentLayout: 'Simple Layout',
     Layouts: [
       {
         Name: 'Simple Layout',
         Columns: ['price', 'model', 'make', 'Multiply'],
-        RowGroupedColumns: ['year', 'make'],
-        EnablePivot: true,
+        // RowGroupedColumns: ['year', 'make'],
+        // EnablePivot: true,
         AggregationColumns: {
           price: 'avg',
         },

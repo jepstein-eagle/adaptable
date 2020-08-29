@@ -1,5 +1,5 @@
-import { LayoutEditorDroppableIds } from './droppableIds';
 import { Layout } from '../../../../PredefinedConfig/LayoutState';
+import { LayoutEditorDroppableIds } from './droppableIds';
 
 export type LayoutEditorState = {
   dropDisabledOnColumns: boolean;

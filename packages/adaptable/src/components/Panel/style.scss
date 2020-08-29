@@ -17,10 +17,15 @@
 
   --ab-cmp-panel_body__background: var(--ab-color-defaultbackground);
   --ab-cmp-panel_body__color: inherit;
-  
+
   --ab-cmp-panel_header__padding: var(--ab-space-2);
   --ab-cmp-panel_header__color: var(--ab-color-text-on-primary);
 
   --ab-cmp-panel_header--variant-primary__background: var(--ab-color-secondary);//linear-gradient(180deg, var(--ab-color-secondary) 0, var(--ab-color-secondarydark));
   --ab-cmp-panel_header--variant-primary__color: var(--ab-color-text-on-secondary);
+
+  --ab-cmp-panel_header--variant-modern__background: var(--ab-color-primary);
+  --ab-cmp-panel_header--variant-modern__color: var(--ab-color-text-on-primary);
+
+  --ab-cmp-panel_body--variant-modern__background: var(--ab-color-primarylight);
 }

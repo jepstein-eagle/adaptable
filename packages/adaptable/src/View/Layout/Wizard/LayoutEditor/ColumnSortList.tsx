@@ -1,10 +1,6 @@
 import * as React from 'react';
-import { DragDropContext, Draggable, Droppable, DropResult } from 'react-beautiful-dnd';
-import { AdaptableColumn } from '../../../../PredefinedConfig/Common/AdaptableColumn';
-import { Layout, LayoutState } from '../../../../PredefinedConfig/LayoutState';
-import { AdaptableApi } from '../../../../Api/AdaptableApi';
-import { Flex } from 'rebass';
-import Panel from '../../../../components/Panel';
+import { Draggable, Droppable } from 'react-beautiful-dnd';
+
 import { CSSProperties } from 'react';
 import { useState, useEffect } from 'react';
 import { ColumnSort } from '../../../../PredefinedConfig/Common/ColumnSort';
@@ -12,6 +8,7 @@ import { reorder } from './reorder';
 import HelpBlock from '../../../../components/HelpBlock';
 import { OnDragEnd } from './ColumnList';
 import { LayoutEditorDroppableIds } from './droppableIds';
+import { getListStyle } from './utils';
 
 export interface ColumnSortListProps {
   columnSorts?: ColumnSort[];
@@ -26,12 +23,6 @@ export interface ColumnSortListProps {
   ) => CSSProperties;
   renderItem: (c: ColumnSort, clear: () => void, toggleSort: () => void) => React.ReactNode;
 }
-
-const getListStyle = (isDraggingOver: boolean) => ({
-  width: 300,
-  height: '100%',
-});
-
 export const ColumnSortList = (props: ColumnSortListProps) => {
   const columnSorts = props.columnSorts || [];
 
@@ -132,18 +123,25 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
   };
 
   return (
-    <Droppable droppableId="ColumnSortList" isDropDisabled={props.isDropDisabled}>
+    <Droppable
+      droppableId={LayoutEditorDroppableIds.ColumnSortList}
+      isDropDisabled={props.isDropDisabled}
+    >
       {(provided, snapshot) => (
         <div
           className={`ab-ColumnSortList ${!columnSorts.length ? 'ab-ColumnSortList--empty' : ''}`}
           {...provided.droppableProps}
           ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
+          style={getListStyle(snapshot)}
         >
           {!columnSorts.length ? <HelpBlock>Drag columns to create sort order</HelpBlock> : null}
           {columnSorts.map((c: ColumnSort, index) => {
             return (
-              <Draggable key={c.ColumnId} draggableId={`${c.ColumnId}-sort`} index={index}>
+              <Draggable
+                key={`${c.ColumnId}-sort`}
+                draggableId={`${c.ColumnId}-sort`}
+                index={index}
+              >
                 {(provided, snapshot) => {
                   return (
                     <div

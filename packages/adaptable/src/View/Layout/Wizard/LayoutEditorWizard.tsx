@@ -36,20 +36,20 @@ export class LayoutEditorWizard
 
   render(): any {
     return (
-      <WizardPanel pb={2}>
-        <FormLayout columns={[1]} mb={2}>
-          <FormRow>
+      <WizardPanel>
+        <FormLayout columns={['label', 'children']} mb={2} width="30rem">
+          <FormRow label="Layout Name">
             <Input
               value={this.state.layoutName}
               width="100%"
-              style={{ maxWidth: '20rem' }}
-              placeholder="Layout Name"
+              autoFocus
+              placeholder="Type a name"
               onChange={this.onLayoutNameChange}
             ></Input>{' '}
           </FormRow>
 
           {this.state.ErrorMessage ? (
-            <FormRow>
+            <FormRow label="">
               <ErrorBox>{this.state.ErrorMessage}</ErrorBox>
             </FormRow>
           ) : null}

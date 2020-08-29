@@ -1,12 +1,13 @@
 import { CSSProperties } from 'react';
 import { AdaptableColumn, Layout } from '../../../../types';
 import { LayoutEditorDroppableIds } from './droppableIds';
+import { DraggableSnapshot } from './utils';
 
 export type LayoutGetItemStyle = (
   column: AdaptableColumn,
   layout: Layout,
   dragSource: LayoutEditorDroppableIds,
-  { isDragging, draggingOver }: { isDragging: boolean; draggingOver?: string },
+  { isDragging, draggingOver }: DraggableSnapshot,
   draggableStyle: CSSProperties
 ) => CSSProperties;
 
@@ -19,14 +20,11 @@ export const getItemStyle: LayoutGetItemStyle = (
 ): CSSProperties => {
   const { isDragging, draggingOver } = snapshot;
   const result: CSSProperties = {
-    // some basic styles to make the items look a bit nicer
     userSelect: 'none',
 
-    // padding: 'var(--ab-space-2)',
+    background: isDragging ? 'var(--ab-color-secondarylight)' : '',
+    color: isDragging ? 'var(--ab-color-text-on-secondarylight)' : '',
 
-    // change background colour if dragging
-    background: isDragging ? 'var(--ab-color-accent)' : '',
-    color: isDragging ? 'var(--ab-color-text-on-secondary)' : '',
     opacity: 1,
 
     // styles we need to apply on draggables
@@ -43,8 +41,6 @@ export const getItemStyle: LayoutGetItemStyle = (
         (layout.ColumnSorts &&
           layout.ColumnSorts.filter(sort => sort.ColumnId === column.ColumnId)[0]))
     ) {
-      result.background = '';
-      result.color = '';
     }
 
     //dragging things on the first column, from any other column
@@ -52,8 +48,8 @@ export const getItemStyle: LayoutGetItemStyle = (
       dragSource != LayoutEditorDroppableIds.ColumnList &&
       draggingOver === LayoutEditorDroppableIds.ColumnList
     ) {
-      result.background = '';
-      result.color = '';
+      // result.background = '';
+      // result.color = '';
     }
   }
 
