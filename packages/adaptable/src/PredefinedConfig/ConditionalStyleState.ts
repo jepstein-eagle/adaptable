@@ -91,14 +91,13 @@ export interface StyleScope {
   DataTypes?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
-export interface Test {
-  Result: string;
-}
-
 /**
  * The ConditionalStyle object used in the Conditional Style function.
  */
 export interface ConditionalStyle extends QueryObject {
+  /**
+   * Where the Style is applied - can be for whole Row, some Columns or all Colunns of given DataType
+   */
   Scope: Scope;
 
   /**
@@ -116,6 +115,4 @@ export interface ConditionalStyle extends QueryObject {
    * If unset, will default to false.
    */
   ExcludeGroupedRows?: boolean;
-
-  //  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }

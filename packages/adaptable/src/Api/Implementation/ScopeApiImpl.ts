@@ -29,6 +29,9 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
   }
 
   public getColumnsForScope(scope: Scope): AdaptableColumn[] {
+    if (scope == undefined) {
+      return [];
+    }
     return this.adaptable.api.columnApi.getColumns().filter(c => {
       if ('All' in scope) {
         // do we need a true check here?

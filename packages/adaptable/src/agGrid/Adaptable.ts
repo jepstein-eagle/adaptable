@@ -297,6 +297,8 @@ export class Adaptable implements IAdaptable {
 
   private originalColDefValueFormatters: { [key: string]: any } = {};
 
+  private runParserTemp: boolean = true;
+
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
@@ -2722,7 +2724,9 @@ export class Adaptable implements IAdaptable {
     const originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
       const columns = this.api.columnApi.getColumns();
-
+      if (!this.runParserTemp) {
+        return false;
+      }
       // first we assess Query (if its running locally)
       if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
         const currentQuery = this.api.queryApi.getCurrentQuery();

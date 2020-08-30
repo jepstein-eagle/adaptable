@@ -85,7 +85,7 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
         onClick={() => {
           this.onNew();
         }}
-        tooltip="Create Shared Expression"
+        tooltip="Create Shared Query"
         AccessLevel={this.props.AccessLevel}
       />
     );

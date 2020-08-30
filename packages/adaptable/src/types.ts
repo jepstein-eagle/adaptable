@@ -96,6 +96,8 @@ export {
   UserMenuItem,
   UserMenuItemShowPredicate,
   UserMenuItemClickedFunction,
+  UserMenuItemLabelFunction,
+  GetColumnValuesFunction,
   PermittedValuesItem,
   EditLookUpItem,
   RowStyle,
