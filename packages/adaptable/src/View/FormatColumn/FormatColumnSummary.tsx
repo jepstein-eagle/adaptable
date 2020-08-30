@@ -48,8 +48,8 @@ export class FormatColumnSummaryComponent extends React.Component<
   }
 
   render(): any {
-    let formatColumn: FormatColumn = this.props.FormatColumns.find(
-      c => c.ColumnId == this.props.summarisedColumn.ColumnId
+    let formatColumn: FormatColumn = this.props.api.formatColumnApi.getFormatColumnForColumn(
+      this.props.summarisedColumn
     );
     let noFormatColumn: boolean = formatColumn == null;
 
@@ -106,7 +106,9 @@ export class FormatColumnSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: FormatColumn = ObjectFactory.CreateEmptyFormatColumn();
-    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
+    configEntity.Scope = {
+      ColumnIds: [this.props.summarisedColumn.ColumnId],
+    };
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -133,7 +135,7 @@ export class FormatColumnSummaryComponent extends React.Component<
 
   onFinishWizard() {
     let formatColumn: FormatColumn = this.state.EditedAdaptableObject as FormatColumn;
-    if (this.props.FormatColumns.find(x => x.ColumnId == formatColumn.ColumnId)) {
+    if (this.props.FormatColumns.find(x => x.Uuid == formatColumn.Uuid)) {
       this.props.onEditFormatColumn(formatColumn);
     } else {
       this.props.onAddFormatColumn(formatColumn);
@@ -147,10 +149,7 @@ export class FormatColumnSummaryComponent extends React.Component<
 
   canFinishWizard() {
     let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
-    return (
-      StringExtensions.IsNotNullOrEmpty(formatColumn.ColumnId) &&
-      UIHelper.IsNotEmptyStyle(formatColumn.Style)
-    );
+    return formatColumn.Scope != undefined && UIHelper.IsNotEmptyStyle(formatColumn.Style);
   }
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FormatColumnSummaryProps> {
