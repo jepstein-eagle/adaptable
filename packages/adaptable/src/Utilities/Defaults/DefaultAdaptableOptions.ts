@@ -101,7 +101,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   userInterfaceOptions: {
     useCustomMacLikeScrollbars: false,
-
+    showAdaptableToolPanel: true,
     showAdaptableContextMenu: true,
     adaptableToolPanelTitle: GeneralConstants.ADAPTABLE,
     showUngroupColumnMenuItem: true,

@@ -34,8 +34,9 @@ async function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
-      showAdaptableToolPanel: false,
+      //  showAdaptableToolPanel: false,
       //showUngroupColumnMenuItem: false,
+      adaptableToolPanelTitle: 'Hello',
     },
     vendorGrid: {
       ...gridOptions,
