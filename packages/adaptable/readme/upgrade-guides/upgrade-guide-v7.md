@@ -48,6 +48,8 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
   
 * Semantic Class Names
 
+* Option Changes (showAdaptableToolPanel now true by default)
+
 > For details of the previous Version see [Version 6 Upgrade Guide](upgrade-guide-v6.md).
 
 ## Support for ag-Grid Version 23

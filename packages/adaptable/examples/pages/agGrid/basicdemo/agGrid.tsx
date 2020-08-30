@@ -26,6 +26,7 @@ async function InitAdaptableDemo() {
   const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  gridOptions.sideBar = 'columns';
   const tickingDataHelper = new TickingDataHelper();
 
   const adaptableOptions: AdaptableOptions = {
@@ -33,7 +34,7 @@ async function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
-      showAdaptableToolPanel: true,
+      showAdaptableToolPanel: false,
       //showUngroupColumnMenuItem: false,
     },
     vendorGrid: {

@@ -35,9 +35,7 @@ const adaptableOptions = {
   adaptableId: 'BYOP demos',
 
   plugins: [charts()],
-  userInterfaceOptions: {
-    showAdaptableToolPanel: true,
-  },
+  userInterfaceOptions: {},
 };
 export default () => {
   const gridOptions = useMemo((): GridOptions => {

@@ -610,12 +610,10 @@ export class Adaptable implements IAdaptable {
 
     // Create Adaptable adaptable Tool Panel
     if (this.adaptableOptions!!.userInterfaceOptions!.showAdaptableToolPanel) {
-      LoggingHelper.LogAdaptableInfo('Adding Adaptable Tool Panel');
-      this.gridOptions.sideBar = this.gridOptions.sideBar || {};
-      this.gridOptions.components = this.gridOptions.components || {};
-      // https://www.ag-grid.com/javascript-grid-side-bar/
-
       if (this.gridOptions.sideBar) {
+        this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+        this.gridOptions.components = this.gridOptions.components || {};
+        // https://www.ag-grid.com/javascript-grid-side-bar/
         const sidebar = this.gridOptions.sideBar;
         if (sidebar === true) {
           // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:

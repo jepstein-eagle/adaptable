@@ -40,9 +40,7 @@ async function InitAdaptableDemo() {
         throttleTime: 10000,
       }),
     ],
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

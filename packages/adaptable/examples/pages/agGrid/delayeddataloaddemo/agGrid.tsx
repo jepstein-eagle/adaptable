@@ -38,9 +38,7 @@ async function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,

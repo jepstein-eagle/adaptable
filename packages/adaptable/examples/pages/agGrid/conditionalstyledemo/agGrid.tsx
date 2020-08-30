@@ -49,9 +49,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   api = await Adaptable.init(adaptableOptions);
 }
@@ -73,6 +71,9 @@ let demoConfig: PredefinedConfig = {
   ConditionalStyle: {
     ConditionalStyles: [
       {
+        Scope: {
+          All: true,
+        },
         Style: {
           BackColor: '#ffffe0',
         },
@@ -80,18 +81,27 @@ let demoConfig: PredefinedConfig = {
         ExcludeGroupedRows: false,
       },
       {
+        Scope: {
+          All: true,
+        },
         Style: {
           ForeColor: '#008000',
         },
         Expression: '[changeOnYear] > 0',
       },
       {
+        Scope: {
+          All: true,
+        },
         Style: {
           ForeColor: '#ff0000',
         },
         Expression: '[changeOnYear] < 0',
       },
       {
+        Scope: {
+          All: true,
+        },
         Style: {
           BackColor: 'green',
           FontStyle: 'Italic',

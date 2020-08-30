@@ -28,9 +28,7 @@ async function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Dashboard Tabs Demo',
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

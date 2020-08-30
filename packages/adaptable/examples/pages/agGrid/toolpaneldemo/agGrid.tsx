@@ -38,7 +38,6 @@ async function InitAdaptableDemo() {
   };
 
   adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
     adaptableToolPanelTitle: 'hello world',
   };
 
