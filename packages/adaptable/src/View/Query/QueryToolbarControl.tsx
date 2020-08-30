@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -34,6 +35,7 @@ import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonRunQuery } from '../Components/Buttons/ButtonRunQuery';
 import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
 import { ButtonInvalid } from '../Components/Buttons/ButtonInvalid';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface QueryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QueryToolbarControlComponent> {
@@ -142,7 +144,7 @@ class QueryToolbarControlComponent extends React.Component<
             <ButtonClear
               onClick={() => this.props.onChangeCurrentQuery('')}
               tooltip="Clear Query"
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             />
 
             //
@@ -151,7 +153,7 @@ class QueryToolbarControlComponent extends React.Component<
             <ButtonRunQuery
               onClick={() => this.runQuery()}
               tooltip="Run Query"
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
               variant="text"
               tone="neutral"
               marginRight={1}
@@ -184,6 +186,7 @@ class QueryToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Query"
         headerText={StrategyConstants.QueryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Query')}
       >
         {content}
       </PanelDashboard>
@@ -251,6 +254,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.QueryStrategyId, ScreenPopups.QueryPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

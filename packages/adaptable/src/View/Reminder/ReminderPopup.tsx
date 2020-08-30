@@ -66,10 +66,10 @@ class ReminderPopupComponent extends React.Component<
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(reminder, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onEdit={() => this.onEdit(reminder)}
           onDeleteConfirm={ScheduleRedux.ReminderScheduleDelete(reminder)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -78,7 +78,7 @@ class ReminderPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Reminder"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

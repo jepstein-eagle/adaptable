@@ -128,7 +128,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       this.state.editedColumnFilter.Predicate === undefined;
 
     let closeButton = (
-      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} AccessLevel={'Full'} />
+      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} accessLevel={'Full'} />
     );
 
     let clearFilterButton = (
@@ -136,7 +136,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => this.onClearFilter()}
         disabled={isEmptyFilter}
         tooltip={null}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       />
     );
 
@@ -145,7 +145,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => {}}
         disabled={true}
         tooltip={'Save as User Filter'}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       />
     );
 

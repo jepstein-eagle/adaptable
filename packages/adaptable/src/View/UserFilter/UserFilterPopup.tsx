@@ -103,10 +103,10 @@ class UserFilterPopupComponent extends React.Component<
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(userFilter, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onEdit={() => this.onEdit(userFilter)}
           onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -115,7 +115,7 @@ class UserFilterPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create User Filter"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

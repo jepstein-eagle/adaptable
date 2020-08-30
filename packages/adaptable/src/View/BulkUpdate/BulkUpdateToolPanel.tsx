@@ -144,7 +144,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
                 (this.props.PreviewInfo != null &&
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
               }
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             >
               Update
             </ButtonApply>

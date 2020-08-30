@@ -47,16 +47,16 @@ export class PlusMinusSummaryComponent extends React.Component<
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.PlusMinusStrategyFriendlyName}
-        FunctionName={StrategyConstants.PlusMinusStrategyId}
-        StrategySummary={Helper.ReturnItemCount(
+        functionName={StrategyConstants.PlusMinusStrategyId}
+        strategySummary={Helper.ReturnItemCount(
           this.props.PlusMinusRules.filter(
             item => item.ColumnId == this.props.summarisedColumn.ColumnId
           ),
           'Plus Minus Condition'
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={'Plus / Minus Rule'}
-        AccessLevel={this.props.accessLevel}
+        newButtonTooltip={'Plus / Minus Rule'}
+        accessLevel={this.props.accessLevel}
       />
     );
 

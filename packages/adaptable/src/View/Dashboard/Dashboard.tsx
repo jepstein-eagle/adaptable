@@ -207,7 +207,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
               tooltip={menuItem.Label}
               disabled={this.props.accessLevel == 'ReadOnly'}
               onClick={() => this.props.dispatch(menuItem!.ReduxAction)}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
               style={
                 menuItem.FunctionName === 'SystemStatus'
                   ? {
@@ -242,7 +242,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             tooltip={cb.Name}
             disabled={this.props.accessLevel == 'ReadOnly'}
             onClick={() => this.fireToolbarButtonEvent(cb)}
-            AccessLevel={'Full'}
+            accessLevel={'Full'}
           >
             {cb.Icon ? <img {...iconProps} /> : null}
             {cb.Caption}

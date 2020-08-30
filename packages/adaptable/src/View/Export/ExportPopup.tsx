@@ -106,11 +106,11 @@ class ExportPopupComponent extends React.Component<
             colItems={colItems}
             api={this.props.api}
             onShare={description => this.props.onShare(report, description)}
-            TeamSharingActivated={this.props.teamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -120,7 +120,7 @@ class ExportPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Report"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

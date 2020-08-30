@@ -117,11 +117,11 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
           onChangeUpColorFlashingCell={(flashingcell, UpColor) =>
             this.props.onChangeUpColorFlashingCell(flashingcell, UpColor)
           }
-          TeamSharingActivated={false}
+          teamSharingActivated={false}
           onShare={null}
           onEdit={null}
           onDeleteConfirm={null}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });

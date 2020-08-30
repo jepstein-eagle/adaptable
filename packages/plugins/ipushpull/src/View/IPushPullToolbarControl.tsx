@@ -7,6 +7,7 @@ import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/A
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import * as IPushPullRedux from '../Redux/ActionReducers/IPushPullRedux';
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import * as DashboardRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/DashboardRedux';
 import { PanelDashboard } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelDashboard';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
@@ -33,6 +34,7 @@ import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Butto
 import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
 import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
 import { ButtonLogout } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogout';
+import { AdaptableDashboardToolbar } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Types';
 
 interface IPushPullToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<IPushPullToolbarControlComponent> {
@@ -183,7 +185,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           onClick={() => this.onIPushPullSendSnapshot()}
           tooltip="Send Snapshot to ipushpull"
           disabled={isLiveIPushPullReport || !isCompletedReport}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
         {isLiveIPushPullReport ? (
           <ButtonPause
@@ -192,7 +194,7 @@ class IPushPullToolbarControlComponent extends React.Component<
             onClick={() => this.props.onIPushPullStopLiveData()}
             tooltip="Stop sync with ipushpull"
             disabled={!isLiveIPushPullReport}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         ) : (
           <ButtonPlay
@@ -201,13 +203,13 @@ class IPushPullToolbarControlComponent extends React.Component<
             onClick={() => this.onIPushPullStartLiveData()}
             tooltip="Start sync with ipushpull"
             disabled={isLiveIPushPullReport || !isCompletedReport}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
         {isCompletedReport && (
           <Flex
             className={join(
-              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+              this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
               'ab-DashboardToolbar__IPushPull__controls'
             )}
             alignItems="stretch"
@@ -219,7 +221,7 @@ class IPushPullToolbarControlComponent extends React.Component<
                 onClick={() => this.onNewIPushPullSchedule()}
                 tooltip="Schedule"
                 disabled={isLiveIPushPullReport || !isCompletedReport}
-                AccessLevel={this.props.AccessLevel}
+                accessLevel={this.props.accessLevel}
               />
             )}
           </Flex>
@@ -230,7 +232,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           onClick={() => this.props.onShowAddIPushPullPage()}
           tooltip="New Page"
           disabled={isLiveIPushPullReport}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
         <ButtonLogout
           marginLeft={1}
@@ -238,7 +240,7 @@ class IPushPullToolbarControlComponent extends React.Component<
           onClick={() => this.getIPPApi().logoutFromIPushPull()}
           tooltip="Logout"
           disabled={isLiveIPushPullReport}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       </Flex>
     ) : (
@@ -247,7 +249,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__IPushPull__login"
         onClick={() => this.props.onShowIPushPullLogin()}
         tooltip="Login to ipushpull"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       >
         {' '}
         Login
@@ -260,6 +262,7 @@ class IPushPullToolbarControlComponent extends React.Component<
         headerText={StrategyConstants.IPushPullStrategyFriendlyName}
         showConfigureButton={false} // later : isIPushPullRunning
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('IPushPull')}
       >
         {content}
       </PanelDashboard>
@@ -386,6 +389,8 @@ function mapDispatchToProps(dispatch: Redux.Dispatch<Redux.Action<AdaptableState
           ScreenPopups.IPushPullPopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

@@ -52,10 +52,10 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(plusMinusRule)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={false}
         EntityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

@@ -121,7 +121,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
               (this.props.PreviewInfo != null &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
             }
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
 
@@ -144,6 +144,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__BulkUpdate"
         headerText={StrategyConstants.BulkUpdateStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('BulkUpdate')}
       >
         {content}
       </PanelDashboard>
@@ -226,6 +227,8 @@ function mapDispatchToProps(
           ScreenPopups.BulkUpdatePopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

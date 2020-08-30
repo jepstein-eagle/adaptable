@@ -91,7 +91,7 @@ class DataSourceToolbarControlComponent extends React.Component<
           onClick={() => this.onApplyClick()}
           tooltip="Get Data Source"
           disabled={!canApplyDataSource}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
         {/*
         {this.state.CurrentDataSource != null && !canApplyDataSource && (
@@ -115,6 +115,7 @@ class DataSourceToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__DataSource"
         headerText={StrategyConstants.DataSourceStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('DataSource')}
       >
         {content}
       </PanelDashboard>
@@ -173,6 +174,8 @@ function mapDispatchToProps(
           ScreenPopups.DataSourcePopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

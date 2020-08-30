@@ -138,7 +138,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               data-name="close"
               onClick={() => this.props.onHide()}
               tooltip="Close wizard"
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             >
               CLOSE
             </SimpleButton>
@@ -149,7 +149,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
               onClick={() => this.handleClickBack()}
               icon="arrow-left"
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             >
               Back
             </SimpleButton>
@@ -160,7 +160,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               onClick={() => this.handleClickNext()}
               icon="arrow-right"
               iconPosition="end"
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
               marginLeft={2}
               marginRight={2}
             >
@@ -173,7 +173,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}
               icon={'check'}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             >
               Finish
             </SimpleButton>

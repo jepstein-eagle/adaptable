@@ -91,7 +91,7 @@ class SparklineColumnPopupComponent extends React.Component<
           Column={column}
           onEdit={() => this.onEdit(sparklineColumn)}
           onShare={description => this.props.onShare(sparklineColumn, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={SparklineColumnRedux.SparklineColumnsDelete(sparklineColumn)}
           onMinimumValueChanged={(sparklineColumn, minimumValue) =>
             this.onMinimumValueChanged(sparklineColumn, minimumValue)
@@ -103,7 +103,7 @@ class SparklineColumnPopupComponent extends React.Component<
           onLineColorChanged={(sparklineColumn, color) =>
             this.onLineColorChanged(sparklineColumn, color)
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });

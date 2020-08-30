@@ -49,12 +49,12 @@ export class CustomSortSummaryComponent extends React.Component<
       customSortRow = (
         <StrategyHeader
           key={StrategyConstants.CustomSortStrategyFriendlyName}
-          FunctionName={StrategyConstants.CustomSortStrategyId}
-          StrategySummary={'Column is not sortable'}
-          NewButtonDisabled={true}
+          functionName={StrategyConstants.CustomSortStrategyId}
+          strategySummary={'Column is not sortable'}
+          newButtonDisabled={true}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
-          AccessLevel={this.props.accessLevel}
+          newButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else if (noCustomSort) {
@@ -62,11 +62,11 @@ export class CustomSortSummaryComponent extends React.Component<
       customSortRow = (
         <StrategyHeader
           key={StrategyConstants.CustomSortStrategyFriendlyName}
-          FunctionName={StrategyConstants.CustomSortStrategyId}
-          StrategySummary={'No Custom Sort Set'}
+          functionName={StrategyConstants.CustomSortStrategyId}
+          strategySummary={'No Custom Sort Set'}
           onNew={() => this.onNew()}
-          AccessLevel={this.props.accessLevel}
-          NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
+          newButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
         />
       );
     } else {

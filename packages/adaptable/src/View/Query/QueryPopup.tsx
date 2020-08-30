@@ -70,12 +70,12 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
           colItems={colItems}
           api={this.props.api}
           onShare={description => this.props.onShare(sharedQuery, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           AdaptableObject={sharedQuery}
           key={sharedQuery.Uuid}
           onEdit={sharedQuery => this.onEdit(sharedQuery as SharedQuery)}
           onDeleteConfirm={QueryRedux.SharedQueryDelete(sharedQuery)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -86,7 +86,7 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
           this.onNew();
         }}
         tooltip="Create Shared Query"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

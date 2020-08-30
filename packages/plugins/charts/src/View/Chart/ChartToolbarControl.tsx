@@ -123,14 +123,14 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
 
         <Flex
           alignItems="stretch"
-          className={this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : ''}
+          className={this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : ''}
         >
           <ButtonShowChart
             className="ab-DashboardToolbar__Chart__show"
             onClick={() => this.onShowChart()}
             tooltip="Show Chart"
             disabled={currentChartDefinitionName == selectChartString}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
           <DropdownButton
             columns={['label']}
@@ -153,7 +153,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
             }
             tooltip="Edit Chart Definition"
             disabled={currentChartDefinitionName == selectChartString}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -165,7 +165,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
               "Are you sure you want to delete '" + currentChartDefinitionName + "'?"
             }
             ConfirmationTitle={'Delete Chart'}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>
@@ -176,6 +176,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
         className="ab-DashboardToolbar__Chart"
         headerText={StrategyConstants.ChartStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Chart')}
       >
         {content}
       </PanelDashboard>
@@ -227,6 +228,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ChartStrategyId, ScreenPopups.ChartPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

@@ -37,9 +37,9 @@ export class CalculatedColumnEntityRow extends React.Component<
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(calculatedColumn)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         EntityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

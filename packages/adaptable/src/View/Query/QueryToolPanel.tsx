@@ -102,12 +102,12 @@ class QueryToolPanelComponent extends React.Component<
           <ButtonClear
             onClick={() => this.props.onChangeCurrentQuery('')}
             tooltip="Clear Query"
-            AccessLevel={'Full'}
+            accessLevel={'Full'}
           />
           <ButtonRunQuery
             // onClick={() => this.runQuery()}
             tooltip="Run Query"
-            AccessLevel={'Full'}
+            accessLevel={'Full'}
             variant="text"
             tone="neutral"
             marginRight={1}

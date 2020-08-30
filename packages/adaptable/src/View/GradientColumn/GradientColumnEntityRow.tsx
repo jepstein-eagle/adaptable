@@ -101,12 +101,12 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
     colItems[6].Content = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(GradientColumn)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
         EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

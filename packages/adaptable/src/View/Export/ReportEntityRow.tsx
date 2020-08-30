@@ -78,10 +78,10 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
         overrideDisableEdit={isSystemReport || report.ReportColumnScope == 'CustomColumns'}
         overrideDisableDelete={isSystemReport}
         overrideDisableShare={isSystemReport}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         shareClick={(description: string) => this.props.onShare(description)}
         EntityType="Report"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

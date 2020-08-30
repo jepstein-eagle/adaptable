@@ -57,7 +57,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
         variant="text"
         disabled={isDefaultMessage}
         marginTop={1}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Clear
       </SimpleButton>
@@ -92,6 +92,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__SystemStatus"
         headerText={StrategyConstants.SystemStatusStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('SystemStatus')}
       >
         {content}
       </PanelDashboard>
@@ -120,6 +121,8 @@ function mapDispatchToProps(
           ScreenPopups.SystemStatusPopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

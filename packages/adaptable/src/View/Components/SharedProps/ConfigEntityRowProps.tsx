@@ -21,8 +21,8 @@ export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
 // shared props
 export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
   onShare: (description: string) => void;
-  TeamSharingActivated: boolean;
-  AccessLevel: AccessLevel;
+  teamSharingActivated: boolean;
+  accessLevel: AccessLevel;
 }
 
 export interface SharedEntityComponent<View> extends React.ClassAttributes<View> {

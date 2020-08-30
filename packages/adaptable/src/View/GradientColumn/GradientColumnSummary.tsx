@@ -61,11 +61,11 @@ export class GradientColumnSummaryComponent extends React.Component<
       GradientColumnRow = (
         <StrategyHeader
           key={StrategyConstants.GradientColumnStrategyFriendlyName}
-          FunctionName={StrategyConstants.GradientColumnStrategyId}
-          StrategySummary={'No Gradient Column'}
+          functionName={StrategyConstants.GradientColumnStrategyId}
+          strategySummary={'No Gradient Column'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.GradientColumnStrategyFriendlyName}
-          AccessLevel={this.props.accessLevel}
+          newButtonTooltip={StrategyConstants.GradientColumnStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else {

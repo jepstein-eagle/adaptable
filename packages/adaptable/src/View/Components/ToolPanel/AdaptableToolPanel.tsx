@@ -78,7 +78,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
               tooltip={menuItem.Label}
               //  disabled={props.AccessLevel == 'ReadOnly' }
               onClick={() => props.onClick(menuItem.ReduxAction)}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             />
           );
         }

@@ -143,7 +143,7 @@ class SmartEditToolbarControlComponent extends React.Component<
               (this.props.PreviewInfo != null &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
             }
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
 
@@ -167,6 +167,7 @@ class SmartEditToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__SmartEdit"
         headerText={StrategyConstants.SmartEditStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('SmartEdit')}
       >
         {content}
       </PanelDashboard>
@@ -247,6 +248,8 @@ function mapDispatchToProps(
           ScreenPopups.SmartEditPopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

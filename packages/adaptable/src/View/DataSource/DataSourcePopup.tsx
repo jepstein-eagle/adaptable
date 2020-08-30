@@ -68,13 +68,13 @@ class DataSourcePopupComponent extends React.Component<
           colItems={colItems}
           api={this.props.api}
           onShare={description => this.props.onShare(dataSource, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={DataSourceRedux.DataSourceDelete(dataSource)}
           onChangeName={(dataSource, name) => this.onChangeName(dataSource, name)}
           onChangeDescription={(dataSource, description) =>
             this.onChangeDescription(dataSource, description)
           }
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -83,7 +83,7 @@ class DataSourcePopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.CreateDataSource()}
         tooltip="Create New DataSource"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

@@ -33,12 +33,12 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
     colItems[1].Content = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(PercentBar)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
         EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

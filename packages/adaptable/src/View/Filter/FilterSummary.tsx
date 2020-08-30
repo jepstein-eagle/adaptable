@@ -51,7 +51,7 @@ export class FilterSummaryComponent extends React.Component<
         onClick={() => this.props.onClearFilter(columnFilter)}
         tooltip="Clear Column Filter"
         disabled={columnFilter == null}
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

@@ -58,7 +58,7 @@ class SystemStatusToolPanelComponent extends React.Component<
         variant="text"
         disabled={isDefaultMessage}
         marginTop={1}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Clear
       </SimpleButton>

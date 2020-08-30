@@ -32,7 +32,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         tone="error"
         variant="raised"
         marginTop={2}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Clear User Data
       </SimpleButton>
@@ -46,7 +46,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         variant="raised"
         marginTop={2}
         marginRight={3}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Copy All Data to Clipboard
       </SimpleButton>
@@ -60,7 +60,7 @@ class StateManagementPopupComponent extends React.Component<StateManagementPopup
         variant="raised"
         marginTop={2}
         marginRight={3}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Copy User Data to Clipboard
       </SimpleButton>

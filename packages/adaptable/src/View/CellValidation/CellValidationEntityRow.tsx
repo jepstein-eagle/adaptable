@@ -50,12 +50,12 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     colItems[3].Content = (
       <EntityListActionButtons
         ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(cellValidationRule)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
         EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

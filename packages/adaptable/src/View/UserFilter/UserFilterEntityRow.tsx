@@ -24,11 +24,11 @@ export class UserFilterEntityRow extends React.Component<
       <EntityListActionButtons
         editClick={() => this.props.onEdit(userFilter)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={false}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

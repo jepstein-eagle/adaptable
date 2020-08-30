@@ -55,16 +55,16 @@ export class ConditionalStyleSummaryComponent extends React.Component<
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-        FunctionName={StrategyConstants.ConditionalStyleStrategyId}
-        StrategySummary={Helper.ReturnItemCount(
+        functionName={StrategyConstants.ConditionalStyleStrategyId}
+        strategySummary={Helper.ReturnItemCount(
           this.props.ConditionalStyles.filter(item =>
             this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)
           ),
           StrategyConstants.ConditionalStyleStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-        AccessLevel={this.props.accessLevel}
+        newButtonTooltip={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);

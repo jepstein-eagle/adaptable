@@ -85,14 +85,14 @@ class ShortcutPopupComponent extends React.Component<
           api={this.props.api}
           AvailableKeys={this.getAvailableKeys(shortcut)}
           onShare={description => this.props.onShare(shortcut, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={ShortcutRedux.ShortcutDelete(shortcut)}
           onChangeKey={(shortcut, newKey) => this.onChangeKeyShortcut(shortcut, newKey)}
           onChangeOperation={(shortcut, newOperation) =>
             this.onChangeOperationShortcut(shortcut, newOperation)
           }
           onChangeResult={(shortcut, newResult) => this.onChangeResultShortcut(shortcut, newResult)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -101,7 +101,7 @@ class ShortcutPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create New Shortcut"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

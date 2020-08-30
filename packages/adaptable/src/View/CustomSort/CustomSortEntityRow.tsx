@@ -25,13 +25,13 @@ export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProp
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(customSort)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={
           customSort.CustomSortComparerFunction != undefined ||
           this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)
         }
         EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

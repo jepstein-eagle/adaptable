@@ -48,12 +48,12 @@ export class UserFilterSummaryComponent extends React.Component<
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.UserFilterStrategyFriendlyName}
-        FunctionName={StrategyConstants.UserFilterStrategyId}
-        StrategySummary={this.getSummary()}
+        functionName={StrategyConstants.UserFilterStrategyId}
+        strategySummary={this.getSummary()}
         onNew={() => this.onNew()}
-        NewButtonDisabled={!this.isFilterable()}
-        NewButtonTooltip={StrategyConstants.UserFilterStrategyFriendlyName}
-        AccessLevel={this.props.accessLevel}
+        newButtonDisabled={!this.isFilterable()}
+        newButtonTooltip={StrategyConstants.UserFilterStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);

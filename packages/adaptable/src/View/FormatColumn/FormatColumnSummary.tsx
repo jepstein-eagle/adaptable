@@ -59,11 +59,11 @@ export class FormatColumnSummaryComponent extends React.Component<
       formatColumnRow = (
         <StrategyHeader
           key={StrategyConstants.FormatColumnStrategyFriendlyName}
-          FunctionName={StrategyConstants.FormatColumnStrategyId}
-          StrategySummary={'No Format Column Set'}
+          functionName={StrategyConstants.FormatColumnStrategyId}
+          strategySummary={'No Format Column Set'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.FormatColumnStrategyFriendlyName}
-          AccessLevel={this.props.accessLevel}
+          newButtonTooltip={StrategyConstants.FormatColumnStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else {

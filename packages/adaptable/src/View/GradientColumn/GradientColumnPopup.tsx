@@ -119,7 +119,7 @@ class GradientColumnPopupComponent extends React.Component<
             Column={column}
             onEdit={() => this.onEdit(gradientColumn)}
             onShare={description => this.props.onShare(gradientColumn, description)}
-            TeamSharingActivated={this.props.teamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onDeleteConfirm={GradientColumnRedux.GradientColumnDelete(gradientColumn)}
             onNegativeValueChanged={(gradientColumn, minimumValue) =>
               this.onNegativeValueChanged(gradientColumn, minimumValue)
@@ -136,7 +136,7 @@ class GradientColumnPopupComponent extends React.Component<
             onNegativeColorChanged={(gradientColumn, negativeColor) =>
               this.onNegativeColorChanged(gradientColumn, negativeColor)
             }
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -145,7 +145,7 @@ class GradientColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Percent Bar "
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

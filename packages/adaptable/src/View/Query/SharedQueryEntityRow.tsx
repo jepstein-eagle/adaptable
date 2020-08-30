@@ -27,9 +27,9 @@ export class SharedQueryEntityRow extends React.Component<
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(sharedQuery)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         EntityType={StrategyConstants.QueryStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[2].Content = buttons;

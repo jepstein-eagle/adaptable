@@ -153,10 +153,10 @@ class SchedulePopupComponent extends React.Component<
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(baseSchedule, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onEdit={() => this.onEdit(baseSchedule)}
           onDeleteConfirm={deleteAction}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });

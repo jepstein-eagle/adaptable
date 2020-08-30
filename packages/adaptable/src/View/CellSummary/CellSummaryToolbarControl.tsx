@@ -125,6 +125,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__CellSummary"
         headerText={StrategyConstants.CellSummaryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('CellSummary')}
       >
         {content}
       </PanelDashboard>
@@ -185,6 +186,8 @@ function mapDispatchToProps(
           ScreenPopups.CellSummaryPopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

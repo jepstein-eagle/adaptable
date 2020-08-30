@@ -52,12 +52,12 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
           colItems={colItems}
           api={this.props.api}
           AdaptableObject={null}
-          ColumnFilter={columnFilter}
+          columnFilter={columnFilter}
           onEdit={null}
           onDeleteConfirm={null}
           onClear={() => this.onClearColumnFilter(columnFilter.ColumnId)}
           onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });

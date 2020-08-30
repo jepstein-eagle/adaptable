@@ -7,6 +7,7 @@ import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/A
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import * as OpenFinRedux from '../Redux/ActionReducers/OpenFinRedux';
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import * as DashboardRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/DashboardRedux';
 import { PanelDashboard } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelDashboard';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
@@ -28,6 +29,7 @@ import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Butto
 
 import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 import { CreateEmptyOpenFinSchedule } from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
+import { AdaptableDashboardToolbar } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Types';
 
 interface OpenFinToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<OpenFinToolbarControlComponent> {
@@ -125,7 +127,7 @@ class OpenFinToolbarControlComponent extends React.Component<
             onClick={() => this.getOpenFinApi().stopLiveData()}
             tooltip="Stop sync with OpenFin"
             disabled={!isLiveOpenFinReport}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         ) : (
           <ButtonPlay
@@ -134,13 +136,13 @@ class OpenFinToolbarControlComponent extends React.Component<
             onClick={() => this.onOpenFinStartLiveData()}
             tooltip="Start sync with OpenFin"
             disabled={isLiveOpenFinReport || !isCompletedReport}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
 
         <Flex
           className={join(
-            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-DashboardToolbar__OpenFin__controls'
           )}
           alignItems="stretch"
@@ -150,7 +152,7 @@ class OpenFinToolbarControlComponent extends React.Component<
             className="ab-DashboardToolbar__OpenFin__schedule"
             onClick={() => this.onNewOpenFinSchedule()}
             tooltip="Schedule"
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>
@@ -162,6 +164,7 @@ class OpenFinToolbarControlComponent extends React.Component<
         headerText={StrategyConstants.OpenFinStrategyFriendlyName}
         showConfigureButton={false}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('OpenFin')}
       >
         {content}
       </PanelDashboard>
@@ -229,6 +232,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.OpenFinStrategyId, ScreenPopups.OpenFinPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

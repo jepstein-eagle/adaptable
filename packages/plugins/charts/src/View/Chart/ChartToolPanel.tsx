@@ -139,7 +139,7 @@ class ChartToolPanelComponent extends React.Component<
           flexDirection="row"
           alignItems="stretch"
           className={
-            this.props.AccessLevel == 'ReadOnly'
+            this.props.accessLevel == 'ReadOnly'
               ? GeneralConstants.READ_ONLY_STYLE
               : 'ab-ToolPanel__Chart_wrap'
           }
@@ -149,7 +149,7 @@ class ChartToolPanelComponent extends React.Component<
             onClick={() => this.onShowChart()}
             tooltip="Show Chart"
             disabled={currentChartDefinitionName == selectChartString}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
           <DropdownButton
             columns={['label']}
@@ -172,7 +172,7 @@ class ChartToolPanelComponent extends React.Component<
             }
             tooltip="Edit Chart Definition"
             disabled={currentChartDefinitionName == selectChartString}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -184,7 +184,7 @@ class ChartToolPanelComponent extends React.Component<
               "Are you sure you want to delete '" + currentChartDefinitionName + "'?"
             }
             ConfirmationTitle={'Delete Chart'}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>

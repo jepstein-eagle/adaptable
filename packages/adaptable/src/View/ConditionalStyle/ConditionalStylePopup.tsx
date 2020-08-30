@@ -103,10 +103,10 @@ class ConditionalStylePopupComponent extends React.Component<
             api={this.props.api}
             key={'CS' + (conditionalStyle.Uuid || index)}
             onShare={description => this.props.onShare(conditionalStyle, description)}
-            TeamSharingActivated={this.props.teamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(conditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -116,7 +116,7 @@ class ConditionalStylePopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Conditional Style"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

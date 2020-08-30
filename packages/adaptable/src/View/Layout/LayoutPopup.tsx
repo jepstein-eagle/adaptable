@@ -104,11 +104,11 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           AdaptableObject={x}
           onEdit={() => this.onEdit(x)}
           onShare={description => this.props.onShare(x, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
           canDelete={this.props.Layouts.length > 1}
           onSelect={() => this.props.onSelectLayout(x.Name)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -120,7 +120,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         icon="plus"
         tone="accent"
         variant="raised"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       >
         ADD
       </SimpleButton>

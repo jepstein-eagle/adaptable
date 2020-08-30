@@ -7,6 +7,7 @@ import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/A
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import * as Glue42Redux from '../Redux/ActionReducers/Glue42Redux';
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
+import * as DashboardRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/DashboardRedux';
 import { PanelDashboard } from '@adaptabletools/adaptable/src/View/Components/Panels/PanelDashboard';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
@@ -32,6 +33,7 @@ import { ButtonPause } from '@adaptabletools/adaptable/src/View/Components/Butto
 import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory';
 import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
 import { ButtonLogout } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogout';
+import { AdaptableDashboardToolbar } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Types';
 
 interface Glue42ToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<Glue42ToolbarControlComponent> {
@@ -133,12 +135,12 @@ class Glue42ToolbarControlComponent extends React.Component<
           onClick={() => this.onGlue42SendSnapshot()}
           tooltip="Send Snapshot to Glue42"
           disabled={isLiveGlue42Report || !isCompletedReport}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
         {isCompletedReport && (
           <Flex
             className={join(
-              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+              this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
               'ab-DashboardToolbar__Glue42__controls'
             )}
             alignItems="stretch"
@@ -149,7 +151,7 @@ class Glue42ToolbarControlComponent extends React.Component<
               onClick={() => this.onNewGlue42Schedule()}
               tooltip="Schedule"
               disabled={isLiveGlue42Report || !isCompletedReport}
-              AccessLevel={this.props.AccessLevel}
+              accessLevel={this.props.accessLevel}
             />
           </Flex>
         )}{' '}
@@ -159,7 +161,7 @@ class Glue42ToolbarControlComponent extends React.Component<
           onClick={() => this.getGlue42Api().logoutFromGlue42()}
           tooltip="Logout"
           disabled={isLiveGlue42Report}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       </Flex>
     ) : (
@@ -168,7 +170,7 @@ class Glue42ToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Glue42__login"
         onClick={() => this.props.onShowGlue42Login()}
         tooltip="Login to Glue42"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       >
         {' '}
         Login
@@ -181,6 +183,7 @@ class Glue42ToolbarControlComponent extends React.Component<
         headerText={StrategyConstants.Glue42StrategyFriendlyName}
         showConfigureButton={false} // later : isGlue42Running
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Glue42')}
       >
         {content || 'no glue42'}
       </PanelDashboard>
@@ -267,6 +270,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.Glue42StrategyId, ScreenPopups.Glue42Popup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

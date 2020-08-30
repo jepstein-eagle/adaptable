@@ -7,6 +7,7 @@ export type DashboardToolbarProps = {
   className?: string;
   title: string;
   tooltip?: string;
+  onClose?: () => void;
   onConfigure?: () => void;
   children: ReactNode;
   showConfigure: boolean;
@@ -28,7 +29,19 @@ export function DashboardToolbar(props: DashboardToolbarProps) {
             tooltip={props.tooltip || `Configure ${props.title}`}
             onClick={() => props.onConfigure()}
           />
-        )}
+        )}{' '}
+        {/** 
+        <SimpleButton
+        
+          icon="clear"
+          variant="text"
+          tone="none"
+          iconSize={16}
+          marginLeft={1}
+        
+          tooltip={props.tooltip || `Close ${props.title}`}
+          onClick={() => props.onClose()}
+        />*/}
       </div>
     </div>
   );

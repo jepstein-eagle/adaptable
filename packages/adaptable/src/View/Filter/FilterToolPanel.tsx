@@ -83,7 +83,7 @@ class FilterToolPanelComponent extends React.Component<
                 onClick={() => this.onClearFilters()}
                 tooltip="Clear Column Filters"
                 disabled={this.props.ColumnFilters.length == 0}
-                AccessLevel={this.props.accessLevel}
+                accessLevel={this.props.accessLevel}
               >
                 Clear
               </ButtonClear>

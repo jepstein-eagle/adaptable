@@ -23,6 +23,7 @@ export const DASHBOARD_SET_IS_INLINE = 'DASHBOARD_SET_IS_INLINE';
 const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
 export const DASHBOARD_SET_TABS = 'DASHBOARD_SET_TABS';
 const DASHBOARD_CREATE_DEFAULT_TAB = 'DASHBOARD_CREATE_DEFAULT_TAB';
+const DASHBOARD_CLOSE_TOOLBAR = 'DASHBOARD_CLOSE_TOOLBAR';
 
 export interface DashboardShowToolbarAction extends Redux.Action {
   toolbar: AdaptableDashboardToolbar | string;
@@ -81,12 +82,15 @@ export interface DashboardSetFloatingPositionAction extends Redux.Action {
   FloatingPosition: AdaptableCoordinate;
 }
 
-export interface DashboardSetTabsAction extends Redux.Action {
-  Tabs: DashboardTab[];
+export interface DashboardCloseToolbarAction extends Redux.Action {
+  toolbar: AdaptableDashboardToolbar;
 }
 
 export interface DashboardCreateDefaultTabAction extends Redux.Action {}
 
+export interface DashboardSetTabsAction extends Redux.Action {
+  Tabs: DashboardTab[];
+}
 export const DashboardSetFunctionButtons = (
   functionButtons: AdaptableFunctionButtons
 ): DashboardSetFunctionButtonsAction => ({
@@ -142,6 +146,13 @@ export const DashboardSetTabs = (Tabs: DashboardTab[]): DashboardSetTabsAction =
 
 export const DashboardCreateDefaultTab = (): DashboardCreateDefaultTabAction => ({
   type: DASHBOARD_CREATE_DEFAULT_TAB,
+});
+
+export const DashboardCloseToolbar = (
+  toolbar: AdaptableDashboardToolbar
+): DashboardCloseToolbarAction => ({
+  toolbar,
+  type: DASHBOARD_CLOSE_TOOLBAR,
 });
 
 const initialDashboardState: DashboardState = {
@@ -222,6 +233,21 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
         ...state,
         Tabs: [{ Name: 'Toolbars', Toolbars: ['Query', 'Layout', 'Export', 'Filter'] }],
       };
+    }
+
+    case DASHBOARD_CLOSE_TOOLBAR: {
+      const actionTyped = action as DashboardCloseToolbarAction;
+      const tabs: DashboardTab[] = [].concat(state.Tabs);
+      const currentTab: DashboardTab = tabs[state.ActiveTab];
+      if (currentTab) {
+        const toolbars = [].concat(currentTab.Toolbars);
+        const index = toolbars.findIndex(t => t == actionTyped.toolbar);
+        toolbars.splice(index, 1);
+        currentTab.Toolbars = toolbars;
+        return { ...state, Tabs: tabs };
+      } else {
+        return { ...state };
+      }
     }
 
     default:

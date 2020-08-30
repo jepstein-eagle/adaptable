@@ -93,28 +93,28 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           api={this.props.api}
           key={Chart.Name}
           onEdit={() => this.onEdit(Chart as ChartDefinition)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(Chart, description)}
           onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
           onShowChart={chartName => this.onShowChart(chartName)}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.CategoryChart),
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.PieChart),
       label: 'Pie Chart',
     };
 
     let sparklinesChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.SparklinesChart),
       label: 'Sparklines Chart',
     };

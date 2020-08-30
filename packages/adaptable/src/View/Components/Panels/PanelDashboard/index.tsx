@@ -4,6 +4,7 @@ import { DashboardToolbar as DashboardToolbarUI } from '../../../../components/D
 
 export interface PanelDashboardProps extends PanelProps {
   headerText: string;
+  onClose: () => void;
   onConfigure: () => void;
   showConfigureButton?: boolean;
 }
@@ -15,16 +16,18 @@ export class PanelDashboard extends React.Component<PanelDashboardProps, {}> {
   public static defaultProps: PanelDashboardProps = {
     showConfigureButton: true,
     headerText: 'Function',
+    onClose: null,
     onConfigure: null,
   };
   render() {
-    const { headerText, showConfigureButton, onConfigure, children } = this.props;
+    const { headerText, showConfigureButton, onConfigure, onClose, children } = this.props;
 
     return (
       <DashboardToolbarUI
         title={headerText}
         onConfigure={onConfigure}
         showConfigure={showConfigureButton}
+        onClose={onClose}
       >
         {children}
       </DashboardToolbarUI>

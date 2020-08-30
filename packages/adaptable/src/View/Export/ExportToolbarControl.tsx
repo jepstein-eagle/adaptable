@@ -186,7 +186,7 @@ class ExportToolbarControlComponent extends React.Component<
               this.props.api.internalApi.getReportService().IsSystemReport(savedReport) ||
               savedReport.ReportColumnScope == 'CustomColumns'
             }
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonNew
@@ -196,7 +196,7 @@ class ExportToolbarControlComponent extends React.Component<
             children={null}
             onClick={() => this.props.onNewReport()}
             tooltip="Create New Report"
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -209,7 +209,7 @@ class ExportToolbarControlComponent extends React.Component<
             ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
             ConfirmationMsg={deleteMessage}
             ConfirmationTitle={'Delete Report'}
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
           {this.props.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
             <ButtonSchedule
@@ -218,7 +218,7 @@ class ExportToolbarControlComponent extends React.Component<
               onClick={() => this.onNewReportSchedule()}
               tooltip="Schedule"
               disabled={savedReport == null}
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
           )}
         </Flex>
@@ -230,6 +230,7 @@ class ExportToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Export"
         headerText={StrategyConstants.ExportStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Export')}
       >
         {content}
       </PanelDashboard>
@@ -295,6 +296,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

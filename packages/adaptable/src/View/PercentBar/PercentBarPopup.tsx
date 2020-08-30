@@ -115,9 +115,9 @@ class PercentBarPopupComponent extends React.Component<
           Column={column}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={PercentBarRedux.PercentBarDelete(percentBar)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -125,7 +125,7 @@ class PercentBarPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Percent Bar "
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

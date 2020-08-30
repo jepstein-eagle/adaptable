@@ -95,11 +95,11 @@ class CustomSortPopupComponent extends React.Component<
           AdaptableObject={customSort}
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
           ColumnLabel={this.props.api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -108,7 +108,7 @@ class CustomSortPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Custom Sort"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

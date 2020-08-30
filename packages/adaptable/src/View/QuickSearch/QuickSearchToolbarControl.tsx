@@ -53,6 +53,7 @@ class QuickSearchToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__QuickSearch"
         headerText={StrategyConstants.QuickSearchStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('QuickSearch')}
       >
         <AdaptableFormControlTextClear
           type="text"
@@ -102,6 +103,8 @@ function mapDispatchToProps(
           ScreenPopups.QuickSearchPopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

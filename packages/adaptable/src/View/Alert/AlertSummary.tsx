@@ -46,14 +46,14 @@ export class AlertSummaryComponent extends React.Component<
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.AlertStrategyFriendlyName}
-        FunctionName={StrategyConstants.AlertStrategyId}
-        StrategySummary={Helper.ReturnItemCount(
+        functionName={StrategyConstants.AlertStrategyId}
+        strategySummary={Helper.ReturnItemCount(
           this.props.Alerts.filter(item => item.ColumnId == this.props.summarisedColumn.ColumnId),
           StrategyConstants.AlertStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.AlertStrategyFriendlyName}
-        AccessLevel={this.props.accessLevel}
+        newButtonTooltip={StrategyConstants.AlertStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);

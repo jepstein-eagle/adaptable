@@ -53,16 +53,16 @@ export class CellValidationSummaryComponent extends React.Component<
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.CellValidationStrategyFriendlyName}
-        FunctionName={StrategyConstants.CellValidationStrategyId}
-        StrategySummary={Helper.ReturnItemCount(
+        functionName={StrategyConstants.CellValidationStrategyId}
+        strategySummary={Helper.ReturnItemCount(
           this.props.cellValidations.filter(
             item => item.ColumnId == this.props.summarisedColumn.ColumnId
           ),
           StrategyConstants.CellValidationStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.CellValidationStrategyFriendlyName}
-        AccessLevel={this.props.accessLevel}
+        newButtonTooltip={StrategyConstants.CellValidationStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);

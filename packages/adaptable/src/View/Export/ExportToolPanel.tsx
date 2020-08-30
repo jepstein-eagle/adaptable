@@ -196,7 +196,7 @@ class ExportToolPanelComponent extends React.Component<
                 savedReport == null ||
                 this.props.api.internalApi.getReportService().IsSystemReport(savedReport)
               }
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
 
             <ButtonNew
@@ -206,7 +206,7 @@ class ExportToolPanelComponent extends React.Component<
               children={null}
               onClick={() => this.props.onNewReport()}
               tooltip="Create New Report"
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
 
             <ButtonDelete
@@ -219,7 +219,7 @@ class ExportToolPanelComponent extends React.Component<
               ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
               ConfirmationMsg={deleteMessage}
               ConfirmationTitle={'Delete Report'}
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
 
             <ButtonSchedule
@@ -228,7 +228,7 @@ class ExportToolPanelComponent extends React.Component<
               onClick={() => this.onNewReportSchedule()}
               tooltip="Schedule"
               disabled={savedReport == null}
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
           </Flex>
         </Flex>

@@ -39,11 +39,11 @@ export class FormatColumnEntityRow extends React.Component<
     colItems[3].Content = (
       <EntityListActionButtons
         editClick={() => this.props.onEdit(formatColumn)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         shareClick={(description: string) => this.props.onShare(description)}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

@@ -21,7 +21,7 @@ export interface SimpleButtonProps extends ButtonProps {
   iconSize?: number;
   iconPosition?: 'start' | 'end';
   disabled?: boolean;
-  AccessLevel?: AccessLevel;
+  accessLevel?: AccessLevel;
   children?: ReactNode | ReactNode[];
 }
 
@@ -36,7 +36,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
     className,
     icon,
     tooltip,
-    AccessLevel: accessLevel,
+    accessLevel: accessLevel,
     type,
     ...buttonProps
   } = props;

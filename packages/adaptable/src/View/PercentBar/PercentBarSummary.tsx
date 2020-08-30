@@ -56,11 +56,11 @@ export class PercentBarSummaryComponent extends React.Component<
       percentBarRow = (
         <StrategyHeader
           key={StrategyConstants.PercentBarStrategyFriendlyName}
-          FunctionName={StrategyConstants.PercentBarStrategyId}
-          StrategySummary={'No Percent Bar'}
+          functionName={StrategyConstants.PercentBarStrategyId}
+          strategySummary={'No Percent Bar'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.PercentBarStrategyFriendlyName}
-          AccessLevel={this.props.accessLevel}
+          newButtonTooltip={StrategyConstants.PercentBarStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else {

@@ -96,14 +96,14 @@ class LayoutToolPanelComponent extends React.Component<
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
               disabled={!this.props.CanSave}
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
           )}
           <ButtonEdit
             onClick={() => this.props.onEditLayout()}
             tooltip="Edit Layout"
             className="ab-DashboardToolbar__Layout__edit"
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonNew
@@ -113,7 +113,7 @@ class LayoutToolPanelComponent extends React.Component<
             className="ab-ToolPanel__Layout__new"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -125,7 +125,7 @@ class LayoutToolPanelComponent extends React.Component<
               "Are you sure you want to delete '" + this.props.CurrentLayoutName + "'?"
             }
             ConfirmationTitle={'Delete Layout'}
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>

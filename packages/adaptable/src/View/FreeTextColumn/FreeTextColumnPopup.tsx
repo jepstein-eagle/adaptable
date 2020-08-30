@@ -91,9 +91,9 @@ class FreeTextColumnPopupComponent extends React.Component<
             AdaptableObject={FreeTextColumn}
             onEdit={() => this.onEdit(FreeTextColumn)}
             onShare={description => this.props.onShare(FreeTextColumn, description)}
-            TeamSharingActivated={this.props.teamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onDeleteConfirm={FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn)}
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -103,7 +103,7 @@ class FreeTextColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create FreeText Column"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

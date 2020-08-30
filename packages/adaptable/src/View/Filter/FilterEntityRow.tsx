@@ -12,8 +12,8 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 export interface FilterEntityRowProps<FilterEntityRow> extends BaseEntityRowProps<FilterEntityRow> {
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
-  ColumnFilter: ColumnFilter;
-  AccessLevel: AccessLevel;
+  columnFilter: ColumnFilter;
+  accessLevel: AccessLevel;
 }
 
 export class FilterEntityRow extends React.Component<FilterEntityRowProps<FilterEntityRow>, {}> {
@@ -22,34 +22,34 @@ export class FilterEntityRow extends React.Component<FilterEntityRowProps<Filter
     colItems[0].Content = (
       <EntityRowItem
         Content={this.props.api.columnApi.getFriendlyNameFromColumnId(
-          this.props.ColumnFilter.ColumnId
+          this.props.columnFilter.ColumnId
         )}
       />
     );
     colItems[1].Content = (
       <EntityRowItem
-        Content={this.props.api.filterApi.convertColumnFilterToString(this.props.ColumnFilter)}
+        Content={this.props.api.filterApi.convertColumnFilterToString(this.props.columnFilter)}
       />
     );
     colItems[2].Content = (
       <>
         <ButtonSave
-          onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.ColumnFilter)}
+          onClick={() => this.props.onSaveColumnFilterasUserFilter(this.props.columnFilter)}
           tooltip="Save as User Filter"
           disabled={
-            this.props.ColumnFilter == null || this.props.ColumnFilter.Predicate === undefined
+            this.props.columnFilter == null || this.props.columnFilter.Predicate === undefined
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
         <ButtonClear
-          onClick={() => this.props.onClear(this.props.ColumnFilter)}
+          onClick={() => this.props.onClear(this.props.columnFilter)}
           tooltip="Clear Column Filter"
-          disabled={this.props.ColumnFilter == null}
-          AccessLevel={this.props.AccessLevel}
+          disabled={this.props.columnFilter == null}
+          accessLevel={this.props.accessLevel}
         />
       </>
     );
 
-    return <AdaptableObjectRow colItems={colItems} key={this.props.ColumnFilter.Uuid} />;
+    return <AdaptableObjectRow colItems={colItems} key={this.props.columnFilter.Uuid} />;
   }
 }

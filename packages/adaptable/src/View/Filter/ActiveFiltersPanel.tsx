@@ -59,13 +59,13 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
           disabled={columnFilter == null || columnFilter.Predicate === undefined}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />{' '}
         <ButtonClear
           onClick={() => this.props.onClear(columnFilter)}
           tooltip="Clear Column Filter"
           disabled={columnFilter == null}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       </Flex>
     );

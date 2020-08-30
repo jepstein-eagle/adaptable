@@ -26,10 +26,10 @@ export class ReminderEntityRow extends React.Component<
       <EntityListActionButtons
         editClick={() => this.props.onEdit(reminder)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         ConfirmDeleteAction={this.props.onDeleteConfirm}
         EntityType={StrategyConstants.ReminderStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

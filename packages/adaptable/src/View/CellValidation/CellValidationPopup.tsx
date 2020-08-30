@@ -99,10 +99,10 @@ class CellValidationPopupComponent extends React.Component<
           Column={column}
           onEdit={() => this.onEdit(cellValidationRule)}
           onShare={description => this.props.onShare(cellValidationRule, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
           onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
           ValidationService={this.props.api.internalApi.getValidationService()}
         />
       );
@@ -114,7 +114,7 @@ class CellValidationPopupComponent extends React.Component<
         tooltip="Create Cell Validation Rule"
         icon="plus"
         variant="raised"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       >
         NEW
       </SimpleButton>

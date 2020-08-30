@@ -90,12 +90,12 @@ class AlertPopupComponent extends React.Component<
           Column={column}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={description => this.props.onShare(alertDefinition, description)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={AlertRedux.AlertDefinitionDelete(alertDefinition)}
           onChangeMessageType={(alertDef, messageType) =>
             this.onMessageTypeChanged(alertDef, messageType)
           }
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -104,7 +104,7 @@ class AlertPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

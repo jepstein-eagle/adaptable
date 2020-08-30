@@ -99,12 +99,12 @@ class CalculatedColumnPopupComponent extends React.Component<
             colItems={colItems}
             api={this.props.api}
             onShare={description => this.props.onShare(calculatedColumn, description)}
-            TeamSharingActivated={this.props.teamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             AdaptableObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
-            AccessLevel={this.props.accessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -116,7 +116,7 @@ class CalculatedColumnPopupComponent extends React.Component<
           this.onNew();
         }}
         tooltip="Create Calculated Column"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 

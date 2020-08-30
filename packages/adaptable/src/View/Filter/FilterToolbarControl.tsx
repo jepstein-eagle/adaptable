@@ -6,6 +6,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -17,6 +18,7 @@ import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface FilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<FilterToolbarControlComponent> {
@@ -67,7 +69,7 @@ class FilterToolbarControlComponent extends React.Component<
               onClick={() => this.onClearFilters()}
               tooltip="Clear Column Filters"
               disabled={this.props.ColumnFilters.length == 0}
-              AccessLevel={this.props.accessLevel}
+              accessLevel={this.props.accessLevel}
             />
           </>
         )}
@@ -93,6 +95,7 @@ class FilterToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Filter"
         headerText={StrategyConstants.FilterStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Filter')}
       >
         {content}
       </PanelDashboard>
@@ -138,6 +141,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.FilterStrategyId, ScreenPopups.FilterPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

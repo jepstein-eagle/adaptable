@@ -102,14 +102,14 @@ class PlusMinusPopupComponent extends React.Component<
           AdaptableObject={x}
           key={index}
           onEdit={() => this.onEdit(x)}
-          TeamSharingActivated={this.props.teamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(x, description)}
           onDeleteConfirm={PlusMinusRedux.PlusMinusRuleDelete(x)}
           Column={column}
           onColumnDefaultNudgeValueChange={(plusMinusRule, event) =>
             this.onColumnDefaultNudgeValueChange(plusMinusRule, event)
           }
-          AccessLevel={this.props.accessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -118,7 +118,7 @@ class PlusMinusPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Plus / Minus Rule"
-        AccessLevel={this.props.accessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
