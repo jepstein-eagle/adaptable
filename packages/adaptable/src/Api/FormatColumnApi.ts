@@ -54,27 +54,6 @@ export interface FormatColumnApi {
   editFormatColumn(formatColumn: FormatColumn): void;
 
   /**
-   * Adds a new Format Column
-   * @param column The column to apply the Style to
-   * @param style The Style to apply - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
-   */
-  addFormatColumnStyle(column: string, style: AdaptableStyle): void;
-
-  /**
-   * Updates an existing Format Column
-   * @param column The colunn to update the style for.
-   * @param style The Style to update - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
-   */
-  updateFormatColumnStyle(column: string, style: AdaptableStyle): void;
-
-  /**
-   * Updates an existing Format Column Style
-   * @param column The colunn to update the style for.
-   * @param style The Style to update - (see [Style Object](https://api.adaptabletools.com/interfaces/_predefinedconfig_common_istyle_.istyle.html) for more details)
-   */
-  setFormatColumnStylet(columnId: string, style: AdaptableStyle): void;
-
-  /**
    * Deletes an existing Format Column
    * @param formatColumn The Format Column to delete
    */
@@ -97,13 +76,5 @@ export interface FormatColumnApi {
    */
   showFormatColumnPopup(): void;
 
-  /**
-   * Sets the Cell Alignment for a given Column
-   *
-   * It does this by creating a new (or updating an existing) Format Column for the given Column
-   *
-   * @param columnId the column to align cell contents
-   * @param cellAlignment the cell alignment to set
-   */
-  setCellAlignment(columnId: string, cellAlignment: 'Left' | 'Right' | 'Center'): void;
+  getFormatColumnForColumnId(columnId: string): FormatColumn | undefined;
 }

@@ -20,13 +20,13 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
       <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
+          ModalContainer={this.props.modalContainer}
+          Api={this.props.api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <FormatColumnScopeWizard Api={this.props.Api} />,
+              Element: <FormatColumnScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Style',
@@ -35,28 +35,28 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
                 <FormatColumnStyleWizard
                   // Api={this.props.api}
                   StyleClassNames={this.props.StyleClassNames}
-                  Api={this.props.Api}
+                  api={this.props.api}
                 />
               ),
             },
             {
               StepName: 'Display Format',
               Index: 2,
-              Element: <FormatColumnFormatWizard Api={this.props.Api} />,
+              Element: <FormatColumnFormatWizard api={this.props.api} />,
             },
             {
               StepName: 'Cell Alignment',
               Index: 3,
-              Element: <FormatColumnAlignmentWizard Api={this.props.Api} />,
+              Element: <FormatColumnAlignmentWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 4,
-              Element: <FormatColumnSummaryWizard Api={this.props.Api} />,
+              Element: <FormatColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          Data={this.props.editedAdaptableObject}
+          StepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

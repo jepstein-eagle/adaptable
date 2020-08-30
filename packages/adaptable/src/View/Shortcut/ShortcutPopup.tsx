@@ -125,10 +125,10 @@ class ShortcutPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <ShortcutWizard
-              EditedAdaptableObject={shortcut}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
+              editedAdaptableObject={shortcut}
+              configEntities={null}
+              modalContainer={this.props.ModalContainer}
+              api={this.props.Api}
               DateKeysAvailable={
                 shortcut.ShortcutKey
                   ? keys
@@ -165,7 +165,7 @@ class ShortcutPopupComponent extends React.Component<
                         ) == -1
                     )
               }
-              WizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

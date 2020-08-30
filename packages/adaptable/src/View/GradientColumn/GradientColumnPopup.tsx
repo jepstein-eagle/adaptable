@@ -174,11 +174,11 @@ class GradientColumnPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <GradientColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
-              ConfigEntities={null}
-              Api={this.props.Api}
-              ModalContainer={this.props.ModalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
+              configEntities={null}
+              api={this.props.Api}
+              modalContainer={this.props.ModalContainer}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

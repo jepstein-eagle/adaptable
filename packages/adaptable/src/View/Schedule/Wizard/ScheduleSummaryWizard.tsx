@@ -25,18 +25,18 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
 
   render(): any {
     let keyValuePairs: KeyValuePair[] = [];
-    switch (this.props.Data.ScheduleType) {
+    switch (this.props.data.ScheduleType) {
       case ScheduleType.Reminder:
         let reminderKVP: KeyValuePair[] = [
-          { Key: 'Header', Value: (this.props.Data as ReminderSchedule)!.Alert.Header },
-          { Key: 'Message', Value: (this.props.Data as ReminderSchedule)!.Alert.Msg },
+          { Key: 'Header', Value: (this.props.data as ReminderSchedule)!.Alert.Header },
+          { Key: 'Message', Value: (this.props.data as ReminderSchedule)!.Alert.Msg },
           {
             Key: 'Message Type',
-            Value: (this.props.Data as ReminderSchedule)!.Alert.AlertDefinition.MessageType,
+            Value: (this.props.data as ReminderSchedule)!.Alert.AlertDefinition.MessageType,
           },
           {
             Key: 'Show as Popup',
-            Value: (this.props.Data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties
+            Value: (this.props.data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties
               .ShowPopup
               ? 'True'
               : 'False',
@@ -46,10 +46,10 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
         break;
       case ScheduleType.Report:
         let reportKVP: KeyValuePair[] = [
-          { Key: 'Report Name', Value: (this.props.Data as ReportSchedule)!.ReportName },
+          { Key: 'Report Name', Value: (this.props.data as ReportSchedule)!.ReportName },
           {
             Key: 'Export Destination',
-            Value: (this.props.Data as ReportSchedule)!.ExportDestination,
+            Value: (this.props.data as ReportSchedule)!.ExportDestination,
           },
         ];
         keyValuePairs.push(...reportKVP);
@@ -58,13 +58,13 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
         let iPushPullKVP: KeyValuePair[] = [
           {
             Key: 'Report',
-            Value: (this.props.Data as IPushPullSchedule)!.IPushPullReport.ReportName,
+            Value: (this.props.data as IPushPullSchedule)!.IPushPullReport.ReportName,
           },
-          { Key: 'Folder', Value: (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder },
-          { Key: 'Page', Value: (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page },
+          { Key: 'Folder', Value: (this.props.data as IPushPullSchedule)!.IPushPullReport.Folder },
+          { Key: 'Page', Value: (this.props.data as IPushPullSchedule)!.IPushPullReport.Page },
           {
             Key: 'Export As',
-            Value: (this.props.Data as IPushPullSchedule)!.Transmission,
+            Value: (this.props.data as IPushPullSchedule)!.Transmission,
           },
         ];
         keyValuePairs.push(...iPushPullKVP);
@@ -73,7 +73,7 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
         let glue42KVP: KeyValuePair[] = [
           {
             Key: 'Report',
-            Value: (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName,
+            Value: (this.props.data as Glue42Schedule)!.Glue42Report.ReportName,
           },
           //   {
           //     Key: 'Export As',
@@ -86,7 +86,7 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
         let openFinKVP: KeyValuePair[] = [
           {
             Key: 'Report',
-            Value: (this.props.Data as OpenFinSchedule)!.OpenFinReport.ReportName,
+            Value: (this.props.data as OpenFinSchedule)!.OpenFinReport.ReportName,
           },
         ];
         keyValuePairs.push(...openFinKVP);
@@ -94,7 +94,7 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
     }
     keyValuePairs.push({
       Key: 'Schedule',
-      Value: UIHelper.getScheduleDescription(this.props.Data.Schedule),
+      Value: UIHelper.getScheduleDescription(this.props.data.Schedule),
     });
 
     return (
@@ -112,18 +112,18 @@ export class ScheduleSummaryWizard extends React.Component<ScheduleSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

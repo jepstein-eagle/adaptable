@@ -21,7 +21,7 @@ export class SharedQuerySettingsWizard
   constructor(props: SharedQuerySettingsWizardProps) {
     super(props);
     this.state = {
-      Name: this.props.Data.Name,
+      Name: this.props.data.Name,
     };
   }
   render(): any {
@@ -50,7 +50,7 @@ export class SharedQuerySettingsWizard
       {
         Name: e.value,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -60,16 +60,16 @@ export class SharedQuerySettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.Name = this.state.Name;
+  public next(): void {
+    this.props.data.Name = this.state.Name;
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -24,7 +24,7 @@ export class PercentBarRangesWizard
   constructor(props: PercentBarRangesWizardProps) {
     super(props);
     this.state = {
-      Ranges: this.props.Data.Ranges,
+      Ranges: this.props.data.Ranges,
     };
   }
 
@@ -52,7 +52,7 @@ export class PercentBarRangesWizard
               mr={2}
             />
             <ColorPicker
-              Api={this.props.Api}
+              Api={this.props.api}
               value={range.Color}
               onChange={(event: React.FormEvent) => {
                 const { value } = event.target as HTMLInputElement;
@@ -79,18 +79,18 @@ export class PercentBarRangesWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.Ranges = this.state.Ranges;
+  public next(): void {
+    this.props.data.Ranges = this.state.Ranges;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 

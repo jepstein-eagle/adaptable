@@ -19,40 +19,40 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
       <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
+          ModalContainer={this.props.modalContainer}
+          Api={this.props.api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <AlertSelectColumnWizard Api={this.props.Api} />,
+              Element: <AlertSelectColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Alert Rules',
               Index: 1,
-              Element: <AlertRulesWizard Api={this.props.Api} />,
+              Element: <AlertRulesWizard api={this.props.api} />,
             },
             {
               StepName: 'Message Type',
               Index: 2,
-              Element: <AlertTypeWizard Api={this.props.Api} />,
+              Element: <AlertTypeWizard api={this.props.api} />,
             },
             {
               StepName: 'Behaviour',
               Index: 3,
-              Element: <AlertScopeWizard Api={this.props.Api} />,
+              Element: <AlertScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
-              Element: <AlertSelectQueryWizard Api={this.props.Api} />,
+              Element: <AlertSelectQueryWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 5,
               Element: (
                 <ExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -61,11 +61,11 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <AlertSummaryWizard Api={this.props.Api} />,
+              Element: <AlertSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          Data={this.props.editedAdaptableObject}
+          StepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

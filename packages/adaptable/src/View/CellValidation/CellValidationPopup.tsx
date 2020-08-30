@@ -142,10 +142,10 @@ class CellValidationPopupComponent extends React.Component<
 
         {this.state.EditedAdaptableObject != null && (
           <CellValidationWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
-            ConfigEntities={null}
-            Api={this.props.Api}
-            ModalContainer={this.props.ModalContainer}
+            editedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
+            configEntities={null}
+            api={this.props.Api}
+            modalContainer={this.props.ModalContainer}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
                 NewSharedQueryName: newSharedQueryName,
@@ -156,7 +156,7 @@ class CellValidationPopupComponent extends React.Component<
                 UseSharedQuery: useSharedQuery,
               })
             }
-            WizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

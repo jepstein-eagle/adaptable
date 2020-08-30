@@ -18,8 +18,8 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
 
   render() {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
-      { Key: 'Description', Value: this.props.Data.Description },
+      { Key: 'Name', Value: this.props.data.Name },
+      { Key: 'Description', Value: this.props.data.Description },
     ];
 
     return (
@@ -37,16 +37,16 @@ export class DataSourceSummaryWizard extends React.Component<DataSourceSummaryWi
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation required   */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -26,6 +26,6 @@ export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
 }
 
 export interface SharedEntityComponent<View> extends React.ClassAttributes<View> {
-  Entity: AdaptableObject;
-  Api: AdaptableApi;
+  entity: AdaptableObject;
+  api: AdaptableApi;
 }

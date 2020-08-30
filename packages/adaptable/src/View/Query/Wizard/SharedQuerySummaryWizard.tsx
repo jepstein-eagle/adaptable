@@ -14,10 +14,10 @@ export class SharedQuerySummaryWizard extends React.Component<SharedQuerySummary
   implements AdaptableWizardStep {
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
+      { Key: 'Name', Value: this.props.data.Name },
       {
         Key: 'Expression',
-        Value: this.props.Data.Expression,
+        Value: this.props.data.Expression,
       },
     ];
 
@@ -35,16 +35,16 @@ export class SharedQuerySummaryWizard extends React.Component<SharedQuerySummary
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

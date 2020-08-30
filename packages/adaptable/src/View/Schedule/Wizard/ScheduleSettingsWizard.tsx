@@ -62,84 +62,84 @@ export class ScheduleSettingsWizard
   constructor(props: ScheduleSettingsWizardProps) {
     super(props);
 
-    const ippApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi = this.props.api.pluginsApi.getPluginApi('ipushpull');
     this.state = {
       // Reminder
       Header:
-        this.props.Data!.ScheduleType == ScheduleType.Reminder
-          ? (this.props.Data as ReminderSchedule)!.Alert.Header
+        this.props.data!.ScheduleType == ScheduleType.Reminder
+          ? (this.props.data as ReminderSchedule)!.Alert.Header
           : undefined,
       Msg:
-        this.props.Data!.ScheduleType == ScheduleType.Reminder
-          ? (this.props.Data as ReminderSchedule)!.Alert.Msg
+        this.props.data!.ScheduleType == ScheduleType.Reminder
+          ? (this.props.data as ReminderSchedule)!.Alert.Msg
           : undefined,
       MessageType:
-        this.props.Data!.ScheduleType == ScheduleType.Reminder
-          ? ((this.props.Data as ReminderSchedule)!.Alert.AlertDefinition
+        this.props.data!.ScheduleType == ScheduleType.Reminder
+          ? ((this.props.data as ReminderSchedule)!.Alert.AlertDefinition
               .MessageType as MessageType)
           : undefined,
       ShowPopup:
-        this.props.Data!.ScheduleType == ScheduleType.Reminder
-          ? (this.props.Data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties.ShowPopup
+        this.props.data!.ScheduleType == ScheduleType.Reminder
+          ? (this.props.data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties.ShowPopup
           : undefined,
 
       // Report
       ReportName:
-        this.props.Data!.ScheduleType == ScheduleType.Report
-          ? (this.props.Data as ReportSchedule)!.ReportName
+        this.props.data!.ScheduleType == ScheduleType.Report
+          ? (this.props.data as ReportSchedule)!.ReportName
           : undefined,
       ExportDestination:
-        this.props.Data!.ScheduleType == ScheduleType.Report
-          ? (this.props.Data as ReportSchedule)!.ExportDestination
+        this.props.data!.ScheduleType == ScheduleType.Report
+          ? (this.props.data as ReportSchedule)!.ExportDestination
           : undefined,
 
       // ipushpull
       IPushPullReportName:
-        this.props.Data!.ScheduleType === ScheduleType.ipushpull
-          ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.ReportName
+        this.props.data!.ScheduleType === ScheduleType.ipushpull
+          ? (this.props.data as IPushPullSchedule)!.IPushPullReport.ReportName
           : undefined,
       Page:
-        this.props.Data!.ScheduleType === ScheduleType.ipushpull
-          ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page
+        this.props.data!.ScheduleType === ScheduleType.ipushpull
+          ? (this.props.data as IPushPullSchedule)!.IPushPullReport.Page
           : undefined,
       Folder:
-        this.props.Data!.ScheduleType === ScheduleType.ipushpull
-          ? (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
+        this.props.data!.ScheduleType === ScheduleType.ipushpull
+          ? (this.props.data as IPushPullSchedule)!.IPushPullReport.Folder
           : undefined,
       IPushPullTransmission:
-        this.props.Data!.ScheduleType === ScheduleType.ipushpull
-          ? (this.props.Data as IPushPullSchedule)!.Transmission
+        this.props.data!.ScheduleType === ScheduleType.ipushpull
+          ? (this.props.data as IPushPullSchedule)!.Transmission
           : undefined,
       AvailablePages:
-        this.props.Data!.ScheduleType === ScheduleType.ipushpull
+        this.props.data!.ScheduleType === ScheduleType.ipushpull
           ? StringExtensions.IsNotNullOrEmpty(
-              (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
+              (this.props.data as IPushPullSchedule)!.IPushPullReport.Folder
             )
             ? ippApi
               ? ippApi.getPagesForIPushPullDomain(
-                  (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder
+                  (this.props.data as IPushPullSchedule)!.IPushPullReport.Folder
                 )
               : []
             : []
           : [],
       // Glue42
       Glue42ReportName:
-        this.props.Data!.ScheduleType === ScheduleType.Glue42
-          ? (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName
+        this.props.data!.ScheduleType === ScheduleType.Glue42
+          ? (this.props.data as Glue42Schedule)!.Glue42Report.ReportName
           : undefined,
       Glue42Transmission:
-        this.props.Data!.ScheduleType === ScheduleType.Glue42
-          ? (this.props.Data as Glue42Schedule)!.Transmission
+        this.props.data!.ScheduleType === ScheduleType.Glue42
+          ? (this.props.data as Glue42Schedule)!.Transmission
           : undefined,
 
       OpenFinReportName:
-        this.props.Data!.ScheduleType === ScheduleType.OpenFin
-          ? (this.props.Data as OpenFinSchedule)!.OpenFinReport.ReportName
+        this.props.data!.ScheduleType === ScheduleType.OpenFin
+          ? (this.props.data as OpenFinSchedule)!.OpenFinReport.ReportName
           : undefined,
 
       OpenFinTransmission:
-        this.props.Data!.ScheduleType === ScheduleType.OpenFin
-          ? (this.props.Data as OpenFinSchedule)!.Transmission
+        this.props.data!.ScheduleType === ScheduleType.OpenFin
+          ? (this.props.data as OpenFinSchedule)!.Transmission
           : undefined,
     };
   }
@@ -154,7 +154,7 @@ export class ScheduleSettingsWizard
     });
 
     // Report Stuff
-    let allReports: Report[] = this.props.Api.exportApi.getAllReports();
+    let allReports: Report[] = this.props.api.exportApi.getAllReports();
     let availableReports: any[] = allReports.map(report => {
       return {
         label: report.Name,
@@ -170,7 +170,7 @@ export class ScheduleSettingsWizard
     });
 
     // ipushpull Stuff
-    const ippApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi = this.props.api.pluginsApi.getPluginApi('ipushpull');
     let allFolders: IPushPullDomain[] = ippApi ? ippApi.getIPushPullDomains() : [];
     let availableFolders: any[] = allFolders.map((iPushPullDomain: IPushPullDomain) => {
       return {
@@ -182,7 +182,7 @@ export class ScheduleSettingsWizard
     return (
       <div style={{ height: '100%' }}>
         <WizardPanel>
-          {this.props.Data!.ScheduleType === ScheduleType.Reminder && (
+          {this.props.data!.ScheduleType === ScheduleType.Reminder && (
             <Flex flexDirection="column">
               <Flex marginTop={2} alignItems="center">
                 <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
@@ -242,7 +242,7 @@ export class ScheduleSettingsWizard
             </Flex>
           )}
 
-          {this.props.Data!.ScheduleType === ScheduleType.Report && (
+          {this.props.data!.ScheduleType === ScheduleType.Report && (
             <>
               <Flex flexDirection="column" padding={1}>
                 <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
@@ -275,7 +275,7 @@ export class ScheduleSettingsWizard
             </>
           )}
 
-          {this.props.Data!.ScheduleType === ScheduleType.ipushpull && (
+          {this.props.data!.ScheduleType === ScheduleType.ipushpull && (
             <>
               <Flex flexDirection="column" padding={1}>
                 <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
@@ -349,7 +349,7 @@ export class ScheduleSettingsWizard
               </Flex>
             </>
           )}
-          {this.props.Data!.ScheduleType === ScheduleType.Glue42 && (
+          {this.props.data!.ScheduleType === ScheduleType.Glue42 && (
             <>
               <Flex flexDirection="column" padding={1}>
                 <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
@@ -369,7 +369,7 @@ export class ScheduleSettingsWizard
               </Flex>
             </>
           )}
-          {this.props.Data!.ScheduleType === ScheduleType.OpenFin && (
+          {this.props.data!.ScheduleType === ScheduleType.OpenFin && (
             <>
               <Flex flexDirection="column" padding={1}>
                 <HelpBlock marginBottom={1}>Select a Report to Export</HelpBlock>
@@ -397,37 +397,37 @@ export class ScheduleSettingsWizard
   private onHeaderChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Header: e.value } as ScheduleSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onMessageChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Msg: e.value } as ScheduleSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onMessageTypeChanged(value: any) {
     this.setState({ MessageType: value } as ScheduleSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onShowAsPopupChanged(checked: boolean) {
     this.setState({ ShowPopup: checked } as ScheduleSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onSelectedReportChanged(reportName: string) {
     if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
       this.setState({ ReportName: reportName } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else {
       this.setState({ ReportName: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -435,23 +435,23 @@ export class ScheduleSettingsWizard
   private onExportDestinationChanged(value: any) {
     this.setState(
       { ExportDestination: value as ExportDestination } as ScheduleSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
   private onIPushPullSelectedReportChanged(reportName: string) {
     if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
       this.setState({ IPushPullReportName: reportName } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else {
       this.setState({ IPushPullReportName: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
   private onFolderChanged(folder: string) {
-    const ippApi = this.props.Api.pluginsApi.getPluginApi('ipushpull');
+    const ippApi = this.props.api.pluginsApi.getPluginApi('ipushpull');
     if (StringExtensions.IsNotNullOrEmpty(folder) && folder !== 'Select Folder') {
       let availablePages = ippApi ? ippApi.getPagesForIPushPullDomain(folder) : [];
       this.setState(
@@ -460,7 +460,7 @@ export class ScheduleSettingsWizard
           AvailablePages: availablePages,
           Page: EMPTY_STRING,
         } as ScheduleSettingsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState(
@@ -469,18 +469,18 @@ export class ScheduleSettingsWizard
           AvailablePages: [],
           Page: EMPTY_STRING,
         } as ScheduleSettingsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     }
   }
   private onPageChanged(page: string) {
     if (StringExtensions.IsNotNullOrEmpty(page) && page !== 'Select Page') {
       this.setState({ Page: page } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else {
       this.setState({ Page: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -488,18 +488,18 @@ export class ScheduleSettingsWizard
   private onIPushPullTransmissionChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ IPushPullTransmission: e.value } as ScheduleSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onGlue42SelectedReportChanged(reportName: string) {
     if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
       this.setState({ Glue42ReportName: reportName } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else {
       this.setState({ Glue42ReportName: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -507,11 +507,11 @@ export class ScheduleSettingsWizard
   private onOpenFinSelectedReportChanged(reportName: string) {
     if (StringExtensions.IsNotNullOrEmpty(reportName) && reportName !== 'Select Report') {
       this.setState({ OpenFinReportName: reportName } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else {
       this.setState({ OpenFinReportName: EMPTY_STRING } as ScheduleSettingsWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -519,12 +519,12 @@ export class ScheduleSettingsWizard
   private onGlue42TransmissionChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Glue42Transmission: e.value } as ScheduleSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   public canNext(): boolean {
-    switch (this.props.Data.ScheduleType) {
+    switch (this.props.data.ScheduleType) {
       case ScheduleType.Reminder:
         return this.state.MessageType != null && StringExtensions.IsNotNullOrEmpty(this.state.Msg);
       case ScheduleType.Report:
@@ -549,50 +549,50 @@ export class ScheduleSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    switch (this.props.Data.ScheduleType) {
+  public next(): void {
+    switch (this.props.data.ScheduleType) {
       case ScheduleType.Reminder:
-        (this.props.Data as ReminderSchedule)!.Alert.Header = this.state.Header;
-        (this.props.Data as ReminderSchedule)!.Alert.Msg = this.state.Msg;
+        (this.props.data as ReminderSchedule)!.Alert.Header = this.state.Header;
+        (this.props.data as ReminderSchedule)!.Alert.Msg = this.state.Msg;
         (this.props
-          .Data as ReminderSchedule)!.Alert.AlertDefinition.MessageType = this.state.MessageType;
+          .data as ReminderSchedule)!.Alert.AlertDefinition.MessageType = this.state.MessageType;
         (this.props
-          .Data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties.ShowPopup = this.state.ShowPopup;
+          .data as ReminderSchedule)!.Alert.AlertDefinition.AlertProperties.ShowPopup = this.state.ShowPopup;
         break;
 
       case ScheduleType.Report:
-        (this.props.Data as ReportSchedule)!.ReportName = this.state.ReportName;
-        (this.props.Data as ReportSchedule)!.ExportDestination = this.state.ExportDestination;
+        (this.props.data as ReportSchedule)!.ReportName = this.state.ReportName;
+        (this.props.data as ReportSchedule)!.ExportDestination = this.state.ExportDestination;
         break;
 
       case ScheduleType.ipushpull:
         (this.props
-          .Data as IPushPullSchedule)!.IPushPullReport.ReportName = this.state.IPushPullReportName;
-        (this.props.Data as IPushPullSchedule)!.IPushPullReport.Folder = this.state.Folder;
-        (this.props.Data as IPushPullSchedule)!.IPushPullReport.Page = this.state.Page;
-        (this.props.Data as IPushPullSchedule)!.Transmission = this.state.IPushPullTransmission;
+          .data as IPushPullSchedule)!.IPushPullReport.ReportName = this.state.IPushPullReportName;
+        (this.props.data as IPushPullSchedule)!.IPushPullReport.Folder = this.state.Folder;
+        (this.props.data as IPushPullSchedule)!.IPushPullReport.Page = this.state.Page;
+        (this.props.data as IPushPullSchedule)!.Transmission = this.state.IPushPullTransmission;
         break;
 
       case ScheduleType.Glue42:
-        (this.props.Data as Glue42Schedule)!.Glue42Report.ReportName = this.state.Glue42ReportName;
-        (this.props.Data as Glue42Schedule)!.Transmission = this.state.Glue42Transmission;
+        (this.props.data as Glue42Schedule)!.Glue42Report.ReportName = this.state.Glue42ReportName;
+        (this.props.data as Glue42Schedule)!.Transmission = this.state.Glue42Transmission;
         break;
       case ScheduleType.OpenFin:
         (this.props
-          .Data as OpenFinSchedule)!.OpenFinReport.ReportName = this.state.OpenFinReportName;
-        (this.props.Data as OpenFinSchedule)!.Transmission = this.state.OpenFinTransmission;
+          .data as OpenFinSchedule)!.OpenFinReport.ReportName = this.state.OpenFinReportName;
+        (this.props.data as OpenFinSchedule)!.Transmission = this.state.OpenFinTransmission;
         break;
     }
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

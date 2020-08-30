@@ -19,8 +19,8 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
       <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.CalculatedColumnStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
+          ModalContainer={this.props.modalContainer}
+          Api={this.props.api}
           Steps={[
             {
               StepName: 'Expression',
@@ -29,24 +29,24 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
                 <CalculatedColumnExpressionWizard
                   GetErrorMessage={this.props.GetErrorMessage}
                   IsExpressionValid={this.props.IsExpressionValid}
-                  calculatedColumnExpressionService={this.props.Api.internalApi.getCalculatedColumnExpressionService()}
-                  Api={this.props.Api}
+                  calculatedColumnExpressionService={this.props.api.internalApi.getCalculatedColumnExpressionService()}
+                  api={this.props.api}
                 />
               ),
             },
             {
               StepName: 'Settings',
               Index: 1,
-              Element: <CalculatedColumnSettingsWizard Api={this.props.Api} />,
+              Element: <CalculatedColumnSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <CalculatedColumnSummaryWizard Api={this.props.Api} />,
+              Element: <CalculatedColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          Data={this.props.editedAdaptableObject}
+          StepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -85,12 +85,12 @@ export class UserFilterSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <UserFilterWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
+            editedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
+            configEntities={null}
+            modalContainer={this.props.ModalContainer}
             SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            api={this.props.Api}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

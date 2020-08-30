@@ -28,8 +28,8 @@ export class DataSourceSettingsWizard
     super(props);
 
     this.state = {
-      Name: this.props.Data.Name,
-      Description: this.props.Data.Description,
+      Name: this.props.data.Name,
+      Description: this.props.data.Description,
       ErrorMessage: null,
     };
   }
@@ -84,14 +84,14 @@ export class DataSourceSettingsWizard
           ? 'A data source already exists with that name'
           : null,
       } as DataSourceSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
   onDataSourceDescriptionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Description: e.value } as DataSourceSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -105,17 +105,17 @@ export class DataSourceSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.Name = this.state.Name;
-    this.props.Data.Description = this.state.Description;
+  public next(): void {
+    this.props.data.Name = this.state.Name;
+    this.props.data.Description = this.state.Description;
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation required   */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

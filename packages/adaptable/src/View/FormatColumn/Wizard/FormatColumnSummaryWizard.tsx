@@ -17,36 +17,32 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   implements AdaptableWizardStep {
   constructor(props: FormatColumnSummaryWizardProps) {
     super(props);
-    this.state = { Style: this.props.Data.Style };
+    this.state = { Style: this.props.data.Style };
   }
 
   render() {
-    let adaptableColumn: AdaptableColumn = this.props.Api.columnApi.getColumnFromId(
-      this.props.Data.ColumnId
-    );
-
     let keyValuePairs: KeyValuePair[] = [
       {
-        Key: 'Column',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Key: 'Scope',
+        Value: this.props.api.scopeApi.getScopeDescription(this.props.data.Scope),
       },
 
       {
         Key: 'Style',
         Value:
-          this.props.Data.Style == null || UIHelper.IsEmptyStyle(this.props.Data.Style) ? (
+          this.props.data.Style == null || UIHelper.IsEmptyStyle(this.props.data.Style) ? (
             '[None]'
           ) : (
-            <StyleVisualItem Style={this.props.Data.Style} />
+            <StyleVisualItem Style={this.props.data.Style} />
           ),
       },
       {
         Key: 'Format',
-        Value: this.showFormatExample(this.props.Data, adaptableColumn),
+        Value: this.showFormatExample(this.props.data),
       },
       {
         Key: 'Cell Alignment',
-        Value: this.props.Data.CellAlignment,
+        Value: this.props.data.CellAlignment,
       },
     ];
 
@@ -64,24 +60,21 @@ export class FormatColumnSummaryWizard extends React.Component<FormatColumnSumma
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     // todo
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 
-  private showFormatExample(
-    formatColumn: FormatColumn,
-    adaptableColumn: AdaptableColumn
-  ): string | undefined {
+  private showFormatExample(formatColumn: FormatColumn): string | undefined {
     if (!formatColumn.DisplayFormat) {
       return '[None]';
     }

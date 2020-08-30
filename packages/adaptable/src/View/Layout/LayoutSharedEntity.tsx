@@ -9,7 +9,7 @@ export class LayoutSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let layout: Layout = this.props.Entity as Layout;
+    let layout: Layout = this.props.entity as Layout;
 
     return (
       <Flex flexDirection="row" alignItems="center">

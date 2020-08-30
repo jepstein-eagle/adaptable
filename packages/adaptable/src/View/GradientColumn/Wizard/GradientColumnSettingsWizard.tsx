@@ -31,11 +31,11 @@ export class GradientColumnSettingsWizard
   constructor(props: GradientColumnSettingsWizardProps) {
     super(props);
     this.state = {
-      BaseValue: this.props.Data.BaseValue,
-      PositiveValue: this.props.Data.PositiveValue,
-      PositiveColor: this.props.Data.PositiveColor,
-      NegativeValue: this.props.Data.NegativeValue,
-      NegativeColor: this.props.Data.NegativeColor,
+      BaseValue: this.props.data.BaseValue,
+      PositiveValue: this.props.data.PositiveValue,
+      PositiveColor: this.props.data.PositiveColor,
+      NegativeValue: this.props.data.NegativeValue,
+      NegativeColor: this.props.data.NegativeColor,
     };
   }
 
@@ -77,7 +77,7 @@ export class GradientColumnSettingsWizard
                 Positive Colour:
               </Text>{' '}
               <ColorPicker
-                Api={this.props.Api}
+                Api={this.props.api}
                 value={this.state.PositiveColor}
                 onChange={(x: any) => this.onPositiveColorSelectChanged(x)}
               />
@@ -103,7 +103,7 @@ export class GradientColumnSettingsWizard
               </Text>
               <Flex flex={3}>
                 <ColorPicker
-                  Api={this.props.Api}
+                  Api={this.props.api}
                   value={this.state.NegativeColor}
                   onChange={(x: any) => this.onNegativeColorSelectChanged(x)}
                 />
@@ -117,43 +117,43 @@ export class GradientColumnSettingsWizard
 
   private onBaseValueChanged = (e: any) => {
     this.setState({ BaseValue: e.target.value } as GradientColumnSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   };
 
   private onPositiveValueChanged = (e: any) => {
     this.setState(
       { PositiveValue: e.target.value } as GradientColumnPositiveValuesWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   };
 
   private onPositiveColorSelectChanged(event: React.FormEvent<ColorPicker>) {
     let e = event.target as HTMLInputElement;
     this.setState({ PositiveColor: e.value } as GradientColumnPositiveValuesWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
   private onNegativeValueChanged = (e: any) => {
     this.setState(
       { NegativeValue: e.target.value } as GradientColumnNegativeValuesWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   };
 
   private onNegativeColorSelectChanged(event: React.FormEvent<ColorPicker>) {
     let e = event.target as HTMLInputElement;
     this.setState({ NegativeColor: e.value } as GradientColumnNegativeValuesWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   public canNext(): boolean {
-    if (StringExtensions.IsNullOrEmpty(this.props.Data.ColumnId)) {
+    if (StringExtensions.IsNullOrEmpty(this.props.data.ColumnId)) {
       return false;
     }
 
-    if (StringExtensions.IsNullOrEmpty(this.props.Data.ColumnId)) {
+    if (StringExtensions.IsNullOrEmpty(this.props.data.ColumnId)) {
       return false;
     }
 
@@ -165,7 +165,7 @@ export class GradientColumnSettingsWizard
     if (this.state.PositiveValue && StringExtensions.IsNullOrEmpty(this.state.PositiveColor)) {
       return false;
     }
-    if (StringExtensions.IsNullOrEmpty(this.props.Data.ColumnId)) {
+    if (StringExtensions.IsNullOrEmpty(this.props.data.ColumnId)) {
       return false;
     }
 
@@ -184,23 +184,23 @@ export class GradientColumnSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.BaseValue = this.state.BaseValue;
-    this.props.Data.PositiveValue = this.state.PositiveValue;
+  public next(): void {
+    this.props.data.BaseValue = this.state.BaseValue;
+    this.props.data.PositiveValue = this.state.PositiveValue;
 
-    this.props.Data.PositiveColor = this.state.PositiveColor;
-    this.props.Data.NegativeValue = this.state.NegativeValue;
-    this.props.Data.NegativeColor = this.state.NegativeColor;
+    this.props.data.PositiveColor = this.state.PositiveColor;
+    this.props.data.NegativeValue = this.state.NegativeValue;
+    this.props.data.NegativeColor = this.state.NegativeColor;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -28,18 +28,18 @@ export class ConditionalStyleScopeWizard
   implements AdaptableWizardStep {
   constructor(props: ConditionalStyleScopeWizardProps) {
     super(props);
-    let scopeChoice: 'All' | 'Column' | 'DataType' = this.props.Api.scopeApi.scopeIsAll(
-      this.props.Data.Scope
+    let scopeChoice: 'All' | 'Column' | 'DataType' = this.props.api.scopeApi.scopeIsAll(
+      this.props.data.Scope
     )
       ? 'All'
-      : this.props.Api.scopeApi.scopeHasColumns(this.props.Data.Scope)
+      : this.props.api.scopeApi.scopeHasColumns(this.props.data.Scope)
       ? 'Column'
       : 'DataType';
     this.state = {
       ScopeChoice: scopeChoice,
-      ExcludeGroupedRows: this.props.Data.ExcludeGroupedRows,
-      ColumnIds: this.props.Api.scopeApi.getColumnIdsInScope(this.props.Data.Scope),
-      DataTypes: this.props.Api.scopeApi.getDataTypesInScope(this.props.Data.Scope),
+      ExcludeGroupedRows: this.props.data.ExcludeGroupedRows,
+      ColumnIds: this.props.api.scopeApi.getColumnIdsInScope(this.props.data.Scope),
+      DataTypes: this.props.api.scopeApi.getDataTypesInScope(this.props.data.Scope),
     };
   }
 
@@ -82,10 +82,10 @@ export class ConditionalStyleScopeWizard
             <Box marginBottom={2}>
               <DualListBoxEditor
                 style={{ flex: 1, overflow: 'hidden', height: '250px' }}
-                AvailableValues={this.props.Api.columnApi.getColumns().map(c => {
+                AvailableValues={this.props.api.columnApi.getColumns().map(c => {
                   return c.FriendlyName;
                 })}
-                SelectedValues={this.props.Api.columnApi.getFriendlyNamesFromColumnIds(
+                SelectedValues={this.props.api.columnApi.getFriendlyNamesFromColumnIds(
                   this.state.ColumnIds
                 )}
                 HeaderAvailable="Columns"
@@ -159,9 +159,9 @@ export class ConditionalStyleScopeWizard
   private onColumnsSelectedChanged(columnFriendlyNames: string[]) {
     this.setState(
       {
-        ColumnIds: this.props.Api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
+        ColumnIds: this.props.api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
       } as ConditionalStyleScopeWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -170,7 +170,7 @@ export class ConditionalStyleScopeWizard
     if (e.value == 'Column') {
       this.setState(
         { ScopeChoice: 'Column', ColumnIds: [] } as ConditionalStyleScopeWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else if (e.value == 'DataType') {
       this.setState(
@@ -178,11 +178,11 @@ export class ConditionalStyleScopeWizard
           ScopeChoice: 'DataType',
           DataTypes: [],
         } as ConditionalStyleScopeWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState({ ScopeChoice: 'All' } as ConditionalStyleScopeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -198,13 +198,13 @@ export class ConditionalStyleScopeWizard
       }
     }
     this.setState({ DataTypes: dataTypes } as ConditionalStyleScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onExludeGroupedRowsChanged(checked: boolean) {
     this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -215,31 +215,31 @@ export class ConditionalStyleScopeWizard
   public canBack(): boolean {
     return false;
   }
-  public Next(): void {
+  public next(): void {
     if (this.state.ScopeChoice == 'All') {
-      this.props.Data.Scope = {
+      this.props.data.Scope = {
         All: true,
       };
     } else if (this.state.ScopeChoice == 'Column') {
-      this.props.Data.Scope = {
+      this.props.data.Scope = {
         ColumnIds: this.state.ColumnIds,
       };
     } else {
-      this.props.Data.Scope = {
+      this.props.data.Scope = {
         DataTypes: this.state.DataTypes,
       };
     }
-    this.props.Data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
+    this.props.data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

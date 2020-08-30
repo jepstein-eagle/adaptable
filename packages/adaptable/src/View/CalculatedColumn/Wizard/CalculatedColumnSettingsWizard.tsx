@@ -40,21 +40,21 @@ export class CalculatedColumnSettingsWizard
     super(props);
     this.state = {
       ErrorMessage: null,
-      ColumnId: this.props.Data.ColumnId,
-      ColumnName: this.props.Data.FriendlyName ?? this.props.Data.ColumnId,
+      ColumnId: this.props.data.ColumnId,
+      ColumnName: this.props.data.FriendlyName ?? this.props.data.ColumnId,
       ColumnNameFocused: false,
-      DataType: this.props.Data.CalculatedColumnSettings.DataType,
-      Width: this.props.Data.CalculatedColumnSettings.Width,
-      Filterable: this.props.Data.CalculatedColumnSettings.Filterable,
-      Resizable: this.props.Data.CalculatedColumnSettings.Resizable,
-      Groupable: this.props.Data.CalculatedColumnSettings.Groupable,
-      Sortable: this.props.Data.CalculatedColumnSettings.Sortable,
-      Pivotable: this.props.Data.CalculatedColumnSettings.Pivotable,
-      Aggregatable: this.props.Data.CalculatedColumnSettings.Aggregatable,
+      DataType: this.props.data.CalculatedColumnSettings.DataType,
+      Width: this.props.data.CalculatedColumnSettings.Width,
+      Filterable: this.props.data.CalculatedColumnSettings.Filterable,
+      Resizable: this.props.data.CalculatedColumnSettings.Resizable,
+      Groupable: this.props.data.CalculatedColumnSettings.Groupable,
+      Sortable: this.props.data.CalculatedColumnSettings.Sortable,
+      Pivotable: this.props.data.CalculatedColumnSettings.Pivotable,
+      Aggregatable: this.props.data.CalculatedColumnSettings.Aggregatable,
     };
   }
   render(): any {
-    const inEdit = !!this.props.Data.ColumnId;
+    const inEdit = !!this.props.data.ColumnId;
     return (
       <WizardPanel>
         <Panel header="Column Details" margin={2}>
@@ -184,13 +184,13 @@ export class CalculatedColumnSettingsWizard
       {
         ColumnId: e.value,
         ErrorMessage: ArrayExtensions.ContainsItem(
-          this.props.Api.columnApi.getColumns().map(c => c.ColumnId),
+          this.props.api.columnApi.getColumns().map(c => c.ColumnId),
           e.value
         )
           ? 'A Column already exists with that id'
           : null,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -200,7 +200,7 @@ export class CalculatedColumnSettingsWizard
       {
         ColumnName: e.value,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -213,26 +213,26 @@ export class CalculatedColumnSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.FriendlyName = this.state.ColumnName || this.state.ColumnId;
+  public next(): void {
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.FriendlyName = this.state.ColumnName || this.state.ColumnId;
 
-    this.props.Data.CalculatedColumnSettings.DataType = this.state.DataType;
-    this.props.Data.CalculatedColumnSettings.Width = this.state.Width;
-    this.props.Data.CalculatedColumnSettings.Filterable = this.state.Filterable;
-    this.props.Data.CalculatedColumnSettings.Resizable = this.state.Resizable;
-    this.props.Data.CalculatedColumnSettings.Groupable = this.state.Groupable;
-    this.props.Data.CalculatedColumnSettings.Sortable = this.state.Sortable;
-    this.props.Data.CalculatedColumnSettings.Pivotable = this.state.Pivotable;
-    this.props.Data.CalculatedColumnSettings.Aggregatable = this.state.Aggregatable;
+    this.props.data.CalculatedColumnSettings.DataType = this.state.DataType;
+    this.props.data.CalculatedColumnSettings.Width = this.state.Width;
+    this.props.data.CalculatedColumnSettings.Filterable = this.state.Filterable;
+    this.props.data.CalculatedColumnSettings.Resizable = this.state.Resizable;
+    this.props.data.CalculatedColumnSettings.Groupable = this.state.Groupable;
+    this.props.data.CalculatedColumnSettings.Sortable = this.state.Sortable;
+    this.props.data.CalculatedColumnSettings.Pivotable = this.state.Pivotable;
+    this.props.data.CalculatedColumnSettings.Aggregatable = this.state.Aggregatable;
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

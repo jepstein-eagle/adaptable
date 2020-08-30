@@ -38,10 +38,10 @@ export class FormatColumnFormatWizard
   column: AdaptableColumn;
   constructor(props: FormatColumnFormatWizardProps) {
     super(props);
-    const column = this.props.Api.columnApi
+    const column = this.props.api.columnApi
       .getColumns()
-      .find(column => column.ColumnId === this.props.Data.ColumnId);
-    this.state = { DisplayFormat: this.props.Data.DisplayFormat };
+      .find(column => column.ColumnId === this.props.data.ColumnId);
+    this.state = { DisplayFormat: this.props.data.DisplayFormat };
 
     if (this.state.DisplayFormat === undefined && column.DataType === 'Number') {
       this.state = {
@@ -290,17 +290,17 @@ export class FormatColumnFormatWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.DisplayFormat = this.state.DisplayFormat;
+  public next(): void {
+    this.props.data.DisplayFormat = this.state.DisplayFormat;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

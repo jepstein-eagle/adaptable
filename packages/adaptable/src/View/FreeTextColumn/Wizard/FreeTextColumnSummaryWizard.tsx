@@ -18,26 +18,26 @@ export class FreeTextColumnSummaryWizard
   implements AdaptableWizardStep {
   constructor(props: FreeTextColumnSummaryWizardProps) {
     super(props);
-    this.state = { ColumnId: this.props.Data.ColumnId };
+    this.state = { ColumnId: this.props.data.ColumnId };
   }
 
   render() {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Column Id', Value: this.props.Data.ColumnId },
-      { Key: 'Column Name', Value: this.props.Data.FriendlyName },
+      { Key: 'Column Id', Value: this.props.data.ColumnId },
+      { Key: 'Column Name', Value: this.props.data.FriendlyName },
       {
         Key: 'Default Value',
-        Value: StringExtensions.IsNullOrEmpty(this.props.Data.DefaultValue)
+        Value: StringExtensions.IsNullOrEmpty(this.props.data.DefaultValue)
           ? '[None]'
-          : this.props.Data.DefaultValue,
+          : this.props.data.DefaultValue,
       },
       {
         Key: 'No. Stored Values',
-        Value: ArrayExtensions.IsNullOrEmpty(this.props.Data.FreeTextStoredValues)
+        Value: ArrayExtensions.IsNullOrEmpty(this.props.data.FreeTextStoredValues)
           ? 0
-          : this.props.Data.FreeTextStoredValues.length,
+          : this.props.data.FreeTextStoredValues.length,
       },
-      { Key: 'Text Editor', Value: this.props.Data.TextEditor },
+      { Key: 'Text Editor', Value: this.props.data.TextEditor },
     ];
 
     return (
@@ -54,17 +54,17 @@ export class FreeTextColumnSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     // todo
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

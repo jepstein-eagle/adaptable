@@ -35,9 +35,9 @@ export class CellValidationRulesWizard
   constructor(props: CellValidationRulesWizardProps) {
     super(props);
     this.state = {
-      Operator: this.props.Data.Range.Operator as LeafExpressionOperator,
-      Operand1: this.props.Data.Range.Operand1,
-      Operand2: this.props.Data.Range.Operand2,
+      Operator: this.props.data.Range.Operator as LeafExpressionOperator,
+      Operand1: this.props.data.Range.Operand1,
+      Operand2: this.props.data.Range.Operand2,
     };
   }
 
@@ -49,13 +49,13 @@ export class CellValidationRulesWizard
         value: operator.toString(),
         label: ExpressionHelper.OperatorToLongFriendlyString(
           operator,
-          this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)
+          this.props.api.columnApi.getColumnDataTypeFromColumnId(this.props.data.ColumnId)
         ),
       };
     });
 
-    let columnFriendlyName: string = this.props.Api.columnApi.getFriendlyNameFromColumnId(
-      this.props.Data.ColumnId
+    let columnFriendlyName: string = this.props.api.columnApi.getFriendlyNameFromColumnId(
+      this.props.data.ColumnId
     );
 
     let helpText: string =
@@ -117,7 +117,7 @@ export class CellValidationRulesWizard
             !this.checkOperator(LeafExpressionOperator.IsPositive) &&
             !this.checkOperator(LeafExpressionOperator.IsNegative) &&
             !this.checkOperator(LeafExpressionOperator.IsNotNumber) &&
-            this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
+            this.props.api.columnApi.getColumnDataTypeFromColumnId(this.props.data.ColumnId) ==
               DataType.Number && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -142,7 +142,7 @@ export class CellValidationRulesWizard
           {/* if  date then show a date control */}
           {this.state.Operator != null &&
             !this.checkOperator(LeafExpressionOperator.AnyChange) &&
-            this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
+            this.props.api.columnApi.getColumnDataTypeFromColumnId(this.props.data.ColumnId) ==
               DataType.Date && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -169,7 +169,7 @@ export class CellValidationRulesWizard
             !this.checkOperator(LeafExpressionOperator.AnyChange) &&
             !this.checkOperator(LeafExpressionOperator.NoDuplicateValues) &&
             !this.checkOperator(LeafExpressionOperator.ExistingValuesOnly) &&
-            this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId) ==
+            this.props.api.columnApi.getColumnDataTypeFromColumnId(this.props.data.ColumnId) ==
               DataType.String && (
               <Flex flex={5} alignItems="center">
                 <Input
@@ -189,21 +189,21 @@ export class CellValidationRulesWizard
   private onOperatorChanged(value: any) {
     this.setState(
       { Operator: value, Operand1: '', Operand2: '' } as CellValidationSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
   private onOperand1ValueChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Operand1: e.value } as CellValidationSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onOperand2ValueChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Operand2: e.value } as CellValidationSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -212,7 +212,7 @@ export class CellValidationRulesWizard
     let operator: LeafExpressionOperator =
       e.value == 'Any' ? LeafExpressionOperator.AnyChange : null;
     this.setState({ Operator: operator } as CellValidationSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -228,7 +228,7 @@ export class CellValidationRulesWizard
   }
 
   private getAvailableOperators(): LeafExpressionOperator[] {
-    switch (this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.props.Data.ColumnId)) {
+    switch (this.props.api.columnApi.getColumnDataTypeFromColumnId(this.props.data.ColumnId)) {
       case DataType.Boolean:
         return [LeafExpressionOperator.IsTrue, LeafExpressionOperator.IsFalse];
       case DataType.String:
@@ -290,7 +290,7 @@ export class CellValidationRulesWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     let rangeExpression: QueryRange = {
       Operator: this.state.Operator,
       Operand1: this.state.Operand1,
@@ -298,18 +298,18 @@ export class CellValidationRulesWizard
       Operand1Type: RangeOperandType.Value,
       Operand2Type: RangeOperandType.Value,
     };
-    this.props.Data.Range = rangeExpression;
+    this.props.data.Range = rangeExpression;
     //     this.props.Data.Description = this.createCellValidationDescription(this.props.Data);
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

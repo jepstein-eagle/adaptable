@@ -8,7 +8,7 @@ export class SharedQuerySharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let sharedQuery: SharedQuery = this.props.Entity as SharedQuery;
+    let sharedQuery: SharedQuery = this.props.entity as SharedQuery;
 
     return (
       <Flex flexDirection="row" alignItems="center">

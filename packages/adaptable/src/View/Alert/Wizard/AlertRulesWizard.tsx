@@ -32,17 +32,17 @@ export class AlertRulesWizard
   constructor(props: AlertRulesWizardProps) {
     super(props);
     this.state = {
-      Id: this.props.Data.Predicate.Id,
-      Inputs: this.props.Data.Predicate.Inputs ?? [],
+      Id: this.props.data.Predicate.Id,
+      Inputs: this.props.data.Predicate.Inputs ?? [],
     };
   }
 
   render(): any {
     // TODO replace this with the full scope object from prev step
     const columnScope: Scope = {
-      ColumnIds: [this.props.Data.ColumnId],
+      ColumnIds: [this.props.data.ColumnId],
     };
-    const predicatesOptions = this.props.Api.alertApi
+    const predicatesOptions = this.props.api.alertApi
       .getAlertPredicateDefsForScope(columnScope)
       .map(predicateDef => {
         return {
@@ -51,7 +51,7 @@ export class AlertRulesWizard
         };
       });
 
-    const currentPredicateDef = this.props.Api.predicateApi.getPredicateDefById(this.state.Id);
+    const currentPredicateDef = this.props.api.predicateApi.getPredicateDefById(this.state.Id);
 
     return (
       <WizardPanel>
@@ -78,14 +78,14 @@ export class AlertRulesWizard
   }
 
   private onPredicateChange(Id: string) {
-    const predicateDef = this.props.Api.predicateApi.getPredicateDefById(Id);
+    const predicateDef = this.props.api.predicateApi.getPredicateDefById(Id);
 
     this.setState(
       {
         Id,
         Inputs: (predicateDef?.inputs ?? []).map(input => input.defaultValue ?? ''),
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -94,7 +94,7 @@ export class AlertRulesWizard
     const { Inputs } = this.state;
     Inputs[index] = value;
 
-    this.setState({ Inputs }, () => this.props.UpdateGoBackState());
+    this.setState({ Inputs }, () => this.props.updateGoBackState());
   }
 
   public canNext(): boolean {
@@ -113,21 +113,21 @@ export class AlertRulesWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.Predicate = {
+  public next(): void {
+    this.props.data.Predicate = {
       Id: this.state.Id,
       Inputs: this.state.Inputs,
     };
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

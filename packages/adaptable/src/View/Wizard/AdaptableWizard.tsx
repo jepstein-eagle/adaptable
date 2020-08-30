@@ -43,17 +43,17 @@ class DummyActiveStep implements AdaptableWizardStep {
     return false;
   }
 
-  public Next(): void {
+  public next(): void {
     // no implementation for this
   }
-  public Back(): void {
+  public back(): void {
     // no implementation for this
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }
@@ -210,8 +210,8 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   handleClickBack() {
     if (!this.isFirstStep()) {
       if (this.ActiveStep.canBack()) {
-        let decrement = this.ActiveStep.GetIndexStepDecrement();
-        this.ActiveStep.Back();
+        let decrement = this.ActiveStep.getIndexStepDecrement();
+        this.ActiveStep.back();
         let activeWizardInfo: IWizardStepInfo = this.props.Steps[this.state.IndexState - decrement];
         let bodyElement: JSX.Element = activeWizardInfo.Element;
         let newElement = this.cloneWizardStep(bodyElement);
@@ -223,8 +223,8 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   handleClickNext() {
     if (this.ActiveStep.canNext()) {
-      let increment = this.ActiveStep.GetIndexStepIncrement();
-      this.ActiveStep.Next();
+      let increment = this.ActiveStep.getIndexStepIncrement();
+      this.ActiveStep.next();
       let activeWizardInfo: IWizardStepInfo = this.props.Steps[this.state.IndexState + increment];
       let bodyElement: JSX.Element = activeWizardInfo.Element;
       let newElement = this.cloneWizardStep(bodyElement);
@@ -235,7 +235,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   handleClickFinish() {
     if (this.ActiveStep.canNext()) {
-      this.ActiveStep.Next();
+      this.ActiveStep.next();
       if (this.props.onFinish) {
         this.props.onFinish();
       }

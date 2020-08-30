@@ -27,7 +27,7 @@ export class CellValidationActionWizard
   constructor(props: CellValidationActionWizardProps) {
     super(props);
     this.state = {
-      ActionMode: this.props.Data.ActionMode as ActionMode,
+      ActionMode: this.props.data.ActionMode as ActionMode,
     };
   }
 
@@ -66,7 +66,7 @@ export class CellValidationActionWizard
   private onActionModeChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ ActionMode: e.value as ActionMode } as CellValidationSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -77,18 +77,18 @@ export class CellValidationActionWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ActionMode = this.state.ActionMode;
+  public next(): void {
+    this.props.data.ActionMode = this.state.ActionMode;
   }
 
-  public Back(): void {
+  public back(): void {
     //
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

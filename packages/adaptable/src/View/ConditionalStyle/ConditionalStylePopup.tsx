@@ -139,12 +139,12 @@ class ConditionalStylePopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <ConditionalStyleWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
+              editedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
+              configEntities={null}
+              modalContainer={this.props.ModalContainer}
+              api={this.props.Api}
               StyleClassNames={this.props.StyleClassNames}
-              WizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

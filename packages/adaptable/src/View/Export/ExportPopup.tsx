@@ -145,10 +145,10 @@ class ExportPopupComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <ReportWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as Report}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.Reports}
-            Api={this.props.Api}
+            editedAdaptableObject={this.state.EditedAdaptableObject as Report}
+            modalContainer={this.props.ModalContainer}
+            configEntities={this.props.Reports}
+            api={this.props.Api}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
                 NewSharedQueryName: newSharedQueryName,
@@ -159,7 +159,7 @@ class ExportPopupComponent extends React.Component<
                 UseSharedQuery: useSharedQuery,
               })
             }
-            WizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

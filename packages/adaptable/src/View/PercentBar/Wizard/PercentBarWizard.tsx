@@ -16,32 +16,32 @@ export class PercentBarWizard extends React.Component<PercentBarWizardProps, {}>
       <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.PercentBarStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
+          ModalContainer={this.props.modalContainer}
+          Api={this.props.api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <PercentBarSelectColumnWizard Api={this.props.Api} />,
+              Element: <PercentBarSelectColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Ranges',
               Index: 1,
-              Element: <PercentBarRangesWizard Api={this.props.Api} />,
+              Element: <PercentBarRangesWizard api={this.props.api} />,
             },
             {
               StepName: 'Settings',
               Index: 2,
-              Element: <PercentBarSettingsWizard Api={this.props.Api} />,
+              Element: <PercentBarSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PercentBarSummaryWizard Api={this.props.Api} />,
+              Element: <PercentBarSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          Data={this.props.editedAdaptableObject}
+          StepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

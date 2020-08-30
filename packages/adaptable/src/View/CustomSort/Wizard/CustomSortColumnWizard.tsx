@@ -25,11 +25,11 @@ export class CustomSortColumnWizard
   implements AdaptableWizardStep {
   constructor(props: CustomSortColumnWizardProps) {
     super(props);
-    this.state = { SelectedColumnId: this.props.Data.ColumnId };
+    this.state = { SelectedColumnId: this.props.data.ColumnId };
   }
   render(): any {
     let existingCols = this.props.CustomSorts.map(cs => cs.ColumnId);
-    let sortableCols = this.props.Api.columnApi
+    let sortableCols = this.props.api.columnApi
       .getSortableColumns()
       .filter(c => ArrayExtensions.NotContainsItem(existingCols, c.ColumnId));
     return (
@@ -46,7 +46,7 @@ export class CustomSortColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : '' }, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
   public canNext(): boolean {
@@ -55,15 +55,15 @@ export class CustomSortColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.SelectedColumnId;
+  public next(): void {
+    this.props.data.ColumnId = this.state.SelectedColumnId;
   }
   // tslint:disable-next-line:no-empty
-  public Back(): void {}
-  public GetIndexStepIncrement() {
+  public back(): void {}
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

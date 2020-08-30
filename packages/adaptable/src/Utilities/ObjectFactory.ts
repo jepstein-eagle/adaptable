@@ -446,7 +446,9 @@ export function CreateEmptyShortcut(): Shortcut {
 export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
-    Scope: undefined, // will be row
+    Scope: {
+      All: true,
+    },
     Style: CreateEmptyStyle(),
     ExcludeGroupedRows: false,
     Expression: undefined,
@@ -456,8 +458,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
 
 export function CreateEmptyFormatColumn(): FormatColumn {
   return {
-    Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Style: CreateEmptyStyle(),
     DisplayFormat: undefined,
     CellAlignment: undefined,

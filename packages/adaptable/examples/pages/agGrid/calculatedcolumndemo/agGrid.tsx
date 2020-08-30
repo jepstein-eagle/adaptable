@@ -133,7 +133,9 @@ let demoConfig: PredefinedConfig = {
   FormatColumn: {
     FormatColumns: [
       {
-        ColumnId: 'Dob Notional',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         DisplayFormat: {
           Formatter: 'NumberFormatter',
           Options: {
@@ -149,6 +151,9 @@ let demoConfig: PredefinedConfig = {
   ConditionalStyle: {
     ConditionalStyles: [
       {
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         Style: {
           BackColor: '#0000ff',
           ForeColor: undefined,

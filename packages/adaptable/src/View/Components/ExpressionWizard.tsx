@@ -32,16 +32,16 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
   constructor(props: ExpressionWizardProps) {
     super(props);
     this.state = {
-      expression: props.Data.Expression,
-      sharedQueryId: props.Data.SharedQueryId,
-      useSharedQuery: StringExtensions.IsNotNullOrEmpty(props.Data.SharedQueryId),
+      expression: props.data.Expression,
+      sharedQueryId: props.data.SharedQueryId,
+      useSharedQuery: StringExtensions.IsNotNullOrEmpty(props.data.SharedQueryId),
       saveToSharedQueries: false,
       newSharedQueryName: '',
     };
   }
 
   render() {
-    const firstRow = this.props.Api.gridApi.getFirstRowNode().data;
+    const firstRow = this.props.api.gridApi.getFirstRowNode().data;
 
     return (
       <>
@@ -59,7 +59,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                 {
                   useSharedQuery: !this.state.useSharedQuery,
                 },
-                () => this.props.UpdateGoBackState()
+                () => this.props.updateGoBackState()
               )
             }
           >
@@ -74,7 +74,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                 {
                   useSharedQuery: !this.state.useSharedQuery,
                 },
-                () => this.props.UpdateGoBackState()
+                () => this.props.updateGoBackState()
               )
             }
           >
@@ -91,10 +91,10 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                   {
                     sharedQueryId: value,
                   },
-                  () => this.props.UpdateGoBackState()
+                  () => this.props.updateGoBackState()
                 )
               }
-              options={this.props.Api.queryApi.getAllSharedQuery().map(item => ({
+              options={this.props.api.queryApi.getAllSharedQuery().map(item => ({
                 value: item.Uuid,
                 label: item.Name,
               }))}
@@ -107,7 +107,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               value={this.state.expression}
               onChange={(e: React.SyntheticEvent) => this.handleCustomExpressionChange(e)}
               initialData={firstRow}
-              columns={this.props.Api.columnApi.getColumns()}
+              columns={this.props.api.columnApi.getColumns()}
               functions={parser.defaultFunctions}
               hideHelpBlock={true}
             />
@@ -118,7 +118,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                   {
                     saveToSharedQueries: checked,
                   },
-                  () => this.props.UpdateGoBackState()
+                  () => this.props.updateGoBackState()
                 )
               }
             >
@@ -132,7 +132,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                     {
                       newSharedQueryName: (e.target as HTMLInputElement).value,
                     },
-                    () => this.props.UpdateGoBackState()
+                    () => this.props.updateGoBackState()
                   )
                 }
               />
@@ -149,7 +149,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
       {
         expression: e.value,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -185,13 +185,13 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     if (this.state.useSharedQuery) {
-      this.props.Data.Expression = undefined;
-      this.props.Data.SharedQueryId = this.state.sharedQueryId;
+      this.props.data.Expression = undefined;
+      this.props.data.SharedQueryId = this.state.sharedQueryId;
     } else {
-      this.props.Data.Expression = this.state.expression;
-      this.props.Data.SharedQueryId = undefined;
+      this.props.data.Expression = this.state.expression;
+      this.props.data.SharedQueryId = undefined;
     }
 
     this.props.onSetUseSharedQuery(this.state.useSharedQuery);
@@ -201,14 +201,14 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
     }
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

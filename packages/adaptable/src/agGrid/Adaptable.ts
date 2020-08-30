@@ -3044,9 +3044,6 @@ export class Adaptable implements IAdaptable {
 
   public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
-    const formatColumns: FormatColumn[] = this.api.formatColumnApi
-      .getAllFormatColumnWithDisplayFormat()
-      .concat(this.api.formatColumnApi.getAllFormatColumnWithCellAlignment());
 
     const cols = this.gridOptions.columnApi.getAllColumns();
 
@@ -3058,10 +3055,10 @@ export class Adaptable implements IAdaptable {
 
       colDef.valueFormatter = this.originalColDefValueFormatters[colDef.field];
 
-      const formatColumn = formatColumns.find(
-        fc => fc.ColumnId === colDef.field || fc.ColumnId === colDef.colId
-      );
-
+      // we have to assume that we always get the right one (if there are more than one).
+      // and we need to ensure that a colId is always being set even when not provided
+      // think that Radu is doing this
+      const formatColumn = this.api.formatColumnApi.getFormatColumnForColumnId(colDef.colId);
       if (!formatColumn) {
         return;
       }

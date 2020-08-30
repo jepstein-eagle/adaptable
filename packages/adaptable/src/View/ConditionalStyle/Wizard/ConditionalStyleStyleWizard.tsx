@@ -22,7 +22,7 @@ export class ConditionalStyleStyleWizard
   implements AdaptableWizardStep {
   constructor(props: ConditionalStyleStyleWizardProps) {
     super(props);
-    this.state = { Style: this.props.Data.Style };
+    this.state = { Style: this.props.data.Style };
   }
 
   render() {
@@ -31,9 +31,9 @@ export class ConditionalStyleStyleWizard
       <div style={{ height: '100%' }}>
         <StyleComponent
           style={{ height: '100%' }}
-          api={this.props.Api}
+          api={this.props.api}
           StyleClassNames={this.props.StyleClassNames}
-          Style={this.props.Data.Style}
+          Style={this.props.data.Style}
           UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}
           CanUseClassName={canUseClassName}
         />
@@ -43,7 +43,7 @@ export class ConditionalStyleStyleWizard
 
   private onUpdateStyle(style: AdaptableStyle) {
     this.setState({ Style: style } as ConditionalStyleStyleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -53,16 +53,16 @@ export class ConditionalStyleStyleWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.Style = this.state.Style;
+  public next(): void {
+    this.props.data.Style = this.state.Style;
   }
-  public Back(): void {
+  public back(): void {
     // todod
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

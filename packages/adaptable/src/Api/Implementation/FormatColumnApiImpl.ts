@@ -40,34 +40,14 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
   }
 
-  public addFormatColumnStyle(column: string, style: AdaptableStyle): void {
-    let formatColumn: FormatColumn = { ColumnId: column, Style: style };
+  public addFormatColumnStyle(formatColumn: FormatColumn, style: AdaptableStyle): void {
+    formatColumn.Style = style;
     this.dispatchAction(FormatColumnRedux.FormatColumnAdd(formatColumn));
   }
 
-  public updateFormatColumnStyle(column: string, style: AdaptableStyle): void {
-    let formatColumn: FormatColumn = { ColumnId: column, Style: style };
+  public updateFormatColumnStyle(formatColumn: FormatColumn, style: AdaptableStyle): void {
+    formatColumn.Style = style;
     this.dispatchAction(FormatColumnRedux.FormatColumnEdit(formatColumn));
-  }
-
-  public setFormatColumnStylet(columnId: string, style: AdaptableStyle): void {
-    let formatColumn: FormatColumn = this.getAllFormatColumn().find(fc => fc.ColumnId == columnId);
-    if (formatColumn) {
-      this.addFormatColumnStyle(columnId, style);
-    } else {
-      this.updateFormatColumnStyle(columnId, style);
-    }
-  }
-
-  public setCellAlignment(columnId: string, cellAlignment: 'Left' | 'Right' | 'Center'): void {
-    let formatColumn: FormatColumn = this.getAllFormatColumn().find(fc => fc.ColumnId == columnId);
-    if (formatColumn) {
-      formatColumn.CellAlignment = cellAlignment;
-      this.editFormatColumn(formatColumn);
-    } else {
-      formatColumn = { ColumnId: columnId, CellAlignment: cellAlignment };
-      this.addFormatColumn(formatColumn);
-    }
   }
 
   public deleteFormatColumn(formatColumn: FormatColumn): void {
@@ -82,6 +62,14 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
 
   public applyFormatColumnDisplayFormats(): void {
     this.adaptable.applyFormatColumnDisplayFormats();
+  }
+
+  // TODO: This is important as we need to get the FIRST one that matches
+  public getFormatColumnForColumnId(columnId: string): FormatColumn | undefined {
+    const formatColumns: FormatColumn[] = this.getAllFormatColumnWithDisplayFormat().concat(
+      this.getAllFormatColumnWithCellAlignment()
+    );
+    return undefined;
   }
 
   public showFormatColumnPopup(): void {

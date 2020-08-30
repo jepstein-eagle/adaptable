@@ -12,20 +12,20 @@ export class CellValidationSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let cellVal: CellValidationRule = this.props.Entity as CellValidationRule;
+    let cellVal: CellValidationRule = this.props.entity as CellValidationRule;
 
-    let expression = this.props.Api.queryApi.getExpressionForQueryObject(cellVal);
+    let expression = this.props.api.queryApi.getExpressionForQueryObject(cellVal);
     let expressionString: string = expression ? expression : 'No Expression';
 
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {this.props.Api.columnApi.getFriendlyNameFromColumnId(cellVal.ColumnId)}
+          {this.props.api.columnApi.getFriendlyNameFromColumnId(cellVal.ColumnId)}
         </Flex>
         <Flex flex={4}>
-          {this.props.Api.internalApi
+          {this.props.api.internalApi
             .getValidationService()
-            .createCellValidationDescription(cellVal, this.props.Api.columnApi.getColumns())}
+            .createCellValidationDescription(cellVal, this.props.api.columnApi.getColumns())}
         </Flex>
         <Flex flex={4}>{expressionString}</Flex>
       </Flex>

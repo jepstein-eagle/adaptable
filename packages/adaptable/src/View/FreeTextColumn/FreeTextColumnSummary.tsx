@@ -84,14 +84,14 @@ export class FreeTextColumnSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <FreeTextColumnWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.FreeTextColumns}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
+            modalContainer={this.props.ModalContainer}
+            configEntities={this.props.FreeTextColumns}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Api={this.props.Api}
+            api={this.props.Api}
           />
         )}
       </div>

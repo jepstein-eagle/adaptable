@@ -142,12 +142,12 @@ class PlusMinusPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <PlusMinusWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
+              configEntities={null}
+              modalContainer={this.props.ModalContainer}
+              wizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
-              Api={this.props.Api}
+              api={this.props.Api}
               onSetNewSharedQueryName={(newSharedQueryName: string) =>
                 this.setState({
                   NewSharedQueryName: newSharedQueryName,

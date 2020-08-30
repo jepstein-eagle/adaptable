@@ -30,17 +30,17 @@ export class CalculatedColumnExpressionWizard
   implements AdaptableWizardStep {
   constructor(props: CalculatedColumnExpressionWizardProps) {
     super(props);
-    this.state = { ColumnExpression: this.props.Data.ColumnExpression };
+    this.state = { ColumnExpression: this.props.data.ColumnExpression };
   }
   render(): any {
-    const firstRow = this.props.Api.gridApi.getFirstRowNode().data;
+    const firstRow = this.props.api.gridApi.getFirstRowNode().data;
 
     return (
       <ExpressionEditor
         value={this.state.ColumnExpression}
         onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
         initialData={firstRow}
-        columns={this.props.Api.columnApi.getColumns()}
+        columns={this.props.api.columnApi.getColumns()}
         functions={defaultFunctions}
         isFullExpression={true}
       />
@@ -53,7 +53,7 @@ export class CalculatedColumnExpressionWizard
   handleExpressionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.props.IsExpressionValid(e.value);
-    this.setState({ ColumnExpression: e.value }, () => this.props.UpdateGoBackState());
+    this.setState({ ColumnExpression: e.value }, () => this.props.updateGoBackState());
   }
 
   public canNext(): boolean {
@@ -65,16 +65,16 @@ export class CalculatedColumnExpressionWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    const hasChanged: boolean = this.props.Data.ColumnExpression != this.state.ColumnExpression;
-    this.props.Data.ColumnExpression = this.state.ColumnExpression;
+  public next(): void {
+    const hasChanged: boolean = this.props.data.ColumnExpression != this.state.ColumnExpression;
+    this.props.data.ColumnExpression = this.state.ColumnExpression;
 
     // if its changed then lets work out the other values based on it
     if (hasChanged) {
       // workd out the correct datatype if possible
       const cleanedExpression: string = this.props.calculatedColumnExpressionService.CleanExpressionColumnNames(
         this.state.ColumnExpression,
-        this.props.Api.columnApi.getColumns()
+        this.props.api.columnApi.getColumns()
       );
 
       const dataType = this.props.calculatedColumnExpressionService.GetCalculatedColumnDataType(
@@ -84,18 +84,18 @@ export class CalculatedColumnExpressionWizard
       const pivotable: boolean = dataType == DataType.String;
       const aggregatable: boolean = dataType == DataType.Number;
 
-      this.props.Data.CalculatedColumnSettings.DataType = dataType;
-      this.props.Data.CalculatedColumnSettings.Pivotable = pivotable;
-      this.props.Data.CalculatedColumnSettings.Aggregatable = aggregatable;
+      this.props.data.CalculatedColumnSettings.DataType = dataType;
+      this.props.data.CalculatedColumnSettings.Pivotable = pivotable;
+      this.props.data.CalculatedColumnSettings.Aggregatable = aggregatable;
     }
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

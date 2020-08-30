@@ -86,11 +86,11 @@ export class AlertSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <AlertWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
+            configEntities={null}
+            modalContainer={this.props.ModalContainer}
+            api={this.props.Api}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

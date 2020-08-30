@@ -126,12 +126,12 @@ class FormatColumnPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <FormatColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
+              editedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
+              modalContainer={this.props.ModalContainer}
+              api={this.props.Api}
               StyleClassNames={this.props.StyleClassNames}
-              ConfigEntities={this.props.FormatColumns}
-              WizardStartIndex={this.state.WizardStartIndex}
+              configEntities={this.props.FormatColumns}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

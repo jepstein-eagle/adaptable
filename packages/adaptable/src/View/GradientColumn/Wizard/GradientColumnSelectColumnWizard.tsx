@@ -28,10 +28,10 @@ export class GradientColumnSelectColumnWizard
   constructor(props: GradientColumnSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
-      NegativeValue: this.props.Data.NegativeValue,
-      PositiveValue: this.props.Data.PositiveValue,
-      BaseValue: this.props.Data.BaseValue,
+      ColumnId: this.props.data.ColumnId,
+      NegativeValue: this.props.data.NegativeValue,
+      PositiveValue: this.props.data.PositiveValue,
+      BaseValue: this.props.data.BaseValue,
     };
   }
 
@@ -40,7 +40,7 @@ export class GradientColumnSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.columnApi.getNumericColumns()}
+          ColumnList={this.props.api.columnApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -50,7 +50,7 @@ export class GradientColumnSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
+      let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
         columns[0].ColumnId
       );
 
@@ -77,11 +77,11 @@ export class GradientColumnSelectColumnWizard
           PositiveValue: positiveValue,
           BaseValue: baseValue,
         } as GradientColumnSelectColumnWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState({ ColumnId: '' } as GradientColumnSelectColumnWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -93,20 +93,20 @@ export class GradientColumnSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.NegativeValue = this.state.NegativeValue;
-    this.props.Data.PositiveValue = this.state.PositiveValue;
-    this.props.Data.BaseValue = this.state.BaseValue;
+  public next(): void {
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.NegativeValue = this.state.NegativeValue;
+    this.props.data.PositiveValue = this.state.PositiveValue;
+    this.props.data.BaseValue = this.state.BaseValue;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -23,7 +23,7 @@ export class FormatColumnScopeWizard
   constructor(props: FormatColumnScopeWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
+      ColumnId: this.props.data.ColumnId,
     };
   }
 
@@ -32,7 +32,7 @@ export class FormatColumnScopeWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.columnApi.getColumns()}
+          ColumnList={this.props.api.columnApi.getColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -43,7 +43,7 @@ export class FormatColumnScopeWizard
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     this.setState(
       { ColumnId: columns.length > 0 ? columns[0].ColumnId : '' } as FormatColumnScopeWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -54,19 +54,19 @@ export class FormatColumnScopeWizard
   public canBack(): boolean {
     return false;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.DisplayFormat = undefined;
+  public next(): void {
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.DisplayFormat = undefined;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

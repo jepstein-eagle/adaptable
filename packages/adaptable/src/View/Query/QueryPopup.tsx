@@ -108,11 +108,11 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
 
         {this.state.EditedAdaptableObject && (
           <SharedQueryWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as SharedQuery}
-            ConfigEntities={this.props.SharedQueries}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.EditedAdaptableObject as SharedQuery}
+            configEntities={this.props.SharedQueries}
+            modalContainer={this.props.ModalContainer}
+            api={this.props.Api}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

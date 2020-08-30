@@ -95,11 +95,11 @@ export class CellValidationSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <CellValidationWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
+            configEntities={null}
+            modalContainer={this.props.ModalContainer}
+            api={this.props.Api}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

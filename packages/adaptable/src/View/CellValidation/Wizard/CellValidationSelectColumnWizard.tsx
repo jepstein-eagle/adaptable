@@ -26,7 +26,7 @@ export class CellValidationSelectColumnWizard
   constructor(props: CellValidationSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
+      ColumnId: this.props.data.ColumnId,
     };
   }
 
@@ -35,7 +35,7 @@ export class CellValidationSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.columnApi.getColumns()}
+          ColumnList={this.props.api.columnApi.getColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -48,7 +48,7 @@ export class CellValidationSelectColumnWizard
       {
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',
       } as CellValidationSelectColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -59,17 +59,17 @@ export class CellValidationSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
+  public next(): void {
+    this.props.data.ColumnId = this.state.ColumnId;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

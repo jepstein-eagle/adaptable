@@ -17,18 +17,18 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
   }
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
+      { Key: 'Name', Value: this.props.data.Name },
       {
         Key: 'Column Scope',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getReportService()
-          .GetReportColumnScopeLongDescription(this.props.Data),
+          .GetReportColumnScopeLongDescription(this.props.data),
       },
       {
         Key: 'Row Scope',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getReportService()
-          .GetReportExpressionDescription(this.props.Data, this.props.Api.columnApi.getColumns()),
+          .GetReportExpressionDescription(this.props.data, this.props.api.columnApi.getColumns()),
       },
     ];
 
@@ -46,17 +46,17 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

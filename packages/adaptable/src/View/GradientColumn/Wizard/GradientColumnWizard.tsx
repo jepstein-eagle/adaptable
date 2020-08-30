@@ -17,18 +17,18 @@ export class GradientColumnWizard extends React.Component<GradientColumnWizardPr
       <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.GradientColumnStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
+          ModalContainer={this.props.modalContainer}
+          Api={this.props.api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <GradientColumnSelectColumnWizard Api={this.props.Api} />,
+              Element: <GradientColumnSelectColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Settings',
               Index: 1,
-              Element: <GradientColumnSettingsWizard Api={this.props.Api} />,
+              Element: <GradientColumnSettingsWizard api={this.props.api} />,
             },
             /*
             {
@@ -45,11 +45,11 @@ export class GradientColumnWizard extends React.Component<GradientColumnWizardPr
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <GradientColumnSummaryWizard Api={this.props.Api} />,
+              Element: <GradientColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          Data={this.props.editedAdaptableObject}
+          StepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

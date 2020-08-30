@@ -89,12 +89,12 @@ export class FormatColumnSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <FormatColumnWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.FormatColumns}
-            Api={this.props.Api}
+            editedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
+            modalContainer={this.props.ModalContainer}
+            configEntities={this.props.FormatColumns}
+            api={this.props.Api}
             StyleClassNames={this.props.StyleClassNames}
-            WizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

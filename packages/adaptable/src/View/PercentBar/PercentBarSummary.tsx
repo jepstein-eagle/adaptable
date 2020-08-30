@@ -86,14 +86,14 @@ export class PercentBarSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <PercentBarWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.PercentBars}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
+            modalContainer={this.props.ModalContainer}
+            configEntities={this.props.PercentBars}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Api={this.props.Api}
+            api={this.props.Api}
           />
         )}
       </div>

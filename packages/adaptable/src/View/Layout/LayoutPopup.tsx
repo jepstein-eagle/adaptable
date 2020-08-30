@@ -143,12 +143,12 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
           {this.state.EditedAdaptableObject != null && (
             <LayoutWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject}
-              ConfigEntities={this.props.Layouts}
-              ModalContainer={this.props.ModalContainer}
+              editedAdaptableObject={this.state.EditedAdaptableObject}
+              configEntities={this.props.Layouts}
+              modalContainer={this.props.ModalContainer}
               ColumnSorts={this.props.Api.gridApi.getColumnSorts()}
-              Api={this.props.Api}
-              WizardStartIndex={this.state.WizardStartIndex}
+              api={this.props.Api}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

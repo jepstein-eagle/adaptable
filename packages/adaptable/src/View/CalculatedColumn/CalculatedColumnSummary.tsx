@@ -64,13 +64,13 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
         {this.state.EditedAdaptableObject && (
           <CalculatedColumnWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
-            ConfigEntities={this.props.CalculatedColumns}
-            ModalContainer={this.props.ModalContainer}
+            editedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
+            configEntities={this.props.CalculatedColumns}
+            modalContainer={this.props.ModalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            api={this.props.Api}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

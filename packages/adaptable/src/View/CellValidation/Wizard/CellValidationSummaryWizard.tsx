@@ -23,18 +23,18 @@ export class CellValidationSummaryWizard
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
       },
-      { Key: 'Mode', Value: this.props.Data.ActionMode },
+      { Key: 'Mode', Value: this.props.data.ActionMode },
       {
         Key: 'Rule',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getValidationService()
-          .createCellValidationDescription(this.props.Data, this.props.Api.columnApi.getColumns()),
+          .createCellValidationDescription(this.props.data, this.props.api.columnApi.getColumns()),
       },
       {
         Key: 'Query',
-        Value: this.setExpressionDescription(this.props.Data),
+        Value: this.setExpressionDescription(this.props.data),
       },
     ];
 
@@ -47,7 +47,7 @@ export class CellValidationSummaryWizard
   }
 
   private setExpressionDescription(cellValidation: CellValidationRule): string {
-    let expression = this.props.Api.queryApi.getExpressionForQueryObject(cellValidation);
+    let expression = this.props.api.queryApi.getExpressionForQueryObject(cellValidation);
     return expression ? expression : 'No Expression';
   }
 
@@ -58,20 +58,20 @@ export class CellValidationSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
-    return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ||
-      StringExtensions.IsNullOrEmpty(this.props.Data.SharedQueryId)
+  public getIndexStepDecrement() {
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId)
       ? 2
       : 1;
   }

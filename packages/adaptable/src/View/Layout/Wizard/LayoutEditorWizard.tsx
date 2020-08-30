@@ -28,8 +28,8 @@ export class LayoutEditorWizard
   constructor(props: LayoutEditorWizardProps) {
     super(props);
     this.state = {
-      layout: props.Data,
-      layoutName: props.Data.Name,
+      layout: props.data,
+      layoutName: props.data.Name,
       ErrorMessage: null,
     };
   }
@@ -56,7 +56,7 @@ export class LayoutEditorWizard
         </FormLayout>
 
         <LayoutEditor
-          api={this.props.Api}
+          api={this.props.api}
           layout={this.state.layout}
           onLayoutChange={this.onLayoutChange}
         />
@@ -86,14 +86,14 @@ export class LayoutEditorWizard
         ErrorMessage: ErrorMessage || null,
       },
       () => {
-        this.props.UpdateGoBackState();
+        this.props.updateGoBackState();
       }
     );
   };
 
   onLayoutChange = (layout: Layout) => {
     this.setState({ layout }, () => {
-      this.props.UpdateGoBackState();
+      this.props.updateGoBackState();
     });
   };
 
@@ -103,20 +103,20 @@ export class LayoutEditorWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    Object.keys(this.props.Data).forEach(key => {
-      delete (this.props.Data as any)[key];
+  public next(): void {
+    Object.keys(this.props.data).forEach(key => {
+      delete (this.props.data as any)[key];
     });
     // TODO: Radu to fix properly but Jonny added this temporarily so could create new layouts and edit for testing!
     this.state.layout.Name = this.state.layoutName;
 
-    Object.assign(this.props.Data, this.state.layout);
+    Object.assign(this.props.data, this.state.layout);
   }
-  public Back(): void {}
-  public GetIndexStepIncrement() {
+  public back(): void {}
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

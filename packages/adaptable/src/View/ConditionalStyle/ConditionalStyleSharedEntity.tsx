@@ -10,16 +10,16 @@ export class ConditionalStyleSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let conditionalStyle: ConditionalStyle = this.props.Entity as ConditionalStyle;
+    let conditionalStyle: ConditionalStyle = this.props.entity as ConditionalStyle;
 
     return (
       <Flex flexDirection="row" alignItems="center">
-        <Flex flex={4}>{this.props.Api.scopeApi.getScopeToString(conditionalStyle.Scope)}</Flex>
+        <Flex flex={4}>{this.props.api.scopeApi.getScopeToString(conditionalStyle.Scope)}</Flex>
         <Flex flex={3}>
           <StyleVisualItem Style={conditionalStyle.Style} />
         </Flex>
         <Flex flex={5}>
-          {this.props.Api.queryApi.getExpressionForQueryObject(conditionalStyle)}
+          {this.props.api.queryApi.getExpressionForQueryObject(conditionalStyle)}
         </Flex>
       </Flex>
     );

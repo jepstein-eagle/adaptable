@@ -105,11 +105,11 @@ class DataSourcePopupComponent extends React.Component<
 
         {this.state.EditedAdaptableObject != null && (
           <DataSourceWizard
-            EditedAdaptableObject={DataSource}
-            ConfigEntities={this.props.DataSources}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={DataSource}
+            configEntities={this.props.DataSources}
+            modalContainer={this.props.ModalContainer}
+            api={this.props.Api}
+            wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}

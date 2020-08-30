@@ -25,14 +25,14 @@ export class CustomSortValuesWizard
   extends React.Component<CustomSortValuesWizardProps, CustomSortValuesWizardState>
   implements AdaptableWizardStep {
   constructor(props: CustomSortValuesWizardProps) {
-    let adaptable: IAdaptable = props.Api.internalApi.getAdaptableInstance();
+    let adaptable: IAdaptable = props.api.internalApi.getAdaptableInstance();
     super(props);
     this.state = {
       ColumnValues: adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
-        this.props.Data.ColumnId
+        this.props.data.ColumnId
       ),
-      SelectedValues: this.props.Data.SortedValues,
-      IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.Data.SortedValues),
+      SelectedValues: this.props.data.SortedValues,
+      IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.data.SortedValues),
     };
   }
 
@@ -61,7 +61,7 @@ export class CustomSortValuesWizard
   }
   OnSelectedValuesChange(newValues: Array<string>) {
     this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -71,16 +71,16 @@ export class CustomSortValuesWizard
   public canBack(): boolean {
     return !this.state.IsEdit;
   }
-  public Next(): void {
-    this.props.Data.SortedValues = this.state.SelectedValues;
+  public next(): void {
+    this.props.data.SortedValues = this.state.SelectedValues;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -33,12 +33,12 @@ export class ScheduleScheduleWizard
     super(props);
 
     this.state = {
-      IsRecurringDate: this.props.Data.Schedule.OneOffDate == null ? true : false,
-      Hour: this.props.Data.Schedule.Hour,
-      Minute: this.props.Data.Schedule.Minute,
-      DaysOfWeek: this.props.Data.Schedule.DaysOfWeek,
-      OneOffDate: this.props.Data.Schedule.OneOffDate
-        ? this.props.Data.Schedule.OneOffDate
+      IsRecurringDate: this.props.data.Schedule.OneOffDate == null ? true : false,
+      Hour: this.props.data.Schedule.Hour,
+      Minute: this.props.data.Schedule.Minute,
+      DaysOfWeek: this.props.data.Schedule.DaysOfWeek,
+      OneOffDate: this.props.data.Schedule.OneOffDate
+        ? this.props.data.Schedule.OneOffDate
         : new Date(),
     };
   }
@@ -230,32 +230,32 @@ export class ScheduleScheduleWizard
       daysOfWeek.splice(index, 1);
     }
     this.setState({ DaysOfWeek: daysOfWeek } as ScheduleScheduleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onOneOffDateChanged = (event: React.FormEvent<any>) => {
     let e = event.target as HTMLInputElement;
     this.setState({ OneOffDate: e.value } as ScheduleScheduleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   };
 
   private onRecurringDateChanged(checked: boolean) {
     this.setState({ IsRecurringDate: checked } as ScheduleScheduleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onHourChanged(value: any) {
     this.setState({ Hour: Number(value) } as ScheduleScheduleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onMinuteChanged(value: any) {
     this.setState({ Minute: Number(value) } as ScheduleScheduleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -275,24 +275,24 @@ export class ScheduleScheduleWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     let schedule: Schedule = {
       Hour: this.state.Hour,
       Minute: this.state.Minute,
       OneOffDate: this.state.IsRecurringDate ? null : this.state.OneOffDate,
       DaysOfWeek: this.state.IsRecurringDate ? this.state.DaysOfWeek : [],
     };
-    this.props.Data.Schedule = schedule;
+    this.props.data.Schedule = schedule;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

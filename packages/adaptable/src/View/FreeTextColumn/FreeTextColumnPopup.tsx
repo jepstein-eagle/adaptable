@@ -124,11 +124,11 @@ class FreeTextColumnPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <FreeTextColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
-              ConfigEntities={this.props.FreeTextColumns}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
+              modalContainer={this.props.ModalContainer}
+              api={this.props.Api}
+              configEntities={this.props.FreeTextColumns}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

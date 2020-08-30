@@ -18,35 +18,35 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
       <div>
         <AdaptableWizard
           FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
+          ModalContainer={this.props.modalContainer}
+          Api={this.props.api}
           Steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <CellValidationSelectColumnWizard Api={this.props.Api} />,
+              Element: <CellValidationSelectColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Action',
               Index: 1,
-              Element: <CellValidationActionWizard Api={this.props.Api} />,
+              Element: <CellValidationActionWizard api={this.props.api} />,
             },
             {
               StepName: 'Validation',
               Index: 2,
-              Element: <CellValidationRulesWizard Api={this.props.Api} />,
+              Element: <CellValidationRulesWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 3,
-              Element: <CellValidationSelectQueryWizard Api={this.props.Api} />,
+              Element: <CellValidationSelectQueryWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
               Element: (
                 <ExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -55,11 +55,11 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <CellValidationSummaryWizard Api={this.props.Api} />,
+              Element: <CellValidationSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          Data={this.props.editedAdaptableObject}
+          StepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

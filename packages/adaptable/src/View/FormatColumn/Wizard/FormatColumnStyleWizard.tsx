@@ -26,9 +26,9 @@ export class FormatColumnStyleWizard
     super(props);
     this.state = {
       Style:
-        this.props.Data.Style == null || this.props.Data.Style == undefined
+        this.props.data.Style == null || this.props.data.Style == undefined
           ? ObjectFactory.CreateEmptyStyle()
-          : this.props.Data.Style,
+          : this.props.data.Style,
     };
   }
 
@@ -38,7 +38,7 @@ export class FormatColumnStyleWizard
     return (
       <div>
         <StyleComponent
-          api={this.props.Api}
+          api={this.props.api}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.state.Style}
           UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}
@@ -59,23 +59,23 @@ export class FormatColumnStyleWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.Style = this.state.Style;
+  public next(): void {
+    this.props.data.Style = this.state.Style;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 
   private onUpdateStyle(style: AdaptableStyle) {
     this.setState({ Style: style } as FormatColumnStyleWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 }
