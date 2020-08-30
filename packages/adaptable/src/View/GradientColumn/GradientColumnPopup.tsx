@@ -52,11 +52,11 @@ class GradientColumnPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        let columnId: string = this.props.popupParams.columnId;
+        if (this.props.popupParams.action == 'New') {
+          let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
             columnId
           );
 
@@ -78,13 +78,13 @@ class GradientColumnPopupComponent extends React.Component<
 
           this.onNewFromColumn(newGradientColumn);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let editGradientColumn = this.props.GradientColumns.find(x => x.ColumnId == columnId);
           this.onEdit(editGradientColumn);
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -109,17 +109,17 @@ class GradientColumnPopupComponent extends React.Component<
 
     let GradientColumnItems = this.props.GradientColumns.map(
       (gradientColumn: GradientColumn, index) => {
-        let column = this.props.Api.columnApi.getColumnFromId(gradientColumn.ColumnId);
+        let column = this.props.api.columnApi.getColumnFromId(gradientColumn.ColumnId);
         return (
           <GradientColumnEntityRow
             key={gradientColumn.Uuid}
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             AdaptableObject={gradientColumn}
             Column={column}
             onEdit={() => this.onEdit(gradientColumn)}
             onShare={description => this.props.onShare(gradientColumn, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            TeamSharingActivated={this.props.teamSharingActivated}
             onDeleteConfirm={GradientColumnRedux.GradientColumnDelete(gradientColumn)}
             onNegativeValueChanged={(gradientColumn, minimumValue) =>
               this.onNegativeValueChanged(gradientColumn, minimumValue)
@@ -136,7 +136,7 @@ class GradientColumnPopupComponent extends React.Component<
             onNegativeColorChanged={(gradientColumn, negativeColor) =>
               this.onNegativeColorChanged(gradientColumn, negativeColor)
             }
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
         );
       }
@@ -145,7 +145,7 @@ class GradientColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Percent Bar "
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -176,8 +176,8 @@ class GradientColumnPopupComponent extends React.Component<
             <GradientColumnWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
               configEntities={null}
-              api={this.props.Api}
-              modalContainer={this.props.ModalContainer}
+              api={this.props.api}
+              modalContainer={this.props.modalContainer}
               wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

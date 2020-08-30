@@ -17,10 +17,10 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
@@ -58,8 +58,8 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
               Element: <CellValidationSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

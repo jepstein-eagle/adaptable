@@ -51,21 +51,26 @@ class FormatColumnPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        let columnId: string = this.props.popupParams.columnId;
+        if (this.props.popupParams.action == 'New') {
           let newFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
-          newFormatColumn.ColumnId = columnId;
+          newFormatColumn.Scope = {
+            ColumnIds: [columnId],
+          };
           this.onNewFromColumn(newFormatColumn);
         }
-        if (this.props.PopupParams.action == 'Edit') {
-          let editFormatColumn = this.props.FormatColumns.find(x => x.ColumnId == columnId);
+        if (this.props.popupParams.action == 'Edit') {
+          // have to hope we get the most suitable / current one
+          let editFormatColumn = this.props.api.formatColumnApi.getFormatColumnForColumnId(
+            columnId
+          );
           this.onEdit(editFormatColumn);
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -90,13 +95,13 @@ class FormatColumnPopupComponent extends React.Component<
         <FormatColumnEntityRow
           key={formatColumn.Uuid}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={formatColumn}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={description => this.props.onShare(formatColumn, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={FormatColumnRedux.FormatColumnDelete(formatColumn)}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -105,7 +110,7 @@ class FormatColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Format Column"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -127,8 +132,8 @@ class FormatColumnPopupComponent extends React.Component<
           {this.state.EditedAdaptableObject != null && (
             <FormatColumnWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
-              modalContainer={this.props.ModalContainer}
-              api={this.props.Api}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
               StyleClassNames={this.props.StyleClassNames}
               configEntities={this.props.FormatColumns}
               wizardStartIndex={this.state.WizardStartIndex}
@@ -192,7 +197,7 @@ class FormatColumnPopupComponent extends React.Component<
 
   canFinishWizard() {
     let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
-    if (StringExtensions.IsNullOrEmpty(formatColumn.ColumnId)) {
+    if (formatColumn.Scope == undefined || formatColumn.Scope == null) {
       return false;
     }
 

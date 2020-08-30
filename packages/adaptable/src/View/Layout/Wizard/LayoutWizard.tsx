@@ -17,19 +17,19 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
     return (
       <AdaptableWizard
         style={{ maxWidth: '', height: '80vh' }}
-        FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
-        ModalContainer={this.props.modalContainer}
-        Api={this.props.api}
+        friendlyName={StrategyConstants.LayoutStrategyFriendlyName}
+        modalContainer={this.props.modalContainer}
+        api={this.props.api}
         showStepsLegend={false}
-        Steps={[
+        steps={[
           {
             StepName: 'Layout Editor',
             Index: 0,
             Element: <LayoutEditorWizard api={this.props.api} Layouts={layouts} />,
           },
         ]}
-        Data={this.props.editedAdaptableObject}
-        StepStartIndex={this.props.wizardStartIndex}
+        data={this.props.editedAdaptableObject}
+        stepStartIndex={this.props.wizardStartIndex}
         onHide={() => this.props.onCloseWizard()}
         onFinish={() => this.props.onFinishWizard()}
         canFinishWizard={() => this.props.canFinishWizard()}

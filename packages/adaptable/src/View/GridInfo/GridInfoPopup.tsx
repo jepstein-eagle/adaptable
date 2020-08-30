@@ -48,7 +48,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
   }
 
   render() {
-    let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
 
     let gridPropertiesColItems: IColItem[] = [
       { Content: 'Property', Size: 5 },
@@ -360,15 +360,15 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
   private CreateGridInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let calcColumns: string[] = this.props.Api.calculatedColumnApi
+    let calcColumns: string[] = this.props.api.calculatedColumnApi
       .getAllCalculatedColumn()
       .map(c => c.ColumnId);
-    let columnFilterDescription: string = this.props.Api.filterApi.convertColumnFiltersToString(
-      this.props.Api.filterApi.getAllColumnFilter()
+    let columnFilterDescription: string = this.props.api.filterApi.convertColumnFiltersToString(
+      this.props.api.filterApi.getAllColumnFilter()
     );
-    let sorts: any = this.props.Api.gridApi.getColumnSorts().map(gs => {
+    let sorts: any = this.props.api.gridApi.getColumnSorts().map(gs => {
       return (
-        this.props.Api.columnApi.getFriendlyNameFromColumnId(gs.ColumnId) + ': ' + gs.SortOrder
+        this.props.api.columnApi.getFriendlyNameFromColumnId(gs.ColumnId) + ': ' + gs.SortOrder
       );
     });
 

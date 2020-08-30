@@ -15,10 +15,10 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
     let customSorts: CustomSort[] = this.props.configEntities as CustomSort[];
     return (
       <AdaptableWizard
-        FriendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
-        ModalContainer={this.props.modalContainer}
-        Api={this.props.api}
-        Steps={[
+        friendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
+        modalContainer={this.props.modalContainer}
+        api={this.props.api}
+        steps={[
           {
             StepName: 'Select Column',
             Index: 0,
@@ -43,8 +43,8 @@ export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}>
             Element: <CustomSortSummaryWizard api={this.props.api} />,
           },
         ]}
-        Data={this.props.editedAdaptableObject}
-        StepStartIndex={this.props.wizardStartIndex}
+        data={this.props.editedAdaptableObject}
+        stepStartIndex={this.props.wizardStartIndex}
         onHide={() => this.props.onCloseWizard()}
         onFinish={() => this.props.onFinishWizard()}
         canFinishWizard={() => this.props.canFinishWizard()}

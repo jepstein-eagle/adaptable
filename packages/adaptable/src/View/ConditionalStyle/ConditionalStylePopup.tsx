@@ -58,10 +58,10 @@ class ConditionalStylePopupComponent extends React.Component<
 
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        let columnId: string = this.props.popupParams.columnId;
+        if (this.props.popupParams.action == 'New') {
           let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
           _editedConditionalStyle.Scope = {
             ColumnIds: [columnId],
@@ -75,7 +75,7 @@ class ConditionalStylePopupComponent extends React.Component<
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -99,13 +99,13 @@ class ConditionalStylePopupComponent extends React.Component<
           <ConditionalStyleEntityRow
             AdaptableObject={conditionalStyle}
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             key={'CS' + (conditionalStyle.Uuid || index)}
             onShare={description => this.props.onShare(conditionalStyle, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            TeamSharingActivated={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(conditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
         );
       }
@@ -115,7 +115,7 @@ class ConditionalStylePopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Conditional Style"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -141,8 +141,8 @@ class ConditionalStylePopupComponent extends React.Component<
             <ConditionalStyleWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
               configEntities={null}
-              modalContainer={this.props.ModalContainer}
-              api={this.props.Api}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
               StyleClassNames={this.props.StyleClassNames}
               wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

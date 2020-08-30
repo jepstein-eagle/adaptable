@@ -65,7 +65,7 @@ class ExportToolPanelComponent extends React.Component<
   }
 
   public componentDidMount() {
-    this.props.Api.eventApi.on(
+    this.props.api.eventApi.on(
       'LiveDataChanged',
       (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
         let liveDataChangedInfo: LiveDataChangedInfo = liveDataChangedEventArgs.data[0].id;
@@ -83,11 +83,11 @@ class ExportToolPanelComponent extends React.Component<
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props
       .SystemReports!.filter(s =>
-        this.props.Api.internalApi.getReportService().IsSystemReportActive(s)
+        this.props.api.internalApi.getReportService().IsSystemReportActive(s)
       )
       .concat(this.props.Reports);
 
-    let currentReport: Report = this.props.Api.exportApi.getCurrentReport();
+    let currentReport: Report = this.props.api.exportApi.getCurrentReport();
 
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
 
@@ -146,12 +146,12 @@ class ExportToolPanelComponent extends React.Component<
     }
 
     const exportItems = [
-      this.props.Api.exportApi.canExportToExcel() && excelMenuItem,
+      this.props.api.exportApi.canExportToExcel() && excelMenuItem,
       ,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      this.props.Api.internalApi
+      this.props.api.internalApi
         .getReportService()
         .IsReportDestinationActive(ExportDestination.OpenfinExcel) && openfinExcelMenuItem,
     ].filter(x => !!x);
@@ -183,7 +183,7 @@ class ExportToolPanelComponent extends React.Component<
           </DropdownButton>
           <Flex
             className={join(
-              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+              this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
               'ab-ToolPanel__Export__controls'
             )}
             alignItems="stretch"
@@ -194,9 +194,9 @@ class ExportToolPanelComponent extends React.Component<
               className="ab-ToolPanel__Export__edit"
               disabled={
                 savedReport == null ||
-                this.props.Api.internalApi.getReportService().IsSystemReport(savedReport)
+                this.props.api.internalApi.getReportService().IsSystemReport(savedReport)
               }
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             />
 
             <ButtonNew
@@ -206,7 +206,7 @@ class ExportToolPanelComponent extends React.Component<
               children={null}
               onClick={() => this.props.onNewReport()}
               tooltip="Create New Report"
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             />
 
             <ButtonDelete
@@ -214,12 +214,12 @@ class ExportToolPanelComponent extends React.Component<
               className="ab-ToolPanel__Export__delete"
               disabled={
                 savedReport == null ||
-                this.props.Api.internalApi.getReportService().IsSystemReport(savedReport)
+                this.props.api.internalApi.getReportService().IsSystemReport(savedReport)
               }
               ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
               ConfirmationMsg={deleteMessage}
               ConfirmationTitle={'Delete Report'}
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             />
 
             <ButtonSchedule
@@ -228,7 +228,7 @@ class ExportToolPanelComponent extends React.Component<
               onClick={() => this.onNewReportSchedule()}
               tooltip="Schedule"
               disabled={savedReport == null}
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             />
           </Flex>
         </Flex>

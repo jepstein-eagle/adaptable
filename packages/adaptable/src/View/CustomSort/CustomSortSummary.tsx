@@ -39,13 +39,13 @@ export class CustomSortSummaryComponent extends React.Component<
   }
   render(): any {
     let customSort: CustomSort = this.props.CustomSorts.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noCustomSort: boolean = customSort == null;
 
     let customSortRow: any;
 
-    if (!this.props.SummarisedColumn.Sortable) {
+    if (!this.props.summarisedColumn.Sortable) {
       customSortRow = (
         <StrategyHeader
           key={StrategyConstants.CustomSortStrategyFriendlyName}
@@ -54,7 +54,7 @@ export class CustomSortSummaryComponent extends React.Component<
           NewButtonDisabled={true}
           onNew={() => this.onNew()}
           NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     } else if (noCustomSort) {
@@ -65,7 +65,7 @@ export class CustomSortSummaryComponent extends React.Component<
           FunctionName={StrategyConstants.CustomSortStrategyId}
           StrategySummary={'No Custom Sort Set'}
           onNew={() => this.onNew()}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
           NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
         />
       );
@@ -80,7 +80,7 @@ export class CustomSortSummaryComponent extends React.Component<
           onEdit={() => this.onEdit(customSort)}
           showEdit={customSort.CustomSortComparerFunction == undefined}
           onShare={description => this.props.onShare(customSort, description)}
-          showShare={this.props.TeamSharingActivated}
+          showShare={this.props.teamSharingActivated}
           onDelete={CustomSortRedux.CustomSortDelete(customSort)}
           showBold={true}
         />
@@ -95,8 +95,8 @@ export class CustomSortSummaryComponent extends React.Component<
           <CustomSortWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
             configEntities={this.props.CustomSorts}
-            modalContainer={this.props.ModalContainer}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -109,7 +109,7 @@ export class CustomSortSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: CustomSort = ObjectFactory.CreateEmptyCustomSort();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,

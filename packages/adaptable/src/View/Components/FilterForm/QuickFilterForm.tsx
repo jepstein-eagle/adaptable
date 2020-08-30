@@ -36,31 +36,10 @@ import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
 
-/*
-Rather than explain the code I will try to explain in an overview what this class is trying do.
-
-It replaces the ag-Grid Filter bar providing our own custom implementation with wildcards
-
-For current wildcards see: https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md
-
-The main idea is that a user can create a Column Filter by hand.
-
-By default it will be a 'Contains' Filter but we provide a number of wildcards (in the old Expression way of doing things, this was a Range Expression)
-
-We first create a number of KeyValue pairs so we an match the wildcard string to the operator and we update teh QuickFilter as we go.
-
-Note: The string is NOT saved and this is one way only. the Quick Filter bar does NOT show what is in the Filter - should it? Probably...
-
-Just checked: the ag-Grid behaviour is really weird: (https://www.ag-grid.com/javascript-grid-floating-filters/)
-a. if you do a Greater Than filter in the dropdown then the quick filter becomes greater than but there is no way to know
-b.  if you do an In Rnage in the dropdown then the quick filter does indicate that but it becomes disabled and you cannot clear the filter easily
-
-*/
-
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
-  Api: AdaptableApi;
-  CurrentColumn: AdaptableColumn;
-  ColumnFilters: ColumnFilter[];
+  api: AdaptableApi;
+  currentColumn: AdaptableColumn;
+  columnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
   onClearColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
@@ -85,34 +64,34 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     });
   }
   getFilterFromProps(props: QuickFilterFormProps) {
-    const filter = props.ColumnFilters.find(cf => cf.ColumnId == props.CurrentColumn.ColumnId);
+    const filter = props.columnFilters.find(cf => cf.ColumnId == props.currentColumn.ColumnId);
 
     if (filter) return filter;
 
-    if (!filter && props.CurrentColumn.DataType === 'Number') {
-      return ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, 'Equals', ['']);
+    if (!filter && props.currentColumn.DataType === 'Number') {
+      return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'Equals', ['']);
     }
 
-    if (!filter && props.CurrentColumn.DataType === 'String') {
-      return ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, 'Contains', ['']);
+    if (!filter && props.currentColumn.DataType === 'String') {
+      return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'Contains', ['']);
     }
 
-    if (!filter && props.CurrentColumn.DataType === 'Date') {
-      return ObjectFactory.CreateColumnFilter(this.props.CurrentColumn.ColumnId, 'On', ['']);
+    if (!filter && props.currentColumn.DataType === 'Date') {
+      return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'On', ['']);
     }
   }
   render(): any {
     const { filter } = this.state;
 
-    const predicateDefs = this.props.Api.filterApi.getFilterPredicateDefsForColumn(
-      this.props.CurrentColumn
+    const predicateDefs = this.props.api.filterApi.getFilterPredicateDefsForColumn(
+      this.props.currentColumn
     );
 
-    const activePredicateDef = this.props.Api.predicateApi.getPredicateDefById(
+    const activePredicateDef = this.props.api.predicateApi.getPredicateDefById(
       filter?.Predicate.Id
     );
 
-    if (!this.props.CurrentColumn || !this.props.CurrentColumn.Filterable) {
+    if (!this.props.currentColumn || !this.props.currentColumn.Filterable) {
       return null;
     }
 
@@ -197,8 +176,8 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   renderValuesDropdown(filter: ColumnFilter) {
-    let distinctColumnValues: any[] = this.props.Api.columnApi.getDistinctDisplayValuesForColumn(
-      this.props.CurrentColumn.ColumnId
+    let distinctColumnValues: any[] = this.props.api.columnApi.getDistinctDisplayValuesForColumn(
+      this.props.currentColumn.ColumnId
     );
 
     return (
@@ -227,10 +206,10 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
             </Flex>
             <ListBoxFilterForm
-              CurrentColumn={this.props.CurrentColumn}
+              CurrentColumn={this.props.currentColumn}
               Columns={[]}
               ColumnDistinctValues={distinctColumnValues}
-              DataType={this.props.CurrentColumn.DataType}
+              DataType={this.props.currentColumn.DataType}
               UiSelectedColumnValues={this.state.filter.Predicate.Inputs}
               useVendorStyle={true}
               onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
@@ -259,13 +238,12 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     const { filter } = this.state;
 
     filter.Predicate = { Id: 'Values', Inputs: columnValues };
-
     this.updateFilter(filter);
   }
 
   selectColumnPredicate(predicateId: string) {
     const { filter } = this.state;
-    const predicateDef = this.props.Api.predicateApi.getPredicateDefById(predicateId);
+    const predicateDef = this.props.api.predicateApi.getPredicateDefById(predicateId);
 
     filter.Predicate = {
       Id: predicateId,
@@ -309,7 +287,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   getPredicateIdForShortcutValue(value: string) {
-    return this.props.Api.filterApi.findPredicateDefByShortcut(value, this.props.CurrentColumn)?.id;
+    return this.props.api.filterApi.findPredicateDefByShortcut(value, this.props.currentColumn)?.id;
   }
 
   clearFilter() {
@@ -320,8 +298,8 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFilterFormProps> {
   return {
-    CurrentColumn: ownProps.CurrentColumn,
-    ColumnFilters: state.Filter.ColumnFilters,
+    currentColumn: ownProps.CurrentColumn,
+    columnFilters: state.Filter.ColumnFilters,
   };
 }
 
@@ -345,10 +323,10 @@ export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <QuickFilterForm
-          Api={FilterContext.Adaptable.api}
-          CurrentColumn={FilterContext.Column}
-          TeamSharingActivated={false}
-          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+          api={FilterContext.Adaptable.api}
+          currentColumn={FilterContext.Column}
+          teamSharingActivated={false}
+          embedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
         />
       </AdaptableContext.Provider>
     </ThemeProvider>

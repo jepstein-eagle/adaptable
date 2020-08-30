@@ -68,7 +68,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       <EntityRowItem
         Content={
           <ColorPicker
-            Api={this.props.api}
+            api={this.props.api}
             disabled={isDisabled}
             value={flashingCell.UpColor}
             onChange={(x: any) => this.onUpColorChange(x)}
@@ -80,7 +80,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       <EntityRowItem
         Content={
           <ColorPicker
-            Api={this.props.api}
+            api={this.props.api}
             disabled={isDisabled}
             value={flashingCell.DownColor}
             onChange={(x: any) => this.onDownColorChange(x)}

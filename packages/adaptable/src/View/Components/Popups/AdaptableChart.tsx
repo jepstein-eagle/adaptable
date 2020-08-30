@@ -56,11 +56,11 @@ export class AdaptableChart extends React.Component<IAdaptableChartProps, Adapta
 
   render() {
     let commonProps: ChartDisplayPopupPropsBase<this> = {
-      ModalContainer: this.state.chartContainer,
+      modalContainer: this.state.chartContainer,
       onClose: this.props.onClose,
       ShowModal: this.props.showModal,
-      AccessLevel: this.state.accessLevel,
-      Api: this.props.Adaptable.api,
+      accessLevel: this.state.accessLevel,
+      api: this.props.Adaptable.api,
     };
 
     let ChartCmp: any = AdaptableViewFactory[ScreenPopups.ChartDisplayPopup];

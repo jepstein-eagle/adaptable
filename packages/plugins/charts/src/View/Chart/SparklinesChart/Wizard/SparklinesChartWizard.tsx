@@ -12,19 +12,19 @@ export interface SparklinesChartWizardProps
 
 export class SparklinesChartWizard extends React.Component<SparklinesChartWizardProps, {}> {
   render() {
-    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.configEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ChartStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <SparklinesChartColumnWizard Api={this.props.Api} />,
+              Element: <SparklinesChartColumnWizard api={this.props.api} />,
             },
             /*
             {
@@ -32,7 +32,7 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
               Index: 1,
               Element: (
                 <SparklinesChartExpressionColumnWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   ExpressionMode={ExpressionMode.SingleColumn}
                 />
               ),
@@ -42,17 +42,17 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
               StepName: 'Chart Settings',
               Index: 2,
               Element: (
-                <SparklinesChartSettingsWizard ChartNames={chartNames} Api={this.props.Api} />
+                <SparklinesChartSettingsWizard ChartNames={chartNames} api={this.props.api} />
               ),
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <SparklinesChartSummaryWizard Api={this.props.Api} />,
+              Element: <SparklinesChartSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -57,14 +57,14 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.value) {
-        let chartType: ChartType = this.props.PopupParams.value.trim() as ChartType; // todo: use the enum...
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.value) {
+        let chartType: ChartType = this.props.popupParams.value.trim() as ChartType; // todo: use the enum...
 
-        if (this.props.PopupParams.action == 'New') {
+        if (this.props.popupParams.action == 'New') {
           this.onNew(chartType);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let index: number = this.props.ChartDefinitions.findIndex(
             cd => cd.Name == this.props.CurrentChartDefinition.Name
           );
@@ -90,10 +90,10 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
         <ChartEntityRow
           colItems={colItems}
           AdaptableObject={Chart}
-          api={this.props.Api}
+          api={this.props.api}
           key={Chart.Name}
           onEdit={() => this.onEdit(Chart as ChartDefinition)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(Chart, description)}
           onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
           onShowChart={chartName => this.onShowChart(chartName)}
@@ -161,8 +161,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
               <CategoryChartWizard
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.ModalContainer}
-                Api={this.props.Api}
+                ModalContainer={this.props.modalContainer}
+                api={this.props.api}
                 WizardStartIndex={this.state.WizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -179,8 +179,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
               <PieChartWizard
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.ModalContainer}
-                Api={this.props.Api}
+                ModalContainer={this.props.modalContainer}
+                api={this.props.api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -198,8 +198,8 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
               <SparklinesChartWizard
                 EditedAdaptableObject={editedChartDefinition}
                 ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.ModalContainer}
-                Api={this.props.Api}
+                ModalContainer={this.props.modalContainer}
+                api={this.props.api}
                 WizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
@@ -265,11 +265,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
     });
     // if we've come from the Toolbar and the Searches are identical then close the main popup
     if (
-      this.props.PopupParams &&
-      this.props.PopupParams.source &&
-      this.props.PopupParams.source == 'Toolbar'
+      this.props.popupParams &&
+      this.props.popupParams.source &&
+      this.props.popupParams.source == 'Toolbar'
     ) {
-      if (this.props.ChartDefinitions === this.props.Api.chartApi.getAllChartDefinitions()) {
+      if (this.props.ChartDefinitions === this.props.api.chartApi.getAllChartDefinitions()) {
         this.props.onClosePopup();
       }
     }

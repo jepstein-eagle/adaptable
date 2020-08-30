@@ -49,7 +49,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
 
       //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
       let commonProps: StrategyViewPopupProps<this> = {
-        PopupParams: this.props.PopupParams,
+        popupParams: this.props.PopupParams,
         onClearPopupParams: () =>
           this.props.onClearPopupParams ? this.props.onClearPopupParams() : null,
         onClosePopup: () => {
@@ -57,10 +57,10 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
             this.props.onHide();
           }
         },
-        TeamSharingActivated: this.props.Adaptable.api.teamSharingApi.isTeamSharingActivated(),
-        ModalContainer: modalContainer,
-        AccessLevel: accessLevel,
-        Api: this.props.Adaptable.api,
+        teamSharingActivated: this.props.Adaptable.api.teamSharingApi.isTeamSharingActivated(),
+        modalContainer: modalContainer,
+        accessLevel: accessLevel,
+        api: this.props.Adaptable.api,
       };
 
       var body: any = React.createElement(bodyElement, commonProps);

@@ -19,10 +19,10 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
@@ -33,7 +33,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
               Index: 1,
               Element: (
                 <FormatColumnStyleWizard
-                  // Api={this.props.api}
+                  // api={this.props.api}
                   StyleClassNames={this.props.StyleClassNames}
                   api={this.props.api}
                 />
@@ -55,8 +55,8 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
               Element: <FormatColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

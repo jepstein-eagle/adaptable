@@ -69,11 +69,11 @@ class Glue42ToolbarControlComponent extends React.Component<
   }
 
   public componentDidMount() {
-    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -88,13 +88,13 @@ class Glue42ToolbarControlComponent extends React.Component<
   };
 
   getGlue42Api() {
-    return this.props.Api.pluginsApi.getPluginApi('glue42');
+    return this.props.api.pluginsApi.getPluginApi('glue42');
   }
 
   render(): any {
     let allReports: Report[] = this.props
       .SystemReports!.filter(s =>
-        this.props.Api.internalApi.getReportService().IsSystemReportActive(s)
+        this.props.api.internalApi.getReportService().IsSystemReportActive(s)
       )
       .concat(this.props.Reports);
 

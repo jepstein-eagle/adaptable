@@ -49,11 +49,11 @@ class PercentBarPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        let columnId: string = this.props.popupParams.columnId;
+        if (this.props.popupParams.action == 'New') {
+          let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
             columnId
           );
 
@@ -81,13 +81,13 @@ class PercentBarPopupComponent extends React.Component<
 
           this.onNewFromColumn(newPercentRender);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let editPercentRender = this.props.PercentBars.find(x => x.ColumnId == columnId);
           this.onEdit(editPercentRender);
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -105,19 +105,19 @@ class PercentBarPopupComponent extends React.Component<
     ];
 
     let PercentBarItems = this.props.PercentBars.map((percentBar: PercentBar) => {
-      let column = this.props.Api.columnApi.getColumnFromId(percentBar.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(percentBar.ColumnId);
       return (
         <PercentBarEntityRow
           key={percentBar.Uuid}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={percentBar}
           Column={column}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={PercentBarRedux.PercentBarDelete(percentBar)}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -125,7 +125,7 @@ class PercentBarPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Percent Bar "
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -155,8 +155,8 @@ class PercentBarPopupComponent extends React.Component<
             <PercentBarWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
               configEntities={null}
-              api={this.props.Api}
-              modalContainer={this.props.ModalContainer}
+              api={this.props.api}
+              modalContainer={this.props.modalContainer}
               wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

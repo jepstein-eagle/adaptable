@@ -110,7 +110,7 @@ class QuickSearchPopupComponent extends React.Component<
         </Panel>
         <StyleComponent
           style={{ height: '100%' }}
-          api={this.props.Api}
+          api={this.props.api}
           StyleClassNames={this.props.StyleClassNames}
           Style={this.props.QuickSearchStyle}
           UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}

@@ -4,9 +4,9 @@ import { BaseProps } from './BaseProps';
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
 export interface StrategyViewPopupProps<View> extends BaseProps<View> {
-  PopupParams: StrategyParams;
+  popupParams: StrategyParams;
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
-  TeamSharingActivated: boolean;
+  teamSharingActivated: boolean;
   //  ColumnSorts: ColumnSort[]; // we should get rid of this!
   onClosePopup: () => void;
 }

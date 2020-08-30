@@ -91,7 +91,7 @@ class DataSourceToolbarControlComponent extends React.Component<
           onClick={() => this.onApplyClick()}
           tooltip="Get Data Source"
           disabled={!canApplyDataSource}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
         {/*
         {this.state.CurrentDataSource != null && !canApplyDataSource && (

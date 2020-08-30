@@ -50,13 +50,13 @@ export class PlusMinusSummaryComponent extends React.Component<
         FunctionName={StrategyConstants.PlusMinusStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.PlusMinusRules.filter(
-            item => item.ColumnId == this.props.SummarisedColumn.ColumnId
+            item => item.ColumnId == this.props.summarisedColumn.ColumnId
           ),
           'Plus Minus Condition'
         )}
         onNew={() => this.onNew()}
         NewButtonTooltip={'Plus / Minus Rule'}
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -64,16 +64,16 @@ export class PlusMinusSummaryComponent extends React.Component<
 
     // existing items
     this.props.PlusMinusRules.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
             key={'PM' + index}
             Item1={'Nudge Value: ' + item.NudgeValue}
             Item2={this.wrapExpressionDescription(
-              this.props.Api.queryApi.getExpressionForQueryObject(item)
+              this.props.api.queryApi.getExpressionForQueryObject(item)
             )}
             ConfigEnity={item}
-            showShare={this.props.TeamSharingActivated}
+            showShare={this.props.teamSharingActivated}
             EntityType={StrategyConstants.PlusMinusStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
@@ -92,9 +92,9 @@ export class PlusMinusSummaryComponent extends React.Component<
           <PlusMinusWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
             configEntities={null}
-            modalContainer={this.props.ModalContainer}
-            SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            SelectedColumnId={this.props.summarisedColumn.ColumnId}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -113,7 +113,7 @@ export class PlusMinusSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: PlusMinusRule = ObjectFactory.CreateEmptyPlusMinusRule();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,

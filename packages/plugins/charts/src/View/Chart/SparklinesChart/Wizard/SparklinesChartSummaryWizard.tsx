@@ -24,7 +24,7 @@ export class SparklinesChartSummaryWizard
       { Key: 'Description', Value: this.props.Data.Description },
       {
         Key: 'Column',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
       },
       { Key: 'Values', Value: this.props.Data.Expression },
     ];

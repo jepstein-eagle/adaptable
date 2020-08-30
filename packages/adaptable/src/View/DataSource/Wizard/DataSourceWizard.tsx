@@ -16,10 +16,10 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Settings',
               Index: 0,
@@ -33,8 +33,8 @@ export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}>
               Element: <DataSourceSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

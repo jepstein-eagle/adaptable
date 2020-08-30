@@ -47,7 +47,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
     let content = (
       <div
         className={join(
-          this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+          this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
           'ab-DashboardToolbar__Theme__wrap'
         )}
       >

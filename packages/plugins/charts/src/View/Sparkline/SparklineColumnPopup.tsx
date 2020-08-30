@@ -54,8 +54,8 @@ class SparklineColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      let sparklineColumnId = this.props.PopupParams.columnId;
+    if (this.props.popupParams) {
+      let sparklineColumnId = this.props.popupParams.columnId;
       if (sparklineColumnId) {
         const sparklineColumn = this.props.SparklineColumns.filter(
           c => c.ColumnId === sparklineColumnId
@@ -81,17 +81,17 @@ class SparklineColumnPopupComponent extends React.Component<
     ];
 
     let SparklineItems = this.props.SparklineColumns.map((sparklineColumn: SparklineColumn) => {
-      let column = this.props.Api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
       return (
         <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={sparklineColumn}
           Column={column}
           onEdit={() => this.onEdit(sparklineColumn)}
           onShare={description => this.props.onShare(sparklineColumn, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={SparklineColumnRedux.SparklineColumnsDelete(sparklineColumn)}
           onMinimumValueChanged={(sparklineColumn, minimumValue) =>
             this.onMinimumValueChanged(sparklineColumn, minimumValue)
@@ -129,8 +129,8 @@ class SparklineColumnPopupComponent extends React.Component<
             <SparklineColumnWizard
               EditedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
               ConfigEntities={null}
-              Api={this.props.Api}
-              ModalContainer={this.props.ModalContainer}
+              api={this.props.api}
+              ModalContainer={this.props.modalContainer}
               WizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

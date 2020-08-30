@@ -50,11 +50,11 @@ class AlertPopupComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        if (this.props.popupParams.action == 'New') {
           let alertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-          alertDefinition.ColumnId = this.props.PopupParams.columnId;
+          alertDefinition.ColumnId = this.props.popupParams.columnId;
           this.setState({
             EditedAdaptableObject: alertDefinition,
             WizardStartIndex: 1,
@@ -80,22 +80,22 @@ class AlertPopupComponent extends React.Component<
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = this.props.Api.columnApi.getColumnFromId(alertDefinition.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={alertDefinition}
           Column={column}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={description => this.props.onShare(alertDefinition, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={AlertRedux.AlertDefinitionDelete(alertDefinition)}
           onChangeMessageType={(alertDef, messageType) =>
             this.onMessageTypeChanged(alertDef, messageType)
           }
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -104,12 +104,12 @@ class AlertPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
     let startWizardText =
-      this.props.AccessLevel == 'ReadOnly'
+      this.props.accessLevel == 'ReadOnly'
         ? 'You have no Alert Definitions.'
         : "Click 'New' to start creating Alert Definitions.  An alert will be triggered whenever an edit - or external data change - matches the condition in the Alert Definition.";
 
@@ -131,8 +131,8 @@ class AlertPopupComponent extends React.Component<
           <AlertWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             configEntities={null}
-            modalContainer={this.props.ModalContainer}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onSetNewSharedQueryName={newSharedQueryName =>
               this.setState({

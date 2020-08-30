@@ -49,7 +49,7 @@ export class FormatColumnSummaryComponent extends React.Component<
 
   render(): any {
     let formatColumn: FormatColumn = this.props.FormatColumns.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noFormatColumn: boolean = formatColumn == null;
 
@@ -63,7 +63,7 @@ export class FormatColumnSummaryComponent extends React.Component<
           StrategySummary={'No Format Column Set'}
           onNew={() => this.onNew()}
           NewButtonTooltip={StrategyConstants.FormatColumnStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     } else {
@@ -73,7 +73,7 @@ export class FormatColumnSummaryComponent extends React.Component<
           Item1={<StrategyProfile FunctionName={StrategyConstants.FormatColumnStrategyId} />}
           Item2={<StyleVisualItem Style={formatColumn.Style} />}
           ConfigEnity={formatColumn}
-          showShare={this.props.TeamSharingActivated}
+          showShare={this.props.teamSharingActivated}
           EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={description => this.props.onShare(formatColumn, description)}
@@ -90,9 +90,9 @@ export class FormatColumnSummaryComponent extends React.Component<
         {this.state.EditedAdaptableObject && (
           <FormatColumnWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             configEntities={this.props.FormatColumns}
-            api={this.props.Api}
+            api={this.props.api}
             StyleClassNames={this.props.StyleClassNames}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
@@ -106,7 +106,7 @@ export class FormatColumnSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: FormatColumn = ObjectFactory.CreateEmptyFormatColumn();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,

@@ -48,20 +48,20 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
+    if (this.props.popupParams) {
       // if we come in from a function then open the current layout
-      if (this.props.PopupParams.source == 'FunctionButton') {
+      if (this.props.popupParams.source == 'FunctionButton') {
         let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName);
         if (currentLayout) {
           this.onEdit(currentLayout);
         }
       }
 
-      if (this.props.PopupParams.action) {
-        if (this.props.PopupParams.action == 'New') {
+      if (this.props.popupParams.action) {
+        if (this.props.popupParams.action == 'New') {
           this.onNew();
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let currentLayout = this.props.Layouts.find(
             as => as.Name == this.props.CurrentLayoutName
           );
@@ -72,10 +72,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
       }
 
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source &&
-        (this.props.PopupParams.source == 'Toolbar' ||
-          this.props.PopupParams.source == 'FunctionButton' ||
-          this.props.PopupParams.source == 'ColumnMenu');
+        this.props.popupParams.source &&
+        (this.props.popupParams.source == 'Toolbar' ||
+          this.props.popupParams.source == 'FunctionButton' ||
+          this.props.popupParams.source == 'ColumnMenu');
     }
   }
 
@@ -99,16 +99,16 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         <LayoutEntityRow
           key={x.Uuid}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
           AdaptableObject={x}
           onEdit={() => this.onEdit(x)}
           onShare={description => this.props.onShare(x, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
           canDelete={this.props.Layouts.length > 1}
           onSelect={() => this.props.onSelectLayout(x.Name)}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -120,7 +120,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         icon="plus"
         tone="accent"
         variant="raised"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       >
         ADD
       </SimpleButton>
@@ -145,9 +145,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             <LayoutWizard
               editedAdaptableObject={this.state.EditedAdaptableObject}
               configEntities={this.props.Layouts}
-              modalContainer={this.props.ModalContainer}
-              ColumnSorts={this.props.Api.gridApi.getColumnSorts()}
-              api={this.props.Api}
+              modalContainer={this.props.modalContainer}
+              ColumnSorts={this.props.api.gridApi.getColumnSorts()}
+              api={this.props.api}
               wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

@@ -49,7 +49,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
 
   render(): any {
     let freeTextColumn: FreeTextColumn = this.props.FreeTextColumns.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noFreeTextColumn: boolean = freeTextColumn == null;
 
@@ -60,7 +60,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
         ? ' Stored values: ' + freeTextColumn.FreeTextStoredValues.length
         : 'No stored values';
       let index = this.props.FreeTextColumns.findIndex(
-        ftc => ftc.ColumnId == this.props.SummarisedColumn.ColumnId
+        ftc => ftc.ColumnId == this.props.summarisedColumn.ColumnId
       );
       FreeTextColumnRow = (
         <StrategyDetail
@@ -68,7 +68,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
           Item1={<StrategyProfile FunctionName={StrategyConstants.FreeTextColumnStrategyId} />}
           Item2={description}
           ConfigEnity={freeTextColumn}
-          showShare={this.props.TeamSharingActivated}
+          showShare={this.props.teamSharingActivated}
           EntityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(freeTextColumn)}
           onShare={description => this.props.onShare(freeTextColumn, description)}
@@ -85,13 +85,13 @@ export class FreeTextColumnSummaryComponent extends React.Component<
         {this.state.EditedAdaptableObject && (
           <FreeTextColumnWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             configEntities={this.props.FreeTextColumns}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            api={this.props.Api}
+            api={this.props.api}
           />
         )}
       </div>
@@ -100,7 +100,7 @@ export class FreeTextColumnSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: FreeTextColumn = ObjectFactory.CreateEmptyFreeTextColumn();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,

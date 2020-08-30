@@ -4,7 +4,7 @@ import * as TeamSharingRedux from '../../../Redux/ActionsReducers/TeamSharingRed
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 
 export interface StrategySummaryProps<View> extends StrategyViewPopupProps<View> {
-  SummarisedColumn: AdaptableColumn;
+  summarisedColumn: AdaptableColumn;
   onShare: (
     entity: AdaptableObject,
     description: string

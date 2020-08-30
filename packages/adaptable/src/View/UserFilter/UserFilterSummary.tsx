@@ -42,7 +42,7 @@ export class UserFilterSummaryComponent extends React.Component<
   render(): any {
     let strategySummaries: any = [];
 
-    let userFilters: UserFilter[] = this.props.Api.filterApi.getAllUserFilter();
+    let userFilters: UserFilter[] = this.props.api.filterApi.getAllUserFilter();
 
     // title row
     let titleRow = (
@@ -53,21 +53,21 @@ export class UserFilterSummaryComponent extends React.Component<
         onNew={() => this.onNew()}
         NewButtonDisabled={!this.isFilterable()}
         NewButtonTooltip={StrategyConstants.UserFilterStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);
 
     // existing items
     userFilters.map((item, index) => {
-      if (this.props.Api.scopeApi.isColumnInScope(this.props.SummarisedColumn, item.Scope)) {
+      if (this.props.api.scopeApi.isColumnInScope(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
             Item1={item.Name}
             Item2={this.getDescription(item)}
             ConfigEnity={item}
-            showShare={this.props.TeamSharingActivated}
+            showShare={this.props.teamSharingActivated}
             showEdit={this.isFilterable()}
             EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
@@ -87,9 +87,9 @@ export class UserFilterSummaryComponent extends React.Component<
           <UserFilterWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
             configEntities={null}
-            modalContainer={this.props.ModalContainer}
-            SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            SelectedColumnId={this.props.summarisedColumn.ColumnId}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -130,7 +130,7 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 
   isColumnFilterable(): boolean {
-    if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
+    if (this.props.summarisedColumn && !this.props.summarisedColumn.Filterable) {
       return false;
     }
     return true;

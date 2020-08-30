@@ -69,7 +69,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     let flashingCellDurations: number[] = [250, 500, 750, 1000];
 
     let calculatedColumns: string[] = this.props.CalculatedColumns.map(c => c.ColumnId);
-    let numericColumns = this.props.Api.columnApi.getNumericColumns();
+    let numericColumns = this.props.api.columnApi.getNumericColumns();
     let numericNonCalcColumns = numericColumns.filter(c =>
       ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId)
     );
@@ -80,7 +80,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     );
 
     let allPotentialFlashingCells: FlashingCell[] = [];
-    let flashingCellState: FlashingCellState = this.props.Api.configApi.configGetFlashingCellState(
+    let flashingCellState: FlashingCellState = this.props.api.configApi.configGetFlashingCellState(
       false
     );
     numericNonCalcColumns.forEach(nc => {
@@ -106,7 +106,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
           key={flashingcell.ColumnId}
           colItems={colItems}
           FlashingCellDurations={flashingCellDurations}
-          api={this.props.Api}
+          api={this.props.api}
           onSelect={flashingcell => this.props.onSelectColumn(flashingcell)}
           onChangeFlashingDuration={(flashingcell, newFlashDuration) =>
             this.props.onChangeFlashDuration(flashingcell, newFlashDuration)
@@ -121,7 +121,7 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
           onShare={null}
           onEdit={null}
           onDeleteConfirm={null}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });

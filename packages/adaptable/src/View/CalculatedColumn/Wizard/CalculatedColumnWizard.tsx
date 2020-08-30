@@ -18,10 +18,10 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.CalculatedColumnStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.CalculatedColumnStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Expression',
               Index: 0,
@@ -45,8 +45,8 @@ export class CalculatedColumnWizard extends React.Component<CalculatedColumnWiza
               Element: <CalculatedColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

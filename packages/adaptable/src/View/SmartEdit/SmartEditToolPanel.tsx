@@ -60,8 +60,8 @@ class SmartEditToolPanelComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Api) {
-      const adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    if (this.props.api) {
+      const adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       if (adaptable) {
         adaptable._on('CellsSelected', () => {
           this.props.onSmartEditCheckSelectedCells();
@@ -74,16 +74,16 @@ class SmartEditToolPanelComponent extends React.Component<
     let statusColour: StatusColour = this.getStatusColour();
 
     let selectedColumn = StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)
-      ? this.props.Api.columnApi.getColumnFromId(this.state.SelectedColumnId)
+      ? this.props.api.columnApi.getColumnFromId(this.state.SelectedColumnId)
       : null;
 
     let previewPanel = (
       <PreviewResultsPanel
-        PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Api}
-        SelectedColumn={selectedColumn}
-        ShowPanel={true}
-        ShowHeader={false}
+        previewInfo={this.props.PreviewInfo}
+        api={this.props.api}
+        selectedColumn={selectedColumn}
+        showPanel={true}
+        showHeader={false}
       />
     );
 
@@ -102,7 +102,7 @@ class SmartEditToolPanelComponent extends React.Component<
     };
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == 'ReadOnly' ||
+      this.props.accessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
       this.props.InPivotMode == true;
 
@@ -144,7 +144,7 @@ class SmartEditToolPanelComponent extends React.Component<
                 (this.props.PreviewInfo != null &&
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
               }
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             >
               Edit
             </ButtonApply>
@@ -212,7 +212,7 @@ class SmartEditToolPanelComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = this.props.Api.internalApi
+    let confirmation: IUIConfirmation = this.props.api.internalApi
       .getValidationService()
       .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);

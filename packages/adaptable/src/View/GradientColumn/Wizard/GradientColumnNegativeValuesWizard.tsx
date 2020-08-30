@@ -64,7 +64,7 @@ export class GradientColumnNegativeValuesWizard
 
             <Flex flex={3}>
               <ColorPicker
-                Api={this.props.api}
+                api={this.props.api}
                 value={this.state.NegativeColor}
                 onChange={(x: any) => this.onNegativeColorSelectChanged(x)}
               />

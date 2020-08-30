@@ -60,11 +60,11 @@ class OpenFinToolbarControlComponent extends React.Component<
   }
 
   public componentDidMount() {
-    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -79,13 +79,13 @@ class OpenFinToolbarControlComponent extends React.Component<
   };
 
   getOpenFinApi(): OpenFinApi {
-    return this.props.Api.pluginsApi.getPluginApi('openfin');
+    return this.props.api.pluginsApi.getPluginApi('openfin');
   }
 
   render(): any {
     let allReports: Report[] = this.props
       .SystemReports!.filter(s =>
-        this.props.Api.internalApi.getReportService().IsSystemReportActive(s)
+        this.props.api.internalApi.getReportService().IsSystemReportActive(s)
       )
       .concat(this.props.Reports);
 

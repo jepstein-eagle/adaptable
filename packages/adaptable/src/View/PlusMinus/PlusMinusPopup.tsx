@@ -57,11 +57,11 @@ class PlusMinusPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        if (this.props.popupParams.action == 'New') {
           let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule();
-          plusMinus.ColumnId = this.props.PopupParams.columnId;
+          plusMinus.ColumnId = this.props.popupParams.columnId;
           this.setState({
             EditedAdaptableObject: plusMinus,
             WizardStatus: WizardStatus.New,
@@ -70,7 +70,7 @@ class PlusMinusPopupComponent extends React.Component<
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -93,23 +93,23 @@ class PlusMinusPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
     let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-      let column = this.props.Api.columnApi.getColumnFromId(x.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(x.ColumnId);
 
       return (
         <PlusMinusEntityRow
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={x}
           key={index}
           onEdit={() => this.onEdit(x)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(x, description)}
           onDeleteConfirm={PlusMinusRedux.PlusMinusRuleDelete(x)}
           Column={column}
           onColumnDefaultNudgeValueChange={(plusMinusRule, event) =>
             this.onColumnDefaultNudgeValueChange(plusMinusRule, event)
           }
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -118,7 +118,7 @@ class PlusMinusPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Plus / Minus Rule"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -144,10 +144,10 @@ class PlusMinusPopupComponent extends React.Component<
             <PlusMinusWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
               configEntities={null}
-              modalContainer={this.props.ModalContainer}
+              modalContainer={this.props.modalContainer}
               wizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={null}
-              api={this.props.Api}
+              api={this.props.api}
               onSetNewSharedQueryName={(newSharedQueryName: string) =>
                 this.setState({
                   NewSharedQueryName: newSharedQueryName,

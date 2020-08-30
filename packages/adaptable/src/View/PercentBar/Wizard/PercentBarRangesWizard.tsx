@@ -52,7 +52,7 @@ export class PercentBarRangesWizard
               mr={2}
             />
             <ColorPicker
-              Api={this.props.api}
+              api={this.props.api}
               value={range.Color}
               onChange={(event: React.FormEvent) => {
                 const { value } = event.target as HTMLInputElement;

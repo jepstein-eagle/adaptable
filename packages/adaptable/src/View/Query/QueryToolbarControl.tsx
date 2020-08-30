@@ -107,7 +107,7 @@ class QueryToolbarControlComponent extends React.Component<
         })),
     ];
 
-    let availableColumns: any[] = this.props.Api.columnApi.getColumns().map(col => {
+    let availableColumns: any[] = this.props.api.columnApi.getColumns().map(col => {
       return {
         label: col.FriendlyName,
         onClick: () => this.setState({ expression: this.state.expression + `[${col.ColumnId}]` }),

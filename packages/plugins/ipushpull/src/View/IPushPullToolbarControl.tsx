@@ -82,11 +82,11 @@ class IPushPullToolbarControlComponent extends React.Component<
   }
 
   public componentDidMount() {
-    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -101,7 +101,7 @@ class IPushPullToolbarControlComponent extends React.Component<
   };
 
   getIPPApi() {
-    return this.props.Api.pluginsApi.getPluginApi('ipushpull');
+    return this.props.api.pluginsApi.getPluginApi('ipushpull');
   }
 
   render(): any {
@@ -110,7 +110,7 @@ class IPushPullToolbarControlComponent extends React.Component<
       : [];
 
     let allReports: Report[] = systemReports!
-      .filter(s => this.props.Api.internalApi.getReportService().IsSystemReportActive(s))
+      .filter(s => this.props.api.internalApi.getReportService().IsSystemReportActive(s))
       .concat(this.props.Reports);
 
     let availableReports: any[] = allReports.map(report => {
@@ -212,7 +212,7 @@ class IPushPullToolbarControlComponent extends React.Component<
             )}
             alignItems="stretch"
           >
-            {this.props.Api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
+            {this.props.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
               <ButtonSchedule
                 marginLeft={1}
                 className="ab-DashboardToolbar__IPushPull__schedule"

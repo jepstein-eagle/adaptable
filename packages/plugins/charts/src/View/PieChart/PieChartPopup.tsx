@@ -98,12 +98,12 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.columnId) {
-        const column = this.props.PopupParams.columnId;
+    if (this.props.popupParams) {
+      if (this.props.popupParams.columnId) {
+        const column = this.props.popupParams.columnId;
 
         if (StringExtensions.IsNotNullOrEmpty(column)) {
-          this.updateDataSource(null, column, this.props.PopupParams.primaryKeyValues);
+          this.updateDataSource(null, column, this.props.popupParams.primaryKeyValues);
         }
       }
     }
@@ -358,7 +358,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
                   style={{ flex: 1 }}
                   SelectedColumnIds={[this.state.PieChartDefinition.PrimaryColumnId]}
                   SelectionMode={SelectionMode.Single}
-                  ColumnList={this.props.Api.columnApi.getColumns()}
+                  ColumnList={this.props.api.columnApi.getColumns()}
                   onColumnChange={columns => this.onDataGroupColumnChanged(columns)}
                 />
               </Flex>
@@ -407,7 +407,7 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
       pieChartDefinition.PrimaryKeyValues = primaryKeyValues;
     }
 
-    let chartData: ChartData = this.props.Api.internalApi
+    let chartData: ChartData = this.props.api.internalApi
       .getChartService()
       .BuildPieChartData(pieChartDefinition);
     let dataSource: PieChartDataItem[] = chartData.Data;

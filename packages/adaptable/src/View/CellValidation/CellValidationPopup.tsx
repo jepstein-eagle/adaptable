@@ -54,11 +54,11 @@ class CellValidationPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        if (this.props.popupParams.action == 'New') {
           let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
-          cellValitdation.ColumnId = this.props.PopupParams.columnId;
+          cellValitdation.ColumnId = this.props.popupParams.columnId;
           this.setState({
             EditedAdaptableObject: cellValitdation,
             WizardStartIndex: 1,
@@ -67,7 +67,7 @@ class CellValidationPopupComponent extends React.Component<
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
   render() {
@@ -89,21 +89,21 @@ class CellValidationPopupComponent extends React.Component<
     ];
 
     let CellValidationItems = this.props.CellValidations.map((cellValidationRule, index) => {
-      let column = this.props.Api.columnApi.getColumnFromId(cellValidationRule.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(cellValidationRule.ColumnId);
       return (
         <CellValidationEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={cellValidationRule}
           Column={column}
           onEdit={() => this.onEdit(cellValidationRule)}
           onShare={description => this.props.onShare(cellValidationRule, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={CellValidationRedux.CellValidationDelete(cellValidationRule)}
           onChangeActionMode={(x, actionMode) => this.onActionModeChanged(x, actionMode)}
-          AccessLevel={this.props.AccessLevel}
-          ValidationService={this.props.Api.internalApi.getValidationService()}
+          AccessLevel={this.props.accessLevel}
+          ValidationService={this.props.api.internalApi.getValidationService()}
         />
       );
     });
@@ -114,7 +114,7 @@ class CellValidationPopupComponent extends React.Component<
         tooltip="Create Cell Validation Rule"
         icon="plus"
         variant="raised"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       >
         NEW
       </SimpleButton>
@@ -144,8 +144,8 @@ class CellValidationPopupComponent extends React.Component<
           <CellValidationWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             configEntities={null}
-            api={this.props.Api}
-            modalContainer={this.props.ModalContainer}
+            api={this.props.api}
+            modalContainer={this.props.modalContainer}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
                 NewSharedQueryName: newSharedQueryName,

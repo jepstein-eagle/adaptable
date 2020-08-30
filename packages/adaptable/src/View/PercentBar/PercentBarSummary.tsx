@@ -46,7 +46,7 @@ export class PercentBarSummaryComponent extends React.Component<
 
   render(): any {
     let percentBar: PercentBar = this.props.PercentBars.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noPercentBar: boolean = percentBar == null;
 
@@ -60,7 +60,7 @@ export class PercentBarSummaryComponent extends React.Component<
           StrategySummary={'No Percent Bar'}
           onNew={() => this.onNew()}
           NewButtonTooltip={StrategyConstants.PercentBarStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     } else {
@@ -70,7 +70,7 @@ export class PercentBarSummaryComponent extends React.Component<
           Item1={<StrategyProfile FunctionName={StrategyConstants.PercentBarStrategyId} />}
           Item2={'Percent Bar set'}
           ConfigEnity={percentBar}
-          showShare={this.props.TeamSharingActivated}
+          showShare={this.props.teamSharingActivated}
           EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
@@ -87,13 +87,13 @@ export class PercentBarSummaryComponent extends React.Component<
         {this.state.EditedAdaptableObject && (
           <PercentBarWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             configEntities={this.props.PercentBars}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            api={this.props.Api}
+            api={this.props.api}
           />
         )}
       </div>
@@ -102,10 +102,10 @@ export class PercentBarSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
-      this.props.SummarisedColumn.ColumnId
+    let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
+      this.props.summarisedColumn.ColumnId
     );
 
     configEntity.Ranges.push({

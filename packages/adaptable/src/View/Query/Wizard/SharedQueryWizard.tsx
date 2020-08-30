@@ -15,10 +15,10 @@ export class SharedQueryWizard extends React.Component<SharedQueryWizardProps, {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.QueryStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.QueryStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Expression',
               Index: 0,
@@ -35,8 +35,8 @@ export class SharedQueryWizard extends React.Component<SharedQueryWizardProps, {
               Element: <SharedQuerySummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

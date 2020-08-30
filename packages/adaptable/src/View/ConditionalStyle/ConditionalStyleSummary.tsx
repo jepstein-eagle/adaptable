@@ -58,20 +58,20 @@ export class ConditionalStyleSummaryComponent extends React.Component<
         FunctionName={StrategyConstants.ConditionalStyleStrategyId}
         StrategySummary={Helper.ReturnItemCount(
           this.props.ConditionalStyles.filter(item =>
-            this.props.Api.scopeApi.isColumnInScopeColumns(this.props.SummarisedColumn, item.Scope)
+            this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)
           ),
           StrategyConstants.ConditionalStyleStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
         NewButtonTooltip={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);
 
     // existing items
     this.props.ConditionalStyles.map((item, index) => {
-      if (this.props.Api.scopeApi.isColumnInScopeColumns(this.props.SummarisedColumn, item.Scope)) {
+      if (this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={'CS' + index}
@@ -79,7 +79,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
             Item2={item.Expression}
             ConfigEnity={item}
             EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-            showShare={this.props.TeamSharingActivated}
+            showShare={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={ConditionalStyleRedux.ConditionalStyleDelete(item)}
@@ -97,9 +97,9 @@ export class ConditionalStyleSummaryComponent extends React.Component<
           <ConditionalStyleWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
             configEntities={null}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             StyleClassNames={this.props.StyleClassNames}
-            api={this.props.Api}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -119,7 +119,7 @@ export class ConditionalStyleSummaryComponent extends React.Component<
   onNew() {
     let configEntity: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
     configEntity.Scope = {
-      ColumnIds: [this.props.SummarisedColumn.ColumnId],
+      ColumnIds: [this.props.summarisedColumn.ColumnId],
     };
     this.setState({
       EditedAdaptableObject: configEntity,

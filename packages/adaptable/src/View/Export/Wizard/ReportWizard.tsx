@@ -18,10 +18,10 @@ export class ReportWizard extends React.Component<ReportWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ExportStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.ExportStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Columns',
               Index: 0,
@@ -64,8 +64,8 @@ export class ReportWizard extends React.Component<ReportWizardProps, {}> {
               Element: <ReportSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject as Report}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject as Report}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

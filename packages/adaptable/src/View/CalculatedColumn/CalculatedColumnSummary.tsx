@@ -37,17 +37,17 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
   render(): any {
     let detailRow;
-    let sharing = this.props.TeamSharingActivated;
+    let sharing = this.props.teamSharingActivated;
 
     this.props.CalculatedColumns.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
         detailRow = (
           <StrategyDetail
             key={'UF' + index}
             Item1={StrategyConstants.CalculatedColumnStrategyFriendlyName}
             Item2={item.ColumnExpression}
             ConfigEnity={item}
-            showShare={this.props.TeamSharingActivated}
+            showShare={this.props.teamSharingActivated}
             EntityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
@@ -66,10 +66,10 @@ export class CalculatedColumnSummaryComponent extends React.Component<
           <CalculatedColumnWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
             configEntities={this.props.CalculatedColumns}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            api={this.props.Api}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

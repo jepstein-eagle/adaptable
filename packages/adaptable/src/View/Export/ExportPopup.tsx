@@ -65,12 +65,12 @@ class ExportPopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action) {
+        if (this.props.popupParams.action == 'New') {
           this.onNew();
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let selectedReport: Report = this.props.Reports.find(
             a => a.Name == this.props.CurrentReport
           );
@@ -78,7 +78,7 @@ class ExportPopupComponent extends React.Component<
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.popupParams.source && this.props.popupParams.source == 'Toolbar';
     }
   }
 
@@ -104,13 +104,13 @@ class ExportPopupComponent extends React.Component<
             AdaptableObject={report}
             key={report.Uuid}
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             onShare={description => this.props.onShare(report, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            TeamSharingActivated={this.props.teamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
         );
       }
@@ -120,7 +120,7 @@ class ExportPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Report"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -146,9 +146,9 @@ class ExportPopupComponent extends React.Component<
         {this.state.EditedAdaptableObject && (
           <ReportWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as Report}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             configEntities={this.props.Reports}
-            api={this.props.Api}
+            api={this.props.api}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
                 NewSharedQueryName: newSharedQueryName,
@@ -221,7 +221,7 @@ class ExportPopupComponent extends React.Component<
 
     if (
       report.ReportColumnScope == ReportColumnScope.ScopeColumns &&
-      ArrayExtensions.IsNullOrEmpty(this.props.Api.scopeApi.getColumnsForScope(report.Scope))
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnsForScope(report.Scope))
     ) {
       return false;
     }

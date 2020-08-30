@@ -16,10 +16,10 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ShortcutStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.ShortcutStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Column Data Type',
               Index: 0,
@@ -42,8 +42,8 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
               Element: <ShortcutSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

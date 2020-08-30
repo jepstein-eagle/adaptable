@@ -95,7 +95,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
         Content={
           <ColorPicker
             style={{ width: '100%' }}
-            Api={this.props.api}
+            api={this.props.api}
             value={sparklineColumn.LineColor}
             onChange={(x: any) => this.onLineColorChanged(x)}
           />

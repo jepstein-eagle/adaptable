@@ -53,11 +53,11 @@ class FreeTextColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'Edit') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        if (this.props.popupParams.action == 'Edit') {
           let editFreeTextColumn = this.props.FreeTextColumns.find(
-            x => x.ColumnId == this.props.PopupParams.columnId
+            x => x.ColumnId == this.props.popupParams.columnId
           );
           let index = this.props.FreeTextColumns.indexOf(editFreeTextColumn);
           this.onEdit(editFreeTextColumn);
@@ -87,13 +87,13 @@ class FreeTextColumnPopupComponent extends React.Component<
           <FreeTextColumnEntityRow
             key={FreeTextColumn.Uuid}
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             AdaptableObject={FreeTextColumn}
             onEdit={() => this.onEdit(FreeTextColumn)}
             onShare={description => this.props.onShare(FreeTextColumn, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            TeamSharingActivated={this.props.teamSharingActivated}
             onDeleteConfirm={FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn)}
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
         );
       }
@@ -103,7 +103,7 @@ class FreeTextColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create FreeText Column"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -125,8 +125,8 @@ class FreeTextColumnPopupComponent extends React.Component<
           {this.state.EditedAdaptableObject != null && (
             <FreeTextColumnWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
-              modalContainer={this.props.ModalContainer}
-              api={this.props.Api}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
               configEntities={this.props.FreeTextColumns}
               wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}

@@ -18,33 +18,33 @@ export class PieChartWizard extends React.Component<PieChartWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ChartStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Primary Column',
               Index: 0,
-              Element: <PieChartPrimaryColumnWizard Api={this.props.Api} />,
+              Element: <PieChartPrimaryColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Secondary Column',
               Index: 1,
-              Element: <PieChartSecondaryColumnWizard Api={this.props.Api} />,
+              Element: <PieChartSecondaryColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Settings',
               Index: 2,
-              Element: <PieChartSettingsWizard ChartNames={chartNames} Api={this.props.Api} />,
+              Element: <PieChartSettingsWizard ChartNames={chartNames} api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PieChartSummaryWizard Api={this.props.Api} />,
+              Element: <PieChartSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -57,12 +57,12 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'Edit') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        if (this.props.popupParams.action == 'Edit') {
           // only editing is possible - you cannot create a new calc column from the column menu
           let calculatedColumn = this.props.CalculatedColumns.find(
-            x => x.ColumnId == this.props.PopupParams.columnId
+            x => x.ColumnId == this.props.popupParams.columnId
           );
           this.onEdit(calculatedColumn);
         }
@@ -97,14 +97,14 @@ class CalculatedColumnPopupComponent extends React.Component<
         return (
           <CalculatedColumnEntityRow
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             onShare={description => this.props.onShare(calculatedColumn, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            TeamSharingActivated={this.props.teamSharingActivated}
             AdaptableObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
         );
       }
@@ -116,7 +116,7 @@ class CalculatedColumnPopupComponent extends React.Component<
           this.onNew();
         }}
         tooltip="Create Calculated Column"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -141,10 +141,10 @@ class CalculatedColumnPopupComponent extends React.Component<
           <CalculatedColumnWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
             configEntities={this.props.CalculatedColumns}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            api={this.props.Api}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

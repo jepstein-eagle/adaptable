@@ -48,9 +48,9 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action === 'New') {
-        this.onNew(this.props.PopupParams.value);
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action === 'New') {
+        this.onNew(this.props.popupParams.value);
       }
     }
   }
@@ -68,14 +68,14 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
       return (
         <SharedQueryEntityRow
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           onShare={description => this.props.onShare(sharedQuery, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           AdaptableObject={sharedQuery}
           key={sharedQuery.Uuid}
           onEdit={sharedQuery => this.onEdit(sharedQuery as SharedQuery)}
           onDeleteConfirm={QueryRedux.SharedQueryDelete(sharedQuery)}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -86,7 +86,7 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
           this.onNew();
         }}
         tooltip="Create Shared Query"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -110,8 +110,8 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
           <SharedQueryWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as SharedQuery}
             configEntities={this.props.SharedQueries}
-            modalContainer={this.props.ModalContainer}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

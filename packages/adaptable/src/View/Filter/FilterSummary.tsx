@@ -37,7 +37,7 @@ export class FilterSummaryComponent extends React.Component<
 
   render(): any {
     let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let description: string = this.getDescription(columnFilter);
     let summaryItems: any[] = [];
@@ -51,7 +51,7 @@ export class FilterSummaryComponent extends React.Component<
         onClick={() => this.props.onClearFilter(columnFilter)}
         tooltip="Clear Column Filter"
         disabled={columnFilter == null}
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -59,14 +59,14 @@ export class FilterSummaryComponent extends React.Component<
   }
 
   getDescription(columnFilter: ColumnFilter): string {
-    if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
+    if (this.props.summarisedColumn && !this.props.summarisedColumn.Filterable) {
       return 'Column is not filterable';
     }
 
     if (columnFilter == null) {
       return 'No Column Filter Active';
     }
-    return this.props.Api.filterApi.convertColumnFilterToString(columnFilter);
+    return this.props.api.filterApi.convertColumnFilterToString(columnFilter);
   }
 }
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterSummaryProps> {

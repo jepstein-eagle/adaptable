@@ -14,33 +14,33 @@ export class SparklineColumnWizard extends React.Component<SparklineColumnWizard
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.SparklineColumnStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.SparklineColumnStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <SparklineColumnSelectColumnWizard Api={this.props.Api} />,
+              Element: <SparklineColumnSelectColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Sparkline Settings',
               Index: 1,
               Element: (
                 <SparklineColumnSettingsWizard
-                  ColorPalette={this.props.Api.userInterfaceApi.getColorPalette()}
-                  Api={this.props.Api}
+                  ColorPalette={this.props.api.userInterfaceApi.getColorPalette()}
+                  api={this.props.api}
                 />
               ),
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <SparklineColumnSummaryWizard Api={this.props.Api} />,
+              Element: <SparklineColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

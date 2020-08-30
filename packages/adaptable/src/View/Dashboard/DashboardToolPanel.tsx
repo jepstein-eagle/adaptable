@@ -50,7 +50,7 @@ class DashboardToolPanelComponent extends React.Component<
             {' '}
             <CheckBox
               className="ab-ToolPanel__Dashboard__collapsed-check"
-              disabled={this.props.Api.internalApi.isGridInPivotMode()}
+              disabled={this.props.api.internalApi.isGridInPivotMode()}
               marginLeft={1}
               marginTop={0}
               fontSize={2}
@@ -64,7 +64,7 @@ class DashboardToolPanelComponent extends React.Component<
             {this.props.CanFloat && (
               <CheckBox
                 className="ab-ToolPanel__Dashboard__collapsed-check"
-                disabled={this.props.Api.internalApi.isGridInPivotMode()}
+                disabled={this.props.api.internalApi.isGridInPivotMode()}
                 marginLeft={1}
                 marginTop={0}
                 fontSize={2}

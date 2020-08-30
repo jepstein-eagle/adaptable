@@ -50,14 +50,14 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
         <FilterEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={null}
           ColumnFilter={columnFilter}
           onEdit={null}
           onDeleteConfirm={null}
           onClear={() => this.onClearColumnFilter(columnFilter.ColumnId)}
           onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -83,7 +83,7 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
   }
 
   private onClearColumnFilter(columnId: string) {
-    this.props.Api.filterApi.clearColumnFilterByColumn(columnId);
+    this.props.api.filterApi.clearColumnFilterByColumn(columnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

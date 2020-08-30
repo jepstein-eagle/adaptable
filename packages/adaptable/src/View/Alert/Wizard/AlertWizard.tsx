@@ -18,10 +18,10 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
-          ModalContainer={this.props.modalContainer}
-          Api={this.props.api}
-          Steps={[
+          friendlyName={StrategyConstants.AlertStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
@@ -64,8 +64,8 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
               Element: <AlertSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.editedAdaptableObject}
-          StepStartIndex={this.props.wizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -45,7 +45,7 @@ export interface ExpressionBuilderConditionSelectorProps
   SelectedColumnId: string;
   SelectedTab: QueryTab;
   QueryBuildStatus: QueryBuildStatus;
-  Api: AdaptableApi;
+  oldapi: AdaptableApi;
   Adaptable: IAdaptable;
 }
 
@@ -197,7 +197,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
       // Note: if we invoke this function and the result is null then we get the distinct values for the column
       // 2. If the property above is not set then instead, we get the distinct values for the column
 
-      if (props.Api.internalApi.getAdaptableOptions().queryOptions.getColumnValues != null) {
+      if (props.oldapi.internalApi.getAdaptableOptions().queryOptions.getColumnValues != null) {
         // The dev has provided us with a function to call that will retrieve the column values
 
         newState = { ShowWaitingMessage: true };
@@ -222,11 +222,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     return newState;
   }
 
-  componentDidMount() {
-    if (this.props.Api.internalApi.getAdaptableOptions().queryOptions.getColumnValues) {
-      this.setStateForColumnValues();
-    }
-  }
+  componentDidMount() {}
 
   setStateForColumnValues(props = this.props) {
     this.lazyLoadColumnValues(props).then(state => {
@@ -234,17 +230,10 @@ export class ExpressionBuilderConditionSelector extends React.Component<
     });
   }
 
-  componentDidUpdate(_prevState: any, prevProps: any) {
-    if (
-      this.props.SelectedColumnId != prevProps.SelectedColumnId &&
-      this.props.Api.internalApi.getAdaptableOptions().queryOptions.getColumnValues
-    ) {
-      this.setStateForColumnValues();
-    }
-  }
+  componentDidUpdate(_prevState: any, prevProps: any) {}
 
   lazyLoadColumnValues = async (props: ExpressionBuilderConditionSelectorProps) => {
-    return props.Api.internalApi
+    return props.oldapi.internalApi
       .getAdaptableOptions()
       .queryOptions.getColumnValues(props.SelectedColumnId)
       .then(result => {
@@ -272,7 +261,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           // make sure that we only return within max items that can be displayed
           let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
             0,
-            props.Api.internalApi.getAdaptableOptions().queryOptions.maxColumnValueItemsDisplayed
+            props.oldapi.internalApi.getAdaptableOptions().queryOptions.maxColumnValueItemsDisplayed
           );
           distinctItems.forEach(di => {
             columnValuePairs.push({ RawValue: di, DisplayValue: '' });
@@ -383,7 +372,7 @@ export class ExpressionBuilderConditionSelector extends React.Component<
           <Flex flex={1} flexDirection="column">
             {selectedColumn && (
               <>
-                {this.props.Api.internalApi.getAdaptableOptions().queryOptions
+                {this.props.oldapi.internalApi.getAdaptableOptions().queryOptions
                   .columnValuesOnlyInQueries ? (
                   <>
                     {this.state.ShowWaitingMessage ? (

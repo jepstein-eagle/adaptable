@@ -66,15 +66,15 @@ class DataSourcePopupComponent extends React.Component<
           key={'ns' + index}
           onEdit={() => this.onEdit(dataSource)}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           onShare={description => this.props.onShare(dataSource, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={DataSourceRedux.DataSourceDelete(dataSource)}
           onChangeName={(dataSource, name) => this.onChangeName(dataSource, name)}
           onChangeDescription={(dataSource, description) =>
             this.onChangeDescription(dataSource, description)
           }
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -83,7 +83,7 @@ class DataSourcePopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.CreateDataSource()}
         tooltip="Create New DataSource"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -107,8 +107,8 @@ class DataSourcePopupComponent extends React.Component<
           <DataSourceWizard
             editedAdaptableObject={DataSource}
             configEntities={this.props.DataSources}
-            modalContainer={this.props.ModalContainer}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}

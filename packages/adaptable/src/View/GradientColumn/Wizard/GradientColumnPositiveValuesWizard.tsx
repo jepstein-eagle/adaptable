@@ -59,7 +59,7 @@ export class GradientColumnPositiveValuesWizard
           <Flex flexDirection="row" alignItems="left" marginTop={3}>
             <Text marginRight={2}>Positive Colour:</Text>{' '}
             <ColorPicker
-              Api={this.props.api}
+              api={this.props.api}
               value={this.state.PositiveColor}
               onChange={(x: any) => this.onPositiveColorSelectChanged(x)}
             />

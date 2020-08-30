@@ -36,17 +36,17 @@ export class CategoryChartYAxisWizard
     };
   }
   render(): any {
-    let numericColumnIds = this.props.Api.columnApi.getNumericColumns().map(c => {
+    let numericColumnIds = this.props.api.columnApi.getNumericColumns().map(c => {
       return c.ColumnId;
     });
     let availableColumns: string[] = numericColumnIds
       .filter(c => ArrayExtensions.NotContainsItem(this.state.YAxisColumnIds, c))
       .map(ac => {
-        return this.props.Api.columnApi.getFriendlyNameFromColumnId(ac);
+        return this.props.api.columnApi.getFriendlyNameFromColumnId(ac);
       });
 
     let existingColumns: string[] = this.state.YAxisColumnIds.map(ec => {
-      return this.props.Api.columnApi.getFriendlyNameFromColumnId(ec);
+      return this.props.api.columnApi.getFriendlyNameFromColumnId(ec);
     });
 
     return (
@@ -101,7 +101,7 @@ export class CategoryChartYAxisWizard
   }
 
   OnSelectedValuesChange(newValues: Array<string>) {
-    let yAxisColumnIds = this.props.Api.columnApi.getColumnIdsFromFriendlyNames(newValues);
+    let yAxisColumnIds = this.props.api.columnApi.getColumnIdsFromFriendlyNames(newValues);
     this.setState({ YAxisColumnIds: yAxisColumnIds } as CategoryChartYAxisWizardState, () =>
       this.props.UpdateGoBackState()
     );

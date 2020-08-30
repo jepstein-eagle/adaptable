@@ -18,7 +18,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
   }
   render(): any {
     let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
-      return this.props.Api.columnApi.getFriendlyNameFromColumnId(c);
+      return this.props.api.columnApi.getFriendlyNameFromColumnId(c);
     });
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Name', Value: this.props.Data.Name },
@@ -27,7 +27,7 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
       { Key: 'Total', Value: this.props.Data.YAxisTotal },
       {
         Key: 'X Axis Column',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId),
       },
       { Key: 'X Axis Values', Value: this.props.Data.XAxisExpression },
     ];

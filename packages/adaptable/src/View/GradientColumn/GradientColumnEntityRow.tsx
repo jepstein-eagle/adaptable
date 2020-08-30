@@ -78,7 +78,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
         Content={
           <ColorPicker
             style={{ width: '100%' }}
-            Api={this.props.api}
+            api={this.props.api}
             value={GradientColumn.PositiveColor}
             onChange={(x: any) => this.onPositiveColorChanged(x)}
           />
@@ -90,7 +90,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
         Content={
           <ColorPicker
             style={{ width: '100%' }}
-            Api={this.props.api}
+            api={this.props.api}
             value={GradientColumn.NegativeColor}
             onChange={(x: any) => this.onNegativeColorChanged(x)}
           />

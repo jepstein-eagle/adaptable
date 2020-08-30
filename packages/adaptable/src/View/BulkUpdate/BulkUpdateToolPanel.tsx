@@ -58,10 +58,10 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Api) {
-      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    if (this.props.api) {
+      let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       if (adaptable) {
-        this.props.Api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
+        this.props.api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
           this.checkSelectedCells();
         });
       }
@@ -75,16 +75,16 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
 
     let previewPanel = (
       <PreviewResultsPanel
-        PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Api}
-        SelectedColumn={selectedColumn}
-        ShowPanel={true}
-        ShowHeader={false}
+        previewInfo={this.props.PreviewInfo}
+        api={this.props.api}
+        selectedColumn={selectedColumn}
+        showPanel={true}
+        showHeader={false}
       />
     );
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == 'ReadOnly' ||
+      this.props.accessLevel == 'ReadOnly' ||
       !this.props.BulkUpdateValidationResult.IsValid ||
       this.props.InPivotMode == true;
 
@@ -118,9 +118,9 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
             }}
             className="ab-ToolPanel__BulkUpdate__select"
             disabled={shouldDisable}
-            SelectedColumnValue={this.props.BulkUpdateValue}
-            SelectedColumn={selectedColumn}
-            Api={this.props.Api}
+            selectedColumnValue={this.props.BulkUpdateValue}
+            selectedColumn={selectedColumn}
+            api={this.props.api}
             onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
           />
         </Flex>
@@ -144,7 +144,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
                 (this.props.PreviewInfo != null &&
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
               }
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             >
               Update
             </ButtonApply>
@@ -214,7 +214,7 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Api.internalApi
+    let confirmation: IUIConfirmation = this.props.api.internalApi
       .getValidationService()
       .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);

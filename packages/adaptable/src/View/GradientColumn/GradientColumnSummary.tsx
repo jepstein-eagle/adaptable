@@ -51,7 +51,7 @@ export class GradientColumnSummaryComponent extends React.Component<
 
   render(): any {
     let GradientColumn: GradientColumn = this.props.GradientColumns.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noGradientColumn: boolean = GradientColumn == null;
 
@@ -65,7 +65,7 @@ export class GradientColumnSummaryComponent extends React.Component<
           StrategySummary={'No Gradient Column'}
           onNew={() => this.onNew()}
           NewButtonTooltip={StrategyConstants.GradientColumnStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     } else {
@@ -75,7 +75,7 @@ export class GradientColumnSummaryComponent extends React.Component<
           Item1={<StrategyProfile FunctionName={StrategyConstants.GradientColumnStrategyId} />}
           Item2={'Gradient Column set'}
           ConfigEnity={GradientColumn}
-          showShare={this.props.TeamSharingActivated}
+          showShare={this.props.teamSharingActivated}
           EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(GradientColumn)}
           onShare={description => this.props.onShare(GradientColumn, description)}
@@ -92,13 +92,13 @@ export class GradientColumnSummaryComponent extends React.Component<
         {this.state.EditedAdaptableObject && (
           <GradientColumnWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
-            modalContainer={this.props.ModalContainer}
+            modalContainer={this.props.modalContainer}
             configEntities={this.props.GradientColumns}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            api={this.props.Api}
+            api={this.props.api}
           />
         )}
       </div>
@@ -107,10 +107,10 @@ export class GradientColumnSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
-      this.props.SummarisedColumn.ColumnId
+    let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
+      this.props.summarisedColumn.ColumnId
     );
 
     configEntity.NegativeValue = Math.min(...distinctColumnsValues);

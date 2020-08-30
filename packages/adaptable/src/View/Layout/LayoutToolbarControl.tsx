@@ -45,7 +45,7 @@ class LayoutToolbarControlComponent extends React.Component<
     );
 
     let isManualSaveLayout: boolean =
-      this.props.Api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
+      this.props.api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
 
     let availableLayoutOptions: any = this.props.Layouts.map((layout, index) => {
       return {
@@ -74,7 +74,7 @@ class LayoutToolbarControlComponent extends React.Component<
         <Flex
           flexDirection="row"
           className={join(
-            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-DashboardToolbar__Layout__wrap'
           )}
         >
@@ -84,7 +84,7 @@ class LayoutToolbarControlComponent extends React.Component<
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
               disabled={!this.props.CanSave}
-              AccessLevel={this.props.AccessLevel}
+              AccessLevel={this.props.accessLevel}
             />
           )}
 
@@ -92,7 +92,7 @@ class LayoutToolbarControlComponent extends React.Component<
             onClick={() => this.props.onEditLayout()}
             tooltip="Edit Layout"
             className="ab-DashboardToolbar__Layout__edit"
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
 
           <ButtonNew
@@ -102,7 +102,7 @@ class LayoutToolbarControlComponent extends React.Component<
             className="ab-DashboardToolbar__Layout__new"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -114,7 +114,7 @@ class LayoutToolbarControlComponent extends React.Component<
               "Are you sure you want to delete '" + this.props.CurrentLayoutName + "'?"
             }
             ConfirmationTitle={'Delete Layout'}
-            AccessLevel={this.props.AccessLevel}
+            AccessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>

@@ -35,7 +35,7 @@ class CustomToolbarControlComponent extends React.Component<
 
     let customToolbarConfiguredInfo: CustomToolbarConfiguredInfo = {
       customToolbar: this.props.CustomToolbar,
-      adaptableApi: this.props.Api,
+      adaptableApi: this.props.api,
     };
     const customToolbarConfiguredEventArgs: CustomToolbarConfiguredEventArgs = AdaptableHelper.createFDC3Message(
       'Custom Toolbar Configured Args',
@@ -51,7 +51,7 @@ class CustomToolbarControlComponent extends React.Component<
           this.props.CustomToolbar.ShowConfigureButton == true
         }
         onConfigure={() =>
-          this.props.Api.eventApi.emit('CustomToolbarConfigured', customToolbarConfiguredEventArgs)
+          this.props.api.eventApi.emit('CustomToolbarConfigured', customToolbarConfiguredEventArgs)
         }
       >
         <div
@@ -65,7 +65,7 @@ class CustomToolbarControlComponent extends React.Component<
               let toolbarButtonClickedInfo: ToolbarButtonClickedInfo = {
                 toolbarButton: button,
                 customToolbar: this.props.CustomToolbar,
-                adaptableApi: this.props.Api,
+                adaptableApi: this.props.api,
               };
               const toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
                 'Toolbar Button Clicked Args',
@@ -84,7 +84,7 @@ class CustomToolbarControlComponent extends React.Component<
                   variant={buttonVariant}
                   tone={buttonTone}
                   onClick={() => {
-                    this.props.Api.eventApi.emit(
+                    this.props.api.eventApi.emit(
                       'ToolbarButtonClicked',
                       toolbarButtonClickedEventArgs
                     );

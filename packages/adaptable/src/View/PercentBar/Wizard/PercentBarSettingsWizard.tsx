@@ -83,7 +83,7 @@ export class PercentBarSettingsWizard
               ></Checkbox>
               {this.state.BackColor !== undefined && (
                 <ColorPicker
-                  Api={this.props.api}
+                  api={this.props.api}
                   value={this.state.BackColor}
                   onChange={(event: React.FormEvent) => {
                     const { value } = event.target as HTMLInputElement;

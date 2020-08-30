@@ -109,7 +109,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
                     {this.state.myStyle.BackColor != null ? (
                       <ColorPicker
-                        Api={this.props.api}
+                        api={this.props.api}
                         value={this.state.myStyle.BackColor}
                         onChange={(x: any) => this.onBackColorSelectChange(x)}
                       />
@@ -131,7 +131,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
                     {this.state.myStyle.ForeColor != null ? (
                       <ColorPicker
-                        Api={this.props.api}
+                        api={this.props.api}
                         value={this.state.myStyle.ForeColor}
                         onChange={(x: any) => this.onForeColorSelectChange(x)}
                       />

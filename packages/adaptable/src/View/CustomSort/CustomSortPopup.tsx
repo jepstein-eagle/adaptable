@@ -50,21 +50,21 @@ class CustomSortPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        let columnId: string = this.props.popupParams.columnId;
+        if (this.props.popupParams.action == 'New') {
           let newCustomSort = ObjectFactory.CreateEmptyCustomSort();
           newCustomSort.ColumnId = columnId;
           this.onNewFromColumn(newCustomSort);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == columnId);
           this.onEdit(editCustomSort);
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -91,15 +91,15 @@ class CustomSortPopupComponent extends React.Component<
       return (
         <CustomSortEntityRow
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           AdaptableObject={customSort}
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-          ColumnLabel={this.props.Api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
-          AccessLevel={this.props.AccessLevel}
+          ColumnLabel={this.props.api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -108,7 +108,7 @@ class CustomSortPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Custom Sort"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -133,8 +133,8 @@ class CustomSortPopupComponent extends React.Component<
             <CustomSortWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
               configEntities={this.props.CustomSorts}
-              modalContainer={this.props.ModalContainer}
-              api={this.props.Api}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
               wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}

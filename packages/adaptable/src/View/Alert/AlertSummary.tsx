@@ -48,29 +48,29 @@ export class AlertSummaryComponent extends React.Component<
         key={StrategyConstants.AlertStrategyFriendlyName}
         FunctionName={StrategyConstants.AlertStrategyId}
         StrategySummary={Helper.ReturnItemCount(
-          this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId),
+          this.props.Alerts.filter(item => item.ColumnId == this.props.summarisedColumn.ColumnId),
           StrategyConstants.AlertStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
         NewButtonTooltip={StrategyConstants.AlertStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);
 
     // existing items
     this.props.Alerts.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
             key={'CV' + index}
             Item1={'something here?'}
-            Item2={this.props.Api.internalApi
+            Item2={this.props.api.internalApi
               .getStrategyService()
-              .createAlertDescription(item, this.props.Api.columnApi.getColumns())}
+              .createAlertDescription(item, this.props.api.columnApi.getColumns())}
             ConfigEnity={item}
             EntityType={StrategyConstants.AlertStrategyFriendlyName}
-            showShare={this.props.TeamSharingActivated}
+            showShare={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={AlertRedux.AlertDefinitionDelete(item)}
@@ -88,8 +88,8 @@ export class AlertSummaryComponent extends React.Component<
           <AlertWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
             configEntities={null}
-            modalContainer={this.props.ModalContainer}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -108,7 +108,7 @@ export class AlertSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: AlertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,

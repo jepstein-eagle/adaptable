@@ -45,11 +45,11 @@ class UserFilterPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+        if (this.props.popupParams.action == 'New') {
           let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-          userFilter.Scope = { ColumnIds: [this.props.PopupParams.columnId] };
+          userFilter.Scope = { ColumnIds: [this.props.popupParams.columnId] };
           this.setState({
             EditedAdaptableObject: userFilter,
             WizardStartIndex: 1,
@@ -58,7 +58,7 @@ class UserFilterPopupComponent extends React.Component<
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
   render() {
@@ -81,9 +81,9 @@ class UserFilterPopupComponent extends React.Component<
       let editedColumn: string = ''; //filter.Scope.ColumnIds[0];
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
-      } else if (this.props.PopupParams) {
-        if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-          selectedColumnId = this.props.PopupParams.columnId;
+      } else if (this.props.popupParams) {
+        if (this.props.popupParams.action && this.props.popupParams.columnId) {
+          selectedColumnId = this.props.popupParams.columnId;
         }
       }
     }
@@ -95,18 +95,18 @@ class UserFilterPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let UserFilterItems = this.props.Api.filterApi.getAllUserFilter().map((userFilter, index) => {
+    let UserFilterItems = this.props.api.filterApi.getAllUserFilter().map((userFilter, index) => {
       return (
         <UserFilterEntityRow
           AdaptableObject={userFilter}
-          api={this.props.Api}
+          api={this.props.api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(userFilter, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          TeamSharingActivated={this.props.teamSharingActivated}
           onEdit={() => this.onEdit(userFilter)}
           onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)}
-          AccessLevel={this.props.AccessLevel}
+          AccessLevel={this.props.accessLevel}
         />
       );
     });
@@ -115,7 +115,7 @@ class UserFilterPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create User Filter"
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
 
@@ -145,10 +145,10 @@ class UserFilterPopupComponent extends React.Component<
             <UserFilterWizard
               editedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
               configEntities={null}
-              modalContainer={this.props.ModalContainer}
+              modalContainer={this.props.modalContainer}
               wizardStartIndex={this.state.WizardStartIndex}
               SelectedColumnId={selectedColumnId}
-              api={this.props.Api}
+              api={this.props.api}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

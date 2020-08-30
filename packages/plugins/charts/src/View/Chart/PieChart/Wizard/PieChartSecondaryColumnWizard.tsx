@@ -47,7 +47,7 @@ export class PieChartSecondaryColumnWizard
       | 'Date'
       | 'Object'
       | 'Unknown' = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId)
-      ? this.props.Api.columnApi.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId)
+      ? this.props.api.columnApi.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId)
       : 'Unknown';
 
     return (
@@ -58,7 +58,7 @@ export class PieChartSecondaryColumnWizard
           <Flex flex={7}>
             <ColumnSelector
               SelectedColumnIds={[this.state.SecondaryColumnId]}
-              ColumnList={this.props.Api.columnApi.getColumns()}
+              ColumnList={this.props.api.columnApi.getColumns()}
               onColumnChange={columns => this.onSecondaryColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />

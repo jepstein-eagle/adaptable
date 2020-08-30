@@ -24,7 +24,7 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface CellValidationSummaryProps
   extends StrategySummaryProps<CellValidationSummaryComponent> {
-  CellValidations: CellValidationRule[];
+  cellValidations: CellValidationRule[];
   onAddCellValidation: (
     cellValidationRule: CellValidationRule
   ) => CellValidationRedux.CellValidationAddAction;
@@ -55,31 +55,31 @@ export class CellValidationSummaryComponent extends React.Component<
         key={StrategyConstants.CellValidationStrategyFriendlyName}
         FunctionName={StrategyConstants.CellValidationStrategyId}
         StrategySummary={Helper.ReturnItemCount(
-          this.props.CellValidations.filter(
-            item => item.ColumnId == this.props.SummarisedColumn.ColumnId
+          this.props.cellValidations.filter(
+            item => item.ColumnId == this.props.summarisedColumn.ColumnId
           ),
           StrategyConstants.CellValidationStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
         NewButtonTooltip={StrategyConstants.CellValidationStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        AccessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);
 
     // existing items
-    this.props.CellValidations.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+    this.props.cellValidations.map((item, index) => {
+      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
         let detailRow = (
           <StrategyDetail
             key={'CV' + index}
             Item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
-            Item2={this.props.Api.internalApi
+            Item2={this.props.api.internalApi
               .getValidationService()
-              .createCellValidationDescription(item, this.props.Api.columnApi.getColumns())}
+              .createCellValidationDescription(item, this.props.api.columnApi.getColumns())}
             ConfigEnity={item}
             EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
-            showShare={this.props.TeamSharingActivated}
+            showShare={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={CellValidationRedux.CellValidationDelete(item)}
@@ -97,8 +97,8 @@ export class CellValidationSummaryComponent extends React.Component<
           <CellValidationWizard
             editedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
             configEntities={null}
-            modalContainer={this.props.ModalContainer}
-            api={this.props.Api}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
             wizardStartIndex={this.state.WizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
@@ -117,7 +117,7 @@ export class CellValidationSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: CellValidationRule = ObjectFactory.CreateEmptyCellValidation();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
       EditedAdaptableObject: configEntity,
       WizardStartIndex: 1,
@@ -168,7 +168,7 @@ function mapStateToProps(
   ownProps: any
 ): Partial<CellValidationSummaryProps> {
   return {
-    CellValidations: state.CellValidation.CellValidations,
+    cellValidations: state.CellValidation.CellValidations,
   };
 }
 
