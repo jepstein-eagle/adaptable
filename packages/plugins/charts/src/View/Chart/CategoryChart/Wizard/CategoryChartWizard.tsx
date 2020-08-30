@@ -16,7 +16,7 @@ export interface CategoryChartWizardProps
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {
-    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.configEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div>

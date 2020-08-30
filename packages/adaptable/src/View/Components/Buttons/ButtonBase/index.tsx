@@ -37,11 +37,11 @@ export interface ButtonBaseProps extends BtnProps {
   overrideDisableButton?: boolean;
   transformGlyph?: boolean;
   className?: string;
-  AccessLevel?: AccessLevel;
+  accessLevel?: AccessLevel;
   showDefaultStyle?: boolean;
-  DisplayMode?: string;
+  displayMode?: string;
   icon?: string;
-  ToolTipAndText?: string;
+  toolTipAndText?: string;
   glyph?: string;
   overrideText?: string;
   overrideTooltip?: string;
@@ -54,46 +54,46 @@ export type ButtonProps = ButtonBaseProps;
 export class ButtonBase extends React.Component<ButtonBaseProps, {}> {
   public static defaultProps: ButtonBaseProps = {
     overrideDisableButton: false,
-    ToolTipAndText: '',
+    toolTipAndText: '',
     glyph: '',
-    DisplayMode: 'Glyph+Text',
+    displayMode: 'Glyph+Text',
     transformGlyph: false,
-    AccessLevel: 'Full',
+    accessLevel: 'Full',
     showDefaultStyle: false,
   };
   render() {
     let isDisabled: boolean;
-    isDisabled = this.props.AccessLevel == 'Hidden';
+    isDisabled = this.props.accessLevel == 'Hidden';
 
     if (this.props.overrideDisableButton || this.props.disabled) {
       isDisabled = true;
     }
-    let text = this.props.children || this.props.ToolTipAndText;
+    let text = this.props.children || this.props.toolTipAndText;
     if (this.props.overrideText) {
       text = this.props.overrideText;
     }
-    let tooltip = this.props.ToolTipAndText;
+    let tooltip = this.props.toolTipAndText;
     if (this.props.overrideTooltip) {
       tooltip = this.props.overrideTooltip;
     }
     let hideToolTip = this.props.hideToolTip ? this.props.hideToolTip : false;
 
     let content: React.ReactElement<any>;
-    if (this.props.DisplayMode == 'Glyph') {
+    if (this.props.displayMode == 'Glyph') {
       if (this.props.transformGlyph) {
         content = <Glyphicon glyph={this.props.glyph} style={{ transform: 'scale(-1, 1)' }} />;
       } else {
         content = <Glyphicon glyph={this.props.glyph} />;
       }
-    } else if (this.props.DisplayMode == 'Text') {
+    } else if (this.props.displayMode == 'Text') {
       content = <span>{text}</span>;
-    } else if (this.props.DisplayMode == 'Glyph+Text') {
+    } else if (this.props.displayMode == 'Glyph+Text') {
       content = (
         <div>
           <Glyphicon glyph={this.props.glyph} /> {text}
         </div>
       );
-    } else if (this.props.DisplayMode == 'Text+Glyph') {
+    } else if (this.props.displayMode == 'Text+Glyph') {
       content = (
         <div>
           {text} <Glyphicon glyph={this.props.glyph} />

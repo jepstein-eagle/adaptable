@@ -75,7 +75,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.CategoryChart,
@@ -85,7 +85,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.PieChart,
@@ -95,7 +95,7 @@ class ChartToolbarControlComponent extends React.Component<ChartToolbarControlCo
       label: 'Pie Chart',
     };
     let sparkLineMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.SparklinesChart,

@@ -98,7 +98,7 @@ export class SparklinesChartColumnWizard
       {
         ColumnId: isColumn ? columns[0].ColumnId : '',
       } as SparklinesChartColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -110,19 +110,19 @@ export class SparklinesChartColumnWizard
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
     this.props.Data.Expression = !this.state.Filtered ? null : this.state.Expression;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.Filtered ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

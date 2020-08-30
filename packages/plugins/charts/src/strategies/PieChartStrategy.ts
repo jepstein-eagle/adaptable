@@ -26,7 +26,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('ReadOnly') && column.DataType !== DataType.NumberArray) {
       let popUpParams: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         source: 'ColumnMenu',
       };
 
@@ -51,7 +51,7 @@ export class PieChartStrategy extends AdaptableStrategyBase implements IPieChart
         return gc.primaryKeyValue;
       });
       let popUpParams: StrategyParams = {
-        columnId: menuInfo.Column.ColumnId,
+        column: menuInfo.Column,
         primaryKeyValues: pkValues,
         source: 'ContextMenu',
       };

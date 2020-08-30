@@ -127,11 +127,11 @@ class SparklineColumnPopupComponent extends React.Component<
 
           {this.state.EditedAdaptableObject != null && (
             <SparklineColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
+              editedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
               ConfigEntities={null}
               api={this.props.api}
-              ModalContainer={this.props.modalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              modalContainer={this.props.modalContainer}
+              wizardStartIndex={this.state.WizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}

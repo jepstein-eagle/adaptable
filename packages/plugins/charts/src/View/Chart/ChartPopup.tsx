@@ -159,11 +159,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           <div>
             {editedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                EditedAdaptableObject={editedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.modalContainer}
+                editedAdaptableObject={editedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
                 api={this.props.api}
-                WizardStartIndex={this.state.WizardStartIndex}
+                wizardStartIndex={this.state.WizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
@@ -177,11 +177,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
             ) : null}
             {editedChartDefinition.ChartType === ChartType.PieChart ? (
               <PieChartWizard
-                EditedAdaptableObject={editedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.modalContainer}
+                editedAdaptableObject={editedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
                 api={this.props.api}
-                WizardStartIndex={0}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
@@ -196,11 +196,11 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
 
             {editedChartDefinition.ChartType === ChartType.SparklinesChart ? (
               <SparklinesChartWizard
-                EditedAdaptableObject={editedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.modalContainer}
+                editedAdaptableObject={editedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
                 api={this.props.api}
-                WizardStartIndex={0}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}

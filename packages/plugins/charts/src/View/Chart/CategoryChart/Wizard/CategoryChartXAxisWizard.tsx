@@ -30,9 +30,9 @@ export class CategoryChartXAxisWizard
   constructor(props: CategoryChartXAxisWizardProps) {
     super(props);
     this.state = {
-      XAxisColumnId: props.Data.XAxisColumnId,
-      UseAllXAsisColumnValues: StringExtensions.IsNullOrEmpty(this.props.Data.XAxisExpression),
-      XAxisExpression: this.props.Data.XAxisExpression,
+      XAxisColumnId: props.data.XAxisColumnId,
+      UseAllXAsisColumnValues: StringExtensions.IsNullOrEmpty(this.props.data.XAxisExpression),
+      XAxisExpression: this.props.data.XAxisExpression,
     };
   }
 
@@ -98,7 +98,7 @@ export class CategoryChartXAxisWizard
         UseAllXAsisColumnValues: showAll,
         XAxisExpression: expression,
       } as CategoryChartXAxisWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -109,7 +109,7 @@ export class CategoryChartXAxisWizard
         XAxisColumnId: isColumn ? columns[0].ColumnId : '',
         UseAllXAsisColumnValues: true,
       } as CategoryChartXAxisWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -121,24 +121,24 @@ export class CategoryChartXAxisWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.XAxisColumnId = this.state.XAxisColumnId;
-    this.props.Data.XAxisExpression = this.state.UseAllXAsisColumnValues
+  public next(): void {
+    this.props.data.XAxisColumnId = this.state.XAxisColumnId;
+    this.props.data.XAxisExpression = this.state.UseAllXAsisColumnValues
       ? null
       : this.state.XAxisExpression;
-    if (this.props.Data.XAxisColumnId != this.state.XAxisColumnId) {
-      this.props.Data.XAxisExpression = null;
+    if (this.props.data.XAxisColumnId != this.state.XAxisColumnId) {
+      this.props.data.XAxisExpression = null;
     }
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.UseAllXAsisColumnValues ? 2 : 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

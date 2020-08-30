@@ -181,11 +181,11 @@ class ChartDisplayPopupComponent extends React.Component<
           <div>
             {this.state.EditedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                EditedAdaptableObject={this.state.EditedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.modalContainer}
+                editedAdaptableObject={this.state.EditedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
                 api={this.props.api}
-                WizardStartIndex={0}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
@@ -199,11 +199,11 @@ class ChartDisplayPopupComponent extends React.Component<
             ) : null}
             {this.state.EditedChartDefinition.ChartType == ChartType.PieChart ? (
               <PieChartWizard
-                EditedAdaptableObject={this.state.EditedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.modalContainer}
+                editedAdaptableObject={this.state.EditedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
                 api={this.props.api}
-                WizardStartIndex={0}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
@@ -218,11 +218,11 @@ class ChartDisplayPopupComponent extends React.Component<
 
             {this.state.EditedChartDefinition.ChartType == ChartType.SparklinesChart ? (
               <SparklinesChartWizard
-                EditedAdaptableObject={this.state.EditedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.modalContainer}
+                editedAdaptableObject={this.state.EditedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
                 api={this.props.api}
-                WizardStartIndex={0}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}

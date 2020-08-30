@@ -31,8 +31,8 @@ export class CategoryChartYAxisWizard
   constructor(props: CategoryChartYAxisWizardProps) {
     super(props);
     this.state = {
-      YAxisColumnIds: props.Data.YAxisColumnIds,
-      YAxisTotal: props.Data.YAxisTotal as AxisTotal,
+      YAxisColumnIds: props.data.YAxisColumnIds,
+      YAxisTotal: props.data.YAxisTotal as AxisTotal,
     };
   }
   render(): any {
@@ -103,7 +103,7 @@ export class CategoryChartYAxisWizard
   OnSelectedValuesChange(newValues: Array<string>) {
     let yAxisColumnIds = this.props.api.columnApi.getColumnIdsFromFriendlyNames(newValues);
     this.setState({ YAxisColumnIds: yAxisColumnIds } as CategoryChartYAxisWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -111,7 +111,7 @@ export class CategoryChartYAxisWizard
     let e = event.target as HTMLInputElement;
     let axisTotal: AxisTotal = e.value == 'Sum' ? AxisTotal.Sum : AxisTotal.Average;
     this.setState({ YAxisTotal: axisTotal } as CategoryChartYAxisWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -123,18 +123,18 @@ export class CategoryChartYAxisWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.YAxisColumnIds = this.state.YAxisColumnIds;
-    this.props.Data.YAxisTotal = this.state.YAxisTotal;
+  public next(): void {
+    this.props.data.YAxisColumnIds = this.state.YAxisColumnIds;
+    this.props.data.YAxisTotal = this.state.YAxisTotal;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }
