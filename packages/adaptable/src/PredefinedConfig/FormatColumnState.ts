@@ -131,11 +131,6 @@ export interface FormatColumnState extends ConfigState {
  * The FormatColumn object used in the Format Column function.
  */
 export interface FormatColumn extends AdaptableObject {
-  /**
-   * The column which has the style applied to it.
-   */
-  ColumnId?: string;
-
   Scope: Scope;
 
   /**

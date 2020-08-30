@@ -25,6 +25,7 @@ import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 import { Flex } from 'rebass';
 import EmptyContent from '../../components/EmptyContent';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 interface FormatColumnPopupProps extends StrategyViewPopupProps<FormatColumnPopupComponent> {
   FormatColumns: Array<FormatColumn>;
@@ -52,20 +53,18 @@ class FormatColumnPopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
-        let columnId: string = this.props.popupParams.columnId;
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        let column: AdaptableColumn = this.props.popupParams.column;
         if (this.props.popupParams.action == 'New') {
           let newFormatColumn = ObjectFactory.CreateEmptyFormatColumn();
           newFormatColumn.Scope = {
-            ColumnIds: [columnId],
+            ColumnIds: [column.ColumnId],
           };
           this.onNewFromColumn(newFormatColumn);
         }
         if (this.props.popupParams.action == 'Edit') {
           // have to hope we get the most suitable / current one
-          let editFormatColumn = this.props.api.formatColumnApi.getFormatColumnForColumnId(
-            columnId
-          );
+          let editFormatColumn = this.props.api.formatColumnApi.getFormatColumnForColumn(column);
           this.onEdit(editFormatColumn);
         }
       }

@@ -58,11 +58,11 @@ class CalculatedColumnPopupComponent extends React.Component<
 
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'Edit') {
           // only editing is possible - you cannot create a new calc column from the column menu
           let calculatedColumn = this.props.CalculatedColumns.find(
-            x => x.ColumnId == this.props.popupParams.columnId
+            x => x.ColumnId == this.props.popupParams.column.ColumnId
           );
           this.onEdit(calculatedColumn);
         }

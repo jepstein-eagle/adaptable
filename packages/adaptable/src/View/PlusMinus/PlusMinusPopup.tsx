@@ -58,10 +58,10 @@ class PlusMinusPopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'New') {
           let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule();
-          plusMinus.ColumnId = this.props.popupParams.columnId;
+          plusMinus.ColumnId = this.props.popupParams.column.ColumnId;
           this.setState({
             EditedAdaptableObject: plusMinus,
             WizardStatus: WizardStatus.New,

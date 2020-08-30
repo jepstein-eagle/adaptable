@@ -6,7 +6,7 @@ import { AdaptableFunctionName } from '../../../PredefinedConfig/Common/Types';
 import { CustomToolbar } from '../../../PredefinedConfig/DashboardState';
 
 export interface CustomToolbarStrategyViewPopupProps<View> extends StrategyViewPopupProps<View> {
-  CustomToolbar: CustomToolbar;
+  customToolbar: CustomToolbar;
 }
 
 export interface ToolbarStrategyViewPopupProps<View> extends StrategyViewPopupProps<View> {

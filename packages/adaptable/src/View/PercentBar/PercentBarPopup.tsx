@@ -50,8 +50,8 @@ class PercentBarPopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
-        let columnId: string = this.props.popupParams.columnId;
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        let columnId: string = this.props.popupParams.column.ColumnId;
         if (this.props.popupParams.action == 'New') {
           let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
             columnId

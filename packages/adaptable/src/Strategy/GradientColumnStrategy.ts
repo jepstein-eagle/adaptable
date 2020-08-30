@@ -34,7 +34,7 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
       let label = GradientColumnExists ? 'Edit ' : 'Create ';
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: GradientColumnExists ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };

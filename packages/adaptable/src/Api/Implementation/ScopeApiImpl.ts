@@ -2,16 +2,9 @@ import { ApiBase } from './ApiBase';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Scope, ScopeDataType } from '../../PredefinedConfig/Common/Scope';
 import { ScopeApi } from '../ScopeApi';
-import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class ScopeApiImpl extends ApiBase implements ScopeApi {
   public isColumnInScope(column: AdaptableColumn, scope: Scope | undefined) {
-    if (scope === undefined) {
-      // keeping this for now but this should be removed once we update teh filter predicates...
-      LogAdaptableWarning('we should update this to be ALL instead of using null..');
-      return true;
-    }
-
     if ('All' in scope) {
       // do we need a true check here?
       return true;

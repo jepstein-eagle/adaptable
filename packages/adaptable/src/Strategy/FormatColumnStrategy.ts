@@ -43,7 +43,7 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       let label = formatExists ? 'Edit ' : 'Create ';
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column.ColumnId,
         action: formatExists ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };

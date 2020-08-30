@@ -206,11 +206,11 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
             </Flex>
             <ListBoxFilterForm
-              CurrentColumn={this.props.currentColumn}
-              Columns={[]}
-              ColumnDistinctValues={distinctColumnValues}
-              DataType={this.props.currentColumn.DataType}
-              UiSelectedColumnValues={this.state.filter.Predicate.Inputs}
+              currentColumn={this.props.currentColumn}
+              columns={[]}
+              columnDistinctValues={distinctColumnValues}
+              dataType={this.props.currentColumn.DataType}
+              uiSelectedColumnValues={this.state.filter.Predicate.Inputs}
               useVendorStyle={true}
               onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
             />
@@ -298,7 +298,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFilterFormProps> {
   return {
-    currentColumn: ownProps.CurrentColumn,
+    currentColumn: ownProps.currentColumn,
     columnFilters: state.Filter.ColumnFilters,
   };
 }

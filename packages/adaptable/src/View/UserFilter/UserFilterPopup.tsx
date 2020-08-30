@@ -46,10 +46,10 @@ class UserFilterPopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'New') {
           let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-          userFilter.Scope = { ColumnIds: [this.props.popupParams.columnId] };
+          userFilter.Scope = { ColumnIds: [this.props.popupParams.column.ColumnId] };
           this.setState({
             EditedAdaptableObject: userFilter,
             WizardStartIndex: 1,
@@ -82,8 +82,8 @@ class UserFilterPopupComponent extends React.Component<
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
       } else if (this.props.popupParams) {
-        if (this.props.popupParams.action && this.props.popupParams.columnId) {
-          selectedColumnId = this.props.popupParams.columnId;
+        if (this.props.popupParams.action && this.props.popupParams.column) {
+          selectedColumnId = this.props.popupParams.column.ColumnId;
         }
       }
     }

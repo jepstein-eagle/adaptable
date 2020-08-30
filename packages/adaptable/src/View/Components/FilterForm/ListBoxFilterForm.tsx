@@ -12,13 +12,13 @@ import { AdaptableFormControlTextClear } from '../Forms/AdaptableFormControlText
 import GridList from '../../../components/List/GridList';
 
 export interface ListBoxFilterFormProps extends ListGroupProps {
-  CurrentColumn: AdaptableColumn;
-  Columns: AdaptableColumn[];
+  currentColumn: AdaptableColumn;
+  columns: AdaptableColumn[];
   useVendorStyle?: boolean;
-  ColumnDistinctValues: any[];
-  UiSelectedColumnValues: Array<string>;
+  columnDistinctValues: any[];
+  uiSelectedColumnValues: Array<string>;
   onColumnValueSelectedChange: (SelectedValues: Array<any>) => void;
-  DataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
+  dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown';
 }
 
 export interface ListBoxFilterFormState extends React.ClassAttributes<ListBoxFilterForm> {
@@ -34,19 +34,19 @@ export class ListBoxFilterForm extends React.Component<
     super(props);
 
     this.state = {
-      UiSelectedColumnValues: this.props.UiSelectedColumnValues,
+      UiSelectedColumnValues: this.props.uiSelectedColumnValues,
       FilterValue: '',
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps: ListBoxFilterFormProps, nextContext: any) {
     this.setState({
-      UiSelectedColumnValues: nextProps.UiSelectedColumnValues,
+      UiSelectedColumnValues: nextProps.uiSelectedColumnValues,
       FilterValue: this.state.FilterValue,
     });
   }
 
   render() {
-    let columnValuesItemsElements = this.props.ColumnDistinctValues.map((x, y) => {
+    let columnValuesItemsElements = this.props.columnDistinctValues.map((x, y) => {
       const isActive = this.state.UiSelectedColumnValues.indexOf(x) >= 0;
       const columnValue = x;
       if (StringExtensions.IsNullOrEmpty(columnValue)) {

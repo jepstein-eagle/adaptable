@@ -172,7 +172,7 @@ function mapStateToProps(
   return {
     CurrentLayoutName,
     CurrentDraftLayout: state.Grid.CurrentLayout || selectedLayout,
-    CanSave: !ownProps.Api.internalApi
+    CanSave: !ownProps.api.internalApi
       .getLayoutService()
       .areEqual(selectedLayout, state.Grid.CurrentLayout),
     Layouts,

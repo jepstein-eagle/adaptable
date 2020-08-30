@@ -49,7 +49,7 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
           .find(ftc => ftc.ColumnId == column.ColumnId)
       ) {
         let popupParam: StrategyParams = {
-          columnId: column.ColumnId,
+          column: column,
           action: 'Edit',
           source: 'ColumnMenu',
         };

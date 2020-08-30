@@ -1,5 +1,6 @@
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { FormatColumnState, FormatColumn } from '../PredefinedConfig/FormatColumnState';
+import { AdaptableColumn } from '../types';
 
 /**
  * Provides full and comprehensive run-time access to the Format Column function and associated state.
@@ -76,5 +77,13 @@ export interface FormatColumnApi {
    */
   showFormatColumnPopup(): void;
 
-  getFormatColumnForColumnId(columnId: string): FormatColumn | undefined;
+  getFormatColumnForColumn(column: AdaptableColumn): FormatColumn | undefined;
+  getFormatColumnWithStyleForColumn(column: AdaptableColumn): FormatColumn | undefined;
+  getFormatColumnWithDisplayFormatForColumn(column: AdaptableColumn): FormatColumn | undefined;
+
+  hasStyleFormatColumns(): boolean;
+
+  //  getFormatColumnsWithAllScope(): FormatColumn[] | undefined;
+  //  getFormatColumnsWithDataTypeScope(): FormatColumn[] | undefined;
+  //  getFormatColumnsWithColumnScope(): FormatColumn[] | undefined;
 }

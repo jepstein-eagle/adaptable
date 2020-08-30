@@ -122,7 +122,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
           .find(cc => cc.ColumnId == column.ColumnId)
       ) {
         let popupParam: StrategyParams = {
-          columnId: column.ColumnId,
+          column: column,
           action: 'Edit',
           source: 'ColumnMenu',
         };

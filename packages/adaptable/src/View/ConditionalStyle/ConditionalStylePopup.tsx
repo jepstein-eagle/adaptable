@@ -29,6 +29,7 @@ import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
@@ -59,12 +60,12 @@ class ConditionalStylePopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
-        let columnId: string = this.props.popupParams.columnId;
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        let column: AdaptableColumn = this.props.popupParams.column;
         if (this.props.popupParams.action == 'New') {
           let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
           _editedConditionalStyle.Scope = {
-            ColumnIds: [columnId],
+            ColumnIds: [column.ColumnId],
           };
 
           this.setState({

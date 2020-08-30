@@ -6,6 +6,8 @@ import { FormatColumnState, FormatColumn } from '../../PredefinedConfig/FormatCo
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import ObjectFactory from '../../Utilities/ObjectFactory';
+import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
   public getFormatColumnState(): FormatColumnState {
@@ -64,12 +66,46 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
     this.adaptable.applyFormatColumnDisplayFormats();
   }
 
-  // TODO: This is important as we need to get the FIRST one that matches
-  public getFormatColumnForColumnId(columnId: string): FormatColumn | undefined {
+  public getFormatColumnForColumn(column: AdaptableColumn): FormatColumn | undefined {
+    const formatColumns: FormatColumn[] = this.getAllFormatColumn();
+    return this.getAppropriateFormatColumn(formatColumns, column);
+  }
+  public getFormatColumnWithStyleForColumn(column: AdaptableColumn): FormatColumn | undefined {
+    const formatColumns: FormatColumn[] = this.getAllFormatColumnWithStyle();
+    return this.getAppropriateFormatColumn(formatColumns, column);
+  }
+
+  public getFormatColumnWithDisplayFormatForColumn(
+    column: AdaptableColumn
+  ): FormatColumn | undefined {
     const formatColumns: FormatColumn[] = this.getAllFormatColumnWithDisplayFormat().concat(
       this.getAllFormatColumnWithCellAlignment()
     );
-    return undefined;
+    return this.getAppropriateFormatColumn(formatColumns, column);
+  }
+
+  private getAppropriateFormatColumn(
+    formatColumns: FormatColumn[],
+    column: AdaptableColumn
+  ): FormatColumn | undefined {
+    let test: FormatColumn[] | undefined = this.getFormatColumnsWithColumnScope(formatColumns)
+      .concat(this.getFormatColumnsWithDataTypeScope(formatColumns))
+      .concat(this.getFormatColumnsWithAllScope(formatColumns));
+
+    let returnFormatColumn: FormatColumn = undefined;
+    test.forEach((fc, index) => {
+      // we just do one and then return
+      if (returnFormatColumn == undefined) {
+        if (this.adaptable.api.scopeApi.isColumnInScope(column, fc.Scope)) {
+          returnFormatColumn = fc;
+        }
+      }
+    });
+    return returnFormatColumn;
+  }
+
+  public hasStyleFormatColumns(): boolean {
+    return ArrayExtensions.IsNotNullOrEmpty(this.getAllFormatColumnWithStyle());
   }
 
   public showFormatColumnPopup(): void {
@@ -77,5 +113,19 @@ export class FormatColumnApiImpl extends ApiBase implements FormatColumnApi {
       StrategyConstants.FormatColumnStrategyId,
       ScreenPopups.FormatColumnPopup
     );
+  }
+
+  public getFormatColumnsWithAllScope(formatColumns: FormatColumn[]): FormatColumn[] | undefined {
+    return formatColumns.filter(fc => this.adaptable.api.scopeApi.scopeIsAll(fc.Scope));
+  }
+  public getFormatColumnsWithDataTypeScope(
+    formatColumns: FormatColumn[]
+  ): FormatColumn[] | undefined {
+    return formatColumns.filter(fc => this.adaptable.api.scopeApi.scopeHasDataType(fc.Scope));
+  }
+  public getFormatColumnsWithColumnScope(
+    formatColumns: FormatColumn[]
+  ): FormatColumn[] | undefined {
+    return formatColumns.filter(fc => this.adaptable.api.scopeApi.scopeHasColumns(fc.Scope));
   }
 }

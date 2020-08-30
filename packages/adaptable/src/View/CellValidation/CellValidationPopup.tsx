@@ -55,10 +55,10 @@ class CellValidationPopupComponent extends React.Component<
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'New') {
           let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
-          cellValitdation.ColumnId = this.props.popupParams.columnId;
+          cellValitdation.ColumnId = this.props.popupParams.column.ColumnId;
           this.setState({
             EditedAdaptableObject: cellValitdation,
             WizardStartIndex: 1,

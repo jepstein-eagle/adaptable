@@ -51,10 +51,10 @@ class AlertPopupComponent extends React.Component<
   }
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.action && this.props.popupParams.columnId) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'New') {
           let alertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-          alertDefinition.ColumnId = this.props.popupParams.columnId;
+          alertDefinition.ColumnId = this.props.popupParams.column.ColumnId;
           this.setState({
             EditedAdaptableObject: alertDefinition,
             WizardStartIndex: 1,

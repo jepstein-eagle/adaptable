@@ -3058,7 +3058,10 @@ export class Adaptable implements IAdaptable {
       // we have to assume that we always get the right one (if there are more than one).
       // and we need to ensure that a colId is always being set even when not provided
       // think that Radu is doing this
-      const formatColumn = this.api.formatColumnApi.getFormatColumnForColumnId(colDef.colId);
+      const abColumn = this.api.columnApi.getColumnFromId(colDef.colId);
+      const formatColumn = this.api.formatColumnApi.getFormatColumnWithDisplayFormatForColumn(
+        abColumn
+      );
       if (!formatColumn) {
         return;
       }

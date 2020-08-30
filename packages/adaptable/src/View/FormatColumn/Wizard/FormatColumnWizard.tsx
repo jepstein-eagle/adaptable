@@ -24,7 +24,7 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
           api={this.props.api}
           steps={[
             {
-              StepName: 'Select Column',
+              StepName: 'Scope',
               Index: 0,
               Element: <FormatColumnScopeWizard api={this.props.api} />,
             },

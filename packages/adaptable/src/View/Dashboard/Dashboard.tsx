@@ -139,7 +139,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             let customDshboardElememt = React.createElement(customToolbarControl, {
               api: this.props.api,
               accessLevel: accessLevel,
-              CustomToolbar: customToolbar,
+              customToolbar: customToolbar,
             });
             return (
               <Box
@@ -167,8 +167,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             if (dashboardControl) {
               let dashboardElememt = React.createElement(dashboardControl, {
                 api: this.props.api,
-
-                AccessLevel: accessLevel,
+                accessLevel: accessLevel,
               });
               return (
                 <Box

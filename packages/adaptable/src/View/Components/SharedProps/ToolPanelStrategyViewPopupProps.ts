@@ -11,5 +11,4 @@ export interface ToolPanelStrategyViewPopupProps<View> extends StrategyViewPopup
   onClick: (action: Redux.Action) => Redux.Action;
   onClose: (toolPanel: AdaptableToolPanel) => ToolPanelRedux.ToolPanelHideToolPanelAction;
   onConfigure: () => PopupRedux.PopupShowScreenAction;
-  accessLevel: AccessLevel;
 }
