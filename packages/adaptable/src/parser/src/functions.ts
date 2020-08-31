@@ -1,5 +1,5 @@
 import { FunctionMap } from './types';
-import { evaluate } from '.';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 
 export const defaultFunctions: FunctionMap = {
   ADD: {
@@ -117,21 +117,30 @@ export const defaultFunctions: FunctionMap = {
   COL: {
     handler(args, context) {
       const name = args[0];
-      if (context.data[name] !== undefined) return context.data[name];
-      throw new Error(`Column name "${name}" is not found`);
+
+      // TODO skip this in eval mode, keep in edit mode
+      if (!context.api.columnApi.getColumnFromId(name)) {
+        throw new Error(`Column name "${name}" is not found`);
+      }
+
+      return context.api.gridApi.getValueFromRowNode(
+        context.node,
+        name,
+        CellValueType.RawValue
+      );
     },
     docs: [{ type: 'code', content: 'col(name: string): any' }],
   },
-  VAR: {
-    handler(args, context) {
-      if (args.length === 1) {
-        return context.variables[args[0]];
-      }
-      if (args.length === 2) {
-        context.variables[args[0]] = args[1];
-      }
-    },
-  },
+  // VAR: {
+  //   handler(args, context) {
+  //     if (args.length === 1) {
+  //       return context.variables[args[0]];
+  //     }
+  //     if (args.length === 2) {
+  //       context.variables[args[0]] = args[1];
+  //     }
+  //   },
+  // },
   MIN: {
     handler(args) {
       return Math.min(...args);
@@ -164,26 +173,6 @@ export const defaultFunctions: FunctionMap = {
           'between(input: number, lower: number, upper: number): boolean',
       },
     ],
-  },
-  FILTER: {
-    handler([name, value], context) {
-      context.value = value;
-
-      const filter = context.filters[name];
-      if (filter === undefined) return true;
-
-      const result = evaluate(filter, context);
-
-      context.value = null;
-
-      return result;
-    },
-    type: 'boolean',
-  },
-  VALUE: {
-    handler(_, context) {
-      return context.value;
-    },
   },
   IN: {
     handler([needle, haystack]) {

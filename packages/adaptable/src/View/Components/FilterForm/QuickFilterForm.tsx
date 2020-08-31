@@ -260,9 +260,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   private updateFilter(filter: ColumnFilter) {
     this.setState({ filter });
 
-    if (filter.Predicate.Inputs?.some(input => StringExtensions.IsNullOrEmpty(input))) {
-      return;
-    }
+    // if (filter.Predicate.Inputs?.some(input => StringExtensions.IsNullOrEmpty(input))) {
+    //   return;
+    // }
 
     if (filter.Uuid) {
       // TODO debounce here?

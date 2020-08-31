@@ -29,7 +29,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
       let styleName: string = this.getNameForStyle(cs);
       rowClassRules[styleName] = (params: any) => {
         if (shouldRunStyle(cs, theadaptable, params.node)) {
-          return this.evaluateExpression(cs, params.node.data);
+          return this.evaluateExpression(cs, params.node);
         }
       };
       theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
@@ -49,7 +49,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
           cellClassRules[styleName] = (params: any) => {
             if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
-              return this.evaluateExpression(conditionalStyleForColumn, params.node.data);
+              return this.evaluateExpression(conditionalStyleForColumn, params.node);
             }
           };
           theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
@@ -61,11 +61,11 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     this.adaptable.redraw();
   }
 
-  private evaluateExpression(conditionalStyle: ConditionalStyle, data: any): boolean {
+  private evaluateExpression(conditionalStyle: ConditionalStyle, node: RowNode): boolean {
     let expression: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
       conditionalStyle
     );
-    return parser.evaluate(expression, { data });
+    return parser.evaluate(expression, { node: node, api: this.adaptable.api });
   }
 
   private shouldRunStyle(

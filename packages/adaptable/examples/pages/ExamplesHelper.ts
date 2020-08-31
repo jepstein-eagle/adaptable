@@ -1065,7 +1065,7 @@ export class ExamplesHelper {
       //  lockVisible: true,
       // pinned: true,
       //  suppressMovable: true,
-      editable: true,
+      editable: false,
       type: ['hello', 'abColDefNumberx'],
       sortable: true,
       filter: false,

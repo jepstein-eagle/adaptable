@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../types';
+import { AdaptableColumn, AdaptableApi } from '../../types';
 
 import { FunctionMap } from '../../parser/src/types';
 import useSelectionRange from '../utils/useSelectionRange';
@@ -41,6 +41,7 @@ interface ExpressionEditorProps {
   functions: FunctionMap;
   hideHelpBlock?: boolean;
   isFullExpression?: boolean;
+  api: AdaptableApi;
 }
 
 function ExpressionEditor(props: ExpressionEditorProps) {
@@ -51,7 +52,8 @@ function ExpressionEditor(props: ExpressionEditorProps) {
 
   try {
     const expr = parser.parse(props.value || '');
-    result = expr.evaluate({ data });
+    console.log('data', data);
+    result = expr.evaluate({ node: { data } as any, api: props.api });
     const path = parser.findPathTo(expr.ast, cursor);
     currentFunction = path[0] ? path[0].type : null;
   } catch (e) {
@@ -176,60 +178,66 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       sizes={['auto', '130px']}
       style={{ alignItems: 'stretch' }}
     >
-      {props.columns.map(column => (
-        <FormRow
-          key={column.ColumnId}
-          label={
-            <EditorButton
-              width="100%"
-              height="100%"
-              style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
-              data={`[${column.ColumnId}]`}
-              textAreaRef={textAreaRef}
-            >
-              <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
-              {column.FriendlyName}
-            </EditorButton>
-          }
-        >
-          {column.DataType === 'Number' ? (
-            <Input
-              type="number"
-              value={data[column.ColumnId]}
-              onChange={(e: React.FormEvent) =>
-                setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
-              }
-              width="100%"
-            />
-          ) : column.DataType === 'String' ? (
-            <Input
-              type="text"
-              value={data[column.ColumnId]}
-              onChange={(e: React.FormEvent) =>
-                setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
-              }
-              width="100%"
-            />
-          ) : column.DataType === 'Date' ? (
-            <Input
-              type="date"
-              value={new Date(data[column.ColumnId]).toISOString().substr(0, 10)}
-              onChange={(e: React.FormEvent) => {
-                setData({
-                  ...data,
-                  [column.ColumnId]: new Date((e.target as HTMLInputElement).value),
-                });
-              }}
-              width="100%"
-            />
-          ) : column.DataType === 'Boolean' ? (
-            <CheckBox
-              checked={data[column.ColumnId]}
-              onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
-            />
-          ) : null}
-        </FormRow>
-      ))}
+      {props.columns
+        .filter(c => !props.api.columnApi.isCalculatedColumn(c.ColumnId))
+        .map(column => (
+          <FormRow
+            key={column.ColumnId}
+            label={
+              <EditorButton
+                width="100%"
+                height="100%"
+                style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
+                data={`[${column.ColumnId}]`}
+                textAreaRef={textAreaRef}
+              >
+                <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
+                {column.FriendlyName}
+              </EditorButton>
+            }
+          >
+            {column.DataType === 'Number' ? (
+              <Input
+                type="number"
+                value={data[column.ColumnId]}
+                onChange={(e: React.FormEvent) =>
+                  setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                }
+                width="100%"
+                disabled={column.ReadOnly}
+              />
+            ) : column.DataType === 'String' ? (
+              <Input
+                type="text"
+                value={data[column.ColumnId]}
+                onChange={(e: React.FormEvent) =>
+                  setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                }
+                width="100%"
+                disabled={column.ReadOnly}
+              />
+            ) : column.DataType === 'Date' ? (
+              <Input
+                type="date"
+                value={new Date(data[column.ColumnId]).toISOString().substr(0, 10)}
+                onChange={(e: React.FormEvent) => {
+                  setData({
+                    ...data,
+                    [column.ColumnId]: new Date((e.target as HTMLInputElement).value),
+                  });
+                }}
+                width="100%"
+                disabled={column.ReadOnly}
+              />
+            ) : column.DataType === 'Boolean' ? (
+              <CheckBox
+                checked={data[column.ColumnId]}
+                onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
+                disabled={column.ReadOnly}
+              />
+            ) : null}
+          </FormRow>
+        ))}
     </FormLayout>
   );
 

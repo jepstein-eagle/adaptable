@@ -111,7 +111,8 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
             rowNode = this.adaptable.getRowNodeForPrimaryKey(dataChangedEvent.PrimaryKeyValue);
           }
           let isSatisfiedExpression: boolean = parser.evaluate(expression, {
-            data: rowNode.data,
+            node: rowNode,
+            api: this.adaptable.api,
           });
 
           if (

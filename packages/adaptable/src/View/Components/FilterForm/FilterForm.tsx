@@ -119,7 +119,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     );
 
     let uiSelectedColumnValues =
-      this.state.editedColumnFilter?.Predicate.Id === 'Values'
+      this.state.editedColumnFilter?.Predicate?.Id === 'Values'
         ? this.state.editedColumnFilter.Predicate.Inputs
         : [];
 

@@ -120,7 +120,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let rowNode = this.adaptable.getRowNodeForPrimaryKey(selectedCell.primaryKeyValue);
             let isSatisfiedExpression: boolean = parser.evaluate(expression, {
-              data: rowNode.data,
+              node: rowNode,
+              api: this.adaptable.api,
             });
 
             if (isSatisfiedExpression) {

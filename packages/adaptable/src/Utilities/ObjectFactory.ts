@@ -68,6 +68,7 @@ import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/QueryState';
 import { ColumnFilter, UserFilter } from '../PredefinedConfig/FilterState';
+import { Predicate } from '../PredefinedConfig/Common/Predicate';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -224,13 +225,7 @@ export function CreateEmptyCellValidation(): CellValidationRule {
     Uuid: createUuid(),
     ActionMode: 'Stop Edit',
     ColumnId: EMPTY_STRING,
-    Range: {
-      Operator: LeafExpressionOperator.AnyChange,
-      Operand1: EMPTY_STRING,
-      Operand2: EMPTY_STRING,
-      Operand1Type: RangeOperandType.Column,
-      Operand2Type: RangeOperandType.Column,
-    },
+    Predicate: { Id: 'Any' },
     Expression: null,
   };
 }
@@ -539,13 +534,13 @@ export function CreateRangeEvaluation(
 }
 export function CreateCellValidationRule(
   columnId: string,
-  range: QueryRange,
+  predicate: Predicate,
   actionMode: ActionMode
 ): CellValidationRule {
   return {
     Uuid: createUuid(),
     ColumnId: columnId,
-    Range: range,
+    Predicate: predicate,
     ActionMode: actionMode,
     Expression: undefined,
     SharedQueryId: undefined,

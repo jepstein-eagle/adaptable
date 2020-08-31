@@ -47,6 +47,7 @@ class ExpandedQueryPopupComponent extends React.Component<
           initialData={this.props.api.gridApi.getFirstRowNode().data}
           columns={this.props.api.columnApi.getColumns()}
           functions={parser.defaultFunctions}
+          api={this.props.api}
         />
         <SimpleButton
           padding={2}

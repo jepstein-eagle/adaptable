@@ -43,7 +43,7 @@ export class AlertRulesWizard
       ColumnIds: [this.props.data.ColumnId],
     };
     const predicatesOptions = this.props.api.alertApi
-      .getAlertPredicateDefsForScope(columnScope)
+      .getPredicateDefsForScope(columnScope)
       .map(predicateDef => {
         return {
           value: predicateDef.id,
@@ -102,7 +102,7 @@ export class AlertRulesWizard
       return false;
     }
 
-    if (this.state.Inputs.some(StringExtensions.IsNullOrEmpty)) {
+    if (this.state.Inputs?.some(StringExtensions.IsNullOrEmpty)) {
       return false;
     }
 

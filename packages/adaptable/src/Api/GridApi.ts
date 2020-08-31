@@ -2,6 +2,7 @@ import { GridState } from '../PredefinedConfig/GridState';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
+import { CellValueType } from '../PredefinedConfig/Common/Enums';
 
 /**
  * Provides access to important elements of the Adaptable Grid like sorting, selected cells etc.
@@ -122,6 +123,8 @@ export interface GridApi {
   getFirstRowNode(): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
+  getValueFromRowNode(rowwNode: any, columnId: string, cellValueType: CellValueType): string;
+  getRawValueFromRowNode(rowwNode: any, columnId: string): any;
 
   expandAllRowGroups(): void;
   closeAllRowGroups(): void;

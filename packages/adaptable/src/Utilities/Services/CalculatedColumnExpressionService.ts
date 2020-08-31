@@ -4,6 +4,7 @@ import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../../PredefinedConfig/Common/Enums';
+import { RowNode } from '@ag-grid-community/all-modules';
 
 export class CalculatedColumnExpressionService implements ICalculatedColumnExpressionService {
   constructor(private adaptable: IAdaptable) {
@@ -14,7 +15,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     try {
       let firstRecord = this.adaptable.api.gridApi.getFirstRowNode();
       let firstRowValue: any = evaluate(expression, {
-        data: firstRecord.data,
+        node: firstRecord,
+        api: this.adaptable.api,
       });
       if (firstRowValue instanceof Date) {
         return DataType.Date;
@@ -40,7 +42,8 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
       let cleanedExpression: string = this.CleanExpressionColumnNames(expression, columns);
       let firstRecord = this.adaptable.getFirstRowNode();
       evaluate(cleanedExpression, {
-        data: firstRecord.data,
+        node: firstRecord,
+        api: this.adaptable.api,
       });
       return { IsValid: true };
     } catch (e) {
@@ -49,13 +52,14 @@ export class CalculatedColumnExpressionService implements ICalculatedColumnExpre
     }
   }
 
-  public ComputeExpressionValue(expression: string, record: any): any {
+  public ComputeExpressionValue(expression: string, record: RowNode): any {
     try {
       if (this.adaptable.isGroupRowNode(record)) {
         return undefined;
       }
       return evaluate(expression, {
-        data: record.data,
+        node: record,
+        api: this.adaptable.api,
       });
     } catch (e) {
       LoggingHelper.LogAdaptableError(e);
