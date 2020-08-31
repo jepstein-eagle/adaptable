@@ -29,10 +29,6 @@ export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarS
   StyleClassNames: string[];
   onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
   onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PercentBarSummaryComponent extends React.Component<

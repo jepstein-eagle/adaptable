@@ -32,10 +32,6 @@ export interface FreeTextColumnSummaryProps
   onEditFreeTextColumn: (
     FreeTextColumn: FreeTextColumn
   ) => FreeTextColumnRedux.FreeTextColumnEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class FreeTextColumnSummaryComponent extends React.Component<

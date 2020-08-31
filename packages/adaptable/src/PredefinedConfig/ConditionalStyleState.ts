@@ -1,16 +1,14 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { QueryObject } from './Common/QueryObject';
-import { Scope, ScopeColumnIds, ScopeDataTypes } from './Common/Scope';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { TypeUuid } from './Uuid';
+import { Scope } from './Common/Scope';
 
 /**
  * The Predefined Configuration for the Conditional Style function
  *
  * Use Conditional Styles to set rules for how columns or rows should look visualy based on the data they contain.
  *
- * Conditional Styles uses an [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
+ * Conditional Styles uses an Expression (aka Query) for evaluation.
  *
  * **Further AdapTable Help Resources**
  *
@@ -27,54 +25,22 @@ import { TypeUuid } from './Uuid';
  * ConditionalStyle: {
  *   ConditionalStyles: [
  *     {
- *       ColumnId: 'ChangeLastOrder',
+ *       Scope: {
+            DataTypes: ['Number'],
+        },
  *       Style: {
- *         ForeColor: '#008000',
+ *          ForeColor: '#008000',
  *       },
- *       Expression: {
- *         FilterExpressions: [
- *           {
- *             ColumnId: 'ChangeLastOrder',
- *             Filters: ['Positive'],
- *           },
- *         ],
- *       },
+ *       Expression: '[ChangeLastOrder]> 0'
  *     },
  *     {
- *       Style: {
- *        ForeColor: '#ff0000',
+ *       Scope: {
+            DataTypes: ['Number'],
+         },
+         Style: {
+ *          ForeColor: '#ff0000',
  *       },
- *       Expression: {
- *         FilterExpressions: [
- *           {
- *             ColumnId: 'ChangeLastOrder',
- *             Filters: ['Negative'],
- *           },
- *         ],
- *       },
- *     },
- *     {
- *       Style: {
- *         BackColor: '#ffffcc',
- *         FontStyle: 'Italic',
- *         ForeColor: '#000000',
- *       },
- *       Expression: {
- *         RangeExpressions: [
- *           {
- *             ColumnId: 'ItemCost',
- *             Ranges: [
- *               {
- *                 Operand1: '80',
- *                 Operand1Type: 'Value',
- *                 Operand2: '',
- *                 Operand2Type: 'Value',
- *                 Operator: 'GreaterThan',
- *               },
- *             ],
- *           },
- *         ],
- *       },
+ *       Expression: '[ChangeLastOrder]< 0'
  *     },
  *   ],
  * },
@@ -84,11 +50,6 @@ import { TypeUuid } from './Uuid';
 export interface ConditionalStyleState extends ConfigState {
   ConditionalStyles?: ConditionalStyle[];
   ExcludeGroupedRows?: boolean;
-}
-
-export interface StyleScope {
-  ColumnIds?: string[];
-  DataTypes?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
 
 /**

@@ -26,10 +26,6 @@ export interface PlusMinusSummaryProps extends StrategySummaryProps<PlusMinusSum
   PlusMinusRules: PlusMinusRule[];
   onAddPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleAddAction;
   onEditPlusMinusRule: (PlusMinus: PlusMinusRule) => PlusMinusRedux.PlusMinusRuleEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PlusMinusSummaryComponent extends React.Component<

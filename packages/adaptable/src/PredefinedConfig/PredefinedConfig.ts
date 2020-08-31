@@ -235,22 +235,7 @@ import { QueryState } from './QueryState';
  *          'PackageCost',
  *          'InvoicedCost',
  *         ],
- *         Expression: {
- *             RangeExpressions: [
- *             {
- *               ColumnId: 'Freight',
- *               Ranges: [
- *                 {
- *                   Operand1: '500',
- *                   Operand1Type: 'Value',
- *                   Operand2: '',
- *                   Operand2Type: 'Value',
- *                   Operator: 'GreaterThan',
- *                 },
- *               ],
- *             },
- *           ],
- *         },
+ *         Expression: '[Freight]> 500'
  *       },
  *     ],
  *   },
@@ -272,27 +257,13 @@ import { QueryState } from './QueryState';
  *         Style: {
  *           ForeColor: '#008000',
  *         },
- *         Expression: {
- *            FilterExpressions: [
- *             {
- *               ColumnId: 'ChangeLastOrder',
- *               Filters: ['Positive'],
- *             },
- *           ],
- *         },
+ *         Expression: '[ChangeLastOrder]> 0'
  *       },
  *       {
  *         Style: {
  *           ForeColor: '#ff0000',
  *         },
- *         Expression: {
- *           FilterExpressions: [
- *             {
- *               ColumnId: 'ChangeLastOrder',
- *               Filters: ['Negative'],
- *             },
- *           ],
- *         },
+ *         Expression: '[ChangeLastOrder]< 0'
  *       },
  *       {
  *         Style: {
@@ -300,22 +271,7 @@ import { QueryState } from './QueryState';
  *           FontStyle: 'Italic',
  *           ForeColor: '#000000',
  *         },
- *         Expression: {
- *           RangeExpressions: [
- *             {
- *               ColumnId: 'InvoicedCost',
- *               Ranges: [
- *                 {
- *                   Operand1: '2000',
- *                   Operand1Type: 'Value',
- *                   Operand2: '',
- *                   Operand2Type: 'Value',
- *                   Operator: 'GreaterThan',
- *                 },
- *               ],
- *             },
- *           ],
- *         },
+ *         Expression: '[InvoicedCost]> 2000'
  *       },
  *     ],
  *   },

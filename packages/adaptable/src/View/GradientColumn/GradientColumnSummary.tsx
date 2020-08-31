@@ -34,10 +34,6 @@ export interface GradientColumnSummaryProps
   onEditGradientColumn: (
     GradientColumn: GradientColumn
   ) => GradientColumnRedux.GradientColumnEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class GradientColumnSummaryComponent extends React.Component<

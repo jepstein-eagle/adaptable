@@ -19,11 +19,6 @@ import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 export interface FilterSummaryProps extends StrategySummaryProps<FilterSummaryComponent> {
   ColumnFilters: ColumnFilter[];
   onClearFilter: (columnfilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
-  Entitlements: Entitlement[];
 }
 
 export class FilterSummaryComponent extends React.Component<

@@ -1,36 +1,8 @@
 import { createUuid, TypeUuid } from '../Uuid';
 
-/**
- * The main Expression (or Query) object used in multiple AdapTable functions
- *
- * It is comprised of 3 (nullable) collections:
- *
- * - Column Values: actual cell value in the a Column - can be either Display or Raw Values
- *
- * - Filters: can be a mix of *Column Filters* (created by the user at run-time), *System Filters* (filters which are shipped by Adaptable) and *User Filters* (special filters which the user creates and names and can then re-use as required).
- *
- * - Ranges: an evaluation (e.g. 'GreaterThan 15', 'LessThan [Bid]' etc.)
- *
- * **Further AdapTable Help Resources**
- *
- * [Expression Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-expression-guide.md) | [Filtering Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
- *
- */
 export class Expression {
-  /**
-   * @property {Uuid} - unique identifier for the expression - nullable and created automatically by Adaptable
-   */
   public Uuid?: TypeUuid;
 
-  /**
-   * @property {ColumnValueExpressions} - Column values (as displayed in the Grid)
-   */
-  /**
-   * @property {FilterExpressions} - User, System and Column Filters contained in the expression
-   */
-  /**
-   * @property {RangeExpressions} - Ranges contained in the expression
-   */
   constructor(
     public ColumnValueExpressions?: ColumnValueExpression[],
     public FilterExpressions?: FilterExpression[],

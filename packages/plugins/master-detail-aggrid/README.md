@@ -58,23 +58,13 @@ And we have supplied the detail grid Adaptable Options in the plugins section.  
             ConditionalStyle: {
               ConditionalStyles: [
                 {
+                  Scope: {
+                    ColumnIds: ['age'],
+                  },
                   Style: {
                     BackColor: '#ffffe0',
                   },
-                  Expression: {
-                    RangeExpressions: [
-                      {
-                        ColumnId: 'age',
-                        Ranges: [
-                          {
-                            Operand1: '30',
-                            Operand1Type: 'Value',
-                            Operator: 'GreaterThan',
-                          },
-                        ],
-                      },
-                    ],
-                  },
+                  Expression: '[age]> 30'
                 },
               ],
             },

@@ -42,13 +42,12 @@ interface AdaptableViewProps extends React.ClassAttributes<AdaptableView> {
   onCloseLoadingPopup: () => PopupRedux.PopupHideLoadingAction;
 }
 
-//PLEASE NO LOGIC HERE!!! I keep removing stuf... Search , filter, quick search and now layouts.......
 class AdaptableView extends React.Component<AdaptableViewProps, {}> {
   render() {
     return (
       <div>
         {this.props.Adaptable.StrategyService.isStrategyAvailable('Dashboard') && (
-          <Dashboard Adaptable={this.props.Adaptable} api={this.props.Adaptable.api} />
+          <Dashboard api={this.props.Adaptable.api} />
         )}
         {/* The chart widget - it will decide where it will display
                 Either modally (if we set ShowModal in our Predefiend Config for Chart State)
@@ -65,7 +64,6 @@ class AdaptableView extends React.Component<AdaptableViewProps, {}> {
         {/*  These are all popups that we show at different times */}
 
         <AdaptableLoadingScreen
-          Adaptable={this.props.Adaptable}
           onClose={this.props.onCloseLoadingPopup}
           showLoadingScreen={this.props.PopupState.LoadingPopup.ShowLoadingPopup}
         />

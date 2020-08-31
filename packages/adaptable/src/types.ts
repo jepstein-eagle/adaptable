@@ -21,6 +21,8 @@ export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo'
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
 export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
 export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
+export { Scope } from './PredefinedConfig/Common/Scope';
+export { Predicate } from './PredefinedConfig/Common/Predicate';
 export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';

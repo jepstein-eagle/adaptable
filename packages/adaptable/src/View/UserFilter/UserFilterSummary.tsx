@@ -18,16 +18,11 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
   onAddUserFilter: (UserFilter: UserFilter) => FilterRedux.UserFilterAddAction;
   onEditUserFilter: (UserFilter: UserFilter) => FilterRedux.UserFilterEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class UserFilterSummaryComponent extends React.Component<
@@ -59,13 +54,13 @@ export class UserFilterSummaryComponent extends React.Component<
     strategySummaries.push(titleRow);
 
     // existing items
-    userFilters.map((item, index) => {
+    userFilters.map(item => {
       if (this.props.api.scopeApi.isColumnInScope(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
             item1={item.Name}
-            item2={this.getDescription(item)}
+            item2={this.getDescription()}
             configEnity={item}
             showShare={this.props.teamSharingActivated}
             showEdit={this.isFilterable()}
@@ -114,7 +109,7 @@ export class UserFilterSummaryComponent extends React.Component<
     return '5';
   }
 
-  getDescription(userFilter: UserFilter): string {
+  getDescription(): string {
     if (!this.isColumnFilterable()) {
       return 'Column is not filterable';
     }
@@ -183,7 +178,7 @@ export class UserFilterSummaryComponent extends React.Component<
     // StringExtensions.IsNotEmpty(userFilter.Scope.ColumnIds[0])
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<UserFilterSummaryProps> {
+function mapStateToProps(): Partial<UserFilterSummaryProps> {
   return {};
 }
 
