@@ -171,7 +171,12 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
 
   const setColumnVisibility = (c: AdaptableColumn, visible: boolean) => {
     const newLayout = visible
-      ? { ...layout, Columns: [...layout.Columns, c.ColumnId] }
+      ? {
+          ...layout,
+          Columns: columnList
+            .filter(col => visibleColumnsMap[col.ColumnId] || col.ColumnId === c.ColumnId)
+            .map(c => c.ColumnId),
+        }
       : { ...layout, Columns: layout.Columns.filter(colId => colId !== c.ColumnId) };
 
     setLayout(newLayout);
