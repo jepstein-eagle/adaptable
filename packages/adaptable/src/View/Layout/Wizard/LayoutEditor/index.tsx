@@ -39,7 +39,9 @@ const ListPanel = (props: PanelProps) => (
     {...props}
   />
 );
-const ColumnLabels = (props: AdaptableColumnProperties) => {
+const ColumnLabels = (props: AdaptableColumnProperties & { children?: React.ReactNode }) => {
+  const { children, ...columnProperties } = props;
+
   const labelNames = [
     'Aggregatable',
     // 'Filterable',
@@ -48,7 +50,7 @@ const ColumnLabels = (props: AdaptableColumnProperties) => {
     'Pivotable',
     'Sortable',
   ];
-  const labels = labelNames.map(name => ((props as any)[name] ? name.charAt(0) : ''));
+  const labels = labelNames.map(name => ((columnProperties as any)[name] ? name.charAt(0) : ''));
   return (
     <Flex flexDirection="row" alignItems="center" width="100%">
       <Text mr={2}>Attributes:</Text>
@@ -95,6 +97,7 @@ const ColumnLabels = (props: AdaptableColumnProperties) => {
           </Flex>
         );
       })}
+      {children}
     </Flex>
   );
 };
@@ -397,65 +400,68 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                       Pivotable={c.Pivotable}
                       Groupable={c.Groupable}
                       Aggregatable={c.Aggregatable}
-                    ></ColumnLabels>
-                    {c.Aggregatable &&
-                    c.AvailableAggregationFunctions &&
-                    c.AvailableAggregationFunctions.length ? (
-                      <CheckBox
-                        disabled={!layout.RowGroupedColumns || !layout.RowGroupedColumns.length}
-                        onChange={checked => {
-                          let aggCols: null | Record<string, string | true> =
-                            layout.AggregationColumns || {};
-                          // const aggCols = new Set(layout.AggregationColumns);
-                          if (checked) {
-                            let aggFunc = c.AggregationFunction;
-                            if (!aggFunc && c.AvailableAggregationFunctions) {
-                              aggFunc = c.AvailableAggregationFunctions[0];
-                            }
-                            aggCols[c.ColumnId] = aggFunc;
-                          } else {
-                            delete aggCols[c.ColumnId];
+                    >
+                      <Flex flex={1}></Flex>
+                      {c.Aggregatable &&
+                      c.AvailableAggregationFunctions &&
+                      c.AvailableAggregationFunctions.length ? (
+                        <CheckBox
+                          ml={3}
+                          disabled={!layout.RowGroupedColumns || !layout.RowGroupedColumns.length}
+                          onChange={checked => {
+                            let aggCols: null | Record<string, string | true> =
+                              layout.AggregationColumns || {};
+                            // const aggCols = new Set(layout.AggregationColumns);
+                            if (checked) {
+                              let aggFunc = c.AggregationFunction;
+                              if (!aggFunc && c.AvailableAggregationFunctions) {
+                                aggFunc = c.AvailableAggregationFunctions[0];
+                              }
+                              aggCols[c.ColumnId] = aggFunc;
+                            } else {
+                              delete aggCols[c.ColumnId];
 
-                            if (!Object.keys(aggCols).length) {
-                              aggCols = null;
+                              if (!Object.keys(aggCols).length) {
+                                aggCols = null;
+                              }
                             }
-                          }
-                          setLayout({
-                            ...layout,
-                            AggregationColumns: aggCols,
-                          });
-                        }}
-                        checked={aggregate}
-                      >
-                        Aggregate
-                        <DropdownButton
-                          style={{
-                            visibility: aggregate ? 'visible' : 'hidden',
+                            setLayout({
+                              ...layout,
+                              AggregationColumns: aggCols,
+                            });
                           }}
-                          columns={['label']}
-                          ml={2}
-                          variant="text"
-                          items={c.AvailableAggregationFunctions.map(fnName => {
-                            return {
-                              label: fnName,
-                              onClick: () => {
-                                const aggCols = layout.AggregationColumns;
-                                if (!aggCols) {
-                                  return;
-                                }
-                                aggCols[c.ColumnId] = fnName;
-                                setLayout({
-                                  ...layout,
-                                  AggregationColumns: aggCols,
-                                });
-                              },
-                            };
-                          })}
+                          checked={aggregate}
                         >
-                          {aggregationColumnsMap[c.ColumnId]}
-                        </DropdownButton>
-                      </CheckBox>
-                    ) : null}
+                          Aggregate
+                          <DropdownButton
+                            style={{
+                              visibility: aggregate ? 'visible' : 'hidden',
+                            }}
+                            ml={2}
+                            columns={['label']}
+                            variant="text"
+                            items={c.AvailableAggregationFunctions.map(fnName => {
+                              return {
+                                label: fnName,
+                                onClick: () => {
+                                  const aggCols = layout.AggregationColumns;
+                                  if (!aggCols) {
+                                    return;
+                                  }
+                                  aggCols[c.ColumnId] = fnName;
+                                  setLayout({
+                                    ...layout,
+                                    AggregationColumns: aggCols,
+                                  });
+                                },
+                              };
+                            })}
+                          >
+                            {aggregationColumnsMap[c.ColumnId]}
+                          </DropdownButton>
+                        </CheckBox>
+                      ) : null}
+                    </ColumnLabels>
                   </Flex>
                 </Flex>
               );

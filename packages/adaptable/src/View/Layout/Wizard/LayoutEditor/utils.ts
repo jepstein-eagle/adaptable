@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 
-export const listWidth = '20rem';
+export const listWidth = '28rem';
 
 export type DraggableSnapshot = {
   isDragging: boolean;

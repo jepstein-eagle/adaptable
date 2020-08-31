@@ -7,9 +7,9 @@ import { useState, useCallback } from 'react';
 import { reorder } from './reorder';
 import { LayoutEditorDroppableIds } from './droppableIds';
 
-import Input from '../../../../components/Input';
 import { getListStyle } from './utils';
 import { Box } from 'rebass';
+import { AdaptableFormControlTextClear } from '../../../Components/Forms/AdaptableFormControlTextClear';
 
 export type OnDragEnd = (result: {
   destination?: { index: number; droppableId: string };
@@ -103,14 +103,12 @@ export const ColumnList = (props: ColumnListProps) => {
             ref={provided.innerRef}
             style={getListStyle(snapshot)}
           >
-            <Box px={2}>
-              <Input
+            <Box px={2} mb={2}>
+              <AdaptableFormControlTextClear
                 placeholder="Search a column"
-                mb={2}
                 width="100%"
-                onChange={(e: React.FormEvent<HTMLInputElement>) => {
-                  setSearch((e.target as HTMLInputElement).value);
-                }}
+                value={search}
+                OnTextChange={setSearch}
               />
             </Box>
             {columns.map((c: AdaptableColumn, index) => {

@@ -12,6 +12,7 @@ import Check from './check';
 import AttachFile from './attach-file';
 import Plus from './plus';
 import Clear from './clear';
+import Clone from './clone';
 import Query from './query';
 import Info from './info';
 import Alert from './alert';
@@ -153,6 +154,7 @@ const allIcons = {
   comment,
   list: List,
   undo: Undo,
+  clone: Clone,
   delete: Delete,
   build: Build,
   save: Save,
