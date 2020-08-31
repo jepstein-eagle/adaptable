@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 
 import { ButtonEdit } from './ButtonEdit';
+import { ButtonClone } from './ButtonClone';
 import { ButtonDelete } from './ButtonDelete';
 
 import { Flex } from 'rebass';
@@ -13,14 +14,18 @@ export interface EntityListActionButtonsProps
   extends React.ClassAttributes<EntityListActionButtons> {
   // Adaptable: IAdaptable;
   editClick?: () => void;
+  cloneClick?: () => void;
   shareClick?: (description: string) => void;
   showEdit?: boolean;
+  showClone?: boolean;
   showDelete?: boolean;
   showShare?: boolean;
   overrideDisableEdit?: boolean;
   overrideDisableDelete?: boolean;
+  overrideDisableClone?: boolean;
   overrideDisableShare?: boolean;
   overrideTooltipEdit?: string;
+  overrideTooltipClone?: string;
   overrideTooltipDelete?: string;
   overrideTooltipShare?: string;
   confirmDeleteAction: Redux.Action;
@@ -45,6 +50,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
     showShare: false,
     overrideDisableEdit: false,
     overrideDisableDelete: false,
+    overrideDisableClone: false,
     overrideDisableShare: false,
     confirmDeleteAction: null,
     entityType: '',
@@ -76,6 +82,24 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
             disabled={this.props.overrideDisableEdit || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipEdit}
             accessLevel={this.props.accessLevel}
+          />
+        )}
+        {this.props.showClone && (
+          <ButtonClone
+            onClick={() => (this.props.cloneClick ? this.props.cloneClick() : null)}
+            style={{
+              marginLeft: '0px',
+              marginTop: '2px',
+              marginBottom: '2px',
+              marginRight: '2px',
+              color: 'var(--ab-color-text-on-info)',
+              fill: 'var(--ab-color-text-on-info)',
+              background: 'var(--ab-color-info)',
+            }}
+            children={null}
+            disabled={this.props.overrideDisableClone || this.props.AccessLevel == 'ReadOnly'}
+            tooltip={this.props.overrideTooltipClone}
+            AccessLevel={this.props.AccessLevel}
           />
         )}
         {this.props.showDelete && (

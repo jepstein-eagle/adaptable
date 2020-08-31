@@ -86,6 +86,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
       })
     );
 
+    const hasNext = this.props.steps.length > 1;
+    const hasBack = hasNext;
+
     return (
       <Dialog
         modal
@@ -143,29 +146,33 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               CLOSE
             </SimpleButton>
             <div style={{ flex: 1 }} />
-            <SimpleButton
-              data-name="back"
-              variant="outlined"
-              disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
-              onClick={() => this.handleClickBack()}
-              icon="arrow-left"
-              accessLevel={'Full'}
-            >
-              Back
-            </SimpleButton>
-            <SimpleButton
-              variant="outlined"
-              data-name="next"
-              disabled={!this.ActiveStep.canNext() || this.isLastStep()}
-              onClick={() => this.handleClickNext()}
-              icon="arrow-right"
-              iconPosition="end"
-              accessLevel={'Full'}
-              marginLeft={2}
-              marginRight={2}
-            >
-              Next
-            </SimpleButton>
+            {hasBack ? (
+              <SimpleButton
+                data-name="back"
+                variant="outlined"
+                disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
+                onClick={() => this.handleClickBack()}
+                icon="arrow-left"
+                accessLevel={'Full'}
+              >
+                Back
+              </SimpleButton>
+            ) : null}
+            {hasNext ? (
+              <SimpleButton
+                variant="outlined"
+                data-name="next"
+                disabled={!this.ActiveStep.canNext() || this.isLastStep()}
+                onClick={() => this.handleClickNext()}
+                icon="arrow-right"
+                iconPosition="end"
+                accessLevel={'Full'}
+                marginLeft={2}
+                marginRight={2}
+              >
+                Next
+              </SimpleButton>
+            ) : null}
             <SimpleButton
               tone="accent"
               data-name="finish"

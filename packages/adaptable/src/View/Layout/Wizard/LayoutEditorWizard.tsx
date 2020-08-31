@@ -65,21 +65,11 @@ export class LayoutEditorWizard
   }
 
   onLayoutNameChange = (event: React.FormEvent<any>) => {
-    //TODO continue here when Radu returns
-    // Jonny uncommented return so could do initial testing
-    // return;
     const Name = (event.target as HTMLInputElement).value;
-    const Exists = ArrayExtensions.ContainsItem(
-      this.props.Layouts.map(l => l.Name),
-      Name
-    );
 
-    const ErrorMessage = Exists
-      ? 'A Layout already exists with that name'
-      : !Name
-      ? 'Layout name cannot be blank'
-      : null;
+    const ErrorMessage = this.getErrorMessage({ ...this.state, layoutName: Name });
 
+    this.updateLayout({ Name });
     this.setState(
       {
         layoutName: Name,
@@ -91,26 +81,62 @@ export class LayoutEditorWizard
     );
   };
 
-  onLayoutChange = (layout: Layout) => {
-    this.setState({ layout }, () => {
-      this.props.updateGoBackState();
+  getErrorMessage = ({ layout, layoutName }: { layout: Layout; layoutName: string }): string => {
+    const Exists = this.props.Layouts.find(l => l.Name === layoutName && l.Uuid !== layout.Uuid);
+
+    let ErrorMessage = Exists
+      ? 'A Layout already exists with that name'
+      : !layoutName
+      ? 'Layout name cannot be blank'
+      : null;
+
+    // if (!ErrorMessage && !layout.Columns.length) {
+    //   ErrorMessage = 'A Layout must have at least one visible column';
+    // }
+
+    return ErrorMessage;
+  };
+
+  updateLayout = (layout: Partial<Layout>) => {
+    const updatedLayout = { ...this.state.layout, ...layout } as Layout;
+
+    Object.assign(this.props.Data, updatedLayout);
+    this.setState({
+      layout: updatedLayout,
     });
+  };
+
+  onLayoutChange = (layout: Layout) => {
+    this.updateLayout(layout);
+
+    this.setState(
+      { layout, ErrorMessage: this.getErrorMessage({ layout, layoutName: this.state.layoutName }) },
+      () => {
+        this.props.UpdateGoBackState();
+      }
+    );
+  };
+
+  getLayout = () => {
+    return { ...this.state.layout, Name: this.state.layoutName };
   };
 
   public canNext(): boolean {
     return !!this.state.layoutName && !this.state.ErrorMessage;
   }
+
   public canBack(): boolean {
     return true;
   }
-  public next(): void {
-    Object.keys(this.props.data).forEach(key => {
-      delete (this.props.data as any)[key];
-    });
-    // TODO: Radu to fix properly but Jonny added this temporarily so could create new layouts and edit for testing!
-    this.state.layout.Name = this.state.layoutName;
 
-    Object.assign(this.props.data, this.state.layout);
+  public Next(): void {
+    Object.keys(this.props.Data).forEach(key => {
+      delete (this.props.Data as any)[key];
+    });
+
+    const layout = this.getLayout();
+
+    Object.assign(this.props.Data, layout);
   }
   public back(): void {}
   public getIndexStepIncrement() {

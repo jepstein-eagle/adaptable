@@ -27,7 +27,7 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { createUuid } from '../../components/utils/uuid';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: Layout[];
@@ -103,6 +103,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
           adaptableObject={x}
           onEdit={() => this.onEdit(x)}
+          onClone={() => this.onClone(x)}
           onShare={description => this.props.onShare(x, description)}
           teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
@@ -178,6 +179,17 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     });
   }
 
+  onClone(layout: Layout) {
+    let clonedObject: Layout = Helper.cloneObject(layout);
+    clonedObject.Name = '';
+    clonedObject.Uuid = createUuid();
+    this.setState({
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
+    });
+  }
+
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
@@ -218,12 +230,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   canFinishWizard() {
     let layout = this.state.editedAdaptableObject as Layout;
 
-    // Need a name and EITHER columns or Pivot Columns
-    return (
-      StringExtensions.IsNotNullOrEmpty(layout.Name) &&
-      (ArrayExtensions.IsNotNullOrEmpty(layout.Columns) ||
-        ArrayExtensions.IsNotNullOrEmpty(layout.PivotColumns))
-    );
+    return StringExtensions.IsNotNullOrEmpty(layout.Name);
   }
 }
 

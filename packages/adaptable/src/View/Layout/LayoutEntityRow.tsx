@@ -47,9 +47,11 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
     let buttons: any = (
       <EntityListActionButtons
+        showClone={true}
         confirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(layout)}
+        cloneClick={() => this.props.onClone(layout)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={false}
         overrideDisableDelete={!this.props.canDelete}

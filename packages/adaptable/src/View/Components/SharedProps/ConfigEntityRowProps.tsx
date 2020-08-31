@@ -16,6 +16,7 @@ export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
   adaptableObject: AdaptableObject;
   onDeleteConfirm: Redux.Action;
   onEdit: (AdaptableObject: AdaptableObject) => void;
+  onClone?: (AdaptableObject: AdaptableObject) => void;
 }
 
 // shared props
