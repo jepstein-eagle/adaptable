@@ -22,14 +22,14 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     let alertDefinition: AlertDefinition = this.props.data as AlertDefinition;
     let keyValuePairs: KeyValuePair[] = [
       {
-        Key: 'Column',
-        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(alertDefinition.ColumnId),
+        Key: 'Scope',
+        Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope),
       },
       {
         Key: 'Rule',
         Value: this.props.api.internalApi
           .getStrategyService()
-          .createAlertDescription(alertDefinition, this.props.api.columnApi.getColumns()),
+          .createAlertDescription(alertDefinition),
       },
       { Key: 'Alert Type', Value: alertDefinition.MessageType },
       {

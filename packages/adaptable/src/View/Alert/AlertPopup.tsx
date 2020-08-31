@@ -54,7 +54,9 @@ class AlertPopupComponent extends React.Component<
       if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'New') {
           let alertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-          alertDefinition.ColumnId = this.props.popupParams.column.ColumnId;
+          alertDefinition.Scope = {
+            ColumnIds: [this.props.popupParams.column.ColumnId],
+          };
           this.setState({
             editedAdaptableObject: alertDefinition,
             wizardStartIndex: 1,
@@ -80,14 +82,12 @@ class AlertPopupComponent extends React.Component<
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = this.props.api.columnApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}
           colItems={colItems}
           api={this.props.api}
           adaptableObject={alertDefinition}
-          Column={column}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={description => this.props.onShare(alertDefinition, description)}
           teamSharingActivated={this.props.teamSharingActivated}
@@ -203,8 +203,8 @@ class AlertPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let AlertRule = this.state.editedAdaptableObject as AlertDefinition;
-    return StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId);
+    let alertDefinition = this.state.editedAdaptableObject as AlertDefinition;
+    return alertDefinition.Scope != null; // can it be?
     //   &&       ExpressionHelper.IsNullOrEmptyOrValidExpression(AlertRule.Expression)
   }
 

@@ -7,7 +7,7 @@ import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from './AlertTypeWizard';
-import { AlertScopeWizard } from './AlertScopeWizard';
+import { AlertSettingsWizard } from './AlertSettingsWizard';
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
 
 export interface AlertWizardProps
@@ -40,7 +40,7 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
             {
               StepName: 'Behaviour',
               Index: 3,
-              Element: <AlertScopeWizard api={this.props.api} />,
+              Element: <AlertSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',

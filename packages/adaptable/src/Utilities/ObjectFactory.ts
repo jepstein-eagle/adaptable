@@ -185,7 +185,7 @@ export function CreateAlert(
 export function CreateEmptyAlertDefinition(): AlertDefinition {
   return {
     Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Predicate: { Id: 'Any' },
     Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
@@ -201,7 +201,7 @@ export function CreateInternalAlertDefinitionForMessages(
 ): AlertDefinition {
   return {
     Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Predicate: null,
     Expression: null,
     MessageType: messageType,

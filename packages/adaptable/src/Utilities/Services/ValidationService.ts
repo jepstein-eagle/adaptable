@@ -27,6 +27,7 @@ import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, Scope } from '../../types';
 import * as parser from '../../parser/src';
 import { isThisQuarter } from 'date-fns';
+import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export class ValidationService implements IValidationService {
   constructor(private adaptable: IAdaptable) {
@@ -281,15 +282,12 @@ export class ValidationService implements IValidationService {
 
   public createCellValidationDescription(cellValidationRule: CellValidationRule): string {
     // this is rubbish but at least it builds - think it needs more thought!
-    const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
+    const predicateDef: PredicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
       cellValidationRule.Predicate.Id
     );
-    return (
-      'scope:' +
-      this.adaptable.api.scopeApi.getScopeDescription(cellValidationRule.Scope) +
-      'predicate: ' +
-      cellValidationRule.Predicate.Inputs
-    );
+    return 'I need to do do this when predicateDef receives a Scope';
+
+    // return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
   }
 
   public createCellValidationUIConfirmation(

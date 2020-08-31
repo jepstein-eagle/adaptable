@@ -44,7 +44,9 @@ export class AlertSummaryComponent extends React.Component<
         key={StrategyConstants.AlertStrategyFriendlyName}
         functionName={StrategyConstants.AlertStrategyId}
         strategySummary={Helper.ReturnItemCount(
-          this.props.Alerts.filter(item => item.ColumnId == this.props.summarisedColumn.ColumnId),
+          this.props.Alerts.filter(item =>
+            this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)
+          ),
           StrategyConstants.AlertStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
@@ -56,14 +58,12 @@ export class AlertSummaryComponent extends React.Component<
 
     // existing items
     this.props.Alerts.map((item, index) => {
-      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
+      if (this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={'CV' + index}
             item1={'something here?'}
-            item2={this.props.api.internalApi
-              .getStrategyService()
-              .createAlertDescription(item, this.props.api.columnApi.getColumns())}
+            item2={this.props.api.internalApi.getStrategyService().createAlertDescription(item)}
             configEnity={item}
             entityType={StrategyConstants.AlertStrategyFriendlyName}
             showShare={this.props.teamSharingActivated}
@@ -104,7 +104,9 @@ export class AlertSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: AlertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
+    configEntity.Scope = {
+      ColumnIds: [this.props.summarisedColumn.ColumnId],
+    };
     this.setState({
       editedAdaptableObject: configEntity,
       wizardStartIndex: 1,

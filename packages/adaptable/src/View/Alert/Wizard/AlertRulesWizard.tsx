@@ -38,12 +38,8 @@ export class AlertRulesWizard
   }
 
   render(): any {
-    // TODO replace this with the full scope object from prev step
-    const columnScope: Scope = {
-      ColumnIds: [this.props.data.ColumnId],
-    };
     const predicatesOptions = this.props.api.alertApi
-      .getPredicateDefsForScope(columnScope)
+      .getPredicateDefsForScope(this.props.data.Scope)
       .map(predicateDef => {
         return {
           value: predicateDef.id,
