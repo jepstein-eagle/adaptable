@@ -1,13 +1,9 @@
 import * as React from 'react';
 
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import WizardPanel from '../../../components/WizardPanel';
 import { ScopeDataType } from '../../../PredefinedConfig/Common/Scope';
@@ -18,17 +14,16 @@ import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualLis
 import Panel from '../../../components/Panel';
 import CheckBox from '../../../components/CheckBox';
 
-export interface AlertSelectColumnWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
-export interface AlertSelectColumnWizardState {
+export interface AlertScopeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
+export interface AlertScopeWizardState {
   ScopeChoice: 'All' | 'Column' | 'DataType';
   ColumnIds: string[];
   DataTypes: ScopeDataType[];
 }
 
-export class AlertSelectColumnWizard
-  extends React.Component<AlertSelectColumnWizardProps, AlertSelectColumnWizardState>
+export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, AlertScopeWizardState>
   implements AdaptableWizardStep {
-  constructor(props: AlertSelectColumnWizardProps) {
+  constructor(props: AlertScopeWizardProps) {
     super(props);
     let scopeChoice: 'All' | 'Column' | 'DataType' = this.props.api.scopeApi.scopeIsAll(
       this.props.data.Scope
@@ -50,8 +45,7 @@ export class AlertSelectColumnWizard
         {' '}
         <Flex flexDirection="column" padding={2}>
           <HelpBlock marginBottom={1}>
-            Scope: Apply Conditional Style to: whole Row, or one or more Columns, or one or more
-            Data Types
+            Apply Scope for: Row, or one or more Columns, or one or more Data Types
           </HelpBlock>{' '}
           <Flex flexDirection="row" padding={2}>
             <Radio
@@ -148,7 +142,7 @@ export class AlertSelectColumnWizard
     this.setState(
       {
         ColumnIds: this.props.api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
-      } as AlertSelectColumnWizardState,
+      } as AlertScopeWizardState,
       () => this.props.updateGoBackState()
     );
   }
@@ -156,7 +150,7 @@ export class AlertSelectColumnWizard
   private onScopeSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     if (e.value == 'Column') {
-      this.setState({ ScopeChoice: 'Column', ColumnIds: [] } as AlertSelectColumnWizardState, () =>
+      this.setState({ ScopeChoice: 'Column', ColumnIds: [] } as AlertScopeWizardState, () =>
         this.props.updateGoBackState()
       );
     } else if (e.value == 'DataType') {
@@ -164,18 +158,18 @@ export class AlertSelectColumnWizard
         {
           ScopeChoice: 'DataType',
           DataTypes: [],
-        } as AlertSelectColumnWizardState,
+        } as AlertScopeWizardState,
         () => this.props.updateGoBackState()
       );
     } else {
-      this.setState({ ScopeChoice: 'All' } as AlertSelectColumnWizardState, () =>
+      this.setState({ ScopeChoice: 'All' } as AlertScopeWizardState, () =>
         this.props.updateGoBackState()
       );
     }
   }
 
   private onDataTypeChecked(checked: boolean, item: ScopeDataType) {
-    let dataTypes = this.state.DataTypes;
+    let dataTypes = [].concat(this.state.DataTypes);
     if (checked) {
       dataTypes.push(item);
     } else {
@@ -184,7 +178,7 @@ export class AlertSelectColumnWizard
         dataTypes.splice(index, 1);
       }
     }
-    this.setState({ DataTypes: dataTypes } as AlertSelectColumnWizardState, () =>
+    this.setState({ DataTypes: dataTypes } as AlertScopeWizardState, () =>
       this.props.updateGoBackState()
     );
   }

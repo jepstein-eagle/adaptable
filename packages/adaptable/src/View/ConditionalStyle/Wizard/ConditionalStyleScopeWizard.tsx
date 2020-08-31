@@ -49,8 +49,7 @@ export class ConditionalStyleScopeWizard
         {' '}
         <Flex flexDirection="column" padding={2}>
           <HelpBlock marginBottom={1}>
-            Scope: Apply Conditional Style to: whole Row, or one or more Columns, or one or more
-            Data Types
+            Apply Scope for: Row, or one or more Columns, or one or more Data Types
           </HelpBlock>{' '}
           <Flex flexDirection="row" padding={2}>
             <Radio
@@ -188,7 +187,7 @@ export class ConditionalStyleScopeWizard
   }
 
   private onDataTypeChecked(checked: boolean, item: ScopeDataType) {
-    let dataTypes = this.state.DataTypes;
+    let dataTypes = [].concat(this.state.DataTypes);
     if (checked) {
       dataTypes.push(item);
     } else {

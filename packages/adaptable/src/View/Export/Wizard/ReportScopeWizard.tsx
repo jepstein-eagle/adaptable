@@ -170,7 +170,7 @@ export class ReportScopeWizard
   }
 
   private onDataTypeChecked(checked: boolean, item: ScopeDataType) {
-    let dataTypes = this.state.DataTypes;
+    let dataTypes = [].concat(this.state.DataTypes);
     if (checked) {
       dataTypes.push(item);
     } else {

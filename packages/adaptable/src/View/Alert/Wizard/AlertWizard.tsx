@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
-import { AlertSelectColumnWizard } from './AlertSelectColumnWizard';
+import { AlertScopeWizard } from './AlertScopeWizard';
 import { AlertRulesWizard } from './AlertRulesWizard';
 import { AlertSummaryWizard } from './AlertSummaryWizard';
 import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
@@ -23,9 +23,9 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
           api={this.props.api}
           steps={[
             {
-              StepName: 'Select Column',
+              StepName: 'Scope',
               Index: 0,
-              Element: <AlertSelectColumnWizard api={this.props.api} />,
+              Element: <AlertScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Alert Rules',

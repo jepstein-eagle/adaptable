@@ -22,7 +22,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
           api={this.props.api}
           steps={[
             {
-              StepName: 'Select Column',
+              StepName: 'Scope',
               Index: 0,
               Element: <CellValidationScopeWizard api={this.props.api} />,
             },
