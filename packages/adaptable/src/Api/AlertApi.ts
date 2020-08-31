@@ -88,6 +88,6 @@ export interface AlertApi {
    */
   showAlertPopup(): void;
 
-  getAlertPredicateDefs(): PredicateDef[];
-  getAlertPredicateDefsForScope(scope: Scope): PredicateDef[];
+  getPredicateDefs(): PredicateDef[];
+  getPredicateDefsForScope(scope: Scope): PredicateDef[];
 }

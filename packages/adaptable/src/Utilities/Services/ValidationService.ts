@@ -12,6 +12,7 @@ import {
   ActionMode,
   DataType,
   MessageType,
+  CellValueType,
 } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
@@ -34,6 +35,7 @@ export class ValidationService implements IValidationService {
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
   public GetValidationRulesForDataChange(dataChangedInfo: DataChangedInfo): CellValidationRule[] {
     let failedWarningRules: CellValidationRule[] = [];
+
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
     if (dataChangedInfo.OldValue == dataChangedInfo.NewValue) {
       return failedWarningRules;
@@ -48,16 +50,9 @@ export class ValidationService implements IValidationService {
           );
           let existingItem = distinctValues.find(dv => dv == dataChangedInfo.NewValue);
           if (existingItem) {
-            let range = ObjectFactory.CreateRange(
-              LeafExpressionOperator.PrimaryKeyDuplicate,
-              dataChangedInfo.ColumnId,
-              null,
-              RangeOperandType.Column,
-              null
-            );
             let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
               dataChangedInfo.ColumnId,
-              range,
+              { Id: 'PrimaryKeyDuplicate' },
               ActionMode.StopEdit
             );
             failedWarningRules.push(cellValidationRule);
@@ -197,23 +192,20 @@ export class ValidationService implements IValidationService {
     cellValidationRule: CellValidationRule,
     dataChangedEvent: DataChangedInfo
   ): boolean {
-    // if its any change then validation fails immediately
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.AnyChange) {
-      return true;
-    }
-    // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
+    const column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       dataChangedEvent.ColumnId
     );
-    let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
-      cellValidationRule.Range,
-      dataChangedEvent.NewValue,
-      dataChangedEvent.OldValue,
+
+    return this.adaptable.api.predicateApi.handlePredicate(cellValidationRule.Predicate, {
+      value: dataChangedEvent.NewValue,
+      oldValue: dataChangedEvent.OldValue,
+      displayValue: this.adaptable.getValueFromRowNode(
+        dataChangedEvent.RowNode,
+        dataChangedEvent.ColumnId,
+        CellValueType.DisplayValue
+      ),
       column,
-      this.adaptable,
-      null
-    );
-    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
+    });
   }
 
   private GetCellValidationState(): CellValidationState {
@@ -283,42 +275,14 @@ export class ValidationService implements IValidationService {
     cellValidationRule: CellValidationRule,
     columns: AdaptableColumn[]
   ): string {
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
-      return 'Primary Key column cannot contain duplicate values';
-    }
-
-    let operator: LeafExpressionOperator = cellValidationRule.Range
-      .Operator as LeafExpressionOperator;
-    let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-      operator,
-      this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId)
+    const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
+      cellValidationRule.Predicate.Id
     );
 
-    if (!ExpressionHelper.OperatorRequiresValue(operator)) {
-      return valueDescription;
-    }
-    let dataType = this.adaptable.api.columnApi.getColumnDataTypeFromColumnId(
-      cellValidationRule.ColumnId
-    );
-    let operand1Text: string =
-      dataType == DataType.Boolean || dataType == DataType.Number
-        ? cellValidationRule.Range.Operand1
-        : "'" + cellValidationRule.Range.Operand1 + "'";
-
-    valueDescription = valueDescription + operand1Text;
-
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.PercentChange) {
-      valueDescription = valueDescription + '%';
-    }
-
-    if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.Range.Operand2)) {
-      let operand2Text: string =
-        dataType == DataType.Number
-          ? ' and ' + cellValidationRule.Range.Operand2
-          : " and '" + cellValidationRule.Range.Operand2 + "'";
-      valueDescription = valueDescription + operand2Text;
-    }
-    return valueDescription;
+    return predicateDef.toString({
+      column: this.adaptable.api.columnApi.getColumnFromId(cellValidationRule.ColumnId),
+      inputs: cellValidationRule.Predicate.Inputs,
+    });
   }
 
   public createCellValidationUIConfirmation(

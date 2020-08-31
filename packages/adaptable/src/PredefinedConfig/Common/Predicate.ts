@@ -473,7 +473,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     name: 'Any Change',
     columnScope: { All: true },
     functionScope: ['alert', 'validation'],
-    handler: ({ value: newValue, oldValue }) => newValue !== oldValue,
+    handler: ({ value, oldValue }) => value !== oldValue,
     toString: () => 'TODO',
   },
   {
@@ -482,9 +482,20 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['alert', 'validation'],
     inputs: [{ type: 'number' }],
-    handler: ({ value: newValue, oldValue, inputs }) =>
-      (Math.abs(Number(newValue) - Number(oldValue)) / Number(newValue)) * 100 > Number(inputs[0]),
+    handler: ({ value, oldValue, inputs }) =>
+      (Math.abs(Number(value) - Number(oldValue)) / Number(value)) * 100 > Number(inputs[0]),
     toString: () => 'TODO',
+  },
+  {
+    id: 'PrimaryKeyDuplicate',
+    name: 'Primary Key Duplicate',
+    columnScope: { All: true },
+    functionScope: ['validation'],
+    // TODO try to put the implementation inside the handler
+    handler: ({ column, api }) => {
+      throw 'This should not be called';
+    },
+    toString: () => 'PrimaryKeyDuplicate',
   },
 ];
 
