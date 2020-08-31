@@ -9,6 +9,7 @@ The Data Source Selector simply provides a dropdown which contains a list of all
 These Data Sources are simply text names that developers provide and will typically correspond to Stored Procedures or other server-related items that make sense to the user (e.g. a 'book').
 
 ### SearchChanged Event (and Server Searching)
+
 Data Sources provide a nice alternative to [Server Searching](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) as it allows for data to be dynamically retrieved from the server as a response to user selection, but without needing to build a whole server-side searching and filtering infrastructure.  And then users can filter the returned data set on the client as normal.
 
 When a Data Source is selected, AdapTable will fire the [SearchChanged event](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedeventargs.html), providing the name of the newly selected Data Source and stating the trigger for the event to be 'DataSource'.

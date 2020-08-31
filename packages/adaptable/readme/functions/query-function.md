@@ -34,7 +34,7 @@ Query supports these Entitlement Rules:
 
 ## FAQ
 
-**Can we run Queryes on the server?**
+**Can we run Queries on the server?**
 
 Yes, through setting the [ServerSearchOption](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) in SearchOptions.
 

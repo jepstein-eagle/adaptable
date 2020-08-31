@@ -96,7 +96,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     showGroupingTotalsAsHeader: false,
   },
   searchOptions: {
-    serverSearchOption: 'None',
+    serverSearchOption: undefined,
     clearSearchesOnStartUp: false,
   },
   userInterfaceOptions: {

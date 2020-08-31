@@ -47,7 +47,7 @@ async function InitAdaptableDemo() {
     'event handling demo'
   );
   adaptableOptions.searchOptions = {
-    serverSearchOption: 'AllSearchandSort',
+    serverSearchOption: ['Query', 'ColumnFilter', 'Sort'],
   };
   adaptableOptions.predefinedConfig = demoConfig;
   adaptableApi = await Adaptable.init(adaptableOptions);

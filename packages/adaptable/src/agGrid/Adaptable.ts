@@ -2727,7 +2727,10 @@ export class Adaptable implements IAdaptable {
         return false;
       }
       // first we assess Query (if its running locally)
-      if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
+      if (
+        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('Query')
+      ) {
         const currentQuery = this.api.queryApi.getCurrentQuery();
 
         if (currentQuery) {
@@ -2744,8 +2747,8 @@ export class Adaptable implements IAdaptable {
       }
       // we then assess filters
       if (
-        this.adaptableOptions.searchOptions.serverSearchOption == 'None' ||
-        this.adaptableOptions.searchOptions.serverSearchOption == 'Query'
+        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('ColumnFilter')
       ) {
         const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
 

@@ -11,7 +11,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
  *
  * ```ts
  * searchOptions = {
- *  serverSearchOption: 'Query',
+ *  serverSearchOption: ['Query'],
  *  clearSearchesOnStartUp: true,
  *  excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
  *      if (column.ColumnId === 'country' || column.ReadOnly) {
@@ -102,7 +102,7 @@ export interface SearchOptions {
    * **Default Value: None**
    *
    */
-  serverSearchOption?: 'None' | 'Query' | 'AllSearch' | 'AllSearchandSort';
+  serverSearchOption?: ServerSearchOptions;
 
   /**
    * Whether to clear all searches when AdapTable loads.
@@ -115,3 +115,7 @@ export interface SearchOptions {
    */
   clearSearchesOnStartUp?: boolean;
 }
+
+export type ServerSearchOptions = ServerSearchOption[];
+
+export type ServerSearchOption = 'Query' | 'ColumnFilter' | 'Sort';
