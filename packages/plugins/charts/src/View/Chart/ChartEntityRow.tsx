@@ -15,13 +15,13 @@ import { ChartType } from '@adaptabletools/adaptable/src/PredefinedConfig/Common
 
 export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow> {
   onShowChart: (chart: string) => void;
-  AccessLevel: AccessLevel;
+  accessLevel: AccessLevel;
 }
 
 export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
   render(): any {
     // assuming only category charts for now - silly assumption to make in due course...
-    let Chart: CategoryChartDefinition = this.props.AdaptableObject as CategoryChartDefinition;
+    let Chart: CategoryChartDefinition = this.props.adaptableObject as CategoryChartDefinition;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={Chart.Name} />;
@@ -32,18 +32,18 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
         onClick={() => this.props.onShowChart(Chart.Name)}
         tooltip="Show Chart"
         variant="raised"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[4].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(Chart)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={undefined}
-        EntityType={StrategyConstants.ChartStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        entityType={StrategyConstants.ChartStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     return <AdaptableObjectRow colItems={colItems} />;

@@ -29,7 +29,7 @@ interface FilterPopupProps extends StrategyViewPopupProps<FilterPopupComponent> 
 class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
   constructor(props: FilterPopupProps) {
     super(props);
-    this.state = { EditedUserFilter: null, WizardStartIndex: 0 };
+    this.state = { EditedUserFilter: null, wizardStartIndex: 0 };
   }
 
   render() {
@@ -50,14 +50,14 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
         <FilterEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Api}
-          AdaptableObject={null}
-          ColumnFilter={columnFilter}
+          api={this.props.api}
+          adaptableObject={null}
+          columnFilter={columnFilter}
           onEdit={null}
           onDeleteConfirm={null}
           onClear={() => this.onClearColumnFilter(columnFilter.ColumnId)}
           onSaveColumnFilterasUserFilter={() => this.onSaveColumnFilterasUserFilter(columnFilter)}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -83,7 +83,7 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
   }
 
   private onClearColumnFilter(columnId: string) {
-    this.props.Api.filterApi.clearColumnFilterByColumn(columnId);
+    this.props.api.filterApi.clearColumnFilterByColumn(columnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

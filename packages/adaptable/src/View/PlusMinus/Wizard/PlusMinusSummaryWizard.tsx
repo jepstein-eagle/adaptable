@@ -19,15 +19,15 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Name',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
       },
-      { Key: 'Nudge Value', Value: this.props.Data.NudgeValue },
-      { Key: 'Is Column Default', Value: this.props.Data.IsDefaultNudge ? 'True' : 'False' },
+      { Key: 'Nudge Value', Value: this.props.data.NudgeValue },
+      { Key: 'Is Column Default', Value: this.props.data.IsDefaultNudge ? 'True' : 'False' },
       {
         Key: 'Custom Rule',
-        Value: this.props.Data.IsDefaultNudge
+        Value: this.props.data.IsDefaultNudge
           ? 'None'
-          : this.props.Api.queryApi.getExpressionForQueryObject(this.props.Data),
+          : this.props.api.queryApi.getExpressionForQueryObject(this.props.data),
       },
     ];
 
@@ -45,16 +45,16 @@ export class PlusMinusSummaryWizard extends React.Component<PlusMinusSummaryWiza
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     /* No implementation */
   }
-  public Back(): void {
+  public back(): void {
     /* No implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
-    return this.props.Data.IsDefaultNudge ? 2 : 1;
+  public getIndexStepDecrement() {
+    return this.props.data.IsDefaultNudge ? 2 : 1;
   }
 }

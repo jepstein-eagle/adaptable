@@ -47,9 +47,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     //  autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   api = await Adaptable.init(adaptableOptions); // turn on mimicing ticking data 200, tradeCount);
 }

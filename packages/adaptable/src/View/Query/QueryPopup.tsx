@@ -48,9 +48,9 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action === 'New') {
-        this.onNew(this.props.PopupParams.value);
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action === 'New') {
+        this.onNew(this.props.popupParams.value);
       }
     }
   }
@@ -68,14 +68,14 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
       return (
         <SharedQueryEntityRow
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           onShare={description => this.props.onShare(sharedQuery, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
-          AdaptableObject={sharedQuery}
+          teamSharingActivated={this.props.teamSharingActivated}
+          adaptableObject={sharedQuery}
           key={sharedQuery.Uuid}
           onEdit={sharedQuery => this.onEdit(sharedQuery as SharedQuery)}
           onDeleteConfirm={QueryRedux.SharedQueryDelete(sharedQuery)}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -85,8 +85,8 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
         onClick={() => {
           this.onNew();
         }}
-        tooltip="Create Shared Expression"
-        AccessLevel={this.props.AccessLevel}
+        tooltip="Create Shared Query"
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -106,13 +106,13 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
           <EmptyContent>Click 'New' to create a new Shared Query.</EmptyContent>
         )}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <SharedQueryWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as SharedQuery}
-            ConfigEntities={this.props.SharedQueries}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as SharedQuery}
+            configEntities={this.props.SharedQueries}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -124,46 +124,46 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
 
   onNew(value?: string) {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptySharedQuery(value),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptySharedQuery(value),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(sharedQuery: SharedQuery) {
     let clonedObject = Helper.cloneObject(sharedQuery);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let sharedQuery: SharedQuery = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let sharedQuery: SharedQuery = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditSharedQuery(sharedQuery);
     } else {
       this.props.onAddSharedQuery(sharedQuery);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let sharedQuery = this.state.EditedAdaptableObject as SharedQuery;
+    let sharedQuery = this.state.editedAdaptableObject as SharedQuery;
     // TODO: validate expression
     return (
       StringExtensions.IsNotNullOrEmpty(sharedQuery.Name) &&

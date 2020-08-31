@@ -9,7 +9,7 @@ export class UserFilterSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let filter = this.props.Entity as UserFilter;
+    let filter = this.props.entity as UserFilter;
     let expressionString = 'Need a way to convert filter to string';
 
     return (

@@ -21,7 +21,7 @@ export class ReportColumnTypeWizard
   constructor(props: ReportColumnTypeWizardProps) {
     super(props);
     this.state = {
-      ReportColumnScope: this.props.Data.ReportColumnScope as ReportColumnScope,
+      ReportColumnScope: this.props.data.ReportColumnScope as ReportColumnScope,
     };
   }
   render() {
@@ -77,7 +77,7 @@ export class ReportColumnTypeWizard
           ReportColumnScope: ReportColumnScope.AllColumns,
           SelectedColumnValues: [],
         } as ReportColumnsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else if (e.value == 'Visible') {
       this.setState(
@@ -85,12 +85,12 @@ export class ReportColumnTypeWizard
           ReportColumnScope: ReportColumnScope.VisibleColumns,
           SelectedColumnValues: [],
         } as ReportColumnsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState(
         { ReportColumnScope: ReportColumnScope.ScopeColumns } as ReportColumnsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     }
   }
@@ -105,19 +105,19 @@ export class ReportColumnTypeWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
+  public next(): void {
+    this.props.data.ReportColumnScope = this.state.ReportColumnScope;
     if (this.state.ReportColumnScope != ReportColumnScope.ScopeColumns) {
-      this.props.Data.Scope = undefined;
+      this.props.data.Scope = undefined;
     }
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.ReportColumnScope == ReportColumnScope.ScopeColumns ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

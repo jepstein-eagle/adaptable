@@ -16,24 +16,24 @@ export interface CategoryChartWizardProps
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {
-    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.configEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ChartStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Y Axis',
               Index: 0,
-              Element: <CategoryChartYAxisWizard Api={this.props.Api} />,
+              Element: <CategoryChartYAxisWizard api={this.props.api} />,
             },
             {
               StepName: 'X Axis',
               Index: 1,
-              Element: <CategoryChartXAxisWizard Api={this.props.Api} />,
+              Element: <CategoryChartXAxisWizard api={this.props.api} />,
             },
             /*
             {
@@ -41,7 +41,7 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
               Index: 2,
               Element: (
                 <CategoryChartXAxisExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   ExpressionMode={ExpressionMode.SingleColumn}
                 />
               ),
@@ -50,16 +50,16 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
             {
               StepName: 'Settings',
               Index: 5,
-              Element: <CategoryChartSettingsWizard Api={this.props.Api} ChartNames={chartNames} />,
+              Element: <CategoryChartSettingsWizard api={this.props.api} ChartNames={chartNames} />,
             },
             {
               StepName: 'Summary',
               Index: 6,
-              Element: <CategoryChartSummaryWizard Api={this.props.Api} />,
+              Element: <CategoryChartSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

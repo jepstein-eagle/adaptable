@@ -15,7 +15,7 @@ export class CalculatedColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let calculatedColumn: CalculatedColumn = this.props.AdaptableObject as CalculatedColumn;
+    let calculatedColumn: CalculatedColumn = this.props.adaptableObject as CalculatedColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -34,12 +34,12 @@ export class CalculatedColumnEntityRow extends React.Component<
 
     let buttons: any = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(calculatedColumn)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
-        EntityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        showShare={this.props.teamSharingActivated}
+        entityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

@@ -48,7 +48,7 @@ export class SparklinesChartSettingsWizard
           ? 'A Chart Definition already exists with that name'
           : null,
       } as SparklinesChartSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -108,7 +108,7 @@ export class SparklinesChartSettingsWizard
   onChartDescriptionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Description: e.value } as CategoryChartSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -116,7 +116,7 @@ export class SparklinesChartSettingsWizard
     let e = event.target as HTMLInputElement;
     this.setState(
       { VisibleRowsOnly: e.value == 'Visible' } as CategoryChartSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -130,18 +130,18 @@ export class SparklinesChartSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     this.props.Data.Name = this.state.Name;
     this.props.Data.Description = this.state.Description;
     this.props.Data.VisibleRowsOnly = this.state.VisibleRowsOnly;
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ? 2 : 1;
   }
 }

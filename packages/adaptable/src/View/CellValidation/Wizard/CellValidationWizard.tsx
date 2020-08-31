@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { CellValidationActionWizard } from './CellValidationActionWizard';
-import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard';
+import { CellValidationScopeWizard } from './CellValidationScopeWizard';
 import { CellValidationRulesWizard } from './CellValidationRulesWizard';
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard';
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard';
@@ -17,36 +17,36 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.CellValidationStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <CellValidationSelectColumnWizard Api={this.props.Api} />,
+              Element: <CellValidationScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Action',
               Index: 1,
-              Element: <CellValidationActionWizard Api={this.props.Api} />,
+              Element: <CellValidationActionWizard api={this.props.api} />,
             },
             {
               StepName: 'Validation',
               Index: 2,
-              Element: <CellValidationRulesWizard Api={this.props.Api} />,
+              Element: <CellValidationRulesWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 3,
-              Element: <CellValidationSelectQueryWizard Api={this.props.Api} />,
+              Element: <CellValidationSelectQueryWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
               Element: (
                 <ExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -55,11 +55,11 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <CellValidationSummaryWizard Api={this.props.Api} />,
+              Element: <CellValidationSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

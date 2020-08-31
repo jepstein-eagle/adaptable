@@ -21,7 +21,7 @@ export interface LayoutEntityRowProps<LayoutEntityRow>
 
 export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<LayoutEntityRow>, {}> {
   render(): any {
-    let layout: Layout = this.props.AdaptableObject as Layout;
+    let layout: Layout = this.props.adaptableObject as Layout;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -47,16 +47,16 @@ export class LayoutEntityRow extends React.Component<LayoutEntityRowProps<Layout
 
     let buttons: any = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
         showClone={true}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(layout)}
         cloneClick={() => this.props.onClone(layout)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={false}
         overrideDisableDelete={!this.props.canDelete}
-        EntityType={StrategyConstants.LayoutStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        entityType={StrategyConstants.LayoutStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
 

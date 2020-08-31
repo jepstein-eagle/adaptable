@@ -21,7 +21,7 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
   constructor(props: AlertTypeWizardProps) {
     super(props);
     this.state = {
-      MessageType: this.props.Data!.MessageType as MessageType,
+      MessageType: this.props.data!.MessageType as MessageType,
     };
   }
 
@@ -87,19 +87,19 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
     let e = event.target as HTMLInputElement;
     if (e.value == 'Info') {
       this.setState({ MessageType: MessageType.Info } as AlertTypeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else if (e.value == 'Success') {
       this.setState({ MessageType: MessageType.Success } as AlertTypeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else if (e.value == 'Warning') {
       this.setState({ MessageType: MessageType.Warning } as AlertTypeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else if (e.value == 'Error') {
       this.setState({ MessageType: MessageType.Error } as AlertTypeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -111,18 +111,18 @@ export class AlertTypeWizard extends React.Component<AlertTypeWizardProps, Alert
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data!.MessageType = this.state.MessageType;
+  public next(): void {
+    this.props.data!.MessageType = this.state.MessageType;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

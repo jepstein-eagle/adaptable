@@ -43,7 +43,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: 'New',
         source: 'ColumnMenu',
       };
@@ -120,7 +120,8 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
 
             let rowNode = this.adaptable.getRowNodeForPrimaryKey(selectedCell.primaryKeyValue);
             let isSatisfiedExpression: boolean = parser.evaluate(expression, {
-              data: rowNode.data,
+              node: rowNode,
+              api: this.adaptable.api,
             });
 
             if (isSatisfiedExpression) {

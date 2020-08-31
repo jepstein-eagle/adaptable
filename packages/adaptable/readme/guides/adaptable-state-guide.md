@@ -229,21 +229,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
           'PackageCost',
           'InvoicedCost',
          ],
-         Expression: {
-             RangeExpressions: [
-             {
-               ColumnId: 'Freight',
-               Ranges: [
-                 {
-                   Operand1: '500',
-                   Operand1Type: 'Value',
-                   Operand2: '',
-                   Operand2Type: 'Value',
-                   Operator: 'GreaterThan',
-                 },
-               ],
-             },
-           ],
+         Expression: '[Freight]> 500'
          },
        },
      ],
@@ -263,53 +249,22 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
    ConditionalStyle: {
      ConditionalStyles: [
        {
-         Style: {
+        Scope: {
+          DataTypes: ['Number'],
+        },
+        Style: {
            ForeColor: '#008000',
-         },
-         Expression: {
-            FilterExpressions: [
-             {
-               ColumnId: 'ChangeLastOrder',
-               Filters: ['Positive'],
-             },
-           ],
-         },
+        },
+        Expression: '[ChangeLastOrder]> 0'
        },
        {
-         Style: {
+        Scope: {
+          DataTypes: ['Number'],
+        },
+        Style: {
            ForeColor: '#ff0000',
-         },
-         Expression: {
-           FilterExpressions: [
-             {
-               ColumnId: 'ChangeLastOrder',
-               Filters: ['Negative'],
-             },
-           ],
-         },
-       },
-       {
-         Style: {
-           BackColor: '#ffffcc',
-           FontStyle: 'Italic',
-           ForeColor: '#000000',
-         },
-         Expression: {
-           RangeExpressions: [
-             {
-               ColumnId: 'InvoicedCost',
-               Ranges: [
-                 {
-                   Operand1: '2000',
-                   Operand1Type: 'Value',
-                   Operand2: '',
-                   Operand2Type: 'Value',
-                   Operator: 'GreaterThan',
-                 },
-               ],
-             },
-           ],
-         },
+        },
+         Expression: '[ChangeLastOrder]< 0'
        },
      ],
    },

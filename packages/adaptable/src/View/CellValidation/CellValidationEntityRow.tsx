@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
@@ -11,18 +10,16 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
 import Dropdown from '../../components/Dropdown';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
-import cellValidation from '../../components/icons/cell-validation';
 
 export interface CellValidationEntityRowProps
   extends SharedEntityRowProps<CellValidationEntityRow> {
-  Column: AdaptableColumn;
   ValidationService: IValidationService;
   onChangeActionMode: (cellValidationRule: CellValidationRule, ActionMode: ActionMode) => void;
 }
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
   render(): any {
-    let cellValidationRule: CellValidationRule = this.props.AdaptableObject as CellValidationRule;
+    let cellValidationRule: CellValidationRule = this.props.adaptableObject as CellValidationRule;
 
     let ActionModeTypes = EnumExtensions.getNames(ActionMode).map(type => {
       return {
@@ -49,13 +46,13 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(cellValidationRule)}
         shareClick={(description: string) => this.props.onShare(description)}
-        overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        //  overrideDisableEdit={!this.props.Column}
+        entityType={StrategyConstants.CellValidationStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -68,17 +65,7 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
   }
 
   private getColumnandRule(cellValidation: CellValidationRule): string {
-    let columnInfo: string = this.props.api.columnApi.getFriendlyNameFromColumn(
-      cellValidation.ColumnId,
-      this.props.Column
-    );
-    columnInfo +=
-      ': ' +
-      this.props.ValidationService.createCellValidationDescription(
-        cellValidation,
-        this.props.api.columnApi.getColumns()
-      );
-    return columnInfo;
+    return this.props.ValidationService.createCellValidationDescription(cellValidation);
   }
 
   onActionModeChanged(cellValidationRule: CellValidationRule, value: string) {

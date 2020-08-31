@@ -17,7 +17,7 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
   }
   render() {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
+      { Key: 'Name', Value: this.props.data.Name },
       {
         Key: 'Column',
         Value: '',
@@ -44,16 +44,16 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

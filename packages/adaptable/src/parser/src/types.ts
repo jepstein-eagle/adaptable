@@ -1,3 +1,6 @@
+import { RowNode } from '@ag-grid-community/all-modules';
+import { AdaptableApi } from '../../Api/AdaptableApi';
+
 export type AST = AST_Expression[];
 
 export type AST_Expression =
@@ -20,11 +23,9 @@ export type Token = {
 };
 
 export type Context = {
-  data: { [key: string]: any };
-  variables: { [key: string]: any };
-  functions: FunctionMap;
-  filters: { [key: string]: string };
-  value: any;
+  node: RowNode;
+  api: AdaptableApi;
+  functions?: FunctionMap;
 };
 
 export type FunctionMap = {

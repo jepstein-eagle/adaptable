@@ -43,8 +43,10 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
           let relevantAlert: AdaptableAlert = currentAlerts.find(
             a =>
-              a.AlertDefinition.ColumnId == menuInfo.Column.ColumnId &&
-              a.DataChangedInfo.RowNode == menuInfo.RowNode
+              this.adaptable.api.scopeApi.isColumnInScopeColumns(
+                menuInfo.Column,
+                a.AlertDefinition.Scope
+              ) && a.DataChangedInfo.RowNode == menuInfo.RowNode
           );
           if (relevantAlert) {
             menuItemShowPopup = this.createColumnMenuItemReduxAction(
@@ -60,9 +62,12 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let alertDefinitions: AlertDefinition[] = this.adaptable.api.alertApi
       .getAlertDefinitions()
-      .filter((ad: AlertDefinition) => ad.ColumnId == specialColumnId);
+      .filter((ad: AlertDefinition) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, ad.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)
       ? alertDefinitions.length + ' Alerts'
@@ -74,12 +79,11 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
       alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
         this.adaptable.api.alertApi.showAlert(
-          this.adaptable.api.columnApi.getFriendlyNameFromColumnId(alertDefintion.ColumnId),
-          this.adaptable.StrategyService.createAlertDescription(alertDefintion, columns),
+          this.adaptable.api.columnApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId),
+          this.adaptable.StrategyService.createAlertDescription(alertDefintion),
           alertDefintion,
           dataChangedInfo
         );
@@ -90,7 +94,12 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   private getAlertDefinitionsForDataChange(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
     let relatedAlertDefinitions = this.adaptable.api.alertApi
       .getAlertDefinitions()
-      .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
+      .filter(v =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(
+          this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
+          v.Scope
+        )
+      );
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
       let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
@@ -111,7 +120,8 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
             rowNode = this.adaptable.getRowNodeForPrimaryKey(dataChangedEvent.PrimaryKeyValue);
           }
           let isSatisfiedExpression: boolean = parser.evaluate(expression, {
-            data: rowNode.data,
+            node: rowNode,
+            api: this.adaptable.api,
           });
 
           if (
@@ -142,7 +152,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       oldValue: dataChangedEvent.OldValue,
       // TODO send real display value
       displayValue: null,
-      column: this.adaptable.api.columnApi.getColumnFromId(alert.ColumnId),
+      column: this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
     });
   }
 

@@ -130,7 +130,7 @@ export interface IAdaptable {
     onlyIncludeIds?: { [key: string]: boolean }
   ): any[];
   getDistinctValuesForColumn(
-    columnId: string,
+    column: AdaptableColumn,
     cellValueType: CellValueType,
     visibleRowsOnly: boolean
   ): any[];

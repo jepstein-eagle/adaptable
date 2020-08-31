@@ -98,12 +98,11 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     return undefined;
   }
 
-  public getPermittedValuesForColumn(columnId: string): any[] | undefined {
+  public getPermittedValuesForColumn(column: AdaptableColumn): any[] | undefined {
     if (ArrayExtensions.IsNullOrEmpty(this.getAllPermittedValuesItems())) {
       return undefined;
     }
-    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(columnId);
-    let permittedValuesColumn: PermittedValuesItem = this.getPermittedValuesForScope(abColumn);
+    let permittedValuesColumn: PermittedValuesItem = this.getPermittedValuesForScope(column);
     if (!permittedValuesColumn) {
       return undefined;
     }
@@ -115,12 +114,12 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
 
     // then try the function if that has been set
     if (StringExtensions.IsNotNullOrEmpty(permittedValuesColumn.GetColumnValuesFunction)) {
-      if (abColumn) {
+      if (column) {
         const fn = this.adaptable.getUserFunctionHandler(
           'GetColumnValuesFunction',
           permittedValuesColumn.GetColumnValuesFunction
         );
-        let values = fn(abColumn);
+        let values = fn(column);
         return values;
       }
     }

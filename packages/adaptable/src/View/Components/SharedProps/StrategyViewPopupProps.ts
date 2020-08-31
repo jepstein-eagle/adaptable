@@ -1,19 +1,18 @@
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { BaseProps } from './BaseProps';
-// import { ColumnSort } from '../../../PredefinedConfig/Common/ColumnSort';
+import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 
 //Warning : FilterForm needs to be changed if we add properties since it uses the same interface
 export interface StrategyViewPopupProps<View> extends BaseProps<View> {
-  PopupParams: StrategyParams;
+  popupParams: StrategyParams;
   onClearPopupParams: () => PopupRedux.PopupClearParamAction;
-  TeamSharingActivated: boolean;
-  //  ColumnSorts: ColumnSort[]; // we should get rid of this!
+  teamSharingActivated: boolean;
   onClosePopup: () => void;
 }
 
 // The params object that is, optionally, passed into each popup.  contains useful information
 export interface StrategyParams {
-  columnId?: string;
+  column?: AdaptableColumn;
   action?: 'New' | 'Edit';
   value?: any;
   primaryKeyValues?: any[];

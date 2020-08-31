@@ -109,13 +109,13 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
   fireToolbarButtonEvent(toolbarButton: ToolbarButton): void {
     let dashboardButtonClickedInfo: DashboardButtonClickedInfo = {
       dashboardButton: toolbarButton,
-      adaptableApi: this.props.Api,
+      adaptableApi: this.props.api,
     };
     const dashboardButtonClickedEventArgs: DashboardButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
       'Dashboard Button Clicked Args',
       dashboardButtonClickedInfo
     );
-    this.props.Api.eventApi.emit('DashboardButtonClicked', dashboardButtonClickedEventArgs);
+    this.props.api.eventApi.emit('DashboardButtonClicked', dashboardButtonClickedEventArgs);
   }
 
   renderTab(tab: DashboardTab): React.ReactNode {
@@ -127,7 +127,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         ct => ct.Name == control
       );
       if (customToolbar) {
-        let accessLevel: AccessLevel = this.props.Api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        let accessLevel: AccessLevel = this.props.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
           StrategyConstants.DashboardStrategyId
         );
 
@@ -137,9 +137,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
           );
           if (customToolbarControl) {
             let customDshboardElememt = React.createElement(customToolbarControl, {
-              Api: this.props.Api,
-              AccessLevel: accessLevel,
-              CustomToolbar: customToolbar,
+              api: this.props.api,
+              accessLevel: accessLevel,
+              customToolbar: customToolbar,
             });
             return (
               <Box
@@ -157,8 +157,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
         }
       } else {
         let shippedToolbar = control as AdaptableFunctionName;
-        if (this.props.Api.internalApi.getStrategyService().isStrategyAvailable(shippedToolbar)) {
-          let accessLevel: AccessLevel = this.props.Api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+        if (this.props.api.internalApi.getStrategyService().isStrategyAvailable(shippedToolbar)) {
+          let accessLevel: AccessLevel = this.props.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
             shippedToolbar
           );
 
@@ -166,9 +166,8 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             let dashboardControl = AdaptableDashboardFactory.get(shippedToolbar);
             if (dashboardControl) {
               let dashboardElememt = React.createElement(dashboardControl, {
-                Api: this.props.Api,
-
-                AccessLevel: accessLevel,
+                api: this.props.api,
+                accessLevel: accessLevel,
               });
               return (
                 <Box
@@ -206,9 +205,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
               className={`ab-DashboardToolbar__Home__${kebabCase(menuItem.Label)}`}
               icon={menuItem.Icon}
               tooltip={menuItem.Label}
-              disabled={this.props.AccessLevel == 'ReadOnly'}
+              disabled={this.props.accessLevel == 'ReadOnly'}
               onClick={() => this.props.dispatch(menuItem!.ReduxAction)}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
               style={
                 menuItem.FunctionName === 'SystemStatus'
                   ? {
@@ -241,9 +240,9 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
             tone={cb.ButtonStyle && cb.ButtonStyle.Tone ? cb.ButtonStyle.Tone : 'none'}
             className={`ab-DashboardToolbar__Home__${kebabCase(cb.Name)}`}
             tooltip={cb.Name}
-            disabled={this.props.AccessLevel == 'ReadOnly'}
+            disabled={this.props.accessLevel == 'ReadOnly'}
             onClick={() => this.fireToolbarButtonEvent(cb)}
-            AccessLevel={'Full'}
+            accessLevel={'Full'}
           >
             {cb.Icon ? <img {...iconProps} /> : null}
             {cb.Caption}
@@ -256,7 +255,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
   }
   renderFunctionsDropdown() {
     let strategyKeys: string[] = [
-      ...this.props.Api.internalApi.getAdaptableInstance().strategies.keys(),
+      ...this.props.api.internalApi.getAdaptableInstance().strategies.keys(),
     ];
     let allowedMenuItems: AdaptableMenuItem[] = this.props.GridState.FunctionDropdownMenuItems.filter(
       x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
@@ -264,7 +263,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     // function menu items
     let menuItems: DropdownButtonItem[] = allowedMenuItems.map(menuItem => {
       return {
-        disabled: this.props.AccessLevel == 'Hidden',
+        disabled: this.props.accessLevel == 'Hidden',
         onClick: () => this.props.dispatch(menuItem.ReduxAction),
         icon: <Icon name={menuItem.Icon} />,
         label: menuItem.Label,
@@ -346,7 +345,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
     );
   }
   render() {
-    let instanceName = this.props.Api.internalApi.setToolbarTitle();
+    let instanceName = this.props.api.internalApi.setToolbarTitle();
     return (
       <DashboardUI
         title={instanceName}

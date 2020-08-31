@@ -510,7 +510,9 @@ export interface PermittedValuesItem extends AdaptableObject {
   PermittedValues?: any[];
 
   /**
-   * A function which will run each time Permitted values are required.
+   * The name of the function which will run each time Permitted values are required.
+   *
+   * The implementation of the function will be provided in UserFunctions
    */
   GetColumnValuesFunction?: string;
 }
@@ -536,6 +538,11 @@ export interface EditLookUpItem {
    */
   LookUpValues?: any[];
 
+  /**
+   * The name of the function which will run each time Look Up Values are required.
+   *
+   * The implementation of the function will be provided in UserFunctions
+   */
   GetColumnValuesFunction?: string;
 }
 

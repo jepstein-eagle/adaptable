@@ -13,28 +13,28 @@ export class ScheduleWizard extends React.Component<ScheduleWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Settings',
               Index: 0,
-              Element: <ScheduleSettingsWizard Api={this.props.Api} />,
+              Element: <ScheduleSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Schedule',
               Index: 1,
-              Element: <ScheduleScheduleWizard Api={this.props.Api} />,
+              Element: <ScheduleScheduleWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <ScheduleSummaryWizard Api={this.props.Api} />,
+              Element: <ScheduleSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

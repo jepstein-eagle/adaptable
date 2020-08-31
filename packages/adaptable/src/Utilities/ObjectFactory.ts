@@ -68,6 +68,8 @@ import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/QueryState';
 import { ColumnFilter, UserFilter } from '../PredefinedConfig/FilterState';
+import { Predicate } from '../PredefinedConfig/Common/Predicate';
+import { Scope } from '../PredefinedConfig/Common/Scope';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -183,7 +185,7 @@ export function CreateAlert(
 export function CreateEmptyAlertDefinition(): AlertDefinition {
   return {
     Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Predicate: { Id: 'Any' },
     Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
@@ -199,7 +201,7 @@ export function CreateInternalAlertDefinitionForMessages(
 ): AlertDefinition {
   return {
     Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Predicate: null,
     Expression: null,
     MessageType: messageType,
@@ -223,14 +225,8 @@ export function CreateEmptyCellValidation(): CellValidationRule {
   return {
     Uuid: createUuid(),
     ActionMode: 'Stop Edit',
-    ColumnId: EMPTY_STRING,
-    Range: {
-      Operator: LeafExpressionOperator.AnyChange,
-      Operand1: EMPTY_STRING,
-      Operand2: EMPTY_STRING,
-      Operand1Type: RangeOperandType.Column,
-      Operand2Type: RangeOperandType.Column,
-    },
+    Scope: undefined,
+    Predicate: { Id: 'Any' },
     Expression: null,
   };
 }
@@ -446,7 +442,9 @@ export function CreateEmptyShortcut(): Shortcut {
 export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
-    Scope: undefined, // will be row
+    Scope: {
+      All: true,
+    },
     Style: CreateEmptyStyle(),
     ExcludeGroupedRows: false,
     Expression: undefined,
@@ -456,8 +454,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
 
 export function CreateEmptyFormatColumn(): FormatColumn {
   return {
-    Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Style: CreateEmptyStyle(),
     DisplayFormat: undefined,
     CellAlignment: undefined,
@@ -537,14 +534,14 @@ export function CreateRangeEvaluation(
   };
 }
 export function CreateCellValidationRule(
-  columnId: string,
-  range: QueryRange,
+  scope: Scope,
+  predicate: Predicate,
   actionMode: ActionMode
 ): CellValidationRule {
   return {
     Uuid: createUuid(),
-    ColumnId: columnId,
-    Range: range,
+    Scope: scope,
+    Predicate: predicate,
     ActionMode: actionMode,
     Expression: undefined,
     SharedQueryId: undefined,

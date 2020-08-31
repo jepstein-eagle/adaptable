@@ -136,12 +136,12 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     );
   }
 
-  public getAlertPredicateDefs(): PredicateDef[] {
+  public getPredicateDefs(): PredicateDef[] {
     return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('alert');
   }
 
-  public getAlertPredicateDefsForScope(scope: Scope): PredicateDef[] {
-    return this.getAlertPredicateDefs().filter(predicateDef =>
+  public getPredicateDefsForScope(scope: Scope): PredicateDef[] {
+    return this.getPredicateDefs().filter(predicateDef =>
       this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
     );
   }

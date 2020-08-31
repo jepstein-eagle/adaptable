@@ -12,39 +12,39 @@ export interface CustomSortWizardProps
 
 export class CustomSortWizard extends React.Component<CustomSortWizardProps, {}> {
   render() {
-    let customSorts: CustomSort[] = this.props.ConfigEntities as CustomSort[];
+    let customSorts: CustomSort[] = this.props.configEntities as CustomSort[];
     return (
       <AdaptableWizard
-        FriendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
-        ModalContainer={this.props.ModalContainer}
-        Api={this.props.Api}
-        Steps={[
+        friendlyName={StrategyConstants.CustomSortStrategyFriendlyName}
+        modalContainer={this.props.modalContainer}
+        api={this.props.api}
+        steps={[
           {
             StepName: 'Select Column',
             Index: 0,
             Element: (
               <CustomSortColumnWizard
-                SortedColumns={this.props.Api.columnApi
+                SortedColumns={this.props.api.columnApi
                   .getColumns()
                   .filter(x => !customSorts.find(y => y.ColumnId == x.ColumnId))}
                 CustomSorts={customSorts}
-                Api={this.props.Api}
+                api={this.props.api}
               />
             ),
           },
           {
             StepName: 'Sort Order',
             Index: 1,
-            Element: <CustomSortValuesWizard Api={this.props.Api} />,
+            Element: <CustomSortValuesWizard api={this.props.api} />,
           },
           {
             StepName: 'Summary',
             Index: 2,
-            Element: <CustomSortSummaryWizard Api={this.props.Api} />,
+            Element: <CustomSortSummaryWizard api={this.props.api} />,
           },
         ]}
-        Data={this.props.EditedAdaptableObject}
-        StepStartIndex={this.props.WizardStartIndex}
+        data={this.props.editedAdaptableObject}
+        stepStartIndex={this.props.wizardStartIndex}
         onHide={() => this.props.onCloseWizard()}
         onFinish={() => this.props.onFinishWizard()}
         canFinishWizard={() => this.props.canFinishWizard()}

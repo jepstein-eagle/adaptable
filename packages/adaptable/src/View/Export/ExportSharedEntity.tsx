@@ -9,12 +9,12 @@ export class ExportSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let report = this.props.Entity as Report;
+    let report = this.props.entity as Report;
 
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>{report.Name}</Flex>
-        <Flex flex={8}>{this.props.Api.queryApi.getExpressionForQueryObject(report)}</Flex>
+        <Flex flex={8}>{this.props.api.queryApi.getExpressionForQueryObject(report)}</Flex>
       </Flex>
     );
   }

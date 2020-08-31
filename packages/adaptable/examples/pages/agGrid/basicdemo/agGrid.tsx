@@ -26,6 +26,7 @@ async function InitAdaptableDemo() {
   const tradeCount: number = 50;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  gridOptions.sideBar = 'columns';
   const tickingDataHelper = new TickingDataHelper();
 
   const adaptableOptions: AdaptableOptions = {
@@ -33,8 +34,9 @@ async function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
-      showAdaptableToolPanel: true,
+      //  showAdaptableToolPanel: false,
       //showUngroupColumnMenuItem: false,
+      adaptableToolPanelTitle: 'Hello',
     },
     vendorGrid: {
       ...gridOptions,
@@ -85,6 +87,7 @@ async function InitAdaptableDemo() {
       // this is for testing distinct values
       // we have made the function better but its stil per column and not a promise
       // so it doubles up with the server values promise we have
+      /*
       ConditionalStyle: {
         Revision: 35,
         ConditionalStyles: [
@@ -134,6 +137,7 @@ async function InitAdaptableDemo() {
           },
         ],
       },
+      */
       UserInterface: {
         PermittedValuesItems: [
           /*
@@ -269,8 +273,8 @@ async function InitAdaptableDemo() {
   }, 1000);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    console.log('search changed');
-    console.log(searchChangedArgs.data[0].id);
+    //   console.log('search changed');
+    //   console.log(searchChangedArgs.data[0].id);
   });
 }
 

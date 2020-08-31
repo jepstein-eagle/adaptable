@@ -46,9 +46,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   UNSAFE_componentWillMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.columnId) {
-        let column = this.props.Api.columnApi.getColumnFromId(this.props.PopupParams.columnId);
+    if (this.props.popupParams) {
+      if (this.props.popupParams.column) {
+        let column = this.props.popupParams.column;
         this.setState({ SelectedColumn: column, ShowSelector: false });
       }
     }
@@ -84,10 +84,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <CustomSortSummary
               key={StrategyConstants.CustomSortStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -104,10 +104,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <ConditionalStyleSummary
               key={StrategyConstants.ConditionalStyleStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ConditionalStyleStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.ConditionalStyleStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -124,34 +124,15 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <CellValidationSummary
               key={StrategyConstants.CellValidationStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.CellValidationStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.CellValidationStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
       }
-      if (this.isStrategyVisible(StrategyConstants.UserFilterStrategyId)) {
-        summaries.push(
-          <div
-            key={StrategyConstants.UserFilterStrategyId}
-            className={
-              this.isStrategyReadOnly(StrategyConstants.UserFilterStrategyId)
-                ? GeneralConstants.READ_ONLY_STYLE
-                : ''
-            }
-          >
-            <UserFilterSummary
-              key={StrategyConstants.UserFilterStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.UserFilterStrategyId)}
-              Api={this.props.Api}
-            />
-          </div>
-        );
-      }
+
       if (this.isStrategyVisible(StrategyConstants.FilterStrategyId)) {
         summaries.push(
           <div
@@ -164,10 +145,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FilterSummary
               key={StrategyConstants.FilterStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FilterStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.FilterStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -185,10 +166,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FormatColumnSummary
               key={StrategyConstants.FormatColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -205,10 +186,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FreeTextColumnSummary
               key={StrategyConstants.FormatColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -228,10 +209,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <PercentBarSummary
               key={StrategyConstants.PercentBarStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.PercentBarStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.PercentBarStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -251,10 +232,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <GradientColumnSummary
               key={StrategyConstants.GradientColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.GradientColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.GradientColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -274,10 +255,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <PlusMinusSummary
               key={StrategyConstants.PlusMinusStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.PlusMinusStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.PlusMinusStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -298,9 +279,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FlashingCellSummary
               key={StrategyConstants.FlashingCellsStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              accessLevel={this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -323,9 +304,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <CalculatedColumnSummary
               key={StrategyConstants.CalculatedColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              AccessLevel={this.getAccessLevel(StrategyConstants.CalculatedColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              accessLevel={this.getAccessLevel(StrategyConstants.CalculatedColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -348,7 +329,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <Box flex={1} marginLeft={2}>
               <ColumnSelector
                 SelectedColumnIds={[selectedColumnId]}
-                ColumnList={this.props.Api.columnApi.getColumns()}
+                ColumnList={this.props.api.columnApi.getColumns()}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single}
               />
@@ -383,7 +364,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   private getAccessLevel(functionName: AdaptableFunctionName): AccessLevel {
-    return this.props.Api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+    return this.props.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
       functionName
     );
   }

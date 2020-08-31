@@ -13,23 +13,23 @@ export interface LayoutWizardProps extends AdaptableObjectAdaptableWizardProps<L
 
 export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
   render() {
-    let layouts: Layout[] = this.props.ConfigEntities as Layout[];
+    let layouts: Layout[] = this.props.configEntities as Layout[];
     return (
       <AdaptableWizard
         style={{ maxWidth: '', height: '80vh' }}
-        FriendlyName={StrategyConstants.LayoutStrategyFriendlyName}
-        ModalContainer={this.props.ModalContainer}
-        Api={this.props.Api}
+        friendlyName={StrategyConstants.LayoutStrategyFriendlyName}
+        modalContainer={this.props.modalContainer}
+        api={this.props.api}
         showStepsLegend={false}
-        Steps={[
+        steps={[
           {
             StepName: 'Layout Editor',
             Index: 0,
-            Element: <LayoutEditorWizard Api={this.props.Api} Layouts={layouts} />,
+            Element: <LayoutEditorWizard api={this.props.api} Layouts={layouts} />,
           },
         ]}
-        Data={this.props.EditedAdaptableObject}
-        StepStartIndex={this.props.WizardStartIndex}
+        data={this.props.editedAdaptableObject}
+        stepStartIndex={this.props.wizardStartIndex}
         onHide={() => this.props.onCloseWizard()}
         onFinish={() => this.props.onFinishWizard()}
         canFinishWizard={() => this.props.canFinishWizard()}

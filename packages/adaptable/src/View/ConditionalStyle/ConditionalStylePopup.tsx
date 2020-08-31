@@ -29,6 +29,7 @@ import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 interface ConditionalStylePopupProps
   extends StrategyViewPopupProps<ConditionalStylePopupComponent> {
@@ -58,24 +59,24 @@ class ConditionalStylePopupComponent extends React.Component<
 
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        let column: AdaptableColumn = this.props.popupParams.column;
+        if (this.props.popupParams.action == 'New') {
           let _editedConditionalStyle: ConditionalStyle = ObjectFactory.CreateEmptyConditionalStyle();
           _editedConditionalStyle.Scope = {
-            ColumnIds: [columnId],
+            ColumnIds: [column.ColumnId],
           };
 
           this.setState({
-            EditedAdaptableObject: _editedConditionalStyle,
-            WizardStartIndex: 1,
-            WizardStatus: WizardStatus.New,
+            editedAdaptableObject: _editedConditionalStyle,
+            wizardStartIndex: 1,
+            wizardStatus: WizardStatus.New,
           });
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -97,15 +98,15 @@ class ConditionalStylePopupComponent extends React.Component<
       (conditionalStyle: ConditionalStyle, index) => {
         return (
           <ConditionalStyleEntityRow
-            AdaptableObject={conditionalStyle}
+            adaptableObject={conditionalStyle}
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             key={'CS' + (conditionalStyle.Uuid || index)}
             onShare={description => this.props.onShare(conditionalStyle, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(conditionalStyle)}
             onDeleteConfirm={ConditionalStyleRedux.ConditionalStyleDelete(conditionalStyle)}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -115,7 +116,7 @@ class ConditionalStylePopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Conditional Style"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -137,25 +138,25 @@ class ConditionalStylePopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={conditionalStyles} />
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <ConditionalStyleWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
+              editedAdaptableObject={this.state.editedAdaptableObject as ConditionalStyle}
+              configEntities={null}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
               StyleClassNames={this.props.StyleClassNames}
-              WizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
               onSetNewSharedQueryName={newSharedQueryName =>
                 this.setState({
-                  NewSharedQueryName: newSharedQueryName,
+                  newSharedQueryName: newSharedQueryName,
                 })
               }
               onSetUseSharedQuery={useSharedQuery =>
                 this.setState({
-                  UseSharedQuery: useSharedQuery,
+                  useSharedQuery: useSharedQuery,
                 })
               }
             />
@@ -167,18 +168,18 @@ class ConditionalStylePopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyConditionalStyle(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyConditionalStyle(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(condition: ConditionalStyle) {
     let clonedObject: ConditionalStyle = Helper.cloneObject(condition);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -191,13 +192,13 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    const conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
+    const conditionalStyle = this.state.editedAdaptableObject as ConditionalStyle;
 
-    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
       const SharedQueryId = createUuid();
       this.props.onAddSharedQuery({
         Uuid: SharedQueryId,
-        Name: this.state.NewSharedQueryName,
+        Name: this.state.newSharedQueryName,
         Expression: conditionalStyle.Expression,
       });
 
@@ -205,9 +206,9 @@ class ConditionalStylePopupComponent extends React.Component<
       conditionalStyle.SharedQueryId = SharedQueryId;
     }
 
-    if (this.state.WizardStatus == WizardStatus.New) {
+    if (this.state.wizardStatus == WizardStatus.New) {
       this.props.onAddConditionalStyle(conditionalStyle);
-    } else if (this.state.WizardStatus == WizardStatus.Edit) {
+    } else if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditConditionalStyle(conditionalStyle);
     }
 
@@ -215,19 +216,19 @@ class ConditionalStylePopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
+    let conditionalStyle = this.state.editedAdaptableObject as ConditionalStyle;
 
     if (
-      this.state.UseSharedQuery &&
+      this.state.useSharedQuery &&
       StringExtensions.IsNullOrEmpty(conditionalStyle.SharedQueryId)
     ) {
       return false;
     }
 
-    if (!this.state.UseSharedQuery && StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
+    if (!this.state.useSharedQuery && StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
       return false;
     }
-    if (!this.state.UseSharedQuery && !parser.validateBoolean(conditionalStyle.Expression)) {
+    if (!this.state.useSharedQuery && !parser.validateBoolean(conditionalStyle.Expression)) {
       return false;
     }
 
@@ -236,11 +237,11 @@ class ConditionalStylePopupComponent extends React.Component<
 
   resetState() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-      NewSharedQueryName: EMPTY_STRING,
-      UseSharedQuery: false,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
     });
   }
 }

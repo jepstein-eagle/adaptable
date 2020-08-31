@@ -13,9 +13,10 @@ import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import Helper from '../Helpers/Helper';
 import { TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
+import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export interface IStrategyService {
-  createAlertDescription(alertDefinition: AlertDefinition, columns: AdaptableColumn[]): string;
+  createAlertDescription(alertDefinition: AlertDefinition): string;
 
   isStrategyAvailable(adaptableFunctionName: AdaptableFunctionName): boolean;
 
@@ -33,11 +34,13 @@ export class StrategyService implements IStrategyService {
     this.adaptable = adaptable;
   }
 
-  public createAlertDescription(alert: AlertDefinition, columns: AdaptableColumn[]): string {
-    const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(alert.Predicate.Id);
-    const column = this.adaptable.api.columnApi.getColumnFromId(alert.ColumnId);
+  public createAlertDescription(alert: AlertDefinition): string {
+    const predicateDef: PredicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
+      alert.Predicate.Id
+    );
+    return 'I need to do do this when predicateDef receives a Scope';
 
-    return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
+    // return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
   }
 
   public setStrategiesEntitlements(): void {

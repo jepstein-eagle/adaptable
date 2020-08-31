@@ -52,7 +52,7 @@ class CalendarsPopupComponent extends React.Component<
       { Content: 'Details', Size: 3 },
     ];
 
-    let allCalendars = this.props.Api.calendarApi
+    let allCalendars = this.props.api.calendarApi
       .getAvailableCalendars()
       .map((calendar: Calendar) => {
         return (

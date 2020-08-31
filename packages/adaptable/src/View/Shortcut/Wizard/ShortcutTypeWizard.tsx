@@ -24,7 +24,7 @@ export class ShortcutTypeWizard
   constructor(props: ShortcutTypeWizardProps) {
     super(props);
     this.state = {
-      ColumnType: this.props.Data.ColumnType,
+      ColumnType: this.props.data.ColumnType,
     };
   }
 
@@ -66,11 +66,11 @@ export class ShortcutTypeWizard
     let e = event.target as HTMLInputElement;
     if (e.value == 'Number') {
       this.setState({ ColumnType: DataType.Number } as ShortcutTypeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else {
       this.setState({ ColumnType: DataType.Date } as ShortcutTypeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -81,19 +81,19 @@ export class ShortcutTypeWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnType = this.state.ColumnType;
+  public next(): void {
+    this.props.data.ColumnType = this.state.ColumnType;
     if (this.state.ColumnType == DataType.Date) {
-      this.props.Data.ShortcutOperation = MathOperation.Replace;
+      this.props.data.ShortcutOperation = MathOperation.Replace;
     }
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

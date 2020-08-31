@@ -8,7 +8,6 @@ import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { RowNode } from '@ag-grid-community/core';
 import * as parser from '../../parser/src';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -23,63 +22,50 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     let theadaptable = this.adaptable as Adaptable;
 
     let shouldRunStyle = this.shouldRunStyle;
-    let isColumnInScope = this.isColumnInScope;
-    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
 
-    if (
-      ArrayExtensions.IsNotNullOrEmpty(columns) &&
-      ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
-    ) {
+    // first do rows
+    let rowClassRules: any = {};
+    this.adaptable.api.conditionalStyleApi.getRowConditionalStyles().forEach(cs => {
+      let styleName: string = this.getNameForStyle(cs);
+      rowClassRules[styleName] = (params: any) => {
+        if (shouldRunStyle(cs, theadaptable, params.node)) {
+          return this.evaluateExpression(cs, params.node);
+        }
+      };
+      theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
+    });
+
+    // now do columns
+    if (ArrayExtensions.IsNotNullOrEmpty(columns)) {
       for (let column of columns) {
         let cellClassRules: any = {};
-        let rowClassRules: any = {};
-        conditionalStyles.forEach(cs => {
-          let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
-            ? theadaptable.StyleService.CreateUniqueStyleName(
-                StrategyConstants.ConditionalStyleStrategyId,
-                cs
-              )
-            : cs.Style.ClassName;
 
-          if (theadaptable.api.scopeApi.scopeIsAll(cs.Scope)) {
-            // for the moment we assume that an undefined scope is all columns (i.e. whole row)
-            rowClassRules[styleName] = (params: any) => {
-              if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return this.evaluateExpression(cs, params.node.data);
-              }
-            };
-            theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
-          } else {
-            cellClassRules[styleName] = (params: any) => {
-              if (shouldRunStyle(cs, theadaptable, params.node)) {
-                if (isColumnInScope(cs, theadaptable, column)) {
-                  return this.evaluateExpression(cs, params.node.data);
-                }
-              }
-            };
-          }
-        });
-        theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
+        let conditionalStyleForColumn:
+          | ConditionalStyle
+          | undefined = this.adaptable.api.conditionalStyleApi.getConditionalStyleForColumn(column);
+
+        if (conditionalStyleForColumn) {
+          let styleName: string = this.getNameForStyle(conditionalStyleForColumn);
+
+          cellClassRules[styleName] = (params: any) => {
+            if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
+              return this.evaluateExpression(conditionalStyleForColumn, params.node);
+            }
+          };
+          theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
+        }
       }
     }
+
     // Redraw Adaptableto be on safe side (its rare use case)
     this.adaptable.redraw();
   }
 
-  private evaluateExpression(conditionalStyle: ConditionalStyle, data: any): boolean {
+  private evaluateExpression(conditionalStyle: ConditionalStyle, node: RowNode): boolean {
     let expression: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
       conditionalStyle
     );
-    return parser.evaluate(expression, { data });
-  }
-
-  private isColumnInScope(
-    conditionalStyle: ConditionalStyle,
-    adaptable: IAdaptable,
-    column: AdaptableColumn
-  ): boolean {
-    let shouldRun: boolean = adaptable.api.scopeApi.isColumnInScope(column, conditionalStyle.Scope);
-    return shouldRun;
+    return parser.evaluate(expression, { node: node, api: this.adaptable.api });
   }
 
   private shouldRunStyle(
@@ -91,5 +77,14 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
       return false;
     }
     return true;
+  }
+
+  private getNameForStyle(conditionalStyle: ConditionalStyle): string {
+    return StringExtensions.IsNullOrEmpty(conditionalStyle.Style.ClassName)
+      ? this.adaptable.StyleService.CreateUniqueStyleName(
+          StrategyConstants.ConditionalStyleStrategyId,
+          conditionalStyle
+        )
+      : conditionalStyle.Style.ClassName;
   }
 }

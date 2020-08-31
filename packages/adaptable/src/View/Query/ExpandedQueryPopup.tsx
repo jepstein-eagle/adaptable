@@ -26,7 +26,7 @@ class ExpandedQueryPopupComponent extends React.Component<
   constructor(props: ExpandedQueryPopupComponentProps) {
     super(props);
     this.state = {
-      expression: this.props.PopupParams.value,
+      expression: this.props.popupParams.value,
     };
   }
 
@@ -44,9 +44,10 @@ class ExpandedQueryPopupComponent extends React.Component<
           onChange={event =>
             this.setState({ expression: (event.target as HTMLInputElement).value })
           }
-          initialData={this.props.Api.gridApi.getFirstRowNode().data}
-          columns={this.props.Api.columnApi.getColumns()}
+          initialData={this.props.api.gridApi.getFirstRowNode().data}
+          columns={this.props.api.columnApi.getColumns()}
           functions={parser.defaultFunctions}
+          api={this.props.api}
         />
         <SimpleButton
           padding={2}

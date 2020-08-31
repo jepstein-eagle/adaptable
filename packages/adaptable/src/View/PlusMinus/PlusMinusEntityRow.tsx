@@ -21,7 +21,7 @@ export interface PlusMinusEntityRowProps extends SharedEntityRowProps<PlusMinusE
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
   render(): any {
-    let plusMinusRule: PlusMinusRule = this.props.AdaptableObject as PlusMinusRule;
+    let plusMinusRule: PlusMinusRule = this.props.adaptableObject as PlusMinusRule;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (
@@ -49,13 +49,13 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
 
     let buttons: any = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(plusMinusRule)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={false}
-        EntityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}
-        AccessLevel={this.props.AccessLevel}
+        entityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

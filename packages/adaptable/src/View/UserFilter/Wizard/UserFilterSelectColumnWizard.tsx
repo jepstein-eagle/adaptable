@@ -35,7 +35,7 @@ export class UserFilterSelectColumnWizard
         </HelpBlock>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.columnApi.getColumns()}
+          ColumnList={this.props.api.columnApi.getColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -48,7 +48,7 @@ export class UserFilterSelectColumnWizard
       {
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',
       } as UserFilterSelectColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -59,15 +59,15 @@ export class UserFilterSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {}
+  public next(): void {}
 
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

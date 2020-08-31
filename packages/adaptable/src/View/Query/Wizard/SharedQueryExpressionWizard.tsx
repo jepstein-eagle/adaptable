@@ -21,18 +21,19 @@ export class SharedQueryExpressionWizard
   implements AdaptableWizardStep {
   constructor(props: SharedQueryExpressionWizardProps) {
     super(props);
-    this.state = { Expression: this.props.Data.Expression };
+    this.state = { Expression: this.props.data.Expression };
   }
   render(): any {
-    const firstRow = this.props.Api.gridApi.getFirstRowNode().data;
+    const firstRow = this.props.api.gridApi.getFirstRowNode().data;
 
     return (
       <ExpressionEditor
         value={this.state.Expression}
         onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
         initialData={firstRow}
-        columns={this.props.Api.columnApi.getColumns()}
+        columns={this.props.api.columnApi.getColumns()}
         functions={defaultFunctions}
+        api={this.props.api}
       />
     );
     /* {validationState ? (
@@ -42,7 +43,7 @@ export class SharedQueryExpressionWizard
 
   handleExpressionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.setState({ Expression: e.value }, () => this.props.UpdateGoBackState());
+    this.setState({ Expression: e.value }, () => this.props.updateGoBackState());
   }
 
   public canNext(): boolean {
@@ -52,16 +53,16 @@ export class SharedQueryExpressionWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.Expression = this.state.Expression;
+  public next(): void {
+    this.props.data.Expression = this.state.Expression;
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

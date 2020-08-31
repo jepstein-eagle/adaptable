@@ -46,18 +46,18 @@ class FreeTextColumnPopupComponent extends React.Component<
   constructor(props: FreeTextColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     };
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'Edit') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        if (this.props.popupParams.action == 'Edit') {
           let editFreeTextColumn = this.props.FreeTextColumns.find(
-            x => x.ColumnId == this.props.PopupParams.columnId
+            x => x.ColumnId == this.props.popupParams.column.ColumnId
           );
           let index = this.props.FreeTextColumns.indexOf(editFreeTextColumn);
           this.onEdit(editFreeTextColumn);
@@ -87,13 +87,13 @@ class FreeTextColumnPopupComponent extends React.Component<
           <FreeTextColumnEntityRow
             key={FreeTextColumn.Uuid}
             colItems={colItems}
-            api={this.props.Api}
-            AdaptableObject={FreeTextColumn}
+            api={this.props.api}
+            adaptableObject={FreeTextColumn}
             onEdit={() => this.onEdit(FreeTextColumn)}
             onShare={description => this.props.onShare(FreeTextColumn, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onDeleteConfirm={FreeTextColumnRedux.FreeTextColumnDelete(FreeTextColumn)}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -103,7 +103,7 @@ class FreeTextColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create FreeText Column"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -122,13 +122,13 @@ class FreeTextColumnPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={freeTextColumns} />
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <FreeTextColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
-              ConfigEntities={this.props.FreeTextColumns}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as FreeTextColumn}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
+              configEntities={this.props.FreeTextColumns}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -141,46 +141,46 @@ class FreeTextColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyFreeTextColumn(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyFreeTextColumn(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(FreeTextColumn: FreeTextColumn) {
     let clonedObject: FreeTextColumn = Helper.cloneObject(FreeTextColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let freeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let freeTextColumn = this.state.editedAdaptableObject as FreeTextColumn;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditFreeTextColumn(freeTextColumn);
     } else {
       this.props.onAddFreeTextColumn(freeTextColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let freeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
+    let freeTextColumn = this.state.editedAdaptableObject as FreeTextColumn;
     return StringExtensions.IsNotNullOrEmpty(freeTextColumn.ColumnId);
   }
 }

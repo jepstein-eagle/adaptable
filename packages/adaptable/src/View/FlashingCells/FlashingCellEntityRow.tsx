@@ -19,7 +19,7 @@ export interface FlashingCellEntityRowProps extends SharedEntityRowProps<Flashin
 
 export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRowProps, {}> {
   render(): any {
-    let flashingCell: FlashingCell = this.props.AdaptableObject as FlashingCell;
+    let flashingCell: FlashingCell = this.props.adaptableObject as FlashingCell;
 
     let durations = this.props.FlashingCellDurations.map(flashingCellDuration => {
       return {
@@ -68,7 +68,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       <EntityRowItem
         Content={
           <ColorPicker
-            Api={this.props.api}
+            api={this.props.api}
             disabled={isDisabled}
             value={flashingCell.UpColor}
             onChange={(x: any) => this.onUpColorChange(x)}
@@ -80,7 +80,7 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
       <EntityRowItem
         Content={
           <ColorPicker
-            Api={this.props.api}
+            api={this.props.api}
             disabled={isDisabled}
             value={flashingCell.DownColor}
             onChange={(x: any) => this.onDownColorChange(x)}
@@ -93,19 +93,19 @@ export class FlashingCellEntityRow extends React.Component<FlashingCellEntityRow
 
   onActionChange(value: any) {
     this.props.onChangeFlashingDuration(
-      this.props.AdaptableObject as FlashingCell,
+      this.props.adaptableObject as FlashingCell,
       Number.parseInt(value)
     );
   }
 
   onDownColorChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeDownColorFlashingCell(this.props.AdaptableObject as FlashingCell, e.value);
+    this.props.onChangeDownColorFlashingCell(this.props.adaptableObject as FlashingCell, e.value);
   }
 
   onUpColorChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeUpColorFlashingCell(this.props.AdaptableObject as FlashingCell, e.value);
+    this.props.onChangeUpColorFlashingCell(this.props.adaptableObject as FlashingCell, e.value);
   }
 
   getFriendlyFlashingDuration(duration: number) {

@@ -24,7 +24,7 @@ export class UserFilterSettingsWizard
   constructor(props: UserFilterSettingsWizardProps) {
     super(props);
     this.state = {
-      FilterName: this.props.Data.Name,
+      FilterName: this.props.data.Name,
       ErrorMessage: null,
     };
   }
@@ -67,7 +67,7 @@ export class UserFilterSettingsWizard
       {
         FilterName: e.value,
       } as UserFilterSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -82,16 +82,16 @@ export class UserFilterSettingsWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.Name = this.state.FilterName;
+  public next(): void {
+    this.props.data.Name = this.state.FilterName;
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -107,10 +107,7 @@ export interface AlertState extends ConfigState {
  * See {@link AlertState|Alert State} for how to use this object.
  */
 export interface AlertDefinition extends QueryObject {
-  /**
-   * The Id (fieldname) of the column whose change will trigger the alert
-   */
-  ColumnId?: string;
+  Scope: Scope;
 
   Predicate?: Predicate;
 

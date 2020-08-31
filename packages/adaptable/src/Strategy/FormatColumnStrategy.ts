@@ -36,14 +36,12 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
-      let formatExists: boolean = ArrayExtensions.ContainsItem(
-        this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
-        column.ColumnId
-      );
+      let formatExists: boolean = false; // need some way of working out whether to edit or not, until then wont bother
+
       let label = formatExists ? 'Edit ' : 'Create ';
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: formatExists ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };
@@ -68,12 +66,15 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let formatColumns: FormatColumn[] = this.adaptable.api.formatColumnApi
       .getAllFormatColumn()
-      .filter((fc: FormatColumn) => fc.ColumnId == specialColumnId);
+      .filter((fc: FormatColumn) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, fc.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(formatColumns)
-      ? formatColumns.length + ' Format Columns'
+      ? formatColumns.length + ' Format Column()'
       : undefined;
   }
 

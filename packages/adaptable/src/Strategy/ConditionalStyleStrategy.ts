@@ -28,7 +28,7 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: 'New',
         source: 'ColumnMenu',
       };

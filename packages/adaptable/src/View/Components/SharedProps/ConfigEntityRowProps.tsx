@@ -13,7 +13,7 @@ export interface BaseRowProps<View> extends React.ClassAttributes<View> {
 }
 
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
-  AdaptableObject: AdaptableObject;
+  adaptableObject: AdaptableObject;
   onDeleteConfirm: Redux.Action;
   onEdit: (AdaptableObject: AdaptableObject) => void;
   onClone?: (AdaptableObject: AdaptableObject) => void;
@@ -22,11 +22,11 @@ export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
 // shared props
 export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
   onShare: (description: string) => void;
-  TeamSharingActivated: boolean;
-  AccessLevel: AccessLevel;
+  teamSharingActivated: boolean;
+  accessLevel: AccessLevel;
 }
 
 export interface SharedEntityComponent<View> extends React.ClassAttributes<View> {
-  Entity: AdaptableObject;
-  Api: AdaptableApi;
+  entity: AdaptableObject;
+  api: AdaptableApi;
 }

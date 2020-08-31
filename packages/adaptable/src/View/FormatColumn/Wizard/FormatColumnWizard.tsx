@@ -19,44 +19,44 @@ export class FormatColumnWizard extends React.Component<FormatColumnWizardProps,
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.FormatColumnStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
-              StepName: 'Select Column',
+              StepName: 'Scope',
               Index: 0,
-              Element: <FormatColumnScopeWizard Api={this.props.Api} />,
+              Element: <FormatColumnScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Style',
               Index: 1,
               Element: (
                 <FormatColumnStyleWizard
-                  // Api={this.props.api}
+                  // api={this.props.api}
                   StyleClassNames={this.props.StyleClassNames}
-                  Api={this.props.Api}
+                  api={this.props.api}
                 />
               ),
             },
             {
               StepName: 'Display Format',
               Index: 2,
-              Element: <FormatColumnFormatWizard Api={this.props.Api} />,
+              Element: <FormatColumnFormatWizard api={this.props.api} />,
             },
             {
               StepName: 'Cell Alignment',
               Index: 3,
-              Element: <FormatColumnAlignmentWizard Api={this.props.Api} />,
+              Element: <FormatColumnAlignmentWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 4,
-              Element: <FormatColumnSummaryWizard Api={this.props.Api} />,
+              Element: <FormatColumnSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

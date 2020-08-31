@@ -686,7 +686,7 @@ export class agGridHelper {
       return false;
     }
     if (colDef.lockPosition != null && colDef.lockPosition == true) {
-      return false;
+      return true;
     }
 
     if (colDef.lockPinned != null && colDef.lockPinned == true) {

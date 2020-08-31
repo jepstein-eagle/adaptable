@@ -6,6 +6,7 @@ import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -17,6 +18,7 @@ import { IUIPrompt } from '../../Utilities/Interface/IMessage';
 import { Flex } from 'rebass';
 import CheckBox from '../../components/CheckBox';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface FilterToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<FilterToolbarControlComponent> {
@@ -35,10 +37,10 @@ class FilterToolbarControlComponent extends React.Component<
   render(): any {
     let activeFiltersPanel = (
       <ActiveFiltersPanel
-        Columns={this.props.Api.columnApi.getColumns()}
-        Api={this.props.Api}
-        ColumnFilters={this.props.ColumnFilters}
-        AccessLevel={this.props.AccessLevel}
+        columns={this.props.api.columnApi.getColumns()}
+        api={this.props.api}
+        columnFilters={this.props.ColumnFilters}
+        accessLevel={this.props.accessLevel}
         onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}
         onSaveColumnFilterasUserFilter={(columnFilter: ColumnFilter) =>
           this.onSaveColumnFilterasUserFilter(columnFilter)
@@ -67,15 +69,15 @@ class FilterToolbarControlComponent extends React.Component<
               onClick={() => this.onClearFilters()}
               tooltip="Clear Column Filters"
               disabled={this.props.ColumnFilters.length == 0}
-              AccessLevel={this.props.AccessLevel}
+              accessLevel={this.props.accessLevel}
             />
           </>
         )}
         <CheckBox
           className="ab-DashboardToolbar__Filter__active-check"
           disabled={
-            this.props.Api.internalApi.isGridInPivotMode() ||
-            !this.props.Api.internalApi.isQuickFilterActive()
+            this.props.api.internalApi.isGridInPivotMode() ||
+            !this.props.api.internalApi.isQuickFilterActive()
           }
           fontSize={2}
           checked={this.props.IsQuickFilterVisible}
@@ -93,6 +95,7 @@ class FilterToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Filter"
         headerText={StrategyConstants.FilterStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Filter')}
       >
         {content}
       </PanelDashboard>
@@ -100,11 +103,11 @@ class FilterToolbarControlComponent extends React.Component<
   }
 
   private onClearFilters() {
-    this.props.Api.filterApi.clearAllColumnFilter();
+    this.props.api.filterApi.clearAllColumnFilter();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
-    this.props.Api.filterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
+    this.props.api.filterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {
@@ -138,6 +141,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.FilterStrategyId, ScreenPopups.FilterPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

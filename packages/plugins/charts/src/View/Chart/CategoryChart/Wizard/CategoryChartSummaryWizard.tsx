@@ -17,19 +17,19 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
     super(props);
   }
   render(): any {
-    let friendlyNames = this.props.Data.YAxisColumnIds.map(c => {
-      return this.props.Api.columnApi.getFriendlyNameFromColumnId(c);
+    let friendlyNames = this.props.data.YAxisColumnIds.map(c => {
+      return this.props.api.columnApi.getFriendlyNameFromColumnId(c);
     });
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
-      { Key: 'Description', Value: this.props.Data.Description },
+      { Key: 'Name', Value: this.props.data.Name },
+      { Key: 'Description', Value: this.props.data.Description },
       { Key: 'Y Axis Column(s)', Value: friendlyNames.join(', ') },
-      { Key: 'Total', Value: this.props.Data.YAxisTotal },
+      { Key: 'Total', Value: this.props.data.YAxisTotal },
       {
         Key: 'X Axis Column',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(this.props.Data.XAxisColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.XAxisColumnId),
       },
-      { Key: 'X Axis Values', Value: this.props.Data.XAxisExpression },
+      { Key: 'X Axis Values', Value: this.props.data.XAxisExpression },
     ];
 
     return (
@@ -46,16 +46,16 @@ export class CategoryChartSummaryWizard extends React.Component<CategoryChartSum
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

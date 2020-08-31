@@ -27,16 +27,16 @@ export class ReportScopeWizard
     super(props);
 
     let scopeChoice: 'All' | 'Column' | 'DataType' =
-      this.props.Data.Scope == undefined ||
-      this.props.Api.scopeApi.scopeIsAll(this.props.Data.Scope)
+      this.props.data.Scope == undefined ||
+      this.props.api.scopeApi.scopeIsAll(this.props.data.Scope)
         ? 'All'
-        : this.props.Api.scopeApi.scopeHasColumns(this.props.Data.Scope)
+        : this.props.api.scopeApi.scopeHasColumns(this.props.data.Scope)
         ? 'Column'
         : 'DataType';
     this.state = {
       ScopeChoice: scopeChoice,
-      ColumnIds: this.props.Api.scopeApi.getColumnIdsInScope(this.props.Data.Scope),
-      DataTypes: this.props.Api.scopeApi.getDataTypesInScope(this.props.Data.Scope),
+      ColumnIds: this.props.api.scopeApi.getColumnIdsInScope(this.props.data.Scope),
+      DataTypes: this.props.api.scopeApi.getDataTypesInScope(this.props.data.Scope),
     };
   }
 
@@ -78,10 +78,10 @@ export class ReportScopeWizard
             <Box marginBottom={2}>
               <DualListBoxEditor
                 style={{ flex: 1, overflow: 'hidden', height: '250px' }}
-                AvailableValues={this.props.Api.columnApi.getColumns().map(c => {
+                AvailableValues={this.props.api.columnApi.getColumns().map(c => {
                   return c.FriendlyName;
                 })}
-                SelectedValues={this.props.Api.columnApi.getFriendlyNamesFromColumnIds(
+                SelectedValues={this.props.api.columnApi.getFriendlyNamesFromColumnIds(
                   this.state.ColumnIds
                 )}
                 HeaderAvailable="Columns"
@@ -142,9 +142,9 @@ export class ReportScopeWizard
   private onColumnsSelectedChanged(columnFriendlyNames: string[]) {
     this.setState(
       {
-        ColumnIds: this.props.Api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
+        ColumnIds: this.props.api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
       } as ReportScopeWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -152,7 +152,7 @@ export class ReportScopeWizard
     let e = event.target as HTMLInputElement;
     if (e.value == 'Column') {
       this.setState({ ScopeChoice: 'Column', ColumnIds: [] } as ReportScopeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     } else if (e.value == 'DataType') {
       this.setState(
@@ -160,11 +160,11 @@ export class ReportScopeWizard
           ScopeChoice: 'DataType',
           DataTypes: [],
         } as ReportScopeWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState({ ScopeChoice: 'All' } as ReportScopeWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -180,7 +180,7 @@ export class ReportScopeWizard
       }
     }
     this.setState({ DataTypes: dataTypes } as ReportScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -191,29 +191,29 @@ export class ReportScopeWizard
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     if (this.state.ScopeChoice == 'All') {
-      this.props.Data.Scope = {
+      this.props.data.Scope = {
         All: true,
       };
     } else if (this.state.ScopeChoice == 'Column') {
-      this.props.Data.Scope = {
+      this.props.data.Scope = {
         ColumnIds: this.state.ColumnIds,
       };
     } else if (this.state.ScopeChoice == 'DataType') {
-      this.props.Data.Scope = {
+      this.props.data.Scope = {
         DataTypes: this.state.DataTypes,
       };
     }
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

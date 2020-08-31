@@ -50,10 +50,10 @@ class FilterToolPanelComponent extends React.Component<
   render(): any {
     let activeFiltersPanel = (
       <ActiveFiltersPanel
-        Columns={this.props.Columns}
-        ColumnFilters={this.props.ColumnFilters}
-        Api={this.props.Api}
-        AccessLevel={this.props.AccessLevel}
+        columns={this.props.Columns}
+        columnFilters={this.props.ColumnFilters}
+        api={this.props.api}
+        accessLevel={this.props.accessLevel}
         onClear={(columnFilter: ColumnFilter) => this.onClearColumnFilter(columnFilter)}
         onSaveColumnFilterasUserFilter={(columnFilter: ColumnFilter) =>
           this.onSaveColumnFilterasUserFilter(columnFilter)
@@ -83,7 +83,7 @@ class FilterToolPanelComponent extends React.Component<
                 onClick={() => this.onClearFilters()}
                 tooltip="Clear Column Filters"
                 disabled={this.props.ColumnFilters.length == 0}
-                AccessLevel={this.props.AccessLevel}
+                accessLevel={this.props.accessLevel}
               >
                 Clear
               </ButtonClear>
@@ -94,8 +94,8 @@ class FilterToolPanelComponent extends React.Component<
           <CheckBox
             className="ab-ToolPanel__Filter__active-check"
             disabled={
-              this.props.Api.internalApi.isGridInPivotMode() ||
-              !this.props.Api.internalApi.isQuickFilterActive()
+              this.props.api.internalApi.isGridInPivotMode() ||
+              !this.props.api.internalApi.isQuickFilterActive()
             }
             marginLeft={1}
             marginTop={0}
@@ -127,11 +127,11 @@ class FilterToolPanelComponent extends React.Component<
   }
 
   private onClearFilters() {
-    this.props.Api.filterApi.clearAllColumnFilter();
+    this.props.api.filterApi.clearAllColumnFilter();
   }
 
   private onClearColumnFilter(columnFilter: ColumnFilter) {
-    this.props.Api.filterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
+    this.props.api.filterApi.clearColumnFilterByColumn(columnFilter.ColumnId);
   }
 
   private onSaveColumnFilterasUserFilter(columnFilter: ColumnFilter): void {

@@ -9,15 +9,15 @@ export class PlusMinusSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let plusMinusRule: PlusMinusRule = this.props.Entity as PlusMinusRule;
+    let plusMinusRule: PlusMinusRule = this.props.entity as PlusMinusRule;
 
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {this.props.Api.columnApi.getFriendlyNameFromColumnId(plusMinusRule.ColumnId)}
+          {this.props.api.columnApi.getFriendlyNameFromColumnId(plusMinusRule.ColumnId)}
         </Flex>
         <Flex flex={3}>{plusMinusRule.NudgeValue.toString()}</Flex>
-        <Flex flex={5}>{this.props.Api.queryApi.getExpressionForQueryObject(plusMinusRule)}</Flex>
+        <Flex flex={5}>{this.props.api.queryApi.getExpressionForQueryObject(plusMinusRule)}</Flex>
       </Flex>
     );
   }

@@ -6,6 +6,7 @@ import {
   PermittedValuesItem,
 } from '../PredefinedConfig/UserInterfaceState';
 import { Scope } from '../PredefinedConfig/Common/Scope';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export interface UserInterfaceApi {
   /**
@@ -59,7 +60,7 @@ export interface UserInterfaceApi {
 
   getAllPermittedValuesItems(): any[];
 
-  getPermittedValuesForColumn(columnId: string): any[];
+  getPermittedValuesForColumn(column: AdaptableColumn): any[];
 
   getAllEditLookUpItems(): EditLookUpItem[];
 

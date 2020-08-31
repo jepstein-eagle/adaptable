@@ -7,7 +7,6 @@ export interface ToolPanelState extends ConfigState {
    *
    * The Current ToolPanels that Adaptable offers are:
    *
-   * - Query
    * - Alert
    * - BulkUpdate
    * - CellSummary
@@ -16,6 +15,7 @@ export interface ToolPanelState extends ConfigState {
    * - Dashboard
    * - Export
    * - Layout
+   * - Query
    * - QuickSearch
    * - SmartEdit
    * - SystemStatus

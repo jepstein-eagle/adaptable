@@ -21,14 +21,14 @@ export class PlusMinusColumnWizard
   implements AdaptableWizardStep {
   constructor(props: PlusMinusColumnWizardProps) {
     super(props);
-    this.state = { SelectedColumnId: this.props.Data.ColumnId };
+    this.state = { SelectedColumnId: this.props.data.ColumnId };
   }
   render(): any {
     return (
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.SelectedColumnId]}
-          ColumnList={this.props.Api.columnApi.getNumericColumns()}
+          ColumnList={this.props.api.columnApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -38,7 +38,7 @@ export class PlusMinusColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     this.setState({ SelectedColumnId: columns.length > 0 ? columns[0].ColumnId : '' }, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
   public canNext(): boolean {
@@ -47,16 +47,16 @@ export class PlusMinusColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.SelectedColumnId;
+  public next(): void {
+    this.props.data.ColumnId = this.state.SelectedColumnId;
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

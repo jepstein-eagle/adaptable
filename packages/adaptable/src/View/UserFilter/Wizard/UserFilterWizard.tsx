@@ -16,29 +16,29 @@ export class UserFilterWizard extends React.Component<UserFilterWizardProps, {}>
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.UserFilterStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.UserFilterStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <UserFilterSelectColumnWizard Api={this.props.Api} />,
+              Element: <UserFilterSelectColumnWizard api={this.props.api} />,
             },
 
             {
               StepName: 'Settings',
               Index: 2,
-              Element: <UserFilterSettingsWizard Api={this.props.Api} />,
+              Element: <UserFilterSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <UserFilterSummaryWizard Api={this.props.Api} />,
+              Element: <UserFilterSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -50,15 +50,17 @@ class AlertPopupComponent extends React.Component<
     this.state = UIHelper.getEmptyConfigState();
   }
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        if (this.props.popupParams.action == 'New') {
           let alertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-          alertDefinition.ColumnId = this.props.PopupParams.columnId;
+          alertDefinition.Scope = {
+            ColumnIds: [this.props.popupParams.column.ColumnId],
+          };
           this.setState({
-            EditedAdaptableObject: alertDefinition,
-            WizardStartIndex: 1,
-            WizardStatus: WizardStatus.New,
+            editedAdaptableObject: alertDefinition,
+            wizardStartIndex: 1,
+            wizardStatus: WizardStatus.New,
           });
         }
       }
@@ -80,22 +82,20 @@ class AlertPopupComponent extends React.Component<
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = this.props.Api.columnApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Api}
-          AdaptableObject={alertDefinition}
-          Column={column}
+          api={this.props.api}
+          adaptableObject={alertDefinition}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={description => this.props.onShare(alertDefinition, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={AlertRedux.AlertDefinitionDelete(alertDefinition)}
           onChangeMessageType={(alertDef, messageType) =>
             this.onMessageTypeChanged(alertDef, messageType)
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -104,12 +104,12 @@ class AlertPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
     let startWizardText =
-      this.props.AccessLevel == 'ReadOnly'
+      this.props.accessLevel == 'ReadOnly'
         ? 'You have no Alert Definitions.'
         : "Click 'New' to start creating Alert Definitions.  An alert will be triggered whenever an edit - or external data change - matches the condition in the Alert Definition.";
 
@@ -127,21 +127,21 @@ class AlertPopupComponent extends React.Component<
           <EmptyContent>{startWizardText}</EmptyContent>
         )}
 
-        {this.state.WizardStatus != WizardStatus.None && (
+        {this.state.wizardStatus != WizardStatus.None && (
           <AlertWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as AlertDefinition}
+            configEntities={null}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onSetNewSharedQueryName={newSharedQueryName =>
               this.setState({
-                NewSharedQueryName: newSharedQueryName,
+                newSharedQueryName: newSharedQueryName,
               })
             }
             onSetUseSharedQuery={useSharedQuery =>
               this.setState({
-                UseSharedQuery: useSharedQuery,
+                useSharedQuery: useSharedQuery,
               })
             }
             onCloseWizard={() => this.onCloseWizard()}
@@ -155,9 +155,9 @@ class AlertPopupComponent extends React.Component<
 
   createAlertDefinition() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyAlertDefinition(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyAlertDefinition(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
@@ -168,9 +168,9 @@ class AlertPopupComponent extends React.Component<
 
   onEdit(alert: AlertDefinition) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(alert),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(alert),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -180,22 +180,22 @@ class AlertPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    const alertDefinition = this.state.EditedAdaptableObject as AlertDefinition;
+    const alertDefinition = this.state.editedAdaptableObject as AlertDefinition;
 
-    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
       const SharedQueryId = createUuid();
       this.props.onAddSharedQuery({
         Uuid: SharedQueryId,
-        Name: this.state.NewSharedQueryName,
+        Name: this.state.newSharedQueryName,
         Expression: alertDefinition.Expression,
       });
       alertDefinition.Expression = undefined;
       alertDefinition.SharedQueryId = SharedQueryId;
     }
 
-    if (this.state.WizardStatus == WizardStatus.New) {
+    if (this.state.wizardStatus == WizardStatus.New) {
       this.props.onAddAlert(alertDefinition);
-    } else if (this.state.WizardStatus == WizardStatus.Edit) {
+    } else if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditAlert(alertDefinition);
     }
 
@@ -203,18 +203,18 @@ class AlertPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let AlertRule = this.state.EditedAdaptableObject as AlertDefinition;
-    return StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId);
+    let alertDefinition = this.state.editedAdaptableObject as AlertDefinition;
+    return alertDefinition.Scope != null; // can it be?
     //   &&       ExpressionHelper.IsNullOrEmptyOrValidExpression(AlertRule.Expression)
   }
 
   resetState() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-      NewSharedQueryName: EMPTY_STRING,
-      UseSharedQuery: false,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
     });
   }
 }

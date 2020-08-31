@@ -23,18 +23,20 @@ export interface UserInterfaceOptions {
   useCustomMacLikeScrollbars?: boolean;
 
   /**
-   * Whether or not to show an Adaptable Tool Panel on the right hand side (ag-Grid only).
+   * Whether to show the Adaptable Tool Panel on the right hand side (ag-Grid only).
    *
-   * Note - the toolpanel is not yet operational and will be released in v.6 (January 2020).
+   * This contains many of the same options in the Dashboard so is a useful alternative where screen estate is tight
    *
-   * **Default Value: false**
+   * Note: it will only appear if SideBar is true or set to display.
+   *
+   * **Default Value: true**
    */
   showAdaptableToolPanel?: boolean;
 
   /**
    * The name to tive the AdapTable Tool Panel
    *
-   * This will vertically in the Tool Panel name section.
+   * This will appear vertically in the Tool Panel name section.
    *
    * **Default Value: 'AdapTable'**
    */

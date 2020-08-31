@@ -28,11 +28,11 @@ export interface EntityListActionButtonsProps
   overrideTooltipClone?: string;
   overrideTooltipDelete?: string;
   overrideTooltipShare?: string;
-  ConfirmDeleteAction: Redux.Action;
-  EntityType: string;
+  confirmDeleteAction: Redux.Action;
+  entityType: string;
   justifyContent?: string;
 
-  AccessLevel: AccessLevel;
+  accessLevel: AccessLevel;
   editSize: any;
   deleteSize: any;
   shareSize: any;
@@ -52,9 +52,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
     overrideDisableDelete: false,
     overrideDisableClone: false,
     overrideDisableShare: false,
-    ConfirmDeleteAction: null,
-    EntityType: '',
-    AccessLevel: 'Full',
+    confirmDeleteAction: null,
+    entityType: '',
+    accessLevel: 'Full',
     editSize: 'xsmall',
     deleteSize: 'xsmall',
     shareSize: 'xsmall',
@@ -79,9 +79,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               fill: 'var(--ab-color-text-on-info)',
               background: 'var(--ab-color-info)',
             }}
-            disabled={this.props.overrideDisableEdit || this.props.AccessLevel == 'ReadOnly'}
+            disabled={this.props.overrideDisableEdit || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipEdit}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
         {this.props.showClone && (
@@ -114,12 +114,12 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               fill: 'var(--ab-color-text-on-error)',
               background: 'var(--ab-color-error)',
             }}
-            disabled={this.props.overrideDisableDelete || this.props.AccessLevel == 'ReadOnly'}
+            disabled={this.props.overrideDisableDelete || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipDelete}
-            ConfirmAction={this.props.ConfirmDeleteAction}
-            ConfirmationMsg={'Are you sure you want to delete this ' + this.props.EntityType + '?'}
-            ConfirmationTitle={'Delete ' + this.props.EntityType}
-            AccessLevel={this.props.AccessLevel}
+            ConfirmAction={this.props.confirmDeleteAction}
+            ConfirmationMsg={'Are you sure you want to delete this ' + this.props.entityType + '?'}
+            ConfirmationTitle={'Delete ' + this.props.entityType}
+            accessLevel={this.props.accessLevel}
           />
         )}
         {this.props.showShare && (
@@ -138,9 +138,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
             }
             Header={'Please provide a Description for the Shared Item'}
             Message={undefined}
-            disabled={this.props.overrideDisableShare || this.props.AccessLevel == 'ReadOnly'}
+            disabled={this.props.overrideDisableShare || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipShare}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
       </Flex>

@@ -17,14 +17,14 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Scope',
               Index: 0,
-              Element: <ConditionalStyleScopeWizard Api={this.props.Api} />,
+              Element: <ConditionalStyleScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Style',
@@ -32,7 +32,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Element: (
                 <ConditionalStyleStyleWizard
                   StyleClassNames={this.props.StyleClassNames}
-                  Api={this.props.Api}
+                  api={this.props.api}
                 />
               ),
             },
@@ -41,7 +41,7 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Index: 2,
               Element: (
                 <ExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -50,11 +50,11 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <ConditionalStyleSummaryWizard Api={this.props.Api} />,
+              Element: <ConditionalStyleSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

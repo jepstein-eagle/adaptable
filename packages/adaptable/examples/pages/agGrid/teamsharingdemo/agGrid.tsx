@@ -23,7 +23,6 @@ async function InitAdaptableDemo() {
     userName: 'Demo User',
     adaptableId: 'Team Sharing Demo',
     userInterfaceOptions: {
-      showAdaptableToolPanel: true,
       useCustomMacLikeScrollbars: true,
     },
     teamSharingOptions: {

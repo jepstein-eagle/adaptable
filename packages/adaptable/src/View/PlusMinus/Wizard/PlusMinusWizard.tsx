@@ -17,26 +17,26 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.PlusMinusStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.PlusMinusStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <PlusMinusColumnWizard Api={this.props.Api} />,
+              Element: <PlusMinusColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Settings',
               Index: 1,
-              Element: <PlusMinusSettingsWizard Api={this.props.Api} />,
+              Element: <PlusMinusSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 2,
               Element: (
                 <ExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -45,11 +45,11 @@ export class PlusMinusWizard extends React.Component<PlusMinusWizardProps, {}> {
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <PlusMinusSummaryWizard Api={this.props.Api} />,
+              Element: <PlusMinusSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

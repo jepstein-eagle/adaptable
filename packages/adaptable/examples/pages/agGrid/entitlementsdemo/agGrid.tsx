@@ -65,9 +65,7 @@ async function InitAdaptableDemo() {
     // useAdaptableFilterForm: false,
   };
 
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
   adaptableOptions.predefinedConfig = demoConfig;
   const adaptableApi = await Adaptable.init(adaptableOptions);
 }

@@ -22,7 +22,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('ReadOnly')) {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         source: 'ColumnMenu',
       };
       return [
@@ -40,7 +40,7 @@ export class ColumnInfoStrategy extends AdaptableStrategyBase implements IColumn
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (this.canCreateMenuItem('ReadOnly')) {
       let popupParam: StrategyParams = {
-        columnId: menuInfo.Column.ColumnId,
+        column: menuInfo.Column,
         source: 'ContextMenu',
       };
       if (menuInfo.Column) {

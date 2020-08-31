@@ -7,7 +7,7 @@ import { AlertSelectQueryWizard } from './AlertSelectQueryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { AlertTypeWizard } from './AlertTypeWizard';
-import { AlertScopeWizard } from './AlertScopeWizard';
+import { AlertSettingsWizard } from './AlertSettingsWizard';
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
 
 export interface AlertWizardProps
@@ -18,41 +18,41 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.AlertStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.AlertStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <AlertSelectColumnWizard Api={this.props.Api} />,
+              Element: <AlertSelectColumnWizard api={this.props.api} />,
             },
             {
               StepName: 'Alert Rules',
               Index: 1,
-              Element: <AlertRulesWizard Api={this.props.Api} />,
+              Element: <AlertRulesWizard api={this.props.api} />,
             },
             {
               StepName: 'Message Type',
               Index: 2,
-              Element: <AlertTypeWizard Api={this.props.Api} />,
+              Element: <AlertTypeWizard api={this.props.api} />,
             },
             {
               StepName: 'Behaviour',
               Index: 3,
-              Element: <AlertScopeWizard Api={this.props.Api} />,
+              Element: <AlertSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 4,
-              Element: <AlertSelectQueryWizard Api={this.props.Api} />,
+              Element: <AlertSelectQueryWizard api={this.props.api} />,
             },
             {
               StepName: 'Query Builder',
               Index: 5,
               Element: (
                 <ExpressionWizard
-                  Api={this.props.Api}
+                  api={this.props.api}
                   onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
                   onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
@@ -61,11 +61,11 @@ export class AlertWizard extends React.Component<AlertWizardProps, {}> {
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <AlertSummaryWizard Api={this.props.Api} />,
+              Element: <AlertSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -19,17 +19,17 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   }
 
   render(): any {
-    let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
+    let alertDefinition: AlertDefinition = this.props.data as AlertDefinition;
     let keyValuePairs: KeyValuePair[] = [
       {
-        Key: 'Column',
-        Value: this.props.Api.columnApi.getFriendlyNameFromColumnId(alertDefinition.ColumnId),
+        Key: 'Scope',
+        Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope),
       },
       {
         Key: 'Rule',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getStrategyService()
-          .createAlertDescription(alertDefinition, this.props.Api.columnApi.getColumns()),
+          .createAlertDescription(alertDefinition),
       },
       { Key: 'Alert Type', Value: alertDefinition.MessageType },
       {
@@ -42,7 +42,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
       {
         Key: 'Query',
-        Value: this.setExpressionDescription(this.props.Data),
+        Value: this.setExpressionDescription(this.props.data),
       },
     ];
 
@@ -55,7 +55,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   }
 
   private setExpressionDescription(alert: AlertDefinition): string {
-    let expression = this.props.Api.queryApi.getExpressionForQueryObject(alert);
+    let expression = this.props.api.queryApi.getExpressionForQueryObject(alert);
     return expression ? expression : 'No Expression';
   }
 
@@ -66,21 +66,21 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
 
-  public GetIndexStepDecrement() {
-    return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ||
-      StringExtensions.IsNullOrEmpty(this.props.Data.SharedQueryId)
+  public getIndexStepDecrement() {
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId)
       ? 2
       : 1;
   }

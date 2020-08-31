@@ -58,11 +58,11 @@ class ExportToolbarControlComponent extends React.Component<
   {}
 > {
   public componentDidMount() {
-    this.props.Api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.on('LiveDataChanged', this.onLiveDataChanged);
   }
 
   public componentWillUnmount() {
-    this.props.Api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
+    this.props.api.eventApi.off('LiveDataChanged', this.onLiveDataChanged);
   }
 
   onLiveDataChanged = (liveDataChangedEventArgs: LiveDataChangedEventArgs) => {
@@ -79,10 +79,10 @@ class ExportToolbarControlComponent extends React.Component<
     const selectReportString: string = 'Select a Report';
     let allReports: Report[] = this.props
       .SystemReports!.filter(s =>
-        this.props.Api.internalApi.getReportService().IsSystemReportActive(s)
+        this.props.api.internalApi.getReportService().IsSystemReportActive(s)
       )
       .concat(this.props.Reports);
-    let currentReport: Report = this.props.Api.exportApi.getReportByName(this.props.CurrentReport);
+    let currentReport: Report = this.props.api.exportApi.getReportByName(this.props.CurrentReport);
     let savedReport: Report | undefined = allReports.find(s => s.Name == this.props.CurrentReport);
     let currentReportId = StringExtensions.IsNullOrEmpty(this.props.CurrentReport)
       ? selectReportString
@@ -138,11 +138,11 @@ class ExportToolbarControlComponent extends React.Component<
     }
 
     const exportItems = [
-      this.props.Api.exportApi.canExportToExcel() && excelMenuItem,
+      this.props.api.exportApi.canExportToExcel() && excelMenuItem,
       csvMenuItem,
       clipboardMenuItem,
       jsonMenuItem,
-      this.props.Api.internalApi
+      this.props.api.internalApi
         .getReportService()
         .IsReportDestinationActive(ExportDestination.OpenfinExcel) && openfinExcelMenuItem,
     ].filter(x => !!x);
@@ -172,7 +172,7 @@ class ExportToolbarControlComponent extends React.Component<
         </DropdownButton>
         <Flex
           className={join(
-            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-DashboardToolbar__Export__controls'
           )}
           alignItems="stretch"
@@ -183,10 +183,10 @@ class ExportToolbarControlComponent extends React.Component<
             className="ab-DashboardToolbar__Export__edit"
             disabled={
               savedReport == null ||
-              this.props.Api.internalApi.getReportService().IsSystemReport(savedReport) ||
+              this.props.api.internalApi.getReportService().IsSystemReport(savedReport) ||
               savedReport.ReportColumnScope == 'CustomColumns'
             }
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonNew
@@ -196,7 +196,7 @@ class ExportToolbarControlComponent extends React.Component<
             children={null}
             onClick={() => this.props.onNewReport()}
             tooltip="Create New Report"
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -204,21 +204,21 @@ class ExportToolbarControlComponent extends React.Component<
             className="ab-DashboardToolbar__Export__delete"
             disabled={
               savedReport == null ||
-              this.props.Api.internalApi.getReportService().IsSystemReport(savedReport)
+              this.props.api.internalApi.getReportService().IsSystemReport(savedReport)
             }
             ConfirmAction={ExportRedux.ReportDelete(savedReport as Report)}
             ConfirmationMsg={deleteMessage}
             ConfirmationTitle={'Delete Report'}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
-          {this.props.Api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
+          {this.props.api.entitlementsApi.isFunctionFullEntitlement('Schedule') && (
             <ButtonSchedule
               marginLeft={1}
               className="ab-DashboardToolbar__Export__schedule"
               onClick={() => this.onNewReportSchedule()}
               tooltip="Schedule"
               disabled={savedReport == null}
-              AccessLevel={this.props.AccessLevel}
+              accessLevel={this.props.accessLevel}
             />
           )}
         </Flex>
@@ -230,6 +230,7 @@ class ExportToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Export"
         headerText={StrategyConstants.ExportStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Export')}
       >
         {content}
       </PanelDashboard>
@@ -295,6 +296,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ExportStrategyId, ScreenPopups.ExportPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

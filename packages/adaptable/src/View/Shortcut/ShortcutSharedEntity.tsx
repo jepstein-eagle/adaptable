@@ -9,7 +9,7 @@ export class ShortcutSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let shortcut: Shortcut = this.props.Entity as Shortcut;
+    let shortcut: Shortcut = this.props.entity as Shortcut;
 
     return (
       <Flex flexDirection="row" alignItems="center">

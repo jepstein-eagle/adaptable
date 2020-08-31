@@ -13,10 +13,10 @@ import { AdaptableApi } from '../../Api/AdaptableApi';
 import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 export interface ActiveFiltersPanelProps extends React.ClassAttributes<ActiveFiltersPanel> {
-  ColumnFilters: ColumnFilter[];
-  Columns: AdaptableColumn[];
-  Api: AdaptableApi;
-  AccessLevel: AccessLevel;
+  columnFilters: ColumnFilter[];
+  columns: AdaptableColumn[];
+  api: AdaptableApi;
+  accessLevel: AccessLevel;
   onClear: (columnFilter: ColumnFilter) => void;
   onSaveColumnFilterasUserFilter: (columnFilter: ColumnFilter) => void;
 }
@@ -34,7 +34,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
     ];
 
     let rowElements: any[] = [];
-    this.props.ColumnFilters.forEach((columnFilter: ColumnFilter, index: number) => {
+    this.props.columnFilters.forEach((columnFilter: ColumnFilter, index: number) => {
       rowElements.push(this.createRow(colItems, columnFilter));
     });
 
@@ -48,10 +48,10 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
   private createRow(colItems: IColItem[], columnFilter: ColumnFilter): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
-    rowColItems[0].Content = this.props.Api.columnApi.getFriendlyNameFromColumnId(
+    rowColItems[0].Content = this.props.api.columnApi.getFriendlyNameFromColumnId(
       columnFilter.ColumnId
     );
-    rowColItems[1].Content = this.props.Api.filterApi.convertColumnFilterToString(columnFilter);
+    rowColItems[1].Content = this.props.api.filterApi.convertColumnFilterToString(columnFilter);
 
     rowColItems[2].Content = (
       <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
@@ -59,13 +59,13 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
           disabled={columnFilter == null || columnFilter.Predicate === undefined}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />{' '}
         <ButtonClear
           onClick={() => this.props.onClear(columnFilter)}
           tooltip="Clear Column Filter"
           disabled={columnFilter == null}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       </Flex>
     );

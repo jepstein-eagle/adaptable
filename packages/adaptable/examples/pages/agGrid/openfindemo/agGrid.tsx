@@ -40,9 +40,7 @@ async function InitAdaptableDemo() {
         throttleTime: 10000,
       }),
     ],
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,
@@ -81,7 +79,7 @@ async function InitAdaptableDemo() {
           {
             Name: 'Toolbar1',
             Title: 'Demo Toolbar',
-            Glyph: 'aquery',
+            //  Glyph: 'aquery',
             ToolbarButtons: [
               {
                 Name: 'btnNewLayout',
@@ -108,7 +106,9 @@ async function InitAdaptableDemo() {
       FormatColumn: {
         FormatColumns: [
           {
-            ColumnId: 'notional',
+            Scope: {
+              ColumnIds: [''],
+            },
             CellAlignment: 'Right',
           },
         ],
@@ -144,7 +144,7 @@ async function InitAdaptableDemo() {
       let newLayout: Layout = {
         Name: 'test',
         Columns: ['bid', 'currency', 'counterparty'],
-        GroupedColumns: ['country'],
+        RowGroupedColumns: ['country'],
       };
       api.layoutApi.createAndSetLayout(newLayout);
     } else if (toolbarButton.Name == 'btnCopyLayout') {
@@ -153,8 +153,6 @@ async function InitAdaptableDemo() {
 
       //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
       console.log('here');
-      api.formatColumnApi.setCellAlignment('amount', 'Right');
-      api.formatColumnApi.setCellAlignment('notional', 'Center');
     }
   });
 

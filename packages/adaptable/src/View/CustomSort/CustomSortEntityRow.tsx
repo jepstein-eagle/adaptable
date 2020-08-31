@@ -15,23 +15,23 @@ export interface CustomSortEntityRowProps extends SharedEntityRowProps<CustomSor
 
 export class CustomSortEntityRow extends React.Component<CustomSortEntityRowProps, {}> {
   render(): any {
-    let customSort: CustomSort = this.props.AdaptableObject as CustomSort;
+    let customSort: CustomSort = this.props.adaptableObject as CustomSort;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={this.props.ColumnLabel} />;
     colItems[1].Content = <EntityRowItem Content={this.getCustomSortedValues(customSort)} />;
     colItems[2].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(customSort)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={
           customSort.CustomSortComparerFunction != undefined ||
           this.props.ColumnLabel.includes(GeneralConstants.MISSING_COLUMN)
         }
-        EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        entityType={StrategyConstants.CustomSortStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
 

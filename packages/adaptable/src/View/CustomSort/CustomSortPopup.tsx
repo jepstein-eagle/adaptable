@@ -50,21 +50,21 @@ class CustomSortPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        let columnId: string = this.props.popupParams.column.ColumnId;
+        if (this.props.popupParams.action == 'New') {
           let newCustomSort = ObjectFactory.CreateEmptyCustomSort();
           newCustomSort.ColumnId = columnId;
           this.onNewFromColumn(newCustomSort);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let editCustomSort = this.props.CustomSorts.find(x => x.ColumnId == columnId);
           this.onEdit(editCustomSort);
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -91,15 +91,15 @@ class CustomSortPopupComponent extends React.Component<
       return (
         <CustomSortEntityRow
           colItems={colItems}
-          api={this.props.Api}
-          AdaptableObject={customSort}
+          api={this.props.api}
+          adaptableObject={customSort}
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(customSort, description)}
           onDeleteConfirm={CustomSortRedux.CustomSortDelete(customSort)}
-          ColumnLabel={this.props.Api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
-          AccessLevel={this.props.AccessLevel}
+          ColumnLabel={this.props.api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -108,7 +108,7 @@ class CustomSortPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Custom Sort"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -129,13 +129,13 @@ class CustomSortPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject && (
+          {this.state.editedAdaptableObject && (
             <CustomSortWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
-              ConfigEntities={this.props.CustomSorts}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as CustomSort}
+              configEntities={this.props.CustomSorts}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -149,35 +149,35 @@ class CustomSortPopupComponent extends React.Component<
   onEdit(customSort: CustomSort) {
     //so we dont mutate original object
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(customSort),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(customSort),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyCustomSort(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyCustomSort(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onNewFromColumn(customsort: CustomSort) {
     let clonedObject: CustomSort = Helper.cloneObject(customsort);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: clonedObject,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -185,21 +185,21 @@ class CustomSortPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let customSort: CustomSort = this.state.EditedAdaptableObject as CustomSort;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let customSort: CustomSort = this.state.editedAdaptableObject as CustomSort;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditCustomSort(customSort);
     } else {
       this.props.onAddCustomSort(customSort);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   canFinishWizard() {
-    let customSort = this.state.EditedAdaptableObject as CustomSort;
+    let customSort = this.state.editedAdaptableObject as CustomSort;
     return (
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)

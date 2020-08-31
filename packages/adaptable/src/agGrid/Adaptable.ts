@@ -297,6 +297,8 @@ export class Adaptable implements IAdaptable {
 
   private originalColDefValueFormatters: { [key: string]: any } = {};
 
+  private runParserTemp: boolean = true;
+
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
@@ -608,12 +610,10 @@ export class Adaptable implements IAdaptable {
 
     // Create Adaptable adaptable Tool Panel
     if (this.adaptableOptions!!.userInterfaceOptions!.showAdaptableToolPanel) {
-      LoggingHelper.LogAdaptableInfo('Adding Adaptable Tool Panel');
-      this.gridOptions.sideBar = this.gridOptions.sideBar || {};
-      this.gridOptions.components = this.gridOptions.components || {};
-      // https://www.ag-grid.com/javascript-grid-side-bar/
-
       if (this.gridOptions.sideBar) {
+        this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+        this.gridOptions.components = this.gridOptions.components || {};
+        // https://www.ag-grid.com/javascript-grid-side-bar/
         const sidebar = this.gridOptions.sideBar;
         if (sidebar === true) {
           // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
@@ -1517,7 +1517,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public getDistinctValuesForColumn(
-    columnId: string,
+    column: AdaptableColumn,
     cellValueType: CellValueType,
     visibleRowsOnly: boolean
   ): any[] {
@@ -1529,17 +1529,17 @@ export class Adaptable implements IAdaptable {
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
     // but that is only something used by a chart so not a big problem but one day... TODO
-    const permittedValues: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(columnId);
+    const permittedValues: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(column);
     if (ArrayExtensions.IsNotNull(permittedValues)) {
       returnValues.push(...permittedValues);
     } else {
       if (visibleRowsOnly) {
         this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
-          returnValues.push(this.addDistinctColumnValue(rowNode, columnId, cellValueType));
+          returnValues.push(this.addDistinctColumnValue(rowNode, column.ColumnId, cellValueType));
         });
       } else {
         this.gridOptions.api!.forEachNode(rowNode => {
-          returnValues.push(this.addDistinctColumnValue(rowNode, columnId, cellValueType));
+          returnValues.push(this.addDistinctColumnValue(rowNode, column.ColumnId, cellValueType));
         });
       }
     }
@@ -1560,8 +1560,9 @@ export class Adaptable implements IAdaptable {
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
+    const abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(columnId);
     const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
-      columnId
+      abColumn
     );
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
       permittedValuesForColumn.forEach(pv => {
@@ -2722,7 +2723,9 @@ export class Adaptable implements IAdaptable {
     const originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
       const columns = this.api.columnApi.getColumns();
-
+      if (!this.runParserTemp) {
+        return false;
+      }
       // first we assess Query (if its running locally)
       if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
         const currentQuery = this.api.queryApi.getCurrentQuery();
@@ -2731,7 +2734,8 @@ export class Adaptable implements IAdaptable {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
           if (
             !parser.evaluate(currentQuery, {
-              data: node.data,
+              node: node,
+              api: this.api,
             })
           ) {
             return false;
@@ -3042,9 +3046,6 @@ export class Adaptable implements IAdaptable {
 
   public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
-    const formatColumns: FormatColumn[] = this.api.formatColumnApi
-      .getAllFormatColumnWithDisplayFormat()
-      .concat(this.api.formatColumnApi.getAllFormatColumnWithCellAlignment());
 
     const cols = this.gridOptions.columnApi.getAllColumns();
 
@@ -3056,10 +3057,13 @@ export class Adaptable implements IAdaptable {
 
       colDef.valueFormatter = this.originalColDefValueFormatters[colDef.field];
 
-      const formatColumn = formatColumns.find(
-        fc => fc.ColumnId === colDef.field || fc.ColumnId === colDef.colId
+      // we have to assume that we always get the right one (if there are more than one).
+      // and we need to ensure that a colId is always being set even when not provided
+      // think that Radu is doing this
+      const abColumn = this.api.columnApi.getColumnFromId(colDef.colId);
+      const formatColumn = this.api.formatColumnApi.getFormatColumnWithDisplayFormatForColumn(
+        abColumn
       );
-
       if (!formatColumn) {
         return;
       }

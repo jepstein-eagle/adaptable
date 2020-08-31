@@ -102,7 +102,6 @@ async function InitAdaptableDemo() {
     ],
   };
   adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
     //showAdaptableContextMenu: true,
     //showAdaptableContextMenu: false,
 

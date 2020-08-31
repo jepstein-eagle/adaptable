@@ -34,10 +34,6 @@ export interface GradientColumnSummaryProps
   onEditGradientColumn: (
     GradientColumn: GradientColumn
   ) => GradientColumnRedux.GradientColumnEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class GradientColumnSummaryComponent extends React.Component<
@@ -51,7 +47,7 @@ export class GradientColumnSummaryComponent extends React.Component<
 
   render(): any {
     let GradientColumn: GradientColumn = this.props.GradientColumns.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noGradientColumn: boolean = GradientColumn == null;
 
@@ -61,22 +57,22 @@ export class GradientColumnSummaryComponent extends React.Component<
       GradientColumnRow = (
         <StrategyHeader
           key={StrategyConstants.GradientColumnStrategyFriendlyName}
-          FunctionName={StrategyConstants.GradientColumnStrategyId}
-          StrategySummary={'No Gradient Column'}
+          functionName={StrategyConstants.GradientColumnStrategyId}
+          strategySummary={'No Gradient Column'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.GradientColumnStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          newButtonTooltip={StrategyConstants.GradientColumnStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else {
       GradientColumnRow = (
         <StrategyDetail
           key={StrategyConstants.GradientColumnStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.GradientColumnStrategyId} />}
-          Item2={'Gradient Column set'}
-          ConfigEnity={GradientColumn}
-          showShare={this.props.TeamSharingActivated}
-          EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}
+          item1={<StrategyProfile FunctionName={StrategyConstants.GradientColumnStrategyId} />}
+          item2={'Gradient Column set'}
+          configEnity={GradientColumn}
+          showShare={this.props.teamSharingActivated}
+          entityType={StrategyConstants.GradientColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(GradientColumn)}
           onShare={description => this.props.onShare(GradientColumn, description)}
           onDelete={GradientColumnRedux.GradientColumnDelete(GradientColumn)}
@@ -89,16 +85,16 @@ export class GradientColumnSummaryComponent extends React.Component<
       <div>
         {GradientColumnRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <GradientColumnWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.GradientColumns}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as GradientColumn}
+            modalContainer={this.props.modalContainer}
+            configEntities={this.props.GradientColumns}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Api={this.props.Api}
+            api={this.props.api}
           />
         )}
       </div>
@@ -107,55 +103,55 @@ export class GradientColumnSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.columnApi.getDistinctRawValuesForColumn(
-      this.props.SummarisedColumn.ColumnId
+    let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
+      this.props.summarisedColumn.ColumnId
     );
 
     configEntity.NegativeValue = Math.min(...distinctColumnsValues);
     configEntity.PositiveValue = Math.max(...distinctColumnsValues);
 
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(renderedColumn: GradientColumn) {
     let clonedObject: GradientColumn = Helper.cloneObject(renderedColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let GradientColumn: GradientColumn = this.state.EditedAdaptableObject as GradientColumn;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let GradientColumn: GradientColumn = this.state.editedAdaptableObject as GradientColumn;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditGradientColumn(GradientColumn);
     } else {
       this.props.onAddGradientColumn(GradientColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let GradientColumn = this.state.EditedAdaptableObject as GradientColumn;
+    let GradientColumn = this.state.editedAdaptableObject as GradientColumn;
     return StringExtensions.IsNotNullOrEmpty(GradientColumn.ColumnId);
   }
 }

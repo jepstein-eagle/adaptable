@@ -10,24 +10,25 @@ import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import { Flex, Box } from 'rebass';
 
-export interface AlertScopeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
+export interface AlertSettingsWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
-export interface AlertScopeWizardState {
+export interface AlertSettingsWizardState {
   ShowPopup: boolean;
   HighlightCell: boolean;
   JumpToCell: boolean;
   ShowInDiv: boolean;
 }
 
-export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, AlertScopeWizardState>
+export class AlertSettingsWizard
+  extends React.Component<AlertSettingsWizardProps, AlertSettingsWizardState>
   implements AdaptableWizardStep {
-  constructor(props: AlertScopeWizardProps) {
+  constructor(props: AlertSettingsWizardProps) {
     super(props);
     this.state = {
-      ShowPopup: this.props.Data!.AlertProperties.ShowPopup,
-      HighlightCell: this.props.Data!.AlertProperties.HighlightCell,
-      JumpToCell: this.props.Data!.AlertProperties.JumpToCell,
-      ShowInDiv: this.props.Data!.AlertProperties.ShowInDiv,
+      ShowPopup: this.props.data!.AlertProperties.ShowPopup,
+      HighlightCell: this.props.data!.AlertProperties.HighlightCell,
+      JumpToCell: this.props.data!.AlertProperties.JumpToCell,
+      ShowInDiv: this.props.data!.AlertProperties.ShowInDiv,
     };
   }
 
@@ -95,23 +96,23 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
   }
 
   private onShowPopupChanged = (checked: boolean) => {
-    this.setState({ ShowPopup: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+    this.setState({ ShowPopup: checked } as AlertSettingsWizardState, () =>
+      this.props.updateGoBackState()
     );
   };
   private onHighlightCellChanged = (checked: boolean) => {
-    this.setState({ HighlightCell: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+    this.setState({ HighlightCell: checked } as AlertSettingsWizardState, () =>
+      this.props.updateGoBackState()
     );
   };
   private onJumpToCellChanged = (checked: boolean) => {
-    this.setState({ JumpToCell: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+    this.setState({ JumpToCell: checked } as AlertSettingsWizardState, () =>
+      this.props.updateGoBackState()
     );
   };
   private onShowInDivChanged = (checked: boolean) => {
-    this.setState({ ShowInDiv: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
+    this.setState({ ShowInDiv: checked } as AlertSettingsWizardState, () =>
+      this.props.updateGoBackState()
     );
   };
 
@@ -122,21 +123,21 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Ale
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data!.AlertProperties.ShowPopup = this.state.ShowPopup;
-    this.props.Data!.AlertProperties.HighlightCell = this.state.HighlightCell;
-    this.props.Data!.AlertProperties.JumpToCell = this.state.JumpToCell;
-    this.props.Data!.AlertProperties.ShowInDiv = this.state.ShowInDiv;
+  public next(): void {
+    this.props.data!.AlertProperties.ShowPopup = this.state.ShowPopup;
+    this.props.data!.AlertProperties.HighlightCell = this.state.HighlightCell;
+    this.props.data!.AlertProperties.JumpToCell = this.state.JumpToCell;
+    this.props.data!.AlertProperties.ShowInDiv = this.state.ShowInDiv;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

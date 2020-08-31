@@ -394,8 +394,6 @@ export interface CustomToolbar extends AdaptableObject {
 export interface DashboardTab extends AdaptableObject {
   Name: string;
   Toolbars: AdaptableDashboardToolbars | string[];
-  // changed this from
-  /// Toolbars: (AdaptableDashboardToolbar | string)[];
 }
 
 export interface AdaptableCoordinate extends AdaptableObject {

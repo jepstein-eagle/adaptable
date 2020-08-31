@@ -44,13 +44,13 @@ import Radio from '../../../components/Radio';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
-  CurrentColumn: AdaptableColumn;
-  Adaptable: IAdaptable;
-  Columns: AdaptableColumn[];
-  SystemFilters: string[];
-  ColumnFilters: ColumnFilter[];
-  EmbedColumnMenu: boolean;
-  ShowCloseButton: boolean;
+  currentColumn: AdaptableColumn;
+  adaptable: IAdaptable;
+  columns: AdaptableColumn[];
+  systemFilters: string[];
+  columnFilters: ColumnFilter[];
+  embedColumnMenu: boolean;
+  showCloseButton: boolean;
   onClearColumnFilter: (columnfilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
   onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
   onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
@@ -77,13 +77,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   constructor(props: FilterFormProps) {
     super(props);
 
-    let existingColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+    let existingColumnFilter = this.props.columnFilters.find(
+      cf => cf.ColumnId == this.props.currentColumn.ColumnId
     );
 
     if (!existingColumnFilter) {
       existingColumnFilter = ObjectFactory.CreateColumnFilter(
-        this.props.CurrentColumn.ColumnId,
+        this.props.currentColumn.ColumnId,
         null,
         null
       );
@@ -99,9 +99,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 
   componentDidMount() {
-    if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-      let distinctColumnValues: any[] = this.props.Adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
-        this.props.CurrentColumn.ColumnId
+    if (this.props.currentColumn.DataType != DataType.Boolean) {
+      let distinctColumnValues: any[] = this.props.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+        this.props.currentColumn.ColumnId
       );
 
       this.setState({
@@ -114,12 +114,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   render(): any {
     let isFilterable: string = this.isFilterable();
 
-    const predicateDefs = this.props.Adaptable.api.filterApi.getFilterPredicateDefsForColumn(
-      this.props.CurrentColumn
+    const predicateDefs = this.props.adaptable.api.filterApi.getFilterPredicateDefsForColumn(
+      this.props.currentColumn
     );
 
     let uiSelectedColumnValues =
-      this.state.editedColumnFilter?.Predicate.Id === 'Values'
+      this.state.editedColumnFilter?.Predicate?.Id === 'Values'
         ? this.state.editedColumnFilter.Predicate.Inputs
         : [];
 
@@ -128,7 +128,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       this.state.editedColumnFilter.Predicate === undefined;
 
     let closeButton = (
-      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} AccessLevel={'Full'} />
+      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} accessLevel={'Full'} />
     );
 
     let clearFilterButton = (
@@ -136,7 +136,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => this.onClearFilter()}
         disabled={isEmptyFilter}
         tooltip={null}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       />
     );
 
@@ -145,11 +145,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => {}}
         disabled={true}
         tooltip={'Save as User Filter'}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       />
     );
 
-    const useVendorStyle = !!this.props.Adaptable.adaptableOptions.filterOptions!
+    const useVendorStyle = !!this.props.adaptable.adaptableOptions.filterOptions!
       .useVendorFilterFormStyle;
 
     return (
@@ -159,13 +159,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             style={panelStyle}
             ColumnMenuTab={this.state.SelectedTab}
             ColumnMenuTabChanged={e => this.onSelectTab(e)}
-            IsAlwaysFilter={this.props.EmbedColumnMenu}
+            IsAlwaysFilter={this.props.embedColumnMenu}
             clearFilterButton={clearFilterButton}
             saveButton={saveButton}
             closeButton={closeButton}
-            showCloseButton={this.props.ShowCloseButton}
+            showCloseButton={this.props.showCloseButton}
             autoApplyFilter={
-              this.props.Adaptable.adaptableOptions.filterOptions!.autoApplyFilter ? true : false
+              this.props.adaptable.adaptableOptions.filterOptions!.autoApplyFilter ? true : false
             }
             useVendorStyle={useVendorStyle}
             applyFilterButtonDisabled={isEmptyFilter}
@@ -173,8 +173,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           >
             {this.state.SelectedTab == ColumnMenuTab.Menu ? (
               <ListBoxMenu
-                MenuItems={this.props.Adaptable.buildStandaloneColumnHeader(
-                  this.props.CurrentColumn
+                MenuItems={this.props.adaptable.buildStandaloneColumnHeader(
+                  this.props.currentColumn
                 )}
                 onMenuItemClick={menuItem => this.onMenuItemClick(menuItem)}
               />
@@ -188,11 +188,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                       <Waiting WaitingMessage="Retrieving Column Values..." />
                     ) : (
                       <ListBoxFilterForm
-                        CurrentColumn={this.props.CurrentColumn}
-                        Columns={this.props.Columns}
-                        ColumnDistinctValues={this.state.DistinctColumnValues}
-                        DataType={this.props.CurrentColumn.DataType}
-                        UiSelectedColumnValues={uiSelectedColumnValues}
+                        currentColumn={this.props.currentColumn}
+                        columns={this.props.columns}
+                        columnDistinctValues={this.state.DistinctColumnValues}
+                        dataType={this.props.currentColumn.DataType}
+                        uiSelectedColumnValues={uiSelectedColumnValues}
                         useVendorStyle={useVendorStyle}
                         onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
                       />
@@ -250,7 +250,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   }
 
   isFilterable(): string {
-    if (!this.props.CurrentColumn.Filterable) {
+    if (!this.props.currentColumn.Filterable) {
       return 'Column is not filterable';
     }
     return '';
@@ -289,7 +289,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     ) {
       this.props.onClearColumnFilter(editedColumnFilter);
     } else {
-      if (this.props.Adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
+      if (this.props.adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
         this.props.onSetColumnFilter(editedColumnFilter);
       }
     }
@@ -351,12 +351,12 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterFormProps> {
   return {
-    CurrentColumn: ownProps.CurrentColumn,
-    Adaptable: ownProps.Adaptable,
-    Columns: state.Grid.Columns,
-    ColumnFilters: state.Filter.ColumnFilters,
-    SystemFilters: state.Filter.SystemFilters,
-    ShowCloseButton: ownProps.ShowCloseButton,
+    currentColumn: ownProps.currentColumn,
+    adaptable: ownProps.adaptable,
+    columns: state.Grid.Columns,
+    columnFilters: state.Filter.ColumnFilters,
+    systemFilters: state.Filter.SystemFilters,
+    showCloseButton: ownProps.showCloseButton,
   };
 }
 
@@ -385,11 +385,11 @@ export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <FilterForm
-          Adaptable={FilterContext.Adaptable}
-          CurrentColumn={FilterContext.Column}
-          TeamSharingActivated={false}
-          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
-          ShowCloseButton={FilterContext.ShowCloseButton}
+          adaptable={FilterContext.Adaptable}
+          currentColumn={FilterContext.Column}
+          teamSharingActivated={false}
+          embedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+          showCloseButton={FilterContext.ShowCloseButton}
         />
       </AdaptableContext.Provider>
     </ThemeProvider>

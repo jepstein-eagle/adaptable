@@ -14,7 +14,7 @@ export class ConditionalStyleEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let conditionalStyle: ConditionalStyle = this.props.AdaptableObject as ConditionalStyle;
+    let conditionalStyle: ConditionalStyle = this.props.adaptableObject as ConditionalStyle;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -33,10 +33,10 @@ export class ConditionalStyleEntityRow extends React.Component<
       <EntityListActionButtons
         editClick={() => this.props.onEdit(conditionalStyle)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        showShare={this.props.teamSharingActivated}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

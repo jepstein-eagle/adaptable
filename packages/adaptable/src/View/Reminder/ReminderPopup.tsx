@@ -61,15 +61,15 @@ class ReminderPopupComponent extends React.Component<
     let Reminders = this.props.Reminders.map((reminder: ReminderSchedule, index) => {
       return (
         <ReminderEntityRow
-          AdaptableObject={reminder}
-          api={this.props.Api}
+          adaptableObject={reminder}
+          api={this.props.api}
           colItems={colItems}
           key={'CS' + index}
           onShare={description => this.props.onShare(reminder, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onEdit={() => this.onEdit(reminder)}
           onDeleteConfirm={ScheduleRedux.ReminderScheduleDelete(reminder)}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -78,7 +78,7 @@ class ReminderPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Reminder"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -99,13 +99,13 @@ class ReminderPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={Reminders} />
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <ScheduleWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as ReminderSchedule}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              Api={this.props.Api}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as ReminderSchedule}
+              configEntities={null}
+              modalContainer={this.props.modalContainer}
+              api={this.props.api}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -118,46 +118,46 @@ class ReminderPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyReminder(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyReminder(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(reminder: ReminderSchedule) {
     let clonedObject: ReminderSchedule = Helper.cloneObject(reminder);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let reminder: ReminderSchedule = this.state.EditedAdaptableObject as ReminderSchedule;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let reminder: ReminderSchedule = this.state.editedAdaptableObject as ReminderSchedule;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditReminder(reminder);
     } else {
       this.props.onAddReminder(reminder);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let reminder = this.state.EditedAdaptableObject as ReminderSchedule;
+    let reminder = this.state.editedAdaptableObject as ReminderSchedule;
     if (reminder.Alert == null && reminder.Schedule == null) {
       return false;
     }

@@ -62,7 +62,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       let label = percentBarExists ? 'Edit ' : 'Create ';
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: percentBarExists ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };

@@ -32,7 +32,7 @@ import { AdaptableApi } from '../../Api/AdaptableApi';
 export interface ExpressionBuilderPreviewProps
   extends React.ClassAttributes<ExpressionBuilderPreview> {
   Expression: Expression;
-  Api: AdaptableApi;
+  oldapi: AdaptableApi;
   onSelectedColumnChange: (ColumnId: string, tab: QueryTab) => void;
   ColumnsList: Array<AdaptableColumn>;
   DeleteRange: (ColumnId: string, index: number) => void;
@@ -217,7 +217,7 @@ export class ExpressionBuilderPreview extends React.Component<ExpressionBuilderP
         });
       }
 
-      let columnFriendlyName = this.props.Api.columnApi.getFriendlyNameFromColumnId(columnId);
+      let columnFriendlyName = null; //this.props.api.columnApi.getFriendlyNameFromColumnId(columnId);
 
       return (
         <div

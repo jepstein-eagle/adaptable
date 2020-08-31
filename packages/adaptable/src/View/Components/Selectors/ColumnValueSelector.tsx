@@ -12,11 +12,11 @@ import Input from '../../../components/Input';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
-  SelectedColumn: AdaptableColumn;
-  SelectedColumnValue: string;
+  selectedColumn: AdaptableColumn;
+  selectedColumnValue: string;
   onColumnValueChange: (columnvalue: any) => void;
-  Api: AdaptableApi;
-  AllowNew?: boolean; // defaults to true if not provided
+  api: AdaptableApi;
+  allowNew?: boolean; // defaults to true if not provided
   style?: React.CSSProperties;
   newLabel?: string;
   existingLabel?: string;
@@ -44,8 +44,8 @@ export class ColumnValueSelector extends React.Component<
   }
   UNSAFE_componentWillReceiveProps(nextProps: ColumnValueSelectorProps, nextContext: any) {
     if (
-      StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue) &&
-      StringExtensions.IsNullOrEmpty(nextProps.SelectedColumnValue)
+      StringExtensions.IsNullOrEmpty(this.props.selectedColumnValue) &&
+      StringExtensions.IsNullOrEmpty(nextProps.selectedColumnValue)
     ) {
       let typeahed: any = this.refs.typeahead as any;
       if (typeahed) {
@@ -57,7 +57,7 @@ export class ColumnValueSelector extends React.Component<
     let sortedColumnValues: any[] = [];
 
     let placeholderText = 'Select value';
-    let allowNew = this.props.AllowNew != null ? this.props.AllowNew : true;
+    let allowNew = this.props.allowNew != null ? this.props.allowNew : true;
     if (allowNew) {
       // placeholderText += ' or enter free text';
     }
@@ -69,15 +69,15 @@ export class ColumnValueSelector extends React.Component<
         style={{ maxWidth: 'inherit', width: fieldWidth, border: 'none' }}
         placeholder={placeholderText}
         showClearButton={false}
-        value={this.props.SelectedColumnValue}
+        value={this.props.selectedColumnValue}
         onChange={(selected: any) => {
           this.onSelectedValueChange([{ RawValue: selected }]);
         }}
         options={() => {
-          //  let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
-          if (this.props.SelectedColumn != null) {
-            let columnDisplayValuePairs: any[] = this.props.Api.columnApi.getDistinctDisplayValuesForColumn(
-              this.props.SelectedColumn.ColumnId
+          //  let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
+          if (this.props.selectedColumn != null) {
+            let columnDisplayValuePairs: any[] = this.props.api.columnApi.getDistinctDisplayValuesForColumn(
+              this.props.selectedColumn.ColumnId
             );
 
             sortedColumnValues = ArrayExtensions.sortArray(columnDisplayValuePairs, SortOrder.Asc);
@@ -97,7 +97,7 @@ export class ColumnValueSelector extends React.Component<
         autoFocus
         disabled={this.props.disabled}
         style={{ width: fieldWidth }}
-        value={this.props.SelectedColumnValue}
+        value={this.props.selectedColumnValue}
         onChange={(e: React.SyntheticEvent) => {
           this.onSelectedValueChange([
             { customOption: true, DisplayValue: (e.target as any).value },
@@ -152,7 +152,7 @@ export class ColumnValueSelector extends React.Component<
   onSelectedValueChange(selected: any[]) {
     if (
       ArrayExtensions.IsEmpty(selected) &&
-      StringExtensions.IsNullOrEmpty(this.props.SelectedColumnValue)
+      StringExtensions.IsNullOrEmpty(this.props.selectedColumnValue)
     ) {
       return; // must be a nicer way but we want to avoid ridiculous amounts of prop calls
     }

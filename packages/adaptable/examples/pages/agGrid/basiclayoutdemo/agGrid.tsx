@@ -150,9 +150,7 @@ async function InitAdaptableDemo() {
     primaryKey: 'identifier',
     userName: 'Demo User',
     adaptableId: 'Basic Setup Demo Layout 1',
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
 
     layoutOptions: {
       autoSaveLayouts: true,

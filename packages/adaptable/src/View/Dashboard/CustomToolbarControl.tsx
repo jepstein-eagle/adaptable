@@ -30,12 +30,12 @@ class CustomToolbarControlComponent extends React.Component<
   {}
 > {
   render(): any {
-    let contentsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__contents';
-    let buttonsDivId: string = 'ab-CustomToolbar__' + this.props.CustomToolbar.Name + '__buttons';
+    let contentsDivId: string = 'ab-CustomToolbar__' + this.props.customToolbar.Name + '__contents';
+    let buttonsDivId: string = 'ab-CustomToolbar__' + this.props.customToolbar.Name + '__buttons';
 
     let customToolbarConfiguredInfo: CustomToolbarConfiguredInfo = {
-      customToolbar: this.props.CustomToolbar,
-      adaptableApi: this.props.Api,
+      customToolbar: this.props.customToolbar,
+      adaptableApi: this.props.api,
     };
     const customToolbarConfiguredEventArgs: CustomToolbarConfiguredEventArgs = AdaptableHelper.createFDC3Message(
       'Custom Toolbar Configured Args',
@@ -45,13 +45,13 @@ class CustomToolbarControlComponent extends React.Component<
     return (
       <PanelDashboard
         className="ab-CustomToolbar ab-DashboardToolbar__Custom"
-        headerText={this.props.CustomToolbar.Title ? this.props.CustomToolbar.Title : ''}
+        headerText={this.props.customToolbar.Title ? this.props.customToolbar.Title : ''}
         showConfigureButton={
-          this.props.CustomToolbar.ShowConfigureButton != null &&
-          this.props.CustomToolbar.ShowConfigureButton == true
+          this.props.customToolbar.ShowConfigureButton != null &&
+          this.props.customToolbar.ShowConfigureButton == true
         }
         onConfigure={() =>
-          this.props.Api.eventApi.emit('CustomToolbarConfigured', customToolbarConfiguredEventArgs)
+          this.props.api.eventApi.emit('CustomToolbarConfigured', customToolbarConfiguredEventArgs)
         }
       >
         <div
@@ -60,12 +60,12 @@ class CustomToolbarControlComponent extends React.Component<
           style={{ minHeight: 22 }}
         />
         <div id={buttonsDivId} className="ab-CustomToolbar__buttons" style={{ minHeight: 22 }}>
-          {this.props.CustomToolbar.ToolbarButtons &&
-            this.props.CustomToolbar.ToolbarButtons.map((button: ToolbarButton, index: number) => {
+          {this.props.customToolbar.ToolbarButtons &&
+            this.props.customToolbar.ToolbarButtons.map((button: ToolbarButton, index: number) => {
               let toolbarButtonClickedInfo: ToolbarButtonClickedInfo = {
                 toolbarButton: button,
-                customToolbar: this.props.CustomToolbar,
-                adaptableApi: this.props.Api,
+                customToolbar: this.props.customToolbar,
+                adaptableApi: this.props.api,
               };
               const toolbarButtonClickedEventArgs: ToolbarButtonClickedEventArgs = AdaptableHelper.createFDC3Message(
                 'Toolbar Button Clicked Args',
@@ -84,7 +84,7 @@ class CustomToolbarControlComponent extends React.Component<
                   variant={buttonVariant}
                   tone={buttonTone}
                   onClick={() => {
-                    this.props.Api.eventApi.emit(
+                    this.props.api.eventApi.emit(
                       'ToolbarButtonClicked',
                       toolbarButtonClickedEventArgs
                     );

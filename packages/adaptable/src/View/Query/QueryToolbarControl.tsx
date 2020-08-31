@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
+import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
 import { PanelDashboard } from '../Components/Panels/PanelDashboard';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
@@ -30,6 +31,11 @@ import FieldWrap from '../../components/FieldWrap';
 import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import Dropdown from '../../components/Dropdown';
+import { ButtonClear } from '../Components/Buttons/ButtonClear';
+import { ButtonRunQuery } from '../Components/Buttons/ButtonRunQuery';
+import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
+import { ButtonInvalid } from '../Components/Buttons/ButtonInvalid';
+import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 
 interface QueryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QueryToolbarControlComponent> {
@@ -69,7 +75,7 @@ class QueryToolbarControlComponent extends React.Component<
   render() {
     const isExpressionValid = parser.validateBoolean(this.state.expression);
 
-    let sortedSharedExpressions: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
+    let sortedSharedQueries: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Asc,
       this.props.SharedQueries,
       'Name'
@@ -82,7 +88,7 @@ class QueryToolbarControlComponent extends React.Component<
         onClick: () => this.props.onShowSharedQueries(this.state.expression),
       },
       { separator: true },
-      ...sortedSharedExpressions.map(expression => {
+      ...sortedSharedQueries.map(expression => {
         return {
           label: expression.Name,
           icon:
@@ -103,7 +109,7 @@ class QueryToolbarControlComponent extends React.Component<
         })),
     ];
 
-    let availableColumns: any[] = this.props.Api.columnApi.getColumns().map(col => {
+    let availableColumns: any[] = this.props.api.columnApi.getColumns().map(col => {
       return {
         label: col.FriendlyName,
         onClick: () => this.setState({ expression: this.state.expression + `[${col.ColumnId}]` }),
@@ -113,15 +119,14 @@ class QueryToolbarControlComponent extends React.Component<
     let content = (
       <Flex flexDirection="row" alignItems="stretch" className="ab-DashboardToolbar__Query__wrap">
         <FieldWrap marginRight={1} width={600}>
-          <SimpleButton
+          <ButtonExpand
             variant="text"
             tone="neutral"
             onClick={() => this.props.onExpand(this.state.expression)}
             tooltip="Expand"
             marginLeft={1}
-          >
-            <Icon size="1.1rem" path={mdiArrowExpand} />
-          </SimpleButton>
+          />
+
           <Input
             type="text"
             placeholder="Query"
@@ -136,29 +141,25 @@ class QueryToolbarControlComponent extends React.Component<
             }}
           />
           {this.props.CurrentQuery !== '' && (
-            <SimpleButton
-              variant="text"
-              tone="neutral"
+            <ButtonClear
               onClick={() => this.props.onChangeCurrentQuery('')}
               tooltip="Clear Query"
-            >
-              <Icon size="1.1rem" path={mdiClose} />
-            </SimpleButton>
+              accessLevel={'Full'}
+            />
+
+            //
           )}
           {isExpressionValid ? (
-            <SimpleButton
-              variant="text"
-              tone="neutral"
+            <ButtonRunQuery
               onClick={() => this.runQuery()}
               tooltip="Run Query"
+              accessLevel={'Full'}
+              variant="text"
+              tone="neutral"
               marginRight={1}
-            >
-              <Icon size="1.1rem" path={mdiMagnify} />
-            </SimpleButton>
+            />
           ) : (
-            <SimpleButton variant="text" tone="neutral" tooltip="Invalid Query" marginRight={1}>
-              <Icon size="1.1rem" path={mdiAlert} />
-            </SimpleButton>
+            <ButtonInvalid variant="text" tone="neutral" tooltip="Invalid Query" marginRight={1} />
           )}
         </FieldWrap>
         <DropdownButton
@@ -185,6 +186,7 @@ class QueryToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Query"
         headerText={StrategyConstants.QueryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Query')}
       >
         {content}
       </PanelDashboard>
@@ -252,6 +254,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.QueryStrategyId, ScreenPopups.QueryPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

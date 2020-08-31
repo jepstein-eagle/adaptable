@@ -24,8 +24,8 @@ export class AlertSelectQueryWizard
     super(props);
     this.state = {
       HasExpression:
-        StringExtensions.IsNotNullOrEmpty(this.props.Data.Expression) ||
-        StringExtensions.IsNotNullOrEmpty(this.props.Data.SharedQueryId),
+        StringExtensions.IsNotNullOrEmpty(this.props.data.Expression) ||
+        StringExtensions.IsNotNullOrEmpty(this.props.data.SharedQueryId),
     };
   }
 
@@ -61,7 +61,7 @@ export class AlertSelectQueryWizard
 
   private onOtherExpressionOptionChanged(checked: boolean) {
     this.setState({ HasExpression: checked } as AlertSelectQueryWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -72,21 +72,21 @@ export class AlertSelectQueryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     // if we have an expression and its null then create an empty one
     if (!this.state.HasExpression) {
-      this.props.Data.Expression = undefined;
-      this.props.Data.SharedQueryId = undefined;
+      this.props.data.Expression = undefined;
+      this.props.data.SharedQueryId = undefined;
     }
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.HasExpression ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

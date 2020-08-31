@@ -93,11 +93,11 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
 
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
-        PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Api}
-        SelectedColumn={col}
-        ShowPanel={showPanel}
-        ShowHeader={true}
+        previewInfo={this.props.PreviewInfo}
+        api={this.props.api}
+        selectedColumn={col}
+        showPanel={showPanel}
+        showHeader={true}
       />
     ) : null;
 
@@ -135,11 +135,11 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
               <Flex alignItems="center" flexDirection="row" flex={1} marginRight={2}>
                 {this.state.useSelector ? (
                   <ColumnValueSelector
-                    SelectedColumnValue={this.props.BulkUpdateValue}
-                    SelectedColumn={col}
-                    Api={this.props.Api}
+                    selectedColumnValue={this.props.BulkUpdateValue}
+                    selectedColumn={col}
+                    api={this.props.api}
                     onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
-                    AllowNew={false}
+                    allowNew={false}
                     style={{ width: '100%', maxWidth: 'inherit' }}
                   />
                 ) : (
@@ -177,9 +177,9 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
             <Flex marginTop={2} flexDirection="row" alignItems="center">
               <Flex alignItems="center" flexDirection="row" flex={1} marginRight={2}>
                 <ColumnValueSelector
-                  SelectedColumnValue={this.props.BulkUpdateValue}
-                  SelectedColumn={col}
-                  Api={this.props.Api}
+                  selectedColumnValue={this.props.BulkUpdateValue}
+                  selectedColumn={col}
+                  api={this.props.api}
                   onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
                   style={{ width: '100%', maxWidth: 'inherit' }}
                 />
@@ -259,7 +259,7 @@ class BulkUpdatePopupComponent extends React.Component<BulkUpdatePopupProps, Bul
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Api.internalApi
+    let confirmation: IUIConfirmation = this.props.api.internalApi
       .getValidationService()
       .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);

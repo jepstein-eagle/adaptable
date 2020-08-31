@@ -62,19 +62,19 @@ class DataSourcePopupComponent extends React.Component<
     let dataSources = this.props.DataSources.map((dataSource: DataSource, index: number) => {
       return (
         <DataSourceEntityRow
-          AdaptableObject={dataSource}
+          adaptableObject={dataSource}
           key={'ns' + index}
           onEdit={() => this.onEdit(dataSource)}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           onShare={description => this.props.onShare(dataSource, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={DataSourceRedux.DataSourceDelete(dataSource)}
           onChangeName={(dataSource, name) => this.onChangeName(dataSource, name)}
           onChangeDescription={(dataSource, description) =>
             this.onChangeDescription(dataSource, description)
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -83,11 +83,11 @@ class DataSourcePopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.CreateDataSource()}
         tooltip="Create New DataSource"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
-    let DataSource: DataSource = this.state.EditedAdaptableObject as DataSource;
+    let DataSource: DataSource = this.state.editedAdaptableObject as DataSource;
 
     return (
       <PanelWithButton
@@ -103,13 +103,13 @@ class DataSourcePopupComponent extends React.Component<
           <EmptyContent>Click 'New' to add a new DataSource.</EmptyContent>
         )}
 
-        {this.state.EditedAdaptableObject != null && (
+        {this.state.editedAdaptableObject != null && (
           <DataSourceWizard
-            EditedAdaptableObject={DataSource}
-            ConfigEntities={this.props.DataSources}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={DataSource}
+            configEntities={this.props.DataSources}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -134,18 +134,18 @@ class DataSourcePopupComponent extends React.Component<
   onEdit(dataSource: DataSource) {
     let clonedObject: DataSource = Helper.cloneObject(dataSource);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
@@ -154,17 +154,17 @@ class DataSourcePopupComponent extends React.Component<
     //  let currentSearchIndex: number = this.props.DataSources.findIndex(
     //    as => as.Name == this.props.CurrentDataSource
     //  );
-    let clonedObject: DataSource = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let clonedObject: DataSource = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditDataSource(clonedObject);
     } else {
       this.props.onAddDataSource(clonedObject);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     //  if (searchIndex == -1 || searchIndex == currentSearchIndex) {
     // its new so make it the new search or we are editing the current search (but might have changed the name)
@@ -173,7 +173,7 @@ class DataSourcePopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let DataSource = this.state.EditedAdaptableObject as DataSource;
+    let DataSource = this.state.editedAdaptableObject as DataSource;
 
     return (
       StringExtensions.IsNotNullOrEmpty(DataSource.Name) &&
@@ -183,8 +183,8 @@ class DataSourcePopupComponent extends React.Component<
 
   CreateDataSource() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyDataSource(),
-      WizardStartIndex: 0,
+      editedAdaptableObject: ObjectFactory.CreateEmptyDataSource(),
+      wizardStartIndex: 0,
     });
   }
 }

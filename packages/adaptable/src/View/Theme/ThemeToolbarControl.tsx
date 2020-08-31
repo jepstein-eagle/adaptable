@@ -47,7 +47,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
     let content = (
       <div
         className={join(
-          this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+          this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
           'ab-DashboardToolbar__Theme__wrap'
         )}
       >
@@ -72,6 +72,7 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
         className="ab-DashboardToolbar__Theme"
         headerText={StrategyConstants.ThemeStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Theme')}
       >
         {content}
       </PanelDashboard>
@@ -103,6 +104,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.ThemeStrategyId, ScreenPopups.ThemePopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

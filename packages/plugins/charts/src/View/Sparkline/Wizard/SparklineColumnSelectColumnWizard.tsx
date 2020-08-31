@@ -35,7 +35,7 @@ export class SparklineColumnSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.columnApi.getNumericArrayColumns()}
+          ColumnList={this.props.api.columnApi.getNumericArrayColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -49,11 +49,11 @@ export class SparklineColumnSelectColumnWizard
         {
           ColumnId: columns[0].ColumnId,
         } as SparklineColumnSelectColumnWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState({ ColumnId: '' } as SparklineColumnSelectColumnWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -65,20 +65,20 @@ export class SparklineColumnSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     this.props.Data.ColumnId = this.state.ColumnId;
     this.props.Data.SparklineType = this.state.SparklineType;
     this.props.Data.MinimumValue = this.state.MinimumValue;
     this.props.Data.MaximumValue = this.state.MaximumValue;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

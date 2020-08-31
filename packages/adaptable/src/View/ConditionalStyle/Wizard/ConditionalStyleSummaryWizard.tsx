@@ -23,16 +23,16 @@ export class ConditionalStyleSummaryWizard
 
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Scope', Value: this.props.Api.scopeApi.getScopeToString(this.props.Data.Scope) },
+      { Key: 'Scope', Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope) },
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
-      { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
+      { Key: 'Style', Value: <StyleVisualItem Style={this.props.data.Style} /> },
       {
         Key: 'Query Type',
-        Value: StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ? 'Shared' : 'Custom',
+        Value: StringExtensions.IsNullOrEmpty(this.props.data.Expression) ? 'Shared' : 'Custom',
       },
       {
         Key: 'Expression',
-        Value: this.props.Api.queryApi.getExpressionForQueryObject(this.props.Data),
+        Value: this.props.api.queryApi.getExpressionForQueryObject(this.props.data),
       },
     ];
 
@@ -45,9 +45,9 @@ export class ConditionalStyleSummaryWizard
   }
 
   private getExcludedGroupedRows(): string {
-    return this.props.Data.ExcludeGroupedRows != null &&
-      this.props.Data.ExcludeGroupedRows != undefined &&
-      this.props.Data.ExcludeGroupedRows == true
+    return this.props.data.ExcludeGroupedRows != null &&
+      this.props.data.ExcludeGroupedRows != undefined &&
+      this.props.data.ExcludeGroupedRows == true
       ? 'True'
       : 'False';
   }
@@ -59,18 +59,18 @@ export class ConditionalStyleSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

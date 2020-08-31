@@ -62,7 +62,7 @@ class ThemeToolPanelComponent extends React.Component<
         {!this.state.IsMinimised && (
           <div
             className={join(
-              this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+              this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
               'ab-ToolPanel__Theme__wrap'
             )}
           >

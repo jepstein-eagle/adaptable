@@ -23,11 +23,12 @@ import FormLayout, { FormRow } from '../../components/FormLayout';
 import HelpBlock from '../../components/HelpBlock';
 import Radio from '../../components/Radio';
 import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
+import { StyleComponent } from '../Components/StyleComponent';
 
 interface QuickSearchPopupProps extends StrategyViewPopupProps<QuickSearchPopupComponent> {
   QuickSearchText: string;
   QuickSearchStyle: AdaptableStyle;
-
+  StyleClassNames: string[];
   onRunQuickSearch: (quickSearchText: string) => QuickSearchRedux.QuickSearchApplyAction;
   onSetStyle: (style: AdaptableStyle) => QuickSearchRedux.QuickSearchSetStyleAction;
 }
@@ -63,56 +64,20 @@ class QuickSearchPopupComponent extends React.Component<
     this.debouncedRunQuickSearch();
   }
 
-  private onUseBackColorCheckChange(checked: boolean) {
-    let style: AdaptableStyle = this.state.EditedStyle;
-    style.BackColor = checked
-      ? this.props.QuickSearchStyle.BackColor
-        ? this.props.QuickSearchStyle.BackColor
-        : QUICK_SEARCH_DEFAULT_BACK_COLOR
-      : null;
-    this.setState({ EditedStyle: style });
-    this.props.onSetStyle(style);
-  }
-
-  private onUseForeColorCheckChange(checked: boolean) {
-    let style: AdaptableStyle = this.state.EditedStyle;
-    style.ForeColor = checked
-      ? this.props.QuickSearchStyle.ForeColor
-        ? this.props.QuickSearchStyle.ForeColor
-        : QUICK_SEARCH_DEFAULT_FORE_COLOR
-      : null;
-    this.setState({ EditedStyle: style });
-    this.props.onSetStyle(style);
-  }
-
-  private onBackColorSelectChange(event: React.FormEvent<ColorPicker>) {
-    let e = event.target as HTMLInputElement;
-    let style: AdaptableStyle = this.state.EditedStyle;
-    style.BackColor = e.value;
-    this.setState({ EditedStyle: style });
-    this.props.onSetStyle(style);
-  }
-
-  private onForeColorSelectChange(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    let style: AdaptableStyle = this.state.EditedStyle;
-    style.ForeColor = e.value;
-    this.setState({ EditedStyle: style });
-    this.props.onSetStyle(style);
-  }
-
   render() {
     let infoBody: any[] = [
       'Run a simple text search across all visible cells in Adaptable.',
       <br />,
       <br />,
-      'Use Quick Search Options to set search operator, behaviour and back colour (all automatically saved).',
+      'Set the Quick Search style for matching cells.',
       <br />,
       <br />,
       'For a more powerful, multi-column, saveable search with a wide range of options, use ',
       <i>Query</i>,
       '.',
     ];
+
+    let canUseClassName = true; // get from somewhere...
 
     return (
       <PanelWithImage
@@ -122,65 +87,42 @@ class QuickSearchPopupComponent extends React.Component<
         infoBody={infoBody}
         bodyProps={{ padding: 2 }}
       >
-        <FormLayout>
-          <FormRow label={'Search For:'}>
-            <AdaptableFormControlTextClear
-              type="text"
-              placeholder="Quick Search Text"
-              value={this.state.EditedQuickSearchText}
-              OnTextChange={x => this.handleQuickSearchTextChange(x)}
-            />
-          </FormRow>
-        </FormLayout>
-
         <Panel
-          header="Quick Search Options"
+          header="Quick Search Text"
           style={{ height: 'auto' }}
           variant="default"
           borderRadius="none"
           marginTop={3}
+          marginLeft={2}
+          marginRight={2}
         >
-          <FormLayout columns={['label', 2, 3]}>
-            <FormRow label="Set Back Colour:">
-              <Flex alignItems="center">
-                <Checkbox
-                  value="existing"
-                  checked={this.props.QuickSearchStyle.BackColor ? true : false}
-                  onChange={(checked: boolean) => this.onUseBackColorCheckChange(checked)}
-                  marginRight={3}
-                  marginLeft={2}
-                />
-                {this.props.QuickSearchStyle.BackColor != null && (
-                  <ColorPicker
-                    Api={this.props.Api}
-                    value={this.props.QuickSearchStyle.BackColor}
-                    onChange={(x: any) => this.onBackColorSelectChange(x)}
-                  />
-                )}
-              </Flex>
-            </FormRow>
-            <FormRow label="Set Fore Colour:">
-              <Flex alignItems="center">
-                <Checkbox
-                  marginRight={3}
-                  marginLeft={2}
-                  value="existing"
-                  checked={this.props.QuickSearchStyle.ForeColor ? true : false}
-                  onChange={(checked: boolean) => this.onUseForeColorCheckChange(checked)}
-                />
-                {this.props.QuickSearchStyle.ForeColor != null && (
-                  <ColorPicker
-                    Api={this.props.Api}
-                    value={this.props.QuickSearchStyle.ForeColor}
-                    onChange={(x: any) => this.onForeColorSelectChange(x)}
-                  />
-                )}
-              </Flex>
+          {' '}
+          <FormLayout>
+            <FormRow label={'Search For:'}>
+              <AdaptableFormControlTextClear
+                type="text"
+                placeholder="Search Text"
+                value={this.state.EditedQuickSearchText}
+                OnTextChange={x => this.handleQuickSearchTextChange(x)}
+              />
             </FormRow>
           </FormLayout>
         </Panel>
+        <StyleComponent
+          style={{ height: '100%' }}
+          api={this.props.api}
+          StyleClassNames={this.props.StyleClassNames}
+          Style={this.props.QuickSearchStyle}
+          UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}
+          CanUseClassName={canUseClassName}
+        />
       </PanelWithImage>
     );
+  }
+
+  private onUpdateStyle(style: AdaptableStyle) {
+    this.setState({ EditedStyle: style });
+    this.props.onSetStyle(style);
   }
 }
 
@@ -188,6 +130,7 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickSea
   return {
     QuickSearchText: state.QuickSearch.QuickSearchText,
     QuickSearchStyle: state.QuickSearch.Style,
+    StyleClassNames: state.UserInterface.StyleClassNames,
   };
 }
 

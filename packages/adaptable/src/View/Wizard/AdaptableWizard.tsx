@@ -17,17 +17,17 @@ export interface IWizardStepInfo {
 }
 
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
-  Steps: IWizardStepInfo[];
-  Data: any;
+  steps: IWizardStepInfo[];
+  data: any;
   onHide: Function;
   onFinish?: Function;
-  StepStartIndex?: number;
-  FriendlyName?: string;
-  ModalContainer: HTMLElement;
+  stepStartIndex?: number;
+  friendlyName?: string;
+  modalContainer: HTMLElement;
   canFinishWizard: Function;
   style?: CSSProperties;
   showStepsLegend?: Boolean;
-  Api: AdaptableApi;
+  api: AdaptableApi;
 }
 
 export interface AdaptableWizardState extends React.ClassAttributes<AdaptableWizard> {
@@ -43,17 +43,17 @@ class DummyActiveStep implements AdaptableWizardStep {
     return false;
   }
 
-  public Next(): void {
+  public next(): void {
     // no implementation for this
   }
-  public Back(): void {
+  public back(): void {
     // no implementation for this
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }
@@ -69,24 +69,24 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   constructor(props: AdaptableWizardProps) {
     super(props);
     let indexStart = 0;
-    if (this.props.StepStartIndex) {
-      indexStart = this.props.StepStartIndex;
+    if (this.props.stepStartIndex) {
+      indexStart = this.props.stepStartIndex;
     }
 
-    let BodyElement: JSX.Element = this.props.Steps[indexStart].Element;
-    this.stepName = this.props.Steps[indexStart].StepName;
+    let BodyElement: JSX.Element = this.props.steps[indexStart].Element;
+    this.stepName = this.props.steps[indexStart].StepName;
     let newElement = this.cloneWizardStep(BodyElement);
     this.state = { ActiveState: newElement, IndexState: indexStart };
   }
 
   render() {
     let wizardStepNames: string[] = ArrayExtensions.RetrieveDistinct(
-      this.props.Steps.map(x => {
+      this.props.steps.map(x => {
         return x.StepName;
       })
     );
 
-    const hasNext = this.props.Steps.length > 1;
+    const hasNext = this.props.steps.length > 1;
     const hasBack = hasNext;
 
     return (
@@ -107,7 +107,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
           }}
         >
           <Panel
-            header={this.props.FriendlyName}
+            header={this.props.friendlyName}
             border="none"
             className="ab-WizardDialog__steps"
             borderRadius="none"
@@ -141,7 +141,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               data-name="close"
               onClick={() => this.props.onHide()}
               tooltip="Close wizard"
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             >
               CLOSE
             </SimpleButton>
@@ -153,7 +153,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 disabled={!this.ActiveStep.canBack() || this.isFirstStep()}
                 onClick={() => this.handleClickBack()}
                 icon="arrow-left"
-                AccessLevel={'Full'}
+                accessLevel={'Full'}
               >
                 Back
               </SimpleButton>
@@ -166,7 +166,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
                 onClick={() => this.handleClickNext()}
                 icon="arrow-right"
                 iconPosition="end"
-                AccessLevel={'Full'}
+                accessLevel={'Full'}
                 marginLeft={2}
                 marginRight={2}
               >
@@ -180,7 +180,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               disabled={!this.canFinishWizard()}
               onClick={() => this.handleClickFinish()}
               icon={'check'}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             >
               Finish
             </SimpleButton>
@@ -191,7 +191,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   }
 
   private onStepButtonClicked(stepName: string): void {
-    let wizardStepInfo: IWizardStepInfo = this.props.Steps.find(s => s.StepName == stepName);
+    let wizardStepInfo: IWizardStepInfo = this.props.steps.find(s => s.StepName == stepName);
     let bodyElement: any = wizardStepInfo.Element;
     let newElement = this.cloneWizardStep(bodyElement);
     this.stepName = wizardStepInfo.StepName;
@@ -203,7 +203,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   }
 
   isLastStep(): boolean {
-    return this.state.IndexState == this.props.Steps.length - 1;
+    return this.state.IndexState == this.props.steps.length - 1;
   }
 
   isFirstStep(): boolean {
@@ -217,9 +217,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
   handleClickBack() {
     if (!this.isFirstStep()) {
       if (this.ActiveStep.canBack()) {
-        let decrement = this.ActiveStep.GetIndexStepDecrement();
-        this.ActiveStep.Back();
-        let activeWizardInfo: IWizardStepInfo = this.props.Steps[this.state.IndexState - decrement];
+        let decrement = this.ActiveStep.getIndexStepDecrement();
+        this.ActiveStep.back();
+        let activeWizardInfo: IWizardStepInfo = this.props.steps[this.state.IndexState - decrement];
         let bodyElement: JSX.Element = activeWizardInfo.Element;
         let newElement = this.cloneWizardStep(bodyElement);
         this.stepName = activeWizardInfo.StepName;
@@ -230,9 +230,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   handleClickNext() {
     if (this.ActiveStep.canNext()) {
-      let increment = this.ActiveStep.GetIndexStepIncrement();
-      this.ActiveStep.Next();
-      let activeWizardInfo: IWizardStepInfo = this.props.Steps[this.state.IndexState + increment];
+      let increment = this.ActiveStep.getIndexStepIncrement();
+      this.ActiveStep.next();
+      let activeWizardInfo: IWizardStepInfo = this.props.steps[this.state.IndexState + increment];
       let bodyElement: JSX.Element = activeWizardInfo.Element;
       let newElement = this.cloneWizardStep(bodyElement);
       this.stepName = activeWizardInfo.StepName;
@@ -242,7 +242,7 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
 
   handleClickFinish() {
     if (this.ActiveStep.canNext()) {
-      this.ActiveStep.Next();
+      this.ActiveStep.next();
       if (this.props.onFinish) {
         this.props.onFinish();
       }
@@ -257,9 +257,9 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
         this.ActiveStep = Element;
         this.forceUpdate();
       },
-      Data: this.props.Data,
-      UpdateGoBackState: () => this.ForceUpdateGoBackState(),
-      Api: this.props.Api,
+      data: this.props.data,
+      updateGoBackState: () => this.ForceUpdateGoBackState(),
+      api: this.props.api,
     });
   }
 }

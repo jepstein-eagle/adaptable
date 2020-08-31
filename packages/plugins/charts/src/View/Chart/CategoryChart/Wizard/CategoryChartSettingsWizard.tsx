@@ -30,9 +30,9 @@ export class CategoryChartSettingsWizard
   constructor(props: CategoryChartSettingsWizardProps) {
     super(props);
     this.state = {
-      Name: props.Data.Name,
-      Description: props.Data.Description,
-      VisibleRowsOnly: props.Data.VisibleRowsOnly,
+      Name: props.data.Name,
+      Description: props.data.Description,
+      VisibleRowsOnly: props.data.VisibleRowsOnly,
       ErrorMessage: null,
     };
   }
@@ -103,14 +103,14 @@ export class CategoryChartSettingsWizard
           ? 'A Chart Definition already exists with that name'
           : null,
       } as CategoryChartSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
   onChartDescriptionChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ Description: e.value } as CategoryChartSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -118,7 +118,7 @@ export class CategoryChartSettingsWizard
     let e = event.target as HTMLInputElement;
     this.setState(
       { VisibleRowsOnly: e.value == 'Visible' } as CategoryChartSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -133,19 +133,19 @@ export class CategoryChartSettingsWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.Name = this.state.Name;
-    this.props.Data.Description = this.state.Description;
-    this.props.Data.VisibleRowsOnly = this.state.VisibleRowsOnly;
+  public next(): void {
+    this.props.data.Name = this.state.Name;
+    this.props.data.Description = this.state.Description;
+    this.props.data.VisibleRowsOnly = this.state.VisibleRowsOnly;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
-    return StringExtensions.IsNullOrEmpty(this.props.Data.XAxisExpression) ? 2 : 1;
+  public getIndexStepDecrement() {
+    return StringExtensions.IsNullOrEmpty(this.props.data.XAxisExpression) ? 2 : 1;
   }
 }

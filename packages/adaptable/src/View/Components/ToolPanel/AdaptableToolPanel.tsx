@@ -38,9 +38,9 @@ import AdaptableContext from '../../AdaptableContext';
 const preventDefault = (e: React.SyntheticEvent) => e.preventDefault();
 
 interface AdaptableToolPanelProps {
-  Adaptable: IAdaptable;
-  Api: AdaptableApi;
-  TeamSharingActivated?: boolean;
+  adaptable: IAdaptable;
+  api: AdaptableApi;
+  teamSharingActivated?: boolean;
   VisibleToolsPanels: AdaptableToolPanels;
   AvailableToolPanels: AdaptableToolPanels;
   VisibleButtons: AdaptableFunctionButtons;
@@ -78,7 +78,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
               tooltip={menuItem.Label}
               //  disabled={props.AccessLevel == 'ReadOnly' }
               onClick={() => props.onClick(menuItem.ReduxAction)}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             />
           );
         }
@@ -100,10 +100,10 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
 
   // Build the Tool Panels
   let visibleToolPanels = props.VisibleToolsPanels.filter(
-    vt => !props.Adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(vt)
+    vt => !props.adaptable.api.entitlementsApi.isFunctionHiddenEntitlement(vt)
   );
   let visibleToolPanelControls = visibleToolPanels.map((control, idx) => {
-    let accessLevel: AccessLevel = props.Adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+    let accessLevel: AccessLevel = props.adaptable.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
       control
     );
 
@@ -111,8 +111,8 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
       let toolPanel = AdaptableToolPanelFactory.get(control);
       if (toolPanel) {
         let toolPanelElememt = React.createElement(toolPanel, {
-          AccessLevel: accessLevel,
-          Api: props.Adaptable.api,
+          accessLevel: accessLevel,
+          api: props.adaptable.api,
         });
         return (
           <Box
@@ -130,8 +130,8 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
     }
   });
 
-  let strategyKeys: string[] = props.Adaptable.strategies
-    ? [...props.Adaptable.strategies.keys()]
+  let strategyKeys: string[] = props.adaptable.strategies
+    ? [...props.adaptable.strategies.keys()]
     : [];
   let allowedMenuItems = props.MainMenuItems.filter(
     x => x.IsVisible && ArrayExtensions.NotContainsItem(strategyKeys, x)
@@ -174,7 +174,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
   ];
 
   const onSetColumnVisibility = (name: string) => {
-    let changedColumn: AdaptableColumn = props.Adaptable.api.columnApi.getColumnFromId(name);
+    let changedColumn: AdaptableColumn = props.adaptable.api.columnApi.getColumnFromId(name);
 
     let columns: AdaptableColumn[] = [].concat(props.Columns);
     changedColumn = Object.assign({}, changedColumn, {
@@ -299,7 +299,7 @@ const AdaptableToolPanelComponent = (props: AdaptableToolPanelProps) => {
       className="ab-ToolPanel__configure-button"
       tooltip={'Configure ToolPanels'}
       onClick={() => {
-        props.Adaptable.api.toolPanelApi.showToolPanelPopup();
+        props.adaptable.api.toolPanelApi.showToolPanelPopup();
       }}
     />
   );
@@ -359,9 +359,9 @@ export const getAdaptableToolPanelAgGridComponent = (adaptable?: IAdaptable) => 
     public gui: HTMLElement;
 
     public init(params?: IToolPanelParams): void {
-      const api = params.api as GridApi;
-      const Adaptable = (api as any).__adaptable || adaptable;
-      const AdaptableApi = Adaptable.api;
+      const vendorGridApi = params.api as GridApi;
+      const Adaptable = (vendorGridApi as any).__adaptable || adaptable;
+      const api = Adaptable.api;
 
       this.gui = document.createElement('div');
       this.gui.id = 'adaptable-tool-panel_' + Adaptable.adaptableOptions.adaptableId;
@@ -372,9 +372,9 @@ export const getAdaptableToolPanelAgGridComponent = (adaptable?: IAdaptable) => 
           <ThemeProvider theme={theme}>
             <AdaptableContext.Provider value={Adaptable}>
               <ConnectedAdaptableToolPanel
-                Adaptable={Adaptable}
-                Api={AdaptableApi}
-                TeamSharingActivated={false}
+                adaptable={Adaptable}
+                api={api}
+                teamSharingActivated={false}
               />
             </AdaptableContext.Provider>
           </ThemeProvider>
