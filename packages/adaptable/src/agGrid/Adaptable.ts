@@ -1517,7 +1517,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public getDistinctValuesForColumn(
-    columnId: string,
+    column: AdaptableColumn,
     cellValueType: CellValueType,
     visibleRowsOnly: boolean
   ): any[] {
@@ -1529,17 +1529,17 @@ export class Adaptable implements IAdaptable {
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
     // but that is only something used by a chart so not a big problem but one day... TODO
-    const permittedValues: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(columnId);
+    const permittedValues: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(column);
     if (ArrayExtensions.IsNotNull(permittedValues)) {
       returnValues.push(...permittedValues);
     } else {
       if (visibleRowsOnly) {
         this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
-          returnValues.push(this.addDistinctColumnValue(rowNode, columnId, cellValueType));
+          returnValues.push(this.addDistinctColumnValue(rowNode, column.ColumnId, cellValueType));
         });
       } else {
         this.gridOptions.api!.forEachNode(rowNode => {
-          returnValues.push(this.addDistinctColumnValue(rowNode, columnId, cellValueType));
+          returnValues.push(this.addDistinctColumnValue(rowNode, column.ColumnId, cellValueType));
         });
       }
     }
@@ -1560,8 +1560,9 @@ export class Adaptable implements IAdaptable {
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
+    const abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(columnId);
     const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
-      columnId
+      abColumn
     );
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
       permittedValuesForColumn.forEach(pv => {

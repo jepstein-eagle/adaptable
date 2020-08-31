@@ -288,12 +288,13 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
   }
 
   public getDistinctDisplayValuesForColumn(columnId: string): any[] {
+    const abColumn: AdaptableColumn = this.getColumnFromId(columnId);
     const returnValues = this.adaptable.getDistinctValuesForColumn(
-      columnId,
+      abColumn,
       CellValueType.DisplayValue,
       false
     );
-    return this.sortDistinctValues(returnValues, columnId);
+    return this.sortDistinctValues(returnValues, abColumn);
     /*
      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
         this.setState({ ShowWaitingMessage: true });
@@ -366,39 +367,38 @@ export class ColumnApiImpl extends ApiBase implements ColumnApi {
       }
       */
   }
-  public getDistinctVisibleDisplayValuesForColumn(
-    columnId: string,
-    sortColumns: boolean = false
-  ): any[] {
+  public getDistinctVisibleDisplayValuesForColumn(columnId: string): any[] {
+    const abColumn: AdaptableColumn = this.getColumnFromId(columnId);
     const returnValues = this.adaptable.getDistinctValuesForColumn(
-      columnId,
+      abColumn,
       CellValueType.DisplayValue,
       true
     );
-    return this.sortDistinctValues(returnValues, columnId);
+    return this.sortDistinctValues(returnValues, abColumn);
   }
 
   public getDistinctRawValuesForColumn(columnId: string): any[] {
+    const abColumn: AdaptableColumn = this.getColumnFromId(columnId);
     const returnValues = this.adaptable.getDistinctValuesForColumn(
-      columnId,
+      abColumn,
       CellValueType.RawValue,
       false
     );
-    return this.sortDistinctValues(returnValues, columnId);
+    return this.sortDistinctValues(returnValues, abColumn);
   }
 
   public getDistinctVisibleRawValuesForColumn(columnId: string): any[] {
+    const abColumn: AdaptableColumn = this.getColumnFromId(columnId);
     const returnValues = this.adaptable.getDistinctValuesForColumn(
-      columnId,
+      abColumn,
       CellValueType.RawValue,
       true
     );
-    return this.sortDistinctValues(returnValues, columnId);
+    return this.sortDistinctValues(returnValues, abColumn);
   }
 
-  private sortDistinctValues(returnValues: any[], columnId: string): any[] {
-    const abColumn: AdaptableColumn = this.getColumnFromId(columnId);
-    if (this.isNumericColumn(abColumn)) {
+  private sortDistinctValues(returnValues: any[], column: AdaptableColumn): any[] {
+    if (this.isNumericColumn(column)) {
       returnValues = ArrayExtensions.sortArrayNumeric(returnValues, SortOrder.Asc);
     } else {
       returnValues = ArrayExtensions.sortArray(returnValues, SortOrder.Asc);
