@@ -2733,7 +2733,8 @@ export class Adaptable implements IAdaptable {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
           if (
             !parser.evaluate(currentQuery, {
-              data: node.data,
+              node: node,
+              api: this.api,
             })
           ) {
             return false;

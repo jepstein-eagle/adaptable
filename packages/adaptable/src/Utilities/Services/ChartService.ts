@@ -23,6 +23,7 @@ import {
 } from '../../PredefinedConfig/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
 import * as parser from '../../parser/src';
+import { RowNode } from '@ag-grid-community/all-modules';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -137,13 +138,14 @@ export class ChartService implements IChartService {
 
     if (chartDefinition.Expression) {
       values = [];
-      const forEach = (row: any) => {
+      const forEach = (node: RowNode) => {
         if (
           parser.evaluate(chartDefinition.Expression, {
-            data: row,
+            node: node,
+            api: this.adaptable.api,
           })
         ) {
-          let columnValue = this.adaptable.getRawValueFromRowNode(row, chartDefinition.ColumnId);
+          let columnValue = this.adaptable.getRawValueFromRowNode(node, chartDefinition.ColumnId);
           values.push(columnValue);
         }
       };
@@ -218,26 +220,28 @@ export class ChartService implements IChartService {
     let returnedRecordCount: number = 0;
 
     if (chartDefinition.VisibleRowsOnly) {
-      this.adaptable.forAllVisibleRowNodesDo(row => {
+      this.adaptable.forAllVisibleRowNodesDo(node => {
         if (
           parser.evaluate(completedExpressionTemp, {
-            data: row,
+            node: node,
+            api: this.adaptable.api,
           })
         ) {
           returnedRecordCount++;
-          let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
+          let columnValue = this.adaptable.getRawValueFromRowNode(node, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
     } else {
-      this.adaptable.forAllRowNodesDo(row => {
+      this.adaptable.forAllRowNodesDo(node => {
         if (
           parser.evaluate(completedExpressionTemp, {
-            data: row,
+            node: node,
+            api: this.adaptable.api,
           })
         ) {
           returnedRecordCount++;
-          let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
+          let columnValue = this.adaptable.getRawValueFromRowNode(node, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
@@ -280,16 +284,17 @@ export class ChartService implements IChartService {
   private addXAxisFromExpression(
     chartDefinition: CategoryChartDefinition,
     columns: AdaptableColumn[],
-    row: any,
+    node: RowNode,
     xAxisColValues: string[]
   ): void {
     if (
       parser.evaluate(chartDefinition.XAxisExpression, {
-        data: row,
+        node: node,
+        api: this.adaptable.api,
       })
     ) {
       let columnValue = this.adaptable.getValueFromRowNode(
-        row,
+        node,
         chartDefinition.XAxisColumnId,
         CellValueType.DisplayValue
       );

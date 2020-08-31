@@ -33,6 +33,7 @@ export class SharedQueryExpressionWizard
         initialData={firstRow}
         columns={this.props.api.columnApi.getColumns()}
         functions={defaultFunctions}
+        api={this.props.api}
       />
     );
     /* {validationState ? (

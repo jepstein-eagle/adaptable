@@ -6,6 +6,7 @@ import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInf
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 
 export class GridApiImpl extends ApiBase implements GridApi {
   public getGridState(): GridState {
@@ -103,6 +104,14 @@ export class GridApiImpl extends ApiBase implements GridApi {
 
   public getFirstRowNode(): any {
     return this.adaptable.getFirstRowNode();
+  }
+
+  public getValueFromRowNode(rowwNode: any, columnId: string, cellValueType: CellValueType) {
+    return this.adaptable.getValueFromRowNode(rowwNode, columnId, cellValueType);
+  }
+
+  public getRawValueFromRowNode(rowwNode: any, columnId: string) {
+    return this.adaptable.getRawValueFromRowNode(rowwNode, columnId);
   }
 
   public getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[] {

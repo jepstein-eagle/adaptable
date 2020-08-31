@@ -184,13 +184,14 @@ export class ReportService implements IReportService {
           report
         );
 
-        this.adaptable.forAllRowNodesDo((row: any) => {
+        this.adaptable.forAllRowNodesDo(node => {
           if (
             parser.evaluate(expressionToCheck, {
-              data: row.data,
+              node: node,
+              api: this.adaptable.api,
             })
           ) {
-            let newRow = this.getRowValues(row, reportColumns, report);
+            let newRow = this.getRowValues(node, reportColumns, report);
             dataToExport.push(newRow);
           }
         });
@@ -288,13 +289,14 @@ export class ReportService implements IReportService {
           report
         );
 
-        this.adaptable.forAllRowNodesDo((row: any) => {
+        this.adaptable.forAllRowNodesDo(node => {
           if (
             parser.evaluate(expressionToCheck, {
-              data: row.data,
+              node: node,
+              api: this.adaptable.api,
             })
           ) {
-            let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(row);
+            let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(node);
             pkValues.push(pkValue);
           }
         });

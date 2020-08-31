@@ -110,6 +110,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               columns={this.props.api.columnApi.getColumns()}
               functions={parser.defaultFunctions}
               hideHelpBlock={true}
+              api={this.props.api}
             />
             <CheckBox
               checked={this.state.saveToSharedQueries}

@@ -4,17 +4,15 @@ import { evaluateNode } from './evaluator';
 import { defaultFunctions } from './functions';
 import { findPathTo } from './utils';
 import { Context, FunctionMap } from './types';
+import Adaptable from '../../agGrid';
 
 export function parse(input: string) {
   const ast = parser.parse(input.trim());
 
-  const evaluate = (context: Partial<Context>) => {
+  const evaluate = (context: Context) => {
     const contextWithDefaults: Context = {
-      data: { ...context.data },
-      variables: { ...context.variables },
+      ...context,
       functions: { ...defaultFunctions, ...context.functions },
-      filters: { ...context.filters },
-      value: context.value,
     };
     const result = evaluateNode(ast, contextWithDefaults);
     return result[result.length - 1];
@@ -24,7 +22,7 @@ export function parse(input: string) {
 }
 
 const cache: Record<string, any> = {};
-export function evaluate(input: string, context: Partial<Context>) {
+export function evaluate(input: string, context: Context) {
   cache[input] = cache[input] || parse(input);
   return cache[input].evaluate(context);
 }

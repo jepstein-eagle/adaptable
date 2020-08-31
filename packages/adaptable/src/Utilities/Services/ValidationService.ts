@@ -85,7 +85,8 @@ export class ValidationService implements IValidationService {
           let isSatisfiedExpression: boolean =
             dataChangedInfo.RowNode != null &&
             parser.evaluate(expression, {
-              data: dataChangedInfo.RowNode.data,
+              node: dataChangedInfo.RowNode,
+              api: this.adaptable.api,
             });
           if (
             isSatisfiedExpression &&
