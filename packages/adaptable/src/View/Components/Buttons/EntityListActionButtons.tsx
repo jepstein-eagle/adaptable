@@ -97,9 +97,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               background: 'var(--ab-color-info)',
             }}
             children={null}
-            disabled={this.props.overrideDisableClone || this.props.AccessLevel == 'ReadOnly'}
+            disabled={this.props.overrideDisableClone || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipClone}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
         {this.props.showDelete && (

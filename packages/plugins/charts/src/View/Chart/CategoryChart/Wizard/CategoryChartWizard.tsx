@@ -10,6 +10,7 @@ import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
 import { CategoryChartXAxisWizard } from './CategoryChartXAxisWizard';
 import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
+import { ExpressionWizard } from '@adaptabletools/adaptable/src/View/Components/ExpressionWizard';
 
 export interface CategoryChartWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
@@ -35,18 +36,18 @@ export class CategoryChartWizard extends React.Component<CategoryChartWizardProp
               Index: 1,
               Element: <CategoryChartXAxisWizard api={this.props.api} />,
             },
-            /*
             {
               StepName: 'X Axis',
-              Index: 2,
+              Index: 2, // or should it be 2?
               Element: (
-                <CategoryChartXAxisExpressionWizard
+                <ExpressionWizard
                   api={this.props.api}
-                  ExpressionMode={ExpressionMode.SingleColumn}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
               ),
             },
-            */
+
             {
               StepName: 'Settings',
               Index: 5,

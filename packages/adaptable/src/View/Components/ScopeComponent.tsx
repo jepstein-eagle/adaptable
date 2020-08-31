@@ -1,49 +1,54 @@
 import * as React from 'react';
-import {
-  AdaptableWizardStep,
-  AdaptableWizardStepProps,
-} from '../../Wizard/Interface/IAdaptableWizard';
-import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-import WizardPanel from '../../../components/WizardPanel';
-import { ScopeDataType } from '../../../PredefinedConfig/Common/Scope';
-import { Flex, Box } from 'rebass';
-import HelpBlock from '../../../components/HelpBlock';
-import Radio from '../../../components/Radio';
-import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import Panel from '../../../components/Panel';
-import CheckBox from '../../../components/CheckBox';
 
-export interface CellValidationScopeWizardProps
-  extends AdaptableWizardStepProps<CellValidationRule> {}
-export interface CellValidationScopeWizardState {
-  ScopeChoice: 'All' | 'Column' | 'DataType';
-  ColumnIds: string[];
-  DataTypes: ScopeDataType[];
+import { FontWeight, FontStyle, FontSize } from '../../PredefinedConfig/Common/Enums';
+import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
+import { ColorPicker } from '../ColorPicker';
+import { AdaptablePopover } from '../AdaptablePopover';
+import { Text, Flex, Box } from 'rebass';
+import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
+import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
+import Checkbox from '../../components/CheckBox';
+import Panel from '../../components/Panel';
+import HelpBlock from '../../components/HelpBlock';
+import Dropdown from '../../components/Dropdown';
+import { CSSProperties } from 'react';
+import { AdaptableApi } from '../../Api/AdaptableApi';
+import FormLayout, { FormRow } from '../../components/FormLayout';
+import { ScopeDataType, Scope } from '../../PredefinedConfig/Common/Scope';
+import Radio from '../../components/Radio';
+import { DualListBoxEditor, DisplaySize } from './ListBox/DualListBoxEditor';
+import CheckBox from '../../components/CheckBox';
+
+export interface ScopeComponentProps extends React.ClassAttributes<ScopeComponent> {
+  api: AdaptableApi;
+  scope: Scope;
+  updateScope: (scope: Scope) => void;
 }
 
-export class CellValidationScopeWizard
-  extends React.Component<CellValidationScopeWizardProps, CellValidationScopeWizardState>
-  implements AdaptableWizardStep {
-  constructor(props: CellValidationScopeWizardProps) {
+export interface ScopeComponentState {
+  ScopeChoice: 'All' | 'Column' | 'DataType';
+  componentScope: Scope;
+}
+
+export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeComponentState> {
+  constructor(props: ScopeComponentProps) {
     super(props);
     let scopeChoice: 'All' | 'Column' | 'DataType' = this.props.api.scopeApi.scopeIsAll(
-      this.props.data.Scope
+      this.props.scope
     )
       ? 'All'
-      : this.props.api.scopeApi.scopeHasColumns(this.props.data.Scope)
+      : this.props.api.scopeApi.scopeHasColumns(this.props.scope)
       ? 'Column'
       : 'DataType';
     this.state = {
       ScopeChoice: scopeChoice,
-      ColumnIds: this.props.api.scopeApi.getColumnIdsInScope(this.props.data.Scope),
-      DataTypes: this.props.api.scopeApi.getDataTypesInScope(this.props.data.Scope),
+      componentScope: this.props.scope,
     };
   }
 
-  render(): any {
+  render() {
     return (
-      <WizardPanel>
-        {' '}
+      <Panel header="Scope" margin={2}>
         <Flex flexDirection="column" padding={2}>
           <HelpBlock marginBottom={1}>
             Apply Scope for: Row, or one or more Columns, or one or more Data Types
@@ -55,7 +60,7 @@ export class CellValidationScopeWizard
               checked={this.state.ScopeChoice == 'All'}
               onChange={(checked: boolean, e: React.SyntheticEvent) => this.onScopeSelectChanged(e)}
             >
-              Row
+              Whole Row
             </Radio>{' '}
             <Radio
               marginLeft={3}
@@ -82,7 +87,9 @@ export class CellValidationScopeWizard
                   return c.FriendlyName;
                 })}
                 SelectedValues={this.props.api.columnApi.getFriendlyNamesFromColumnIds(
-                  this.state.ColumnIds
+                  this.props.api.scopeApi
+                    .getColumnsForScope(this.state.componentScope)
+                    .map(c => c.ColumnId)
                 )}
                 HeaderAvailable="Columns"
                 HeaderSelected="Columns In Style"
@@ -97,7 +104,10 @@ export class CellValidationScopeWizard
               <Flex flexDirection="row" padding={2}>
                 <CheckBox
                   checked={
-                    this.state.DataTypes != undefined && this.state.DataTypes.includes('Date')
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('Date')
                   }
                   marginLeft={2}
                   onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'Date')}
@@ -106,7 +116,10 @@ export class CellValidationScopeWizard
                 </CheckBox>{' '}
                 <CheckBox
                   checked={
-                    this.state.DataTypes != undefined && this.state.DataTypes.includes('Number')
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('Number')
                   }
                   marginLeft={4}
                   onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'Number')}
@@ -115,7 +128,10 @@ export class CellValidationScopeWizard
                 </CheckBox>{' '}
                 <CheckBox
                   checked={
-                    this.state.DataTypes != undefined && this.state.DataTypes.includes('String')
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('String')
                   }
                   marginLeft={4}
                   onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'String')}
@@ -124,7 +140,10 @@ export class CellValidationScopeWizard
                 </CheckBox>{' '}
                 <CheckBox
                   checked={
-                    this.state.DataTypes != undefined && this.state.DataTypes.includes('Boolean')
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('Boolean')
                   }
                   marginLeft={4}
                   onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'Boolean')}
@@ -135,43 +154,56 @@ export class CellValidationScopeWizard
             </Panel>
           )}
         </Flex>
-      </WizardPanel>
+      </Panel>
     );
+  }
+  private onScopeSelectChanged(event: React.FormEvent<any>) {
+    let e = event.target as HTMLInputElement;
+    let newScope: Scope;
+    let newScopeChoice: 'All' | 'Column' | 'DataType';
+    if (e.value == 'Column') {
+      newScope = {
+        ColumnIds: [],
+      };
+      newScopeChoice = 'Column';
+    } else if (e.value == 'DataType') {
+      newScope = {
+        DataTypes: [],
+      };
+      newScopeChoice = 'DataType';
+    } else {
+      newScope = {
+        All: true,
+      };
+      newScopeChoice = 'All';
+    }
+    this.setState(
+      { ScopeChoice: newScopeChoice, componentScope: newScope } as ScopeComponentState,
+      () => this.forceUpdate()
+    );
+    this.props.updateScope(newScope);
   }
 
   private onColumnsSelectedChanged(columnFriendlyNames: string[]) {
+    let cols = this.props.api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames);
+    let newScope: Scope = {
+      ColumnIds: cols,
+    };
+    console.log('new scope', newScope);
     this.setState(
       {
-        ColumnIds: this.props.api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames),
-      } as CellValidationScopeWizardState,
-      () => this.props.updateGoBackState()
+        componentScope: newScope,
+      } as ScopeComponentState,
+      () => this.forceUpdate()
     );
-  }
-
-  private onScopeSelectChanged(event: React.FormEvent<any>) {
-    let e = event.target as HTMLInputElement;
-    if (e.value == 'Column') {
-      this.setState(
-        { ScopeChoice: 'Column', ColumnIds: [] } as CellValidationScopeWizardState,
-        () => this.props.updateGoBackState()
-      );
-    } else if (e.value == 'DataType') {
-      this.setState(
-        {
-          ScopeChoice: 'DataType',
-          DataTypes: [],
-        } as CellValidationScopeWizardState,
-        () => this.props.updateGoBackState()
-      );
-    } else {
-      this.setState({ ScopeChoice: 'All' } as CellValidationScopeWizardState, () =>
-        this.props.updateGoBackState()
-      );
-    }
+    //  this.updateScope();
+    this.props.updateScope(newScope);
   }
 
   private onDataTypeChecked(checked: boolean, item: ScopeDataType) {
-    let dataTypes = [].concat(this.state.DataTypes);
+    let dataTypes = [].concat(
+      this.props.api.scopeApi.getDataTypesInScope(this.state.componentScope)
+    );
     if (checked) {
       dataTypes.push(item);
     } else {
@@ -180,41 +212,10 @@ export class CellValidationScopeWizard
         dataTypes.splice(index, 1);
       }
     }
-    this.setState({ DataTypes: dataTypes } as CellValidationScopeWizardState, () =>
-      this.props.updateGoBackState()
-    );
-  }
-
-  public canNext(): boolean {
-    return true; // to do more
-  }
-
-  public canBack(): boolean {
-    return true;
-  }
-  public next(): void {
-    if (this.state.ScopeChoice == 'All') {
-      this.props.data.Scope = {
-        All: true,
-      };
-    } else if (this.state.ScopeChoice == 'Column') {
-      this.props.data.Scope = {
-        ColumnIds: this.state.ColumnIds,
-      };
-    } else {
-      this.props.data.Scope = {
-        DataTypes: this.state.DataTypes,
-      };
-    }
-  }
-
-  public back(): void {
-    //todo
-  }
-  public getIndexStepIncrement() {
-    return 1;
-  }
-  public getIndexStepDecrement() {
-    return 1;
+    let newScope: Scope = {
+      DataTypes: dataTypes,
+    };
+    this.setState({ componentScope: newScope } as ScopeComponentState, () => this.forceUpdate());
+    this.props.updateScope(newScope);
   }
 }

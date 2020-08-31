@@ -33,9 +33,9 @@ export class SparklinesChartSettingsWizard
   constructor(props: SparklinesChartSettingsWizardProps) {
     super(props);
     this.state = {
-      Name: props.Data.Name,
-      Description: props.Data.Description,
-      VisibleRowsOnly: props.Data.VisibleRowsOnly,
+      Name: props.data.Name,
+      Description: props.data.Description,
+      VisibleRowsOnly: props.data.VisibleRowsOnly,
       ErrorMessage: null,
     };
   }
@@ -131,9 +131,9 @@ export class SparklinesChartSettingsWizard
     return true;
   }
   public next(): void {
-    this.props.Data.Name = this.state.Name;
-    this.props.Data.Description = this.state.Description;
-    this.props.Data.VisibleRowsOnly = this.state.VisibleRowsOnly;
+    this.props.data.Name = this.state.Name;
+    this.props.data.Description = this.state.Description;
+    this.props.data.VisibleRowsOnly = this.state.VisibleRowsOnly;
   }
   public back(): void {
     //
@@ -142,6 +142,6 @@ export class SparklinesChartSettingsWizard
     return 1;
   }
   public getIndexStepDecrement() {
-    return StringExtensions.IsNullOrEmpty(this.props.Data.Expression) ? 2 : 1;
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ? 2 : 1;
   }
 }

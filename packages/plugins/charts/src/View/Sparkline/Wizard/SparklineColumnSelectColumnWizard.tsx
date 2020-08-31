@@ -23,10 +23,10 @@ export class SparklineColumnSelectColumnWizard
   constructor(props: SparklineColumnSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
-      SparklineType: this.props.Data.SparklineType,
-      MinimumValue: this.props.Data.MinimumValue,
-      MaximumValue: this.props.Data.MaximumValue,
+      ColumnId: this.props.data.ColumnId,
+      SparklineType: this.props.data.SparklineType,
+      MinimumValue: this.props.data.MinimumValue,
+      MaximumValue: this.props.data.MaximumValue,
     };
   }
 
@@ -66,10 +66,10 @@ export class SparklineColumnSelectColumnWizard
     return true;
   }
   public next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.SparklineType = this.state.SparklineType;
-    this.props.Data.MinimumValue = this.state.MinimumValue;
-    this.props.Data.MaximumValue = this.state.MaximumValue;
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.SparklineType = this.state.SparklineType;
+    this.props.data.MinimumValue = this.state.MinimumValue;
+    this.props.data.MaximumValue = this.state.MaximumValue;
   }
 
   public back(): void {

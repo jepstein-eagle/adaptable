@@ -1,11 +1,15 @@
 import * as React from 'react';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
+import {
+  AdaptableObjectExpressionAdaptableWizardProps,
+  AdaptableObjectAdaptableWizardProps,
+} from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { ChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { AdaptableWizard } from '@adaptabletools/adaptable/src/View/Wizard/AdaptableWizard';
 import { SparklinesChartColumnWizard } from './SparklinesChartColumnWizard';
 import { SparklinesChartSummaryWizard } from './SparklinesChartSummaryWizard';
 import { SparklinesChartSettingsWizard } from './SparklinesChartSettingsWizard';
+import { ExpressionWizard } from '@adaptabletools/adaptable/src/View/Components/ExpressionWizard';
 
 export interface SparklinesChartWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<SparklinesChartWizard> {}
@@ -26,18 +30,17 @@ export class SparklinesChartWizard extends React.Component<SparklinesChartWizard
               Index: 0,
               Element: <SparklinesChartColumnWizard api={this.props.api} />,
             },
-            /*
             {
-              StepName: 'Build Query',
+              StepName: 'Query Builder',
               Index: 1,
               Element: (
-                <SparklinesChartExpressionColumnWizard
+                <ExpressionWizard
                   api={this.props.api}
-                  ExpressionMode={ExpressionMode.SingleColumn}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
               ),
             },
-            */
             {
               StepName: 'Chart Settings',
               Index: 2,

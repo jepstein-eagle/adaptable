@@ -23,7 +23,7 @@ export class UserFilterSelectColumnWizard
   constructor(props: UserFilterSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: '', //props.Data.Scope.ColumnIds[0],
+      ColumnId: '', //props.data.Scope.ColumnIds[0],
     };
   }
 
