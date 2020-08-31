@@ -4,32 +4,23 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
-import { Box, Flex } from 'rebass';
-import Radio from '../../../components/Radio';
 import WizardPanel from '../../../components/WizardPanel';
-import HelpBlock from '../../../components/HelpBlock';
-import CheckBox from '../../../components/CheckBox';
-import { ScopeDataType, Scope } from '../../../PredefinedConfig/Common/Scope';
-import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import Panel from '../../../components/Panel';
+import { Scope } from '../../../PredefinedConfig/Common/Scope';
 import { ScopeComponent } from '../../Components/ScopeComponent';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { WizardScopeState } from '../../Components/SharedProps/WizardScopeState';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {}
 
-export interface ConditionalStyleScopeWizardState {
-  Scope: Scope;
-}
-
 export class ConditionalStyleScopeWizard
-  extends React.Component<ConditionalStyleScopeWizardProps, ConditionalStyleScopeWizardState>
+  extends React.Component<ConditionalStyleScopeWizardProps, WizardScopeState>
   implements AdaptableWizardStep {
   constructor(props: ConditionalStyleScopeWizardProps) {
     super(props);
 
     this.state = {
-      Scope: this.props.data.Scope,
+      scope: this.props.data.Scope ? this.props.data.Scope : { All: true },
     };
   }
 
@@ -39,33 +30,31 @@ export class ConditionalStyleScopeWizard
         {' '}
         <ScopeComponent
           api={this.props.api}
-          scope={this.props.data.Scope}
+          scope={this.state.scope}
           updateScope={(scope: Scope) => this.onUpdateScope(scope)}
+          useAllDataTypes={true}
         />{' '}
       </WizardPanel>
     );
   }
 
   private onUpdateScope(scope: Scope) {
-    console.log('scope received', scope);
-    this.setState({ Scope: scope } as ConditionalStyleScopeWizardState, () =>
-      this.props.updateGoBackState()
-    );
+    this.setState({ scope: scope } as WizardScopeState, () => this.props.updateGoBackState());
   }
 
   public canNext(): boolean {
-    if (this.state.Scope == undefined) {
+    if (this.state.scope == undefined) {
       return false;
     }
     if (
-      'ColumnIds' in this.state.Scope &&
-      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnIdsInScope(this.state.Scope))
+      'ColumnIds' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnIdsInScope(this.state.scope))
     ) {
       return false;
     }
     if (
-      'DataTypes' in this.state.Scope &&
-      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getDataTypesInScope(this.state.Scope))
+      'DataTypes' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getDataTypesInScope(this.state.scope))
     ) {
       return false;
     }
@@ -76,7 +65,7 @@ export class ConditionalStyleScopeWizard
     return false;
   }
   public next(): void {
-    this.props.data.Scope = this.state.Scope;
+    this.props.data.Scope = this.state.scope;
   }
 
   public back(): void {

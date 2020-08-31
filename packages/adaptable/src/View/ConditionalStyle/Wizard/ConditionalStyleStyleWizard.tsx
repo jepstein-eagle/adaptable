@@ -10,7 +10,6 @@ import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleStat
 import { Box } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
 import CheckBox from '../../../components/CheckBox';
-import { ConditionalStyleScopeWizardState } from './ConditionalStyleScopeWizard';
 
 export interface ConditionalStyleStyleWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
