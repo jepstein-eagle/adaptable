@@ -171,7 +171,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onEdit(layout: Layout) {
-    let clonedObject: Layout = Helper.cloneObject(layout);
+    const clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
       editedAdaptableObject: clonedObject,
       wizardStartIndex: 0,
@@ -204,7 +204,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let clonedObject: Layout = Helper.cloneObject(this.state.editedAdaptableObject);
+    const clonedObject: Layout = Helper.cloneObject(this.state.editedAdaptableObject);
+
     const isNew = this.state.wizardStatus == WizardStatus.New;
     if (isNew) {
       this.props.onAddLayout(clonedObject);
