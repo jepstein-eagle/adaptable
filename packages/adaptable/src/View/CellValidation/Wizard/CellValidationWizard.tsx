@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { CellValidationActionWizard } from './CellValidationActionWizard';
-import { CellValidationSelectColumnWizard } from './CellValidationSelectColumnWizard';
+import { CellValidationScopeWizard } from './CellValidationSelectColumnWizard';
 import { CellValidationRulesWizard } from './CellValidationRulesWizard';
 import { CellValidationSummaryWizard } from './CellValidationSummaryWizard';
 import { CellValidationSelectQueryWizard } from './CellValidationSelectQueryWizard';
@@ -24,7 +24,7 @@ export class CellValidationWizard extends React.Component<CellValidationWizardPr
             {
               StepName: 'Select Column',
               Index: 0,
-              Element: <CellValidationSelectColumnWizard api={this.props.api} />,
+              Element: <CellValidationScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Action',

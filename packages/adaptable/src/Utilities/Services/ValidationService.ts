@@ -24,8 +24,9 @@ import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
 import { IUIConfirmation } from '../Interface/IMessage';
 import { ValidationResult } from '../../AdaptableOptions/EditOptions';
 import StringExtensions from '../Extensions/StringExtensions';
-import { AdaptableFunctionName } from '../../types';
+import { AdaptableFunctionName, Scope } from '../../types';
 import * as parser from '../../parser/src';
+import { isThisQuarter } from 'date-fns';
 
 export class ValidationService implements IValidationService {
   constructor(private adaptable: IAdaptable) {
@@ -50,8 +51,11 @@ export class ValidationService implements IValidationService {
           );
           let existingItem = distinctValues.find(dv => dv == dataChangedInfo.NewValue);
           if (existingItem) {
+            let scope: Scope = {
+              ColumnIds: [dataChangedInfo.ColumnId],
+            };
             let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
-              dataChangedInfo.ColumnId,
+              scope,
               { Id: 'PrimaryKeyDuplicate' },
               ActionMode.StopEdit
             );
@@ -61,8 +65,11 @@ export class ValidationService implements IValidationService {
       }
     }
 
-    let editingRules = this.GetCellValidationState().CellValidations.filter(
-      v => v.ColumnId == dataChangedInfo.ColumnId
+    let editingRules = this.GetCellValidationState().CellValidations.filter(v =>
+      this.adaptable.api.scopeApi.isColumnInScopeColumns(
+        this.adaptable.api.columnApi.getColumnFromId(dataChangedInfo.ColumnId),
+        v.Scope
+      )
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
@@ -272,18 +279,17 @@ export class ValidationService implements IValidationService {
     };
   }
 
-  public createCellValidationDescription(
-    cellValidationRule: CellValidationRule,
-    columns: AdaptableColumn[]
-  ): string {
+  public createCellValidationDescription(cellValidationRule: CellValidationRule): string {
+    // this is rubbish but at least it builds - think it needs more thought!
     const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
       cellValidationRule.Predicate.Id
     );
-
-    return predicateDef.toString({
-      column: this.adaptable.api.columnApi.getColumnFromId(cellValidationRule.ColumnId),
-      inputs: cellValidationRule.Predicate.Inputs,
-    });
+    return (
+      'scope:' +
+      this.adaptable.api.scopeApi.getScopeDescription(cellValidationRule.Scope) +
+      'predicate: ' +
+      cellValidationRule.Predicate.Inputs
+    );
   }
 
   public createCellValidationUIConfirmation(
@@ -304,12 +310,7 @@ export class ValidationService implements IValidationService {
   }
 
   public CreateCellValidationMessage(cellValidation: CellValidationRule): string {
-    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
-    let columnFriendlyName: string = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(
-      cellValidation.ColumnId
-    );
-    let returnMessage: string =
-      columnFriendlyName + ': ' + this.createCellValidationDescription(cellValidation, columns);
+    let returnMessage: string = this.createCellValidationDescription(cellValidation);
     let expressionDescription: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
       cellValidation
     );

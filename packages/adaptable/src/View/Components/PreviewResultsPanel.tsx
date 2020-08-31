@@ -124,8 +124,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
 
       let expressionDescription: string = expression ? ' when ' + expression : '';
       returnString.push(
-        validationService.createCellValidationDescription(cellValidation, columns) +
-          expressionDescription
+        validationService.createCellValidationDescription(cellValidation) + expressionDescription
       );
     }
     return returnString.join('\n');

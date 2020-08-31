@@ -51,8 +51,8 @@ export class CellValidationSummaryComponent extends React.Component<
         key={StrategyConstants.CellValidationStrategyFriendlyName}
         functionName={StrategyConstants.CellValidationStrategyId}
         strategySummary={Helper.ReturnItemCount(
-          this.props.cellValidations.filter(
-            item => item.ColumnId == this.props.summarisedColumn.ColumnId
+          this.props.cellValidations.filter(item =>
+            this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)
           ),
           StrategyConstants.CellValidationStrategyFriendlyName
         )}
@@ -65,14 +65,14 @@ export class CellValidationSummaryComponent extends React.Component<
 
     // existing items
     this.props.cellValidations.map((item, index) => {
-      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
+      if (this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={'CV' + index}
             item1={StringExtensions.PlaceSpaceBetweenCapitalisedWords(item.ActionMode)}
             item2={this.props.api.internalApi
               .getValidationService()
-              .createCellValidationDescription(item, this.props.api.columnApi.getColumns())}
+              .createCellValidationDescription(item)}
             configEnity={item}
             entityType={StrategyConstants.CellValidationStrategyFriendlyName}
             showShare={this.props.teamSharingActivated}
@@ -113,7 +113,9 @@ export class CellValidationSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: CellValidationRule = ObjectFactory.CreateEmptyCellValidation();
-    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
+    configEntity.Scope = {
+      ColumnIds: [this.props.summarisedColumn.ColumnId],
+    };
     this.setState({
       editedAdaptableObject: configEntity,
       wizardStartIndex: 1,

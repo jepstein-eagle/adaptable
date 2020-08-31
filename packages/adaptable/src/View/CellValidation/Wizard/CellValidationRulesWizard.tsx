@@ -42,11 +42,9 @@ export class CellValidationRulesWizard
 
   render(): any {
     // TODO replace this with the full scope object from prev step
-    const columnScope: Scope = {
-      ColumnIds: [this.props.data.ColumnId],
-    };
+
     const predicatesOptions = this.props.api.cellValidationApi
-      .getPredicateDefsForScope(columnScope)
+      .getPredicateDefsForScope(this.props.data.Scope)
       .map(predicateDef => {
         return {
           value: predicateDef.id,
@@ -55,10 +53,6 @@ export class CellValidationRulesWizard
       });
 
     const currentPredicateDef = this.props.api.predicateApi.getPredicateDefById(this.state.Id);
-
-    let columnFriendlyName: string = this.props.api.columnApi.getFriendlyNameFromColumnId(
-      this.props.data.ColumnId
-    );
 
     let helpText: string =
       'Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).';

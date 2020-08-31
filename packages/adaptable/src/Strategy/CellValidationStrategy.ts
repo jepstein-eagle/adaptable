@@ -50,9 +50,12 @@ export class CellValidationStrategy extends AdaptableStrategyBase
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let cellValidations: CellValidationRule[] = this.adaptable.api.cellValidationApi
       .getAllCellValidation()
-      .filter((cvr: CellValidationRule) => cvr.ColumnId == specialColumnId);
+      .filter((cs: CellValidationRule) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, cs.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(cellValidations)
       ? cellValidations.length + ' Cell Validations'

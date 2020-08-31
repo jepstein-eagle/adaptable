@@ -16,10 +16,7 @@ export interface IValidationService {
     }
   ): () => boolean;
 
-  createCellValidationDescription(
-    cellValidationRule: CellValidationRule,
-    columns: AdaptableColumn[]
-  ): string;
+  createCellValidationDescription(cellValidationRule: CellValidationRule): string;
 
   CreateCellValidationMessage(CellValidation: CellValidationRule): string;
 

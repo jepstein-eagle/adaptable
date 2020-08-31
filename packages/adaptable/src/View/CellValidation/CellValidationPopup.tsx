@@ -58,7 +58,10 @@ class CellValidationPopupComponent extends React.Component<
       if (this.props.popupParams.action && this.props.popupParams.column) {
         if (this.props.popupParams.action == 'New') {
           let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
-          cellValitdation.ColumnId = this.props.popupParams.column.ColumnId;
+          cellValitdation.Scope = {
+            ColumnIds: [this.props.popupParams.column.ColumnId],
+          };
+
           this.setState({
             editedAdaptableObject: cellValitdation,
             wizardStartIndex: 1,
@@ -89,14 +92,13 @@ class CellValidationPopupComponent extends React.Component<
     ];
 
     let CellValidationItems = this.props.CellValidations.map((cellValidationRule, index) => {
-      let column = this.props.api.columnApi.getColumnFromId(cellValidationRule.ColumnId);
+      //   let column = this.props.api.columnApi.getColumnFromId(cellValidationRule.ColumnId);
       return (
         <CellValidationEntityRow
           key={index}
           colItems={colItems}
           api={this.props.api}
           adaptableObject={cellValidationRule}
-          Column={column}
           onEdit={() => this.onEdit(cellValidationRule)}
           onShare={description => this.props.onShare(cellValidationRule, description)}
           teamSharingActivated={this.props.teamSharingActivated}
@@ -223,7 +225,7 @@ class CellValidationPopupComponent extends React.Component<
   canFinishWizard() {
     let cellValidationRule = this.state.editedAdaptableObject as CellValidationRule;
 
-    if (StringExtensions.IsNullOrEmpty(cellValidationRule.ColumnId)) {
+    if (cellValidationRule.Scope == undefined) {
       return false;
     }
     // need to do some validation around the Expression / Shared Query but leave for now

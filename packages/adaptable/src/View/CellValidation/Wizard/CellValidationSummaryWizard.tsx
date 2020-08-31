@@ -22,15 +22,15 @@ export class CellValidationSummaryWizard
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
       {
-        Key: 'Column',
-        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
+        Key: 'Scope',
+        Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope),
       },
       { Key: 'Mode', Value: this.props.data.ActionMode },
       {
         Key: 'Rule',
         Value: this.props.api.internalApi
           .getValidationService()
-          .createCellValidationDescription(this.props.data, this.props.api.columnApi.getColumns()),
+          .createCellValidationDescription(this.props.data),
       },
       {
         Key: 'Query',
