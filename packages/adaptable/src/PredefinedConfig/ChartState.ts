@@ -73,7 +73,8 @@ export interface FinancialChartDefinition extends ChartDefinition {
 
 export interface SparklinesChartDefinition extends ChartDefinition {
   ColumnId: string;
-  Expression?: string; // perhaps allow this to use Shared Queries ?
+  Expression?: string;
+  SharedQueryId?: TypeUuid;
   PrimaryKeyValues?: any[];
 }
 
@@ -81,7 +82,8 @@ export interface CategoryChartDefinition extends ChartDefinition {
   YAxisColumnIds: string[];
   YAxisTotal: 'Sum' | 'Average';
   XAxisColumnId: string;
-  XAxisExpression?: string; // perhaps allow this to use Shared Queries ?;
+  XAxisExpression?: string;
+  XAxisSharedQueryId?: TypeUuid;
 }
 
 export interface PieChartProperties extends ChartProperties {

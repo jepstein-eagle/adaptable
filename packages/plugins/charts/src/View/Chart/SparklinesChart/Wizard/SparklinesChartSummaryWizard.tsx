@@ -20,13 +20,16 @@ export class SparklinesChartSummaryWizard
   }
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
-      { Key: 'Description', Value: this.props.Data.Description },
+      { Key: 'Name', Value: this.props.data.Name },
+      { Key: 'Description', Value: this.props.data.Description },
       {
         Key: 'Column',
-        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
       },
-      { Key: 'Values', Value: this.props.Data.Expression },
+      {
+        Key: 'Expression',
+        Value: this.props.api.queryApi.getExpressionForQueryObject(this.props.data),
+      },
     ];
 
     return (

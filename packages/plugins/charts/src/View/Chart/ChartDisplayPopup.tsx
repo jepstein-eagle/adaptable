@@ -26,6 +26,7 @@ import { StringExtensions } from '@adaptabletools/adaptable/src/Utilities/Extens
 import { AdaptableState } from '@adaptabletools/adaptable/src/PredefinedConfig/AdaptableState';
 import * as ChartRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/ChartRedux';
 import * as SystemRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/SystemRedux';
+import * as QueryRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/QueryRedux';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import { CategoryChartComponent } from './CategoryChart/CategoryChartComponent';
 import { PieChartComponent } from './PieChart/PieChartComponent';
@@ -33,6 +34,9 @@ import { PieChartWizard } from './PieChart/Wizard/PieChartWizard';
 import { FinancialChartComponent } from './FinancialChart/FinancialChartComponent';
 import { SparklinesChartComponent } from './SparklinesChart/SparklinesChartComponent';
 import { SparklinesChartWizard } from './SparklinesChart/Wizard/SparklinesChartWizard';
+import { SharedQuery } from '@adaptabletools/adaptable/src/PredefinedConfig/QueryState';
+import { createUuid } from '@adaptabletools/adaptable/src/PredefinedConfig/Uuid';
+import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
 
 interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplayPopupComponent> {
   ChartDefinitions: ChartDefinition[];
@@ -50,10 +54,13 @@ interface ChartDisplayPopupProps extends ChartDisplayPopupPropsBase<ChartDisplay
     chartUuid: string,
     chartProperties: ChartProperties
   ) => ChartRedux.ChartPropertiesUpdateAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
 }
 
 export interface ChartDisplayPopupState {
   EditedChartDefinition: ChartDefinition;
+  newSharedQueryName?: string;
+  useSharedQuery?: boolean;
 }
 
 class ChartDisplayPopupComponent extends React.Component<
@@ -189,12 +196,16 @@ class ChartDisplayPopupComponent extends React.Component<
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
-                onSetNewSharedQueryName={() => {
-                  throw 'unimplemented';
-                }}
-                onSetUseSharedQuery={() => {
-                  throw 'unimplemented';
-                }}
+                onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                  this.setState({
+                    newSharedQueryName: newSharedQueryName,
+                  })
+                }
+                onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                  this.setState({
+                    useSharedQuery: useSharedQuery,
+                  })
+                }
               />
             ) : null}
             {this.state.EditedChartDefinition.ChartType == ChartType.PieChart ? (
@@ -207,12 +218,16 @@ class ChartDisplayPopupComponent extends React.Component<
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
-                onSetNewSharedQueryName={() => {
-                  throw 'unimplemented';
-                }}
-                onSetUseSharedQuery={() => {
-                  throw 'unimplemented';
-                }}
+                onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                  this.setState({
+                    newSharedQueryName: newSharedQueryName,
+                  })
+                }
+                onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                  this.setState({
+                    useSharedQuery: useSharedQuery,
+                  })
+                }
               />
             ) : null}
 
@@ -226,12 +241,16 @@ class ChartDisplayPopupComponent extends React.Component<
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
-                onSetNewSharedQueryName={() => {
-                  throw 'unimplemented';
-                }}
-                onSetUseSharedQuery={() => {
-                  throw 'unimplemented';
-                }}
+                onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                  this.setState({
+                    newSharedQueryName: newSharedQueryName,
+                  })
+                }
+                onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                  this.setState({
+                    useSharedQuery: useSharedQuery,
+                  })
+                }
               />
             ) : null}
           </div>
@@ -258,6 +277,38 @@ class ChartDisplayPopupComponent extends React.Component<
 
   onFinishWizard() {
     let clonedObject: ChartDefinition = Helper.cloneObject(this.state.EditedChartDefinition);
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      switch (clonedObject.ChartType) {
+        case ChartType.CategoryChart: {
+          this.props.onAddSharedQuery({
+            Uuid: SharedQueryId,
+            Name: this.state.newSharedQueryName,
+            Expression: (clonedObject as CategoryChartDefinition).XAxisExpression,
+          });
+
+          (clonedObject as CategoryChartDefinition).XAxisExpression = undefined;
+          (clonedObject as CategoryChartDefinition).XAxisSharedQueryId = SharedQueryId;
+          break;
+        }
+        case ChartType.PieChart: {
+          break;
+        }
+        case ChartType.SparklinesChart: {
+          this.props.onAddSharedQuery({
+            Uuid: SharedQueryId,
+            Name: this.state.newSharedQueryName,
+            Expression: (clonedObject as SparklinesChartDefinition).Expression,
+          });
+
+          (clonedObject as SparklinesChartDefinition).Expression = undefined;
+          (clonedObject as SparklinesChartDefinition).SharedQueryId = SharedQueryId;
+          break;
+        }
+      }
+    }
+
     let isNew: boolean =
       this.props.ChartDefinitions.find(cd => cd.Uuid == this.state.EditedChartDefinition.Uuid) ==
       null;
@@ -266,7 +317,11 @@ class ChartDisplayPopupComponent extends React.Component<
     } else {
       this.props.onEditChartDefinition(clonedObject);
     }
-    this.setState({ EditedChartDefinition: null });
+    this.setState({
+      EditedChartDefinition: null,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
+    });
     this.props.onSelectChartDefinition(clonedObject.Name);
   }
 
@@ -300,6 +355,8 @@ function mapDispatchToProps(
       dispatch(SystemRedux.ChartSetChartVisibility(chartVisibility)),
     onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) =>
       dispatch(ChartRedux.ChartPropertiesUpdate(chartUuid, chartProperties)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
   };
 }
 

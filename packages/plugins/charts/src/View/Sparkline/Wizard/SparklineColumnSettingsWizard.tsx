@@ -79,18 +79,18 @@ export class SparklineColumnSettingsWizard
     super(props);
     this._prefix = `${Date.now()}`;
     this.state = {
-      MinimumValue: this.props.Data!.MinimumValue,
-      MaximumValue: this.props.Data!.MaximumValue,
+      MinimumValue: this.props.data!.MinimumValue,
+      MaximumValue: this.props.data!.MaximumValue,
       SparklineType:
-        (this.props.Data!.SparklineType as SparklineTypeEnum) || SparklineTypeEnum.Line,
-      UseMinStaticValue: this.props.Data!.MinimumValue != null,
-      UseMinCurrentValue: this.props.Data!.MinimumValue == null,
-      UseMaxStaticValue: this.props.Data!.MaximumValue != null,
-      UseMaxCurrentValue: this.props.Data!.MaximumValue == null,
-      ShowToolTip: this.props.Data!.ShowToolTip,
+        (this.props.data!.SparklineType as SparklineTypeEnum) || SparklineTypeEnum.Line,
+      UseMinStaticValue: this.props.data!.MinimumValue != null,
+      UseMinCurrentValue: this.props.data!.MinimumValue == null,
+      UseMaxStaticValue: this.props.data!.MaximumValue != null,
+      UseMaxCurrentValue: this.props.data!.MaximumValue == null,
+      ShowToolTip: this.props.data!.ShowToolTip,
 
-      LineColor: this.props.Data!.LineColor
-        ? this.props.Data!.LineColor
+      LineColor: this.props.data!.LineColor
+        ? this.props.data!.LineColor
         : DefaultSparklinesChartProperties.Brush,
     };
   }
@@ -274,7 +274,7 @@ export class SparklineColumnSettingsWizard
   };
 
   public canNext(): boolean {
-    if (StringExtensions.IsNullOrEmpty(this.props.Data!.ColumnId)) {
+    if (StringExtensions.IsNullOrEmpty(this.props.data!.ColumnId)) {
       return false;
     }
 
@@ -285,16 +285,16 @@ export class SparklineColumnSettingsWizard
     return true;
   }
   public next(): void {
-    this.props.Data!.SparklineType = this.state.SparklineType;
-    this.props.Data!.MinimumValue = this.state.UseMinCurrentValue
+    this.props.data!.SparklineType = this.state.SparklineType;
+    this.props.data!.MinimumValue = this.state.UseMinCurrentValue
       ? undefined
       : this.state.MinimumValue;
 
-    this.props.Data!.MaximumValue = this.state.UseMaxCurrentValue
+    this.props.data!.MaximumValue = this.state.UseMaxCurrentValue
       ? undefined
       : this.state.MaximumValue;
-    this.props.Data!.LineColor = this.state.LineColor;
-    this.props.Data!.ShowToolTip = this.state.ShowToolTip;
+    this.props.data!.LineColor = this.state.LineColor;
+    this.props.data!.ShowToolTip = this.state.ShowToolTip;
   }
 
   public back(): void {

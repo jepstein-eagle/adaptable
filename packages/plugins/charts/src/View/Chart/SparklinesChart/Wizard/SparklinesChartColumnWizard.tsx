@@ -32,9 +32,9 @@ export class SparklinesChartColumnWizard
   constructor(props: SparklinesChartColumnWizardProps) {
     super(props);
     this.state = {
-      Filtered: StringExtensions.IsNotNullOrEmpty(props.Data.Expression),
-      Expression: props.Data.Expression,
-      ColumnId: props.Data.ColumnId,
+      Filtered: StringExtensions.IsNotNullOrEmpty(props.data.Expression),
+      Expression: props.data.Expression,
+      ColumnId: props.data.ColumnId,
     };
   }
 
@@ -82,12 +82,6 @@ export class SparklinesChartColumnWizard
     const state = {
       Filtered,
     } as SparklinesChartColumnWizardState;
-    // TODO: FIX THIS!!!!
-    //  let Expression: Expression = this.state.Expression;
-    //   if (Filtered && ExpressionHelper.IsNullOrEmptyExpression(this.state.Expression)) {
-    //    Expression = ExpressionHelper.CreateEmptyExpression();
-    //    state.Expression = Expression;
-    //  }
 
     this.setState(state);
   };
@@ -111,8 +105,8 @@ export class SparklinesChartColumnWizard
   }
 
   public next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.Expression = !this.state.Filtered ? null : this.state.Expression;
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.Expression = !this.state.Filtered ? null : this.state.Expression;
   }
 
   public back(): void {

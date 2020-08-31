@@ -52,19 +52,20 @@ export class ChartService implements IChartService {
     //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
     let yAxisColumnNames: string[] = [];
 
-    let returnData: any = xAxisColValues.map(cv => {
+    let returnData: any = xAxisColValues.map(xAxisColumnValue => {
       let chartItem: any = new Object();
 
-      chartItem[xAxisColumnName] = cv;
+      chartItem[xAxisColumnName] = xAxisColumnValue;
       let showAverageTotal: boolean = chartDefinition.YAxisTotal == AxisTotal.Average;
-      let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv };
+      // let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: xAxisColumnValue };
 
       chartDefinition.YAxisColumnIds.forEach(colID => {
         let total = this.buildYAxisTotal(
           chartDefinition,
           colID,
-          [xAxisKVP],
-          columns,
+          chartDefinition.XAxisColumnId,
+          xAxisColumnValue,
+          //  [xAxisKVP],
           showAverageTotal
         );
         let colName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(colID);
@@ -189,8 +190,9 @@ export class ChartService implements IChartService {
   private buildYAxisTotal(
     chartDefinition: ChartDefinition,
     yAxisColumn: string,
-    kvps: KeyValuePair[],
-    columns: AdaptableColumn[],
+    xAxisColumnId: string,
+    xAxisColumnValue: any,
+
     showAverageTotal: boolean
   ): number {
     /*
@@ -214,7 +216,7 @@ export class ChartService implements IChartService {
     // need here to create a 'completedExpresson' based on the kvp passed in
     // but for now lets just create an empty one
     // TODO - to fix!!!!
-    let completedExpressionTemp: string = '';
+    let completedExpressionTemp: string = '[' + xAxisColumnId + '] = "' + xAxisColumnValue + '"';
 
     let finalTotal: number = 0;
     let returnedRecordCount: number = 0;
