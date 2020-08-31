@@ -73,10 +73,10 @@ export class CustomSortSummaryComponent extends React.Component<
       customSortRow = (
         <StrategyDetail
           key={StrategyConstants.CustomSortStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.CustomSortStrategyId} />}
-          Item2={this.getCustomSortedValues(customSort)}
-          ConfigEnity={customSort}
-          EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
+          item1={<StrategyProfile FunctionName={StrategyConstants.CustomSortStrategyId} />}
+          item2={this.getCustomSortedValues(customSort)}
+          configEnity={customSort}
+          entityType={StrategyConstants.CustomSortStrategyFriendlyName}
           onEdit={() => this.onEdit(customSort)}
           showEdit={customSort.CustomSortComparerFunction == undefined}
           onShare={description => this.props.onShare(customSort, description)}
@@ -91,13 +91,13 @@ export class CustomSortSummaryComponent extends React.Component<
       <div>
         {customSortRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <CustomSortWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
+            editedAdaptableObject={this.state.editedAdaptableObject as CustomSort}
             configEntities={this.props.CustomSorts}
             modalContainer={this.props.modalContainer}
             api={this.props.api}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -111,44 +111,44 @@ export class CustomSortSummaryComponent extends React.Component<
     let configEntity: CustomSort = ObjectFactory.CreateEmptyCustomSort();
     configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(customSort: CustomSort) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(customSort),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(customSort),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let customSort: CustomSort = this.state.EditedAdaptableObject as CustomSort;
+    let customSort: CustomSort = this.state.editedAdaptableObject as CustomSort;
     if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
       this.props.onEditCustomSort(customSort);
     } else {
       this.props.onAddCustomSort(customSort);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let customSort = this.state.EditedAdaptableObject as CustomSort;
+    let customSort = this.state.editedAdaptableObject as CustomSort;
     return (
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)

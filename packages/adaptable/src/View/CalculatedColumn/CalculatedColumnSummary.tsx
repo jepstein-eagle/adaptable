@@ -44,11 +44,11 @@ export class CalculatedColumnSummaryComponent extends React.Component<
         detailRow = (
           <StrategyDetail
             key={'UF' + index}
-            Item1={StrategyConstants.CalculatedColumnStrategyFriendlyName}
-            Item2={item.ColumnExpression}
-            ConfigEnity={item}
+            item1={StrategyConstants.CalculatedColumnStrategyFriendlyName}
+            item2={item.ColumnExpression}
+            configEnity={item}
             showShare={this.props.teamSharingActivated}
-            EntityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
+            entityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={CalculatedColumnRedux.CalculatedColumnDelete(item)}
@@ -62,15 +62,15 @@ export class CalculatedColumnSummaryComponent extends React.Component<
       <div>
         {detailRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <CalculatedColumnWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
+            editedAdaptableObject={this.state.editedAdaptableObject as CalculatedColumn}
             configEntities={this.props.CalculatedColumns}
             modalContainer={this.props.modalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
             api={this.props.api}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -82,32 +82,32 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
   onEdit(calculatedColumn: CalculatedColumn) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(calculatedColumn),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(calculatedColumn),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.editedAdaptableObject);
     this.props.onEdit(calculatedColumn);
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableObject as CalculatedColumn;
+    let calculatedColumn = this.state.editedAdaptableObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)

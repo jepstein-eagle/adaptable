@@ -67,11 +67,11 @@ export class PercentBarSummaryComponent extends React.Component<
       percentBarRow = (
         <StrategyDetail
           key={StrategyConstants.PercentBarStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.PercentBarStrategyId} />}
-          Item2={'Percent Bar set'}
-          ConfigEnity={percentBar}
+          item1={<StrategyProfile FunctionName={StrategyConstants.PercentBarStrategyId} />}
+          item2={'Percent Bar set'}
+          configEnity={percentBar}
           showShare={this.props.teamSharingActivated}
-          EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
+          entityType={StrategyConstants.PercentBarStrategyFriendlyName}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
           onDelete={PercentBarRedux.PercentBarDelete(percentBar)}
@@ -84,12 +84,12 @@ export class PercentBarSummaryComponent extends React.Component<
       <div>
         {percentBarRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <PercentBarWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
+            editedAdaptableObject={this.state.editedAdaptableObject as PercentBar}
             modalContainer={this.props.modalContainer}
             configEntities={this.props.PercentBars}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -115,45 +115,45 @@ export class PercentBarSummaryComponent extends React.Component<
     });
 
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(renderedColumn: PercentBar) {
     let clonedObject: PercentBar = Helper.cloneObject(renderedColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let percentBar: PercentBar = this.state.EditedAdaptableObject as PercentBar;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let percentBar: PercentBar = this.state.editedAdaptableObject as PercentBar;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditPercentBar(percentBar);
     } else {
       this.props.onAddPercentBar(percentBar);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let percentBar = this.state.EditedAdaptableObject as PercentBar;
+    let percentBar = this.state.editedAdaptableObject as PercentBar;
     return StringExtensions.IsNotNullOrEmpty(percentBar.ColumnId);
   }
 }

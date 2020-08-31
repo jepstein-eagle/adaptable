@@ -70,11 +70,11 @@ export class FormatColumnSummaryComponent extends React.Component<
       formatColumnRow = (
         <StrategyDetail
           key={StrategyConstants.FormatColumnStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.FormatColumnStrategyId} />}
-          Item2={<StyleVisualItem Style={formatColumn.Style} />}
-          ConfigEnity={formatColumn}
+          item1={<StrategyProfile FunctionName={StrategyConstants.FormatColumnStrategyId} />}
+          item2={<StyleVisualItem Style={formatColumn.Style} />}
+          configEnity={formatColumn}
           showShare={this.props.teamSharingActivated}
-          EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
+          entityType={StrategyConstants.FormatColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={description => this.props.onShare(formatColumn, description)}
           onDelete={FormatColumnRedux.FormatColumnDelete(formatColumn)}
@@ -87,14 +87,14 @@ export class FormatColumnSummaryComponent extends React.Component<
       <div>
         {formatColumnRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <FormatColumnWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
+            editedAdaptableObject={this.state.editedAdaptableObject as FormatColumn}
             modalContainer={this.props.modalContainer}
             configEntities={this.props.FormatColumns}
             api={this.props.api}
             StyleClassNames={this.props.StyleClassNames}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -110,45 +110,45 @@ export class FormatColumnSummaryComponent extends React.Component<
       ColumnIds: [this.props.summarisedColumn.ColumnId],
     };
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(formatColumn: FormatColumn) {
     let clonedObject: FormatColumn = Helper.cloneObject(formatColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let formatColumn: FormatColumn = this.state.EditedAdaptableObject as FormatColumn;
+    let formatColumn: FormatColumn = this.state.editedAdaptableObject as FormatColumn;
     if (this.props.FormatColumns.find(x => x.Uuid == formatColumn.Uuid)) {
       this.props.onEditFormatColumn(formatColumn);
     } else {
       this.props.onAddFormatColumn(formatColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
+    let formatColumn = this.state.editedAdaptableObject as FormatColumn;
     return formatColumn.Scope != undefined && UIHelper.IsNotEmptyStyle(formatColumn.Style);
   }
 }

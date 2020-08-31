@@ -28,7 +28,7 @@ export interface SparklineColumnEntityRowProps
 
 export class SparklineColumnEntityRow extends React.Component<SparklineColumnEntityRowProps, {}> {
   render(): any {
-    let sparklineColumn: SparklineColumn = this.props.AdaptableObject as SparklineColumn;
+    let sparklineColumn: SparklineColumn = this.props.adaptableObject as SparklineColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -48,7 +48,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
             value={sparklineColumn.SparklineType as SparklineTypeEnum}
             onChange={(sparklineType: SparklineTypeEnum) => {
               this.props.onSparklineTypeChange(
-                this.props.AdaptableObject as SparklineColumn,
+                this.props.adaptableObject as SparklineColumn,
                 sparklineType
               );
             }}
@@ -104,13 +104,13 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
     );
     colItems[5].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(sparklineColumn)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
         showDelete={false}
-        EntityType={StrategyConstants.SparklineColumnStrategyFriendlyName}
+        entityType={StrategyConstants.SparklineColumnStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );
@@ -122,7 +122,7 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let minValue: number = Number(e.value);
-      this.props.onMinimumValueChanged(this.props.AdaptableObject as SparklineColumn, minValue);
+      this.props.onMinimumValueChanged(this.props.adaptableObject as SparklineColumn, minValue);
     }
   }
 
@@ -130,12 +130,12 @@ export class SparklineColumnEntityRow extends React.Component<SparklineColumnEnt
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let maxValue: number = Number(e.value);
-      this.props.onMaximumValueChanged(this.props.AdaptableObject as SparklineColumn, maxValue);
+      this.props.onMaximumValueChanged(this.props.adaptableObject as SparklineColumn, maxValue);
     }
   }
 
   onLineColorChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onLineColorChanged(this.props.AdaptableObject as SparklineColumn, e.value);
+    this.props.onLineColorChanged(this.props.adaptableObject as SparklineColumn, e.value);
   }
 }

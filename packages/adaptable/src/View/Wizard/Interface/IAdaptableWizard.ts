@@ -1,5 +1,3 @@
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
 

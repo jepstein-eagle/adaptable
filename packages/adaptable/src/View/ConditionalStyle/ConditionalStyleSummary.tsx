@@ -75,10 +75,10 @@ export class ConditionalStyleSummaryComponent extends React.Component<
         let detailRow = (
           <StrategyDetail
             key={'CS' + index}
-            Item1={<StyleVisualItem Style={item.Style} />}
-            Item2={item.Expression}
-            ConfigEnity={item}
-            EntityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+            item1={<StyleVisualItem Style={item.Style} />}
+            item2={item.Expression}
+            configEnity={item}
+            entityType={StrategyConstants.ConditionalStyleStrategyFriendlyName}
             showShare={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
@@ -93,14 +93,14 @@ export class ConditionalStyleSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <ConditionalStyleWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as ConditionalStyle}
+            editedAdaptableObject={this.state.editedAdaptableObject as ConditionalStyle}
             configEntities={null}
             modalContainer={this.props.modalContainer}
             StyleClassNames={this.props.StyleClassNames}
             api={this.props.api}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -122,44 +122,44 @@ export class ConditionalStyleSummaryComponent extends React.Component<
       ColumnIds: [this.props.summarisedColumn.ColumnId],
     };
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(ConditionalStyle: ConditionalStyle) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(ConditionalStyle),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(ConditionalStyle),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    if (this.state.WizardStatus == WizardStatus.Edit) {
-      this.props.onEditConditionalStyle(this.state.EditedAdaptableObject as ConditionalStyle);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
+      this.props.onEditConditionalStyle(this.state.editedAdaptableObject as ConditionalStyle);
     } else {
-      this.props.onAddConditionalStyle(this.state.EditedAdaptableObject as ConditionalStyle);
+      this.props.onAddConditionalStyle(this.state.editedAdaptableObject as ConditionalStyle);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let conditionalStyle = this.state.EditedAdaptableObject as ConditionalStyle;
+    let conditionalStyle = this.state.editedAdaptableObject as ConditionalStyle;
 
     if (StringExtensions.IsNullOrEmpty(conditionalStyle.Expression)) {
       return false;

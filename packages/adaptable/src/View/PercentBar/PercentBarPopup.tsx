@@ -42,9 +42,9 @@ class PercentBarPopupComponent extends React.Component<
   constructor(props: PercentBarPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     };
   }
   shouldClosePopupOnFinishWizard: boolean = false;
@@ -111,7 +111,7 @@ class PercentBarPopupComponent extends React.Component<
           key={percentBar.Uuid}
           colItems={colItems}
           api={this.props.api}
-          AdaptableObject={percentBar}
+          adaptableObject={percentBar}
           Column={column}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
@@ -151,13 +151,13 @@ class PercentBarPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <PercentBarWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
+              editedAdaptableObject={this.state.editedAdaptableObject as PercentBar}
               configEntities={null}
               api={this.props.api}
               modalContainer={this.props.modalContainer}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -170,35 +170,35 @@ class PercentBarPopupComponent extends React.Component<
 
   onNewFromColumn(percentBar: PercentBar) {
     this.setState({
-      EditedAdaptableObject: percentBar,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: percentBar,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyPercentBar(),
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 0,
+      editedAdaptableObject: ObjectFactory.CreateEmptyPercentBar(),
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
     });
   }
 
   onEdit(percentBar: PercentBar) {
     let clonedObject: PercentBar = Helper.cloneObject(percentBar);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -206,21 +206,21 @@ class PercentBarPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let percentBar: PercentBar = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let percentBar: PercentBar = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditPercentBar(percentBar);
     } else {
       this.props.onAddPercentBar(percentBar);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard(): boolean {
-    let percentBar = this.state.EditedAdaptableObject as PercentBar;
+    let percentBar = this.state.editedAdaptableObject as PercentBar;
     if (StringExtensions.IsNullOrEmpty(percentBar.ColumnId)) {
       return false;
     }

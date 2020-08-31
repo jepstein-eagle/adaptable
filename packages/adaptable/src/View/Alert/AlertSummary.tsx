@@ -64,12 +64,12 @@ export class AlertSummaryComponent extends React.Component<
         let detailRow = (
           <StrategyDetail
             key={'CV' + index}
-            Item1={'something here?'}
-            Item2={this.props.api.internalApi
+            item1={'something here?'}
+            item2={this.props.api.internalApi
               .getStrategyService()
               .createAlertDescription(item, this.props.api.columnApi.getColumns())}
-            ConfigEnity={item}
-            EntityType={StrategyConstants.AlertStrategyFriendlyName}
+            configEnity={item}
+            entityType={StrategyConstants.AlertStrategyFriendlyName}
             showShare={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
@@ -84,13 +84,13 @@ export class AlertSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <AlertWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
+            editedAdaptableObject={this.state.editedAdaptableObject as AlertDefinition}
             configEntities={null}
             modalContainer={this.props.modalContainer}
             api={this.props.api}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -110,44 +110,44 @@ export class AlertSummaryComponent extends React.Component<
     let configEntity: AlertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
     configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(Alert: AlertDefinition) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(Alert),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(Alert),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    if (this.state.WizardStatus == WizardStatus.New) {
-      this.props.onAddAlert(this.state.EditedAdaptableObject as AlertDefinition);
+    if (this.state.wizardStatus == WizardStatus.New) {
+      this.props.onAddAlert(this.state.editedAdaptableObject as AlertDefinition);
     } else {
-      this.props.onEditAlert(this.state.EditedAdaptableObject as AlertDefinition);
+      this.props.onEditAlert(this.state.editedAdaptableObject as AlertDefinition);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    //  let alertDefinition = this.state.EditedAdaptableObject as AlertDefinition
+    //  let alertDefinition = this.state.editedAdaptableObject as AlertDefinition
     return true;
   }
 }

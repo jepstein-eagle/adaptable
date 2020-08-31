@@ -220,9 +220,9 @@ class ViewAsSparklinesPopupComponent extends React.Component<
 
   componentDidMount() {
     if (this.props.popupParams) {
-      const column = this.props.popupParams.columnId;
-      if (StringExtensions.IsNotNullOrEmpty(column)) {
-        this.updateDataSource(column, this.props.popupParams.primaryKeyValues);
+      const column = this.props.popupParams.column;
+      if (column) {
+        this.updateDataSource(column.ColumnId, this.props.popupParams.primaryKeyValues);
       }
     }
   }

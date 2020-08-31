@@ -101,7 +101,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
           colItems={colItems}
           api={this.props.api}
           IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
-          AdaptableObject={x}
+          adaptableObject={x}
           onEdit={() => this.onEdit(x)}
           onShare={description => this.props.onShare(x, description)}
           teamSharingActivated={this.props.teamSharingActivated}
@@ -141,14 +141,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             <EmptyContent>Click 'New' to start creating layouts.</EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <LayoutWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject}
+              editedAdaptableObject={this.state.editedAdaptableObject}
               configEntities={this.props.Layouts}
               modalContainer={this.props.modalContainer}
               ColumnSorts={this.props.api.gridApi.getColumnSorts()}
               api={this.props.api}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -161,29 +161,29 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout({
+      editedAdaptableObject: ObjectFactory.CreateEmptyLayout({
         Name: '',
       }),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(layout: Layout) {
     let clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
 
     if (this.shouldClosePopupOnFinishWizard) {
@@ -192,8 +192,8 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
-    const isNew = this.state.WizardStatus == WizardStatus.New;
+    let clonedObject: Layout = Helper.cloneObject(this.state.editedAdaptableObject);
+    const isNew = this.state.wizardStatus == WizardStatus.New;
     if (isNew) {
       this.props.onAddLayout(clonedObject);
     } else {
@@ -204,9 +204,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     let shouldChangeLayout: boolean = isNew || currentLayout.Uuid == clonedObject.Uuid;
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
 
     if (shouldChangeLayout) {
@@ -216,7 +216,7 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   canFinishWizard() {
-    let layout = this.state.EditedAdaptableObject as Layout;
+    let layout = this.state.editedAdaptableObject as Layout;
 
     // Need a name and EITHER columns or Pivot Columns
     return (

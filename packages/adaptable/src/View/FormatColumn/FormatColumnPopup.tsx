@@ -45,9 +45,9 @@ class FormatColumnPopupComponent extends React.Component<
   constructor(props: FormatColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     };
   }
   shouldClosePopupOnFinishWizard: boolean = false;
@@ -95,7 +95,7 @@ class FormatColumnPopupComponent extends React.Component<
           key={formatColumn.Uuid}
           colItems={colItems}
           api={this.props.api}
-          AdaptableObject={formatColumn}
+          adaptableObject={formatColumn}
           onEdit={() => this.onEdit(formatColumn)}
           onShare={description => this.props.onShare(formatColumn, description)}
           teamSharingActivated={this.props.teamSharingActivated}
@@ -128,14 +128,14 @@ class FormatColumnPopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={FormatColumns} />
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <FormatColumnWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject as FormatColumn}
+              editedAdaptableObject={this.state.editedAdaptableObject as FormatColumn}
               modalContainer={this.props.modalContainer}
               api={this.props.api}
               StyleClassNames={this.props.StyleClassNames}
               configEntities={this.props.FormatColumns}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -148,36 +148,36 @@ class FormatColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyFormatColumn(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyFormatColumn(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onNewFromColumn(formatColumn: FormatColumn) {
     let clonedObject: FormatColumn = Helper.cloneObject(formatColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: clonedObject,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onEdit(formatColumn: FormatColumn) {
     let clonedObject: FormatColumn = Helper.cloneObject(formatColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -185,17 +185,17 @@ class FormatColumnPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let formatColumn = this.state.editedAdaptableObject as FormatColumn;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditFormatColumn(formatColumn);
     } else {
       this.props.onAddFormatColumn(formatColumn);
     }
-    this.setState({ EditedAdaptableObject: null, WizardStartIndex: 0 });
+    this.setState({ editedAdaptableObject: null, wizardStartIndex: 0 });
   }
 
   canFinishWizard() {
-    let formatColumn = this.state.EditedAdaptableObject as FormatColumn;
+    let formatColumn = this.state.editedAdaptableObject as FormatColumn;
     if (formatColumn.Scope == undefined || formatColumn.Scope == null) {
       return false;
     }

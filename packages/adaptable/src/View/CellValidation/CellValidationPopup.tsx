@@ -60,9 +60,9 @@ class CellValidationPopupComponent extends React.Component<
           let cellValitdation = ObjectFactory.CreateEmptyCellValidation();
           cellValitdation.ColumnId = this.props.popupParams.column.ColumnId;
           this.setState({
-            EditedAdaptableObject: cellValitdation,
-            WizardStartIndex: 1,
-            WizardStatus: WizardStatus.New,
+            editedAdaptableObject: cellValitdation,
+            wizardStartIndex: 1,
+            wizardStatus: WizardStatus.New,
           });
         }
       }
@@ -95,7 +95,7 @@ class CellValidationPopupComponent extends React.Component<
           key={index}
           colItems={colItems}
           api={this.props.api}
-          AdaptableObject={cellValidationRule}
+          adaptableObject={cellValidationRule}
           Column={column}
           onEdit={() => this.onEdit(cellValidationRule)}
           onShare={description => this.props.onShare(cellValidationRule, description)}
@@ -140,23 +140,23 @@ class CellValidationPopupComponent extends React.Component<
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableObject != null && (
+        {this.state.editedAdaptableObject != null && (
           <CellValidationWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as CellValidationRule}
+            editedAdaptableObject={this.state.editedAdaptableObject as CellValidationRule}
             configEntities={null}
             api={this.props.api}
             modalContainer={this.props.modalContainer}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
-                NewSharedQueryName: newSharedQueryName,
+                newSharedQueryName: newSharedQueryName,
               })
             }
             onSetUseSharedQuery={(useSharedQuery: boolean) =>
               this.setState({
-                UseSharedQuery: useSharedQuery,
+                useSharedQuery: useSharedQuery,
               })
             }
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -168,17 +168,17 @@ class CellValidationPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyCellValidation(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyCellValidation(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(CellValidation: CellValidationRule) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(CellValidation),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(CellValidation),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -198,21 +198,21 @@ class CellValidationPopupComponent extends React.Component<
 
   onFinishWizard() {
     let cellValidationRule: CellValidationRule = Helper.cloneObject(
-      this.state.EditedAdaptableObject
+      this.state.editedAdaptableObject
     );
 
-    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
       const SharedQueryId = createUuid();
       this.props.onAddSharedQuery({
         Uuid: SharedQueryId,
-        Name: this.state.NewSharedQueryName,
+        Name: this.state.newSharedQueryName,
         Expression: cellValidationRule.Expression,
       });
       cellValidationRule.Expression = undefined;
       cellValidationRule.SharedQueryId = SharedQueryId;
     }
 
-    if (this.state.WizardStatus == WizardStatus.New) {
+    if (this.state.wizardStatus == WizardStatus.New) {
       this.props.onAddCellValidation(cellValidationRule);
     } else {
       this.props.onEditCellValidation(cellValidationRule);
@@ -221,7 +221,7 @@ class CellValidationPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let cellValidationRule = this.state.EditedAdaptableObject as CellValidationRule;
+    let cellValidationRule = this.state.editedAdaptableObject as CellValidationRule;
 
     if (StringExtensions.IsNullOrEmpty(cellValidationRule.ColumnId)) {
       return false;
@@ -233,11 +233,11 @@ class CellValidationPopupComponent extends React.Component<
 
   resetState() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-      NewSharedQueryName: EMPTY_STRING,
-      UseSharedQuery: false,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
     });
   }
 }

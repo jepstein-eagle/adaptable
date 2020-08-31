@@ -22,7 +22,7 @@ export interface GradientColumnEntityRowProps
 
 export class GradientColumnEntityRow extends React.Component<GradientColumnEntityRowProps, {}> {
   render(): any {
-    let GradientColumn: GradientColumn = this.props.AdaptableObject as GradientColumn;
+    let GradientColumn: GradientColumn = this.props.adaptableObject as GradientColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -100,12 +100,12 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
 
     colItems[6].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(GradientColumn)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}
+        entityType={StrategyConstants.GradientColumnStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );
@@ -117,7 +117,7 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let minValue: number = Number(e.value);
-      this.props.onNegativeValueChanged(this.props.AdaptableObject as GradientColumn, minValue);
+      this.props.onNegativeValueChanged(this.props.adaptableObject as GradientColumn, minValue);
     }
   }
 
@@ -125,24 +125,24 @@ export class GradientColumnEntityRow extends React.Component<GradientColumnEntit
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let maxValue: number = Number(e.value);
-      this.props.onPositiveValueChanged(this.props.AdaptableObject as GradientColumn, maxValue);
+      this.props.onPositiveValueChanged(this.props.adaptableObject as GradientColumn, maxValue);
     }
   }
   onBaseValueChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     if (!isNaN(Number(e.value))) {
       let maxValue: number = Number(e.value);
-      this.props.onBaseValueChanged(this.props.AdaptableObject as GradientColumn, maxValue);
+      this.props.onBaseValueChanged(this.props.adaptableObject as GradientColumn, maxValue);
     }
   }
 
   onPositiveColorChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onPositiveColorChanged(this.props.AdaptableObject as GradientColumn, e.value);
+    this.props.onPositiveColorChanged(this.props.adaptableObject as GradientColumn, e.value);
   }
 
   onNegativeColorChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onNegativeColorChanged(this.props.AdaptableObject as GradientColumn, e.value);
+    this.props.onNegativeColorChanged(this.props.adaptableObject as GradientColumn, e.value);
   }
 }

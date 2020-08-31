@@ -101,7 +101,7 @@ class ExportPopupComponent extends React.Component<
       (report: Report, index) => {
         return (
           <ReportEntityRow
-            AdaptableObject={report}
+            adaptableObject={report}
             key={report.Uuid}
             colItems={colItems}
             api={this.props.api}
@@ -143,23 +143,23 @@ class ExportPopupComponent extends React.Component<
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <ReportWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as Report}
+            editedAdaptableObject={this.state.editedAdaptableObject as Report}
             modalContainer={this.props.modalContainer}
             configEntities={this.props.Reports}
             api={this.props.api}
             onSetNewSharedQueryName={(newSharedQueryName: string) =>
               this.setState({
-                NewSharedQueryName: newSharedQueryName,
+                newSharedQueryName: newSharedQueryName,
               })
             }
             onSetUseSharedQuery={(useSharedQuery: boolean) =>
               this.setState({
-                UseSharedQuery: useSharedQuery,
+                useSharedQuery: useSharedQuery,
               })
             }
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -179,20 +179,20 @@ class ExportPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let report: Report = this.state.EditedAdaptableObject as Report;
+    let report: Report = this.state.editedAdaptableObject as Report;
 
-    if (StringExtensions.IsNotNullOrEmpty(this.state.NewSharedQueryName)) {
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
       const SharedQueryId = createUuid();
       this.props.onAddSharedQuery({
         Uuid: SharedQueryId,
-        Name: this.state.NewSharedQueryName,
+        Name: this.state.newSharedQueryName,
         Expression: report.Expression,
       });
       report.Expression = undefined;
       report.SharedQueryId = SharedQueryId;
     }
 
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditReport(report);
     } else {
       this.props.onAddReport(report);
@@ -202,19 +202,19 @@ class ExportPopupComponent extends React.Component<
   }
 
   canFinishWizard() {
-    let report = this.state.EditedAdaptableObject as Report;
+    let report = this.state.editedAdaptableObject as Report;
     if (StringExtensions.IsNullOrEmpty(report.Name)) {
       return false;
     }
     if (report.ReportRowScope == ReportRowScope.ExpressionRows) {
-      if (this.state.UseSharedQuery && StringExtensions.IsNullOrEmpty(report.SharedQueryId)) {
+      if (this.state.useSharedQuery && StringExtensions.IsNullOrEmpty(report.SharedQueryId)) {
         return false;
       }
 
-      if (!this.state.UseSharedQuery && StringExtensions.IsNullOrEmpty(report.Expression)) {
+      if (!this.state.useSharedQuery && StringExtensions.IsNullOrEmpty(report.Expression)) {
         return false;
       }
-      if (!this.state.UseSharedQuery && !parser.validateBoolean(report.Expression)) {
+      if (!this.state.useSharedQuery && !parser.validateBoolean(report.Expression)) {
         return false;
       }
     }
@@ -231,28 +231,28 @@ class ExportPopupComponent extends React.Component<
 
   resetState() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-      NewSharedQueryName: EMPTY_STRING,
-      UseSharedQuery: false,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyReport(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyReport(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(ReportToEdit: Report) {
     let clonedReportToEdit = Helper.cloneObject(ReportToEdit);
     this.setState({
-      EditedAdaptableObject: clonedReportToEdit,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedReportToEdit,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 

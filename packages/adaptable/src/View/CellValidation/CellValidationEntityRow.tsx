@@ -22,7 +22,7 @@ export interface CellValidationEntityRowProps
 
 export class CellValidationEntityRow extends React.Component<CellValidationEntityRowProps, {}> {
   render(): any {
-    let cellValidationRule: CellValidationRule = this.props.AdaptableObject as CellValidationRule;
+    let cellValidationRule: CellValidationRule = this.props.adaptableObject as CellValidationRule;
 
     let ActionModeTypes = EnumExtensions.getNames(ActionMode).map(type => {
       return {
@@ -49,12 +49,12 @@ export class CellValidationEntityRow extends React.Component<CellValidationEntit
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(cellValidationRule)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.CellValidationStrategyFriendlyName}
+        entityType={StrategyConstants.CellValidationStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

@@ -148,7 +148,7 @@ class SchedulePopupComponent extends React.Component<
 
       return (
         <ScheduleEntityRow
-          AdaptableObject={baseSchedule}
+          adaptableObject={baseSchedule}
           api={this.props.api}
           colItems={colItems}
           key={'CS' + index}
@@ -230,13 +230,13 @@ class SchedulePopupComponent extends React.Component<
             <AdaptableObjectCollection colItems={colItems} items={allScheduleRows} />
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <ScheduleWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject as BaseSchedule}
+              editedAdaptableObject={this.state.editedAdaptableObject as BaseSchedule}
               configEntities={null}
               modalContainer={this.props.modalContainer}
               api={this.props.api}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -271,27 +271,27 @@ class SchedulePopupComponent extends React.Component<
 
   onNew(baseSchedule: BaseSchedule) {
     this.setState({
-      EditedAdaptableObject: baseSchedule,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: baseSchedule,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(baseSchedule: BaseSchedule) {
     let clonedObject = Helper.cloneObject(baseSchedule);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
 
     if (this.shouldClosePopupOnFinishWizard) {
@@ -300,39 +300,39 @@ class SchedulePopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let baseSchedule = this.state.EditedAdaptableObject as BaseSchedule;
+    let baseSchedule = this.state.editedAdaptableObject as BaseSchedule;
 
     switch (baseSchedule.ScheduleType) {
       case ScheduleType.Reminder:
-        if (this.state.WizardStatus == WizardStatus.Edit) {
+        if (this.state.wizardStatus == WizardStatus.Edit) {
           this.props.onEditReminderSchedule(baseSchedule as ReminderSchedule);
         } else {
           this.props.onAddReminderSchedule(baseSchedule as ReminderSchedule);
         }
         break;
       case ScheduleType.Report:
-        if (this.state.WizardStatus == WizardStatus.Edit) {
+        if (this.state.wizardStatus == WizardStatus.Edit) {
           this.props.onEditReportSchedule(baseSchedule as ReportSchedule);
         } else {
           this.props.onAddReportSchedule(baseSchedule as ReportSchedule);
         }
         break;
       case ScheduleType.ipushpull:
-        if (this.state.WizardStatus == WizardStatus.Edit) {
+        if (this.state.wizardStatus == WizardStatus.Edit) {
           this.props.onEditIPushPullSchedule(baseSchedule as IPushPullSchedule);
         } else {
           this.props.onAddIPushPullSchedule(baseSchedule as IPushPullSchedule);
         }
         break;
       case ScheduleType.Glue42:
-        if (this.state.WizardStatus == WizardStatus.Edit) {
+        if (this.state.wizardStatus == WizardStatus.Edit) {
           this.props.onEditGlue42Schedule(baseSchedule as Glue42Schedule);
         } else {
           this.props.onAddGlue42Schedule(baseSchedule as Glue42Schedule);
         }
         break;
       case ScheduleType.OpenFin:
-        if (this.state.WizardStatus == WizardStatus.Edit) {
+        if (this.state.wizardStatus == WizardStatus.Edit) {
           this.props.onEditOpenFinSchedule(baseSchedule as OpenFinSchedule);
         } else {
           this.props.onAddOpenFinSchedule(baseSchedule as OpenFinSchedule);
@@ -341,14 +341,14 @@ class SchedulePopupComponent extends React.Component<
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let baseSchedule = this.state.EditedAdaptableObject as BaseSchedule;
+    let baseSchedule = this.state.editedAdaptableObject as BaseSchedule;
     // todo - need to do the type specific checks...
     // if (reminder.Alert == null) {
     //   return false;

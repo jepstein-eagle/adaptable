@@ -64,12 +64,12 @@ export class UserFilterSummaryComponent extends React.Component<
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
-            Item1={item.Name}
-            Item2={this.getDescription(item)}
-            ConfigEnity={item}
+            item1={item.Name}
+            item2={this.getDescription(item)}
+            configEnity={item}
             showShare={this.props.teamSharingActivated}
             showEdit={this.isFilterable()}
-            EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
+            entityType={StrategyConstants.UserFilterStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={FilterRedux.UserFilterDelete(item)}
@@ -83,14 +83,14 @@ export class UserFilterSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <UserFilterWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
+            editedAdaptableObject={this.state.editedAdaptableObject as UserFilter}
             configEntities={null}
             modalContainer={this.props.modalContainer}
             SelectedColumnId={this.props.summarisedColumn.ColumnId}
             api={this.props.api}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -140,45 +140,45 @@ export class UserFilterSummaryComponent extends React.Component<
     let configEntity: UserFilter = ObjectFactory.CreateEmptyUserFilter();
     // configEntity.Scope.ColumnIds[0] = this.props.SummarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(UserFilter: UserFilter) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(UserFilter),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(UserFilter),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditUserFilter(userFilter);
     } else {
       this.props.onAddUserFilter(userFilter);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
     return StringExtensions.IsNotNullOrEmpty(userFilter.Name); //&&
     // StringExtensions.IsNotEmpty(userFilter.Scope.ColumnIds[0])
   }

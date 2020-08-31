@@ -77,7 +77,7 @@ class ShortcutPopupComponent extends React.Component<
     let shortcuts = this.props.Shortcuts.map((shortcut: Shortcut, index: number) => {
       return (
         <ShortcutEntityRow
-          AdaptableObject={shortcut}
+          adaptableObject={shortcut}
           key={'ns' + index}
           onEdit={null}
           colItems={colItems}
@@ -105,7 +105,7 @@ class ShortcutPopupComponent extends React.Component<
       />
     );
 
-    let shortcut: Shortcut = this.state.EditedAdaptableObject as Shortcut;
+    let shortcut: Shortcut = this.state.editedAdaptableObject as Shortcut;
 
     return (
       <Flex flex={1} flexDirection="column">
@@ -123,7 +123,7 @@ class ShortcutPopupComponent extends React.Component<
             <EmptyContent>Click 'New' to add a new Shortcut.</EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <ShortcutWizard
               editedAdaptableObject={shortcut}
               configEntities={null}
@@ -165,7 +165,7 @@ class ShortcutPopupComponent extends React.Component<
                         ) == -1
                     )
               }
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -195,24 +195,24 @@ class ShortcutPopupComponent extends React.Component<
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let shortcut = this.state.EditedAdaptableObject as Shortcut;
+    let shortcut = this.state.editedAdaptableObject as Shortcut;
     this.props.onAddShortcut(shortcut);
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let shortcut = this.state.EditedAdaptableObject as Shortcut;
+    let shortcut = this.state.editedAdaptableObject as Shortcut;
 
     return (
       StringExtensions.IsNotNullOrEmpty(shortcut.ShortcutResult) &&
@@ -222,9 +222,9 @@ class ShortcutPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyShortcut(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyShortcut(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 

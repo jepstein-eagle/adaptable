@@ -13,7 +13,7 @@ export interface BaseRowProps<View> extends React.ClassAttributes<View> {
 }
 
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
-  AdaptableObject: AdaptableObject;
+  adaptableObject: AdaptableObject;
   onDeleteConfirm: Redux.Action;
   onEdit: (AdaptableObject: AdaptableObject) => void;
 }

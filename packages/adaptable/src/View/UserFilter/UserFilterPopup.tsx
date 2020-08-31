@@ -51,9 +51,9 @@ class UserFilterPopupComponent extends React.Component<
           let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
           userFilter.Scope = { ColumnIds: [this.props.popupParams.column.ColumnId] };
           this.setState({
-            EditedAdaptableObject: userFilter,
-            WizardStartIndex: 1,
-            WizardStatus: WizardStatus.New,
+            editedAdaptableObject: userFilter,
+            wizardStartIndex: 1,
+            wizardStatus: WizardStatus.New,
           });
         }
       }
@@ -76,8 +76,8 @@ class UserFilterPopupComponent extends React.Component<
     ];
 
     let selectedColumnId: string = '';
-    if (this.state.EditedAdaptableObject != null) {
-      let filter: UserFilter = this.state.EditedAdaptableObject as UserFilter;
+    if (this.state.editedAdaptableObject != null) {
+      let filter: UserFilter = this.state.editedAdaptableObject as UserFilter;
       let editedColumn: string = ''; //filter.Scope.ColumnIds[0];
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
@@ -98,7 +98,7 @@ class UserFilterPopupComponent extends React.Component<
     let UserFilterItems = this.props.api.filterApi.getAllUserFilter().map((userFilter, index) => {
       return (
         <UserFilterEntityRow
-          AdaptableObject={userFilter}
+          adaptableObject={userFilter}
           api={this.props.api}
           colItems={colItems}
           key={'CS' + index}
@@ -141,12 +141,12 @@ class UserFilterPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <UserFilterWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
+              editedAdaptableObject={this.state.editedAdaptableObject as UserFilter}
               configEntities={null}
               modalContainer={this.props.modalContainer}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               SelectedColumnId={selectedColumnId}
               api={this.props.api}
               onCloseWizard={() => this.onCloseWizard()}
@@ -167,27 +167,27 @@ class UserFilterPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyUserFilter(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyUserFilter(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(userFilter: UserFilter) {
     let clonedObject: UserFilter = Helper.cloneObject(userFilter);
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(clonedObject),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(clonedObject),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -195,22 +195,22 @@ class UserFilterPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditUserFilter(userFilter);
     } else {
       this.props.onAddUserFilter(userFilter);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
     return true; // to do!
   }
 }

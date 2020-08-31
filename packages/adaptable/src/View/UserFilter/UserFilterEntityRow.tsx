@@ -13,7 +13,7 @@ export class UserFilterEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let userFilter: UserFilter = this.props.AdaptableObject as UserFilter;
+    let userFilter: UserFilter = this.props.adaptableObject as UserFilter;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -26,8 +26,8 @@ export class UserFilterEntityRow extends React.Component<
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.teamSharingActivated}
         overrideDisableEdit={false}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.UserFilterStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

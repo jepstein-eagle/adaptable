@@ -99,12 +99,10 @@ class PieChartPopupComponent extends React.Component<PieChartPopupProps, PieChar
 
   componentDidMount() {
     if (this.props.popupParams) {
-      if (this.props.popupParams.columnId) {
-        const column = this.props.popupParams.columnId;
+      if (this.props.popupParams.column) {
+        const column = this.props.popupParams.column;
 
-        if (StringExtensions.IsNotNullOrEmpty(column)) {
-          this.updateDataSource(null, column, this.props.popupParams.primaryKeyValues);
-        }
+        this.updateDataSource(null, column.ColumnId, this.props.popupParams.primaryKeyValues);
       }
     }
   }

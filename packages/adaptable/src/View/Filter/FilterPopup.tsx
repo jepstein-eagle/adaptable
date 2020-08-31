@@ -29,7 +29,7 @@ interface FilterPopupProps extends StrategyViewPopupProps<FilterPopupComponent> 
 class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
   constructor(props: FilterPopupProps) {
     super(props);
-    this.state = { EditedUserFilter: null, WizardStartIndex: 0 };
+    this.state = { EditedUserFilter: null, wizardStartIndex: 0 };
   }
 
   render() {
@@ -51,7 +51,7 @@ class FilterPopupComponent extends React.Component<FilterPopupProps, {}> {
           key={index}
           colItems={colItems}
           api={this.props.api}
-          AdaptableObject={null}
+          adaptableObject={null}
           columnFilter={columnFilter}
           onEdit={null}
           onDeleteConfirm={null}

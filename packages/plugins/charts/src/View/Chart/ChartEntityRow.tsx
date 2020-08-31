@@ -21,7 +21,7 @@ export interface ChartEntityRowProps extends SharedEntityRowProps<ChartEntityRow
 export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
   render(): any {
     // assuming only category charts for now - silly assumption to make in due course...
-    let Chart: CategoryChartDefinition = this.props.AdaptableObject as CategoryChartDefinition;
+    let Chart: CategoryChartDefinition = this.props.adaptableObject as CategoryChartDefinition;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = <EntityRowItem Content={Chart.Name} />;
@@ -37,12 +37,12 @@ export class ChartEntityRow extends React.Component<ChartEntityRowProps, {}> {
     );
     colItems[4].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(Chart)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.teamSharingActivated}
         overrideDisableEdit={undefined}
-        EntityType={StrategyConstants.ChartStrategyFriendlyName}
+        entityType={StrategyConstants.ChartStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

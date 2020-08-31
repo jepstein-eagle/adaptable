@@ -72,11 +72,11 @@ export class GradientColumnSummaryComponent extends React.Component<
       GradientColumnRow = (
         <StrategyDetail
           key={StrategyConstants.GradientColumnStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.GradientColumnStrategyId} />}
-          Item2={'Gradient Column set'}
-          ConfigEnity={GradientColumn}
+          item1={<StrategyProfile FunctionName={StrategyConstants.GradientColumnStrategyId} />}
+          item2={'Gradient Column set'}
+          configEnity={GradientColumn}
           showShare={this.props.teamSharingActivated}
-          EntityType={StrategyConstants.GradientColumnStrategyFriendlyName}
+          entityType={StrategyConstants.GradientColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(GradientColumn)}
           onShare={description => this.props.onShare(GradientColumn, description)}
           onDelete={GradientColumnRedux.GradientColumnDelete(GradientColumn)}
@@ -89,12 +89,12 @@ export class GradientColumnSummaryComponent extends React.Component<
       <div>
         {GradientColumnRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <GradientColumnWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
+            editedAdaptableObject={this.state.editedAdaptableObject as GradientColumn}
             modalContainer={this.props.modalContainer}
             configEntities={this.props.GradientColumns}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -117,45 +117,45 @@ export class GradientColumnSummaryComponent extends React.Component<
     configEntity.PositiveValue = Math.max(...distinctColumnsValues);
 
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(renderedColumn: GradientColumn) {
     let clonedObject: GradientColumn = Helper.cloneObject(renderedColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let GradientColumn: GradientColumn = this.state.EditedAdaptableObject as GradientColumn;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let GradientColumn: GradientColumn = this.state.editedAdaptableObject as GradientColumn;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditGradientColumn(GradientColumn);
     } else {
       this.props.onAddGradientColumn(GradientColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let GradientColumn = this.state.EditedAdaptableObject as GradientColumn;
+    let GradientColumn = this.state.editedAdaptableObject as GradientColumn;
     return StringExtensions.IsNotNullOrEmpty(GradientColumn.ColumnId);
   }
 }

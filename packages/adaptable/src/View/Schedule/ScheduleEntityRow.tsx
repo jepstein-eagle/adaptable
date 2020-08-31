@@ -19,7 +19,7 @@ export class ScheduleEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let baseSchedule: BaseSchedule = this.props.AdaptableObject as BaseSchedule;
+    let baseSchedule: BaseSchedule = this.props.adaptableObject as BaseSchedule;
     let details: string = '';
     switch (baseSchedule.ScheduleType) {
       case ScheduleType.Reminder:
@@ -68,8 +68,8 @@ export class ScheduleEntityRow extends React.Component<
         editClick={() => this.props.onEdit(baseSchedule)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.teamSharingActivated}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ScheduleStrategyFriendlyName}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.ScheduleStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

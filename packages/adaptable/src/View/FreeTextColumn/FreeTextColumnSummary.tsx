@@ -65,11 +65,11 @@ export class FreeTextColumnSummaryComponent extends React.Component<
       FreeTextColumnRow = (
         <StrategyDetail
           key={StrategyConstants.FreeTextColumnStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.FreeTextColumnStrategyId} />}
-          Item2={description}
-          ConfigEnity={freeTextColumn}
+          item1={<StrategyProfile FunctionName={StrategyConstants.FreeTextColumnStrategyId} />}
+          item2={description}
+          configEnity={freeTextColumn}
           showShare={this.props.teamSharingActivated}
-          EntityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
+          entityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
           onEdit={() => this.onEdit(freeTextColumn)}
           onShare={description => this.props.onShare(freeTextColumn, description)}
           onDelete={FreeTextColumnRedux.FreeTextColumnDelete(freeTextColumn)}
@@ -82,12 +82,12 @@ export class FreeTextColumnSummaryComponent extends React.Component<
       <div>
         {FreeTextColumnRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <FreeTextColumnWizard
-            editedAdaptableObject={this.state.EditedAdaptableObject as FreeTextColumn}
+            editedAdaptableObject={this.state.editedAdaptableObject as FreeTextColumn}
             modalContainer={this.props.modalContainer}
             configEntities={this.props.FreeTextColumns}
-            wizardStartIndex={this.state.WizardStartIndex}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -102,45 +102,45 @@ export class FreeTextColumnSummaryComponent extends React.Component<
     let configEntity: FreeTextColumn = ObjectFactory.CreateEmptyFreeTextColumn();
     configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(FreeTextColumn: FreeTextColumn) {
     let clonedObject: FreeTextColumn = Helper.cloneObject(FreeTextColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let FreeTextColumn: FreeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
+    let FreeTextColumn: FreeTextColumn = this.state.editedAdaptableObject as FreeTextColumn;
     if (this.props.FreeTextColumns.find(x => x.ColumnId == FreeTextColumn.ColumnId)) {
       this.props.onEditFreeTextColumn(FreeTextColumn);
     } else {
       this.props.onAddFreeTextColumn(FreeTextColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let FreeTextColumn = this.state.EditedAdaptableObject as FreeTextColumn;
+    let FreeTextColumn = this.state.editedAdaptableObject as FreeTextColumn;
     return StringExtensions.IsNotNullOrEmpty(FreeTextColumn.ColumnId);
   }
 }

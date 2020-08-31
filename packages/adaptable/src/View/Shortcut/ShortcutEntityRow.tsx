@@ -22,7 +22,7 @@ export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEnt
 
 export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {}> {
   render(): any {
-    let shortcut: Shortcut = this.props.AdaptableObject as Shortcut;
+    let shortcut: Shortcut = this.props.adaptableObject as Shortcut;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (
@@ -92,8 +92,8 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
         showEdit={false}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.teamSharingActivated}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ShortcutStrategyFriendlyName}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.ShortcutStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );
@@ -103,14 +103,14 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
 
   onResultChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.props.onChangeResult(this.props.AdaptableObject as Shortcut, e.value);
+    this.props.onChangeResult(this.props.adaptableObject as Shortcut, e.value);
   }
 
   onKeySelectChange(value: any) {
-    this.props.onChangeKey(this.props.AdaptableObject as Shortcut, value);
+    this.props.onChangeKey(this.props.adaptableObject as Shortcut, value);
   }
 
   onActionChange(value: MathOperation) {
-    this.props.onChangeOperation(this.props.AdaptableObject as Shortcut, value as MathOperation);
+    this.props.onChangeOperation(this.props.adaptableObject as Shortcut, value as MathOperation);
   }
 }

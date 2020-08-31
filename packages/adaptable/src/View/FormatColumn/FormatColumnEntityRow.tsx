@@ -17,7 +17,7 @@ export class FormatColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let formatColumn = this.props.AdaptableObject as FormatColumn;
+    let formatColumn = this.props.adaptableObject as FormatColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -41,8 +41,8 @@ export class FormatColumnEntityRow extends React.Component<
         editClick={() => this.props.onEdit(formatColumn)}
         showShare={this.props.teamSharingActivated}
         shareClick={(description: string) => this.props.onShare(description)}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.FormatColumnStrategyFriendlyName}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.FormatColumnStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

@@ -15,7 +15,7 @@ export class FreeTextColumnEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let FreeTextColumn = this.props.AdaptableObject as FreeTextColumn;
+    let FreeTextColumn = this.props.adaptableObject as FreeTextColumn;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -44,8 +44,8 @@ export class FreeTextColumnEntityRow extends React.Component<
         editClick={() => this.props.onEdit(FreeTextColumn)}
         showShare={this.props.teamSharingActivated}
         shareClick={(description: string) => this.props.onShare(description)}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.FreeTextColumnStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

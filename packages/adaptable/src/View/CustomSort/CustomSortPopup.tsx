@@ -92,7 +92,7 @@ class CustomSortPopupComponent extends React.Component<
         <CustomSortEntityRow
           colItems={colItems}
           api={this.props.api}
-          AdaptableObject={customSort}
+          adaptableObject={customSort}
           key={customSort.Uuid}
           onEdit={() => this.onEdit(customSort)}
           teamSharingActivated={this.props.teamSharingActivated}
@@ -129,13 +129,13 @@ class CustomSortPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject && (
+          {this.state.editedAdaptableObject && (
             <CustomSortWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
+              editedAdaptableObject={this.state.editedAdaptableObject as CustomSort}
               configEntities={this.props.CustomSorts}
               modalContainer={this.props.modalContainer}
               api={this.props.api}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -149,35 +149,35 @@ class CustomSortPopupComponent extends React.Component<
   onEdit(customSort: CustomSort) {
     //so we dont mutate original object
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(customSort),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(customSort),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyCustomSort(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyCustomSort(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onNewFromColumn(customsort: CustomSort) {
     let clonedObject: CustomSort = Helper.cloneObject(customsort);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: clonedObject,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -185,21 +185,21 @@ class CustomSortPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let customSort: CustomSort = this.state.EditedAdaptableObject as CustomSort;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let customSort: CustomSort = this.state.editedAdaptableObject as CustomSort;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditCustomSort(customSort);
     } else {
       this.props.onAddCustomSort(customSort);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   canFinishWizard() {
-    let customSort = this.state.EditedAdaptableObject as CustomSort;
+    let customSort = this.state.editedAdaptableObject as CustomSort;
     return (
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)

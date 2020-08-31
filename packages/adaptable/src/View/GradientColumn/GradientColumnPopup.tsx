@@ -45,9 +45,9 @@ class GradientColumnPopupComponent extends React.Component<
   constructor(props: GradientColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     };
   }
   shouldClosePopupOnFinishWizard: boolean = false;
@@ -115,7 +115,7 @@ class GradientColumnPopupComponent extends React.Component<
             key={gradientColumn.Uuid}
             colItems={colItems}
             api={this.props.api}
-            AdaptableObject={gradientColumn}
+            adaptableObject={gradientColumn}
             Column={column}
             onEdit={() => this.onEdit(gradientColumn)}
             onShare={description => this.props.onShare(gradientColumn, description)}
@@ -172,13 +172,13 @@ class GradientColumnPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <GradientColumnWizard
-              editedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
+              editedAdaptableObject={this.state.editedAdaptableObject as GradientColumn}
               configEntities={null}
               api={this.props.api}
               modalContainer={this.props.modalContainer}
-              wizardStartIndex={this.state.WizardStartIndex}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -218,35 +218,35 @@ class GradientColumnPopupComponent extends React.Component<
 
   onNewFromColumn(GradientColumn: GradientColumn) {
     this.setState({
-      EditedAdaptableObject: GradientColumn,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: GradientColumn,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyGradientColumn(),
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 0,
+      editedAdaptableObject: ObjectFactory.CreateEmptyGradientColumn(),
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
     });
   }
 
   onEdit(GradientColumn: GradientColumn) {
     let clonedObject: GradientColumn = Helper.cloneObject(GradientColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -254,21 +254,21 @@ class GradientColumnPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let gradientColumn: GradientColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let gradientColumn: GradientColumn = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditGradientColumn(gradientColumn);
     } else {
       this.props.onAddGradientColumn(gradientColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard(): boolean {
-    let gradientColumn = this.state.EditedAdaptableObject as GradientColumn;
+    let gradientColumn = this.state.editedAdaptableObject as GradientColumn;
 
     if (StringExtensions.IsNullOrEmpty(gradientColumn.ColumnId)) {
       return false;

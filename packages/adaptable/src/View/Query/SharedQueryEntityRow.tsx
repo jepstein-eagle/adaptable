@@ -15,7 +15,7 @@ export class SharedQueryEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let sharedQuery: SharedQuery = this.props.AdaptableObject as SharedQuery;
+    let sharedQuery: SharedQuery = this.props.adaptableObject as SharedQuery;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -24,11 +24,11 @@ export class SharedQueryEntityRow extends React.Component<
 
     let buttons: any = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(sharedQuery)}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.teamSharingActivated}
-        EntityType={StrategyConstants.QueryStrategyFriendlyName}
+        entityType={StrategyConstants.QueryStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );

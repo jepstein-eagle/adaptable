@@ -19,7 +19,7 @@ export interface AlertEntityRowProps extends SharedEntityRowProps<AlertEntityRow
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   render(): any {
-    let alertDefinition: AlertDefinition = this.props.AdaptableObject as AlertDefinition;
+    let alertDefinition: AlertDefinition = this.props.adaptableObject as AlertDefinition;
 
     let MessageTypes = EnumExtensions.getNames(MessageType).map(type => {
       return {
@@ -46,12 +46,12 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(alertDefinition)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.AlertStrategyFriendlyName}
+        entityType={StrategyConstants.AlertStrategyFriendlyName}
         accessLevel={this.props.accessLevel}
       />
     );
