@@ -9,7 +9,6 @@ import WizardPanel from '../../../components/WizardPanel';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import Input from '../../../components/Input';
 import { LayoutEditor } from './LayoutEditor';
-import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import ErrorBox from '../../../components/ErrorBox';
 
 export interface LayoutEditorWizardProps extends AdaptableWizardStepProps<Layout> {
@@ -100,7 +99,7 @@ export class LayoutEditorWizard
   updateLayout = (layout: Partial<Layout>) => {
     const updatedLayout = { ...this.state.layout, ...layout } as Layout;
 
-    Object.assign(this.props.Data, updatedLayout);
+    Object.assign(this.props.data, updatedLayout);
     this.setState({
       layout: updatedLayout,
     });
@@ -112,7 +111,7 @@ export class LayoutEditorWizard
     this.setState(
       { layout, ErrorMessage: this.getErrorMessage({ layout, layoutName: this.state.layoutName }) },
       () => {
-        this.props.UpdateGoBackState();
+        this.props.updateGoBackState();
       }
     );
   };
@@ -129,14 +128,14 @@ export class LayoutEditorWizard
     return true;
   }
 
-  public Next(): void {
-    Object.keys(this.props.Data).forEach(key => {
-      delete (this.props.Data as any)[key];
+  public next(): void {
+    Object.keys(this.props.data).forEach(key => {
+      delete (this.props.data as any)[key];
     });
 
     const layout = this.getLayout();
 
-    Object.assign(this.props.Data, layout);
+    Object.assign(this.props.data, layout);
   }
   public back(): void {}
   public getIndexStepIncrement() {
