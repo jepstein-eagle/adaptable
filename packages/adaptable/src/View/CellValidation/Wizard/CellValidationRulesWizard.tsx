@@ -60,8 +60,11 @@ export class CellValidationRulesWizard
     return (
       <WizardPanel>
         <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={2}>
+            Select a Cell Validation Rule - to be applied when data in the grid is edited
+          </HelpBlock>{' '}
           <Dropdown
-            placeholder="Select a Predicate"
+            placeholder="Select Validation Rule"
             value={this.state.Id}
             onChange={Id => this.onPredicateChange(Id)}
             options={predicatesOptions}

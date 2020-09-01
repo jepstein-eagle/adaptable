@@ -67,15 +67,13 @@ export class ValidationService implements IValidationService {
     }
 
     let editingRules = this.GetCellValidationState().CellValidations.filter(v =>
-      this.adaptable.api.scopeApi.isColumnInScopeColumns(
+      this.adaptable.api.scopeApi.isColumnInScope(
         this.adaptable.api.columnApi.getColumnFromId(dataChangedInfo.ColumnId),
         v.Scope
       )
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
-
       // first check the rules which have expressions
       let expressionRules: CellValidationRule[] = editingRules.filter(
         r =>

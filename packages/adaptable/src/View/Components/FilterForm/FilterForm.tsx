@@ -273,7 +273,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 autoFocus={index === 0}
                 value={editedColumnFilter.Predicate.Inputs[index]}
                 onChange={e => this.changeColumnPredicateInput(e, index)}
-                style={{ flex: 1, width: 0, minWidth: 0 }}
+                style={{ flex: 1, width: 0, minWidth: 0, fontSize: 'var( --ab-font-size-1)' }}
               />
             ))}
         </Flex>

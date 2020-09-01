@@ -95,15 +95,13 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     let relatedAlertDefinitions = this.adaptable.api.alertApi
       .getAlertDefinitions()
       .filter(v =>
-        this.adaptable.api.scopeApi.isColumnInScopeColumns(
+        this.adaptable.api.scopeApi.isColumnInScope(
           this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
           v.Scope
         )
       );
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
-
       // first check the rules which have expressions
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(
         r => this.adaptable.api.queryApi.getExpressionForQueryObject(r) != undefined

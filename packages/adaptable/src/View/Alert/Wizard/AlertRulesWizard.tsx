@@ -52,8 +52,11 @@ export class AlertRulesWizard
     return (
       <WizardPanel>
         <Flex flexDirection="column" padding={2}>
+          <HelpBlock marginBottom={2}>
+            Select an Alert Rule - to be applied when data changes
+          </HelpBlock>{' '}
           <Dropdown
-            placeholder="Select a Predicate"
+            placeholder="Select Rule"
             value={this.state.Id}
             onChange={Id => this.onPredicateChange(Id)}
             options={predicatesOptions}
