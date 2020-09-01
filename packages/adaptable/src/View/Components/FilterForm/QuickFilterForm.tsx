@@ -204,7 +204,17 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             }}
           >
             <Flex mb={2}>
-              <SimpleButton>Close</SimpleButton>
+              <SimpleButton
+                onClick={() => {
+                  requestAnimationFrame(() => {
+                    if (this.valuesDropdown) {
+                      this.valuesDropdown.hide();
+                    }
+                  });
+                }}
+              >
+                Close
+              </SimpleButton>
               <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
             </Flex>
             <ListBoxFilterForm
