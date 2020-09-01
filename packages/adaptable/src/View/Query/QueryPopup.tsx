@@ -46,12 +46,14 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
-
+  shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
     if (this.props.popupParams) {
       if (this.props.popupParams.action === 'New') {
-        this.onNew(this.props.popupParams.value);
+        this.onExisting(this.props.popupParams.value);
       }
+      this.shouldClosePopupOnFinishWizard =
+        this.props.popupParams.source && this.props.popupParams.source == 'Toolbar';
     }
   }
 
@@ -90,7 +92,7 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
         style={{
           color: 'var(--ab-color-text-on-add)',
           fill: 'var(--ab-color-text-on-add',
-          background: 'var(--ab-color-add)',
+          background: 'var(--ab-color-action-add)',
         }}
       />
     );
@@ -135,6 +137,16 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
     });
   }
 
+  onExisting(value?: string) {
+    alert('hello');
+    alert(value);
+    this.setState({
+      editedAdaptableObject: ObjectFactory.CreateEmptySharedQuery(value),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
+    });
+  }
+
   onEdit(sharedQuery: SharedQuery) {
     let clonedObject = Helper.cloneObject(sharedQuery);
     this.setState({
@@ -151,6 +163,9 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
       wizardStartIndex: 0,
       wizardStatus: WizardStatus.None,
     });
+    if (this.shouldClosePopupOnFinishWizard) {
+      this.props.onClosePopup();
+    }
   }
 
   onFinishWizard() {

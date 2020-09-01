@@ -124,7 +124,7 @@ class ExportPopupComponent extends React.Component<
         style={{
           color: 'var(--ab-color-text-on-add)',
           fill: 'var(--ab-color-text-on-add',
-          background: 'var(--ab-color-add)',
+          background: 'var(--ab-color-action-add)',
         }}
       />
     );

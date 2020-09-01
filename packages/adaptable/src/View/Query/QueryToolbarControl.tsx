@@ -14,28 +14,17 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import DropdownButton from '../../components/DropdownButton';
-import SimpleButton from '../../components/SimpleButton';
 import { Icon } from '@mdi/react';
-import {
-  mdiViewColumn,
-  mdiContentSave,
-  mdiFolderOpen,
-  mdiClose,
-  mdiMagnify,
-  mdiArrowExpand,
-  mdiHistory,
-  mdiCheck,
-  mdiAlert,
-} from '@mdi/js';
+import { mdiViewColumn, mdiFolderOpen, mdiHistory, mdiCheck } from '@mdi/js';
 import FieldWrap from '../../components/FieldWrap';
 import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/QueryState';
-import Dropdown from '../../components/Dropdown';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
 import { ButtonRunQuery } from '../Components/Buttons/ButtonRunQuery';
 import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
 import { ButtonInvalid } from '../Components/Buttons/ButtonInvalid';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import { ButtonSave } from '../Components/Buttons/ButtonSave';
 
 interface QueryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QueryToolbarControlComponent> {
@@ -80,9 +69,14 @@ class QueryToolbarControlComponent extends React.Component<
     }
   }
   render() {
-    if (this.state.isAdaptableReady === false) return null;
+    if (this.state.isAdaptableReady === false) {
+      return null;
+    }
 
-    const isExpressionValid = parser.validateBoolean(this.state.expression);
+    const isExpressionValid: boolean = parser.validateBoolean(this.state.expression);
+
+    const isExpressionSharedQuery: boolean =
+      this.props.SharedQueries.find(sq => sq.Expression == this.state.expression) != null;
 
     let sortedSharedQueries: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(
       SortOrder.Asc,
@@ -91,12 +85,6 @@ class QueryToolbarControlComponent extends React.Component<
     );
 
     let availableSearches: any[] = [
-      {
-        label: 'Save Query',
-        icon: <Icon size="1.1rem" path={mdiContentSave} />,
-        onClick: () => this.props.onShowSharedQueries(this.state.expression),
-      },
-      { separator: true },
       ...sortedSharedQueries.map(expression => {
         return {
           label: expression.Name,
@@ -165,12 +153,24 @@ class QueryToolbarControlComponent extends React.Component<
               accessLevel={'Full'}
               variant="text"
               tone="neutral"
+              disabled={this.state.expression == ''}
               marginRight={1}
             />
           ) : (
             <ButtonInvalid variant="text" tone="neutral" tooltip="Invalid Query" marginRight={1} />
           )}
         </FieldWrap>
+
+        <ButtonSave
+          onClick={() => this.saveQuery()}
+          tooltip="Save as New Query"
+          accessLevel={'Full'}
+          disabled={!isExpressionValid || isExpressionSharedQuery || this.state.expression == ''}
+          variant="text"
+          tone="neutral"
+          marginRight={1}
+        />
+
         <DropdownButton
           variant="text"
           items={availableColumns}
@@ -200,6 +200,14 @@ class QueryToolbarControlComponent extends React.Component<
         {content}
       </PanelDashboard>
     );
+  }
+
+  saveQuery(): void {
+    let currentQuery = this.props.SharedQueries.find(sq => sq.Expression == this.state.expression);
+    if (currentQuery) {
+      alert('its shared');
+    }
+    this.props.onShowSharedQueries(this.state.expression);
   }
 
   onSelectedSearchChanged(searchName: string) {

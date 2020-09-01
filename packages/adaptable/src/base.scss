@@ -46,11 +46,11 @@
   --ab-color-text-on-info: white;
   --ab-color-text-on-warn: white;
 
-  --ab-color-add: #2966A8;
-  --ab-color-edit: #17a2b8;
-  --ab-color-share: #eb9316;
-  --ab-color-delete: #dc3545;
-  --ab-color-clone: #419641;
+  --ab-color-action-add: #2966A8;
+  --ab-color-action-edit: #17a2b8;
+  --ab-color-action-share: #eb9316;
+  --ab-color-action-delete: #dc3545;
+  --ab-color-action-clone: #419641;
   
   --ab-color-text-on-add: white;
   --ab-color-text-on-edit: white;
@@ -71,7 +71,7 @@
   --ab-color-secondary: #2966A8;  // was previously 005ebb;//   #07c;   //00AF5C; (green)
   --ab-color-secondarydark: #015a9a;
   --ab-color-secondarylight: #a9ddff;
-  --ab-color-text-on-secondary: white;
+  --ab-color-text-on-secondary: #E2E2E2;
   --ab-color-text-on-secondarylight: #000000;
 
   --ab-icon-fill: currentColor;
