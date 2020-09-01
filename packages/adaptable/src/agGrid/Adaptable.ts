@@ -24,7 +24,7 @@ import {
 
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
-//import * as _ from 'lodash';
+import * as _ from 'lodash';
 
 import {
   NewValueParams,
@@ -144,7 +144,7 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
-import { isEqual, Cancelable, zipObject, clamp, uniq, debounce, throttle } from 'lodash';
+//import { isEqual, Cancelable, zipObject, clamp, uniq, debounce, throttle } from 'lodash';
 import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
@@ -280,9 +280,9 @@ export class Adaptable implements IAdaptable {
 
   public isInitialised: boolean;
 
-  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & Cancelable;
+  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & _.Cancelable;
 
-  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & Cancelable;
+  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & _.Cancelable;
 
   private agGridHelper: agGridHelper;
 
@@ -486,11 +486,11 @@ export class Adaptable implements IAdaptable {
       }
 
       // create debounce methods that take a time based on user settings
-      this.throttleOnDataChangedUser = throttle(
+      this.throttleOnDataChangedUser = _.throttle(
         this.applyDataChange,
         this.adaptableOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
       );
-      this.throttleOnDataChangedExternal = throttle(
+      this.throttleOnDataChangedExternal = _.throttle(
         this.applyDataChange,
         this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
       );
@@ -731,35 +731,35 @@ export class Adaptable implements IAdaptable {
   }
 
   // debounced methods
-  debouncedSetColumnIntoStore = debounce(() => {
+  debouncedSetColumnIntoStore = _.debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.updateColumnsIntoStore();
   }, HALF_SECOND);
 
-  debouncedSaveGridLayout = debounce(() => {
+  debouncedSaveGridLayout = _.debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.saveGridLayout();
   }, HALF_SECOND);
 
-  debouncedSetSelectedCells = debounce(() => {
+  debouncedSetSelectedCells = _.debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.setSelectedCells();
   }, 250);
 
-  debouncedSetSelectedRows = debounce(() => {
+  debouncedSetSelectedRows = _.debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.setSelectedRows();
   }, HALF_SECOND);
 
-  debouncedFilterGrid = debounce(() => {
+  debouncedFilterGrid = _.debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
@@ -1195,7 +1195,7 @@ export class Adaptable implements IAdaptable {
               : (aggregationFunctionsColumnsMap[colId] as string);
         }
 
-        isChanged = isChanged || !isEqual(newColState, oldColState);
+        isChanged = isChanged || !_.isEqual(newColState, oldColState);
 
         return newColState;
       })
@@ -1227,7 +1227,7 @@ export class Adaptable implements IAdaptable {
       })
       .filter(x => !!x);
 
-    const equalSortModel = isEqual(oldSortModel, sortModel);
+    const equalSortModel = _.isEqual(oldSortModel, sortModel);
 
     const pivoted = !!layout.EnablePivot;
     const shouldUpdatePivoted = this.gridOptions.columnApi.isPivotMode() !== pivoted;
@@ -1541,7 +1541,7 @@ export class Adaptable implements IAdaptable {
         });
       }
     }
-    return uniq(returnValues).slice(
+    return _.uniq(returnValues).slice(
       0,
       this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed
     );
@@ -3214,7 +3214,7 @@ export class Adaptable implements IAdaptable {
         // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
         //  coldDef.tooltipComponent = PercentBarTooltip;
         colDef.tooltipValueGetter = ({ value }: ITooltipParams) => {
-          const clampedValue = clamp(value, min, max);
+          const clampedValue = _.clamp(value, min, max);
           const percentageValue = ((clampedValue - min) / (max - min)) * 100;
 
           if (pcr.DisplayRawValue && pcr.DisplayPercentageValue) {
@@ -3937,7 +3937,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       headerName: columnName,
     }));
 
-    const rowData: any[] = data.map(row => zipObject(columnNames, row));
+    const rowData: any[] = data.map(row => _.zipObject(columnNames, row));
 
     const gridOptions: GridOptions = {
       columnDefs,
