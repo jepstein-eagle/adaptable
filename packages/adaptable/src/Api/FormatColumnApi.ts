@@ -79,6 +79,11 @@ export interface FormatColumnApi {
 
   getFormatColumnForColumn(column: AdaptableColumn): FormatColumn | undefined;
   getFormatColumnWithStyleForColumn(column: AdaptableColumn): FormatColumn | undefined;
+
+  /**
+   * Will get the most appropriate one i.e. first named Column, then DataType, then All
+   * @param column
+   */
   getFormatColumnWithDisplayFormatForColumn(column: AdaptableColumn): FormatColumn | undefined;
 
   hasStyleFormatColumns(): boolean;

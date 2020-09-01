@@ -30,7 +30,6 @@ export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, Wiz
           api={this.props.api}
           scope={this.state.scope}
           updateScope={(scope: Scope) => this.onUpdateScope(scope)}
-          useAllDataTypes={true}
         />{' '}
       </WizardPanel>
     );

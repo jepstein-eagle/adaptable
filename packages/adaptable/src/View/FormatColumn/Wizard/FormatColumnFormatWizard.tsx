@@ -86,7 +86,8 @@ export class FormatColumnFormatWizard
     }
     return (
       <HelpBlock margin={3}>
-        Formatting is only available if all the columns in Scope are either Numeric or Date.
+        Setting a Display Format is only available if <b>all</b> the columns in Scope are either
+        Numeric or Date.
       </HelpBlock>
     );
   }

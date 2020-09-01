@@ -111,6 +111,54 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     return undefined;
   }
 
+  public isColumnInNumericScope(column: AdaptableColumn, scope: Scope): boolean {
+    // if column is not even numeric then return false
+    if (column == null || column == undefined || column.DataType !== 'Number') {
+      return false;
+    }
+
+    // if no scope then return false
+    if (scope == undefined) {
+      return false;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
+      return true;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('DataTypes' in scope && scope.DataTypes.includes('Number')) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public isColumnInDateScope(column: AdaptableColumn, scope: Scope): boolean {
+    // if column is not even numeric then return false
+    if (column == null || column == undefined || column.DataType !== 'Date') {
+      return false;
+    }
+
+    // if no scope then return false
+    if (scope == undefined) {
+      return false;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
+      return true;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('DataTypes' in scope && scope.DataTypes.includes('Date')) {
+      return true;
+    }
+
+    return false;
+  }
+
   /*
     Scope A     | Scope B     | Result
     ===========================================================================

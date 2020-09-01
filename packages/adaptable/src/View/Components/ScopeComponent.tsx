@@ -1,19 +1,9 @@
 import * as React from 'react';
 
-import { FontWeight, FontStyle, FontSize } from '../../PredefinedConfig/Common/Enums';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ColorPicker } from '../ColorPicker';
-import { AdaptablePopover } from '../AdaptablePopover';
-import { Text, Flex, Box } from 'rebass';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
-import Checkbox from '../../components/CheckBox';
+import { Flex, Box } from 'rebass';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
-import Dropdown from '../../components/Dropdown';
-import { CSSProperties } from 'react';
 import { AdaptableApi } from '../../Api/AdaptableApi';
-import FormLayout, { FormRow } from '../../components/FormLayout';
 import { ScopeDataType, Scope } from '../../PredefinedConfig/Common/Scope';
 import Radio from '../../components/Radio';
 import { DualListBoxEditor, DisplaySize } from './ListBox/DualListBoxEditor';
@@ -23,7 +13,6 @@ export interface ScopeComponentProps extends React.ClassAttributes<ScopeComponen
   api: AdaptableApi;
   scope: Scope;
   updateScope: (scope: Scope) => void;
-  useAllDataTypes: boolean;
 }
 
 export interface ScopeComponentState {
@@ -100,109 +89,61 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
             </Box>
           )}
           {this.state.ScopeChoice == 'DataType' && (
-            <div>
-              {this.props.useAllDataTypes == true ? (
-                <Panel header="Data Types" margin={2} marginLeft={4}>
-                  {' '}
-                  <Flex flexDirection="row" padding={2}>
-                    <CheckBox
-                      checked={
-                        'DataTypes' in this.state.componentScope &&
-                        this.props.api.scopeApi
-                          .getDataTypesInScope(this.state.componentScope)
-                          .includes('Date')
-                      }
-                      marginLeft={2}
-                      onChange={(checked: boolean) =>
-                        this.onCheckBoxDataTypeChecked(checked, 'Date')
-                      }
-                    >
-                      Date
-                    </CheckBox>{' '}
-                    <CheckBox
-                      checked={
-                        'DataTypes' in this.state.componentScope &&
-                        this.props.api.scopeApi
-                          .getDataTypesInScope(this.state.componentScope)
-                          .includes('Number')
-                      }
-                      marginLeft={4}
-                      onChange={(checked: boolean) =>
-                        this.onCheckBoxDataTypeChecked(checked, 'Number')
-                      }
-                    >
-                      Number
-                    </CheckBox>{' '}
-                    <CheckBox
-                      checked={
-                        'DataTypes' in this.state.componentScope &&
-                        this.props.api.scopeApi
-                          .getDataTypesInScope(this.state.componentScope)
-                          .includes('String')
-                      }
-                      marginLeft={4}
-                      onChange={(checked: boolean) =>
-                        this.onCheckBoxDataTypeChecked(checked, 'String')
-                      }
-                    >
-                      String
-                    </CheckBox>{' '}
-                    <CheckBox
-                      checked={
-                        'DataTypes' in this.state.componentScope &&
-                        this.props.api.scopeApi
-                          .getDataTypesInScope(this.state.componentScope)
-                          .includes('Boolean')
-                      }
-                      marginLeft={4}
-                      onChange={(checked: boolean) =>
-                        this.onCheckBoxDataTypeChecked(checked, 'Boolean')
-                      }
-                    >
-                      Boolean
-                    </CheckBox>{' '}
-                  </Flex>{' '}
-                </Panel>
-              ) : (
-                <div>
-                  <Panel header="Data Types" margin={2} marginLeft={4}>
-                    {' '}
-                    <Flex flexDirection="row" padding={2}>
-                      <Radio
-                        checked={
-                          'DataTypes' in this.state.componentScope &&
-                          this.props.api.scopeApi
-                            .getDataTypesInScope(this.state.componentScope)
-                            .includes('Date')
-                        }
-                        value="Date"
-                        marginLeft={2}
-                        onChange={(checked: boolean) =>
-                          this.onRadioDataTypeChecked(checked, 'Date')
-                        }
-                      >
-                        Date
-                      </Radio>
-                      <Radio
-                        checked={
-                          'DataTypes' in this.state.componentScope &&
-                          this.props.api.scopeApi
-                            .getDataTypesInScope(this.state.componentScope)
-                            .includes('Number')
-                        }
-                        value="Number"
-                        marginLeft={2}
-                        onChange={(checked: boolean) =>
-                          this.onRadioDataTypeChecked(checked, 'Number')
-                        }
-                      >
-                        Number
-                      </Radio>
-                    </Flex>{' '}
-                  </Panel>
-                </div>
-              )}
-            </div>
+            <Panel margin={2} marginLeft={3}>
+              {' '}
+              <Flex flexDirection="row" padding={2}>
+                <CheckBox
+                  checked={
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('Date')
+                  }
+                  marginLeft={2}
+                  onChange={(checked: boolean) => this.onCheckBoxDataTypeChecked(checked, 'Date')}
+                >
+                  Date
+                </CheckBox>{' '}
+                <CheckBox
+                  checked={
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('Number')
+                  }
+                  marginLeft={4}
+                  onChange={(checked: boolean) => this.onCheckBoxDataTypeChecked(checked, 'Number')}
+                >
+                  Number
+                </CheckBox>{' '}
+                <CheckBox
+                  checked={
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('String')
+                  }
+                  marginLeft={4}
+                  onChange={(checked: boolean) => this.onCheckBoxDataTypeChecked(checked, 'String')}
+                >
+                  String
+                </CheckBox>{' '}
+                <CheckBox
+                  checked={
+                    'DataTypes' in this.state.componentScope &&
+                    this.props.api.scopeApi
+                      .getDataTypesInScope(this.state.componentScope)
+                      .includes('Boolean')
+                  }
+                  marginLeft={4}
+                  onChange={(checked: boolean) =>
+                    this.onCheckBoxDataTypeChecked(checked, 'Boolean')
+                  }
+                >
+                  Boolean
+                </CheckBox>{' '}
+              </Flex>{' '}
+            </Panel>
           )}
         </Flex>
       </Panel>
@@ -266,23 +207,6 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
     let newScope: Scope = {
       DataTypes: dataTypes,
     };
-    this.setState({ componentScope: newScope } as ScopeComponentState, () => this.forceUpdate());
-    this.props.updateScope(newScope);
-  }
-
-  private onRadioDataTypeChecked(checked: boolean, item: ScopeDataType) {
-    let e = event.target as HTMLInputElement;
-    let newScope: Scope;
-    if (e.value == 'Date') {
-      newScope = {
-        DataTypes: ['Date'],
-      };
-    } else if (e.value == 'Number') {
-      newScope = {
-        DataTypes: ['Number'],
-      };
-    }
-
     this.setState({ componentScope: newScope } as ScopeComponentState, () => this.forceUpdate());
     this.props.updateScope(newScope);
   }

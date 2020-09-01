@@ -3073,13 +3073,19 @@ export class Adaptable implements IAdaptable {
 
       if (formatColumn.DisplayFormat) {
         if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
-          const options = formatColumn.DisplayFormat.Options;
-          colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+          // change the Number format - if the scope allows it
+          if (this.api.scopeApi.isColumnInNumericScope(abColumn, formatColumn.Scope)) {
+            const options = formatColumn.DisplayFormat.Options;
+            colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+          }
         }
 
         if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
-          const options = formatColumn.DisplayFormat.Options;
-          colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+          // change the Date format - if the scope allows it
+          if (this.api.scopeApi.isColumnInDateScope(abColumn, formatColumn.Scope)) {
+            const options = formatColumn.DisplayFormat.Options;
+            colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+          }
         }
       }
 
