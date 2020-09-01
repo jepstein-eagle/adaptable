@@ -24,7 +24,7 @@ import {
 
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
-import * as _ from 'lodash';
+//import * as _ from 'lodash';
 
 import {
   NewValueParams,
@@ -144,7 +144,7 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
-import { isEqual } from 'lodash';
+import { isEqual, Cancelable } from 'lodash';
 import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
@@ -280,9 +280,9 @@ export class Adaptable implements IAdaptable {
 
   public isInitialised: boolean;
 
-  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & Cancelable;
 
-  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & Cancelable;
 
   private agGridHelper: agGridHelper;
 
