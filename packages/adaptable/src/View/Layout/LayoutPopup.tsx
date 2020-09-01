@@ -115,16 +115,16 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     });
 
     let newSearchButton = (
-      <SimpleButton
+      <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create New Layout"
-        icon="plus"
-        tone="accent"
-        variant="raised"
         accessLevel={this.props.accessLevel}
-      >
-        ADD
-      </SimpleButton>
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-add)',
+        }}
+      />
     );
 
     return (

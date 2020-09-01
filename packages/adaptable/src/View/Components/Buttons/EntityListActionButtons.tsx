@@ -75,9 +75,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '2px',
-              color: 'var(--ab-color-text-on-info)',
-              fill: 'var(--ab-color-text-on-info)',
-              background: 'var(--ab-color-info)',
+              color: 'var(--ab-color-text-on-edit)',
+              fill: 'var(--ab-color-text-on-edit)',
+              background: 'var(--ab-color-edit)',
             }}
             disabled={this.props.overrideDisableEdit || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipEdit}
@@ -92,9 +92,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '2px',
-              color: 'var(--ab-color-text-on-info)',
-              fill: 'var(--ab-color-text-on-info)',
-              background: 'var(--ab-color-info)',
+              color: 'var(--ab-color-text-on-clone)',
+              fill: 'var(--ab-color-text-on-clone)',
+              background: 'var(--ab-color-clone)',
             }}
             children={null}
             disabled={this.props.overrideDisableClone || this.props.accessLevel == 'ReadOnly'}
@@ -110,9 +110,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '1px',
-              color: 'var(--ab-color-text-on-error)',
-              fill: 'var(--ab-color-text-on-error)',
-              background: 'var(--ab-color-error)',
+              color: 'var(--ab-color-text-on-delete)',
+              fill: 'var(--ab-color-text-on-delete)',
+              background: 'var(--ab-color-delete)',
             }}
             disabled={this.props.overrideDisableDelete || this.props.accessLevel == 'ReadOnly'}
             tooltip={this.props.overrideTooltipDelete}
@@ -129,9 +129,9 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '1px',
-              color: 'var(--ab-color-text-on-warn)',
-              fill: 'var(--ab-color-text-on-warn)',
-              background: 'var(--ab-color-warn)',
+              color: 'var(--ab-color-text-on-share)',
+              fill: 'var(--ab-color-text-on-share)',
+              background: 'var(--ab-color-share)',
             }}
             onShare={(description: string) =>
               this.props.shareClick ? this.props.shareClick(description) : null

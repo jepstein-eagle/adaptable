@@ -116,6 +116,11 @@ class UserFilterPopupComponent extends React.Component<
         onClick={() => this.onNew()}
         tooltip="Create User Filter"
         accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-add)',
+        }}
       />
     );
 

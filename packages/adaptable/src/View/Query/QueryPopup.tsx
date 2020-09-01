@@ -87,6 +87,11 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
         }}
         tooltip="Create Shared Query"
         accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-add)',
+        }}
       />
     );
 

@@ -712,12 +712,12 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             flexDirection="column"
             showBoth
             labels={{
-              Sortable: 'Be sorted',
-              Filterable: 'Be filtered',
-              Aggregatable: 'Show aggregations (in grouped rows)',
-              Groupable: 'Be (Row) Grouped',
-              Moveable: 'Be dragged and moved',
-              Pivotable: 'Can be used in pivoting',
+              Sortable: 'Able to be sorted',
+              Filterable: 'Can be filtered',
+              Aggregatable: 'Shows aggregations (in grouped rows)',
+              Groupable: 'Can form a row group',
+              Moveable: 'Is draggable and movable',
+              Pivotable: 'Eligible for pivoting',
             }}
             Sortable={true}
             Filterable={true}

@@ -115,6 +115,11 @@ class CalculatedColumnPopupComponent extends React.Component<
         onClick={() => {
           this.onNew();
         }}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-add)',
+        }}
         tooltip="Create Calculated Column"
         accessLevel={this.props.accessLevel}
       />

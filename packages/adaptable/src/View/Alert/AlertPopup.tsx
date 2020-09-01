@@ -105,6 +105,11 @@ class AlertPopupComponent extends React.Component<
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
         accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-add)',
+        }}
       />
     );
 
