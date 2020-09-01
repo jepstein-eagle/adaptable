@@ -10,6 +10,7 @@ import SimpleButton from '../../components/SimpleButton';
 import ExpressionEditor from '../../components/ExpressionEditor';
 import * as parser from '../../parser/src';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
+import { Flex } from 'rebass';
 
 interface ExpandedQueryPopupComponentProps
   extends StrategyViewPopupProps<ExpandedQueryPopupComponent> {
@@ -50,28 +51,33 @@ class ExpandedQueryPopupComponent extends React.Component<
           functions={parser.defaultFunctions}
           api={this.props.api}
         />
-        <SimpleButton
-          padding={2}
-          margin={2}
-          onClick={() => {
-            this.props.onClosePopup();
-          }}
-        >
-          Close
-        </SimpleButton>
-        <SimpleButton
-          variant="raised"
-          tone="accent"
-          padding={2}
-          margin={2}
-          onClick={() => {
-            this.props.onChangeCurrentQuery(this.state.expression);
-            this.props.onClosePopup();
-          }}
-          disabled={!isExpressionValid || StringExtensions.IsNullOrEmpty(this.state.expression)}
-        >
-          Run Query
-        </SimpleButton>
+
+        <Flex flexDirection="row" padding={1} backgroundColor="primary" alignItems="center">
+          <SimpleButton
+            padding={2}
+            margin={2}
+            onClick={() => {
+              this.props.onClosePopup();
+            }}
+          >
+            Close
+          </SimpleButton>
+          <div style={{ flex: 1 }} />
+
+          <SimpleButton
+            variant="raised"
+            tone="accent"
+            padding={2}
+            margin={2}
+            onClick={() => {
+              this.props.onChangeCurrentQuery(this.state.expression);
+              this.props.onClosePopup();
+            }}
+            disabled={!isExpressionValid || StringExtensions.IsNullOrEmpty(this.state.expression)}
+          >
+            Run Query
+          </SimpleButton>
+        </Flex>
       </PanelWithButton>
     );
   }
