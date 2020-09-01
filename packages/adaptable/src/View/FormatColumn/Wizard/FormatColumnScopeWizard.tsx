@@ -31,7 +31,6 @@ export class FormatColumnScopeWizard
           api={this.props.api}
           scope={this.state.scope}
           updateScope={(scope: Scope) => this.onUpdateScope(scope)}
-          useAllDataTypes={false}
         />{' '}
       </WizardPanel>
     );

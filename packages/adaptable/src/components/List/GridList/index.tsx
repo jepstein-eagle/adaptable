@@ -9,6 +9,7 @@ export interface GridListProps {
   children: ReactNode[];
   className?: string;
   rowHeight?: number;
+  showZebraRows?: boolean;
 }
 
 type GridListItem = {
@@ -25,9 +26,11 @@ const GridList = (props: GridListProps) => {
       id: index,
     };
   }).filter(data => !!data.item);
+
   return (
     <DataSource<GridListItem> data={data} primaryKey="id" fields={['item', 'id']}>
       <Grid
+        showZebraRows={props.showZebraRows}
         rowHeight={props.rowHeight || 30}
         domProps={{
           className: join(baseClassName, props.className),
