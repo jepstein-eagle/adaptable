@@ -39,61 +39,92 @@ const ListPanel = (props: PanelProps) => (
     {...props}
   />
 );
-const ColumnLabels = (props: AdaptableColumnProperties & { children?: React.ReactNode }) => {
-  const { children, ...columnProperties } = props;
+const ColumnLabels = (
+  props: AdaptableColumnProperties & {
+    children?: React.ReactNode;
+    labels?: Record<string, React.ReactNode>;
+    flexDirection?: 'row' | 'column';
+    showBoth?: boolean;
+  }
+) => {
+  const {
+    children,
+    showBoth,
+    flexDirection = 'row',
+    labels: labelsProp,
+    ...columnProperties
+  } = props;
 
   const labelNames = [
     'Aggregatable',
-    // 'Filterable',
+    'Filterable',
     'Groupable',
     'Moveable',
     'Pivotable',
     'Sortable',
   ];
   const labels = labelNames.map(name => ((columnProperties as any)[name] ? name.charAt(0) : ''));
+  const flexProps = {
+    [flexDirection === 'row' ? 'alignItems' : 'justifyContent']: 'center',
+  };
+
   return (
-    <Flex flexDirection="row" alignItems="center" width="100%">
+    <Flex flexDirection={flexDirection} {...flexProps} width="100%">
       <Text mr={2}>Attributes:</Text>
       {labels.map((l, index) => {
         const enabled = !!l;
         const labelName = labelNames[index];
         const letter = labelName.charAt(0);
+
+        const renderBox = (enabled: boolean) => {
+          return (
+            <Flex
+              width={'20px'}
+              height={'20px'}
+              alignItems="center"
+              justifyContent="center"
+              fontSize={2}
+              ml={2}
+              backgroundColor="defaultbackground"
+              title={enabled ? labelName : `Not ${labelName}`}
+              style={{
+                overflow: 'hidden',
+                cursor: 'auto',
+                position: 'relative',
+                fontWeight: 600,
+                lineHeight: 0,
+                border: `1px solid var(--ab-color-${enabled ? 'accent' : 'inputborder'})`,
+                borderRadius: 'var(--ab__border-radius)',
+                opacity: enabled ? 1 : 0.5,
+              }}
+              key={letter}
+            >
+              {!enabled ? (
+                <div
+                  style={{
+                    background: 'currentColor',
+                    position: 'absolute',
+                    bottom: '-100%',
+                    right: 0,
+                    width: 2,
+                    height: '200%',
+                    transform: 'skewX(45deg)',
+                  }}
+                ></div>
+              ) : null}
+              {letter}
+            </Flex>
+          );
+        };
         return (
-          <Flex
-            width={'20px'}
-            height={'20px'}
-            marginLeft={2}
-            alignItems="center"
-            justifyContent="center"
-            fontSize={2}
-            backgroundColor="defaultbackground"
-            title={enabled ? labelName : `Not ${labelName}`}
-            style={{
-              overflow: 'hidden',
-              cursor: 'auto',
-              position: 'relative',
-              fontWeight: 600,
-              lineHeight: 0,
-              border: `1px solid var(--ab-color-${enabled ? 'accent' : 'inputborder'})`,
-              borderRadius: 'var(--ab__border-radius)',
-              opacity: enabled ? 1 : 0.5,
-            }}
-            key={letter}
-          >
-            {!enabled ? (
-              <div
-                style={{
-                  background: 'currentColor',
-                  position: 'absolute',
-                  bottom: '-100%',
-                  right: 0,
-                  width: 2,
-                  height: '200%',
-                  transform: 'skewX(45deg)',
-                }}
-              ></div>
+          <Flex mt={flexDirection === 'row' ? 0 : 2} flexDirection="row" alignItems="center">
+            {renderBox(enabled)}
+            {showBoth ? renderBox(!enabled) : null}
+            {labelsProp ? (
+              <Flex flex={1} ml={2}>
+                {labelsProp[labelName]}
+              </Flex>
             ) : null}
-            {letter}
           </Flex>
         );
       })}
@@ -344,11 +375,12 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
 
   return (
     <DragDropContext onDragEnd={onDragEnd} onDragStart={onDragStart}>
-      <Flex flexDirection="row" flex={1} className="ab-LayoutEditor">
+      <Box className="ab-LayoutEditor">
         <ListPanel
           header="Columns"
           bodyScroll
           style={{ flex: 'none' }}
+          className="ab-LayoutEditor__ColumnListPanel"
           bodyProps={{ style: { display: 'flex' }, px: 0 }}
         >
           <ColumnList
@@ -373,7 +405,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                   <Flex
                     flexDirection="row"
                     alignItems="center"
-                    backgroundColor="text-on-primary"
+                    backgroundColor="secondary"
                     color="text-on-secondary"
                   >
                     <Flex flex={1} alignItems="center">
@@ -474,185 +506,215 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
           />
         </ListPanel>
 
-        <Flex flexDirection="column" style={{ overflow: 'auto' }}>
-          <ListPanel ml={2} header="Sorting" mb={2}>
-            <ColumnSortList
-              columnSorts={layout.ColumnSorts}
-              onColumnSortsChange={onColumnSortsChange}
-              isDropDisabled={state.dropDisabledOnSort}
-              onReady={dragEnd => {
-                onDragEndRef.current.columnSortList = dragEnd;
-              }}
-              getItemStyle={(
-                columnId,
-                snapshot: { isDragging: boolean; draggingOver?: string },
+        <ListPanel header="Sorting" className="ab-LayoutEditor__ColumnSortListPanel">
+          <ColumnSortList
+            columnSorts={layout.ColumnSorts}
+            onColumnSortsChange={onColumnSortsChange}
+            isDropDisabled={state.dropDisabledOnSort}
+            onReady={dragEnd => {
+              onDragEndRef.current.columnSortList = dragEnd;
+            }}
+            getItemStyle={(
+              columnId,
+              snapshot: { isDragging: boolean; draggingOver?: string },
+              draggableStyle
+            ): CSSProperties => {
+              return getItemStyle(
+                allColumnsMap[columnId],
+                layout,
+                state.dragSource,
+                snapshot,
                 draggableStyle
-              ): CSSProperties => {
-                return getItemStyle(
-                  allColumnsMap[columnId],
-                  layout,
-                  state.dragSource,
-                  snapshot,
-                  draggableStyle
-                );
-              }}
-              renderItem={(c: ColumnSort, clear, toggleSort) => {
-                const column: AdaptableColumn = allColumnsMap[c.ColumnId];
-                return (
-                  <Flex flexDirection="row" alignItems="center">
-                    <Box ml={2} mr={3}>
-                      <Icon name="drag" size={30} />
-                    </Box>
-                    <Flex flex="1" flexDirection="row" alignItems="center">
-                      {column.FriendlyName} [{c.SortOrder}]
-                    </Flex>
-                    <SimpleButton
-                      variant="raised"
-                      style={{ cursor: 'pointer' }}
-                      mr={3}
-                      onClick={e => {
-                        e.stopPropagation();
-                        toggleSort();
-                      }}
-                    >
-                      <Icon name={c.SortOrder === 'Asc' ? 'sort-asc' : 'sort-desc'} />
-                    </SimpleButton>
-                    <SimpleButton
-                      variant="text"
-                      onClick={e => {
-                        e.stopPropagation();
-                        clear();
-                      }}
-                    >
-                      <Icon name="clear" />
-                    </SimpleButton>
+              );
+            }}
+            renderItem={(c: ColumnSort, clear, toggleSort) => {
+              const column: AdaptableColumn = allColumnsMap[c.ColumnId];
+              return (
+                <Flex flexDirection="row" alignItems="center">
+                  <Box ml={2} mr={3}>
+                    <Icon name="drag" size={30} />
+                  </Box>
+                  <Flex flex="1" flexDirection="row" alignItems="center">
+                    {column.FriendlyName} [{c.SortOrder}]
                   </Flex>
-                );
-              }}
-            />
-          </ListPanel>
+                  <SimpleButton
+                    variant="raised"
+                    style={{ cursor: 'pointer' }}
+                    mr={3}
+                    onClick={e => {
+                      e.stopPropagation();
+                      toggleSort();
+                    }}
+                  >
+                    <Icon name={c.SortOrder === 'Asc' ? 'sort-asc' : 'sort-desc'} />
+                  </SimpleButton>
+                  <SimpleButton
+                    variant="text"
+                    onClick={e => {
+                      e.stopPropagation();
+                      clear();
+                    }}
+                  >
+                    <Icon name="clear" />
+                  </SimpleButton>
+                </Flex>
+              );
+            }}
+          />
+        </ListPanel>
 
-          <ListPanel ml={2} mb={2} header="Row Groups">
-            <RowGroupsList
-              rowGroups={layout.RowGroupedColumns}
-              onRowGroupsChange={onRowGroupsChange}
-              isDropDisabled={state.dropDisabledOnRowGroups}
-              onReady={dragEnd => {
-                onDragEndRef.current.rowGroupsList = dragEnd;
-              }}
-              getItemStyle={(
-                columnId,
-                snapshot: { isDragging: boolean; draggingOver?: string },
+        <ListPanel header="Row Groups" className="ab-LayoutEditor__RowGroupsListPanel">
+          <RowGroupsList
+            rowGroups={layout.RowGroupedColumns}
+            onRowGroupsChange={onRowGroupsChange}
+            isDropDisabled={state.dropDisabledOnRowGroups}
+            onReady={dragEnd => {
+              onDragEndRef.current.rowGroupsList = dragEnd;
+            }}
+            getItemStyle={(
+              columnId,
+              snapshot: { isDragging: boolean; draggingOver?: string },
+              draggableStyle
+            ): CSSProperties => {
+              return getItemStyle(
+                allColumnsMap[columnId],
+                layout,
+                state.dragSource,
+                snapshot,
                 draggableStyle
-              ): CSSProperties => {
-                return getItemStyle(
-                  allColumnsMap[columnId],
-                  layout,
-                  state.dragSource,
-                  snapshot,
-                  draggableStyle
-                );
-              }}
-              renderItem={(colId: string, clear) => {
-                const column: AdaptableColumn = allColumnsMap[colId];
-                return (
-                  <Flex flexDirection="row" alignItems="center">
-                    <Box ml={2} mr={3}>
-                      <Icon name="drag" size={30} />
-                    </Box>
-                    <Flex flexDirection="row" alignItems="center" flex={1}>
-                      {column.FriendlyName}
-                    </Flex>
-
-                    <SimpleButton
-                      variant="text"
-                      onClick={e => {
-                        e.stopPropagation();
-                        clear();
-                      }}
-                    >
-                      <Icon name="clear" />
-                    </SimpleButton>
+              );
+            }}
+            renderItem={(colId: string, clear) => {
+              const column: AdaptableColumn = allColumnsMap[colId];
+              return (
+                <Flex flexDirection="row" alignItems="center">
+                  <Box ml={2} mr={3}>
+                    <Icon name="drag" size={30} />
+                  </Box>
+                  <Flex flexDirection="row" alignItems="center" flex={1}>
+                    {column.FriendlyName}
                   </Flex>
-                );
-              }}
-            />
-          </ListPanel>
 
-          <ListPanel
-            ml={2}
-            header={
-              <Flex
-                width="100%"
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="center"
+                  <SimpleButton
+                    variant="text"
+                    onClick={e => {
+                      e.stopPropagation();
+                      clear();
+                    }}
+                  >
+                    <Icon name="clear" />
+                  </SimpleButton>
+                </Flex>
+              );
+            }}
+          />
+        </ListPanel>
+
+        <ListPanel
+          className="ab-LayoutEditor__PivotListPanel"
+          header={
+            <Flex
+              width="100%"
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+            >
+              <Text>Pivoted Columns</Text>
+              <CheckBox
+                mt={0}
+                mb={0}
+                checked={layout.EnablePivot}
+                onChange={checked => {
+                  setLayout({
+                    ...layout,
+                    EnablePivot: checked,
+                  });
+                }}
               >
-                <Text>Pivoted Columns</Text>
-                <CheckBox
-                  mt={0}
-                  mb={0}
-                  checked={layout.EnablePivot}
-                  onChange={checked => {
-                    setLayout({
-                      ...layout,
-                      EnablePivot: checked,
-                    });
-                  }}
-                >
-                  Enable
-                </CheckBox>
-              </Flex>
-            }
-            bodyProps={{ padding: 0 }}
-          >
-            <PivotList
-              pivotColumns={layout.PivotColumns}
-              onPivotColumnsChange={onPivotColumnsChange}
-              isDropDisabled={state.dropDisabledOnPivot}
-              onReady={dragEnd => {
-                onDragEndRef.current.pivotList = dragEnd;
-              }}
-              renderItem={(colId: string, clear) => {
-                const column: AdaptableColumn = allColumnsMap[colId];
-                return (
-                  <Flex flexDirection="row" alignItems="center">
-                    <Box ml={2} mr={3}>
-                      <Icon name="drag" size={30} />
-                    </Box>
-                    <Flex flexDirection="row" alignItems="center" flex={1}>
-                      {column.FriendlyName}
-                    </Flex>
-
-                    <SimpleButton
-                      variant="text"
-                      onClick={e => {
-                        e.stopPropagation();
-                        clear();
-                      }}
-                    >
-                      <Icon name="clear" />
-                    </SimpleButton>
+                Enable
+              </CheckBox>
+            </Flex>
+          }
+          bodyProps={{ padding: 0 }}
+        >
+          <PivotList
+            pivotColumns={layout.PivotColumns}
+            onPivotColumnsChange={onPivotColumnsChange}
+            isDropDisabled={state.dropDisabledOnPivot}
+            onReady={dragEnd => {
+              onDragEndRef.current.pivotList = dragEnd;
+            }}
+            renderItem={(colId: string, clear) => {
+              const column: AdaptableColumn = allColumnsMap[colId];
+              return (
+                <Flex flexDirection="row" alignItems="center">
+                  <Box ml={2} mr={3}>
+                    <Icon name="drag" size={30} />
+                  </Box>
+                  <Flex flexDirection="row" alignItems="center" flex={1}>
+                    {column.FriendlyName}
                   </Flex>
-                );
-              }}
-              getItemStyle={(
-                columnId,
-                snapshot: { isDragging: boolean; draggingOver?: string },
+
+                  <SimpleButton
+                    variant="text"
+                    onClick={e => {
+                      e.stopPropagation();
+                      clear();
+                    }}
+                  >
+                    <Icon name="clear" />
+                  </SimpleButton>
+                </Flex>
+              );
+            }}
+            getItemStyle={(
+              columnId,
+              snapshot: { isDragging: boolean; draggingOver?: string },
+              draggableStyle
+            ): CSSProperties => {
+              return getItemStyle(
+                allColumnsMap[columnId],
+                layout,
+                state.dragSource,
+                snapshot,
                 draggableStyle
-              ): CSSProperties => {
-                return getItemStyle(
-                  allColumnsMap[columnId],
-                  layout,
-                  state.dragSource,
-                  snapshot,
-                  draggableStyle
-                );
-              }}
-            />
-          </ListPanel>
-        </Flex>
-      </Flex>
+              );
+            }}
+          />
+        </ListPanel>
+
+        <ListPanel
+          header="Legend"
+          style={{
+            gridRow: '1 /1',
+            gridColumn: '3/3',
+          }}
+          bodyProps={{
+            padding: 2,
+            backgroundColor: 'defaultbackground',
+            color: 'text-on-defaultbackground',
+          }}
+        >
+          <ColumnLabels
+            flexDirection="column"
+            showBoth
+            labels={{
+              Sortable: 'Whether the column can be sorted',
+              Filterable: 'Whether the column can be filtered',
+              Aggregatable: 'Whether the column can be aggregated by',
+              Groupable: 'Whether the column can be used for grouping',
+              Moveable: 'Whether the column can be dragged and moved',
+              Pivotable: 'Whether the column can be used in pivoting',
+            }}
+            Sortable={true}
+            Filterable={true}
+            Moveable={true}
+            Pivotable={true}
+            Groupable={true}
+            Aggregatable={true}
+          ></ColumnLabels>
+        </ListPanel>
+      </Box>
     </DragDropContext>
   );
 };

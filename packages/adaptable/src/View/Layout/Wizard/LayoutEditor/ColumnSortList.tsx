@@ -129,7 +129,9 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
     >
       {(provided, snapshot) => (
         <div
-          className={`ab-ColumnSortList ${!columnSorts.length ? 'ab-ColumnSortList--empty' : ''}`}
+          className={`ab-LayoutEditor__ColumnSortList ${
+            !columnSorts.length ? 'ab-LayoutEditor__ColumnSortList--empty' : ''
+          }`}
           {...provided.droppableProps}
           ref={provided.innerRef}
           style={getListStyle(snapshot)}
@@ -148,7 +150,7 @@ export const ColumnSortList = (props: ColumnSortListProps) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="ab-ColumnSortList__column"
+                      className="ab-LayoutEditor__ColumnSortList__column"
                       style={props.getItemStyle(
                         c.ColumnId,
                         snapshot,

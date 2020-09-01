@@ -104,7 +104,9 @@ export const PivotList = (props: PivotListProps) => {
     >
       {(provided, snapshot) => (
         <div
-          className={`ab-PivotList ${!pivotColumns.length ? 'ab-PivotList--empty' : ''}`}
+          className={`ab-LayoutEditor__PivotList ${
+            !pivotColumns.length ? 'ab-LayoutEditor__PivotList--empty' : ''
+          }`}
           {...provided.droppableProps}
           ref={provided.innerRef}
           style={getListStyle(snapshot)}
@@ -119,7 +121,7 @@ export const PivotList = (props: PivotListProps) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="ab-PivotList__column"
+                      className="ab-LayoutEditor__PivotList__column"
                       style={props.getItemStyle(colId, snapshot, provided.draggableProps.style)}
                     >
                       {renderItem(colId)}

@@ -1,7 +1,5 @@
 import { CSSProperties } from 'react';
 
-export const listWidth = '28rem';
-
 export type DraggableSnapshot = {
   isDragging: boolean;
   draggingOver?: string;
@@ -14,7 +12,7 @@ export type DroppableSnapshot = {
 
 export const getListStyle = (droppableSnapshot: DroppableSnapshot): CSSProperties => {
   const style: CSSProperties = {
-    width: listWidth,
+    width: '100%',
     height: '100%',
   };
 

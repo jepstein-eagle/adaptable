@@ -98,7 +98,7 @@ export const ColumnList = (props: ColumnListProps) => {
       {(provided, snapshot) => {
         return (
           <div
-            className="ab-ColumnList"
+            className="ab-LayoutEditor__ColumnList"
             {...provided.droppableProps}
             ref={provided.innerRef}
             style={getListStyle(snapshot)}
@@ -130,7 +130,7 @@ export const ColumnList = (props: ColumnListProps) => {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="ab-ColumnList__column"
+                          className="ab-LayoutEditor__ColumnList__column"
                           style={style}
                         >
                           {renderColumn(c)}

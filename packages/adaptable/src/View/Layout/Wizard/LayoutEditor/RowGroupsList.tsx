@@ -102,7 +102,9 @@ export const RowGroupsList = (props: RowGroupsListProps) => {
     >
       {(provided, snapshot) => (
         <div
-          className={`ab-RowGroupsList ${!rowGroups.length ? 'ab-RowGroupsList--empty' : ''}`}
+          className={`ab-LayoutEditor__RowGroupsList ${
+            !rowGroups.length ? 'ab-LayoutEditor__RowGroupsList--empty' : ''
+          }`}
           {...provided.droppableProps}
           ref={provided.innerRef}
           style={getListStyle(snapshot)}
@@ -117,7 +119,7 @@ export const RowGroupsList = (props: RowGroupsListProps) => {
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      className="ab-RowGroupsList__column"
+                      className="ab-LayoutEditor__RowGroupsList__column"
                       style={props.getItemStyle(colId, snapshot, provided.draggableProps.style)}
                     >
                       {renderItem(colId)}
