@@ -22,6 +22,7 @@ import { getItemStyle } from './getItemStyle';
 import { reducer, LayoutEditorActions, getInitialState } from './reducer';
 import DropdownButton from '../../../../components/DropdownButton';
 import { PivotList } from './PivotList';
+import { ButtonInfo } from '../../../Components/Buttons/ButtonInfo';
 
 export interface LayoutEditorProps {
   api: AdaptableApi;
@@ -45,11 +46,13 @@ const ColumnLabels = (
     labels?: Record<string, React.ReactNode>;
     flexDirection?: 'row' | 'column';
     showBoth?: boolean;
+    showTitle?: boolean;
   }
 ) => {
   const {
     children,
     showBoth,
+    showTitle,
     flexDirection = 'row',
     labels: labelsProp,
     ...columnProperties
@@ -70,7 +73,7 @@ const ColumnLabels = (
 
   return (
     <Flex flexDirection={flexDirection} {...flexProps} width="100%">
-      <Text mr={2}>Attributes:</Text>
+      {showTitle ? <Text mr={2}>Behaviours:</Text> : null}
       {labels.map((l, index) => {
         const enabled = !!l;
         const labelName = labelNames[index];
@@ -412,8 +415,17 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                       <Box ml={2} mr={2}>
                         <Icon name="drag" size={30} />
                       </Box>
-
-                      {c.FriendlyName}
+                      {c.FriendlyName}{' '}
+                      <ButtonInfo
+                        marginLeft={1}
+                        style={{ color: 'var(--ab-color-text-on-secondary)' }}
+                        onClick={() => {
+                          props.api.internalApi.showPopupScreen('ColumnInfo', 'ColumnInfoPopup', {
+                            column: c,
+                            source: 'ContextMenu',
+                          });
+                        }}
+                      ></ButtonInfo>
                     </Flex>
                     <CheckBox
                       title="Visible"
@@ -425,12 +437,13 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                       }}
                       onChange={setColumnVisibility.bind(null, c)}
                     >
-                      Visibility
+                      Visible
                     </CheckBox>
                   </Flex>
 
                   <Flex padding={2} flexDirection="column">
                     <ColumnLabels
+                      showTitle={true}
                       Sortable={c.Sortable}
                       Filterable={c.Filterable}
                       Moveable={c.Moveable}
@@ -684,7 +697,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
         </ListPanel>
 
         <ListPanel
-          header="Legend"
+          header="Legend: Column Behaviour"
           style={{
             gridRow: '1 /1',
             gridColumn: '3/3',
@@ -699,12 +712,12 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             flexDirection="column"
             showBoth
             labels={{
-              Sortable: 'Whether the column can be sorted',
-              Filterable: 'Whether the column can be filtered',
-              Aggregatable: 'Whether the column can be aggregated by',
-              Groupable: 'Whether the column can be used for grouping',
-              Moveable: 'Whether the column can be dragged and moved',
-              Pivotable: 'Whether the column can be used in pivoting',
+              Sortable: 'Be sorted',
+              Filterable: 'Be filtered',
+              Aggregatable: 'Show aggregations (in grouped rows)',
+              Groupable: 'Be (Row) Grouped',
+              Moveable: 'Be dragged and moved',
+              Pivotable: 'Can be used in pivoting',
             }}
             Sortable={true}
             Filterable={true}
