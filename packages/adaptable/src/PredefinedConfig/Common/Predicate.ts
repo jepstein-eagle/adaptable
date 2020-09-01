@@ -66,7 +66,6 @@ export interface PredicateDefHandlerParams {
 
 export interface PredicateDefToStringParams {
   inputs: any[];
-  column: AdaptableColumn;
 }
 
 ////
@@ -79,7 +78,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { All: true },
     functionScope: ['filter'],
     handler: ({ displayValue, inputs }) => inputs.length === 0 || inputs.includes(displayValue),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `IN (${inputs.join(', ')})`,
     shortcuts: ['#', '['],
   },
   {
@@ -89,7 +88,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { All: true },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
-    toString: () => 'TODO',
+    toString: () => 'Blanks',
   },
   {
     id: 'NonBlanks',
@@ -98,7 +97,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { All: true },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
-    toString: () => 'TODO',
+    toString: () => 'Non Blanks',
   },
 
   // Numeric System Filters
@@ -110,7 +109,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'number' }],
     handler: ({ value, inputs }) => Number(value) > Number(inputs[0]),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `> ${inputs[0]}`,
     shortcuts: ['>'],
   },
   {
@@ -121,7 +120,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'number' }],
     handler: ({ value, inputs }) => Number(value) < Number(inputs[0]),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `< ${inputs[0]}`,
     shortcuts: ['<'],
   },
   {
@@ -131,7 +130,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Number(value) > 0,
-    toString: () => 'TODO',
+    toString: () => 'Positive',
   },
   {
     id: 'Negative',
@@ -140,7 +139,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Number(value) < 0,
-    toString: () => 'TODO',
+    toString: () => 'Negative',
   },
   {
     id: 'Zero',
@@ -149,7 +148,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Number(value) == 0,
-    toString: () => 'TODO',
+    toString: () => 'Zero',
   },
   {
     id: 'Equals',
@@ -159,7 +158,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'number' }],
     handler: ({ value, inputs }) => Number(value) === Number(inputs[0]),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `= ${inputs[0]}`,
     shortcuts: ['='],
   },
   {
@@ -170,7 +169,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'number' }],
     handler: ({ value, inputs }) => Number(value) !== Number(inputs[0]),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `!= ${inputs[0]}`,
     shortcuts: ['!='],
   },
   {
@@ -182,7 +181,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     inputs: [{ type: 'number' }, { type: 'number' }],
     handler: ({ value, inputs }) =>
       Number(value) > Number(inputs[0]) && Number(value) < Number(inputs[1]),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Between ${inputs[0]}:${inputs[1]}`,
     shortcuts: [':'],
   },
   {
@@ -194,7 +193,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     inputs: [{ type: 'number' }, { type: 'number' }],
     handler: ({ value, inputs }) =>
       Number(value) < Number(inputs[0]) || Number(value) > Number(inputs[1]),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Not Between ${inputs[0]}:${inputs[1]}`,
     shortcuts: ['!:'],
   },
 
@@ -213,7 +212,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v == i;
     },
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `= ${inputs[0]}`,
     shortcuts: ['='],
   },
   {
@@ -230,7 +229,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v != i;
     },
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `!= ${inputs[0]}`,
     shortcuts: ['!='],
   },
   {
@@ -247,7 +246,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.indexOf(i) !== -1;
     },
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Contains ${inputs[0]}`,
   },
   {
     id: 'NotContains',
@@ -263,7 +262,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.indexOf(i) === -1;
     },
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Not Contains ${inputs[0]}`,
   },
   {
     id: 'StartsWith',
@@ -279,7 +278,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.startsWith(i);
     },
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Starts With ${inputs[0]}`,
   },
   {
     id: 'EndsWith',
@@ -295,7 +294,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
       const i = ignoreCase ? String(inputs[0]).toLocaleLowerCase() : String(inputs[0]);
       return v.endsWith(i);
     },
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Ends With ${inputs[0]}`,
   },
   {
     id: 'Regex',
@@ -305,7 +304,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'text' }],
     handler: ({ value, inputs }) => new RegExp(inputs[0]).test(value),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `Regex ${inputs[0]}`,
   },
 
   // Date System Filters
@@ -316,7 +315,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isToday(value),
-    toString: () => 'TODO',
+    toString: () => 'Today',
   },
   {
     id: 'Yesterday',
@@ -325,7 +324,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isYesterday(value),
-    toString: () => 'TODO',
+    toString: () => 'Yesterday',
   },
   {
     id: 'Tomorrow',
@@ -334,7 +333,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isTomorrow(value),
-    toString: () => 'TODO',
+    toString: () => 'Tomorrow',
   },
   {
     id: 'ThisWeek',
@@ -343,7 +342,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isThisWeek(value),
-    toString: () => 'TODO',
+    toString: () => 'This Week',
   },
   {
     id: 'ThisMonth',
@@ -352,7 +351,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isThisMonth(value),
-    toString: () => 'TODO',
+    toString: () => 'This Month',
   },
   {
     id: 'ThisQuarter',
@@ -361,7 +360,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isThisQuarter(value),
-    toString: () => 'TODO',
+    toString: () => 'This Quarter',
   },
   {
     id: 'ThisYear',
@@ -370,7 +369,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isThisYear(value),
-    toString: () => 'TODO',
+    toString: () => 'This Year',
   },
   {
     id: 'InPast',
@@ -388,7 +387,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => isFuture(value),
-    toString: () => 'TODO',
+    toString: () => 'In Future',
   },
   {
     id: 'After',
@@ -398,7 +397,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'date' }],
     handler: ({ value, inputs }) => isAfter(value, new Date(inputs[0])),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `> ${inputs[0]}`,
   },
   {
     id: 'Before',
@@ -408,17 +407,17 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'date' }],
     handler: ({ value, inputs }) => isBefore(value, new Date(inputs[0])),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `< ${inputs[0]}`,
   },
   {
     id: 'On',
     name: 'Equals',
+    icon: { path: mdiEqual },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'date' }],
     handler: ({ value, inputs }) => isSameDay(value, new Date(inputs[0])),
-    toString: () => 'TODO',
-    icon: { path: mdiEqual },
+    toString: ({ inputs }) => `= ${inputs[0]}`,
   },
   {
     id: 'NotOn',
@@ -428,7 +427,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     functionScope: ['filter', 'alert', 'validation'],
     inputs: [{ type: 'date' }],
     handler: ({ value, inputs }) => !isSameDay(value, new Date(inputs[0])),
-    toString: () => 'TODO',
+    toString: ({ inputs }) => `!= ${inputs[0]}`,
   },
   {
     id: 'NextWorkDay',
@@ -437,7 +436,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
-    toString: () => 'TODO',
+    toString: () => 'Next Work Day',
   },
   {
     id: 'LastWorkDay',
@@ -446,7 +445,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
-    toString: () => 'TODO',
+    toString: () => 'Last Work Day',
   },
 
   // Boolean System Filters
@@ -457,7 +456,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Boolean'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Boolean(value) === true,
-    toString: () => 'TODO',
+    toString: () => 'True',
   },
   {
     id: 'False',
@@ -466,7 +465,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { DataTypes: ['Boolean'] },
     functionScope: ['filter', 'alert', 'validation'],
     handler: ({ value }) => Boolean(value) === false,
-    toString: () => 'TODO',
+    toString: () => 'False',
   },
   {
     id: 'Any',
@@ -474,7 +473,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { All: true },
     functionScope: ['alert', 'validation'],
     handler: ({ value, oldValue }) => value !== oldValue,
-    toString: () => 'TODO',
+    toString: () => 'Any Change',
   },
   {
     id: 'PercentChange',
@@ -484,7 +483,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
     inputs: [{ type: 'number' }],
     handler: ({ value, oldValue, inputs }) =>
       (Math.abs(Number(value) - Number(oldValue)) / Number(value)) * 100 > Number(inputs[0]),
-    toString: () => 'TODO',
+    toString: () => 'Percent Change',
   },
   {
     id: 'PrimaryKeyDuplicate',
@@ -492,10 +491,10 @@ export const SystemPredicateDefs: PredicateDef[] = [
     columnScope: { All: true },
     functionScope: ['validation'],
     // TODO try to put the implementation inside the handler
-    handler: ({ column, api }) => {
+    handler: () => {
       throw 'This should not be called';
     },
-    toString: () => 'PrimaryKeyDuplicate',
+    toString: () => 'Primary Key Duplicate',
   },
 ];
 

@@ -52,15 +52,16 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     }
 
     if ('DataTypes' in scope) {
-      return 'DataType(s): ' + scope.DataTypes.join(', ');
+      return (
+        (scope.DataTypes.length > 0 ? 'DataTypes' : 'DataType') + ': ' + scope.DataTypes.join(', ')
+      );
     }
 
     if ('ColumnIds' in scope) {
       return (
-        'Columns(s): ' +
-        scope.ColumnIds.map(c => this.adaptable.api.columnApi.getFriendlyNameFromColumnId(c)).join(
-          ', '
-        )
+        (scope.ColumnIds.length > 0 ? 'Columns' : 'Column') +
+        ': ' +
+        this.adaptable.api.columnApi.getFriendlyNamesFromColumnIds(scope.ColumnIds).join(', ')
       );
     }
   }

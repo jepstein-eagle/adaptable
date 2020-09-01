@@ -25,12 +25,16 @@ function EditorButton(props: EditorButtonProps) {
         }
 
         document.getSelection().empty();
-        event.dataTransfer.setData('text', data);
+        event.dataTransfer.setData('text', data + ' ');
         event.dataTransfer.setDragImage(dragImage, 0, 0);
+      }}
+      onDragEnd={() => {
+        document.getSelection().collapseToEnd();
       }}
       onClick={() => {
         textAreaRef.current.focus();
-        document.execCommand('insertText', false, data);
+        document.execCommand('insertText', false, data + ' ');
+        document.getSelection().collapseToEnd();
       }}
       style={{
         cursor: 'grab',
