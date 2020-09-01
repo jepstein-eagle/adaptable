@@ -9,6 +9,7 @@ import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import SimpleButton from '../../components/SimpleButton';
 import ExpressionEditor from '../../components/ExpressionEditor';
 import * as parser from '../../parser/src';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 interface ExpandedQueryPopupComponentProps
   extends StrategyViewPopupProps<ExpandedQueryPopupComponent> {
@@ -67,7 +68,7 @@ class ExpandedQueryPopupComponent extends React.Component<
             this.props.onChangeCurrentQuery(this.state.expression);
             this.props.onClosePopup();
           }}
-          disabled={!isExpressionValid}
+          disabled={!isExpressionValid || StringExtensions.IsNullOrEmpty(this.state.expression)}
         >
           Run Query
         </SimpleButton>

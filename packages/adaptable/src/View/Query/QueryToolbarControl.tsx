@@ -25,6 +25,7 @@ import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
 import { ButtonInvalid } from '../Components/Buttons/ButtonInvalid';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ButtonSave } from '../Components/Buttons/ButtonSave';
+import { ButtonPlay } from '../Components/Buttons/ButtonPlay';
 
 interface QueryToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<QueryToolbarControlComponent> {
@@ -123,7 +124,6 @@ class QueryToolbarControlComponent extends React.Component<
             tooltip="Expand"
             marginLeft={1}
           />
-
           <Input
             type="text"
             placeholder="Query"
@@ -137,17 +137,8 @@ class QueryToolbarControlComponent extends React.Component<
               }
             }}
           />
-          {this.props.CurrentQuery !== '' && (
-            <ButtonClear
-              onClick={() => this.props.onChangeCurrentQuery('')}
-              tooltip="Clear Query"
-              accessLevel={'Full'}
-            />
-
-            //
-          )}
           {isExpressionValid ? (
-            <ButtonRunQuery
+            <ButtonPlay
               onClick={() => this.runQuery()}
               tooltip="Run Query"
               accessLevel={'Full'}
@@ -158,6 +149,13 @@ class QueryToolbarControlComponent extends React.Component<
             />
           ) : (
             <ButtonInvalid variant="text" tone="neutral" tooltip="Invalid Query" marginRight={1} />
+          )}{' '}
+          {this.props.CurrentQuery !== '' && (
+            <ButtonClear
+              onClick={() => this.props.onChangeCurrentQuery('')}
+              tooltip="Clear Query"
+              accessLevel={'Full'}
+            />
           )}
         </FieldWrap>
 
