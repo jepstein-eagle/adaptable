@@ -57,6 +57,32 @@ async function InitAdaptableDemo() {
     },
     userFunctions: [
       {
+        name: 'country',
+        type: 'CustomSortComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'United Kingdom') {
+            return -1;
+          }
+          if (valueB === 'United Kingdom') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
+        name: 'currency',
+        type: 'CustomSortComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'USD') {
+            return -1;
+          }
+          if (valueB === 'USD') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
         name: 'PermittedValuesForCountry',
         type: 'GetColumnValuesFunction',
         handler(column: AdaptableColumn) {
@@ -73,6 +99,28 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      CustomSort: {
+        Revision: 2,
+        CustomSorts: [
+          {
+            ColumnId: 'country',
+            CustomSortComparerFunction: 'country',
+          },
+          {
+            ColumnId: 'currency',
+            CustomSortComparerFunction: 'currency',
+          },
+          {
+            ColumnId: 'counterparty',
+            SortedValues: ['Citi', 'Nat West'],
+          },
+          {
+            ColumnId: 'status',
+            SortedValues: ['Pending', 'Completed', 'Rejected'],
+          },
+        ],
+      },
+
       Filter: {
         Revision: 4,
         UserFilters: [
