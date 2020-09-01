@@ -313,7 +313,6 @@ const adaptableOptions: AdaptableOptions = {
   adaptableId: 'react demo',
   plugins: [charts()] // adaptable plugins
   userInterfaceOptions: { // show the AdapTable ToolPanel
-   
   },
 };
 
