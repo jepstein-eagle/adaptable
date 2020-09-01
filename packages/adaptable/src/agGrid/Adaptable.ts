@@ -144,7 +144,6 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
-import { isEqual } from 'lodash';
 import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
@@ -1195,7 +1194,7 @@ export class Adaptable implements IAdaptable {
               : (aggregationFunctionsColumnsMap[colId] as string);
         }
 
-        isChanged = isChanged || !isEqual(newColState, oldColState);
+        isChanged = isChanged || !_.isEqual(newColState, oldColState);
 
         return newColState;
       })
@@ -1227,7 +1226,7 @@ export class Adaptable implements IAdaptable {
       })
       .filter(x => !!x);
 
-    const equalSortModel = isEqual(oldSortModel, sortModel);
+    const equalSortModel = _.isEqual(oldSortModel, sortModel);
 
     const pivoted = !!layout.EnablePivot;
     const shouldUpdatePivoted = this.gridOptions.columnApi.isPivotMode() !== pivoted;
