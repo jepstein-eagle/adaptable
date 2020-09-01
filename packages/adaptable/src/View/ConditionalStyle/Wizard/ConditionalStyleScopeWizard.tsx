@@ -4,22 +4,20 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
-import { Box, Flex } from 'rebass';
-import Radio from '../../../components/Radio';
 import WizardPanel from '../../../components/WizardPanel';
-import HelpBlock from '../../../components/HelpBlock';
-import CheckBox from '../../../components/CheckBox';
-import { ScopeDataType, Scope } from '../../../PredefinedConfig/Common/Scope';
-import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
-import Panel from '../../../components/Panel';
+import { Scope } from '../../../PredefinedConfig/Common/Scope';
 import { ScopeComponent } from '../../Components/ScopeComponent';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { WizardScopeState } from '../../Components/SharedProps/WizardScopeState';
+import { Box } from 'rebass';
+import HelpBlock from '../../../components/HelpBlock';
+import CheckBox from '../../../components/CheckBox';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {}
 
-export interface ConditionalStyleScopeWizardState {
-  Scope: Scope;
+export interface ConditionalStyleScopeWizardState extends WizardScopeState {
+  ExcludeGroupedRows: boolean;
 }
 
 export class ConditionalStyleScopeWizard
@@ -29,7 +27,8 @@ export class ConditionalStyleScopeWizard
     super(props);
 
     this.state = {
-      Scope: this.props.data.Scope,
+      scope: this.props.data.Scope ? this.props.data.Scope : { All: true },
+      ExcludeGroupedRows: this.props.data.ExcludeGroupedRows,
     };
   }
 
@@ -39,33 +38,47 @@ export class ConditionalStyleScopeWizard
         {' '}
         <ScopeComponent
           api={this.props.api}
-          scope={this.props.data.Scope}
+          scope={this.state.scope}
           updateScope={(scope: Scope) => this.onUpdateScope(scope)}
         />{' '}
+        <Box marginLeft={3} marginTop={2}>
+          <HelpBlock marginBottom={2}>
+            Exclude any cells in a Grouped Row when applying the Conditional Style
+          </HelpBlock>
+
+          <CheckBox
+            onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
+            checked={this.state.ExcludeGroupedRows}
+          >
+            Exclude Grouped Rows
+          </CheckBox>
+        </Box>
       </WizardPanel>
     );
   }
-
-  private onUpdateScope(scope: Scope) {
-    console.log('scope received', scope);
-    this.setState({ Scope: scope } as ConditionalStyleScopeWizardState, () =>
+  private onExludeGroupedRowsChanged(checked: boolean) {
+    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleScopeWizardState, () =>
       this.props.updateGoBackState()
     );
   }
 
+  private onUpdateScope(scope: Scope) {
+    this.setState({ scope: scope } as WizardScopeState, () => this.props.updateGoBackState());
+  }
+
   public canNext(): boolean {
-    if (this.state.Scope == undefined) {
+    if (this.state.scope == undefined) {
       return false;
     }
     if (
-      'ColumnIds' in this.state.Scope &&
-      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnIdsInScope(this.state.Scope))
+      'ColumnIds' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnIdsInScope(this.state.scope))
     ) {
       return false;
     }
     if (
-      'DataTypes' in this.state.Scope &&
-      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getDataTypesInScope(this.state.Scope))
+      'DataTypes' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getDataTypesInScope(this.state.scope))
     ) {
       return false;
     }
@@ -76,7 +89,8 @@ export class ConditionalStyleScopeWizard
     return false;
   }
   public next(): void {
-    this.props.data.Scope = this.state.Scope;
+    this.props.data.Scope = this.state.scope;
+    this.props.data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
   }
 
   public back(): void {

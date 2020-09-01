@@ -101,7 +101,10 @@ export class ListBoxFilterForm extends React.Component<
         <Box mx={this.props.useVendorStyle ? 0 : '2px'} marginBottom={2}>
           {textClear}
         </Box>
-        <GridList className={!this.props.useVendorStyle ? 'ab-padding-horizontal-0' : ''}>
+        <GridList
+          showZebraRows={false}
+          className={!this.props.useVendorStyle ? 'ab-padding-horizontal-0' : ''}
+        >
           {columnValuesItemsElements}
         </GridList>
       </div>

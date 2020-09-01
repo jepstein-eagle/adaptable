@@ -1,19 +1,9 @@
 import * as React from 'react';
 
-import { FontWeight, FontStyle, FontSize } from '../../PredefinedConfig/Common/Enums';
-import { EnumExtensions } from '../../Utilities/Extensions/EnumExtensions';
-import { ColorPicker } from '../ColorPicker';
-import { AdaptablePopover } from '../AdaptablePopover';
-import { Text, Flex, Box } from 'rebass';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
-import Checkbox from '../../components/CheckBox';
+import { Flex, Box } from 'rebass';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
-import Dropdown from '../../components/Dropdown';
-import { CSSProperties } from 'react';
 import { AdaptableApi } from '../../Api/AdaptableApi';
-import FormLayout, { FormRow } from '../../components/FormLayout';
 import { ScopeDataType, Scope } from '../../PredefinedConfig/Common/Scope';
 import Radio from '../../components/Radio';
 import { DualListBoxEditor, DisplaySize } from './ListBox/DualListBoxEditor';
@@ -99,7 +89,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
             </Box>
           )}
           {this.state.ScopeChoice == 'DataType' && (
-            <Panel header="Data Types" margin={2} marginLeft={4}>
+            <Panel margin={2} marginLeft={3}>
               {' '}
               <Flex flexDirection="row" padding={2}>
                 <CheckBox
@@ -110,7 +100,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                       .includes('Date')
                   }
                   marginLeft={2}
-                  onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'Date')}
+                  onChange={(checked: boolean) => this.onCheckBoxDataTypeChecked(checked, 'Date')}
                 >
                   Date
                 </CheckBox>{' '}
@@ -122,7 +112,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                       .includes('Number')
                   }
                   marginLeft={4}
-                  onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'Number')}
+                  onChange={(checked: boolean) => this.onCheckBoxDataTypeChecked(checked, 'Number')}
                 >
                   Number
                 </CheckBox>{' '}
@@ -134,7 +124,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                       .includes('String')
                   }
                   marginLeft={4}
-                  onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'String')}
+                  onChange={(checked: boolean) => this.onCheckBoxDataTypeChecked(checked, 'String')}
                 >
                   String
                 </CheckBox>{' '}
@@ -146,7 +136,9 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                       .includes('Boolean')
                   }
                   marginLeft={4}
-                  onChange={(checked: boolean) => this.onDataTypeChecked(checked, 'Boolean')}
+                  onChange={(checked: boolean) =>
+                    this.onCheckBoxDataTypeChecked(checked, 'Boolean')
+                  }
                 >
                   Boolean
                 </CheckBox>{' '}
@@ -200,7 +192,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
     this.props.updateScope(newScope);
   }
 
-  private onDataTypeChecked(checked: boolean, item: ScopeDataType) {
+  private onCheckBoxDataTypeChecked(checked: boolean, item: ScopeDataType) {
     let dataTypes = [].concat(
       this.props.api.scopeApi.getDataTypesInScope(this.state.componentScope)
     );

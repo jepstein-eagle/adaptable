@@ -125,7 +125,7 @@ export const AdaptableToolPanelFactory = new Map<
   AdaptableFunctionName,
   ConnectedComponent<any, any>
 >([
-  [StrategyConstants.QueryStrategyId, QueryToolPanel],
+  // [StrategyConstants.QueryStrategyId, QueryToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],

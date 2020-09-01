@@ -131,21 +131,19 @@ By default all filtering and searching in AdapTable takes place on the client.
 
 However you can choose to run some or all filtering and searching on the Server instead.
 
->  Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 100,000 records that you need filtering.
+> Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 100,000 records that you need filtering.
 
 This is done through the `serverSearchOption` in the [SearchOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) section of Adaptable Options
 
-The property can take one of 4 values:
+The property is an array that can take any combination of these 3 values:
 
-- **None** - the default; all searching and filtering will take place on the client.
+- **Query** - runs the [`Query` Function](../functions/query-function.md) on the server.
 
-- **Query** - runs just the [`Query` Function](../functions/query-function.md) on the server but filtering will take place on the client. (This is a popular option).
+- **ColumnFilter** - enables a [Column Filter](../functions/column-filter-function.md) to be run on the server
 
-- **AllSearch** - runs all search and filtering functions on the server (i.e. Query, Column Filters etc)
+- **Sort** - allows a sort to take place on the server (presumably to return a new Dataset)
 
-- **AllSearchandSort** - runs all search and filtering functions on the server and will also run all sorting on the server.
-
-> If a search function has been selected to be run on the Server then AdapTable will not do any relevant searching or filtering when the function runs.
+> AdapTable will not perform the client side action if a server search option is set, e.g. if its set to Query then AdapTable will do nothing when the Query is run (other than fire the SearchChangedEvent).
 
 ### SearchChanged Event
 Whenever the search criteria in AdapTable change (e.g. a new Query has been run, or a Column Filter has been applied) the [SearchChanged](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedeventargs.html) event is fired.

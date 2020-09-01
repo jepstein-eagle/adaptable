@@ -159,7 +159,7 @@ export class CustomSortSummaryComponent extends React.Component<
     if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
       return customSort.SortedValues.join(', ');
     } else {
-      return 'Custom Sort uses a bespoke function';
+      return '[Has bespoke Custom Sort implementing using bespoke function]';
     }
   }
 }

@@ -297,8 +297,6 @@ export class Adaptable implements IAdaptable {
 
   private originalColDefValueFormatters: { [key: string]: any } = {};
 
-  private runParserTemp: boolean = true;
-
   // only for our private / internal events used within Adaptable
   // public events are emitted through the EventApi
   _on = (eventName: string, callback: EmitterCallback): (() => void) =>
@@ -2722,12 +2720,13 @@ export class Adaptable implements IAdaptable {
     };
     const originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
-      const columns = this.api.columnApi.getColumns();
-      if (!this.runParserTemp) {
-        return false;
-      }
       // first we assess Query (if its running locally)
-      if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
+      if (
+        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('Query')
+      ) {
+        return true;
+      } else {
         const currentQuery = this.api.queryApi.getCurrentQuery();
 
         if (currentQuery) {
@@ -2744,9 +2743,11 @@ export class Adaptable implements IAdaptable {
       }
       // we then assess filters
       if (
-        this.adaptableOptions.searchOptions.serverSearchOption == 'None' ||
-        this.adaptableOptions.searchOptions.serverSearchOption == 'Query'
+        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('ColumnFilter')
       ) {
+        return true;
+      } else {
         const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
 
         if (columnFilters.length > 0) {
@@ -3070,13 +3071,19 @@ export class Adaptable implements IAdaptable {
 
       if (formatColumn.DisplayFormat) {
         if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
-          const options = formatColumn.DisplayFormat.Options;
-          colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+          // change the Number format - if the scope allows it
+          if (this.api.scopeApi.isColumnInNumericScope(abColumn, formatColumn.Scope)) {
+            const options = formatColumn.DisplayFormat.Options;
+            colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+          }
         }
 
         if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
-          const options = formatColumn.DisplayFormat.Options;
-          colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+          // change the Date format - if the scope allows it
+          if (this.api.scopeApi.isColumnInDateScope(abColumn, formatColumn.Scope)) {
+            const options = formatColumn.DisplayFormat.Options;
+            colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+          }
         }
       }
 

@@ -20,6 +20,9 @@ export interface ScopeApi {
   getColumnIdsInScope(scope: Scope): string[] | undefined;
   getDataTypesInScope(scope: Scope): ScopeDataType[] | undefined;
 
+  isColumnInNumericScope(column: AdaptableColumn, scope: Scope): boolean;
+  isColumnInDateScope(column: AdaptableColumn, scope: Scope): boolean;
+
   isScopeInScope(a: Scope, b: Scope): boolean;
 
   getScopeDescription(scope: Scope): string;

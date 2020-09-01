@@ -56,4 +56,29 @@ export function validateBoolean(input: string) {
   }
 }
 
+export function getColumnsFromExpression(input: string): string[] {
+  const columns: string[] = [];
+
+  // @ts-ignore
+  const walk = (node: any) => {
+    if (typeof node !== 'object') {
+      return false;
+    }
+
+    if (Array.isArray(node)) {
+      return node.map(walk);
+    }
+
+    node.args.map(walk);
+
+    if (node.type === 'COL') {
+      columns.push(String(node.args[0]));
+    }
+  };
+
+  walk(parser.parse(input.trim()));
+
+  return columns;
+}
+
 export { findPathTo, defaultFunctions };

@@ -40,6 +40,8 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * Config Server Removed
 
+* Server Search changed
+
 * New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble
 
 * Support for Master / Detail grids

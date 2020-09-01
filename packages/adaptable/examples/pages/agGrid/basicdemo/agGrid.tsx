@@ -19,6 +19,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { getColumnsFromExpression } from '../../../../src/parser/src';
 var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
@@ -57,6 +58,32 @@ async function InitAdaptableDemo() {
     },
     userFunctions: [
       {
+        name: 'country',
+        type: 'CustomSortComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'United Kingdom') {
+            return -1;
+          }
+          if (valueB === 'United Kingdom') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
+        name: 'currency',
+        type: 'CustomSortComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'USD') {
+            return -1;
+          }
+          if (valueB === 'USD') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
         name: 'PermittedValuesForCountry',
         type: 'GetColumnValuesFunction',
         handler(column: AdaptableColumn) {
@@ -73,6 +100,28 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      CustomSort: {
+        Revision: 2,
+        CustomSorts: [
+          {
+            ColumnId: 'country',
+            CustomSortComparerFunction: 'country',
+          },
+          {
+            ColumnId: 'currency',
+            CustomSortComparerFunction: 'currency',
+          },
+          {
+            ColumnId: 'counterparty',
+            SortedValues: ['Citi', 'Nat West'],
+          },
+          {
+            ColumnId: 'status',
+            SortedValues: ['Pending', 'Completed', 'Rejected'],
+          },
+        ],
+      },
+
       Filter: {
         Revision: 4,
         UserFilters: [
@@ -80,6 +129,22 @@ async function InitAdaptableDemo() {
             Name: 'hello',
             Scope: {
               ColumnIds: ['currency'],
+            },
+          },
+        ],
+      },
+      FormatColumn: {
+        Revision: 7,
+        FormatColumns: [
+          {
+            Scope: {
+              DataTypes: ['Number'],
+            },
+            DisplayFormat: {
+              Formatter: 'DateFormatter',
+              Options: {
+                Pattern: 'yyyyMMdd',
+              },
             },
           },
         ],
@@ -276,6 +341,8 @@ async function InitAdaptableDemo() {
     //   console.log('search changed');
     //   console.log(searchChangedArgs.data[0].id);
   });
+
+  console.log('cols', getColumnsFromExpression('[A] > Min([B], [C])'));
 }
 
 export default () => {

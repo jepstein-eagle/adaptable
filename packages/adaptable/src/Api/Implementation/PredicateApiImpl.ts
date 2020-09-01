@@ -22,6 +22,11 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
     return SystemPredicateDefsById[predicateId];
   }
 
+  public predicateToString(predicate: Predicate) {
+    const predicateDef = this.getPredicateDefById(predicate.Id);
+    return predicateDef.toString({ inputs: predicate.Inputs });
+  }
+
   public handlePredicate(
     predicate: Predicate,
     params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>

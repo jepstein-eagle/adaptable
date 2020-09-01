@@ -7,40 +7,42 @@ export const defaultFunctions: FunctionMap = {
       return args.reduce((a: any, b: any) => a + b);
     },
     hidden: true,
-    docs: [
-      { type: 'code', content: 'add(...number): number' },
-      { type: 'paragraph', content: 'Documentation for add() function' },
-    ],
+    docs: [{ type: 'code', content: 'number + number' }],
   },
   SUB: {
     handler(args) {
       return args.reduce((a: any, b: any) => a - b);
     },
     hidden: true,
+    docs: [{ type: 'code', content: 'number - number' }],
   },
   MUL: {
     handler(args) {
       return args.reduce((a: any, b: any) => a * b);
     },
     hidden: true,
+    docs: [{ type: 'code', content: 'number x number' }],
   },
   DIV: {
     handler(args) {
       return args.reduce((a: any, b: any) => a / b);
     },
     hidden: true,
+    docs: [{ type: 'code', content: 'number / number' }],
   },
   MOD: {
     handler(args) {
       return args[0] % args[1];
     },
     hidden: true,
+    docs: [{ type: 'code', content: 'number % number' }],
   },
   POW: {
     handler(args) {
       return Math.pow(args[0], args[1]);
     },
     hidden: true,
+    docs: [{ type: 'code', content: 'number ^ number' }],
   },
   //
   OR: {
@@ -49,6 +51,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'expression OR expression' }],
   },
   AND: {
     handler(args) {
@@ -56,6 +59,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'expression AND expression' }],
   },
   NOT: {
     handler(args) {
@@ -63,12 +67,14 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: '!expression' }],
   },
   IF: {
     handler(args) {
       return args[0] ? args[1] : args[2];
     },
     hidden: true,
+    docs: [{ type: 'code', content: 'condition ? expression : expression' }],
   },
   //
   EQ: {
@@ -77,6 +83,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'number = number' }],
   },
   NEQ: {
     handler(args) {
@@ -84,6 +91,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'number != number' }],
   },
   LT: {
     handler(args) {
@@ -91,6 +99,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'number < number' }],
   },
   LTE: {
     handler(args) {
@@ -98,6 +107,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'number <= number' }],
   },
   GT: {
     handler(args) {
@@ -105,6 +115,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'number > number' }],
   },
   GTE: {
     handler(args) {
@@ -112,6 +123,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
+    docs: [{ type: 'code', content: 'number >= number' }],
   },
   //
   COL: {
@@ -129,7 +141,7 @@ export const defaultFunctions: FunctionMap = {
         CellValueType.RawValue
       );
     },
-    docs: [{ type: 'code', content: 'col(name: string): any' }],
+    docs: [{ type: 'code', content: '[columnId]' }],
   },
   // VAR: {
   //   handler(args, context) {
@@ -179,5 +191,6 @@ export const defaultFunctions: FunctionMap = {
       return haystack.includes(needle);
     },
     type: 'boolean',
+    docs: [{ type: 'code', content: '[column] IN (1, 2, 3)' }],
   },
 };

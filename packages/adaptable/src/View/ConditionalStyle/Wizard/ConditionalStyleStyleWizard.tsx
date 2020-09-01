@@ -10,7 +10,6 @@ import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleStat
 import { Box } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
 import CheckBox from '../../../components/CheckBox';
-import { ConditionalStyleScopeWizardState } from './ConditionalStyleScopeWizard';
 
 export interface ConditionalStyleStyleWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {
@@ -19,7 +18,6 @@ export interface ConditionalStyleStyleWizardProps
 
 export interface ConditionalStyleStyleWizardState {
   Style: AdaptableStyle;
-  ExcludeGroupedRows: boolean;
 }
 
 export class ConditionalStyleStyleWizard
@@ -29,7 +27,6 @@ export class ConditionalStyleStyleWizard
     super(props);
     this.state = {
       Style: this.props.data.Style,
-      ExcludeGroupedRows: this.props.data.ExcludeGroupedRows,
     };
   }
 
@@ -45,26 +42,7 @@ export class ConditionalStyleStyleWizard
           UpdateStyle={(style: AdaptableStyle) => this.onUpdateStyle(style)}
           CanUseClassName={canUseClassName}
         />
-        <Box>
-          <HelpBlock marginBottom={2}>
-            Exclude any cells in a Grouped Row from applying the Style
-          </HelpBlock>
-
-          <CheckBox
-            marginLeft={3}
-            onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
-            checked={this.state.ExcludeGroupedRows}
-          >
-            Exclude Grouped Rows
-          </CheckBox>
-        </Box>
       </div>
-    );
-  }
-
-  private onExludeGroupedRowsChanged(checked: boolean) {
-    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleStyleWizardState, () =>
-      this.props.updateGoBackState()
     );
   }
 
@@ -82,7 +60,6 @@ export class ConditionalStyleStyleWizard
   }
   public next(): void {
     this.props.data.Style = this.state.Style;
-    this.props.data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
   }
   public back(): void {
     // todod

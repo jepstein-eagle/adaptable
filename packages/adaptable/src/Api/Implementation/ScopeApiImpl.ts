@@ -52,15 +52,16 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     }
 
     if ('DataTypes' in scope) {
-      return 'DataType(s): ' + scope.DataTypes.join(', ');
+      return (
+        (scope.DataTypes.length > 0 ? 'DataTypes' : 'DataType') + ': ' + scope.DataTypes.join(', ')
+      );
     }
 
     if ('ColumnIds' in scope) {
       return (
-        'Columns(s): ' +
-        scope.ColumnIds.map(c => this.adaptable.api.columnApi.getFriendlyNameFromColumnId(c)).join(
-          ', '
-        )
+        (scope.ColumnIds.length > 0 ? 'Columns' : 'Column') +
+        ': ' +
+        this.adaptable.api.columnApi.getFriendlyNamesFromColumnIds(scope.ColumnIds).join(', ')
       );
     }
   }
@@ -109,6 +110,54 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
       return scope.DataTypes;
     }
     return undefined;
+  }
+
+  public isColumnInNumericScope(column: AdaptableColumn, scope: Scope): boolean {
+    // if column is not even numeric then return false
+    if (column == null || column == undefined || column.DataType !== 'Number') {
+      return false;
+    }
+
+    // if no scope then return false
+    if (scope == undefined) {
+      return false;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
+      return true;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('DataTypes' in scope && scope.DataTypes.includes('Number')) {
+      return true;
+    }
+
+    return false;
+  }
+
+  public isColumnInDateScope(column: AdaptableColumn, scope: Scope): boolean {
+    // if column is not even numeric then return false
+    if (column == null || column == undefined || column.DataType !== 'Date') {
+      return false;
+    }
+
+    // if no scope then return false
+    if (scope == undefined) {
+      return false;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('ColumnIds' in scope && scope.ColumnIds.includes(column.ColumnId)) {
+      return true;
+    }
+
+    // check if the scope has ColumnIds and whether this column is contained
+    if ('DataTypes' in scope && scope.DataTypes.includes('Date')) {
+      return true;
+    }
+
+    return false;
   }
 
   /*

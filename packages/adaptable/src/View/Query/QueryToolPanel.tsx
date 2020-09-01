@@ -129,7 +129,7 @@ class QueryToolPanelComponent extends React.Component<
         className="ab-ToolPanel__Query"
         headerText={StrategyConstants.QueryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
-        onClose={() => this.props.onClose('Query')}
+        //    onClose={() => this.props.onClose('Query')} NEED to redo later
         onMinimiseChanged={() => this.setState({ IsMinimised: !this.state.IsMinimised })}
         isMinimised={this.state.IsMinimised}
       >

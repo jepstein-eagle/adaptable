@@ -9,6 +9,7 @@ export interface PredicateApi {
   getPredicateDefs(): PredicateDef[];
   getPredicateDefsByFunctionScope(functionScope: FunctionScope): PredicateDef[];
   getPredicateDefById(predicateId: string): PredicateDef;
+  predicateToString(predicate: Predicate): string;
 
   handlePredicate(
     predicate: Predicate,
