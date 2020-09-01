@@ -29,10 +29,17 @@ const translateToValues = (x: string): string[] =>
     .split(',')
     .map(s => s.trim());
 
-const Overlay = (props: OverlayProps) => {
+const Overlay = React.forwardRef((props: OverlayProps, ref: React.MutableRefObject<Element>) => {
   const { visible, getConstrainRect, anchor, position, ...domProps } = props;
 
   const domRef = useRef<HTMLDivElement>(null);
+
+  const setRef = (node: HTMLDivElement) => {
+    domRef.current = node;
+    if (ref && typeof ref === 'object') {
+      (ref as any).current = node;
+    }
+  };
 
   const [opacity, setOpacity] = useState<number>(0);
   const transitionInProgressRef = useRef<boolean>(false);
@@ -137,11 +144,11 @@ const Overlay = (props: OverlayProps) => {
   return (
     <div
       {...domProps}
-      ref={domRef}
+      ref={setRef}
       style={{ ...props.style, opacity }}
       onTransitionEnd={onTransitionEnd}
     />
   );
-};
+});
 
 export default Overlay;

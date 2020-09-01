@@ -47,15 +47,14 @@ interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormCom
 
 export interface QuickFilterFormState {
   filter: ColumnFilter;
-  valuesDropdownVisible: boolean;
 }
 
 class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, QuickFilterFormState> {
+  private valuesDropdown?: { show: () => any; hide: () => any };
   constructor(props: QuickFilterFormProps) {
     super(props);
     this.state = {
       filter: this.getFilterFromProps(props),
-      valuesDropdownVisible: false,
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps: QuickFilterFormProps) {
@@ -100,6 +99,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         <OverlayTrigger
           showEvent="mouseenter"
           hideEvent="mouseleave"
+          alignHorizontal="left"
+          targetOffset={10}
+          hideDelay={300}
           render={() => (
             <Flex
               flexDirection="column"
@@ -182,7 +184,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
     return (
       <OverlayTrigger
-        visible={this.state.valuesDropdownVisible}
+        alignHorizontal="left"
+        showEvent="mouseenter"
+        hideEvent="mouseleave"
+        hideDelay={300}
+        ref={api => {
+          this.valuesDropdown = api;
+        }}
         render={() => (
           <Flex
             p={2}
@@ -196,13 +204,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             }}
           >
             <Flex mb={2}>
-              <SimpleButton
-                onClick={() => {
-                  this.setState({ valuesDropdownVisible: !this.state.valuesDropdownVisible });
-                }}
-              >
-                Close
-              </SimpleButton>
+              <SimpleButton>Close</SimpleButton>
               <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
             </Flex>
             <ListBoxFilterForm
@@ -223,9 +225,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
-          }}
-          onClick={() => {
-            this.setState({ valuesDropdownVisible: !this.state.valuesDropdownVisible });
           }}
         >
           {filter.Predicate.Inputs.join(', ') || 'Select Values'}
@@ -253,7 +252,11 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     this.updateFilter(filter);
 
     if (predicateId === 'Values') {
-      this.setState({ valuesDropdownVisible: true });
+      requestAnimationFrame(() => {
+        if (this.valuesDropdown) {
+          this.valuesDropdown.show();
+        }
+      });
     }
   }
 

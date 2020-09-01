@@ -165,6 +165,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
       visible={expanded}
       constrainTo={constrainTo}
       anchor="vertical"
+      targetOffset={listOffset}
       render={() => {
         return (
           <div style={listStyle} className={`${baseClassName}__list`}>
@@ -173,6 +174,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
         );
       }}
       {...overlayProps}
+      target={domProps.tooltip ? node => node.previousSibling as HTMLElement : undefined}
     >
       <SimpleButton
         icon={icon}
