@@ -158,7 +158,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   public convertColumnFiltersToString(columnFilters: ColumnFilter[]): string {
-    return 'I need to do this for all !!!';
+    return columnFilters.map(cf => this.convertColumnFilterToString(cf)).join(', ');
   }
 
   public evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean {

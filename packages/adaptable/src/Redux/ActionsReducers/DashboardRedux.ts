@@ -1,6 +1,4 @@
 import * as Redux from 'redux';
-import { Visibility } from '../../PredefinedConfig/Common/Enums';
-import { ButtonStyle } from '../../PredefinedConfig/Common/ToolbarButton';
 import {
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
@@ -42,20 +40,8 @@ export interface DashboardSetFunctionButtonsAction extends Redux.Action {
   functionButtons: AdaptableFunctionButtons;
 }
 
-export interface DashboardSetVisibilityAction extends Redux.Action {
-  Visibility: Visibility;
-}
-
-export interface DashboardShowFunctionsDropdownAction extends Redux.Action {}
-
-export interface DashboardHideFunctionsDropdownAction extends Redux.Action {}
-
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
   Title: string;
-}
-
-export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux.Action {
-  ButtonStyle: ButtonStyle;
 }
 
 export interface DashboardCustomToolbarEditAction extends Redux.Action {

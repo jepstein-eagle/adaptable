@@ -1,4 +1,3 @@
-import * as DeepDiff from 'deep-diff';
 import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
@@ -7,32 +6,19 @@ import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
-import {
-  DataType,
-  LeafExpressionOperator,
-  SortOrder,
-} from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import Input from '../../../components/Input';
-import { ThemeProvider, CSSProperties } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
 import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
-import DropdownButton from '../../../components/DropdownButton';
 import OverlayTrigger from '../../../components/OverlayTrigger';
 import SimpleButton from '../../../components/SimpleButton';
 import Icon from '@mdi/react';
 import { mdiFilterOutline, mdiClose } from '@mdi/js';
 import { Flex, Box } from 'rebass';
-import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
 

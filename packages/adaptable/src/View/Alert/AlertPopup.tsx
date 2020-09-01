@@ -210,7 +210,6 @@ class AlertPopupComponent extends React.Component<
   canFinishWizard() {
     let alertDefinition = this.state.editedAdaptableObject as AlertDefinition;
     return alertDefinition.Scope != null; // can it be?
-    //   &&       ExpressionHelper.IsNullOrEmptyOrValidExpression(AlertRule.Expression)
   }
 
   resetState() {

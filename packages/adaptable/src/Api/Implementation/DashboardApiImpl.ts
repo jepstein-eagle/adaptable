@@ -1,15 +1,10 @@
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ApiBase } from './ApiBase';
-import { Visibility } from '../../PredefinedConfig/Common/Enums';
 import { DashboardApi } from '../DashboardApi';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
-import {
-  AdaptableDashboardToolbars,
-  AdaptableDashboardToolbar,
-  AdaptableFunctionButtons,
-} from '../../PredefinedConfig/Common/Types';
+import { AdaptableFunctionButtons } from '../../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import Helper from '../../Utilities/Helpers/Helper';

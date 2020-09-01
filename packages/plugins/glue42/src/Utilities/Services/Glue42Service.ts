@@ -9,7 +9,6 @@ import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/
 import { DataType, ActionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/DataChangedInfo';
 import { CellValidationRule } from '@adaptabletools/adaptable/src/PredefinedConfig/CellValidationState';
-import ExpressionHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { Glue42State } from '@adaptabletools/adaptable/src/PredefinedConfig/Glue42State';
 import { IGlue42Service } from './Interface/IGlue42Service';
 import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
@@ -405,11 +404,9 @@ export class Glue42Service implements IGlue42Service {
     );
     if (ArrayExtensions.IsNotNullOrEmpty(cellValidationRules)) {
       cellValidationRules.forEach((cv: CellValidationRule) => {
-        let failedvalidationMessage: string =
-          'Validation failed for ' +
-          column.FriendlyName +
-          ': ' +
-          ExpressionHelper.ConvertRangeToString(cv.Range, columns);
+        let failedvalidationMessage: string = 'Validation failed for ' + column.FriendlyName + ': ';
+        //+
+        //  ExpressionHelper.ConvertRangeToString(cv.Range, columns);
         if (cv.ActionMode == ActionMode.StopEdit) {
           errors.push(
             this.addValidationError(rowIndex + 1, columnIndex + 1, failedvalidationMessage)

@@ -3,22 +3,13 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import {
-  DataType,
-  LeafExpressionOperator,
-  RangeOperandType,
-} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
-import Radio from '../../../components/Radio';
 import HelpBlock from '../../../components/HelpBlock';
-import { Box, Flex } from 'rebass';
+import { Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
-import { QueryRange } from '../../../PredefinedConfig/Common/Expression';
-import { Scope } from '../../../PredefinedConfig/Common/Scope';
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSettingsWizardState {

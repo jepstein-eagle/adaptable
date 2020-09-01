@@ -11,45 +11,6 @@ export enum DataType {
   Unknown = 'Unknown',
 }
 
-export enum ExpressionMode {
-  SingleColumn = 'SingleColumn',
-  MultiColumn = 'MultiColumn',
-}
-
-export enum LeafExpressionOperator {
-  // Still not sure about this tbh
-  None = 'None',
-
-  // Numeric and Date
-  GreaterThan = 'GreaterThan',
-  LessThan = 'LessThan',
-  Equals = 'Equals',
-  NotEquals = 'NotEquals',
-  GreaterThanOrEqual = 'GreaterThanOrEqual',
-  LessThanOrEqual = 'LessThanOrEqual',
-  Between = 'Between',
-  // String
-  Contains = 'Contains',
-  NotContains = 'NotContains',
-  StartsWith = 'StartsWith',
-  EndsWith = 'EndsWith',
-  Regex = 'Regex',
-  // Cell Validations and Alerts
-  AnyChange = 'AnyChange',
-  ValueChange = 'ValueChange',
-  PercentChange = 'PercentChange',
-  NotBetween = 'NotBetween',
-  IsPositive = 'IsPositive',
-  IsNegative = 'IsNegative',
-  IsNotNumber = 'IsNotNumber',
-  IsTrue = 'IsTrue',
-  IsFalse = 'IsFalse',
-  NoDuplicateValues = 'NoDuplicateValues',
-  ExistingValuesOnly = 'ExistingValuesOnly',
-  // Special
-  PrimaryKeyDuplicate = 'PrimaryKeyDuplicate',
-}
-
 export enum MathOperation {
   Add = 'Add',
   Subtract = 'Subtract',
@@ -63,11 +24,6 @@ export enum MathOperation {
 export enum ActionMode {
   WarnUser = 'Warn User',
   StopEdit = 'Stop Edit',
-}
-
-export enum LayoutSource {
-  Existing = 'Existing',
-  New = 'New',
 }
 
 export enum ReportColumnScope {
@@ -109,11 +65,6 @@ export enum SortOrder {
   Desc = 'Desc',
 }
 
-export enum RangeOperandType {
-  Column = 'Column',
-  Value = 'Value',
-}
-
 export enum SelectionMode {
   Multi = 'Multi',
   Single = 'Single',
@@ -143,38 +94,12 @@ export enum FontSize {
   XLarge = 'XLarge',
 }
 
-export enum PanelWidth {
-  Wide = '800px',
-  Medium = '600px',
-  Narrow = '400px',
-}
-
-export enum QueryBuildStatus {
-  SelectFirstColumn,
-  SelectFurtherColumn,
-  ColumnSelected,
-  SingleConditionsAdded,
-  MultipleConditionsAdded,
-}
-
 export enum SearchChangedTrigger {
   DataSource = 'DataSource',
   CurrentQuery = 'CurrentQuery',
   Filter = 'Filter',
   DataChange = 'DataChange',
   Sort = 'Sort',
-}
-
-export enum Visibility {
-  Minimised = 'Minimised',
-  Visible = 'Visible',
-  Hidden = 'Hidden',
-}
-
-export enum QueryTab {
-  ColumnValue = 'ColumnValue',
-  Filter = 'Filter',
-  QueryRange = 'QueryRange',
 }
 
 export enum ColumnMenuTab {
@@ -207,27 +132,10 @@ export enum CellSummaryOperation {
   Count = 'Count',
 }
 
-export enum PinnedColumnDirection {
-  Left = 'Leftt',
-  Right = 'Right',
-}
-
 export enum FilterOnDataChangeOptions {
   Always = 'Always',
   Never = 'Never',
   Throttle = 'Throttle',
-}
-
-export enum DashboardSize {
-  Small = 'small',
-  XSmall = 'xsmall',
-}
-
-export enum ButtonVariant {
-  Text = 'text',
-  Outlined = 'outlined',
-  Raised = 'raised',
-  Unelevated = 'unelevated',
 }
 
 export enum DayOfWeek {

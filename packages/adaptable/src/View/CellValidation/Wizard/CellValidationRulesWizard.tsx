@@ -3,24 +3,14 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import {
-  DataType,
-  LeafExpressionOperator,
-  RangeOperandType,
-} from '../../../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { Flex } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
 
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
-import Radio from '../../../components/Radio';
 import Input from '../../../components/Input';
-import { QueryRange } from '../../../PredefinedConfig/Common/Expression';
-import { Scope } from '../../../PredefinedConfig/Common/Scope';
 
 export interface CellValidationRulesWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -53,9 +43,6 @@ export class CellValidationRulesWizard
       });
 
     const currentPredicateDef = this.props.api.predicateApi.getPredicateDefById(this.state.Id);
-
-    let helpText: string =
-      'Choose whether to prevent all edits for this column, or whether to allow those which match a rule (to be set by you).';
 
     return (
       <WizardPanel>

@@ -1,19 +1,10 @@
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import {
-  DataType,
-  LeafExpressionOperator,
-  CellValueType,
-} from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
-import ExpressionHelper from '../Helpers/ExpressionHelper';
-import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, AdaptableMenuItem } from '../../types';
 import { IStrategy } from '../../Strategy/Interface/IStrategy';
 import Helper from '../Helpers/Helper';
 import { TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export interface IStrategyService {
   createAlertDescription(alertDefinition: AlertDefinition): string;

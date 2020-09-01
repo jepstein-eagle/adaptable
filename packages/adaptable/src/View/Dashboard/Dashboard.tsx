@@ -17,7 +17,7 @@ import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { Visibility, MessageType } from '../../PredefinedConfig/Common/Enums';
+import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import SimpleButton from '../../components/SimpleButton';

@@ -1,7 +1,5 @@
 import {
   MessageType,
-  LeafExpressionOperator,
-  RangeOperandType,
   ReportColumnScope,
   ReportRowScope,
   ExportDestination,
@@ -17,8 +15,6 @@ import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
   PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-  ALERT_DEFAULT_OPERATOR,
-  ALERT_DEFAULT_RANGE_OPERAND_TYPE,
   ALERT_DEFAULT_MESSAGE_TYPE,
   ALERT_DEFAULT_SHOW_POPUP,
   ALL_DATA_REPORT,
@@ -39,7 +35,6 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
-import { IRangeEvaluation } from './Helpers/ExpressionHelper';
 import { Layout } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
@@ -51,15 +46,13 @@ import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
-import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { CellSummmary } from '../PredefinedConfig/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
-import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED, GRAY } from '../View/UIHelper';
+import { DARK_GREEN, getHexForName, RED, GRAY } from '../View/UIHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
-import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
@@ -211,16 +204,6 @@ export function CreateInternalAlertDefinitionForMessages(
   };
 }
 
-export function CreateEmptyRange(): QueryRange {
-  return {
-    Operator: LeafExpressionOperator.None,
-    Operand1: EMPTY_STRING,
-    Operand2: EMPTY_STRING,
-    Operand1Type: RangeOperandType.Value,
-    Operand2Type: RangeOperandType.Value,
-  };
-}
-
 export function CreateEmptyCellValidation(): CellValidationRule {
   return {
     Uuid: createUuid(),
@@ -270,8 +253,6 @@ export function CreateEmptyUserFilter(): UserFilter {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
     Scope: undefined,
-    // Expression: ExpressionHelper.CreateEmptyExpression(),
-    //  ColumnId: EMPTY_STRING,
   };
 }
 
@@ -496,43 +477,9 @@ export function CreateUserFilterFromColumnFilter(
     Uuid: createUuid(),
     Name: name,
     Scope: { ColumnIds: [columnFilter.ColumnId] },
-    //  Expression: ExpressionHelper.CreateEmptyExpression(), // TODO:  need to get this from the column filter somehow now that its changed
   };
 }
 
-export function CreateRange(
-  operator: LeafExpressionOperator,
-  operand1?: any,
-  operand2?: any,
-  rangeOperandType?: RangeOperandType,
-  rangeOperandType2?: RangeOperandType
-): QueryRange {
-  return {
-    Operator: operator,
-    Operand1: operand1,
-    Operand2: operand2,
-    Operand1Type: rangeOperandType,
-    Operand2Type: rangeOperandType2,
-  };
-}
-
-export function CreateRangeEvaluation(
-  operator: LeafExpressionOperator,
-  operand1: any,
-  operand2: any,
-  newValue: any,
-  initialValue: any,
-  columnId: string
-): IRangeEvaluation {
-  return {
-    operand1: operand1,
-    operand2: operand2,
-    newValue: newValue,
-    operator: operator,
-    initialValue: initialValue,
-    columnId: columnId,
-  };
-}
 export function CreateCellValidationRule(
   scope: Scope,
   predicate: Predicate,
@@ -640,7 +587,6 @@ export const ObjectFactory = {
   CreateAlert,
   CreateEmptyAlertDefinition,
   CreateInternalAlertDefinitionForMessages,
-  CreateEmptyRange,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
   CreateEmptyGradientColumn,
@@ -667,8 +613,6 @@ export const ObjectFactory = {
   CreateEmptyLayout,
   CreateUserFilterFromColumnFilter,
   CreateColumnFilter,
-  CreateRange,
-  CreateRangeEvaluation,
   CreateCellValidationRule,
   CreateEmptyStyle,
   CreateEmptyCellSummmary,

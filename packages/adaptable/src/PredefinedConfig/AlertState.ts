@@ -1,10 +1,6 @@
 import { ConfigState } from './ConfigState';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { Expression, QueryRange } from './Common/Expression';
 import { QueryObject } from './Common/QueryObject';
 import { Scope } from './Common/Scope';
-import { AdaptableColumn, AdaptableApi } from '../types';
-import { keyBy } from 'lodash';
 import { Predicate } from './Common/Predicate';
 
 /**

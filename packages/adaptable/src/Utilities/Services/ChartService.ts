@@ -2,14 +2,11 @@ import { IChartService } from './Interface/IChartService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
-import { KeyValuePair } from '../Interface/KeyValuePair';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { NumberExtensions } from '../Extensions/NumberExtensions';
-import { createUuid } from '../../PredefinedConfig/Uuid';
 import {
   CategoryChartDefinition,
   ChartData,
@@ -272,11 +269,11 @@ export class ChartService implements IChartService {
     } else {
       if (chartDefinition.VisibleRowsOnly) {
         this.adaptable.forAllVisibleRowNodesDo(row => {
-          this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+          this.addXAxisFromExpression(chartDefinition, row, xAxisColValues);
         });
       } else {
         this.adaptable.forAllRowNodesDo(row => {
-          this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+          this.addXAxisFromExpression(chartDefinition, row, xAxisColValues);
         });
       }
     }
@@ -285,7 +282,6 @@ export class ChartService implements IChartService {
 
   private addXAxisFromExpression(
     chartDefinition: CategoryChartDefinition,
-    columns: AdaptableColumn[],
     node: RowNode,
     xAxisColValues: string[]
   ): void {
@@ -344,7 +340,7 @@ export class ChartService implements IChartService {
 
     let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
-    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
+    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition);
 
     // if we don't use ranges but there are too many slices then we return an error
     if (
@@ -419,7 +415,7 @@ export class ChartService implements IChartService {
       });
 
       // finally we can generate slice items based on data ranges
-      dataRanges.forEach((range, key) => {
+      dataRanges.forEach(range => {
         let sliceItem: PieChartDataItem = {
           Name: '[' + range.min + ' to ' + range.max + ']',
           Value: range.values.length,
@@ -466,8 +462,7 @@ export class ChartService implements IChartService {
 
   private shouldUseRange(
     dataCounter: Map<any, number>,
-    chartDefinition: PieChartDefinition,
-    columns: AdaptableColumn[]
+    chartDefinition: PieChartDefinition
   ): boolean {
     let returnValue: boolean = false;
     if (dataCounter.size > 15) {

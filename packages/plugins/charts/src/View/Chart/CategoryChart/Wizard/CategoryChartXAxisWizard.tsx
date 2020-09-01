@@ -89,10 +89,7 @@ export class CategoryChartXAxisWizard
     let e = event.target as HTMLInputElement;
     let showAll: boolean = e.value == 'All';
     let expression: string = this.state.XAxisExpression;
-    //   if (!showAll && ExpressionHelper.IsNullOrEmptyExpression(expression)) {
-    //    expression = ExpressionHelper.CreateEmptyExpression();
-    //   }
-    // TODO: FIX THIS!!!!
+
     this.setState(
       {
         UseAllXAsisColumnValues: showAll,

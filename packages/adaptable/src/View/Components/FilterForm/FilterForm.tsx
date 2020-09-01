@@ -7,28 +7,16 @@ import * as GridRedux from '../../../Redux/ActionsReducers/GridRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import {
-  DataType,
-  SortOrder,
-  CellValueType,
-  LeafExpressionOperator,
-  ColumnMenuTab,
-} from '../../../PredefinedConfig/Common/Enums';
+import { DataType, ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { ButtonClose } from '../Buttons/ButtonClose';
-import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';
-import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
-
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
-import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
@@ -36,8 +24,6 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import AdaptableContext from '../../AdaptableContext';
-import ListGroupItem from '../../../components/List/ListGroupItem';
-import CheckBox from '../../../components/CheckBox';
 import { Flex } from 'rebass';
 import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import Radio from '../../../components/Radio';
@@ -148,15 +134,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         showText={true}
         showIcon={false}
       ></ButtonClear>
-    );
-
-    let saveButton = (
-      <ButtonSave
-        onClick={() => {}}
-        disabled={true}
-        tooltip={'Save as User Filter'}
-        accessLevel={'Full'}
-      />
     );
 
     const useVendorStyle = !!this.props.adaptable.adaptableOptions.filterOptions!
@@ -290,12 +267,6 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
   onSelectTab(tab: any): any {
     this.setState({ SelectedTab: tab } as FilterFormState);
-  }
-
-  getLeafExpressionOperatorsForDataType(
-    dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
-  ): LeafExpressionOperator[] {
-    return ExpressionHelper.GetOperatorsForDataType(dataType);
   }
 
   onColumnValuesChange(columnValues: any[]) {

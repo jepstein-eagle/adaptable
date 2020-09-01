@@ -2,18 +2,10 @@ import * as Redux from 'redux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import {
-  LeafExpressionOperator,
-  RangeOperandType,
-  ActionMode,
-  DataType,
-  MessageType,
-  CellValueType,
-} from '../../PredefinedConfig/Common/Enums';
+import { ActionMode, MessageType, CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   CellValidationState,
@@ -26,8 +18,6 @@ import { ValidationResult } from '../../AdaptableOptions/EditOptions';
 import StringExtensions from '../Extensions/StringExtensions';
 import { AdaptableFunctionName, Scope } from '../../types';
 import * as parser from '../../parser/src';
-import { isThisQuarter } from 'date-fns';
-import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export class ValidationService implements IValidationService {
   constructor(private adaptable: IAdaptable) {
