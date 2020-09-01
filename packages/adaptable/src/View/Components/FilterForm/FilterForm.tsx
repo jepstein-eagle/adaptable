@@ -238,7 +238,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
   private renderColumnPredicate(predicateDef: PredicateDef, index: number): JSX.Element {
     const { editedColumnFilter } = this.state;
-    const checked = editedColumnFilter.Predicate.Id === predicateDef.id;
+    const checked = editedColumnFilter?.Predicate?.Id === predicateDef.id;
 
     return (
       <Flex key={index}>

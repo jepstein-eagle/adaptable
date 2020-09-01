@@ -66,7 +66,7 @@ export interface PredicateDefHandlerParams {
 
 export interface PredicateDefToStringParams {
   inputs: any[];
-  column: AdaptableColumn;
+  column: AdaptableColumn; // should take Scope and then
 }
 
 ////

@@ -20,6 +20,7 @@ export const WizardSummaryPage = (props: WizardSummaryPageProps) => {
         primaryKey="Key"
       >
         <Grid
+          showZebraRows={true}
           domProps={{
             className: 'ab-WizardSummary__list',
             style: {

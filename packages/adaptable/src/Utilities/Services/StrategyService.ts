@@ -40,7 +40,7 @@ export class StrategyService implements IStrategyService {
     );
     return 'I need to do do this when predicateDef receives a Scope';
 
-    // return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
+    //  return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
   }
 
   public setStrategiesEntitlements(): void {
