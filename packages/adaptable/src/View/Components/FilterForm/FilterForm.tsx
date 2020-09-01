@@ -42,6 +42,7 @@ import { Flex } from 'rebass';
 import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import Radio from '../../../components/Radio';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
+import Helper from '../../../Utilities/Helpers/Helper';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
   currentColumn: AdaptableColumn;
@@ -94,7 +95,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       ShowWaitingMessage: false,
       SelectedTab: ColumnMenuTab.Filter,
       editedColumnFilter: existingColumnFilter,
-      currentTab: 'values',
+      currentTab:
+        existingColumnFilter &&
+        existingColumnFilter.Predicate &&
+        existingColumnFilter.Predicate.Id &&
+        existingColumnFilter.Predicate.Id != 'Values'
+          ? 'predicates'
+          : 'values',
     };
   }
 
@@ -124,8 +131,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         : [];
 
     let isEmptyFilter: boolean =
-      this.state.editedColumnFilter === undefined ||
-      this.state.editedColumnFilter.Predicate === undefined;
+      Helper.objectNotExists(this.state.editedColumnFilter) ||
+      Helper.objectNotExists(this.state.editedColumnFilter.Predicate) ||
+      Helper.objectNotExists(this.state.editedColumnFilter.Predicate.Id);
 
     let closeButton = (
       <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} accessLevel={'Full'} />
@@ -137,7 +145,9 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         disabled={isEmptyFilter}
         tooltip={null}
         accessLevel={'Full'}
-      />
+        showText={true}
+        showIcon={false}
+      ></ButtonClear>
     );
 
     let saveButton = (
@@ -161,7 +171,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             ColumnMenuTabChanged={e => this.onSelectTab(e)}
             IsAlwaysFilter={this.props.embedColumnMenu}
             clearFilterButton={clearFilterButton}
-            saveButton={saveButton}
+            //saveButton={saveButton} // removing in v.7 until we re-add User Filter
             closeButton={closeButton}
             showCloseButton={this.props.showCloseButton}
             autoApplyFilter={
@@ -221,9 +231,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                   <div>
                     {' '}
                     <hr></hr>
-                    {predicateDefs.map((predicateDef, index) =>
-                      this.renderColumnPredicate(predicateDef, index)
-                    )}
+                    {predicateDefs
+                      .filter(p => p.id != 'Values')
+                      .map((predicateDef, index) =>
+                        this.renderColumnPredicate(predicateDef, index)
+                      )}
                   </div>
                 )}
               </div>

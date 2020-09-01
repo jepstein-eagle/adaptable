@@ -33,7 +33,7 @@ export type AdaptableDashboardToolbar =
 export type AdaptableToolPanels = AdaptableToolPanel[];
 
 export type AdaptableToolPanel =
-  | 'Query'
+  // | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CellSummary'
