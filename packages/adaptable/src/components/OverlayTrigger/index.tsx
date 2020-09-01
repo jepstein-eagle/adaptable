@@ -220,7 +220,19 @@ const OverlayTrigger = React.forwardRef(
       overlay = createPortal(
         <Overlay
           {...domProps}
-          ref={overlayRef}
+          ref={node => {
+            if (overlayRef.current && overlayRef.current != node) {
+              overlayRef.current.removeEventListener(showEvent, onShow);
+              overlayRef.current.removeEventListener(hideEvent, onHide);
+            }
+
+            overlayRef.current = node;
+
+            if (node) {
+              node.addEventListener(showEvent, onShow);
+              node.addEventListener(hideEvent, onHide);
+            }
+          }}
           className={join(
             'ab-Overlay',
             `ab-Overlay--position-${position}`,
@@ -239,22 +251,6 @@ const OverlayTrigger = React.forwardRef(
         portalElement
       );
     }
-
-    useEffect(() => {
-      const overlayNode = overlayRef.current;
-      if (overlayNode) {
-        overlayNode.addEventListener(showEvent, onShow);
-        overlayNode.addEventListener(hideEvent, onHide);
-      }
-
-      return () => {
-        if (overlayNode) {
-          overlayNode.removeEventListener(showEvent, onShow);
-          overlayNode.removeEventListener(hideEvent, onHide);
-        }
-      };
-    }, [overlayRef.current]);
-
     return (
       <>
         {props.children}

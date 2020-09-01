@@ -29,15 +29,15 @@ const translateToValues = (x: string): string[] =>
     .split(',')
     .map(s => s.trim());
 
-const Overlay = React.forwardRef((props: OverlayProps, ref: React.MutableRefObject<Element>) => {
+const Overlay = React.forwardRef((props: OverlayProps, ref: (el: Element) => null) => {
   const { visible, getConstrainRect, anchor, position, ...domProps } = props;
 
   const domRef = useRef<HTMLDivElement>(null);
 
   const setRef = (node: HTMLDivElement) => {
     domRef.current = node;
-    if (ref && typeof ref === 'object') {
-      (ref as any).current = node;
+    if (ref && typeof ref === 'function') {
+      ref(node);
     }
   };
 
