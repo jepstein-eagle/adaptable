@@ -180,8 +180,26 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
               />
             ) : (
               <div>
-                <button onClick={() => this.setState({ currentTab: 'values' })}>Values</button>
-                <button onClick={() => this.setState({ currentTab: 'predicates' })}>Filters</button>
+                <Radio
+                  marginLeft={1}
+                  flex={1}
+                  checked={this.state.currentTab == 'values'}
+                  onChange={() => this.setState({ currentTab: 'values' })}
+                >
+                  Column Values
+                </Radio>
+                <Radio
+                  marginLeft={2}
+                  flex={1}
+                  checked={this.state.currentTab == 'predicates'}
+                  onChange={() => this.setState({ currentTab: 'predicates' })}
+                >
+                  Filters
+                </Radio>
+                {/* 
+               <button onClick={() => this.setState({ currentTab: 'values' })}>Values</button>
+              <button onClick={() => this.setState({ currentTab: 'predicates' })}>Filters</button>   */}
+
                 {this.state.currentTab === 'values' && (
                   <div>
                     {this.state.ShowWaitingMessage ? (
@@ -201,6 +219,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 )}
                 {this.state.currentTab === 'predicates' && (
                   <div>
+                    {' '}
+                    <hr></hr>
                     {predicateDefs.map((predicateDef, index) =>
                       this.renderColumnPredicate(predicateDef, index)
                     )}
@@ -223,7 +243,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     return (
       <Flex key={index}>
         <Radio
-          fontSize="12px"
+          fontSize={'var(--ab-font-size-2)'}
           margin={1}
           flex={1}
           checked={checked}
