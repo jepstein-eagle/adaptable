@@ -34,8 +34,6 @@ export class CalculatedColumnExpressionWizard
   }
   render(): any {
     const firstRow = this.props.api.gridApi.getFirstRowNode().data;
-    console.log(firstRow);
-
     return (
       <ExpressionEditor
         value={this.state.ColumnExpression}

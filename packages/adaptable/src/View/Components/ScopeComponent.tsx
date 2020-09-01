@@ -181,7 +181,6 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
     let newScope: Scope = {
       ColumnIds: cols,
     };
-    console.log('new scope', newScope);
     this.setState(
       {
         componentScope: newScope,

@@ -13,6 +13,7 @@ import CheckBox from '../../components/CheckBox';
 import Input from '../../components/Input';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { QueryObject } from '../../PredefinedConfig/Common/QueryObject';
+import DropdownButton from '../../components/DropdownButton';
 
 export interface ExpressionWizardProps extends AdaptableWizardStepProps<QueryObject> {
   onSetNewSharedQueryName: (newSharedQueryName: string) => void;
@@ -63,7 +64,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               )
             }
           >
-            Use Shared Expression
+            Use Shared Query
           </Radio>
           <Radio
             marginLeft={3}
@@ -78,14 +79,48 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               )
             }
           >
-            Use Custom Expression
+            Create Custom Expression
           </Radio>
         </Flex>
         {this.state.useSharedQuery == true && (
           <div>
+            <DropdownButton
+              margin={3}
+              placeholder="Select Shared Query"
+              variant="outlined"
+              tone="none"
+              style={{
+                minWidth: '15rem',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+              items={this.props.api.queryApi.getAllSharedQuery().map(item => ({
+                value: item.Uuid,
+                label: item.Name,
+                onClick: () => {
+                  this.setState(
+                    {
+                      sharedQueryId: item.Uuid,
+                    },
+                    () => this.props.updateGoBackState()
+                  );
+                },
+              }))}
+            >
+              {this.props.api.queryApi
+                .getAllSharedQuery()
+                .find(sq => sq.Uuid == this.state.sharedQueryId)
+                ? this.props.api.queryApi
+                    .getAllSharedQuery()
+                    .find(sq => sq.Uuid == this.state.sharedQueryId).Name
+                : 'Select Shared Query'}
+            </DropdownButton>
+
             <Dropdown
-              placeholder="Select Shared Expression"
+              placeholder="Select Shared Query"
               value={this.state.sharedQueryId}
+              margin={3}
               onChange={(value: any) =>
                 this.setState(
                   {
@@ -111,36 +146,56 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               functions={parser.defaultFunctions}
               hideHelpBlock={true}
               api={this.props.api}
-            />
-            <CheckBox
-              checked={this.state.saveToSharedQueries}
-              onChange={checked =>
-                this.setState(
-                  {
-                    saveToSharedQueries: checked,
-                  },
-                  () => this.props.updateGoBackState()
-                )
-              }
+            />{' '}
+            <Flex
+              flexDirection="row"
+              padding={1}
+              marginBottom={2}
+              marginLeft={1}
+              alignItems="center"
             >
-              Save to Shared Expressions
-            </CheckBox>
-            {this.state.saveToSharedQueries && (
-              <Input
-                value={this.state.newSharedQueryName}
-                onChange={(e: React.FormEvent) =>
+              <CheckBox
+                marginLeft={2}
+                disabled={!this.isValidExpression()}
+                marginBottom={2}
+                checked={this.state.saveToSharedQueries}
+                onChange={checked =>
                   this.setState(
                     {
-                      newSharedQueryName: (e.target as HTMLInputElement).value,
+                      saveToSharedQueries: checked,
                     },
                     () => this.props.updateGoBackState()
                   )
                 }
-              />
-            )}
+              >
+                Save as new Shared Query
+              </CheckBox>
+              {this.state.saveToSharedQueries && (
+                <Input
+                  marginLeft={2}
+                  marginBottom={2}
+                  value={this.state.newSharedQueryName}
+                  onChange={(e: React.FormEvent) =>
+                    this.setState(
+                      {
+                        newSharedQueryName: (e.target as HTMLInputElement).value,
+                      },
+                      () => this.props.updateGoBackState()
+                    )
+                  }
+                />
+              )}
+            </Flex>
           </div>
         )}
       </>
+    );
+  }
+
+  isValidExpression(): boolean {
+    return (
+      StringExtensions.IsNotNullOrEmpty(this.state.expression) &&
+      parser.validateBoolean(this.state.expression)
     );
   }
 
@@ -162,14 +217,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
       return false;
     }
 
-    if (
-      this.state.useSharedQuery == false &&
-      StringExtensions.IsNullOrEmpty(this.state.expression)
-    ) {
-      return false;
-    }
-
-    if (this.state.useSharedQuery == false && !parser.validateBoolean(this.state.expression)) {
+    if (this.state.useSharedQuery == false && this.isValidExpression() == false) {
       return false;
     }
 

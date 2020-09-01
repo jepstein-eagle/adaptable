@@ -41,7 +41,6 @@ export class FormatColumnFormatWizard
   column: AdaptableColumn;
   constructor(props: FormatColumnFormatWizardProps) {
     super(props);
-    console.log('scope recieved, ', this.props.data.Scope);
     let formatDataType: 'Number' | 'Date' | undefined;
     formatDataType = this.getFormatDisplayTypeForScope(this.props.data.Scope);
     this.state = { DisplayFormat: this.props.data.DisplayFormat }; // might need to change?

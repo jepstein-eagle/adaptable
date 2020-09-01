@@ -71,12 +71,13 @@ const DropdownButton = (props: DropdownButtonProps) => {
 
   if (Array.isArray(items)) {
     content = items.map((item, index) => {
-      if (item.separator)
+      if (item.separator) {
         return (
           <tr className={`${baseClassName}__separator`} key={index}>
             <td colSpan={2}></td>
           </tr>
         );
+      }
       if (typeof listItemStyle === 'function') {
         listItemStyle = listItemStyle(item, index);
       }

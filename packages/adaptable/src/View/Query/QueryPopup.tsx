@@ -58,7 +58,7 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
   }
 
   render() {
-    let infoBody: any[] = ['TODO: explain shared expressions'];
+    let infoBody: any[] = ['TODO: explain shared queries'];
 
     let colItems: IColItem[] = [
       { Content: 'Name', Size: 2 },
