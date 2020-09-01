@@ -47,6 +47,7 @@ interface QueryToolbarControlComponentProps
 }
 
 interface QueryToolbarControlComponentState {
+  isAdaptableReady: boolean;
   expression: string;
   history: {
     expression: string;
@@ -61,9 +62,15 @@ class QueryToolbarControlComponent extends React.Component<
   constructor(props: QueryToolbarControlComponentProps) {
     super(props);
     this.state = {
+      isAdaptableReady: false,
       expression: this.props.CurrentQuery || '',
       history: [],
     };
+  }
+  componentDidMount() {
+    this.props.api.eventApi.on('AdaptableReady', () => {
+      this.setState({ isAdaptableReady: true });
+    });
   }
   componentDidUpdate(prevProps: QueryToolbarControlComponentProps) {
     if (prevProps.CurrentQuery !== this.props.CurrentQuery) {
@@ -73,6 +80,8 @@ class QueryToolbarControlComponent extends React.Component<
     }
   }
   render() {
+    if (this.state.isAdaptableReady === false) return null;
+
     const isExpressionValid = parser.validateBoolean(this.state.expression);
 
     let sortedSharedQueries: SharedQuery[] = ArrayExtensions.sortArrayWithProperty(

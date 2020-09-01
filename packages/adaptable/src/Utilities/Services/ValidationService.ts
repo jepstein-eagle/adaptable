@@ -281,13 +281,11 @@ export class ValidationService implements IValidationService {
   }
 
   public createCellValidationDescription(cellValidationRule: CellValidationRule): string {
-    // this is rubbish but at least it builds - think it needs more thought!
-    const predicateDef: PredicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
-      cellValidationRule.Predicate.Id
+    return (
+      this.adaptable.api.scopeApi.getScopeDescription(cellValidationRule.Scope) +
+      ' ' +
+      this.adaptable.api.predicateApi.predicateToString(cellValidationRule.Predicate)
     );
-    return 'I need to do do this when predicateDef receives a Scope';
-
-    // return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
   }
 
   public createCellValidationUIConfirmation(

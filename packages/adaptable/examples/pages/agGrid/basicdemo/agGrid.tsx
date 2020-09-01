@@ -19,6 +19,7 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
+import { getColumnsFromExpression } from '../../../../src/parser/src';
 var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
@@ -340,6 +341,8 @@ async function InitAdaptableDemo() {
     //   console.log('search changed');
     //   console.log(searchChangedArgs.data[0].id);
   });
+
+  console.log('cols', getColumnsFromExpression('[A] > Min([B], [C])'));
 }
 
 export default () => {

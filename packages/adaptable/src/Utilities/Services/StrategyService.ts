@@ -35,12 +35,11 @@ export class StrategyService implements IStrategyService {
   }
 
   public createAlertDescription(alert: AlertDefinition): string {
-    const predicateDef: PredicateDef = this.adaptable.api.predicateApi.getPredicateDefById(
-      alert.Predicate.Id
+    return (
+      this.adaptable.api.scopeApi.getScopeDescription(alert.Scope) +
+      ' ' +
+      this.adaptable.api.predicateApi.predicateToString(alert.Predicate)
     );
-    return 'I need to do do this when predicateDef receives a Scope';
-
-    //  return predicateDef.toString({ inputs: alert.Predicate.Inputs, column });
   }
 
   public setStrategiesEntitlements(): void {

@@ -52,7 +52,6 @@ function ExpressionEditor(props: ExpressionEditorProps) {
 
   try {
     const expr = parser.parse(props.value || '');
-    console.log('data', data);
     result = expr.evaluate({ node: { data } as any, api: props.api });
     const path = parser.findPathTo(expr.ast, cursor);
     currentFunction = path[0] ? path[0].type : null;
