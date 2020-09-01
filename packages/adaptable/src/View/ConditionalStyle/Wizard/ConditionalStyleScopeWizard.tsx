@@ -9,18 +9,26 @@ import { Scope } from '../../../PredefinedConfig/Common/Scope';
 import { ScopeComponent } from '../../Components/ScopeComponent';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import { WizardScopeState } from '../../Components/SharedProps/WizardScopeState';
+import { Box } from 'rebass';
+import HelpBlock from '../../../components/HelpBlock';
+import CheckBox from '../../../components/CheckBox';
 
 export interface ConditionalStyleScopeWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {}
 
+export interface ConditionalStyleScopeWizardState extends WizardScopeState {
+  ExcludeGroupedRows: boolean;
+}
+
 export class ConditionalStyleScopeWizard
-  extends React.Component<ConditionalStyleScopeWizardProps, WizardScopeState>
+  extends React.Component<ConditionalStyleScopeWizardProps, ConditionalStyleScopeWizardState>
   implements AdaptableWizardStep {
   constructor(props: ConditionalStyleScopeWizardProps) {
     super(props);
 
     this.state = {
       scope: this.props.data.Scope ? this.props.data.Scope : { All: true },
+      ExcludeGroupedRows: this.props.data.ExcludeGroupedRows,
     };
   }
 
@@ -33,7 +41,24 @@ export class ConditionalStyleScopeWizard
           scope={this.state.scope}
           updateScope={(scope: Scope) => this.onUpdateScope(scope)}
         />{' '}
+        <Box marginLeft={3} marginTop={2}>
+          <HelpBlock marginBottom={2}>
+            Exclude any cells in a Grouped Row when applying the Conditional Style
+          </HelpBlock>
+
+          <CheckBox
+            onChange={(checked: boolean) => this.onExludeGroupedRowsChanged(checked)}
+            checked={this.state.ExcludeGroupedRows}
+          >
+            Exclude Grouped Rows
+          </CheckBox>
+        </Box>
       </WizardPanel>
+    );
+  }
+  private onExludeGroupedRowsChanged(checked: boolean) {
+    this.setState({ ExcludeGroupedRows: checked } as ConditionalStyleScopeWizardState, () =>
+      this.props.updateGoBackState()
     );
   }
 
@@ -65,6 +90,7 @@ export class ConditionalStyleScopeWizard
   }
   public next(): void {
     this.props.data.Scope = this.state.scope;
+    this.props.data.ExcludeGroupedRows = this.state.ExcludeGroupedRows;
   }
 
   public back(): void {
