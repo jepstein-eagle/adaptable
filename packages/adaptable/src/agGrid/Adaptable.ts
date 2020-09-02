@@ -25,6 +25,7 @@ import {
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import * as _ from 'lodash';
+import { Cancelable } from 'lodash';
 
 import {
   NewValueParams,
@@ -279,9 +280,9 @@ export class Adaptable implements IAdaptable {
 
   public isInitialised: boolean;
 
-  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & Cancelable;
 
-  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & Cancelable;
 
   private agGridHelper: agGridHelper;
 
