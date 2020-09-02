@@ -105,7 +105,7 @@ export interface AlertState extends ConfigState {
 export interface AlertDefinition extends QueryObject {
   Scope: Scope;
 
-  Predicate?: Predicate | Predicate[]; // think about an array ... // ANDs  // later
+  Predicate?: Predicate; // perhaps later | Predicate[]; // think about an array ... // ANDs  // later
 
   /**
    * An (optional) Expression (or Query).

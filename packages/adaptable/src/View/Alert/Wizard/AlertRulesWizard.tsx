@@ -12,13 +12,12 @@ import Input from '../../../components/Input';
 import WizardPanel from '../../../components/WizardPanel';
 
 export interface AlertRulesWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
-export interface AlertSettingsWizardState {
+export interface AlertRulesWizardState {
   Id: string;
   Inputs: any[];
 }
 
-export class AlertRulesWizard
-  extends React.Component<AlertRulesWizardProps, AlertSettingsWizardState>
+export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, AlertRulesWizardState>
   implements AdaptableWizardStep {
   constructor(props: AlertRulesWizardProps) {
     super(props);

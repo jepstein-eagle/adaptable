@@ -426,6 +426,7 @@ export function CreateEmptyConditionalStyle(): ConditionalStyle {
     Scope: {
       All: true,
     },
+    Predicate: undefined,
     Style: CreateEmptyStyle(),
     ExcludeGroupedRows: false,
     Expression: undefined,

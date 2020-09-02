@@ -6,7 +6,8 @@ import {
 } from '../../PredefinedConfig/ConditionalStyleState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { AdaptableColumn } from '../../types';
+import { AdaptableColumn, Scope } from '../../types';
+import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {
@@ -36,25 +37,24 @@ export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyle
     );
   }
 
-  public getConditionalStyleForColumn(column: AdaptableColumn): ConditionalStyle | undefined {
+  public getOrderedConditionalStyles(): ConditionalStyle[] | undefined {
     const colConditionalStyles: ConditionalStyle[] | undefined = this.getColumnConditionalStyles();
 
-    let orderedConditionalStyles:
-      | ConditionalStyle[]
-      | undefined = this.getConditionalStylesWithColumnScope(colConditionalStyles).concat(
-      this.getConditionalStylesWithDataTypeScope(colConditionalStyles)
-    );
+    let orderedConditionalStyles: ConditionalStyle[] | undefined = this.getRowConditionalStyles()
+      .concat(this.getConditionalStylesWithDataTypeScope(colConditionalStyles))
+      .concat(this.getConditionalStylesWithColumnScope(colConditionalStyles));
+    return orderedConditionalStyles;
+  }
 
-    let returnConditionalStyle: ConditionalStyle = undefined;
-    orderedConditionalStyles.forEach((fc, index) => {
-      // we just do one and then return
-      if (returnConditionalStyle == undefined) {
-        if (this.adaptable.api.scopeApi.isColumnInScope(column, fc.Scope)) {
-          returnConditionalStyle = fc;
-        }
+  public getConditionalStylesForColumn(column: AdaptableColumn): ConditionalStyle[] | undefined {
+    const colConditionalStyles: ConditionalStyle[] | undefined = this.getColumnConditionalStyles();
+    let returnStyles: ConditionalStyle[] = [];
+    colConditionalStyles.forEach(fc => {
+      if (this.adaptable.api.scopeApi.isColumnInScope(column, fc.Scope)) {
+        returnStyles.push(fc);
       }
     });
-    return returnConditionalStyle;
+    return returnStyles;
   }
 
   public getConditionalStylesWithDataTypeScope(
@@ -67,5 +67,15 @@ export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyle
     conditionalStyles: ConditionalStyle[]
   ): ConditionalStyle[] | undefined {
     return conditionalStyles.filter(fc => this.adaptable.api.scopeApi.scopeHasColumns(fc.Scope));
+  }
+
+  public getPredicateDefs(): PredicateDef[] {
+    return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('conditionalstyle');
+  }
+
+  public getPredicateDefsForScope(scope: Scope): PredicateDef[] {
+    return this.getPredicateDefs().filter(predicateDef =>
+      this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
+    );
   }
 }

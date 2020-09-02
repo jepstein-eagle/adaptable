@@ -8,6 +8,7 @@ import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowP
 import { IColItem } from '../UIInterfaces';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { EntityRowItem } from '../Components/EntityRowItem';
+import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 
 export class ConditionalStyleEntityRow extends React.Component<
   SharedEntityRowProps<ConditionalStyleEntityRow>,
@@ -26,7 +27,12 @@ export class ConditionalStyleEntityRow extends React.Component<
     );
     colItems[2].Content = (
       <EntityRowItem
-        Content={this.props.api.queryApi.getExpressionForQueryObject(conditionalStyle)}
+        Content={
+          StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression) ||
+          StringExtensions.IsNotNullOrEmpty(conditionalStyle.SharedQueryId)
+            ? this.props.api.queryApi.QueryObjectToString(conditionalStyle)
+            : this.props.api.predicateApi.predicateToString(conditionalStyle.Predicate)
+        }
       />
     );
     let buttons: any = (

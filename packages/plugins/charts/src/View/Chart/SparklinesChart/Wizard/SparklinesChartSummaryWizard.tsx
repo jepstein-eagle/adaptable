@@ -28,7 +28,7 @@ export class SparklinesChartSummaryWizard
       },
       {
         Key: 'Expression',
-        Value: this.props.api.queryApi.getExpressionForQueryObject(this.props.data),
+        Value: this.props.api.queryApi.QueryObjectToString(this.props.data),
       },
     ];
 

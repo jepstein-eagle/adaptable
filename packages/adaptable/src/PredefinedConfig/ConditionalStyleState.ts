@@ -2,6 +2,7 @@ import { ConfigState } from './ConfigState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { QueryObject } from './Common/QueryObject';
 import { Scope } from './Common/Scope';
+import { Predicate } from './Common/Predicate';
 
 /**
  * The Predefined Configuration for the Conditional Style function
@@ -60,6 +61,8 @@ export interface ConditionalStyle extends QueryObject {
    * Where the Style is applied - can be for whole Row, some Columns or all Colunns of given DataType
    */
   Scope: Scope;
+
+  Predicate?: Predicate;
 
   /**
    * The Style to apply when the rule is matched.

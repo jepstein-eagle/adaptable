@@ -118,7 +118,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     let validationService: IValidationService = this.props.api.internalApi.getValidationService();
     let returnString: string[] = [];
     for (let cellValidation of cellValidations) {
-      let expression: string | undefined = this.props.api.queryApi.getExpressionForQueryObject(
+      let expression: string | undefined = this.props.api.queryApi.QueryObjectToString(
         cellValidation
       );
 
