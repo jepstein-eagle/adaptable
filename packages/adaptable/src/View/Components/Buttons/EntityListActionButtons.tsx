@@ -110,6 +110,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
               marginTop: '2px',
               marginBottom: '2px',
               marginRight: '1px',
+              //TODO move those styles in ButtonDelete
               color: 'var(--ab-color-text-on-delete)',
               fill: 'var(--ab-color-text-on-delete)',
               background: 'var(--ab-color-action-delete)',

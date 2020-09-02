@@ -302,7 +302,7 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 76,
+    Revision: 77,
     CurrentLayout: 'Simple Layout',
     Layouts: [
       {

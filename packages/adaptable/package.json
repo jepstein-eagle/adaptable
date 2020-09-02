@@ -96,7 +96,8 @@
     "util-deprecate": "^1.0.2",
     "webpack": "^1.15.0",
     "webpack-dev-server": "^1.16.5",
-    "webpack-fail-plugin": "^1.0.6"
+    "webpack-fail-plugin": "^1.0.6",
+    "@chakra-ui/core": "^0.7.0"
   },
   "scripts": {
     "build-apidoc": "typedoc --options ./typedocconfig.ts",
