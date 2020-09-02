@@ -25,7 +25,6 @@ import {
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
 import * as _ from 'lodash';
-import { Cancelable } from 'lodash';
 
 import {
   NewValueParams,
@@ -150,6 +149,11 @@ import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
 import { ColumnFilter, SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
+
+interface Cancelable {
+  cancel(): void;
+  flush(): void;
+}
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
