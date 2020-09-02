@@ -178,6 +178,7 @@ class QueryToolbarControlComponent extends React.Component<
           <Icon size="1.1rem" path={mdiViewColumn} />
         </DropdownButton>
         <DropdownButton
+          disabled={ArrayExtensions.IsNullOrEmpty(availableSearches)}
           variant="text"
           items={availableSearches}
           marginRight={1}

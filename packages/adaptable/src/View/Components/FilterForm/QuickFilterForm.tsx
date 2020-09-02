@@ -260,6 +260,10 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     }
   }
 
+  debouncedAddFilter = _.debounce(() => this.props.onAddColumnFilter(this.state.filter), 250);
+
+  debouncedEditFilter = _.debounce(() => this.props.onEditColumnFilter(this.state.filter), 250);
+
   private updateFilter(filter: ColumnFilter) {
     this.setState({ filter });
 
@@ -269,10 +273,12 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
     if (filter.Uuid) {
       // TODO debounce here?
-      this.props.onEditColumnFilter(filter);
+      this.debouncedEditFilter();
+      // this.props.onEditColumnFilter(filter);
     } else {
       // TODO debounce here?
-      this.props.onAddColumnFilter(filter);
+      this.debouncedAddFilter();
+      //  this.props.onAddColumnFilter(filter);
     }
   }
 
