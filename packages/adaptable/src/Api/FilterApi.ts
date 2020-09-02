@@ -99,8 +99,8 @@ export interface FilterApi {
 
   createColumnFilterForCell(column: string, primarykeyValues: any[]): void;
 
-  convertColumnFilterToString(columnFilter: ColumnFilter): string;
-  convertColumnFiltersToString(columnFilters: ColumnFilter[]): string;
+  columnFilterToString(columnFilter: ColumnFilter): string;
+  columnFiltersToString(columnFilters: ColumnFilter[]): string;
 
   evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean;
 

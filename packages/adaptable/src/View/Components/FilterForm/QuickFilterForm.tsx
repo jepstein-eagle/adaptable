@@ -21,6 +21,7 @@ import { mdiFilterOutline, mdiClose } from '@mdi/js';
 import { Flex, Box } from 'rebass';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
+import { LogAdaptableError } from '../../../Utilities/Helpers/LoggingHelper';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   api: AdaptableApi;

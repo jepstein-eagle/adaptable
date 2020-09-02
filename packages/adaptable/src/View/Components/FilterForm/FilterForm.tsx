@@ -348,7 +348,11 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     editedColumnFilter.Predicate.Inputs[index] = value;
 
     this.setState({ editedColumnFilter });
-    this.props.onSetColumnFilter(editedColumnFilter);
+
+    if (this.props.adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
+      this.props.onSetColumnFilter(editedColumnFilter);
+    }
+    // this.props.onSetColumnFilter(editedColumnFilter);
   }
 }
 

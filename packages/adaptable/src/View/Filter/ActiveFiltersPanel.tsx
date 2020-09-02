@@ -28,8 +28,7 @@ const stopPropagation = (e: React.SyntheticEvent) => {
 export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps, {}> {
   render(): any {
     let colItems: IColItem[] = [
-      { Content: 'Column', Size: 4 },
-      { Content: 'Filter', Size: 5 },
+      { Content: 'Column Filter', Size: 9 },
       { Content: '', Size: 3 },
     ];
 
@@ -48,19 +47,18 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
   private createRow(colItems: IColItem[], columnFilter: ColumnFilter): any {
     let rowColItems: IColItem[] = Helper.cloneObject(colItems);
-    rowColItems[0].Content = this.props.api.columnApi.getFriendlyNameFromColumnId(
-      columnFilter.ColumnId
-    );
-    rowColItems[1].Content = this.props.api.filterApi.convertColumnFilterToString(columnFilter);
+    rowColItems[0].Content = this.props.api.filterApi.columnFilterToString(columnFilter);
 
-    rowColItems[2].Content = (
+    rowColItems[1].Content = (
       <Flex justifyContent="center" margin={0} padding={0} onClick={stopPropagation}>
+        {/* removing until we have user filter back!
         <ButtonSave
           onClick={() => this.props.onSaveColumnFilterasUserFilter(columnFilter)}
           tooltip="Save as User Filter"
           disabled={columnFilter == null || columnFilter.Predicate === undefined}
-          accessLevel={this.props.accessLevel}
-        />{' '}
+          accessLevel={this.props.accessLevel} /> {' '}
+        */}
+
         <ButtonClear
           onClick={() => this.props.onClear(columnFilter)}
           tooltip="Clear Column Filter"

@@ -14,15 +14,15 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
     return SystemPredicateDefs;
   }
 
-  public getPredicateDefsByFunctionScope(functionScope: FunctionScope) {
+  public getPredicateDefsByFunctionScope(functionScope: FunctionScope): PredicateDef[] {
     return this.getPredicateDefs().filter(p => p.functionScope.includes(functionScope));
   }
 
-  public getPredicateDefById(predicateId: string) {
+  public getPredicateDefById(predicateId: string): PredicateDef {
     return SystemPredicateDefsById[predicateId];
   }
 
-  public predicateToString(predicate: Predicate) {
+  public predicateToString(predicate: Predicate): string {
     const predicateDef = this.getPredicateDefById(predicate.Id);
     return predicateDef.toString({ inputs: predicate.Inputs });
   }
