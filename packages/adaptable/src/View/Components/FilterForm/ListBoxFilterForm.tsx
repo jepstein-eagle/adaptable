@@ -87,6 +87,12 @@ export class ListBoxFilterForm extends React.Component<
         type="text"
         placeholder="Search Column Values"
         value={this.state.FilterValue}
+        style={{
+          paddingTop: 'var(--ab-space-2)',
+          paddingBottom: 'var(--ab-space-2)',
+          paddingLeft: 'var(--ab-space-2)',
+          borderRadius: 'var(--ab__border-radius)',
+        }}
         OnTextChange={x => this.onUpdateFilterSearch(x)}
       />
     );

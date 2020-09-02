@@ -150,6 +150,11 @@ import * as parser from '../parser/src';
 import { ColumnFilter, SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 
+interface Cancelable {
+  cancel(): void;
+  flush(): void;
+}
+
 ModuleRegistry.registerModules(AllCommunityModules);
 
 const GROUP_PATH_SEPARATOR = '/';
@@ -279,9 +284,9 @@ export class Adaptable implements IAdaptable {
 
   public isInitialised: boolean;
 
-  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & Cancelable;
 
-  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & Cancelable;
 
   private agGridHelper: agGridHelper;
 
