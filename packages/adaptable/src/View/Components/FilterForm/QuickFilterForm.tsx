@@ -195,9 +195,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             }}
           >
             <Flex mb={2}>
-              <SimpleButton ml={2} onClick={() => this.clearFilter()}>
-                Clear Filter
-              </SimpleButton>
+              <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
               {this.props.adaptable.adaptableOptions?.filterOptions?.autoApplyFilter == false && (
                 <SimpleButton ml={2} onClick={() => this.updateFilter(this.state.filter)}>
                   Apply Filter
