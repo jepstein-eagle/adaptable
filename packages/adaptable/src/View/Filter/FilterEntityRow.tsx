@@ -28,7 +28,7 @@ export class FilterEntityRow extends React.Component<FilterEntityRowProps<Filter
     );
     colItems[1].Content = (
       <EntityRowItem
-        Content={this.props.api.filterApi.convertColumnFilterToString(this.props.columnFilter)}
+        Content={this.props.api.filterApi.columnFilterToString(this.props.columnFilter)}
       />
     );
     colItems[2].Content = (

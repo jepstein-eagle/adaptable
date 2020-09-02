@@ -245,19 +245,14 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       {' '}
       {props.hideHelpBlock !== true && (
         <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
-          Create an 'Expression' using, as required, a mixture (and any number) of:
+          Create an Expression using a mixture (and any number) of:
           <ul>
+            <li>Functions: Select from the functions dropdown or pick one displayed below</li>
             <li>
-              <b>Functions</b>: Select from the functions dropdown or pick one displayed below; each
-              function is separately documented
-            </li>
-            <li>
-              <b>Columns</b> - Drag n Drop columns from the right hand side - they will resolve to
+              Columns: Drag n Drop columns from the right hand side - they will resolve to
               '[column-name]'
             </li>
-            <li>
-              <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
-            </li>{' '}
+            <li>Static Values: Add any hardcoded values that you require for the Expression.</li>{' '}
           </ul>
           The Expression result is displayed underneath the Editor (using Test Data taken from first
           row). <br />

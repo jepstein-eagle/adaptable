@@ -1848,7 +1848,7 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
               info: 'Column Filter Applied',
               data: {
                 Column: actionTyped.columnFilter.ColumnId,
-                ColumnFilter: adaptable.api.filterApi.convertColumnFilterToString(
+                ColumnFilter: adaptable.api.filterApi.columnFilterToString(
                   actionTyped.columnFilter
                 ),
               },
@@ -1864,7 +1864,7 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
               info: 'Column Filter Updated',
               data: {
                 Column: actionTyped.columnFilter.ColumnId,
-                ColumnFilter: adaptable.api.filterApi.convertColumnFilterToString(
+                ColumnFilter: adaptable.api.filterApi.columnFilterToString(
                   actionTyped.columnFilter
                 ),
               },

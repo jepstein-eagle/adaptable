@@ -153,12 +153,17 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     this.setColumnFilter([filter]);
   }
 
-  public convertColumnFilterToString(columnFilter: ColumnFilter): string {
-    return 'I need to do this !!!';
+  public columnFilterToString(columnFilter: ColumnFilter): string {
+    return (
+      '[' +
+      this.adaptable.api.columnApi.getColumnFromId(columnFilter.ColumnId).FriendlyName +
+      '] ' +
+      this.adaptable.api.predicateApi.predicateToString(columnFilter.Predicate)
+    );
   }
 
-  public convertColumnFiltersToString(columnFilters: ColumnFilter[]): string {
-    return columnFilters.map(cf => this.convertColumnFilterToString(cf)).join(', ');
+  public columnFiltersToString(columnFilters: ColumnFilter[]): string {
+    return columnFilters.map(cf => this.columnFilterToString(cf)).join(', ');
   }
 
   public evaluateColumnFilter(columnFilter: ColumnFilter, node: any): boolean {
