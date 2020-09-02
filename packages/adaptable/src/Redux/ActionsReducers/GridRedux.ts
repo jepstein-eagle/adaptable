@@ -320,6 +320,12 @@ export const GridReducer: Redux.Reducer<GridState> = (
       });
     }
 
+    case LAYOUT_SELECT: {
+      return Object.assign({}, state, {
+        CurrentLayout: null,
+      });
+    }
+
     case SET_PIVOT_MODE_ON:
       return Object.assign({}, state, { IsGridInPivotMode: true });
     case SET_PIVOT_MODE_OFF:

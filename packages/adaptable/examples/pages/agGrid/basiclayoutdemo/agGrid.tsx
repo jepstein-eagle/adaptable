@@ -302,11 +302,12 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 71,
+    Revision: 76,
     CurrentLayout: 'Simple Layout',
     Layouts: [
       {
         Name: 'Simple Layout',
+        AutoSave: true,
         Columns: ['price', 'model', 'make', 'Multiply'],
         // RowGroupedColumns: ['year', 'make'],
         // EnablePivot: true,

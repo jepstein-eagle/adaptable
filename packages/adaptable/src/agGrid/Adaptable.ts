@@ -1116,7 +1116,7 @@ export class Adaptable implements IAdaptable {
   }
 
   private persistLayout(layout: Layout) {
-    if (this.adaptableOptions.layoutOptions.autoSaveLayouts) {
+    if (this.api.layoutApi.shouldAutoSaveLayout(layout)) {
       this.api.layoutApi.saveLayout(layout);
     } else {
       this.api.internalApi.updateCurrentDraftLayout(layout);

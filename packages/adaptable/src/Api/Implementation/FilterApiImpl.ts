@@ -173,8 +173,8 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       return true;
     }
 
-    if (value === null || value === undefined) {
-      return false;
+    if (columnFilter.Predicate.Inputs?.some(input => StringExtensions.IsNullOrEmpty(input))) {
+      return true;
     }
 
     const displayValue = this.adaptable.getValueFromRowNode(
