@@ -2170,7 +2170,12 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           case LayoutRedux.LAYOUT_SELECT: {
             let returnAction = next(action);
             let layoutState = middlewareAPI.getState().Layout;
+            let gridState = middlewareAPI.getState().Grid;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
+
+            if (gridState.CurrentLayout && gridState.CurrentLayout) {
+              currentLayout = gridState.CurrentLayout;
+            }
 
             if (currentLayout) {
               // tell grid the layout has been selected

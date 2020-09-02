@@ -143,4 +143,6 @@ export interface Layout extends AdaptableObject {
   PivotColumns?: string[];
 
   PinnedColumnsMap?: { [columnId: string]: 'left' | 'right' };
+
+  AutoSave?: boolean;
 }

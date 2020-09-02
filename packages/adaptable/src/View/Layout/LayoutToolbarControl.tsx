@@ -26,7 +26,7 @@ import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: Layout) => void;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
   onEditLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
@@ -44,8 +44,9 @@ class LayoutToolbarControlComponent extends React.Component<
       x => x.Name == this.props.CurrentLayoutName || x.Uuid == this.props.CurrentLayoutName
     );
 
-    let isManualSaveLayout: boolean =
-      this.props.api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
+    let isManualSaveLayout: boolean = !this.props.api.layoutApi.shouldAutoSaveLayout(
+      this.props.CurrentDraftLayout
+    );
 
     let availableLayoutOptions: any = this.props.Layouts.map((layout, index) => {
       return {
@@ -143,7 +144,7 @@ class LayoutToolbarControlComponent extends React.Component<
 
 function mapStateToProps(
   state: AdaptableState,
-  ownProps: any
+  ownProps: LayoutToolbarControlComponentProps
 ): Partial<LayoutToolbarControlComponentProps> {
   const CurrentLayoutName = state.Layout.CurrentLayout;
   const Layouts = state.Layout.Layouts || [];
@@ -153,9 +154,11 @@ function mapStateToProps(
     CurrentLayoutName,
     CurrentDraftLayout: state.Grid.CurrentLayout || selectedLayout,
     Layouts,
-    CanSave: !ownProps.api.internalApi
-      .getLayoutService()
-      .areEqual(selectedLayout, state.Grid.CurrentLayout),
+    CanSave:
+      state.Grid.CurrentLayout &&
+      !ownProps.api.internalApi
+        .getLayoutService()
+        .areEqual(selectedLayout, state.Grid.CurrentLayout),
   };
 }
 
@@ -164,7 +167,10 @@ function mapDispatchToProps(
 ): Partial<LayoutToolbarControlComponentProps> {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onSaveLayout: (layout: Layout) => {
+      dispatch(LayoutRedux.LayoutSave(layout));
+      dispatch(LayoutRedux.LayoutUpdateCurrentDraft(null));
+    },
 
     onNewLayout: () =>
       dispatch(

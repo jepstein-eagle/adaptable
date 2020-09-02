@@ -168,9 +168,9 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       return true;
     }
 
-    if (value === null || value === undefined) {
-      return false;
-    }
+    // if (value === null || value === undefined) {
+    //   return false;
+    // }
 
     const displayValue = this.adaptable.getValueFromRowNode(
       node,

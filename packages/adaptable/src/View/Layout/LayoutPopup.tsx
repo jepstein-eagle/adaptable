@@ -32,8 +32,8 @@ import { createUuid } from '../../components/utils/uuid';
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: Layout[];
   CurrentLayoutName: string;
-  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
-  onAddLayout: (layout: Layout) => LayoutRedux.LayoutAddAction;
+  onSaveLayout: (layout: Layout) => void;
+  onAddLayout: (layout: Layout) => void;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
   onShare: (
     entity: AdaptableObject,
@@ -235,7 +235,10 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<LayoutPopupProps> {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: LayoutPopupProps
+): Partial<LayoutPopupProps> {
   return {
     Layouts: state.Layout.Layouts,
     CurrentLayoutName: state.Layout.CurrentLayout,
@@ -243,11 +246,22 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<LayoutPo
 }
 
 function mapDispatchToProps(
-  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>,
+  ownProps: LayoutPopupProps
 ): Partial<LayoutPopupProps> {
   return {
-    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
-    onAddLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutAdd(layout)),
+    onSaveLayout: (layout: Layout) => {
+      const autoSave = ownProps.api.layoutApi.shouldAutoSaveLayout(layout);
+
+      if (autoSave) {
+        dispatch(LayoutRedux.LayoutSave(layout));
+      } else {
+        dispatch(LayoutRedux.LayoutUpdateCurrentDraft(layout));
+      }
+    },
+    onAddLayout: (layout: Layout) => {
+      dispatch(LayoutRedux.LayoutAdd(layout));
+    },
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
 

@@ -17,6 +17,16 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
     return this.getAdaptableState().Layout;
   }
 
+  public shouldAutoSaveLayout = (layout?: Layout): boolean => {
+    let autoSave = this.adaptable.adaptableOptions.layoutOptions?.autoSaveLayouts;
+
+    if (layout && layout.AutoSave != null) {
+      autoSave = layout.AutoSave;
+    }
+
+    return autoSave;
+  };
+
   public getCurrentVisibleColumnIdsMap(): { [key: string]: boolean } {
     const layout = this.getCurrentLayout();
 

@@ -12,6 +12,8 @@ export interface LayoutApi {
    */
   getLayoutState(): LayoutState;
 
+  shouldAutoSaveLayout(layout?: Layout): boolean;
+
   /**
    * Sets (i.e. selects) the Layout
    * @param layoutName the Layout to set (has to be the name an existing Layout)
