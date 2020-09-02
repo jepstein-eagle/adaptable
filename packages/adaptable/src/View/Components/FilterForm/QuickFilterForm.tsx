@@ -185,7 +185,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               fontSize: 'var(--ab-font-size-2)',
               border: '1px solid var(--ab-color-primarydark)',
               borderRadius: 'var(--ab__border-radius)',
-              background: 'white',
+              background: 'var(--ab-color-defaultbackground)',
               zIndex: 1000,
             }}
           >
@@ -201,7 +201,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               >
                 Close
               </SimpleButton>
-              <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
+              <SimpleButton ml={2} onClick={() => this.clearFilter()}>
+                Clear Filter
+              </SimpleButton>
             </Flex>
             <ListBoxFilterForm
               currentColumn={this.props.currentColumn}
@@ -222,6 +224,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             overflow: 'hidden',
             textOverflow: 'ellipsis',
           }}
+          ml={1}
         >
           {filter.Predicate.Inputs.join(', ') || 'Select Values'}
         </SimpleButton>
