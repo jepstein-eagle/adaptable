@@ -65,6 +65,8 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     if (!filter && props.currentColumn.DataType === 'Date') {
       return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'On', ['']);
     }
+
+    return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, null, null);
   }
   render(): any {
     const { filter } = this.state;
