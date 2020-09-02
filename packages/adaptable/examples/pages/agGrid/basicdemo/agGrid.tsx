@@ -123,13 +123,19 @@ async function InitAdaptableDemo() {
       },
 
       Filter: {
-        Revision: 4,
+        Revision: 5,
         UserFilters: [
           {
             Name: 'hello',
             Scope: {
               ColumnIds: ['currency'],
             },
+          },
+        ],
+        ColumnFilters: [
+          {
+            ColumnId: 'currency',
+            Predicate: { Id: 'NonExistent' },
           },
         ],
       },

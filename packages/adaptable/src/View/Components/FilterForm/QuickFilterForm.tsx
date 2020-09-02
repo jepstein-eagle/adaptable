@@ -22,9 +22,11 @@ import { Flex, Box } from 'rebass';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
 import { LogAdaptableError } from '../../../Utilities/Helpers/LoggingHelper';
+import { IAdaptable } from '../../../types';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
   api: AdaptableApi;
+  adaptable: IAdaptable;
   currentColumn: AdaptableColumn;
   columnFilters: ColumnFilter[];
   onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
@@ -193,20 +195,12 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             }}
           >
             <Flex mb={2}>
-              <SimpleButton
-                onClick={() => {
-                  requestAnimationFrame(() => {
-                    if (this.valuesDropdown) {
-                      this.valuesDropdown.hide();
-                    }
-                  });
-                }}
-              >
-                Close
-              </SimpleButton>
-              <SimpleButton ml={2} onClick={() => this.clearFilter()}>
-                Clear Filter
-              </SimpleButton>
+              <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
+              {this.props.adaptable.adaptableOptions?.filterOptions?.autoApplyFilter == false && (
+                <SimpleButton ml={2} onClick={() => this.updateFilter(this.state.filter)}>
+                  Apply Filter
+                </SimpleButton>
+              )}
             </Flex>
             <ListBoxFilterForm
               currentColumn={this.props.currentColumn}
@@ -239,7 +233,12 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     const { filter } = this.state;
 
     filter.Predicate = { Id: 'Values', Inputs: columnValues };
-    this.updateFilter(filter);
+
+    if (this.props.adaptable.adaptableOptions?.filterOptions?.autoApplyFilter) {
+      this.updateFilter(filter);
+    } else {
+      this.setState({ filter });
+    }
   }
 
   selectColumnPredicate(predicateId: string) {
@@ -268,10 +267,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
   private updateFilter(filter: ColumnFilter) {
     this.setState({ filter });
-
-    // if (filter.Predicate.Inputs?.some(input => StringExtensions.IsNullOrEmpty(input))) {
-    //   return;
-    // }
 
     if (filter.Uuid) {
       // TODO debounce here?
@@ -335,6 +330,7 @@ export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <QuickFilterForm
           api={FilterContext.Adaptable.api}
+          adaptable={FilterContext.Adaptable}
           currentColumn={FilterContext.Column}
           teamSharingActivated={false}
           embedColumnMenu={FilterContext.Adaptable.embedColumnMenu}

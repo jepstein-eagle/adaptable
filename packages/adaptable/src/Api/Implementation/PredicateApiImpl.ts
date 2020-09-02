@@ -33,7 +33,11 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
   ) {
     const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(predicate.Id);
 
-    if (predicate.Inputs.some(Input => Input === '')) {
+    if (predicateDef === undefined) {
+      return true;
+    }
+
+    if (predicate.Inputs?.some(Input => Input === '')) {
       return true;
     }
 
