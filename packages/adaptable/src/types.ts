@@ -77,7 +77,7 @@ export {
   FreeTextStoredValue,
 } from './PredefinedConfig/FreeTextColumnState';
 export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
-export { FilterState as SystemFilterState, FilterPredicate } from './PredefinedConfig/FilterState';
+export { FilterState as SystemFilterState } from './PredefinedConfig/FilterState';
 export { LayoutState, Layout } from './PredefinedConfig/LayoutState';
 export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
 export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';
