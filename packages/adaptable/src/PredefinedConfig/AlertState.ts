@@ -2,6 +2,7 @@ import { ConfigState } from './ConfigState';
 import { QueryObject } from './Common/QueryObject';
 import { Scope } from './Common/Scope';
 import { Predicate } from './Common/Predicate';
+import { TypeHint } from './Common/Types';
 
 /**
  * The Predefined Configuration for the Alert function
@@ -105,7 +106,8 @@ export interface AlertState extends ConfigState {
 export interface AlertDefinition extends QueryObject {
   Scope: Scope;
 
-  Predicate?: Predicate; // perhaps later | Predicate[]; // think about an array ... // ANDs  // later
+  // perhaps later | Predicate[]; // think about an array ... // ANDs  // later
+  Predicate?: AlertDefinitionPredicate;
 
   /**
    * An (optional) Expression (or Query).
@@ -127,6 +129,10 @@ export interface AlertDefinition extends QueryObject {
    * A series of properties which set what should happen when the Alert is triggered.
    */
   AlertProperties?: AlertProperties;
+}
+
+export interface AlertDefinitionPredicate extends Predicate {
+  PredicateId: TypeHint<string, SystemAlertPredicateId>;
 }
 
 /**
@@ -162,3 +168,5 @@ export interface AlertProperties {
    */
   ShowInDiv?: boolean;
 }
+
+type SystemAlertPredicateId = 'Blanks' | 'NonBlanks';

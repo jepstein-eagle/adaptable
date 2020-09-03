@@ -4,6 +4,7 @@ import { Scope } from './Common/Scope';
 import { AdaptableApi, AdaptableColumn } from '../types';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Predicate } from './Common/Predicate';
+import { TypeHint } from './Common/Types';
 
 /**
  * The Predefined Configuration for Filters
@@ -88,18 +89,6 @@ export interface FilterState extends ConfigState {
   UserFilters?: UserFilter[];
 }
 
-export interface FilterPredicate extends BaseUserFunction {
-  id: SystemFilterPredicateId | string;
-  type: 'FilterPredicate';
-  name: string;
-  scope?: Scope;
-  inputs?: FilterPredicateInput[];
-  handler: FilterPredicateHandler;
-  iconPath?: string;
-  iconText?: string;
-  shortcuts?: string[];
-}
-
 export interface FilterPredicateInput {
   type: 'number' | 'text' | 'date';
   defaultValue?: any;
@@ -119,7 +108,11 @@ export interface FilterPredicateParams {
 
 export interface ColumnFilter extends AdaptableObject {
   ColumnId: string;
-  Predicate: Predicate;
+  Predicate: ColumnFilterPredicate;
+}
+
+export interface ColumnFilterPredicate extends Predicate {
+  PredicateId: TypeHint<string, SystemFilterPredicateId>;
 }
 
 export interface UserFilter extends AdaptableObject {
