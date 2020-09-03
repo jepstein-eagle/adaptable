@@ -47,7 +47,6 @@ async function InitAdaptableDemo() {
       showMissingColumnsWarning: false,
     },
     layoutOptions: {
-      autoSizeColumnsInDefaultLayout: false,
       includeExpandedRowGroups: true,
     },
     filterOptions: {

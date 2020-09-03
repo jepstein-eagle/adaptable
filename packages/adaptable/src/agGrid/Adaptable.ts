@@ -1165,6 +1165,8 @@ export class Adaptable implements IAdaptable {
 
     let isChanged = false;
 
+    const colsToAutoSize: Record<string, boolean> = {};
+
     const newColState = this.getSortedColumnStateForVisibleColumns(columnsToShow, columnsState)
       .map((colDef: ColDef) => {
         const { colId } = colDef;
@@ -1176,6 +1178,8 @@ export class Adaptable implements IAdaptable {
 
         if (layout.ColumnWidthMap && layout.ColumnWidthMap[colId] != null) {
           newColState.width = layout.ColumnWidthMap[colId];
+        } else {
+          colsToAutoSize[colId] = true;
         }
 
         // if (groupedColumnsIndexesMap[colId] != null) {
@@ -1259,6 +1263,29 @@ export class Adaptable implements IAdaptable {
       this.updateColumnsIntoStore();
     } else {
       // console.warn('NOTHING CHANGED');
+    }
+
+    const colsToAutoSizeArray = Object.keys(colsToAutoSize);
+
+    if (pivoted && this.adaptableOptions?.layoutOptions?.autoSizeColumnsInPivotLayout) {
+      requestAnimationFrame(() => {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      });
+      setTimeout(() => {
+        this.gridOptions.columnApi?.autoSizeAllColumns();
+        setTimeout(() => {
+          this.gridOptions.columnApi?.autoSizeAllColumns();
+        }, 200);
+      }, 100);
+
+      return;
+    }
+
+    if (
+      this.adaptableOptions?.layoutOptions?.autoSizeColumnsInLayout &&
+      colsToAutoSizeArray.length
+    ) {
+      this.gridOptions.columnApi?.autoSizeColumns(colsToAutoSizeArray);
     }
   }
 
@@ -2745,10 +2772,12 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
+
       // we then assess filters
       if (
-        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
-        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('ColumnFilter')
+        this.gridOptions.columnApi.isPivotMode() || //TODO fix properly - loading directly a pivot layout when we have a column filter it breaks aggrid
+        (this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+          this.adaptableOptions!.searchOptions!.serverSearchOption.includes('ColumnFilter'))
       ) {
         return true;
       } else {
@@ -3891,14 +3920,14 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
 
     // if the current layout is the default or not set then autosize all columns if requested
-    if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
-      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
-        this.gridOptions.columnApi!.autoSizeAllColumns();
-      }
-    } else {
-      // at the end so load the current layout (as its not default)
-      this.api.layoutApi.setLayout(currentlayout);
-    }
+    // if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
+    //   if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
+    //     this.gridOptions.columnApi!.autoSizeAllColumns();
+    //   }
+    // } else {
+    //   // at the end so load the current layout (as its not default)
+    //   this.api.layoutApi.setLayout(currentlayout);
+    // }
 
     // in case we have an existing quick search we need to make sure its applied
     this.api.quickSearchApi.applyQuickSearch(this.api.quickSearchApi.getQuickSearchValue());

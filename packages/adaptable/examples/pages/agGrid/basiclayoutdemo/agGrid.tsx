@@ -154,6 +154,8 @@ async function InitAdaptableDemo() {
 
     layoutOptions: {
       autoSaveLayouts: true,
+      autoSizeColumnsInLayout: false,
+      autoSizeColumnsInPivotLayout: true,
       includeExpandedRowGroups: true,
     },
     userFunctions: [
@@ -302,15 +304,18 @@ let demoConfig: PredefinedConfig = {
     // },
     // // Layout: {
     //   CreateDefaultLayout: false,
-    Revision: 77,
+    Revision: 2,
     CurrentLayout: 'Simple Layout',
     Layouts: [
       {
         Name: 'Simple Layout',
         AutoSave: true,
         Columns: ['price', 'model', 'make', 'Multiply'],
-        // RowGroupedColumns: ['year', 'make'],
-        // EnablePivot: true,
+        RowGroupedColumns: ['make'],
+        EnablePivot: true,
+        ColumnWidthMap: {
+          price: 500,
+        },
         AggregationColumns: {
           price: 'avg',
         },

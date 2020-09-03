@@ -40,15 +40,6 @@ export interface LayoutOptions {
   autoSizeColumnsInLayout?: boolean;
 
   /**
-   * Whether columns should be auto-sized in the Default Layout
-   *
-   * This is the Layout created by AdapTable based on the initial column definition.
-   *
-   * **Default Value: true**
-   */
-  autoSizeColumnsInDefaultLayout?: boolean; //TODO remove
-
-  /**
    * Whether columns should be auto-sized when a Pivot-based Layout loads for the first time
    *
    * **Default Value: false**

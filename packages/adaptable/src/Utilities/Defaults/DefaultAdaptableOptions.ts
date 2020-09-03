@@ -55,7 +55,6 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     includeExpandedRowGroups: false,
     autoSaveLayouts: true,
     autoSizeColumnsInLayout: false,
-    autoSizeColumnsInDefaultLayout: true,
     autoSizeColumnsInPivotLayout: false,
   },
   filterOptions: {
