@@ -178,6 +178,7 @@ class QueryToolbarControlComponent extends React.Component<
           <Icon size="1.1rem" path={mdiViewColumn} />
         </DropdownButton>
         <DropdownButton
+          disabled={ArrayExtensions.IsNullOrEmpty(availableSearches)}
           variant="text"
           items={availableSearches}
           marginRight={1}
@@ -201,10 +202,6 @@ class QueryToolbarControlComponent extends React.Component<
   }
 
   saveQuery(): void {
-    let currentQuery = this.props.SharedQueries.find(sq => sq.Expression == this.state.expression);
-    if (currentQuery) {
-      alert('its shared');
-    }
     this.props.onShowSharedQueries(this.state.expression);
   }
 

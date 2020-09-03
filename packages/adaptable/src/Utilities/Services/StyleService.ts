@@ -153,8 +153,8 @@ export class StyleService implements IStyleService {
       );
     });
 
-    // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
+    // we get the CS in order so that it will show those with a Column style abvove those with DataType
+    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getOrderedConditionalStyles();
     // lets worry about row ones later - need to get cols working first..
     /*
     conditionalStyles

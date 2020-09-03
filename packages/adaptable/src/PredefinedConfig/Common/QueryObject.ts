@@ -14,4 +14,6 @@ export interface QueryObject extends AdaptableObject {
   Expression?: string;
 
   SharedQueryId?: TypeUuid;
+
+  // perhaps here add Predicate ???
 }

@@ -148,7 +148,6 @@ export const FilterReducer: Redux.Reducer<FilterState> = (
     }
 
     case COLUMN_FILTER_ADD: {
-      console.log('Column filter added');
       const actionColumnFilter: ColumnFilter = (action as ColumnFilterAction).columnFilter;
       if (!actionColumnFilter.Uuid) {
         actionColumnFilter.Uuid = createUuid();
@@ -159,7 +158,6 @@ export const FilterReducer: Redux.Reducer<FilterState> = (
     }
 
     case COLUMN_FILTER_EDIT: {
-      console.log('Column filter edited');
       const actionColumnFilter: ColumnFilter = (action as ColumnFilterAction).columnFilter;
 
       return {
@@ -175,7 +173,6 @@ export const FilterReducer: Redux.Reducer<FilterState> = (
     }
 
     case COLUMN_FILTER_CLEAR: {
-      console.log('Column filter cleared');
       const actionTypedDelete = action as ColumnFilterClearAction;
       columnFilters = [].concat(state.ColumnFilters);
       const index = actionTypedDelete.columnFilter

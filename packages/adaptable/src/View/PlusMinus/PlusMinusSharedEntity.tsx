@@ -17,7 +17,7 @@ export class PlusMinusSharedEntity extends React.Component<
           {this.props.api.columnApi.getFriendlyNameFromColumnId(plusMinusRule.ColumnId)}
         </Flex>
         <Flex flex={3}>{plusMinusRule.NudgeValue.toString()}</Flex>
-        <Flex flex={5}>{this.props.api.queryApi.getExpressionForQueryObject(plusMinusRule)}</Flex>
+        <Flex flex={5}>{this.props.api.queryApi.QueryObjectToString(plusMinusRule)}</Flex>
       </Flex>
     );
   }

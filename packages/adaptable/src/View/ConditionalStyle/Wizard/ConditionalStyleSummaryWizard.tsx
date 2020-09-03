@@ -24,15 +24,19 @@ export class ConditionalStyleSummaryWizard
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
       { Key: 'Scope', Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope) },
+      {
+        Key: 'Condition',
+        Value:
+          StringExtensions.IsNotNullOrEmpty(this.props.data.Expression) ||
+          StringExtensions.IsNotNullOrEmpty(this.props.data.SharedQueryId)
+            ? this.props.api.queryApi.QueryObjectToString(this.props.data)
+            : this.props.api.predicateApi.predicateToString(this.props.data.Predicate),
+      },
       { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
       { Key: 'Style', Value: <StyleVisualItem Style={this.props.data.Style} /> },
       {
         Key: 'Query Type',
         Value: StringExtensions.IsNullOrEmpty(this.props.data.Expression) ? 'Shared' : 'Custom',
-      },
-      {
-        Key: 'Expression',
-        Value: this.props.api.queryApi.getExpressionForQueryObject(this.props.data),
       },
     ];
 
@@ -71,6 +75,9 @@ export class ConditionalStyleSummaryWizard
     return 1;
   }
   public getIndexStepDecrement() {
-    return 1;
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId)
+      ? 2
+      : 1;
   }
 }

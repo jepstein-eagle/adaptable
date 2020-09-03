@@ -65,7 +65,7 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   }
 
   setExpressionDescription(alert: AlertDefinition): string {
-    let expression = this.props.api.queryApi.getExpressionForQueryObject(alert);
+    let expression = this.props.api.queryApi.QueryObjectToString(alert);
     return expression ? expression : 'No Expression';
   }
 

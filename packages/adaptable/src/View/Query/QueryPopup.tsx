@@ -138,8 +138,6 @@ class QueryPopupComponent extends React.Component<QueryPopupProps, EditableConfi
   }
 
   onExisting(value?: string) {
-    alert('hello');
-    alert(value);
     this.setState({
       editedAdaptableObject: ObjectFactory.CreateEmptySharedQuery(value),
       wizardStartIndex: 1,

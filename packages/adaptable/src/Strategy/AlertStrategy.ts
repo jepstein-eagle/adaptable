@@ -102,12 +102,12 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
       // first check the rules which have expressions
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(
-        r => this.adaptable.api.queryApi.getExpressionForQueryObject(r) != undefined
+        r => this.adaptable.api.queryApi.QueryObjectToString(r) != undefined
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(expressionAlertDefinitions)) {
         for (let expressionAlertDefinition of expressionAlertDefinitions) {
-          let expression: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
+          let expression: string = this.adaptable.api.queryApi.QueryObjectToString(
             expressionAlertDefinition
           );
 
@@ -131,7 +131,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
 
       // now check the rules without expressions//
       let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(
-        r => this.adaptable.api.queryApi.getExpressionForQueryObject(r) == undefined
+        r => this.adaptable.api.queryApi.QueryObjectToString(r) == undefined
       );
       for (let noExpressionRule of noExpressionRules) {
         if (this.isAlertTriggered(noExpressionRule, dataChangedEvent)) {

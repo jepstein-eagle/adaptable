@@ -8,6 +8,8 @@ import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { RowNode } from '@ag-grid-community/core';
 import * as parser from '../../parser/src';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -32,28 +34,53 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           return this.evaluateExpression(cs, params.node);
         }
       };
-      theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
     });
+    theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
 
     // now do columns
     if (ArrayExtensions.IsNotNullOrEmpty(columns)) {
       for (let column of columns) {
         let cellClassRules: any = {};
 
-        let conditionalStyleForColumn:
-          | ConditionalStyle
-          | undefined = this.adaptable.api.conditionalStyleApi.getConditionalStyleForColumn(column);
+        let conditionalStylesForColumn:
+          | ConditionalStyle[]
+          | undefined = this.adaptable.api.conditionalStyleApi.getConditionalStylesForColumn(
+          column
+        );
 
-        if (conditionalStyleForColumn) {
-          let styleName: string = this.getNameForStyle(conditionalStyleForColumn);
+        conditionalStylesForColumn.forEach((conditionalStyleForColumn: ConditionalStyle) => {
+          if (conditionalStyleForColumn) {
+            let styleName: string = this.getNameForStyle(conditionalStyleForColumn);
 
-          cellClassRules[styleName] = (params: any) => {
-            if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
-              return this.evaluateExpression(conditionalStyleForColumn, params.node);
-            }
-          };
-          theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
-        }
+            cellClassRules[styleName] = (params: any) => {
+              if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
+                // first run the predicate
+                if (conditionalStyleForColumn.Predicate && conditionalStyleForColumn.Predicate.Id) {
+                  if (
+                    this.evaluatePredicate(
+                      conditionalStyleForColumn,
+                      column,
+                      params.value,
+                      params.node
+                    )
+                  ) {
+                    return true;
+                  }
+                } else if (
+                  StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.Expression) ||
+                  StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.SharedQueryId)
+                ) {
+                  if (this.evaluateExpression(conditionalStyleForColumn, params.node)) {
+                    return true;
+                  }
+                }
+                // nothing has passed then return false
+                return false;
+              }
+            };
+          }
+        });
+        theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
       }
     }
 
@@ -61,10 +88,26 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     this.adaptable.redraw();
   }
 
+  private evaluatePredicate(
+    conditionalStyle: ConditionalStyle,
+    column: AdaptableColumn,
+    value: any,
+    node: any
+  ): boolean {
+    return this.adaptable.api.predicateApi.handlePredicate(conditionalStyle.Predicate, {
+      value: value,
+      oldValue: null,
+      displayValue: this.adaptable.getValueFromRowNode(
+        node,
+        column.ColumnId,
+        CellValueType.DisplayValue
+      ),
+      column: column,
+    });
+  }
+
   private evaluateExpression(conditionalStyle: ConditionalStyle, node: RowNode): boolean {
-    let expression: string = this.adaptable.api.queryApi.getExpressionForQueryObject(
-      conditionalStyle
-    );
+    let expression: string = this.adaptable.api.queryApi.QueryObjectToString(conditionalStyle);
     return parser.evaluate(expression, { node: node, api: this.adaptable.api });
   }
 

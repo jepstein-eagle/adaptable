@@ -6,6 +6,8 @@ import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
+import { ConditionalStylePredicateWizard } from './ConditionalStylePredicateWizard';
+import { ConditionalStyleSelectQueryWizard } from './ConditionalStyleSelectQueryWizard';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
@@ -22,13 +24,8 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
           api={this.props.api}
           steps={[
             {
-              StepName: 'Scope',
-              Index: 0,
-              Element: <ConditionalStyleScopeWizard api={this.props.api} />,
-            },
-            {
               StepName: 'Style',
-              Index: 1,
+              Index: 0,
               Element: (
                 <ConditionalStyleStyleWizard
                   StyleClassNames={this.props.StyleClassNames}
@@ -37,7 +34,23 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               ),
             },
             {
-              StepName: 'Query Builder',
+              StepName: 'Scope',
+              Index: 1,
+              Element: <ConditionalStyleScopeWizard api={this.props.api} />,
+            },
+            //   {
+            //      StepName: 'Condition',
+            //     Index: 2,
+            //     Element: <ConditionalStyleSelectQueryWizard api={this.props.api} />,
+            //   },
+            {
+              StepName: 'Condition',
+              Index: 2,
+              Element: <ConditionalStylePredicateWizard api={this.props.api} />,
+            },
+
+            {
+              StepName: 'Condition', // has to be conditional in a minute!
               Index: 2,
               Element: (
                 <ExpressionWizard
