@@ -47,7 +47,7 @@ export class ValidationService implements IValidationService {
             };
             let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
               scope,
-              { Id: 'PrimaryKeyDuplicate' },
+              { PredicateId: 'PrimaryKeyDuplicate' },
               ActionMode.StopEdit
             );
             failedWarningRules.push(cellValidationRule);

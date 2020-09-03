@@ -35,7 +35,7 @@ export class ConditionalStylePredicateWizard
 
     this.state = {
       PredicateId:
-        this.props.data.Predicate != undefined ? this.props.data.Predicate.Id : undefined,
+        this.props.data.Predicate != undefined ? this.props.data.Predicate.PredicateId : undefined,
       PredicateInputs:
         this.props.data.Predicate != undefined && this.props.data.Predicate.Inputs != undefined
           ? this.props.data.Predicate.Inputs
@@ -229,7 +229,7 @@ export class ConditionalStylePredicateWizard
   public next(): void {
     if (this.state.ConditionType == 'Predicate') {
       this.props.data.Predicate = {
-        Id: this.state.PredicateId,
+        PredicateId: this.state.PredicateId,
         Inputs: this.state.PredicateInputs,
       };
       this.props.data.Expression = '';

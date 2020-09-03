@@ -179,7 +179,7 @@ export function CreateEmptyAlertDefinition(): AlertDefinition {
   return {
     Uuid: createUuid(),
     Scope: undefined,
-    Predicate: { Id: 'Any' },
+    Predicate: { PredicateId: 'Any' },
     Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
     AlertProperties: {
@@ -209,7 +209,7 @@ export function CreateEmptyCellValidation(): CellValidationRule {
     Uuid: createUuid(),
     ActionMode: 'Stop Edit',
     Scope: undefined,
-    Predicate: { Id: 'Any' },
+    Predicate: { PredicateId: 'Any' },
     Expression: null,
   };
 }
@@ -569,7 +569,7 @@ export function CreateColumnFilter(
   return {
     ColumnId,
     Predicate: {
-      Id: PredicateId,
+      PredicateId: PredicateId,
       Inputs,
     },
   };

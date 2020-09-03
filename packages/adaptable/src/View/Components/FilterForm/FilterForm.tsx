@@ -84,8 +84,8 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
       currentTab:
         existingColumnFilter &&
         existingColumnFilter.Predicate &&
-        existingColumnFilter.Predicate.Id &&
-        existingColumnFilter.Predicate.Id != 'Values'
+        existingColumnFilter.Predicate.PredicateId &&
+        existingColumnFilter.Predicate.PredicateId != 'Values'
           ? 'predicates'
           : 'values',
     };
@@ -112,14 +112,14 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     );
 
     let uiSelectedColumnValues =
-      this.state.editedColumnFilter?.Predicate?.Id === 'Values'
+      this.state.editedColumnFilter?.Predicate?.PredicateId === 'Values'
         ? this.state.editedColumnFilter.Predicate.Inputs
         : [];
 
     let isEmptyFilter: boolean =
       Helper.objectNotExists(this.state.editedColumnFilter) ||
       Helper.objectNotExists(this.state.editedColumnFilter.Predicate) ||
-      Helper.objectNotExists(this.state.editedColumnFilter.Predicate.Id);
+      Helper.objectNotExists(this.state.editedColumnFilter.Predicate.PredicateId);
 
     let closeButton = (
       <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} accessLevel={'Full'} />
@@ -227,7 +227,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
 
   private renderColumnPredicate(predicateDef: PredicateDef, index: number): JSX.Element {
     const { editedColumnFilter } = this.state;
-    const checked = editedColumnFilter?.Predicate?.Id === predicateDef.id;
+    const checked = editedColumnFilter?.Predicate?.PredicateId === predicateDef.id;
 
     return (
       <Flex key={index}>
@@ -273,7 +273,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     const { editedColumnFilter } = this.state;
 
     editedColumnFilter.Predicate = {
-      Id: 'Values',
+      PredicateId: 'Values',
       Inputs: columnValues,
     };
 
@@ -287,7 +287,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     //delete if empty
     if (
       editedColumnFilter.Predicate === undefined ||
-      (editedColumnFilter.Predicate.Id === 'Values' &&
+      (editedColumnFilter.Predicate.PredicateId === 'Values' &&
         editedColumnFilter.Predicate.Inputs.length === 0)
     ) {
       this.props.onClearColumnFilter(editedColumnFilter);
@@ -333,7 +333,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     const { editedColumnFilter } = this.state;
 
     editedColumnFilter.Predicate = {
-      Id: predicateDef.id,
+      PredicateId: predicateDef.id,
       Inputs: (predicateDef.inputs ?? []).map(i => i.defaultValue ?? ''),
     };
 

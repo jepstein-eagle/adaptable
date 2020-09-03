@@ -32,7 +32,7 @@ import {
 } from 'date-fns';
 
 export interface Predicate {
-  Id: string;
+  PredicateId: string;
   Inputs?: any[];
 }
 

@@ -55,7 +55,10 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
             cellClassRules[styleName] = (params: any) => {
               if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
                 // first run the predicate
-                if (conditionalStyleForColumn.Predicate && conditionalStyleForColumn.Predicate.Id) {
+                if (
+                  conditionalStyleForColumn.Predicate &&
+                  conditionalStyleForColumn.Predicate.PredicateId
+                ) {
                   if (
                     this.evaluatePredicate(
                       conditionalStyleForColumn,
