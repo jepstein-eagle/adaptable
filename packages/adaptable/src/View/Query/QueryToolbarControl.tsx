@@ -202,10 +202,6 @@ class QueryToolbarControlComponent extends React.Component<
   }
 
   saveQuery(): void {
-    let currentQuery = this.props.SharedQueries.find(sq => sq.Expression == this.state.expression);
-    if (currentQuery) {
-      alert('its shared');
-    }
     this.props.onShowSharedQueries(this.state.expression);
   }
 

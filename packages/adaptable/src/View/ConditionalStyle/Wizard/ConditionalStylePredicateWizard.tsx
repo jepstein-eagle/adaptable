@@ -152,23 +152,19 @@ export class ConditionalStylePredicateWizard
       StringExtensions.IsNotNullOrEmpty(this.props.data.SharedQueryId) ||
       StringExtensions.IsNotNullOrEmpty(this.props.data.Expression)
     ) {
-      console.log(2);
       return 'Expression';
     }
     if (this.props.data.Predicate != null) {
-      console.log(1);
       return 'Predicate';
     }
     // if an existing expression then its 'Expression'
 
     // if the Scope is All then its 'Expression'
     if (this.props.api.scopeApi.scopeIsAll(this.props.data.Scope)) {
-      console.log(3);
       return 'Expression';
     }
 
     // otherwise its a Predicate
-    console.log(4);
     return 'Predicate';
   }
 
@@ -183,7 +179,6 @@ export class ConditionalStylePredicateWizard
         () => this.props.updateGoBackState()
       );
     } else if (e.value == 'Expression') {
-      console.log('changing');
       this.setState(
         {
           ConditionType: 'Expression',
@@ -214,7 +209,6 @@ export class ConditionalStylePredicateWizard
   }
 
   public canNext(): boolean {
-    console.log('can next', this.state.ConditionType);
     if (this.state.ConditionType == 'Predicate') {
       if (StringExtensions.IsNullOrEmpty(this.state.PredicateId)) {
         return false;
