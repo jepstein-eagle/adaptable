@@ -40,7 +40,7 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
   }
 
   public predicateToString(predicate: Predicate): string {
-    const predicateDef = this.getPredicateDefById(predicate.Id);
+    const predicateDef = this.getPredicateDefById(predicate.PredicateId);
     return predicateDef.hasOwnProperty('toString')
       ? predicateDef.toString({ inputs: predicate.Inputs })
       : predicateDef.label;
@@ -50,7 +50,7 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
     predicate: Predicate,
     params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>
   ) {
-    const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(predicate.Id);
+    const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(predicate.PredicateId);
 
     if (predicateDef === undefined) {
       return true;

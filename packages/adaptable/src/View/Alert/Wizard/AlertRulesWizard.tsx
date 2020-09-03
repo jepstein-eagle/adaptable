@@ -22,7 +22,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
   constructor(props: AlertRulesWizardProps) {
     super(props);
     this.state = {
-      Id: this.props.data.Predicate.Id,
+      Id: this.props.data.Predicate.PredicateId,
       Inputs: this.props.data.Predicate.Inputs ?? [],
     };
   }
@@ -104,7 +104,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
 
   public next(): void {
     this.props.data.Predicate = {
-      Id: this.state.Id,
+      PredicateId: this.state.Id,
       Inputs: this.state.Inputs,
     };
   }

@@ -140,7 +140,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     let filter: ColumnFilter = {
       ColumnId: column,
       Predicate: {
-        Id: 'Values',
+        PredicateId: 'Values',
         Inputs: displayValues,
       },
     };
