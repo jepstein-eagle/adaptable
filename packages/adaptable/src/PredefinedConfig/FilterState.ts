@@ -4,6 +4,7 @@ import { Scope } from './Common/Scope';
 import { AdaptableApi, AdaptableColumn } from '../types';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { Predicate } from './Common/Predicate';
+import { TypeHint } from './Common/Types';
 
 /**
  * The Predefined Configuration for Filters
@@ -105,13 +106,13 @@ export interface FilterPredicateParams {
   api: AdaptableApi;
 }
 
-export interface ColumnFilterPredicate extends Predicate {
-  PredicateId: SystemFilterPredicateId | (string & { __notSystemFilterPredicateId?: true });
-}
-
 export interface ColumnFilter extends AdaptableObject {
   ColumnId: string;
   Predicate: ColumnFilterPredicate;
+}
+
+export interface ColumnFilterPredicate extends Predicate {
+  PredicateId: TypeHint<string, SystemFilterPredicateId>;
 }
 
 export interface UserFilter extends AdaptableObject {

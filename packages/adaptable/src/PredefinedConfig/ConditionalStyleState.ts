@@ -3,6 +3,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
 import { QueryObject } from './Common/QueryObject';
 import { Scope } from './Common/Scope';
 import { Predicate } from './Common/Predicate';
+import { TypeHint } from './Common/Types';
 
 /**
  * The Predefined Configuration for the Conditional Style function
@@ -62,7 +63,7 @@ export interface ConditionalStyle extends QueryObject {
    */
   Scope: Scope;
 
-  Predicate?: Predicate;
+  Predicate?: ConditionalStylePredicate;
 
   /**
    * The Style to apply when the rule is matched.
@@ -80,3 +81,9 @@ export interface ConditionalStyle extends QueryObject {
    */
   ExcludeGroupedRows?: boolean;
 }
+
+export interface ConditionalStylePredicate extends Predicate {
+  PredicateId: TypeHint<string, SystemConditionalStylePredicateId>;
+}
+
+type SystemConditionalStylePredicateId = 'Blanks' | 'NonBlanks';

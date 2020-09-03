@@ -184,3 +184,5 @@ export type AdaptableFunctionName =
   | 'ToolPanel'
   | 'UpdatedRow'
   | 'UserFilter';
+
+export type TypeHint<Base, Literals> = (Base & { __subType?: true }) | Literals;
