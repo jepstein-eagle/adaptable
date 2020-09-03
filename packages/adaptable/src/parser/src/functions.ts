@@ -128,18 +128,14 @@ export const defaultFunctions: FunctionMap = {
   //
   COL: {
     handler(args, context) {
-      const name = args[0];
+      const columnId = args[0];
 
       // TODO skip this in eval mode, keep in edit mode
-      if (!context.api.columnApi.getColumnFromId(name)) {
-        throw new Error(`Column name "${name}" is not found`);
+      if (!context.api.columnApi.getColumnFromId(columnId)) {
+        throw new Error(`Column name "${columnId}" is not found`);
       }
 
-      return context.api.gridApi.getValueFromRowNode(
-        context.node,
-        name,
-        CellValueType.RawValue
-      );
+      return context.api.gridApi.getRawValueFromRowNode(context.node, columnId);
     },
     docs: [{ type: 'code', content: '[columnId]' }],
   },
