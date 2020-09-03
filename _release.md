@@ -1,3 +1,7 @@
+## 7.0.0-canary.29
+
+Fixes around default layout edge case.
+
 ## 7.0.0-canary.28
 
 All v7 features.
