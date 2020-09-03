@@ -122,7 +122,8 @@ import { PredicateApi } from './PredicateApi';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
- *  | [scopeApi](#scopeapiapi)                        | Many methods to manage the {@link Scope|Scope} object|
+ *  | [predicateApi](#predicateapi)                   | Helper functions for the commonly-used `Predicate` - boolean return function|
+ *  | [scopeApi](#scopeapi)                           | Many methods to manage the {@link Scope|Scope} object|
  *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
  *
  */
@@ -136,7 +137,6 @@ export interface AdaptableApi {
    * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_src_predefinedconfig_configstate_alertstate_.alertstate.html).
    */
   alertApi: AlertApi;
-  predicateApi: PredicateApi;
 
   /**
    * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
@@ -286,9 +286,15 @@ export interface AdaptableApi {
   pluginsApi: PluginsApi;
 
   /**
+   * Functions relating to the `Predicate` object - a  boolean-return function used in Filters and Alerts
+   */
+  predicateApi: PredicateApi;
+
+  /**
    * Provides access to functions related to a `Query` - a cross-column search.
    */
   queryApi: QueryApi;
+
   /**
    * Provides access to the *Quick Search* function, the *Quick Search* object and [Quick Search State](_src_predefinedconfig_configstate_quicksearchstate_.quicksearchstate.html).
    */
@@ -303,6 +309,11 @@ export interface AdaptableApi {
    * Provides access to the *Schedule* function which allows you to create schedules for Reminders, Reports and ipushpull.
    */
   scheduleApi: ScheduleApi;
+
+  /**
+   * Manages the `Scope` object - used in many functions to determine where an object is applied
+   */
+  scopeApi: ScopeApi;
 
   /**
    * Provides access to the *Shortcut* function, the *Shortcut* object and [Shortcut State](_src_predefinedconfig_configstate_shortcutstate_.shortcutstate.html).
@@ -350,11 +361,6 @@ export interface AdaptableApi {
    * Functions related to team-sharing whereby users can create and share objects at run-time with colleagues
    */
   teamSharingApi: TeamSharingApi;
-
-  /**
-   * Manages the `Scope` object - used in many functions to determine where an object is applied
-   */
-  scopeApi: ScopeApi;
 
   /**
    * Api methods used *internally* within AdapTable.
