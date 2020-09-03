@@ -48,6 +48,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   const [textAreaRefCallback, textAreaRef, selectionStart, selectionEnd] = useSelectionRange();
   const cursor = selectionStart === selectionEnd ? selectionStart : null;
   const [data, setData] = useState(props.initialData);
+  const [showColumnIds, setShowColumnIds] = useState(false);
   let result, error, currentFunction;
 
   try {
@@ -191,7 +192,9 @@ function ExpressionEditor(props: ExpressionEditorProps) {
                 textAreaRef={textAreaRef}
               >
                 <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
-                {column.FriendlyName}
+                <Flex flexDirection="column" alignItems="start">
+                  {showColumnIds ? `[${column.ColumnId}]` : column.FriendlyName}
+                </Flex>
               </EditorButton>
             }
           >
@@ -325,6 +328,13 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             }}
           >
             Test Data
+            <CheckBox
+              checked={showColumnIds}
+              onChange={checked => setShowColumnIds(checked)}
+              style={{ float: 'right', margin: 0 }}
+            >
+              Show Column IDs
+            </CheckBox>
           </Box>
           {dataTableEditor}
         </Box>

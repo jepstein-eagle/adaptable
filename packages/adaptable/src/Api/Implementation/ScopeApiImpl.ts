@@ -171,7 +171,7 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     DataTypes     ColumnIds     false
   */
   public isScopeInScope(a: Scope, b: Scope): boolean {
-    if ('All' in a || 'All' in b) {
+    if ('All' in b) {
       return true;
     }
 
