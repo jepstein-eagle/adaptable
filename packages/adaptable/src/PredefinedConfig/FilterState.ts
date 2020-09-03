@@ -88,18 +88,6 @@ export interface FilterState extends ConfigState {
   UserFilters?: UserFilter[];
 }
 
-export interface FilterPredicate extends BaseUserFunction {
-  id: SystemFilterPredicateId | string;
-  type: 'FilterPredicate';
-  name: string;
-  scope?: Scope;
-  inputs?: FilterPredicateInput[];
-  handler: FilterPredicateHandler;
-  iconPath?: string;
-  iconText?: string;
-  shortcuts?: string[];
-}
-
 export interface FilterPredicateInput {
   type: 'number' | 'text' | 'date';
   defaultValue?: any;
@@ -117,9 +105,13 @@ export interface FilterPredicateParams {
   api: AdaptableApi;
 }
 
+export interface ColumnFilterPredicate extends Predicate {
+  PredicateId: SystemFilterPredicateId | (string & { __notSystemFilterPredicateId?: true });
+}
+
 export interface ColumnFilter extends AdaptableObject {
   ColumnId: string;
-  Predicate: Predicate;
+  Predicate: ColumnFilterPredicate;
 }
 
 export interface UserFilter extends AdaptableObject {

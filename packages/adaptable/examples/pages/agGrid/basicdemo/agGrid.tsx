@@ -143,7 +143,11 @@ async function InitAdaptableDemo() {
         ColumnFilters: [
           {
             ColumnId: 'currency',
-            Predicate: { Id: 'NonExistent' },
+            Predicate: { PredicateId: 'NonExistent' },
+          },
+          {
+            ColumnId: 'changeOnYear',
+            Predicate: { PredicateId: 'Positive' },
           },
         ],
       },
