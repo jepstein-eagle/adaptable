@@ -11,6 +11,7 @@ import Helper from '../../Utilities/Helpers/Helper';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { ColumnStateChangedInfo, ColumnStateChangedEventArgs } from '../../types';
+import { DEFAULT_LAYOUT } from '../../Utilities/Constants/GeneralConstants';
 
 export class LayoutApiImpl extends ApiBase implements LayoutApi {
   public getLayoutState(): LayoutState {
@@ -68,7 +69,9 @@ export class LayoutApiImpl extends ApiBase implements LayoutApi {
       return state.Grid.CurrentLayout;
     }
     let layoutName = state.Layout.CurrentLayout;
-    return this.getLayoutByName(layoutName);
+    return (
+      this.getLayoutByName(layoutName) || ObjectFactory.CreateEmptyLayout({ Name: DEFAULT_LAYOUT })
+    );
   }
 
   public getCurrentLayoutName(): string {
