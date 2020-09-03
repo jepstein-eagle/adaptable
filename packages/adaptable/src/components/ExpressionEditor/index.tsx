@@ -189,6 +189,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
                 height="100%"
                 style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
                 data={`[${column.ColumnId}]`}
+                data-name="column"
                 textAreaRef={textAreaRef}
               >
                 <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
@@ -201,6 +202,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             {column.DataType === 'Number' ? (
               <Input
                 type="number"
+                data-name="column-input"
                 value={data[column.ColumnId]}
                 onChange={(e: React.FormEvent) =>
                   setData({
@@ -214,6 +216,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             ) : column.DataType === 'String' ? (
               <Input
                 type="text"
+                data-name="column-input"
                 value={data[column.ColumnId]}
                 onChange={(e: React.FormEvent) =>
                   setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
@@ -224,6 +227,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             ) : column.DataType === 'Date' ? (
               <Input
                 type="date"
+                data-name="column-input"
                 value={new Date(data[column.ColumnId]).toISOString().substr(0, 10)}
                 onChange={(e: React.FormEvent) => {
                   setData({
@@ -236,6 +240,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               />
             ) : column.DataType === 'Boolean' ? (
               <CheckBox
+                data-name="column-input"
                 checked={data[column.ColumnId]}
                 onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
                 disabled={column.ReadOnly}
@@ -247,7 +252,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   );
 
   return (
-    <div>
+    <>
       {' '}
       {props.hideHelpBlock !== true && (
         <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
@@ -264,7 +269,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           row). <br />
         </HelpBlock>
       )}{' '}
-      <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
+      <Flex flex={1} flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
         <Box flex={1} mx={2}>
           <Flex
             data-name="expression-toolbar"
@@ -285,6 +290,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             ref={textAreaRefCallback}
             value={props.value || ''}
             placeholder="Enter expression"
+            className="ab-ExpressionEditor__textarea"
             autoFocus
             spellCheck="false"
             onChange={props.onChange}
@@ -297,7 +303,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
             }}
           />{' '}
           {props.isFullExpression !== true && (
-            <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
+            <HelpBlock mt={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
               Expression must resolve to a <b>boolean </b>(i.e. true / false) value
             </HelpBlock>
           )}
@@ -318,12 +324,12 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           )}
           {functionDocs}
         </Box>
-        <Box height={450} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
+        <Box mb={2} style={{ overflowY: 'auto', paddingRight: 'var(--ab-space-2)' }}>
           <Box
             mb={1}
             p={2}
+            backgroundColor="primarylight"
             style={{
-              background: 'var(--ab-color-primarylight)',
               borderRadius: 'var(--ab__border-radius)',
             }}
           >
@@ -339,7 +345,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           {dataTableEditor}
         </Box>
       </Flex>
-    </div>
+    </>
   );
 }
 
