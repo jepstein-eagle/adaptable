@@ -1,5 +1,4 @@
 import { AdaptablePlugin, IAdaptable } from '@adaptabletools/adaptable/types';
-import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import { version } from '../package.json';
 import coreVersion from '@adaptabletools/adaptable/version';
 import { AdaptableOptions } from '@adaptabletools/adaptable/src/AdaptableOptions/AdaptableOptions';
