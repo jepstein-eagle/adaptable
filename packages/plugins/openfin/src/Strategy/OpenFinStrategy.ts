@@ -17,12 +17,13 @@ import { OpenFinApi } from '@adaptabletools/adaptable/src/Api/OpenFinApi';
 
 import { IOpenFinService } from '../Utilities/Services/Interface/IOpenFinService';
 import { OpenFinReport } from '@adaptabletools/adaptable/src/PredefinedConfig/SystemState';
+import { Cancelable } from '@adaptabletools/adaptable/src/Utilities/Cancelable';
 
 export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinStrategy {
   private isSendingData: boolean = false;
   private openFinService: IOpenFinService | null = null;
 
-  private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
+  private throttledRecomputeAndSendLiveDataEvent: (() => void) & Cancelable;
   private liveIntervalId: number;
 
   public setStrategyEntitlement(): void {

@@ -29,5 +29,6 @@
   "exclude": ["src/test.ts", "src/**/*.spec.ts",
     "../adaptable/parser/**/*.test.ts",
     "../adaptable/parser/playground",
+    "../adaptable/parser/playground/**/*",
   ]
 }

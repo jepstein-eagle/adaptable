@@ -23,5 +23,5 @@
     "types.ts",
     "version.ts"
   ],
-  "exclude": ["node_modules", ".next","src/parser/**/*.test.ts","src/parser/playground"]
+  "exclude": ["node_modules", ".next","src/parser/**/*.test.ts","src/parser/playground","src/parser/playground/**/*"]
 }

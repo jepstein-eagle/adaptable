@@ -20,12 +20,13 @@ import {
 import LoggingHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 import { Glue42Service } from '../Utilities/Services/Glue42Service';
 import { Glue42Api } from '@adaptabletools/adaptable/src/Api/Glue42Api';
+import { Cancelable } from '@adaptabletools/adaptable/src/Utilities/Cancelable';
 
 export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Strategy {
   private isSendingData: boolean = false;
   private glue42Service: Glue42Service | null = null;
 
-  private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
+  private throttledRecomputeAndSendLiveDataEvent: (() => void) & Cancelable;
 
   public getGlue42Api(): Glue42Api {
     return this.adaptable.api.pluginsApi.getPluginApi('glue42');

@@ -24,11 +24,12 @@ import {
 } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
+import { Cancelable } from '@adaptabletools/adaptable/src/Utilities/Cancelable';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
   private SystemState: SystemState;
-  private throttleSetChartData: (() => void) & _.Cancelable;
+  private throttleSetChartData: (() => void) & Cancelable;
 
   constructor(adaptable: IAdaptable) {
     super(
