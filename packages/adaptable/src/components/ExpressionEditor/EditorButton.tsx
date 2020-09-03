@@ -14,7 +14,7 @@ function EditorButton(props: EditorButtonProps) {
   const { textAreaRef, data, ...buttonProps } = props;
   return (
     <SimpleButton
-      data-name={props.data}
+      data-name={'operator-or-fn'}
       variant="text"
       draggable={true}
       onDragStart={event => {

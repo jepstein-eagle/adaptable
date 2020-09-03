@@ -82,6 +82,7 @@ const ColumnLabels = (
         const renderBox = (enabled: boolean) => {
           return (
             <Flex
+              className="ab-LayoutEditor__LegendLetter"
               width={'20px'}
               height={'20px'}
               alignItems="center"
@@ -124,7 +125,7 @@ const ColumnLabels = (
             {renderBox(enabled)}
             {showBoth ? renderBox(!enabled) : null}
             {labelsProp ? (
-              <Flex flex={1} ml={2}>
+              <Flex flex={1} ml={2} className="ab-LayoutEditor__LegendLetterDescription">
                 {labelsProp[labelName]}
               </Flex>
             ) : null}
@@ -404,7 +405,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
               const visible = !!visibleColumnsMap[c.ColumnId];
               const aggregate = !!aggregationColumnsMap[c.ColumnId];
               return (
-                <Flex flexDirection="column" alignItems="stretch">
+                <Flex flexDirection="column" alignItems="stretch" data-name="drag-item">
                   <Flex
                     flexDirection="row"
                     alignItems="center"
@@ -543,7 +544,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             renderItem={(c: ColumnSort, clear, toggleSort) => {
               const column: AdaptableColumn = allColumnsMap[c.ColumnId];
               return (
-                <Flex flexDirection="row" alignItems="center">
+                <Flex flexDirection="row" alignItems="center" data-name="drag-item">
                   <Box ml={2} mr={3}>
                     <Icon name="drag" size={30} />
                   </Box>
@@ -600,7 +601,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             renderItem={(colId: string, clear) => {
               const column: AdaptableColumn = allColumnsMap[colId];
               return (
-                <Flex flexDirection="row" alignItems="center">
+                <Flex flexDirection="row" alignItems="center" data-name="drag-item">
                   <Box ml={2} mr={3}>
                     <Icon name="drag" size={30} />
                   </Box>
@@ -660,7 +661,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
             renderItem={(colId: string, clear) => {
               const column: AdaptableColumn = allColumnsMap[colId];
               return (
-                <Flex flexDirection="row" alignItems="center">
+                <Flex flexDirection="row" alignItems="center" data-name="drag-item">
                   <Box ml={2} mr={3}>
                     <Icon name="drag" size={30} />
                   </Box>
@@ -698,6 +699,7 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
 
         <ListPanel
           header="Legend: Column Behaviour"
+          className="ab-LayoutEditor__LegendPanel"
           style={{
             gridRow: '1 /1',
             gridColumn: '3/3',

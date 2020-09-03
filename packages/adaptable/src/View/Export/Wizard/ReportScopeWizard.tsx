@@ -24,7 +24,7 @@ export class ReportScopeWizard extends React.Component<ReportScopeWizardProps, W
 
   render(): any {
     return (
-      <WizardPanel>
+      <WizardPanel data-name="scope-container" bodyProps={{ padding: 0 }}>
         {' '}
         <ScopeComponent
           api={this.props.api}

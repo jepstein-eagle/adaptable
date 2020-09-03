@@ -137,7 +137,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
           </div>
         )}
         {this.state.useSharedQuery == false && (
-          <div>
+          <>
             <ExpressionEditor
               value={this.state.expression}
               onChange={(e: React.SyntheticEvent) => this.handleCustomExpressionChange(e)}
@@ -173,7 +173,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
               {this.state.saveToSharedQueries && (
                 <Input
                   marginLeft={2}
-                  marginBottom={2}
+                  style={{ minWidth: '20rem' }}
                   value={this.state.newSharedQueryName}
                   onChange={(e: React.FormEvent) =>
                     this.setState(
@@ -186,7 +186,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                 />
               )}
             </Flex>
-          </div>
+          </>
         )}
       </>
     );

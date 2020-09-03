@@ -125,17 +125,15 @@ export const ColumnList = (props: ColumnListProps) => {
                       style.display = 'none';
                     }
                     return (
-                      <>
-                        <div
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          className="ab-LayoutEditor__ColumnList__column"
-                          style={style}
-                        >
-                          {renderColumn(c)}
-                        </div>
-                      </>
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        className="ab-LayoutEditor__ColumnList__column"
+                        style={style}
+                      >
+                        {renderColumn(c)}
+                      </div>
                     );
                   }}
                 </Draggable>
