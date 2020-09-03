@@ -1,6 +1,6 @@
 ## 7.0.0-canary.28
 
-All v7 features
+All v7 features.
 
 ## 7.0.0-canary.27
 
