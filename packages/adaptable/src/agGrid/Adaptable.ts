@@ -149,11 +149,7 @@ import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
 import * as parser from '../parser/src';
 import { ColumnFilter, SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
-
-interface Cancelable {
-  cancel(): void;
-  flush(): void;
-}
+import { Cancelable } from '../Utilities/Cancelable';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 

@@ -17,12 +17,13 @@ import { DataChangedInfo } from '@adaptabletools/adaptable/src/PredefinedConfig/
 import { IPushPullApi } from '@adaptabletools/adaptable/src/Api/IPushPullApi';
 
 import { IPushPullService } from '../Utilities/Services/Interface/IPushPullService';
+import { Cancelable } from '@adaptabletools/adaptable/src/Utilities/Cancelable';
 
 export class PushPullStrategy extends AdaptableStrategyBase implements IPushPullStrategy {
   private isSendingData: boolean = false;
   private ippService: IPushPullService | null = null;
 
-  private throttledRecomputeAndSendLiveDataEvent: (() => void) & _.Cancelable;
+  private throttledRecomputeAndSendLiveDataEvent: (() => void) & Cancelable;
 
   public setStrategyEntitlement(): void {
     // TODO
