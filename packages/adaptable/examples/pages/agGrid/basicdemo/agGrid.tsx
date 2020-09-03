@@ -24,7 +24,7 @@ var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 20;
+  const tradeCount: number = 200;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   gridOptions.sideBar = 'columns';
@@ -131,7 +131,7 @@ async function InitAdaptableDemo() {
       },
 
       Filter: {
-        Revision: 5,
+        Revision: 9,
         UserFilters: [
           {
             Name: 'hello',
@@ -143,11 +143,15 @@ async function InitAdaptableDemo() {
         ColumnFilters: [
           {
             ColumnId: 'currency',
-            Predicate: { PredicateId: 'NonExistent' },
+            Predicate: { PredicateId: 'fdfdasfdas' },
           },
           {
             ColumnId: 'changeOnYear',
             Predicate: { PredicateId: 'Positive' },
+          },
+          {
+            ColumnId: 'country',
+            Predicate: { PredicateId: 'Values', Inputs: ['Japan', 'Italy'] },
           },
         ],
       },

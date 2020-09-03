@@ -7,6 +7,7 @@ import {
   SystemPredicateDefs,
 } from '../../PredefinedConfig/Common/Predicate';
 import { FunctionScope } from '../../PredefinedConfig/Common/Scope';
+import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class PredicateApiImpl extends ApiBase implements PredicateApi {
   public getPredicateDefs() {
@@ -39,8 +40,12 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
     return this.getCustomPredicateDefs().find(predicateDef => predicateDef.id === predicateId);
   }
 
-  public predicateToString(predicate: Predicate): string {
+  public predicateToString(predicate: Predicate): string | undefined {
     const predicateDef = this.getPredicateDefById(predicate.PredicateId);
+    if (!predicateDef) {
+      LogAdaptableWarning('Cannot find Predicate with Id:' + predicate.PredicateId);
+      return '[Predicate Not found]';
+    }
     return predicateDef.hasOwnProperty('toString')
       ? predicateDef.toString({ inputs: predicate.Inputs })
       : predicateDef.label;
