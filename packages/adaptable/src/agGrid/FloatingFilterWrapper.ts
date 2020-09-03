@@ -25,7 +25,7 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
     afterGuiAttached?(params?: IAfterGuiAttachedParams): void {
       // todo: consider theme
       this.filterContainer.parentElement.style.overflow = 'visible';
-      this.filterContainer.parentElement.parentElement.style.padding = '0 2px';
+      this.filterContainer.parentElement.parentElement.style.padding = 'var(--ab-space-1)';
     }
 
     private filterContainer: HTMLSpanElement;
@@ -34,9 +34,10 @@ export const FloatingFilterWrapperFactory = (adaptable: Adaptable) =>
       const colId = params.column.getColId();
       this.filterContainer = document.createElement('div');
       this.filterContainer.id = `floatingFilter_${colId}_${adaptable.adaptableOptions.adaptableId}`;
-      this.filterContainer.style.display = 'flex';
       this.filterContainer.style.minWidth = '0';
-      this.filterContainer.style.alignItems = 'center';
+      this.filterContainer.style.height = '100%';
+      this.filterContainer.style.display = 'flex';
+      this.filterContainer.style.alignItems = 'stretch';
       const column: AdaptableColumn = adaptable.api.columnApi.getColumnFromId(colId);
 
       const filterContext: IColumnFilterContext = {
