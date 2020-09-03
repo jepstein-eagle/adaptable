@@ -38,7 +38,12 @@ function TabList({
   return (
     <Droppable droppableId="MAIN" type="TAB" direction="horizontal">
       {provided => (
-        <div ref={provided.innerRef} {...provided.droppableProps} style={{ display: 'flex' }}>
+        <div
+          ref={provided.innerRef}
+          {...provided.droppableProps}
+          style={{ display: 'flex' }}
+          data-name="dashboard-tabs"
+        >
           {tabs.map((tab, tabIndex) => (
             <TabItem
               key={tabIndex}
@@ -73,6 +78,7 @@ function TabItem({
     <Draggable draggableId={String(tabIndex)} index={tabIndex}>
       {provided => (
         <div
+          data-name="dashboard-tab"
           ref={provided.innerRef}
           {...provided.draggableProps}
           style={{
@@ -206,6 +212,7 @@ function ToolbarItem({
 function UnusedPanel({ toolbars }: { toolbars: string[] }) {
   return (
     <div
+      data-name="dashboard-toolbars"
       style={{
         border: '1px solid var(--ab-color-primarydark)',
         borderRadius: 'var(--ab__border-radius)',
@@ -228,6 +235,7 @@ function UnusedToolbarList({ toolbars }: { toolbars: string[] }) {
       {provided => (
         <div
           ref={provided.innerRef}
+          data-name="dashboard-toolbars-list"
           {...provided.droppableProps}
           style={{
             display: 'flex',
@@ -253,6 +261,7 @@ function UnusedToolbarItem({ toolbar, toolbarIndex }: { toolbar: string; toolbar
     <Draggable draggableId={toolbar} index={toolbarIndex}>
       {(provided, snapshot) => (
         <div
+          data-name="dashboard-toolbar"
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}

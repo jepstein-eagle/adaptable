@@ -83,6 +83,7 @@ export class AdaptablePopupConfirmation extends React.Component<
                 <Flex padding={2}>
                   <SimpleButton
                     tone="error"
+                    data-name="delete"
                     variant="raised"
                     disabled={!this.canConfirm()}
                     onClick={() => this.onConfirmmForm()}
@@ -90,7 +91,12 @@ export class AdaptablePopupConfirmation extends React.Component<
                     {this.props.ConfirmButtonText}
                   </SimpleButton>
                   <div style={{ flex: 1 }} />
-                  <SimpleButton tone="neutral" variant="raised" onClick={() => this.onCancelForm()}>
+                  <SimpleButton
+                    data-name="cancel"
+                    tone="neutral"
+                    variant="raised"
+                    onClick={() => this.onCancelForm()}
+                  >
                     {this.props.CancelButtonText}
                   </SimpleButton>
                 </Flex>

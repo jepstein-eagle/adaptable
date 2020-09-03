@@ -79,6 +79,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
         <PopupWithFooter
           showModal={this.props.showModal}
           onHide={this.props.onHide}
+          data-name={this.props.ComponentName}
           modal
           padding={0}
           footer={

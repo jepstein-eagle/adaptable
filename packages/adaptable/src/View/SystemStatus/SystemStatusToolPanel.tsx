@@ -92,7 +92,9 @@ class SystemStatusToolPanelComponent extends React.Component<
         </Flex>
       </Flex>
     ) : (
-      <Text fontSize={2}>No Status Message</Text>
+      <Text fontSize={2} data-name="system-status-message">
+        No Status Message
+      </Text>
     );
 
     return (

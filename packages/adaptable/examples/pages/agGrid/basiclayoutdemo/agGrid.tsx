@@ -255,6 +255,11 @@ let demoConfig: PredefinedConfig = {
     Revision: 5,
   },
 
+  SystemStatus: {
+    Revision: 1,
+    StatusType: 'Info',
+    StatusMessage: 'all good',
+  },
   ActionColumn: {
     Revision: 5,
     ActionColumns: [

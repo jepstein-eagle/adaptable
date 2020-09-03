@@ -123,6 +123,7 @@ class DashboardPopupComponent extends React.Component<
         <Flex
           flexDirection="row"
           padding={2}
+          data-name="dashboard-configuration-select"
           style={{ borderBottom: '1px solid var(--ab-color-primary)' }}
         >
           <Radio

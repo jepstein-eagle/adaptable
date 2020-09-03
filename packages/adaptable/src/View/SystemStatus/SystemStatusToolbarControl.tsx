@@ -78,6 +78,7 @@ class SystemStatusToolbarControlComponent extends React.Component<
           backgroundColor={messageTypeColor}
           fontSize={'var( --ab-font-size-2)'}
           alignItems="center"
+          data-name="system-status-message"
         >
           {message}
         </Flex>

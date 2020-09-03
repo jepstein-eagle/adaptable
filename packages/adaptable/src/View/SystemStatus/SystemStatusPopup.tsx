@@ -84,7 +84,7 @@ class SystemStatusPopupComponent extends React.Component<
           System Status Message
         </Flex>
         <Flex flexDirection="row" alignItems="center">
-          <Text style={{ flex: 2 }} marginRight={2}>
+          <Text style={{ flex: 2 }} marginRight={2} data-name="system-status-message">
             {this.props.StatusMessage}
           </Text>
         </Flex>
@@ -96,7 +96,9 @@ class SystemStatusPopupComponent extends React.Component<
         {clearButton}
       </div>
     ) : (
-      <Text fontSize={2}>No Status Message</Text>
+      <Text fontSize={2} data-name="system-status-message">
+        No Status Message
+      </Text>
     );
 
     return (

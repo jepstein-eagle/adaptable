@@ -104,7 +104,7 @@ export class EntityListActionButtons extends React.Component<EntityListActionBut
         )}
         {this.props.showDelete && (
           <ButtonDelete
-            data-name="edit"
+            data-name="delete"
             style={{
               marginLeft: '1px',
               marginTop: '2px',
