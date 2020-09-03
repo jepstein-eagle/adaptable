@@ -300,61 +300,66 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Layout: {
-    CreateDefaultLayout: true,
-    // },
-    // // Layout: {
-    //   CreateDefaultLayout: false,
-    Revision: 2,
-    CurrentLayout: 'Simple Layout',
-    Layouts: [
-      {
-        Name: 'Simple Layout',
-        AutoSave: true,
-        Columns: ['price', 'model', 'make', 'Multiply'],
-        RowGroupedColumns: ['make'],
-        EnablePivot: true,
-        ColumnWidthMap: {
-          price: 500,
-        },
-        AggregationColumns: {
-          price: 'avg',
-        },
-        PivotColumns: ['make', 'model'],
-      },
-      {
-        Name: 'Pivot Layout',
-        Columns: [],
-        //    PivotDetails: {
-        //      PivotColumns: ['make'],
-        //     AggregationColumns: ['price'],
-        //   },
-      },
-      {
-        Name: 'Full Layout',
-        Columns: ['year', 'model', 'make', 'identifier', 'price'],
-        RowGroupedColumns: ['make'],
-        // GroupedColumns: ['make', 'model'],
-        ColumnWidthMap: {
-          model: 600,
-          year: 400,
-        },
-        ColumnFlexMap: {
-          make: 1,
-        },
-        //  ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
-        PinnedColumnsMap: {
-          // year: 'left',
-          // model: 'right',
-        },
-        ColumnSorts: [
-          {
-            ColumnId: 'model',
-            SortOrder: 'Desc',
-          },
-        ],
-      },
-    ],
+    Revision: 23,
+    CurrentLayout: '',
+    Layouts: [],
   },
+  // Layout: {
+  //   CreateDefaultLayout: true,
+  //   // },
+  //   // // Layout: {
+  //   //   CreateDefaultLayout: false,
+  //   Revision: 2,
+  //   CurrentLayout: 'Simple Layout',
+  //   Layouts: [
+  //     {
+  //       Name: 'Simple Layout',
+  //       AutoSave: true,
+  //       Columns: ['price', 'model', 'make', 'Multiply'],
+  //       RowGroupedColumns: ['make'],
+  //       EnablePivot: true,
+  //       ColumnWidthMap: {
+  //         price: 500,
+  //       },
+  //       AggregationColumns: {
+  //         price: 'avg',
+  //       },
+  //       PivotColumns: ['make', 'model'],
+  //     },
+  //     {
+  //       Name: 'Pivot Layout',
+  //       Columns: [],
+  //       //    PivotDetails: {
+  //       //      PivotColumns: ['make'],
+  //       //     AggregationColumns: ['price'],
+  //       //   },
+  //     },
+  //     {
+  //       Name: 'Full Layout',
+  //       Columns: ['year', 'model', 'make', 'identifier', 'price'],
+  //       RowGroupedColumns: ['make'],
+  //       // GroupedColumns: ['make', 'model'],
+  //       ColumnWidthMap: {
+  //         model: 600,
+  //         year: 400,
+  //       },
+  //       ColumnFlexMap: {
+  //         make: 1,
+  //       },
+  //       //  ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
+  //       PinnedColumnsMap: {
+  //         // year: 'left',
+  //         // model: 'right',
+  //       },
+  //       ColumnSorts: [
+  //         {
+  //           ColumnId: 'model',
+  //           SortOrder: 'Desc',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
 };
 
 export default () => {
