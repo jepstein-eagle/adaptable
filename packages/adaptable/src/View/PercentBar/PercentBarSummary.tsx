@@ -20,7 +20,7 @@ import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PercentBar } from '../../PredefinedConfig/PercentBarState';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarSummaryComponent> {
@@ -29,10 +29,6 @@ export interface PercentBarSummaryProps extends StrategySummaryProps<PercentBarS
   StyleClassNames: string[];
   onAddPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarAddAction;
   onEditPercentBar: (percentBar: PercentBar) => PercentBarRedux.PercentBarEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class PercentBarSummaryComponent extends React.Component<
@@ -46,7 +42,7 @@ export class PercentBarSummaryComponent extends React.Component<
 
   render(): any {
     let percentBar: PercentBar = this.props.PercentBars.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noPercentBar: boolean = percentBar == null;
 
@@ -56,22 +52,22 @@ export class PercentBarSummaryComponent extends React.Component<
       percentBarRow = (
         <StrategyHeader
           key={StrategyConstants.PercentBarStrategyFriendlyName}
-          FunctionName={StrategyConstants.PercentBarStrategyId}
-          StrategySummary={'No Percent Bar'}
+          functionName={StrategyConstants.PercentBarStrategyId}
+          strategySummary={'No Percent Bar'}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.PercentBarStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          newButtonTooltip={StrategyConstants.PercentBarStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else {
       percentBarRow = (
         <StrategyDetail
           key={StrategyConstants.PercentBarStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.PercentBarStrategyId} />}
-          Item2={'Percent Bar set'}
-          ConfigEnity={percentBar}
-          showShare={this.props.TeamSharingActivated}
-          EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
+          item1={<StrategyProfile FunctionName={StrategyConstants.PercentBarStrategyId} />}
+          item2={'Percent Bar set'}
+          configEnity={percentBar}
+          showShare={this.props.teamSharingActivated}
+          entityType={StrategyConstants.PercentBarStrategyFriendlyName}
           onEdit={() => this.onEdit(percentBar)}
           onShare={description => this.props.onShare(percentBar, description)}
           onDelete={PercentBarRedux.PercentBarDelete(percentBar)}
@@ -84,16 +80,16 @@ export class PercentBarSummaryComponent extends React.Component<
       <div>
         {percentBarRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <PercentBarWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as PercentBar}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.PercentBars}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as PercentBar}
+            modalContainer={this.props.modalContainer}
+            configEntities={this.props.PercentBars}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
-            Api={this.props.Api}
+            api={this.props.api}
           />
         )}
       </div>
@@ -102,11 +98,11 @@ export class PercentBarSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: PercentBar = ObjectFactory.CreateEmptyPercentBar();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
 
-    let distinctColumnsValues: number[] = this.props.Api.internalApi
-      .getStrategyService()
-      .getDistinctColumnValues(this.props.SummarisedColumn.ColumnId);
+    let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
+      this.props.summarisedColumn.ColumnId
+    );
 
     configEntity.Ranges.push({
       Min: Math.min(...distinctColumnsValues),
@@ -115,45 +111,45 @@ export class PercentBarSummaryComponent extends React.Component<
     });
 
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(renderedColumn: PercentBar) {
     let clonedObject: PercentBar = Helper.cloneObject(renderedColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let percentBar: PercentBar = this.state.EditedAdaptableObject as PercentBar;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let percentBar: PercentBar = this.state.editedAdaptableObject as PercentBar;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditPercentBar(percentBar);
     } else {
       this.props.onAddPercentBar(percentBar);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let percentBar = this.state.EditedAdaptableObject as PercentBar;
+    let percentBar = this.state.editedAdaptableObject as PercentBar;
     return StringExtensions.IsNotNullOrEmpty(percentBar.ColumnId);
   }
 }

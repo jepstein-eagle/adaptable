@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../AdaptablePopover';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
@@ -22,25 +21,25 @@ type PreviewDataItem = {
 const Grid = GridFactory<PreviewDataItem>();
 
 export interface PreviewResultsPanelProps extends React.ClassAttributes<PreviewResultsPanel> {
-  PreviewInfo: IPreviewInfo;
-  Api: AdaptableApi;
-  SelectedColumn: AdaptableColumn;
-  ShowPanel: boolean;
+  previewInfo: IPreviewInfo;
+  api: AdaptableApi;
+  selectedColumn: AdaptableColumn;
+  showPanel: boolean;
   style?: React.CSSProperties;
-  ShowHeader: boolean;
+  showHeader: boolean;
 }
 
 export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProps, {}> {
   render(): any {
     let previewHeader: string =
-      this.props.ShowHeader && this.props.PreviewInfo != null
+      this.props.showHeader && this.props.previewInfo != null
         ? 'Preview Results: ' +
-          (this.props.SelectedColumn ? this.props.SelectedColumn.FriendlyName : '')
+          (this.props.selectedColumn ? this.props.selectedColumn.FriendlyName : '')
         : '';
 
     let successColor = UIHelper.getColorByMessageType(MessageType.Success);
 
-    const dataSource: PreviewDataItem[] = this.props.PreviewInfo.PreviewResults.map(
+    const dataSource: PreviewDataItem[] = this.props.previewInfo.PreviewResults.map(
       (previewResult, index) => {
         return {
           Id: index,
@@ -49,7 +48,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
           ValidInfo:
             previewResult.ValidationRules.length > 0 ? (
               <>
-                {this.props.PreviewInfo.PreviewValidationSummary.HasValidationPrevent == true && (
+                {this.props.previewInfo.PreviewValidationSummary.HasValidationPrevent == true && (
                   <AdaptablePopover
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
@@ -58,7 +57,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
                     MessageType={MessageType.Error}
                   />
                 )}
-                {this.props.PreviewInfo.PreviewValidationSummary.HasValidationWarning == true && (
+                {this.props.previewInfo.PreviewValidationSummary.HasValidationWarning == true && (
                   <AdaptablePopover
                     showEvent="mouseenter"
                     hideEvent="mouseleave"
@@ -78,7 +77,7 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
       }
     );
 
-    return this.props.ShowPanel ? (
+    return this.props.showPanel ? (
       <Panel
         header={previewHeader}
         style={{ flex: 1 }}
@@ -114,20 +113,18 @@ export class PreviewResultsPanel extends React.Component<PreviewResultsPanelProp
     ) : null;
   }
 
-  private getValidationErrorMessage(CellValidations: CellValidationRule[]): string {
-    let columns = this.props.Api.gridApi.getColumns();
-    let validationService: IValidationService = this.props.Api.internalApi.getValidationService();
+  private getValidationErrorMessage(cellValidations: CellValidationRule[]): string {
+    let columns = this.props.api.columnApi.getColumns();
+    let validationService: IValidationService = this.props.api.internalApi.getValidationService();
     let returnString: string[] = [];
-    for (let CellValidation of CellValidations) {
-      let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
-        CellValidation.Expression
-      )
-        ? ' when ' +
-          ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.props.Api)
-        : '';
+    for (let cellValidation of cellValidations) {
+      let expression: string | undefined = this.props.api.queryApi.QueryObjectToString(
+        cellValidation
+      );
+
+      let expressionDescription: string = expression ? ' when ' + expression : '';
       returnString.push(
-        validationService.createCellValidationDescription(CellValidation, columns) +
-          expressionDescription
+        validationService.createCellValidationDescription(cellValidation) + expressionDescription
       );
     }
     return returnString.join('\n');

@@ -14,23 +14,19 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 export class CellValidationStrategy extends AdaptableStrategyBase
   implements ICellValidationStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CellValidationStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CellValidationStrategyFriendlyName,
-        ComponentName: ScreenPopups.CellValidationPopup,
-        Icon: StrategyConstants.CellValidationGlyph,
-      });
-    }
+    super(
+      StrategyConstants.CellValidationStrategyId,
+      StrategyConstants.CellValidationStrategyFriendlyName,
+      StrategyConstants.CellValidationGlyph,
+      ScreenPopups.CellValidationPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && !column.ReadOnly) {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: 'New',
         source: 'ColumnMenu',
       };
@@ -54,9 +50,12 @@ export class CellValidationStrategy extends AdaptableStrategyBase
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let cellValidations: CellValidationRule[] = this.adaptable.api.cellValidationApi
       .getAllCellValidation()
-      .filter((cvr: CellValidationRule) => cvr.ColumnId == specialColumnId);
+      .filter((cs: CellValidationRule) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, cs.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(cellValidations)
       ? cellValidations.length + ' Cell Validations'

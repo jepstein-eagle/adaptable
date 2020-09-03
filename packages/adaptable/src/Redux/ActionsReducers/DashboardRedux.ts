@@ -1,6 +1,4 @@
 import * as Redux from 'redux';
-import { Visibility } from '../../PredefinedConfig/Common/Enums';
-import { ButtonStyle } from '../../PredefinedConfig/Common/ToolbarButton';
 import {
   AdaptableDashboardToolbar,
   AdaptableFunctionButtons,
@@ -23,6 +21,7 @@ export const DASHBOARD_SET_IS_INLINE = 'DASHBOARD_SET_IS_INLINE';
 const DASHBOARD_SET_FLOATING_POSITION = 'DASHBOARD_SET_FLOATING_POSITION';
 export const DASHBOARD_SET_TABS = 'DASHBOARD_SET_TABS';
 const DASHBOARD_CREATE_DEFAULT_TAB = 'DASHBOARD_CREATE_DEFAULT_TAB';
+const DASHBOARD_CLOSE_TOOLBAR = 'DASHBOARD_CLOSE_TOOLBAR';
 
 export interface DashboardShowToolbarAction extends Redux.Action {
   toolbar: AdaptableDashboardToolbar | string;
@@ -41,20 +40,8 @@ export interface DashboardSetFunctionButtonsAction extends Redux.Action {
   functionButtons: AdaptableFunctionButtons;
 }
 
-export interface DashboardSetVisibilityAction extends Redux.Action {
-  Visibility: Visibility;
-}
-
-export interface DashboardShowFunctionsDropdownAction extends Redux.Action {}
-
-export interface DashboardHideFunctionsDropdownAction extends Redux.Action {}
-
 export interface DashboardSetHomeToolbarTitleAction extends Redux.Action {
   Title: string;
-}
-
-export interface DashboardSetMinimisedHomeToolbarButtonStyleAction extends Redux.Action {
-  ButtonStyle: ButtonStyle;
 }
 
 export interface DashboardCustomToolbarEditAction extends Redux.Action {
@@ -81,12 +68,15 @@ export interface DashboardSetFloatingPositionAction extends Redux.Action {
   FloatingPosition: AdaptableCoordinate;
 }
 
-export interface DashboardSetTabsAction extends Redux.Action {
-  Tabs: DashboardTab[];
+export interface DashboardCloseToolbarAction extends Redux.Action {
+  toolbar: AdaptableDashboardToolbar;
 }
 
 export interface DashboardCreateDefaultTabAction extends Redux.Action {}
 
+export interface DashboardSetTabsAction extends Redux.Action {
+  Tabs: DashboardTab[];
+}
 export const DashboardSetFunctionButtons = (
   functionButtons: AdaptableFunctionButtons
 ): DashboardSetFunctionButtonsAction => ({
@@ -144,6 +134,13 @@ export const DashboardCreateDefaultTab = (): DashboardCreateDefaultTabAction => 
   type: DASHBOARD_CREATE_DEFAULT_TAB,
 });
 
+export const DashboardCloseToolbar = (
+  toolbar: AdaptableDashboardToolbar
+): DashboardCloseToolbarAction => ({
+  toolbar,
+  type: DASHBOARD_CLOSE_TOOLBAR,
+});
+
 const initialDashboardState: DashboardState = {
   Tabs: undefined,
   ActiveTab: 0,
@@ -151,21 +148,13 @@ const initialDashboardState: DashboardState = {
   IsFloating: false,
   IsInline: false,
   FloatingPosition: { x: 100, y: 100 },
-  VisibleButtons: ['SystemStatus', 'GridInfo', 'ColumnChooser', 'ConditionalStyle'],
+  VisibleButtons: ['SystemStatus', 'GridInfo', 'Layout', 'ConditionalStyle'],
   CustomButtons: EMPTY_ARRAY,
   CustomToolbars: EMPTY_ARRAY,
   ShowQuickSearchInHeader: true,
   ShowFunctionsDropdown: true,
   HomeToolbarTitle: '',
   CanFloat: true,
-
-  // deprecated properties
-  VisibleToolbars: ['Layout', 'Export', 'ColumnFilter'],
-  AvailableToolbars: undefined,
-  DashboardVisibility: undefined,
-  ShowColumnsDropdown: undefined,
-  ShowToolbarsDropdown: undefined,
-  MinimisedHomeToolbarButtonStyle: undefined,
 };
 
 export const DashboardReducer: Redux.Reducer<DashboardState> = (
@@ -228,8 +217,23 @@ export const DashboardReducer: Redux.Reducer<DashboardState> = (
     case DASHBOARD_CREATE_DEFAULT_TAB: {
       return {
         ...state,
-        Tabs: [{ Name: 'Toolbars', Toolbars: state.VisibleToolbars }],
+        Tabs: [{ Name: 'Toolbars', Toolbars: ['Query', 'Layout', 'Export', 'Filter'] }],
       };
+    }
+
+    case DASHBOARD_CLOSE_TOOLBAR: {
+      const actionTyped = action as DashboardCloseToolbarAction;
+      const tabs: DashboardTab[] = [].concat(state.Tabs);
+      const currentTab: DashboardTab = tabs[state.ActiveTab];
+      if (currentTab) {
+        const toolbars = [].concat(currentTab.Toolbars);
+        const index = toolbars.findIndex(t => t == actionTyped.toolbar);
+        toolbars.splice(index, 1);
+        currentTab.Toolbars = toolbars;
+        return { ...state, Tabs: tabs };
+      } else {
+        return { ...state };
+      }
     }
 
     default:

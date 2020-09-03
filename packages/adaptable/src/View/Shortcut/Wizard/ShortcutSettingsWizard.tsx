@@ -31,7 +31,7 @@ export class ShortcutSettingsWizard
   implements AdaptableWizardStep {
   changeContent = (e: any) => {
     this.setState({ ShortcutResult: e.target.value } as ShortcutSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   };
 
@@ -39,10 +39,10 @@ export class ShortcutSettingsWizard
     super(props);
 
     this.state = {
-      ShortcutKey: this.props.Data.ShortcutKey,
-      ShortcutResult: this.props.Data.ShortcutResult == null ? '' : this.props.Data.ShortcutResult,
-      ShortcutOperation: this.props.Data.ShortcutOperation as MathOperation,
-      IsDynamic: this.props.Data.IsDynamic,
+      ShortcutKey: this.props.data.ShortcutKey,
+      ShortcutResult: this.props.data.ShortcutResult == null ? '' : this.props.data.ShortcutResult,
+      ShortcutOperation: this.props.data.ShortcutOperation as MathOperation,
+      IsDynamic: this.props.data.IsDynamic,
     };
   }
 
@@ -52,14 +52,14 @@ export class ShortcutSettingsWizard
         ShortcutOperation: shortcutOperation,
         ShortcutResult: this.state.ShortcutResult,
       } as ShortcutSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
   render() {
     // sort out keys
     let keyList: string[] =
-      this.props.Data.ColumnType == DataType.Number
+      this.props.data.ColumnType == DataType.Number
         ? this.props.NumericKeysAvailable
         : this.props.DateKeysAvailable;
 
@@ -109,7 +109,7 @@ export class ShortcutSettingsWizard
           </Flex>
         </Flex>
 
-        {this.props.Data.ColumnType == DataType.Number ? (
+        {this.props.data.ColumnType == DataType.Number ? (
           <>
             <Flex flexDirection="row" alignItems="center" marginTop={3}>
               <Text style={{ flex: 2 }} textAlign="end" marginRight={2}>
@@ -267,26 +267,26 @@ export class ShortcutSettingsWizard
 
   private onShortcutKeyChanged(value: any) {
     this.setState({ ShortcutKey: value } as ShortcutSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onShortcutOperationChanged(value: any) {
     this.setState({ ShortcutOperation: value } as ShortcutSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onDynamicResultChanged(value: any) {
     this.setState({ ShortcutResult: value } as ShortcutSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   private onDynamicSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ IsDynamic: e.value == 'dynamic' } as ShortcutSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -305,19 +305,19 @@ export class ShortcutSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ShortcutResult = this.state.ShortcutResult;
-    this.props.Data.ShortcutOperation = this.state.ShortcutOperation;
-    this.props.Data.ShortcutKey = this.state.ShortcutKey;
-    this.props.Data.IsDynamic = this.state.IsDynamic;
+  public next(): void {
+    this.props.data.ShortcutResult = this.state.ShortcutResult;
+    this.props.data.ShortcutOperation = this.state.ShortcutOperation;
+    this.props.data.ShortcutKey = this.state.ShortcutKey;
+    this.props.data.IsDynamic = this.state.IsDynamic;
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation required   */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

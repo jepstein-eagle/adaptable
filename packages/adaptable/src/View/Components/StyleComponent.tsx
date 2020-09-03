@@ -26,7 +26,7 @@ export interface StyleComponentProps extends React.ClassAttributes<StyleComponen
 }
 
 export interface StyleComponentState {
-  myStyle: AdaptableStyle;
+  componentStyle: AdaptableStyle;
   ShowClassName: boolean;
 }
 
@@ -34,7 +34,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
   constructor(props: StyleComponentProps) {
     super(props);
     this.state = {
-      myStyle: this.props.Style,
+      componentStyle: this.props.Style,
       ShowClassName: StringExtensions.IsNotNullOrEmpty(this.props.Style.ClassName),
     };
   }
@@ -76,7 +76,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
               placeholder="select"
               showEmptyItem={false}
               showClearButton={false}
-              value={this.state.myStyle.ClassName}
+              value={this.state.componentStyle.ClassName}
               onChange={(value: any) => this.onStyleClassNameChanged(value)}
               options={[
                 {
@@ -101,16 +101,16 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                       value="existing"
                       marginLeft={1}
                       marginRight={3}
-                      checked={this.state.myStyle.BackColor ? true : false}
+                      checked={this.state.componentStyle.BackColor ? true : false}
                       onChange={checked => this.onUseBackColorCheckChange(checked)}
                     >
                       Set Back Colour
                     </Checkbox>
 
-                    {this.state.myStyle.BackColor != null ? (
+                    {this.state.componentStyle.BackColor != null ? (
                       <ColorPicker
-                        Api={this.props.api}
-                        value={this.state.myStyle.BackColor}
+                        api={this.props.api}
+                        value={this.state.componentStyle.BackColor}
                         onChange={(x: any) => this.onBackColorSelectChange(x)}
                       />
                     ) : (
@@ -123,16 +123,16 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                       marginLeft={1}
                       marginRight={3}
                       value="existing"
-                      checked={this.state.myStyle.ForeColor ? true : false}
+                      checked={this.state.componentStyle.ForeColor ? true : false}
                       onChange={checked => this.onUseForeColorCheckChange(checked)}
                     >
                       Set Fore Colour
                     </Checkbox>
 
-                    {this.state.myStyle.ForeColor != null ? (
+                    {this.state.componentStyle.ForeColor != null ? (
                       <ColorPicker
-                        Api={this.props.api}
-                        value={this.state.myStyle.ForeColor}
+                        api={this.props.api}
+                        value={this.state.componentStyle.ForeColor}
                         onChange={(x: any) => this.onForeColorSelectChange(x)}
                       />
                     ) : (
@@ -148,7 +148,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     <Checkbox
                       marginLeft={1}
                       value={FontWeight.Normal.toString()}
-                      checked={this.state.myStyle.FontWeight == FontWeight.Bold}
+                      checked={this.state.componentStyle.FontWeight == FontWeight.Bold}
                       onChange={checked => this.onFontWeightChange(checked)}
                     >
                       Bold
@@ -158,7 +158,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                     <Checkbox
                       marginLeft={1}
                       value={FontStyle.Normal.toString()}
-                      checked={this.state.myStyle.FontStyle == FontStyle.Italic}
+                      checked={this.state.componentStyle.FontStyle == FontStyle.Italic}
                       onChange={checked => this.onFontStyleChange(checked)}
                     >
                       Italic
@@ -167,7 +167,7 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                   <FormRow>
                     <Checkbox
                       marginLeft={1}
-                      checked={this.state.myStyle.FontSize ? true : false}
+                      checked={this.state.componentStyle.FontSize ? true : false}
                       onChange={checked => this.onUseFontSizeCheckChange(checked)}
                     >
                       Set Font Size
@@ -175,12 +175,12 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
                   </FormRow>
                   <FormRow>
                     {/*we use the componentclass fieldset to indicate its not a new form...*/}
-                    {this.state.myStyle.FontSize != null && (
+                    {this.state.componentStyle.FontSize != null && (
                       <Flex flexDirection="row" alignItems="center">
                         <Dropdown
                           placeholder="select"
                           marginRight={2}
-                          value={this.state.myStyle.FontSize.toString()}
+                          value={this.state.componentStyle.FontSize.toString()}
                           onChange={(value: any) => this.onFontSizeChange(value)}
                           options={optionFontSizes}
                         />{' '}
@@ -204,61 +204,61 @@ export class StyleComponent extends React.Component<StyleComponentProps, StyleCo
 
   private onShowClassNameChanged(checked: boolean) {
     // clear everything
-    this.state.myStyle.BackColor = null;
-    this.state.myStyle.ForeColor = null;
-    this.state.myStyle.FontSize = null;
-    this.state.myStyle.FontStyle = null;
-    this.state.myStyle.FontWeight = null;
-    this.state.myStyle.ClassName = '';
+    this.state.componentStyle.BackColor = null;
+    this.state.componentStyle.ForeColor = null;
+    this.state.componentStyle.FontSize = null;
+    this.state.componentStyle.FontStyle = null;
+    this.state.componentStyle.FontWeight = null;
+    this.state.componentStyle.ClassName = '';
     this.setState({ ShowClassName: checked } as StyleComponentState);
   }
 
   private onStyleClassNameChanged(value: any) {
-    this.state.myStyle.ClassName = value == 'select' ? '' : value;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.ClassName = value == 'select' ? '' : value;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onUseBackColorCheckChange(checked: boolean) {
-    this.state.myStyle.BackColor = checked ? '#ffffff' : null;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.BackColor = checked ? '#ffffff' : null;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onUseForeColorCheckChange(checked: boolean) {
-    this.state.myStyle.ForeColor = checked ? '#000000' : null;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.ForeColor = checked ? '#000000' : null;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onUseFontSizeCheckChange(checked: boolean) {
-    this.state.myStyle.FontSize = checked ? FontSize.Medium : null;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.FontSize = checked ? FontSize.Medium : null;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onBackColorSelectChange(event: React.FormEvent<ColorPicker>) {
     let e = event.target as HTMLInputElement;
-    this.state.myStyle.BackColor = e.value;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.BackColor = e.value;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onForeColorSelectChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    this.state.myStyle.ForeColor = e.value;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.ForeColor = e.value;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onFontWeightChange(checked: boolean) {
     let fontWeight: FontWeight = checked ? FontWeight.Bold : FontWeight.Normal;
-    this.state.myStyle.FontWeight = fontWeight;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.FontWeight = fontWeight;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onFontStyleChange(checked: boolean) {
     let fontStyle: FontStyle = checked ? FontStyle.Italic : FontStyle.Normal;
-    this.state.myStyle.FontStyle = fontStyle;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.FontStyle = fontStyle;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 
   private onFontSizeChange(value: any) {
-    this.state.myStyle.FontSize = value as FontSize;
-    this.props.UpdateStyle(this.state.myStyle);
+    this.state.componentStyle.FontSize = value as FontSize;
+    this.props.UpdateStyle(this.state.componentStyle);
   }
 }

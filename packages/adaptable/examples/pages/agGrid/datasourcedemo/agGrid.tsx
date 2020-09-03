@@ -9,17 +9,16 @@ import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,
   PredefinedConfig,
   SearchChangedEventArgs,
   AdaptableApi,
+  SearchChangedInfo,
+  AdaptableSearchState,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
-import { AdaptableSearchState } from '../../../../src/Api/Events/SearchChanged/AdaptableSearchState';
-import { SearchChangedInfo } from '../../../../src/Api/Events/SearchChanged/SearchChangedInfo';
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
@@ -59,7 +58,7 @@ function listenToSearchChange(
   console.log(searchChangedArgs);
   let searchChangedInfo: SearchChangedInfo = searchChangedArgs.data[0].id;
   if (searchChangedInfo.searchChangedTrigger == 'DataSource') {
-    let searchState: AdaptableSearchState = searchChangedArgs.data[0].id.AdaptableSearchState;
+    let searchState: AdaptableSearchState = searchChangedArgs.data[0].id.adaptableSearchState;
     if (searchState.dataSource != null) {
       switch (searchState.dataSource.Name) {
         case 'Euro':
@@ -82,9 +81,6 @@ function listenToSearchChange(
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['DataSource'],
-  },
   DataSource: {
     DataSources: [
       {

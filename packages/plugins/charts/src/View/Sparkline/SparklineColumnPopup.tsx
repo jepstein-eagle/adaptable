@@ -47,18 +47,18 @@ class SparklineColumnPopupComponent extends React.Component<
   constructor(props: SparklineColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     };
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      let sparklineColumnId = this.props.PopupParams.columnId;
-      if (sparklineColumnId) {
+    if (this.props.popupParams) {
+      let column = this.props.popupParams.column;
+      if (column) {
         const sparklineColumn = this.props.SparklineColumns.filter(
-          c => c.ColumnId === sparklineColumnId
+          c => c.ColumnId === column.ColumnId
         )[0];
 
         if (sparklineColumn) {
@@ -81,17 +81,17 @@ class SparklineColumnPopupComponent extends React.Component<
     ];
 
     let SparklineItems = this.props.SparklineColumns.map((sparklineColumn: SparklineColumn) => {
-      let column = this.props.Api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
       return (
         <SparklineColumnEntityRow
           key={sparklineColumn.Uuid}
           colItems={colItems}
-          api={this.props.Api}
-          AdaptableObject={sparklineColumn}
+          api={this.props.api}
+          adaptableObject={sparklineColumn}
           Column={column}
           onEdit={() => this.onEdit(sparklineColumn)}
           onShare={description => this.props.onShare(sparklineColumn, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={SparklineColumnRedux.SparklineColumnsDelete(sparklineColumn)}
           onMinimumValueChanged={(sparklineColumn, minimumValue) =>
             this.onMinimumValueChanged(sparklineColumn, minimumValue)
@@ -103,7 +103,7 @@ class SparklineColumnPopupComponent extends React.Component<
           onLineColorChanged={(sparklineColumn, color) =>
             this.onLineColorChanged(sparklineColumn, color)
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -125,16 +125,22 @@ class SparklineColumnPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <SparklineColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as SparklineColumn}
-              ConfigEntities={null}
-              Api={this.props.Api}
-              ModalContainer={this.props.ModalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as SparklineColumn}
+              configEntities={null}
+              api={this.props.api}
+              modalContainer={this.props.modalContainer}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
+              onSetNewSharedQueryName={() => {
+                throw 'unimplemented';
+              }}
+              onSetUseSharedQuery={() => {
+                throw 'unimplemented';
+              }}
             />
           )}
         </PanelWithButton>
@@ -170,54 +176,54 @@ class SparklineColumnPopupComponent extends React.Component<
 
   onNewFromColumn(sparklineColumn: SparklineColumn) {
     this.setState({
-      EditedAdaptableObject: sparklineColumn,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: sparklineColumn,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptySparklineColumn(),
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 0,
+      editedAdaptableObject: ObjectFactory.CreateEmptySparklineColumn(),
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
     });
   }
 
   onEdit(sparklineColumn: SparklineColumn) {
     let clonedObject: SparklineColumn = Helper.cloneObject(sparklineColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let sparklineColumn: SparklineColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let sparklineColumn: SparklineColumn = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditSparklineColumn(sparklineColumn);
     } else {
       this.props.onAddSparklineColumn(sparklineColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard(): boolean {
-    let sparklineColumn = this.state.EditedAdaptableObject as SparklineColumn;
+    let sparklineColumn = this.state.editedAdaptableObject as SparklineColumn;
     if (StringExtensions.IsNullOrEmpty(sparklineColumn.ColumnId)) {
       return false;
     }

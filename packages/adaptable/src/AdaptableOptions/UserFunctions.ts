@@ -5,12 +5,13 @@ import {
 import { CustomSortCompareFunction } from '../PredefinedConfig/CustomSortState';
 import { CellSummaryOperationFunction } from '../PredefinedConfig/CellSummaryState';
 import { EntitlementLookUpFunction } from '../PredefinedConfig/EntitlementState';
-import { NamedFilterPredicate } from '../PredefinedConfig/NamedFilterState';
 import {
   UserMenuItemClickedFunction,
   UserMenuItemShowPredicate,
   UserMenuItemLabelFunction,
+  GetColumnValuesFunction,
 } from '../PredefinedConfig/UserInterfaceState';
+import { FilterPredicate } from '../PredefinedConfig/FilterState';
 import { CustomReportFunction } from '../PredefinedConfig/ExportState';
 
 /**
@@ -39,10 +40,11 @@ import { CustomReportFunction } from '../PredefinedConfig/ExportState';
  *  | `ActionColumnRenderFunction`        | Render an Action Column in a non-standard way           |
  *  | `ActionColumnShouldRenderPredicate` | Whether or not to render an Acton Column	              |
  *  | `EntitlementLookUpFunction`         | Enables external look ups for Entitlements        	    |
- *  | `NamedFilterPredicate`              | Runs each time a Named Filter is applied          	    |
+ *  | `FilterPredicate`                   | Runs each time a user-supplied Filter is applied        |
  *  | `UserMenuItemClickedFunction`       | Action to run when a User Menu item is clicked    	    |
  *  | `UserMenuItemShowPredicate`         | Whether or not to show the User Menu item               |
  *  | `UserMenuItemLabelFunction`         | Retrieves a distinct value for the label of a Menu Item |
+ *  | `GetColumnValuesFunction`           | Get Columns Values (used in Lookups & Permitted Values)|
  *  | `CustomReportFunction`              | Runs a Custom Report                                    |
  *
  */
@@ -52,10 +54,11 @@ export type UserFunction =
   | ActionColumnRenderFunction
   | ActionColumnShouldRenderPredicate
   | EntitlementLookUpFunction
-  | NamedFilterPredicate
+  | FilterPredicate
   | UserMenuItemClickedFunction
   | UserMenuItemShowPredicate
   | UserMenuItemLabelFunction
+  | GetColumnValuesFunction
   | CustomReportFunction;
 
 /**

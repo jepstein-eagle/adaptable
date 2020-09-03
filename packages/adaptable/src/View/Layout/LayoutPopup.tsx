@@ -27,13 +27,13 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
 import SimpleButton from '../../components/SimpleButton';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { createUuid } from '../../components/utils/uuid';
 
 interface LayoutPopupProps extends StrategyViewPopupProps<LayoutPopupComponent> {
   Layouts: Layout[];
   CurrentLayoutName: string;
-  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
-  onAddLayout: (layout: Layout) => LayoutRedux.LayoutAddAction;
+  onSaveLayout: (layout: Layout) => void;
+  onAddLayout: (layout: Layout) => void;
   onSelectLayout: (SelectedSearchName: string) => LayoutRedux.LayoutSelectAction;
   onShare: (
     entity: AdaptableObject,
@@ -48,15 +48,34 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      // if we come in from a function then open the current layout
+      if (this.props.popupParams.source == 'FunctionButton') {
+        let currentLayout = this.props.Layouts.find(as => as.Name == this.props.CurrentLayoutName);
+        if (currentLayout) {
+          this.onEdit(currentLayout);
+        }
+      }
+
+      if (this.props.popupParams.action) {
+        if (this.props.popupParams.action == 'New') {
           this.onNew();
+        }
+        if (this.props.popupParams.action == 'Edit') {
+          let currentLayout = this.props.Layouts.find(
+            as => as.Name == this.props.CurrentLayoutName
+          );
+          if (currentLayout) {
+            this.onEdit(currentLayout);
+          }
         }
       }
 
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.popupParams.source &&
+        (this.props.popupParams.source == 'Toolbar' ||
+          this.props.popupParams.source == 'FunctionButton' ||
+          this.props.popupParams.source == 'ColumnMenu');
     }
   }
 
@@ -80,31 +99,32 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
         <LayoutEntityRow
           key={x.Uuid}
           colItems={colItems}
-          api={this.props.Api}
+          api={this.props.api}
           IsCurrentLayout={x.Name == this.props.CurrentLayoutName}
-          AdaptableObject={x}
+          adaptableObject={x}
           onEdit={() => this.onEdit(x)}
+          onClone={() => this.onClone(x)}
           onShare={description => this.props.onShare(x, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={LayoutRedux.LayoutDelete(x)}
           canDelete={this.props.Layouts.length > 1}
           onSelect={() => this.props.onSelectLayout(x.Name)}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
 
     let newSearchButton = (
-      <SimpleButton
+      <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create New Layout"
-        icon="plus"
-        tone="accent"
-        variant="raised"
-        AccessLevel={this.props.AccessLevel}
-      >
-        ADD
-      </SimpleButton>
+        accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
+      />
     );
 
     return (
@@ -122,14 +142,14 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
             <EmptyContent>Click 'New' to start creating layouts.</EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <LayoutWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject}
-              ConfigEntities={this.props.Layouts}
-              ModalContainer={this.props.ModalContainer}
-              ColumnSorts={this.props.Api.gridApi.getColumnSorts()}
-              Api={this.props.Api}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject}
+              configEntities={this.props.Layouts}
+              modalContainer={this.props.modalContainer}
+              ColumnSorts={this.props.api.gridApi.getColumnSorts()}
+              api={this.props.api}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -142,29 +162,40 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyLayout({
+      editedAdaptableObject: ObjectFactory.CreateEmptyLayout({
         Name: '',
       }),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(layout: Layout) {
-    let clonedObject: Layout = Helper.cloneObject(layout);
+    const clonedObject: Layout = Helper.cloneObject(layout);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
+    });
+  }
+
+  onClone(layout: Layout) {
+    let clonedObject: Layout = Helper.cloneObject(layout);
+    clonedObject.Name = '';
+    clonedObject.Uuid = createUuid();
+    this.setState({
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
 
     if (this.shouldClosePopupOnFinishWizard) {
@@ -173,8 +204,9 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let clonedObject: Layout = Helper.cloneObject(this.state.EditedAdaptableObject);
-    const isNew = this.state.WizardStatus == WizardStatus.New;
+    const clonedObject: Layout = Helper.cloneObject(this.state.editedAdaptableObject);
+
+    const isNew = this.state.wizardStatus == WizardStatus.New;
     if (isNew) {
       this.props.onAddLayout(clonedObject);
     } else {
@@ -185,39 +217,28 @@ class LayoutPopupComponent extends React.Component<LayoutPopupProps, EditableCon
     let shouldChangeLayout: boolean = isNew || currentLayout.Uuid == clonedObject.Uuid;
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
 
     if (shouldChangeLayout) {
       // its new so make it the selected layout or name has changed.
       this.props.onSelectLayout(clonedObject.Name);
     }
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
-    let layout = this.state.EditedAdaptableObject as Layout;
-    if (ArrayExtensions.IsNotNullOrEmpty(layout.ColumnSorts)) {
-      let canFinish: boolean = true;
-      layout.ColumnSorts.forEach(gs => {
-        if (StringExtensions.IsNullOrEmpty(gs.Column)) {
-          canFinish = false;
-        }
-      });
-      if (!canFinish) {
-        return false;
-      }
-    }
-    return (
-      StringExtensions.IsNotNullOrEmpty(layout.Name) &&
-      ArrayExtensions.IsNotNullOrEmpty(layout.Columns)
-    );
+    let layout = this.state.editedAdaptableObject as Layout;
+
+    return StringExtensions.IsNotNullOrEmpty(layout.Name);
   }
 }
 
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<LayoutPopupProps> {
+function mapStateToProps(
+  state: AdaptableState,
+  ownProps: LayoutPopupProps
+): Partial<LayoutPopupProps> {
   return {
     Layouts: state.Layout.Layouts,
     CurrentLayoutName: state.Layout.CurrentLayout,
@@ -225,11 +246,22 @@ function mapStateToProps(state: AdaptableState, ownProps: any): Partial<LayoutPo
 }
 
 function mapDispatchToProps(
-  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
+  dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>,
+  ownProps: LayoutPopupProps
 ): Partial<LayoutPopupProps> {
   return {
-    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
-    onAddLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutAdd(layout)),
+    onSaveLayout: (layout: Layout) => {
+      const autoSave = ownProps.api.layoutApi.shouldAutoSaveLayout(layout);
+
+      if (autoSave) {
+        dispatch(LayoutRedux.LayoutSave(layout));
+      } else {
+        dispatch(LayoutRedux.LayoutUpdateCurrentDraft(layout));
+      }
+    },
+    onAddLayout: (layout: Layout) => {
+      dispatch(LayoutRedux.LayoutAdd(layout));
+    },
     onSelectLayout: (selectedSearchName: string) =>
       dispatch(LayoutRedux.LayoutSelect(selectedSearchName)),
 

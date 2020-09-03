@@ -33,8 +33,8 @@ export class PieChartSecondaryColumnWizard
   constructor(props: PieChartSecondaryColumnWizardProps) {
     super(props);
     this.state = {
-      SecondaryColumnId: props.Data!.SecondaryColumnId,
-      SecondaryColumnOperation: props.Data!.SecondaryColumnOperation as SecondaryColumnOperation,
+      SecondaryColumnId: props.data!.SecondaryColumnId,
+      SecondaryColumnOperation: props.data!.SecondaryColumnOperation as SecondaryColumnOperation,
     };
   }
 
@@ -47,7 +47,7 @@ export class PieChartSecondaryColumnWizard
       | 'Date'
       | 'Object'
       | 'Unknown' = StringExtensions.IsNotNullOrEmpty(this.state.SecondaryColumnId)
-      ? this.props.Api.gridApi.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId)
+      ? this.props.api.columnApi.getColumnDataTypeFromColumnId(this.state.SecondaryColumnId)
       : 'Unknown';
 
     return (
@@ -58,7 +58,7 @@ export class PieChartSecondaryColumnWizard
           <Flex flex={7}>
             <ColumnSelector
               SelectedColumnIds={[this.state.SecondaryColumnId]}
-              ColumnList={this.props.Api.gridApi.getColumns()}
+              ColumnList={this.props.api.columnApi.getColumns()}
               onColumnChange={columns => this.onSecondaryColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />
@@ -101,7 +101,7 @@ export class PieChartSecondaryColumnWizard
       {
         SecondaryColumnOperation: e.value as SecondaryColumnOperation,
       } as PieChartSecondaryColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -118,7 +118,7 @@ export class PieChartSecondaryColumnWizard
         SecondaryColumnId: isColumn ? columns[0].ColumnId : '',
         SecondaryColumnOperation: secondaryColumnOperation,
       } as PieChartSecondaryColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -130,19 +130,19 @@ export class PieChartSecondaryColumnWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.SecondaryColumnId = this.state.SecondaryColumnId;
-    this.props.Data.SecondaryColumnOperation = this.state.SecondaryColumnOperation;
+  public next(): void {
+    this.props.data.SecondaryColumnId = this.state.SecondaryColumnId;
+    this.props.data.SecondaryColumnOperation = this.state.SecondaryColumnOperation;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

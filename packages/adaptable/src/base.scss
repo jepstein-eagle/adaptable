@@ -5,6 +5,7 @@
  **********************************/
 
 :root {
+  // Spaces
   --ab-space-0: 0px;
   --ab-space-1: 4px;
   --ab-space-2: 8px;
@@ -14,6 +15,7 @@
   --ab-space-6: 128px;
   --ab-space-7: 256px;
 
+  // Font Sizes
   --ab-font-size-0: 0.5rem; //8px for 1rem=16px
   --ab-font-size-1: 0.625rem; //10px for 1rem=16px
   --ab-font-size-2: 0.75rem; //12px for 1rem=16px
@@ -35,15 +37,26 @@
   --ab-color-errorlight: #ffd3d2;
   --ab-color-warn: #eb9316;
   --ab-color-info: #17a2b8;
-  --ab-color-success: #419641; // var(--ab-color-green);
+  --ab-color-success: #419641; 
   --ab-color-accent: #07c;
   --ab-color-accentlight: #dbf0ff; // is this used?
-
 
   --ab-color-text-on-success: white;
   --ab-color-text-on-error: white;
   --ab-color-text-on-info: white;
   --ab-color-text-on-warn: white;
+
+  --ab-color-action-add: #2966A8;
+  --ab-color-action-edit: #17a2b8;
+  --ab-color-action-share: #eb9316;
+  --ab-color-action-delete: #dc3545;
+  --ab-color-action-clone: #419641;
+  
+  --ab-color-text-on-add: white;
+  --ab-color-text-on-edit: white;
+  --ab-color-text-on-share: white;
+  --ab-color-text-on-delete: white;
+  --ab-color-text-on-clone: white;
 
   --ab-color-defaultbackground: white;
   --ab-color-text-on-defaultbackground: var(--ab-color-text-on-primary);
@@ -55,10 +68,10 @@
   --ab-color-text-on-primarydark: var(--ab-color-text-on-primary);
   /*--ab-color-text-on-primarylight: var(--ab-color-text-on-primary);*/
 
-  --ab-color-secondary: #005ebb;//   #07c;
+  --ab-color-secondary: #2966A8;  // was previously 005ebb;//   #07c;   //00AF5C; (green)
   --ab-color-secondarydark: #015a9a;
   --ab-color-secondarylight: #a9ddff;
-  --ab-color-text-on-secondary: white;
+  --ab-color-text-on-secondary: #E2E2E2;
   --ab-color-text-on-secondarylight: #000000;
 
   --ab-icon-fill: currentColor;
@@ -116,6 +129,7 @@
 @import './View/Components/Buttons/ButtonBase/style.scss';
 @import './View/Components/Panels/PanelDashboard/style.scss';
 @import './View/Components/ListBox/SingleListBox/style.scss';
+@import './View/Layout/Wizard/LayoutEditor/style.scss';
 @import './View/AdaptablePopover/style.scss';
 // @import './View/Dashboard/style.scss';
 

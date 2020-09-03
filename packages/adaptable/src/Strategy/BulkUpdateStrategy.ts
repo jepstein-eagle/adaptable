@@ -19,20 +19,21 @@ import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import ObjectFactory from '../Utilities/ObjectFactory';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
+import { AccessLevel } from '../types';
 
 export class BulkUpdateStrategy extends AdaptableStrategyBase implements IBulkUpdateStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.BulkUpdateStrategyId, adaptable);
+    super(
+      StrategyConstants.BulkUpdateStrategyId,
+      StrategyConstants.BulkUpdateStrategyFriendlyName,
+      StrategyConstants.BulkUpdateGlyph,
+      ScreenPopups.BulkUpdatePopup,
+      adaptable
+    );
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.BulkUpdateStrategyFriendlyName,
-        ComponentName: ScreenPopups.BulkUpdatePopup,
-        Icon: StrategyConstants.BulkUpdateGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {

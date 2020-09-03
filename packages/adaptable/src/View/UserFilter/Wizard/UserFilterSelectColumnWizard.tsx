@@ -7,11 +7,10 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
+import { UserFilter } from '../../../PredefinedConfig/FilterState';
 
 export interface UserFilterSelectColumnWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSelectColumnWizardState {
@@ -24,7 +23,7 @@ export class UserFilterSelectColumnWizard
   constructor(props: UserFilterSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: props.Data.ColumnId,
+      ColumnId: '', //props.data.Scope.ColumnIds[0],
     };
   }
 
@@ -36,7 +35,7 @@ export class UserFilterSelectColumnWizard
         </HelpBlock>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.gridApi.getColumns()}
+          ColumnList={this.props.api.columnApi.getColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -49,7 +48,7 @@ export class UserFilterSelectColumnWizard
       {
         ColumnId: columns.length > 0 ? columns[0].ColumnId : '',
       } as UserFilterSelectColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -60,20 +59,15 @@ export class UserFilterSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    if (this.props.Data.ColumnId != this.state.ColumnId) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
-    }
-    this.props.Data.ColumnId = this.state.ColumnId;
-  }
+  public next(): void {}
 
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

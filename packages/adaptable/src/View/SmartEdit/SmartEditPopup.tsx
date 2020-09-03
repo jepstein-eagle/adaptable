@@ -67,7 +67,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
 
     let col: AdaptableColumn;
     if (this.props.PreviewInfo) {
-      col = this.props.Api.gridApi.getColumnFromId(this.props.PreviewInfo.ColumnId);
+      col = this.props.api.columnApi.getColumnFromId(this.props.PreviewInfo.ColumnId);
     }
 
     let globalValidationMessage: string = PreviewHelper.GetValidationMessage(
@@ -81,11 +81,11 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
     let previewPanel = showPanel ? (
       <PreviewResultsPanel
         style={{ flex: '1 1 100%', overflow: 'initial', height: '100%' }}
-        PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Api}
-        SelectedColumn={col}
-        ShowPanel={showPanel}
-        ShowHeader={true}
+        previewInfo={this.props.PreviewInfo}
+        api={this.props.api}
+        selectedColumn={col}
+        showPanel={showPanel}
+        showHeader={true}
       />
     ) : null;
 
@@ -189,7 +189,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = this.props.Api.internalApi
+    let confirmation: IUIConfirmation = this.props.api.internalApi
       .getValidationService()
       .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);

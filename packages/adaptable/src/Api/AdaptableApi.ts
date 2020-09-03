@@ -1,6 +1,5 @@
 import { ActionColumnApi } from './ActionColumnApi';
 import { SparklineColumnApi } from './SparklineColumnApi';
-import { AdvancedSearchApi } from './AdvancedSearchApi';
 import { AlertApi } from './AlertApi';
 import { PluginsApi } from './PluginsApi';
 import { AuditEventApi } from './AuditEventApi';
@@ -10,9 +9,6 @@ import { CalendarApi } from './CalendarApi';
 import { CellSummaryApi } from './CellSummaryApi';
 import { CellValidationApi } from './CellValidationApi';
 import { ChartApi } from './ChartApi';
-import { ColumnCategoryApi } from './ColumnCategoryApi';
-import { ColumnChooserAPI } from './ColumnChooserAPI';
-import { ColumnFilterApi } from './ColumnFilterApi';
 import { ConfigApi } from './ConfigApi';
 import { ConditionalStyleApi } from './ConditionalStyleApi';
 import { CustomSortApi } from './CustomSortApi';
@@ -33,17 +29,20 @@ import { ReminderApi } from './ReminderApi';
 import { QuickSearchApi } from './QuickSearchApi';
 import { ShortcutApi } from './ShortcutApi';
 import { SmartEditApi } from './SmartEditApi';
-import { SystemFilterApi } from './SystemFilterApi';
+import { FilterApi } from './FilterApi';
 import { SystemStatusApi } from './SystemStatusApi';
 import { ThemeApi } from './ThemeApi';
 import { UserInterfaceApi } from './UserInterfaceApi';
-import { UserFilterApi } from './UserFilterApi';
 import { InternalApi } from './InternalApi';
-import { NamedFilterApi } from './NamedFilterApi';
 import { GridApi } from './GridApi';
 import { ScheduleApi } from './ScheduleApi';
 import { GradientColumnApi } from './GradientColumnApi';
-import { ApplicationApi } from './ApplicationAPI';
+import { QueryApi } from './QueryApi';
+import { TeamSharingApi } from './TeamSharingApi';
+import { ColumnApi } from './ColumnApi';
+import { ApplicationApi } from './AppApi';
+import { ScopeApi } from './ScopeApi';
+import { PredicateApi } from './PredicateApi';
 
 /**
  *
@@ -55,7 +54,7 @@ import { ApplicationApi } from './ApplicationAPI';
  *
  * It also allows them to bypass the UI screens altogether if they so wish.
  *
- * `The AdaptableAPI is essentially just a wrapper around the AdapTable Store but provides additional error-checking, logging, and auditing. And it also ensures that the immutable "purity" of the store is maintained.`
+ * `The AdaptableApiApi is essentially just a wrapper around the AdapTable Store but provides additional error-checking, logging, and auditing. And it also ensures that the immutable "purity" of the store is maintained.`
  *
  * *Note to AdapTable users: If there is a method missing from `AdaptableApi` that you would like implemented, please contact [`support@adaptabletools.com`](mailto:support@adaptabletools.com) and we will add it*
  *
@@ -65,61 +64,67 @@ import { ApplicationApi } from './ApplicationAPI';
  *
  * If you are using one of the Framework Wrappers then the AdaptableApi is available to you through the [AdaptableReady](interfaces/_src_api_eventapi_.eventapi.html) event.
  *
- * ### API functions
+ * ### Api functions
  *
  * `AdaptableApi` consists of over 50 sets of properties.
  *
- * Each of these properties is a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `AdvancedSearchAPI`) or type (e.g. `AuditEventApi`)
+ * Most of these properties are each a class that contains a set of Api methods grouped either by AdapTable Function (e.g. `ConditionalStyleApi`) or type (e.g. `AuditEventApi`)
  *
- * The full list is:
+ * In addition there are a few api classes designed primarily for internal use which deal with how AdapTable itself works (e.g. `gridApi`, `columnApi`, `gridApi`)
  *
- *  | API Class  	                                    | Details                                     	                                                                            |
+ * #### Function-Related Api classes
+ *
+ *  | Api Class  	                                    | Details                                     	                                                                            |
  *  |----------------	                                |---------------------------------------------	                                                                            |
  *  | [actionColumnApi](#actioncolumnapi)             | Manages {@link ActionColumnState|Action Columns} which contain buttons with bespoke click logic	    |
- *  | [advancedSearchApi](#advancedsearchapi)         | Functions relating to the saveable, cross-column {@link AdvancedSearchState|Advanced Searches}  |
  *  | [alertApi](#alertapi)                           | {@link AlertState|Adaptable Alerts} provide bespoke notifications and messages                                 |
  *  | [applicationApi](#applicationapi)               | Use {@link ApplicationState|Application Data Entries} to manage custom state and data |
  *  | [auditEventApi](#auditeventapi)                 | Listen to the [Audit Events](_src_api_auditeventapi_.auditeventapi.html) published by the Audit Log           |
  *  | [bulkUpdateApi](#bulkupdateapi)                 | Run Bulk Update so mutliple selected cells are given same value  |
- *  | [calculatedColumnApi](#calculatedcolumnapi)     | Manages [Calculated Columns](_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expresssions |
+ *  | [calculatedColumnApi](#calculatedcolumnapi)     | Manages [Calculated Columns](_src_predefinedconfig_calculatedcolumnstate_.calculatedcolumnstate.html) which contain custom expressions |
  *  | [calendarApi](#calendarapi)                     | Allows you to choose which [Calendar](_src_predefinedconfig_calendarstate_.calendarstate.html) AdapTable will use in its date filters |
  *  | [cellSummaryApi](#cellsummaryapi)               | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnCategoryApi](#columncategoryapi)         | Arranges columns into [Column Categories](_src_predefinedconfig_columncategorystate_.columncategorystate.html) (i.e. groups) |
  *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
- *  | [columnFilterApi](#columnfilterapi)             | Manages [Column Filters](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html), allowing run-time code access to filtering|
  *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
- *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
  *  | [customSortApi](#customsortapi)                 | Manages {@link CustomSortState|Custom Sorts} allowing bespoke column sorting|
- *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of the Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
+ *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
  *  | [dataSourceApi](#datasourceapi)                 | Deals with [Data Sources](_src_predefinedconfig_datasourcestate_.datasourcestate.html) used in Server Searching|
- *  | [entitlementsApi](#entitlementsapi)             | Manages User {@link EntitlementState|Entitlements} (essentially Permissions)|
- *  | [eventApi](#eventapi)                           | Subscribe to some of the many Events that AdapTable fires|
  *  | [exportApi](#exportapi)                         | Run reports either manually or at scheduled times|
+ *  | [filterApi](#filterapi)             | Manages various filters provided by AdapTable
  *  | [flashingCellApi](#flashingcellapi)             | Manages the [Flashing Cell](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_flashingcellstate_.flashingcellstate.html) |
  *  | [freeTextColumnApi](#freetextcolumnapi)         | Configures {@link FreeTextColumnState|FreeText Columns} - special columns containing bespoke data|
  *  | [gradientColumnApi](#gradientcolumnapi)         | Aids creation of visual {@link GradientColumnState|Gradient Columns} |
- *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
- *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [layoutApi](#layoutapi)                         | Manages {@link LayoutState|Layouts} - sets of column order and visibility|
- *  | [namedFilterApi](#namedfilterapi)               | Manages {@link NamedFilterState|Named Filers} - filter predicates provided at design-time|
  *  | [percentBarApi](#percentbarapi)                 | Aids creation and editing of visual {@link PercentBarState: Percent Bars} |
- *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
+ *  | [queryApi](#queryapi)                           | Functions relating to the saveable, cross-column Queries  |
  *  | [quickSearchApi](#quicksearchapi)               | Functions for running and clearing Quick Search|
  *  | [reminderApi](#reminderapi)                     | Manages Reminders (scheduled Alerts) |
  *  | [scheduleApi](#scheduleapi)                     | Supports {@link ScheduleState|Schedules} for running Actions at set time|
  *  | [shortcutApi](#shortcutapi)                     | Deals with {@link ShortcutState|Shortcuts} for faster & safer data entry|
  *  | [smartEditApi](#smarteditapi)                   | Functions for managing the Smart Edit function to enable better editing|
  *  | [sparklineColumnApi](#sparklinecolumnapi)       | For {@link SparklineColumnState|Sparkline Columns} - ideal for historical or array-based data|
- *  | [systemFilterApi](#systemfilterapi)             | Fetches the System Filters (shipped by AdapTable)
  *  | [systemStatusApi](#systemstatusapi)             | Manages how the System Status function will display run-time messages|
  *  | [themeApi](#themeapi)                           | Deals with {@link ThemeState|Themes} both AdapTable and Custom|
  *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
  *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
  *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
+ *
+ * #### General Api classes
+ *
+ *  | Api Class  	                                    | Details                                     	                                                                            |
+ *  |----------------	                                |---------------------------------------------	                                                                            |
+ *  | [columnApi](#columnapi)                         | Large number of column-related functions|
+ *  | [configApi](#configapi)                         | Series of functions managing [Predefined Config](_src_predefinedconfig_predefinedconfig_.predefinedconfig.html) and User State|
+ *  | [entitlementsApi](#entitlementsapi)             | Manages User {@link EntitlementState|Entitlements} (essentially Permissions)|
+ *  | [eventApi](#eventapi)                           | Subscribe to some of the many Events that AdapTable fires|
+ *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
+ *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
+ *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
+ *  | [scopeApi](#scopeapiapi)                        | Many methods to manage the {@link Scope|Scope} object|
  *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
- *  |
+ *
  */
 export interface AdaptableApi {
   /**
@@ -128,14 +133,10 @@ export interface AdaptableApi {
   actionColumnApi: ActionColumnApi;
 
   /**
-   * Provides access to the *Advanced Search* function, the *AdvancedSearch* object and [Advanced Search State](_src_predefinedconfig_configstate_advancedsearchstate_.advancedsearchstate.html).
-   */
-  advancedSearchApi: AdvancedSearchApi;
-
-  /**
    * Provides access to the *Alert* function (enabling the displaying of **Alerts**) and [Alerrt State](_src_predefinedconfig_configstate_alertstate_.alertstate.html).
    */
   alertApi: AlertApi;
+  predicateApi: PredicateApi;
 
   /**
    * Enables use of the Application Function which lets developers render their own toolbar and screen (if required).
@@ -180,22 +181,12 @@ export interface AdaptableApi {
   chartApi: ChartApi;
 
   /**
-   * Provides access to the *Column Category* function, the *Column Category* object and [Column Category State](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html).
+   * Provides a number of column-related methods
    */
-  columnCategoryApi: ColumnCategoryApi;
+  columnApi: ColumnApi;
 
   /**
-   * Provides access to the *Column Chooser* function.
-   */
-  columnChooserApi: ColumnChooserAPI;
-
-  /**
-   * Provides access to the *Column Filter* function, the *Column Filter* object and [Column Filter State](_src_predefinedconfig_configstate_columnfilterstate_.columnfilterstate.html).
-   */
-  columnFilterApi: ColumnFilterApi;
-
-  /**
-   * Methods that give access to the [Predefined Config](_src_predefinedconfig_configstate_columncategorystate_.columncategorystate.html), State and Store.
+   * Methods that give access to the Adaptable State and Store.
    */
   configApi: ConfigApi;
 
@@ -235,6 +226,11 @@ export interface AdaptableApi {
   exportApi: ExportApi;
 
   /**
+   * Provides access to [System Filter State](_src_predefinedconfig_configstate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
+   */
+  filterApi: FilterApi;
+
+  /**
    * Provides access to the *Flashing Cell* function, the *Flashing Cell* object and [Flashing Cell State](_src_predefinedconfig_configstate_flashingcellstate_.flashingcellstate.html).
    */
   flashingCellApi: FlashingCellApi;
@@ -265,11 +261,6 @@ export interface AdaptableApi {
   layoutApi: LayoutApi;
 
   /**
-   * Provides access to the *Named Filter* function, the `NamedFilter` object and [NamedFilter State](_src_predefinedconfig_configstate_namedfilterstate_.namedfilterstate.html).
-   */
-  namedFilterApi: NamedFilterApi;
-
-  /**
    * Provides access to the *Percent Bar* function, the *Percent Bar* object and [Percent Bar State](_src_predefinedconfig_configstate_percentbarstate_.percentbarstate.html).
    */
   percentBarApi: PercentBarApi;
@@ -294,6 +285,10 @@ export interface AdaptableApi {
    */
   pluginsApi: PluginsApi;
 
+  /**
+   * Provides access to functions related to a `Query` - a cross-column search.
+   */
+  queryApi: QueryApi;
   /**
    * Provides access to the *Quick Search* function, the *Quick Search* object and [Quick Search State](_src_predefinedconfig_configstate_quicksearchstate_.quicksearchstate.html).
    */
@@ -327,11 +322,6 @@ export interface AdaptableApi {
   sparklineColumnApi: SparklineColumnApi;
 
   /**
-   * Provides access to [System Filter State](_src_predefinedconfig_configstate_systemfilterstate_.systemfilterstate.html) that manages the Filters that AdapTable ships with.
-   */
-  systemFilterApi: SystemFilterApi;
-
-  /**
    * Api methods related to the System Status function which displays information about the health of the application.
    */
   systemStatusApi: SystemStatusApi;
@@ -357,12 +347,17 @@ export interface AdaptableApi {
   userInterfaceApi: UserInterfaceApi;
 
   /**
-   * Provides access to the *User Filter* function, the *User Filter* object and [User Filter State](_src_predefinedconfig_configstate_userfilterstate_.userfilterstate.html).
+   * Functions related to team-sharing whereby users can create and share objects at run-time with colleagues
    */
-  userFilterApi: UserFilterApi;
+  teamSharingApi: TeamSharingApi;
 
   /**
-   * API methods used internally within AdapTable.
+   * Manages the `Scope` object - used in many functions to determine where an object is applied
+   */
+  scopeApi: ScopeApi;
+
+  /**
+   * Api methods used *internally* within AdapTable.
    *
    * **This api class is not intended for developers to use and it is not recommended to use this section if accessing AdapTable at runtime through code**
    *

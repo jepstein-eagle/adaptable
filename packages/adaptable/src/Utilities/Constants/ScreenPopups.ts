@@ -1,5 +1,5 @@
 export const GridInfoPopup: string = 'GridInfoPopup';
-export const AdvancedSearchPopup: string = 'AdvancedSearchPopup';
+export const ExpandedQueryPopup: string = 'ExpandedQueryPopup';
 export const AlertPopup: string = 'AlertPopup';
 export const ApplicationPopup: string = 'ApplicationPopup';
 export const BulkUpdatePopup: string = 'BulkUpdatePopup';
@@ -9,9 +9,9 @@ export const CellValidationPopup: string = 'CellValidationPopup';
 export const ChartPopup: string = 'ChartPopup';
 export const ChartDisplayPopup: string = 'ChartDisplayPopup';
 export const ColumnChooserPopup: string = 'ColumnChooserPopup';
+export const FilterPopup: string = 'FilterPopup';
 export const ColumnFilterPopup: string = 'ColumnFilterPopup';
 export const ColumnInfoPopup: string = 'ColumnInfoPopup';
-export const ColumnCategoryPopup: string = 'ColumnCategoryPopup';
 export const ConditionalStylePopup: string = 'ConditionalStylePopup';
 export const CustomSortPopup: string = 'CustomSortPopup';
 export const DashboardPopup: string = 'DashboardPopup';
@@ -41,6 +41,7 @@ export const SchedulePopup: string = 'SchedulePopup';
 export const StateManagementPopup: string = 'StateManagementPopup';
 export const SystemStatusPopup: string = 'SystemStatusPopup';
 export const UserFilterPopup: string = 'UserFilterPopup';
+export const QueryPopup: string = 'QueryPopup';
 
 // Plugins
 export const OpenFinPopup: string = 'OpenFinPopup';

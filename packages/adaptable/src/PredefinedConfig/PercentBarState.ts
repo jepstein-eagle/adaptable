@@ -16,7 +16,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Percent Bar Demo](https://demo.adaptabletools.com/style/aggridpercentbardemo)
  *
- * {@link PercentBarApi|Percent Bar API}
+ * {@link PercentBarApi|Percent Bar Api}
  *
  * --------------
  *

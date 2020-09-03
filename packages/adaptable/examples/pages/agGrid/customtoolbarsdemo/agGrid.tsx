@@ -118,7 +118,7 @@ async function InitAdaptableDemo() {
 
     if (toolbarButton.Name == 'btnClearButton') {
       api.dashboardApi.clearCustomToolbarButtons('Toolbar1');
-      api.columnFilterApi.clearColumnFilterByColumn('currency');
+      api.filterApi.clearColumnFilterByColumn('currency');
     }
   });
 
@@ -141,7 +141,6 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     Revision: 8,
     CanFloat: false,
-    VisibleToolbars: ['Toolbar1', 'Toolbar2', 'Toolbar3', 'Toolbar4'],
     IsInline: false,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
     CustomButtons: [
@@ -283,18 +282,11 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
-  ColumnFilter: {
+  Filter: {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        Filter: {
-          ColumnValueExpressions: [
-            {
-              ColumnId: 'currency',
-              ColumnDisplayValues: ['GBP', 'ZAR'],
-            },
-          ],
-        },
+        Predicate: { Id: 'In', Inputs: ['GBP', 'ZAR'] },
       },
     ],
   },

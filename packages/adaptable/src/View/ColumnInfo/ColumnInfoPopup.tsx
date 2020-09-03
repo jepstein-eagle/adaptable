@@ -12,7 +12,7 @@ import { CustomSortSummary } from '../CustomSort/CustomSortSummary';
 import { ConditionalStyleSummary } from '../ConditionalStyle/ConditionalStyleSummary';
 import { CellValidationSummary } from '../CellValidation/CellValidationSummary';
 import { UserFilterSummary } from '../UserFilter/UserFilterSummary';
-import { ColumnFilterSummary } from '../ColumnFilter/ColumnFilterSummary';
+import { FilterSummary } from '../Filter/FilterSummary';
 import { PlusMinusSummary } from '../PlusMinus/PlusMinusSummary';
 import { FormatColumnSummary } from '../FormatColumn/FormatColumnSummary';
 import { FlashingCellSummary } from '../FlashingCells/FlashingCellSummary';
@@ -23,21 +23,15 @@ import { IColItem, IRawValueDisplayValuePair } from '../UIInterfaces';
 import { ColumnSelector } from '../Components/Selectors/ColumnSelector';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { ColumnCategorySummary } from '../ColumnCategory/ColumnCategorySummary';
 import { PercentBarSummary } from '../PercentBar/PercentBarSummary';
 import { FreeTextColumnSummary } from '../FreeTextColumn/FreeTextColumnSummary';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
-import { Entitlement, AccessLevel } from '../../PredefinedConfig/EntitlementState';
-import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
+import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
 import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 import { GradientColumnSummary } from '../GradientColumn/GradientColumnSummary';
-import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import { Expression } from '../../PredefinedConfig/Common/Expression';
 
 interface ColumnInfoPopupProps extends StrategyViewPopupProps<ColumnInfoPopupComponent> {
   CalculatedColumns: Array<CalculatedColumn>;
-  ColumnCategory: ColumnCategory[];
 }
 
 export interface ColumnInfoState {
@@ -52,9 +46,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   UNSAFE_componentWillMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.columnId) {
-        let column = this.props.Api.gridApi.getColumnFromId(this.props.PopupParams.columnId);
+    if (this.props.popupParams) {
+      if (this.props.popupParams.column) {
+        let column = this.props.popupParams.column;
         this.setState({ SelectedColumn: column, ShowSelector: false });
       }
     }
@@ -77,29 +71,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
     let headerText = StrategyConstants.ColumnInfoStrategyFriendlyName;
 
     let summaries: any[] = [];
-    let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
-    let myExpression = adaptable.getColumnValueDisplayValuePairDistinctList;
     if (this.state.SelectedColumn) {
-      if (ArrayExtensions.IsNotNullOrEmpty(this.props.ColumnCategory)) {
-        summaries.push(
-          <div
-            key={StrategyConstants.ColumnCategoryStrategyId}
-            className={
-              this.isStrategyReadOnly(StrategyConstants.ColumnCategoryStrategyId)
-                ? GeneralConstants.READ_ONLY_STYLE
-                : ''
-            }
-          >
-            <ColumnCategorySummary
-              key={StrategyConstants.ColumnChooserStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ColumnChooserStrategyId)}
-              Api={this.props.Api}
-            />
-          </div>
-        );
-      }
       if (this.isStrategyVisible(StrategyConstants.CustomSortStrategyId)) {
         summaries.push(
           <div
@@ -112,11 +84,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <CustomSortSummary
               key={StrategyConstants.CustomSortStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.CustomSortStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -133,11 +104,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <ConditionalStyleSummary
               key={StrategyConstants.ConditionalStyleStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ConditionalStyleStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.ConditionalStyleStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -154,53 +124,31 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <CellValidationSummary
               key={StrategyConstants.CellValidationStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.CellValidationStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.CellValidationStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
       }
-      if (this.isStrategyVisible(StrategyConstants.UserFilterStrategyId)) {
+
+      if (this.isStrategyVisible(StrategyConstants.FilterStrategyId)) {
         summaries.push(
           <div
-            key={StrategyConstants.UserFilterStrategyId}
+            key={StrategyConstants.FilterStrategyId}
             className={
-              this.isStrategyReadOnly(StrategyConstants.UserFilterStrategyId)
+              this.isStrategyReadOnly(StrategyConstants.FilterStrategyId)
                 ? GeneralConstants.READ_ONLY_STYLE
                 : ''
             }
           >
-            <UserFilterSummary
-              key={StrategyConstants.UserFilterStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.UserFilterStrategyId)}
-              Api={this.props.Api}
-            />
-          </div>
-        );
-      }
-      if (this.isStrategyVisible(StrategyConstants.ColumnFilterStrategyId)) {
-        summaries.push(
-          <div
-            key={StrategyConstants.ColumnFilterStrategyId}
-            className={
-              this.isStrategyReadOnly(StrategyConstants.ColumnFilterStrategyId)
-                ? GeneralConstants.READ_ONLY_STYLE
-                : ''
-            }
-          >
-            <ColumnFilterSummary
-              key={StrategyConstants.ColumnFilterStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.ColumnFilterStrategyId)}
-              Api={this.props.Api}
+            <FilterSummary
+              key={StrategyConstants.FilterStrategyId}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.FilterStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -218,11 +166,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FormatColumnSummary
               key={StrategyConstants.FormatColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -239,11 +186,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FreeTextColumnSummary
               key={StrategyConstants.FormatColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.FormatColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -263,11 +209,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <PercentBarSummary
               key={StrategyConstants.PercentBarStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.PercentBarStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.PercentBarStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -287,11 +232,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <GradientColumnSummary
               key={StrategyConstants.GradientColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.GradientColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.GradientColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -311,11 +255,10 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <PlusMinusSummary
               key={StrategyConstants.PlusMinusStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              TeamSharingActivated={this.props.TeamSharingActivated}
-              getColumnValueDisplayValuePairDistinctList={myExpression}
-              AccessLevel={this.getAccessLevel(StrategyConstants.PlusMinusStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              teamSharingActivated={this.props.teamSharingActivated}
+              accessLevel={this.getAccessLevel(StrategyConstants.PlusMinusStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -336,9 +279,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <FlashingCellSummary
               key={StrategyConstants.FlashingCellsStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              AccessLevel={this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              accessLevel={this.getAccessLevel(StrategyConstants.FlashingCellsStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -361,9 +304,9 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
           >
             <CalculatedColumnSummary
               key={StrategyConstants.CalculatedColumnStrategyId}
-              SummarisedColumn={this.state.SelectedColumn}
-              AccessLevel={this.getAccessLevel(StrategyConstants.CalculatedColumnStrategyId)}
-              Api={this.props.Api}
+              summarisedColumn={this.state.SelectedColumn}
+              accessLevel={this.getAccessLevel(StrategyConstants.CalculatedColumnStrategyId)}
+              api={this.props.api}
             />
           </div>
         );
@@ -386,7 +329,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
             <Box flex={1} marginLeft={2}>
               <ColumnSelector
                 SelectedColumnIds={[selectedColumnId]}
-                ColumnList={this.props.Api.gridApi.getColumns()}
+                ColumnList={this.props.api.columnApi.getColumns()}
                 onColumnChange={columns => this.onColumnSelectedChanged(columns)}
                 SelectionMode={SelectionMode.Single}
               />
@@ -421,7 +364,7 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
   }
 
   private getAccessLevel(functionName: AdaptableFunctionName): AccessLevel {
-    return this.props.Api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
+    return this.props.api.entitlementsApi.getEntitlementAccessLevelByAdaptableFunctionName(
       functionName
     );
   }
@@ -430,7 +373,6 @@ class ColumnInfoPopupComponent extends React.Component<ColumnInfoPopupProps, Col
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<ColumnInfoPopupProps> {
   return {
     CalculatedColumns: state.CalculatedColumn.CalculatedColumns,
-    ColumnCategory: state.ColumnCategory.ColumnCategories,
   };
 }
 

@@ -4,8 +4,6 @@ import {
   AdaptableWizardStep,
 } from '@adaptabletools/adaptable/src/View/Wizard/Interface/IAdaptableWizard';
 import { CategoryChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 import { ColumnSelector } from '@adaptabletools/adaptable/src/View/Components/Selectors/ColumnSelector';
 import { SelectionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
@@ -23,7 +21,7 @@ export interface CategoryChartXAxisWizardProps
 export interface CategoryChartXAxisWizardState {
   XAxisColumnId: string;
   UseAllXAsisColumnValues: boolean;
-  XAxisExpression?: Expression;
+  XAxisExpression?: string;
 }
 
 export class CategoryChartXAxisWizard
@@ -32,11 +30,9 @@ export class CategoryChartXAxisWizard
   constructor(props: CategoryChartXAxisWizardProps) {
     super(props);
     this.state = {
-      XAxisColumnId: props.Data.XAxisColumnId,
-      UseAllXAsisColumnValues: ExpressionHelper.IsNullOrEmptyExpression(
-        this.props.Data.XAxisExpression
-      ),
-      XAxisExpression: this.props.Data.XAxisExpression,
+      XAxisColumnId: props.data.XAxisColumnId,
+      UseAllXAsisColumnValues: StringExtensions.IsNullOrEmpty(this.props.data.XAxisExpression),
+      XAxisExpression: this.props.data.XAxisExpression,
     };
   }
 
@@ -52,7 +48,7 @@ export class CategoryChartXAxisWizard
           <Flex flex={7} flexDirection="row" alignItems="center">
             <ColumnSelector
               SelectedColumnIds={[this.state.XAxisColumnId]}
-              ColumnList={this.props.Api.gridApi.getColumns()}
+              ColumnList={this.props.api.columnApi.getColumns()}
               onColumnChange={columns => this.onXAxisColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />
@@ -92,16 +88,14 @@ export class CategoryChartXAxisWizard
   private onUseAllColumnValuesChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let showAll: boolean = e.value == 'All';
-    let expression: Expression = this.state.XAxisExpression;
-    if (!showAll && ExpressionHelper.IsNullOrEmptyExpression(expression)) {
-      expression = ExpressionHelper.CreateEmptyExpression();
-    }
+    let expression: string = this.state.XAxisExpression;
+
     this.setState(
       {
         UseAllXAsisColumnValues: showAll,
         XAxisExpression: expression,
       } as CategoryChartXAxisWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -112,7 +106,7 @@ export class CategoryChartXAxisWizard
         XAxisColumnId: isColumn ? columns[0].ColumnId : '',
         UseAllXAsisColumnValues: true,
       } as CategoryChartXAxisWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -124,24 +118,24 @@ export class CategoryChartXAxisWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.XAxisColumnId = this.state.XAxisColumnId;
-    this.props.Data.XAxisExpression = this.state.UseAllXAsisColumnValues
+  public next(): void {
+    this.props.data.XAxisColumnId = this.state.XAxisColumnId;
+    this.props.data.XAxisExpression = this.state.UseAllXAsisColumnValues
       ? null
       : this.state.XAxisExpression;
-    if (this.props.Data.XAxisColumnId != this.state.XAxisColumnId) {
-      this.props.Data.XAxisExpression = null;
+    if (this.props.data.XAxisColumnId != this.state.XAxisColumnId) {
+      this.props.data.XAxisExpression = null;
     }
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.UseAllXAsisColumnValues ? 2 : 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

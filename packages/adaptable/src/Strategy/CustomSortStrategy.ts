@@ -18,7 +18,13 @@ import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 export class CustomSortStrategy extends AdaptableStrategyBase implements ICustomSortStrategy {
   private CustomSorts: CustomSort[];
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CustomSortStrategyId, adaptable);
+    super(
+      StrategyConstants.CustomSortStrategyId,
+      StrategyConstants.CustomSortStrategyFriendlyName,
+      StrategyConstants.CustomSortGlyph,
+      ScreenPopups.CustomSortPopup,
+      adaptable
+    );
   }
 
   protected InitState() {
@@ -26,16 +32,6 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
       this.removeCustomSorts();
       this.CustomSorts = this.adaptable.api.customSortApi.getAllCustomSort();
       this.applyCustomSorts();
-    }
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CustomSortStrategyFriendlyName,
-        ComponentName: ScreenPopups.CustomSortPopup,
-        Icon: StrategyConstants.CustomSortGlyph,
-      });
     }
   }
 
@@ -50,7 +46,7 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
       }
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: customSort ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };

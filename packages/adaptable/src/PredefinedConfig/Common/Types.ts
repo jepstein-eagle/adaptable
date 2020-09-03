@@ -1,5 +1,5 @@
 /*
-This page includes frequently used typed - particularly helpful for State and API where we can strongly type stuff
+This page includes frequently used typed - particularly helpful for State and Api where we can strongly type stuff
 */
 
 /**
@@ -13,12 +13,12 @@ export type AdaptableDashboardToolbars = AdaptableDashboardToolbar[];
  * List of all the Toolbars that Adaptable provides
  */
 export type AdaptableDashboardToolbar =
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CellSummary'
   | 'Chart'
-  | 'ColumnFilter'
+  | 'Filter'
   | 'DataSource'
   | 'Export'
   | 'Glue42'
@@ -33,12 +33,12 @@ export type AdaptableDashboardToolbar =
 export type AdaptableToolPanels = AdaptableToolPanel[];
 
 export type AdaptableToolPanel =
-  | 'AdvancedSearch'
+  // | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CellSummary'
   | 'Chart'
-  | 'ColumnFilter'
+  | 'Filter'
   | 'Dashboard'
   | 'Export'
   | 'Layout'
@@ -60,7 +60,7 @@ export type AdaptableFunctionButtons = AdaptableFunctionButton[];
  * Essentially it is a list of all the Functions in Adaptable as each Function has a popup for which this is a shortcut button.
  */
 export type AdaptableFunctionButton =
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CalculatedColumn'
@@ -68,9 +68,7 @@ export type AdaptableFunctionButton =
   | 'CellSummary'
   | 'CellValidation'
   | 'Chart'
-  | 'ColumnCategory'
-  | 'ColumnChooser'
-  | 'ColumnFilter'
+  | 'Filter'
   | 'ColumnInfo'
   | 'ConditionalStyle'
   | 'CustomSort'
@@ -105,7 +103,7 @@ export type AdaptableStateKeys = AdaptableStateKey[];
 
 export type AdaptableStateKey =
   | 'ActionColumn'
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'Application'
   | 'BulkUpdate'
@@ -114,8 +112,6 @@ export type AdaptableStateKey =
   | 'CellSummary'
   | 'CellValidation'
   | 'Chart'
-  | 'ColumnCategory'
-  | 'ColumnFilter'
   | 'ConditionalStyle'
   | 'CustomSort'
   | 'Dashboard'
@@ -129,7 +125,6 @@ export type AdaptableStateKey =
   | 'GradientColumn'
   | 'IPushPull'
   | 'Layout'
-  | 'NamedFilter'
   | 'OpenFin'
   | 'PercentBar'
   | 'PlusMinus'
@@ -138,7 +133,7 @@ export type AdaptableStateKey =
   | 'Shortcut'
   | 'SmartEdit'
   | 'SparklineColumn'
-  | 'SystemFilter'
+  | 'Filter'
   | 'SystemStatus'
   | 'Theme'
   | 'ToolPanel'
@@ -148,7 +143,7 @@ export type AdaptableStateKey =
 
 export type AdaptableFunctionName =
   | 'ActionColumn'
-  | 'AdvancedSearch'
+  | 'Query'
   | 'Alert'
   | 'BulkUpdate'
   | 'CalculatedColumn'
@@ -156,9 +151,7 @@ export type AdaptableFunctionName =
   | 'CellSummary'
   | 'CellValidation'
   | 'Chart'
-  | 'ColumnCategory'
-  | 'ColumnChooser'
-  | 'ColumnFilter'
+  | 'Filter'
   | 'ColumnInfo'
   | 'ConditionalStyle'
   | 'CustomSort'

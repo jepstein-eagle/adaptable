@@ -69,18 +69,18 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     let flashingCellDurations: number[] = [250, 500, 750, 1000];
 
     let calculatedColumns: string[] = this.props.CalculatedColumns.map(c => c.ColumnId);
-    let numericColumns = this.props.Api.gridApi.getNumericColumns();
+    let numericColumns = this.props.api.columnApi.getNumericColumns();
     let numericNonCalcColumns = numericColumns.filter(c =>
       ArrayExtensions.NotContainsItem(calculatedColumns, c.ColumnId)
     );
     numericNonCalcColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       numericNonCalcColumns,
       'FriendlyName'
     );
 
     let allPotentialFlashingCells: FlashingCell[] = [];
-    let flashingCellState: FlashingCellState = this.props.Api.configApi.configGetFlashingCellState(
+    let flashingCellState: FlashingCellState = this.props.api.configApi.configGetFlashingCellState(
       false
     );
     numericNonCalcColumns.forEach(nc => {
@@ -102,11 +102,11 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
     let allFlashingCells = allPotentialFlashingCells.map((flashingcell: FlashingCell, index) => {
       return (
         <FlashingCellEntityRow
-          AdaptableObject={flashingcell}
+          adaptableObject={flashingcell}
           key={flashingcell.ColumnId}
           colItems={colItems}
           FlashingCellDurations={flashingCellDurations}
-          api={this.props.Api}
+          api={this.props.api}
           onSelect={flashingcell => this.props.onSelectColumn(flashingcell)}
           onChangeFlashingDuration={(flashingcell, newFlashDuration) =>
             this.props.onChangeFlashDuration(flashingcell, newFlashDuration)
@@ -117,11 +117,11 @@ class FlashingCellsPopupComponent extends React.Component<FlashingCellsPopupProp
           onChangeUpColorFlashingCell={(flashingcell, UpColor) =>
             this.props.onChangeUpColorFlashingCell(flashingcell, UpColor)
           }
-          TeamSharingActivated={false}
+          teamSharingActivated={false}
           onShare={null}
           onEdit={null}
           onDeleteConfirm={null}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });

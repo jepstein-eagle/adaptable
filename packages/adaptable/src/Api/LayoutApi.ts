@@ -12,6 +12,8 @@ export interface LayoutApi {
    */
   getLayoutState(): LayoutState;
 
+  shouldAutoSaveLayout(layout?: Layout): boolean;
+
   /**
    * Sets (i.e. selects) the Layout
    * @param layoutName the Layout to set (has to be the name an existing Layout)
@@ -37,11 +39,6 @@ export interface LayoutApi {
    * Retrieves the name of the current Layout
    */
   getCurrentLayoutName(): string;
-
-  /**
-   * Returns true if the current Layout is the default Layout
-   */
-  isDefaultLayout(): boolean;
 
   /**
    * Retrieves the Layout with the inputted name
@@ -75,9 +72,6 @@ export interface LayoutApi {
    * @param layoutToCreate the Layout to create (the Api will create the identiifer automatically)
    */
   createAndSetLayout(layoutToCreate: Layout): Layout;
-
-  // tslint:disable-next-line: adjacent-overload-signatures
-  getCurrentVisibleColumnIdsMap(): { [key: string]: boolean };
 
   /**
    * Clones the given Layout by creating a new one with the same properties but with a new name (using the one provided)

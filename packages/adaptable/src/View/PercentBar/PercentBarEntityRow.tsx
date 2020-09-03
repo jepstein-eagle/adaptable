@@ -17,13 +17,13 @@ export interface PercentBarEntityRowProps extends SharedEntityRowProps<PercentBa
 
 export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProps, {}> {
   render(): any {
-    let PercentBar: PercentBar = this.props.AdaptableObject as PercentBar;
+    let PercentBar: PercentBar = this.props.adaptableObject as PercentBar;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumn(
           PercentBar.ColumnId,
           this.props.Column
         )}
@@ -32,13 +32,13 @@ export class PercentBarEntityRow extends React.Component<PercentBarEntityRowProp
 
     colItems[1].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(PercentBar)}
         shareClick={(description: string) => this.props.onShare(description)}
         overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.PercentBarStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        entityType={StrategyConstants.PercentBarStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
 

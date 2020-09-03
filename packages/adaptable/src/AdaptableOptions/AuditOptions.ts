@@ -39,7 +39,7 @@
  *
  * - **Alert**: If you set this option for any Trigger, then you can should also choose the Type (e.g. 'Success', 'Info' etc) and whether to show it as a Popup.
  *
- * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the {@link AuditEventApi|Audit Event API}
+ * - **Event**: If selected, you will be able to listen to the the `Audit Event` using the {@link AuditEventApi|Audit Event Api}
  *
  * **The default for each option for each Audit Type is false** - meaning that audit is **only triggered** if you set at least one destination for one trigger to `true`.
  *
@@ -91,7 +91,7 @@ export interface AuditOptions {
   /**
    * Whether to audit function events in Adaptable.
    *
-   * These are events that happen when a Function does something (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)
+   * These are events that happen when a Function does something (e.g. 'Current Query Changed', 'Smart Edit Applied' etc.)
    *
    * **Default Value: all destinations are false**
    */

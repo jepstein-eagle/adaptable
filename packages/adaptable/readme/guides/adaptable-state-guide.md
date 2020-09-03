@@ -18,7 +18,7 @@ This ensures that users wont see an empty AdapTable instance but, rather, one fu
 
 ### Predefined Config Contents
 
-Predefined Config consists of a series of (nullable) properties that themselves each implement Config State (e.g. `AdvancedSearch`, `Layouts` etc.
+Predefined Config consists of a series of (nullable) properties that themselves each implement Config State (e.g. `ConditionalStyle`, `Layouts` etc.
 
 Users only need to provide config for those properties which they want intial state; within each object every object is nullable (with default values) so only those elements which differ from the default implementation need to be provided.
 
@@ -153,7 +153,7 @@ Among many other advantages, the Adaptable Api provides full, programmatic, read
 
 ### Listening to State Changes
 
-The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventAPI](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html) section of Adaptable API. 
+The recommended way to listen to changes in the Store is by subscribing to the `AuditStateChanged` audit event in the [AuditEventApi](https://api.adaptabletools.com/interfaces/_src_api_auditeventapi_.auditeventapi.html) section of Adaptable Api.
 
 
 ## FAQs
@@ -193,7 +193,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
     Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+            Toolbars: ['QuickSearch', 'DataSource', 'Query'],
           },
           {
             Name: 'Edit',
@@ -210,8 +210,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
   },
   QuickSearch: {
      QuickSearchText: 'g*',
-     DisplayAction: 'ShowRowAndHighlightCell',
-     Style: {
+      Style: {
        BackColor: '#ffff00',
        ForeColor: '#8b0000',
      },
@@ -230,21 +229,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
           'PackageCost',
           'InvoicedCost',
          ],
-         Expression: {
-             RangeExpressions: [
-             {
-               ColumnId: 'Freight',
-               Ranges: [
-                 {
-                   Operand1: '500',
-                   Operand1Type: 'Value',
-                   Operand2: '',
-                   Operand2Type: 'Value',
-                   Operator: 'GreaterThan',
-                 },
-               ],
-             },
-           ],
+         Expression: '[Freight]> 500'
          },
        },
      ],
@@ -264,58 +249,22 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
    ConditionalStyle: {
      ConditionalStyles: [
        {
-         ColumnId: 'ChangeLastOrder',
-         Style: {
+        Scope: {
+          DataTypes: ['Number'],
+        },
+        Style: {
            ForeColor: '#008000',
-         },
-         ConditionalStyleScope: 'Column',
-         Expression: {
-            FilterExpressions: [
-             {
-               ColumnId: 'ChangeLastOrder',
-               Filters: ['Positive'],
-             },
-           ],
-         },
+        },
+        Expression: '[ChangeLastOrder]> 0'
        },
        {
-         ColumnId: 'ChangeLastOrder',
-         Style: {
+        Scope: {
+          DataTypes: ['Number'],
+        },
+        Style: {
            ForeColor: '#ff0000',
-         },
-         ConditionalStyleScope: 'Column',
-         Expression: {
-           FilterExpressions: [
-             {
-               ColumnId: 'ChangeLastOrder',
-               Filters: ['Negative'],
-             },
-           ],
-         },
-       },
-       {
-         Style: {
-           BackColor: '#ffffcc',
-           FontStyle: 'Italic',
-           ForeColor: '#000000',
-         },
-         ConditionalStyleScope: 'Row',
-         Expression: {
-           RangeExpressions: [
-             {
-               ColumnId: 'InvoicedCost',
-               Ranges: [
-                 {
-                   Operand1: '2000',
-                   Operand1Type: 'Value',
-                   Operand2: '',
-                   Operand2Type: 'Value',
-                   Operator: 'GreaterThan',
-                 },
-               ],
-             },
-           ],
-         },
+        },
+         Expression: '[ChangeLastOrder]< 0'
        },
      ],
    },
@@ -328,7 +277,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
            'OrderDate',
            'CustomerReference',
            'CompanyName',
-          'ContactName',
+           'ContactName',
            'InvoicedCost',
            'ChangeLastOrder',
            'OrderCost',

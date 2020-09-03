@@ -11,7 +11,7 @@ import { ColumnSort } from './Common/ColumnSort';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridlayoutdemo/) | [API](_src_api_layoutapi_.layoutapi.html) | [Options](_src_adaptableoptions_layoutoptions_.layoutoptions.html) | [Layout Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/layout-function.md)
+ * [Demo Site](https://demo.adaptabletools.com/gridmanagement/aggridlayoutdemo/) | [Api](_src_api_layoutapi_.layoutapi.html) | [Options](_src_adaptableoptions_layoutoptions_.layoutoptions.html) | [Layout Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/layout-function.md)
  *
  * **Layout Predefined Config Example**
  *
@@ -29,11 +29,11 @@ import { ColumnSort } from './Common/ColumnSort';
  *        ColumnSorts: [
  *          {
  *            Column: 'counterparty',
- *            SortOrder: 'Descending',
+ *            SortOrder: 'Desc',
  *          },
  *          {
  *            Column: 'currency',
- *            SortOrder: 'Descending',
+ *            SortOrder: 'Desc',
  *          },
  *        ],
  *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
@@ -46,11 +46,10 @@ import { ColumnSort } from './Common/ColumnSort';
  *      {
  *        Name: 'Pivoted Layout',
  *        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
- *        GroupedColumns: ['currency'],
- *        PivotDetails: {
- *          PivotColumns: ['status', 'stars'],
- *          AggregationColumns: ['bid', 'ask'],
- *        },
+ *        RowGroupedColumns: ['currency'],
+ *        PivotColumns: ['status', 'stars'],
+ *        AggregationColumns: {'bid':'avg', 'ask':'avg'},
+ *
  *      },
  *    ],
  *  }
@@ -90,7 +89,7 @@ export interface LayoutState extends ConfigState {
    *
    * Note: If there are no Layouts in Predefined Config then the default layout will be created anyway and this property will be ignored.
    *
-   * **Default Value**:  false
+   * **Default Value**: false
    */
   CreateDefaultLayout?: boolean;
 }
@@ -114,17 +113,17 @@ export interface Layout extends AdaptableObject {
   Columns: string[];
 
   ColumnWidthMap?: {
-    [key: string]: number;
+    [columnId: string]: number;
   };
 
   ColumnFlexMap?: {
-    [key: string]: number;
+    [columnId: string]: number;
   };
 
   /**
    * What sorting wil be applied in the Layout.
    *
-   * A `ColumnSort` takes a Column name and a Sort Order (e.g. 'Ascending' or 'Descending')
+   * A `ColumnSort` takes a Column name and a Sort Order (e.g. 'Asc' or 'Desc')
    */
   ColumnSorts?: ColumnSort[];
 
@@ -133,24 +132,17 @@ export interface Layout extends AdaptableObject {
    *
    * Make sure that the column names supplied are groupable according to the vendor grid you are using (e.g. `enableRowGroup` in ag-Grid)
    */
-  GroupedColumns?: string[]; //TODO rename as RowGroupedColumns
+  RowGroupedColumns?: string[];
 
-  PinnedColumnsMap?: { [colId: string]: 'left' | 'right' };
+  ExpandedRowGroupValues?: any[];
 
-  ExpandedRowGroupKeys?: any[];
-  /**
-   * Old, now deprecated, property that used to set pivoting - now superseded by PinnedColumnsMap
-   *
-   * @deprecated
-   *
-   */
-  PivotDetails?: PivotDetails;
-}
+  AggregationColumns?: Record<string, string | true>;
 
-/**
- * @deprecated
- */
-export interface PivotDetails {
+  EnablePivot?: boolean;
+
   PivotColumns?: string[];
-  AggregationColumns?: string[];
+
+  PinnedColumnsMap?: { [columnId: string]: 'left' | 'right' };
+
+  AutoSave?: boolean;
 }

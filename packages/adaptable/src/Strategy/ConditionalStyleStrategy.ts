@@ -16,26 +16,19 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
   implements IConditionalStyleStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ConditionalStyleStrategyId, adaptable);
-    this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
-      this.handleDataSourceChanged(dataChangedInfo);
-    });
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ConditionalStyleStrategyFriendlyName,
-        ComponentName: ScreenPopups.ConditionalStylePopup,
-        Icon: StrategyConstants.ConditionalStyleGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ConditionalStyleStrategyId,
+      StrategyConstants.ConditionalStyleStrategyFriendlyName,
+      StrategyConstants.ConditionalStyleGlyph,
+      ScreenPopups.ConditionalStylePopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: 'New',
         source: 'ColumnMenu',
       };
@@ -58,18 +51,28 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
-    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
+  public getSharedQueryReferences(sharedQueryId: string): string | undefined {
+    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
       .getAllConditionalStyle()
-      .filter((cs: ConditionalStyle) => cs.ColumnId == specialColumnId);
+      .filter(cs => cs.SharedQueryId == sharedQueryId);
 
     return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
       ? conditionalStyles.length + ' Conditional Styles'
       : undefined;
   }
 
-  // Called when a single piece of data changes, ie. usually the result of an inline edit
-  protected abstract handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void;
+  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
+    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
+      .getAllConditionalStyle()
+      .filter((cs: ConditionalStyle) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, cs.Scope)
+      );
+
+    return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
+      ? conditionalStyles.length + ' Conditional Styles'
+      : undefined;
+  }
 
   public abstract initStyles(): void;
 }

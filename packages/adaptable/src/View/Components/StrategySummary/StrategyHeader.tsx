@@ -9,28 +9,28 @@ import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 
 export interface StrategyHeaderProps extends React.ClassAttributes<StrategyHeader> {
   key: string;
-  FunctionName: AdaptableFunctionName;
-  StrategySummary: any;
+  functionName: AdaptableFunctionName;
+  strategySummary: any;
   onNew: () => void;
-  NewButtonTooltip: string;
+  newButtonTooltip: string;
 
-  NewButtonDisabled?: boolean;
-  AccessLevel: AccessLevel;
+  newButtonDisabled?: boolean;
+  accessLevel: AccessLevel;
 }
 
 export class StrategyHeader extends React.Component<StrategyHeaderProps, {}> {
   render(): any {
     let summaryItems: any[] = [];
-    let newButton = this.props.NewButtonDisabled ? null : (
+    let newButton = this.props.newButtonDisabled ? null : (
       <ButtonNew
         onClick={() => this.props.onNew()}
-        tooltip={'Create ' + this.props.NewButtonTooltip}
-        AccessLevel={this.props.AccessLevel}
+        tooltip={'Create ' + this.props.newButtonTooltip}
+        accessLevel={this.props.accessLevel}
       />
     );
 
-    summaryItems.push(<b>{<StrategyProfile FunctionName={this.props.FunctionName} />}</b>);
-    summaryItems.push(this.props.StrategySummary);
+    summaryItems.push(<b>{<StrategyProfile FunctionName={this.props.functionName} />}</b>);
+    summaryItems.push(this.props.strategySummary);
     summaryItems.push(newButton);
     return <SummaryRowItem SummaryItems={summaryItems} />;
   }

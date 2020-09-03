@@ -58,12 +58,12 @@ class DashboardPopupComponent extends React.Component<
   render() {
     // this should be elswhere but we shouldnt use state as the property is deprecated but still could be used.
     const availableToolbars: any[] = [
-      'AdvancedSearch',
+      'Query',
       'Alert',
       'BulkUpdate',
       'CellSummary',
       'Chart',
-      'ColumnFilter',
+      'Filter',
       'DataSource',
       'Export',
       'Glue42',
@@ -77,14 +77,14 @@ class DashboardPopupComponent extends React.Component<
 
     let selectedValues: string[] = [];
     this.props.DashboardState.VisibleButtons.forEach(x => {
-      let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
+      let menuItem = this.props.GridState.FunctionDropdownMenuItems.find(m => m.FunctionName == x);
       if (menuItem != null && menuItem.IsVisible) {
         selectedValues.push(StrategyConstants.getFriendlyNameForStrategyId(x));
       }
     });
 
     let systemToolbars = availableToolbars
-      .filter(at => this.props.Api.internalApi.getStrategyService().isStrategyAvailable(at))
+      .filter(at => this.props.api.internalApi.getStrategyService().isStrategyAvailable(at))
       .map(at => ({
         Id: at,
         Title: StrategyConstants.getFriendlyNameForStrategyId(at),
@@ -102,7 +102,7 @@ class DashboardPopupComponent extends React.Component<
         );
         return customToolbar
           ? true
-          : this.props.Api.internalApi
+          : this.props.api.internalApi
               .getStrategyService()
               .isStrategyAvailable(vt as AdaptableFunctionName);
       });
@@ -110,7 +110,7 @@ class DashboardPopupComponent extends React.Component<
       return { ...tab, Toolbars };
     });
 
-    let availableValues = this.props.GridState.MainMenuItems.filter(
+    let availableValues = this.props.GridState.FunctionDropdownMenuItems.filter(
       x => x.IsVisible && selectedValues.indexOf(x.Label) == -1
     ).map(x => x.Label);
 

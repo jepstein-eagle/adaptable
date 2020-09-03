@@ -20,7 +20,7 @@ export interface ColumnSelectorProps extends React.HTMLProps<ColumnSelector> {
 export class ColumnSelector extends React.Component<ColumnSelectorProps, {}> {
   render() {
     const sortedColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.ColumnList,
       'FriendlyName'
     );

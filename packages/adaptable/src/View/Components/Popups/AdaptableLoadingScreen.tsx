@@ -9,7 +9,6 @@ export interface IAdaptableLoadingScreenProps
   extends React.ClassAttributes<AdaptableLoadingScreen> {
   showLoadingScreen: boolean;
   onClose?: () => {};
-  Adaptable: IAdaptable;
 }
 
 export class AdaptableLoadingScreen extends React.Component<IAdaptableLoadingScreenProps, {}> {

@@ -59,7 +59,13 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
   }
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.Glue42StrategyId, adaptable);
+    super(
+      StrategyConstants.Glue42StrategyId,
+      StrategyConstants.Glue42StrategyFriendlyName,
+      StrategyConstants.Glue42Glyph,
+      ScreenPopups.Glue42Popup,
+      adaptable
+    );
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
@@ -140,16 +146,6 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
         }
       }
     });
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.Glue42StrategyFriendlyName,
-        ComponentName: ScreenPopups.Glue42Popup,
-        Icon: StrategyConstants.Glue42Glyph,
-      });
-    }
   }
 
   private sendNewLiveData() {
@@ -233,7 +229,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
 
     if (report) {
       let data: any[] = this.ConvertReportToArray(report);
-      let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+      let gridColumns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
       // for glue42 we need to pass in the pk values of the data also
       let primaryKeyValues: any[] = this.adaptable.ReportService.GetPrimaryKeysForReport(report);
       try {

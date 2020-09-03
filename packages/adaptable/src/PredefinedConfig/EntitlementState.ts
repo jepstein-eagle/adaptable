@@ -10,7 +10,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements API](_src_api_entitlementsapi_.entitlementsapi.html)
+ * [Demo Site](https://demo.adaptabletools.com/admin/aggridentitlementsdemo/) | [Entitlements Api](_src_api_entitlementsapi_.entitlementsapi.html)
  *
  *  Entitlements work at the `AdaptableFunction Level`.  Each Entitlement has 3 potential `AccessLevel` values:
  *
@@ -40,12 +40,12 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  * export default {
  * Entitlements: {
  *   FunctionEntitlements: [
- *     {
- *       FunctionName: 'ColumnCategory',
- *       AccessLevel: 'Hidden',
- *    },
  *    {
- *        FunctionName: 'AdvancedSearch',
+ *        FunctionName: 'PercentBar',
+ *        AccessLevel: 'Hidden',
+ *      },
+ *    {
+ *        FunctionName: 'Query',
  *        AccessLevel: 'Hidden',
  *      },
  *      {
@@ -64,7 +64,7 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *
  * - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
  *
- * - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated toolbars and tool panel elements.
+ * - **2 Hidden Entitlements**: Percen tBar and Query.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated toolbars and tool panel elements.
  *
  * --------------
  *
@@ -97,8 +97,8 @@ import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
  *              case 'Shortcut':
  *                return 'Hidden';
  *
- *              case 'AdvancedSearch':
- *              case 'ColumnFilter':
+ *              case 'Query':
+ *              case 'Filter':
  *              case 'UserFilter':
  *              case 'DataSource':
  *              case 'QuickSearch':

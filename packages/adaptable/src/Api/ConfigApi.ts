@@ -1,5 +1,4 @@
 import { ChartState } from '../PredefinedConfig/ChartState';
-import { UserFilterState } from '../PredefinedConfig/UserFilterState';
 import { ThemeState } from '../PredefinedConfig/ThemeState';
 import { SmartEditState } from '../PredefinedConfig/SmartEditState';
 import { ShortcutState } from '../PredefinedConfig/ShortcutState';
@@ -12,14 +11,12 @@ import { DataSourceState } from '../PredefinedConfig/DataSourceState';
 import { DashboardState } from '../PredefinedConfig/DashboardState';
 import { CustomSortState } from '../PredefinedConfig/CustomSortState';
 import { ConditionalStyleState } from '../PredefinedConfig/ConditionalStyleState';
-import { ColumnFilterState } from '../PredefinedConfig/ColumnFilterState';
 import { CellValidationState } from '../PredefinedConfig/CellValidationState';
 import { CellSummaryState } from '../PredefinedConfig/CellSummaryState';
 import { CalendarState } from '../PredefinedConfig/CalendarState';
 import { CalculatedColumnState } from '../PredefinedConfig/CalculatedColumnState';
 import { BulkUpdateState } from '../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../PredefinedConfig/AlertState';
-import { AdvancedSearchState } from '../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../PredefinedConfig/ConfigState';
 import { PlusMinusState } from '../PredefinedConfig/PlusMinusState';
 import { ActionColumnState } from '../PredefinedConfig/ActionColumnState';
@@ -27,12 +24,10 @@ import { ApplicationState } from '../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../PredefinedConfig/SparklineColumnState';
 import { AdaptableState } from '../PredefinedConfig/AdaptableState';
-import { ColumnCategoryState } from '../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../PredefinedConfig/FreeTextColumnState';
-import { NamedFilterState } from '../PredefinedConfig/NamedFilterState';
 import { PercentBarState } from '../PredefinedConfig/PercentBarState';
-import { SystemFilterState } from '../PredefinedConfig/SystemFilterState';
+import { FilterState } from '../PredefinedConfig/FilterState';
 import { SystemStatusState } from '../PredefinedConfig/SystemStatusState';
 import { TeamSharingState } from '../PredefinedConfig/TeamSharingState';
 import { ToolPanelState } from '../PredefinedConfig/ToolPanelState';
@@ -42,6 +37,7 @@ import { IPushPullState } from '../PredefinedConfig/IPushPullState';
 import { Glue42State } from '../PredefinedConfig/Glue42State';
 import { AdaptableSearchState, ScheduleState } from '../types';
 import { AdaptableSortState } from './Events/SearchChanged';
+import { QueryState } from '../PredefinedConfig/QueryState';
 
 export interface ConfigApi {
   configInit(): void;
@@ -80,7 +76,7 @@ export interface ConfigApi {
   ): ConfigState | string;
 
   configGetActionColumnState(returnJson: boolean): ActionColumnState;
-  configGetAdvancedSearchState(returnJson: boolean): AdvancedSearchState;
+  configGetQueryState(returnJson: boolean): QueryState;
   configGetAlertState(returnJson: boolean): AlertState;
   configGetApplicationState(returnJson: boolean): ApplicationState;
   configGetBulkUpdateState(returnJson: boolean): BulkUpdateState;
@@ -89,8 +85,6 @@ export interface ConfigApi {
   configGetCellSummaryState(returnJson: boolean): CellSummaryState;
   configGetCellValidationState(returnJson: boolean): CellValidationState;
   configGetChartState(returnJson: boolean): ChartState;
-  configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState;
-  configGetColumnFilterState(returnJson: boolean): ColumnFilterState;
   configGetConditionalStyleState(returnJson: boolean): ConditionalStyleState;
   configGetCustomSortState(returnJson: boolean): CustomSortState;
   configGetDashboardState(returnJson: boolean): DashboardState;
@@ -101,7 +95,6 @@ export interface ConfigApi {
   configGetFormatColumnState(returnJson: boolean): FormatColumnState;
   configGetFreeTextColumnState(returnJson: boolean): FreeTextColumnState;
   configGetLayoutState(returnJson: boolean): LayoutState;
-  configGetNamedFilterState(returnJson: boolean): NamedFilterState;
   configGetIPushPullState(returnJson: boolean): IPushPullState;
   configGetGlue42State(returnJson: boolean): Glue42State;
   configGetPercentBarState(returnJson: boolean): PercentBarState;
@@ -111,12 +104,11 @@ export interface ConfigApi {
   configGetShortcutState(returnJson: boolean): ShortcutState;
   configGetSmartEditState(returnJson: boolean): SmartEditState;
   configGetSparklineColumnState(returnJson: boolean): SparklineColumnState;
-  configGetSystemFilterState(returnJson: boolean): SystemFilterState;
+  configGetFilterState(returnJson: boolean): FilterState;
   configGetSystemStatusState(returnJson: boolean): SystemStatusState;
   configGetThemeState(returnJson: boolean): ThemeState;
   configGetToolPanelState(returnJson: boolean): ToolPanelState;
   configGetUpdatedRowState(returnJson: boolean): UpdatedRowState;
-  configGetUserFilterState(returnJson: boolean): UserFilterState;
   configGetUserInterfaceState(returnJson: boolean): UserInterfaceState;
 
   configGetAdaptableSearchState(): AdaptableSearchState;

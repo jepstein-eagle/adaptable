@@ -1,10 +1,12 @@
 import {
   UserInterfaceState,
-  EditLookUpColumn,
+  EditLookUpItem,
   RowStyle,
   UserMenuItem,
-  PermittedValuesColumn,
+  PermittedValuesItem,
 } from '../PredefinedConfig/UserInterfaceState';
+import { Scope } from '../PredefinedConfig/Common/Scope';
+import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export interface UserInterfaceApi {
   /**
@@ -44,31 +46,30 @@ export interface UserInterfaceApi {
    * Sets (and replaces any existing) Permitted Values for a given column
    *
    * **note:  This replaces any existing permitted values for the column.  It is ​​not​​ an additive function.**
-   * @param column
+   * @param scope
    * @param permittedValues
    */
-  setColumnPermittedValues(column: string, permittedValues: string[]): void;
+  setPermittedValuesItem(scope: Scope, permittedValues: string[]): void;
 
   /**
    * If this function is called the column will revert to default behaviour
    * which is t show current distinct values for the column in filters, searches etc
-   * @param column
+   * @param permittedValuesItem
    */
-  clearColumnPermittedValues(column: string): void;
+  deletePermittedValuesItem(permittedValuesItem: PermittedValuesItem): void;
 
-  getAllPermittedValuesColumns(): any[];
+  getAllPermittedValuesItems(): any[];
 
-  getPermittedValuesColumnForColumn(columnId: string): PermittedValuesColumn;
+  getPermittedValuesForColumn(column: AdaptableColumn): any[];
 
-  getPermittedValuesForColumn(columnId: string): any[];
+  getAllEditLookUpItems(): EditLookUpItem[];
 
-  getAllEditLookUpColumns(): EditLookUpColumn[];
+  getEditLookUpItemForColumnId(columnId: string): EditLookUpItem | undefined;
 
-  getEditLookUpColumnForColumn(columnId: string): EditLookUpColumn;
-
-  getEditLookUpValuesForColumn(columnId: string): any[];
-
-  isEditLookUpColumn(columnId: string): boolean;
+  getEditLookUpValuesForEditLookUpItem(
+    editLookUpItem: EditLookUpItem,
+    columnId: string
+  ): any[] | undefined;
 
   clearRowStyles(): void;
 

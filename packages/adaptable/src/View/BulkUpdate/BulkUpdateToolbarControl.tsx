@@ -33,7 +33,7 @@ interface BulkUpdateToolbarControlComponentProps
   BulkUpdateValue: string;
   BulkUpdateValidationResult: BulkUpdateValidationResult;
   PreviewInfo: IPreviewInfo;
-
+  InPivotMode: Boolean;
   onBulkUpdateValueChange: (value: string) => BulkUpdateRedux.BulkUpdateChangeValueAction;
   onBulkUpdateCheckSelectedCells: () => SystemRedux.BulkUpdateCheckCellSelectionAction;
   onApplyBulkUpdate: () => BulkUpdateRedux.BulkUpdateApplyAction;
@@ -53,8 +53,8 @@ class BulkUpdateToolbarControlComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Api) {
-      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    if (this.props.api) {
+      let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       if (adaptable) {
         adaptable._on('CellsSelected', () => {
           this.checkSelectedCells();
@@ -70,18 +70,18 @@ class BulkUpdateToolbarControlComponent extends React.Component<
 
     let previewPanel = (
       <PreviewResultsPanel
-        PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Api}
-        SelectedColumn={selectedColumn}
-        ShowPanel={true}
-        ShowHeader={false}
+        previewInfo={this.props.PreviewInfo}
+        api={this.props.api}
+        selectedColumn={selectedColumn}
+        showPanel={true}
+        showHeader={false}
       />
     );
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == 'ReadOnly' ||
+      this.props.accessLevel == 'ReadOnly' ||
       !this.props.BulkUpdateValidationResult.IsValid ||
-      this.props.Api.internalApi.isGridInPivotMode();
+      this.props.InPivotMode == true;
 
     const applyStyle = {
       color: statusColour,
@@ -103,9 +103,9 @@ class BulkUpdateToolbarControlComponent extends React.Component<
           }}
           className="ab-DashboardToolbar__BulkUpdate__select"
           disabled={shouldDisable}
-          SelectedColumnValue={this.props.BulkUpdateValue}
-          SelectedColumn={selectedColumn}
-          Api={this.props.Api}
+          selectedColumnValue={this.props.BulkUpdateValue}
+          selectedColumn={selectedColumn}
+          api={this.props.api}
           onColumnValueChange={columns => this.onColumnValueSelectedChanged(columns)}
         />
 
@@ -121,7 +121,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
               (this.props.PreviewInfo != null &&
                 this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
             }
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         )}
 
@@ -144,6 +144,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__BulkUpdate"
         headerText={StrategyConstants.BulkUpdateStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('BulkUpdate')}
       >
         {content}
       </PanelDashboard>
@@ -185,7 +186,7 @@ class BulkUpdateToolbarControlComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(true);
     let cancelAction: Redux.Action = BulkUpdateRedux.BulkUpdateApply(false);
-    let confirmation: IUIConfirmation = this.props.Api.internalApi
+    let confirmation: IUIConfirmation = this.props.api.internalApi
       .getValidationService()
       .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);
@@ -205,6 +206,7 @@ function mapStateToProps(
     BulkUpdateValue: state.BulkUpdate.BulkUpdateValue,
     BulkUpdateValidationResult: state.System.BulkUpdateValidationResult,
     PreviewInfo: state.System.BulkUpdatePreviewInfo,
+    InPivotMode: state.Grid.IsGridInPivotMode,
   };
 }
 
@@ -225,6 +227,8 @@ function mapDispatchToProps(
           ScreenPopups.BulkUpdatePopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

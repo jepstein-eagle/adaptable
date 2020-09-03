@@ -16,46 +16,46 @@ export class CalculatedColumnSummaryWizard
   implements AdaptableWizardStep {
   constructor(props: CalculatedColumnSummaryWizardProps) {
     super(props);
-    this.state = { ColumnId: this.props.Data.ColumnId, ErrorMessage: null };
+    this.state = { ColumnId: this.props.data.ColumnId, ErrorMessage: null };
   }
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Column Id', Value: this.props.Data.ColumnId },
-      { Key: 'Column Name', Value: this.props.Data.FriendlyName },
+      { Key: 'Column Id', Value: this.props.data.ColumnId },
+      { Key: 'Column Name', Value: this.props.data.FriendlyName },
       {
         Key: 'Expression',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getCalculatedColumnExpressionService()
           .GetExpressionString(
-            this.props.Data.ColumnExpression,
-            this.props.Api.gridApi.getColumns()
+            this.props.data.ColumnExpression,
+            this.props.api.columnApi.getColumns()
           ),
       },
-      { Key: 'DataType', Value: this.props.Data.CalculatedColumnSettings.DataType },
-      { Key: 'Width', Value: this.props.Data.CalculatedColumnSettings.Width },
+      { Key: 'DataType', Value: this.props.data.CalculatedColumnSettings.DataType },
+      { Key: 'Width', Value: this.props.data.CalculatedColumnSettings.Width },
       {
         Key: 'Filterable',
-        Value: this.props.Data.CalculatedColumnSettings.Filterable ? 'True' : 'False',
+        Value: this.props.data.CalculatedColumnSettings.Filterable ? 'True' : 'False',
       },
       {
         Key: 'Resizable',
-        Value: this.props.Data.CalculatedColumnSettings.Resizable ? 'True' : 'False',
+        Value: this.props.data.CalculatedColumnSettings.Resizable ? 'True' : 'False',
       },
       {
         Key: 'Groupable',
-        Value: this.props.Data.CalculatedColumnSettings.Groupable ? 'True' : 'False',
+        Value: this.props.data.CalculatedColumnSettings.Groupable ? 'True' : 'False',
       },
       {
         Key: 'Sortable',
-        Value: this.props.Data.CalculatedColumnSettings.Sortable ? 'True' : 'False',
+        Value: this.props.data.CalculatedColumnSettings.Sortable ? 'True' : 'False',
       },
       {
         Key: 'Pivotable',
-        Value: this.props.Data.CalculatedColumnSettings.Pivotable ? 'True' : 'False',
+        Value: this.props.data.CalculatedColumnSettings.Pivotable ? 'True' : 'False',
       },
       {
         Key: 'Aggregatable',
-        Value: this.props.Data.CalculatedColumnSettings.Aggregatable ? 'True' : 'False',
+        Value: this.props.data.CalculatedColumnSettings.Aggregatable ? 'True' : 'False',
       },
     ];
 
@@ -73,16 +73,16 @@ export class CalculatedColumnSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

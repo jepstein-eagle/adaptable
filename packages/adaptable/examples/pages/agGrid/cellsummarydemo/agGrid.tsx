@@ -85,9 +85,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   api = await Adaptable.init(adaptableOptions);
   (global as any).api = api;
@@ -108,15 +106,8 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'CellSummary'],
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'CellSummary', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'CellSummary', 'Filter'],
   },
   CellSummary: {
     CellSummaryOperationDefinitions: [

@@ -1,14 +1,12 @@
 import { PopupState } from './PopupState';
 import { GridState } from './GridState';
 import { SystemState } from './SystemState';
-import { AdvancedSearchState } from './AdvancedSearchState';
 import { AlertState } from './AlertState';
 import { BulkUpdateState } from './BulkUpdateState';
 import { CalculatedColumnState } from './CalculatedColumnState';
 import { CalendarState } from './CalendarState';
 import { CellValidationState } from './CellValidationState';
 import { ChartState } from './ChartState';
-import { ColumnFilterState } from './ColumnFilterState';
 import { ConditionalStyleState } from './ConditionalStyleState';
 import { CustomSortState } from './CustomSortState';
 import { DashboardState } from './DashboardState';
@@ -18,7 +16,6 @@ import { FlashingCellState } from './FlashingCellState';
 import { FormatColumnState } from './FormatColumnState';
 import { FreeTextColumnState } from './FreeTextColumnState';
 import { LayoutState } from './LayoutState';
-import { ColumnCategoryState } from './ColumnCategoryState';
 import { PercentBarState } from './PercentBarState';
 import { ScheduleState } from './ScheduleState';
 import { PlusMinusState } from './PlusMinusState';
@@ -28,22 +25,18 @@ import { ShortcutState } from './ShortcutState';
 import { SmartEditState } from './SmartEditState';
 import { TeamSharingState } from './TeamSharingState';
 import { ThemeState } from './ThemeState';
-import { UserFilterState } from './UserFilterState';
 import { ConfigState } from './ConfigState';
 import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
-import { SystemFilterState } from './SystemFilterState';
+import { FilterState } from './FilterState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
-import { NamedFilterState } from './NamedFilterState';
-import { Glue42State } from './Glue42State';
 import { ApplicationState } from './ApplicationState';
 import { UpdatedRowState } from './UpdatedRowState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
-import { IPushPullState } from './IPushPullState';
-import { OpenFinState } from './OpenFinState';
+import { QueryState } from './QueryState';
 
 /**
  * The main state object that Adaptable persists
@@ -63,12 +56,11 @@ export interface AdaptableState {
   ActionColumn: ActionColumnState;
   Application: ApplicationState;
   Entitlements: EntitlementState;
-  NamedFilter: NamedFilterState;
   // Glue42: Glue42State;
   // IPushPull: IPushPullState;
   // OpenFin: OpenFinState;
   SparklineColumn: SparklineColumnState;
-  SystemFilter: SystemFilterState;
+  Filter: FilterState;
   SystemStatus: SystemStatusState;
   UserInterface: UserInterfaceState;
 
@@ -76,7 +68,6 @@ export interface AdaptableState {
   CellSummary: CellSummaryState;
 
   // Set at design time and / or run time => only state which is persisted
-  AdvancedSearch: AdvancedSearchState;
   Alert: AlertState;
   BulkUpdate: BulkUpdateState;
   CalculatedColumn: CalculatedColumnState;
@@ -84,8 +75,6 @@ export interface AdaptableState {
 
   CellValidation: CellValidationState;
   Chart: ChartState;
-  ColumnCategory: ColumnCategoryState;
-  ColumnFilter: ColumnFilterState;
   ConditionalStyle: ConditionalStyleState;
   CustomSort: CustomSortState;
   Dashboard: DashboardState;
@@ -106,5 +95,5 @@ export interface AdaptableState {
   Theme: ThemeState;
   ToolPanel: ToolPanelState;
   UpdatedRow: UpdatedRowState;
-  UserFilter: UserFilterState;
+  Query: QueryState;
 }

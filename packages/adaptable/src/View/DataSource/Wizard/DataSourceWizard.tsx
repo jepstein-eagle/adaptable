@@ -3,38 +3,38 @@ import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { DataSourceSettingsWizard } from './DataSourceSettingsWizard';
 import { DataSourceSummaryWizard } from './DataSourceSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { DataSource } from '../../../PredefinedConfig/DataSourceState';
 
 export interface DataSourceWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<DataSourceWizard> {}
+  extends AdaptableObjectAdaptableWizardProps<DataSourceWizard> {}
 
 export class DataSourceWizard extends React.Component<DataSourceWizardProps, {}> {
   render() {
-    let dataSources: DataSource[] = this.props.ConfigEntities as DataSource[];
+    let dataSources: DataSource[] = this.props.configEntities as DataSource[];
     let dataSourceNames: string[] = dataSources.map(s => s.Name);
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.DataSourceStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Settings',
               Index: 0,
               Element: (
-                <DataSourceSettingsWizard DataSourceNames={dataSourceNames} Api={this.props.Api} />
+                <DataSourceSettingsWizard DataSourceNames={dataSourceNames} api={this.props.api} />
               ),
             },
             {
               StepName: 'Summary',
               Index: 1,
-              Element: <DataSourceSummaryWizard Api={this.props.Api} />,
+              Element: <DataSourceSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

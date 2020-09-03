@@ -20,10 +20,10 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
       },
 
-      { Key: 'Values', Value: this.props.Data.SortedValues.join(', ') },
+      { Key: 'Values', Value: this.props.data.SortedValues.join(', ') },
     ];
 
     return (
@@ -40,16 +40,16 @@ export class CustomSortSummaryWizard extends React.Component<CustomSortSummaryWi
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     // todo
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

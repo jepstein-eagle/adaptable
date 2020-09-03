@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../types';
+import { AdaptableColumn, AdaptableApi } from '../../types';
 
 import { FunctionMap } from '../../parser/src/types';
 import useSelectionRange from '../utils/useSelectionRange';
 import { useState } from 'react';
-import { parse, findPathTo } from '../../parser/src';
+import * as parser from '../../parser/src';
 import OverlayTrigger from '../OverlayTrigger';
 import { Flex, Box } from 'rebass';
 import EditorButton from './EditorButton';
@@ -34,11 +34,14 @@ import ErrorBox from '../ErrorBox';
 import HelpBlock from '../HelpBlock';
 
 interface ExpressionEditorProps {
-  value?: string;
-  onChange?: (event: React.FormEvent) => void;
+  value: string;
+  onChange: (event: React.FormEvent) => void;
   initialData: { [key: string]: any };
   columns: AdaptableColumn[];
   functions: FunctionMap;
+  hideHelpBlock?: boolean;
+  isFullExpression?: boolean;
+  api: AdaptableApi;
 }
 
 function ExpressionEditor(props: ExpressionEditorProps) {
@@ -48,9 +51,9 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   let result, error, currentFunction;
 
   try {
-    const expr = parse(props.value);
-    result = expr.evaluate({ data });
-    const path = findPathTo(expr.ast, cursor);
+    const expr = parser.parse(props.value || '');
+    result = expr.evaluate({ node: { data } as any, api: props.api });
+    const path = parser.findPathTo(expr.ast, cursor);
     currentFunction = path[0] ? path[0].type : null;
   } catch (e) {
     error = e;
@@ -61,7 +64,6 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       render={() => (
         <Flex
           flexDirection="column"
-          backgroundColor="white"
           p={2}
           style={{
             fontSize: 'var(--ab-font-size-2)',
@@ -138,6 +140,9 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       <EditorButton data="OR" textAreaRef={textAreaRef}>
         OR
       </EditorButton>
+      <EditorButton data="IN" textAreaRef={textAreaRef}>
+        IN
+      </EditorButton>
     </>
   );
 
@@ -172,84 +177,87 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       sizes={['auto', '130px']}
       style={{ alignItems: 'stretch' }}
     >
-      {props.columns.map(column => (
-        <FormRow
-          key={column.ColumnId}
-          label={
-            <EditorButton
-              width="100%"
-              height="100%"
-              style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
-              data={`COL('${column.ColumnId}')`}
-              textAreaRef={textAreaRef}
-            >
-              <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
-              {column.FriendlyName}
-            </EditorButton>
-          }
-        >
-          {column.DataType === 'Number' ? (
-            <Input
-              type="number"
-              value={data[column.ColumnId]}
-              onChange={(e: React.FormEvent) =>
-                setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
-              }
-              width="100%"
-            />
-          ) : column.DataType === 'String' ? (
-            <Input
-              type="text"
-              value={data[column.ColumnId]}
-              onChange={(e: React.FormEvent) =>
-                setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
-              }
-              width="100%"
-            />
-          ) : column.DataType === 'Date' ? (
-            <Input
-              type="date"
-              value={new Date(data[column.ColumnId]).toISOString().substr(0, 10)}
-              onChange={(e: React.FormEvent) => {
-                setData({
-                  ...data,
-                  [column.ColumnId]: new Date((e.target as HTMLInputElement).value),
-                });
-              }}
-              width="100%"
-            />
-          ) : column.DataType === 'Boolean' ? (
-            <CheckBox
-              checked={data[column.ColumnId]}
-              onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
-            />
-          ) : null}
-        </FormRow>
-      ))}
+      {props.columns
+        .filter(c => !props.api.columnApi.isCalculatedColumn(c.ColumnId))
+        .map(column => (
+          <FormRow
+            key={column.ColumnId}
+            label={
+              <EditorButton
+                width="100%"
+                height="100%"
+                style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
+                data={`[${column.ColumnId}]`}
+                textAreaRef={textAreaRef}
+              >
+                <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
+                {column.FriendlyName}
+              </EditorButton>
+            }
+          >
+            {column.DataType === 'Number' ? (
+              <Input
+                type="number"
+                value={data[column.ColumnId]}
+                onChange={(e: React.FormEvent) =>
+                  setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                }
+                width="100%"
+                disabled={column.ReadOnly}
+              />
+            ) : column.DataType === 'String' ? (
+              <Input
+                type="text"
+                value={data[column.ColumnId]}
+                onChange={(e: React.FormEvent) =>
+                  setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                }
+                width="100%"
+                disabled={column.ReadOnly}
+              />
+            ) : column.DataType === 'Date' ? (
+              <Input
+                type="date"
+                value={new Date(data[column.ColumnId]).toISOString().substr(0, 10)}
+                onChange={(e: React.FormEvent) => {
+                  setData({
+                    ...data,
+                    [column.ColumnId]: new Date((e.target as HTMLInputElement).value),
+                  });
+                }}
+                width="100%"
+                disabled={column.ReadOnly}
+              />
+            ) : column.DataType === 'Boolean' ? (
+              <CheckBox
+                checked={data[column.ColumnId]}
+                onChange={checked => setData({ ...data, [column.ColumnId]: checked })}
+                disabled={column.ReadOnly}
+              />
+            ) : null}
+          </FormRow>
+        ))}
     </FormLayout>
   );
 
   return (
     <div>
       {' '}
-      <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
-        Create a Calculated Column 'Expression' using, as required, a mixture (and any number) of:
-        <ul>
-          <li>
-            <b>Functions</b>: Select from the functions dropdown or pick one displayed below; each
-            function is separately documented
-          </li>
-          <li>
-            <b>Columns</b> - Drag n Drop required columns from the right hand side - they will
-            resolve to 'Col([column-name])'
-          </li>
-          <li>
-            <b>Static Values</b>: Add any hardcoded values that you require for the Expression.
-          </li>{' '}
-        </ul>
-        The result of the Expression is displayed underneath the Editor - using the Test Data (taken
-        from first row of grid).
-      </HelpBlock>{' '}
+      {props.hideHelpBlock !== true && (
+        <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
+          Create an Expression using a mixture (and any number) of:
+          <ul>
+            <li>Functions: Select from the functions dropdown or pick one displayed below</li>
+            <li>
+              Columns: Drag n Drop columns from the right hand side - they will resolve to
+              '[column-name]'
+            </li>
+            <li>Static Values: Add any hardcoded values that you require for the Expression.</li>{' '}
+          </ul>
+          The Expression result is displayed underneath the Editor (using Test Data taken from first
+          row). <br />
+        </HelpBlock>
+      )}{' '}
       <Flex flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
         <Box flex={1} mx={2}>
           <Flex
@@ -269,7 +277,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           </Flex>
           <Textarea
             ref={textAreaRefCallback}
-            value={props.value}
+            value={props.value || ''}
             placeholder="Enter expression"
             autoFocus
             spellCheck="false"
@@ -281,7 +289,12 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               fontSize: '1rem',
               padding: 'var(--ab-space-2)',
             }}
-          />
+          />{' '}
+          {props.isFullExpression !== true && (
+            <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
+              Expression must resolve to a <b>boolean </b>(i.e. true / false) value
+            </HelpBlock>
+          )}
           {error && <ErrorBox mt={2}>{error.message}</ErrorBox>}
           {result !== undefined && (
             <Box

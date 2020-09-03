@@ -5,7 +5,7 @@ export interface DataSourceApi {
 
   getAllDataSource(): DataSource[];
 
-  getCurrentDataSource(): DataSource;
+  getCurrentDataSource(): DataSource | undefined;
 
   getDataSourceByName(dataSourceName: string): DataSource;
 

@@ -1,6 +1,6 @@
 # Action Column (AdaptableFunction)
 
-The Action Column ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ActionColumn`) Function enables the creation of special columns that contain buttons.
+The Action Column Function enables the creation of special columns that contain buttons.
 
 Action Columns are created at run-time based on definitions provided by developers at design-time in Predefined Config 
 

@@ -40,11 +40,11 @@ You can provide  AdapTable at start-up with _Predefined Configuration_ which ens
 [Predefined Configuration Developer Documentation](/interfaces/_src_predefinedconfig_predefinedconfig_.predefinedconfig.html)
 
 
-## AdapTable API
+## AdapTable Api
 
 AdapTable's `api` provides full safe, run-time access to all the functionality and state inside AdapTable. This allows you to create, save and delete AdapTable objects in your our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
 
-[AdapTable API Developer Documentation](/interfaces/_src_api_adaptableapi_.adaptableapi.html)
+[AdapTable Api Developer Documentation](/interfaces/_src_api_adaptableapi_.adaptableapi.html)
 
 # Additional Resources
 

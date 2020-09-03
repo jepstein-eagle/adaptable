@@ -7,6 +7,7 @@ import { getSize } from '../icons/DefaultIcon';
 type TypeProps = {
   checked?: boolean | null;
   disabled?: boolean;
+  readOnly?: boolean;
   as?: any;
   name?: string;
   value?: any;
@@ -26,6 +27,7 @@ const CheckBox = ({
   value,
   name,
   disabled,
+  readOnly,
   variant = 'default',
   gapDistance = 'var(--ab-space-1)',
   childrenPosition = 'end',
@@ -37,6 +39,9 @@ const CheckBox = ({
   const computedChecked = checked !== undefined ? checked : stateChecked;
 
   const onInputChange = (event: React.SyntheticEvent) => {
+    if (readOnly) {
+      return;
+    }
     const newChecked = (event.target as any).checked;
 
     if (checked === undefined) {
@@ -73,6 +78,7 @@ const CheckBox = ({
       )}
       ref={checkboxRef}
       disabled={disabled}
+      readOnly={readOnly}
       checked={!!computedChecked}
       type="checkbox"
       name={name}
@@ -107,6 +113,7 @@ const CheckBox = ({
         'ab-CheckBox',
 
         disabled ? 'ab-CheckBox--disabled' : '',
+        readOnly ? 'ab-CheckBox--readonly' : '',
         props.className
       )}
       style={{

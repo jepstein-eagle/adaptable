@@ -134,10 +134,6 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
-
-  Dashboard: {
-    VisibleToolbars: ['IPushPull'],
-  },
 };
 
 export default () => {

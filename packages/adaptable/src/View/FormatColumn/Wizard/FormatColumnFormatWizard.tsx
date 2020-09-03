@@ -15,7 +15,10 @@ import CheckBox from '../../../components/CheckBox';
 import FormatHelper from '../../../Utilities/Helpers/FormatHelper';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
-
+import { Scope } from '../../../PredefinedConfig/Common/Scope';
+import { DataType } from '../../../PredefinedConfig/Common/Enums';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { uniq } from 'lodash';
 export interface FormatColumnFormatWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
 export interface FormatColumnFormatWizardState {
@@ -38,12 +41,11 @@ export class FormatColumnFormatWizard
   column: AdaptableColumn;
   constructor(props: FormatColumnFormatWizardProps) {
     super(props);
-    const column = this.props.Api.gridApi
-      .getColumns()
-      .find(column => column.ColumnId === this.props.Data.ColumnId);
-    this.state = { DisplayFormat: this.props.Data.DisplayFormat };
+    let formatDataType: 'Number' | 'Date' | undefined;
+    formatDataType = this.getFormatDisplayTypeForScope(this.props.data.Scope);
+    this.state = { DisplayFormat: this.props.data.DisplayFormat }; // might need to change?
 
-    if (this.state.DisplayFormat === undefined && column.DataType === 'Number') {
+    if (this.state.DisplayFormat === undefined && formatDataType === 'Number') {
       this.state = {
         DisplayFormat: {
           Formatter: 'NumberFormatter',
@@ -61,7 +63,7 @@ export class FormatColumnFormatWizard
       };
     }
 
-    if (this.state.DisplayFormat === undefined && column.DataType === 'Date') {
+    if (this.state.DisplayFormat === undefined && formatDataType === 'Date') {
       this.state = {
         DisplayFormat: {
           Formatter: 'DateFormatter',
@@ -82,7 +84,10 @@ export class FormatColumnFormatWizard
       return this.renderDateFormat();
     }
     return (
-      <HelpBlock margin={3}>Formatting is only available on Numeric and Date columns</HelpBlock>
+      <HelpBlock margin={3}>
+        Setting a Display Format is only available if <b>all</b> the columns in Scope are either
+        Numeric or Date.
+      </HelpBlock>
     );
   }
 
@@ -284,23 +289,63 @@ export class FormatColumnFormatWizard
     this.setState({ DisplayFormat });
   }
 
+  getFormatDisplayTypeForScope(scope: Scope): 'Number' | 'Date' | undefined {
+    if (scope == undefined) {
+      return undefined;
+    }
+    if ('All' in scope) {
+      return undefined;
+    }
+    // need to see if all columns are numeric or date
+    if ('ColumnIds' in scope) {
+      let cols = scope.ColumnIds.map(c => this.props.api.columnApi.getColumnFromId(c));
+      if (ArrayExtensions.IsNotNullOrEmpty(cols)) {
+        let dataTypes: DataType[] = cols.map(c => {
+          return c.DataType as DataType;
+        });
+
+        if (ArrayExtensions.IsNotNullOrEmpty(dataTypes)) {
+          let uniqVals = uniq(dataTypes);
+          if (uniqVals.length == 1) {
+            if (uniqVals[0] == 'Date') {
+              return 'Date';
+            } else if (uniqVals[0] == 'Number') {
+              return 'Number';
+            }
+          }
+        }
+      }
+
+      return undefined;
+    }
+
+    if ('DataTypes' in scope && scope.DataTypes.length == 1 && scope.DataTypes[0] == 'Number') {
+      return 'Number';
+    }
+    if ('DataTypes' in scope && scope.DataTypes.length == 1 && scope.DataTypes[0] == 'Date') {
+      return 'Date';
+    }
+
+    return undefined;
+  }
+
   public canNext(): boolean {
     return true;
   }
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.DisplayFormat = this.state.DisplayFormat;
+  public next(): void {
+    this.props.data.DisplayFormat = this.state.DisplayFormat;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -1,13 +1,13 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import { ConditionalStyleStyleWizard } from './ConditionalStyleStyleWizard';
 import { ConditionalStyleScopeWizard } from './ConditionalStyleScopeWizard';
-import { ConditionalStyleExpressionWizard } from './ConditionalStyleExpressionWizard';
 import { ConditionalStyleSummaryWizard } from './ConditionalStyleSummaryWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
+import { ExpressionWizard } from '../../Components/ExpressionWizard';
+import { ConditionalStylePredicateWizard } from './ConditionalStylePredicateWizard';
+import { ConditionalStyleSelectQueryWizard } from './ConditionalStyleSelectQueryWizard';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
@@ -19,38 +19,55 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
-            {
-              StepName: 'Scope',
-              Index: 0,
-              Element: <ConditionalStyleScopeWizard Api={this.props.Api} />,
-            },
+          friendlyName={StrategyConstants.ConditionalStyleStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Style',
-              Index: 1,
+              Index: 0,
               Element: (
                 <ConditionalStyleStyleWizard
                   StyleClassNames={this.props.StyleClassNames}
-                  Api={this.props.Api}
+                  api={this.props.api}
                 />
               ),
             },
             {
-              StepName: 'Query Builder',
+              StepName: 'Scope',
+              Index: 1,
+              Element: <ConditionalStyleScopeWizard api={this.props.api} />,
+            },
+            //   {
+            //      StepName: 'Condition',
+            //     Index: 2,
+            //     Element: <ConditionalStyleSelectQueryWizard api={this.props.api} />,
+            //   },
+            {
+              StepName: 'Condition',
               Index: 2,
-              Element: <ConditionalStyleExpressionWizard Api={this.props.Api} />,
+              Element: <ConditionalStylePredicateWizard api={this.props.api} />,
+            },
+
+            {
+              StepName: 'Condition', // has to be conditional in a minute!
+              Index: 2,
+              Element: (
+                <ExpressionWizard
+                  api={this.props.api}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
+                />
+              ),
             },
             {
               StepName: 'Summary',
               Index: 3,
-              Element: <ConditionalStyleSummaryWizard Api={this.props.Api} />,
+              Element: <ConditionalStyleSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

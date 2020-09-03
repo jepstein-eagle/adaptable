@@ -23,8 +23,8 @@ export class PercentBarSelectColumnWizard
   constructor(props: PercentBarSelectColumnWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data!.ColumnId,
-      Ranges: this.props.Data!.Ranges,
+      ColumnId: this.props.data!.ColumnId,
+      Ranges: this.props.data!.Ranges,
     };
   }
 
@@ -33,7 +33,7 @@ export class PercentBarSelectColumnWizard
       <WizardPanel>
         <ColumnSelector
           SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.gridApi.getNumericColumns()}
+          ColumnList={this.props.api.columnApi.getNumericColumns()}
           onColumnChange={columns => this.onColumnSelectedChanged(columns)}
           SelectionMode={SelectionMode.Single}
         />
@@ -43,9 +43,10 @@ export class PercentBarSelectColumnWizard
 
   private onColumnSelectedChanged(columns: AdaptableColumn[]) {
     if (columns.length > 0) {
-      let distinctColumnsValues: number[] = this.props.Api.internalApi
-        .getStrategyService()
-        .getDistinctColumnValues(columns[0].ColumnId);
+      let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
+        columns[0].ColumnId
+      );
+
       let minValue = Math.min(...distinctColumnsValues);
       let maxValue = Math.max(...distinctColumnsValues);
 
@@ -72,11 +73,11 @@ export class PercentBarSelectColumnWizard
           ColumnId: columns[0].ColumnId,
           Ranges: ranges,
         } as PercentBarSelectColumnWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState({ ColumnId: '' } as PercentBarSelectColumnWizardState, () =>
-        this.props.UpdateGoBackState()
+        this.props.updateGoBackState()
       );
     }
   }
@@ -88,18 +89,18 @@ export class PercentBarSelectColumnWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data!.ColumnId = this.state.ColumnId;
-    this.props.Data!.Ranges = this.state.Ranges;
+  public next(): void {
+    this.props.data!.ColumnId = this.state.ColumnId;
+    this.props.data!.Ranges = this.state.Ranges;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

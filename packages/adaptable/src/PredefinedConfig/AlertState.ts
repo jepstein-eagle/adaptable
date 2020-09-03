@@ -1,6 +1,7 @@
 import { ConfigState } from './ConfigState';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { Expression, QueryRange } from './Common/Expression';
+import { QueryObject } from './Common/QueryObject';
+import { Scope } from './Common/Scope';
+import { Predicate } from './Common/Predicate';
 
 /**
  * The Predefined Configuration for the Alert function
@@ -17,7 +18,7 @@ import { Expression, QueryRange } from './Common/Expression';
  *
  * - [Alert Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
  *
- * - {@link AlertApi|Alert API}
+ * - {@link AlertApi|Alert Api}
  *
  * - [Alert Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/alert-function.md)
  *
@@ -101,16 +102,10 @@ export interface AlertState extends ConfigState {
  *
  * See {@link AlertState|Alert State} for how to use this object.
  */
-export interface AlertDefinition extends AdaptableObject {
-  /**
-   * The Id (fieldname) of the column whose change will trigger the alert
-   */
-  ColumnId?: string;
+export interface AlertDefinition extends QueryObject {
+  Scope: Scope;
 
-  /**
-   * The `QueryRange` of the Alert (see [[Expression]] for more information on Ranges).
-   */
-  Range?: QueryRange;
+  Predicate?: Predicate; // perhaps later | Predicate[]; // think about an array ... // ANDs  // later
 
   /**
    * An (optional) Expression (or Query).
@@ -119,7 +114,7 @@ export interface AlertDefinition extends AdaptableObject {
    *
    * See Expression Object Config for more information.
    */
-  Expression?: Expression;
+  //Expression?: Expression;
 
   /**
    * The type of the Alert - will influence how the Alert is logged and also the colour and icon displayed.

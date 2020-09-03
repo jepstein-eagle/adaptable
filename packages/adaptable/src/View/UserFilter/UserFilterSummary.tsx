@@ -8,27 +8,21 @@ import {
 import { connect } from 'react-redux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { UserFilterWizard } from './Wizard/UserFilterWizard';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StrategyHeader } from '../Components/StrategySummary/StrategyHeader';
 import { StrategyDetail } from '../Components/StrategySummary/StrategyDetail';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import { UIHelper } from '../UIHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 export interface UserFilterSummaryProps extends StrategySummaryProps<UserFilterSummaryComponent> {
-  onAddUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (UserFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
+  onAddUserFilter: (UserFilter: UserFilter) => FilterRedux.UserFilterAddAction;
+  onEditUserFilter: (UserFilter: UserFilter) => FilterRedux.UserFilterEditAction;
 }
 
 export class UserFilterSummaryComponent extends React.Component<
@@ -43,37 +37,37 @@ export class UserFilterSummaryComponent extends React.Component<
   render(): any {
     let strategySummaries: any = [];
 
-    let userFilters: UserFilter[] = this.props.Api.userFilterApi.getAllUserFilter();
+    let userFilters: UserFilter[] = this.props.api.filterApi.getAllUserFilter();
 
     // title row
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.UserFilterStrategyFriendlyName}
-        FunctionName={StrategyConstants.UserFilterStrategyId}
-        StrategySummary={this.getSummary()}
+        functionName={StrategyConstants.UserFilterStrategyId}
+        strategySummary={this.getSummary()}
         onNew={() => this.onNew()}
-        NewButtonDisabled={!this.isFilterable()}
-        NewButtonTooltip={StrategyConstants.UserFilterStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        newButtonDisabled={!this.isFilterable()}
+        newButtonTooltip={StrategyConstants.UserFilterStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);
 
     // existing items
-    userFilters.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+    userFilters.map(item => {
+      if (this.props.api.scopeApi.isColumnInScope(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={item.Uuid}
-            Item1={item.Name}
-            Item2={this.getDescription(item)}
-            ConfigEnity={item}
-            showShare={this.props.TeamSharingActivated}
+            item1={item.Name}
+            item2={this.getDescription()}
+            configEnity={item}
+            showShare={this.props.teamSharingActivated}
             showEdit={this.isFilterable()}
-            EntityType={StrategyConstants.UserFilterStrategyFriendlyName}
+            entityType={StrategyConstants.UserFilterStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
-            onDelete={UserFilterRedux.UserFilterDelete(item)}
+            onDelete={FilterRedux.UserFilterDelete(item)}
           />
         );
         strategySummaries.push(detailRow);
@@ -84,17 +78,23 @@ export class UserFilterSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <UserFilterWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
-            SelectedColumnId={this.props.SummarisedColumn.ColumnId}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as UserFilter}
+            configEntities={null}
+            modalContainer={this.props.modalContainer}
+            SelectedColumnId={this.props.summarisedColumn.ColumnId}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
+            onSetNewSharedQueryName={() => {
+              throw 'unimplemented';
+            }}
+            onSetUseSharedQuery={() => {
+              throw 'unimplemented';
+            }}
           />
         )}
       </div>
@@ -106,20 +106,15 @@ export class UserFilterSummaryComponent extends React.Component<
       return 'Column is not filterable';
     }
 
-    return Helper.ReturnItemCount(
-      this.props.Api.userFilterApi
-        .getAllUserFilter()
-        .filter(uf => uf.ColumnId == this.props.SummarisedColumn.ColumnId),
-      StrategyConstants.UserFilterStrategyFriendlyName
-    );
+    return '5';
   }
 
-  getDescription(userFilter: UserFilter): string {
+  getDescription(): string {
     if (!this.isColumnFilterable()) {
       return 'Column is not filterable';
     }
 
-    return ExpressionHelper.ConvertExpressionToString(userFilter.Expression, this.props.Api);
+    return 'Need to do do this';
   }
 
   isFilterable(): boolean {
@@ -130,7 +125,7 @@ export class UserFilterSummaryComponent extends React.Component<
   }
 
   isColumnFilterable(): boolean {
-    if (this.props.SummarisedColumn && !this.props.SummarisedColumn.Filterable) {
+    if (this.props.summarisedColumn && !this.props.summarisedColumn.Filterable) {
       return false;
     }
     return true;
@@ -138,55 +133,52 @@ export class UserFilterSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    // configEntity.Scope.ColumnIds[0] = this.props.SummarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(UserFilter: UserFilter) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(UserFilter),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(UserFilter),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditUserFilter(userFilter);
     } else {
       this.props.onAddUserFilter(userFilter);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    return (
-      StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
-      StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression)
-    );
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
+    return StringExtensions.IsNotNullOrEmpty(userFilter.Name); //&&
+    // StringExtensions.IsNotEmpty(userFilter.Scope.ColumnIds[0])
   }
 }
-function mapStateToProps(state: AdaptableState, ownProps: any): Partial<UserFilterSummaryProps> {
+function mapStateToProps(): Partial<UserFilterSummaryProps> {
   return {};
 }
 
@@ -194,10 +186,8 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<UserFilterSummaryProps> {
   return {
-    onAddUserFilter: (UserFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterAdd(UserFilter)),
-    onEditUserFilter: (UserFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterEdit(UserFilter)),
+    onAddUserFilter: (UserFilter: UserFilter) => dispatch(FilterRedux.UserFilterAdd(UserFilter)),
+    onEditUserFilter: (UserFilter: UserFilter) => dispatch(FilterRedux.UserFilterEdit(UserFilter)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

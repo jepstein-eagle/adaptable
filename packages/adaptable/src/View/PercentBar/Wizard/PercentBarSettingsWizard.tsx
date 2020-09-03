@@ -28,11 +28,11 @@ export class PercentBarSettingsWizard
   constructor(props: PercentBarSettingsWizardProps) {
     super(props);
     this.state = {
-      ShowValue: this.props.Data.ShowValue,
-      ShowToolTip: this.props.Data.ShowToolTip,
-      DisplayRawValue: this.props.Data.DisplayRawValue,
-      DisplayPercentageValue: this.props.Data.DisplayPercentageValue,
-      BackColor: this.props.Data.BackColor,
+      ShowValue: this.props.data.ShowValue,
+      ShowToolTip: this.props.data.ShowToolTip,
+      DisplayRawValue: this.props.data.DisplayRawValue,
+      DisplayPercentageValue: this.props.data.DisplayPercentageValue,
+      BackColor: this.props.data.BackColor,
     };
   }
 
@@ -83,7 +83,7 @@ export class PercentBarSettingsWizard
               ></Checkbox>
               {this.state.BackColor !== undefined && (
                 <ColorPicker
-                  Api={this.props.Api}
+                  api={this.props.api}
                   value={this.state.BackColor}
                   onChange={(event: React.FormEvent) => {
                     const { value } = event.target as HTMLInputElement;
@@ -106,22 +106,22 @@ export class PercentBarSettingsWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.ShowValue = this.state.ShowValue;
-    this.props.Data.ShowToolTip = this.state.ShowToolTip;
-    this.props.Data.DisplayRawValue = this.state.DisplayRawValue;
-    this.props.Data.DisplayPercentageValue = this.state.DisplayPercentageValue;
-    this.props.Data.BackColor = this.state.BackColor;
+  public next(): void {
+    this.props.data.ShowValue = this.state.ShowValue;
+    this.props.data.ShowToolTip = this.state.ShowToolTip;
+    this.props.data.DisplayRawValue = this.state.DisplayRawValue;
+    this.props.data.DisplayPercentageValue = this.state.DisplayPercentageValue;
+    this.props.data.BackColor = this.state.BackColor;
   }
 
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

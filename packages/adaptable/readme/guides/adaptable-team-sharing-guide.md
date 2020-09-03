@@ -1,7 +1,7 @@
 # AdapTable Team Sharing Guide
 Team Sharing allows users to share - at run-time - Adaptable Objects between colleagues.
 
-It is designed for use cases where the same, newly-created Adaptable Object (e.g. a Layout, Conditional Style, Advanced Search, Report etc.) will be required by multiple users.
+It is designed for use cases where the same, newly-created Adaptable Object (e.g. a Layout, Conditional Style, Report etc.) will be required by multiple users.
 
 ## Enabling Team Sharing
 For Team Sharing to be available both of the following must be set up:

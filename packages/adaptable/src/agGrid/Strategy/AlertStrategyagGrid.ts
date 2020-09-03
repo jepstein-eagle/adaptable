@@ -13,7 +13,7 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
   }
 
   public initStyles(): void {
-    let allColumns = this.adaptable.api.gridApi.getColumns();
+    let allColumns = this.adaptable.api.columnApi.getColumns();
     let theAdaptableInstance = this.adaptable as Adaptable;
 
     let alertDefsWithHighlightCells: AlertDefinition[] = this.adaptable.api.alertApi
@@ -24,7 +24,9 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
       allColumns.forEach(col => {
         let cellClassRules: any = {};
 
-        let alertDefinitions = alertDefsWithHighlightCells.filter(x => x.ColumnId == col.ColumnId);
+        let alertDefinitions = alertDefsWithHighlightCells.filter(x =>
+          this.adaptable.api.scopeApi.isColumnInScopeColumns(col, x.Scope)
+        );
 
         if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
           alertDefinitions.forEach((alertDefinition: AlertDefinition) => {
@@ -36,7 +38,11 @@ export class AlertStrategyagGrid extends AlertStrategy implements IAlertStrategy
                 let relevantAlerts: AdaptableAlert[] = currentAlerts.filter(
                   aa =>
                     aa.AlertDefinition.AlertProperties.HighlightCell &&
-                    aa.AlertDefinition.ColumnId == col.ColumnId &&
+                    this.adaptable.api.scopeApi.isColumnInScopeColumns(
+                      col,
+                      aa.AlertDefinition.Scope
+                    ) &&
+                    //   aa.AlertDefinition.ColumnId == col.ColumnId &&
                     aa.AlertDefinition.MessageType == alertDefinition.MessageType &&
                     aa.DataChangedInfo &&
                     aa.DataChangedInfo.PrimaryKeyValue ==

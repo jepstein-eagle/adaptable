@@ -4,7 +4,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { DistinctCriteriaPairValue } from '../../../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../../../PredefinedConfig/Common/Enums';
 
 import { DualListBoxEditor, DisplaySize } from '../../Components/ListBox/DualListBoxEditor';
 import { CustomSort } from '../../../PredefinedConfig/CustomSortState';
@@ -25,16 +25,14 @@ export class CustomSortValuesWizard
   extends React.Component<CustomSortValuesWizardProps, CustomSortValuesWizardState>
   implements AdaptableWizardStep {
   constructor(props: CustomSortValuesWizardProps) {
-    let adaptable: IAdaptable = props.Api.internalApi.getAdaptableInstance();
+    let adaptable: IAdaptable = props.api.internalApi.getAdaptableInstance();
     super(props);
     this.state = {
-      ColumnValues: adaptable.getColumnValueDisplayValuePairDistinctList(
-        this.props.Data.ColumnId,
-        DistinctCriteriaPairValue.DisplayValue,
-        false
+      ColumnValues: adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+        this.props.data.ColumnId
       ),
-      SelectedValues: this.props.Data.SortedValues,
-      IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.Data.SortedValues),
+      SelectedValues: this.props.data.SortedValues,
+      IsEdit: ArrayExtensions.IsNotNullOrEmpty(this.props.data.SortedValues),
     };
   }
 
@@ -52,9 +50,6 @@ export class CustomSortValuesWizard
           SelectedValues={this.state.SelectedValues}
           HeaderAvailable="Column Values"
           HeaderSelected="Custom Sort Order"
-          DisplayMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
-          SortMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]}
-          ValueMember={DistinctCriteriaPairValue[DistinctCriteriaPairValue.DisplayValue]}
           onChange={SelectedValues => this.OnSelectedValuesChange(SelectedValues)}
           DisplaySize={DisplaySize.Small}
         />
@@ -66,7 +61,7 @@ export class CustomSortValuesWizard
   }
   OnSelectedValuesChange(newValues: Array<string>) {
     this.setState({ SelectedValues: newValues } as CustomSortValuesWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -76,16 +71,16 @@ export class CustomSortValuesWizard
   public canBack(): boolean {
     return !this.state.IsEdit;
   }
-  public Next(): void {
-    this.props.Data.SortedValues = this.state.SelectedValues;
+  public next(): void {
+    this.props.data.SortedValues = this.state.SelectedValues;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

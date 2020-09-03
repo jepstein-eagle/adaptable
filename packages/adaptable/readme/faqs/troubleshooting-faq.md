@@ -6,7 +6,7 @@ This is likely because the Function is 'Read Only'.  When this happens users can
 
 **Why are some rows missing from my grid?**
 
-Check that there are no Column Filters applied, or that there is no active Advanced Search.  
+Check that there are no Column Filters applied, or that the Current Query is empty.  
 
 **Why can I not see some toolbars in my Dashboard that other user have?**
 

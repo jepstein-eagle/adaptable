@@ -48,7 +48,7 @@ class CellSummaryToolPanelComponent extends React.Component<
     this.state = { IsMinimised: true };
   }
   public componentDidMount() {
-    this.props.Api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
+    this.props.api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
       this.props.onCreateCellSummary();
     });
   }
@@ -85,8 +85,8 @@ class CellSummaryToolPanelComponent extends React.Component<
     let cellSummaryPopover = <CellSummaryPopover CellSummary={this.props.CellSummary} />;
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == 'ReadOnly' ||
-      this.props.Api.internalApi.isGridInPivotMode() ||
+      this.props.accessLevel == 'ReadOnly' ||
+      this.props.api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 
     let operationValue = shouldDisable ? null : this.getOperationValue();

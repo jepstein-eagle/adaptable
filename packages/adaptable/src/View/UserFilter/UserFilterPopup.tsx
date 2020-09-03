@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
-import * as UserFilterRedux from '../../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../../Redux/ActionsReducers/FilterRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
@@ -21,16 +21,14 @@ import {
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 interface UserFilterPopupProps extends StrategyViewPopupProps<UserFilterPopupComponent> {
-  onAddUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterAddAction;
-  onEditUserFilter: (userFilter: UserFilter) => UserFilterRedux.UserFilterEditAction;
+  onAddUserFilter: (userFilter: UserFilter) => FilterRedux.UserFilterAddAction;
+  onEditUserFilter: (userFilter: UserFilter) => FilterRedux.UserFilterEditAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -47,20 +45,20 @@ class UserFilterPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        if (this.props.popupParams.action == 'New') {
           let userFilter: UserFilter = ObjectFactory.CreateEmptyUserFilter();
-          userFilter.ColumnId = this.props.PopupParams.columnId;
+          userFilter.Scope = { ColumnIds: [this.props.popupParams.column.ColumnId] };
           this.setState({
-            EditedAdaptableObject: userFilter,
-            WizardStartIndex: 1,
-            WizardStatus: WizardStatus.New,
+            editedAdaptableObject: userFilter,
+            wizardStartIndex: 1,
+            wizardStatus: WizardStatus.New,
           });
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
   render() {
@@ -71,21 +69,21 @@ class UserFilterPopupComponent extends React.Component<
       "Once created, User Filters are available in the column's filter dropdown as if a single colum value.",
       <br />,
       <br />,
-      'Additionally they are available when creating other Queries (e.g. for Advanced Search)',
+      'Additionally they are available when creating other Queries (e.g. for Reports)',
       <br />,
       <br />,
       'A User Filter Query can contain only one Column Condition; but that condition may contain as many column values, filter or ranges as required.',
     ];
 
     let selectedColumnId: string = '';
-    if (this.state.EditedAdaptableObject != null) {
-      let filter: UserFilter = this.state.EditedAdaptableObject as UserFilter;
-      let editedColumn: string = filter.ColumnId;
+    if (this.state.editedAdaptableObject != null) {
+      let filter: UserFilter = this.state.editedAdaptableObject as UserFilter;
+      let editedColumn: string = ''; //filter.Scope.ColumnIds[0];
       if (StringExtensions.IsNotNullOrEmpty(editedColumn)) {
         selectedColumnId = editedColumn;
-      } else if (this.props.PopupParams) {
-        if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-          selectedColumnId = this.props.PopupParams.columnId;
+      } else if (this.props.popupParams) {
+        if (this.props.popupParams.action && this.props.popupParams.column) {
+          selectedColumnId = this.props.popupParams.column.ColumnId;
         }
       }
     }
@@ -97,29 +95,32 @@ class UserFilterPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
 
-    let UserFilterItems = this.props.Api.userFilterApi
-      .getAllUserFilter()
-      .map((userFilter, index) => {
-        return (
-          <UserFilterEntityRow
-            AdaptableObject={userFilter}
-            api={this.props.Api}
-            colItems={colItems}
-            key={'CS' + index}
-            onShare={description => this.props.onShare(userFilter, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            onEdit={() => this.onEdit(userFilter)}
-            onDeleteConfirm={UserFilterRedux.UserFilterDelete(userFilter)}
-            AccessLevel={this.props.AccessLevel}
-          />
-        );
-      });
+    let UserFilterItems = this.props.api.filterApi.getAllUserFilter().map((userFilter, index) => {
+      return (
+        <UserFilterEntityRow
+          adaptableObject={userFilter}
+          api={this.props.api}
+          colItems={colItems}
+          key={'CS' + index}
+          onShare={description => this.props.onShare(userFilter, description)}
+          teamSharingActivated={this.props.teamSharingActivated}
+          onEdit={() => this.onEdit(userFilter)}
+          onDeleteConfirm={FilterRedux.UserFilterDelete(userFilter)}
+          accessLevel={this.props.accessLevel}
+        />
+      );
+    });
 
     let newButton = (
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create User Filter"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
       />
     );
 
@@ -140,22 +141,28 @@ class UserFilterPopupComponent extends React.Component<
               <p />
               <p>
                 Once created, user filters are accessible both when filtering columns and creating
-                queries (e.g. Advanced Search, Plus / Minus, Conditional Style etc.).
+                queries (e.g. Export, Plus / Minus, Conditional Style etc.).
               </p>
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <UserFilterWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as UserFilter}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as UserFilter}
+              configEntities={null}
+              modalContainer={this.props.modalContainer}
+              wizardStartIndex={this.state.wizardStartIndex}
               SelectedColumnId={selectedColumnId}
-              Api={this.props.Api}
+              api={this.props.api}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
+              onSetNewSharedQueryName={() => {
+                throw 'unimplemented';
+              }}
+              onSetUseSharedQuery={() => {
+                throw 'unimplemented';
+              }}
             />
           )}
         </PanelWithButton>
@@ -165,27 +172,27 @@ class UserFilterPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyUserFilter(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyUserFilter(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(userFilter: UserFilter) {
     let clonedObject: UserFilter = Helper.cloneObject(userFilter);
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(clonedObject),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(clonedObject),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -193,28 +200,23 @@ class UserFilterPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditUserFilter(userFilter);
     } else {
       this.props.onAddUserFilter(userFilter);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard() {
-    let userFilter = this.state.EditedAdaptableObject as UserFilter;
-    return (
-      StringExtensions.IsNotNullOrEmpty(userFilter.Name) &&
-      StringExtensions.IsNotEmpty(userFilter.ColumnId) &&
-      ExpressionHelper.IsNotEmptyOrInvalidExpression(userFilter.Expression)
-    );
+    let userFilter = this.state.editedAdaptableObject as UserFilter;
+    return true; // to do!
   }
 }
 
@@ -226,10 +228,8 @@ function mapDispatchToProps(
   dispatch: Redux.Dispatch<Redux.Action<AdaptableState>>
 ): Partial<UserFilterPopupProps> {
   return {
-    onAddUserFilter: (userFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterAdd(userFilter)),
-    onEditUserFilter: (userFilter: UserFilter) =>
-      dispatch(UserFilterRedux.UserFilterEdit(userFilter)),
+    onAddUserFilter: (userFilter: UserFilter) => dispatch(FilterRedux.UserFilterAdd(userFilter)),
+    onEditUserFilter: (userFilter: UserFilter) => dispatch(FilterRedux.UserFilterEdit(userFilter)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

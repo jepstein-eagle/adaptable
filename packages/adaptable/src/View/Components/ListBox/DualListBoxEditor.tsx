@@ -4,8 +4,6 @@ import * as ReactDOM from 'react-dom';
 import { SortOrder } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterSortComponent } from './ListBoxFilterSortComponent';
 import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
-import { IMasterChildren } from '../../../Utilities/Interface/IMasterChildren';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import ListGroupItem from '../../../components/List/ListGroupItem';
 import Checkbox from '../../../components/CheckBox';
 import SimpleButton, { SimpleButtonProps } from '../../../components/SimpleButton';
@@ -19,11 +17,6 @@ export enum DisplaySize {
   Small,
   XSmall,
 }
-export interface IMasterValue {
-  value: string;
-  isOpen: boolean;
-  isAvailable: boolean;
-}
 
 export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBoxEditor> {
   SelectedValues: Array<any>;
@@ -31,13 +24,9 @@ export interface DualListBoxEditorProps extends React.ClassAttributes<DualListBo
   onChange: (SelectedValues: Array<any>) => void;
   HeaderAvailable: string;
   HeaderSelected: string;
-  //if not primitive objects all DisplayMember and ValueMember and sortmember need to be used
-  DisplayMember?: string;
+
   style?: React.CSSProperties;
-  ValueMember?: string;
-  SortMember?: string;
   DisplaySize?: DisplaySize;
-  MasterChildren?: IMasterChildren[];
 }
 
 export interface DualListBoxEditorState extends React.ClassAttributes<DualListBoxEditor> {
@@ -50,7 +39,6 @@ export interface DualListBoxEditorState extends React.ClassAttributes<DualListBo
   SortOrder: SortOrder;
   SelectedValuesSortOrder: SortOrder;
   AllValues: Array<any>;
-  MasterValues: Array<IMasterValue>;
 }
 
 const ButtonDirection = (props: SimpleButtonProps) => (
@@ -80,82 +68,44 @@ export class DualListBoxEditor extends React.Component<
     };
 
     this.props.AvailableValues.forEach(x => {
-      if (this.props.ValueMember) {
-        if (this.props.SelectedValues.findIndex(y => y == x[this.props.ValueMember]) < 0) {
-          availableValues.push(x);
-        }
-      } else {
-        if (this.props.SelectedValues.indexOf(x) < 0) {
-          availableValues.push(x);
-        }
+      if (this.props.SelectedValues.indexOf(x) < 0) {
+        availableValues.push(x);
       }
     });
     this.state = {
       SelectedValues: this.props.SelectedValues,
-      AvailableValues: this.createAvailableValuesList(
-        availableValues,
-        SortOrder.Ascending,
-        this.props.SortMember
-      ),
+      AvailableValues: this.createAvailableValuesList(availableValues, SortOrder.Asc),
       UiSelectedSelectedValues: [],
       UiSelectedAvailableValues: [],
       FilterValue: '',
       SelectedValuesFilterValue: '',
-      SortOrder: SortOrder.Ascending,
-      SelectedValuesSortOrder: SortOrder.Ascending,
+      SortOrder: SortOrder.Asc,
+      SelectedValuesSortOrder: SortOrder.Asc,
       AllValues: this.props.AvailableValues,
-      MasterValues: this.buildMasterValues(this.props.MasterChildren),
     };
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: DualListBoxEditorProps, nextContext: any) {
     let availableValues = new Array<any>();
     nextProps.AvailableValues.forEach(x => {
-      if (nextProps.ValueMember) {
-        if (nextProps.SelectedValues.findIndex(y => y == x[nextProps.ValueMember]) < 0) {
-          availableValues.push(x);
-        }
-      } else {
-        if (nextProps.SelectedValues.indexOf(x) < 0) {
-          availableValues.push(x);
-        }
+      if (nextProps.SelectedValues.indexOf(x) < 0) {
+        availableValues.push(x);
       }
     });
     //we need to rebuild the list of UI Selected items in case we are managing non primitive objects as we compare stuff on instance rather than properties
     let uiAvailableSelected: Array<any>;
     let uiSelectedSelected: Array<any>;
-    if (nextProps.ValueMember) {
-      uiAvailableSelected = [];
-      this.state.UiSelectedAvailableValues.forEach(x => {
-        let item = availableValues.find(y => y[nextProps.ValueMember] == x[nextProps.ValueMember]);
-        if (item) {
-          uiAvailableSelected.push(item);
-        }
-      });
-      uiSelectedSelected = [];
-      this.state.UiSelectedSelectedValues.forEach(x => {
-        let item = nextProps.SelectedValues.find(y => y == x);
-        if (item) {
-          uiSelectedSelected.push(item);
-        }
-      });
-    } else {
-      uiAvailableSelected = this.state.UiSelectedAvailableValues;
-      uiSelectedSelected = this.state.UiSelectedSelectedValues;
-    }
+
+    uiAvailableSelected = this.state.UiSelectedAvailableValues;
+    uiSelectedSelected = this.state.UiSelectedSelectedValues;
 
     this.setState({
       SelectedValues: nextProps.SelectedValues,
-      AvailableValues: this.createAvailableValuesList(
-        availableValues,
-        this.state.SortOrder,
-        nextProps.SortMember
-      ),
+      AvailableValues: this.createAvailableValuesList(availableValues, this.state.SortOrder),
       UiSelectedAvailableValues: uiAvailableSelected,
       UiSelectedSelectedValues: uiSelectedSelected,
       FilterValue: this.state.FilterValue,
       SortOrder: this.state.SortOrder,
-      MasterValues: this.buildMasterValues(nextProps.MasterChildren),
     });
   }
   render() {
@@ -168,13 +118,8 @@ export class DualListBoxEditor extends React.Component<
     let selectedElements = this.state.SelectedValues.map((x, index) => {
       let isActive = this.state.UiSelectedSelectedValues.indexOf(x) >= 0;
 
-      let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
       if (
-        this.isValueFilteredOut(
-          display,
-          this.state.SelectedValuesFilterValue,
-          this.state.SelectedValues
-        )
+        this.isValueFilteredOut(x, this.state.SelectedValuesFilterValue, this.state.SelectedValues)
       ) {
         return null;
       }
@@ -202,49 +147,27 @@ export class DualListBoxEditor extends React.Component<
       return result;
     });
 
-    // build available elements - might have master/children
+    // build available elements
     let availableElements = this.state.AvailableValues.map((x, index) => {
       let isActive = this.state.UiSelectedAvailableValues.indexOf(x) >= 0;
-      let display = this.props.DisplayMember ? x[this.props.DisplayMember] : x;
-      let value = this.props.ValueMember ? x[this.props.ValueMember] : x;
-      let masterValue: IMasterValue = this.state.MasterValues.find(mv => mv.value == x);
-      let isMasterElement = masterValue != null;
+      let value = x;
 
-      if (this.isValueFilteredOut(display)) {
+      if (this.isValueFilteredOut(x)) {
         return null;
       } else {
-        return isMasterElement ? (
-          <ListGroupItem
-            key={`${value}-master`}
-            className="Available"
-            index={index}
-            selectionId={value}
-            style={listGroupItemStyle}
-            active={isActive}
-            draggable={false}
-            value={value}
-          >
-            <Checkbox
-              key={masterValue.value}
-              checked={masterValue.isOpen}
-              onChange={(checked: boolean) => this.onMasterValueCheckChanged(checked, x)}
-            >
-              {display}
-            </Checkbox>
-          </ListGroupItem>
-        ) : (
+        return (
           <ListGroupItem
             className="Available"
             style={listGroupItemStyle}
             active={isActive}
             index={index}
             draggable={true}
-            key={`${value}-not-master`}
+            key={`${value}-item`}
             onDragStart={event => this.DragAvailableStart(event, x)}
             onDragEnd={() => this.DragAvailableEnd()}
             value={value}
           >
-            {display}
+            {x}
           </ListGroupItem>
         );
       }
@@ -256,7 +179,6 @@ export class DualListBoxEditor extends React.Component<
         sortColumnValues={() => this.sortColumnValues()}
         SortOrder={this.state.SortOrder}
         handleChangeFilterValue={e => this.handleChangeFilterValue(e)}
-        DisableSort={ArrayExtensions.IsNotEmpty(this.state.MasterValues)}
       />
     );
 
@@ -266,7 +188,6 @@ export class DualListBoxEditor extends React.Component<
         sortColumnValues={() => this.sortSelectedColumnValues()}
         SortOrder={this.state.SelectedValuesSortOrder}
         handleChangeFilterValue={e => this.handleChangeSelectedValuesFilterValue(e)}
-        DisableSort={ArrayExtensions.IsNotEmpty(this.state.MasterValues)}
       />
     );
 
@@ -427,80 +348,9 @@ export class DualListBoxEditor extends React.Component<
     );
   }
 
-  buildMasterValues(masterChildren: IMasterChildren[]): IMasterValue[] {
-    if (ArrayExtensions.IsNullOrEmpty(masterChildren)) {
-      return [];
-    }
-    return this.props.MasterChildren.map(mc => {
-      return { value: mc.Master, isAvailable: false, isOpen: true };
-    });
-  }
-
-  onMasterValueCheckChanged(checked: boolean, item: any): void {
-    let masterValues = [].concat(this.state.MasterValues);
-    let currentMasterValue: IMasterValue = masterValues.find(mv => mv.value == item);
-
-    currentMasterValue.isOpen = checked;
-    let newArray = [...this.state.UiSelectedAvailableValues];
-
-    let index = this.state.UiSelectedAvailableValues.indexOf(item);
-    if (index >= 0) {
-      let newArray = [...this.state.UiSelectedAvailableValues];
-      newArray.splice(index, 1);
-    }
-
-    this.setState({
-      MasterValues: masterValues,
-      UiSelectedAvailableValues: newArray,
-    } as DualListBoxEditorState);
-  }
-
-  createAvailableValuesList(
-    availableValues: any[],
-    sortOrder: SortOrder,
-    sortMember: string
-  ): any[] {
-    // if there are no master / children then sort the values
-    if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-      let valstoReturn: any[] = ArrayExtensions.sortArrayWithProperty(
-        sortOrder,
-        availableValues,
-        sortMember
-      );
-      return valstoReturn;
-    }
-
-    // we do have master / children
-    let returnValues: any[] = [];
-
-    // first add any orphans = that are not masters or are not children
-    availableValues.forEach(av => {
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(
-        mc => mc.Master == av || ArrayExtensions.ContainsItem(mc.Children, av)
-      );
-      if (!masterChildren) {
-        returnValues.push(av);
-      }
-    });
-
-    // now add all the Master Children
-    this.props.MasterChildren.forEach(mc => {
-      let availableChildren: any[] = [];
-
-      mc.Children.forEach(c => {
-        if (ArrayExtensions.ContainsItem(availableValues, c)) {
-          availableChildren.push(c);
-        }
-      });
-      // only add the item if there are available children
-      if (ArrayExtensions.IsNotEmpty(availableChildren)) {
-        returnValues.push(mc.Master);
-        availableChildren.forEach(c => {
-          returnValues.push(c);
-        });
-      }
-    });
-    return returnValues;
+  createAvailableValuesList(availableValues: any[], sortOrder: SortOrder): any[] {
+    let valstoReturn: any[] = ArrayExtensions.sortArray(availableValues, sortOrder);
+    return valstoReturn;
   }
 
   isValueFilteredOut = (
@@ -508,65 +358,9 @@ export class DualListBoxEditor extends React.Component<
     FilterValue: string = this.state.FilterValue,
     Values: Array<any> = this.state.AvailableValues
   ): boolean => {
-    // if not master child then simply filter on the value
-    if (ArrayExtensions.IsNullOrEmpty(this.state.MasterValues)) {
-      return (
-        FilterValue != '' && item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0
-      );
-    }
-
-    let masterNames = this.state.MasterValues.map(mv => {
-      return mv.value;
-    });
-    let isFilterMode: boolean = StringExtensions.IsNotEmpty(FilterValue);
-
-    if (ArrayExtensions.ContainsItem(masterNames, item)) {
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == item);
-      let filterMaster: boolean = true;
-      if (masterChildren) {
-        // so we are dealing with a Master
-
-        masterChildren.Children.forEach(c => {
-          if (ArrayExtensions.ContainsItem(Values, c)) {
-            // we need the child to be present to show the master
-            if (isFilterMode) {
-              // if there is a filter then the child needs to pass that in order to display the Master
-              if (c.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) >= 0) {
-                filterMaster = false;
-              }
-            } else {
-              // if no filter, then always show the Master
-              filterMaster = false;
-            }
-          }
-        });
-      }
-      return filterMaster;
-    } else {
-      // its a child - so first check that the Master is open
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc =>
-        ArrayExtensions.ContainsItem(mc.Children, item)
-      );
-      if (masterChildren) {
-        let masterValue: IMasterValue = this.state.MasterValues.find(
-          mv => mv.value == masterChildren.Master
-        );
-        if (!masterValue.isOpen) {
-          // no open Master so always filter
-          return true;
-        } else {
-          // if there is a filter then check on that, otherwise return false
-          if (isFilterMode) {
-            return item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0;
-          } else {
-            return false;
-          }
-        }
-      } else {
-        // for orphans filter as normal
-        return item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0;
-      }
-    }
+    return (
+      FilterValue != '' && item.toLocaleLowerCase().indexOf(FilterValue.toLocaleLowerCase()) < 0
+    );
   };
 
   canGoTopOrUp(): boolean {
@@ -672,17 +466,10 @@ export class DualListBoxEditor extends React.Component<
     valuesToAdd.forEach(x => {
       let index = newAvailableValues.indexOf(x);
       newAvailableValues.splice(index, 1);
-      if (this.props.ValueMember) {
-        newSelectedValues.push(x[this.props.ValueMember]);
-      } else {
-        newSelectedValues.push(x);
-      }
+
+      newSelectedValues.push(x);
     });
-    newAvailableValues = this.createAvailableValuesList(
-      newAvailableValues,
-      this.state.SortOrder,
-      this.props.SortMember
-    );
+    newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder);
 
     this.setState(
       {
@@ -698,58 +485,18 @@ export class DualListBoxEditor extends React.Component<
     let newSelectedValues = [].concat(this.state.SelectedValues);
     let valuesToAdd = this.getValuesToAdd(this.state.AvailableValues);
     valuesToAdd.forEach(x => {
-      if (this.props.ValueMember) {
-        newSelectedValues.push(x[this.props.ValueMember]);
-      } else {
-        if (ArrayExtensions.NotContainsItem(this.state.MasterValues, x)) {
-          newSelectedValues.push(x);
-        }
-      }
+      newSelectedValues.push(x);
     });
-
-    let newAvailableValues: string[] = [];
-
-    this.setState(
-      {
-        UiSelectedSelectedValues: [],
-        UiSelectedAvailableValues: [],
-        SelectedValues: newSelectedValues,
-        AvailableValues: newAvailableValues,
-      } as DualListBoxEditorState,
-      () => this.raiseOnChange()
-    );
   }
 
   getValuesToAdd(addedValues: any[]): any[] {
-    if (ArrayExtensions.IsNullOrEmpty(this.props.MasterChildren)) {
-      return addedValues;
-    }
-
-    let newAvailableValues: any[] = [];
-
-    addedValues.forEach(av => {
-      let masterChildren: IMasterChildren = this.props.MasterChildren.find(mc => mc.Master == av);
-      if (masterChildren) {
-        masterChildren.Children.forEach(c => {
-          if (ArrayExtensions.ContainsItem(this.state.AvailableValues, c)) {
-            ArrayExtensions.AddItem(newAvailableValues, c);
-          }
-        });
-      } else {
-        ArrayExtensions.AddItem(newAvailableValues, av);
-      }
-    });
-    return newAvailableValues;
+    return addedValues;
   }
 
   RemoveAll() {
     let newSelectedValues: string[] = [];
     let newAvailableValues = [].concat(this.state.AllValues);
-    newAvailableValues = this.createAvailableValuesList(
-      newAvailableValues,
-      this.state.SortOrder,
-      this.props.SortMember
-    );
+    newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder);
     this.setState(
       {
         UiSelectedSelectedValues: [],
@@ -767,23 +514,13 @@ export class DualListBoxEditor extends React.Component<
     this.state.UiSelectedSelectedValues.forEach(x => {
       let index = newSelectedValues.indexOf(x);
       newSelectedValues.splice(index, 1);
-      if (this.props.ValueMember) {
-        let originalItem = this.state.AllValues.find(y => y[this.props.ValueMember] == x);
-        if (originalItem) {
-          newAvailableValues.push(originalItem);
-        }
-      } else {
-        let originalItem = this.state.AllValues.find(y => y == x);
-        if (originalItem) {
-          newAvailableValues.push(originalItem);
-        }
+
+      let originalItem = this.state.AllValues.find(y => y == x);
+      if (originalItem) {
+        newAvailableValues.push(originalItem);
       }
     });
-    newAvailableValues = this.createAvailableValuesList(
-      newAvailableValues,
-      this.state.SortOrder,
-      this.props.SortMember
-    );
+    newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder);
     this.setState(
       {
         UiSelectedSelectedValues: [],
@@ -809,56 +546,29 @@ export class DualListBoxEditor extends React.Component<
       let newSelectedArray: Array<any>;
       let newAvailableValues: Array<any>;
       if (this.overHTMLElement.classList.contains('Available')) {
-        if (this.props.DisplayMember) {
-          to = this.state.AvailableValues.findIndex(
-            x => x[this.props.DisplayMember] == this.overHTMLElement.innerText
-          );
-        } else {
-          to = this.state.AvailableValues.indexOf(this.overHTMLElement.innerText);
-        }
+        to = this.state.AvailableValues.indexOf(this.overHTMLElement.innerText);
+
         newSelectedArray = [...this.state.SelectedValues];
         newSelectedArray.splice(from, 1);
         newAvailableValues = [...this.state.AvailableValues];
-        if (this.props.ValueMember) {
-          let originalItem = this.state.AllValues.find(
-            y => y[this.props.ValueMember] == this.draggedElement
-          );
-          if (originalItem) {
-            let checkForExistig: any = newAvailableValues.find(x => x == originalItem);
-            if (!checkForExistig) {
-              newAvailableValues.splice(to, 0, originalItem);
-            }
-          }
-        } else {
-          let originalItem = this.state.AllValues.find(y => y == this.draggedElement);
-          if (originalItem) {
-            let checkForExistig: any = newAvailableValues.find(x => x == originalItem);
-            if (!checkForExistig) {
-              newAvailableValues.splice(to, 0, originalItem);
-            }
+
+        let originalItem = this.state.AllValues.find(y => y == this.draggedElement);
+        if (originalItem) {
+          let checkForExistig: any = newAvailableValues.find(x => x == originalItem);
+          if (!checkForExistig) {
+            newAvailableValues.splice(to, 0, originalItem);
           }
         }
       } else if (this.overHTMLElement.classList.contains('ab-AvailableDropZone')) {
         newSelectedArray = [...this.state.SelectedValues];
         newSelectedArray.splice(from, 1);
         newAvailableValues = [...this.state.AvailableValues];
-        if (this.props.ValueMember) {
-          let originalItem = this.state.AllValues.find(
-            y => y[this.props.ValueMember] == this.draggedElement
-          );
-          if (originalItem) {
-            let checkForExistig: any = newAvailableValues.find(x => x == originalItem);
-            if (!checkForExistig) {
-              newAvailableValues.push(originalItem);
-            }
-          }
-        } else {
-          let originalItem = this.state.AllValues.find(y => y == this.draggedElement);
-          if (originalItem) {
-            let checkForExistig: any = newAvailableValues.find(x => x == originalItem);
-            if (!checkForExistig) {
-              newAvailableValues.push(originalItem);
-            }
+
+        let originalItem = this.state.AllValues.find(y => y == this.draggedElement);
+        if (originalItem) {
+          let checkForExistig: any = newAvailableValues.find(x => x == originalItem);
+          if (!checkForExistig) {
+            newAvailableValues.push(originalItem);
           }
         }
       } else if (this.overHTMLElement.classList.contains('Selected')) {
@@ -886,11 +596,7 @@ export class DualListBoxEditor extends React.Component<
       this.draggedHTMLElement = null;
       this.draggedElement = null;
       // Update state
-      newAvailableValues = this.createAvailableValuesList(
-        newAvailableValues,
-        this.state.SortOrder,
-        this.props.SortMember
-      );
+      newAvailableValues = this.createAvailableValuesList(newAvailableValues, this.state.SortOrder);
 
       this.setState(
         {
@@ -918,20 +624,16 @@ export class DualListBoxEditor extends React.Component<
         from = this.state.AvailableValues.indexOf(this.draggedElement);
         to = this.state.SelectedValues.indexOf(this.overHTMLElement.innerText);
         newSelectedArray = [...this.state.SelectedValues];
-        if (this.props.ValueMember) {
-          newSelectedArray.splice(to, 0, this.draggedElement[this.props.ValueMember]);
-        } else {
-          newSelectedArray.splice(to, 0, this.draggedElement);
-        }
+
+        newSelectedArray.splice(to, 0, this.draggedElement);
+
         newAvailableValues = [...this.state.AvailableValues];
         newAvailableValues.splice(from, 1);
       } else if (this.overHTMLElement.classList.contains('ab-SelectedDropZone')) {
         newSelectedArray = [...this.state.SelectedValues];
-        if (this.props.ValueMember) {
-          newSelectedArray.push(this.draggedElement[this.props.ValueMember]);
-        } else {
-          newSelectedArray.push(this.draggedElement);
-        }
+
+        newSelectedArray.push(this.draggedElement);
+
         newAvailableValues = [...this.state.AvailableValues];
         newAvailableValues.splice(from, 1);
       }
@@ -1052,45 +754,29 @@ export class DualListBoxEditor extends React.Component<
   }
 
   sortColumnValues() {
-    if (this.state.SortOrder == SortOrder.Ascending) {
+    if (this.state.SortOrder == SortOrder.Asc) {
       this.setState({
-        AvailableValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Descending,
-          this.state.AvailableValues,
-          this.props.SortMember
-        ),
-        SortOrder: SortOrder.Descending,
+        AvailableValues: ArrayExtensions.sortArray(this.state.AvailableValues, SortOrder.Desc),
+        SortOrder: SortOrder.Desc,
       } as DualListBoxEditorState);
     } else {
       this.setState({
-        AvailableValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
-          this.state.AvailableValues,
-          this.props.SortMember
-        ),
-        SortOrder: SortOrder.Ascending,
+        AvailableValues: ArrayExtensions.sortArray(this.state.AvailableValues, SortOrder.Asc),
+        SortOrder: SortOrder.Asc,
       } as DualListBoxEditorState);
     }
   }
 
   sortSelectedColumnValues() {
-    if (this.state.SelectedValuesSortOrder == SortOrder.Ascending) {
+    if (this.state.SelectedValuesSortOrder == SortOrder.Asc) {
       this.setState({
-        SelectedValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Descending,
-          this.state.SelectedValues,
-          this.props.SortMember
-        ),
-        SelectedValuesSortOrder: SortOrder.Descending,
+        SelectedValues: ArrayExtensions.sortArray(this.state.SelectedValues, SortOrder.Desc),
+        SelectedValuesSortOrder: SortOrder.Desc,
       } as DualListBoxEditorState);
     } else {
       this.setState({
-        SelectedValues: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
-          this.state.SelectedValues,
-          this.props.SortMember
-        ),
-        SelectedValuesSortOrder: SortOrder.Ascending,
+        SelectedValues: ArrayExtensions.sortArray(this.state.SelectedValues, SortOrder.Asc),
+        SelectedValuesSortOrder: SortOrder.Asc,
       } as DualListBoxEditorState);
     }
   }
@@ -1106,7 +792,7 @@ export class DualListBoxEditor extends React.Component<
       return -1;
     }
 
-    let display = this.props.DisplayMember ? item[this.props.DisplayMember] : item;
+    let display = item;
 
     if (
       this.isValueFilteredOut(
@@ -1138,8 +824,8 @@ export class DualListBoxEditor extends React.Component<
       return -1;
     }
 
-    let display = this.props.DisplayMember ? item[this.props.DisplayMember] : item;
-    let value = this.props.ValueMember ? item[this.props.ValueMember] : item;
+    let display = item;
+    let value = item;
 
     if (this.isValueFilteredOut(display)) {
       return -1;
@@ -1157,21 +843,9 @@ export class DualListBoxEditor extends React.Component<
     let availableValues = this.state.AvailableValues;
     let availableValuesMap: { [key: string]: any } = {};
 
-    if (this.props.ValueMember) {
-      availableValues = availableValues.map(x => {
-        const key = x[this.props.ValueMember];
-
-        availableValuesMap[key] = x;
-        return key;
-      });
-    }
     UiSelectedAvailableValues.sort(
       (a, b) => availableValues.indexOf(a) - availableValues.indexOf(b)
     );
-
-    if (this.props.ValueMember) {
-      UiSelectedAvailableValues = UiSelectedAvailableValues.map(k => availableValuesMap[k]);
-    }
 
     this.setState({ UiSelectedAvailableValues } as DualListBoxEditorState);
   };

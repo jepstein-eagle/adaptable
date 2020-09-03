@@ -135,12 +135,12 @@ export const ToolPanelSetToolPanelTitle = (Title: string): ToolPanelSetToolPanel
 
 const initialToolPanelState: ToolPanelState = {
   AvailableToolPanels: [
-    'AdvancedSearch',
+    //  'Query',
     'Alert',
     'BulkUpdate',
     'CellSummary',
     'Chart',
-    'ColumnFilter',
+    'Filter',
     'Dashboard',
     'Export',
     'Layout',
@@ -150,11 +150,11 @@ const initialToolPanelState: ToolPanelState = {
     'Theme',
   ],
   VisibleToolPanels: [
-    'AdvancedSearch',
+    //  'Query',
     'Alert',
     'BulkUpdate',
     'CellSummary',
-    'ColumnFilter',
+    'Filter',
     'Dashboard',
     'Export',
     'Layout',

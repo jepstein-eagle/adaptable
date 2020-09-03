@@ -22,17 +22,13 @@ import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ExportStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ExportStrategyFriendlyName,
-        ComponentName: ScreenPopups.ExportPopup,
-        Icon: StrategyConstants.ExportGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ExportStrategyId,
+      StrategyConstants.ExportStrategyFriendlyName,
+      StrategyConstants.ExportGlyph,
+      ScreenPopups.ExportPopup,
+      adaptable
+    );
   }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
@@ -120,11 +116,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
     let cols: AdaptableColumn[];
     if (report.ReportColumnScope == 'CustomColumns') {
-      cols = report.ColumnIds.map(c => {
-        return AdaptableHelper.createAdaptableColumnFromColumnId(c);
-      });
+      cols = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
     } else {
-      cols = this.adaptable.api.gridApi.getColumnsFromFriendlyNames(reportCols);
+      cols = this.adaptable.api.columnApi.getColumnsFromFriendlyNames(reportCols);
     }
     this.adaptable.api.exportApi.exportDataToExcel(
       cols.map(c => c.FriendlyName),
@@ -175,9 +169,14 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
-    let reports: Report[] = this.adaptable.api.exportApi
-      .getAllReports()
-      .filter((r: Report) => r.ColumnIds.includes(specialColumnId));
+    let reports: Report[] = this.adaptable.api.exportApi.getAllReports().filter((r: Report) =>
+      this.adaptable.api.scopeApi
+        .getColumnsForScope(r.Scope)
+        .map(c => {
+          return c.ColumnId;
+        })
+        .includes(specialColumnId)
+    );
 
     return ArrayExtensions.IsNotNullOrEmpty(reports) ? reports.length + ' Reports' : undefined;
   }

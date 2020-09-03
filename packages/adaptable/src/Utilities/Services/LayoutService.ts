@@ -1,21 +1,14 @@
-import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SortOrder } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { Layout, PivotDetails, LayoutState } from '../../PredefinedConfig/LayoutState';
-import AdaptableHelper from '../Helpers/AdaptableHelper';
+import { Layout, LayoutState } from '../../PredefinedConfig/LayoutState';
 import ArrayExtensions from '../Extensions/ArrayExtensions';
-
 import { ILayoutService } from './Interface/ILayoutService';
-import {
-  ColumnStateChangedEventArgs,
-  ColumnStateChangedInfo,
-} from '../../Api/Events/ColumnStateChanged';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import { AG_GRID_GROUPED_COLUMN } from '../Constants/GeneralConstants';
 import { GridState } from '../../PredefinedConfig/GridState';
 import { isEqual } from 'lodash';
+import { DEFAULT_LAYOUT } from '../Constants/GeneralConstants';
 
 export class LayoutService implements ILayoutService {
   constructor(private adaptable: IAdaptable) {
@@ -38,7 +31,7 @@ export class LayoutService implements ILayoutService {
       ColumnSorts: [],
       ColumnFlexMap: {},
       ColumnWidthMap: {},
-      GroupedColumns: [],
+      RowGroupedColumns: [],
     };
     layout1 = { ...defaults, ...layout1 };
     layout2 = { ...defaults, ...layout2 };
@@ -53,7 +46,6 @@ export class LayoutService implements ILayoutService {
     const isLayoutDefined = (layoutName: string) =>
       !!layoutState.Layouts.filter(layout => layout.Name === layoutName)[0];
 
-    let defaultLayoutName = 'Default Layout';
     let defaultLayoutColumns = gridState.Columns.filter(column => column.Visible);
 
     const columnsMap = gridState.Columns.reduce((acc, col) => {
@@ -68,10 +60,10 @@ export class LayoutService implements ILayoutService {
     }
 
     if (shouldCreateDefaultLayout) {
-      if (!layoutState.Layouts || !isLayoutDefined(defaultLayoutName)) {
+      if (!layoutState.Layouts || !isLayoutDefined(DEFAULT_LAYOUT)) {
         let defaultLayout: Layout = ObjectFactory.CreateEmptyLayout(
           {
-            Name: defaultLayoutName,
+            Name: DEFAULT_LAYOUT,
             Columns: defaultLayoutColumns.map(c => c.ColumnId),
           },
           gridState.Columns
@@ -91,11 +83,7 @@ export class LayoutService implements ILayoutService {
     return returnString;
   }
 
-  public getSortsForLayout(layout: Layout): ColumnSort[] {
-    return layout.ColumnSorts;
-  }
-
-  public getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
+  private getColumnSort(columnSorts: ColumnSort[], columns: AdaptableColumn[]): string {
     if (ArrayExtensions.IsNullOrEmpty(columnSorts)) {
       return 'None';
     }
@@ -103,21 +91,10 @@ export class LayoutService implements ILayoutService {
     let returnString: string = '';
     columnSorts.forEach((gs: ColumnSort) => {
       returnString +=
-        this.adaptable.api.gridApi.getFriendlyNameFromColumnId(gs.Column) +
-        this.getSortOrder(gs.SortOrder);
+        this.adaptable.api.columnApi.getFriendlyNameFromColumnId(gs.ColumnId) + SortOrder.Asc
+          ? ' [asc] '
+          : ' [desc] ';
     });
     return returnString;
-  }
-
-  public getSortOrder(sortOrder: 'Ascending' | 'Descending'): string {
-    return sortOrder == SortOrder.Ascending ? ' [asc] ' : ' [desc] ';
-  }
-
-  public isPivotedLayout(pivotDetails: PivotDetails): boolean {
-    return (
-      pivotDetails != null &&
-      (ArrayExtensions.IsNotNullOrEmpty(pivotDetails.PivotColumns) ||
-        ArrayExtensions.IsNotNullOrEmpty(pivotDetails.AggregationColumns))
-    );
   }
 }

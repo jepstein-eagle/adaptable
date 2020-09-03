@@ -34,13 +34,13 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
     super(props);
     this.state = {
       Values: ArrayExtensions.sortArrayWithProperty(
-        SortOrder.Ascending,
+        SortOrder.Asc,
         this.props.Values,
         this.props.SortMember
       ),
       UiSelectedValues: this.props.UiSelectedValues,
       FilterValue: '',
-      SortOrder: SortOrder.Ascending,
+      SortOrder: SortOrder.Asc,
     };
   }
   UNSAFE_componentWillReceiveProps(nextProps: SingleListBoxProps, nextContext: any) {
@@ -90,7 +90,6 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
         sortColumnValues={() => this.sortColumnValues()}
         SortOrder={this.state.SortOrder}
         handleChangeFilterValue={e => this.handleChangeFilterValue(e)}
-        DisableSort={false}
       />
     );
 
@@ -125,23 +124,23 @@ export class SingleListBox extends React.Component<SingleListBoxProps, SingleLis
   }
 
   sortColumnValues() {
-    if (this.state.SortOrder == SortOrder.Ascending) {
+    if (this.state.SortOrder == SortOrder.Asc) {
       this.setState({
         Values: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Descending,
+          SortOrder.Desc,
           this.state.Values,
           this.props.SortMember
         ),
-        SortOrder: SortOrder.Descending,
+        SortOrder: SortOrder.Desc,
       } as SingleListBoxState);
     } else {
       this.setState({
         Values: ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
+          SortOrder.Asc,
           this.state.Values,
           this.props.SortMember
         ),
-        SortOrder: SortOrder.Ascending,
+        SortOrder: SortOrder.Asc,
       } as SingleListBoxState);
     }
   }

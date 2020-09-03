@@ -1,72 +1,79 @@
 import * as React from 'react';
-
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { SelectionMode } from '../../../PredefinedConfig/Common/Enums';
-import { ColumnSelector } from '../../Components/Selectors/ColumnSelector';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import WizardPanel from '../../../components/WizardPanel';
+import { Scope } from '../../../PredefinedConfig/Common/Scope';
+import { ScopeComponent } from '../../Components/ScopeComponent';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { WizardScopeState } from '../../Components/SharedProps/WizardScopeState';
 
 export interface FormatColumnScopeWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
-export interface FormatColumnScopeWizardState {
-  ColumnId: string;
-}
-
 export class FormatColumnScopeWizard
-  extends React.Component<FormatColumnScopeWizardProps, FormatColumnScopeWizardState>
+  extends React.Component<FormatColumnScopeWizardProps, WizardScopeState>
   implements AdaptableWizardStep {
   constructor(props: FormatColumnScopeWizardProps) {
     super(props);
+
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
+      scope: this.props.data.Scope ? this.props.data.Scope : { All: true },
     };
   }
 
   render(): any {
     return (
       <WizardPanel>
-        <ColumnSelector
-          SelectedColumnIds={[this.state.ColumnId]}
-          ColumnList={this.props.Api.gridApi.getColumns()}
-          onColumnChange={columns => this.onColumnSelectedChanged(columns)}
-          SelectionMode={SelectionMode.Single}
-        />
+        {' '}
+        <ScopeComponent
+          api={this.props.api}
+          scope={this.state.scope}
+          updateScope={(scope: Scope) => this.onUpdateScope(scope)}
+        />{' '}
       </WizardPanel>
     );
   }
 
-  private onColumnSelectedChanged(columns: AdaptableColumn[]) {
-    this.setState(
-      { ColumnId: columns.length > 0 ? columns[0].ColumnId : '' } as FormatColumnScopeWizardState,
-      () => this.props.UpdateGoBackState()
-    );
+  private onUpdateScope(scope: Scope) {
+    this.setState({ scope: scope } as WizardScopeState, () => this.props.updateGoBackState());
   }
 
   public canNext(): boolean {
-    return StringExtensions.IsNotNullOrEmpty(this.state.ColumnId);
+    if (this.state.scope == undefined) {
+      return false;
+    }
+    if (
+      'ColumnIds' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnIdsInScope(this.state.scope))
+    ) {
+      return false;
+    }
+    if (
+      'DataTypes' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getDataTypesInScope(this.state.scope))
+    ) {
+      return false;
+    }
+    return true;
   }
 
   public canBack(): boolean {
     return false;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.DisplayFormat = undefined;
+  public next(): void {
+    this.props.data.Scope = this.state.scope;
   }
 
-  public Back(): void {
-    //todo
+  public back(): void {
+    // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

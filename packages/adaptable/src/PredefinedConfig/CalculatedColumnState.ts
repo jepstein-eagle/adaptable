@@ -18,7 +18,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * [Calculated Column Demo](https://demo.adaptabletools.com/column/aggridcalculatedcolumndemo/)
  *
- * {@link CalculatedColumnApi|Calculated Column API}
+ * {@link CalculatedColumnApi|Calculated Column Api}
  *
  * [Calculated Column Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
  *

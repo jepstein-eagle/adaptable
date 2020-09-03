@@ -1,6 +1,6 @@
 # Flashing Cell (AdaptableFunction)
 
-The Flashing Cell([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FlashingCell`) Function enables you to set numeric cells to flash briefly as their contents change.
+The Flashing Cell Function enables you to set numeric cells to flash briefly as their contents change.
 
 By default, flashing cells is disabled for all numeric columns. 
 

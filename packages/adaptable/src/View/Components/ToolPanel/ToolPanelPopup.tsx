@@ -67,14 +67,16 @@ class ToolPanelPopupComponent extends React.Component<
     let visibleButtons: string[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(this.props.ToolPanelState.VisibleButtons)) {
       this.props.ToolPanelState.VisibleButtons!.forEach(x => {
-        let menuItem = this.props.GridState.MainMenuItems.find(m => m.FunctionName == x);
+        let menuItem = this.props.GridState.FunctionDropdownMenuItems.find(
+          m => m.FunctionName == x
+        );
         if (menuItem != null && menuItem.IsVisible) {
           visibleButtons.push(StrategyConstants.getFriendlyNameForStrategyId(x));
         }
       });
     }
 
-    let availableButtons = this.props.GridState.MainMenuItems.filter(
+    let availableButtons = this.props.GridState.FunctionDropdownMenuItems.filter(
       x => x.IsVisible && visibleButtons.indexOf(x.Label) == -1
     ).map(x => x.Label);
 
@@ -223,7 +225,7 @@ class ToolPanelPopupComponent extends React.Component<
   }
 
   isFullStrategy(functionName: AdaptableFunctionName): boolean {
-    return this.props.Api.entitlementsApi.isFunctionFullEntitlement(functionName);
+    return this.props.api.entitlementsApi.isFunctionFullEntitlement(functionName);
   }
 }
 

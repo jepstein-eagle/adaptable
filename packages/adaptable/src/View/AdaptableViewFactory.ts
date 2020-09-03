@@ -2,19 +2,17 @@ import { CustomSortPopup } from './CustomSort/CustomSortPopup';
 import { SmartEditPopup } from './SmartEdit/SmartEditPopup';
 import { ShortcutPopup } from './Shortcut/ShortcutPopup';
 import { PlusMinusPopup } from './PlusMinus/PlusMinusPopup';
-import { ColumnChooserPopup } from './ColumnChooser/ColumnChooserPopup';
 import { ColumnInfoPopup } from './ColumnInfo/ColumnInfoPopup';
 import { ExportPopup } from './Export/ExportPopup';
 import { FlashingCellsPopup } from './FlashingCells/FlashingCellsPopup';
 import { UpdatedRowPopup } from './UpdatedRow/UpdatedRowPopup';
 import { CalendarsPopup } from './Calendars/CalendarsPopup';
+import { FilterPopup } from './Filter/FilterPopup';
 import { ConditionalStylePopup } from './ConditionalStyle/ConditionalStylePopup';
 import { QuickSearchPopup } from './QuickSearch/QuickSearchPopup';
+import { QueryPopup } from './Query/QueryPopup';
 import { QuickSearchToolbarControl } from './QuickSearch/QuickSearchToolbarControl';
-import { ColumnFilterToolbarControl } from './ColumnFilter/ColumnFilterToolbarControl';
-import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
-import { AdvancedSearchPopup } from './AdvancedSearch/AdvancedSearchPopup';
-import { AdvancedSearchToolbarControl } from './AdvancedSearch/AdvancedSearchToolbarControl';
+import { ExpandedQueryPopup } from './Query/ExpandedQueryPopup';
 import { BulkUpdateToolbarControl } from './BulkUpdate/BulkUpdateToolbarControl';
 import { SmartEditToolbarControl } from './SmartEdit/SmartEditToolbarControl';
 import { UserFilterPopup } from './UserFilter/UserFilterPopup';
@@ -24,19 +22,19 @@ import { ToolPanelPopup } from './Components/ToolPanel/ToolPanelPopup';
 import { CellValidationPopup } from './CellValidation/CellValidationPopup';
 import { GradientColumnPopup } from './GradientColumn/GradientColumnPopup';
 import { LayoutPopup } from './Layout/LayoutPopup';
-import { ColumnCategoryPopup } from './ColumnCategory/ColumnCategoryPopup';
 import { GridInfoPopup } from './GridInfo/GridInfoPopup';
 import { LayoutToolbarControl } from './Layout/LayoutToolbarControl';
 import { ExportToolbarControl } from './Export/ExportToolbarControl';
 import { TeamSharingPopup } from './TeamSharing/TeamSharingPopup';
 import { DashboardPopup } from './Dashboard/DashboardPopup';
 import { StateManagementPopup } from './StateManagement/StateManagementPopup';
-import { ColumnFilterPopup } from './ColumnFilter/ColumnFilterPopup';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { CalculatedColumnPopup } from './CalculatedColumn/CalculatedColumnPopup';
 import { BulkUpdatePopup } from './BulkUpdate/BulkUpdatePopup';
 import { DataSourcePopup } from './DataSource/DataSourcePopup';
 import { DataSourceToolbarControl } from './DataSource/DataSourceToolbarControl';
+import { FilterToolbarControl } from './Filter/FilterToolbarControl';
+import { ThemeToolbarControl } from './Theme/ThemeToolbarControl';
 import { AlertPopup } from './Alert/AlertPopup';
 import { AlertToolbarControl } from './Alert/AlertToolbarControl';
 import { SystemStatusToolbarControl } from './SystemStatus/SystemStatusToolbarControl';
@@ -49,7 +47,6 @@ import { ReminderPopup } from './Reminder/ReminderPopup';
 import { SchedulePopup } from './Schedule/SchedulePopup';
 import { SystemStatusPopup } from './SystemStatus/SystemStatusPopup';
 import { ConnectedComponent } from 'react-redux';
-import { AdvancedSearchToolPanel } from './AdvancedSearch/AdvancedSearchToolPanel';
 import { QuickSearchToolPanel } from './QuickSearch/QuickSearchToolPanel';
 import { DashboardToolPanel } from './Dashboard/DashboardToolPanel';
 import { LayoutToolPanel } from './Layout/LayoutToolPanel';
@@ -57,21 +54,22 @@ import { ThemeToolPanel } from './Theme/ThemeToolPanel';
 import { ExportToolPanel } from './Export/ExportToolPanel';
 import { SystemStatusToolPanel } from './SystemStatus/SystemStatusToolPanel';
 import { AlertToolPanel } from './Alert/AlertToolPanel';
-import { ColumnFilterToolPanel } from './ColumnFilter/ColumnFilterToolPanel';
 import { CellSummaryToolPanel } from './CellSummary/CellSummaryToolPanel';
+import { FilterToolPanel } from './Filter/FilterToolPanel';
 import { SmartEditToolPanel } from './SmartEdit/SmartEditToolPanel';
 import { BulkUpdateToolPanel } from './BulkUpdate/BulkUpdateToolPanel';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
+import { QueryToolbarControl } from './Query/QueryToolbarControl';
+import { QueryToolPanel } from './Query/QueryToolPanel';
 
 export const AdaptableViewFactory: IAdaptableViewFactory = {
-  AdvancedSearchPopup,
+  ExpandedQueryPopup,
   AlertPopup,
   BulkUpdatePopup,
   CalculatedColumnPopup,
   CalendarsPopup,
   CellValidationPopup,
-  ColumnChooserPopup,
-  ColumnFilterPopup,
+  FilterPopup,
   ColumnInfoPopup,
   ConditionalStylePopup,
   CustomSortPopup,
@@ -85,7 +83,6 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   FreeTextColumnPopup,
   GridInfoPopup,
   LayoutPopup,
-  ColumnCategoryPopup,
   PercentBarPopup,
   GradientColumnPopup,
   PlusMinusPopup,
@@ -100,6 +97,7 @@ export const AdaptableViewFactory: IAdaptableViewFactory = {
   ToolPanelPopup,
   SystemStatusPopup,
   UserFilterPopup,
+  QueryPopup,
 };
 
 // here we put the dashboard control for each strategy
@@ -107,11 +105,11 @@ export const AdaptableDashboardFactory = new Map<
   AdaptableFunctionName,
   ConnectedComponent<any, any>
 >([
-  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolbarControl],
+  [StrategyConstants.QueryStrategyId, QueryToolbarControl],
   [StrategyConstants.AlertStrategyId, AlertToolbarControl],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolbarControl],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolbarControl],
-  [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolbarControl],
+  [StrategyConstants.FilterStrategyId, FilterToolbarControl],
   [StrategyConstants.DataSourceStrategyId, DataSourceToolbarControl],
   [StrategyConstants.ExportStrategyId, ExportToolbarControl],
   [StrategyConstants.LayoutStrategyId, LayoutToolbarControl],
@@ -127,11 +125,11 @@ export const AdaptableToolPanelFactory = new Map<
   AdaptableFunctionName,
   ConnectedComponent<any, any>
 >([
-  [StrategyConstants.AdvancedSearchStrategyId, AdvancedSearchToolPanel],
+  // [StrategyConstants.QueryStrategyId, QueryToolPanel],
   [StrategyConstants.AlertStrategyId, AlertToolPanel],
   [StrategyConstants.BulkUpdateStrategyId, BulkUpdateToolPanel],
   [StrategyConstants.CellSummaryStrategyId, CellSummaryToolPanel],
-  [StrategyConstants.ColumnFilterStrategyId, ColumnFilterToolPanel],
+  [StrategyConstants.FilterStrategyId, FilterToolPanel],
   [StrategyConstants.DashboardStrategyId, DashboardToolPanel],
   [StrategyConstants.ExportStrategyId, ExportToolPanel],
   [StrategyConstants.LayoutStrategyId, LayoutToolPanel],

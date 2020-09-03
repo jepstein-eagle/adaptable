@@ -15,13 +15,26 @@ import { DataType } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/
 
 export class SparklineStrategy extends AdaptableStrategyBase implements ISparklineStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.SparklineStrategyId, adaptable);
+    super(
+      StrategyConstants.SparklineStrategyId,
+      StrategyConstants.SparklineStrategyFriendlyName,
+      StrategyConstants.SparklinesGlyph,
+      undefined, // is that ok?
+      adaptable
+    );
+  }
+
+  public addStrategyMenuItem(
+    source: 'FunctionMenu' | 'FunctionButton'
+  ): AdaptableMenuItem | undefined {
+    // dont need
+    return undefined;
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let popUpParams: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         source: 'ColumnMenu',
       };
       return [
@@ -48,7 +61,7 @@ export class SparklineStrategy extends AdaptableStrategyBase implements ISparkli
           return gc.primaryKeyValue;
         });
         let popUpParams: StrategyParams = {
-          columnId: menuInfo.Column.ColumnId,
+          column: menuInfo.Column,
           primaryKeyValues: pkValues,
           source: 'ContextMenu',
         };

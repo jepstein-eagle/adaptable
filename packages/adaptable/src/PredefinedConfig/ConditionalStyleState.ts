@@ -1,20 +1,21 @@
 import { ConfigState } from './ConfigState';
-import { AdaptableObject } from './Common/AdaptableObject';
-import { Expression } from './Common/Expression';
 import { AdaptableStyle } from './Common/AdaptableStyle';
+import { QueryObject } from './Common/QueryObject';
+import { Scope } from './Common/Scope';
+import { Predicate } from './Common/Predicate';
 
 /**
  * The Predefined Configuration for the Conditional Style function
  *
  * Use Conditional Styles to set rules for how columns or rows should look visualy based on the data they contain.
  *
- * Conditional Styles uses an [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) (aka Queries) for evaluation.
+ * Conditional Styles uses an Expression (aka Query) for evaluation.
  *
  * **Further AdapTable Help Resources**
  *
  * [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo/)
  *
- * [Conditional Style API](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
+ * [Conditional Style Api](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
  *
  * [Conditional Style Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/conditional-style-function.md)
  *
@@ -25,58 +26,22 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
  * ConditionalStyle: {
  *   ConditionalStyles: [
  *     {
- *       ColumnId: 'ChangeLastOrder',
+ *       Scope: {
+            DataTypes: ['Number'],
+        },
  *       Style: {
- *         ForeColor: '#008000',
+ *          ForeColor: '#008000',
  *       },
- *       ConditionalStyleScope: 'Column',
- *       Expression: {
- *         FilterExpressions: [
- *           {
- *             ColumnId: 'ChangeLastOrder',
- *             Filters: ['Positive'],
- *           },
- *         ],
- *       },
+ *       Expression: '[ChangeLastOrder]> 0'
  *     },
  *     {
- *       ColumnId: 'ChangeLastOrder',
- *       Style: {
- *        ForeColor: '#ff0000',
+ *       Scope: {
+            DataTypes: ['Number'],
+         },
+         Style: {
+ *          ForeColor: '#ff0000',
  *       },
- *       ConditionalStyleScope: 'Column',
- *       Expression: {
- *         FilterExpressions: [
- *           {
- *             ColumnId: 'ChangeLastOrder',
- *             Filters: ['Negative'],
- *           },
- *         ],
- *       },
- *     },
- *     {
- *       Style: {
- *         BackColor: '#ffffcc',
- *         FontStyle: 'Italic',
- *         ForeColor: '#000000',
- *       },
- *       ConditionalStyleScope: 'Row',
- *       Expression: {
- *         RangeExpressions: [
- *           {
- *             ColumnId: 'ItemCost',
- *             Ranges: [
- *               {
- *                 Operand1: '80',
- *                 Operand1Type: 'Value',
- *                 Operand2: '',
- *                 Operand2Type: 'Value',
- *                 Operator: 'GreaterThan',
- *               },
- *             ],
- *           },
- *         ],
- *       },
+ *       Expression: '[ChangeLastOrder]< 0'
  *     },
  *   ],
  * },
@@ -91,59 +56,27 @@ export interface ConditionalStyleState extends ConfigState {
 /**
  * The ConditionalStyle object used in the Conditional Style function.
  */
-export interface ConditionalStyle extends AdaptableObject {
+export interface ConditionalStyle extends QueryObject {
   /**
-   * The column which will be styled (if the scope is Column)
+   * Where the Style is applied - can be for whole Row, some Columns or all Colunns of given DataType
    */
-  ColumnId?: string;
+  Scope: Scope;
 
-  /**
-   * The Column Category which will have all its set of columns styled identically (if the scope is ColumnCategory)
-   */
-  ColumnCategoryId?: string;
-
-  /**
-   * Where the Conditional Style is applied:  Either at Column, Row or (if there are any) Column Category level.
-   */
-  ConditionalStyleScope?: 'Column' | 'Row' | 'ColumnCategory'; //| 'DataType'
-
-  /**
-   * When the Style should be applied.  Only rows that match the Expression will be styled.  See [Expression](../classes/_predefinedconfig_common_expression_expression_.expression.html) for more details.
-   */
-  Expression?: Expression;
+  Predicate?: Predicate;
 
   /**
    * The Style to apply when the rule is matched.
    *
    * The Style object defines fore and back colours, font size and other basic style properties.  See [Style](_src_predefinedconfig_common_istyle_.istyle.html) for more details.
    */
-  Style?: AdaptableStyle;
+  Style: AdaptableStyle;
 
   /**
    * Whether to show the Style for Grouped Rows
    *
-   * Only applies where the `ConditionalStyleScope` is Row.
+   * Only applies where the `Scope` is undefined (i.e. 'Row').
    *
    * If unset, will default to false.
    */
   ExcludeGroupedRows?: boolean;
-
-  //  DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 }
-
-/*
-A collection of Conditional Styles
-
-An IConditionalStyle consists of 5 properties: (see section below for more information).
-
-ColumnId: The column which will be styled (if there is one)
-
-ColumnCategoryId: The Column Category which will have all its columns styled.
-
-ConditionalStyleScope: Where the Style will be applied.  Possible values are: Column, Row, ColumnCategory
-
-Expression: When the Style should be applied.  Only rows that match the Expression will be styled.  See Expression Object Config for more details.
-
-Style: The style to apply.  See Style Object Config for more details.
-
-*/

@@ -1,6 +1,6 @@
 # Smart Edit (AdaptableFunction)
 
-The Smart Edit([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `SmartEdit`) Function provides a way to update multiple, contiguous numeric cells with a single mathematical operation (e.g. Multiply).
+The Smart Edit Function provides a way to update multiple, contiguous numeric cells with a single mathematical operation (e.g. Multiply).
 
 Rather than users needing to change multiple columns individually, Smart Edit enables **the selection of a group of cells in one numeric column**, and for a single operation to be applied on all the cells (based on each cell value).
 

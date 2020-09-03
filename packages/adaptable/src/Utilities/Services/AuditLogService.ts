@@ -153,7 +153,7 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditAsAlert) {
         let message: string =
           'Column: ' +
-          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId) +
+          this.adaptable.api.columnApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId) +
           '.  Identifier: ' +
           dataChangedInfo.PrimaryKeyValue +
           '.  Old Value: ' +
@@ -270,7 +270,7 @@ export class AuditLogService implements IAuditLogService {
       if (auditDestinationOptions.auditAsAlert) {
         let message: string =
           'Column: ' +
-          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId) +
+          this.adaptable.api.columnApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId) +
           '.  Identifier: ' +
           dataChangedInfo.PrimaryKeyValue +
           '.  Old Value: ' +

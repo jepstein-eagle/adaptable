@@ -18,14 +18,11 @@ import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import { IStrategy } from '../Strategy/Interface/IStrategy';
-import { AdvancedSearchStrategy } from '../Strategy/AdvancedSearchStrategy';
 import { BulkUpdateStrategy } from '../Strategy/BulkUpdateStrategy';
 import { CalculatedColumnStrategy } from '../Strategy/CalculatedColumnStrategy';
 import { CalendarStrategy } from '../Strategy/CalendarStrategy';
 import { CellValidationStrategy } from '../Strategy/CellValidationStrategy';
-
-import { ColumnChooserStrategy } from '../Strategy/ColumnChooserStrategy';
-import { ColumnFilterStrategy } from '../Strategy/ColumnFilterStrategy';
+import { FilterStrategy } from '../Strategy/FilterStrategy';
 import { ColumnInfoStrategy } from '../Strategy/ColumnInfoStrategy';
 import { ConditionalStyleStrategyagGrid } from './Strategy/ConditionalStyleStrategyagGrid';
 import { DashboardStrategy } from '../Strategy/DashboardStrategy';
@@ -36,7 +33,6 @@ import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGr
 import { FormatColumnStrategyagGrid } from './Strategy/FormatColumnStrategyagGrid';
 import { FreeTextColumnStrategy } from '../Strategy/FreeTextColumnStrategy';
 import { LayoutStrategy } from '../Strategy/LayoutStrategy';
-import { ColumnCategoryStrategy } from '../Strategy/ColumnCategoryStrategy';
 import { PercentBarStrategy } from '../Strategy/PercentBarStrategy';
 import { PlusMinusStrategy } from '../Strategy/PlusMinusStrategy';
 import { QuickSearchStrategy } from '../Strategy/QuickSearchStrategy';
@@ -64,7 +60,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { iconToString } from '../components/icons';
-import { DataType } from '../PredefinedConfig/Common/Enums';
+import { DataType, CellValueType } from '../PredefinedConfig/Common/Enums';
 import { AdaptableFunctionName } from '../PredefinedConfig/Common/Types';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
@@ -84,6 +80,7 @@ import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants'
 import { clamp } from 'lodash';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
+import { QueryStrategy } from '../Strategy/QueryStrategy';
 
 /**
  * Adaptable ag-Grid implementation is getting really big and unwieldy
@@ -118,10 +115,6 @@ export class agGridHelper {
     strategies.set(StrategyConstants.ColumnInfoStrategyId, new ColumnInfoStrategy(adaptable));
     strategies.set(StrategyConstants.AlertStrategyId, new AlertStrategyagGrid(adaptable));
     strategies.set(StrategyConstants.ActionColumnStrategyId, new ActionColumnStrategy(adaptable));
-    strategies.set(
-      StrategyConstants.AdvancedSearchStrategyId,
-      new AdvancedSearchStrategy(adaptable)
-    );
     strategies.set(StrategyConstants.BulkUpdateStrategyId, new BulkUpdateStrategy(adaptable));
     strategies.set(
       StrategyConstants.CalculatedColumnStrategyId,
@@ -133,8 +126,7 @@ export class agGridHelper {
       new CellValidationStrategy(adaptable)
     );
 
-    strategies.set(StrategyConstants.ColumnChooserStrategyId, new ColumnChooserStrategy(adaptable));
-    strategies.set(StrategyConstants.ColumnFilterStrategyId, new ColumnFilterStrategy(adaptable));
+    strategies.set(StrategyConstants.FilterStrategyId, new FilterStrategy(adaptable));
     strategies.set(
       StrategyConstants.ConditionalStyleStrategyId,
       new ConditionalStyleStrategyagGrid(adaptable)
@@ -160,12 +152,7 @@ export class agGridHelper {
       new GradientColumnStrategy(adaptable)
     );
     strategies.set(StrategyConstants.LayoutStrategyId, new LayoutStrategy(adaptable));
-    strategies.set(
-      StrategyConstants.ColumnCategoryStrategyId,
-      new ColumnCategoryStrategy(adaptable)
-    );
     strategies.set(StrategyConstants.PercentBarStrategyId, new PercentBarStrategy(adaptable));
-
     strategies.set(StrategyConstants.PlusMinusStrategyId, new PlusMinusStrategy(adaptable));
     strategies.set(StrategyConstants.QuickSearchStrategyId, new QuickSearchStrategy(adaptable));
     strategies.set(StrategyConstants.SmartEditStrategyId, new SmartEditStrategy(adaptable));
@@ -183,6 +170,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
     strategies.set(StrategyConstants.ScheduleStrategyId, new ScheduleStrategy(adaptable));
+    strategies.set(StrategyConstants.QueryStrategyId, new QueryStrategy(adaptable));
 
     return strategies;
   }
@@ -213,7 +201,7 @@ export class agGridHelper {
     return this.adaptable.lookupPlugins('sparklineColumnRenderer', sparkline);
   }
 
-  public createPercentBarCellRendererFunc(pcr: PercentBar, adaptableId: string): ICellRendererFunc {
+  public createPercentBarCellRendererFunc(pcr: PercentBar): ICellRendererFunc {
     if (pcr.Ranges === undefined) {
       return;
     }
@@ -277,12 +265,7 @@ export class agGridHelper {
     return String(value) || '';
   }
 
-  public getRenderedValue(percentBars: PercentBar[], colDef: ColDef, valueToRender: any): any {
-    const isRenderedColumn = ArrayExtensions.ContainsItem(percentBars, colDef.field);
-    if (isRenderedColumn) {
-      return valueToRender;
-    }
-
+  public getRenderedValue(colDef: ColDef, valueToRender: any): any {
     const render: any = colDef.cellRenderer;
     if (typeof render === 'string') {
       return this.getCleanValue(valueToRender);
@@ -316,6 +299,8 @@ export class agGridHelper {
       Groupable: this.isColumnGroupable(colDef),
       Pivotable: this.isColumnPivotable(colDef),
       Aggregatable: this.isColumnAggregetable(colDef),
+      AvailableAggregationFunctions: null,
+      AggregationFunction: null,
       Moveable: this.isColumnMoveable(colDef),
       Hideable: this.isColumnHideable(colDef),
 
@@ -329,6 +314,13 @@ export class agGridHelper {
       IsSpecialColumn: false,
       IsExcludedFromQuickSearch: false,
     };
+
+    if (abColumn.Aggregatable) {
+      abColumn.AvailableAggregationFunctions = this.getColumnAggregationFunctions(colDef);
+      if (typeof colDef.aggFunc === 'string') {
+        abColumn.AggregationFunction = colDef.aggFunc;
+      }
+    }
     // lets set this here one as the function cannot change the result so dont need to run it each time
     let excludeColumnFromQuickSearch = this.adaptable.adaptableOptions.searchOptions!
       .excludeColumnFromQuickSearch;
@@ -511,7 +503,11 @@ export class agGridHelper {
     let clickedCell: GridCell = {
       columnId: colId,
       rawValue: params.value,
-      displayValue: this.adaptable.getDisplayValueFromRowNode(params.node, colId),
+      displayValue: this.adaptable.getValueFromRowNode(
+        params.node,
+        colId,
+        CellValueType.DisplayValue
+      ),
       primaryKeyValue: primaryKeyValue,
     };
     let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
@@ -543,6 +539,20 @@ export class agGridHelper {
       SelectedCellInfo: selectedCellInfo,
 
       SelectedRowInfo: selectedRowInfo,
+    };
+  }
+
+  public createRemoveGroupsMenuItem(x: AdaptableMenuItem): MenuItemDef {
+    return {
+      name: x.Label,
+      action: x.ClickFunction
+        ? x.ClickFunction
+        : () => this.adaptable.api.internalApi.dispatchReduxAction(x.ReduxAction),
+      icon: iconToString(x.Icon, {
+        style: {
+          fill: 'var(--ab-color-text-on-primary)',
+        },
+      }),
     };
   }
 
@@ -638,6 +648,10 @@ export class agGridHelper {
     return false;
   }
 
+  public getColumnAggregationFunctions(colDef: ColDef): string[] {
+    return colDef.allowedAggFuncs || ['sum', 'min', 'max', 'count', 'avg', 'first', 'last']; // those are the default fns aggrid supports out-of-the-box
+  }
+
   public isColumnMoveable(colDef: ColDef): boolean {
     if (!colDef) {
       return false;
@@ -672,7 +686,7 @@ export class agGridHelper {
       return false;
     }
     if (colDef.lockPosition != null && colDef.lockPosition == true) {
-      return false;
+      return true;
     }
 
     if (colDef.lockPinned != null && colDef.lockPinned == true) {
@@ -706,7 +720,7 @@ export class agGridHelper {
     }
     let dataType: any = DataType.Unknown;
     // get the column type if already in store (and not unknown)
-    const existingColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    const existingColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       column.getId(),
       logWarning
     );
@@ -858,7 +872,7 @@ export class agGridHelper {
         if (
           !this.adaptable.api.gridApi
             .getColumnSorts()
-            .find((gs: ColumnSort) => this.adaptable.api.gridApi.isRowGroupColumn(gs.Column))
+            .find((gs: ColumnSort) => this.adaptable.api.columnApi.isRowGroupColumn(gs.ColumnId))
         ) {
           const customSortStrategy: CustomSortStrategy = this.adaptable.strategies.get(
             StrategyConstants.CustomSortStrategyId
@@ -882,13 +896,11 @@ export class agGridHelper {
   public checkShouldClearExistingFiltersOrSearches(): void {
     // if they have selected to clear column filters on startup then do it
     if (this.adaptable.adaptableOptions.filterOptions!.clearFiltersOnStartUp) {
-      if (
-        ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.columnFilterApi.getAllColumnFilter())
-      ) {
+      if (ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.filterApi.getAllColumnFilter())) {
         LoggingHelper.LogWarning(
           'Clearing existing Column Filters as "clearFiltersOnStartUp" is true'
         );
-        this.adaptable.api.columnFilterApi.clearAllColumnFilter();
+        this.adaptable.api.filterApi.clearAllColumnFilter();
       }
     }
     // if they have selected to clear searches on startup then do it
@@ -897,14 +909,12 @@ export class agGridHelper {
         StringExtensions.IsNotNullOrEmpty(
           this.adaptable.api.quickSearchApi.getQuickSearchState().QuickSearchText
         ) ||
-        ArrayExtensions.IsNotNullOrEmpty(
-          this.adaptable.api.advancedSearchApi.getAllAdvancedSearch()
-        ) ||
+        StringExtensions.IsNotNullOrEmpty(this.adaptable.api.queryApi.getCurrentQuery()) ||
         ArrayExtensions.IsNotNullOrEmpty(this.adaptable.api.dataSourceApi.getAllDataSource())
       ) {
         LoggingHelper.LogWarning('Clearing existing Searches as "clearSearchesOnStartUp" is true');
         this.adaptable.api.quickSearchApi.clearQuickSearch();
-        this.adaptable.api.advancedSearchApi.clearAdvancedSearch();
+        this.adaptable.api.queryApi.clearCurrentQuery();
         this.adaptable.api.dataSourceApi.clearDataSource();
       }
     }
@@ -983,7 +993,7 @@ export class agGridHelper {
         headerFontStyle: headerColStyle.fontStyle,
         headerFontWeight: headerColStyle.fontWeight,
         height: Number(headerColStyle.height.replace('px', '')),
-        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+        Columns: this.adaptable.api.columnApi.getColumns().map(col => {
           const headerColumn: HTMLElement = document.querySelector(
             `.ag-header-cell[col-id='${col.ColumnId}']`
           ) as HTMLElement;
@@ -1004,7 +1014,7 @@ export class agGridHelper {
         fontStyle: firstRowStyle.fontStyle,
         fontWeight: firstRowStyle.fontWeight,
         height: Number(firstRowStyle.height.replace('px', '')),
-        Columns: this.adaptable.api.gridApi.getColumns().map(col => {
+        Columns: this.adaptable.api.columnApi.getColumns().map(col => {
           const cellElement: HTMLElement = document.querySelector(
             `.ag-cell[col-id='${col.ColumnId}']`
           ) as HTMLElement;

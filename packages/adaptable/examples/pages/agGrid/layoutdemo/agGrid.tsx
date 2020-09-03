@@ -50,7 +50,6 @@ async function InitAdaptableDemo() {
       },
     ],
     layoutOptions: {
-      includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
       //  autoSizeColumnsInLayout: true,
       autoSizeColumnsInPivotLayout: true,
@@ -75,7 +74,6 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Layout'],
     IsInline: true,
     Revision: 455,
   },
@@ -95,7 +93,7 @@ let demoConfig: PredefinedConfig = {
     CurrentLayout: 'Sorting Layout',
     Layouts: [
       {
-        GroupedColumns: ['currency'],
+        RowGroupedColumns: ['currency'],
         Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Basic Group Layout',
       },
@@ -108,11 +106,11 @@ let demoConfig: PredefinedConfig = {
         ColumnSorts: [
           // {
           //   Column: 'counterparty',
-          //   SortOrder: 'Descending',
+          //   SortOrder: 'Desc',
           // },
           {
-            Column: 'currency',
-            SortOrder: 'Ascending',
+            ColumnId: 'currency',
+            SortOrder: 'Asc',
           },
         ],
         Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
@@ -122,22 +120,21 @@ let demoConfig: PredefinedConfig = {
         // ColumnSorts: [
         //   {
         //     Column: 'currency',
-        //     SortOrder: 'Descending',
+        //     SortOrder: 'Desc',
         //   },
         // ],
         //  GroupedColumns: ['currency', 'country'],
-        GroupedColumns: ['currency'],
+        RowGroupedColumns: ['currency'],
         Columns: ['tradeId', 'currency', 'counterparty', 'bid', 'ask', 'notional', 'country'],
         Name: 'Grouping Layout',
       },
       {
         Columns: ['bid', 'ask'],
         Name: 'Pivoted Layout',
-        GroupedColumns: ['currency'],
-        PivotDetails: {
-          PivotColumns: ['status', 'stars'],
-          AggregationColumns: ['bid', 'ask'],
-        },
+        RowGroupedColumns: ['currency'],
+
+        PivotColumns: ['status', 'stars'],
+        AggregationColumns: { bid: true, ask: true },
       },
     ],
   },

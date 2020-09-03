@@ -8,8 +8,6 @@ import {
 import { SparklinesChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import { WizardSummaryPage } from '@adaptabletools/adaptable/src/View/Components/WizardSummaryPage';
 import { KeyValuePair } from '@adaptabletools/adaptable/src/Utilities/Interface/KeyValuePair';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import ExpressionHelper from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartSummaryWizardProps
   extends AdaptableWizardStepProps<SparklinesChartDefinition> {}
@@ -22,13 +20,16 @@ export class SparklinesChartSummaryWizard
   }
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
-      { Key: 'Description', Value: this.props.Data.Description },
+      { Key: 'Name', Value: this.props.data.Name },
+      { Key: 'Description', Value: this.props.data.Description },
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
       },
-      { Key: 'Values', Value: this.getExpressionString(this.props.Data.Expression) },
+      {
+        Key: 'Expression',
+        Value: this.props.api.queryApi.QueryObjectToString(this.props.data),
+      },
     ];
 
     return (
@@ -38,13 +39,6 @@ export class SparklinesChartSummaryWizard
       />
     );
   }
-  private getExpressionString(expression: Expression): string {
-    if (ExpressionHelper.IsNullOrEmptyExpression(expression)) {
-      return '[All Column Values]';
-    } else {
-      return ExpressionHelper.ConvertExpressionToString(expression, this.props.Api, false);
-    }
-  }
 
   public canNext(): boolean {
     return true;
@@ -52,16 +46,16 @@ export class SparklinesChartSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

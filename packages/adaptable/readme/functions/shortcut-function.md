@@ -1,6 +1,6 @@
 # Shortcut (AdaptableFunction)
 
-The Shortcut([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Shortcut`) Function helps to avoid fat finger issues and to speed up data entry for numeric and date columns.
+The Shortcut Function helps to avoid fat finger issues and to speed up data entry for numeric and date columns.
 
 ### Defining a Shortcut
 A Shortcut defines what happens when a particular key is pressed.

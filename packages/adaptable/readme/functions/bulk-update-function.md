@@ -1,6 +1,6 @@
 # Bulk Update (AdaptableFunction)
 
-The Bulk Update ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `BulkUpdate`) facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
+Bulk Update facilitates replacing, via a single action, the cell value in multiple cells (in one column) **with the same new value**.
 
 The 'replacement' value can either be one that already exists in the column or an entirely new one.
 
@@ -8,7 +8,7 @@ The 'replacement' value can either be one that already exists in the column or a
 
 Bulk Update can bre applied on text, numeric and date columns. The input will change depending on the datatype of the column.
 
-> If updating a date column you are provided with a calendar when entering the new value.
+> If updating a date column you are provided with a datepicker when entering the new value.
 
 Users are able to choose between selecting an existing column value or providing their own.
 

@@ -45,10 +45,10 @@ async function InitAdaptableDemo() {
             case 'SmartEdit':
             case 'Shortcut':
               return 'ReadOnly';
-            case 'AdvancedSearch':
+            case 'Query':
             case 'PercentBar':
             case 'Schedule':
-            case 'ColumnFilter':
+            case 'Filter':
             case 'UserFilter':
             case 'Export':
             case 'DataSource':
@@ -65,50 +65,26 @@ async function InitAdaptableDemo() {
     // useAdaptableFilterForm: false,
   };
 
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
   adaptableOptions.predefinedConfig = demoConfig;
   const adaptableApi = await Adaptable.init(adaptableOptions);
 }
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: [
-      'SmartEdit',
-      'Export',
-      'SystemStatus',
-      'BulkUpdate',
-      'QuickSearch',
-      'AdvancedSearch',
-    ],
-    VisibleButtons: [
-      'SmartEdit',
-      'Export',
-      'SystemStatus',
-      'BulkUpdate',
-      'QuickSearch',
-      'AdvancedSearch',
-    ],
+    VisibleButtons: ['SmartEdit', 'Export', 'SystemStatus', 'BulkUpdate', 'QuickSearch', 'Query'],
   },
   Entitlements: {
     DefaultAccessLevel: 'Hidden',
     EntitlementLookUpFunction: 'serverLookUp',
     // FunctionEntitlements: [
-    //   {
-    //     FunctionName: 'ColumnCategory',
-    //     AccessLevel: 'Full',
-    //   },
-    //   {
-    //     FunctionName: 'ColumnChooser',
-    //     AccessLevel: 'Full',
-    //   },
+    //
     //   {
     //     FunctionName: 'Export',
     //     AccessLevel: 'Full',
     //   },
     //   {
-    //     FunctionName: 'ColumnFilter',
+    //     FunctionName: 'Filter',
     //     AccessLevel: 'ReadOnly',
     //   },
     //   {
@@ -136,12 +112,7 @@ let demoConfig: PredefinedConfig = {
   Export: {
     Reports: [
       {
-        ColumnIds: [],
-        Expression: {
-          ColumnValueExpressions: [],
-          FilterExpressions: [],
-          RangeExpressions: [],
-        },
+        Expression: '[currency]="EUR',
         Name: 'Test',
         ReportColumnScope: 'AllColumns',
         ReportRowScope: 'AllRows',

@@ -50,7 +50,6 @@ import { AdaptableStore, INIT_STATE } from '../Redux/Store/AdaptableStore';
 import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 
 // services
-import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { AuditLogService } from '../Utilities/Services/AuditLogService';
 import { StyleService } from '../Utilities/Services/StyleService';
@@ -58,7 +57,6 @@ import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IFreeTextColumnService } from '../Utilities/Services/Interface/IFreeTextColumnService';
-import { CalendarService } from '../Utilities/Services/CalendarService';
 import { DataService } from '../Utilities/Services/DataService';
 import { ValidationService } from '../Utilities/Services/ValidationService';
 import { ChartService } from '../Utilities/Services/ChartService';
@@ -73,8 +71,7 @@ import { FloatingFilterWrapperFactory } from './FloatingFilterWrapper';
 import {
   DataType,
   SortOrder,
-  DisplayAction,
-  DistinctCriteriaPairValue,
+  CellValueType,
   FilterOnDataChangeOptions,
 } from '../PredefinedConfig/Common/Enums';
 import { Color } from '../Utilities/color';
@@ -83,18 +80,10 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-// Helpers
-
-import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { LoggingHelper, LogAdaptableError } from '../Utilities/Helpers/LoggingHelper';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { Helper } from '../Utilities/Helpers/Helper';
-
-// ag-Grid
-// if you add an import from a different folder for aggrid you need to add it to externals in the webpack prod file
-import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
-import { RangeHelper } from '../Utilities/Helpers/RangeHelper';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableApiImpl } from '../Api/Implementation/AdaptableApiImpl';
@@ -116,9 +105,8 @@ import { SearchService } from '../Utilities/Services/SearchService';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
-import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { Layout } from '../PredefinedConfig/LayoutState';
-import { EditLookUpColumn, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
+import { EditLookUpItem, UserMenuItem } from '../PredefinedConfig/UserInterfaceState';
 import { TypeUuid, createUuid } from '../PredefinedConfig/Uuid';
 import { ActionColumn } from '../PredefinedConfig/ActionColumnState';
 import { ActionColumnRenderer } from './ActionColumnRenderer';
@@ -137,8 +125,6 @@ import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStrategyService, StrategyService } from '../Utilities/Services/StrategyService';
 import { LayoutService } from '../Utilities/Services/LayoutService';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
-import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
-import { FilterService } from '../Utilities/Services/FilterService';
 import { DefaultAdaptableOptions } from '../Utilities/Defaults/DefaultAdaptableOptions';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
@@ -158,10 +144,16 @@ import { Report } from '../PredefinedConfig/ExportState';
 import getScrollbarSize from '../Utilities/getScrollbarSize';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import FormatHelper from '../Utilities/Helpers/FormatHelper';
-import { isEqual } from 'lodash';
-import { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
+import ObjectFactory, { CreateEmptyCalculatedColumn } from '../Utilities/ObjectFactory';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
+import * as parser from '../parser/src';
+import { ColumnFilter, SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
+
+interface Cancelable {
+  cancel(): void;
+  flush(): void;
+}
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -248,13 +240,11 @@ export class Adaptable implements IAdaptable {
 
   public strategies: IStrategyCollection;
 
-  public AdaptableStore: IAdaptableStore;
+  public adaptableStore: IAdaptableStore;
 
   public adaptableOptions: AdaptableOptions;
 
   public vendorGridName: any;
-
-  public CalendarService: ICalendarService;
 
   public DataService: IDataService;
 
@@ -269,8 +259,6 @@ export class Adaptable implements IAdaptable {
   public LayoutService: ILayoutService;
 
   public StrategyService: IStrategyService;
-
-  public FilterService: IFilterService;
 
   public CalculatedColumnExpressionService: ICalculatedColumnExpressionService;
 
@@ -296,9 +284,9 @@ export class Adaptable implements IAdaptable {
 
   public isInitialised: boolean;
 
-  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedUser: ((rowNodes: RowNode[]) => void) & Cancelable;
 
-  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & _.Cancelable;
+  private throttleOnDataChangedExternal: ((rowNodes: RowNode[]) => void) & Cancelable;
 
   private agGridHelper: agGridHelper;
 
@@ -373,7 +361,9 @@ export class Adaptable implements IAdaptable {
     delete adaptableInstances[adaptable._id];
   }
 
-  constructor() {}
+  constructor() {
+    // (global as any).adaptable = this;
+  }
 
   // the 'old' constructor which takes an Adaptable adaptable object
   // this is still used internally but should not be used externally as a preference
@@ -429,7 +419,6 @@ export class Adaptable implements IAdaptable {
     this.initStore();
 
     // create the services
-    this.CalendarService = new CalendarService(this);
     this.ValidationService = new ValidationService(this);
     this.StyleService = new StyleService(this);
     this.ChartService = new ChartService(this);
@@ -438,7 +427,6 @@ export class Adaptable implements IAdaptable {
     this.SearchService = new SearchService(this);
     this.ReportService = new ReportService(this);
     this.LayoutService = new LayoutService(this);
-    this.FilterService = new FilterService(this);
     this.StrategyService = new StrategyService(this);
     this.CalculatedColumnExpressionService = new CalculatedColumnExpressionService(this);
 
@@ -469,7 +457,7 @@ export class Adaptable implements IAdaptable {
       }
 
       // Load the store
-      this.AdaptableStore.Load.then(
+      this.adaptableStore.Load.then(
         () => this.strategies.forEach(strat => strat.initializeWithRedux()),
         e => {
           LoggingHelper.LogAdaptableError('Failed to Init AdaptableStore : ', e);
@@ -572,14 +560,14 @@ export class Adaptable implements IAdaptable {
   };
 
   private initStore() {
-    this.AdaptableStore = new AdaptableStore(this);
+    this.adaptableStore = new AdaptableStore(this);
 
-    this.AdaptableStore.onAny(
+    this.adaptableStore.onAny(
       (
         eventName: string,
         data: { action: Redux.Action; state: AdaptableState; newState: AdaptableState }
       ) => {
-        this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.AdaptableStore));
+        this.forPlugins(plugin => plugin.onStoreEvent(eventName, data, this.adaptableStore));
 
         if (eventName == INIT_STATE) {
           // and reset state also?
@@ -624,12 +612,10 @@ export class Adaptable implements IAdaptable {
 
     // Create Adaptable adaptable Tool Panel
     if (this.adaptableOptions!!.userInterfaceOptions!.showAdaptableToolPanel) {
-      LoggingHelper.LogAdaptableInfo('Adding Adaptable Tool Panel');
-      this.gridOptions.sideBar = this.gridOptions.sideBar || {};
-      this.gridOptions.components = this.gridOptions.components || {};
-      // https://www.ag-grid.com/javascript-grid-side-bar/
-
       if (this.gridOptions.sideBar) {
+        this.gridOptions.sideBar = this.gridOptions.sideBar || {};
+        this.gridOptions.components = this.gridOptions.components || {};
+        // https://www.ag-grid.com/javascript-grid-side-bar/
         const sidebar = this.gridOptions.sideBar;
         if (sidebar === true) {
           // Possibility 1: Sidebar is true - meaning that they want the default filter and columns, so create both:
@@ -822,14 +808,10 @@ export class Adaptable implements IAdaptable {
     let vendorColDef: ColDef = this.gridOptions.api!.getColumnDef(col);
     if (vendorColDef) {
       vendorColDef.floatingFilterComponentParams = {
-        suppressFilterButton: false,
+        suppressFilterButton: true,
       };
       vendorColDef.floatingFilterComponent = FloatingFilterWrapperFactory(this);
     }
-  }
-
-  public reloadGrid(): void {
-    this._emit('GridReloaded');
   }
 
   public applyGridFiltering() {
@@ -931,7 +913,7 @@ export class Adaptable implements IAdaptable {
 
     vendorCols.forEach(vendorColumn => {
       const colId: string = vendorColumn.getColId();
-      if (!this.api.gridApi.isRowGroupColumn(colId)) {
+      if (!this.api.columnApi.isRowGroupColumn(colId)) {
         allColumns.push(this.createAdaptableColumn(vendorColumn));
       }
     });
@@ -970,7 +952,7 @@ export class Adaptable implements IAdaptable {
 
     const quickSearchClassName = this.getQuickSearchClassName();
     if (abColumn == null) {
-      abColumn = this.api.gridApi.getColumnFromId(vendorColumn.getColId());
+      abColumn = this.api.columnApi.getColumnFromId(vendorColumn.getColId());
     }
     if (abColumn) {
       this.addQuickSearchStyleToColumn(abColumn, quickSearchClassName);
@@ -984,7 +966,7 @@ export class Adaptable implements IAdaptable {
 
     const vendorCols: Column[] = this.gridOptions.columnApi!.getAllGridColumns();
     vendorCols.forEach((vendorColumn: Column) => {
-      let abColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(vendorColumn.getColId());
+      let abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(vendorColumn.getColId());
       this.applyStylingToColumn(vendorColumn, abColumn);
     });
   }
@@ -999,69 +981,22 @@ export class Adaptable implements IAdaptable {
   }
 
   private addQuickSearchStyleToColumn(col: AdaptableColumn, quickSearchClassName: string): void {
-    const adaptable = this;
+    const api = this.api;
     const cellClassRules: any = {};
     cellClassRules[quickSearchClassName] = function(params: any) {
+      if (col.IsExcludedFromQuickSearch || !col.Visible) {
+        return false;
+      }
       if (params.node && !params.node.group) {
-        let columnId = params.colDef.colId ? params.colDef.colId : params.colDef.field;
+        let quickSearchValue = api.quickSearchApi.getQuickSearchValue();
 
-        const quickSearchState = adaptable.api.quickSearchApi.getQuickSearchState();
-        if (
-          StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText) &&
-          (quickSearchState.DisplayAction == DisplayAction.HighlightCell ||
-            quickSearchState.DisplayAction == DisplayAction.ShowRowAndHighlightCell)
-        ) {
-          if (col.IsExcludedFromQuickSearch) {
-            return false;
-          }
-
-          // in the very rare use case where there is no column id and we have a value
-          // then lets try to find the column via the ColumnHeader and do it that way
-          if (columnId == null) {
-            if (params.columnApi) {
-              let allCols: Column[] = params.columnApi.getAllColumns();
-              if (ArrayExtensions.IsNotNullOrEmpty(allCols)) {
-                let currentColumn: Column = allCols.find(
-                  c => c.getColDef().headerName == params.colDef.headerName
-                );
-                if (currentColumn) {
-                  columnId = currentColumn.getColId();
-                }
-              }
-            }
-            // if that fails then we should do a basic comparison (but without creating a range)
-            if (columnId == null && params.value) {
-              return String(params.value)
-                .toLowerCase()
-                .includes(quickSearchState.QuickSearchText);
-            }
-          }
-
-          if (columnId != null) {
-            const range = RangeHelper.CreateValueRangeFromOperand(quickSearchState.QuickSearchText);
-            if (range) {
-              // not right but just checking...
-              if (RangeHelper.IsColumnAppropriateForRange(range, col)) {
-                const expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                  columnId,
-                  null,
-                  null,
-                  null,
-                  [range]
-                );
-                if (
-                  ExpressionHelper.checkForExpressionFromRowNode(
-                    expression,
-                    params.node,
-                    [col],
-                    adaptable
-                  )
-                ) {
-                  return true;
-                }
-              }
-            }
-          }
+        if (StringExtensions.IsNotNullOrEmpty(quickSearchValue)) {
+          const columnFilter: ColumnFilter = ObjectFactory.CreateColumnFilter(
+            col.ColumnId,
+            'Contains',
+            [quickSearchValue]
+          );
+          return api.filterApi.evaluateColumnFilter(columnFilter, params.node);
         }
       }
       return false;
@@ -1110,7 +1045,11 @@ export class Adaptable implements IAdaptable {
           columnId: activeCell.column.getColId(),
           primaryKeyValue: this.getPrimaryKeyValueFromRowNode(rowNode),
           rawValue: this.getRawValueFromRowNode(rowNode, activeCell.column.getColId()),
-          displayValue: this.getDisplayValueFromRowNode(rowNode, activeCell.column.getColId()),
+          displayValue: this.getValueFromRowNode(
+            rowNode,
+            activeCell.column.getColId(),
+            CellValueType.DisplayValue
+          ),
         };
       }
     }
@@ -1148,10 +1087,10 @@ export class Adaptable implements IAdaptable {
         const originalIndex1 = columnsStateIndexes[colId1];
         const originalIndex2 = columnsStateIndexes[colId2];
 
-        if (colId1 === AG_GRID_GROUPED_COLUMN) {
+        if (this.api.columnApi.isRowGroupColumn(colId1)) {
           return -1;
         }
-        if (colId2 === AG_GRID_GROUPED_COLUMN) {
+        if (this.api.columnApi.isRowGroupColumn(colId2)) {
           return 1;
         }
 
@@ -1177,7 +1116,7 @@ export class Adaptable implements IAdaptable {
   }
 
   private persistLayout(layout: Layout) {
-    if (this.adaptableOptions.layoutOptions.autoSaveLayouts) {
+    if (this.api.layoutApi.shouldAutoSaveLayout(layout)) {
       this.api.layoutApi.saveLayout(layout);
     } else {
       this.api.internalApi.updateCurrentDraftLayout(layout);
@@ -1201,7 +1140,7 @@ export class Adaptable implements IAdaptable {
 
       return acc;
     }, {} as VendorColumnStateMap);
-    const groupedColumnsIndexesMap = (layout.GroupedColumns || []).reduce(
+    const groupedColumnsIndexesMap = (layout.RowGroupedColumns || []).reduce(
       (acc, colId: string, index) => {
         acc[colId] = index;
 
@@ -1211,41 +1150,22 @@ export class Adaptable implements IAdaptable {
     );
 
     let pivotedColumnsIndexesMap: { [key: string]: number } = {};
-    let aggregationFunctionsColumnsMap: { [key: string]: string | IAggFunc } = {};
 
-    if (layout.PivotDetails) {
-      pivotedColumnsIndexesMap = (layout.PivotDetails.PivotColumns || []).reduce(
-        (acc, colId: string, index) => {
-          acc[colId] = index;
-
-          return acc;
-        },
-        {} as { [key: string]: number }
-      );
-
-      aggregationFunctionsColumnsMap = (layout.PivotDetails.AggregationColumns || []).reduce(
-        (acc, colId: string) => {
-          const agGridCol = this.gridOptions.columnApi.getColumn(colId);
-          const colAggFunc = agGridCol ? agGridCol.getAggFunc() : null;
-          acc[colId] = colAggFunc || 'sum';
-
-          return acc;
-        },
-        {} as { [key: string]: string | IAggFunc }
-      );
-    }
+    const aggregationFunctionsColumnsMap = layout.AggregationColumns || {};
 
     const columnsInPivot = [
-      ...(layout.PivotDetails?.PivotColumns || []),
-      ...(layout.PivotDetails?.AggregationColumns || []),
+      ...(layout.PivotColumns || []),
+      ...Object.keys(layout.AggregationColumns || {}),
     ];
-    const columnsToShow = columnsInPivot.length ? columnsInPivot : layout.Columns;
+    const columnsToShow = !layout.EnablePivot ? layout.Columns : columnsInPivot || [];
 
-    if (columnsInPivot.length && layout.GroupedColumns) {
-      columnsInPivot.push(...layout.GroupedColumns);
+    if (columnsInPivot.length && layout.RowGroupedColumns) {
+      columnsInPivot.push(...layout.RowGroupedColumns);
     }
 
     let isChanged = false;
+
+    const colsToAutoSize: Record<string, boolean> = {};
 
     const newColState = this.getSortedColumnStateForVisibleColumns(columnsToShow, columnsState)
       .map((colDef: ColDef) => {
@@ -1258,11 +1178,14 @@ export class Adaptable implements IAdaptable {
 
         if (layout.ColumnWidthMap && layout.ColumnWidthMap[colId] != null) {
           newColState.width = layout.ColumnWidthMap[colId];
+        } else {
+          colsToAutoSize[colId] = true;
         }
 
-        if (groupedColumnsIndexesMap[colId] != null) {
-          newColState.rowGroupIndex = groupedColumnsIndexesMap[colId];
-        }
+        // if (groupedColumnsIndexesMap[colId] != null) {
+        newColState.rowGroupIndex =
+          groupedColumnsIndexesMap[colId] != null ? groupedColumnsIndexesMap[colId] : null;
+        // }
         const pinned = layout.PinnedColumnsMap ? layout.PinnedColumnsMap[colId] : false;
         if (pinned) {
           newColState.pinned = pinned;
@@ -1274,42 +1197,56 @@ export class Adaptable implements IAdaptable {
         }
         newColState.aggFunc = null;
         if (aggregationFunctionsColumnsMap[colId] != null) {
-          newColState.aggFunc = aggregationFunctionsColumnsMap[colId];
+          newColState.aggFunc =
+            aggregationFunctionsColumnsMap[colId] === true
+              ? colDef.aggFunc
+              : (aggregationFunctionsColumnsMap[colId] as string);
         }
 
-        isChanged = isChanged || !isEqual(newColState, oldColState);
+        isChanged = isChanged || !_.isEqual(newColState, oldColState);
 
         return newColState;
       })
       .filter(x => !!x);
 
+    if (!isChanged) {
+      // order changed
+      const toString = (c: any) =>
+        `${c.colId}-${c.rowGroupIndex}-${c.pivotIndex}-${c.aggFunc}-${c.pinned}-${c.width}-${c.hide}`;
+
+      const oldColStateString = columnsState.map(toString).join(',');
+      const newColStateString = newColState.map(toString).join(',');
+
+      isChanged = newColStateString != oldColStateString;
+    }
+
     const oldSortModel = this.gridOptions.api.getSortModel();
 
     const sortModel = (layout.ColumnSorts ?? [])
       .map(customSort => {
-        const colId = customSort.Column;
+        const colId = customSort.ColumnId;
         if (!layoutColumnsMap[colId]) {
           return null;
         }
         return {
           colId,
-          sort: customSort.SortOrder === 'Ascending' ? 'asc' : 'desc',
+          sort: customSort.SortOrder === 'Asc' ? 'asc' : 'desc',
         };
       })
       .filter(x => !!x);
 
-    const equalSortModel = isEqual(oldSortModel, sortModel);
+    const equalSortModel = _.isEqual(oldSortModel, sortModel);
 
-    const pivoted = !!columnsInPivot.length;
+    const pivoted = !!layout.EnablePivot;
     const shouldUpdatePivoted = this.gridOptions.columnApi.isPivotMode() !== pivoted;
 
     isChanged = isChanged || !equalSortModel || shouldUpdatePivoted;
 
     if (
-      ArrayExtensions.IsNotNullOrEmpty(layout.ExpandedRowGroupKeys) &&
-      this.adaptableOptions.layoutOptions.includeOpenedRowGroups
+      ArrayExtensions.IsNotNullOrEmpty(layout.ExpandedRowGroupValues) &&
+      this.adaptableOptions.layoutOptions.includeExpandedRowGroups
     ) {
-      this.expandRowGroupsForValues(layout.ExpandedRowGroupKeys);
+      this.expandRowGroupsForValues(layout.ExpandedRowGroupValues);
     }
 
     if (isChanged) {
@@ -1320,12 +1257,35 @@ export class Adaptable implements IAdaptable {
       if (shouldUpdatePivoted) {
         this.gridOptions.columnApi.setPivotMode(pivoted);
       }
-      if (pivoted) {
-        this.gridOptions.columnApi.addValueColumns(layout.PivotDetails.AggregationColumns);
-      }
+
+      this.gridOptions.columnApi.setPivotColumns(layout.PivotColumns || []);
+
       this.updateColumnsIntoStore();
     } else {
       // console.warn('NOTHING CHANGED');
+    }
+
+    const colsToAutoSizeArray = Object.keys(colsToAutoSize);
+
+    if (pivoted && this.adaptableOptions?.layoutOptions?.autoSizeColumnsInPivotLayout) {
+      requestAnimationFrame(() => {
+        this.gridOptions.columnApi!.autoSizeAllColumns();
+      });
+      setTimeout(() => {
+        this.gridOptions.columnApi?.autoSizeAllColumns();
+        setTimeout(() => {
+          this.gridOptions.columnApi?.autoSizeAllColumns();
+        }, 200);
+      }, 100);
+
+      return;
+    }
+
+    if (
+      this.adaptableOptions?.layoutOptions?.autoSizeColumnsInLayout &&
+      colsToAutoSizeArray.length
+    ) {
+      this.gridOptions.columnApi?.autoSizeColumns(colsToAutoSizeArray);
     }
   }
 
@@ -1347,7 +1307,7 @@ export class Adaptable implements IAdaptable {
     }[] = this.gridOptions.api.getSortModel();
 
     const columnSorts: ColumnSort[] = sortModel.map(({ colId, sort }) => {
-      return { Column: colId, SortOrder: sort === 'asc' ? 'Ascending' : 'Descending' };
+      return { ColumnId: colId, SortOrder: sort === 'asc' ? 'Asc' : 'Desc' };
     });
 
     const columnState = this.gridOptions.columnApi.getColumnState();
@@ -1355,7 +1315,8 @@ export class Adaptable implements IAdaptable {
     let groupedColumns = [...new Array(columnState.length)];
     let pivotedColumns = [...new Array(columnState.length)];
 
-    const pivotAggregatedColumns: string[] = [];
+    const pivotColumns: string[] = [];
+    const aggregatedColumns: Record<string, string> = {};
 
     const columnWidths = columnState.reduce((acc, colDef) => {
       const { colId } = colDef;
@@ -1382,15 +1343,15 @@ export class Adaptable implements IAdaptable {
       if (colDef.pivotIndex != null) {
         pivotedColumns[colDef.pivotIndex] = colId;
       }
-      // if (colDef.aggFunc) {
-      //   pivotAggregatedColumns.push(colId);
-      // }
+      if (colDef.aggFunc && typeof colDef.aggFunc === 'string') {
+        aggregatedColumns[colId] = colDef.aggFunc;
+      }
 
       return acc;
     }, {} as { [key: string]: number });
 
-    this.gridOptions.columnApi.getValueColumns().forEach(col => {
-      pivotAggregatedColumns.push(col.getColId());
+    this.gridOptions.columnApi.getPivotColumns().forEach(col => {
+      pivotColumns.push(col.getColId());
     });
 
     groupedColumns = groupedColumns.filter(x => !!x);
@@ -1402,20 +1363,16 @@ export class Adaptable implements IAdaptable {
 
     layout.Columns = columnOrder;
     layout.ColumnSorts = columnSorts;
-    layout.GroupedColumns = groupedColumns;
-
-    layout.PivotDetails = null;
-    if (this.gridOptions.columnApi.isPivotMode()) {
-      if (pivotedColumns.length || pivotAggregatedColumns.length) {
-        layout.PivotDetails = {
-          PivotColumns: pivotedColumns,
-          AggregationColumns: pivotAggregatedColumns,
-        };
-      }
+    layout.RowGroupedColumns = groupedColumns;
+    if (Object.keys(aggregatedColumns).length) {
+      layout.AggregationColumns = aggregatedColumns;
     }
 
-    if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
-      layout.ExpandedRowGroupKeys = this.getExpandRowGroupsKeys();
+    layout.EnablePivot = this.gridOptions.columnApi.isPivotMode();
+    layout.PivotColumns = pivotColumns;
+
+    if (this.adaptableOptions.layoutOptions.includeExpandedRowGroups) {
+      layout.ExpandedRowGroupValues = this.getExpandRowGroupsKeys();
     }
     this.persistLayout(layout);
   }
@@ -1462,7 +1419,7 @@ export class Adaptable implements IAdaptable {
           for (const column of rangeSelection.columns) {
             if (column != null) {
               const colId: string = column.getColId();
-              const selectedColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(colId);
+              const selectedColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(colId);
               if (
                 selectedColumn &&
                 columns.find(c => c.ColumnId == selectedColumn.ColumnId) == null
@@ -1481,7 +1438,11 @@ export class Adaptable implements IAdaptable {
                   const selectedCell: GridCell = {
                     columnId: colId,
                     rawValue: this.getRawValueFromRowNode(rowNode, colId),
-                    displayValue: this.getDisplayValueFromRowNode(rowNode, colId),
+                    displayValue: this.getValueFromRowNode(
+                      rowNode,
+                      colId,
+                      CellValueType.DisplayValue
+                    ),
                     primaryKeyValue: primaryKey,
                   };
                   selectedCells.push(selectedCell);
@@ -1545,7 +1506,7 @@ export class Adaptable implements IAdaptable {
       | 'Boolean'
       | 'Date'
       | 'Object'
-      | 'Unknown' = this.api.gridApi.getColumnDataTypeFromColumnId(dataChangedInfo.ColumnId);
+      | 'Unknown' = this.api.columnApi.getColumnDataTypeFromColumnId(dataChangedInfo.ColumnId);
     newValue =
       dataType == DataType.Number ? Number(dataChangedInfo.NewValue) : dataChangedInfo.NewValue;
 
@@ -1584,70 +1545,34 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.stopEditing(true);
   }
 
-  public getRowNodeIsSatisfiedFunction(
-    id: any,
-    distinctCriteria: DistinctCriteriaPairValue
-  ): (columnId: string) => any {
-    if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-      let rowNode: RowNode;
-      if (this.useRowNodeLookUp) {
-        rowNode = this.gridOptions.api!.getRowNode(id);
-      } else {
-        let foundRow: boolean = false;
-        this.gridOptions.api!.getModel().forEachNode(node => {
-          if (!foundRow && id == this.getPrimaryKeyValueFromRowNode(node)) {
-            rowNode = node;
-            foundRow = true;
-          }
-        });
-      }
-      return (columnId: string) => this.gridOptions.api!.getValue(columnId, rowNode);
-    }
-    return (columnId: string) => this.getDisplayValue(id, columnId);
-  }
-
-  public getRowNodeIsSatisfiedFunctionFromRowNode(
-    rowwNode: RowNode,
-    distinctCriteria: DistinctCriteriaPairValue
-  ): (columnId: string) => any {
-    if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-      let testreturnvalue: any = (columnId: string) =>
-        this.gridOptions.api!.getValue(columnId, rowwNode);
-      return testreturnvalue;
-    }
-    return (columnId: string) => this.getDisplayValueFromRowNode(rowwNode, columnId);
-  }
-
-  public getColumnValueDisplayValuePairDistinctList(
-    columnId: string,
-    distinctCriteria: DistinctCriteriaPairValue,
+  public getDistinctValuesForColumn(
+    column: AdaptableColumn,
+    cellValueType: CellValueType,
     visibleRowsOnly: boolean
-  ): Array<IRawValueDisplayValuePair> {
-    const returnMap = new Map<string, IRawValueDisplayValuePair>();
+  ): any[] {
+    let returnValues: any[] = [];
+
+    // this function does NOT look up for server values but actually it should...
+    // that is currently commented out in the column api function (previously in filter form)
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
-    const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
-      columnId
-    );
-    if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
-      permittedValuesForColumn.forEach(pv => {
-        returnMap.set(pv, { RawValue: pv, DisplayValue: pv });
-      });
+    // but that is only something used by a chart so not a big problem but one day... TODO
+    const permittedValues: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(column);
+    if (ArrayExtensions.IsNotNull(permittedValues)) {
+      returnValues.push(...permittedValues);
     } else {
-      const useRawValue: boolean = this.useRawValueForColumn(columnId);
-
       if (visibleRowsOnly) {
         this.gridOptions.api!.forEachNodeAfterFilter((rowNode: RowNode) => {
-          this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+          returnValues.push(this.addDistinctColumnValue(rowNode, column.ColumnId, cellValueType));
         });
       } else {
         this.gridOptions.api!.forEachNode(rowNode => {
-          this.addDistinctColumnValue(rowNode, columnId, useRawValue, distinctCriteria, returnMap);
+          returnValues.push(this.addDistinctColumnValue(rowNode, column.ColumnId, cellValueType));
         });
       }
     }
-    return Array.from(returnMap.values()).slice(
+    return _.uniq(returnValues).slice(
       0,
       this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed
     );
@@ -1664,8 +1589,9 @@ export class Adaptable implements IAdaptable {
 
     // check if there are permitted column values for that column
     // NB.  this currently contains a small bug as we dont check for visibility so if using permitted values then ALL are returned :(
+    const abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(columnId);
     const permittedValuesForColumn: any[] = this.api.userInterfaceApi.getPermittedValuesForColumn(
-      columnId
+      abColumn
     );
     if (ArrayExtensions.IsNotNullOrEmpty(permittedValuesForColumn)) {
       permittedValuesForColumn.forEach(pv => {
@@ -1674,14 +1600,14 @@ export class Adaptable implements IAdaptable {
     } else {
       permittedMap = null;
     }
-    const useRawValue: boolean = this.useRawValueForColumn(columnId);
+    const useRawValue: boolean = this.shouldUseRawValueForColumn(columnId);
 
     const eachFn = (rowNode: RowNode, columnId: string, useRawValue: boolean) => {
       if (rowNode && !this.isGroupRowNode(rowNode)) {
         const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
         const displayValue = useRawValue
           ? Helper.StringifyValue(rawValue)
-          : this.getDisplayValueFromRowNode(rowNode, columnId);
+          : this.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue);
 
         let allowed = !permittedMap || permittedMap.has(displayValue);
         if (allowed && onlyIncludeIds) {
@@ -1710,29 +1636,19 @@ export class Adaptable implements IAdaptable {
   private addDistinctColumnValue(
     rowNode: RowNode,
     columnId: string,
-    useRawValue: boolean,
-    distinctCriteria: DistinctCriteriaPairValue,
-    returnMap: Map<string, IRawValueDisplayValuePair>
-  ): void {
+    cellValueType: CellValueType
+  ): string {
     // we do not return the values of the aggregates when in grouping mode
     // otherwise they would appear in the filter dropdown etc....
-
     if (rowNode && !this.isGroupRowNode(rowNode)) {
-      const rawValue = this.gridOptions.api!.getValue(columnId, rowNode);
-
-      const displayValue = useRawValue
-        ? Helper.StringifyValue(rawValue)
-        : this.getDisplayValueFromRowNode(rowNode, columnId);
-
-      if (distinctCriteria == DistinctCriteriaPairValue.RawValue) {
-        returnMap.set(rawValue, { RawValue: rawValue, DisplayValue: displayValue });
-      } else {
-        returnMap.set(displayValue, { RawValue: rawValue, DisplayValue: displayValue });
+      const returnValue = this.getValueFromRowNode(rowNode, columnId, cellValueType);
+      if (Helper.objectExists(returnValue)) {
+        return returnValue;
       }
     }
   }
 
-  private useRawValueForColumn(columnId: string): boolean {
+  private shouldUseRawValueForColumn(columnId: string): boolean {
     // we need to return false if the column has a cell rendeerer i think...
     const colDef: ColDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
@@ -1740,16 +1656,10 @@ export class Adaptable implements IAdaptable {
         return true;
       }
     }
-
-    // will add more in due course I'm sure but for now only percent bar columns return false...
-    const percentBars: PercentBar[] = this.api.percentBarApi.getAllPercentBar();
-    if (ArrayExtensions.IsEmpty(percentBars)) {
-      return false;
+    if (this.api.columnApi.isSpecialRenderedColumn(columnId)) {
+      return true;
     }
-    return ArrayExtensions.ContainsItem(
-      percentBars.map(pb => pb.ColumnId),
-      columnId
-    );
+    return false;
   }
 
   public getDisplayValue(id: any, columnId: string): string {
@@ -1757,12 +1667,12 @@ export class Adaptable implements IAdaptable {
 
     if (this.useRowNodeLookUp) {
       const rowNode: RowNode = this.gridOptions.api!.getRowNode(id);
-      returnValue = this.getDisplayValueFromRowNode(rowNode, columnId);
+      returnValue = this.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue);
     } else {
       let foundRow: boolean = false;
       this.gridOptions.api!.getModel().forEachNode(rowNode => {
         if (!foundRow && id == this.getPrimaryKeyValueFromRowNode(rowNode)) {
-          returnValue = this.getDisplayValueFromRowNode(rowNode, columnId);
+          returnValue = this.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue);
           foundRow = true;
         }
       });
@@ -1770,18 +1680,23 @@ export class Adaptable implements IAdaptable {
     return returnValue;
   }
 
-  public getDisplayValueFromRowNode(row: RowNode, columnId: string): string {
+  public getValueFromRowNode(row: RowNode, columnId: string, cellValueType: CellValueType): string {
     if (row == null) {
       return '';
     }
-    const rawValue = this.gridOptions.api!.getValue(columnId, row);
-    if (this.useRawValueForColumn(columnId)) {
+    const rawValue = this.getRawValueFromRowNode(row, columnId);
+    if (cellValueType == CellValueType.RawValue || this.shouldUseRawValueForColumn(columnId)) {
       return Helper.StringifyValue(rawValue);
     }
     return this.getDisplayValueFromRawValue(columnId, rawValue);
   }
 
-  public getDisplayValueFromRawValue(columnId: string, rawValue: any): any {
+  private getDisplayValueFromRawValue(columnId: string, rawValue: any): string {
+    const isRenderedColumn = this.api.columnApi.isSpecialRenderedColumn(columnId);
+    if (isRenderedColumn) {
+      return this.agGridHelper.getCleanValue(rawValue);
+    }
+
     const colDef = this.gridOptions.api!.getColumnDef(columnId);
     if (colDef) {
       if (typeof colDef.valueFormatter == 'function') {
@@ -1801,23 +1716,15 @@ export class Adaptable implements IAdaptable {
         };
         const formattedValue = formatter(params);
         if (colDef.cellRenderer) {
-          return this.getRenderedValue(colDef, formattedValue);
+          return this.agGridHelper.getRenderedValue(colDef, formattedValue);
         }
         return formattedValue || '';
       }
       if (colDef.cellRenderer) {
-        return this.getRenderedValue(colDef, rawValue);
+        return this.agGridHelper.getRenderedValue(colDef, rawValue);
       }
     }
     return this.agGridHelper.getCleanValue(rawValue);
-  }
-
-  private getRenderedValue(colDef: ColDef, valueToRender: any): string {
-    return this.agGridHelper.getRenderedValue(
-      this.api.percentBarApi.getAllPercentBar(),
-      colDef,
-      valueToRender
-    );
   }
 
   public getRawValueFromRowNode(rowNode: RowNode, columnId: string): any {
@@ -2056,7 +1963,7 @@ export class Adaptable implements IAdaptable {
 
     const cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
       calculatedColumn.ColumnExpression,
-      this.api.gridApi.getColumns()
+      this.api.columnApi.getColumns()
     );
 
     if (calculatedColumn.CalculatedColumnSettings) {
@@ -2117,7 +2024,7 @@ export class Adaptable implements IAdaptable {
   public addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], colDefs?: ColDef[]) {
     colDefs = colDefs || this.getColumnDefs();
 
-    const cols: AdaptableColumn[] = this.api.gridApi.getColumns();
+    const cols: AdaptableColumn[] = this.api.columnApi.getColumns();
     const newColDefs: ColDef[] = calculatedColumns.map(calculatedColumn => {
       const cleanedExpression: string = this.CalculatedColumnExpressionService.CleanExpressionColumnNames(
         calculatedColumn.ColumnExpression,
@@ -2372,7 +2279,7 @@ export class Adaptable implements IAdaptable {
         headerFontStyle: 'normal',
         headerFontWeight: '400',
         height: 65,
-        Columns: this.api.gridApi.getColumns().map(col => {
+        Columns: this.api.columnApi.getColumns().map(col => {
           return {
             columnFriendlyName: col.FriendlyName,
             width: 200,
@@ -2389,7 +2296,7 @@ export class Adaptable implements IAdaptable {
         fontStyle: 'normal',
         fontWeight: '400',
         height: 30,
-        Columns: this.api.gridApi.getColumns().map(col => {
+        Columns: this.api.columnApi.getColumns().map(col => {
           return {
             columnFriendlyName: col.FriendlyName,
             width: 200,
@@ -2459,12 +2366,6 @@ export class Adaptable implements IAdaptable {
       gridContainerElement.addEventListener('keydown', event => this._emit('KeyDown', event));
     }
 
-    this.gridOptions.api!.addEventListener(Events.EVENT_COLUMN_VISIBLE, (params: any) => {
-      if (params.visible && params.column) {
-        this.updateQuickSearchRangeVisibleColumn(params.column.colId);
-      }
-    });
-
     // we could use the single event listener but for this one it makes sense to listen to all of them and filter on the type
     // since there are many events and we want them to behave the same
     const columnEventsThatTriggersStateChange = [
@@ -2479,19 +2380,7 @@ export class Adaptable implements IAdaptable {
     ];
     this.gridOptions.api!.addGlobalListener((type: string) => {
       if (columnEventsThatTriggersStateChange.indexOf(type) > -1) {
-        // bit messy but better than alternative which was calling setColumnIntoStore for every single column
-        const popupState = this.getState().Popup.ScreenPopup;
-        if (
-          popupState.ShowScreenPopup &&
-          (popupState.ComponentName == ScreenPopups.ColumnChooserPopup ||
-            ScreenPopups.CalculatedColumnPopup)
-        ) {
-          // ignore
-        } else {
-          // set the column into the store
-          this.debouncedSetColumnIntoStore();
-        }
-        // refilter the grid if required
+        this.debouncedSetColumnIntoStore(); // refilter the grid if required
         this.debouncedFilterGrid();
       }
     });
@@ -2553,7 +2442,7 @@ export class Adaptable implements IAdaptable {
 
     // doing this seperately as wont always be wanted
     this.gridOptions.api!.addEventListener(Events.EVENT_ROW_GROUP_OPENED, (params: any) => {
-      if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
+      if (this.adaptableOptions.layoutOptions.includeExpandedRowGroups) {
         this.debouncedSaveGridLayout();
       }
     });
@@ -2656,7 +2545,7 @@ export class Adaptable implements IAdaptable {
         let column = params.column;
         // for numeric columns we want to make sure its a numeric update in case they have aggregation
         if (column) {
-          let abColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(column.colId);
+          let abColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(column.colId);
           if (abColumn && abColumn.DataType == DataType.Number) {
             let shouldUpdateNumberEdit: boolean = true;
             if (ArrayExtensions.IsNotNullOrEmpty(this.api.shortcutApi.getAllShortcut())) {
@@ -2680,6 +2569,7 @@ export class Adaptable implements IAdaptable {
 
     // this handles ticking data
     // except it doesnt handle when data has been added to ag-Grid using applyTransaction
+    // not sure if we need any of this tbh - needs looking at
     this.gridOptions.api!.addEventListener(
       Events.EVENT_CELL_VALUE_CHANGED,
       (params: NewValueParams) => {
@@ -2696,7 +2586,8 @@ export class Adaptable implements IAdaptable {
           };
            this.DataService.CreateDataChangedEvent(dataChangedInfo);
        */
-          const colId: string | undefined = params.colDef.field;
+          //    const colId: string | undefined = params.colDef.field;
+          /*
           if (colId) {
             // 24/08/17 : AgGrid doesn't raise an event for computed columns that depends on that column
             // so we manually raise.
@@ -2718,25 +2609,12 @@ export class Adaptable implements IAdaptable {
               });
             }
 
-            // see if we need to refresh any percent bars
-            this.api.percentBarApi.getAllPercentBar().forEach(pb => {
-              refreshColumnList.forEach(changedColId => {
-                if (
-                  StringExtensions.IsNotNullOrEmpty(pb.PositiveValueColumnId) &&
-                  pb.PositiveValueColumnId == changedColId
-                ) {
-                  ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                }
-                if (
-                  StringExtensions.IsNotNullOrEmpty(pb.NegativeValueColumnId) &&
-                  pb.NegativeValueColumnId == changedColId
-                ) {
-                  ArrayExtensions.AddItem(refreshColumnList, pb.ColumnId);
-                }
-              });
-            });
+            // see if we need to refresh any Special Rendered Columns
+            if (this.api.columnApi.isSpecialRenderedColumn(colId)) {
+              ArrayExtensions.AddItem(refreshColumnList, colId);
+            }
           }
-
+*/
           // this is new  - giving users ability to filter on external data changes
           this.filterOnExternalDataChange([params.node]);
         }
@@ -2845,7 +2723,7 @@ export class Adaptable implements IAdaptable {
     // We plug our filter mechanism and if there is already something like external widgets... we save ref to the function
     const originalisExternalFilterPresent = this.gridOptions.isExternalFilterPresent;
     this.gridOptions.isExternalFilterPresent = () => {
-      const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
+      const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
       const isFilterActive = ArrayExtensions.IsNotNullOrEmpty(columnFilters);
       if (isFilterActive) {
         // used in particular at init time to show the filter icon correctly
@@ -2858,9 +2736,7 @@ export class Adaptable implements IAdaptable {
           }
         }
       }
-      const isSearchActive = StringExtensions.IsNotNullOrEmpty(
-        this.api.advancedSearchApi.getAdvancedSearchState().CurrentAdvancedSearch
-      );
+      const isSearchActive = StringExtensions.IsNotNullOrEmpty(this.api.queryApi.getCurrentQuery());
       const isQuickSearchActive = StringExtensions.IsNotNullOrEmpty(
         this.api.quickSearchApi.getQuickSearchValue()
       );
@@ -2875,81 +2751,46 @@ export class Adaptable implements IAdaptable {
     };
     const originaldoesExternalFilterPass = this.gridOptions.doesExternalFilterPass;
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
-      const columns = this.api.gridApi.getColumns();
+      // first we assess Query (if its running locally)
+      if (
+        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('Query')
+      ) {
+        return true;
+      } else {
+        const currentQuery = this.api.queryApi.getCurrentQuery();
 
-      // first we assess AdvancedSearch (if its running locally)
-      if (this.adaptableOptions!.searchOptions!.serverSearchOption == 'None') {
-        const currentSearch = this.api.advancedSearchApi.getCurrentAdvancedSearch();
-        if (currentSearch) {
+        if (currentQuery) {
           // See if our rowNode passes the Expression - using Expression Helper; if not then return false
           if (
-            !ExpressionHelper.checkForExpressionFromRowNode(
-              currentSearch.Expression,
-              node,
-              columns,
-              this
-            )
+            !parser.evaluate(currentQuery, {
+              node: node,
+              api: this.api,
+            })
           ) {
             return false;
           }
         }
       }
+
       // we then assess filters
       if (
-        this.adaptableOptions.searchOptions.serverSearchOption == 'None' ||
-        this.adaptableOptions.searchOptions.serverSearchOption == 'AdvancedSearch'
+        this.gridOptions.columnApi.isPivotMode() || //TODO fix properly - loading directly a pivot layout when we have a column filter it breaks aggrid
+        (this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
+          this.adaptableOptions!.searchOptions!.serverSearchOption.includes('ColumnFilter'))
       ) {
-        const columnFilters: ColumnFilter[] = this.api.columnFilterApi.getAllColumnFilter();
+        return true;
+      } else {
+        const columnFilters: ColumnFilter[] = this.api.filterApi.getAllColumnFilter();
+
         if (columnFilters.length > 0) {
+          //  console.log('assessing');
           for (const columnFilter of columnFilters) {
-            if (
-              !ExpressionHelper.checkForExpressionFromRowNode(
-                columnFilter.Filter,
-                node,
-                columns,
-                this
-              )
-            ) {
+            //   console.log('filter', columnFilter);
+            if (!this.api.filterApi.evaluateColumnFilter(columnFilter, node)) {
               return false;
             }
           }
-        }
-        // we next assess quicksearch
-        const quickSearchState: QuickSearchState = this.api.quickSearchApi.getQuickSearchState();
-        if (quickSearchState.DisplayAction != DisplayAction.HighlightCell) {
-          if (StringExtensions.IsNullOrEmpty(quickSearchState.QuickSearchText)) {
-            return true;
-          }
-          const quickSearchVisibleColumnExpresssions: Expression[] = this.getState().System
-            .QuickSearchVisibleColumnExpressions;
-
-          let quickSearchRange = this.getState().System.QuickSearchRange;
-          if (quickSearchRange == null) {
-            // might not have created so lets do it here
-            quickSearchRange = RangeHelper.CreateValueRangeFromOperand(
-              quickSearchState.QuickSearchText
-            );
-          }
-          if (quickSearchRange != null) {
-            const visibleCols = columns.filter(c => c.Visible && !c.IsExcludedFromQuickSearch);
-            for (const column of visibleCols) {
-              const expression = quickSearchVisibleColumnExpresssions.find(
-                exp => exp.RangeExpressions[0].ColumnId == column.ColumnId
-              );
-              if (expression) {
-                if (
-                  ExpressionHelper.checkForExpressionFromRowNode(expression, node, [column], this)
-                ) {
-                  return originaldoesExternalFilterPass
-                    ? originaldoesExternalFilterPass(node)
-                    : true;
-                }
-              }
-            }
-          } else {
-            return true; // is this right????
-          }
-          return false;
         }
       }
       return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
@@ -2973,37 +2814,54 @@ export class Adaptable implements IAdaptable {
       } else {
         colMenuItems = params.defaultItems.slice(0);
       }
-      colMenuItems.push('separator');
 
-      const adaptableColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(colId);
-      if (adaptableColumn != null) {
-        let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
-        // First get all the Strategy based Adaptable Menu Items
-        const adaptableMenuItems: AdaptableMenuItem[] = this.getAdaptableMenuItemsColumnHeader(
-          adaptableColumn,
-          menuInfo
-        );
-
-        // And then convert them into Menu Item Defs
-        adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+      if (this.api.columnApi.isRowGroupColumn(colId)) {
+        if (this.adaptableOptions.userInterfaceOptions.showUngroupColumnMenuItem) {
+          colMenuItems.push('separator');
+          let groupedCols = this.gridOptions.columnApi.getRowGroupColumns();
+          let ungroupMenuItem: AdaptableMenuItem = {
+            Label: groupedCols.length == 1 ? 'Ungroup Column' : 'Ungroup All',
+            ClickFunction: () => this.gridOptions.columnApi.setRowGroupColumns([]),
+            IsVisible: true,
+            Icon: 'undo',
+          };
           let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
-            adaptableMenuItem
+            ungroupMenuItem
           );
           colMenuItems.push(menuItem);
-        });
+        }
+      } else {
+        colMenuItems.push('separator');
+        const adaptableColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(colId);
+        if (adaptableColumn != null) {
+          let menuInfo: MenuInfo = this.createMenuInfoObject(adaptableColumn);
+          // First get all the Strategy based Adaptable Menu Items
+          const adaptableMenuItems: AdaptableMenuItem[] = this.getAdaptableMenuItemsColumnHeader(
+            adaptableColumn,
+            menuInfo
+          );
 
-        // Next get all the User Menu Items
-        let userColumnMenuItems: KeyValuePair[] = this.getUserMenuItemsColumnHeader(menuInfo);
-        if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
-          userColumnMenuItems.forEach((kvp: KeyValuePair) => {
-            // And then convert them into Menu Item Defs
-            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUserMenu(
-              kvp.Key,
-              kvp.Value,
-              menuInfo
+          // And then convert them into Menu Item Defs
+          adaptableMenuItems.forEach((adaptableMenuItem: AdaptableMenuItem) => {
+            let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromAdaptableMenu(
+              adaptableMenuItem
             );
             colMenuItems.push(menuItem);
           });
+
+          // Next get all the User Menu Items
+          let userColumnMenuItems: KeyValuePair[] = this.getUserMenuItemsColumnHeader(menuInfo);
+          if (ArrayExtensions.IsNotNullOrEmpty(userColumnMenuItems)) {
+            userColumnMenuItems.forEach((kvp: KeyValuePair) => {
+              // And then convert them into Menu Item Defs
+              let menuItem: MenuItemDef = this.agGridHelper.createAgGridMenuDefFromUserMenu(
+                kvp.Key,
+                kvp.Value,
+                menuInfo
+              );
+              colMenuItems.push(menuItem);
+            });
+          }
         }
       }
       return colMenuItems;
@@ -3028,7 +2886,7 @@ export class Adaptable implements IAdaptable {
       const adaptableMenuItems: AdaptableMenuItem[] = [];
       const agGridColumn: Column = params.column;
       if (agGridColumn) {
-        const adaptableColumn: AdaptableColumn = this.api.gridApi.getColumnFromId(
+        const adaptableColumn: AdaptableColumn = this.api.columnApi.getColumnFromId(
           agGridColumn.getColId()
         );
 
@@ -3222,9 +3080,6 @@ export class Adaptable implements IAdaptable {
 
   public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
-    const formatColumns: FormatColumn[] = this.api.formatColumnApi
-      .getAllFormatColumnWithDisplayFormat()
-      .concat(this.api.formatColumnApi.getAllFormatColumnWithCellAlignment());
 
     const cols = this.gridOptions.columnApi.getAllColumns();
 
@@ -3236,23 +3091,32 @@ export class Adaptable implements IAdaptable {
 
       colDef.valueFormatter = this.originalColDefValueFormatters[colDef.field];
 
-      const formatColumn = formatColumns.find(
-        fc => fc.ColumnId === colDef.field || fc.ColumnId === colDef.colId
+      // we have to assume that we always get the right one (if there are more than one).
+      // and we need to ensure that a colId is always being set even when not provided
+      // think that Radu is doing this
+      const abColumn = this.api.columnApi.getColumnFromId(colDef.colId);
+      const formatColumn = this.api.formatColumnApi.getFormatColumnWithDisplayFormatForColumn(
+        abColumn
       );
-
       if (!formatColumn) {
         return;
       }
 
       if (formatColumn.DisplayFormat) {
         if (formatColumn.DisplayFormat.Formatter === 'NumberFormatter') {
-          const options = formatColumn.DisplayFormat.Options;
-          colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+          // change the Number format - if the scope allows it
+          if (this.api.scopeApi.isColumnInNumericScope(abColumn, formatColumn.Scope)) {
+            const options = formatColumn.DisplayFormat.Options;
+            colDef.valueFormatter = params => FormatHelper.NumberFormatter(params.value, options);
+          }
         }
 
         if (formatColumn.DisplayFormat.Formatter === 'DateFormatter') {
-          const options = formatColumn.DisplayFormat.Options;
-          colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+          // change the Date format - if the scope allows it
+          if (this.api.scopeApi.isColumnInDateScope(abColumn, formatColumn.Scope)) {
+            const options = formatColumn.DisplayFormat.Options;
+            colDef.valueFormatter = params => FormatHelper.DateFormatter(params.value, options);
+          }
         }
       }
 
@@ -3292,7 +3156,7 @@ export class Adaptable implements IAdaptable {
       sparklineColumn.LineColor = DefaultSparklinesChartProperties.Brush;
     }
 
-    const renderedColumn = this.api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
 
     if (renderedColumn) {
       const cellRendererComp: any = this.agGridHelper.createSparklineCellRendererComp(
@@ -3316,7 +3180,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public removeSparklineColumn(sparklineColumn: SparklineColumn): void {
-    const renderedColumn = this.api.gridApi.getColumnFromId(sparklineColumn.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(sparklineColumn.ColumnId);
     if (renderedColumn) {
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
         sparklineColumn.ColumnId
@@ -3366,11 +3230,10 @@ export class Adaptable implements IAdaptable {
   }
 
   public addPercentBar(pcr: PercentBar): void {
-    const renderedColumn = this.api.gridApi.getColumnFromId(pcr.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(pcr.ColumnId);
     if (renderedColumn) {
       const cellRendererFunc: ICellRendererFunc = this.agGridHelper.createPercentBarCellRendererFunc(
-        pcr,
-        this.adaptableOptions!.adaptableId!
+        pcr
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       const colDef: ColDef = vendorGridColumn.getColDef();
@@ -3404,7 +3267,7 @@ export class Adaptable implements IAdaptable {
   }
 
   public removePercentBar(pcr: PercentBar): void {
-    const renderedColumn = this.api.gridApi.getColumnFromId(pcr.ColumnId);
+    const renderedColumn = this.api.columnApi.getColumnFromId(pcr.ColumnId);
     if (renderedColumn) {
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(pcr.ColumnId);
       // note we dont get it from the original (but I guess it will be applied next time you run...)
@@ -3416,6 +3279,21 @@ export class Adaptable implements IAdaptable {
         coldDef.cellClass = 'number-cell';
       }
     }
+  }
+
+  public isSharedQueryReferenced(sharedQueryId: string): boolean {
+    let referencedText: string | undefined = '';
+    this.strategies.forEach(s => {
+      const strategyReference = s.getSharedQueryReferences(sharedQueryId);
+      if (StringExtensions.IsNotNullOrEmpty(strategyReference)) {
+        referencedText += ' ' + strategyReference;
+      }
+    });
+    if (StringExtensions.IsNotNullOrEmpty(referencedText)) {
+      alert('Cannot delete the Shared Query because it is referenced in' + referencedText);
+      return true;
+    }
+    return false;
   }
 
   private onRowDataChanged({
@@ -3457,7 +3335,7 @@ export class Adaptable implements IAdaptable {
 
         // we cannot check here for cell validation as it will be too late
         // so we have to hope that its been done already - though currently we ONLY do it for direct edits and setCellValue() but not other api updates
-        // if we have gone through AdaptableAPI we will be fine but not if they update ag-Grid directly
+        // if we have gone through AdaptableApi we will be fine but not if they update ag-Grid directly
         // but we can perform the POST EDIT checks
         // probably wrong but seems agGrid is doing it for us
         this.performPostEditChecks(dataChangedInfo, false, false);
@@ -3532,12 +3410,12 @@ export class Adaptable implements IAdaptable {
     const newColumnSorts: ColumnSort[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(sortModel)) {
       sortModel.forEach(sm => {
-        if (this.api.gridApi.isRowGroupColumn(sm.colId)) {
+        if (this.api.columnApi.isRowGroupColumn(sm.colId)) {
           this.agGridHelper.createGroupedColumnCustomSort();
         }
         const columnSort: ColumnSort = {
-          Column: sm.colId,
-          SortOrder: sm.sort == 'asc' ? SortOrder.Ascending : SortOrder.Descending,
+          ColumnId: sm.colId,
+          SortOrder: sm.sort == 'asc' ? SortOrder.Asc : SortOrder.Desc,
         };
         newColumnSorts.push(columnSort);
       });
@@ -3594,7 +3472,7 @@ export class Adaptable implements IAdaptable {
 
   public getExpandRowGroupsKeys(): any[] {
     let returnValues: any[] = [];
-    if (this.adaptableOptions.layoutOptions.includeOpenedRowGroups) {
+    if (this.adaptableOptions.layoutOptions.includeExpandedRowGroups) {
       this.gridOptions.api.forEachNode((node: RowNode) => {
         if (node.group && node.expanded) {
           let current = node;
@@ -3662,13 +3540,21 @@ export class Adaptable implements IAdaptable {
     }
   }
 
+  public showColumn(columnId: string) {
+    let vendorCol = this.gridOptions.columnApi!.getColumn(columnId);
+    if (vendorCol) {
+      this.gridOptions.columnApi.setColumnVisible(columnId, true);
+      this.updateColumnsIntoStore();
+    }
+  }
+
   public setColumnSort(columnSorts: ColumnSort[]): void {
     // get the sort model
     const sortModel: any[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(columnSorts)) {
       columnSorts.forEach(gs => {
-        const sortDescription: string = gs.SortOrder == SortOrder.Ascending ? 'asc' : 'desc';
-        sortModel.push({ colId: gs.Column, sort: sortDescription });
+        const sortDescription: string = gs.SortOrder == SortOrder.Asc ? 'asc' : 'desc';
+        sortModel.push({ colId: gs.ColumnId, sort: sortDescription });
       });
     }
     if (!this.gridOptions.api) {
@@ -3709,77 +3595,20 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.applyTransaction({ remove: dataRows });
   }
 
-  private updateQuickSearchRangeVisibleColumn(columnId: string): void {
-    if (this.isInitialised) {
-      const quickSearchState: QuickSearchState = this.api.quickSearchApi.getQuickSearchState();
-      // only update if quick search is not highlight and is set - rare use case...
-      if (
-        quickSearchState.DisplayAction != DisplayAction.HighlightCell &&
-        StringExtensions.IsNotNullOrEmpty(quickSearchState.QuickSearchText)
-      ) {
-        const column: AdaptableColumn = this.api.gridApi.getColumnFromId(columnId);
-        if (!column.IsExcludedFromQuickSearch) {
-          const quickSearchRange: QueryRange = this.getState().System.QuickSearchRange;
-
-          if (quickSearchRange != null) {
-            if (RangeHelper.IsColumnAppropriateForRange(quickSearchRange, column)) {
-              const quickSearchVisibleColumnExpression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-                column.ColumnId,
-                null,
-                null,
-                null,
-                [quickSearchRange]
-              );
-              const quickSearchVisibleColumnExpressions: Expression[] = [].concat(
-                this.getState().System.QuickSearchVisibleColumnExpressions
-              );
-              quickSearchVisibleColumnExpressions.push(quickSearchVisibleColumnExpression);
-              this.AdaptableStore.TheStore.dispatch(
-                SystemRedux.QuickSearchSetVisibleColumnExpressions(
-                  quickSearchVisibleColumnExpressions
-                )
-              );
-            }
-          }
-        }
-      }
-    }
-  }
-
   public getFirstGroupedColumn(): AdaptableColumn | undefined {
     let groupedColumns: Column[] = this.gridOptions.columnApi.getRowGroupColumns();
     if (ArrayExtensions.IsNotNullOrEmpty(groupedColumns)) {
       let groupedColumn: Column = groupedColumns[0];
-      return this.api.gridApi.getColumnFromId(groupedColumn.getColId());
+      return this.api.columnApi.getColumnFromId(groupedColumn.getColId());
     }
   }
 
   private checkColumnsDataTypeSet(): any {
     // check that we have no unknown columns - if we do then ok
-    const firstCol = this.api.gridApi.getColumns()[0];
+    const firstCol = this.api.columnApi.getColumns()[0];
     if (firstCol && firstCol.DataType == DataType.Unknown) {
       this.updateColumnsIntoStore();
     }
-  }
-
-  public setGroupedColumns(groupedCols: string[]): void {
-    if (ArrayExtensions.IsNotNullOrEmpty(groupedCols)) {
-      this.gridOptions.columnApi!.setRowGroupColumns(groupedCols);
-    } else {
-      this.gridOptions.columnApi!.setRowGroupColumns([]);
-    }
-
-    if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInLayout == true) {
-      this.gridOptions.columnApi!.autoSizeAllColumns();
-    }
-  }
-
-  private turnOnPivoting(): void {
-    this.gridOptions.columnApi!.setPivotMode(true);
-  }
-
-  private turnOffPivoting(): void {
-    this.gridOptions.columnApi!.setPivotMode(false);
   }
 
   public setCustomSort(columnId: string, comparer: AdaptableComparerFunction): void {
@@ -4055,32 +3884,23 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
     // not sure if this is the right place here.
     // perhaps we need some onDataLoaded event??
-    const editLookUpCols:
-      | EditLookUpColumn[]
-      | undefined = this.api.userInterfaceApi.getUserInterfaceState().EditLookUpColumns;
-    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpCols)) {
+    const editLookUpItems:
+      | EditLookUpItem[]
+      | undefined = this.api.userInterfaceApi.getAllEditLookUpItems();
+    if (ArrayExtensions.IsNotNullOrEmpty(editLookUpItems)) {
       const colDefs: (ColDef | ColGroupDef)[] = this.mapColumnDefs((colDef: ColDef) => {
-        editLookUpCols!.forEach((editLookUpColumn: EditLookUpColumn) => {
-          if (colDef.field === editLookUpColumn.ColumnId) {
-            colDef.cellEditor = 'agRichSelectCellEditor';
-            if (editLookUpColumn.LookUpValues) {
-              colDef.cellEditorParams = {
-                values: this.api.userInterfaceApi.getEditLookUpValuesForColumn(
-                  editLookUpColumn.ColumnId
-                ),
-              };
-            } else {
-              colDef.cellEditorParams = {
-                values: this.getColumnValueDisplayValuePairDistinctList(
-                  editLookUpColumn.ColumnId,
-                  DistinctCriteriaPairValue.DisplayValue,
-                  false
-                ).map(t => t.DisplayValue),
-              };
-            }
-          }
-        });
-
+        const editLookUpItem: EditLookUpItem = this.api.userInterfaceApi.getEditLookUpItemForColumnId(
+          colDef.colId
+        ); // need field?
+        if (editLookUpItem) {
+          colDef.cellEditor = 'agRichSelectCellEditor';
+          colDef.cellEditorParams = {
+            values: this.api.userInterfaceApi.getEditLookUpValuesForEditLookUpItem(
+              editLookUpItem,
+              colDef.colId
+            ),
+          };
+        }
         return colDef;
       });
 
@@ -4100,14 +3920,14 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
 
     // if the current layout is the default or not set then autosize all columns if requested
-    if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
-      if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
-        this.gridOptions.columnApi!.autoSizeAllColumns();
-      }
-    } else {
-      // at the end so load the current layout (as its not default)
-      this.api.layoutApi.setLayout(currentlayout);
-    }
+    // if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
+    //   if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
+    //     this.gridOptions.columnApi!.autoSizeAllColumns();
+    //   }
+    // } else {
+    //   // at the end so load the current layout (as its not default)
+    //   this.api.layoutApi.setLayout(currentlayout);
+    // }
 
     // in case we have an existing quick search we need to make sure its applied
     this.api.quickSearchApi.applyQuickSearch(this.api.quickSearchApi.getQuickSearchValue());
@@ -4115,7 +3935,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
 
   // A couple of state management functions
   private getState(): AdaptableState {
-    return this.AdaptableStore.TheStore.getState();
+    return this.adaptableStore.TheStore.getState();
   }
 
   private getGridOptionsApi(): GridApi {

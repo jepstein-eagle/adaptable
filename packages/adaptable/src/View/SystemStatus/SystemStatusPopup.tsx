@@ -61,7 +61,7 @@ class SystemStatusPopupComponent extends React.Component<
         tone="neutral"
         variant="raised"
         marginTop={3}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Clear System Status
       </SimpleButton>

@@ -14,12 +14,12 @@ export class DataSourceApiImpl extends ApiBase implements DataSourceApi {
     return this.getDataSourceState().DataSources;
   }
 
-  public getCurrentDataSource(): DataSource {
+  public getCurrentDataSource(): DataSource | undefined {
     let currentDataSourceName: string = this.getDataSourceState().CurrentDataSource;
     return this.getDataSourceByName(currentDataSourceName);
   }
 
-  public getDataSourceByName(dataSourceName: string): DataSource {
+  public getDataSourceByName(dataSourceName: string): DataSource | undefined {
     return this.getAllDataSource().find(a => a.Name == dataSourceName);
   }
 

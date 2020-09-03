@@ -48,7 +48,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
   }
 
   render() {
-    let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
 
     let gridPropertiesColItems: IColItem[] = [
       { Content: 'Property', Size: 5 },
@@ -360,15 +360,16 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
   private CreateGridInfo(colItems: IColItem[], adaptable: IAdaptable): IColItem[][] {
     let returnRows: IColItem[][] = [];
 
-    let calcColumns: string[] = this.props.Api.calculatedColumnApi
+    let calcColumns: string[] = this.props.api.calculatedColumnApi
       .getAllCalculatedColumn()
       .map(c => c.ColumnId);
-    let columns: AdaptableColumn[] = this.props.Api.gridApi.getColumns();
-    let columnFilterDescription: string = this.props.Api.internalApi
-      .getFilterService()
-      .GetColumnFiltersDescription(this.props.Api.columnFilterApi.getAllColumnFilter(), columns);
-    let sorts: any = this.props.Api.gridApi.getColumnSorts().map(gs => {
-      return this.props.Api.gridApi.getFriendlyNameFromColumnId(gs.Column) + ': ' + gs.SortOrder;
+    let columnFilterDescription: string = this.props.api.filterApi.columnFiltersToString(
+      this.props.api.filterApi.getAllColumnFilter()
+    );
+    let sorts: any = this.props.api.gridApi.getColumnSorts().map(gs => {
+      return (
+        this.props.api.columnApi.getFriendlyNameFromColumnId(gs.ColumnId) + ': ' + gs.SortOrder
+      );
     });
 
     returnRows.push(this.createColItem(colItems, 'Vendor Grid', adaptable.vendorGridName));
@@ -493,7 +494,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
         colItems,
         'auditFunctionEvents',
         options.auditOptions.auditFunctionEvents == true ? 'Yes' : 'No',
-        " Whether to audit function events in Adaptable (e.g. 'Advanced Search Selected', 'Smart Edit Applied' etc.)"
+        " Whether to audit function events in Adaptable (e.g. 'Current Query Changed', 'Smart Edit Applied' etc.)"
       )
     );
     returnRows.push(

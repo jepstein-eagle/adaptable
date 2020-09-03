@@ -60,7 +60,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
               tooltip="Clear Alert"
               disabled={false}
               style={{ float: 'left' }}
-              AccessLevel={'Full'}
+              accessLevel={'Full'}
             />
           </Flex>
 
@@ -76,7 +76,7 @@ export class AlertsPanel extends React.Component<AlertsPanelProps, {}> {
         onClick={() => this.props.onClearAllAlerts(this.props.Alerts)}
         variant="raised"
         tone="neutral"
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
       >
         Clear All
       </SimpleButton>

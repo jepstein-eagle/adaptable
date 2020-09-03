@@ -38,7 +38,6 @@ async function InitAdaptableDemo() {
   };
 
   adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
     adaptableToolPanelTitle: 'hello world',
   };
 
@@ -46,18 +45,10 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'AdvancedSearch'],
-    HomeToolbarTitle: 'working',
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
   Entitlements: {
     FunctionEntitlements: [
       {
-        FunctionName: 'AdvancedSearch',
+        FunctionName: 'Query',
         AccessLevel: 'Hidden',
       },
     ],
@@ -67,7 +58,7 @@ let demoConfig: PredefinedConfig = {
     StatusType: 'Info',
   },
   ToolPanel: {
-    //   VisibleToolPanels: ['Export', 'Layout', 'ColumnFilter'],
+    //   VisibleToolPanels: ['Export', 'Layout', 'Filter'],
     //ToolPanelTitle: 'Hello',
   },
 };

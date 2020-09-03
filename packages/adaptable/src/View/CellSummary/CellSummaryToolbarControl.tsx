@@ -44,8 +44,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
     super(props);
   }
   public componentDidMount() {
-    if (this.props.Api) {
-      let adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    if (this.props.api) {
+      let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       adaptable._on('CellsSelected', () => {
         this.props.onCreateCellSummary();
       });
@@ -74,8 +74,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
     let cellSummaryPopover = <CellSummaryPopover CellSummary={this.props.CellSummary} />;
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == 'ReadOnly' ||
-      this.props.Api.internalApi.isGridInPivotMode() ||
+      this.props.accessLevel == 'ReadOnly' ||
+      this.props.api.internalApi.isGridInPivotMode() ||
       this.props.CellSummary == null;
 
     let content = (
@@ -125,6 +125,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__CellSummary"
         headerText={StrategyConstants.CellSummaryStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('CellSummary')}
       >
         {content}
       </PanelDashboard>
@@ -185,6 +186,8 @@ function mapDispatchToProps(
           ScreenPopups.CellSummaryPopup
         )
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

@@ -1,5 +1,4 @@
 import { ChartState } from '../../PredefinedConfig/ChartState';
-import { UserFilterState } from '../../PredefinedConfig/UserFilterState';
 import { ThemeState } from '../../PredefinedConfig/ThemeState';
 import { SmartEditState } from '../../PredefinedConfig/SmartEditState';
 import { ShortcutState } from '../../PredefinedConfig/ShortcutState';
@@ -13,14 +12,12 @@ import { DataSourceState, DataSource } from '../../PredefinedConfig/DataSourceSt
 import { DashboardState } from '../../PredefinedConfig/DashboardState';
 import { CustomSortState } from '../../PredefinedConfig/CustomSortState';
 import { ConditionalStyleState } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnFilterState } from '../../PredefinedConfig/ColumnFilterState';
 import { CellValidationState } from '../../PredefinedConfig/CellValidationState';
 import { CellSummaryState } from '../../PredefinedConfig/CellSummaryState';
 import { CalendarState } from '../../PredefinedConfig/CalendarState';
 import { CalculatedColumnState } from '../../PredefinedConfig/CalculatedColumnState';
 import { BulkUpdateState } from '../../PredefinedConfig/BulkUpdateState';
 import { AlertState } from '../../PredefinedConfig/AlertState';
-import { AdvancedSearchState, AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { ResetUserData, LoadState, InitState } from '../../Redux/Store/AdaptableStore';
@@ -30,12 +27,10 @@ import { ActionColumnState } from '../../PredefinedConfig/ActionColumnState';
 import { ApplicationState } from '../../PredefinedConfig/ApplicationState';
 import { UpdatedRowState } from '../../PredefinedConfig/UpdatedRowState';
 import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnState';
-import { ColumnCategoryState } from '../../PredefinedConfig/ColumnCategoryState';
 import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
-import { NamedFilterState } from '../../PredefinedConfig/NamedFilterState';
 import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
-import { SystemFilterState } from '../../PredefinedConfig/SystemFilterState';
+import { FilterState, UserFilter } from '../../PredefinedConfig/FilterState';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';
@@ -45,6 +40,7 @@ import { Glue42State } from '../../PredefinedConfig/Glue42State';
 import { AdaptableSearchState, ScheduleState } from '../../types';
 import { AdaptableSortState } from '../Events/SearchChanged';
 import { IPushPullState } from '../../PredefinedConfig/IPushPullState';
+import { QueryState } from '../../PredefinedConfig/QueryState';
 
 export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configInit(): void {
@@ -84,7 +80,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   private getUserStateKeys() {
     return [
       'ActionColumn',
-      'AdvancedSearch',
+      'Query',
       'Alert',
       'Application',
       'BulkUpdate',
@@ -93,8 +89,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'CellSummary',
       'CellValidation',
       'Chart',
-      'ColumnCategory',
-      'ColumnFilter',
       'ConditionalStyle',
       'CustomSort',
       'Dashboard',
@@ -108,7 +102,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'GradientColumn',
       'IPushPull',
       'Layout',
-      'NamedFilter',
       'PercentBar',
       'PlusMinus',
       'QuickSearch',
@@ -116,7 +109,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
       'Shortcut',
       'SmartEdit',
       'SparklineColumn',
-      'SystemFilter',
+      'Filter',
       'SystemStatus',
       'Theme',
       'ToolPanel',
@@ -150,10 +143,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().ActionColumn)
           : this.getAdaptableState().ActionColumn;
-      case 'AdvancedSearch':
+      case 'Query':
         return returnJson
-          ? JSON.stringify(this.getAdaptableState().AdvancedSearch)
-          : this.getAdaptableState().AdvancedSearch;
+          ? JSON.stringify(this.getAdaptableState().Query)
+          : this.getAdaptableState().Query;
       case 'Alert':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Alert)
@@ -186,14 +179,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Chart)
           : this.getAdaptableState().Chart;
-      case 'ColumnCategory':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().ColumnCategory)
-          : this.getAdaptableState().ColumnCategory;
-      case 'ColumnFilter':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().ColumnFilter)
-          : this.getAdaptableState().ColumnFilter;
 
       case 'ConditionalStyle':
         return returnJson
@@ -247,10 +232,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Layout)
           : this.getAdaptableState().Layout;
-      case 'NamedFilter':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().NamedFilter)
-          : this.getAdaptableState().NamedFilter;
       case 'PercentBar':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().PercentBar)
@@ -281,10 +262,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().SparklineColumn)
           : this.getAdaptableState().SparklineColumn;
-      case 'SystemFilter':
+      case 'Filter':
         return returnJson
-          ? JSON.stringify(this.getAdaptableState().SystemFilter)
-          : this.getAdaptableState().SystemFilter;
+          ? JSON.stringify(this.getAdaptableState().Filter)
+          : this.getAdaptableState().Filter;
       case 'SystemStatus':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().SystemStatus)
@@ -316,8 +297,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     return this.configGetUserStateByStateKey('ActionColumn', returnJson) as ActionColumnState;
   }
 
-  public configGetAdvancedSearchState(returnJson: boolean = false): AdvancedSearchState {
-    return this.configGetUserStateByStateKey('AdvancedSearch', returnJson) as AdvancedSearchState;
+  public configGetQueryState(returnJson: boolean = false): QueryState {
+    return this.configGetUserStateByStateKey('Query', returnJson) as QueryState;
   }
   public configGetAlertState(returnJson: boolean = false): AlertState {
     return this.configGetUserStateByStateKey('Alert', returnJson) as AlertState;
@@ -346,12 +327,7 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetChartState(returnJson: boolean = false): ChartState {
     return this.configGetUserStateByStateKey('Chart', returnJson) as ChartState;
   }
-  public configGetColumnFilterState(returnJson: boolean = false): ColumnFilterState {
-    return this.configGetUserStateByStateKey('ColumnFilter', returnJson) as ColumnFilterState;
-  }
-  public configGetColumnCategoryState(returnJson: boolean): ColumnCategoryState {
-    return this.configGetUserStateByStateKey('ColumnCategory', returnJson) as ColumnCategoryState;
-  }
+
   public configGetConditionalStyleState(returnJson: boolean = false): ConditionalStyleState {
     return this.configGetUserStateByStateKey(
       'ConditionalStyle',
@@ -385,9 +361,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetLayoutState(returnJson: boolean = false): LayoutState {
     return this.configGetUserStateByStateKey('Layout', returnJson) as LayoutState;
   }
-  public configGetNamedFilterState(returnJson: boolean = false): NamedFilterState {
-    return this.configGetUserStateByStateKey('NamedFilter', returnJson) as NamedFilterState;
-  }
 
   public configGetIPushPullState(returnJson: boolean = false): IPushPullState {
     return this.configGetUserStateByStateKey('IPushPull', returnJson) as IPushPullState;
@@ -416,8 +389,8 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetSparklineColumnState(returnJson: boolean = false): SparklineColumnState {
     return this.configGetUserStateByStateKey('SparklineColumn', returnJson) as SparklineColumnState;
   }
-  public configGetSystemFilterState(returnJson: boolean = false): SystemFilterState {
-    return this.configGetUserStateByStateKey('SystemFilter', returnJson) as SystemFilterState;
+  public configGetFilterState(returnJson: boolean = false): FilterState {
+    return this.configGetUserStateByStateKey('Filter', returnJson) as FilterState;
   }
   public configGetSystemStatusState(returnJson: boolean = false): SystemStatusState {
     return this.configGetUserStateByStateKey('SystemStatus', returnJson) as SystemStatusState;
@@ -431,27 +404,20 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetUpdatedRowState(returnJson: boolean = false): UpdatedRowState {
     return this.configGetUserStateByStateKey('UpdatedRow', returnJson) as UpdatedRowState;
   }
-  public configGetUserFilterState(returnJson: boolean = false): UserFilterState {
-    return this.configGetUserStateByStateKey('UserFilter', returnJson) as UserFilterState;
-  }
+
   public configGetUserInterfaceState(returnJson: boolean = false): UserInterfaceState {
     return this.configGetUserStateByStateKey('UserInterface', returnJson) as UserInterfaceState;
   }
 
   public configGetAdaptableSearchState(): AdaptableSearchState {
     const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
-    const currentAdvancedSearch:
-      | AdvancedSearch
-      | undefined = this.adaptable.api.advancedSearchApi.getCurrentAdvancedSearch();
 
     // lets get the searchstate
     const adaptableSearchState: AdaptableSearchState = {
-      dataSource: currentDataSource == null ? undefined : currentDataSource,
-      advancedSearch: currentAdvancedSearch == null ? undefined : currentAdvancedSearch,
-      quickSearch: this.adaptable.api.quickSearchApi.getQuickSearchValue(),
-      columnFilters: this.adaptable.api.columnFilterApi.getAllColumnFilter(),
-      userFilters: this.adaptable.api.userFilterApi.getAllUserFilter(),
-      namedFilters: this.adaptable.api.namedFilterApi.getAllNamedFilter(),
+      dataSource: this.adaptable.api.dataSourceApi.getCurrentDataSource(),
+      currentQuery: this.adaptable.api.queryApi.getCurrentQuery(),
+      columnFilters: this.adaptable.api.filterApi.getAllColumnFilter(),
+      // should we be be getting other Filter info or is it enough just to send the column filters?
     };
     return adaptableSearchState;
   }

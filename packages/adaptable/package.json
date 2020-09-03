@@ -21,7 +21,7 @@
     "normalize.css": "^8.0.1",
     "prop-types": "^15.6.2",
     "react": "^16.9.0",
-    "react-beautiful-dnd": "12.2.0",
+    "react-beautiful-dnd": "13.0.0",
     "react-dom": "^16.9.0",
     "react-redux": "7.2.0",
     "react-remove-scroll": "^1.0.8",
@@ -50,7 +50,7 @@
     "@types/node": "^9.6.22",
     "@types/numeral": "0.0.26",
     "@types/react": "^16.9.0",
-    "@types/react-beautiful-dnd": "^12.1.1",
+    "@types/react-beautiful-dnd": "13.0.0",
     "@types/react-dom": "^16.9.0",
     "@types/react-redux": "^7.1.2",
     "@types/rebass": "^3.0.4",
@@ -96,7 +96,8 @@
     "util-deprecate": "^1.0.2",
     "webpack": "^1.15.0",
     "webpack-dev-server": "^1.16.5",
-    "webpack-fail-plugin": "^1.0.6"
+    "webpack-fail-plugin": "^1.0.6",
+    "@chakra-ui/core": "^0.7.0"
   },
   "scripts": {
     "build-apidoc": "typedoc --options ./typedocconfig.ts",

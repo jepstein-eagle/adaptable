@@ -38,36 +38,7 @@ async function InitAdaptableDemo() {
     },
     predefinedConfig: demoConfig,
     userFunctions: [
-      {
-        type: 'NamedFilterPredicate',
-        name: 'usdTrades',
-        handler(_record, _columnId, cellValue) {
-          return cellValue === 'USD';
-        },
-      },
-      {
-        type: 'NamedFilterPredicate',
-        name: 'high',
-        handler(_record, _columnId, cellValue) {
-          let currency: string = _record.data.currency;
-          if (currency === 'USD') {
-            return cellValue > 1000;
-          } else if (currency === 'EUR') {
-            return cellValue > 30;
-          } else {
-            return cellValue > 10;
-          }
-        },
-      },
-      {
-        type: 'NamedFilterPredicate',
-        name: 'bizYear',
-        handler(_record, _columnId, cellValue) {
-          let dateToTest = cellValue as Date;
-          let startBusinesssYear = new Date('2019-04-05');
-          return dateToTest > startBusinesssYear;
-        },
-      },
+      // todo: test this later but get from columnfiltersdemo
     ],
   };
 
@@ -83,70 +54,7 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
-  },
-
-  NamedFilter: {
-    NamedFilters: [
-      {
-        Name: '$ Trades',
-        Scope: {
-          ColumnIds: ['currency'],
-        },
-        FilterPredicate: 'usdTrades',
-      },
-      {
-        Name: 'High',
-        Scope: {
-          DataType: 'Number',
-        },
-        FilterPredicate: 'high',
-      },
-      {
-        Name: 'Biz Year',
-        Scope: {
-          DataType: 'Date',
-        },
-        FilterPredicate: 'bizYear',
-      },
-    ],
-  },
-
-  UserFilter: {
-    UserFilters: [
-      {
-        Name: 'Europe',
-        ColumnId: 'country',
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnDisplayValues: ['France', 'Germany', 'Italy'],
-              ColumnId: 'country',
-            },
-          ],
-        },
-      },
-      {
-        Name: 'Small Notionals',
-        ColumnId: 'notional',
-        Expression: {
-          RangeExpressions: [
-            {
-              ColumnId: 'notional',
-              Ranges: [
-                {
-                  Operand1: '1200',
-                  Operand1Type: 'Value',
-                  Operator: 'LessThan',
-                },
-              ],
-            },
-          ],
-        },
-      },
-    ],
-  },
+  // Need to provide something here!!!
 };
 
 export default () => {

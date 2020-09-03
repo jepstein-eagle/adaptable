@@ -7,10 +7,10 @@ import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObjec
 
 export interface StrategyDetailProps extends React.ClassAttributes<StrategyDetail> {
   key: string;
-  Item1: any;
-  Item2: any;
-  ConfigEnity: AdaptableObject;
-  EntityType: string;
+  item1: any;
+  item2: any;
+  configEnity: AdaptableObject;
+  entityType: string;
   onEdit: () => void;
   onShare: (description: string) => void;
   onDelete: Redux.Action;
@@ -23,19 +23,19 @@ export class StrategyDetail extends React.Component<StrategyDetailProps, {}> {
   render(): any {
     let summaryItems: any[] = [];
     this.props.showBold
-      ? summaryItems.push(<b>{this.props.Item1}</b>)
-      : summaryItems.push(<i>{this.props.Item1}</i>);
+      ? summaryItems.push(<b>{this.props.item1}</b>)
+      : summaryItems.push(<i>{this.props.item1}</i>);
 
-    summaryItems.push(<i>{this.props.Item2}</i>);
+    summaryItems.push(<i>{this.props.item2}</i>);
     summaryItems.push(
       <EntityListActionButtons
         justifyContent="start"
-        ConfirmDeleteAction={this.props.onDelete}
+        confirmDeleteAction={this.props.onDelete}
         showEdit={this.props.showEdit}
         editClick={() => this.props.onEdit()}
         shareClick={(description: string) => this.props.onShare(description)}
         showShare={this.props.showShare}
-        EntityType={this.props.EntityType}
+        entityType={this.props.entityType}
       />
     );
 

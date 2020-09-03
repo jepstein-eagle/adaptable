@@ -33,16 +33,16 @@ export class FreeTextColumnSettingsWizard
   constructor(props: FreeTextColumnSettingsWizardProps) {
     super(props);
     this.state = {
-      ColumnId: this.props.Data.ColumnId,
-      ColumnName: this.props.Data.FriendlyName ?? this.props.Data.ColumnId,
+      ColumnId: this.props.data.ColumnId,
+      ColumnName: this.props.data.FriendlyName ?? this.props.data.ColumnId,
       ErrorMessage: null,
-      DefaultValue: this.props.Data.DefaultValue,
-      TextEditor: this.props.Data.TextEditor ? this.props.Data.TextEditor : 'Inline',
+      DefaultValue: this.props.data.DefaultValue,
+      TextEditor: this.props.data.TextEditor ? this.props.data.TextEditor : 'Inline',
       ColumnNameFocused: false,
     };
   }
   render(): any {
-    const inEdit = !!this.props.Data.ColumnId;
+    const inEdit = !!this.props.data.ColumnId;
     return (
       <div style={{ height: '100%' }}>
         <WizardPanel>
@@ -130,13 +130,13 @@ export class FreeTextColumnSettingsWizard
       {
         ColumnId: e.value,
         ErrorMessage: ArrayExtensions.ContainsItem(
-          this.props.Api.gridApi.getColumns().map(c => c.ColumnId),
+          this.props.api.columnApi.getColumns().map(c => c.ColumnId),
           e.value
         )
           ? 'A Column already exists with that id'
           : null,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -146,14 +146,14 @@ export class FreeTextColumnSettingsWizard
       {
         ColumnName: e.value,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
   private onDynamicSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ TextEditor: e.value } as FreeTextColumnSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -163,7 +163,7 @@ export class FreeTextColumnSettingsWizard
       {
         DefaultValue: e.value,
       },
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -176,19 +176,19 @@ export class FreeTextColumnSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.FriendlyName = this.state.ColumnName || this.state.ColumnId;
-    this.props.Data.DefaultValue = this.state.DefaultValue;
-    this.props.Data.TextEditor = this.state.TextEditor;
+  public next(): void {
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.FriendlyName = this.state.ColumnName || this.state.ColumnId;
+    this.props.data.DefaultValue = this.state.DefaultValue;
+    this.props.data.TextEditor = this.state.TextEditor;
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

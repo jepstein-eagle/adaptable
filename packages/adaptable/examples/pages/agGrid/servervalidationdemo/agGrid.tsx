@@ -81,14 +81,11 @@ function getServerEditResponse(dataChangedInfo: DataChangedInfo): ValidationResu
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout', 'Alert'],
-  },
   ActionColumn: {
     ActionColumns: [
       {
         ColumnId: 'Test',
-        ButtonText: 'Test with API',
+        ButtonText: 'Test with Api',
       },
     ],
   },

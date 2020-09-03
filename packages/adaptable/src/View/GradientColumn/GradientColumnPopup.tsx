@@ -45,20 +45,20 @@ class GradientColumnPopupComponent extends React.Component<
   constructor(props: GradientColumnPopupProps) {
     super(props);
     this.state = {
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     };
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        let columnId: string = this.props.PopupParams.columnId;
-        if (this.props.PopupParams.action == 'New') {
-          let distinctColumnsValues: number[] = this.props.Api.internalApi
-            .getStrategyService()
-            .getDistinctColumnValues(columnId);
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        let columnId: string = this.props.popupParams.column.ColumnId;
+        if (this.props.popupParams.action == 'New') {
+          let distinctColumnsValues: number[] = this.props.api.columnApi.getDistinctRawValuesForColumn(
+            columnId
+          );
 
           let newGradientColumn: GradientColumn = ObjectFactory.CreateEmptyGradientColumn();
           newGradientColumn.ColumnId = columnId;
@@ -70,7 +70,7 @@ class GradientColumnPopupComponent extends React.Component<
           // work out the base value
           if (smallestValue > 0) {
             newGradientColumn.BaseValue = smallestValue;
-            newGradientColumn.NegativeColor = undefined;
+            //   newGradientColumn.NegativeColor = undefined;
           } else {
             let positiveValues: number[] = distinctColumnsValues.filter(f => f > 0);
             newGradientColumn.BaseValue = Math.min(...positiveValues);
@@ -78,13 +78,13 @@ class GradientColumnPopupComponent extends React.Component<
 
           this.onNewFromColumn(newGradientColumn);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let editGradientColumn = this.props.GradientColumns.find(x => x.ColumnId == columnId);
           this.onEdit(editGradientColumn);
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -109,17 +109,17 @@ class GradientColumnPopupComponent extends React.Component<
 
     let GradientColumnItems = this.props.GradientColumns.map(
       (gradientColumn: GradientColumn, index) => {
-        let column = this.props.Api.gridApi.getColumnFromId(gradientColumn.ColumnId);
+        let column = this.props.api.columnApi.getColumnFromId(gradientColumn.ColumnId);
         return (
           <GradientColumnEntityRow
             key={gradientColumn.Uuid}
             colItems={colItems}
-            api={this.props.Api}
-            AdaptableObject={gradientColumn}
+            api={this.props.api}
+            adaptableObject={gradientColumn}
             Column={column}
             onEdit={() => this.onEdit(gradientColumn)}
             onShare={description => this.props.onShare(gradientColumn, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onDeleteConfirm={GradientColumnRedux.GradientColumnDelete(gradientColumn)}
             onNegativeValueChanged={(gradientColumn, minimumValue) =>
               this.onNegativeValueChanged(gradientColumn, minimumValue)
@@ -136,7 +136,7 @@ class GradientColumnPopupComponent extends React.Component<
             onNegativeColorChanged={(gradientColumn, negativeColor) =>
               this.onNegativeColorChanged(gradientColumn, negativeColor)
             }
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -145,7 +145,12 @@ class GradientColumnPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Percent Bar "
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
       />
     );
 
@@ -172,13 +177,13 @@ class GradientColumnPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <GradientColumnWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as GradientColumn}
-              ConfigEntities={null}
-              Api={this.props.Api}
-              ModalContainer={this.props.ModalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as GradientColumn}
+              configEntities={null}
+              api={this.props.api}
+              modalContainer={this.props.modalContainer}
+              wizardStartIndex={this.state.wizardStartIndex}
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -218,35 +223,35 @@ class GradientColumnPopupComponent extends React.Component<
 
   onNewFromColumn(GradientColumn: GradientColumn) {
     this.setState({
-      EditedAdaptableObject: GradientColumn,
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 1,
+      editedAdaptableObject: GradientColumn,
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 1,
     });
   }
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyGradientColumn(),
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 0,
+      editedAdaptableObject: ObjectFactory.CreateEmptyGradientColumn(),
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
     });
   }
 
   onEdit(GradientColumn: GradientColumn) {
     let clonedObject: GradientColumn = Helper.cloneObject(GradientColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -254,22 +259,21 @@ class GradientColumnPopupComponent extends React.Component<
   }
 
   onFinishWizard() {
-    let gradientColumn: GradientColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let gradientColumn: GradientColumn = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditGradientColumn(gradientColumn);
     } else {
       this.props.onAddGradientColumn(gradientColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
-    this.shouldClosePopupOnFinishWizard = false;
   }
 
   canFinishWizard(): boolean {
-    let gradientColumn = this.state.EditedAdaptableObject as GradientColumn;
+    let gradientColumn = this.state.editedAdaptableObject as GradientColumn;
 
     if (StringExtensions.IsNullOrEmpty(gradientColumn.ColumnId)) {
       return false;

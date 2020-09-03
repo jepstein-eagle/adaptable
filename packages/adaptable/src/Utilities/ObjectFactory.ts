@@ -1,14 +1,10 @@
 import {
   MessageType,
-  LeafExpressionOperator,
-  RangeOperandType,
-  SortOrder,
   ReportColumnScope,
   ReportRowScope,
   ExportDestination,
   DataType,
   MathOperation,
-  // ConditionalStyleScope,
   ActionMode,
   FontWeight,
   FontStyle,
@@ -19,8 +15,6 @@ import {
   EMPTY_STRING,
   CHART_DEFAULT_YAXIS_TOTAL,
   PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-  ALERT_DEFAULT_OPERATOR,
-  ALERT_DEFAULT_RANGE_OPERAND_TYPE,
   ALERT_DEFAULT_MESSAGE_TYPE,
   ALERT_DEFAULT_SHOW_POPUP,
   ALL_DATA_REPORT,
@@ -41,13 +35,9 @@ import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
 import { PlusMinusRule } from '../PredefinedConfig/PlusMinusState';
 import { AdaptableAlert } from './Interface/IMessage';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
-import { AdvancedSearch } from '../PredefinedConfig/AdvancedSearchState';
-import ExpressionHelper, { IRangeEvaluation } from './Helpers/ExpressionHelper';
-import { ColumnCategory } from '../PredefinedConfig/ColumnCategoryState';
-import { Layout, PivotDetails } from '../PredefinedConfig/LayoutState';
+import { Layout } from '../PredefinedConfig/LayoutState';
 import { CellValidationRule } from '../PredefinedConfig/CellValidationState';
 import { PercentBar } from '../PredefinedConfig/PercentBarState';
-import { UserFilter } from '../PredefinedConfig/UserFilterState';
 import { Report, ReportSchedule } from '../PredefinedConfig/ExportState';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { FlashingCell } from '../PredefinedConfig/FlashingCellState';
@@ -56,22 +46,23 @@ import { Shortcut } from '../PredefinedConfig/ShortcutState';
 import { ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
-import { Expression, QueryRange } from '../PredefinedConfig/Common/Expression';
-import { ColumnFilter } from '../PredefinedConfig/ColumnFilterState';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
 import { CellSummmary } from '../PredefinedConfig/Selection/CellSummmary';
 import { createUuid } from '../PredefinedConfig/Uuid';
 import { SparklineColumn } from '../PredefinedConfig/SparklineColumnState';
 import { DefaultSparklinesChartProperties } from './Defaults/DefaultSparklinesChartProperties';
-import { DARK_GREEN, DARK_RED, getHexForName, WHITE, RED, GRAY } from '../View/UIHelper';
+import { DARK_GREEN, getHexForName, RED, GRAY } from '../View/UIHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
-import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { ReminderSchedule } from '../PredefinedConfig/ReminderState';
 import { Glue42Report, Glue42Schedule } from '../PredefinedConfig/Glue42State';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { IPushPullReport } from '../PredefinedConfig/SystemState';
 import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
+import { SharedQuery } from '../PredefinedConfig/QueryState';
+import { ColumnFilter, UserFilter } from '../PredefinedConfig/FilterState';
+import { Predicate } from '../PredefinedConfig/Common/Predicate';
+import { Scope } from '../PredefinedConfig/Common/Scope';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -141,13 +132,22 @@ export function CreateEmptyCalculatedColumn(): CalculatedColumn {
   };
 }
 
+export function CreateEmptySharedQuery(expression?: string): SharedQuery {
+  return {
+    Uuid: createUuid(),
+    Name: EMPTY_STRING,
+    Expression: expression || EMPTY_STRING,
+  };
+}
+
 export function CreateEmptyPlusMinusRule(): PlusMinusRule {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
     IsDefaultNudge: false,
     NudgeValue: PLUS_MINUS_DEFAULT_NUDGE_VALUE,
-    Expression: null,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -178,14 +178,8 @@ export function CreateAlert(
 export function CreateEmptyAlertDefinition(): AlertDefinition {
   return {
     Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
-    Range: {
-      Operator: ALERT_DEFAULT_OPERATOR,
-      Operand1: EMPTY_STRING,
-      Operand2: EMPTY_STRING,
-      Operand1Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
-      Operand2Type: ALERT_DEFAULT_RANGE_OPERAND_TYPE,
-    },
+    Scope: undefined,
+    Predicate: { Id: 'Any' },
     Expression: null,
     MessageType: ALERT_DEFAULT_MESSAGE_TYPE,
     AlertProperties: {
@@ -200,8 +194,8 @@ export function CreateInternalAlertDefinitionForMessages(
 ): AlertDefinition {
   return {
     Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
-    Range: null,
+    Scope: undefined,
+    Predicate: null,
     Expression: null,
     MessageType: messageType,
     AlertProperties: {
@@ -210,51 +204,12 @@ export function CreateInternalAlertDefinitionForMessages(
   };
 }
 
-export function CreateEmptyAdvancedSearch(): AdvancedSearch {
-  return {
-    Uuid: createUuid(),
-    Name: EMPTY_STRING,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
-  };
-}
-
-export function CreateEmptyColumnCategory(): ColumnCategory {
-  return {
-    Uuid: createUuid(),
-    ColumnCategoryId: EMPTY_STRING,
-    ColumnIds: [],
-  };
-}
-
-export function CreateEmptyRange(): QueryRange {
-  return {
-    Operator: LeafExpressionOperator.None,
-    Operand1: EMPTY_STRING,
-    Operand2: EMPTY_STRING,
-    Operand1Type: RangeOperandType.Value,
-    Operand2Type: RangeOperandType.Value,
-  };
-}
-
-export function CreateEmptyColumnSort(): ColumnSort {
-  return {
-    Column: EMPTY_STRING,
-    SortOrder: SortOrder.Ascending,
-  };
-}
-
 export function CreateEmptyCellValidation(): CellValidationRule {
   return {
     Uuid: createUuid(),
     ActionMode: 'Stop Edit',
-    ColumnId: EMPTY_STRING,
-    Range: {
-      Operator: LeafExpressionOperator.AnyChange,
-      Operand1: EMPTY_STRING,
-      Operand2: EMPTY_STRING,
-      Operand1Type: RangeOperandType.Column,
-      Operand2Type: RangeOperandType.Column,
-    },
+    Scope: undefined,
+    Predicate: { Id: 'Any' },
     Expression: null,
   };
 }
@@ -263,14 +218,8 @@ export function CreateEmptyPercentBar(): PercentBar {
   return {
     Uuid: createUuid(),
     ColumnId: EMPTY_STRING,
-    PositiveValue: undefined,
-    NegativeValue: undefined,
-    PositiveColor: getHexForName(DARK_GREEN),
-    NegativeColor: getHexForName(RED),
     ShowValue: false,
     ShowToolTip: false,
-    PositiveValueColumnId: undefined,
-    NegativeValueColumnId: undefined,
     Ranges: [],
     BackColor: getHexForName(GRAY),
   };
@@ -303,8 +252,7 @@ export function CreateEmptyUserFilter(): UserFilter {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
   };
 }
 
@@ -312,10 +260,11 @@ export function CreateEmptyReport(): Report {
   return {
     Uuid: createUuid(),
     Name: EMPTY_STRING,
-    Expression: null,
-    ColumnIds: null,
+    Scope: undefined,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -474,19 +423,20 @@ export function CreateEmptyShortcut(): Shortcut {
 export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
-    ColumnId: undefined,
-    ColumnCategoryId: undefined,
+    Scope: {
+      All: true,
+    },
+    Predicate: undefined,
     Style: CreateEmptyStyle(),
-    ConditionalStyleScope: 'Row',
     ExcludeGroupedRows: false,
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
 export function CreateEmptyFormatColumn(): FormatColumn {
   return {
-    Uuid: createUuid(),
-    ColumnId: EMPTY_STRING,
+    Scope: undefined,
     Style: CreateEmptyStyle(),
     DisplayFormat: undefined,
     CellAlignment: undefined,
@@ -514,24 +464,9 @@ export function CreateEmptyLayout(
     ColumnSorts: layout.ColumnSorts || [],
     ColumnFlexMap: layout.ColumnFlexMap || {},
     ColumnWidthMap: layout.ColumnWidthMap || {},
-    GroupedColumns:
-      layout.GroupedColumns ||
+    RowGroupedColumns:
+      layout.RowGroupedColumns ||
       (adaptableColumns ? adaptableColumns.filter(c => c.IsGrouped).map(c => c.ColumnId) : []),
-  };
-}
-
-export function CreateEmptyPivotDetails(): PivotDetails {
-  return {
-    PivotColumns: [],
-    AggregationColumns: [],
-  };
-}
-
-export function CreateColumnFilter(columnId: string, expression: Expression): ColumnFilter {
-  return {
-    Uuid: createUuid(),
-    ColumnId: columnId,
-    Filter: expression,
   };
 }
 
@@ -542,56 +477,22 @@ export function CreateUserFilterFromColumnFilter(
   return {
     Uuid: createUuid(),
     Name: name,
-    ColumnId: columnFilter.ColumnId,
-    Expression: columnFilter.Filter,
+    Scope: { ColumnIds: [columnFilter.ColumnId] },
   };
 }
 
-export function CreateRange(
-  operator: LeafExpressionOperator,
-  operand1?: any,
-  operand2?: any,
-  rangeOperandType?: RangeOperandType,
-  rangeOperandType2?: RangeOperandType
-): QueryRange {
-  return {
-    Operator: operator,
-    Operand1: operand1,
-    Operand2: operand2,
-    Operand1Type: rangeOperandType,
-    Operand2Type: rangeOperandType2,
-  };
-}
-
-export function CreateRangeEvaluation(
-  operator: LeafExpressionOperator,
-  operand1: any,
-  operand2: any,
-  newValue: any,
-  initialValue: any,
-  columnId: string
-): IRangeEvaluation {
-  return {
-    operand1: operand1,
-    operand2: operand2,
-    newValue: newValue,
-    operator: operator,
-    initialValue: initialValue,
-    columnId: columnId,
-  };
-}
 export function CreateCellValidationRule(
-  columnId: string,
-  range: QueryRange,
-  actionMode: ActionMode,
-  expression: Expression
+  scope: Scope,
+  predicate: Predicate,
+  actionMode: ActionMode
 ): CellValidationRule {
   return {
     Uuid: createUuid(),
-    ColumnId: columnId,
-    Range: range,
+    Scope: scope,
+    Predicate: predicate,
     ActionMode: actionMode,
-    Expression: expression,
+    Expression: undefined,
+    SharedQueryId: undefined,
   };
 }
 
@@ -627,8 +528,8 @@ export function CreateSystemReports(): Array<Report> {
     Name: ALL_DATA_REPORT,
     ReportColumnScope: ReportColumnScope.AllColumns,
     ReportRowScope: ReportRowScope.AllRows,
-    ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
 
   _systemReports.push({
@@ -636,17 +537,17 @@ export function CreateSystemReports(): Array<Report> {
     Name: VISIBLE_DATA_REPORT,
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.VisibleRows,
-    ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
 
   _systemReports.push({
     Uuid: createUuid(),
     Name: SELECTED_CELLS_REPORT,
-    ReportColumnScope: ReportColumnScope.SelectedCellColumns,
+    ReportColumnScope: ReportColumnScope.SelectedColumns,
     ReportRowScope: ReportRowScope.SelectedCellRows,
-    ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
 
   _systemReports.push({
@@ -654,10 +555,24 @@ export function CreateSystemReports(): Array<Report> {
     Name: SELECTED_ROWS_REPORT,
     ReportColumnScope: ReportColumnScope.VisibleColumns,
     ReportRowScope: ReportRowScope.SelectedRows,
-    ColumnIds: [],
-    Expression: ExpressionHelper.CreateEmptyExpression(),
+    Expression: undefined,
+    SharedQueryId: undefined,
   });
   return _systemReports;
+}
+
+export function CreateColumnFilter(
+  ColumnId: string,
+  PredicateId: string,
+  Inputs: any[]
+): ColumnFilter {
+  return {
+    ColumnId,
+    Predicate: {
+      Id: PredicateId,
+      Inputs,
+    },
+  };
 }
 
 export const ObjectFactory = {
@@ -667,15 +582,12 @@ export const ObjectFactory = {
   CreateEmptySparklinesChartDefinition,
   CreateEmptyCategoryChartDefinition,
   CreateEmptyCalculatedColumn,
+  CreateEmptySharedQuery,
   CreateEmptyPlusMinusRule,
   CreateEmptyAlert,
   CreateAlert,
   CreateEmptyAlertDefinition,
   CreateInternalAlertDefinitionForMessages,
-  CreateEmptyAdvancedSearch,
-  CreateEmptyColumnCategory,
-  CreateEmptyRange,
-  CreateEmptyColumnSort,
   CreateEmptyCellValidation,
   CreateEmptyPercentBar,
   CreateEmptyGradientColumn,
@@ -699,13 +611,9 @@ export const ObjectFactory = {
   CreateEmptyConditionalStyle,
   CreateEmptyFormatColumn,
   CreateEmptyFreeTextColumn,
-
   CreateEmptyLayout,
-  CreateEmptyPivotDetails,
-  CreateColumnFilter,
   CreateUserFilterFromColumnFilter,
-  CreateRange,
-  CreateRangeEvaluation,
+  CreateColumnFilter,
   CreateCellValidationRule,
   CreateEmptyStyle,
   CreateEmptyCellSummmary,

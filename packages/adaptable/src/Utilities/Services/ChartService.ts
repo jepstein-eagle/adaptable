@@ -1,16 +1,12 @@
 import { IChartService } from './Interface/IChartService';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { DistinctCriteriaPairValue } from '../../PredefinedConfig/Common/Enums';
-import { KeyValuePair } from '../Interface/KeyValuePair';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
-import { Expression, ColumnValueExpression } from '../../PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '../Helpers/ExpressionHelper';
 import { Helper } from '../Helpers/Helper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { LoggingHelper } from '../Helpers/LoggingHelper';
 import { NumberExtensions } from '../Extensions/NumberExtensions';
-import { createUuid } from '../../PredefinedConfig/Uuid';
 import {
   CategoryChartDefinition,
   ChartData,
@@ -23,6 +19,8 @@ import {
   FinancialChartDefinition,
 } from '../../PredefinedConfig/ChartState';
 import { AxisTotal, SecondaryColumnOperation } from '../../PredefinedConfig/Common/ChartEnums';
+import * as parser from '../../parser/src';
+import { RowNode } from '@ag-grid-community/all-modules';
 
 /*
 Class that buils the chart - probably needs some refactoring but working for the time being.
@@ -43,7 +41,7 @@ export class ChartService implements IChartService {
     // and then set chart.includedProperties to array of strings that contain selected data columns:
     // xAxisColumnName and all yAxisColumnNames, e.g. "Trade Date", "Trade Price", "Trade Volume"
 
-    let xAxisColumnName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
+    let xAxisColumnName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(
       chartDefinition.XAxisColumnId
     );
     let xAxisColValues: string[] = this.getXAxisColumnValues(chartDefinition, columns);
@@ -51,22 +49,23 @@ export class ChartService implements IChartService {
     //TODO save yAxisColumnNames in chartDefinition so we can populate getCalloutTypeOptions()
     let yAxisColumnNames: string[] = [];
 
-    let returnData: any = xAxisColValues.map(cv => {
+    let returnData: any = xAxisColValues.map(xAxisColumnValue => {
       let chartItem: any = new Object();
 
-      chartItem[xAxisColumnName] = cv;
+      chartItem[xAxisColumnName] = xAxisColumnValue;
       let showAverageTotal: boolean = chartDefinition.YAxisTotal == AxisTotal.Average;
-      let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: cv };
+      // let xAxisKVP: KeyValuePair = { Key: chartDefinition.XAxisColumnId, Value: xAxisColumnValue };
 
       chartDefinition.YAxisColumnIds.forEach(colID => {
         let total = this.buildYAxisTotal(
           chartDefinition,
           colID,
-          [xAxisKVP],
-          columns,
+          chartDefinition.XAxisColumnId,
+          xAxisColumnValue,
+          //  [xAxisKVP],
           showAverageTotal
         );
-        let colName = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(colID);
+        let colName = this.adaptable.api.columnApi.getFriendlyNameFromColumnId(colID);
         if (yAxisColumnNames.indexOf(colName) < 0) {
           yAxisColumnNames.push(colName);
         }
@@ -137,16 +136,14 @@ export class ChartService implements IChartService {
 
     if (chartDefinition.Expression) {
       values = [];
-      const forEach = (row: any) => {
+      const forEach = (node: RowNode) => {
         if (
-          ExpressionHelper.checkForExpressionFromRowNode(
-            chartDefinition.Expression,
-            row,
-            columns,
-            this.adaptable
-          )
+          parser.evaluate(chartDefinition.Expression, {
+            node: node,
+            api: this.adaptable.api,
+          })
         ) {
-          let columnValue = this.adaptable.getRawValueFromRowNode(row, chartDefinition.ColumnId);
+          let columnValue = this.adaptable.getRawValueFromRowNode(node, chartDefinition.ColumnId);
           values.push(columnValue);
         }
       };
@@ -190,10 +187,13 @@ export class ChartService implements IChartService {
   private buildYAxisTotal(
     chartDefinition: ChartDefinition,
     yAxisColumn: string,
-    kvps: KeyValuePair[],
-    columns: AdaptableColumn[],
+    xAxisColumnId: string,
+    xAxisColumnValue: any,
+
     showAverageTotal: boolean
   ): number {
+    /*
+    // think we need this to help me work out what is being evaluated here!
     let columnValueExpressions: ColumnValueExpression[] = kvps.map(kvp => {
       return {
         ColumnId: kvp.Key,
@@ -208,37 +208,39 @@ export class ChartService implements IChartService {
       FilterExpressions: [],
       RangeExpressions: [],
     };
+    */
+
+    // need here to create a 'completedExpresson' based on the kvp passed in
+    // but for now lets just create an empty one
+    // TODO - to fix!!!!
+    let completedExpressionTemp: string = '[' + xAxisColumnId + '] = "' + xAxisColumnValue + '"';
 
     let finalTotal: number = 0;
     let returnedRecordCount: number = 0;
 
     if (chartDefinition.VisibleRowsOnly) {
-      this.adaptable.forAllVisibleRowNodesDo(row => {
+      this.adaptable.forAllVisibleRowNodesDo(node => {
         if (
-          ExpressionHelper.checkForExpressionFromRowNode(
-            completedExpression,
-            row,
-            columns,
-            this.adaptable
-          )
+          parser.evaluate(completedExpressionTemp, {
+            node: node,
+            api: this.adaptable.api,
+          })
         ) {
           returnedRecordCount++;
-          let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
+          let columnValue = this.adaptable.getRawValueFromRowNode(node, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
     } else {
-      this.adaptable.forAllRowNodesDo(row => {
+      this.adaptable.forAllRowNodesDo(node => {
         if (
-          ExpressionHelper.checkForExpressionFromRowNode(
-            completedExpression,
-            row,
-            columns,
-            this.adaptable
-          )
+          parser.evaluate(completedExpressionTemp, {
+            node: node,
+            api: this.adaptable.api,
+          })
         ) {
           returnedRecordCount++;
-          let columnValue = this.adaptable.getRawValueFromRowNode(row, yAxisColumn);
+          let columnValue = this.adaptable.getRawValueFromRowNode(node, yAxisColumn);
           finalTotal += Number(columnValue);
         }
       });
@@ -256,25 +258,22 @@ export class ChartService implements IChartService {
     columns: AdaptableColumn[]
   ): string[] {
     let xAxisColValues: string[] = [];
-    if (ExpressionHelper.IsNullOrEmptyExpression(chartDefinition.XAxisExpression)) {
-      xAxisColValues = this.adaptable
-        .getColumnValueDisplayValuePairDistinctList(
-          chartDefinition.XAxisColumnId,
-          DistinctCriteriaPairValue.DisplayValue,
-          chartDefinition.VisibleRowsOnly
-        )
-        .filter(cv => Helper.objectExists(cv.RawValue))
-        .map(cv => {
-          return cv.DisplayValue;
-        });
+    if (StringExtensions.IsNullOrEmpty(chartDefinition.XAxisExpression)) {
+      xAxisColValues = chartDefinition.VisibleRowsOnly
+        ? this.adaptable.api.columnApi.getDistinctVisibleDisplayValuesForColumn(
+            chartDefinition.XAxisColumnId
+          )
+        : this.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+            chartDefinition.XAxisColumnId
+          );
     } else {
       if (chartDefinition.VisibleRowsOnly) {
         this.adaptable.forAllVisibleRowNodesDo(row => {
-          this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+          this.addXAxisFromExpression(chartDefinition, row, xAxisColValues);
         });
       } else {
         this.adaptable.forAllRowNodesDo(row => {
-          this.addXAxisFromExpression(chartDefinition, columns, row, xAxisColValues);
+          this.addXAxisFromExpression(chartDefinition, row, xAxisColValues);
         });
       }
     }
@@ -283,21 +282,19 @@ export class ChartService implements IChartService {
 
   private addXAxisFromExpression(
     chartDefinition: CategoryChartDefinition,
-    columns: AdaptableColumn[],
-    row: any,
+    node: RowNode,
     xAxisColValues: string[]
   ): void {
     if (
-      ExpressionHelper.checkForExpressionFromRowNode(
-        chartDefinition.XAxisExpression,
-        row,
-        columns,
-        this.adaptable
-      )
+      parser.evaluate(chartDefinition.XAxisExpression, {
+        node: node,
+        api: this.adaptable.api,
+      })
     ) {
-      let columnValue = this.adaptable.getDisplayValueFromRowNode(
-        row,
-        chartDefinition.XAxisColumnId
+      let columnValue = this.adaptable.getValueFromRowNode(
+        node,
+        chartDefinition.XAxisColumnId,
+        CellValueType.DisplayValue
       );
       ArrayExtensions.AddItem(xAxisColValues, columnValue);
     }
@@ -341,9 +338,9 @@ export class ChartService implements IChartService {
 
     let dataItems: PieChartDataItem[] = [];
 
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
     // we use ranges if its a numeric column and there are more than 15 slices (N.B. Not completely working)
-    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition, columns);
+    let useRanges: boolean = this.shouldUseRange(dataCounter, chartDefinition);
 
     // if we don't use ranges but there are too many slices then we return an error
     if (
@@ -418,7 +415,7 @@ export class ChartService implements IChartService {
       });
 
       // finally we can generate slice items based on data ranges
-      dataRanges.forEach((range, key) => {
+      dataRanges.forEach(range => {
         let sliceItem: PieChartDataItem = {
           Name: '[' + range.min + ' to ' + range.max + ']',
           Value: range.values.length,
@@ -465,15 +462,14 @@ export class ChartService implements IChartService {
 
   private shouldUseRange(
     dataCounter: Map<any, number>,
-    chartDefinition: PieChartDefinition,
-    columns: AdaptableColumn[]
+    chartDefinition: PieChartDefinition
   ): boolean {
     let returnValue: boolean = false;
     if (dataCounter.size > 15) {
-      let primaryColumn = this.adaptable.api.gridApi.getColumnFromId(
+      let primaryColumn = this.adaptable.api.columnApi.getColumnFromId(
         chartDefinition.PrimaryColumnId
       );
-      let primaryColumnIsNumeric: boolean = this.adaptable.api.gridApi.isNumericColumn(
+      let primaryColumnIsNumeric: boolean = this.adaptable.api.columnApi.isNumericColumn(
         primaryColumn
       );
 

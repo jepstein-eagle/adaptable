@@ -47,7 +47,7 @@ async function InitAdaptableDemo() {
     'event handling demo'
   );
   adaptableOptions.searchOptions = {
-    serverSearchOption: 'AllSearchandSort',
+    serverSearchOption: ['Query', 'ColumnFilter', 'Sort'],
   };
   adaptableOptions.predefinedConfig = demoConfig;
   adaptableApi = await Adaptable.init(adaptableOptions);
@@ -153,8 +153,6 @@ function listenToThemeChanged(themeChangedEventArgs: ThemeChangedEventArgs) {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Theme', 'Export', 'Layout', 'Demo'],
-    AvailableToolbars: ['Theme', 'Export', 'Layout', 'AdvancedSearch', 'SmartEdit'],
     CustomToolbars: [
       {
         Name: 'Demo',

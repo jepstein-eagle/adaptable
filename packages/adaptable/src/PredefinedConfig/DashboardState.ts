@@ -8,8 +8,6 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  * The Dashboard is the area above the grid which contains buttons, tabs, toolbars and Quick Search.
  *
- * **Note**: In v.6.1 (March 2020) the Dashboard has been signficantly updated and improved with some previous properties now deprecated.
- *
  * The Dashboard comprises 2 sections:
  *
  * - **Dashboard Header**: contains the Home Dropdown, Function Buttons and Quick Search
@@ -28,7 +26,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *
  *  **Further AdapTable Help Resources**
  *
- * [Demo Site](https://demo.adaptabletools.com/dashboard) | [API](_src_api_dashboardapi_.dashboardapi.html) | [ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/dashboard_function.md)
+ * [Demo Site](https://demo.adaptabletools.com/dashboard) | [Api](_src_api_dashboardapi_.dashboardapi.html) | [ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/Functions/dashboard_function.md)
  *
  *  --------------
  *
@@ -48,7 +46,7 @@ import { AdaptableObject } from './Common/AdaptableObject';
  *   Tabs: [
  *          {
  *            Name: 'Search',
- *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *            Toolbars: ['QuickSearch', 'DataSource', 'Query'],
  *          },
  *          {
  *            Name: 'Edit',
@@ -179,7 +177,7 @@ export interface DashboardState extends ConfigState {
    *
    * Each button is connected to a Function in AdapTable and opens the relevant popup screen.
    *
-   * **Default Value**: 'SystemStatus', 'GridInfo', ColumnChooser', 'ConditionalStyle'
+   * **Default Value**: 'SystemStatus', 'GridInfo', 'Layout', 'ConditionalStyle'
    */
   VisibleButtons?: AdaptableFunctionButtons;
 
@@ -224,48 +222,6 @@ export interface DashboardState extends ConfigState {
    * **Default Value**: the `adaptableId` property in Adaptable Options
    */
   HomeToolbarTitle?: string;
-
-  /**
-   * *Depracated Property; instead create Tabs which include a `Toolbars` property*
-   *
-   * Note: in 6.1 any VisibleToolbars will be automatically added to a new Tab (which can then be edited by you)
-   */
-  VisibleToolbars?: AdaptableDashboardToolbars | string[];
-
-  /**
-   * *Depracated Property; instead any toolbar for an 'entitled' Function is available*
-   */
-  AvailableToolbars?: AdaptableDashboardToolbars;
-
-  /**
-   * *Depracated Property; instead select columns through the Column Chooser*
-   */
-  ShowColumnsDropdown?: boolean;
-
-  /**
-   * *Depracated Property; instead select toolbars and tabs through configuring the Dashboard*
-   */
-  ShowToolbarsDropdown?: boolean;
-
-  /**
-   * *Depracated Property*
-   */
-  MinimisedHomeToolbarButtonStyle?: ButtonStyle;
-
-  /**
-   * *Depracated Property; instead use the `IsCollapsed` and `IsFloating` properties*
-   */
-  DashboardVisibility?: 'Minimised' | 'Visible' | 'Hidden';
-
-  /**
-   * *Depracated Property; instead please make sure that 'SystemStatus' is included in the Visible Buttons collection*
-   */
-  ShowSystemStatusButton?: boolean;
-
-  /**
-   * *Depracated Property; instead please make sure that 'GridInfo' is included in Visible Buttons collection*
-   */
-  ShowGridInfoButton?: boolean;
 }
 
 /**
@@ -280,11 +236,11 @@ export interface DashboardState extends ConfigState {
  *
  * **Rendering Bespoke Content**
  *
- * AdapTable provides the [dashboardAPI](_src_api_dashboardapi_.dashboardapi.html#getcustomtoolbarcontentsdiv) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
+ * AdapTable provides the [dashboardApi](_src_api_dashboardapi_.dashboardapi.html#getcustomtoolbarcontentsdiv) **getCustomToolbarContentsDiv** method that returns the Div in which you should render the contents.
  *
  * You can listen to the **ToolbarVisibilityChanged** event published by AdapTable which provides the name of relevant toolbar (and the Tab in which it is contained).
  *
- * The list of potential values for the Toolbar name are: "AdvancedSearch", "Alert", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "QuickSearch" and "Theme"
+ * The list of potential values for the Toolbar name are: "Alert", "BulkUpdate", "CellSummary", "Chart", "ColumnFilter", "DataSource", "Export", "Layout", "SmartEdit", "Query", "QuickSearch" and "Theme"
  *
  * **Custom Toolbar Rendering Example** (Using React)
  *
@@ -433,20 +389,11 @@ export interface CustomToolbar extends AdaptableObject {
    * When the button is clicked AdapTable will fire the `CustomToolbarConfigured` event.
    */
   ShowConfigureButton?: boolean;
-
-  /**
-   * An (optional) Glyph to display in the Custom Toolbar
-   *
-   * Since V.6 (Feb 2020) **this property has been deprecated** and is no longer used or applied
-   */
-  Glyph?: string;
 }
 
 export interface DashboardTab extends AdaptableObject {
   Name: string;
   Toolbars: AdaptableDashboardToolbars | string[];
-  // changed this from
-  /// Toolbars: (AdaptableDashboardToolbar | string)[];
 }
 
 export interface AdaptableCoordinate extends AdaptableObject {

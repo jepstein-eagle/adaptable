@@ -12,12 +12,12 @@ import Check from './check';
 import AttachFile from './attach-file';
 import Plus from './plus';
 import Clear from './clear';
-import AdvancedSearch from './advancedsearch';
+import Clone from './clone';
+import Query from './query';
 import Info from './info';
 import Alert from './alert';
 import List from './list';
 import SmartEdit from './smart-edit';
-import ColumnChooser from './column-chooser';
 import Home from './home';
 import Justify from './justify';
 import Err from './error';
@@ -46,7 +46,6 @@ import { ReactComponentLike } from 'prop-types';
 import CalculatedColumn from './calculated-column';
 import CellSummary from './cell-summary';
 import CellValidation from './cell-validation';
-import ColumnCategory from './column-category';
 import ColumnFilter from './column-filter';
 import ColumnInformation from './column-info';
 import CustomSort from './custom-sort';
@@ -98,7 +97,6 @@ import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
 const allIcons = {
   // toolbars
-  'advanced-search': AdvancedSearch, // original icon is search
   application: Application, // original icon is   laptop,
   alert: Alert,
   'bulk-update': BulkUpdate, // original icon is update,
@@ -113,11 +111,10 @@ const allIcons = {
   theme: Theme, // original icon is color-fill
 
   // non toolbar strategy images
+  query: Query, // original icon is search
   'calculated-column': CalculatedColumn, // original icon is phone-setup
   calendar: Calendar,
   'cell-validation': CellValidation, // original icon is flag,
-  'column-category': ColumnCategory, // original icon was table-chart
-  'column-chooser': ColumnChooser, // original icon was view-columns
   'conditional-style': ConditionalStyle,
   'column-info': ColumnInformation,
   'custom-sort': CustomSort, // was swap-vert
@@ -157,6 +154,7 @@ const allIcons = {
   comment,
   list: List,
   undo: Undo,
+  clone: Clone,
   delete: Delete,
   build: Build,
   save: Save,

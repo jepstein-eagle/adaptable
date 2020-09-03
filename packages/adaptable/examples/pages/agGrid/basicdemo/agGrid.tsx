@@ -7,35 +7,37 @@ import '@ag-grid-community/all-modules/dist/styles/ag-theme-alpine-dark.css';
 import '../../../../src/index.scss';
 import '../../../../src/themes/dark.scss';
 import './index.css';
-import { GridOptions, Column, ColDef } from '@ag-grid-community/all-modules';
+import { GridOptions } from '@ag-grid-community/all-modules';
 import {
   AdaptableOptions,
   AdaptableApi,
   AdaptableReadyInfo,
   SearchChangedEventArgs,
-  ToolbarButtonClickedInfo,
+  AdaptableColumn,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
-import { Layout } from '../../../../src/PredefinedConfig/LayoutState';
-import { ToolbarButton } from '../../../../src/PredefinedConfig/Common/ToolbarButton';
+import { getColumnsFromExpression } from '../../../../src/parser/src';
 var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tickingDataHelper = new TickingDataHelper();
   const tradeCount: number = 20;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
+  gridOptions.sideBar = 'columns';
+  const tickingDataHelper = new TickingDataHelper();
 
   const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Basic Demo New',
     userInterfaceOptions: {
-      showAdaptableToolPanel: true,
+      //  showAdaptableToolPanel: false,
+      //showUngroupColumnMenuItem: false,
+      adaptableToolPanelTitle: 'Hello',
     },
     vendorGrid: {
       ...gridOptions,
@@ -44,98 +46,308 @@ async function InitAdaptableDemo() {
     generalOptions: {
       showMissingColumnsWarning: false,
     },
+    layoutOptions: {
+      includeExpandedRowGroups: true,
+    },
+    filterOptions: {
+      autoApplyFilter: false,
+    },
+    queryOptions: {
+      maxColumnValueItemsDisplayed: 100000,
+    },
+    userFunctions: [
+      {
+        name: 'country',
+        type: 'CustomSortComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'United Kingdom') {
+            return -1;
+          }
+          if (valueB === 'United Kingdom') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
+        name: 'currency',
+        type: 'CustomSortComparerFunction',
+        handler(valueA: any, valueB: any, nodeA?: any, nodeB?: any) {
+          if (valueA === 'USD') {
+            return -1;
+          }
+          if (valueB === 'USD') {
+            return 1;
+          }
+          return 0;
+        },
+      },
+      {
+        name: 'PermittedValuesForCountry',
+        type: 'GetColumnValuesFunction',
+        handler(column: AdaptableColumn) {
+          return ['uk', 'israel', 'jordan', 'malawi'];
+        },
+      },
+      {
+        name: 'LookupValuesForCounterparty',
+        type: 'GetColumnValuesFunction',
+        handler(column: AdaptableColumn) {
+          return ['BAML', 'Nomura', 'UBS'];
+        },
+      },
+    ],
 
     predefinedConfig: {
-      Layout: {
-        CurrentLayout: 'Simple Layout',
-        /*
-        Layouts: [
+      CustomSort: {
+        Revision: 2,
+        CustomSorts: [
           {
-            Name: 'Simple Layout',
-            Columns: ['country', 'currency', 'countryStars', 'tradeId', 'notional', 'counterparty'],
+            ColumnId: 'country',
+            CustomSortComparerFunction: 'country',
+          },
+          {
+            ColumnId: 'currency',
+            CustomSortComparerFunction: 'currency',
+          },
+          {
+            ColumnId: 'counterparty',
+            SortedValues: ['Citi', 'Nat West'],
+          },
+          {
+            ColumnId: 'status',
+            SortedValues: ['Pending', 'Completed', 'Rejected'],
           },
         ],
-        */
+      },
+
+      Filter: {
+        Revision: 5,
+        UserFilters: [
+          {
+            Name: 'hello',
+            Scope: {
+              ColumnIds: ['currency'],
+            },
+          },
+        ],
+        ColumnFilters: [
+          {
+            ColumnId: 'currency',
+            Predicate: { Id: 'NonExistent' },
+          },
+        ],
+      },
+      FormatColumn: {
+        Revision: 7,
+        FormatColumns: [
+          {
+            Scope: {
+              DataTypes: ['Number'],
+            },
+            DisplayFormat: {
+              Formatter: 'DateFormatter',
+              Options: {
+                Pattern: 'yyyyMMdd',
+              },
+            },
+          },
+        ],
+      },
+      // this is for testing distinct values
+      // we have made the function better but its stil per column and not a promise
+      // so it doubles up with the server values promise we have
+      /*
+      ConditionalStyle: {
+        Revision: 35,
+        ConditionalStyles: [
+          {
+            Scope: {
+              All: true,
+            },
+            Style: {
+              BackColor: 'yellow',
+              ForeColor: undefined,
+              FontWeight: 'Bold',
+              FontStyle: 'Italic',
+              FontSize: undefined,
+              ClassName: '',
+            },
+            Expression: '[currency]="GBP"',
+          },
+
+          {
+            Scope: {
+              //  ColumnIds: ['notional', 'country', 'bid'],
+              DataTypes: ['String'],
+            },
+            Style: {
+              BackColor: '#0000ff',
+              ForeColor: '#228B22',
+              FontWeight: 'Bold',
+              FontStyle: 'Italic',
+              FontSize: undefined,
+              ClassName: '',
+            },
+            Expression: '[country]="Canada"',
+          },
+          {
+            Scope: {
+              ColumnIds: ['notional', 'country', 'bid'],
+            },
+            Style: {
+              BackColor: '#0000ff',
+              ForeColor: '#228B22',
+              FontWeight: 'Bold',
+              FontStyle: 'Italic',
+              FontSize: undefined,
+              ClassName: '',
+            },
+            Expression: '[currency]="USD"',
+          },
+        ],
+      },
+      */
+      UserInterface: {
+        PermittedValuesItems: [
+          /*
+          // testing order
+          // first one for all numbers
+          {
+            Scope: {
+              DataTypes: ['Number'],
+            },
+            PermittedValues: [1, 2, 3],
+          },
+
+          // then one just for notional
+          {
+            Scope: {
+              ColumnIds: ['notional'],
+            },
+            PermittedValues: [4, 5, 6],
+          },
+          */
+
+          // for counterparty we will get a hard-coded list
+          {
+            Scope: {
+              ColumnIds: ['counterparty'],
+            },
+            PermittedValues: ['first', 'second', 'third'],
+          },
+          // for status we will get a hard-coded list
+          {
+            Scope: {
+              ColumnIds: ['status'],
+            },
+            PermittedValues: ['pending', 'mistaken'],
+          },
+          // for country we will call a function
+          {
+            Scope: {
+              ColumnIds: ['country'],
+            },
+            GetColumnValuesFunction: 'PermittedValuesForCountry',
+          },
+          {
+            Scope: {
+              DataTypes: ['Date'],
+            },
+            PermittedValues: [],
+          },
+        ],
+
+        EditLookUpItems: [
+          {
+            Scope: {
+              ColumnIds: ['country'],
+            },
+            LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
+          },
+          {
+            Scope: {
+              ColumnIds: ['counterparty'],
+            },
+            GetColumnValuesFunction: 'LookupValuesForCounterparty',
+          },
+
+          {
+            Scope: {
+              ColumnIds: ['status'],
+            },
+          },
+          {
+            Scope: {
+              ColumnIds: ['currency'],
+            },
+          },
+        ],
+      },
+      Layout: {
+        Revision: 25,
+        CurrentLayout: 'Sigal',
+        CreateDefaultLayout: true,
+        Layouts: [
+          {
+            Name: 'Sigal',
+            Columns: [
+              'country',
+              'tradeId',
+              'bid',
+              'currency',
+              'countryStars',
+              'notional',
+              'counterparty',
+            ],
+            //    ColumnWidthMap: {
+            //      bid: 500,
+            //      currency: 1000,
+            //    },
+            ColumnSorts: [
+              {
+                ColumnId: 'countryStars',
+                SortOrder: 'Asc',
+              },
+              {
+                ColumnId: 'bid',
+                SortOrder: 'Asc',
+              },
+            ],
+            //   RowGroupedColumns: ['country'],
+            // ExpandedRowGroupKeys: ['Spain', 'China'],
+            AggregationColumns: {
+              notional: 'count',
+              tradeId: 'sum',
+            },
+            //   EnablePivot: true,
+            //    PivotColumns: ['country', 'status'],
+            //    PinnedColumnsMap: {
+            //     country: 'right',
+            //      currency: 'left',
+            //    },
+          },
+        ],
       },
     },
   };
 
   api = await Adaptable.init(adaptableOptions);
 
-  api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
-    let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;
-    let toolbarButton = eventInfo.toolbarButton;
-
-    if (toolbarButton.Name == 'btnNewLayout') {
-      let newLayout: Layout = {
-        Name: 'test',
-        Columns: ['bid', 'currency', 'counterparty'],
-        GroupedColumns: ['country'],
-      };
-      // api.layoutApi.createAndSetLayout(newLayout);
-      api.gridApi.showQuickFilterBar();
-    } else if (toolbarButton.Name == 'btnCopyLayout') {
-      api.gridApi.hideQuickFilterBar();
-
-      let cols: string[] = ['Person', 'How much loves Dad'];
-
-      let data = [
-        ['Eliana', 5],
-        ['Naftali', 9],
-        ['Sigal', 10],
-      ];
-
-      api.exportApi.exportDataToExcel(cols, data, 'Test Report');
-      //   let currentLayout = api.layoutApi.getCurrentLayout();
-      //  let testLayout: Layout = api.layoutApi.getLayoutByName('test');
-
-      //  api.layoutApi.cloneAndSetLayout(currentLayout, 'Hello World');
-
-      //  api.customSortApi.addCustomSort()
-
-      console.log('here world');
-      const gridOptions: GridOptions = api.gridApi.getadaptableOptions().vendorGrid as GridOptions;
-      console.log(gridOptions);
-      let bbgBid: ColDef = {
-        headerName: 'Bbg Bid',
-        field: 'bloombergBid',
-        type: 'abColDefNumber',
-        hide: true,
-        sortable: true,
-      };
-      let columnDefs: any = gridOptions.columnDefs;
-      columnDefs?.push(bbgBid);
-      gridOptions.api?.setColumnDefs(columnDefs);
-    }
-  });
-
-  // tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 200, tradeCount);
+  //  tickingDataHelper.useTickingDataagGrid(adaptableOptions.vendorGrid, api, 1000, tradeCount);
 
   setTimeout(() => {
-    api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    api.eventApi.on('AdaptableReady', () => {
       console.log('READY');
-      // info.adaptableApi.layoutApi.setLayout(newLayout.Name);
-      /*
-    setTimeout(() => {
-      api.dashboardApi.floatDashboard();
-    }, 2000);
-    setTimeout(() => {
-      api.dashboardApi.unFloatDashboard();
-    }, 4000);
-    setTimeout(() => {
-      api.dashboardApi.collapseDashboard();
-    }, 6000);
-    setTimeout(() => {
-      api.dashboardApi.unCollapseDashboard();
-    }, 8000); */
-      //  info.adaptableApi.flashingCellApi.showFlashingCellPopup();
     });
-  }, 3000);
+  }, 1000);
 
   api.eventApi.on('SearchChanged', (searchChangedArgs: SearchChangedEventArgs) => {
-    //  console.log('search changed');
-    //  console.log(searchChangedArgs.data[0].id);
+    //   console.log('search changed');
+    //   console.log(searchChangedArgs.data[0].id);
   });
+
+  console.log('cols', getColumnsFromExpression('[A] > Min([B], [C])'));
 }
 
 export default () => {

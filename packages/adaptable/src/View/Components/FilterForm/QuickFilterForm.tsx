@@ -1,360 +1,311 @@
-import * as DeepDiff from 'deep-diff';
 import * as React from 'react';
 import * as Redux from 'redux';
 import * as _ from 'lodash';
-import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
+import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
-import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
-import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
-import { DataType, LeafExpressionOperator } from '../../../PredefinedConfig/Common/Enums';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
-import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { RangeHelper } from '../../../Utilities/Helpers/RangeHelper';
 import Input from '../../../components/Input';
-import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
-import { ThemeProvider, CSSProperties } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import AdaptableContext from '../../AdaptableContext';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
+import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
+import OverlayTrigger from '../../../components/OverlayTrigger';
+import SimpleButton from '../../../components/SimpleButton';
+import Icon from '@mdi/react';
+import { mdiFilterOutline, mdiClose } from '@mdi/js';
+import { Flex, Box } from 'rebass';
+import { ListBoxFilterForm } from './ListBoxFilterForm';
+import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
+import { LogAdaptableError } from '../../../Utilities/Helpers/LoggingHelper';
+import { IAdaptable } from '../../../types';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
-  CurrentColumn: AdaptableColumn;
-  Adaptable: IAdaptable;
-  Api: AdaptableApi;
-  Columns: AdaptableColumn[];
-  UserFilters: UserFilter[];
-  SystemFilters: string[];
-  NamedFilters: NamedFilter[];
-  ColumnCategories: ColumnCategory[];
-  ColumnFilters: ColumnFilter[];
-  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
-  onClearColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
+  api: AdaptableApi;
+  adaptable: IAdaptable;
+  currentColumn: AdaptableColumn;
+  columnFilters: ColumnFilter[];
+  onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
+  onClearColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
 }
 
 export interface QuickFilterFormState {
-  quickFilterFormText: string;
-  filterExpression: Expression;
-  numberOperatorPairs: KeyValuePair[];
-  stringOperatorPairs: KeyValuePair[];
-  dateOperatorPairs: KeyValuePair[];
-  booleanOperatorPairs: KeyValuePair[];
-  placeholder: string;
+  filter: ColumnFilter;
 }
 
 class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, QuickFilterFormState> {
+  private valuesDropdown?: { show: () => any; hide: () => any };
   constructor(props: QuickFilterFormProps) {
     super(props);
     this.state = {
-      quickFilterFormText: '',
-      filterExpression: ExpressionHelper.CreateEmptyExpression(),
-      numberOperatorPairs: RangeHelper.GetNumberOperatorPairs(),
-      stringOperatorPairs: RangeHelper.GetStringOperatorPairs(),
-      dateOperatorPairs: RangeHelper.GetDateOperatorPairs(),
-      booleanOperatorPairs: RangeHelper.GetBooleanOperatorPairs(),
-      placeholder: '',
+      filter: this.getFilterFromProps(props),
     };
   }
-
-  componentDidUpdate(prevProps: any, prevState: QuickFilterFormState) {
-    this.reconcileFilters();
+  UNSAFE_componentWillReceiveProps(nextProps: QuickFilterFormProps) {
+    this.setState({
+      filter: this.getFilterFromProps(nextProps),
+    });
   }
+  getFilterFromProps(props: QuickFilterFormProps) {
+    const filter = props.columnFilters.find(cf => cf.ColumnId == props.currentColumn.ColumnId);
 
-  componentDidMount() {
-    this.reconcileFilters();
-  }
+    if (filter) return filter;
 
-  reconcileFilters(): void {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-    if (existingColumnFilter) {
-      // first check to see if we have an expression
-      if (ExpressionHelper.IsEmptyExpression(this.state.filterExpression)) {
-        // if we have no placeholder then set one - together with the placeholder
-        let expressionDescription = ExpressionHelper.ConvertExpressionToString(
-          existingColumnFilter.Filter,
-          this.props.Api,
-          false
-        );
-        this.doUpdate({
-          filterExpression: existingColumnFilter.Filter,
-          placeholder: expressionDescription,
-        });
-      } else {
-        // we have an expression also - but if its not the same as the new one then update it to the new one
-        let diff = DeepDiff.diff(existingColumnFilter.Filter, this.state.filterExpression);
-        if (diff) {
-          let expressionDescription = ExpressionHelper.ConvertExpressionToString(
-            existingColumnFilter.Filter,
-            this.props.Api,
-            false
-          );
-          this.doUpdate({
-            filterExpression: existingColumnFilter.Filter,
-            placeholder: expressionDescription,
-            quickFilterFormText: '',
-          });
-        }
-      }
-    } else {
-      // no filter so make sure our stuff is clear
-      if (this.state.placeholder != 'TEMP') {
-        if (
-          ExpressionHelper.IsNotNullOrEmptyExpression(this.state.filterExpression) ||
-          StringExtensions.IsNotNullOrEmpty(this.state.placeholder) ||
-          StringExtensions.IsNotNullOrEmpty(this.state.quickFilterFormText)
-        ) {
-          this.clearState();
-        }
-      }
+    if (!filter && props.currentColumn.DataType === 'Number') {
+      return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'Equals', ['']);
     }
-  }
 
+    if (!filter && props.currentColumn.DataType === 'String') {
+      return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'Contains', ['']);
+    }
+
+    if (!filter && props.currentColumn.DataType === 'Date') {
+      return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, 'On', ['']);
+    }
+
+    return ObjectFactory.CreateColumnFilter(this.props.currentColumn.ColumnId, null, null);
+  }
   render(): any {
-    let controlType: string =
-      this.props.CurrentColumn && this.props.CurrentColumn.DataType == DataType.Date
-        ? 'date'
-        : 'text';
+    const { filter } = this.state;
 
-    // on chrome, date inputs do not behave correctly in terms
-    // of respecting width - this is one of those scenarios - width: 100%  is not respected
-    // so we need to set this extra styles
-    const extraStyle: CSSProperties =
-      controlType === 'date'
-        ? {
-            position: 'absolute',
-            transform: 'translate3d(0px, -50%, 0px)',
-            top: '50%',
-          }
-        : null;
+    const predicateDefs = this.props.api.filterApi.getFilterPredicateDefsForColumn(
+      this.props.currentColumn
+    );
 
-    return this.props.CurrentColumn &&
-      this.props.CurrentColumn.Filterable &&
-      this.props.CurrentColumn.DataType != DataType.Unknown ? (
-      <Input
-        style={{
-          width: '100%', // Starting aggrid 23, we no longer use this.props.ColumnWidth, but 100%
-          padding: 0,
-          margin: 'auto',
+    const activePredicateDef = this.props.api.predicateApi.getPredicateDefById(
+      filter?.Predicate.Id
+    );
 
-          minHeight: 20,
-          maxHeight: 20,
-          fontSize: 'var(--ab-font-size-1)',
-          ...extraStyle,
+    if (!this.props.currentColumn || !this.props.currentColumn.Filterable) {
+      return null;
+    }
+
+    return (
+      <>
+        <OverlayTrigger
+          showEvent="mouseenter"
+          hideEvent="mouseleave"
+          alignHorizontal="left"
+          targetOffset={10}
+          hideDelay={300}
+          render={() => (
+            <Flex
+              flexDirection="column"
+              style={{
+                fontSize: 'var(--ab-font-size-2)',
+                border: '1px solid var(--ab-color-primarydark)',
+                borderRadius: 'var(--ab__border-radius)',
+                background: 'var(--ab-color-primarylight)',
+                zIndex: 1000,
+              }}
+            >
+              {filter?.Predicate.Id && (
+                <>
+                  <SimpleButton p={2} variant="text" onClick={() => this.clearFilter()}>
+                    <span style={{ width: 20, marginRight: 10 }}>
+                      <Icon size="1rem" path={mdiClose} />
+                    </span>
+                    Clear
+                  </SimpleButton>
+                </>
+              )}
+              {predicateDefs.map(p => (
+                <SimpleButton
+                  key={p.id}
+                  p={2}
+                  variant="text"
+                  tone={filter?.Predicate.Id === p.id ? 'info' : 'none'}
+                  onClick={() => this.selectColumnPredicate(p.id)}
+                >
+                  <span style={{ width: 20, marginRight: 10 }}>{this.renderPredicateIcon(p)}</span>
+                  {p.name}
+                </SimpleButton>
+              ))}
+            </Flex>
+          )}
+        >
+          <SimpleButton>{this.renderPredicateIcon(activePredicateDef)}</SimpleButton>
+        </OverlayTrigger>
+        {filter?.Predicate.Id === 'Values' && this.renderValuesDropdown(filter)}
+        {filter?.Predicate.Id !== 'Values' &&
+          activePredicateDef &&
+          activePredicateDef?.inputs === undefined && <Box p={1}>{activePredicateDef.name}</Box>}
+        {activePredicateDef?.inputs?.map((predicateInput, index) => (
+          <Input
+            key={index}
+            type={predicateInput.type === 'number' ? 'text' : predicateInput.type}
+            autoFocus={index === 0}
+            value={filter.Predicate.Inputs[index]}
+            onChange={(e: React.FormEvent) => this.changeColumnPredicateInput(e, index)}
+            onKeyDownCapture={(e: React.KeyboardEvent) => {
+              if (e.nativeEvent.key === 'Escape') {
+                e.nativeEvent.preventDefault();
+                e.nativeEvent.stopPropagation();
+                this.clearFilter();
+              }
+            }}
+            style={{ flex: 1, width: 0, minWidth: 0 }}
+          />
+        ))}
+      </>
+    );
+  }
+
+  renderPredicateIcon(predicateDef: PredicateDef) {
+    if (!predicateDef) {
+      return <Icon size="1rem" path={mdiFilterOutline} />;
+    }
+    if ('text' in predicateDef.icon) {
+      return <span>{predicateDef.icon.text}</span>;
+    }
+    if ('path' in predicateDef.icon) {
+      return <Icon size="1rem" path={predicateDef.icon.path} />;
+    }
+  }
+
+  renderValuesDropdown(filter: ColumnFilter) {
+    let distinctColumnValues: any[] = this.props.api.columnApi.getDistinctDisplayValuesForColumn(
+      this.props.currentColumn.ColumnId
+    );
+
+    return (
+      <OverlayTrigger
+        alignHorizontal="left"
+        showEvent="mouseenter"
+        hideEvent="mouseleave"
+        hideDelay={300}
+        ref={api => {
+          this.valuesDropdown = api;
         }}
-        className="ab-QuickFilterFormInput"
-        autoFocus={false}
-        type={controlType}
-        placeholder={this.state.placeholder}
-        value={this.state.quickFilterFormText}
-        onChange={(x: any) => this.OnTextChange((x.target as HTMLInputElement).value)}
-      />
-    ) : null;
-  }
-
-  OnTextChange(searchText: string) {
-    // as soon as anything changes clear existing column filter
-    if (searchText.trim() != this.state.quickFilterFormText.trim()) {
-      //   this.clearExistingColumnFilter();
-    }
-
-    // if text is empty then clear our state
-    if (StringExtensions.IsNullOrEmpty(searchText.trim())) {
-      this.clearState();
-      this.clearExistingColumnFilter();
-      return;
-    }
-
-    // otherwise handle the change
-    this.handleFilterChange(searchText);
-  }
-
-  clearExistingColumnFilter(): void {
-    let existingColumnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+        render={() => (
+          <Flex
+            p={2}
+            flexDirection="column"
+            style={{
+              fontSize: 'var(--ab-font-size-2)',
+              border: '1px solid var(--ab-color-primarydark)',
+              borderRadius: 'var(--ab__border-radius)',
+              background: 'var(--ab-color-defaultbackground)',
+              zIndex: 1000,
+            }}
+          >
+            <Flex mb={2}>
+              <SimpleButton onClick={() => this.clearFilter()}>Clear Filter</SimpleButton>
+              {this.props.adaptable.adaptableOptions?.filterOptions?.autoApplyFilter == false && (
+                <SimpleButton ml={2} onClick={() => this.updateFilter(this.state.filter)}>
+                  Apply Filter
+                </SimpleButton>
+              )}
+            </Flex>
+            <ListBoxFilterForm
+              currentColumn={this.props.currentColumn}
+              columns={[]}
+              columnDistinctValues={distinctColumnValues}
+              dataType={this.props.currentColumn.DataType}
+              uiSelectedColumnValues={this.state.filter.Predicate.Inputs}
+              useVendorStyle={true}
+              onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
+            />
+          </Flex>
+        )}
+      >
+        <SimpleButton
+          style={{
+            flex: 1,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+          }}
+          ml={1}
+        >
+          {filter.Predicate.Inputs.join(', ') || 'Select Values'}
+        </SimpleButton>
+      </OverlayTrigger>
     );
-    if (existingColumnFilter) {
-      this.props.onClearColumnFilter(existingColumnFilter);
+  }
+
+  onColumnValuesChange(columnValues: any[]) {
+    const { filter } = this.state;
+
+    filter.Predicate = { Id: 'Values', Inputs: columnValues };
+
+    if (this.props.adaptable.adaptableOptions?.filterOptions?.autoApplyFilter) {
+      this.updateFilter(filter);
+    } else {
+      this.setState({ filter });
     }
   }
 
-  createColumnFilter(expression: Expression, searchText: string): void {
-    let columnFilter: ColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-    );
-    if (columnFilter == null) {
-      columnFilter = ObjectFactory.CreateColumnFilter(
-        this.props.CurrentColumn.ColumnId,
-        expression
-      );
-    } else {
-      columnFilter.Filter = expression;
-    }
+  selectColumnPredicate(predicateId: string) {
+    const { filter } = this.state;
+    const predicateDef = this.props.api.predicateApi.getPredicateDefById(predicateId);
 
-    this.setState({
-      quickFilterFormText: searchText,
-      filterExpression: expression,
-      placeholder: '',
-    });
-    if (this.props.ColumnFilters.find(cf => cf.ColumnId == columnFilter.ColumnId)) {
-      this.props.onEditColumnFilter(columnFilter);
-    } else {
-      this.props.onAddColumnFilter(columnFilter);
-    }
-  }
+    filter.Predicate = {
+      Id: predicateId,
+      Inputs: (predicateDef.inputs ?? []).map(i => i.defaultValue ?? ''),
+    };
 
-  createRangeExpression(operatorKVP: KeyValuePair, searchText: string): void {
-    if (searchText.trim() == operatorKVP.Key) {
-      if (RangeHelper.IsStandaloneOperator(operatorKVP.Value)) {
-        let range: QueryRange = RangeHelper.CreateValueRange(
-          operatorKVP.Value,
-          undefined,
-          undefined
-        );
-        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-          this.props.CurrentColumn.ColumnId,
-          [],
-          [],
-          [],
-          [range]
-        );
-        this.createColumnFilter(expression, searchText);
-      } else {
-        // its operator only so do nothing (but set placeholder to ensure not wiped)
-        this.clearExpressionState(searchText);
-      }
-    } else {
-      let operand1 = searchText.replace(operatorKVP.Key, '');
-      let operand2 = null;
-      if (operatorKVP.Value == LeafExpressionOperator.Between) {
-        let values: any[] = searchText.trim().split(operatorKVP.Key);
-        if (!this.isValidBetweenValues(values)) {
-          this.clearExpressionState(searchText);
-          return;
+    this.updateFilter(filter);
+
+    if (predicateId === 'Values') {
+      requestAnimationFrame(() => {
+        if (this.valuesDropdown) {
+          this.valuesDropdown.show();
         }
-        operand1 = values[0];
-        operand2 = values[1];
-      }
-      let range: QueryRange = RangeHelper.CreateValueRange(operatorKVP.Value, operand1, operand2);
-      let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-        this.props.CurrentColumn.ColumnId,
-        [],
-        [],
-        [],
-        [range]
-      );
-      this.createColumnFilter(expression, searchText);
+      });
     }
   }
 
-  handleFilterChange(searchText: string): void {
-    // first check for existing operators and handle those
-    let isRangeExpression: boolean = false;
+  debouncedAddFilter = _.debounce(() => this.props.onAddColumnFilter(this.state.filter), 250);
 
-    let operators: KeyValuePair[];
-    switch (this.props.CurrentColumn.DataType) {
-      case DataType.Number:
-        operators = this.state.numberOperatorPairs;
-        break;
-      case DataType.String:
-        operators = this.state.stringOperatorPairs;
-        break;
-      case DataType.Date:
-        operators = this.state.dateOperatorPairs;
-        break;
-      case DataType.Boolean:
-        operators = this.state.booleanOperatorPairs;
-        break;
-      default:
-        operators = [];
-        break;
-    }
+  debouncedEditFilter = _.debounce(() => this.props.onEditColumnFilter(this.state.filter), 250);
 
-    operators.forEach(op => {
-      if (!isRangeExpression) {
-        if (searchText.includes(op.Key)) {
-          this.createRangeExpression(op, searchText);
-          isRangeExpression = true; // set to true so dont do >= and then later >
-        }
-      }
-    });
+  private updateFilter(filter: ColumnFilter) {
+    this.setState({ filter });
 
-    if (!isRangeExpression) {
-      // next check to see if it has a ';' - if so then create an "In" for all values; not sure if raw or display...
-      if (searchText.includes(';')) {
-        let values: string[] = searchText.split(';').map(v => v.trim());
-        let expression: Expression = ExpressionHelper.CreateSingleColumnExpression(
-          this.props.CurrentColumn.ColumnId,
-          values,
-          [],
-          [],
-          []
-        );
-        this.createColumnFilter(expression, searchText);
-      } else {
-        // if just a single, non-operator, value then do an "Equals" range
-        let equalOperatorPair: KeyValuePair = this.state.numberOperatorPairs.find(
-          op => op.Value == LeafExpressionOperator.Contains
-        );
-        this.createRangeExpression(equalOperatorPair, searchText);
-      }
+    if (filter.Uuid) {
+      // TODO debounce here?
+      this.debouncedEditFilter();
+      // this.props.onEditColumnFilter(filter);
+    } else {
+      // TODO debounce here?
+      this.debouncedAddFilter();
+      //  this.props.onAddColumnFilter(filter);
     }
   }
 
-  doUpdate(state: Partial<QuickFilterFormState>): void {
-    if (JSON.stringify(state) === JSON.stringify(this.state)) {
-      return;
-    }
+  changeColumnPredicateInput(e: React.FormEvent, index: number) {
+    const { value } = e.target as HTMLInputElement;
+    const predicateId = this.getPredicateIdForShortcutValue(value);
 
-    this.setState(state as QuickFilterFormState);
+    if (predicateId) {
+      this.selectColumnPredicate(predicateId);
+    } else {
+      const { filter } = this.state;
+      filter.Predicate.Inputs[index] = value;
+      this.updateFilter(filter);
+    }
   }
 
-  clearState(): void {
-    this.doUpdate({
-      quickFilterFormText: '',
-      filterExpression: ExpressionHelper.CreateEmptyExpression(),
-      placeholder: '',
-    });
+  getPredicateIdForShortcutValue(value: string) {
+    return this.props.api.filterApi.findPredicateDefByShortcut(value, this.props.currentColumn)?.id;
   }
 
-  clearExpressionState(searchText: string): void {
-    this.setState({
-      quickFilterFormText: searchText,
-      filterExpression: ExpressionHelper.CreateEmptyExpression(),
-      placeholder: 'TEMP',
-    });
-  }
-
-  isValidBetweenValues(values: any[]): boolean {
-    if (values.length != 2) {
-      return false;
-    }
-    if (StringExtensions.IsNullOrEmpty(values[0]) || StringExtensions.IsNullOrEmpty(values[1])) {
-      return false;
-    }
-    return true;
+  clearFilter() {
+    const { filter } = this.state;
+    this.props.onClearColumnFilter(filter);
   }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<QuickFilterFormProps> {
   return {
-    CurrentColumn: ownProps.CurrentColumn,
-    Adaptable: ownProps.Adaptable,
-    Columns: state.Grid.Columns,
-    UserFilters: state.UserFilter.UserFilters,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
-    ColumnFilters: state.ColumnFilter.ColumnFilters,
+    currentColumn: ownProps.currentColumn,
+    columnFilters: state.Filter.ColumnFilters,
   };
 }
 
@@ -363,25 +314,26 @@ function mapDispatchToProps(
 ): Partial<QuickFilterFormProps> {
   return {
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterEdit(columnFilter)),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
   };
 }
 
 export let QuickFilterForm = connect(mapStateToProps, mapDispatchToProps)(QuickFilterFormComponent);
 
 export const QuickFilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.adaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <QuickFilterForm
-          Api={FilterContext.Adaptable.api}
-          CurrentColumn={FilterContext.Column}
-          TeamSharingActivated={false}
-          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+          api={FilterContext.Adaptable.api}
+          adaptable={FilterContext.Adaptable}
+          currentColumn={FilterContext.Column}
+          teamSharingActivated={false}
+          embedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
         />
       </AdaptableContext.Provider>
     </ThemeProvider>

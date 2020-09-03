@@ -1,21 +1,16 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { StyleVisualItem } from '../Components/StyleVisualItem';
 import { SharedEntityComponent } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Flex } from 'rebass';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
+import { UserFilter } from '../../PredefinedConfig/FilterState';
 
 export class UserFilterSharedEntity extends React.Component<
   SharedEntityComponent<UserFilterSharedEntity>,
   {}
 > {
   render(): any {
-    let filter = this.props.Entity as UserFilter;
-    let expressionString = ExpressionHelper.ConvertExpressionToString(
-      filter.Expression,
-      this.props.Api
-    );
+    let filter = this.props.entity as UserFilter;
+    let expressionString = 'Need a way to convert filter to string';
 
     return (
       <Flex flexDirection="row" alignItems="center">

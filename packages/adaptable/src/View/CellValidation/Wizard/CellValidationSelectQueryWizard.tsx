@@ -1,19 +1,15 @@
 import * as React from 'react';
-
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
-
 import { AdaptablePopover } from '../../AdaptablePopover';
-
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import WizardPanel from '../../../components/WizardPanel';
-
 import { Flex } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
 import Checkbox from '../../../components/CheckBox';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface CellValidationSelectQueryWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -30,7 +26,9 @@ export class CellValidationSelectQueryWizard
   constructor(props: CellValidationSelectQueryWizardProps) {
     super(props);
     this.state = {
-      HasExpression: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression),
+      HasExpression:
+        StringExtensions.IsNotNullOrEmpty(this.props.data.Expression) ||
+        StringExtensions.IsNotNullOrEmpty(this.props.data.SharedQueryId),
     };
   }
 
@@ -65,7 +63,7 @@ export class CellValidationSelectQueryWizard
 
   private onOtherExpressionOptionChanged(checked: boolean) {
     this.setState({ HasExpression: checked } as CellValidationSelectQueryWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -76,22 +74,20 @@ export class CellValidationSelectQueryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    if (
-      !this.state.HasExpression ||
-      (this.state.HasExpression && this.props.Data.Expression == null)
-    ) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+  public next(): void {
+    if (!this.state.HasExpression) {
+      this.props.data.Expression = undefined;
+      this.props.data.SharedQueryId = undefined;
     }
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.HasExpression ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -16,17 +16,43 @@ This is a major version release (primarily to cater for changes in the new ag-Gr
 
 * New Calculated Column Expression Editor and Syntax
 
+* Queries (and Shared Queries)
+
+* Predicates and Merged Filter Functions
+
+* Quick Search - no wildcards
+
+* Layout Changes
+
+* Column Chooser removed
+
+* Column Category removed
+
+* Scope - Conditional Styles
+
+* Alerts and Validation!
+
+* Custom Reports
+
+* Reports - Scope
+
 * Schedule State Changes
 
 * Percent Bars Improvements
 
 * Config Server Removed
 
+* Server Search changed
+
 * New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble
 
 * Support for Master / Detail grids
 
 * Additional CSS Variables
+  
+* Semantic Class Names
+
+* Option Changes (showAdaptableToolPanel now true by default)
 
 > For details of the previous Version see [Version 6 Upgrade Guide](upgrade-guide-v6.md).
 
@@ -199,6 +225,10 @@ The required syntax is very similar to previous versions of AdapTable, and in mo
 
 For more information see the [Calculated Column ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/calculated-column-function.md)
 
+## Layout Changes
+
+TODO
+
 ## Schedule State Changes
 
 In previous versions of AdapTable, each Function that had a Schedule persisted details of the Schedule in its own section of Adaptable State (e.g. Export, Reminder, ipushpull etc).
@@ -225,7 +255,6 @@ For full information on all these changes see the [Percent Bar ReadMe](https://g
 
 ## Config Server Removed
 
-Since Version 5 of AdapTable, Config Server (which enabled remote storage of Adaptable State) has been deprecated in favour of the more powerful and flexible [StateOptions](../../../adaptable/src/AdaptableOptions/StateOptions.ts) functions.  
 
 In Version 7 Config Server has finally been removed.
 

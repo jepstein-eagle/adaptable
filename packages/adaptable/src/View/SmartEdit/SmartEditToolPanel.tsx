@@ -31,7 +31,7 @@ interface SmartEditToolPanelComponentProps
   MathOperation: MathOperation | undefined;
   IsValidSelection: boolean;
   PreviewInfo: IPreviewInfo;
-
+  InPivotMode: Boolean;
   onSmartEditValueChange: (value: number) => SmartEditRedux.SmartEditChangeValueAction;
   onSmartEditOperationChange: (
     MathOperation: MathOperation
@@ -60,8 +60,8 @@ class SmartEditToolPanelComponent extends React.Component<
     };
   }
   public componentDidMount() {
-    if (this.props.Api) {
-      const adaptable: IAdaptable = this.props.Api.internalApi.getAdaptableInstance();
+    if (this.props.api) {
+      const adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       if (adaptable) {
         adaptable._on('CellsSelected', () => {
           this.props.onSmartEditCheckSelectedCells();
@@ -74,16 +74,16 @@ class SmartEditToolPanelComponent extends React.Component<
     let statusColour: StatusColour = this.getStatusColour();
 
     let selectedColumn = StringExtensions.IsNotNullOrEmpty(this.state.SelectedColumnId)
-      ? this.props.Api.gridApi.getColumnFromId(this.state.SelectedColumnId)
+      ? this.props.api.columnApi.getColumnFromId(this.state.SelectedColumnId)
       : null;
 
     let previewPanel = (
       <PreviewResultsPanel
-        PreviewInfo={this.props.PreviewInfo}
-        Api={this.props.Api}
-        SelectedColumn={selectedColumn}
-        ShowPanel={true}
-        ShowHeader={false}
+        previewInfo={this.props.PreviewInfo}
+        api={this.props.api}
+        selectedColumn={selectedColumn}
+        showPanel={true}
+        showHeader={false}
       />
     );
 
@@ -102,9 +102,9 @@ class SmartEditToolPanelComponent extends React.Component<
     };
 
     let shouldDisable: boolean =
-      this.props.AccessLevel == 'ReadOnly' ||
+      this.props.accessLevel == 'ReadOnly' ||
       !this.props.IsValidSelection ||
-      this.props.Api.internalApi.isGridInPivotMode();
+      this.props.InPivotMode == true;
 
     let content = (
       <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
@@ -144,7 +144,7 @@ class SmartEditToolPanelComponent extends React.Component<
                 (this.props.PreviewInfo != null &&
                   this.props.PreviewInfo.PreviewValidationSummary.HasOnlyValidationPrevent)
               }
-              AccessLevel={this.props.AccessLevel}
+              accessLevel={this.props.accessLevel}
             >
               Edit
             </ButtonApply>
@@ -212,7 +212,7 @@ class SmartEditToolPanelComponent extends React.Component<
   private onConfirmWarningCellValidation() {
     let confirmAction: Redux.Action = SmartEditRedux.SmartEditApply(true);
     let cancelAction: Redux.Action = SmartEditRedux.SmartEditApply(false);
-    let confirmation: IUIConfirmation = this.props.Api.internalApi
+    let confirmation: IUIConfirmation = this.props.api.internalApi
       .getValidationService()
       .createCellValidationUIConfirmation(confirmAction, cancelAction);
     this.props.onConfirmWarningCellValidation(confirmation);
@@ -236,6 +236,7 @@ function mapStateToProps(
     MathOperation: state.SmartEdit.MathOperation,
     IsValidSelection: state.System.IsValidSmartEditSelection,
     PreviewInfo: state.System.SmartEditPreviewInfo,
+    InPivotMode: state.Grid.IsGridInPivotMode,
   };
 }
 

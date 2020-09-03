@@ -49,9 +49,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
   adaptableOptions.generalOptions = {
     showGroupingTotalsAsHeader: true,
   };
@@ -65,11 +63,7 @@ async function InitAdaptableDemo() {
   });
 }
 
-let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['CellSummary'],
-  },
-};
+let demoConfig: PredefinedConfig = {};
 
 export default () => {
   useEffect(() => {

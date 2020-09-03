@@ -80,11 +80,9 @@ export default function Grid({}: GridProps) {
     primaryKey: 'tradeId',
     userName: 'pilot',
     userInterfaceOptions: {
-      showAdaptableToolPanel: true,
       adaptableToolPanelTitle: 'Grid Management',
     },
     layoutOptions: {
-      includeVendorStateInLayouts: true,
       autoSaveLayouts: true,
     },
     filterOptions: {

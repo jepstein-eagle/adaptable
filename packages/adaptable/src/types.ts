@@ -20,8 +20,9 @@ export { AdaptableMenuItem, MenuInfo } from './PredefinedConfig/Common/Menu';
 export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo';
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
 export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
-export { Expression } from './PredefinedConfig/Common/Expression';
 export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
+export { Scope } from './PredefinedConfig/Common/Scope';
+//export { Predicate } from './PredefinedConfig/Common/Predicate';
 export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';
@@ -39,7 +40,6 @@ export {
   ActionColumnRenderParams,
   ActionColumnRenderFunction,
 } from './PredefinedConfig/ActionColumnState';
-export { AdvancedSearchState, AdvancedSearch } from './PredefinedConfig/AdvancedSearchState';
 export { AlertState, AlertDefinition, AlertProperties } from './PredefinedConfig/AlertState';
 export { ApplicationState, ApplicationDataEntry } from './PredefinedConfig/ApplicationState';
 export { BulkUpdateState } from './PredefinedConfig/BulkUpdateState';
@@ -55,8 +55,6 @@ export {
   CellSummaryOperationDefinition,
 } from './PredefinedConfig/CellSummaryState';
 export { CellValidationState, CellValidationRule } from './PredefinedConfig/CellValidationState';
-export { ColumnCategoryState, ColumnCategory } from './PredefinedConfig/ColumnCategoryState';
-export { ColumnFilterState, ColumnFilter } from './PredefinedConfig/ColumnFilterState';
 export { ConditionalStyleState, ConditionalStyle } from './PredefinedConfig/ConditionalStyleState';
 export {
   CustomSortState,
@@ -79,12 +77,8 @@ export {
   FreeTextStoredValue,
 } from './PredefinedConfig/FreeTextColumnState';
 export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
-export { LayoutState, Layout, PivotDetails } from './PredefinedConfig/LayoutState';
-export {
-  NamedFilterState,
-  NamedFilter,
-  NamedFilterPredicate,
-} from './PredefinedConfig/NamedFilterState';
+export { FilterState as SystemFilterState, FilterPredicate } from './PredefinedConfig/FilterState';
+export { LayoutState, Layout } from './PredefinedConfig/LayoutState';
 export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
 export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';
 export { QuickSearchState } from './PredefinedConfig/QuickSearchState';
@@ -99,14 +93,15 @@ export {
   SharedEntity,
 } from './PredefinedConfig/TeamSharingState';
 export { UpdatedRowState } from './PredefinedConfig/UpdatedRowState';
-export { UserFilterState, UserFilter } from './PredefinedConfig/UserFilterState';
 export {
   UserInterfaceState,
   UserMenuItem,
   UserMenuItemShowPredicate,
   UserMenuItemClickedFunction,
-  PermittedValuesColumn,
-  EditLookUpColumn,
+  UserMenuItemLabelFunction,
+  GetColumnValuesFunction,
+  PermittedValuesItem,
+  EditLookUpItem,
   RowStyle,
 } from './PredefinedConfig/UserInterfaceState';
 

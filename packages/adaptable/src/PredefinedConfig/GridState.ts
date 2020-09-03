@@ -15,7 +15,8 @@ export interface GridState extends InternalState {
   SelectedRowInfo: SelectedRowInfo;
   CellSummary: CellSummmary;
   IsQuickFilterVisible: boolean;
-  MainMenuItems: AdaptableMenuItem[];
+  FunctionDropdownMenuItems: AdaptableMenuItem[];
+  FunctionButtonMenuItems: AdaptableMenuItem[];
   IsGridInPivotMode: boolean;
   IsGridInTreeMode: boolean;
 }

@@ -17,45 +17,47 @@ yy.node = function(type, args, location) {
 
 %%
 
-(\r?\n)+\s*           return 'NEWLINE';
-[^\S\r?\n]+            /* skip whitespace */
-[0-9]+("."[0-9]+)?\b  return 'NUMBER'
-\"[^"]+\"|\'[^']+\'   return 'STRING'
-"&"|"AND"             return '&'
-"!="                  return '!='
-">="                  return '>='
-"<="                  return '<='
-"="                   return '='
-">"                   return '>'
-"<"                   return '<'
-"|"|"OR"              return '|'
-"!"|NOT               return '!'
-"*"                   return '*'
-"/"                   return '/'
-"-"                   return '-'
-"+"                   return '+'
-"%"                   return '%'
-"^"                   return '^'
-"("                   return '('
-")"                   return ')'
-"["                   return '['
-"]"                   return ']'
-","                   return ','
-"?"                   return '?'
-":"                   return ':'
-"TRUE"                return 'TRUE'
-"FALSE"               return 'FALSE'
-[a-zA-Z_]+            return 'FUNCTION'
-<<EOF>>               return 'EOF'
-.                     return 'INVALID'
+(\r?\n)+\s*                       return 'NEWLINE';
+[^\S\r?\n]+                       /* skip whitespace */
+[0-9]+("."[0-9]+)?\b              return 'NUMBER'
+\"[^"]+\"|\'[^']+\'               return 'STRING'
+[A-Za-z][A-Za-z_0-9\.]+(?=[(])    return 'FUNCTION'
+\[[^[]+\]                         return 'COL'
+"!="                              return '!='
+">="                              return '>='
+"<="                              return '<='
+"="                               return '='
+">"                               return '>'
+"<"                               return '<'
+"!"|"NOT"                         return '!'
+"&"|"AND"                         return '&'
+"|"|"OR"                          return '|'
+"IN"                              return 'IN'
+"*"                               return '*'
+"/"                               return '/'
+"-"                               return '-'
+"+"                               return '+'
+"%"                               return '%'
+"^"                               return '^'
+"("                               return '('
+")"                               return ')'
+"["                               return '['
+"]"                               return ']'
+","                               return ','
+"?"                               return '?'
+":"                               return ':'
+"TRUE"                            return 'TRUE'
+"FALSE"                           return 'FALSE'
+<<EOF>>                           return 'EOF'
+.                                 return 'INVALID'
 
 /lex
 
 /* operator associations and precedence */
 
 %right '?' ':'
-%left '=' '!=' '<' '<=' '>' '>='
 %left '&' '|'
+%left 'IN' '=' '!=' '<' '<=' '>' '>='
 %left '+' '-'
 %left '*' '/' '%'
 %left '^'
@@ -91,7 +93,7 @@ e
   | FALSE                   { $$ = false; }
   | NUMBER                  { $$ = Number($NUMBER); }
   | STRING                  { $$ = $STRING.slice(1, -1); }
-  | '[' args ']'            { $$ = $2; }
+  | COL                     { $$ = yy.node('COL', [$COL.slice(1, -1)], @$); }
   /* math */
   | e '+' e                 { $$ = yy.node('ADD', [$1, $3], @$); }
   | e '-' e                 { $$ = yy.node('SUB', [$1, $3], @$); }
@@ -114,5 +116,6 @@ e
   /* other */
   | FUNCTION '(' args ')'   { $$ = yy.node($FUNCTION.toUpperCase(), $args, @$); }
   | '-' e %prec UMINUS      { $$ = -$2; }
+  | e IN '(' args ')'       { $$ = yy.node('IN', [$1, $args], @$); }
   | '(' e ')'               { $$ = $2; }
   ;

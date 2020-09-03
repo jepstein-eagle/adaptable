@@ -145,7 +145,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
           <FormRow>
             <label>Line Color</label>
             <ColorPicker
-              Api={this.props.Api}
+              api={this.props.api}
               value={this.state.Brush}
               onChange={(x: any) => this.onBrushColorChange(x)}
             />
@@ -153,7 +153,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
           <FormRow>
             <label>Negative Color (for Columns)</label>
             <ColorPicker
-              Api={this.props.Api}
+              api={this.props.api}
               value={this.state.NegativeBrush}
               onChange={(x: any) => this.onNegativeBrushColorChange(x)}
             />
@@ -200,7 +200,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
               showClearButton={false}
               SelectedColumnIds={[this.state.SparklinesChartDefinition.ColumnId]}
               SelectionMode={SelectionMode.Single}
-              ColumnList={this.props.Api.gridApi.getNumericColumns()}
+              ColumnList={this.props.api.columnApi.getNumericColumns()}
               onColumnChange={columns => this.onDataColumnChanged(columns)}
             />
           </Flex>
@@ -219,10 +219,10 @@ class ViewAsSparklinesPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      const column = this.props.PopupParams.columnId;
-      if (StringExtensions.IsNotNullOrEmpty(column)) {
-        this.updateDataSource(column, this.props.PopupParams.primaryKeyValues);
+    if (this.props.popupParams) {
+      const column = this.props.popupParams.column;
+      if (column) {
+        this.updateDataSource(column.ColumnId, this.props.popupParams.primaryKeyValues);
       }
     }
   }
@@ -232,7 +232,7 @@ class ViewAsSparklinesPopupComponent extends React.Component<
     if (columns.length > 0) {
       columnId = columns[0].ColumnId;
     }
-    this.updateDataSource(columnId, this.props.PopupParams.primaryKeyValues);
+    this.updateDataSource(columnId, this.props.popupParams.primaryKeyValues);
   }
 
   private updateDataSource(columnId: string, primaryKeyValues?: any[]) {
@@ -243,9 +243,9 @@ class ViewAsSparklinesPopupComponent extends React.Component<
       sparklinesChartDefinition.PrimaryKeyValues = primaryKeyValues;
     }
 
-    let chartData: ChartData = this.props.Api.internalApi
+    let chartData: ChartData = this.props.api.internalApi
       .getChartService()
-      .BuildSparklinesChartData(sparklinesChartDefinition, this.props.Api.gridApi.getColumns());
+      .BuildSparklinesChartData(sparklinesChartDefinition, this.props.api.columnApi.getColumns());
     let dataSource: number[] = chartData.Data;
     let errorMessage: string = chartData.ErrorMessage;
 

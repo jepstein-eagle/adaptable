@@ -17,7 +17,13 @@ import { DataType } from '../PredefinedConfig/Common/Enums';
 export class CalculatedColumnStrategy extends AdaptableStrategyBase
   implements ICalculatedColumnStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.CalculatedColumnStrategyId, adaptable);
+    super(
+      StrategyConstants.CalculatedColumnStrategyId,
+      StrategyConstants.CalculatedColumnStrategyFriendlyName,
+      StrategyConstants.CalculatedColumnGlyph,
+      ScreenPopups.CalculatedColumnPopup,
+      adaptable
+    );
   }
 
   public addCalculatedColumnsToGrid(): void {
@@ -37,7 +43,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     //   if (cc.CalculatedColumnSettings == null || cc.CalculatedColumnSettings.DataType == null) {
     //     const cleanedExpression: string = this.adaptable.CalculatedColumnExpressionService.CleanExpressionColumnNames(
     //       cc.ColumnExpression,
-    //       this.adaptable.api.gridApi.getColumns()
+    //       this.adaptable.api.columnApi.getColumns()
     //     );
     //     dataType = this.adaptable.CalculatedColumnExpressionService.GetCalculatedColumnDataType(
     //       cleanedExpression
@@ -108,16 +114,6 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     );
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.CalculatedColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.CalculatedColumnPopup,
-        Icon: StrategyConstants.CalculatedColumnGlyph,
-      });
-    }
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full')) {
       if (
@@ -126,7 +122,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
           .find(cc => cc.ColumnId == column.ColumnId)
       ) {
         let popupParam: StrategyParams = {
-          columnId: column.ColumnId,
+          column: column,
           action: 'Edit',
           source: 'ColumnMenu',
         };

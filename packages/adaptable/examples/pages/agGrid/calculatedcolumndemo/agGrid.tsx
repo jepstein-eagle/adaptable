@@ -96,7 +96,7 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleButtons: ['CalculatedColumn', 'ColumnChooser'],
+    VisibleButtons: ['CalculatedColumn', 'Layout'],
   },
   CalculatedColumn: {
     CalculatedColumns: [
@@ -125,7 +125,6 @@ let demoConfig: PredefinedConfig = {
     Layouts: [
       {
         Columns: ['tradeId', 'country', 'notional', 'Dob Notional', 'currency'],
-        //   GroupedColumns: ['currency'],
         ColumnSorts: [],
         Name: 'with calc cols',
       },
@@ -134,7 +133,9 @@ let demoConfig: PredefinedConfig = {
   FormatColumn: {
     FormatColumns: [
       {
-        ColumnId: 'Dob Notional',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         DisplayFormat: {
           Formatter: 'NumberFormatter',
           Options: {
@@ -150,6 +151,9 @@ let demoConfig: PredefinedConfig = {
   ConditionalStyle: {
     ConditionalStyles: [
       {
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         Style: {
           BackColor: '#0000ff',
           ForeColor: undefined,
@@ -158,16 +162,7 @@ let demoConfig: PredefinedConfig = {
           FontSize: undefined,
           ClassName: '',
         },
-        ConditionalStyleScope: 'Row',
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnId: 'country',
-              ColumnDisplayValues: ['France', 'China'],
-              ColumnRawValues: ['France', 'China'],
-            },
-          ],
-        },
+        Expression: '[currency]="EUR',
       },
     ],
   },

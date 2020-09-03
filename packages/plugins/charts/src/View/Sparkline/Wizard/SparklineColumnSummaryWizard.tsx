@@ -24,28 +24,28 @@ export class SparklineColumnSummaryWizard
 
   render(): any {
     let lineColorStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-    lineColorStyle.BackColor = this.props.Data!.LineColor;
-    lineColorStyle.ForeColor = this.props.Data!.LineColor;
+    lineColorStyle.BackColor = this.props.data!.LineColor;
+    lineColorStyle.ForeColor = this.props.data!.LineColor;
 
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data!.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data!.ColumnId),
       },
       {
         Key: 'Minimum Value',
         Value:
-          this.props.Data!.MinimumValue == null ? 'Current cell' : this.props.Data!.MinimumValue,
+          this.props.data!.MinimumValue == null ? 'Current cell' : this.props.data!.MinimumValue,
       },
       {
         Key: 'Maximum Value',
         Value:
-          this.props.Data!.MaximumValue == null ? 'Current cell' : this.props.Data!.MaximumValue,
+          this.props.data!.MaximumValue == null ? 'Current cell' : this.props.data!.MaximumValue,
       },
       { Key: 'Line Color', Value: <StyleVisualItem Style={lineColorStyle} /> },
       {
         Key: 'Show Tool Tip',
-        Value: this.props.Data!.ShowToolTip ? 'True' : 'False',
+        Value: this.props.data!.ShowToolTip ? 'True' : 'False',
       },
     ];
 
@@ -65,18 +65,18 @@ export class SparklineColumnSummaryWizard
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -20,7 +20,6 @@ import { SharedEntity } from '../../PredefinedConfig/TeamSharingState';
 import { CustomSortSharedEntity } from '../CustomSort/CustomSortSharedEntity';
 import { CalculatedColumnSharedEntity } from '../CalculatedColumn/CalculatedColumnSharedEntity';
 import { CellValidationSharedEntity } from '../CellValidation/CellValidationSharedEntity';
-import { AdvancedSearchSharedEntity } from '../AdvancedSearch/AdvancedSearchSharedEntity';
 import { ExportSharedEntity } from '../Export/ExportSharedEntity';
 import { ConditionalStyleSharedEntity } from '../ConditionalStyle/ConditionalStyleSharedEntity';
 import { FormatColumnSharedEntity } from '../FormatColumn/FormatColumnSharedEntity';
@@ -29,6 +28,7 @@ import { PlusMinusSharedEntity } from '../PlusMinus/PlusMinusSharedEntity';
 import { ShortcutSharedEntity } from '../Shortcut/ShortcutSharedEntity';
 import { UserFilterSharedEntity } from '../UserFilter/UserFilterSharedEntity';
 import { PercentBarSharedEntity } from '../PercentBar/PercentBarSharedEntity';
+import { SharedQuerySharedEntity } from '../Query/SharedQuerySharedEntity';
 
 interface TeamSharingPopupProps extends StrategyViewPopupProps<TeamSharingPopupComponent> {
   Entities: Array<SharedEntity>;
@@ -110,50 +110,50 @@ class TeamSharingPopupComponent extends React.Component<TeamSharingPopupProps, {
 
   getSharedItemDetails(sharedEntity: SharedEntity) {
     switch (sharedEntity.FunctionName) {
-      case StrategyConstants.AdvancedSearchStrategyId: {
-        return <AdvancedSearchSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
-      }
       case StrategyConstants.CalculatedColumnStrategyId: {
-        return <CalculatedColumnSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <CalculatedColumnSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
       case StrategyConstants.CustomSortStrategyId: {
-        return <CustomSortSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <CustomSortSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
       case StrategyConstants.CellValidationStrategyId: {
-        return <CellValidationSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <CellValidationSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
       case StrategyConstants.ConditionalStyleStrategyId: {
-        return <ConditionalStyleSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <ConditionalStyleSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
       case StrategyConstants.ExportStrategyId: {
-        return <ExportSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <ExportSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
       case StrategyConstants.FormatColumnStrategyId: {
-        return <FormatColumnSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <FormatColumnSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
       case StrategyConstants.LayoutStrategyId: {
-        return <LayoutSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <LayoutSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
       case StrategyConstants.PercentBarStrategyId: {
-        return <PercentBarSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <PercentBarSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
       case StrategyConstants.PlusMinusStrategyId: {
-        return <PlusMinusSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <PlusMinusSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
       case StrategyConstants.ShortcutStrategyId: {
-        return <ShortcutSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <ShortcutSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
       case StrategyConstants.UserFilterStrategyId: {
-        return <UserFilterSharedEntity Entity={sharedEntity.Entity} Api={this.props.Api} />;
+        return <UserFilterSharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
+      }
+      case StrategyConstants.QueryStrategyId: {
+        return <SharedQuerySharedEntity entity={sharedEntity.Entity} api={this.props.api} />;
       }
 
-      case StrategyConstants.ColumnFilterStrategyId: {
+      case StrategyConstants.FilterStrategyId: {
         return 'NEED TO DO  COLUMN FILTER'; // not sure actually
       }
       default:

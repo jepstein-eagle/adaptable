@@ -1,7 +1,5 @@
 import {
-  DisplayAction,
   MathOperation,
-  LeafExpressionOperator,
   CellSummaryOperation,
   MessageType,
 } from '../../PredefinedConfig/Common/Enums';
@@ -43,7 +41,6 @@ export const CALENDAR_DEFAULT_CURRENT_CALENDER: string = 'United States';
 // Charts
 export const CHART_DEFAULT_REFRESH_RATE: number = 3; // refresh the chart every 3 seconds if stuff chnanges
 // Quick Search
-export const QUICK_SEARCH_DEFAULT_DISPLAY_ACTION: DisplayAction = DisplayAction.HighlightCell;
 export const QUICK_SEARCH_DEFAULT_BACK_COLOR: string = getHexForName(LIGHT_YELLOW);
 export const QUICK_SEARCH_DEFAULT_FORE_COLOR: string = getHexForName(BLACK);
 // Flashing Cells
@@ -73,7 +70,6 @@ export const DEFAULT_LIVE_REPORT_THROTTLE_TIME: number = 2000;
  */
 export const CHART_DEFAULT_YAXIS_TOTAL: AxisTotal = AxisTotal.Sum;
 export const PLUS_MINUS_DEFAULT_NUDGE_VALUE: number = 1;
-export const ALERT_DEFAULT_OPERATOR: LeafExpressionOperator = LeafExpressionOperator.AnyChange;
 export const ALERT_DEFAULT_RANGE_OPERAND_TYPE: 'Value' | 'Column' = 'Column';
 export const ALERT_DEFAULT_MESSAGE_TYPE: 'Success' | 'Info' | 'Warning' | 'Error' = 'Error';
 export const ALERT_DEFAULT_SHOW_POPUP: boolean = true;
@@ -83,7 +79,7 @@ export const ALERT_DEFAULT_HIGHLIGHT_ROW: boolean = true;
 /**
  * Constants for State (primarily for audit property events) - good idea?
  */
-export const CURRENT_ADVANCED_SEARCH_STATE_PROPERTY: string = 'CurrentAdvancedSearch';
+export const CURRENT_SHARED_QUERY_STATE_PROPERTY: string = 'CurrentSharedQuery';
 export const CURRENT_CHART_NAME_STATE_PROPERTY: string = 'CurrentChartName';
 export const BULK_UPDATE_VALUE_STATE_PROPERTY: string = 'BulkUpdateValue';
 export const CURRENT_CALENDAR_STATE_PROPERTY: string = 'CurrentCalendar';
@@ -96,7 +92,6 @@ export const FLASHING_CELL_DEFAULT_DOWN_COLOR_STATE_PROPERTY: string = 'DefautDo
 export const FLASHING_CELL_DEFAULT_DURATION_STATE_PROPERTY: string = 'DefaultDuration';
 export const CURRENT_THEME_STATE_PROPERTY: string = 'CurrentTheme';
 export const QUICK_SEARCH_TEXT_STATE_PROPERTY: string = 'QuickSearchText';
-export const QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY: string = 'DisplayAction';
 export const QUICK_SEARCH_STYLE_STATE_PROPERTY: string = 'Style';
 export const SMART_EDIT_VALUE_STATE_PROPERTY: string = 'SmartEditValue';
 export const SMART_EDIT_MATH_OPERATION_STATE_PROPERTY: string = 'MathOperationz';

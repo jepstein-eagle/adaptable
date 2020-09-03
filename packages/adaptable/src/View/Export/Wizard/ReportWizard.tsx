@@ -1,65 +1,71 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
-import { ReportColumnChooserWizard } from './ReportColumnChooserWizard';
+import { ReportScopeWizard } from './ReportScopeWizard';
 import { ReportColumnTypeWizard } from './ReportColumnTypeWizard';
-import { ReportExpressionWizard } from './ReportExpressionWizard';
-import { ReportSettingsWizard } from './ReportSettingsWizard';
 import { ReportSummaryWizard } from './ReportSummaryWizard';
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { Report } from '../../../PredefinedConfig/ExportState';
 import { ReportRowTypeWizard } from './ReportRowTypeWizard';
+import { ExpressionWizard } from '../../Components/ExpressionWizard';
+import { ReportSettingsWizard } from './ReportSettingsWizard';
 
-export class ReportWizard extends React.Component<
-  AdaptableObjectExpressionAdaptableWizardProps<ReportWizard>,
-  {}
-> {
+export interface ReportWizardProps
+  extends AdaptableObjectExpressionAdaptableWizardProps<ReportWizard> {}
+
+export class ReportWizard extends React.Component<ReportWizardProps, {}> {
   render() {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ExportStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ExportStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Columns',
               Index: 0,
-              Element: <ReportColumnTypeWizard Api={this.props.Api} />,
+              Element: <ReportColumnTypeWizard api={this.props.api} />,
             },
             {
               StepName: 'Columns',
               Index: 1,
-              Element: <ReportColumnChooserWizard Api={this.props.Api} />,
+              Element: <ReportScopeWizard api={this.props.api} />,
             },
             {
               StepName: 'Rows',
               Index: 2,
-              Element: <ReportRowTypeWizard Api={this.props.Api} />,
+              Element: <ReportRowTypeWizard api={this.props.api} />,
             },
             {
               StepName: 'Rows',
               Index: 3,
-              Element: <ReportExpressionWizard Api={this.props.Api} />,
+              Element: (
+                <ExpressionWizard
+                  api={this.props.api}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
+                />
+              ),
             },
             {
               StepName: 'Settings',
               Index: 4,
               Element: (
                 <ReportSettingsWizard
-                  Reports={this.props.ConfigEntities as Report[]}
-                  Api={this.props.Api}
+                  Reports={this.props.configEntities as Report[]}
+                  api={this.props.api}
                 />
               ),
             },
             {
               StepName: 'Summary',
               Index: 5,
-              Element: <ReportSummaryWizard Api={this.props.Api} />,
+              Element: <ReportSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject as Report}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject as Report}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

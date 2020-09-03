@@ -16,7 +16,7 @@ Additionally we are partnering with a number of third party companies who will b
 
 **What are Adaptable Objects**
 
-These are the objects that are created either by the user at run-time, or by developers at design-time, which are used by the Functions. Advanced Searches, Conditional Styles, Shortcuts, Flashing Cell definitions, Cell Validation rules etc. are all Adaptable Objects.
+These are the objects that are created either by the user at run-time, or by developers at design-time, which are used by the Functions. Export, Conditional Styles, Shortcuts, Flashing Cell definitions, Cell Validation rules etc. are all Adaptable Objects.
 
 **Are Adaptable Objects vendor specific?**
 

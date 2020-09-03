@@ -46,12 +46,12 @@ There are 2 ways to provide Entitlements in Predefined Config:
  export default {
  Entitlements: {
    FunctionEntitlements: [
-     {
-       FunctionName: 'ColumnCategory',
-       AccessLevel: 'Hidden',
-    },
-    {
-        FunctionName: 'AdvancedSearch',
+       {
+        FunctionName: 'PercentBar',
+        AccessLevel: 'Hidden',
+      },
+       {
+        FunctionName: 'Query',
         AccessLevel: 'Hidden',
       },
       {
@@ -70,7 +70,7 @@ There are 2 ways to provide Entitlements in Predefined Config:
 
  - **2 ReadOnly Entitlements**: Export and Layout.  This means that users can access any existing layouts and reports but cannot add / edit / delete their own.
 
- - **2 Hidden Entitlements**: Column Category and Advanced Search.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
+ - **2 Hidden Entitlements**: Percent Bar and Query.  This means that these AdaptableFunctions wont be available in any menus, and nor will any associated Toolbars and Tool Panel elements.
 
  --------------
 
@@ -103,8 +103,8 @@ export default {
               case 'Shortcut':
                 return 'Hidden';
 
-              case 'AdvancedSearch':
-              case 'ColumnFilter':
+              case 'Query':
+              case 'Filter':
               case 'UserFilter':
               case 'DataSource':
               case 'QuickSearch':
@@ -138,9 +138,9 @@ These are usually supplied in Predefined Config or Adaptable Options.  These inc
 
 Entitlements worka at the **UI Level only**.  This means that AdapTable will ensure that the user cannot see or access - through AdapTable UI elements like menus, toolbars, popups etc. - Functions to which he is not entitled.
 
-However **the Adaptable API does not take notice of Entitlements**, so anything that is managed programatically through code will ignore the User's entitlements.
+However **the Adaptable AApiPI does not take notice of Entitlements**, so anything that is managed programatically through code will ignore the User's entitlements.
 
-> To ensure that the Adaptable API is not called for functions to which the user has no access, wrap those calls inside relevant EntitlementApi methods e.g. 
+> To ensure that the Adaptable Api is not called for functions to which the user has no access, wrap those calls inside relevant EntitlementApi methods e.g. 
 
 ```ts
  if (entitlementApi.isFunctionFullEntitlement('Layout')){

@@ -10,7 +10,7 @@ export type PanelProps = HTMLProps<HTMLElement> & {
   header?: ReactNode | string;
   headerProps?: HeaderProps;
   bodyProps?: BoxProps;
-  variant?: 'default' | 'primary';
+  variant?: 'default' | 'primary' | 'modern';
   border?: string | number;
   borderRadius?: string | number;
   bodyScroll?: string | boolean;
@@ -20,7 +20,7 @@ const Header = ({
   children,
   variant = 'default',
   ...headerProps
-}: { variant?: 'default' | 'primary'; children?: ReactNode } & FlexProps) => {
+}: { variant?: 'default' | 'primary' | 'modern'; children?: ReactNode } & FlexProps) => {
   if (!children) {
     return null;
   }
@@ -43,8 +43,9 @@ const Header = ({
 const Body = ({
   children,
   bodyScroll,
+  variant,
   ...bodyProps
-}: { children?: ReactNode; bodyScroll?: string | boolean } & BoxProps) => {
+}: { children?: ReactNode; bodyScroll?: string | boolean; variant?: string } & BoxProps) => {
   if (!children) {
     return null;
   }
@@ -58,6 +59,7 @@ const Body = ({
       {...bodyProps}
       className={join(
         `${baseClassName}__body`,
+        variant && `${baseClassName}__body--variant-${variant}`,
         bodyScroll ? `${baseClassName}__body--scroll-${bodyScroll}` : null
       )}
     >
@@ -83,7 +85,8 @@ const Panel = (props: PanelProps) => {
   const style: { [key: string]: any } = {};
 
   if (borderRadius !== undefined) {
-    style['--ab-cmp-panel__border-radius'] = borderRadius;
+    style['--ab-cmp-panel__border-radius'] =
+      typeof borderRadius == 'number' ? `var(--ab-space-${borderRadius})` : borderRadius;
   }
 
   const headerStyle = {
@@ -109,7 +112,7 @@ const Panel = (props: PanelProps) => {
       <Header {...headerProps} style={headerStyle} variant={variant}>
         {header}
       </Header>
-      <Body {...bodyProps} style={bodyStyle} bodyScroll={bodyScroll}>
+      <Body {...bodyProps} style={bodyStyle} bodyScroll={bodyScroll} variant={variant}>
         {children}
       </Body>
     </Box>

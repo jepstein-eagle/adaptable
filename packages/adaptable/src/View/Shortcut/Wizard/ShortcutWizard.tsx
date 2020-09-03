@@ -4,10 +4,9 @@ import { ShortcutSettingsWizard } from './ShortcutSettingsWizard';
 import { ShortcutSummaryWizard } from './ShortcutSummaryWizard';
 import { ShortcutTypeWizard } from './ShortcutTypeWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 
-export interface ShortcutWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ShortcutWizard> {
+export interface ShortcutWizardProps extends AdaptableObjectAdaptableWizardProps<ShortcutWizard> {
   NumericKeysAvailable: Array<string>;
   DateKeysAvailable: Array<string>;
 }
@@ -17,14 +16,14 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ShortcutStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ShortcutStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Column Data Type',
               Index: 0,
-              Element: <ShortcutTypeWizard Api={this.props.Api} />,
+              Element: <ShortcutTypeWizard api={this.props.api} />,
             },
             {
               StepName: 'Settings',
@@ -33,18 +32,18 @@ export class ShortcutWizard extends React.Component<ShortcutWizardProps, {}> {
                 <ShortcutSettingsWizard
                   NumericKeysAvailable={this.props.NumericKeysAvailable}
                   DateKeysAvailable={this.props.DateKeysAvailable}
-                  Api={this.props.Api}
+                  api={this.props.api}
                 />
               ),
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <ShortcutSummaryWizard Api={this.props.Api} />,
+              Element: <ShortcutSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

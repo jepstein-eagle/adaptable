@@ -2,7 +2,6 @@ import { MathOperation, MessageType } from '../../PredefinedConfig/Common/Enums'
 import * as Redux from 'redux';
 import * as DeepDiff from 'deep-diff';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { createEngine as createEngineRemote } from './AdaptableReduxRemoteStorageEngine';
 import { createEngine as createEngineLocal } from './AdaptableReduxLocalStorageEngine';
 import { mergeReducer } from './AdaptableReduxMerger';
 
@@ -24,11 +23,9 @@ import * as UpdatedRowRedux from '../ActionsReducers/UpdatedRowRedux';
 import * as CalendarRedux from '../ActionsReducers/CalendarRedux';
 import * as ConditionalStyleRedux from '../ActionsReducers/ConditionalStyleRedux';
 import * as QuickSearchRedux from '../ActionsReducers/QuickSearchRedux';
-import * as AdvancedSearchRedux from '../ActionsReducers/AdvancedSearchRedux';
 import * as DataSourceRedux from '../ActionsReducers/DataSourceRedux';
-import * as ColumnFilterRedux from '../ActionsReducers/ColumnFilterRedux';
-import * as UserFilterRedux from '../ActionsReducers/UserFilterRedux';
-import * as SystemFilterRedux from '../ActionsReducers/SystemFilterRedux';
+import * as FilterRedux from '../ActionsReducers/FilterRedux';
+import * as SystemFilterRedux from '../ActionsReducers/FilterRedux';
 import * as ThemeRedux from '../ActionsReducers/ThemeRedux';
 import * as FormatColumnRedux from '../ActionsReducers/FormatColumnRedux';
 import * as GradientColumnRedux from '../ActionsReducers/GradientColumnRedux';
@@ -37,8 +34,6 @@ import * as ApplicationRedux from '../ActionsReducers/ApplicationRedux';
 import * as SparklineColumnRedux from '../ActionsReducers/SparklineColumnRedux';
 import * as FreeTextColumnRedux from '../ActionsReducers/FreeTextColumnRedux';
 import * as LayoutRedux from '../ActionsReducers/LayoutRedux';
-import * as NamedFilterRedux from '../ActionsReducers/NamedFilterRedux';
-import * as ColumnCategoryRedux from '../ActionsReducers/ColumnCategoryRedux';
 import * as DashboardRedux from '../ActionsReducers/DashboardRedux';
 import * as ToolPanelRedux from '../ActionsReducers/ToolPanelRedux';
 import * as CellValidationRedux from '../ActionsReducers/CellValidationRedux';
@@ -49,6 +44,7 @@ import * as CellSummaryRedux from '../ActionsReducers/CellSummaryRedux';
 import * as SystemStatusRedux from '../ActionsReducers/SystemStatusRedux';
 import * as TeamSharingRedux from '../ActionsReducers/TeamSharingRedux';
 import * as UserInterfaceRedux from '../ActionsReducers/UserInterfaceRedux';
+import * as QueryRedux from '../ActionsReducers/QueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { ISmartEditStrategy } from '../../Strategy/Interface/ISmartEditStrategy';
@@ -61,26 +57,15 @@ import { IAdaptableStore } from './Interface/IAdaptableStore';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as ConfigConstants from '../../Utilities/Constants/ConfigConstants';
 import { LayoutState } from '../../PredefinedConfig/LayoutState';
-import { GridState } from '../../PredefinedConfig/GridState';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
-import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
-import { Layout } from '../../PredefinedConfig/LayoutState';
-import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { FreeTextColumn } from '../../PredefinedConfig/FreeTextColumnState';
 import { Report } from '../../PredefinedConfig/ExportState';
-import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
-  DEFAULT_LAYOUT,
-  CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
   BULK_UPDATE_VALUE_STATE_PROPERTY,
   CURRENT_CALENDAR_STATE_PROPERTY,
   SUMMARY_OPERATION_STATE_PROPERTY,
   CURRENT_LAYOUT_STATE_PROPERTY,
   QUICK_SEARCH_TEXT_STATE_PROPERTY,
-  QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY,
   QUICK_SEARCH_STYLE_STATE_PROPERTY,
   CURRENT_DATA_SOURCE_STATE_PROPERTY,
   SMART_EDIT_MATH_OPERATION_STATE_PROPERTY,
@@ -92,29 +77,17 @@ import {
   CURRENT_CHART_NAME_STATE_PROPERTY,
   CURRENT_REPORT_STATE_PROPERTY,
   EMPTY_STRING,
+  CURRENT_SHARED_QUERY_STATE_PROPERTY,
 } from '../../Utilities/Constants/GeneralConstants';
-import { Helper } from '../../Utilities/Helpers/Helper';
 import { ICellSummaryStrategy } from '../../Strategy/Interface/ICellSummaryStrategy';
 import { CellSummmary } from '../../PredefinedConfig/Selection/CellSummmary';
 import { PreviewHelper } from '../../Utilities/Helpers/PreviewHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { AdaptableHelper } from '../../Utilities/Helpers/AdaptableHelper';
-import {
-  IUIConfirmation,
-  InputAction,
-  AdaptableAlert,
-  IUIPrompt,
-} from '../../Utilities/Interface/IMessage';
+import { IUIConfirmation, InputAction, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import IStorageEngine from './Interface/IStorageEngine';
 import { CalculatedColumn } from '../../PredefinedConfig/CalculatedColumnState';
-import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
-import { CellValidationRule } from '../../PredefinedConfig/CellValidationState';
-import { Shortcut } from '../../PredefinedConfig/ShortcutState';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import {
   StatePropertyChangedDetails,
@@ -130,12 +103,17 @@ import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService'
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { SharedEntity, TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
+import { TeamSharingImportInfo } from '../../PredefinedConfig/TeamSharingState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
+import {
+  ColumnFilter,
+  UserFilter,
+  SystemFilterPredicateId,
+} from '../../PredefinedConfig/FilterState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -215,16 +193,14 @@ This is the main store for Adaptable State
 
       ActionColumn: ActionColumnRedux.ActionColumnReducer,
       Entitlements: EntitlementsRedux.EntitlementsReducer,
-      NamedFilter: NamedFilterRedux.NamedFilterReducer,
       SparklineColumn: SparklineColumnRedux.SparklineColumnReducer,
-      SystemFilter: SystemFilterRedux.SystemFilterReducer,
+      Filter: SystemFilterRedux.FilterReducer,
       UserInterface: UserInterfaceRedux.UserInterfaceStateReducer,
 
       // not sure
       CellSummary: CellSummaryRedux.CellSummaryReducer,
 
       // Reducers for Persisted State
-      AdvancedSearch: AdvancedSearchRedux.AdvancedSearchReducer,
       Alert: AlertRedux.AlertReducer,
       Application: ApplicationRedux.ApplicationReducer,
       BulkUpdate: BulkUpdateRedux.BulkUpdateReducer,
@@ -232,8 +208,6 @@ This is the main store for Adaptable State
       Calendar: CalendarRedux.CalendarReducer,
       CellValidation: CellValidationRedux.CellValidationReducer,
       Chart: ChartRedux.ChartReducer,
-      ColumnCategory: ColumnCategoryRedux.ColumnCategoryReducer,
-      ColumnFilter: ColumnFilterRedux.ColumnFilterReducer,
       ConditionalStyle: ConditionalStyleRedux.ConditionalStyleReducer,
       CustomSort: CustomSortRedux.CustomSortReducer,
       Dashboard: DashboardRedux.DashboardReducer,
@@ -253,7 +227,7 @@ This is the main store for Adaptable State
       Theme: ThemeRedux.ThemeReducer,
       ToolPanel: ToolPanelRedux.ToolPanelReducer,
       UpdatedRow: UpdatedRowRedux.UpdatedRowReducer,
-      UserFilter: UserFilterRedux.UserFilterReducer,
+      Query: QueryRedux.QueryReducer,
     };
 
     // allow plugins to participate in the root reducer
@@ -271,7 +245,7 @@ This is the main store for Adaptable State
       switch (action.type) {
         case RESET_STATE:
           //This trigger the persist of the state with nothing
-          state.AdvancedSearch = undefined;
+          state.Query = undefined;
           state.Alert = undefined;
           state.BulkUpdate = undefined;
           state.CalculatedColumn = undefined;
@@ -287,9 +261,7 @@ This is the main store for Adaptable State
           state.Export = undefined;
           state.FlashingCell = undefined;
           state.FormatColumn = undefined;
-          state.ColumnFilter.ColumnFilters = [];
-          state.UserFilter.UserFilters = [];
-          state.SystemFilter.SystemFilters = [];
+          state.Filter.SystemFilters = [];
           state.Grid = undefined;
           state.Layout = undefined;
           state.PlusMinus = undefined;
@@ -340,7 +312,6 @@ This is the main store for Adaptable State
       //  ConfigConstants.USER_INTERFACE,
       // Config State - set ONLY in PredefinedConfig and never changed at runtime and contains functions
       ConfigConstants.ACTION_COLUMN,
-      ConfigConstants.NAMED_FILTER,
       ConfigConstants.SPARKLINE_COLUMN,
     ];
 
@@ -489,58 +460,59 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
         switch (action.type) {
           /*
           **********************
-           ADVANCED SEARCH
+           SHARED QUERY
           **********************
            */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
+          case QueryRedux.CURRENT_QUERY_CHANGE: {
+            const actionTyped = action as QueryRedux.CurrentQueryChangeAction;
 
             let changedDetails: StatePropertyChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.Query,
               diffInfo: diff,
-              propertyName: CURRENT_ADVANCED_SEARCH_STATE_PROPERTY,
-              oldValue: oldState.AdvancedSearch.CurrentAdvancedSearch,
-              newValue: actionTyped.selectedSearchName,
+              propertyName: CURRENT_SHARED_QUERY_STATE_PROPERTY,
+              oldValue: oldState.Query.CurrentQuery,
+              newValue: actionTyped.query,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_ADD: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchAddAction;
+
+          case QueryRedux.SHARED_QUERY_ADD: {
+            const actionTyped = action as QueryRedux.SharedQueryAddAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.Query,
               diffInfo: diff,
-              objectChanged: actionTyped.advancedSearch,
+              objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Created,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_EDIT: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchEditAction;
+          case QueryRedux.SHARED_QUERY_EDIT: {
+            const actionTyped = action as QueryRedux.SharedQueryEditAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.Query,
               diffInfo: diff,
-              objectChanged: actionTyped.advancedSearch,
+              objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Updated,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchDeleteAction;
+          case QueryRedux.SHARED_QUERY_DELETE: {
+            const actionTyped = action as QueryRedux.SharedQueryDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
+              name: StrategyConstants.QueryStrategyId,
               actionType: action.type,
-              state: newState.AdvancedSearch,
+              state: newState.Query,
               diffInfo: diff,
-              objectChanged: actionTyped.advancedSearch,
+              objectChanged: actionTyped.sharedQuery,
               stateObjectChangeType: StateObjectChangeType.Deleted,
             };
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
@@ -794,59 +766,16 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          /*
-          **********************
-          COLUMN CATEGORY
-          **********************
-           */
-          case ColumnCategoryRedux.COLUMN_CATEGORY_ADD: {
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryAddAction;
-            let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnCategoryStrategyId,
-              actionType: action.type,
-              state: newState.ColumnCategory,
-              diffInfo: diff,
-              objectChanged: actionTyped.columnCategory,
-              stateObjectChangeType: StateObjectChangeType.Created,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
-          case ColumnCategoryRedux.COLUMN_CATEGORY_EDIT: {
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryEditAction;
-            let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnCategoryStrategyId,
-              actionType: action.type,
-              state: newState.ColumnCategory,
-              diffInfo: diff,
-              objectChanged: actionTyped.columnCategory,
-              stateObjectChangeType: StateObjectChangeType.Updated,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
-          case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryDeleteAction;
-            let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnCategoryStrategyId,
-              actionType: action.type,
-              state: newState.ColumnCategory,
-              diffInfo: diff,
-              objectChanged: actionTyped.columnCategory,
-              stateObjectChangeType: StateObjectChangeType.Deleted,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
+
           /*
           **********************
           COLUMN FILTER
          **********************
           */
-          case ColumnFilterRedux.COLUMN_FILTER_ADD: {
-            const actionTyped = action as ColumnFilterRedux.ColumnFilterAddAction;
+          case FilterRedux.COLUMN_FILTER_ADD: {
+            const actionTyped = action as FilterRedux.ColumnFilterAddAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -856,10 +785,10 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ColumnFilterRedux.COLUMN_FILTER_EDIT: {
-            const actionTyped = action as ColumnFilterRedux.ColumnFilterEditAction;
+          case FilterRedux.COLUMN_FILTER_EDIT: {
+            const actionTyped = action as FilterRedux.ColumnFilterEditAction;
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -869,9 +798,9 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
+          case FilterRedux.COLUMN_FILTER_CLEAR: {
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -881,9 +810,9 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case ColumnFilterRedux.COLUMN_FILTER_CLEAR_ALL: {
+          case FilterRedux.COLUMN_FILTER_CLEAR_ALL: {
             let changedDetails: StateObjectChangedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               actionType: action.type,
               state: newState.ColumnFilter,
               diffInfo: diff,
@@ -1458,20 +1387,6 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
-            const actionTyped = action as QuickSearchRedux.QuickSearchSetDisplayAction;
-            let changedDetails: StatePropertyChangedDetails = {
-              name: StrategyConstants.QuickSearchStrategyId,
-              actionType: action.type,
-              state: newState.QuickSearch,
-              diffInfo: diff,
-              propertyName: QUICK_SEARCH_DISPLAY_ACTION_STATE_PROPERTY,
-              oldValue: oldState.QuickSearch.DisplayAction,
-              newValue: actionTyped.DisplayAction,
-            };
-            adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
-            return ret;
-          }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
             const actionTyped = action as QuickSearchRedux.QuickSearchSetStyleAction;
             let changedDetails: StatePropertyChangedDetails = {
@@ -1635,8 +1550,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
           USER FILTER
           **********************
            */
-          case UserFilterRedux.USER_FILTER_ADD: {
-            const actionTyped = action as UserFilterRedux.UserFilterAddAction;
+          case FilterRedux.USER_FILTER_ADD: {
+            const actionTyped = action as FilterRedux.UserFilterAddAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1648,8 +1563,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case UserFilterRedux.USER_FILTER_EDIT: {
-            const actionTyped = action as UserFilterRedux.UserFilterEditAction;
+          case FilterRedux.USER_FILTER_EDIT: {
+            const actionTyped = action as FilterRedux.UserFilterEditAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1661,8 +1576,8 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addUserStateChangeAuditLog(changedDetails);
             return ret;
           }
-          case UserFilterRedux.USER_FILTER_DELETE: {
-            const actionTyped = action as UserFilterRedux.UserFilterDeleteAction;
+          case FilterRedux.USER_FILTER_DELETE: {
+            const actionTyped = action as FilterRedux.UserFilterDeleteAction;
             let changedDetails: StateObjectChangedDetails = {
               name: StrategyConstants.UserFilterStrategyId,
               actionType: action.type,
@@ -1701,7 +1616,7 @@ var stateChangedAuditLogMiddleware = (adaptable: IAdaptable): any =>
 // this function is responsible for sending any  user-action functions to the audit
 // there are relatively few - primarily relating to search and edit functions
 // note it does not capture when something happens automatically as the result of a function (e.g. if a conditional style gets applied because a value has changed)
-// e.g. this should say when the current Advanced search has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
+// e.g. this should say when the current Shared Query has changed, or if a custom sort is being applied (it doesnt yet), but not when sorts have been added generally or searches changed
 var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
   function(
     middlewareAPI: Redux.MiddlewareAPI<Redux.Dispatch<Redux.Action<AdaptableState>>, AdaptableState>
@@ -1723,6 +1638,18 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
         // Note: not done custom sort as not sure how!
         // Shortcut Apply, Bulk Update Apply and Smart Edit Apply we do in relevant Strategy
         switch (action.type) {
+          case QueryRedux.CURRENT_QUERY_CHANGE: {
+            const actionTyped = action as QueryRedux.CurrentQueryChangeAction;
+
+            let functionAppliedDetails: FunctionAppliedDetails = {
+              name: StrategyConstants.QueryStrategyId,
+              action: action.type,
+              info: actionTyped.query,
+              data: actionTyped.query,
+            };
+            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
+            return next(action);
+          }
           case ActionColumnRedux.ACTION_COLUMN_APPLY: {
             const actionTyped = action as ActionColumnRedux.ActionColumnApplyAction;
 
@@ -1731,20 +1658,6 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
               action: action.type,
               info: actionTyped.actionColumnClickedInfo,
               data: actionTyped.actionColumnClickedInfo.actionColumn,
-            };
-            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
-            return next(action);
-          }
-          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchSelectAction;
-            let advancedSearch = state.AdvancedSearch.AdvancedSearches.find(
-              as => as.Name == actionTyped.selectedSearchName
-            );
-            let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.AdvancedSearchStrategyId,
-              action: action.type,
-              info: actionTyped.selectedSearchName,
-              data: advancedSearch,
             };
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
@@ -1889,19 +1802,6 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
-          case QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY: {
-            const actionTyped = action as QuickSearchRedux.QuickSearchSetDisplayAction;
-
-            let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.QuickSearchStrategyId,
-              action: action.type,
-              info: actionTyped.DisplayAction,
-              data: state.QuickSearch,
-            };
-
-            adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
-            return next(action);
-          }
           case QuickSearchRedux.QUICK_SEARCH_SET_STYLE: {
             const actionTyped = action as QuickSearchRedux.QuickSearchSetStyleAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
@@ -1940,34 +1840,32 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          case ColumnFilterRedux.COLUMN_FILTER_ADD: {
-            const actionTyped = action as ColumnFilterRedux.ColumnFilterAddAction;
+          case FilterRedux.COLUMN_FILTER_ADD: {
+            const actionTyped = action as FilterRedux.ColumnFilterAddAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               action: action.type,
               info: 'Column Filter Applied',
               data: {
                 Column: actionTyped.columnFilter.ColumnId,
-                ColumnFilter: ExpressionHelper.ConvertExpressionToString(
-                  actionTyped.columnFilter.Filter,
-                  adaptable.api
+                ColumnFilter: adaptable.api.filterApi.columnFilterToString(
+                  actionTyped.columnFilter
                 ),
               },
             };
             adaptable.AuditLogService.addFunctionAppliedAuditLog(functionAppliedDetails);
             return next(action);
           }
-          case ColumnFilterRedux.COLUMN_FILTER_EDIT: {
-            const actionTyped = action as ColumnFilterRedux.ColumnFilterEditAction;
+          case FilterRedux.COLUMN_FILTER_EDIT: {
+            const actionTyped = action as FilterRedux.ColumnFilterEditAction;
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               action: action.type,
               info: 'Column Filter Updated',
               data: {
                 Column: actionTyped.columnFilter.ColumnId,
-                ColumnFilter: ExpressionHelper.ConvertExpressionToString(
-                  actionTyped.columnFilter.Filter,
-                  adaptable.api
+                ColumnFilter: adaptable.api.filterApi.columnFilterToString(
+                  actionTyped.columnFilter
                 ),
               },
             };
@@ -1976,11 +1874,11 @@ var functionAppliedLogMiddleware = (adaptable: IAdaptable): any =>
             return next(action);
           }
 
-          case ColumnFilterRedux.COLUMN_FILTER_CLEAR: {
-            const actionTyped = action as ColumnFilterRedux.ColumnFilterClearAction;
+          case FilterRedux.COLUMN_FILTER_CLEAR: {
+            const actionTyped = action as FilterRedux.ColumnFilterClearAction;
 
             let functionAppliedDetails: FunctionAppliedDetails = {
-              name: StrategyConstants.ColumnFilterStrategyId,
+              name: StrategyConstants.FilterStrategyId,
               action: action.type,
               info: 'Column Filter Cleared',
               data: {
@@ -2022,30 +1920,18 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
       return function(action: Redux.Action) {
         switch (action.type) {
           /*******************
-           * ADVANCED SEARCH ACTIONS
+           * SHARED QUERY ACTIONS
            *******************/
 
           /**
-           * Use Case: User has selected an Advanced Search
-           * Action: Apply Grid Filtering
+           * Use Case: User has deleted a Shared Query
+           * Action: Need to check whether it is referenced elsewhere
            */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_SELECT: {
-            let ret = next(action);
-            adaptable.applyGridFiltering();
-            return ret;
-          }
-
-          /**
-           * Use Case: User has deleted an Advanced Search
-           * Action: If the deleted Advanced Search was the currently selected one: Apply Grid Filtering
-           */
-          case AdvancedSearchRedux.ADVANCED_SEARCH_DELETE: {
-            const actionTyped = action as AdvancedSearchRedux.AdvancedSearchDeleteAction;
-            let CurrentAdvancedSearch = middlewareAPI.getState().AdvancedSearch
-              .CurrentAdvancedSearch;
-            let ret = next(action);
-            if (CurrentAdvancedSearch == actionTyped.advancedSearch.Name) {
-              adaptable.applyGridFiltering();
+          case QueryRedux.SHARED_QUERY_DELETE: {
+            const actionTyped = action as QueryRedux.SharedQueryDeleteAction;
+            let ret: any;
+            if (!adaptable.isSharedQueryReferenced(actionTyped.sharedQuery.Uuid)) {
+              ret = next(action);
             }
             return ret;
           }
@@ -2087,6 +1973,20 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               }
             });
 
+            return ret;
+          }
+
+          /*******************
+           * QUICK SEARCH ACTIONS
+           *******************/
+
+          /**
+           * Use Case: User appliced Quick Search
+           * Action: Redraw all rows
+           */
+          case QuickSearchRedux.QUICK_SEARCH_APPLY: {
+            let ret = next(action);
+            adaptable.redraw();
             return ret;
           }
 
@@ -2210,28 +2110,6 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           }
 
           /*******************
-           * COLUMN CATEGORY ACTIONS
-           *******************/
-
-          /**
-           * Use Case: User deletes a Column Category (and there might be conditional styles that reference it)
-           * Action (1):  Get all condiitonal styles from state
-           * Action (2):  Delete any (without currently showing a warning) that reference this Column Category
-           */
-          case ColumnCategoryRedux.COLUMN_CATEGORY_DELETE: {
-            let returnAction = next(action);
-            const actionTyped = action as ColumnCategoryRedux.ColumnCategoryDeleteAction;
-            let conditionalStyleState = middlewareAPI.getState().ConditionalStyle;
-            conditionalStyleState.ConditionalStyles.forEach((cs: ConditionalStyle) => {
-              if (cs.ColumnCategoryId == actionTyped.columnCategory.ColumnCategoryId) {
-                // some warning?
-                middlewareAPI.dispatch(ConditionalStyleRedux.ConditionalStyleDelete(cs));
-              }
-            });
-            return returnAction;
-          }
-
-          /*******************
            * CHART ACTIONS
            *******************/
 
@@ -2292,7 +2170,12 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           case LayoutRedux.LAYOUT_SELECT: {
             let returnAction = next(action);
             let layoutState = middlewareAPI.getState().Layout;
+            let gridState = middlewareAPI.getState().Grid;
             let currentLayout = layoutState.Layouts.find(l => l.Name == layoutState.CurrentLayout);
+
+            if (gridState.CurrentLayout && gridState.CurrentLayout) {
+              currentLayout = gridState.CurrentLayout;
+            }
 
             if (currentLayout) {
               // tell grid the layout has been selected
@@ -2345,7 +2228,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // this is a horrible hack and fix for a weird issue
             // we really need to do smart edit and bulk update better
             // but this fixes it for now
-            if (popup.ComponentName != ScreenPopups.ColumnChooserPopup) {
+            if (popup.ComponentName != ScreenPopups.LayoutPopup) {
               if (apiReturn.Alert) {
                 // check if Smart Edit is showing as popup and then close and show error (dont want to do that if from toolbar)
                 if (popup.ComponentName == ScreenPopups.SmartEditPopup) {
@@ -2425,7 +2308,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // this is a horrible hack and fix for a weird issue
             // we really need to do smart edit and bulk update better
             // but this fixes it for now
-            if (popup.ComponentName != ScreenPopups.ColumnChooserPopup) {
+            if (popup.ComponentName != ScreenPopups.LayoutPopup) {
               if (apiReturn.Alert) {
                 // check if BulkUpdate is showing as popup
                 if (popup.ComponentName == ScreenPopups.BulkUpdatePopup) {
@@ -2526,25 +2409,19 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           /*******************
            * USER FILTER ACTIONS
            *******************/
-          case UserFilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
-            const actionTyped = action as UserFilterRedux.CreateUserFilterFromColumnFilterAction;
+          case FilterRedux.USER_FILTER_CREATE_FROM_COLUMN_FILTER: {
+            const actionTyped = action as FilterRedux.CreateUserFilterFromColumnFilterAction;
             // first create a new user filter based on the column filter and input name
             let userFilter: UserFilter = ObjectFactory.CreateUserFilterFromColumnFilter(
               actionTyped.ColumnFilter,
               actionTyped.InputText
             );
-            middlewareAPI.dispatch(UserFilterRedux.UserFilterAdd(userFilter));
+            middlewareAPI.dispatch(FilterRedux.UserFilterAdd(userFilter));
 
             // then update a new column filter from the user filter - so that it will display the user filter name
             let columnFilter: ColumnFilter = actionTyped.ColumnFilter;
-            columnFilter.Filter = ExpressionHelper.CreateSingleColumnExpression(
-              userFilter.ColumnId,
-              [],
-              [],
-              [userFilter.Name],
-              []
-            );
-            middlewareAPI.dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter));
+            // TODO;: Need to create this properly
+            middlewareAPI.dispatch(FilterRedux.ColumnFilterEdit(columnFilter));
 
             return next(action);
           }
@@ -2569,6 +2446,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
 
             return returnAction;
           }
+
           case TeamSharingRedux.TEAMSHARING_SHARE: {
             const actionTyped = action as TeamSharingRedux.TeamSharingShareAction;
             let returnAction = next(action);
@@ -2862,7 +2740,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             // do this now so it sets strategy entitlements
             adaptable.StrategyService.setStrategiesEntitlements();
             // create the functions menu (for use in the dashboard and the toolpanel)
-            adaptable.StrategyService.createStrategyFunctionMenu();
+            adaptable.StrategyService.createStrategyFunctionMenus();
 
             return returnAction;
           }
@@ -2911,13 +2789,6 @@ export function getNonPersistedReduxActions(): string[] {
     SystemRedux.CALCULATEDCOLUMN_SET_ERROR_MESSAGE,
     SystemRedux.CALCULATEDCOLUMN_IS_EXPRESSION_VALID,
 
-    SystemRedux.QUICK_SEARCH_SET_RANGE,
-    SystemRedux.QUICK_SEARCH_CLEAR_RANGE,
-    SystemRedux.QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
-    SystemRedux.QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS,
-
-    // SystemRedux.SET_NEW_COLUMN_LIST_ORDER,
-
     GridRedux.GRID_SET_COLUMNS,
     GridRedux.GRID_ADD_COLUMN,
     GridRedux.GRID_EDIT_COLUMN,
@@ -2932,7 +2803,7 @@ export function getNonPersistedReduxActions(): string[] {
     GridRedux.FILTER_FORM_HIDE,
     GridRedux.GRID_QUICK_FILTER_BAR_SHOW,
     GridRedux.GRID_QUICK_FILTER_BAR_HIDE,
-    GridRedux.SET_MAIN_MENUITEMS,
+    GridRedux.SET_FUNCTION_DROPDOWN_MENUITEMS,
 
     GridRedux.SET_PIVOT_MODE_ON,
     GridRedux.SET_PIVOT_MODE_OFF,
@@ -2955,13 +2826,13 @@ export function getNonPersistedReduxActions(): string[] {
 
 export function getFunctionAppliedReduxActions(): string[] {
   // NOTE: We have an issue with how we have built Smart Edit and Bulk Update that we are not able to capture the Apply
-  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the API)
+  // Due to poor coding the Apply method only has warnings (though we mitigate by doing the same thing via the Api)
   // As few users currently audit functions and few have editable grids its not an urgent problem but one that we should fix
 
   // We need to add:  Chart, Pie Chart, Custom Sort ???, Export, Layout
   return [
     ActionColumnRedux.ACTION_COLUMN_APPLY,
-    AdvancedSearchRedux.ADVANCED_SEARCH_SELECT,
+    QueryRedux.CURRENT_QUERY_CHANGE,
     CalendarRedux.CALENDAR_SELECT,
     ChartRedux.CHART_DEFINITION_SELECT,
     DataSourceRedux.DATA_SOURCE_SELECT,
@@ -2970,13 +2841,12 @@ export function getFunctionAppliedReduxActions(): string[] {
     FlashingCellsRedux.FLASHING_CELL_SELECT,
     FlashingCellsRedux.FLASHING_CELL_SELECT_ALL,
     QuickSearchRedux.QUICK_SEARCH_APPLY,
-    QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY,
     QuickSearchRedux.QUICK_SEARCH_SET_STYLE,
     PlusMinusRedux.PLUS_MINUS_APPLY,
     ThemeRedux.THEME_SELECT,
-    ColumnFilterRedux.COLUMN_FILTER_ADD,
-    ColumnFilterRedux.COLUMN_FILTER_EDIT,
-    ColumnFilterRedux.COLUMN_FILTER_CLEAR,
+    FilterRedux.COLUMN_FILTER_ADD,
+    FilterRedux.COLUMN_FILTER_EDIT,
+    FilterRedux.COLUMN_FILTER_CLEAR,
     CalculatedColumnRedux.CALCULATEDCOLUMN_ADD,
     CalculatedColumnRedux.CALCULATEDCOLUMN_EDIT,
     CalculatedColumnRedux.CALCULATEDCOLUMN_DELETE,

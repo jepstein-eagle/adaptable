@@ -13,8 +13,7 @@ import join from '../utils/join';
 import usePrevious from '../utils/usePrevious';
 import { getDocRect, getRect } from './utils';
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
-// TODO find a way to not reference this
-import { useAdaptable } from '../../View/AdaptableContext';
+import useVendorClassName from './useVendorClassName';
 
 export type ConstrainToType = ((node: HTMLElement) => HTMLElement) | string;
 
@@ -41,18 +40,22 @@ export interface OverlayTriggerProps extends React.HTMLAttributes<HTMLElement> {
   showTriangle?: boolean;
   style?: CSSProperties;
   onVisibleChange?: (visible: boolean) => void;
-  showEvent: 'click' | 'mousedown' | 'mouseenter' | 'focus';
-  hideEvent: 'mouseleave' | 'blur';
+  showEvent?: 'click' | 'mousedown' | 'mouseenter' | 'focus';
+  target?: (overlayNode: HTMLElement) => HTMLElement;
+  hideEvent?: 'mouseleave' | 'blur';
+  hideDelay?: number;
   render: () => ReactNode;
   targetOffset?: number;
   defaultZIndex?: number;
-  anchor: 'vertical' | 'horizontal';
+  anchor?: 'vertical' | 'horizontal';
   alignHorizontal?: OverlayHorizontalAlign;
   constrainTo?: ConstrainToType;
 }
 
 const globalObject = typeof globalThis !== 'undefined' ? globalThis : window;
+
 let portalElement: HTMLElement;
+
 const ensurePortalElement = () => {
   if (!(globalObject as any).document) {
     return;
@@ -66,47 +69,62 @@ const ensurePortalElement = () => {
   document.body.appendChild(portalElement);
 };
 
-const OverlayTrigger = (props: OverlayTriggerProps) => {
-  let {
-    visible: _,
-    showTriangle,
-    showEvent,
-    hideEvent,
-    render,
-    targetOffset,
-    defaultZIndex,
-    anchor,
-    opacityTransitionDuration,
-    onVisibleChange,
-    alignHorizontal,
-    constrainTo,
-    ...domProps
-  } = props;
+const OverlayTrigger = React.forwardRef(
+  (props: OverlayTriggerProps, ref: React.Ref<{ show: () => any; hide: () => any }>) => {
+    let {
+      visible: _,
+      showTriangle,
+      showEvent,
+      hideEvent,
+      render,
+      targetOffset,
+      defaultZIndex,
+      anchor,
+      hideDelay = 0,
+      opacityTransitionDuration,
+      onVisibleChange,
+      alignHorizontal,
+      constrainTo,
+      target: targetProp,
+      ...domProps
+    } = props;
 
-  const domRef = useRef<HTMLDivElement>(null);
-  const targetRef = useRef<Element>(null);
+    const domRef = useRef<HTMLDivElement>(null);
+    const targetRef = useRef<Element>(null);
+    const overlayRef = useRef<Element>(null);
 
-  const [visible, setVisible] = useProperty(props, 'visible', false);
+    const [visible, doSetVisible] = useProperty(props, 'visible', false);
 
-  const [targetRect, setTargetRect] = useState<BoundingClientRect | null>(null);
-  const [sizeInfo, setSizeInfo] = useState<SizeInfo | null>(null);
-  const prevVisible = usePrevious<boolean>(visible, false);
+    const hideTimeoutRef = useRef<any>(null);
 
-  ensurePortalElement();
+    const setVisible = (visible: boolean) => {
+      if (!visible) {
+        hideTimeoutRef.current = setTimeout(() => {
+          hideTimeoutRef.current = null;
+          doSetVisible(false);
+        }, hideDelay);
+        return;
+      }
 
-  useEffect(() => {
-    const target = (domRef as any).current.previousSibling;
-    if (!target) {
-      LoggingHelper.LogAdaptableWarning(
-        'No OverlayTrigger target - make sure you render a child inside the OverlayTrigger, which will be the overlay target'
-      );
-      return;
-    }
-    (targetRef as any).current = target as Element;
+      if (hideTimeoutRef.current) {
+        clearTimeout(hideTimeoutRef.current);
+        hideTimeoutRef.current = null;
+      }
+
+      doSetVisible(true);
+    };
+
+    const [targetRect, setTargetRect] = useState<BoundingClientRect | null>(null);
+    const [sizeInfo, setSizeInfo] = useState<SizeInfo | null>(null);
+    const prevVisible = usePrevious<boolean>(visible, false);
+
+    ensurePortalElement();
 
     const onShow = () => {
       batchUpdate(() => {
         setVisible(true);
+
+        const target = (targetRef as any).current;
 
         const targetRect = (target as any).getBoundingClientRect() as BoundingClientRect;
         const sizeInfo = getAvailableSizeInfo({
@@ -124,100 +142,135 @@ const OverlayTrigger = (props: OverlayTriggerProps) => {
       setVisible(false);
     };
 
-    if (props.visible === undefined) {
-      target.addEventListener(showEvent, onShow);
-      target.addEventListener(hideEvent, onHide);
-    }
-
-    if (props.visible && !prevVisible) {
-      onShow();
-    }
-
-    return () => {
-      if (props.visible === undefined) {
-        target.removeEventListener(showEvent, onShow);
-        target.removeEventListener(hideEvent, onHide);
+    useEffect(() => {
+      if (ref) {
+        const api = {
+          show: onShow,
+          hide: onHide,
+        };
+        if (typeof ref === 'function') {
+          ref(api);
+        } else {
+          (ref as any).current = api;
+        }
       }
-    };
-  }, [props.visible, showEvent, hideEvent]);
+    }, [ref]);
 
-  let overlay;
+    useEffect(() => {
+      let target = (domRef as any).current.previousSibling;
 
-  const adaptable = useAdaptable();
+      if (targetProp) {
+        target = targetProp(target);
+      }
+      if (!target) {
+        LoggingHelper.LogAdaptableWarning(
+          'No OverlayTrigger target - make sure you render a child inside the OverlayTrigger, which will be the overlay target'
+        );
+        return;
+      }
+      (targetRef as any).current = target as Element;
 
-  if (targetRect) {
-    const overlayTarget = targetRef.current as HTMLElement;
+      if (props.visible === undefined) {
+        target.addEventListener(showEvent, onShow);
+        target.addEventListener(hideEvent, onHide);
+      }
 
-    alignHorizontal =
-      alignHorizontal ||
-      (getComputedStyle(overlayTarget)
-        .getPropertyValue('--ab-overlay-horizontal-align')
-        .trim() as OverlayHorizontalAlign);
+      if (props.visible && !prevVisible) {
+        onShow();
+      }
 
-    let overlayStyle = getOverlayStyle({
-      constrainRect: getConstrainRect(overlayTarget, constrainTo),
-      targetRect,
-      targetOffset,
-      anchor,
-      alignHorizontal,
-    });
+      return () => {
+        if (props.visible === undefined) {
+          target.removeEventListener(showEvent, onShow);
+          target.removeEventListener(hideEvent, onHide);
+        }
+      };
+    }, [props.visible, showEvent, hideEvent]);
 
-    overlayStyle.transition = `opacity ${opacityTransitionDuration}`;
-    overlayStyle.overflow = `visible`;
-    overlayStyle.zIndex = defaultZIndex;
+    let overlay;
 
-    overlayStyle = { ...overlayStyle, ...props.style };
+    const vendorClassName = useVendorClassName([visible]);
 
-    const position =
-      anchor === 'vertical' ? sizeInfo!.verticalPosition : sizeInfo!.horizontalPosition;
+    if (targetRect) {
+      const overlayTarget = targetRef.current as HTMLElement;
 
-    let vendorClassName = '';
+      alignHorizontal =
+        alignHorizontal ||
+        (getComputedStyle(overlayTarget)
+          .getPropertyValue('--ab-overlay-horizontal-align')
+          .trim() as OverlayHorizontalAlign);
 
-    if (adaptable) {
-      vendorClassName = adaptable.getVendorGridCurrentThemeName();
+      let overlayStyle = getOverlayStyle({
+        constrainRect: getConstrainRect(overlayTarget, constrainTo),
+        targetRect,
+        targetOffset,
+        anchor,
+        alignHorizontal,
+      });
+
+      overlayStyle.transition = `opacity ${opacityTransitionDuration}`;
+      overlayStyle.overflow = `visible`;
+      overlayStyle.zIndex = defaultZIndex;
+
+      overlayStyle = { ...overlayStyle, ...props.style };
+
+      const position =
+        anchor === 'vertical' ? sizeInfo!.verticalPosition : sizeInfo!.horizontalPosition;
+
+      overlay = createPortal(
+        <Overlay
+          {...domProps}
+          ref={node => {
+            if (overlayRef.current && overlayRef.current != node) {
+              overlayRef.current.removeEventListener(showEvent, onShow);
+              overlayRef.current.removeEventListener(hideEvent, onHide);
+            }
+
+            overlayRef.current = node;
+
+            if (node) {
+              node.addEventListener(showEvent, onShow);
+              node.addEventListener(hideEvent, onHide);
+            }
+          }}
+          className={join(
+            'ab-Overlay',
+            `ab-Overlay--position-${position}`,
+            showTriangle ? 'ab-Overlay--show-triangle' : '',
+            vendorClassName,
+            domProps.className
+          )}
+          visible={visible}
+          style={overlayStyle}
+          anchor={anchor}
+          position={position}
+          getConstrainRect={() => getConstrainRect(targetRef.current as HTMLElement)}
+        >
+          {props.render()}
+        </Overlay>,
+        portalElement
+      );
     }
-
-    overlay = createPortal(
-      <Overlay
-        {...domProps}
-        className={join(
-          'ab-Overlay',
-          `ab-Overlay--position-${position}`,
-          showTriangle ? 'ab-Overlay--show-triangle' : '',
-          vendorClassName,
-          domProps.className
-        )}
-        visible={visible}
-        style={overlayStyle}
-        anchor={anchor}
-        position={position}
-        getConstrainRect={() => getConstrainRect(targetRef.current as HTMLElement)}
-      >
-        {props.render()}
-      </Overlay>,
-      portalElement
+    return (
+      <>
+        {props.children}
+        <div
+          data-name="OverlayTrigger"
+          data-visible={visible}
+          ref={domRef}
+          style={{
+            visibility: 'hidden',
+            flex: 'none',
+            width: 0,
+            height: 0,
+            pointerEvents: 'none',
+          }}
+        />
+        {overlay}
+      </>
     );
   }
-
-  return (
-    <>
-      {props.children}
-      <div
-        data-name="OverlayTrigger"
-        data-visible={visible}
-        ref={domRef}
-        style={{
-          visibility: 'hidden',
-          flex: 'none',
-          width: 0,
-          height: 0,
-          pointerEvents: 'none',
-        }}
-      />
-      {overlay}
-    </>
-  );
-};
+);
 
 OverlayTrigger.defaultProps = {
   showEvent: 'mouseenter',

@@ -244,7 +244,7 @@ and makes sure the `showAdaptableToolPanel` property is set in the `userInterfac
 const adaptableOptions = {
  ...
   userInterfaceOptions: {
-    showAdaptableToolPanel: true,
+   
   },
   ...
 };
@@ -313,7 +313,6 @@ const adaptableOptions: AdaptableOptions = {
   adaptableId: 'react demo',
   plugins: [charts()] // adaptable plugins
   userInterfaceOptions: { // show the AdapTable ToolPanel
-    showAdaptableToolPanel: true,
   },
 };
 

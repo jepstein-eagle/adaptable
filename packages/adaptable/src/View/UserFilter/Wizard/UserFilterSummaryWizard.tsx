@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import { UserFilter } from '../../../PredefinedConfig/FilterState';
 
 export interface UserFilterSummaryWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 
@@ -19,17 +17,14 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
   }
   render() {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
+      { Key: 'Name', Value: this.props.data.Name },
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: '',
       },
       {
         Key: 'Query',
-        Value: ExpressionHelper.ConvertExpressionToString(
-          this.props.Data.Expression,
-          this.props.Api
-        ),
+        Value: 'Need to do this',
       },
     ];
 
@@ -49,16 +44,16 @@ export class UserFilterSummaryWizard extends React.Component<UserFilterSummaryWi
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -248,18 +248,6 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
             }}
           />
         </FormRow>
-        <FormRow label="Auto Size Columns In Default Layout">
-          <CheckBox
-            checked={layoutOptions.autoSizeColumnsInLayout}
-            onChange={(autoSizeColumnsInLayout: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.layoutOptions = { ...abOptions.layoutOptions };
-              abOptions.layoutOptions.autoSizeColumnsInLayout = autoSizeColumnsInLayout;
-
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
       </FormLayout>
 
       <HelpBlock>Query Options</HelpBlock>

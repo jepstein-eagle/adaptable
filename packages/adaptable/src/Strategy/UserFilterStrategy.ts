@@ -6,29 +6,25 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
-import * as UserFilterRedux from '../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../Redux/ActionsReducers/FilterRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
-import { UserFilter } from '../PredefinedConfig/UserFilterState';
+import { UserFilter } from '../PredefinedConfig/FilterState';
 
 export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFilterStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.UserFilterStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.UserFilterStrategyFriendlyName,
-        ComponentName: ScreenPopups.UserFilterPopup,
-        Icon: StrategyConstants.UserFilterGlyph,
-      });
-    }
+    super(
+      StrategyConstants.UserFilterStrategyId,
+      StrategyConstants.UserFilterStrategyFriendlyName,
+      StrategyConstants.UserFilterGlyph,
+      ScreenPopups.UserFilterPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && column.Filterable) {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: 'New',
         source: 'ColumnMenu',
       };
@@ -46,9 +42,9 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
 
   public getTeamSharingAction(): TeamSharingImportInfo<UserFilter> {
     return {
-      FunctionEntities: this.adaptable.api.userFilterApi.getAllUserFilter(),
-      AddAction: UserFilterRedux.UserFilterAdd,
-      EditAction: UserFilterRedux.UserFilterEdit,
+      FunctionEntities: this.adaptable.api.filterApi.getAllUserFilter(),
+      AddAction: FilterRedux.UserFilterAdd,
+      EditAction: FilterRedux.UserFilterEdit,
     };
   }
 }

@@ -2,20 +2,10 @@ import * as Redux from 'redux';
 import * as GridRedux from '../../Redux/ActionsReducers/GridRedux';
 import { IValidationService } from './Interface/IValidationService';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper, IRangeEvaluation } from '../Helpers/ExpressionHelper';
-import { IRawValueDisplayValuePair } from '../../View/UIInterfaces';
 import { ArrayExtensions } from '../Extensions/ArrayExtensions';
 import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
-import {
-  DistinctCriteriaPairValue,
-  LeafExpressionOperator,
-  RangeOperandType,
-  ActionMode,
-  DisplayAction,
-  DataType,
-  MessageType,
-} from '../../PredefinedConfig/Common/Enums';
+import { ActionMode, MessageType, CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
   CellValidationState,
@@ -23,13 +13,11 @@ import {
 } from '../../PredefinedConfig/CellValidationState';
 import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { FunctionAppliedDetails } from '../../Api/Events/AuditEvents';
-import { IUIConfirmation, AdaptableAlert } from '../Interface/IMessage';
+import { IUIConfirmation } from '../Interface/IMessage';
 import { ValidationResult } from '../../AdaptableOptions/EditOptions';
-import LoggingHelper from '../Helpers/LoggingHelper';
-import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import StringExtensions from '../Extensions/StringExtensions';
-import { EMPTY_STRING } from '../Constants/GeneralConstants';
-import { AdaptableFunctionName } from '../../types';
+import { AdaptableFunctionName, Scope } from '../../types';
+import * as parser from '../../parser/src';
 
 export class ValidationService implements IValidationService {
   constructor(private adaptable: IAdaptable) {
@@ -39,6 +27,7 @@ export class ValidationService implements IValidationService {
   // Not sure where to put this: was in the strategy but might be better here until I can work out a way of having an event with a callback...
   public GetValidationRulesForDataChange(dataChangedInfo: DataChangedInfo): CellValidationRule[] {
     let failedWarningRules: CellValidationRule[] = [];
+
     // if the new value is the same as the old value then we can get out as we dont see it as an edit?
     if (dataChangedInfo.OldValue == dataChangedInfo.NewValue) {
       return failedWarningRules;
@@ -48,27 +37,18 @@ export class ValidationService implements IValidationService {
     if (dataChangedInfo.ColumnId == this.adaptable.adaptableOptions.primaryKey) {
       if (this.adaptable.adaptableOptions.generalOptions!.preventDuplicatePrimaryKeyValues) {
         if (dataChangedInfo.OldValue != dataChangedInfo.NewValue) {
-          let displayValuePair: IRawValueDisplayValuePair[] = this.adaptable.getColumnValueDisplayValuePairDistinctList(
-            dataChangedInfo.ColumnId,
-            DistinctCriteriaPairValue.DisplayValue,
-            false
+          let distinctValues: any[] = this.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+            dataChangedInfo.ColumnId
           );
-          let existingItem = displayValuePair.find(
-            dv => dv.DisplayValue == dataChangedInfo.NewValue
-          );
+          let existingItem = distinctValues.find(dv => dv == dataChangedInfo.NewValue);
           if (existingItem) {
-            let range = ObjectFactory.CreateRange(
-              LeafExpressionOperator.PrimaryKeyDuplicate,
-              dataChangedInfo.ColumnId,
-              null,
-              RangeOperandType.Column,
-              null
-            );
+            let scope: Scope = {
+              ColumnIds: [dataChangedInfo.ColumnId],
+            };
             let cellValidationRule: CellValidationRule = ObjectFactory.CreateCellValidationRule(
-              dataChangedInfo.ColumnId,
-              range,
-              ActionMode.StopEdit,
-              ExpressionHelper.CreateEmptyExpression()
+              scope,
+              { Id: 'PrimaryKeyDuplicate' },
+              ActionMode.StopEdit
             );
             failedWarningRules.push(cellValidationRule);
           }
@@ -76,16 +56,19 @@ export class ValidationService implements IValidationService {
       }
     }
 
-    let editingRules = this.GetCellValidationState().CellValidations.filter(
-      v => v.ColumnId == dataChangedInfo.ColumnId
+    let editingRules = this.GetCellValidationState().CellValidations.filter(v =>
+      this.adaptable.api.scopeApi.isColumnInScope(
+        this.adaptable.api.columnApi.getColumnFromId(dataChangedInfo.ColumnId),
+        v.Scope
+      )
     );
 
     if (ArrayExtensions.IsEmpty(failedWarningRules) && ArrayExtensions.IsNotEmpty(editingRules)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-
       // first check the rules which have expressions
-      let expressionRules: CellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
+      let expressionRules: CellValidationRule[] = editingRules.filter(
+        r =>
+          StringExtensions.IsNotNullOrEmpty(r.Expression) ||
+          StringExtensions.IsNotNullOrEmpty(r.SharedQueryId)
       );
 
       if (expressionRules.length > 0) {
@@ -93,15 +76,17 @@ export class ValidationService implements IValidationService {
         // if the expression is satisfied check if validation rule passes; if it fails then return immediately (if its prevent) or put the rule in return array (if its warning).
         // if expression isnt satisfied then we can ignore the rule but it means that we need subsequently to check all the rules with no expressions
         for (let expressionRule of expressionRules) {
-          let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
-            expressionRule.Expression,
-            dataChangedInfo.PrimaryKeyValue,
-            columns,
-            this.adaptable
-          );
+          let expression = this.adaptable.api.queryApi.QueryObjectToString(expressionRule);
+
+          let isSatisfiedExpression: boolean =
+            dataChangedInfo.RowNode != null &&
+            parser.evaluate(expression, {
+              node: dataChangedInfo.RowNode,
+              api: this.adaptable.api,
+            });
           if (
             isSatisfiedExpression &&
-            this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo, columns)
+            this.IsCellValidationRuleBroken(expressionRule, dataChangedInfo)
           ) {
             // if we fail then get out if its prevent and keep the rule and stop looping if its warning...
             if (expressionRule.ActionMode == 'Stop Edit') {
@@ -123,11 +108,13 @@ export class ValidationService implements IValidationService {
       }
 
       // now check the rules without expressions
-      let noExpressionRules: CellValidationRule[] = editingRules.filter(r =>
-        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
+      let noExpressionRules: CellValidationRule[] = editingRules.filter(
+        r =>
+          StringExtensions.IsNullOrEmpty(r.Expression) &&
+          StringExtensions.IsNullOrEmpty(r.SharedQueryId)
       );
       for (let noExpressionRule of noExpressionRules) {
-        if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo, columns)) {
+        if (this.IsCellValidationRuleBroken(noExpressionRule, dataChangedInfo)) {
           if (noExpressionRule.ActionMode == 'Stop Edit') {
             this.logAuditValidationEvent(
               StrategyConstants.CellValidationStrategyId,
@@ -200,26 +187,22 @@ export class ValidationService implements IValidationService {
 
   private IsCellValidationRuleBroken(
     cellValidationRule: CellValidationRule,
-    dataChangedEvent: DataChangedInfo,
-    columns: AdaptableColumn[]
+    dataChangedEvent: DataChangedInfo
   ): boolean {
-    // if its any change then validation fails immediately
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.AnyChange) {
-      return true;
-    }
-    // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+    const column: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
       dataChangedEvent.ColumnId
     );
-    let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
-      cellValidationRule.Range,
-      dataChangedEvent.NewValue,
-      dataChangedEvent.OldValue,
+
+    return this.adaptable.api.predicateApi.handlePredicate(cellValidationRule.Predicate, {
+      value: dataChangedEvent.NewValue,
+      oldValue: dataChangedEvent.OldValue,
+      displayValue: this.adaptable.getValueFromRowNode(
+        dataChangedEvent.RowNode,
+        dataChangedEvent.ColumnId,
+        CellValueType.DisplayValue
+      ),
       column,
-      this.adaptable,
-      null
-    );
-    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
+    });
   }
 
   private GetCellValidationState(): CellValidationState {
@@ -285,46 +268,12 @@ export class ValidationService implements IValidationService {
     };
   }
 
-  public createCellValidationDescription(
-    cellValidationRule: CellValidationRule,
-    columns: AdaptableColumn[]
-  ): string {
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.PrimaryKeyDuplicate) {
-      return 'Primary Key column cannot contain duplicate values';
-    }
-
-    let operator: LeafExpressionOperator = cellValidationRule.Range
-      .Operator as LeafExpressionOperator;
-    let valueDescription: string = ExpressionHelper.OperatorToLongFriendlyString(
-      operator,
-      this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(cellValidationRule.ColumnId)
+  public createCellValidationDescription(cellValidationRule: CellValidationRule): string {
+    return (
+      this.adaptable.api.scopeApi.getScopeDescription(cellValidationRule.Scope) +
+      ' ' +
+      this.adaptable.api.predicateApi.predicateToString(cellValidationRule.Predicate)
     );
-
-    if (!ExpressionHelper.OperatorRequiresValue(operator)) {
-      return valueDescription;
-    }
-    let dataType = this.adaptable.api.gridApi.getColumnDataTypeFromColumnId(
-      cellValidationRule.ColumnId
-    );
-    let operand1Text: string =
-      dataType == DataType.Boolean || dataType == DataType.Number
-        ? cellValidationRule.Range.Operand1
-        : "'" + cellValidationRule.Range.Operand1 + "'";
-
-    valueDescription = valueDescription + operand1Text;
-
-    if (cellValidationRule.Range.Operator == LeafExpressionOperator.PercentChange) {
-      valueDescription = valueDescription + '%';
-    }
-
-    if (StringExtensions.IsNotNullOrEmpty(cellValidationRule.Range.Operand2)) {
-      let operand2Text: string =
-        dataType == DataType.Number
-          ? ' and ' + cellValidationRule.Range.Operand2
-          : " and '" + cellValidationRule.Range.Operand2 + "'";
-      valueDescription = valueDescription + operand2Text;
-    }
-    return valueDescription;
   }
 
   public createCellValidationUIConfirmation(
@@ -344,22 +293,14 @@ export class ValidationService implements IValidationService {
     };
   }
 
-  public CreateCellValidationMessage(CellValidation: CellValidationRule): string {
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-    let columnFriendlyName: string = this.adaptable.api.gridApi.getFriendlyNameFromColumnId(
-      CellValidation.ColumnId
+  public CreateCellValidationMessage(cellValidation: CellValidationRule): string {
+    let returnMessage: string = this.createCellValidationDescription(cellValidation);
+    let expressionDescription: string = this.adaptable.api.queryApi.QueryObjectToString(
+      cellValidation
     );
-    let expressionDescription: string = ExpressionHelper.IsNotNullOrEmptyExpression(
-      CellValidation.Expression
-    )
-      ? ' when ' +
-        ExpressionHelper.ConvertExpressionToString(CellValidation.Expression, this.adaptable.api)
-      : EMPTY_STRING;
-    return (
-      columnFriendlyName +
-      ': ' +
-      this.createCellValidationDescription(CellValidation, columns) +
-      expressionDescription
-    );
+    if (expressionDescription) {
+      returnMessage += ' when ' + expressionDescription;
+    }
+    return returnMessage;
   }
 }

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { EntityListActionButtons } from '../Components/Buttons/EntityListActionButtons';
 import { AdaptableObjectRow } from '../Components/AdaptableObjectRow';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { IColItem } from '../UIInterfaces';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
@@ -14,13 +13,12 @@ import Dropdown from '../../components/Dropdown';
 import { IStrategyService } from '../../Utilities/Services/StrategyService';
 
 export interface AlertEntityRowProps extends SharedEntityRowProps<AlertEntityRow> {
-  Column: AdaptableColumn;
   onChangeMessageType: (alertDefinition: AlertDefinition, Type: MessageType) => void;
 }
 
 export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
   render(): any {
-    let alertDefinition: AlertDefinition = this.props.AdaptableObject as AlertDefinition;
+    let alertDefinition: AlertDefinition = this.props.adaptableObject as AlertDefinition;
 
     let MessageTypes = EnumExtensions.getNames(MessageType).map(type => {
       return {
@@ -31,7 +29,13 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
-    colItems[0].Content = <EntityRowItem Content={this.getColumnandRule(alertDefinition)} />;
+    colItems[0].Content = (
+      <EntityRowItem
+        Content={this.props.api.internalApi
+          .getStrategyService()
+          .createAlertDescription(alertDefinition)}
+      />
+    );
     colItems[1].Content = (
       <Dropdown
         placeholder="select"
@@ -47,36 +51,22 @@ export class AlertEntityRow extends React.Component<AlertEntityRowProps, {}> {
     );
     colItems[3].Content = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        showShare={this.props.TeamSharingActivated}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        showShare={this.props.teamSharingActivated}
         editClick={() => this.props.onEdit(alertDefinition)}
         shareClick={(description: string) => this.props.onShare(description)}
-        overrideDisableEdit={!this.props.Column}
-        EntityType={StrategyConstants.AlertStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        //overrideDisableEdit={!this.props.Column}
+        entityType={StrategyConstants.AlertStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
 
     return <AdaptableObjectRow colItems={colItems} />;
   }
 
-  setExpressionDescription(Alert: AlertDefinition): string {
-    return ExpressionHelper.IsNotNullOrEmptyExpression(Alert.Expression)
-      ? ExpressionHelper.ConvertExpressionToString(Alert.Expression, this.props.api)
-      : 'No Expression';
-  }
-
-  private getColumnandRule(Alert: AlertDefinition): string {
-    let columnInfo: string = this.props.api.gridApi.getFriendlyNameFromColumn(
-      Alert.ColumnId,
-      this.props.Column
-    );
-    columnInfo +=
-      ': ' +
-      this.props.api.internalApi
-        .getStrategyService()
-        .createAlertDescription(Alert, this.props.api.gridApi.getColumns());
-    return columnInfo;
+  setExpressionDescription(alert: AlertDefinition): string {
+    let expression = this.props.api.queryApi.QueryObjectToString(alert);
+    return expression ? expression : 'No Expression';
   }
 
   onMessageTypeChanged(alertDefinition: AlertDefinition, value: MessageType) {

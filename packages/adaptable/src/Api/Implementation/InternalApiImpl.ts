@@ -8,7 +8,6 @@ import { InternalApi } from '../InternalApi';
 import { IUIConfirmation, AdaptableAlert } from '../../Utilities/Interface/IMessage';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { SystemState } from '../../PredefinedConfig/SystemState';
-import { Calendar } from '../../PredefinedConfig/CalendarState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import { Action } from 'redux';
@@ -31,19 +30,15 @@ import { ActionColumn } from '../../PredefinedConfig/ActionColumnState';
 import { IAdaptable, AdaptableOptions, Layout } from '../../types';
 import { IValidationService } from '../../Utilities/Services/Interface/IValidationService';
 import { IStrategyService } from '../../Utilities/Services/StrategyService';
-import { IFilterService } from '../../Utilities/Services/Interface/IFilterService';
 import { IReportService } from '../../Utilities/Services/Interface/IReportService';
 import { ILayoutService } from '../../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { IChartService } from '../../Utilities/Services/Interface/IChartService';
+import { SystemFilterPredicateId } from '../../PredefinedConfig/FilterState';
 
 export class InternalApiImpl extends ApiBase implements InternalApi {
   public getSystemState(): SystemState {
     return this.getAdaptableState().System;
-  }
-
-  public getAvailableCalendars(): Calendar[] {
-    return this.getSystemState().AvailableCalendars;
   }
 
   public setChartData(chartData: ChartData): void {
@@ -94,8 +89,12 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     this.dispatchAction(GridRedux.GridSetColumns(columns));
   }
 
-  public setMainMenuItems(menuItems: AdaptableMenuItem[]): void {
-    this.dispatchAction(GridRedux.SetMainMenuItems(menuItems));
+  public setFunctionDropdownMenuItems(menuItems: AdaptableMenuItem[]): void {
+    this.dispatchAction(GridRedux.SetFunctionDropdownMenuItems(menuItems));
+  }
+
+  public setFunctionButtonMenuItems(menuItems: AdaptableMenuItem[]): void {
+    this.dispatchAction(GridRedux.SetFunctionButtonMenuItems(menuItems));
   }
 
   public setSelectedCells(selectedCellInfo: SelectedCellInfo): void {
@@ -226,12 +225,8 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
     const dashboardTabs:
       | DashboardTab[]
       | undefined = this.adaptable.api.dashboardApi.getDashboardState().Tabs;
-    const toolbars: string[] | undefined = this.adaptable.api.dashboardApi.getDashboardState()
-      .VisibleToolbars;
-    if (ArrayExtensions.IsNull(dashboardTabs) && ArrayExtensions.IsNotNull(toolbars)) {
-      LoggingHelper.LogAdaptableInfo(
-        'Creating a default Dashboard tab with Toolbars: ' + toolbars.join(', ')
-      );
+    if (ArrayExtensions.IsNull(dashboardTabs)) {
+      LoggingHelper.LogAdaptableInfo('Creating a default Dashboard tab');
       this.dispatchAction(DashboardRedux.DashboardCreateDefaultTab());
     }
   }
@@ -250,9 +245,7 @@ export class InternalApiImpl extends ApiBase implements InternalApi {
   public getStrategyService(): IStrategyService {
     return this.adaptable.StrategyService;
   }
-  public getFilterService(): IFilterService {
-    return this.adaptable.FilterService;
-  }
+
   public getReportService(): IReportService {
     return this.adaptable.ReportService;
   }

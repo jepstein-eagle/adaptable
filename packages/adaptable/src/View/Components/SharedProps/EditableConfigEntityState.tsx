@@ -9,7 +9,12 @@ export enum WizardStatus {
 }
 
 export interface EditableConfigEntityState {
-  EditedAdaptableObject: AdaptableObject;
-  WizardStartIndex: number;
-  WizardStatus: WizardStatus;
+  editedAdaptableObject: AdaptableObject;
+  wizardStartIndex: number;
+  wizardStatus: WizardStatus;
+}
+
+export interface EditableExpressionConfigEntityState extends EditableConfigEntityState {
+  newSharedQueryName?: string;
+  useSharedQuery?: boolean;
 }

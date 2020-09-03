@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as ExportRedux from '../../Redux/ActionsReducers/ExportRedux';
-import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { Helper } from '../../Utilities/Helpers/Helper';
@@ -14,12 +14,11 @@ import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux'
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import {
-  EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -31,6 +30,10 @@ import {
   ReportColumnScope,
 } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
+import * as parser from '../../parser/src';
+import { createUuid } from '../../PredefinedConfig/Uuid';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
 
 interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> {
   Reports: Report[];
@@ -42,13 +45,18 @@ interface ExportPopupProps extends StrategyViewPopupProps<ExportPopupComponent> 
   ) => ExportRedux.ExportApplyAction;
   onAddReport: (report: Report) => ExportRedux.ReportAddAction;
   onEditReport: (report: Report) => ExportRedux.ReportEditAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
+
   onShare: (
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class ExportPopupComponent extends React.Component<ExportPopupProps, EditableConfigEntityState> {
+class ExportPopupComponent extends React.Component<
+  ExportPopupProps,
+  EditableExpressionConfigEntityState
+> {
   constructor(props: ExportPopupProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
@@ -57,12 +65,12 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   shouldClosePopupOnFinishWizard: boolean = false;
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action) {
+        if (this.props.popupParams.action == 'New') {
           this.onNew();
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let selectedReport: Report = this.props.Reports.find(
             a => a.Name == this.props.CurrentReport
           );
@@ -70,7 +78,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.popupParams.source && this.props.popupParams.source == 'Toolbar';
     }
   }
 
@@ -93,16 +101,16 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       (report: Report, index) => {
         return (
           <ReportEntityRow
-            AdaptableObject={report}
+            adaptableObject={report}
             key={report.Uuid}
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             onShare={description => this.props.onShare(report, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
+            teamSharingActivated={this.props.teamSharingActivated}
             onExport={exportDestination => this.onApplyExport(report, exportDestination)}
             onEdit={() => this.onEdit(report)}
             onDeleteConfirm={ExportRedux.ReportDelete(report)}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -112,7 +120,12 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Report"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
       />
     );
 
@@ -135,13 +148,23 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <ReportWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as Report}
-            ModalContainer={this.props.ModalContainer}
-            ConfigEntities={this.props.Reports}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as Report}
+            modalContainer={this.props.modalContainer}
+            configEntities={this.props.Reports}
+            api={this.props.api}
+            onSetNewSharedQueryName={(newSharedQueryName: string) =>
+              this.setState({
+                newSharedQueryName: newSharedQueryName,
+              })
+            }
+            onSetUseSharedQuery={(useSharedQuery: boolean) =>
+              this.setState({
+                useSharedQuery: useSharedQuery,
+              })
+            }
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -153,11 +176,7 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
 
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
@@ -165,35 +184,49 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
   }
 
   onFinishWizard() {
-    let report: Report = this.state.EditedAdaptableObject as Report;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let report: Report = this.state.editedAdaptableObject as Report;
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.newSharedQueryName,
+        Expression: report.Expression,
+      });
+      report.Expression = undefined;
+      report.SharedQueryId = SharedQueryId;
+    }
+
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditReport(report);
     } else {
       this.props.onAddReport(report);
     }
 
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
-    this.shouldClosePopupOnFinishWizard = false;
+    this.resetState();
   }
 
   canFinishWizard() {
-    let report = this.state.EditedAdaptableObject as Report;
+    let report = this.state.editedAdaptableObject as Report;
     if (StringExtensions.IsNullOrEmpty(report.Name)) {
       return false;
     }
-    if (
-      report.ReportRowScope == ReportRowScope.ExpressionRows &&
-      ExpressionHelper.IsNullOrEmptyExpression(report.Expression)
-    ) {
-      return false;
+    if (report.ReportRowScope == ReportRowScope.ExpressionRows) {
+      if (this.state.useSharedQuery && StringExtensions.IsNullOrEmpty(report.SharedQueryId)) {
+        return false;
+      }
+
+      if (!this.state.useSharedQuery && StringExtensions.IsNullOrEmpty(report.Expression)) {
+        return false;
+      }
+      if (!this.state.useSharedQuery && !parser.validateBoolean(report.Expression)) {
+        return false;
+      }
     }
+
     if (
-      report.ReportColumnScope == ReportColumnScope.BespokeColumns &&
-      ArrayExtensions.IsNullOrEmpty(report.ColumnIds)
+      report.ReportColumnScope == ReportColumnScope.ScopeColumns &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnsForScope(report.Scope))
     ) {
       return false;
     }
@@ -201,20 +234,30 @@ class ExportPopupComponent extends React.Component<ExportPopupProps, EditableCon
     return true;
   }
 
+  resetState() {
+    this.setState({
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
+    });
+  }
+
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyReport(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyReport(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(ReportToEdit: Report) {
     let clonedReportToEdit = Helper.cloneObject(ReportToEdit);
     this.setState({
-      EditedAdaptableObject: clonedReportToEdit,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedReportToEdit,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -239,6 +282,8 @@ function mapDispatchToProps(
       dispatch(ExportRedux.ExportApply(report, exportDestination)),
     onAddReport: (report: Report) => dispatch(ExportRedux.ReportAdd(report)),
     onEditReport: (report: Report) => dispatch(ExportRedux.ReportEdit(report)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ExportStrategyId, description)

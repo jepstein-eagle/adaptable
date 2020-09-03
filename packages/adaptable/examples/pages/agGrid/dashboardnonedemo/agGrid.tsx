@@ -31,9 +31,7 @@ async function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Dashboard None Demo',
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,
@@ -50,7 +48,7 @@ async function InitAdaptableDemo() {
         Tabs: [
           {
             Name: 'Search',
-            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch', 'CustomToolbar'], //shouldnt see last one cos of entitlements
+            Toolbars: ['QuickSearch', 'DataSource', 'Query', 'CustomToolbar'], //shouldnt see last one cos of entitlements
           },
           {
             Name: 'Edit',

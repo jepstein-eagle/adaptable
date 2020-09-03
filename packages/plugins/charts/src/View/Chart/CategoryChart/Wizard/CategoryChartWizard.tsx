@@ -8,58 +8,59 @@ import {
 import { AdaptableWizard } from '@adaptabletools/adaptable/src/View/Wizard/AdaptableWizard';
 import { CategoryChartYAxisWizard } from './CategoryChartYAxisWizard';
 import { CategoryChartXAxisWizard } from './CategoryChartXAxisWizard';
-import { CategoryChartXAxisExpressionWizard } from './CategoryChartXAxisExpressionWizard';
-import { ExpressionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { CategoryChartSummaryWizard } from './CategoryChartSummaryWizard';
 import { CategoryChartSettingsWizard } from './CategoryChartSettingsWizard';
+import { ExpressionWizard } from '@adaptabletools/adaptable/src/View/Components/ExpressionWizard';
 
 export interface CategoryChartWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<CategoryChartWizard> {}
 
 export class CategoryChartWizard extends React.Component<CategoryChartWizardProps, {}> {
   render() {
-    let chartDefinitions: ChartDefinition[] = this.props.ConfigEntities as ChartDefinition[];
+    let chartDefinitions: ChartDefinition[] = this.props.configEntities as ChartDefinition[];
     let chartNames: string[] = chartDefinitions.map(s => s.Name);
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ChartStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ChartStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Y Axis',
               Index: 0,
-              Element: <CategoryChartYAxisWizard Api={this.props.Api} />,
+              Element: <CategoryChartYAxisWizard api={this.props.api} />,
             },
             {
               StepName: 'X Axis',
               Index: 1,
-              Element: <CategoryChartXAxisWizard Api={this.props.Api} />,
+              Element: <CategoryChartXAxisWizard api={this.props.api} />,
             },
             {
               StepName: 'X Axis',
-              Index: 2,
+              Index: 2, // or should it be 2?
               Element: (
-                <CategoryChartXAxisExpressionWizard
-                  Api={this.props.Api}
-                  ExpressionMode={ExpressionMode.SingleColumn}
+                <ExpressionWizard
+                  api={this.props.api}
+                  onSetNewSharedQueryName={this.props.onSetNewSharedQueryName}
+                  onSetUseSharedQuery={this.props.onSetUseSharedQuery}
                 />
               ),
             },
+
             {
               StepName: 'Settings',
               Index: 5,
-              Element: <CategoryChartSettingsWizard Api={this.props.Api} ChartNames={chartNames} />,
+              Element: <CategoryChartSettingsWizard api={this.props.api} ChartNames={chartNames} />,
             },
             {
               StepName: 'Summary',
               Index: 6,
-              Element: <CategoryChartSummaryWizard Api={this.props.Api} />,
+              Element: <CategoryChartSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

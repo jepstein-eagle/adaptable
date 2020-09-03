@@ -263,7 +263,7 @@ export class ExamplesHelper {
       history: [...new Array(this.generateRandomInt(5, 20))].map(_ =>
         this.generateRandomInt(1, 30)
       ),
-      notional: this.generateRandomInt(1000, 1500), // this.getRandomItem(this.getNotionals()),
+      notional: this.getRandomItem(this.getNotionals()), //this.generateRandomInt(1000, 1500), // this.getRandomItem(this.getNotionals()),
       deskId: this.generateRandomInt(0, 400),
       counterparty: this.getRandomItem(this.getCounterparties()),
       currency: tradeCurrency,
@@ -551,14 +551,16 @@ export class ExamplesHelper {
     return ary[this.generateRandomInt(0, ary.length - 1)];
   }
 
-  public getNotionals(): number[] {
+  public getNotionals(): (number | undefined | null)[] {
     let notionals = [
       1000000,
       2000000,
       5000000,
       7500000,
       10000000,
-      //  (undefined as unknown) as number,
+      (undefined as unknown) as number,
+      undefined,
+      null,
     ];
     return notionals;
   }
@@ -803,6 +805,7 @@ export class ExamplesHelper {
     return {
       defaultColDef: {
         floatingFilter: true,
+        sortable: true,
         //   valueGetter: (params: any) => {
         //      return 'hello';
         //   },
@@ -1058,14 +1061,14 @@ export class ExamplesHelper {
     schema.push({
       headerName: 'Trade Id',
       field: 'tradeId',
-      //   lockPosition: true,
+      // lockPosition: true,
       //  lockVisible: true,
       // pinned: true,
       //  suppressMovable: true,
-      editable: true,
+      editable: false,
       type: ['hello', 'abColDefNumberx'],
       sortable: true,
-      filter: true,
+      filter: false,
       resizable: true,
       // hide: true,
       enableValue: true,
@@ -1081,6 +1084,7 @@ export class ExamplesHelper {
       colId: 'countryStars',
       editable: false,
       filter: true,
+
       //  pinned: true,
       enableValue: true,
       aggFunc: 'sum',
@@ -1139,6 +1143,17 @@ export class ExamplesHelper {
       cellRendererParams: {
         footerValueGetter: '"All Notionals (" + x + ")"',
       },
+    });
+    schema.push({
+      headerName: 'Currency',
+      field: 'currency',
+      editable: true,
+      enableRowGroup: true,
+      sortable: true,
+      enablePivot: true,
+      filter: 'agTextColumnFilter',
+      type: 'abColDefString',
+      resizable: true,
     });
     schema.push({
       headerName: 'Change',
@@ -1269,18 +1284,6 @@ export class ExamplesHelper {
       type: 'abColDefNumber',
     });
 
-    schema.push({
-      headerName: 'Currency',
-      field: 'currency',
-      editable: true,
-      //  rowGroup: true,
-      enableRowGroup: true,
-      sortable: true,
-      enablePivot: true,
-      filter: 'agTextColumnFilter',
-      type: 'abColDefString',
-      resizable: true,
-    });
     schema.push({
       headerName: 'Status',
       field: 'status',

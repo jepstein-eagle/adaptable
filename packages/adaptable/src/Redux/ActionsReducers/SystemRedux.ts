@@ -1,6 +1,5 @@
 import * as Redux from 'redux';
 import { SystemState } from '../../PredefinedConfig/SystemState';
-import { CalendarHelper } from '../../Utilities/Helpers/CalendarHelper';
 import { IPreviewInfo } from '../../Utilities/Interface/IPreview';
 import { ChartVisibility } from '../../PredefinedConfig/Common/ChartEnums';
 import {
@@ -9,9 +8,6 @@ import {
   EMPTY_STRING,
 } from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableAlert } from '../../Utilities/Interface/IMessage';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
-import { Expression, QueryRange } from '../../PredefinedConfig/Common/Expression';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Report } from '../../PredefinedConfig/ExportState';
 import { ChartData } from '../../PredefinedConfig/ChartState';
 import { UpdatedRowInfo } from '../../Utilities/Services/Interface/IDataService';
@@ -53,14 +49,6 @@ export const CHART_SET_CHART_VISIBILITY = 'CHART_SET_CHART_VISIBILITY';
 // Error Messages
 export const CALCULATEDCOLUMN_SET_ERROR_MESSAGE = 'CALCULATEDCOLUMN_SET_ERROR_MESSAGE';
 export const CALCULATEDCOLUMN_IS_EXPRESSION_VALID = 'CALCULATEDCOLUMN_IS_EXPRESSION_VALID';
-
-// Quick Search
-export const QUICK_SEARCH_SET_RANGE = 'QUICK_SEARCH_SET_RANGE';
-export const QUICK_SEARCH_CLEAR_RANGE = 'QUICK_SEARCH_CLEAR_RANGE';
-export const QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS =
-  'QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS';
-export const QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS =
-  'QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS';
 
 // Columns
 export const SET_NEW_COLUMN_LIST_ORDER = 'SET_NEW_COLUMN_LIST_ORDER';
@@ -145,15 +133,6 @@ export interface CalculatedColumnIsExpressionValidAction extends Redux.Action {
 export interface ReportSetErrorMessageAction extends Redux.Action {
   ErrorMessage: string;
 }
-export interface QuickSearchSetRangeAction extends Redux.Action {
-  QueryRange: QueryRange;
-}
-export interface QuickSearchClearRangeAction extends Redux.Action {}
-export interface QuickSearchSetVisibleColumnExpressionsAction extends Redux.Action {
-  Expressions: Expression[];
-}
-export interface QuickSearchClearVisibleColumnExpressionsAction extends Redux.Action {}
-
 export interface SetNewColumnListOrderAction extends Redux.Action {
   VisibleColumnList: string[];
 }
@@ -259,25 +238,6 @@ export const CalculatedColumnIsExpressionValid = (
   expression,
 });
 
-export const QuickSearchSetRange = (QueryRange: QueryRange): QuickSearchSetRangeAction => ({
-  type: QUICK_SEARCH_SET_RANGE,
-  QueryRange,
-});
-
-export const QuickSearchClearRange = (): QuickSearchClearRangeAction => ({
-  type: QUICK_SEARCH_CLEAR_RANGE,
-});
-export const QuickSearchSetVisibleColumnExpressions = (
-  Expressions: Expression[]
-): QuickSearchSetVisibleColumnExpressionsAction => ({
-  type: QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS,
-  Expressions,
-});
-
-export const QuickSearchClearVisibleColumnExpressions = (): QuickSearchClearVisibleColumnExpressionsAction => ({
-  type: QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS,
-});
-
 export const SetNewColumnListOrder = (
   VisibleColumnList: string[]
 ): SetNewColumnListOrderAction => ({
@@ -295,7 +255,6 @@ export const SetLastAppliedShortcut = (
 const initialSystemState: SystemState = {
   AdaptableAlerts: EMPTY_ARRAY,
   UpdatedRowInfos: EMPTY_ARRAY,
-  AvailableCalendars: CalendarHelper.getSystemCalendars(),
   IsValidSmartEditSelection: false,
   SmartEditPreviewInfo: null,
   BulkUpdateValidationResult: { IsValid: false, Column: null },
@@ -305,8 +264,6 @@ const initialSystemState: SystemState = {
   CalculatedColumnErrorMessage: EMPTY_STRING,
   SystemReports: ObjectFactory.CreateSystemReports(),
   ReportErrorMessage: EMPTY_STRING,
-  QuickSearchRange: ExpressionHelper.CreateEmptyRange(),
-  QuickSearchVisibleColumnExpressions: EMPTY_ARRAY,
   LastAppliedShortCut: null,
 };
 
@@ -400,24 +357,6 @@ export const SystemReducer: Redux.Reducer<SystemState> = (
       return Object.assign({}, state, {
         CalculatedColumnErrorMessage: (action as CalculatedColumnSetErrorMessageAction).ErrorMsg,
       });
-    }
-
-    case QUICK_SEARCH_SET_RANGE: {
-      return Object.assign({}, state, {
-        QuickSearchRange: (action as QuickSearchSetRangeAction).QueryRange,
-      });
-    }
-    case QUICK_SEARCH_CLEAR_RANGE: {
-      return Object.assign({}, state, { QuickSearchRange: ExpressionHelper.CreateEmptyRange() });
-    }
-    case QUICK_SEARCH_SET_VISIBLE_COLUMN_EXPRESSIONS: {
-      return Object.assign({}, state, {
-        QuickSearchVisibleColumnExpressions: (action as QuickSearchSetVisibleColumnExpressionsAction)
-          .Expressions,
-      });
-    }
-    case QUICK_SEARCH_CLEAR_VISIBLE_COLUMN_EXPRESSIONS: {
-      return Object.assign({}, state, { QuickSearchVisibleColumnExpressions: EMPTY_ARRAY });
     }
 
     case SET_LAST_APPLIED_SHORTCUT: {

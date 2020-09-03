@@ -1,176 +1,116 @@
 import { IConditionalStyleStrategy } from '../../Strategy/Interface/IConditionalStyleStrategy';
 import { ConditionalStyleStrategy } from '../../Strategy/ConditionalStyleStrategy';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { Adaptable } from '../Adaptable';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import { ConditionalStyle } from '../../PredefinedConfig/ConditionalStyleState';
-import { ColumnCategory } from '../../PredefinedConfig/ColumnCategoryState';
-import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { RowNode } from '@ag-grid-community/core';
+import * as parser from '../../parser/src';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
   constructor(adaptable: Adaptable) {
     super(adaptable);
-    this.conditionalStyleColumnIds = [];
-    this.columnsForConditionalStyles = new Map<TypeUuid, string[]>();
-  }
-
-  private conditionalStyleColumnIds: string[];
-  private columnsForConditionalStyles: Map<TypeUuid, string[]>;
-
-  // The sole purpose that i can see for this method is to tell Adaptable to refresh the row or other columns in the case where the Grid would not automtically do it
-  // and we need to tell the grid that the whole row has changed and not just this column
-  // Note that we can have Col A changing when Col B updates so need to look at all 3 but should make it as quick as possible: in and out.
-  protected handleDataSourceChanged(dataChangedEvent: DataChangedInfo): void {
-    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
-    if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
-      if (ArrayExtensions.ContainsItem(this.conditionalStyleColumnIds, dataChangedEvent.ColumnId)) {
-        let colsToRefresh: Array<string> = [];
-        conditionalStyles.forEach(cs => {
-          let colList = this.columnsForConditionalStyles.get(cs.Uuid);
-          if (ArrayExtensions.ContainsItem(colList, dataChangedEvent.ColumnId)) {
-            switch (cs.ConditionalStyleScope) {
-              case 'Row':
-                colsToRefresh.push(...this.adaptable.api.gridApi.getColumns().map(c => c.ColumnId));
-                break;
-
-              case 'ColumnCategory':
-                let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
-                  .getAllColumnCategory()
-                  .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
-                if (columnCategory) {
-                  colsToRefresh.push(...columnCategory.ColumnIds);
-                }
-                break;
-
-              case 'Column':
-                colsToRefresh.push(cs.ColumnId);
-                break;
-            }
-          }
-        });
-        if (ArrayExtensions.IsNotNullOrEmpty(colsToRefresh)) {
-          let listOfColumnsToRefresh = Array.from(new Set(colsToRefresh));
-
-          // we dont want to refresh the actual column as that has been updated
-          let index: number = listOfColumnsToRefresh.indexOf(dataChangedEvent.ColumnId);
-          if (index !== -1) {
-            listOfColumnsToRefresh.splice(index, 1);
-          }
-          if (listOfColumnsToRefresh.length > 0) {
-            let theadaptable = this.adaptable as Adaptable;
-            theadaptable.refreshCells([dataChangedEvent.RowNode], listOfColumnsToRefresh);
-          }
-        }
-      }
-    }
   }
 
   // this initialises styles and creates the list of which columns have styles (will be used in onDataChanged)
   public initStyles(): void {
-    let columns = this.adaptable.api.gridApi.getColumns();
+    // return;
+    let columns = this.adaptable.api.columnApi.getColumns();
     let theadaptable = this.adaptable as Adaptable;
-    let shouldRunStyle = this.shouldRunStyle;
-    let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
-    this.conditionalStyleColumnIds = [];
-    this.columnsForConditionalStyles.clear();
 
-    if (
-      ArrayExtensions.IsNotNullOrEmpty(columns) &&
-      ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
-    ) {
+    let shouldRunStyle = this.shouldRunStyle;
+
+    // first do rows
+    let rowClassRules: any = {};
+    this.adaptable.api.conditionalStyleApi.getRowConditionalStyles().forEach(cs => {
+      let styleName: string = this.getNameForStyle(cs);
+      rowClassRules[styleName] = (params: any) => {
+        if (shouldRunStyle(cs, theadaptable, params.node)) {
+          return this.evaluateExpression(cs, params.node);
+        }
+      };
+    });
+    theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
+
+    // now do columns
+    if (ArrayExtensions.IsNotNullOrEmpty(columns)) {
       for (let column of columns) {
         let cellClassRules: any = {};
-        let rowClassRules: any = {};
-        conditionalStyles.forEach((cs, index) => {
-          let styleName: string = StringExtensions.IsNullOrEmpty(cs.Style.ClassName)
-            ? theadaptable.StyleService.CreateUniqueStyleName(
-                StrategyConstants.ConditionalStyleStrategyId,
-                cs
-              )
-            : cs.Style.ClassName;
-          if (cs.ConditionalStyleScope == 'Column' && cs.ColumnId == column.ColumnId) {
-            cellClassRules[styleName] = function(params: any) {
-              if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return ExpressionHelper.checkForExpressionFromRowNode(
-                  cs.Expression,
-                  params.node,
-                  columns,
-                  theadaptable
-                );
-              }
-            };
-          } else if (cs.ConditionalStyleScope == 'ColumnCategory') {
-            let columnCategory: ColumnCategory = this.adaptable.api.columnCategoryApi
-              .getAllColumnCategory()
-              .find(lc => lc.ColumnCategoryId == cs.ColumnCategoryId);
-            if (columnCategory) {
-              if (ArrayExtensions.ContainsItem(columnCategory.ColumnIds, column.ColumnId)) {
-                cellClassRules[styleName] = function(params: any) {
-                  if (shouldRunStyle(cs, theadaptable, params.node)) {
-                    return ExpressionHelper.checkForExpressionFromRowNode(
-                      cs.Expression,
-                      params.node,
-                      columns,
-                      theadaptable
-                    );
-                  }
-                };
-              }
-            }
-            /*
-          } else if (cs.ConditionalStyleScope == 'DataType') {
-            let dataType: 'String' | 'Number' | 'Boolean' | 'Date' = cs.DataType;
 
-            if (dataType) {
-              if (column.DataType == dataType) {
-                cellClassRules[styleName] = function(params: any) {
-                  return ExpressionHelper.checkForExpressionFromRowNode(
-                    cs.Expression,
-                    params.node,
-                    columns,
-                    theadaptable
-                  );
-                };
-              }
-            }
-            */
-          } else if (cs.ConditionalStyleScope == 'Row') {
-            rowClassRules[styleName] = function(params: any) {
-              if (shouldRunStyle(cs, theadaptable, params.node)) {
-                return ExpressionHelper.checkForExpressionFromRowNode(
-                  cs.Expression,
-                  params.node,
-                  columns,
-                  theadaptable
-                );
+        let conditionalStylesForColumn:
+          | ConditionalStyle[]
+          | undefined = this.adaptable.api.conditionalStyleApi.getConditionalStylesForColumn(
+          column
+        );
+
+        conditionalStylesForColumn.forEach((conditionalStyleForColumn: ConditionalStyle) => {
+          if (conditionalStyleForColumn) {
+            let styleName: string = this.getNameForStyle(conditionalStyleForColumn);
+
+            cellClassRules[styleName] = (params: any) => {
+              if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
+                // first run the predicate
+                if (conditionalStyleForColumn.Predicate && conditionalStyleForColumn.Predicate.Id) {
+                  if (
+                    this.evaluatePredicate(
+                      conditionalStyleForColumn,
+                      column,
+                      params.value,
+                      params.node
+                    )
+                  ) {
+                    return true;
+                  }
+                } else if (
+                  StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.Expression) ||
+                  StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.SharedQueryId)
+                ) {
+                  if (this.evaluateExpression(conditionalStyleForColumn, params.node)) {
+                    return true;
+                  }
+                }
+                // nothing has passed then return false
+                return false;
               }
             };
-            theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
           }
         });
         theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
       }
     }
 
-    //  create the list of columns that are in Expressions here so that we dont need to do it each time data updates
-    let colList: string[] = [];
-    conditionalStyles.forEach(x => {
-      let colsForCS: string[] = ExpressionHelper.GetColumnListFromExpression(x.Expression);
-      colList.push(...colsForCS);
-      this.columnsForConditionalStyles.set(x.Uuid, colsForCS);
-    });
-
-    this.conditionalStyleColumnIds = [...new Set(colList)];
-
     // Redraw Adaptableto be on safe side (its rare use case)
     this.adaptable.redraw();
   }
+
+  private evaluatePredicate(
+    conditionalStyle: ConditionalStyle,
+    column: AdaptableColumn,
+    value: any,
+    node: any
+  ): boolean {
+    return this.adaptable.api.predicateApi.handlePredicate(conditionalStyle.Predicate, {
+      value: value,
+      oldValue: null,
+      displayValue: this.adaptable.getValueFromRowNode(
+        node,
+        column.ColumnId,
+        CellValueType.DisplayValue
+      ),
+      column: column,
+    });
+  }
+
+  private evaluateExpression(conditionalStyle: ConditionalStyle, node: RowNode): boolean {
+    let expression: string = this.adaptable.api.queryApi.QueryObjectToString(conditionalStyle);
+    return parser.evaluate(expression, { node: node, api: this.adaptable.api });
+  }
+
   private shouldRunStyle(
     conditionalStyle: ConditionalStyle,
     adaptable: IAdaptable,
@@ -180,5 +120,14 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
       return false;
     }
     return true;
+  }
+
+  private getNameForStyle(conditionalStyle: ConditionalStyle): string {
+    return StringExtensions.IsNullOrEmpty(conditionalStyle.Style.ClassName)
+      ? this.adaptable.StyleService.CreateUniqueStyleName(
+          StrategyConstants.ConditionalStyleStrategyId,
+          conditionalStyle
+        )
+      : conditionalStyle.Style.ClassName;
   }
 }

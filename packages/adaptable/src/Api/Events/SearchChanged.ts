@@ -1,11 +1,8 @@
 import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
 import { DataSource } from '../../PredefinedConfig/DataSourceState';
-import { AdvancedSearch } from '../../PredefinedConfig/AdvancedSearchState';
-import { ColumnFilter } from '../../PredefinedConfig/ColumnFilterState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { ColumnSort } from '../../PredefinedConfig/Common/ColumnSort';
-import { UserFilter } from '../../PredefinedConfig/UserFilterState';
-import { NamedFilter } from '../../PredefinedConfig/NamedFilterState';
+import { ColumnFilter } from '../../PredefinedConfig/FilterState';
 
 /**
  * EventArgs sent as part of the on'SearchChanged' Event
@@ -39,10 +36,9 @@ export interface SearchChangedInfo extends AdaptableEventInfo {
    */
   searchChangedTrigger:
     | 'DataSource'
-    | 'AdvancedSearch'
+    | 'CurrentQuery'
     | 'QuickSearch'
-    | 'ColumnFilter'
-    | 'UserFilter'
+    | 'Filter'
     | 'DataChange'
     | 'Sort';
 
@@ -77,25 +73,13 @@ export interface AdaptableSearchState {
    */
   dataSource: DataSource | undefined;
   /**
-   * Current Advanced Search (if any selected)
+   * Current Query
    */
-  advancedSearch: AdvancedSearch | undefined;
-  /**
-   * Current live Quick Search text. (Value can be null / empty)
-   */
-  quickSearch: string | undefined;
+  currentQuery: string | undefined;
   /**
    * Details of any column filters **currently applied**
    */
   columnFilters: ColumnFilter[] | undefined;
-  /**
-   * Details of **all User Filters** in the Adaptable State
-   */
-  userFilters: UserFilter[] | undefined;
-  /**
-   * Details of **all Named Filters** in the Adaptable State
-   */
-  namedFilters: NamedFilter[] | undefined;
 }
 
 /**

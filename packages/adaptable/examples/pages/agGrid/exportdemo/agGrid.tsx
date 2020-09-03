@@ -53,27 +53,26 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
-  },
   Export: {
     Reports: [
       {
         Name: 'End of Day',
-        ColumnIds: [
-          'bid',
-          'changeOnYear',
-          'counterparty',
-          'country',
-          'currency',
-          'tradeDate',
-          'settlementDate',
-          'ask',
-          'moodysRating',
-          'bloombergBid',
-          'bloombergAsk',
-        ],
-        ReportColumnScope: 'BespokeColumns',
+        Scope: {
+          ColumnIds: [
+            'bid',
+            'changeOnYear',
+            'counterparty',
+            'country',
+            'currency',
+            'tradeDate',
+            'settlementDate',
+            'ask',
+            'moodysRating',
+            'bloombergBid',
+            'bloombergAsk',
+          ],
+        },
+        ReportColumnScope: 'ScopedColumns',
         ReportRowScope: 'VisibleRows',
         /*
         AutoExport: {
@@ -104,8 +103,8 @@ let demoConfig: PredefinedConfig = {
           'country',
         ],
         Name: 'export layout',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
+        // RowGroupedColumns: ['currency'],
+        RowGroupedColumns: [],
       },
     ],
     CurrentLayout: 'export layout',

@@ -6,10 +6,9 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface AlertSummaryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
@@ -20,17 +19,17 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   }
 
   render(): any {
-    let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
+    let alertDefinition: AlertDefinition = this.props.data as AlertDefinition;
     let keyValuePairs: KeyValuePair[] = [
       {
-        Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(alertDefinition.ColumnId),
+        Key: 'Scope',
+        Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope),
       },
       {
         Key: 'Rule',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getStrategyService()
-          .createAlertDescription(alertDefinition, this.props.Api.gridApi.getColumns()),
+          .createAlertDescription(alertDefinition),
       },
       { Key: 'Alert Type', Value: alertDefinition.MessageType },
       {
@@ -43,9 +42,7 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
       },
       {
         Key: 'Query',
-        Value: ExpressionHelper.IsNotNullOrEmptyExpression(alertDefinition.Expression)
-          ? ExpressionHelper.ConvertExpressionToString(alertDefinition.Expression, this.props.Api)
-          : 'None',
+        Value: this.setExpressionDescription(this.props.data),
       },
     ];
 
@@ -57,6 +54,11 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
     );
   }
 
+  private setExpressionDescription(alert: AlertDefinition): string {
+    let expression = this.props.api.queryApi.QueryObjectToString(alert);
+    return expression ? expression : 'No Expression';
+  }
+
   public canNext(): boolean {
     return true;
   }
@@ -64,19 +66,22 @@ export class AlertSummaryWizard extends React.Component<AlertSummaryWizardProps,
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
-    let alertDefinition: AlertDefinition = this.props.Data as AlertDefinition;
-    return ExpressionHelper.IsNullOrEmptyExpression(alertDefinition.Expression) ? 2 : 1;
+
+  public getIndexStepDecrement() {
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId)
+      ? 2
+      : 1;
   }
 }

@@ -71,7 +71,7 @@ class ChartToolPanelComponent extends React.Component<
         : this.props.CurrentChartDefinition.ChartType;
 
     let sortedChartDefinitions: ChartDefinition[] = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.ChartDefinitions,
       'Title'
     );
@@ -86,7 +86,7 @@ class ChartToolPanelComponent extends React.Component<
       });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.CategoryChart,
@@ -96,7 +96,7 @@ class ChartToolPanelComponent extends React.Component<
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.PieChart,
@@ -106,7 +106,7 @@ class ChartToolPanelComponent extends React.Component<
       label: 'Pie Chart',
     };
     let sparkLineMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () =>
         this.props.onNewChartDefinition({
           value: ChartType.SparklinesChart,
@@ -139,7 +139,7 @@ class ChartToolPanelComponent extends React.Component<
           flexDirection="row"
           alignItems="stretch"
           className={
-            this.props.AccessLevel == 'ReadOnly'
+            this.props.accessLevel == 'ReadOnly'
               ? GeneralConstants.READ_ONLY_STYLE
               : 'ab-ToolPanel__Chart_wrap'
           }
@@ -149,7 +149,7 @@ class ChartToolPanelComponent extends React.Component<
             onClick={() => this.onShowChart()}
             tooltip="Show Chart"
             disabled={currentChartDefinitionName == selectChartString}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
           <DropdownButton
             columns={['label']}
@@ -172,7 +172,7 @@ class ChartToolPanelComponent extends React.Component<
             }
             tooltip="Edit Chart Definition"
             disabled={currentChartDefinitionName == selectChartString}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -184,7 +184,7 @@ class ChartToolPanelComponent extends React.Component<
               "Are you sure you want to delete '" + currentChartDefinitionName + "'?"
             }
             ConfirmationTitle={'Delete Chart'}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>

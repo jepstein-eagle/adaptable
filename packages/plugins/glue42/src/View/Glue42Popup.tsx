@@ -31,9 +31,9 @@ class Glue42PopupComponent extends React.Component<Glue42PopupProps, EditableCon
   shouldClosePopupOnFinishWizard: boolean = false;
 
   componentDidMount() {
-    if (this.props.PopupParams) {
+    if (this.props.popupParams) {
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'Toolbar';
+        this.props.popupParams.source && this.props.popupParams.source == 'Toolbar';
     }
   }
 

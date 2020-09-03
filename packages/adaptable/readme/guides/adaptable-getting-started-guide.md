@@ -42,7 +42,7 @@ Where a property is not provided, AdapTable provides a sensible default, so deve
 
 ## Adaptable Api
 
-AdapTable's rich, powerful [runtime API](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) provides full safe, run-time access to all the functionality and state inside AdapTable. 
+AdapTable's rich, powerful [runtime Api](https://api.adaptabletools.com/interfaces/_src_api_adaptableapi_.adaptableapi.html) provides full safe, run-time access to all the functionality and state inside AdapTable. 
 
 This allows users to create, save and delete AdapTable objects in their our screens bypassing AdapTable's UI, or to access the Store in a safe non-mutable manner.
 
@@ -73,7 +73,7 @@ The constructor returns the **AdaptableApi** object (via a Promise) so it is ava
     predefinedConfig: applicationJSON, // the predefined config we created
   };
 
-// The AdapTable constructor returns a promise containing an API object that we can use
+// The AdapTable constructor returns a promise containing an Api object that we can use
  const adaptableApi: AdaptableApi = await Adaptable.init(adaptableOptions);
  ```
 

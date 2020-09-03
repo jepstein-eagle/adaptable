@@ -14,8 +14,6 @@ import WizardPanel from '@adaptabletools/adaptable/src/components/WizardPanel';
 
 import FormLayout, { FormRow } from '@adaptabletools/adaptable/src/components/FormLayout';
 import Radio from '@adaptabletools/adaptable/src/components/Radio';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 
 export interface SparklinesChartColumnWizardProps
   extends AdaptableWizardStepProps<SparklinesChartDefinition> {
@@ -25,7 +23,7 @@ export interface SparklinesChartColumnWizardProps
 export interface SparklinesChartColumnWizardState {
   ColumnId: string;
   Filtered: boolean;
-  Expression?: Expression;
+  Expression?: string;
 }
 
 export class SparklinesChartColumnWizard
@@ -34,9 +32,9 @@ export class SparklinesChartColumnWizard
   constructor(props: SparklinesChartColumnWizardProps) {
     super(props);
     this.state = {
-      Filtered: ExpressionHelper.IsNotNullOrEmptyExpression(props.Data.Expression),
-      Expression: props.Data.Expression,
-      ColumnId: props.Data.ColumnId,
+      Filtered: StringExtensions.IsNotNullOrEmpty(props.data.Expression),
+      Expression: props.data.Expression,
+      ColumnId: props.data.ColumnId,
     };
   }
 
@@ -47,7 +45,7 @@ export class SparklinesChartColumnWizard
           <FormRow label="Column">
             <ColumnSelector
               SelectedColumnIds={[this.state.ColumnId]}
-              ColumnList={this.props.Api.gridApi.getNumericColumns()}
+              ColumnList={this.props.api.columnApi.getNumericColumns()}
               onColumnChange={columns => this.onColumnChanged(columns)}
               SelectionMode={SelectionMode.Single}
             />
@@ -85,12 +83,6 @@ export class SparklinesChartColumnWizard
       Filtered,
     } as SparklinesChartColumnWizardState;
 
-    let Expression: Expression = this.state.Expression;
-    if (Filtered && ExpressionHelper.IsNullOrEmptyExpression(this.state.Expression)) {
-      Expression = ExpressionHelper.CreateEmptyExpression();
-      state.Expression = Expression;
-    }
-
     this.setState(state);
   };
 
@@ -100,7 +92,7 @@ export class SparklinesChartColumnWizard
       {
         ColumnId: isColumn ? columns[0].ColumnId : '',
       } as SparklinesChartColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -112,19 +104,19 @@ export class SparklinesChartColumnWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.ColumnId = this.state.ColumnId;
-    this.props.Data.Expression = !this.state.Filtered ? null : this.state.Expression;
+  public next(): void {
+    this.props.data.ColumnId = this.state.ColumnId;
+    this.props.data.Expression = !this.state.Filtered ? null : this.state.Expression;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.Filtered ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

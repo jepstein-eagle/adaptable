@@ -37,36 +37,58 @@ async function InitAdaptableDemo() {
     autoSizeColumnsInLayout: true,
   };
 
-  api = await Adaptable.init(adaptableOptions);
+  (adaptableOptions.userFunctions = [
+    {
+      name: 'LookupValuesForCounterparty',
+      type: 'GetColumnValuesFunction',
+      handler(column: AdaptableColumn) {
+        return ['BAML', 'Nomura', 'UBS'];
+      },
+    },
+    {
+      name: 'PermittedStatus',
+      type: 'GetColumnValuesFunction',
+      handler(column: AdaptableColumn) {
+        return ['Rejected', 'Pending'];
+      },
+    },
+  ]),
+    (api = await Adaptable.init(adaptableOptions));
 }
 
 let demoConfig: PredefinedConfig = {
   UserInterface: {
-    EditLookUpColumns: [
+    EditLookUpItems: [
       {
-        ColumnId: 'country',
+        Scope: {
+          ColumnIds: ['country'],
+        },
         LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
       },
       {
-        ColumnId: 'counterparty',
-        LookUpValues: (column: AdaptableColumn) => {
-          return ['BAML', 'Nomura', 'UBS'];
+        Scope: {
+          ColumnIds: ['counterparty'],
+        },
+        GetColumnValuesFunction: 'LookupValuesForCounterparty',
+      },
+
+      {
+        Scope: {
+          ColumnIds: ['currency'],
         },
       },
       {
-        ColumnId: 'currency',
-      },
-      {
-        ColumnId: 'status',
+        Scope: {
+          ColumnIds: ['status'],
+        },
       },
     ],
-    PermittedValuesColumns: [
+    PermittedValuesItems: [
       {
-        ColumnId: 'status',
-        // PermittedValues: ['Rejected', 'Pending'],
-        PermittedValues: (column: AdaptableColumn) => {
-          return ['Rejected', 'Pending'];
+        Scope: {
+          ColumnIds: ['status'],
         },
+        GetColumnValuesFunction: 'PermittedStatus',
       },
     ],
   },

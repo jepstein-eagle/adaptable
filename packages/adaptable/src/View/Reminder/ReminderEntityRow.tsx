@@ -13,7 +13,7 @@ export class ReminderEntityRow extends React.Component<
   {}
 > {
   render(): any {
-    let reminder: ReminderSchedule = this.props.AdaptableObject as ReminderSchedule;
+    let reminder: ReminderSchedule = this.props.adaptableObject as ReminderSchedule;
 
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
@@ -26,10 +26,10 @@ export class ReminderEntityRow extends React.Component<
       <EntityListActionButtons
         editClick={() => this.props.onEdit(reminder)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
-        EntityType={StrategyConstants.ReminderStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        showShare={this.props.teamSharingActivated}
+        confirmDeleteAction={this.props.onDeleteConfirm}
+        entityType={StrategyConstants.ReminderStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;

@@ -1,16 +1,13 @@
 import { EntitlementState } from './EntitlementState';
 import { UserInterfaceState } from './UserInterfaceState';
-import { SystemFilterState } from './SystemFilterState';
+import { FilterState } from './FilterState';
 import { ApplicationState } from './ApplicationState';
-import { AdvancedSearchState } from './AdvancedSearchState';
 import { AlertState } from './AlertState';
 import { BulkUpdateState } from './BulkUpdateState';
 import { CalculatedColumnState } from './CalculatedColumnState';
 import { CalendarState } from './CalendarState';
 import { CellSummaryState } from './CellSummaryState';
 import { CellValidationState } from './CellValidationState';
-import { ColumnCategoryState } from './ColumnCategoryState';
-import { ColumnFilterState } from './/ColumnFilterState';
 import { ConditionalStyleState } from './ConditionalStyleState';
 import { CustomSortState } from './CustomSortState';
 import { DashboardState } from './DashboardState';
@@ -28,14 +25,13 @@ import { QuickSearchState } from './QuickSearchState';
 import { ShortcutState } from './ShortcutState';
 import { SmartEditState } from './SmartEditState';
 import { ThemeState } from './ThemeState';
-import { UserFilterState } from './UserFilterState';
 import { ChartState } from './ChartState';
 import { ActionColumnState } from './ActionColumnState';
 import { SparklineColumnState } from './SparklineColumnState';
-import { NamedFilterState } from './NamedFilterState';
 import { SystemStatusState } from './SystemStatusState';
 import { ToolPanelState } from './ToolPanelState';
 import { GradientColumnState } from './GradientColumnState';
+import { QueryState } from './QueryState';
 
 /**
  * This is the main Predefined Config interface which developers will populate at design-time.
@@ -148,7 +144,6 @@ import { GradientColumnState } from './GradientColumnState';
  *  | State Property 	                                                                        | Saveable            | Details                                     	                |
  *  |----------------	                                                                        |-------------------	|---------------------------------------------	                |
  *  | [ActionColumn](_src_predefinedconfig_actioncolumnstate_.actioncolumnstate.html)   	        | No	                | Create dynamic columns with Buttons that fire events 	        |
- *  | [AdvancedSearch](_src_predefinedconfig_advancedsearchstate_.advancedsearchstate.html)   	  | Yes 	              | Create saveable multi-column searches with multiple criteria  |
  *  | [Alert](_src_predefinedconfig_alertstate_.alertstate.html)   	                              | Yes 	              | Provide Alert Definitions which will trigger run-time alerts  |
  *  | [Application](_src_predefinedconfig_applicationstate_.applicationstate.html)   	            | No	                | Save your own state as key / value pairs 	                    |
  *  | [BulkUpdate](_src_predefinedconfig__bulkupdatestate_.bulkupdatestate.html)   	              | Yes 	              | Update multiple cells in a column to contain a new value      |
@@ -156,28 +151,26 @@ import { GradientColumnState } from './GradientColumnState';
  *  | [Calendar](_src_predefinedconfig_calendarstate_.calendar.html)   	                          | Yes 	              | Select or provide your own calendar for dealing with holidays |
  *  | [CellSummary](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html)   	            | Yes 	              | Choose which summary operations to see for selected cells     |
  *  | [CellValidation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html)     	| Yes 	              | Provide (complex) rules to validate cell edits                |
- *  | [ColumnCategory](_src_predefinedconfig_columncategorystate_.columncategorystate.html)       | Yes     	          | Group columns into category for easier column management      |
- *  | [ColumnFilter](_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)             | Yes 	              | Supply your own filters for columns to findy your data easily |
  *  | [ConditionalStyle](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html) | Yes 	              | Dynamically Style columns & rows according to rules provided  |
  *  | [CustomSort](_src_predefinedconfig_customsortstate_.customsortstate.html)                   | Yes 	              | Build your own sort orders for columns with non-standard sorts|
  *  | [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)                      | Yes 	              | Configure & populate the Dasboard area (abov the main grid)   |
  *  | [DataSource](_src_predefinedconfig_datasourcestate.datasourcestate.html)                    | Yes 	              | Provide Data Sources that will populate Grid via the server   |
  *  | [Entitlements](_src_predefinedconfig_entitlementstate_.entitlementstate.html)               | No	                | Manage permissions so users only see relevant functions       |
  *  | [Export](_src_predefinedconfig_exportstate_.exportstate.html)                               | Yes 	              | Create reports to export data from grid to numerous loctions  |
+ *  | [Filter](_src_predefinedconfig_filterstate_.filterstate.html)                               | Yes                 | Manages creation, saving of System, User and Column filters   |
  *  | [FlashingCell](_src_predefinedconfig_flashingcellstate_.flashingcellstate.html)             | Yes 	              | Specify how cells will briefly flash as their values change   |
  *  | [FormatColumn](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)             | Yes 	              | Style a column so it always has a particular set of colours   |
  *  | [FreeTextColumn](_src_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Special free entry columns (e.g. Comments) saved with state   |
  *  | [GradientColumn](_src_predefinedconfig_gradientcolumnstate_.gradientcolumnstate.html)       | Yes 	              | Style columns so that back colour is in ratio to cell contents|
  *  | [Layout](_src_predefinedconfig_layoutstate_.layoutstate.html)                               | Yes 	              | Named views of column sorts, order, pivots, visbility & groups|
- *  | [NamedFilter](_src_predefinedconfig_namedfilterstate_.namedfilterstate.html)                | No                  | Bespoke filters for which you provide a predicate function    |
  *  | [PercentBar](_src_predefinedconfig_percentbarstate_.percentbarstate.html)                   | Yes 	              | Columns which display a bar that is filled based on cell value|
  *  | [Schedule](_src_predefinedconfig_schedulestate_.schedulestate.html)                         | Yes 	              | Set Functions (e.g. E|
  *  | [PlusMinus](interfaces/_predefinedconfig_plusminusstate_.plusminusstate.html)               | Yes 	              | Specify how cells will nudge when '+' and '-' keys are pressed|
+ *  | [Query](_src_predefinedconfig_querystate_.querystate.html)   	  | Yes 	              | Create saveable multi-column searches with multiple criteria  |
  *  | [QuickSearch](_src_predefinedconfig_quicksearchstate_.quicksearchstate.html)                | Yes 	              | Run a text based search across whole grid (using wildcards)   |
  *  | [Schedule](_src_predefinedconfig_reminderstate_.reminder.html)                              | Yes 	              | Schedule alerts to run to remind you of actions to perform    |
  *  | [Shortcut](_src_predefinedconfig_shortcutstate_.shortcutstate.html)                         | Yes 	              | Avoid fat finger issues by creating keyboard shortcuts        |
  *  | [SmartEdit](_src_predefinedconfig_smarteditstate_.smarteditstate.html)                      | Yes 	              | Update multiple numeric cells with a single maths operation   |
- *  | [SystemFilter](_src_predefinedconfig_systemfilterstate_.systemfilterstate.html)             | No                  | Select availability of System Filters (e.g. Today, Blanks)    |
  *  | [SystemStatus](_src_predefinedconfig_systemstatusstate_.systemstatusstate.html)             | No                  | Show Messages and Alerts describing curent Status of the App  |
  *  | [Theme](_src_predefinedconfig_themestate_.themestate.html)                                  | Yes                 | Select with shipped Theme is used or provide a custom one     |
  *  | [ToolPanel](_src_predefinedconfig_toolpanelstate_.toolpanelstate.html)                      | Yes                 | Manage AdapTable ToolPanel (the area to the right of grid)  |
@@ -206,7 +199,7 @@ import { GradientColumnState } from './GradientColumnState';
  *    Tabs: [
  *          {
  *            Name: 'Search',
- *            Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+ *            Toolbars: ['QuickSearch', 'DataSource', 'Query'],
  *          },
  *          {
  *            Name: 'Edit',
@@ -223,7 +216,6 @@ import { GradientColumnState } from './GradientColumnState';
  *  },
  *  QuickSearch: {
  *     QuickSearchText: 'g*',
- *     DisplayAction: 'ShowRowAndHighlightCell',
  *     Style: {
  *       BackColor: '#ffff00',
  *       ForeColor: '#8b0000',
@@ -243,22 +235,7 @@ import { GradientColumnState } from './GradientColumnState';
  *          'PackageCost',
  *          'InvoicedCost',
  *         ],
- *         Expression: {
- *             RangeExpressions: [
- *             {
- *               ColumnId: 'Freight',
- *               Ranges: [
- *                 {
- *                   Operand1: '500',
- *                   Operand1Type: 'Value',
- *                   Operand2: '',
- *                   Operand2Type: 'Value',
- *                   Operator: 'GreaterThan',
- *                 },
- *               ],
- *             },
- *           ],
- *         },
+ *         Expression: '[Freight]> 500'
  *       },
  *     ],
  *   },
@@ -277,34 +254,16 @@ import { GradientColumnState } from './GradientColumnState';
  *   ConditionalStyle: {
  *     ConditionalStyles: [
  *       {
- *         ColumnId: 'ChangeLastOrder',
  *         Style: {
  *           ForeColor: '#008000',
  *         },
- *         ConditionalStyleScope: 'Column',
- *         Expression: {
- *            FilterExpressions: [
- *             {
- *               ColumnId: 'ChangeLastOrder',
- *               Filters: ['Positive'],
- *             },
- *           ],
- *         },
+ *         Expression: '[ChangeLastOrder]> 0'
  *       },
  *       {
- *         ColumnId: 'ChangeLastOrder',
  *         Style: {
  *           ForeColor: '#ff0000',
  *         },
- *         ConditionalStyleScope: 'Column',
- *         Expression: {
- *           FilterExpressions: [
- *             {
- *               ColumnId: 'ChangeLastOrder',
- *               Filters: ['Negative'],
- *             },
- *           ],
- *         },
+ *         Expression: '[ChangeLastOrder]< 0'
  *       },
  *       {
  *         Style: {
@@ -312,23 +271,7 @@ import { GradientColumnState } from './GradientColumnState';
  *           FontStyle: 'Italic',
  *           ForeColor: '#000000',
  *         },
- *         ConditionalStyleScope: 'Row',
- *         Expression: {
- *           RangeExpressions: [
- *             {
- *               ColumnId: 'InvoicedCost',
- *               Ranges: [
- *                 {
- *                   Operand1: '2000',
- *                   Operand1Type: 'Value',
- *                   Operand2: '',
- *                   Operand2Type: 'Value',
- *                   Operator: 'GreaterThan',
- *                 },
- *               ],
- *             },
- *           ],
- *         },
+ *         Expression: '[InvoicedCost]> 2000'
  *       },
  *     ],
  *   },
@@ -341,7 +284,7 @@ import { GradientColumnState } from './GradientColumnState';
  *           'OrderDate',
  *           'CustomerReference',
  *           'CompanyName',
- *          'ContactName',
+ *           'ContactName',
  *           'InvoicedCost',
  *           'ChangeLastOrder',
  *           'OrderCost',
@@ -403,11 +346,6 @@ export interface PredefinedConfig {
   ActionColumn?: ActionColumnState;
 
   /**
-   * Supplies a collection of *AdvancedSearch* objects, to provide saveable cross-column searching, and the selection of the Current Advanced Search.
-   */
-  AdvancedSearch?: AdvancedSearchState;
-
-  /**
    * Supplies a collection of *Alert Definition* objects which will fire when their definition is triggered, and where Alerts are displayed.
    */
   Alert?: AlertState;
@@ -448,18 +386,10 @@ export interface PredefinedConfig {
 
   /**
    * Supplies a collection of *Chart* objects to enable seeing grid data visually in chart format.
+   *
+   * Requires the Chart Plugin to be enabled.
    */
   Chart?: ChartState;
-
-  /**
-   * Supplies a collection of *ColumnCategory* objects to enable the logical grouping of columns (used in the Column Chooser).
-   */
-  ColumnCategory?: ColumnCategoryState;
-
-  /**
-   * Supplies a collection of *ColumnFilter* objects to provide AdapTable with initial filtering.
-   */
-  ColumnFilter?: ColumnFilterState;
 
   /**
    * Supplies a collection of *ConditionalStyle* objects to provides columns and rows with a particular style when the data matches a given rule.
@@ -498,6 +428,17 @@ export interface PredefinedConfig {
   Export?: ExportState;
 
   /**
+   * Provides details of which Filters should be available / running at start-up.  It includes
+   *
+   * - System Filters - users can provide a list of which System Filters should be available (if no values are listed, then all will be).
+   *
+   *  - Filter Predicates  - A set of bespoke User Predicates that have been created at design-timee.
+   *
+   * - Column Filters - which column filters should be applied at start-up
+   */
+  Filter?: FilterState;
+
+  /**
    * Supplies a collection of *FlashingCell* objects to set up which columns should flash when their contents change and how.  Also includes default values to facilitiate creating new flashing cell columns.
    */
   FlashingCell?: FlashingCellState;
@@ -523,23 +464,9 @@ export interface PredefinedConfig {
   Layout?: LayoutState;
 
   /**
-   *  Filters defined by Developers at Nowhich include a predicate function that is called by AdapTable each time the filter is evaluated.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   *
-   * (Note: Named Filter State can be updated via A`daptableApi` but these updates **will not be persisted**).
-   */
-  NamedFilter?: NamedFilterState;
-
-  /**
    * Supplies a collection of *PercentBar* objects which will display numeric columns as a coloured bar, the fill of which is bassed on the cell value.
    */
   PercentBar?: PercentBarState;
-
-  /**
-   * Supplies a collection of *Schedule* objects.
-   */
-  Schedule?: ScheduleState;
 
   /**
    * Supplies a collection of *PlusMinus* rule objects to stipulate what happens when the user clicks '+' or '-' in a numeric cell.
@@ -547,9 +474,21 @@ export interface PredefinedConfig {
   PlusMinus?: PlusMinusState;
 
   /**
+   * Lists any Shared Queries which should be available for use across all AdapTable functions.
+   *
+   * Also includes `CurrentQuery` - an Expression that will be run at start-up.
+   */
+  Query?: QueryState;
+
+  /**
    * Configues how Quick Search will run i.e. how and whether to highlight matching cells and to filter out non-matching rows.
    */
   QuickSearch?: QuickSearchState;
+
+  /**
+   * Supplies a collection of *Schedule* objects.
+   */
+  Schedule?: ScheduleState;
 
   /**
    * Supplies a collection of *Shortcut* objects to aid data entry and prevent 'fat finger' issues.
@@ -571,15 +510,6 @@ export interface PredefinedConfig {
   SparklineColumn?: SparklineColumnState;
 
   /**
-   * List of which System Filters should be available to users.
-   *
-   * If no values are listed, then **all System Filters** are available.
-   *
-   * **This section can only be populated at Design Time.  It cannot be updated or amended by the User at Yes.**
-   */
-  SystemFilter?: SystemFilterState;
-
-  /**
    * Manges the System Status function which allows messages to be sent to the User detailing the health of the running application.
    */
   SystemStatus?: SystemStatusState;
@@ -598,11 +528,6 @@ export interface PredefinedConfig {
    * Sets whether rows should display differently when a value in the row updates.  A different color is used depending on the direction of the change.
    */
   UpdatedRow?: UpdatedRowState;
-
-  /**
-   * Supplies a collection of *UserFilter* objects which can be used to create Column Filters and in other Functions.
-   */
-  UserFilter?: UserFilterState;
 
   /**
    * State that manages UI elements in AdapTable e.g. which colours to put in the default palette.

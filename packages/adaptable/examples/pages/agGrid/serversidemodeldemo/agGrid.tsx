@@ -43,9 +43,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
   adaptableOptions.filterOptions = {
     clearFiltersOnStartUp: true,
   };
@@ -92,15 +90,8 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Layout', 'SystemStatus'],
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'Filter'],
   },
   SystemStatus: {
     // ShowAlert: false,
@@ -110,30 +101,14 @@ let demoConfig: PredefinedConfig = {
     StatusType: 'Error',
   },
 
-  ConditionalStyle: {
-    ConditionalStyles: [
-      {
-        ConditionalStyleScope: 'Column', // 'DataType',
-        ColumnId: 'moodysRating',
-        // DataType: 'Number',
-        Style: {
-          BackColor: '#32cd32',
-        },
-        Expression: {
-          FilterExpressions: [{ ColumnId: 'notional', Filters: ['Positive', 'Negative'] }],
-        },
-      },
-    ],
-  },
-
   Layout: {
     Layouts: [
       {
         ColumnSorts: [],
         Columns: ['moodysRating', 'tradeId', 'notional', 'counterparty', 'country'],
         Name: 'design-time layout',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
+        // RowGroupedColumns: ['currency'],
+        RowGroupedColumns: [],
       },
     ],
     //   CurrentLayout: 'fixing a bug',

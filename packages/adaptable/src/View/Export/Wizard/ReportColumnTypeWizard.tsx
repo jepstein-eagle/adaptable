@@ -1,15 +1,10 @@
 import { Report } from '../../../PredefinedConfig/ExportState';
 import * as React from 'react';
-
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-//import { AdaptableWizard } from './../../../Wizard/AdaptableWizard'
-
-import { AdaptablePopover } from '../../AdaptablePopover';
-import { ReportColumnScope, MessageType } from '../../../PredefinedConfig/Common/Enums';
-
+import { ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';
@@ -26,7 +21,7 @@ export class ReportColumnTypeWizard
   constructor(props: ReportColumnTypeWizardProps) {
     super(props);
     this.state = {
-      ReportColumnScope: this.props.Data.ReportColumnScope as ReportColumnScope,
+      ReportColumnScope: this.props.data.ReportColumnScope as ReportColumnScope,
     };
   }
   render() {
@@ -63,7 +58,7 @@ export class ReportColumnTypeWizard
           <Radio
             value="Bespoke"
             marginRight={3}
-            checked={this.state.ReportColumnScope == ReportColumnScope.BespokeColumns}
+            checked={this.state.ReportColumnScope == ReportColumnScope.ScopeColumns}
             onChange={(_, e: any) => this.onScopeSelectChanged(e)}
           >
             Bespoke Columns
@@ -82,7 +77,7 @@ export class ReportColumnTypeWizard
           ReportColumnScope: ReportColumnScope.AllColumns,
           SelectedColumnValues: [],
         } as ReportColumnsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else if (e.value == 'Visible') {
       this.setState(
@@ -90,12 +85,12 @@ export class ReportColumnTypeWizard
           ReportColumnScope: ReportColumnScope.VisibleColumns,
           SelectedColumnValues: [],
         } as ReportColumnsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState(
-        { ReportColumnScope: ReportColumnScope.BespokeColumns } as ReportColumnsWizardState,
-        () => this.props.UpdateGoBackState()
+        { ReportColumnScope: ReportColumnScope.ScopeColumns } as ReportColumnsWizardState,
+        () => this.props.updateGoBackState()
       );
     }
   }
@@ -104,25 +99,25 @@ export class ReportColumnTypeWizard
     return (
       this.state.ReportColumnScope == ReportColumnScope.AllColumns ||
       this.state.ReportColumnScope == ReportColumnScope.VisibleColumns ||
-      this.state.ReportColumnScope == ReportColumnScope.BespokeColumns
+      this.state.ReportColumnScope == ReportColumnScope.ScopeColumns
     );
   }
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ReportColumnScope = this.state.ReportColumnScope;
-    if (this.state.ReportColumnScope != ReportColumnScope.BespokeColumns) {
-      this.props.Data.ColumnIds = [];
+  public next(): void {
+    this.props.data.ReportColumnScope = this.state.ReportColumnScope;
+    if (this.state.ReportColumnScope != ReportColumnScope.ScopeColumns) {
+      this.props.data.Scope = undefined;
     }
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
-    return this.state.ReportColumnScope == ReportColumnScope.BespokeColumns ? 1 : 2;
+  public getIndexStepIncrement() {
+    return this.state.ReportColumnScope == ReportColumnScope.ScopeColumns ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

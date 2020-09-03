@@ -3,6 +3,7 @@ import { FormatColumnStrategy } from '../../Strategy/FormatColumnStrategy';
 import { Adaptable } from '../Adaptable';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
+import { FormatColumn } from '../../PredefinedConfig/FormatColumnState';
 
 export class FormatColumnStrategyagGrid extends FormatColumnStrategy
   implements IFormatColumnStrategy {
@@ -12,31 +13,40 @@ export class FormatColumnStrategyagGrid extends FormatColumnStrategy
   }
 
   public initStyles(): void {
-    let columns = this.adaptable.api.gridApi.getColumns();
-    let formatColumns = this.adaptable.api.formatColumnApi.getAllFormatColumn();
-    let theadaptable = this.adaptable as Adaptable;
+    if (this.adaptable.api.formatColumnApi.hasStyleFormatColumns()) {
+      let columns = this.adaptable.api.columnApi.getColumns();
 
-    // adding this check as things can get mixed up during 'clean user data'
-    if (columns.length > 0 && formatColumns.length > 0) {
-      for (let column of columns) {
-        let cellClassRules: any = {};
-        formatColumns.forEach((fc, index) => {
-          if (fc.ColumnId == column.ColumnId && fc.Style) {
-            let styleName: string = StringExtensions.IsNullOrEmpty(fc.Style.ClassName)
-              ? theadaptable.StyleService.CreateUniqueStyleName(
+      // adding this check as things can get mixed up during 'clean user data'
+      if (columns.length > 0) {
+        for (let column of columns) {
+          let cellClassRules: any = {};
+          let formatColumn:
+            | FormatColumn
+            | undefined = this.adaptable.api.formatColumnApi.getFormatColumnWithStyleForColumn(
+            column
+          );
+          // we just do one and then return
+          if (formatColumn) {
+            let styleName: string = StringExtensions.IsNullOrEmpty(formatColumn.Style.ClassName)
+              ? this.adaptable.StyleService.CreateUniqueStyleName(
                   StrategyConstants.FormatColumnStrategyId,
-                  fc
+                  formatColumn
                 )
-              : fc.Style.ClassName;
+              : formatColumn.Style.ClassName;
             cellClassRules[styleName] = function(params: any) {
               return true;
             };
-          }
-        });
-        theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'FormatColumn');
-      }
-    }
 
-    this.adaptable.redraw();
+            (this.adaptable as Adaptable).setCellClassRules(
+              cellClassRules,
+              column.ColumnId,
+              'FormatColumn'
+            );
+          }
+        }
+      }
+
+      this.adaptable.redraw();
+    }
   }
 }

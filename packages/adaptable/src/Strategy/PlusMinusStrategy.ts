@@ -10,7 +10,6 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../Utilities/Helpers/Helper';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
-import { ExpressionHelper } from '../Utilities/Helpers/ExpressionHelper';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { IUIConfirmation } from '../Utilities/Interface/IMessage';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
@@ -19,30 +18,32 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { StrategyParams } from '../View/Components/SharedProps/StrategyViewPopupProps';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
+import * as parser from '../parser/src';
+import { AccessLevel } from '../PredefinedConfig/EntitlementState';
 
 export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMinusStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.PlusMinusStrategyId, adaptable);
+    super(
+      StrategyConstants.PlusMinusStrategyId,
+      StrategyConstants.PlusMinusStrategyFriendlyName,
+      StrategyConstants.PlusMinusGlyph,
+      ScreenPopups.PlusMinusPopup,
+      adaptable
+    );
 
     this.adaptable._on('KeyDown', keyDownEvent => {
       this.handleKeyDown(keyDownEvent);
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('Full')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.PlusMinusStrategyFriendlyName,
-        ComponentName: ScreenPopups.PlusMinusPopup,
-        Icon: StrategyConstants.PlusMinusGlyph,
-      });
-    }
+  public getMinimumAccessLevelForMenu(): AccessLevel {
+    return 'Full';
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: 'New',
         source: 'ColumnMenu',
       };
@@ -89,7 +90,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     side: number
   ): boolean {
     let shouldApplyPlusMinus = false;
-    let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let columns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
     let successfulValues: GridCell[] = [];
     let failedPreventEdits: CellValidationRule[] = [];
     let failedWarningEdits: CellValidationRule[] = [];
@@ -101,7 +102,7 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(rulesForColumn)) {
-        let selectedColumn: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
+        let selectedColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(
           selectedCell.columnId
         );
         if (selectedColumn.DataType == DataType.Number && !selectedColumn.ReadOnly) {
@@ -111,21 +112,24 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
           }
           let newValue: GridCell;
           //we try to find a condition with an expression for that column that matches the record
-          let columnNudgesWithExpression = rulesForColumn.filter(x => !x.IsDefaultNudge);
-          for (let columnNudge of columnNudgesWithExpression) {
-            if (
-              ExpressionHelper.checkForExpression(
-                columnNudge.Expression,
-                selectedCell.primaryKeyValue,
-                columns,
-                this.adaptable
-              )
-            ) {
+          let plusMinusRulesWithExpression = rulesForColumn.filter(x => !x.IsDefaultNudge);
+          for (let plusMinusRule of plusMinusRulesWithExpression) {
+            const expression: string = this.adaptable.api.queryApi.QueryObjectToString(
+              plusMinusRule
+            );
+
+            let rowNode = this.adaptable.getRowNodeForPrimaryKey(selectedCell.primaryKeyValue);
+            let isSatisfiedExpression: boolean = parser.evaluate(expression, {
+              node: rowNode,
+              api: this.adaptable.api,
+            });
+
+            if (isSatisfiedExpression) {
               newValue = {
                 primaryKeyValue: selectedCell.primaryKeyValue,
                 columnId: selectedCell.columnId,
-                rawValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
-                displayValue: selectedCell.rawValue + columnNudge.NudgeValue * side,
+                rawValue: selectedCell.rawValue + plusMinusRule.NudgeValue * side,
+                displayValue: selectedCell.rawValue + plusMinusRule.NudgeValue * side,
               };
             }
           }

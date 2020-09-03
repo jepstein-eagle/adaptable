@@ -7,7 +7,6 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as CalculatedColumnRedux from '../../Redux/ActionsReducers/CalculatedColumnRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import { CalculatedColumnWizard } from './Wizard/CalculatedColumnWizard';
 import {
   EditableConfigEntityState,
@@ -38,18 +37,18 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
   render(): any {
     let detailRow;
-    let sharing = this.props.TeamSharingActivated;
+    let sharing = this.props.teamSharingActivated;
 
     this.props.CalculatedColumns.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+      if (item.ColumnId == this.props.summarisedColumn.ColumnId) {
         detailRow = (
           <StrategyDetail
             key={'UF' + index}
-            Item1={StrategyConstants.CalculatedColumnStrategyFriendlyName}
-            Item2={item.ColumnExpression}
-            ConfigEnity={item}
-            showShare={this.props.TeamSharingActivated}
-            EntityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
+            item1={StrategyConstants.CalculatedColumnStrategyFriendlyName}
+            item2={item.ColumnExpression}
+            configEnity={item}
+            showShare={this.props.teamSharingActivated}
+            entityType={StrategyConstants.CalculatedColumnStrategyFriendlyName}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={CalculatedColumnRedux.CalculatedColumnDelete(item)}
@@ -63,15 +62,15 @@ export class CalculatedColumnSummaryComponent extends React.Component<
       <div>
         {detailRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <CalculatedColumnWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
-            ConfigEntities={this.props.CalculatedColumns}
-            ModalContainer={this.props.ModalContainer}
+            editedAdaptableObject={this.state.editedAdaptableObject as CalculatedColumn}
+            configEntities={this.props.CalculatedColumns}
+            modalContainer={this.props.modalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -83,32 +82,32 @@ export class CalculatedColumnSummaryComponent extends React.Component<
 
   onEdit(calculatedColumn: CalculatedColumn) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(calculatedColumn),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(calculatedColumn),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.editedAdaptableObject);
     this.props.onEdit(calculatedColumn);
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableObject as CalculatedColumn;
+    let calculatedColumn = this.state.editedAdaptableObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)

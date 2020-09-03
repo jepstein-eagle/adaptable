@@ -16,13 +16,13 @@ import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
-import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { IReportService } from '../Utilities/Services/Interface/IReportService';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { ICalculatedColumnExpressionService } from '../Utilities/Services/Interface/ICalculatedColumnExpressionService';
 import { AdaptableOptions } from '../AdaptableOptions/AdaptableOptions';
 import { IChartService } from '../Utilities/Services/Interface/IChartService';
 import { Layout } from '../PredefinedConfig/LayoutState';
+import { SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 /**
  * This set of api methods is designed for **internal use of Adaptable** only.
  *
@@ -31,7 +31,7 @@ import { Layout } from '../PredefinedConfig/LayoutState';
 export interface InternalApi {
   // System Redux
   getSystemState(): SystemState;
-  getAvailableCalendars(): Calendar[];
+
   setChartData(chartData: ChartData): void;
   setChartVisibility(chartVisbility: ChartVisibility): void;
   getSystemReports(): Report[];
@@ -52,7 +52,9 @@ export interface InternalApi {
 
   setColumns(columns: AdaptableColumn[]): void;
 
-  setMainMenuItems(menuItems: AdaptableMenuItem[]): void;
+  setFunctionDropdownMenuItems(menuItems: AdaptableMenuItem[]): void;
+
+  setFunctionButtonMenuItems(menuItems: AdaptableMenuItem[]): void;
 
   setSelectedCells(selectedCellInfo: SelectedCellInfo): void;
 
@@ -95,7 +97,6 @@ export interface InternalApi {
 
   getValidationService(): IValidationService;
   getStrategyService(): IStrategyService;
-  getFilterService(): IFilterService;
   getReportService(): IReportService;
   getLayoutService(): ILayoutService;
   getChartService(): IChartService;

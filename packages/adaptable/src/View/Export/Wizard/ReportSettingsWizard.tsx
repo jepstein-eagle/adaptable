@@ -27,7 +27,7 @@ export class ReportSettingsWizard
   constructor(props: ReportSettingsWizardProps) {
     super(props);
     this.state = {
-      ReportName: this.props.Data.Name,
+      ReportName: this.props.data.Name,
       ErrorMessage: null,
     };
   }
@@ -69,7 +69,7 @@ export class ReportSettingsWizard
             ? 'A Report already exists with that name'
             : null,
       } as ReportSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -82,17 +82,17 @@ export class ReportSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.Name = this.state.ReportName;
+  public next(): void {
+    this.props.data.Name = this.state.ReportName;
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

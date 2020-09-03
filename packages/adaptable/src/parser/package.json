@@ -33,13 +33,12 @@
     "registry": "https://registry.adaptabletools.com"
   },
   "devDependencies": {
-    "@types/jest": "^25.1.4",
+    "@types/jest": "^26.0.8",
     "cpy-cli": "^3.1.1",
     "husky": "^4.2.3",
     "jison": "^0.4.18",
     "rimraf": "^3.0.2",
     "tsdx": "^0.13.0",
-    "tslib": "^1.11.1",
-    "typescript": "^3.8.3"
+    "tslib": "^1.11.1"
   }
 }

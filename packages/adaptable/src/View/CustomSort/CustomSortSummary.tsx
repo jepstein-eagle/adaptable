@@ -39,22 +39,22 @@ export class CustomSortSummaryComponent extends React.Component<
   }
   render(): any {
     let customSort: CustomSort = this.props.CustomSorts.find(
-      c => c.ColumnId == this.props.SummarisedColumn.ColumnId
+      c => c.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let noCustomSort: boolean = customSort == null;
 
     let customSortRow: any;
 
-    if (!this.props.SummarisedColumn.Sortable) {
+    if (!this.props.summarisedColumn.Sortable) {
       customSortRow = (
         <StrategyHeader
           key={StrategyConstants.CustomSortStrategyFriendlyName}
-          FunctionName={StrategyConstants.CustomSortStrategyId}
-          StrategySummary={'Column is not sortable'}
-          NewButtonDisabled={true}
+          functionName={StrategyConstants.CustomSortStrategyId}
+          strategySummary={'Column is not sortable'}
+          newButtonDisabled={true}
           onNew={() => this.onNew()}
-          NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
-          AccessLevel={this.props.AccessLevel}
+          newButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
         />
       );
     } else if (noCustomSort) {
@@ -62,25 +62,25 @@ export class CustomSortSummaryComponent extends React.Component<
       customSortRow = (
         <StrategyHeader
           key={StrategyConstants.CustomSortStrategyFriendlyName}
-          FunctionName={StrategyConstants.CustomSortStrategyId}
-          StrategySummary={'No Custom Sort Set'}
+          functionName={StrategyConstants.CustomSortStrategyId}
+          strategySummary={'No Custom Sort Set'}
           onNew={() => this.onNew()}
-          AccessLevel={this.props.AccessLevel}
-          NewButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
+          accessLevel={this.props.accessLevel}
+          newButtonTooltip={StrategyConstants.CustomSortStrategyFriendlyName}
         />
       );
     } else {
       customSortRow = (
         <StrategyDetail
           key={StrategyConstants.CustomSortStrategyFriendlyName}
-          Item1={<StrategyProfile FunctionName={StrategyConstants.CustomSortStrategyId} />}
-          Item2={this.getCustomSortedValues(customSort)}
-          ConfigEnity={customSort}
-          EntityType={StrategyConstants.CustomSortStrategyFriendlyName}
+          item1={<StrategyProfile FunctionName={StrategyConstants.CustomSortStrategyId} />}
+          item2={this.getCustomSortedValues(customSort)}
+          configEnity={customSort}
+          entityType={StrategyConstants.CustomSortStrategyFriendlyName}
           onEdit={() => this.onEdit(customSort)}
           showEdit={customSort.CustomSortComparerFunction == undefined}
           onShare={description => this.props.onShare(customSort, description)}
-          showShare={this.props.TeamSharingActivated}
+          showShare={this.props.teamSharingActivated}
           onDelete={CustomSortRedux.CustomSortDelete(customSort)}
           showBold={true}
         />
@@ -91,13 +91,13 @@ export class CustomSortSummaryComponent extends React.Component<
       <div>
         {customSortRow}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <CustomSortWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as CustomSort}
-            ConfigEntities={this.props.CustomSorts}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as CustomSort}
+            configEntities={this.props.CustomSorts}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -109,46 +109,46 @@ export class CustomSortSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: CustomSort = ObjectFactory.CreateEmptyCustomSort();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.ColumnId = this.props.summarisedColumn.ColumnId;
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(customSort: CustomSort) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(customSort),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(customSort),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    let customSort: CustomSort = this.state.EditedAdaptableObject as CustomSort;
+    let customSort: CustomSort = this.state.editedAdaptableObject as CustomSort;
     if (this.props.CustomSorts.find(x => x.ColumnId == customSort.ColumnId)) {
       this.props.onEditCustomSort(customSort);
     } else {
       this.props.onAddCustomSort(customSort);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let customSort = this.state.EditedAdaptableObject as CustomSort;
+    let customSort = this.state.editedAdaptableObject as CustomSort;
     return (
       StringExtensions.IsNotNullOrEmpty(customSort.ColumnId) &&
       ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)
@@ -159,7 +159,7 @@ export class CustomSortSummaryComponent extends React.Component<
     if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
       return customSort.SortedValues.join(', ');
     } else {
-      return 'Custom Sort uses a bespoke function';
+      return '[Has bespoke Custom Sort implementing using bespoke function]';
     }
   }
 }

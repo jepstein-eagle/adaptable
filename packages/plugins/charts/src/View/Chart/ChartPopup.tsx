@@ -6,6 +6,7 @@ import * as ChartRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers
 import * as PopupRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/PopupRedux';
 import * as SystemRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/SystemRedux';
 import * as TeamSharingRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/TeamSharingRedux';
+import * as QueryRedux from '@adaptabletools/adaptable/src/Redux/ActionsReducers/QueryRedux';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '@adaptabletools/adaptable/src/View/Components/SharedProps/StrategyViewPopupProps';
 import { Helper } from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
@@ -18,11 +19,16 @@ import { AdaptableObjectCollection } from '@adaptabletools/adaptable/src/View/Co
 import {
   EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '@adaptabletools/adaptable/src/View/Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '@adaptabletools/adaptable/src/View/UIInterfaces';
 import { UIHelper } from '@adaptabletools/adaptable/src/View/UIHelper';
 import { AdaptableObject } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableObject';
-import { ChartDefinition } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
+import {
+  ChartDefinition,
+  CategoryChartDefinition,
+  SparklinesChartDefinition,
+} from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
 import {
   ChartVisibility,
   ChartType,
@@ -36,6 +42,9 @@ import EmptyContent from '@adaptabletools/adaptable/src/components/EmptyContent'
 import DropdownButton from '@adaptabletools/adaptable/src/components/DropdownButton';
 import PlusIcon from '@adaptabletools/adaptable/src/components/icons/plus';
 import { AdaptableFunctionName } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Types';
+import { SharedQuery } from '@adaptabletools/adaptable/src/PredefinedConfig/QueryState';
+import { EMPTY_STRING } from '@adaptabletools/adaptable/src/Utilities/Constants/GeneralConstants';
+import { createUuid } from '@adaptabletools/adaptable/src/PredefinedConfig/Uuid';
 
 interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
   onAddChartDefinition: (chartDefinition: ChartDefinition) => ChartRedux.ChartDefinitionAddAction;
@@ -48,26 +57,36 @@ interface ChartPopupProps extends StrategyViewPopupProps<ChartPopupComponent> {
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
 }
 
-class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfigEntityState> {
+class ChartPopupComponent extends React.Component<
+  ChartPopupProps,
+  EditableExpressionConfigEntityState
+> {
   constructor(props: ChartPopupProps) {
     super(props);
-    this.state = UIHelper.getEmptyConfigState();
+    this.state = {
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+    };
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.value) {
-        let chartType: ChartType = this.props.PopupParams.value.trim() as ChartType; // todo: use the enum...
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.value) {
+        let chartType: ChartType = this.props.popupParams.value.trim() as ChartType; // todo: use the enum...
 
-        if (this.props.PopupParams.action == 'New') {
+        if (this.props.popupParams.action == 'New') {
           this.onNew(chartType);
         }
-        if (this.props.PopupParams.action == 'Edit') {
+        if (this.props.popupParams.action == 'Edit') {
           let index: number = this.props.ChartDefinitions.findIndex(
             cd => cd.Name == this.props.CurrentChartDefinition.Name
           );
+          // try to find the chartType!
+          let chartType: ChartType = ChartType.CategoryChart;
           this.onEdit(this.props.CurrentChartDefinition);
         }
       }
@@ -85,36 +104,36 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       { Content: '', Size: 2 },
     ];
 
-    let Charts = this.props.ChartDefinitions.map((Chart: ChartDefinition, index) => {
+    let Charts = this.props.ChartDefinitions.map((chart: ChartDefinition, index) => {
       return (
         <ChartEntityRow
           colItems={colItems}
-          AdaptableObject={Chart}
-          api={this.props.Api}
-          key={Chart.Name}
-          onEdit={() => this.onEdit(Chart as ChartDefinition)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
-          onShare={description => this.props.onShare(Chart, description)}
-          onDeleteConfirm={ChartRedux.ChartDefinitionDelete(Chart)}
+          adaptableObject={chart}
+          api={this.props.api}
+          key={chart.Name}
+          onEdit={() => this.onEdit(chart as ChartDefinition)}
+          teamSharingActivated={this.props.teamSharingActivated}
+          onShare={description => this.props.onShare(chart, description)}
+          onDeleteConfirm={ChartRedux.ChartDefinitionDelete(chart)}
           onShowChart={chartName => this.onShowChart(chartName)}
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
 
     let categoryChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.CategoryChart),
       label: 'Category Chart',
     };
     let pieChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.PieChart),
       label: 'Pie Chart',
     };
 
     let sparklinesChartMenuItem = {
-      disabled: this.props.AccessLevel == 'ReadOnly',
+      disabled: this.props.accessLevel == 'ReadOnly',
       onClick: () => this.onNew(ChartType.SparklinesChart),
       label: 'Sparklines Chart',
     };
@@ -134,7 +153,7 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       </DropdownButton>
     );
 
-    let editedChartDefinition = this.state.EditedAdaptableObject as ChartDefinition;
+    let editedChartDefinition = this.state.editedAdaptableObject as ChartDefinition;
 
     return (
       <PanelWithButton
@@ -155,43 +174,73 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
           </EmptyContent>
         )}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <div>
             {editedChartDefinition.ChartType == ChartType.CategoryChart ? (
               <CategoryChartWizard
-                EditedAdaptableObject={editedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.ModalContainer}
-                Api={this.props.Api}
-                WizardStartIndex={this.state.WizardStartIndex}
+                editedAdaptableObject={editedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
+                api={this.props.api}
+                wizardStartIndex={this.state.wizardStartIndex}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
+                onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                  this.setState({
+                    newSharedQueryName: newSharedQueryName,
+                  })
+                }
+                onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                  this.setState({
+                    useSharedQuery: useSharedQuery,
+                  })
+                }
               />
             ) : null}
             {editedChartDefinition.ChartType === ChartType.PieChart ? (
               <PieChartWizard
-                EditedAdaptableObject={editedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.ModalContainer}
-                Api={this.props.Api}
-                WizardStartIndex={0}
+                editedAdaptableObject={editedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
+                api={this.props.api}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
+                onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                  this.setState({
+                    newSharedQueryName: newSharedQueryName,
+                  })
+                }
+                onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                  this.setState({
+                    useSharedQuery: useSharedQuery,
+                  })
+                }
               />
             ) : null}
 
             {editedChartDefinition.ChartType === ChartType.SparklinesChart ? (
               <SparklinesChartWizard
-                EditedAdaptableObject={editedChartDefinition}
-                ConfigEntities={this.props.ChartDefinitions}
-                ModalContainer={this.props.ModalContainer}
-                Api={this.props.Api}
-                WizardStartIndex={0}
+                editedAdaptableObject={editedChartDefinition}
+                configEntities={this.props.ChartDefinitions}
+                modalContainer={this.props.modalContainer}
+                api={this.props.api}
+                wizardStartIndex={0}
                 onCloseWizard={() => this.onCloseWizard()}
                 onFinishWizard={() => this.onFinishWizard()}
                 canFinishWizard={() => this.canFinishWizard()}
+                onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                  this.setState({
+                    newSharedQueryName: newSharedQueryName,
+                  })
+                }
+                onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                  this.setState({
+                    useSharedQuery: useSharedQuery,
+                  })
+                }
               />
             ) : null}
           </div>
@@ -208,9 +257,9 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   onEdit(Chart: ChartDefinition) {
     //so we dont mutate original object
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(Chart),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(Chart),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
@@ -232,48 +281,75 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
       }
     }
     this.setState({
-      EditedAdaptableObject: emptyChartDefinition,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: emptyChartDefinition,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     // if we've come from the Toolbar and the Searches are identical then close the main popup
     if (
-      this.props.PopupParams &&
-      this.props.PopupParams.source &&
-      this.props.PopupParams.source == 'Toolbar'
+      this.props.popupParams &&
+      this.props.popupParams.source &&
+      this.props.popupParams.source == 'Toolbar'
     ) {
-      if (this.props.ChartDefinitions === this.props.Api.chartApi.getAllChartDefinitions()) {
+      if (this.props.ChartDefinitions === this.props.api.chartApi.getAllChartDefinitions()) {
         this.props.onClosePopup();
       }
     }
   }
 
   onFinishWizard() {
-    let clonedObject: ChartDefinition = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let clonedObject: ChartDefinition = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditChartDefinition(clonedObject);
     } else {
       this.props.onAddChartDefinition(clonedObject);
     }
 
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      switch (clonedObject.ChartType) {
+        case ChartType.CategoryChart: {
+          this.props.onAddSharedQuery({
+            Uuid: SharedQueryId,
+            Name: this.state.newSharedQueryName,
+            Expression: (clonedObject as CategoryChartDefinition).XAxisExpression,
+          });
+
+          (clonedObject as CategoryChartDefinition).XAxisExpression = undefined;
+          (clonedObject as CategoryChartDefinition).XAxisSharedQueryId = SharedQueryId;
+          break;
+        }
+        case ChartType.PieChart: {
+          break;
+        }
+        case ChartType.SparklinesChart: {
+          this.props.onAddSharedQuery({
+            Uuid: SharedQueryId,
+            Name: this.state.newSharedQueryName,
+            Expression: (clonedObject as SparklinesChartDefinition).Expression,
+          });
+
+          (clonedObject as SparklinesChartDefinition).Expression = undefined;
+          (clonedObject as SparklinesChartDefinition).SharedQueryId = SharedQueryId;
+          break;
+        }
+      }
+    }
+
     let shouldSelectChart: boolean =
-      this.state.WizardStatus == WizardStatus.New ||
+      this.state.wizardStatus == WizardStatus.New ||
       this.props.CurrentChartDefinition.Uuid == clonedObject.Uuid;
 
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
 
     if (shouldSelectChart) {
       // its new so make it the new chart or we are editing the current chart
@@ -282,8 +358,18 @@ class ChartPopupComponent extends React.Component<ChartPopupProps, EditableConfi
   }
 
   canFinishWizard() {
-    let Chart = this.state.EditedAdaptableObject as ChartDefinition;
+    let Chart = this.state.editedAdaptableObject as ChartDefinition;
     return StringExtensions.IsNotNullOrEmpty(Chart.Name);
+  }
+
+  resetState() {
+    this.setState({
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
+    });
   }
 }
 
@@ -312,6 +398,8 @@ function mapDispatchToProps(
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.ChartStrategyId, description)
       ),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
   };
 }
 

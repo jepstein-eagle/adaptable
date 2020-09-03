@@ -4,9 +4,7 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-import { MessageType } from '../../../PredefinedConfig/Common/Enums';
 import { AdaptablePopover } from '../../AdaptablePopover';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
@@ -26,8 +24,8 @@ export class PlusMinusSettingsWizard
   constructor(props: PlusMinusSettingsWizardProps) {
     super(props);
     this.state = {
-      NudgeValue: this.props.Data.NudgeValue,
-      IsDefaultNudge: this.props.Data.IsDefaultNudge,
+      NudgeValue: this.props.data.NudgeValue,
+      IsDefaultNudge: this.props.data.IsDefaultNudge,
     };
   }
 
@@ -92,14 +90,14 @@ export class PlusMinusSettingsWizard
     let e = event.target as HTMLInputElement;
     let isDefault: boolean = e.value == 'default';
     this.setState({ IsDefaultNudge: isDefault } as PlusMinusSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
   onColumnDefaultNudgeValueChange(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     this.setState({ NudgeValue: parseFloat(e.value) } as PlusMinusSettingsWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -110,20 +108,21 @@ export class PlusMinusSettingsWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.NudgeValue = this.state.NudgeValue;
-    this.props.Data.IsDefaultNudge = this.state.IsDefaultNudge;
-    if (this.props.Data.Expression == null || this.props.Data.IsDefaultNudge) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+  public next(): void {
+    this.props.data.NudgeValue = this.state.NudgeValue;
+    this.props.data.IsDefaultNudge = this.state.IsDefaultNudge;
+    if (this.props.data.IsDefaultNudge) {
+      this.props.data.Expression = undefined;
+      this.props.data.SharedQueryId = undefined;
     }
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.IsDefaultNudge ? 2 : 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

@@ -53,7 +53,7 @@ export const PlusMinusReducer: Redux.Reducer<PlusMinusState> = (
   let plusMinusRules: PlusMinusRule[];
   switch (action.type) {
     case PLUS_MINUS_APPLY:
-      //we apply logic in the middleware since it's an API call
+      //we apply logic in the middleware since it's an Api call
       return Object.assign({}, state);
 
     case PLUS_MINUS_RULE_ADD: {

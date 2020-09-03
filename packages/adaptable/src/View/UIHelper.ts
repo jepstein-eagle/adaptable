@@ -13,13 +13,10 @@ import {
 } from '../PredefinedConfig/Common/Enums';
 import { StringExtensions } from '../Utilities/Extensions/StringExtensions';
 import { AdaptableStyle } from '../PredefinedConfig/Common/AdaptableStyle';
-import { ExpressionBuilderPageState } from './ExpressionBuilder/ExpressionBuilderPage';
-import { Expression } from '../PredefinedConfig/Common/Expression';
 
 import { LoggingHelper } from '../Utilities/Helpers/LoggingHelper';
 import { Schedule } from '../PredefinedConfig/Common/Schedule';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import ExpressionHelper from '../Utilities/Helpers/ExpressionHelper';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { AdaptableOptions } from '../types';
 
@@ -125,31 +122,9 @@ export function getDefaultColors(): string[] {
 
 export function getEmptyConfigState(): EditableConfigEntityState {
   return {
-    EditedAdaptableObject: null,
-    WizardStartIndex: 0,
-    WizardStatus: WizardStatus.None,
-  };
-}
-
-export function getExpressionBuilderState(expression: Expression): ExpressionBuilderPageState {
-  // add any missing arrays here to avoid issues later
-  ExpressionHelper.AddMissingProperties(expression);
-
-  return {
-    Expression: expression,
-    SelectedColumnId: '',
-    SelectedTab: null,
-  };
-}
-
-export function getExpressionBuilderStateWithColumn(
-  expression: Expression,
-  columnId: string
-): ExpressionBuilderPageState {
-  return {
-    Expression: expression,
-    SelectedColumnId: columnId,
-    SelectedTab: null,
+    editedAdaptableObject: null,
+    wizardStartIndex: 0,
+    wizardStatus: WizardStatus.None,
   };
 }
 
@@ -499,8 +474,6 @@ export const UIHelper = {
   getHexForName,
   getDefaultColors,
   getEmptyConfigState,
-  getExpressionBuilderState,
-  getExpressionBuilderStateWithColumn,
   getDescriptionForDataType,
   getPlaceHolderforDataType,
   getModalContainer,

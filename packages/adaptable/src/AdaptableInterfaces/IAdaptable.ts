@@ -1,7 +1,6 @@
 import { AdaptableOptions, AdaptablePlugin, AdaptableMenuItem, MenuInfo } from '../types';
 import { IAdaptableStore } from '../Redux/Store/Interface/IAdaptableStore';
 import { IStrategyCollection } from '../Strategy/Interface/IStrategy';
-import { ICalendarService } from '../Utilities/Services/Interface/ICalendarService';
 import { IDataService } from '../Utilities/Services/Interface/IDataService';
 import { IValidationService } from '../Utilities/Services/Interface/IValidationService';
 import { IAuditLogService } from '../Utilities/Services/Interface/IAuditLogService';
@@ -12,7 +11,7 @@ import { ISearchService } from '../Utilities/Services/Interface/ISearchService';
 import { GridCell } from '../PredefinedConfig/Selection/GridCell';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { IRawValueDisplayValuePair } from '../View/UIInterfaces';
-import { DistinctCriteriaPairValue } from '../PredefinedConfig/Common/Enums';
+import { CellValueType } from '../PredefinedConfig/Common/Enums';
 import { Layout } from '../PredefinedConfig/LayoutState';
 import { FreeTextColumn } from '../PredefinedConfig/FreeTextColumnState';
 import { CalculatedColumn } from '../PredefinedConfig/CalculatedColumnState';
@@ -27,7 +26,6 @@ import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { ILayoutService } from '../Utilities/Services/Interface/ILayoutService';
 import { IStyleService } from '../Utilities/Services/Interface/IStyleService';
 import { IStrategyService } from '../Utilities/Services/StrategyService';
-import { IFilterService } from '../Utilities/Services/Interface/IFilterService';
 import { ColumnSort } from '../PredefinedConfig/Common/ColumnSort';
 import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
@@ -39,54 +37,17 @@ import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
  *
  *  Contains all the properties and methods that each implemenation must include
  *
- *  Each implemenation has a constructor that contains an AdaptableOptions object.
- *
- *  This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use
- *
- *  It also contains an api property which gives access to Adaptable API - this is the ONLY way that developers should access Adaptable methods.
+ * Should only be used internally as all external access is via the Api
  */
 export interface IAdaptable {
-  /**
-   * The api - the main way to access our store in a way that ensures that things stay immutable.
-   *
-   * Ideally ALL access to and from the Store should be via api methods.
-   *
-   * Likewise ALL access to methods in Adaptable by external developers should be via the API
-   */
   api: AdaptableApi;
 
-  /**
-   * The main configuration object which contains all the options that users needs to set up Adaptable.
-   *
-   * Most properties are nullable with sensible defaults provided in DefaultAdaptableOptions that is merged at initialisation.
-   *
-   * Adaptable's static constructor receives AdaptableOptions object.
-   *
-   * This object contains a number of properties including 'vedorGrid' which is the underlying grid that they use and the way that we can access the underlying grid and its data
-   */
   adaptableOptions: AdaptableOptions;
 
-  /**
-   * The redux store that we use to manage state
-   *
-   * Ideally all access to and from the store should be via Adaptable API and this store should NOT be accessed directly.
-   */
-  AdaptableStore: IAdaptableStore;
+  adaptableStore: IAdaptableStore;
 
-  /**
-   * Each set of functionality in Adaptable is called a strategy (e.g. Quick Search, Export)
-   *
-   * There are about 30 strategies in total
-   *
-   * Users are able to set through Predefined Config which ones are available (default), ReadOnly or Hidden
-   *
-   * Each strategy currently manages the State relevant to it and reacts to any changes (this might change?)
-   */
   strategies: IStrategyCollection;
 
-  /**
-   * The name of the underlying vendor grid - only used in the about page
-   */
   vendorGridName: 'agGrid' | 'Hypergrid';
 
   /**
@@ -108,7 +69,6 @@ export interface IAdaptable {
    *
    * Each takes an instance of Adaptable and is used when it is preferable to accessing a Strategy directly
    */
-  CalendarService: ICalendarService;
   DataService: IDataService;
   ValidationService: IValidationService;
   AuditLogService: IAuditLogService;
@@ -120,7 +80,6 @@ export interface IAdaptable {
   StyleService: IStyleService;
   LayoutService: ILayoutService;
   StrategyService: IStrategyService;
-  FilterService: IFilterService;
 
   // These are private events only
   _on(eventName: 'CellsSelected', callback: () => void): () => void;
@@ -128,17 +87,12 @@ export interface IAdaptable {
   _on(eventName: 'SearchApplied', callback: () => void): () => void;
   _on(eventName: 'GridRefreshed', callback: () => void): () => void;
   _on(eventName: 'GridFiltered', callback: () => void): () => void;
-  _on(eventName: 'GridReloaded', callback: () => void): () => void;
   _on(eventName: 'SortChanged', callback: (columnSorts: ColumnSort[]) => void): () => void;
   _on(eventName: 'SpecialColumnAdded', callback: () => void): () => void;
   _on(eventName: 'ColumnResized', callback: (colId: string) => void): () => void;
   _on(eventName: 'KeyDown', callback: (keyDownEvent: any) => void): () => void;
 
-  // onAny(callback: EmitterCallback): () => void;
-  //emit(eventName: string, data?: any): Promise<any>;
-
   // General
-  reloadGrid(): void;
   redraw(): void;
   redrawRow(rowNode: any): void;
   refreshCells(rowNodes: any[], columnIds: string[]): void;
@@ -162,6 +116,7 @@ export interface IAdaptable {
   selectColumns(columnIds: string[]): void;
   selectAll(): void;
   hideColumn(columnId: string): void;
+  showColumn(columnId: string): void;
 
   // column related
   updateColumnsIntoStore(): void;
@@ -173,24 +128,16 @@ export interface IAdaptable {
     columnId: string,
     visibleRowsOnly: boolean,
     onlyIncludeIds?: { [key: string]: boolean }
-  ): Array<IRawValueDisplayValuePair>;
-  getColumnValueDisplayValuePairDistinctList(
-    columnId: string,
-    distinctCriteria: DistinctCriteriaPairValue,
+  ): any[];
+  getDistinctValuesForColumn(
+    column: AdaptableColumn,
+    cellValueType: CellValueType,
     visibleRowsOnly: boolean
-  ): Array<IRawValueDisplayValuePair>;
+  ): any[];
   getDisplayValue(id: any, columnId: string): string;
-  getDisplayValueFromRowNode(rowwNode: any, columnId: string): string;
+  getValueFromRowNode(rowwNode: any, columnId: string, cellValueType: CellValueType): string;
   getRawValueFromRowNode(rowwNode: any, columnId: string): any;
-  getRowNodeIsSatisfiedFunction(
-    id: any,
-    distinctCriteria: DistinctCriteriaPairValue
-  ): (columnId: string) => any;
-  getRowNodeIsSatisfiedFunctionFromRowNode(
-    rowNode: any,
-    distinctCriteria: DistinctCriteriaPairValue
-  ): (columnId: string) => any;
-  getDisplayValueFromRawValue(columnId: string, rawValue: any): any;
+
   getDataRowFromRowNode(rowNode: any): any;
   getRowNodesForPrimaryKeys(primaryKeyValues: any[]): any[];
   getRowNodeForPrimaryKey(primaryKeyValue: any): any;
@@ -279,7 +226,6 @@ export interface IAdaptable {
   getVisibleColumnCount(): number;
 
   // layout
-  setGroupedColumns(groupedCols: string[]): void;
   setLayout(layout: Layout): void;
 
   // vendor grid related
@@ -323,4 +269,6 @@ export interface IAdaptable {
   getExpandRowGroupsKeys(): any[];
 
   buildStandaloneColumnHeader(adaptableColumn: AdaptableColumn): AdaptableMenuItem[];
+
+  isSharedQueryReferenced(sharedQueryId: string): boolean;
 }

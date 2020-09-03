@@ -91,9 +91,6 @@ function listenToActionColumnClicked(actionColumnEventArgs: ActionColumnClickedE
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Theme', 'Layout'],
-  },
   Entitlements: {
     FunctionEntitlements: [
       {

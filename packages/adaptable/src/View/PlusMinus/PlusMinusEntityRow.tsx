@@ -6,8 +6,6 @@ import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { SharedEntityRowProps } from '../Components/SharedProps/ConfigEntityRowProps';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
-import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { IColItem } from '../UIInterfaces';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { EntityRowItem } from '../Components/EntityRowItem';
@@ -23,12 +21,12 @@ export interface PlusMinusEntityRowProps extends SharedEntityRowProps<PlusMinusE
 
 export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps, {}> {
   render(): any {
-    let plusMinusRule: PlusMinusRule = this.props.AdaptableObject as PlusMinusRule;
+    let plusMinusRule: PlusMinusRule = this.props.adaptableObject as PlusMinusRule;
     let colItems: IColItem[] = [].concat(this.props.colItems);
 
     colItems[0].Content = (
       <EntityRowItem
-        Content={this.props.api.gridApi.getFriendlyNameFromColumn(
+        Content={this.props.api.columnApi.getFriendlyNameFromColumn(
           plusMinusRule.ColumnId,
           this.props.Column
         )}
@@ -51,13 +49,13 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
 
     let buttons: any = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(plusMinusRule)}
         shareClick={(description: string) => this.props.onShare(description)}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         overrideDisableEdit={false}
-        EntityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}
-        AccessLevel={this.props.AccessLevel}
+        entityType={StrategyConstants.PlusMinusStrategyFriendlyName + ' Rule '}
+        accessLevel={this.props.accessLevel}
       />
     );
     colItems[3].Content = buttons;
@@ -65,9 +63,9 @@ export class PlusMinusEntityRow extends React.Component<PlusMinusEntityRowProps,
     return <AdaptableObjectRow colItems={colItems} />;
   }
 
-  private wrapExpressionDescription(PlusMinusRule: PlusMinusRule): string {
-    return PlusMinusRule.IsDefaultNudge
+  private wrapExpressionDescription(plusMinusRule: PlusMinusRule): string {
+    return plusMinusRule.IsDefaultNudge
       ? '[Default Column Nudge Value]'
-      : ExpressionHelper.ConvertExpressionToString(PlusMinusRule.Expression, this.props.api);
+      : this.props.api.queryApi.QueryObjectToString(plusMinusRule);
   }
 }

@@ -71,12 +71,13 @@ const DropdownButton = (props: DropdownButtonProps) => {
 
   if (Array.isArray(items)) {
     content = items.map((item, index) => {
-      if (item.separator)
+      if (item.separator) {
         return (
           <tr className={`${baseClassName}__separator`} key={index}>
             <td colSpan={2}></td>
           </tr>
         );
+      }
       if (typeof listItemStyle === 'function') {
         listItemStyle = listItemStyle(item, index);
       }
@@ -165,6 +166,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
       visible={expanded}
       constrainTo={constrainTo}
       anchor="vertical"
+      targetOffset={listOffset}
       render={() => {
         return (
           <div style={listStyle} className={`${baseClassName}__list`}>
@@ -173,6 +175,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
         );
       }}
       {...overlayProps}
+      target={domProps.tooltip ? node => node.previousSibling as HTMLElement : undefined}
     >
       <SimpleButton
         icon={icon}

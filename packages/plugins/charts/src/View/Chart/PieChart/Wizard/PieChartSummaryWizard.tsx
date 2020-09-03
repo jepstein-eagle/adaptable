@@ -17,26 +17,26 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
     super(props);
   }
   render(): any {
-    let primaryColumnFriendlyName: string = this.props.Api.gridApi.getFriendlyNameFromColumnId(
-      this.props.Data.PrimaryColumnId
+    let primaryColumnFriendlyName: string = this.props.api.columnApi.getFriendlyNameFromColumnId(
+      this.props.data.PrimaryColumnId
     );
     let seondaryColumnFriendlyName: string = StringExtensions.IsNullOrEmpty(
-      this.props.Data.SecondaryColumnId
+      this.props.data.SecondaryColumnId
     )
       ? '[None]'
-      : this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.SecondaryColumnId);
+      : this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.SecondaryColumnId);
 
     let seondaryColumnOperation: string = StringExtensions.IsNullOrEmpty(
-      this.props.Data.SecondaryColumnId
+      this.props.data.SecondaryColumnId
     )
       ? ''
-      : this.props.Data.SecondaryColumnOperation;
+      : this.props.data.SecondaryColumnOperation;
 
-    let rowsDescription: string = this.props.Data.VisibleRowsOnly ? 'Visible Rows' : 'All Rows';
+    let rowsDescription: string = this.props.data.VisibleRowsOnly ? 'Visible Rows' : 'All Rows';
 
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
-      { Key: 'Description', Value: this.props.Data.Description },
+      { Key: 'Name', Value: this.props.data.Name },
+      { Key: 'Description', Value: this.props.data.Description },
       { Key: 'Primary Column', Value: primaryColumnFriendlyName },
       { Key: 'Secondary Column', Value: seondaryColumnFriendlyName },
       { Key: 'Operation', Value: seondaryColumnOperation },
@@ -57,16 +57,16 @@ export class PieChartSummaryWizard extends React.Component<PieChartSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

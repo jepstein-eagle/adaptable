@@ -1,6 +1,11 @@
 .ab-CheckBox--disabled {
   opacity: 0.5;
 }
+.ab-CheckBox--readonly {
+  svg {
+    opacity: 0.5
+  }
+}
 .ab-CheckBox-svg {
   position: relative;
   z-index: 1;

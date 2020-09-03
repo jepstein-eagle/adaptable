@@ -42,9 +42,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   api = await Adaptable.init(adaptableOptions);
 
@@ -55,15 +53,8 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'Filter'],
   },
   SystemStatus: {
     // ShowAlert: false,
@@ -79,8 +70,8 @@ let demoConfig: PredefinedConfig = {
         ColumnSorts: [],
         Columns: ['tradeId', 'notional', 'counterparty', 'country'],
         Name: 'fixing a bug',
-        // GroupedColumns: ['currency'],
-        GroupedColumns: [],
+        // RowGroupedColumns: ['currency'],
+        RowGroupedColumns: [],
       },
     ],
     CurrentLayout: 'fixing a bug',

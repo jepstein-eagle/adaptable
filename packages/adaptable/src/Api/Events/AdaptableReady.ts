@@ -6,7 +6,7 @@ import { AdaptableEventInfo } from './AdaptableEvents';
  *
  * Contains 2 properties
  *
- * - **adaptableAPI**: This is the *AdaptableApi* which provides run time access to all methods, functionality and events in AdapTable
+ * - **adaptableApi**: This is the *AdaptableApi* which provides run time access to all methods, functionality and events in AdapTable
  *
  * - **vendorGrid**: This is the instance of the underlying vendor grid being used.
  *

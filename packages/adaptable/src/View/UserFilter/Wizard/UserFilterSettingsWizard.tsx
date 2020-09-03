@@ -5,12 +5,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import ErrorBox from '../../../components/ErrorBox';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
 import HelpBlock from '../../../components/HelpBlock';
+import { UserFilter } from '../../../PredefinedConfig/FilterState';
 
 export interface UserFilterSettingsWizardProps extends AdaptableWizardStepProps<UserFilter> {}
 export interface UserFilterSettingsWizardState {
@@ -24,7 +24,7 @@ export class UserFilterSettingsWizard
   constructor(props: UserFilterSettingsWizardProps) {
     super(props);
     this.state = {
-      FilterName: this.props.Data.Name,
+      FilterName: this.props.data.Name,
       ErrorMessage: null,
     };
   }
@@ -66,15 +66,8 @@ export class UserFilterSettingsWizard
     this.setState(
       {
         FilterName: e.value,
-        ErrorMessage:
-          this.props.Api.userFilterApi
-            .getAllUserFilter()
-            .findIndex(x => x.Name == e.value && x.ColumnId == this.props.Data.ColumnId) > -1
-            ? 'A User Filter already exists with that name for column: ' +
-              this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
-            : null,
       } as UserFilterSettingsWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -89,16 +82,16 @@ export class UserFilterSettingsWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.Name = this.state.FilterName;
+  public next(): void {
+    this.props.data.Name = this.state.FilterName;
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

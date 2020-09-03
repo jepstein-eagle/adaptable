@@ -10,17 +10,13 @@ import { DataSource } from '../PredefinedConfig/DataSourceState';
 
 export class DataSourceStrategy extends AdaptableStrategyBase implements IDataSourceStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.DataSourceStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.DataSourceStrategyFriendlyName,
-        ComponentName: ScreenPopups.DataSourcePopup,
-        Icon: StrategyConstants.DataSourceGlyph,
-      });
-    }
+    super(
+      StrategyConstants.DataSourceStrategyId,
+      StrategyConstants.DataSourceStrategyFriendlyName,
+      StrategyConstants.DataSourceGlyph,
+      ScreenPopups.DataSourcePopup,
+      adaptable
+    );
   }
 
   public getTeamSharingAction(): TeamSharingImportInfo<DataSource> {

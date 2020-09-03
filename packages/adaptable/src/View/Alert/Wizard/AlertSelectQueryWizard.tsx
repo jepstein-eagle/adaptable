@@ -5,13 +5,12 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { AdaptablePopover } from '../../AdaptablePopover';
-
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 import WizardPanel from '../../../components/WizardPanel';
 import HelpBlock from '../../../components/HelpBlock';
 import CheckBox from '../../../components/CheckBox';
 import { Flex } from 'rebass';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface AlertSelectQueryWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 export interface AlertSelectQueryWizardState {
@@ -24,7 +23,9 @@ export class AlertSelectQueryWizard
   constructor(props: AlertSelectQueryWizardProps) {
     super(props);
     this.state = {
-      HasExpression: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression),
+      HasExpression:
+        StringExtensions.IsNotNullOrEmpty(this.props.data.Expression) ||
+        StringExtensions.IsNotNullOrEmpty(this.props.data.SharedQueryId),
     };
   }
 
@@ -60,7 +61,7 @@ export class AlertSelectQueryWizard
 
   private onOtherExpressionOptionChanged(checked: boolean) {
     this.setState({ HasExpression: checked } as AlertSelectQueryWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -71,23 +72,21 @@ export class AlertSelectQueryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     // if we have an expression and its null then create an empty one
-    if (
-      !this.state.HasExpression ||
-      (this.state.HasExpression && this.props.Data.Expression == null)
-    ) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+    if (!this.state.HasExpression) {
+      this.props.data.Expression = undefined;
+      this.props.data.SharedQueryId = undefined;
     }
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.HasExpression ? 1 : 2;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

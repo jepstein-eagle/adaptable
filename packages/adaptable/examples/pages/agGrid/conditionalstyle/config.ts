@@ -2,7 +2,6 @@ import { PredefinedConfig } from '../../../../src/types';
 
 export default {
   Dashboard: {
-    VisibleToolbars: [],
     VisibleButtons: ['ConditionalStyle'],
   },
   DataSource: {
@@ -20,16 +19,7 @@ export default {
           FontSize: undefined,
           ClassName: '',
         },
-        ConditionalStyleScope: 'Row',
-        Expression: {
-          ColumnValueExpressions: [
-            {
-              ColumnId: 'CompanyName',
-              ColumnDisplayValues: ["La maison d'Asie"],
-              ColumnRawValues: ["La maison d'Asie"],
-            },
-          ],
-        },
+        Expression: '[currency]="EUR',
       },
     ],
   },

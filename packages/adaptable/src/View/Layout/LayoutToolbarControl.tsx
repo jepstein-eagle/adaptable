@@ -21,12 +21,14 @@ import join from '../../components/utils/join';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { isEqual } from 'lodash';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
   onSelectLayout: (layoutName: string) => LayoutRedux.LayoutSelectAction;
-  onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
+  onSaveLayout: (layout: Layout) => void;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
+  onEditLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
   CurrentDraftLayout: Layout;
   CanSave: boolean;
@@ -42,8 +44,9 @@ class LayoutToolbarControlComponent extends React.Component<
       x => x.Name == this.props.CurrentLayoutName || x.Uuid == this.props.CurrentLayoutName
     );
 
-    let isManualSaveLayout: boolean =
-      this.props.Api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
+    let isManualSaveLayout: boolean = !this.props.api.layoutApi.shouldAutoSaveLayout(
+      this.props.CurrentDraftLayout
+    );
 
     let availableLayoutOptions: any = this.props.Layouts.map((layout, index) => {
       return {
@@ -72,7 +75,7 @@ class LayoutToolbarControlComponent extends React.Component<
         <Flex
           flexDirection="row"
           className={join(
-            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-DashboardToolbar__Layout__wrap'
           )}
         >
@@ -82,9 +85,16 @@ class LayoutToolbarControlComponent extends React.Component<
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
               disabled={!this.props.CanSave}
-              AccessLevel={this.props.AccessLevel}
+              accessLevel={this.props.accessLevel}
             />
           )}
+
+          <ButtonEdit
+            onClick={() => this.props.onEditLayout()}
+            tooltip="Edit Layout"
+            className="ab-DashboardToolbar__Layout__edit"
+            accessLevel={this.props.accessLevel}
+          />
 
           <ButtonNew
             children={null}
@@ -93,7 +103,7 @@ class LayoutToolbarControlComponent extends React.Component<
             className="ab-DashboardToolbar__Layout__new"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -105,7 +115,7 @@ class LayoutToolbarControlComponent extends React.Component<
               "Are you sure you want to delete '" + this.props.CurrentLayoutName + "'?"
             }
             ConfirmationTitle={'Delete Layout'}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>
@@ -116,6 +126,7 @@ class LayoutToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Layout"
         headerText={StrategyConstants.LayoutStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Layout')}
       >
         {content}
       </PanelDashboard>
@@ -133,7 +144,7 @@ class LayoutToolbarControlComponent extends React.Component<
 
 function mapStateToProps(
   state: AdaptableState,
-  ownProps: any
+  ownProps: LayoutToolbarControlComponentProps
 ): Partial<LayoutToolbarControlComponentProps> {
   const CurrentLayoutName = state.Layout.CurrentLayout;
   const Layouts = state.Layout.Layouts || [];
@@ -143,9 +154,11 @@ function mapStateToProps(
     CurrentLayoutName,
     CurrentDraftLayout: state.Grid.CurrentLayout || selectedLayout,
     Layouts,
-    CanSave: !ownProps.Api.internalApi
-      .getLayoutService()
-      .areEqual(selectedLayout, state.Grid.CurrentLayout),
+    CanSave:
+      state.Grid.CurrentLayout &&
+      !ownProps.api.internalApi
+        .getLayoutService()
+        .areEqual(selectedLayout, state.Grid.CurrentLayout),
   };
 }
 
@@ -154,7 +167,10 @@ function mapDispatchToProps(
 ): Partial<LayoutToolbarControlComponentProps> {
   return {
     onSelectLayout: (layoutName: string) => dispatch(LayoutRedux.LayoutSelect(layoutName)),
-    onSaveLayout: (layout: Layout) => dispatch(LayoutRedux.LayoutSave(layout)),
+    onSaveLayout: (layout: Layout) => {
+      dispatch(LayoutRedux.LayoutSave(layout));
+      dispatch(LayoutRedux.LayoutUpdateCurrentDraft(null));
+    },
 
     onNewLayout: () =>
       dispatch(
@@ -163,10 +179,19 @@ function mapDispatchToProps(
           source: 'Toolbar',
         })
       ),
+    onEditLayout: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
+          action: 'Edit',
+          source: 'Toolbar',
+        })
+      ),
     onConfigure: () =>
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

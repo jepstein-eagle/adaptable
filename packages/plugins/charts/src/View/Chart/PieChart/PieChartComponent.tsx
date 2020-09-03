@@ -53,9 +53,9 @@ import { ChartContainer } from '@adaptabletools/adaptable/src/components/ChartCo
 import { AdaptableApi } from '@adaptabletools/adaptable/types';
 
 interface PieChartComponentProps {
-  CurrentChartDefinition: PieChartDefinition;
-  ChartData: ChartData;
-  Api: AdaptableApi;
+  currentChartDefinition: PieChartDefinition;
+  chartData: ChartData;
+  api: AdaptableApi;
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
 
@@ -81,8 +81,8 @@ export class PieChartComponent extends React.Component<
     super(props);
 
     this.state = PieChartUIHelper.setChartDisplayPopupState(
-      this.props.CurrentChartDefinition,
-      this.props.ChartData
+      this.props.currentChartDefinition,
+      this.props.chartData
     );
 
     IgrPieChartModule.register();
@@ -99,22 +99,22 @@ export class PieChartComponent extends React.Component<
   UNSAFE_componentWillReceiveProps(nextProps: PieChartComponentProps, nextContext: any) {
     this.setState(
       PieChartUIHelper.setChartDisplayPopupState(
-        nextProps.CurrentChartDefinition,
-        nextProps.ChartData
+        nextProps.currentChartDefinition,
+        nextProps.chartData
       )
     );
   }
 
   render() {
-    let chartTitle: string = this.props.CurrentChartDefinition.Name;
-    if (StringExtensions.IsNotNullOrEmpty(this.props.CurrentChartDefinition.Description)) {
-      chartTitle += ' : ' + this.props.CurrentChartDefinition.Description;
+    let chartTitle: string = this.props.currentChartDefinition.Name;
+    if (StringExtensions.IsNotNullOrEmpty(this.props.currentChartDefinition.Description)) {
+      chartTitle += ' : ' + this.props.currentChartDefinition.Description;
     }
 
     let chartErrorMessage: string =
-      this.props.ChartData != null &&
-      StringExtensions.IsNotNullOrEmpty(this.props.ChartData.ErrorMessage)
-        ? this.props.ChartData.ErrorMessage
+      this.props.chartData != null &&
+      StringExtensions.IsNotNullOrEmpty(this.props.chartData.ErrorMessage)
+        ? this.props.chartData.ErrorMessage
         : null;
 
     let showGeneralPropertiesButton = this.state.IsGeneralMinimised ? (
@@ -203,7 +203,7 @@ export class PieChartComponent extends React.Component<
     );
 
     let chartElement =
-      this.props.ChartData != null && chartErrorMessage == null ? (
+      this.props.chartData != null && chartErrorMessage == null ? (
         chart
       ) : (
         <HelpBlock>{chartErrorMessage}</HelpBlock>
@@ -324,7 +324,7 @@ export class PieChartComponent extends React.Component<
       </PanelWithTwoButtons>
     );
 
-    return this.props.ChartData != null ? (
+    return this.props.chartData != null ? (
       <ChartContainer
         button={!this.state.IsChartSettingsVisible ? openChartSettingsButton : null}
         chart={chartElement}
@@ -387,7 +387,7 @@ export class PieChartComponent extends React.Component<
 
   private updateChartProperties(chartProperties: ChartProperties): void {
     this.setState({ ChartProperties: chartProperties } as PieChartComponentState);
-    this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
+    this.props.onUpdateChartProperties(this.props.currentChartDefinition.Uuid, chartProperties);
   }
 
   private onPieOrDoughnutViewChanged(checked: boolean) {

@@ -22,10 +22,8 @@ import {
   ChartVisibility,
   ChartType,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/ChartEnums';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import StringExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/StringExtensions';
-import { AdaptableMenuItem } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Menu';
 
 export class ChartStrategy extends AdaptableStrategyBase implements IChartStrategy {
   private ChartState: ChartState;
@@ -33,7 +31,13 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   private throttleSetChartData: (() => void) & _.Cancelable;
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ChartStrategyId, adaptable);
+    super(
+      StrategyConstants.ChartStrategyId,
+      StrategyConstants.ChartStrategyFriendlyName,
+      StrategyConstants.ChartGlyph,
+      ScreenPopups.ChartPopup,
+      adaptable
+    );
 
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       setTimeout(() => {
@@ -51,16 +55,6 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
 
     let refreshRate: number = this.GetChartState().RefreshRate * 1000;
     this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ChartStrategyFriendlyName,
-        ComponentName: ScreenPopups.ChartPopup,
-        Icon: StrategyConstants.ChartGlyph,
-      });
-    }
   }
 
   protected InitState() {
@@ -186,18 +180,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
       return true;
     }
 
-    if (
-      ExpressionHelper.ConvertExpressionToString(
-        cd1.XAxisExpression,
-
-        this.adaptable.api
-      ) !=
-      ExpressionHelper.ConvertExpressionToString(
-        cd2.XAxisExpression,
-
-        this.adaptable.api
-      )
-    ) {
+    if (cd1.XAxisExpression != cd2.XAxisExpression) {
       return true;
     }
     return false;
@@ -388,7 +371,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
   }
 
   private GetColumnState(): AdaptableColumn[] {
-    return this.adaptable.api.gridApi.getColumns();
+    return this.adaptable.api.columnApi.getColumns();
   }
 
   private GetCurrentChartDefinition(): ChartDefinition {

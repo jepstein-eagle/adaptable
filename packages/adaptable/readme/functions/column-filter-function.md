@@ -1,6 +1,6 @@
 # Column Filter (AdaptableFunction)
 
-The Column Filter ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `ColumnFilter`) Function facilitates creating powerful, dynamic filters for any column in AdapTable.
+The Column Filter  Function facilitates creating powerful, dynamic filters for any column in AdapTable.
 
 It also provides a way for users to see at a glance which columns have filters applied to them, together with an option to clear them (or turn them into reusable [User Filters](./user-filter-function.md)).
 
@@ -26,7 +26,7 @@ Any active column filters when the system closes are immediately re-applied on s
 
 If you don't want this then you can set it.
 
-Column Filters cannot be saved for re-use.  In order to save - and then re-use - Column Filters in other functions (e.g. Advanced Search), click the save button in the top of the Filter Form which will convert the Column Filter into a named - and re-usable [User Filter](./user-filter-function.md).
+Column Filters cannot be saved for re-use.  In order to save - and then re-use - Column Filters in other functions (e.g. Export), click the save button in the top of the Filter Form which will convert the Column Filter into a named - and re-usable [User Filter](./user-filter-function.md).
 
 > If you dont want to use AdapTable's Filter Form and prefer to use that provided by the underlying vendor grid, then set the useAdaptableFilterForm property to false in Filter Options.
 
@@ -41,6 +41,7 @@ When this is used, AdapTable will create a Column Filter behind the scenes that 
 See the [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md) for more details.
 
 ## UI Elements
+
 Column Filters includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Column Filters with *Save as User Filter* and *Delete* buttons.  
@@ -77,7 +78,7 @@ Yes you can - by creating a [User Filter](./user-filter-function.md).  Column Fi
 
 - [Column Filters State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)
 
-- [Column Filters Api](https://api.adaptabletools.com/interfaces/_src_api_columnfilterapi_.columnfilterapi.html)
+- [ Filters Api](https://api.adaptabletools.com/interfaces/_src_api_filterapi_.filterapi.html)
 
 - [Column Filters Demo](https://demo.adaptabletools.com/filters/aggridcolumnfiltersdemo)
 

@@ -23,38 +23,38 @@ export class GradientColumnSummaryWizard
 
   render(): any {
     let positiveStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-    positiveStyle.BackColor = this.props.Data.PositiveColor;
-    positiveStyle.ForeColor = this.props.Data.PositiveColor;
+    positiveStyle.BackColor = this.props.data.PositiveColor;
+    positiveStyle.ForeColor = this.props.data.PositiveColor;
     let negativeStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-    negativeStyle.BackColor = this.props.Data.NegativeColor;
-    negativeStyle.ForeColor = this.props.Data.NegativeColor;
+    negativeStyle.BackColor = this.props.data.NegativeColor;
+    negativeStyle.ForeColor = this.props.data.NegativeColor;
 
     let keyValuePairs: KeyValuePair[] = [
       {
         Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
       },
       {
         Key: 'Base Value',
-        Value: this.props.Data.BaseValue,
+        Value: this.props.data.BaseValue,
       },
       {
         Key: 'Positive Value',
-        Value: this.props.Data.PositiveValue,
+        Value: this.props.data.PositiveValue,
       },
 
       {
         Key: 'Positive Colour',
-        Value: this.props.Data.PositiveValue ? <StyleVisualItem Style={positiveStyle} /> : null,
+        Value: this.props.data.PositiveValue ? <StyleVisualItem Style={positiveStyle} /> : null,
       },
       {
         Key: 'Negative Value',
-        Value: this.props.Data.NegativeValue,
+        Value: this.props.data.NegativeValue,
       },
 
       {
         Key: 'Negative Colour',
-        Value: this.props.Data.NegativeValue ? <StyleVisualItem Style={negativeStyle} /> : null,
+        Value: this.props.data.NegativeValue ? <StyleVisualItem Style={negativeStyle} /> : null,
       },
     ];
 
@@ -74,18 +74,18 @@ export class GradientColumnSummaryWizard
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

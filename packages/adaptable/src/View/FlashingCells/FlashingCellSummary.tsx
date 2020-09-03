@@ -27,7 +27,7 @@ export class FlashingCellSummaryComponent extends React.Component<
 > {
   render(): any {
     let flashingCell: FlashingCell = this.props.FlashingCells.find(
-      fc => fc.ColumnId == this.props.SummarisedColumn.ColumnId
+      fc => fc.ColumnId == this.props.summarisedColumn.ColumnId
     );
     let isFlashingCellColumn: boolean = flashingCell && flashingCell.IsLive;
 
@@ -63,14 +63,14 @@ export class FlashingCellSummaryComponent extends React.Component<
 
   onFlashingSelectedChanged(flashingCell: FlashingCell) {
     let existingfc = this.props.FlashingCells.find(
-      e => e.ColumnId == this.props.SummarisedColumn.ColumnId
+      e => e.ColumnId == this.props.summarisedColumn.ColumnId
     );
     if (!existingfc) {
-      let flashingCellState: FlashingCellState = this.props.Api.configApi.configGetFlashingCellState(
+      let flashingCellState: FlashingCellState = this.props.api.configApi.configGetFlashingCellState(
         false
       );
-      let col: AdaptableColumn = this.props.Api.gridApi.getColumnFromId(
-        this.props.SummarisedColumn.ColumnId
+      let col: AdaptableColumn = this.props.api.columnApi.getColumnFromId(
+        this.props.summarisedColumn.ColumnId
       );
       existingfc = ObjectFactory.CreateDefaultFlashingCell(
         col,

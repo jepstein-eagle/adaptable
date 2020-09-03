@@ -26,9 +26,7 @@ async function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Ticking Row Data Demo',
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,

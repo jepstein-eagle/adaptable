@@ -1,6 +1,6 @@
 # Schedule (AdaptableFunction)
 
-The Schedule([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Schedule`) Function allows certain actions to be performed at a given point in time - either as a one-off date or a repeated activity.
+The Schedule Function allows certain actions to be performed at a given point in time - either as a one-off date or a repeated activity.
 
 The Schedule function 'wraps' all the AdaptableFunctions that include scheduling functionality in one place.  
 

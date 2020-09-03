@@ -5,9 +5,9 @@ import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as PlusMinusRedux from '../../Redux/ActionsReducers/PlusMinusRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
-import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PlusMinusWizard } from './Wizard/PlusMinusWizard';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
@@ -15,21 +15,22 @@ import { ObjectFactory } from '../../Utilities/ObjectFactory';
 import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
 import {
-  EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { PlusMinusEntityRow } from './PlusMinusEntityRow';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import { PlusMinusRule } from '../../PredefinedConfig/PlusMinusState';
 import { IUIConfirmation } from '../../Utilities/Interface/IMessage';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import EmptyContent from '../../components/EmptyContent';
 import { Flex } from 'rebass';
-import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupComponent> {
   DefaultNudgeValue: number;
@@ -39,6 +40,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
   onConfirmWarningCellValidation: (
     confirmation: IUIConfirmation
   ) => PopupRedux.PopupShowConfirmationAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
@@ -47,7 +49,7 @@ interface PlusMinusPopupProps extends StrategyViewPopupProps<PlusMinusPopupCompo
 
 class PlusMinusPopupComponent extends React.Component<
   PlusMinusPopupProps,
-  EditableConfigEntityState
+  EditableExpressionConfigEntityState
 > {
   constructor(props: PlusMinusPopupProps) {
     super(props);
@@ -55,20 +57,20 @@ class PlusMinusPopupComponent extends React.Component<
   }
   shouldClosePopupOnFinishWizard: boolean = false;
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        if (this.props.popupParams.action == 'New') {
           let plusMinus = ObjectFactory.CreateEmptyPlusMinusRule();
-          plusMinus.ColumnId = this.props.PopupParams.columnId;
+          plusMinus.ColumnId = this.props.popupParams.column.ColumnId;
           this.setState({
-            EditedAdaptableObject: plusMinus,
-            WizardStatus: WizardStatus.New,
-            WizardStartIndex: 1,
+            editedAdaptableObject: plusMinus,
+            wizardStatus: WizardStatus.New,
+            wizardStartIndex: 1,
           });
         }
       }
       this.shouldClosePopupOnFinishWizard =
-        this.props.PopupParams.source && this.props.PopupParams.source == 'ColumnMenu';
+        this.props.popupParams.source && this.props.popupParams.source == 'ColumnMenu';
     }
   }
 
@@ -91,23 +93,23 @@ class PlusMinusPopupComponent extends React.Component<
       { Content: '', Size: 2 },
     ];
     let PlusMinusRules = this.props.PlusMinusRules.map((x, index) => {
-      let column = this.props.Api.gridApi.getColumnFromId(x.ColumnId);
+      let column = this.props.api.columnApi.getColumnFromId(x.ColumnId);
 
       return (
         <PlusMinusEntityRow
           colItems={colItems}
-          api={this.props.Api}
-          AdaptableObject={x}
+          api={this.props.api}
+          adaptableObject={x}
           key={index}
           onEdit={() => this.onEdit(x)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onShare={description => this.props.onShare(x, description)}
           onDeleteConfirm={PlusMinusRedux.PlusMinusRuleDelete(x)}
           Column={column}
           onColumnDefaultNudgeValueChange={(plusMinusRule, event) =>
             this.onColumnDefaultNudgeValueChange(plusMinusRule, event)
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -116,7 +118,12 @@ class PlusMinusPopupComponent extends React.Component<
       <ButtonNew
         onClick={() => this.onNew()}
         tooltip="Create Plus / Minus Rule"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
       />
     );
 
@@ -138,14 +145,24 @@ class PlusMinusPopupComponent extends React.Component<
             </EmptyContent>
           )}
 
-          {this.state.EditedAdaptableObject != null && (
+          {this.state.editedAdaptableObject != null && (
             <PlusMinusWizard
-              EditedAdaptableObject={this.state.EditedAdaptableObject as PlusMinusRule}
-              ConfigEntities={null}
-              ModalContainer={this.props.ModalContainer}
-              WizardStartIndex={this.state.WizardStartIndex}
+              editedAdaptableObject={this.state.editedAdaptableObject as PlusMinusRule}
+              configEntities={null}
+              modalContainer={this.props.modalContainer}
+              wizardStartIndex={this.state.wizardStartIndex}
               SelectedColumnId={null}
-              Api={this.props.Api}
+              api={this.props.api}
+              onSetNewSharedQueryName={(newSharedQueryName: string) =>
+                this.setState({
+                  newSharedQueryName: newSharedQueryName,
+                })
+              }
+              onSetUseSharedQuery={(useSharedQuery: boolean) =>
+                this.setState({
+                  useSharedQuery: useSharedQuery,
+                })
+              }
               onCloseWizard={() => this.onCloseWizard()}
               onFinishWizard={() => this.onFinishWizard()}
               canFinishWizard={() => this.canFinishWizard()}
@@ -158,55 +175,69 @@ class PlusMinusPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyPlusMinusRule(),
-      WizardStatus: WizardStatus.New,
-      WizardStartIndex: 0,
+      editedAdaptableObject: ObjectFactory.CreateEmptyPlusMinusRule(),
+      wizardStatus: WizardStatus.New,
+      wizardStartIndex: 0,
     });
   }
   onEdit(plusMinusRule: PlusMinusRule) {
     let clonedObject: PlusMinusRule = Helper.cloneObject(plusMinusRule);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStatus: WizardStatus.Edit,
-      WizardStartIndex: 1,
+      editedAdaptableObject: clonedObject,
+      wizardStatus: WizardStatus.Edit,
+      wizardStartIndex: 1,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
     if (this.shouldClosePopupOnFinishWizard) {
       this.props.onClosePopup();
     }
   }
 
   onFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let plusMinus = this.state.editedAdaptableObject as PlusMinusRule;
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.newSharedQueryName,
+        Expression: plusMinus.Expression,
+      });
+      plusMinus.Expression = undefined;
+      plusMinus.SharedQueryId = SharedQueryId;
+    }
+
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditPlusMinusRule(plusMinus);
     } else {
       this.props.onAddPlusMinusRule(plusMinus);
     }
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
-    this.shouldClosePopupOnFinishWizard = false;
+    this.resetState();
   }
 
   canFinishWizard() {
-    let plusMinus = this.state.EditedAdaptableObject as PlusMinusRule;
+    let plusMinus = this.state.editedAdaptableObject as PlusMinusRule;
     return (
       StringExtensions.IsNotNullOrEmpty(plusMinus.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(plusMinus.NudgeValue.toString()) && // check its a number??
       (plusMinus.IsDefaultNudge ||
-        ExpressionHelper.IsNullOrEmptyOrValidExpression(plusMinus.Expression))
+        StringExtensions.IsNullOrEmpty(plusMinus.Expression) ||
+        StringExtensions.IsNullOrEmpty(plusMinus.SharedQueryId))
     );
+  }
+
+  resetState() {
+    this.setState({
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
+    });
   }
 
   onColumnDefaultNudgeValueChange(plusMinusRule: PlusMinusRule, event: React.FormEvent<any>) {
@@ -237,7 +268,7 @@ class PlusMinusPopupComponent extends React.Component<
       }
     } else {
       // not quite sure that this is right... need to test:
-      if (this.state.WizardStatus == WizardStatus.Edit) {
+      if (this.state.wizardStatus == WizardStatus.Edit) {
         this.props.onEditPlusMinusRule(plusMinusRule);
       } else {
         this.props.onAddPlusMinusRule(plusMinusRule);
@@ -276,6 +307,8 @@ function mapDispatchToProps(
       dispatch(PlusMinusRedux.PlusMinusRuleEdit(plusMinusRule)),
     onConfirmWarningCellValidation: (confirmation: IUIConfirmation) =>
       dispatch(PopupRedux.PopupShowConfirmation(confirmation)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(

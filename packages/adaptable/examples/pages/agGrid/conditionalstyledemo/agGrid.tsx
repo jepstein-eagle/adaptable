@@ -27,7 +27,7 @@ var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 50;
+  const tradeCount: number = 20;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
 
@@ -49,9 +49,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   api = await Adaptable.init(adaptableOptions);
 }
@@ -60,68 +58,65 @@ let demoConfig: PredefinedConfig = {
   Dashboard: {
     VisibleButtons: ['ConditionalStyle'],
   },
+  Query: {
+    SharedQueries: [
+      {
+        Uuid: '123-456-789',
+        Name: 'US Banks',
+        Expression: '[counterparty] IN("BAML", "Citi", "JP Morgan", "Goldman Sachs")',
+      },
+    ],
+  },
+
   ConditionalStyle: {
     ConditionalStyles: [
       {
-        ColumnId: 'changeOnYear',
+        Scope: {
+          All: true,
+        },
+        Style: {
+          BackColor: '#ffffe0',
+        },
+        SharedQueryId: '123-456-789',
+        ExcludeGroupedRows: false,
+      },
+      {
+        Scope: {
+          All: true,
+        },
         Style: {
           ForeColor: '#008000',
         },
-        ConditionalStyleScope: 'Column',
-        Expression: {
-          FilterExpressions: [
-            {
-              ColumnId: 'changeOnYear',
-              Filters: ['Positive'],
-            },
-          ],
-        },
+        Expression: '[changeOnYear] > 0',
       },
       {
-        ColumnId: 'changeOnYear',
+        Scope: {
+          All: true,
+        },
         Style: {
           ForeColor: '#ff0000',
         },
-        ConditionalStyleScope: 'Column',
-        Expression: {
-          FilterExpressions: [
-            {
-              ColumnId: 'changeOnYear',
-              Filters: ['Negative'],
-            },
-          ],
-        },
+        Expression: '[changeOnYear] < 0',
       },
       {
+        Scope: {
+          All: true,
+        },
         Style: {
           BackColor: 'green',
           FontStyle: 'Italic',
           ForeColor: '#000000',
         },
-        ConditionalStyleScope: 'Row',
-        // ExcludeGroupedRows: false,
-        Expression: {
-          RangeExpressions: [
-            {
-              ColumnId: 'notional',
-              Ranges: [
-                {
-                  Operand1: '1400',
-                  Operand1Type: 'Value',
-                  Operator: 'GreaterThan',
-                },
-              ],
-            },
-          ],
-        },
+        Expression: '[notional] > 1400',
       },
     ],
   },
+
   Layout: {
-    CurrentLayout: 'Grouping Layout',
+    //  CurrentLayout: 'Grouping Layout',
     Layouts: [
       {
-        GroupedColumns: ['country'],
+        RowGroupedColumns: ['country'],
         Columns: ['notional', 'country', 'currency', 'tradeId', 'counterparty'],
         Name: 'Grouping Layout',
       },

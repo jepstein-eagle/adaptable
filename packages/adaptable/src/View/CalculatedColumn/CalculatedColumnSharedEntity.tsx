@@ -8,7 +8,7 @@ export class CalculatedColumnSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let calcCol: CalculatedColumn = this.props.Entity as CalculatedColumn;
+    let calcCol: CalculatedColumn = this.props.entity as CalculatedColumn;
 
     return (
       <Flex flexDirection="row" alignItems="center">

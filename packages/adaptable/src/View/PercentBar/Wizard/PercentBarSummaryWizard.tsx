@@ -22,25 +22,25 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
 
   render(): any {
     let keyValuePairs: KeyValuePair[] = [];
-    if (this.props.Data) {
+    if (this.props.data) {
       let positiveStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-      positiveStyle.BackColor = this.props.Data.PositiveColor;
-      positiveStyle.ForeColor = this.props.Data.PositiveColor;
+      positiveStyle.BackColor = this.props.data.PositiveColor;
+      positiveStyle.ForeColor = this.props.data.PositiveColor;
       let negativeStyle: AdaptableStyle = ObjectFactory.CreateEmptyStyle();
-      negativeStyle.BackColor = this.props.Data.NegativeColor;
-      negativeStyle.ForeColor = this.props.Data.NegativeColor;
+      negativeStyle.BackColor = this.props.data.NegativeColor;
+      negativeStyle.ForeColor = this.props.data.NegativeColor;
 
       keyValuePairs = [
         {
           Key: 'Column',
-          Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+          Value: this.props.api.columnApi.getFriendlyNameFromColumnId(this.props.data.ColumnId),
         },
 
         {
           Key: 'Ranges',
           Value: (
             <Flex>
-              {this.props.Data!.Ranges.map((r, i) => (
+              {this.props.data!.Ranges.map((r, i) => (
                 <Flex key={i} alignItems="center" mr={3}>
                   <Box mr={1}>
                     {r.Min} to {r.Max}{' '}
@@ -58,23 +58,23 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
         },
         {
           Key: 'Back Color',
-          Value: this.props.Data.BackColor ? (
+          Value: this.props.data.BackColor ? (
             <StyleVisualItem
               Style={{
-                BackColor: this.props.Data.BackColor,
-                ForeColor: this.props.Data.BackColor,
+                BackColor: this.props.data.BackColor,
+                ForeColor: this.props.data.BackColor,
               }}
             />
           ) : (
             'No'
           ),
         },
-        { Key: 'Show Cell Value', Value: this.props.Data.ShowValue ? 'Yes' : 'No' },
-        { Key: 'Show Tooltip', Value: this.props.Data.ShowToolTip ? 'Yes' : 'No' },
-        { Key: 'Display Raw Value', Value: this.props.Data.DisplayRawValue ? 'Yes' : 'No' },
+        { Key: 'Show Cell Value', Value: this.props.data.ShowValue ? 'Yes' : 'No' },
+        { Key: 'Show Tooltip', Value: this.props.data.ShowToolTip ? 'Yes' : 'No' },
+        { Key: 'Display Raw Value', Value: this.props.data.DisplayRawValue ? 'Yes' : 'No' },
         {
           Key: 'Display Percentage Value',
-          Value: this.props.Data.DisplayPercentageValue ? 'Yes' : 'No',
+          Value: this.props.data.DisplayPercentageValue ? 'Yes' : 'No',
         },
       ];
     }
@@ -95,18 +95,18 @@ export class PercentBarSummaryWizard extends React.Component<PercentBarSummaryWi
     return true;
   }
 
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

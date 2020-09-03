@@ -34,7 +34,7 @@ async function InitAdaptableDemo() {
   api = await Adaptable.init(adaptableOptions);
 
   // using mousetrap as dependency
-  Mousetrap.bind('alt+shift+1', () => api.advancedSearchApi.showAdvancedSearchPopup());
+  Mousetrap.bind('alt+shift+1', () => api.queryApi.showQueryPopup());
   Mousetrap.bind('alt+shift+2', () => api.calculatedColumnApi.showCalculatedColumnPopup());
   Mousetrap.bind('alt+shift+3', () => api.layoutApi.showLayoutPopup());
   Mousetrap.bind('alt+shift+4', () => api.quickSearchApi.showQuickSearchPopup());

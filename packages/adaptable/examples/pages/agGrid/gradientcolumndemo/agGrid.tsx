@@ -42,9 +42,7 @@ async function InitAdaptableDemo() {
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
   };
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   api = await Adaptable.init(adaptableOptions);
 
@@ -55,15 +53,8 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'Export', 'SystemStatus'],
-    MinimisedHomeToolbarButtonStyle: {
-      Variant: 'text',
-      Tone: 'success',
-    }, //
-  },
   ToolPanel: {
-    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'ColumnFilter'],
+    VisibleToolPanels: ['Export', 'Layout', 'SystemStatus', 'Filter'],
   },
   GradientColumn: {
     GradientColumns: [

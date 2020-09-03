@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { CellValidationRule } from '../../../PredefinedConfig/CellValidationState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface CellValidationSummaryWizardProps
   extends AdaptableWizardStepProps<CellValidationRule> {}
@@ -24,21 +22,19 @@ export class CellValidationSummaryWizard
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
       {
-        Key: 'Column',
-        Value: this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId),
+        Key: 'Scope',
+        Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope),
       },
-      { Key: 'Mode', Value: this.props.Data.ActionMode },
+      { Key: 'Mode', Value: this.props.data.ActionMode },
       {
         Key: 'Rule',
-        Value: this.props.Api.internalApi
+        Value: this.props.api.internalApi
           .getValidationService()
-          .createCellValidationDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
+          .createCellValidationDescription(this.props.data),
       },
       {
         Key: 'Query',
-        Value: ExpressionHelper.IsNotNullOrEmptyExpression(this.props.Data.Expression)
-          ? ExpressionHelper.ConvertExpressionToString(this.props.Data.Expression, this.props.Api)
-          : 'None',
+        Value: this.setExpressionDescription(this.props.data),
       },
     ];
 
@@ -50,6 +46,11 @@ export class CellValidationSummaryWizard
     );
   }
 
+  private setExpressionDescription(cellValidation: CellValidationRule): string {
+    let expression = this.props.api.queryApi.QueryObjectToString(cellValidation);
+    return expression ? expression : 'No Expression';
+  }
+
   public canNext(): boolean {
     return true;
   }
@@ -57,18 +58,21 @@ export class CellValidationSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     /* no implementation */
   }
 
-  public Back(): void {
+  public back(): void {
     /* no implementation */
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
-    return ExpressionHelper.IsNullOrEmptyExpression(this.props.Data.Expression) ? 2 : 1;
+  public getIndexStepDecrement() {
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId)
+      ? 2
+      : 1;
   }
 }

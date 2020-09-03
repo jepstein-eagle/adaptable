@@ -1,10 +1,8 @@
 # Dashboard (AdaptableFunction)
 
-The Dashboard ([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `Dashboard`) is the area above the Grid that contains tabs, toolbars, frequently used buttons and search box.
+The Dashboard is the area above the Grid that contains tabs, toolbars, frequently used buttons and search box.
 
 The Dashboard can be heavily customised so that it fits your needs both in terms of contents and visibility.
-
-**Note**: In v.6.1 (March 2020) the Dashboard was signficantly updated and improved with some previous properties now deprecated.  
 
 >To facilitate this upgrade for existing users, a default Tab is created when AdapTable first loads after the upgrade, containing the Visible toolbars in the Adaptable State.
 
@@ -41,7 +39,7 @@ The Dashboard contains the following elements:
 
 - **Tabs** - collections of Toolbars with a given name (see below for more information on Toolbars) 
   
-    > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' which will contain the (now deprecated) `VisibleToolbars`collection curently in Dashboard State; if there is none, then it will use the default set.
+    > If there are no Tabs present then AdapTable will create a default one called 'Toolbars' containing the default set of toolbars (assuming the user's Entitlements grant access).
 
 - **Custom Buttons** - a group of buttons (of type `ToolbarButton`) which when clicked will trigger the `DashboardButtonClicked` event
   
@@ -59,7 +57,7 @@ The Dashboard contains the following elements:
 
 AdapTable ships with a number of Function Toolbars.
 
-These are essentially collections of controls which provide easy and quick access a single Function (e.g. the 'Advanced Search' Toolbar contains a dropdown showing all Advanced Searches together with buttons to add / edit / delete them).
+These are essentially collections of controls which provide easy and quick access a single Function (e.g. the 'Export' Toolbar contains a dropdown showing all Reports together with buttons to add / edit / delete them).
 
 Toolbars are grouped into Tabs to give users full control over which Toolbars are visible.
 
@@ -100,7 +98,7 @@ Dashboard: {
   Tabs: [
     {
       Name: 'Search',
-      Toolbars: ['QuickSearch', 'DataSource', 'AdvancedSearch'],
+      Toolbars: ['QuickSearch', 'DataSource', 'Query'],
     },
     {
       Name: 'Edit',

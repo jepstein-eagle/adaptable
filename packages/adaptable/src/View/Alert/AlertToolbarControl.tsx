@@ -123,6 +123,7 @@ class AlertToolbarControlComponent extends React.Component<
         className="ab-DashboardToolbar__Alert"
         headerText={StrategyConstants.AlertStrategyFriendlyName}
         onConfigure={() => this.props.onConfigure()}
+        onClose={() => this.props.onClose('Alert')}
       >
         {content}
       </PanelDashboard>
@@ -148,6 +149,8 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.AlertStrategyId, ScreenPopups.AlertPopup)
       ),
+    onClose: (toolbar: AdaptableDashboardToolbar) =>
+      dispatch(DashboardRedux.DashboardCloseToolbar(toolbar)),
   };
 }
 

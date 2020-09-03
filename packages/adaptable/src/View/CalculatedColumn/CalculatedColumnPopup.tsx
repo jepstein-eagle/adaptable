@@ -57,12 +57,12 @@ class CalculatedColumnPopupComponent extends React.Component<
   }
 
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'Edit') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        if (this.props.popupParams.action == 'Edit') {
           // only editing is possible - you cannot create a new calc column from the column menu
           let calculatedColumn = this.props.CalculatedColumns.find(
-            x => x.ColumnId == this.props.PopupParams.columnId
+            x => x.ColumnId == this.props.popupParams.column.ColumnId
           );
           this.onEdit(calculatedColumn);
         }
@@ -86,7 +86,7 @@ class CalculatedColumnPopupComponent extends React.Component<
     ];
 
     let propCalculatedColumns = ArrayExtensions.sortArrayWithProperty(
-      SortOrder.Ascending,
+      SortOrder.Asc,
       this.props.CalculatedColumns,
       'ColumnId'
     );
@@ -97,14 +97,14 @@ class CalculatedColumnPopupComponent extends React.Component<
         return (
           <CalculatedColumnEntityRow
             colItems={colItems}
-            api={this.props.Api}
+            api={this.props.api}
             onShare={description => this.props.onShare(calculatedColumn, description)}
-            TeamSharingActivated={this.props.TeamSharingActivated}
-            AdaptableObject={calculatedColumn}
+            teamSharingActivated={this.props.teamSharingActivated}
+            adaptableObject={calculatedColumn}
             key={calculatedColumn.ColumnId}
             onEdit={calculatedColumn => this.onEdit(calculatedColumn as CalculatedColumn)}
             onDeleteConfirm={CalculatedColumnRedux.CalculatedColumnDelete(calculatedColumn)}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         );
       }
@@ -115,8 +115,13 @@ class CalculatedColumnPopupComponent extends React.Component<
         onClick={() => {
           this.onNew();
         }}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
         tooltip="Create Calculated Column"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
       />
     );
 
@@ -137,15 +142,15 @@ class CalculatedColumnPopupComponent extends React.Component<
         )}
 
         {/* we dont pass in directly the value GetErrorMessage as the steps are cloned in the wizzard. */}
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <CalculatedColumnWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as CalculatedColumn}
-            ConfigEntities={this.props.CalculatedColumns}
-            ModalContainer={this.props.ModalContainer}
+            editedAdaptableObject={this.state.editedAdaptableObject as CalculatedColumn}
+            configEntities={this.props.CalculatedColumns}
+            modalContainer={this.props.modalContainer}
             GetErrorMessage={() => this.props.CalculatedColumnErrorMessage}
             IsExpressionValid={expression => this.props.IsExpressionValid(expression)}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -157,47 +162,47 @@ class CalculatedColumnPopupComponent extends React.Component<
 
   onNew() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyCalculatedColumn(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyCalculatedColumn(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(calculatedColumn: CalculatedColumn) {
     let clonedObject = Helper.cloneObject(calculatedColumn);
     this.setState({
-      EditedAdaptableObject: clonedObject,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: clonedObject,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
     this.props.IsExpressionValid('');
   }
 
   onFinishWizard() {
-    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.EditedAdaptableObject);
-    if (this.state.WizardStatus == WizardStatus.Edit) {
+    let calculatedColumn: CalculatedColumn = Helper.cloneObject(this.state.editedAdaptableObject);
+    if (this.state.wizardStatus == WizardStatus.Edit) {
       this.props.onEditCalculatedColumn(calculatedColumn);
     } else {
       this.props.onAddCalculatedColumn(calculatedColumn);
     }
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    let calculatedColumn = this.state.EditedAdaptableObject as CalculatedColumn;
+    let calculatedColumn = this.state.editedAdaptableObject as CalculatedColumn;
     return (
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnId) &&
       StringExtensions.IsNotNullOrEmpty(calculatedColumn.ColumnExpression)

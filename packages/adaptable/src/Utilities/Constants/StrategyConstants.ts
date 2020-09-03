@@ -2,7 +2,6 @@ import { AdaptableFunctionName } from '../../PredefinedConfig/Common/Types';
 
 // Strategy Ids used in Config so have made it a type of AdaptableFunctionName
 export const ActionColumnStrategyId: AdaptableFunctionName = 'ActionColumn';
-export const AdvancedSearchStrategyId: AdaptableFunctionName = 'AdvancedSearch';
 export const AlertStrategyId: AdaptableFunctionName = 'Alert';
 export const BulkUpdateStrategyId: AdaptableFunctionName = 'BulkUpdate';
 export const CalculatedColumnStrategyId: AdaptableFunctionName = 'CalculatedColumn';
@@ -10,9 +9,7 @@ export const CalendarStrategyId: AdaptableFunctionName = 'Calendar';
 export const CellSummaryStrategyId: AdaptableFunctionName = 'CellSummary';
 export const CellValidationStrategyId: AdaptableFunctionName = 'CellValidation';
 export const ChartStrategyId: AdaptableFunctionName = 'Chart';
-export const ColumnCategoryStrategyId: AdaptableFunctionName = 'ColumnCategory';
-export const ColumnChooserStrategyId: AdaptableFunctionName = 'ColumnChooser';
-export const ColumnFilterStrategyId: AdaptableFunctionName = 'ColumnFilter';
+export const FilterStrategyId: AdaptableFunctionName = 'Filter';
 export const ColumnInfoStrategyId: AdaptableFunctionName = 'ColumnInfo';
 export const ConditionalStyleStrategyId: AdaptableFunctionName = 'ConditionalStyle';
 export const CustomSortStrategyId: AdaptableFunctionName = 'CustomSort';
@@ -45,10 +42,10 @@ export const ThemeStrategyId: AdaptableFunctionName = 'Theme';
 export const ToolPanelStrategyId: AdaptableFunctionName = 'ToolPanel';
 export const UpdatedRowStrategyId: AdaptableFunctionName = 'UpdatedRow';
 export const UserFilterStrategyId: AdaptableFunctionName = 'UserFilter';
+export const QueryStrategyId: AdaptableFunctionName = 'Query';
 
 // Strategy Names - only used internally
 export const ActionColumnStrategyFriendlyName: string = 'Action Column';
-export const AdvancedSearchStrategyFriendlyName: string = 'Advanced Search';
 export const AlertStrategyFriendlyName: string = 'Alert';
 export const BulkUpdateStrategyFriendlyName: string = 'Bulk Update';
 export const CalculatedColumnStrategyFriendlyName: string = 'Calculated Column';
@@ -56,8 +53,8 @@ export const CalendarStrategyFriendlyName: string = 'Calendar';
 export const CellSummaryStrategyFriendlyName: string = 'Cell Summary';
 export const CellValidationStrategyFriendlyName: string = 'Cell Validation';
 export const ChartStrategyFriendlyName: string = 'Chart';
-export const ColumnCategoryStrategyFriendlyName: string = 'Column Category';
 export const ColumnChooserStrategyFriendlyName: string = 'Column Chooser';
+export const FilterStrategyFriendlyName: string = 'Filter';
 export const ColumnFilterStrategyFriendlyName: string = 'Column Filter';
 export const ColumnInfoStrategyFriendlyName: string = 'Column Information';
 export const ConditionalStyleStrategyFriendlyName: string = 'Conditional Style';
@@ -91,10 +88,10 @@ export const TeamSharingStrategyFriendlyName: string = 'Team Sharing';
 export const ThemeStrategyFriendlyName: string = 'Theme';
 export const ToolPanelStrategyFriendlyName: string = 'Tool Panel';
 export const UserFilterStrategyFriendlyName: string = 'User Filter';
+export const QueryStrategyFriendlyName: string = 'Query';
 
 // Strategy Glyphs
-export const ActionColumnGlyph: string = 'advanced-search';
-export const AdvancedSearchGlyph: string = 'advanced-search';
+export const ActionColumnGlyph: string = 'alert';
 export const AlertGlyph: string = 'alert';
 export const BulkUpdateGlyph: string = 'bulk-update';
 export const CalculatedColumnGlyph: string = 'calculated-column';
@@ -102,8 +99,8 @@ export const CalendarGlyph: string = 'calendar';
 export const CellSummaryGlyph: string = 'cell-summary';
 export const CellValidationGlyph: string = 'cell-validation';
 export const ChartGlyph: string = 'chart';
-export const ColumnCategoryGlyph: string = 'column-category';
 export const ColumnChooserGlyph: string = 'column-chooser';
+export const FilterGlyph: string = 'column-filter';
 export const ColumnFilterGlyph: string = 'column-filter';
 export const ColumnInfoGlyph: string = 'column-info';
 export const ConditionalStyleGlyph: string = 'conditional-style';
@@ -138,13 +135,12 @@ export const ThemeGlyph: string = 'theme';
 export const ToolPanelGlyph: string = 'theme';
 export const UpdatedRowGlyph: string = 'updated-row';
 export const UserFilterGlyph: string = 'user-filter';
+export const QueryGlyph: string = 'query';
 
 export function getIdForStrategyFriendlyName(functionName: string): AdaptableFunctionName {
   switch (functionName) {
     case ActionColumnStrategyFriendlyName:
       return ActionColumnStrategyId;
-    case AdvancedSearchStrategyFriendlyName:
-      return AdvancedSearchStrategyId;
     case AlertStrategyFriendlyName:
       return AlertStrategyId;
     case BulkUpdateStrategyFriendlyName:
@@ -157,12 +153,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return CellValidationStrategyId;
     case ChartStrategyFriendlyName:
       return ChartStrategyId;
-    case ColumnCategoryStrategyFriendlyName:
-      return ColumnCategoryStrategyId;
-    case ColumnChooserStrategyFriendlyName:
-      return ColumnChooserStrategyId;
-    case ColumnFilterStrategyFriendlyName:
-      return ColumnFilterStrategyId;
+    case FilterStrategyFriendlyName:
+      return FilterStrategyId;
     case ColumnInfoStrategyFriendlyName:
       return ColumnInfoStrategyId;
     case ConditionalStyleStrategyFriendlyName:
@@ -227,6 +219,8 @@ export function getIdForStrategyFriendlyName(functionName: string): AdaptableFun
       return ToolPanelStrategyId;
     case UserFilterStrategyFriendlyName:
       return UserFilterStrategyId;
+    case QueryStrategyFriendlyName:
+      return QueryStrategyId;
   }
 }
 
@@ -234,8 +228,6 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
   switch (functionName) {
     case ActionColumnStrategyId:
       return ActionColumnStrategyFriendlyName;
-    case AdvancedSearchStrategyId:
-      return AdvancedSearchStrategyFriendlyName;
     case AlertStrategyId:
       return AlertStrategyFriendlyName;
     case BulkUpdateStrategyId:
@@ -248,12 +240,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return CellValidationStrategyFriendlyName;
     case ChartStrategyId:
       return ChartStrategyFriendlyName;
-    case ColumnCategoryStrategyId:
-      return ColumnCategoryStrategyFriendlyName;
-    case ColumnChooserStrategyId:
-      return ColumnChooserStrategyFriendlyName;
-    case ColumnFilterStrategyId:
-      return ColumnFilterStrategyFriendlyName;
+    case FilterStrategyId:
+      return FilterStrategyFriendlyName;
     case ColumnInfoStrategyId:
       return ColumnInfoStrategyFriendlyName;
     case ConditionalStyleStrategyId:
@@ -320,6 +308,8 @@ export function getFriendlyNameForStrategyId(functionName: AdaptableFunctionName
       return ToolPanelStrategyFriendlyName;
     case UserFilterStrategyId:
       return UserFilterStrategyFriendlyName;
+    case QueryStrategyId:
+      return QueryStrategyFriendlyName;
   }
 }
 
@@ -327,8 +317,6 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
   switch (functionName) {
     case ActionColumnStrategyId:
       return ActionColumnGlyph;
-    case AdvancedSearchStrategyId:
-      return AdvancedSearchGlyph;
     case AlertStrategyId:
       return AlertGlyph;
     case BulkUpdateStrategyId:
@@ -341,12 +329,8 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return CellValidationGlyph;
     case ChartStrategyId:
       return ChartGlyph;
-    case ColumnCategoryStrategyId:
-      return ColumnCategoryGlyph;
-    case ColumnChooserStrategyId:
-      return ColumnChooserGlyph;
-    case ColumnFilterStrategyId:
-      return ColumnFilterGlyph;
+    case FilterStrategyId:
+      return FilterGlyph;
     case ColumnInfoStrategyId:
       return ColumnInfoGlyph;
     case ConditionalStyleStrategyId:
@@ -407,5 +391,7 @@ export function getGhyphiconForStrategyId(functionName: AdaptableFunctionName): 
       return ToolPanelGlyph;
     case UserFilterStrategyId:
       return UserFilterGlyph;
+    case QueryStrategyId:
+      return QueryGlyph;
   }
 }

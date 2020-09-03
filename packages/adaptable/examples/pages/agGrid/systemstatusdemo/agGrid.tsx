@@ -61,7 +61,6 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    VisibleToolbars: ['Demo', 'SystemStatus'],
     CustomToolbars: [
       {
         Name: 'Demo',

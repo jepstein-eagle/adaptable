@@ -1,9 +1,7 @@
 import * as React from 'react';
 /// <reference path="../../typings/.d.ts" />
 import * as Redux from 'redux';
-import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { AdaptableObject } from '../../../PredefinedConfig/Common/AdaptableObject';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
 import { IColItem } from '../../UIInterfaces';
 import { AccessLevel } from '../../../PredefinedConfig/EntitlementState';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
@@ -15,19 +13,20 @@ export interface BaseRowProps<View> extends React.ClassAttributes<View> {
 }
 
 export interface BaseEntityRowProps<View> extends BaseRowProps<View> {
-  AdaptableObject: AdaptableObject;
+  adaptableObject: AdaptableObject;
   onDeleteConfirm: Redux.Action;
   onEdit: (AdaptableObject: AdaptableObject) => void;
+  onClone?: (AdaptableObject: AdaptableObject) => void;
 }
 
 // shared props
 export interface SharedEntityRowProps<View> extends BaseEntityRowProps<View> {
   onShare: (description: string) => void;
-  TeamSharingActivated: boolean;
-  AccessLevel: AccessLevel;
+  teamSharingActivated: boolean;
+  accessLevel: AccessLevel;
 }
 
 export interface SharedEntityComponent<View> extends React.ClassAttributes<View> {
-  Entity: AdaptableObject;
-  Api: AdaptableApi;
+  entity: AdaptableObject;
+  api: AdaptableApi;
 }

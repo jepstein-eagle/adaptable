@@ -13,17 +13,13 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
   private ThemeState: ThemeState;
 
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.ThemeStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.ThemeStrategyFriendlyName,
-        ComponentName: ScreenPopups.ThemePopup,
-        Icon: StrategyConstants.ThemeGlyph,
-      });
-    }
+    super(
+      StrategyConstants.ThemeStrategyId,
+      StrategyConstants.ThemeStrategyFriendlyName,
+      StrategyConstants.ThemeGlyph,
+      ScreenPopups.ThemePopup,
+      adaptable
+    );
   }
 
   publishThemeChanged(themeState: ThemeState) {

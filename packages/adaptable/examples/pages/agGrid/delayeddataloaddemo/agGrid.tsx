@@ -38,13 +38,11 @@ async function InitAdaptableDemo() {
     predefinedConfig: demoConfig,
   };
 
-  adaptableOptions.userInterfaceOptions = {
-    showAdaptableToolPanel: true,
-  };
+  adaptableOptions.userInterfaceOptions = {};
 
   adaptableOptions.layoutOptions = {
     autoSizeColumnsInLayout: true,
-    includeOpenedRowGroups: true,
+    includeExpandedRowGroups: true,
   };
 
   adaptableApi = await Adaptable.init(adaptableOptions);
@@ -55,13 +53,12 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['QuickSearch', 'Export', 'Layout'],
-  },
   FormatColumn: {
     FormatColumns: [
       {
-        ColumnId: 'tradeDate',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         DisplayFormat: {
           Formatter: 'DateFormatter',
           Options: {
@@ -70,15 +67,21 @@ let demoConfig: PredefinedConfig = {
         },
       },
       {
-        ColumnId: 'bid',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         CellAlignment: 'Right',
       },
       {
-        ColumnId: 'counterparty',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         CellAlignment: 'Center',
       },
       {
-        ColumnId: 'notional',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         Style: {
           FontWeight: 'Bold',
           FontSize: 'XSmall',
@@ -95,7 +98,9 @@ let demoConfig: PredefinedConfig = {
         CellAlignment: 'Center',
       },
       {
-        ColumnId: 'country',
+        Scope: {
+          ColumnIds: ['Dob Notional'],
+        },
         Style: {
           BackColor: '#d4fb79',
           ForeColor: '#8b0000',

@@ -17,7 +17,7 @@ export interface ReportEntityRowProps extends SharedEntityRowProps<ReportEntityR
 
 export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
   render(): any {
-    let report: Report = this.props.AdaptableObject as Report;
+    let report: Report = this.props.adaptableObject as Report;
     let csvMenuItem: any = {
       onClick: () => this.props.onExport(ExportDestination.CSV),
       label: 'CSV',
@@ -44,14 +44,14 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
       <EntityRowItem
         Content={this.props.api.internalApi
           .getReportService()
-          .GetReportColumnsDescription(report, this.props.api.gridApi.getColumns())}
+          .GetReportColumnScopeShortDescription(report)}
       />
     );
     colItems[2].Content = (
       <EntityRowItem
         Content={this.props.api.internalApi
           .getReportService()
-          .GetReportExpressionDescription(report, this.props.api.gridApi.getColumns())}
+          .GetReportExpressionDescription(report, this.props.api.columnApi.getColumns())}
       />
     );
 
@@ -73,15 +73,15 @@ export class ReportEntityRow extends React.Component<ReportEntityRowProps, {}> {
 
     let buttons: any = (
       <EntityListActionButtons
-        ConfirmDeleteAction={this.props.onDeleteConfirm}
+        confirmDeleteAction={this.props.onDeleteConfirm}
         editClick={() => this.props.onEdit(report)}
         overrideDisableEdit={isSystemReport || report.ReportColumnScope == 'CustomColumns'}
         overrideDisableDelete={isSystemReport}
         overrideDisableShare={isSystemReport}
-        showShare={this.props.TeamSharingActivated}
+        showShare={this.props.teamSharingActivated}
         shareClick={(description: string) => this.props.onShare(description)}
-        EntityType="Report"
-        AccessLevel={this.props.AccessLevel}
+        entityType="Report"
+        accessLevel={this.props.accessLevel}
       />
     );
 

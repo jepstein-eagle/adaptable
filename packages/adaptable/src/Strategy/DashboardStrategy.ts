@@ -15,15 +15,21 @@ import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
 export class DashboardStrategy extends AdaptableStrategyBase implements IDashboardStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.DashboardStrategyId, adaptable);
+    super(
+      StrategyConstants.DashboardStrategyId,
+      StrategyConstants.DashboardStrategyFriendlyName,
+      StrategyConstants.DashboardGlyph,
+      ScreenPopups.DashboardPopup,
+      adaptable
+    );
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      // create the default Dashboard tab - this is for jump from 6 to 6.1
+      // create a default Dashboard tab if one not provided
       this.adaptable.api.internalApi.setDefaultDashboardTab();
       this.prepareToolbarVisibilityChangedEvent();
     });
 
-    adaptable.AdaptableStore.onAny((eventName: string) => {
+    adaptable.adaptableStore.onAny((eventName: string) => {
       if (
         eventName == DashboardRedux.DASHBOARD_SET_ACTIVE_TAB ||
         eventName == DashboardRedux.DASHBOARD_SET_IS_COLLAPSED ||
@@ -47,16 +53,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
           });
         }
       }
-    }
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.DashboardStrategyFriendlyName,
-        ComponentName: ScreenPopups.DashboardPopup,
-        Icon: StrategyConstants.DashboardGlyph,
-      });
     }
   }
 

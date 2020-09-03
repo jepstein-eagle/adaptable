@@ -40,11 +40,8 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['AdvancedSearch'],
-  },
   UserInterface: {
-    PermittedValuesColumns: [
+    PermittedValuesItems: [
       {
         ColumnId: 'status',
         PermittedValues: ['Rejected', 'Pending'],

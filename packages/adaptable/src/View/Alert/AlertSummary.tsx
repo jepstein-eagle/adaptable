@@ -24,10 +24,6 @@ export interface AlertSummaryProps extends StrategySummaryProps<AlertSummaryComp
   Alerts: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
-  onShare: (
-    entity: AdaptableObject,
-    description: string
-  ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
 export class AlertSummaryComponent extends React.Component<
@@ -46,31 +42,31 @@ export class AlertSummaryComponent extends React.Component<
     let titleRow = (
       <StrategyHeader
         key={StrategyConstants.AlertStrategyFriendlyName}
-        FunctionName={StrategyConstants.AlertStrategyId}
-        StrategySummary={Helper.ReturnItemCount(
-          this.props.Alerts.filter(item => item.ColumnId == this.props.SummarisedColumn.ColumnId),
+        functionName={StrategyConstants.AlertStrategyId}
+        strategySummary={Helper.ReturnItemCount(
+          this.props.Alerts.filter(item =>
+            this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)
+          ),
           StrategyConstants.AlertStrategyFriendlyName
         )}
         onNew={() => this.onNew()}
-        NewButtonTooltip={StrategyConstants.AlertStrategyFriendlyName}
-        AccessLevel={this.props.AccessLevel}
+        newButtonTooltip={StrategyConstants.AlertStrategyFriendlyName}
+        accessLevel={this.props.accessLevel}
       />
     );
     strategySummaries.push(titleRow);
 
     // existing items
     this.props.Alerts.map((item, index) => {
-      if (item.ColumnId == this.props.SummarisedColumn.ColumnId) {
+      if (this.props.api.scopeApi.isColumnInScopeColumns(this.props.summarisedColumn, item.Scope)) {
         let detailRow = (
           <StrategyDetail
             key={'CV' + index}
-            Item1={'something here?'}
-            Item2={this.props.Api.internalApi
-              .getStrategyService()
-              .createAlertDescription(item, this.props.Api.gridApi.getColumns())}
-            ConfigEnity={item}
-            EntityType={StrategyConstants.AlertStrategyFriendlyName}
-            showShare={this.props.TeamSharingActivated}
+            item1={'something here?'}
+            item2={this.props.api.internalApi.getStrategyService().createAlertDescription(item)}
+            configEnity={item}
+            entityType={StrategyConstants.AlertStrategyFriendlyName}
+            showShare={this.props.teamSharingActivated}
             onEdit={() => this.onEdit(item)}
             onShare={description => this.props.onShare(item, description)}
             onDelete={AlertRedux.AlertDefinitionDelete(item)}
@@ -84,16 +80,22 @@ export class AlertSummaryComponent extends React.Component<
       <div>
         {strategySummaries}
 
-        {this.state.EditedAdaptableObject && (
+        {this.state.editedAdaptableObject && (
           <AlertWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as AlertDefinition}
+            configEntities={null}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
+            onSetNewSharedQueryName={() => {
+              throw 'unimplemented';
+            }}
+            onSetUseSharedQuery={() => {
+              throw 'unimplemented';
+            }}
           />
         )}
       </div>
@@ -102,46 +104,48 @@ export class AlertSummaryComponent extends React.Component<
 
   onNew() {
     let configEntity: AlertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-    configEntity.ColumnId = this.props.SummarisedColumn.ColumnId;
+    configEntity.Scope = {
+      ColumnIds: [this.props.summarisedColumn.ColumnId],
+    };
     this.setState({
-      EditedAdaptableObject: configEntity,
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: configEntity,
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.New,
     });
   }
 
   onEdit(Alert: AlertDefinition) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(Alert),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(Alert),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   onFinishWizard() {
-    if (this.state.WizardStatus == WizardStatus.New) {
-      this.props.onAddAlert(this.state.EditedAdaptableObject as AlertDefinition);
+    if (this.state.wizardStatus == WizardStatus.New) {
+      this.props.onAddAlert(this.state.editedAdaptableObject as AlertDefinition);
     } else {
-      this.props.onEditAlert(this.state.EditedAdaptableObject as AlertDefinition);
+      this.props.onEditAlert(this.state.editedAdaptableObject as AlertDefinition);
     }
 
     this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
     });
   }
 
   canFinishWizard() {
-    //  let alertDefinition = this.state.EditedAdaptableObject as AlertDefinition
+    //  let alertDefinition = this.state.editedAdaptableObject as AlertDefinition
     return true;
   }
 }

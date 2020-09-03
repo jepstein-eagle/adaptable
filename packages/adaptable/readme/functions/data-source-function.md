@@ -1,6 +1,6 @@
 # Data Source (AdaptableFunction)
 
-The Data Source([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `DataSource`) Function provides a way to provide an entirely new Data Set to AdapTable based on user selection.
+The Data Source Function provides a way to provide an entirely new Data Set to AdapTable based on user selection.
 
 It is designed for those scenarios when there is too much data to send to the client at start-up, and developers want to provide an option for users to switch between different "data sources", with the result that the grid is populated with different data sets.
 
@@ -9,6 +9,7 @@ The Data Source Selector simply provides a dropdown which contains a list of all
 These Data Sources are simply text names that developers provide and will typically correspond to Stored Procedures or other server-related items that make sense to the user (e.g. a 'book').
 
 ### SearchChanged Event (and Server Searching)
+
 Data Sources provide a nice alternative to [Server Searching](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) as it allows for data to be dynamically retrieved from the server as a response to user selection, but without needing to build a whole server-side searching and filtering infrastructure.  And then users can filter the returned data set on the client as normal.
 
 When a Data Source is selected, AdapTable will fire the [SearchChanged event](https://api.adaptabletools.com/interfaces/_src_api_events_searchchanged_.searchchangedeventargs.html), providing the name of the newly selected Data Source and stating the trigger for the event to be 'DataSource'.

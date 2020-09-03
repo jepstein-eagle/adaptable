@@ -7,8 +7,6 @@ import {
   CategoryChartDefinition,
   PieChartDefinition,
 } from '@adaptabletools/adaptable/src/PredefinedConfig/ChartState';
-import { Expression } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Expression';
-import { ExpressionHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/ExpressionHelper';
 import { ColumnSelector } from '@adaptabletools/adaptable/src/View/Components/Selectors/ColumnSelector';
 import { SelectionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
@@ -35,7 +33,7 @@ export class PieChartPrimaryColumnWizard
   constructor(props: PieChartPrimaryColumnWizardProps) {
     super(props);
     this.state = {
-      PrimaryColumnId: props.Data.PrimaryColumnId,
+      PrimaryColumnId: props.data.PrimaryColumnId,
     };
   }
 
@@ -47,7 +45,7 @@ export class PieChartPrimaryColumnWizard
 
           <ColumnSelector
             SelectedColumnIds={[this.state.PrimaryColumnId]}
-            ColumnList={this.props.Api.gridApi.getColumns()}
+            ColumnList={this.props.api.columnApi.getColumns()}
             onColumnChange={columns => this.onPrimaryColumnChanged(columns)}
             SelectionMode={SelectionMode.Single}
           />
@@ -62,7 +60,7 @@ export class PieChartPrimaryColumnWizard
       {
         PrimaryColumnId: isColumn ? columns[0].ColumnId : '',
       } as PieChartPrimaryColumnWizardState,
-      () => this.props.UpdateGoBackState()
+      () => this.props.updateGoBackState()
     );
   }
 
@@ -74,18 +72,18 @@ export class PieChartPrimaryColumnWizard
     return true;
   }
 
-  public Next(): void {
-    this.props.Data.PrimaryColumnId = this.state.PrimaryColumnId;
+  public next(): void {
+    this.props.data.PrimaryColumnId = this.state.PrimaryColumnId;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

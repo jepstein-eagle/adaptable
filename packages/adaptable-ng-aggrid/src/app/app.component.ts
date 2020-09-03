@@ -46,9 +46,7 @@ export class AppComponent {
     userName: 'demo user',
     adaptableId: 'an angular wrapper',
     predefinedConfig: {},
-    userInterfaceOptions: {
-      showAdaptableToolPanel: true,
-    },
+    userInterfaceOptions: {},
     auditOptions: {
       auditCellEdits: {
         auditAsEvent: true,

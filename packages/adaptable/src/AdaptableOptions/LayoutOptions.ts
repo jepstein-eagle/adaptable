@@ -7,29 +7,19 @@
  *
  * ```ts
  * layoutOptions = {
- *  includeVendorStateInLayouts: true,
  *  autoSaveLayouts: false
  *};
  * ```
  */
 export interface LayoutOptions {
   /**
-   * Whether the Layout should include vendor grid related state.
-   *
-   * Note: this option is currently only available in ag-Grid
-   *
-   * **Default Value: true**
-   */
-  includeVendorStateInLayouts?: boolean; //TODO remove
-
-  /**
-   * Whether layouts should include details of which grouped rows when they save.
+   * Whether layouts should include details of which grouped rows are expanded when they save.
    *
    * If set to true, when the Load next loads it will automatically open those grouped rows which were open when it was last displayed
    *
    * **Default Value: false**
    */
-  includeOpenedRowGroups?: boolean;
+  includeExpandedRowGroups?: boolean;
 
   /**
    * Whether layouts should save whenever the Grid's column order or sort information changes.
@@ -48,15 +38,6 @@ export interface LayoutOptions {
    * **Default Value: false**
    */
   autoSizeColumnsInLayout?: boolean;
-
-  /**
-   * Whether columns should be auto-sized in the Default Layout
-   *
-   * This is the Layout created by AdapTable based on the initial column definition.
-   *
-   * **Default Value: true**
-   */
-  autoSizeColumnsInDefaultLayout?: boolean; //TODO remove
 
   /**
    * Whether columns should be auto-sized when a Pivot-based Layout loads for the first time

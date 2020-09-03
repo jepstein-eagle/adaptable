@@ -14,9 +14,15 @@ import { FormatColumn } from '../PredefinedConfig/FormatColumnState';
 export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   implements IFormatColumnStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.FormatColumnStrategyId, adaptable);
+    super(
+      StrategyConstants.FormatColumnStrategyId,
+      StrategyConstants.FormatColumnStrategyFriendlyName,
+      StrategyConstants.FormatColumnGlyph,
+      ScreenPopups.FormatColumnPopup,
+      adaptable
+    );
 
-    adaptable.AdaptableStore.onAny((eventName: string) => {
+    adaptable.adaptableStore.onAny((eventName: string) => {
       if (
         eventName == FormatColumnRedux.FORMAT_COLUMN_ADD ||
         eventName == FormatColumnRedux.FORMAT_COLUMN_EDIT ||
@@ -28,26 +34,14 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     });
   }
 
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.FormatColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.FormatColumnPopup,
-        Icon: StrategyConstants.FormatColumnGlyph,
-      });
-    }
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && !column.IsSparkline) {
-      let formatExists: boolean = ArrayExtensions.ContainsItem(
-        this.adaptable.api.formatColumnApi.getAllFormatColumn().map(f => f.ColumnId),
-        column.ColumnId
-      );
+      let formatExists: boolean = false; // need some way of working out whether to edit or not, until then wont bother
+
       let label = formatExists ? 'Edit ' : 'Create ';
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: formatExists ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };
@@ -72,12 +66,15 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let formatColumns: FormatColumn[] = this.adaptable.api.formatColumnApi
       .getAllFormatColumn()
-      .filter((fc: FormatColumn) => fc.ColumnId == specialColumnId);
+      .filter((fc: FormatColumn) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, fc.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(formatColumns)
-      ? formatColumns.length + ' Format Columns'
+      ? formatColumns.length + ' Format Column()'
       : undefined;
   }
 

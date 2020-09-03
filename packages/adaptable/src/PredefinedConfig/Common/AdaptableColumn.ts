@@ -28,10 +28,21 @@ export interface AdaptableColumn extends AdaptableObject {
   Groupable: boolean;
   Pivotable: boolean;
   Aggregatable: boolean;
+  AvailableAggregationFunctions?: string[];
+  AggregationFunction?: string;
 
   IsGrouped: boolean;
   IsFixed: boolean; // essentially is pinned or locked in such a way other cols cannot precede it in order
   IsSpecialColumn: boolean;
   IsSparkline: boolean;
   IsExcludedFromQuickSearch: boolean;
+}
+
+export interface AdaptableColumnProperties {
+  Sortable: boolean;
+  Filterable: boolean;
+  Moveable: boolean;
+  Groupable: boolean;
+  Pivotable: boolean;
+  Aggregatable: boolean;
 }

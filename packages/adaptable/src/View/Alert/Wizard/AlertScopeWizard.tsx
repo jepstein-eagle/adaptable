@@ -3,140 +3,76 @@ import {
   AdaptableWizardStep,
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
-
-import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
-import Checkbox from '../../../components/CheckBox';
 import WizardPanel from '../../../components/WizardPanel';
-import HelpBlock from '../../../components/HelpBlock';
-import { Flex, Box } from 'rebass';
+import { Scope } from '../../../PredefinedConfig/Common/Scope';
+import { ScopeComponent } from '../../Components/ScopeComponent';
+import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
+import { WizardScopeState } from '../../Components/SharedProps/WizardScopeState';
+import { AlertDefinition } from '../../../PredefinedConfig/AlertState';
 
 export interface AlertScopeWizardProps extends AdaptableWizardStepProps<AlertDefinition> {}
 
-export interface AlertScopeWizardState {
-  ShowPopup: boolean;
-  HighlightCell: boolean;
-  JumpToCell: boolean;
-  ShowInDiv: boolean;
-}
-
-export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, AlertScopeWizardState>
+export class AlertScopeWizard extends React.Component<AlertScopeWizardProps, WizardScopeState>
   implements AdaptableWizardStep {
   constructor(props: AlertScopeWizardProps) {
     super(props);
+
     this.state = {
-      ShowPopup: this.props.Data!.AlertProperties.ShowPopup,
-      HighlightCell: this.props.Data!.AlertProperties.HighlightCell,
-      JumpToCell: this.props.Data!.AlertProperties.JumpToCell,
-      ShowInDiv: this.props.Data!.AlertProperties.ShowInDiv,
+      scope: this.props.data.Scope ? this.props.data.Scope : { All: true },
     };
   }
 
   render(): any {
     return (
-      <>
-        <WizardPanel border="none">
-          <Flex flexDirection="column" padding={2}>
-            <Box>
-              <HelpBlock>
-                {'Display Alert as a Popup - coloured according to the message type.'}
-              </HelpBlock>
-              <Checkbox
-                marginLeft={2}
-                checked={this.state.ShowPopup == true}
-                onChange={this.onShowPopupChanged}
-              >
-                Show as Popup
-              </Checkbox>
-            </Box>
-            <Box marginTop={2}>
-              <HelpBlock>
-                {'Colour the cell that triggered the Alert according to the Alert message type'}
-              </HelpBlock>
-              <Checkbox
-                marginLeft={2}
-                checked={this.state.HighlightCell == true}
-                onChange={this.onHighlightCellChanged}
-              >
-                Highight Cell
-              </Checkbox>
-            </Box>
-            <Box marginTop={2}>
-              <HelpBlock>
-                {
-                  'Make Grid move in order to display the row which contains the cell that raiggered the Alert'
-                }
-              </HelpBlock>
-              <Checkbox
-                marginLeft={2}
-                checked={this.state.JumpToCell == true}
-                onChange={this.onJumpToCellChanged}
-              >
-                Jump To Cell
-              </Checkbox>
-            </Box>
-            <Box marginTop={2}>
-              <HelpBlock>
-                {
-                  'Show the Alert in a separate <Div> (as specified in the "AlertDisplayDiv" property in Alert Config)'
-                }
-              </HelpBlock>
-              <Checkbox
-                marginLeft={2}
-                checked={this.state.ShowInDiv == true}
-                onChange={this.onShowInDivChanged}
-              >
-                Show in Div
-              </Checkbox>
-            </Box>
-          </Flex>
-        </WizardPanel>
-      </>
+      <WizardPanel>
+        {' '}
+        <ScopeComponent
+          api={this.props.api}
+          scope={this.state.scope}
+          updateScope={(scope: Scope) => this.onUpdateScope(scope)}
+        />{' '}
+      </WizardPanel>
     );
   }
 
-  private onShowPopupChanged = (checked: boolean) => {
-    this.setState({ ShowPopup: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  };
-  private onHighlightCellChanged = (checked: boolean) => {
-    this.setState({ HighlightCell: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  };
-  private onJumpToCellChanged = (checked: boolean) => {
-    this.setState({ JumpToCell: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  };
-  private onShowInDivChanged = (checked: boolean) => {
-    this.setState({ ShowInDiv: checked } as AlertScopeWizardState, () =>
-      this.props.UpdateGoBackState()
-    );
-  };
+  private onUpdateScope(scope: Scope) {
+    this.setState({ scope: scope } as WizardScopeState, () => this.props.updateGoBackState());
+  }
 
   public canNext(): boolean {
+    if (this.state.scope == undefined) {
+      return false;
+    }
+    if (
+      'ColumnIds' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getColumnIdsInScope(this.state.scope))
+    ) {
+      return false;
+    }
+    if (
+      'DataTypes' in this.state.scope &&
+      ArrayExtensions.IsNullOrEmpty(this.props.api.scopeApi.getDataTypesInScope(this.state.scope))
+    ) {
+      return false;
+    }
     return true;
   }
 
   public canBack(): boolean {
-    return true;
+    return false;
   }
-  public Next(): void {
-    this.props.Data!.AlertProperties.ShowPopup = this.state.ShowPopup;
-    this.props.Data!.AlertProperties.HighlightCell = this.state.HighlightCell;
-    this.props.Data!.AlertProperties.JumpToCell = this.state.JumpToCell;
-    this.props.Data!.AlertProperties.ShowInDiv = this.state.ShowInDiv;
+  public next(): void {
+    this.props.data.Scope = this.state.scope;
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

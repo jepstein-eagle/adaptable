@@ -51,10 +51,10 @@ This is really only going to be for Category Charts.
 As we add other chart types we will need to rethink this and some of the assumptions
 */
 interface CategoryChartComponentProps {
-  CurrentChartDefinition: CategoryChartDefinition;
-  ChartData: ChartData;
-  Columns: AdaptableColumn[];
-  Api: AdaptableApi;
+  currentChartDefinition: CategoryChartDefinition;
+  chartData: ChartData;
+  columns: AdaptableColumn[];
+  api: AdaptableApi;
 
   onUpdateChartProperties: (chartUuid: string, chartProperties: ChartProperties) => void;
 }
@@ -78,19 +78,19 @@ export class CategoryChartComponent extends React.Component<
     this.calloutStyleUpdating = this.calloutStyleUpdating.bind(this);
 
     this.state = CategoryChartUIHelper.setChartDisplayPopupState(
-      this.props.CurrentChartDefinition as CategoryChartDefinition,
-      this.props.Api
+      this.props.currentChartDefinition as CategoryChartDefinition,
+      this.props.api
     );
     IgrCategoryChartModule.register();
     IgrDataChartAnnotationModule.register();
   }
 
   UNSAFE_componentWillReceiveProps(nextProps: CategoryChartComponentProps, nextContext: any) {
-    if (nextProps.CurrentChartDefinition.Name != this.props.CurrentChartDefinition.Name) {
+    if (nextProps.currentChartDefinition.Name != this.props.currentChartDefinition.Name) {
       this.setState(
         CategoryChartUIHelper.setChartDisplayPopupState(
-          nextProps.CurrentChartDefinition as CategoryChartDefinition,
-          this.props.Api
+          nextProps.currentChartDefinition as CategoryChartDefinition,
+          this.props.api
         ) as CategoryChartComponentState
       );
     }
@@ -201,7 +201,7 @@ export class CategoryChartComponent extends React.Component<
     let chartElement = (
       <IgrCategoryChart
         // data source
-        dataSource={this.props.ChartData.Data}
+        dataSource={this.props.chartData.Data}
         // chart type
         chartType={this.state.ChartProperties.CategoryChartType}
         markerTypes={CategoryChartUIHelper.getMarkerFromProps(this.state.ChartProperties)}
@@ -209,8 +209,8 @@ export class CategoryChartComponent extends React.Component<
         width={'100%'}
         height={'500px'}
         // titles (titles, alignment and margins)
-        chartTitle={this.props.CurrentChartDefinition.Name}
-        subtitle={this.props.CurrentChartDefinition.Description}
+        chartTitle={this.props.currentChartDefinition.Name}
+        subtitle={this.props.currentChartDefinition.Description}
         titleAlignment={this.state.ChartProperties.TitleAlignment}
         titleRightMargin={this.state.TitleMargin}
         titleTopMargin={this.state.TitleMargin}
@@ -269,7 +269,7 @@ export class CategoryChartComponent extends React.Component<
 
         // callouts generated dynamiclly based on current data source and callout properties:
         calloutsDataSource={CategoryChartUIHelper.getCalloutsData(
-          this.props.ChartData.Data,
+          this.props.chartData.Data,
           this.state.ChartProperties
         )}
         calloutsVisible={true}
@@ -502,7 +502,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetYAxisLabelColor && (
                       <ColorPicker
-                        Api={this.props.Api}
+                        api={this.props.api}
                         value={this.state.ChartProperties.YAxisLabelColor}
                         onChange={(x: any) => this.onYAxisLabelColorChange(x)}
                       />
@@ -544,7 +544,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetYAxisTitleColor && (
                       <ColorPicker
-                        Api={this.props.Api}
+                        api={this.props.api}
                         value={this.state.ChartProperties.YAxisTitleColor}
                         onChange={(x: any) => this.onYAxisTitleColorChange(x)}
                       />
@@ -626,7 +626,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetXAxisLabelColor && (
                       <ColorPicker
-                        Api={this.props.Api}
+                        api={this.props.api}
                         value={this.state.ChartProperties.XAxisLabelColor}
                         onChange={(x: any) => this.onXAxisLabelColorChange(x)}
                       />
@@ -688,7 +688,7 @@ export class CategoryChartComponent extends React.Component<
                   >
                     {this.state.SetXAxisTitleColor && (
                       <ColorPicker
-                        Api={this.props.Api}
+                        api={this.props.api}
                         value={this.state.ChartProperties.XAxisTitleColor}
                         onChange={(x: any) => this.onXAxisTitleColorChange(x)}
                       />
@@ -882,7 +882,7 @@ export class CategoryChartComponent extends React.Component<
       </PanelWithTwoButtons>
     );
 
-    return this.props.ChartData.Data != null ? (
+    return this.props.chartData.Data != null ? (
       <ChartContainer
         button={!this.state.IsChartSettingsVisible ? openChartSettingsButton : null}
         chart={chartElement}
@@ -1282,7 +1282,7 @@ export class CategoryChartComponent extends React.Component<
 
   private updateChartProperties(chartProperties: CategoryChartProperties): void {
     this.setState({ ChartProperties: chartProperties } as CategoryChartComponentState);
-    this.props.onUpdateChartProperties(this.props.CurrentChartDefinition.Uuid, chartProperties);
+    this.props.onUpdateChartProperties(this.props.currentChartDefinition.Uuid, chartProperties);
   }
 
   private onXAxisVisibilityOptionChanged(checked: boolean) {
@@ -1382,8 +1382,8 @@ export class CategoryChartComponent extends React.Component<
   private getYAxisTitle(useDefault: boolean): string {
     if (useDefault) {
       return CategoryChartUIHelper.createDefaultYAxisTitle(
-        this.props.CurrentChartDefinition,
-        this.props.Api
+        this.props.currentChartDefinition,
+        this.props.api
       );
     }
     return this.state.ChartProperties.YAxisTitle;
@@ -1392,8 +1392,8 @@ export class CategoryChartComponent extends React.Component<
   private getXAxisTitle(useDefault: boolean): string {
     if (useDefault) {
       return CategoryChartUIHelper.createDefaultXAxisTitle(
-        this.props.CurrentChartDefinition,
-        this.props.Api
+        this.props.currentChartDefinition,
+        this.props.api
       );
     }
     return this.state.ChartProperties.XAxisTitle;

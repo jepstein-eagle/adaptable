@@ -1,5 +1,5 @@
-import fs from 'fs';
-import path from 'path';
+import * as fs from 'fs';
+import * as path from 'path';
 // @ts-ignore
 import { Parser } from 'jison';
 import { AST } from './types';
@@ -56,8 +56,9 @@ describe('literal', () => {
   t('FALSE', 'FALSE', [false]);
   t('NUMBER', '1', [1]);
   t('STRING', ['"A"', "'A'"], ['A']);
-  t('ARRAY', '[1, "A"]', [[1, 'A']]);
-  t('EMPTY ARRAY', '[]', [[]]);
+  // t('ARRAY', '[1, "A"]', [[1, 'A']]);
+  // t('EMPTY ARRAY', '[]', [[]]);
+  t('COL', '[A]', [{ type: 'COL', args: ['A'] }]);
 });
 
 describe('function', () => {
@@ -96,17 +97,18 @@ describe('smart', () => {
       ],
     },
   ]);
-  t('column values', 'IN(COL("A"), ["X", "Y", "Z"])', [
-    {
-      type: 'IN',
-      args: [{ type: 'COL', args: ['A'] }, ['X', 'Y', 'Z']],
-    },
-  ]);
   t('location tracking', '1 + COL("A")', [
     {
       type: 'ADD',
       args: [1, { type: 'COL', args: ['A'], range: [4, 12] }],
       range: [0, 12],
+    },
+  ]);
+  t('IN operator', '1 IN (1, 2, 3)', [
+    {
+      type: 'IN',
+      args: [1, [1, 2, 3]],
+      range: [0, 14],
     },
   ]);
 });

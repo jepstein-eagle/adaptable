@@ -7,7 +7,6 @@ import {
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UIHelper } from '../../UIHelper';
 
 export interface ReportSummaryWizardProps extends AdaptableWizardStepProps<Report> {}
 
@@ -17,23 +16,20 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
     super(props);
   }
   render(): any {
-    // maybe add schedules later from getting them?
-
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Name', Value: this.props.Data.Name },
+      { Key: 'Name', Value: this.props.data.Name },
       {
-        Key: 'Columns',
-        Value: this.props.Api.internalApi
+        Key: 'Column Scope',
+        Value: this.props.api.internalApi
           .getReportService()
-          .GetReportColumnsDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
+          .GetReportColumnScopeLongDescription(this.props.data),
       },
       {
-        Key: 'Rows',
-        Value: this.props.Api.internalApi
+        Key: 'Row Scope',
+        Value: this.props.api.internalApi
           .getReportService()
-          .GetReportExpressionDescription(this.props.Data, this.props.Api.gridApi.getColumns()),
+          .GetReportExpressionDescription(this.props.data, this.props.api.columnApi.getColumns()),
       },
-      //  { Key: 'Schedule', Value: scheduleDescription },
     ];
 
     return (
@@ -50,17 +46,17 @@ export class ReportSummaryWizard extends React.Component<ReportSummaryWizardProp
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

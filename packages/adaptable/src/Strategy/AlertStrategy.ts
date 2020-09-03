@@ -4,10 +4,8 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
-import { ExpressionHelper, IRangeEvaluation } from '../Utilities/Helpers/ExpressionHelper';
 import * as AlertRedux from '../Redux/ActionsReducers/AlertRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
-import { LeafExpressionOperator } from '../PredefinedConfig/Common/Enums';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { DataChangedInfo } from '../PredefinedConfig/Common/DataChangedInfo';
 import { AlertDefinition } from '../PredefinedConfig/AlertState';
@@ -15,26 +13,23 @@ import * as SystemRedux from '../Redux/ActionsReducers/SystemRedux';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
+import * as parser from '../parser/src';
 
 export abstract class AlertStrategy extends AdaptableStrategyBase implements IAlertStrategy {
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.AlertStrategyId, adaptable);
+    super(
+      StrategyConstants.AlertStrategyId,
+      StrategyConstants.AlertStrategyFriendlyName,
+      StrategyConstants.AlertGlyph,
+      ScreenPopups.AlertPopup,
+      adaptable
+    );
     this.adaptable.DataService.on('DataChanged', (dataChangedInfo: DataChangedInfo) => {
       this.handleDataSourceChanged(dataChangedInfo);
     });
   }
 
   public abstract initStyles(): void;
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.AlertStrategyFriendlyName,
-        ComponentName: ScreenPopups.AlertPopup,
-        Icon: StrategyConstants.AlertGlyph,
-      });
-    }
-  }
 
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemShowPopup: MenuItemShowPopup = undefined;
@@ -46,8 +41,10 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         if (ArrayExtensions.IsNotNullOrEmpty(currentAlerts)) {
           let relevantAlert: AdaptableAlert = currentAlerts.find(
             a =>
-              a.AlertDefinition.ColumnId == menuInfo.Column.ColumnId &&
-              a.DataChangedInfo.RowNode == menuInfo.RowNode
+              this.adaptable.api.scopeApi.isColumnInScopeColumns(
+                menuInfo.Column,
+                a.AlertDefinition.Scope
+              ) && a.DataChangedInfo.RowNode == menuInfo.RowNode
           );
           if (relevantAlert) {
             menuItemShowPopup = this.createColumnMenuItemReduxAction(
@@ -63,9 +60,12 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   }
 
   public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+    const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let alertDefinitions: AlertDefinition[] = this.adaptable.api.alertApi
       .getAlertDefinitions()
-      .filter((ad: AlertDefinition) => ad.ColumnId == specialColumnId);
+      .filter((ad: AlertDefinition) =>
+        this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, ad.Scope)
+      );
 
     return ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)
       ? alertDefinitions.length + ' Alerts'
@@ -77,12 +77,11 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       dataChangedInfo
     );
     if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
       alertDefinitions.forEach((alertDefintion: AlertDefinition) => {
         // might be better to do a single alert with all the messages?
         this.adaptable.api.alertApi.showAlert(
-          this.adaptable.api.gridApi.getFriendlyNameFromColumnId(alertDefintion.ColumnId),
-          this.adaptable.StrategyService.createAlertDescription(alertDefintion, columns),
+          this.adaptable.api.columnApi.getFriendlyNameFromColumnId(dataChangedInfo.ColumnId),
+          this.adaptable.StrategyService.createAlertDescription(alertDefintion),
           alertDefintion,
           dataChangedInfo
         );
@@ -93,27 +92,37 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   private getAlertDefinitionsForDataChange(dataChangedEvent: DataChangedInfo): AlertDefinition[] {
     let relatedAlertDefinitions = this.adaptable.api.alertApi
       .getAlertDefinitions()
-      .filter(v => v.ColumnId == dataChangedEvent.ColumnId);
+      .filter(v =>
+        this.adaptable.api.scopeApi.isColumnInScope(
+          this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
+          v.Scope
+        )
+      );
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      let columns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
-
       // first check the rules which have expressions
-      let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
-        ExpressionHelper.IsNotNullOrEmptyExpression(r.Expression)
+      let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(
+        r => this.adaptable.api.queryApi.QueryObjectToString(r) != undefined
       );
 
       if (ArrayExtensions.IsNotNullOrEmpty(expressionAlertDefinitions)) {
         for (let expressionAlertDefinition of expressionAlertDefinitions) {
-          let isSatisfiedExpression: boolean = ExpressionHelper.checkForExpression(
-            expressionAlertDefinition.Expression,
-            dataChangedEvent.PrimaryKeyValue,
-            columns,
-            this.adaptable
+          let expression: string = this.adaptable.api.queryApi.QueryObjectToString(
+            expressionAlertDefinition
           );
+
+          let rowNode: any = dataChangedEvent.RowNode;
+          if (!rowNode) {
+            rowNode = this.adaptable.getRowNodeForPrimaryKey(dataChangedEvent.PrimaryKeyValue);
+          }
+          let isSatisfiedExpression: boolean = parser.evaluate(expression, {
+            node: rowNode,
+            api: this.adaptable.api,
+          });
+
           if (
             isSatisfiedExpression &&
-            this.isAlertTriggered(expressionAlertDefinition, dataChangedEvent, columns)
+            this.isAlertTriggered(expressionAlertDefinition, dataChangedEvent)
           ) {
             triggeredAlerts.push(expressionAlertDefinition);
           }
@@ -121,11 +130,11 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       }
 
       // now check the rules without expressions//
-      let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(r =>
-        ExpressionHelper.IsNullOrEmptyExpression(r.Expression)
+      let noExpressionRules: AlertDefinition[] = relatedAlertDefinitions.filter(
+        r => this.adaptable.api.queryApi.QueryObjectToString(r) == undefined
       );
       for (let noExpressionRule of noExpressionRules) {
-        if (this.isAlertTriggered(noExpressionRule, dataChangedEvent, columns)) {
+        if (this.isAlertTriggered(noExpressionRule, dataChangedEvent)) {
           triggeredAlerts.push(noExpressionRule);
         }
       }
@@ -133,28 +142,14 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     return triggeredAlerts;
   }
 
-  private isAlertTriggered(
-    alert: AlertDefinition,
-    dataChangedEvent: DataChangedInfo,
-    columns: AdaptableColumn[]
-  ): boolean {
-    // if its any change then alert triggers immediately
-    if (alert.Range.Operator == LeafExpressionOperator.AnyChange) {
-      return true;
-    }
-    // todo: change the last argument from null as we might want to do evaluation based on other cells...
-    let column: AdaptableColumn = this.adaptable.api.gridApi.getColumnFromId(
-      dataChangedEvent.ColumnId
-    );
-    let rangeEvaluation: IRangeEvaluation = ExpressionHelper.GetRangeEvaluation(
-      alert.Range,
-      dataChangedEvent.NewValue,
-      dataChangedEvent.OldValue,
-      column,
-      this.adaptable,
-      null
-    );
-    return ExpressionHelper.TestRangeEvaluation(rangeEvaluation, this.adaptable);
+  private isAlertTriggered(alert: AlertDefinition, dataChangedEvent: DataChangedInfo): boolean {
+    return this.adaptable.api.predicateApi.handlePredicate(alert.Predicate, {
+      value: dataChangedEvent.NewValue,
+      oldValue: dataChangedEvent.OldValue,
+      // TODO send real display value
+      displayValue: null,
+      column: this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
+    });
   }
 
   public getTeamSharingAction(): TeamSharingImportInfo<AlertDefinition> {

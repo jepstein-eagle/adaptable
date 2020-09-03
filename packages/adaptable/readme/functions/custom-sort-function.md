@@ -1,6 +1,6 @@
 # Custom Sort (AdaptableFunction)
 
-The Custom Sort([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `CustomSort`) Function enables columns to be given a different sort order to the default for their data type.
+The Custom Sort Function enables columns to be given a different sort order to the default for their data type.
 
 This is useful when users need to order a column in an non-standard way (i.e. not in alphabetical, numerical, or date order). 
 

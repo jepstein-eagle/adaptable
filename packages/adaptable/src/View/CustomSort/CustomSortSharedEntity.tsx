@@ -10,12 +10,12 @@ export class CustomSortSharedEntity extends React.Component<
   {}
 > {
   render(): any {
-    let customSort: CustomSort = this.props.Entity as CustomSort;
+    let customSort: CustomSort = this.props.entity as CustomSort;
 
     return (
       <Flex flexDirection="row" alignItems="center">
         <Flex flex={4}>
-          {this.props.Api.gridApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
+          {this.props.api.columnApi.getFriendlyNameFromColumnId(customSort.ColumnId)}
         </Flex>
         <Flex flex={8}>{this.getCustomSortedValues(customSort)}</Flex>
       </Flex>
@@ -26,7 +26,7 @@ export class CustomSortSharedEntity extends React.Component<
     if (ArrayExtensions.IsNotNullOrEmpty(customSort.SortedValues)) {
       return customSort.SortedValues.join(', ');
     } else {
-      return 'Custom Sort uses a bespoke function';
+      return '[Has bespoke Custom Sort implementing using bespoke function]';
     }
   }
 }

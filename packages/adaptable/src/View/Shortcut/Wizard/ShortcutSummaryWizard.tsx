@@ -18,10 +18,10 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
 
   render() {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Key', Value: this.props.Data.ShortcutKey },
-      { Key: 'Result', Value: this.props.Data.ShortcutResult },
-      { Key: 'Operation', Value: this.props.Data.ShortcutOperation },
-      { Key: 'Columns', Value: this.props.Data.ColumnType },
+      { Key: 'Key', Value: this.props.data.ShortcutKey },
+      { Key: 'Result', Value: this.props.data.ShortcutResult },
+      { Key: 'Operation', Value: this.props.data.ShortcutOperation },
+      { Key: 'Columns', Value: this.props.data.ColumnType },
     ];
 
     return (
@@ -39,16 +39,16 @@ export class ShortcutSummaryWizard extends React.Component<ShortcutSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
-  public Back(): void {
+  public back(): void {
     /* no implementation required   */
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

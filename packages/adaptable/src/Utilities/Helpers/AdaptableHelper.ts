@@ -9,6 +9,7 @@ import { DefaultAdaptableOptions } from '../Defaults/DefaultAdaptableOptions';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
 import { AdaptableEventArgs, AdaptableEventData } from '../../Api/Events/AdaptableEvents';
 import { AdaptableComparerFunction } from '../../PredefinedConfig/Common/AdaptableComparerFunction';
+import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
@@ -86,8 +87,11 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
     const customizer = (value: any) => {
       // so whenever we clone a plain object,
       // we add a Uuid property
+      // jw added 9/8/20: unless there is on there already
       if (isPlainObject(value) && value != predefinedConfig) {
-        value.Uuid = createUuid();
+        if (value.Uuid == null || value.Uuid == undefined) {
+          value.Uuid = createUuid();
+        }
       }
     };
 
@@ -97,7 +101,7 @@ export function assignadaptableOptions(adaptableOptions: AdaptableOptions): Adap
 }
 
 export function isValidPrimaryKey(adaptable: IAdaptable): boolean {
-  const pkColumn: AdaptableColumn = adaptable.api.gridApi.getColumnFromId(
+  const pkColumn: AdaptableColumn = adaptable.api.columnApi.getColumnFromId(
     adaptable.adaptableOptions.primaryKey
   );
 
@@ -164,11 +168,11 @@ export function runAdaptableComparerFunction(
     nodeB?: any
   ): number {
     let firstElementValueString = nodeA
-      ? adaptable.getDisplayValueFromRowNode(nodeA, columnId)
+      ? adaptable.getValueFromRowNode(nodeA, columnId, CellValueType.DisplayValue)
       : valueA;
 
     let secondElementValueString = nodeB
-      ? adaptable.getDisplayValueFromRowNode(nodeB, columnId)
+      ? adaptable.getValueFromRowNode(nodeB, columnId, CellValueType.DisplayValue)
       : valueB;
 
     let indexFirstElement = columnValues.indexOf(firstElementValueString);

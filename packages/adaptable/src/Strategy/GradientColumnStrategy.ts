@@ -16,17 +16,13 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
   implements IGradientColumnStrategy {
   protected GradientColumnState: GradientColumnState;
   constructor(adaptable: IAdaptable) {
-    super(StrategyConstants.GradientColumnStrategyId, adaptable);
-  }
-
-  public addFunctionMenuItem(): AdaptableMenuItem | undefined {
-    if (this.canCreateMenuItem('ReadOnly')) {
-      return this.createMainMenuItemShowPopup({
-        Label: StrategyConstants.GradientColumnStrategyFriendlyName,
-        ComponentName: ScreenPopups.GradientColumnPopup,
-        Icon: StrategyConstants.GradientColumnGlyph,
-      });
-    }
+    super(
+      StrategyConstants.GradientColumnStrategyId,
+      StrategyConstants.GradientColumnStrategyFriendlyName,
+      StrategyConstants.GradientColumnGlyph,
+      ScreenPopups.GradientColumnPopup,
+      adaptable
+    );
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
@@ -38,7 +34,7 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
       let label = GradientColumnExists ? 'Edit ' : 'Create ';
 
       let popupParam: StrategyParams = {
-        columnId: column.ColumnId,
+        column: column,
         action: GradientColumnExists ? 'Edit' : 'New',
         source: 'ColumnMenu',
       };

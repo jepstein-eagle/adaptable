@@ -6,18 +6,14 @@ import {
   AdaptableWizardStepProps,
 } from '../../Wizard/Interface/IAdaptableWizard';
 
-import { AdaptablePopover } from '../../AdaptablePopover';
-import {
-  ReportRowScope,
-  MessageType,
-  ReportColumnScope,
-} from '../../../PredefinedConfig/Common/Enums';
+import { ReportRowScope, ReportColumnScope } from '../../../PredefinedConfig/Common/Enums';
 
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import WizardPanel from '../../../components/WizardPanel';
 import Radio from '../../../components/Radio';
 import { Flex } from 'rebass';
 import HelpBlock from '../../../components/HelpBlock';
+import { EMPTY_STRING } from '../../../Utilities/Constants/GeneralConstants';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ReportRowTypeWizardProps extends AdaptableWizardStepProps<Report> {}
 export interface ReportRowsWizardState {
@@ -30,7 +26,7 @@ export class ReportRowTypeWizard
   constructor(props: ReportRowTypeWizardProps) {
     super(props);
     this.state = {
-      ReportRowScope: this.props.Data.ReportRowScope as ReportRowScope,
+      ReportRowScope: this.props.data.ReportRowScope as ReportRowScope,
     };
   }
   render() {
@@ -87,7 +83,7 @@ export class ReportRowTypeWizard
           ReportRowScope: ReportRowScope.AllRows,
           SelectedColumnValues: [],
         } as ReportRowsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else if (e.value == 'Visible') {
       this.setState(
@@ -95,12 +91,12 @@ export class ReportRowTypeWizard
           ReportRowScope: ReportRowScope.VisibleRows,
           SelectedColumnValues: [],
         } as ReportRowsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     } else {
       this.setState(
         { ReportRowScope: ReportRowScope.ExpressionRows } as ReportRowsWizardState,
-        () => this.props.UpdateGoBackState()
+        () => this.props.updateGoBackState()
       );
     }
   }
@@ -115,23 +111,25 @@ export class ReportRowTypeWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.ReportRowScope = this.state.ReportRowScope;
+  public next(): void {
+    this.props.data.ReportRowScope = this.state.ReportRowScope;
     if (
-      this.props.Data.Expression == null ||
+      StringExtensions.IsNullOrEmpty(this.props.data.Expression) &&
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId) &&
       this.state.ReportRowScope != ReportRowScope.ExpressionRows
     ) {
-      this.props.Data.Expression = ExpressionHelper.CreateEmptyExpression();
+      this.props.data.Expression = EMPTY_STRING;
+      this.props.data.SharedQueryId = EMPTY_STRING;
     }
   }
-  public Back(): void {
+  public back(): void {
     //todo
   }
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return this.state.ReportRowScope == ReportRowScope.ExpressionRows ? 1 : 2;
   }
 
-  public GetIndexStepDecrement() {
-    return this.props.Data.ReportColumnScope == ReportColumnScope.BespokeColumns ? 1 : 2;
+  public getIndexStepDecrement() {
+    return this.props.data.ReportColumnScope == ReportColumnScope.ScopeColumns ? 1 : 2;
   }
 }

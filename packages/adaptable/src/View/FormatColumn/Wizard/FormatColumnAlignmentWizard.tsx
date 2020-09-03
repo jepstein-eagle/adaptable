@@ -22,7 +22,7 @@ export class FormatColumnAlignmentWizard
   column: AdaptableColumn;
   constructor(props: FormatColumnAlignmentWizardProps) {
     super(props);
-    this.state = { CellAlignment: this.props.Data.CellAlignment };
+    this.state = { CellAlignment: this.props.data.CellAlignment };
   }
 
   render() {
@@ -50,7 +50,7 @@ export class FormatColumnAlignmentWizard
 
   private onCellAlignmentSelectChanged(cellAlignment?: 'Left' | 'Right' | 'Center') {
     this.setState({ CellAlignment: cellAlignment } as FormatColumnAlignmentWizardState, () =>
-      this.props.UpdateGoBackState()
+      this.props.updateGoBackState()
     );
   }
 
@@ -60,17 +60,17 @@ export class FormatColumnAlignmentWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
-    this.props.Data.CellAlignment = this.state.CellAlignment;
+  public next(): void {
+    this.props.data.CellAlignment = this.state.CellAlignment;
   }
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
+  public getIndexStepDecrement() {
     return 1;
   }
 }

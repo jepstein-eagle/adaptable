@@ -153,77 +153,12 @@ export class StyleService implements IStyleService {
       );
     });
 
-    // we define first the row conditions and then columns so priority of CS col > CS Row and allow a record to have both
-    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getAllConditionalStyle();
-    conditionalStyles
-      .filter(x => x.ConditionalStyleScope == 'Row')
-      .forEach(element => {
-        const styleName = this.CreateUniqueStyleName(
-          StrategyConstants.ConditionalStyleStrategyId,
-          element
-        );
-        this.addCSSRule(
-          `.${styleName}`,
-          `background-color: ${element.Style.BackColor} !important;color: ${
-            element.Style.ForeColor
-          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
-            element.Style.FontStyle
-          } !important;${
-            element.Style.FontSize
-              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                  element.Style.FontSize
-                )} !important`
-              : ''
-          }`
-        );
-      });
-    conditionalStyles
-      .filter(x => x.ConditionalStyleScope == 'ColumnCategory')
-      .forEach(element => {
-        const styleName = this.CreateUniqueStyleName(
-          StrategyConstants.ConditionalStyleStrategyId,
-          element
-        );
-        this.addCSSRule(
-          `.${styleName}`,
-          `background-color: ${element.Style.BackColor} !important;color: ${
-            element.Style.ForeColor
-          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
-            element.Style.FontStyle
-          } !important;${
-            element.Style.FontSize
-              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                  element.Style.FontSize
-                )} !important`
-              : ''
-          }`
-        );
-      });
-    conditionalStyles
-      .filter(cs => cs.ConditionalStyleScope == 'Column')
-      .forEach(element => {
-        const styleName = this.CreateUniqueStyleName(
-          StrategyConstants.ConditionalStyleStrategyId,
-          element
-        );
-        this.addCSSRule(
-          `.${styleName}`,
-          `background-color: ${element.Style.BackColor} !important;color: ${
-            element.Style.ForeColor
-          } !important;font-weight: ${element.Style.FontWeight} !important;font-style: ${
-            element.Style.FontStyle
-          } !important;${
-            element.Style.FontSize
-              ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
-                  element.Style.FontSize
-                )} !important`
-              : ''
-          }`
-        );
-      });
+    // we get the CS in order so that it will show those with a Column style abvove those with DataType
+    const conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi.getOrderedConditionalStyles();
+    // lets worry about row ones later - need to get cols working first..
     /*
     conditionalStyles
-      .filter(cs => cs.ConditionalStyleScope == 'DataType')
+      .filter(x => x.Scope == undefined) // what is currently a row...
       .forEach(element => {
         const styleName = this.CreateUniqueStyleName(
           StrategyConstants.ConditionalStyleStrategyId,
@@ -244,9 +179,29 @@ export class StyleService implements IStyleService {
           }`
         );
       });
-      */
+     */
+    conditionalStyles.forEach(cs => {
+      const styleName = this.CreateUniqueStyleName(
+        StrategyConstants.ConditionalStyleStrategyId,
+        cs
+      );
+      this.addCSSRule(
+        `.${styleName}`,
+        `background-color: ${cs.Style.BackColor} !important;color: ${
+          cs.Style.ForeColor
+        } !important;font-weight: ${cs.Style.FontWeight} !important;font-style: ${
+          cs.Style.FontStyle
+        } !important;${
+          cs.Style.FontSize
+            ? `font-size: ${EnumExtensions.getCssFontSizeFromFontSizeEnum(
+                cs.Style.FontSize
+              )} !important`
+            : ''
+        }`
+      );
+    });
 
-    // next we do Updated Rows - still not quite sure how this will work...
+    //Updated Rows - still not quite sure how this will work...
     const updatedRowState: UpdatedRowState = this.adaptable.api.updatedRowApi.getUpdatedRowState();
     if (updatedRowState.EnableUpdatedRow) {
       this.addCSSRule(
@@ -323,91 +278,89 @@ export class StyleService implements IStyleService {
   // I suspsect it is so we dont have lots of bits of state being stored and compared
   private setUpStoreListeners() {
     //  Quick Search - no need to set up styles for Quick Search as done in AB not the Strategy = need to test!!!
-    this.adaptable.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_DISPLAY, () => {
-      this.createAdaptableFunctionStyles();
-    });
-    this.adaptable.AdaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
+    this.adaptable.adaptableStore.on(QuickSearchRedux.QUICK_SEARCH_SET_STYLE, () => {
       this.createAdaptableFunctionStyles();
     });
 
     // Format Column
-    this.adaptable.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
+    this.adaptable.adaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_ADD, () => {
       this.setUpFormatColumn();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
+    this.adaptable.adaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_EDIT, () => {
       this.setUpFormatColumn();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
+    this.adaptable.adaptableStore.on(FormatColumnRedux.FORMAT_COLUMN_DELETE, () => {
       this.setUpFormatColumn();
       this.createAdaptableFunctionStyles();
     });
 
     // Conditional Style
-    this.adaptable.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
+
+    this.adaptable.adaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_ADD, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
+    this.adaptable.adaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_EDIT, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
+    this.adaptable.adaptableStore.on(ConditionalStyleRedux.CONDITIONAL_STYLE_DELETE, () => {
       this.setUpConditionalStyle();
       this.createAdaptableFunctionStyles();
     });
 
     // Alert Definition (note we dont need to create styles)
-    this.adaptable.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
+    this.adaptable.adaptableStore.on(AlertRedux.ALERT_DEFIINITION_ADD, () => {
       this.setUpAlerts();
       // this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
+    this.adaptable.adaptableStore.on(AlertRedux.ALERT_DEFIINITION_EDIT, () => {
       this.setUpAlerts();
       // this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
+    this.adaptable.adaptableStore.on(AlertRedux.ALERT_DEFIINITION_DELETE, () => {
       this.setUpAlerts();
       //  this.createAdaptableFunctionStyles();
     });
 
     // Updated Row
-    this.adaptable.AdaptableStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
+    this.adaptable.adaptableStore.on(UpdatedRowRedux.UPDATED_ROW_ENABLE_DISABLE, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
+    this.adaptable.adaptableStore.on(UpdatedRowRedux.UP_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
+    this.adaptable.adaptableStore.on(UpdatedRowRedux.DOWN_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
+    this.adaptable.adaptableStore.on(UpdatedRowRedux.NEUTRAL_COLOR_SET, () => {
       this.setUpUpdatedRow();
       this.createAdaptableFunctionStyles();
     });
 
     // Flashing Cell
-    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
+    this.adaptable.adaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
+    this.adaptable.adaptableStore.on(FlashingCellsRedux.FLASHING_CELL_SELECT_ALL, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
+    this.adaptable.adaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_UP_COLOR, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR, () => {
+    this.adaptable.adaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DOWN_COLOR, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });
-    this.adaptable.AdaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
+    this.adaptable.adaptableStore.on(FlashingCellsRedux.FLASHING_CELL_CHANGE_DURATION, () => {
       this.setUpFlashingCells();
       this.createAdaptableFunctionStyles();
     });

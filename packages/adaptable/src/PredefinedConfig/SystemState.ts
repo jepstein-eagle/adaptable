@@ -1,10 +1,8 @@
 import { IPreviewInfo } from '../Utilities/Interface/IPreview';
 import { AdaptableAlert } from '../Utilities/Interface/IMessage';
 import { ChartVisibility } from './Common/ChartEnums';
-import { Expression, QueryRange } from './Common/Expression';
 import { InternalState } from './InternalState';
 import { UpdatedRowInfo } from '../Utilities/Services/Interface/IDataService';
-import { Calendar } from './CalendarState';
 import { ChartData } from './ChartState';
 import { Report } from './ExportState';
 import { BulkUpdateValidationResult } from '../Strategy/Interface/IBulkUpdateStrategy';
@@ -12,6 +10,7 @@ import { GridCell } from '../types';
 import { IPushPullState, IPushPullReport, IPushPullDomain } from './IPushPullState';
 import { Glue42State, Glue42Report } from './Glue42State';
 import { OpenFinState, OpenFinReport } from './OpenFinState';
+import { SystemFilterPredicateId } from './FilterState';
 
 export { IPushPullReport, IPushPullDomain };
 
@@ -28,7 +27,6 @@ export { OpenFinReport };
 export interface SystemState extends InternalState, IPushPullState, Glue42State, OpenFinState {
   AdaptableAlerts: AdaptableAlert[];
   UpdatedRowInfos: UpdatedRowInfo[];
-  AvailableCalendars: Calendar[];
   IsValidSmartEditSelection: boolean;
   SmartEditPreviewInfo: IPreviewInfo;
   BulkUpdateValidationResult: BulkUpdateValidationResult;
@@ -39,7 +37,5 @@ export interface SystemState extends InternalState, IPushPullState, Glue42State,
 
   SystemReports: Report[];
   ReportErrorMessage: string;
-  QuickSearchRange: QueryRange;
-  QuickSearchVisibleColumnExpressions: Expression[];
   LastAppliedShortCut: GridCell | undefined;
 }

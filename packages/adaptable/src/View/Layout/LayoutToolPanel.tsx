@@ -22,6 +22,7 @@ import { AdaptableApi } from '../../Api/AdaptableApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
+import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 
 interface LayoutToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<LayoutToolPanelComponent> {
@@ -29,6 +30,7 @@ interface LayoutToolPanelComponentProps
 
   onSaveLayout: (layout: Layout) => LayoutRedux.LayoutSaveAction;
   onNewLayout: () => PopupRedux.PopupShowScreenAction;
+  onEditLayout: () => PopupRedux.PopupShowScreenAction;
   Layouts: Layout[];
   CurrentLayoutName: string;
   CurrentDraftLayout: Layout;
@@ -49,17 +51,14 @@ class LayoutToolPanelComponent extends React.Component<
   }
 
   render(): any {
-    let nonDefaultLayouts = this.props.Layouts.filter(
-      l => l.Name != GeneralConstants.DEFAULT_LAYOUT
-    );
-    let layoutEntity = nonDefaultLayouts.find(
+    let layoutEntity = this.props.Layouts.find(
       x => x.Name == this.props.CurrentLayoutName || x.Uuid == this.props.CurrentLayoutName
     );
 
     let isManualSaveLayout: boolean =
-      this.props.Api.gridApi.getadaptableOptions().layoutOptions!.autoSaveLayouts == false;
+      this.props.api.internalApi.getAdaptableOptions().layoutOptions!.autoSaveLayouts == false;
 
-    let availableLayoutOptions: any = nonDefaultLayouts.map((layout, index) => {
+    let availableLayoutOptions: any = this.props.Layouts.map((layout, index) => {
       return {
         ...layout,
         label: layout.Name,
@@ -72,13 +71,14 @@ class LayoutToolPanelComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Layout__wrap">
           <Dropdown
             disabled={availableLayoutOptions.length == 0}
-            style={{ minWidth: 170 }}
+            style={{ minWidth: 160 }}
+            marginRight={2}
             className="ab-ToolPanel__Layout__select"
-            placeholder="Select Layout"
+            showEmptyItem={false}
             value={layoutEntity ? layoutEntity.Name : null}
             options={availableLayoutOptions}
             onChange={(layoutName: any) => {
-              this.onSelectedLayoutChanged(layoutName);
+              this.props.onSelectLayout(layoutName);
             }}
             showClearButton={false}
           />
@@ -86,7 +86,7 @@ class LayoutToolPanelComponent extends React.Component<
         <Flex
           flexDirection="row"
           className={join(
-            this.props.AccessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
+            this.props.accessLevel == 'ReadOnly' ? GeneralConstants.READ_ONLY_STYLE : '',
             'ab-ToolPanel__Layout__wrap'
           )}
         >
@@ -96,9 +96,15 @@ class LayoutToolPanelComponent extends React.Component<
               onClick={() => this.onSaveLayout()}
               tooltip="Save Changes to Current Layout"
               disabled={!this.props.CanSave}
-              AccessLevel={this.props.AccessLevel}
+              accessLevel={this.props.accessLevel}
             />
           )}
+          <ButtonEdit
+            onClick={() => this.props.onEditLayout()}
+            tooltip="Edit Layout"
+            className="ab-DashboardToolbar__Layout__edit"
+            accessLevel={this.props.accessLevel}
+          />
 
           <ButtonNew
             children={null}
@@ -107,7 +113,7 @@ class LayoutToolPanelComponent extends React.Component<
             className="ab-ToolPanel__Layout__new"
             onClick={() => this.props.onNewLayout()}
             tooltip="Create a new Layout"
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
 
           <ButtonDelete
@@ -119,7 +125,7 @@ class LayoutToolPanelComponent extends React.Component<
               "Are you sure you want to delete '" + this.props.CurrentLayoutName + "'?"
             }
             ConfirmationTitle={'Delete Layout'}
-            AccessLevel={this.props.AccessLevel}
+            accessLevel={this.props.accessLevel}
           />
         </Flex>
       </Flex>
@@ -166,7 +172,7 @@ function mapStateToProps(
   return {
     CurrentLayoutName,
     CurrentDraftLayout: state.Grid.CurrentLayout || selectedLayout,
-    CanSave: !ownProps.Api.internalApi
+    CanSave: !ownProps.api.internalApi
       .getLayoutService()
       .areEqual(selectedLayout, state.Grid.CurrentLayout),
     Layouts,
@@ -184,6 +190,13 @@ function mapDispatchToProps(
       dispatch(
         PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
           action: 'New',
+          source: 'Toolbar',
+        })
+      ),
+    onEditLayout: () =>
+      dispatch(
+        PopupRedux.PopupShowScreen(StrategyConstants.LayoutStrategyId, ScreenPopups.LayoutPopup, {
+          action: 'Edit',
           source: 'Toolbar',
         })
       ),

@@ -100,7 +100,7 @@ async function InitAdaptableDemo() {
     showAdaptableColumnMenu: (menuItem: AdaptableMenuItem, menuInfo: MenuInfo) => {
       if (
         menuInfo.Column.ColumnId === 'counterparty' &&
-        (menuItem.FunctionName === 'ColumnChooser' || menuItem.FunctionName === 'PieChart')
+        (menuItem.FunctionName === 'Layout' || menuItem.FunctionName === 'PieChart')
       ) {
         return false;
       }
@@ -111,9 +111,6 @@ async function InitAdaptableDemo() {
 }
 
 let demoConfig: PredefinedConfig = {
-  Dashboard: {
-    VisibleToolbars: ['Layout', 'SystemStatus'],
-  },
   SystemStatus: {
     ShowAlert: false,
   },

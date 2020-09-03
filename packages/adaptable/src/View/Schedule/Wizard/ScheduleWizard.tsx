@@ -1,41 +1,40 @@
 import * as React from 'react';
 import { AdaptableWizard } from '../../Wizard/AdaptableWizard';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
+import { AdaptableObjectAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ScheduleSummaryWizard } from './ScheduleSummaryWizard';
 import { ScheduleSettingsWizard } from './ScheduleSettingsWizard';
 import { ScheduleScheduleWizard } from './ScheduleScheduleWizard';
 
-export interface ScheduleWizardProps
-  extends AdaptableObjectExpressionAdaptableWizardProps<ScheduleWizard> {}
+export interface ScheduleWizardProps extends AdaptableObjectAdaptableWizardProps<ScheduleWizard> {}
 
 export class ScheduleWizard extends React.Component<ScheduleWizardProps, {}> {
   render() {
     return (
       <div>
         <AdaptableWizard
-          FriendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
-          ModalContainer={this.props.ModalContainer}
-          Api={this.props.Api}
-          Steps={[
+          friendlyName={StrategyConstants.ScheduleStrategyFriendlyName}
+          modalContainer={this.props.modalContainer}
+          api={this.props.api}
+          steps={[
             {
               StepName: 'Settings',
               Index: 0,
-              Element: <ScheduleSettingsWizard Api={this.props.Api} />,
+              Element: <ScheduleSettingsWizard api={this.props.api} />,
             },
             {
               StepName: 'Schedule',
               Index: 1,
-              Element: <ScheduleScheduleWizard Api={this.props.Api} />,
+              Element: <ScheduleScheduleWizard api={this.props.api} />,
             },
             {
               StepName: 'Summary',
               Index: 2,
-              Element: <ScheduleSummaryWizard Api={this.props.Api} />,
+              Element: <ScheduleSummaryWizard api={this.props.api} />,
             },
           ]}
-          Data={this.props.EditedAdaptableObject}
-          StepStartIndex={this.props.WizardStartIndex}
+          data={this.props.editedAdaptableObject}
+          stepStartIndex={this.props.wizardStartIndex}
           onHide={() => this.props.onCloseWizard()}
           onFinish={() => this.props.onFinishWizard()}
           canFinishWizard={() => this.props.canFinishWizard()}

@@ -1,6 +1,6 @@
 # Format Column (AdaptableFunction)
 
-The Format Column([AdaptableFunctionName](https://api.adaptabletools.com/modules/_src_predefinedconfig_common_types_.html#adaptablefunctionname): `FormatColumn`) Function enables columns to be given any (or all) of a particular **Style** (i.e. colours, font size etc), **Display Format** or **Cell Alignment** which **all cells** in the Column will display.
+The Format Column Function enables columns to be given any (or all) of a particular **Style** (i.e. colours, font size etc), **Display Format** or **Cell Alignment** which **all cells** in the Column will display.
 
 ## Style
 
@@ -91,7 +91,7 @@ Yes. Set the Display Format to show the time portion only (e.g. see the 'HH:mm:s
 
 - [Format Column State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)
 
-- [Format Column API](https://api.adaptabletools.com/interfaces/_src_api_formatcolumnapi_.formatcolumnapi.html)
+- [Format Column Api](https://api.adaptabletools.com/interfaces/_src_api_formatcolumnapi_.formatcolumnapi.html)
 
 - [Format Column Demo](https://demo.adaptabletools.com/style/aggridformatcolumndemo)
 

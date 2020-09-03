@@ -1,5 +1,4 @@
 import { IStrategyActionReturn } from '../../Strategy/Interface/IStrategyActionReturn';
-import { Expression } from '../../PredefinedConfig/Common/Expression';
 import { SelectedCellInfo } from '../../PredefinedConfig/Selection/SelectedCellInfo';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import {
@@ -7,6 +6,7 @@ import {
   MessageType,
   ReportRowScope,
   ExportDestination,
+  CellValueType,
 } from '../../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
 import { Report } from '../../PredefinedConfig/ExportState';
@@ -15,7 +15,6 @@ import { SelectedRowInfo } from '../../PredefinedConfig/Selection/SelectedRowInf
 import { GridRow } from '../../PredefinedConfig/Selection/GridRow';
 import ObjectFactory from '../ObjectFactory';
 import { IReportService } from './Interface/IReportService';
-import ExpressionHelper from '../Helpers/ExpressionHelper';
 import { GridCell } from '../../PredefinedConfig/Selection/GridCell';
 import AdaptableHelper from '../Helpers/AdaptableHelper';
 import { LiveDataChangedInfo } from '../../Api/Events/LiveDataChanged';
@@ -26,6 +25,8 @@ import {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,
 } from '../Constants/GeneralConstants';
+import StringExtensions from '../Extensions/StringExtensions';
+import * as parser from '../../parser/src';
 
 export class ReportService implements IReportService {
   constructor(private adaptable: IAdaptable) {
@@ -49,36 +50,48 @@ export class ReportService implements IReportService {
     return true;
   }
 
-  public GetReportColumnsDescription(report: Report, cols: AdaptableColumn[]): string {
+  public GetReportColumnScopeShortDescription(report: Report): string {
     switch (report.ReportColumnScope) {
       case ReportColumnScope.AllColumns:
         return '[All Columns]';
       case ReportColumnScope.VisibleColumns:
         return '[Visible Columns]';
-      case ReportColumnScope.SelectedCellColumns:
+      case ReportColumnScope.SelectedColumns:
         return '[Selected Columns]';
-      case ReportColumnScope.BespokeColumns:
-        return this.adaptable.api.gridApi
-          .getFriendlyNamesFromColumnIds(report.ColumnIds)
-          .join(', ');
+      case ReportColumnScope.ScopeColumns:
+        return '[Bespoke Columns]';
+      case ReportColumnScope.CustomColumns:
+        return '[Custom Columns]';
+    }
+  }
+  public GetReportColumnScopeLongDescription(report: Report): string {
+    switch (report.ReportColumnScope) {
+      case ReportColumnScope.AllColumns:
+        return '[All Columns]';
+      case ReportColumnScope.VisibleColumns:
+        return '[Visible Columns]';
+      case ReportColumnScope.SelectedColumns:
+        return '[Selected Columns]';
+      case ReportColumnScope.ScopeColumns:
+        return this.adaptable.api.scopeApi.getScopeDescription(report.Scope);
       case ReportColumnScope.CustomColumns:
         return '[Custom Columns]';
     }
   }
 
-  public GetReportExpressionDescription(Report: Report, cols: AdaptableColumn[]): string {
-    if (this.IsSystemReport(Report)) {
-      if (Report.Name == ALL_DATA_REPORT) {
+  public GetReportExpressionDescription(report: Report, cols: AdaptableColumn[]): string {
+    if (this.IsSystemReport(report)) {
+      if (report.Name == ALL_DATA_REPORT) {
         return '[All Data]';
-      } else if (Report.Name == VISIBLE_DATA_REPORT) {
+      } else if (report.Name == VISIBLE_DATA_REPORT) {
         return '[All Visible Data]';
-      } else if (Report.Name == SELECTED_CELLS_REPORT) {
+      } else if (report.Name == SELECTED_CELLS_REPORT) {
         return '[Selected Cells Data]';
-      } else if (Report.Name == SELECTED_ROWS_REPORT) {
+      } else if (report.Name == SELECTED_ROWS_REPORT) {
         return '[Selected Rows Data]';
       }
     } else {
-      switch (Report.ReportRowScope) {
+      switch (report.ReportRowScope) {
         case ReportRowScope.AllRows:
           return '[All Rows]';
         case ReportRowScope.VisibleRows:
@@ -86,7 +99,7 @@ export class ReportService implements IReportService {
         case ReportRowScope.SelectedRows:
           return '[Selected Rows]';
         case ReportRowScope.ExpressionRows:
-          return ExpressionHelper.ConvertExpressionToString(Report.Expression, this.adaptable.api);
+          return this.adaptable.api.queryApi.QueryObjectToString(report);
         case ReportRowScope.CustomRows:
           return '[Custom Rows]';
       }
@@ -107,7 +120,7 @@ export class ReportService implements IReportService {
 
   private getReportColumnsForReport(report: Report): AdaptableColumn[] {
     let reportColumns: AdaptableColumn[] = [];
-    let gridColumns: AdaptableColumn[] = this.adaptable.api.gridApi.getColumns();
+    let gridColumns: AdaptableColumn[] = this.adaptable.api.columnApi.getColumns();
 
     // first get the cols depending on the Column Scope
     switch (report.ReportColumnScope) {
@@ -117,21 +130,14 @@ export class ReportService implements IReportService {
       case ReportColumnScope.VisibleColumns:
         reportColumns = gridColumns.filter(c => c.Visible);
         break;
-      case ReportColumnScope.SelectedCellColumns:
-        let selectedCellInfo: SelectedCellInfo = this.adaptable.api.gridApi.getSelectedCellInfo();
-
-        // otherwise get columns
-        reportColumns = selectedCellInfo.Columns;
+      case ReportColumnScope.SelectedColumns:
+        reportColumns = this.adaptable.api.gridApi.getSelectedCellInfo().Columns;
         break;
-      case ReportColumnScope.BespokeColumns:
-        reportColumns = report.ColumnIds.map(c => gridColumns.find(col => col.ColumnId == c));
+      case ReportColumnScope.ScopeColumns:
+        reportColumns = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
         break;
       case ReportColumnScope.CustomColumns:
-        // Need to turn these into Adaptable Columns
-        // Bit overkill but it allows us then to keep things neater for other report types (and this is rare)
-        reportColumns = report.ColumnIds.map(c => {
-          return AdaptableHelper.createAdaptableColumnFromColumnId(c);
-        });
+        reportColumns = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
         break;
     }
     return reportColumns;
@@ -174,17 +180,16 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: Expression = report.Expression;
-        this.adaptable.forAllRowNodesDo(row => {
+        let expressionToCheck: string = this.adaptable.api.queryApi.QueryObjectToString(report);
+
+        this.adaptable.forAllRowNodesDo(node => {
           if (
-            ExpressionHelper.checkForExpressionFromRowNode(
-              expressionToCheck,
-              row,
-              reportColumns,
-              this.adaptable
-            )
+            parser.evaluate(expressionToCheck, {
+              node: node,
+              api: this.adaptable.api,
+            })
           ) {
-            let newRow = this.getRowValues(row, reportColumns, report);
+            let newRow = this.getRowValues(node, reportColumns, report);
             dataToExport.push(newRow);
           }
         });
@@ -278,18 +283,16 @@ export class ReportService implements IReportService {
         break;
 
       case ReportRowScope.ExpressionRows:
-        let expressionToCheck: Expression = report.Expression;
+        let expressionToCheck: string = this.adaptable.api.queryApi.QueryObjectToString(report);
 
-        this.adaptable.forAllRowNodesDo(row => {
+        this.adaptable.forAllRowNodesDo(node => {
           if (
-            ExpressionHelper.checkForExpressionFromRowNode(
-              expressionToCheck,
-              row,
-              reportColumns,
-              this.adaptable
-            )
+            parser.evaluate(expressionToCheck, {
+              node: node,
+              api: this.adaptable.api,
+            })
           ) {
-            let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(row);
+            let pkValue: any = this.adaptable.getPrimaryKeyValueFromRowNode(node);
             pkValues.push(pkValue);
           }
         });
@@ -340,7 +343,11 @@ export class ReportService implements IReportService {
       if (useRawValue) {
         columnValue = this.adaptable.getRawValueFromRowNode(rowNode, col.ColumnId);
       } else {
-        columnValue = this.adaptable.getDisplayValueFromRowNode(rowNode, col.ColumnId);
+        columnValue = this.adaptable.getValueFromRowNode(
+          rowNode,
+          col.ColumnId,
+          CellValueType.DisplayValue
+        );
       }
       newRow.push(columnValue);
     });

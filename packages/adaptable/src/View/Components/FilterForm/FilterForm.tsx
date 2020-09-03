@@ -2,72 +2,58 @@ import * as React from 'react';
 import * as Redux from 'redux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
-import * as ColumnFilterRedux from '../../../Redux/ActionsReducers/ColumnFilterRedux';
-import * as UserFilterRedux from '../../../Redux/ActionsReducers/UserFilterRedux';
+import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux';
 import * as GridRedux from '../../../Redux/ActionsReducers/GridRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';
 import { AdaptableColumn } from '../../../PredefinedConfig/Common/AdaptableColumn';
 import { IColumnFilterContext } from '../../../Utilities/Interface/IColumnFilterContext';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
-import {
-  DataType,
-  SortOrder,
-  DistinctCriteriaPairValue,
-  LeafExpressionOperator,
-  ColumnMenuTab,
-} from '../../../PredefinedConfig/Common/Enums';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
-import { ColumnFilter } from '../../../PredefinedConfig/ColumnFilterState';
+import { DataType, ColumnMenuTab } from '../../../PredefinedConfig/Common/Enums';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { StrategyViewPopupProps } from '../SharedProps/StrategyViewPopupProps';
-import { IRawValueDisplayValuePair } from '../../UIInterfaces';
 import { ButtonClose } from '../Buttons/ButtonClose';
-import { Expression, QueryRange } from '../../../PredefinedConfig/Common/Expression';
 import { StringExtensions } from '../../../Utilities/Extensions/StringExtensions';
 import { ButtonClear } from '../Buttons/ButtonClear';
 import { Waiting } from './Waiting';
-import { ArrayExtensions } from '../../../Utilities/Extensions/ArrayExtensions';
 import { ListBoxMenu } from './ListBoxMenu';
-
 import { IAdaptable } from '../../../AdaptableInterfaces/IAdaptable';
 import { FilterFormPanel } from '../Panels/FilterFormPanel';
-import { ButtonSave } from '../Buttons/ButtonSave';
 import { ObjectFactory } from '../../../Utilities/ObjectFactory';
 import { IUIPrompt } from '../../../Utilities/Interface/IMessage';
 import HelpBlock from '../../../components/HelpBlock';
-import { NamedFilter } from '../../../PredefinedConfig/NamedFilterState';
-import { ColumnCategory } from '../../../PredefinedConfig/ColumnCategoryState';
 import { ThemeProvider } from 'styled-components';
 import theme from '../../../theme';
 import { AdaptableMenuItem } from '../../../PredefinedConfig/Common/Menu';
 import AdaptableContext from '../../AdaptableContext';
+import { Flex } from 'rebass';
+import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
+import Radio from '../../../components/Radio';
+import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
+import Helper from '../../../Utilities/Helpers/Helper';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
-  CurrentColumn: AdaptableColumn;
-  Adaptable: IAdaptable;
-  Columns: AdaptableColumn[];
-  UserFilters: UserFilter[];
-  SystemFilters: string[];
-  NamedFilters: NamedFilter[];
-  ColumnCategories: ColumnCategory[];
-  ColumnFilters: ColumnFilter[];
-  EmbedColumnMenu: boolean;
-  ShowCloseButton: boolean;
-  onClearColumnFilter: (columnfilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterClearAction;
-  onAddColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterAddAction;
-  onEditColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterEditAction;
-  onSetColumnFilter: (columnFilter: ColumnFilter) => ColumnFilterRedux.ColumnFilterSetAction;
+  currentColumn: AdaptableColumn;
+  adaptable: IAdaptable;
+  columns: AdaptableColumn[];
+  systemFilters: string[];
+  columnFilters: ColumnFilter[];
+  embedColumnMenu: boolean;
+  showCloseButton: boolean;
+  onClearColumnFilter: (columnfilter: ColumnFilter) => FilterRedux.ColumnFilterClearAction;
+  onAddColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterAddAction;
+  onEditColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterEditAction;
+  onSetColumnFilter: (columnFilter: ColumnFilter) => FilterRedux.ColumnFilterSetAction;
   onHideFilterForm: () => GridRedux.FilterFormHideAction;
   onMenuItemClick: (action: Redux.Action) => Redux.Action;
   onShowPrompt: (prompt: IUIPrompt) => PopupRedux.PopupShowPromptAction;
 }
 
 export interface FilterFormState {
-  ColumnValuePairs: Array<IRawValueDisplayValuePair>;
+  DistinctColumnValues: any[];
   ShowWaitingMessage: boolean;
   SelectedTab: ColumnMenuTab;
-  DistinctCriteriaPairValue: DistinctCriteriaPairValue;
+  // DistinctCriteriaPairValue: CellValueType;
   editedColumnFilter: ColumnFilter | undefined;
+  currentTab: 'values' | 'predicates';
 }
 
 const panelStyle = {
@@ -78,204 +64,65 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
   constructor(props: FilterFormProps) {
     super(props);
 
-    let existingColumnFilter = this.props.ColumnFilters.find(
-      cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+    let existingColumnFilter = this.props.columnFilters.find(
+      cf => cf.ColumnId == this.props.currentColumn.ColumnId
     );
+
     if (!existingColumnFilter) {
       existingColumnFilter = ObjectFactory.CreateColumnFilter(
-        this.props.CurrentColumn.ColumnId,
-        ExpressionHelper.CreateEmptyExpression()
+        this.props.currentColumn.ColumnId,
+        null,
+        null
       );
     }
 
     this.state = {
-      ColumnValuePairs: [],
+      DistinctColumnValues: [],
       ShowWaitingMessage: false,
       SelectedTab: ColumnMenuTab.Filter,
-      DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
       editedColumnFilter: existingColumnFilter,
+      currentTab:
+        existingColumnFilter &&
+        existingColumnFilter.Predicate &&
+        existingColumnFilter.Predicate.Id &&
+        existingColumnFilter.Predicate.Id != 'Values'
+          ? 'predicates'
+          : 'values',
     };
   }
 
-  // TODO impl and call this to sync when column filters are cleared (eg: from toolbar)
-  // syncColumnFilter() {
-  //   let existingColumnFilter = this.props.ColumnFilters.find(
-  //     cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
-  //   );
-  //   if (!existingColumnFilter) {
-  //     existingColumnFilter = ObjectFactory.CreateColumnFilter(
-  //       this.props.CurrentColumn.ColumnId,
-  //       ExpressionHelper.CreateEmptyExpression()
-  //     );
-  //   }
-
-  //   this.setState({
-  //     editedColumnFilter: existingColumnFilter,
-  //   });
-  // }
-
   componentDidMount() {
-    if (this.props.CurrentColumn.DataType != DataType.Boolean) {
-      let columnValuePairs: IRawValueDisplayValuePair[] = [];
-
-      let existingColumnFilter = this.props.ColumnFilters.find(
-        cf => cf.ColumnId == this.props.CurrentColumn.ColumnId
+    if (this.props.currentColumn.DataType != DataType.Boolean) {
+      let distinctColumnValues: any[] = this.props.adaptable.api.columnApi.getDistinctDisplayValuesForColumn(
+        this.props.currentColumn.ColumnId
       );
-      if (!existingColumnFilter) {
-        existingColumnFilter = ObjectFactory.CreateColumnFilter(
-          this.props.CurrentColumn.ColumnId,
-          ExpressionHelper.CreateEmptyExpression()
-        );
-      }
 
-      if (this.props.Adaptable.adaptableOptions.queryOptions.getColumnValues != null) {
-        this.setState({ ShowWaitingMessage: true });
-        this.props.Adaptable.adaptableOptions.queryOptions
-          .getColumnValues(this.props.CurrentColumn.ColumnId)
-          .then(result => {
-            if (result == null) {
-              // if nothing returned then default to normal
-              columnValuePairs = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-                this.props.CurrentColumn.ColumnId,
-                DistinctCriteriaPairValue.DisplayValue,
-                false
-              );
-              columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-                SortOrder.Ascending,
-                columnValuePairs,
-                DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-              );
-              this.setState({
-                ColumnValuePairs: columnValuePairs,
-                ShowWaitingMessage: false,
-                DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
-                editedColumnFilter: existingColumnFilter,
-              });
-            } else {
-              // get the distinct items and make sure within max items that can be displayed
-              let distinctItems = ArrayExtensions.RetrieveDistinct(result.ColumnValues).slice(
-                0,
-                this.props.Adaptable.adaptableOptions.queryOptions.maxColumnValueItemsDisplayed
-              );
-              distinctItems.forEach(distinctItem => {
-                let displayValue =
-                  result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue
-                    ? this.props.Adaptable.getDisplayValueFromRawValue(
-                        this.props.CurrentColumn.ColumnId,
-                        distinctItem
-                      )
-                    : distinctItem;
-                columnValuePairs.push({ RawValue: distinctItem, DisplayValue: displayValue });
-              });
-              let distinctCriteriaPairValue: DistinctCriteriaPairValue =
-                result.DistinctCriteriaPairValue == DistinctCriteriaPairValue.RawValue
-                  ? DistinctCriteriaPairValue.RawValue
-                  : DistinctCriteriaPairValue.DisplayValue;
-              this.setState({
-                ColumnValuePairs: columnValuePairs,
-                ShowWaitingMessage: false,
-                DistinctCriteriaPairValue: distinctCriteriaPairValue,
-                editedColumnFilter: existingColumnFilter,
-              });
-              // set the UIPermittedValues for this column to what has been sent
-              this.props.Adaptable.api.userInterfaceApi.setColumnPermittedValues(
-                this.props.CurrentColumn.ColumnId,
-                distinctItems
-              );
-            }
-          });
-      } else {
-        columnValuePairs = this.props.Adaptable.getColumnValueDisplayValuePairDistinctList(
-          this.props.CurrentColumn.ColumnId,
-          DistinctCriteriaPairValue.DisplayValue,
-          false
-        );
-        columnValuePairs = ArrayExtensions.sortArrayWithProperty(
-          SortOrder.Ascending,
-          columnValuePairs,
-          DistinctCriteriaPairValue[DistinctCriteriaPairValue.RawValue]
-        );
-        this.setState({
-          ColumnValuePairs: columnValuePairs,
-          ShowWaitingMessage: false,
-          DistinctCriteriaPairValue: DistinctCriteriaPairValue.DisplayValue,
-          editedColumnFilter: existingColumnFilter,
-        });
-      }
+      this.setState({
+        DistinctColumnValues: distinctColumnValues,
+        ShowWaitingMessage: false,
+      });
     }
   }
 
   render(): any {
     let isFilterable: string = this.isFilterable();
 
-    // get user filter expressions appropriate for this column
-    let appropriateFilters: string[] = this.props.Adaptable.FilterService.GetUserFiltersForColumn(
-      this.props.CurrentColumn,
-      this.props.UserFilters
-    )
-      .map(uf => uf.Name)
-      .concat(
-        this.props.Adaptable.FilterService.GetNamedFiltersForColumn(
-          this.props.CurrentColumn,
-          this.props.NamedFilters,
-          this.props.ColumnCategories
-        ).map(nf => nf.Name)
-      )
-      .concat(
-        this.props.Adaptable.FilterService.GetSystemFiltersForColumn(
-          this.props.CurrentColumn,
-          this.props.SystemFilters
-        ).map(sf => sf)
-      ); //.filter(u => this.props.Adaptable.FilterService.ShowUserFilterForColumn(this.props.UserFilterState.UserFilters, u.Name, this.props.CurrentColumn));
-
-    let appropriateFilterItems: IRawValueDisplayValuePair[] = appropriateFilters.map(uf => {
-      return { RawValue: uf, DisplayValue: uf };
-    });
-
-    // populate any missing arrays
-    if (this.state.editedColumnFilter && this.state.editedColumnFilter.Filter) {
-      if (ArrayExtensions.IsNull(this.state.editedColumnFilter.Filter.ColumnValueExpressions)) {
-        this.state.editedColumnFilter.Filter.ColumnValueExpressions = [];
-      }
-      if (ArrayExtensions.IsNull(this.state.editedColumnFilter.Filter.FilterExpressions)) {
-        this.state.editedColumnFilter.Filter.FilterExpressions = [];
-      }
-      if (ArrayExtensions.IsNull(this.state.editedColumnFilter.Filter.RangeExpressions)) {
-        this.state.editedColumnFilter.Filter.RangeExpressions = [];
-      }
-    }
-
-    let uiSelectedColumnValues: string[] =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
-        : [];
-
-    let uiSelectedUserFilters =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.FilterExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.FilterExpressions[0].Filters
-        : [];
-
-    let uiSelectedRangeExpression: QueryRange =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.RangeExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.RangeExpressions[0].Ranges[0]
-        : ExpressionHelper.CreateEmptyRange();
-
-    let leafExpressionOperators = this.getLeafExpressionOperatorsForDataType(
-      this.props.CurrentColumn.DataType
+    const predicateDefs = this.props.adaptable.api.filterApi.getFilterPredicateDefsForColumn(
+      this.props.currentColumn
     );
 
-    let isEmptyFilter: boolean =
-      uiSelectedColumnValues.length == 0 &&
-      uiSelectedUserFilters.length == 0 &&
-      ExpressionHelper.IsEmptyRange(uiSelectedRangeExpression);
+    let uiSelectedColumnValues =
+      this.state.editedColumnFilter?.Predicate?.Id === 'Values'
+        ? this.state.editedColumnFilter.Predicate.Inputs
+        : [];
 
-    let hasUserFilter: boolean = uiSelectedUserFilters.length > 0;
+    let isEmptyFilter: boolean =
+      Helper.objectNotExists(this.state.editedColumnFilter) ||
+      Helper.objectNotExists(this.state.editedColumnFilter.Predicate) ||
+      Helper.objectNotExists(this.state.editedColumnFilter.Predicate.Id);
 
     let closeButton = (
-      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} AccessLevel={'Full'} />
+      <ButtonClose onClick={() => this.onCloseForm()} tooltip={null} accessLevel={'Full'} />
     );
 
     let clearFilterButton = (
@@ -283,20 +130,13 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
         onClick={() => this.onClearFilter()}
         disabled={isEmptyFilter}
         tooltip={null}
-        AccessLevel={'Full'}
+        accessLevel={'Full'}
+        showText={true}
+        showIcon={false}
       ></ButtonClear>
     );
 
-    let saveButton = (
-      <ButtonSave
-        onClick={() => this.onSaveFilter()}
-        disabled={isEmptyFilter || hasUserFilter}
-        tooltip={'Save as User Filter'}
-        AccessLevel={'Full'}
-      ></ButtonSave>
-    );
-
-    const useVendorStyle = !!this.props.Adaptable.adaptableOptions.filterOptions!
+    const useVendorStyle = !!this.props.adaptable.adaptableOptions.filterOptions!
       .useVendorFilterFormStyle;
 
     return (
@@ -306,48 +146,74 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
             style={panelStyle}
             ColumnMenuTab={this.state.SelectedTab}
             ColumnMenuTabChanged={e => this.onSelectTab(e)}
-            IsAlwaysFilter={this.props.EmbedColumnMenu}
+            IsAlwaysFilter={this.props.embedColumnMenu}
             clearFilterButton={clearFilterButton}
-            saveButton={saveButton}
+            //saveButton={saveButton} // removing in v.7 until we re-add User Filter
             closeButton={closeButton}
-            showCloseButton={this.props.ShowCloseButton}
+            showCloseButton={this.props.showCloseButton}
             autoApplyFilter={
-              this.props.Adaptable.adaptableOptions.filterOptions!.autoApplyFilter ? true : false
+              this.props.adaptable.adaptableOptions.filterOptions!.autoApplyFilter ? true : false
             }
             useVendorStyle={useVendorStyle}
-            applyFilterButtonDisabled={ExpressionHelper.IsEmptyExpression(
-              this.state.editedColumnFilter!.Filter
-            )}
+            applyFilterButtonDisabled={isEmptyFilter}
             onFilterApplied={() => this.onFilterApplied()}
           >
             {this.state.SelectedTab == ColumnMenuTab.Menu ? (
               <ListBoxMenu
-                MenuItems={this.props.Adaptable.buildStandaloneColumnHeader(
-                  this.props.CurrentColumn
+                MenuItems={this.props.adaptable.buildStandaloneColumnHeader(
+                  this.props.currentColumn
                 )}
                 onMenuItemClick={menuItem => this.onMenuItemClick(menuItem)}
               />
             ) : (
               <div>
-                {this.state.ShowWaitingMessage ? (
-                  <Waiting WaitingMessage="Retrieving Column Values..." />
-                ) : (
-                  <ListBoxFilterForm
-                    CurrentColumn={this.props.CurrentColumn}
-                    Columns={this.props.Columns}
-                    ColumnValuePairs={this.state.ColumnValuePairs}
-                    DataType={this.props.CurrentColumn.DataType}
-                    DistinctCriteriaPairValue={this.state.DistinctCriteriaPairValue}
-                    UiSelectedColumnValues={uiSelectedColumnValues}
-                    UiSelectedUserFilters={uiSelectedUserFilters}
-                    UiSelectedRange={uiSelectedRangeExpression}
-                    UserFilters={appropriateFilterItems}
-                    useVendorStyle={useVendorStyle}
-                    onColumnValueSelectedChange={list => this.onClickColumValue(list)}
-                    onUserFilterSelectedChange={list => this.onClickUserFilter(list)}
-                    Operators={leafExpressionOperators}
-                    onCustomRangeExpressionChange={range => this.onSetCustomExpression(range)}
-                  />
+                <Radio
+                  marginLeft={1}
+                  flex={1}
+                  checked={this.state.currentTab == 'values'}
+                  onChange={() => this.setState({ currentTab: 'values' })}
+                >
+                  Column Values
+                </Radio>
+                <Radio
+                  marginLeft={2}
+                  flex={1}
+                  checked={this.state.currentTab == 'predicates'}
+                  onChange={() => this.setState({ currentTab: 'predicates' })}
+                >
+                  Filters
+                </Radio>
+                {/* 
+               <button onClick={() => this.setState({ currentTab: 'values' })}>Values</button>
+              <button onClick={() => this.setState({ currentTab: 'predicates' })}>Filters</button>   */}
+
+                {this.state.currentTab === 'values' && (
+                  <div>
+                    {this.state.ShowWaitingMessage ? (
+                      <Waiting WaitingMessage="Retrieving Column Values..." />
+                    ) : (
+                      <ListBoxFilterForm
+                        currentColumn={this.props.currentColumn}
+                        columns={this.props.columns}
+                        columnDistinctValues={this.state.DistinctColumnValues}
+                        dataType={this.props.currentColumn.DataType}
+                        uiSelectedColumnValues={uiSelectedColumnValues}
+                        useVendorStyle={useVendorStyle}
+                        onColumnValueSelectedChange={list => this.onColumnValuesChange(list)}
+                      />
+                    )}
+                  </div>
+                )}
+                {this.state.currentTab === 'predicates' && (
+                  <div>
+                    {' '}
+                    <hr></hr>
+                    {predicateDefs
+                      .filter(p => p.id != 'Values')
+                      .map((predicateDef, index) =>
+                        this.renderColumnPredicate(predicateDef, index)
+                      )}
+                  </div>
                 )}
               </div>
             )}
@@ -359,8 +225,41 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     );
   }
 
+  private renderColumnPredicate(predicateDef: PredicateDef, index: number): JSX.Element {
+    const { editedColumnFilter } = this.state;
+    const checked = editedColumnFilter?.Predicate?.Id === predicateDef.id;
+
+    return (
+      <Flex key={index}>
+        <Radio
+          fontSize={'var(--ab-font-size-2)'}
+          margin={1}
+          flex={1}
+          checked={checked}
+          onChange={() => this.selectColumnPredicate(predicateDef)}
+        >
+          {predicateDef.name}
+        </Radio>
+        <Flex flex={1}>
+          {checked &&
+            predicateDef.inputs &&
+            predicateDef.inputs.map((predicateInput, index) => (
+              <input
+                key={index}
+                type={predicateInput.type}
+                autoFocus={index === 0}
+                value={editedColumnFilter.Predicate.Inputs[index]}
+                onChange={e => this.changeColumnPredicateInput(e, index)}
+                style={{ flex: 1, width: 0, minWidth: 0, fontSize: 'var( --ab-font-size-1)' }}
+              />
+            ))}
+        </Flex>
+      </Flex>
+    );
+  }
+
   isFilterable(): string {
-    if (!this.props.CurrentColumn.Filterable) {
+    if (!this.props.currentColumn.Filterable) {
       return 'Column is not filterable';
     }
     return '';
@@ -370,142 +269,42 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.setState({ SelectedTab: tab } as FilterFormState);
   }
 
-  getLeafExpressionOperatorsForDataType(
-    dataType: 'String' | 'Number' | 'NumberArray' | 'Boolean' | 'Date' | 'Object' | 'Unknown'
-  ): LeafExpressionOperator[] {
-    return ExpressionHelper.GetOperatorsForDataType(dataType);
+  onColumnValuesChange(columnValues: any[]) {
+    const { editedColumnFilter } = this.state;
+
+    editedColumnFilter.Predicate = {
+      Id: 'Values',
+      Inputs: columnValues,
+    };
+
+    this.setState({ editedColumnFilter });
+    this.persistFilter();
   }
 
-  onClickColumValue(columnValues: string[]) {
-    let displayValues: string[] = [];
-    let rawValues: string[] = [];
-
-    columnValues.forEach(columnValue => {
-      let columnValuePair: IRawValueDisplayValuePair =
-        this.state.DistinctCriteriaPairValue == DistinctCriteriaPairValue.DisplayValue
-          ? this.state.ColumnValuePairs.find(cvp => cvp.DisplayValue == columnValue)
-          : this.state.ColumnValuePairs.find(cvp => cvp.RawValue == columnValue);
-      if (columnValuePair) {
-        // might not be if previous filter is not in current list
-        displayValues.push(columnValuePair.DisplayValue);
-        rawValues.push(columnValuePair.RawValue);
-      }
-    });
-
-    let userFilters =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.FilterExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.FilterExpressions[0].Filters
-        : [];
-
-    let rangeExpressions =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.RangeExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.RangeExpressions[0].Ranges
-        : [];
-
-    this.persistFilter(displayValues, rawValues, userFilters, rangeExpressions);
-  }
-
-  onClickUserFilter(userFilters: string[]) {
-    let columnDisplayValues =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
-        : [];
-
-    let columnRawValues =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
-        : [];
-
-    let rangeExpressions =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.RangeExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.RangeExpressions[0].Ranges
-        : [];
-
-    this.persistFilter(columnDisplayValues, columnRawValues, userFilters, rangeExpressions);
-  }
-
-  onSetCustomExpression(rangeExpression: QueryRange) {
-    let userFilters =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.FilterExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.FilterExpressions[0].Filters
-        : [];
-
-    let columnDisplayValues =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnDisplayValues
-        : [];
-
-    let columnRawValues =
-      this.state.editedColumnFilter &&
-      this.state.editedColumnFilter.Filter.ColumnValueExpressions.length > 0
-        ? this.state.editedColumnFilter.Filter.ColumnValueExpressions[0].ColumnRawValues
-        : [];
-
-    if (rangeExpression == null) {
-      this.persistFilter(columnDisplayValues, columnRawValues, userFilters, []);
-    } else {
-      this.persistFilter(columnDisplayValues, columnRawValues, userFilters, [rangeExpression]);
-    }
-  }
-
-  persistFilter(
-    columnDisplayValues: string[],
-    columnRawValues: string[],
-    userFilters: string[],
-    rangeExpressions: QueryRange[]
-  ): void {
-    let expression: Expression;
-    expression = ExpressionHelper.CreateSingleColumnExpression(
-      this.props.CurrentColumn.ColumnId,
-      columnDisplayValues,
-      columnRawValues,
-      userFilters,
-      rangeExpressions
-    );
-
-    let columnFilter: ColumnFilter = this.state.editedColumnFilter;
-    columnFilter.Filter = expression;
-
-    this.setState({
-      editedColumnFilter: columnFilter,
-    });
+  persistFilter(): void {
+    const { editedColumnFilter } = this.state;
 
     //delete if empty
     if (
-      columnDisplayValues.length == 0 &&
-      columnRawValues.length == 0 &&
-      userFilters.length == 0 &&
-      rangeExpressions.length == 0
+      editedColumnFilter.Predicate === undefined ||
+      (editedColumnFilter.Predicate.Id === 'Values' &&
+        editedColumnFilter.Predicate.Inputs.length === 0)
     ) {
-      this.props.onClearColumnFilter(columnFilter);
+      this.props.onClearColumnFilter(editedColumnFilter);
     } else {
-      if (this.props.Adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
-        this.props.onSetColumnFilter(columnFilter);
+      if (this.props.adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
+        this.props.onSetColumnFilter(editedColumnFilter);
       }
     }
   }
 
-  onSaveFilter() {
-    let prompt: IUIPrompt = {
-      Header: 'Enter name for User Filter',
-      Msg: '',
-      ConfirmAction: UserFilterRedux.CreateUserFilterFromColumnFilter(
-        this.state.editedColumnFilter,
-        ''
-      ),
-    };
-    this.props.onShowPrompt(prompt);
-  }
-
   onClearFilter() {
-    this.persistFilter([], [], [], []);
+    const { editedColumnFilter } = this.state;
+
+    editedColumnFilter.Predicate = undefined;
+
+    this.setState({ editedColumnFilter });
+    this.persistFilter();
   }
 
   onFilterApplied() {
@@ -529,19 +328,42 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     }
     this.props.onHideFilterForm();
   }
+
+  selectColumnPredicate(predicateDef: PredicateDef) {
+    const { editedColumnFilter } = this.state;
+
+    editedColumnFilter.Predicate = {
+      Id: predicateDef.id,
+      Inputs: (predicateDef.inputs ?? []).map(i => i.defaultValue ?? ''),
+    };
+
+    this.setState({ editedColumnFilter });
+    this.persistFilter();
+  }
+
+  changeColumnPredicateInput(e: React.FormEvent, index: number) {
+    const { value } = e.target as HTMLInputElement;
+    const { editedColumnFilter } = this.state;
+
+    editedColumnFilter.Predicate.Inputs[index] = value;
+
+    this.setState({ editedColumnFilter });
+
+    if (this.props.adaptable.adaptableOptions!.filterOptions!.autoApplyFilter) {
+      this.props.onSetColumnFilter(editedColumnFilter);
+    }
+    // this.props.onSetColumnFilter(editedColumnFilter);
+  }
 }
 
 function mapStateToProps(state: AdaptableState, ownProps: any): Partial<FilterFormProps> {
   return {
-    CurrentColumn: ownProps.CurrentColumn,
-    Adaptable: ownProps.Adaptable,
-    Columns: state.Grid.Columns,
-    ColumnFilters: state.ColumnFilter.ColumnFilters,
-    UserFilters: state.UserFilter.UserFilters,
-    ColumnCategories: state.ColumnCategory.ColumnCategories,
-    SystemFilters: state.SystemFilter.SystemFilters,
-    NamedFilters: state.NamedFilter.NamedFilters,
-    ShowCloseButton: ownProps.ShowCloseButton,
+    currentColumn: ownProps.currentColumn,
+    adaptable: ownProps.adaptable,
+    columns: state.Grid.Columns,
+    columnFilters: state.Filter.ColumnFilters,
+    systemFilters: state.Filter.SystemFilters,
+    showCloseButton: ownProps.showCloseButton,
   };
 }
 
@@ -551,13 +373,13 @@ function mapDispatchToProps(
   return {
     onMenuItemClick: (action: Redux.Action) => dispatch(action),
     onClearColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterClear(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterClear(columnFilter)),
     onAddColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterAdd(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterAdd(columnFilter)),
     onEditColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterEdit(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterEdit(columnFilter)),
     onSetColumnFilter: (columnFilter: ColumnFilter) =>
-      dispatch(ColumnFilterRedux.ColumnFilterSet(columnFilter)),
+      dispatch(FilterRedux.ColumnFilterSet(columnFilter)),
     onShowPrompt: (prompt: IUIPrompt) => dispatch(PopupRedux.PopupShowPrompt(prompt)),
     onHideFilterForm: () => dispatch(GridRedux.FilterFormHide()),
   };
@@ -566,15 +388,15 @@ function mapDispatchToProps(
 export let FilterForm = connect(mapStateToProps, mapDispatchToProps)(FilterFormComponent);
 
 export const FilterFormReact = (FilterContext: IColumnFilterContext) => (
-  <Provider store={FilterContext.Adaptable.AdaptableStore.TheStore}>
+  <Provider store={FilterContext.Adaptable.adaptableStore.TheStore}>
     <ThemeProvider theme={theme}>
       <AdaptableContext.Provider value={FilterContext.Adaptable}>
         <FilterForm
-          Adaptable={FilterContext.Adaptable}
-          CurrentColumn={FilterContext.Column}
-          TeamSharingActivated={false}
-          EmbedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
-          ShowCloseButton={FilterContext.ShowCloseButton}
+          adaptable={FilterContext.Adaptable}
+          currentColumn={FilterContext.Column}
+          teamSharingActivated={false}
+          embedColumnMenu={FilterContext.Adaptable.embedColumnMenu}
+          showCloseButton={FilterContext.ShowCloseButton}
         />
       </AdaptableContext.Provider>
     </ThemeProvider>

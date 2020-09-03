@@ -7,7 +7,7 @@ import { SharedEntity } from '../PredefinedConfig/TeamSharingState';
  *
  * Team Sharing allows users to share - at run-time - Adaptable Objects between colleagues.
  *
- * It is designed for use cases where the same, newly-created Adaptable Object (e.g. a Layout, Conditional Style, Advanced Search, Report etc.) will be required by multiple users.
+ * It is designed for use cases where the same, newly-created Adaptable Object (e.g. a Layout, Conditional Style, Report etc.) will be required by multiple users.
  *
  * Team Sharing is available when the `enableTeamSharing` property is set to true (and the Entitlement's `AccessLevel` is 'Full')
  *

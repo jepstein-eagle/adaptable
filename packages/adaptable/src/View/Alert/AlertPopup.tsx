@@ -7,6 +7,7 @@ import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPo
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as AlertRedux from '../../Redux/ActionsReducers/AlertRedux';
 import * as TeamSharingRedux from '../../Redux/ActionsReducers/TeamSharingRedux';
+import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import { Helper } from '../../Utilities/Helpers/Helper';
 import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import { AlertWizard } from './Wizard/AlertWizard';
@@ -16,42 +17,50 @@ import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import { AdaptableObjectCollection } from '../Components/AdaptableObjectCollection';
 import { AlertEntityRow } from './AlertEntityRow';
 import {
-  EditableConfigEntityState,
   WizardStatus,
+  EditableExpressionConfigEntityState,
 } from '../Components/SharedProps/EditableConfigEntityState';
 import { IColItem } from '../UIInterfaces';
 import { UIHelper } from '../UIHelper';
-import { ExpressionHelper } from '../../Utilities/Helpers/ExpressionHelper';
 import { MessageType } from '../../PredefinedConfig/Common/Enums';
 import { AlertDefinition } from '../../PredefinedConfig/AlertState';
 import { AdaptableObject } from '../../PredefinedConfig/Common/AdaptableObject';
 import EmptyContent from '../../components/EmptyContent';
+import { SharedQuery } from '../../PredefinedConfig/QueryState';
+import { EMPTY_STRING } from '../../Utilities/Constants/GeneralConstants';
+import { createUuid } from '../../PredefinedConfig/Uuid';
 
 interface AlertPopupProps extends StrategyViewPopupProps<AlertPopupComponent> {
   AlertDefinitions: AlertDefinition[];
   onAddAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionAddAction;
   onEditAlert: (Alert: AlertDefinition) => AlertRedux.AlertDefinitionEditAction;
+  onAddSharedQuery: (sharedQuery: SharedQuery) => QueryRedux.SharedQueryAddAction;
   onShare: (
     entity: AdaptableObject,
     description: string
   ) => TeamSharingRedux.TeamSharingShareAction;
 }
 
-class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfigEntityState> {
+class AlertPopupComponent extends React.Component<
+  AlertPopupProps,
+  EditableExpressionConfigEntityState
+> {
   constructor(props: AlertPopupProps) {
     super(props);
     this.state = UIHelper.getEmptyConfigState();
   }
   componentDidMount() {
-    if (this.props.PopupParams) {
-      if (this.props.PopupParams.action && this.props.PopupParams.columnId) {
-        if (this.props.PopupParams.action == 'New') {
+    if (this.props.popupParams) {
+      if (this.props.popupParams.action && this.props.popupParams.column) {
+        if (this.props.popupParams.action == 'New') {
           let alertDefinition = ObjectFactory.CreateEmptyAlertDefinition();
-          alertDefinition.ColumnId = this.props.PopupParams.columnId;
+          alertDefinition.Scope = {
+            ColumnIds: [this.props.popupParams.column.ColumnId],
+          };
           this.setState({
-            EditedAdaptableObject: alertDefinition,
-            WizardStartIndex: 1,
-            WizardStatus: WizardStatus.New,
+            editedAdaptableObject: alertDefinition,
+            wizardStartIndex: 1,
+            wizardStatus: WizardStatus.New,
           });
         }
       }
@@ -73,22 +82,20 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
     ];
 
     let alertEntities = this.props.AlertDefinitions.map((alertDefinition, index) => {
-      let column = this.props.Api.gridApi.getColumnFromId(alertDefinition.ColumnId);
       return (
         <AlertEntityRow
           key={index}
           colItems={colItems}
-          api={this.props.Api}
-          AdaptableObject={alertDefinition}
-          Column={column}
+          api={this.props.api}
+          adaptableObject={alertDefinition}
           onEdit={() => this.onEdit(alertDefinition)}
           onShare={description => this.props.onShare(alertDefinition, description)}
-          TeamSharingActivated={this.props.TeamSharingActivated}
+          teamSharingActivated={this.props.teamSharingActivated}
           onDeleteConfirm={AlertRedux.AlertDefinitionDelete(alertDefinition)}
           onChangeMessageType={(alertDef, messageType) =>
             this.onMessageTypeChanged(alertDef, messageType)
           }
-          AccessLevel={this.props.AccessLevel}
+          accessLevel={this.props.accessLevel}
         />
       );
     });
@@ -97,12 +104,17 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
       <ButtonNew
         onClick={() => this.createAlertDefinition()}
         tooltip="Create Alert"
-        AccessLevel={this.props.AccessLevel}
+        accessLevel={this.props.accessLevel}
+        style={{
+          color: 'var(--ab-color-text-on-add)',
+          fill: 'var(--ab-color-text-on-add',
+          background: 'var(--ab-color-action-add)',
+        }}
       />
     );
 
     let startWizardText =
-      this.props.AccessLevel == 'ReadOnly'
+      this.props.accessLevel == 'ReadOnly'
         ? 'You have no Alert Definitions.'
         : "Click 'New' to start creating Alert Definitions.  An alert will be triggered whenever an edit - or external data change - matches the condition in the Alert Definition.";
 
@@ -120,13 +132,23 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
           <EmptyContent>{startWizardText}</EmptyContent>
         )}
 
-        {this.state.WizardStatus != WizardStatus.None && (
+        {this.state.wizardStatus != WizardStatus.None && (
           <AlertWizard
-            EditedAdaptableObject={this.state.EditedAdaptableObject as AlertDefinition}
-            ConfigEntities={null}
-            ModalContainer={this.props.ModalContainer}
-            Api={this.props.Api}
-            WizardStartIndex={this.state.WizardStartIndex}
+            editedAdaptableObject={this.state.editedAdaptableObject as AlertDefinition}
+            configEntities={null}
+            modalContainer={this.props.modalContainer}
+            api={this.props.api}
+            wizardStartIndex={this.state.wizardStartIndex}
+            onSetNewSharedQueryName={newSharedQueryName =>
+              this.setState({
+                newSharedQueryName: newSharedQueryName,
+              })
+            }
+            onSetUseSharedQuery={useSharedQuery =>
+              this.setState({
+                useSharedQuery: useSharedQuery,
+              })
+            }
             onCloseWizard={() => this.onCloseWizard()}
             onFinishWizard={() => this.onFinishWizard()}
             canFinishWizard={() => this.canFinishWizard()}
@@ -138,9 +160,9 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
   createAlertDefinition() {
     this.setState({
-      EditedAdaptableObject: ObjectFactory.CreateEmptyAlertDefinition(),
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.New,
+      editedAdaptableObject: ObjectFactory.CreateEmptyAlertDefinition(),
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.New,
     });
   }
 
@@ -151,41 +173,53 @@ class AlertPopupComponent extends React.Component<AlertPopupProps, EditableConfi
 
   onEdit(alert: AlertDefinition) {
     this.setState({
-      EditedAdaptableObject: Helper.cloneObject(alert),
-      WizardStartIndex: 1,
-      WizardStatus: WizardStatus.Edit,
+      editedAdaptableObject: Helper.cloneObject(alert),
+      wizardStartIndex: 1,
+      wizardStatus: WizardStatus.Edit,
     });
   }
 
   onCloseWizard() {
     this.props.onClearPopupParams();
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    this.resetState();
   }
 
   onFinishWizard() {
-    if (this.state.WizardStatus == WizardStatus.New) {
-      this.props.onAddAlert(this.state.EditedAdaptableObject as AlertDefinition);
-    } else if (this.state.WizardStatus == WizardStatus.Edit) {
-      this.props.onEditAlert(this.state.EditedAdaptableObject as AlertDefinition);
+    const alertDefinition = this.state.editedAdaptableObject as AlertDefinition;
+
+    if (StringExtensions.IsNotNullOrEmpty(this.state.newSharedQueryName)) {
+      const SharedQueryId = createUuid();
+      this.props.onAddSharedQuery({
+        Uuid: SharedQueryId,
+        Name: this.state.newSharedQueryName,
+        Expression: alertDefinition.Expression,
+      });
+      alertDefinition.Expression = undefined;
+      alertDefinition.SharedQueryId = SharedQueryId;
     }
 
-    this.setState({
-      EditedAdaptableObject: null,
-      WizardStartIndex: 0,
-      WizardStatus: WizardStatus.None,
-    });
+    if (this.state.wizardStatus == WizardStatus.New) {
+      this.props.onAddAlert(alertDefinition);
+    } else if (this.state.wizardStatus == WizardStatus.Edit) {
+      this.props.onEditAlert(alertDefinition);
+    }
+
+    this.resetState();
   }
 
   canFinishWizard() {
-    let AlertRule = this.state.EditedAdaptableObject as AlertDefinition;
-    return (
-      StringExtensions.IsNotNullOrEmpty(AlertRule.ColumnId) &&
-      ExpressionHelper.IsNullOrEmptyOrValidExpression(AlertRule.Expression)
-    );
+    let alertDefinition = this.state.editedAdaptableObject as AlertDefinition;
+    return alertDefinition.Scope != null; // can it be?
+  }
+
+  resetState() {
+    this.setState({
+      editedAdaptableObject: null,
+      wizardStartIndex: 0,
+      wizardStatus: WizardStatus.None,
+      newSharedQueryName: EMPTY_STRING,
+      useSharedQuery: false,
+    });
   }
 }
 
@@ -201,6 +235,8 @@ function mapDispatchToProps(
   return {
     onAddAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionAdd(alert)),
     onEditAlert: (alert: AlertDefinition) => dispatch(AlertRedux.AlertDefinitionEdit(alert)),
+    onAddSharedQuery: (sharedQuery: SharedQuery) =>
+      dispatch(QueryRedux.SharedQueryAdd(sharedQuery)),
     onShare: (entity: AdaptableObject, description: string) =>
       dispatch(
         TeamSharingRedux.TeamSharingShare(entity, StrategyConstants.AlertStrategyId, description)

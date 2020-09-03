@@ -7,10 +7,9 @@ import {
 import { StyleVisualItem } from '../../Components/StyleVisualItem';
 import { WizardSummaryPage } from '../../Components/WizardSummaryPage';
 import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstants';
-import { ExpressionHelper } from '../../../Utilities/Helpers/ExpressionHelper';
 import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleState';
 import { KeyValuePair } from '../../../Utilities/Interface/KeyValuePair';
-import { UserFilter } from '../../../PredefinedConfig/UserFilterState';
+import StringExtensions from '../../../Utilities/Extensions/StringExtensions';
 
 export interface ConditionalStyleSummaryWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {}
@@ -24,15 +23,20 @@ export class ConditionalStyleSummaryWizard
 
   render(): any {
     let keyValuePairs: KeyValuePair[] = [
-      { Key: 'Scope', Value: this.getScope() },
-      { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
-      { Key: 'Style', Value: <StyleVisualItem Style={this.props.Data.Style} /> },
+      { Key: 'Scope', Value: this.props.api.scopeApi.getScopeToString(this.props.data.Scope) },
       {
-        Key: 'Query',
-        Value: ExpressionHelper.ConvertExpressionToString(
-          this.props.Data.Expression,
-          this.props.Api
-        ),
+        Key: 'Condition',
+        Value:
+          StringExtensions.IsNotNullOrEmpty(this.props.data.Expression) ||
+          StringExtensions.IsNotNullOrEmpty(this.props.data.SharedQueryId)
+            ? this.props.api.queryApi.QueryObjectToString(this.props.data)
+            : this.props.api.predicateApi.predicateToString(this.props.data.Predicate),
+      },
+      { Key: 'Exclude Grouped Rows', Value: this.getExcludedGroupedRows() },
+      { Key: 'Style', Value: <StyleVisualItem Style={this.props.data.Style} /> },
+      {
+        Key: 'Query Type',
+        Value: StringExtensions.IsNullOrEmpty(this.props.data.Expression) ? 'Shared' : 'Custom',
       },
     ];
 
@@ -44,26 +48,10 @@ export class ConditionalStyleSummaryWizard
     );
   }
 
-  private getScope(): string {
-    switch (this.props.Data.ConditionalStyleScope) {
-      case 'Row':
-        return 'Row';
-      case 'Column':
-        return (
-          'Column:' + this.props.Api.gridApi.getFriendlyNameFromColumnId(this.props.Data.ColumnId)
-        );
-      //  case 'DataType':
-      //     return this.props.Data.DataType + ' Columns';
-
-      case 'ColumnCategory':
-        return 'Category: ' + this.props.Data.ColumnCategoryId;
-    }
-  }
-
   private getExcludedGroupedRows(): string {
-    return this.props.Data.ExcludeGroupedRows != null &&
-      this.props.Data.ExcludeGroupedRows != undefined &&
-      this.props.Data.ExcludeGroupedRows == true
+    return this.props.data.ExcludeGroupedRows != null &&
+      this.props.data.ExcludeGroupedRows != undefined &&
+      this.props.data.ExcludeGroupedRows == true
       ? 'True'
       : 'False';
   }
@@ -75,18 +63,21 @@ export class ConditionalStyleSummaryWizard
   public canBack(): boolean {
     return true;
   }
-  public Next(): void {
+  public next(): void {
     //
   }
 
-  public Back(): void {
+  public back(): void {
     // todo
   }
 
-  public GetIndexStepIncrement() {
+  public getIndexStepIncrement() {
     return 1;
   }
-  public GetIndexStepDecrement() {
-    return 1;
+  public getIndexStepDecrement() {
+    return StringExtensions.IsNullOrEmpty(this.props.data.Expression) ||
+      StringExtensions.IsNullOrEmpty(this.props.data.SharedQueryId)
+      ? 2
+      : 1;
   }
 }
