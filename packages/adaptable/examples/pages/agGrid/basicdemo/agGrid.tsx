@@ -55,6 +55,15 @@ async function InitAdaptableDemo() {
     queryOptions: {
       maxColumnValueItemsDisplayed: 100000,
     },
+    customPredicateDefs: [
+      {
+        id: 'USBanks',
+        label: 'US Banks',
+        columnScope: { ColumnIds: ['counterparty'] },
+        functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
+        handler: ({ value }) => ['Citi', 'BAML'].includes(value),
+      },
+    ],
     userFunctions: [
       {
         name: 'country',

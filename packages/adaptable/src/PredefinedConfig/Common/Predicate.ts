@@ -30,7 +30,6 @@ import {
   isBefore,
   isSameDay,
 } from 'date-fns';
-import { keyBy } from 'lodash';
 
 export interface Predicate {
   Id: string;
@@ -39,12 +38,12 @@ export interface Predicate {
 
 export interface PredicateDef {
   id: string;
-  name: string;
+  label: string;
   columnScope: Scope;
   functionScope: FunctionScope[];
   inputs?: PredicateDefInput[];
   handler: (params: PredicateDefHandlerParams) => boolean;
-  toString: (params: PredicateDefToStringParams) => string;
+  toString?: (params: PredicateDefToStringParams) => string;
   icon?: { path: string } | { text: string };
   shortcuts?: string[];
 }
@@ -73,7 +72,7 @@ export interface PredicateDefToStringParams {
 export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Values',
-    name: 'Values',
+    label: 'Values',
     icon: { text: 'IN' },
     columnScope: { All: true },
     functionScope: ['filter'],
@@ -83,27 +82,25 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'Blanks',
-    name: 'Blanks',
+    label: 'Blanks',
     icon: { path: mdiCheckboxBlankCircleOutline },
     columnScope: { All: true },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
-    toString: () => 'Blanks',
   },
   {
     id: 'NonBlanks',
-    name: 'Non Blanks',
+    label: 'Non Blanks',
     icon: { path: mdiCheckboxBlankCircle },
     columnScope: { All: true },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
-    toString: () => 'Non Blanks',
   },
 
   // Numeric System Filters
   {
     id: 'GreaterThan',
-    name: 'Greater Than',
+    label: 'Greater Than',
     icon: { path: mdiGreaterThan },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -114,7 +111,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'LessThan',
-    name: 'Less Than',
+    label: 'Less Than',
     icon: { path: mdiLessThan },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -125,34 +122,31 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'Positive',
-    name: 'Positive',
+    label: 'Positive',
     icon: { text: '>0' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Number(value) > 0,
-    toString: () => 'Positive',
   },
   {
     id: 'Negative',
-    name: 'Negative',
+    label: 'Negative',
     icon: { text: '<0' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Number(value) < 0,
-    toString: () => 'Negative',
   },
   {
     id: 'Zero',
-    name: 'Zero',
+    label: 'Zero',
     icon: { text: '=0' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Number(value) == 0,
-    toString: () => 'Zero',
   },
   {
     id: 'Equals',
-    name: 'Equals',
+    label: 'Equals',
     icon: { path: mdiEqual },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -163,7 +157,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'NotEquals',
-    name: 'Not Equals',
+    label: 'Not Equals',
     icon: { path: mdiNotEqual },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -174,7 +168,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'Between',
-    name: 'Between',
+    label: 'Between',
     icon: { text: 'BE' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -186,7 +180,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'NotBetween',
-    name: 'Not Between',
+    label: 'Not Between',
     icon: { text: '!BE' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -200,7 +194,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   // String System Filters
   {
     id: 'Is',
-    name: 'Equals',
+    label: 'Equals',
     icon: { path: mdiEqual },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -217,7 +211,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'IsNot',
-    name: 'Not Equals',
+    label: 'Not Equals',
     icon: { path: mdiNotEqual },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -234,7 +228,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'Contains',
-    name: 'Contains',
+    label: 'Contains',
     icon: { path: mdiFormatTitle },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -250,7 +244,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'NotContains',
-    name: 'Not Contains',
+    label: 'Not Contains',
     icon: { path: mdiFormatStrikethrough },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -266,7 +260,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'StartsWith',
-    name: 'Starts With',
+    label: 'Starts With',
     icon: { path: mdiFormatLetterStartsWith },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -282,7 +276,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'EndsWith',
-    name: 'Ends With',
+    label: 'Ends With',
     icon: { path: mdiFormatLetterEndsWith },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -298,7 +292,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'Regex',
-    name: 'Regex',
+    label: 'Regex',
     icon: { path: mdiRegex },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -310,88 +304,79 @@ export const SystemPredicateDefs: PredicateDef[] = [
   // Date System Filters
   {
     id: 'Today',
-    name: 'Today',
+    label: 'Today',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isToday(value),
-    toString: () => 'Today',
   },
   {
     id: 'Yesterday',
-    name: 'Yesterday',
+    label: 'Yesterday',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isYesterday(value),
-    toString: () => 'Yesterday',
   },
   {
     id: 'Tomorrow',
-    name: 'Tomorrow',
+    label: 'Tomorrow',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isTomorrow(value),
-    toString: () => 'Tomorrow',
   },
   {
     id: 'ThisWeek',
-    name: 'This Week',
+    label: 'This Week',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisWeek(value),
-    toString: () => 'This Week',
   },
   {
     id: 'ThisMonth',
-    name: 'This Month',
+    label: 'This Month',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisMonth(value),
-    toString: () => 'This Month',
   },
   {
     id: 'ThisQuarter',
-    name: 'This Quarter',
+    label: 'This Quarter',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisQuarter(value),
-    toString: () => 'This Quarter',
   },
   {
     id: 'ThisYear',
-    name: 'This Year',
+    label: 'This Year',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisYear(value),
-    toString: () => 'This Year',
   },
   {
     id: 'InPast',
-    name: 'In Past',
+    label: 'In Past',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isPast(value),
-    toString: () => 'TODO',
   },
   {
     id: 'InFuture',
-    name: 'In Future',
+    label: 'In Future',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isFuture(value),
-    toString: () => 'In Future',
   },
   {
     id: 'After',
-    name: 'After',
+    label: 'After',
     icon: { path: mdiGreaterThan },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -401,7 +386,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'Before',
-    name: 'Before',
+    label: 'Before',
     icon: { path: mdiLessThan },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -411,7 +396,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'On',
-    name: 'Equals',
+    label: 'Equals',
     icon: { path: mdiEqual },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -421,7 +406,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'NotOn',
-    name: 'NotEquals',
+    label: 'NotEquals',
     icon: { path: mdiNotEqual },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
@@ -431,74 +416,66 @@ export const SystemPredicateDefs: PredicateDef[] = [
   },
   {
     id: 'NextWorkDay',
-    name: 'Next Work Day',
+    label: 'Next Work Day',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
-    toString: () => 'Next Work Day',
   },
   {
     id: 'LastWorkDay',
-    name: 'Last Work Day',
+    label: 'Last Work Day',
     icon: { path: mdiCalendar },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),
-    toString: () => 'Last Work Day',
   },
 
   // Boolean System Filters
   {
     id: 'True',
-    name: 'True',
+    label: 'True',
     icon: { text: 'T' },
     columnScope: { DataTypes: ['Boolean'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Boolean(value) === true,
-    toString: () => 'True',
   },
   {
     id: 'False',
-    name: 'False',
+    label: 'False',
     icon: { text: 'F' },
     columnScope: { DataTypes: ['Boolean'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Boolean(value) === false,
-    toString: () => 'False',
   },
   {
     id: 'Any',
-    name: 'Any Change',
+    label: 'Any Change',
     columnScope: { All: true },
     functionScope: ['alert', 'validation'],
     handler: ({ value, oldValue }) => value !== oldValue,
-    toString: () => 'Any Change',
   },
   {
     id: 'PercentChange',
-    name: 'Percent Change',
+    label: 'Percent Change',
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['alert', 'validation'],
     inputs: [{ type: 'number' }],
     handler: ({ value, oldValue, inputs }) =>
       (Math.abs(Number(value) - Number(oldValue)) / Number(value)) * 100 > Number(inputs[0]),
-    toString: () => 'Percent Change',
   },
   {
     id: 'PrimaryKeyDuplicate',
-    name: 'Primary Key Duplicate',
+    label: 'Primary Key Duplicate',
     columnScope: { All: true },
     functionScope: ['validation'],
     // TODO try to put the implementation inside the handler
     handler: () => {
       throw 'This should not be called';
     },
-    toString: () => 'Primary Key Duplicate',
   },
 ];
 
-export const SystemPredicateDefsById = keyBy(SystemPredicateDefs, 'id');
 export const SystemFilterPredicateIds = SystemPredicateDefs.filter(p =>
   p.functionScope.includes('filter')
 ).map(p => p.id);

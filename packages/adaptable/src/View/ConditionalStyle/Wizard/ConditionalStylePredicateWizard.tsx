@@ -50,7 +50,7 @@ export class ConditionalStylePredicateWizard
       .map(predicateDef => {
         return {
           value: predicateDef.id,
-          label: predicateDef.name,
+          label: predicateDef.label,
         };
       });
 

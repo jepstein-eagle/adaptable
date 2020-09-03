@@ -183,7 +183,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
                 >
                   Filters
                 </Radio>
-                {/* 
+                {/*
                <button onClick={() => this.setState({ currentTab: 'values' })}>Values</button>
               <button onClick={() => this.setState({ currentTab: 'predicates' })}>Filters</button>   */}
 
@@ -238,7 +238,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
           checked={checked}
           onChange={() => this.selectColumnPredicate(predicateDef)}
         >
-          {predicateDef.name}
+          {predicateDef.label}
         </Radio>
         <Flex flex={1}>
           {checked &&

@@ -13,7 +13,7 @@ import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { AdaptableApi } from '../AdaptableApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
-import { PredicateDef, SystemPredicateDefsById } from '../../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
@@ -58,18 +58,12 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   }
 
   private getAllFilterPredicates(): PredicateDef[] {
-    let filterPredicates: PredicateDef[] = [];
-    let systemFilters = this.getAllSystemFilterIds();
-    if (ArrayExtensions.IsNotNullOrEmpty(systemFilters)) {
-      filterPredicates.push(
-        ...systemFilters.map(sf => this.adaptable.api.predicateApi.getPredicateDefById(sf))
-      );
-    }
-    // let userFilters = this.getAllUserFilterIds();
-    // if (ArrayExtensions.IsNotNullOrEmpty(userFilters)) {
-    //   filterPredicates.push(...userFilters.map(uf => this.getPredicateDefById(uf)));
-    // }
-    return filterPredicates;
+    return [
+      ...this.getAllSystemFilterIds().map(predicateId =>
+        this.adaptable.api.predicateApi.getPredicateDefById(predicateId)
+      ),
+      ...this.adaptable.api.predicateApi.getCustomPredicateDefs(),
+    ].filter(predicateDef => predicateDef.functionScope.includes('filter'));
   }
 
   public getAllColumnFilter(): ColumnFilter[] {

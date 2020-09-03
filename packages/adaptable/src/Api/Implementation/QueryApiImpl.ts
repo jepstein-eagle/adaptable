@@ -26,7 +26,7 @@ export class QueryApiImpl extends ApiBase implements QueryApi {
     return sharedQuery ? sharedQuery.Expression : undefined;
   }
 
-  public QueryObjectToString(queryObject: QueryObject): string {
+  public QueryObjectToString(queryObject: QueryObject): string | undefined {
     // first check the Expression and return that
     if (StringExtensions.IsNotNullOrEmpty(queryObject.Expression)) {
       return queryObject.Expression;
@@ -36,7 +36,11 @@ export class QueryApiImpl extends ApiBase implements QueryApi {
     if (StringExtensions.IsNotNullOrEmpty(queryObject.SharedQueryId)) {
       return this.getExpressionForSharedQueryId(queryObject.SharedQueryId);
     }
-    return '[No Expression]';
+    return undefined;
+  }
+
+  public getQueryDescription(queryObject: QueryObject): string {
+    return this.QueryObjectToString(queryObject) ?? '[No Expression]';
   }
 
   public isSharedQuery(query: string | TypeUuid): boolean {

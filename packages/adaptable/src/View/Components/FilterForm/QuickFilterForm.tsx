@@ -122,7 +122,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
                   onClick={() => this.selectColumnPredicate(p.id)}
                 >
                   <span style={{ width: 20, marginRight: 10 }}>{this.renderPredicateIcon(p)}</span>
-                  {p.name}
+                  {p.label}
                 </SimpleButton>
               ))}
             </Flex>
@@ -135,7 +135,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         {filter?.Predicate.Id === 'Values' && this.renderValuesDropdown(filter)}
         {filter?.Predicate.Id !== 'Values' &&
           activePredicateDef &&
-          activePredicateDef?.inputs === undefined && <Box p={1}>{activePredicateDef.name}</Box>}
+          activePredicateDef?.inputs === undefined && <Box p={1}>{activePredicateDef.label}</Box>}
         {activePredicateDef?.inputs?.map((predicateInput, index) => (
           <Input
             key={index}
@@ -164,7 +164,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
   }
 
   renderPredicateIcon(predicateDef: PredicateDef) {
-    if (!predicateDef) {
+    if (!predicateDef || !predicateDef.icon) {
       return <Icon size="1rem" path={mdiFilterOutline} />;
     }
     if ('text' in predicateDef.icon) {

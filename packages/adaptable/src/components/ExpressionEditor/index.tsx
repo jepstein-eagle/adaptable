@@ -200,7 +200,10 @@ function ExpressionEditor(props: ExpressionEditorProps) {
                 type="number"
                 value={data[column.ColumnId]}
                 onChange={(e: React.FormEvent) =>
-                  setData({ ...data, [column.ColumnId]: (e.target as HTMLInputElement).value })
+                  setData({
+                    ...data,
+                    [column.ColumnId]: Number((e.target as HTMLInputElement).value),
+                  })
                 }
                 width="100%"
                 disabled={column.ReadOnly}

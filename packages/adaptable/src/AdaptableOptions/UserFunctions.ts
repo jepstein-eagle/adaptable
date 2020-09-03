@@ -54,7 +54,6 @@ export type UserFunction =
   | ActionColumnRenderFunction
   | ActionColumnShouldRenderPredicate
   | EntitlementLookUpFunction
-  | FilterPredicate
   | UserMenuItemClickedFunction
   | UserMenuItemShowPredicate
   | UserMenuItemLabelFunction

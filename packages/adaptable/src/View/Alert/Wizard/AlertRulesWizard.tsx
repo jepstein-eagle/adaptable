@@ -33,7 +33,7 @@ export class AlertRulesWizard extends React.Component<AlertRulesWizardProps, Ale
       .map(predicateDef => {
         return {
           value: predicateDef.id,
-          label: predicateDef.name,
+          label: predicateDef.label,
         };
       });
 

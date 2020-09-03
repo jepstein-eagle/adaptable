@@ -1,7 +1,6 @@
 import { ApiBase } from './ApiBase';
 import { PredicateApi } from '../PredicateApi';
 import {
-  SystemPredicateDefsById,
   PredicateDef,
   Predicate,
   PredicateDefHandlerParams,
@@ -11,7 +10,15 @@ import { FunctionScope } from '../../PredefinedConfig/Common/Scope';
 
 export class PredicateApiImpl extends ApiBase implements PredicateApi {
   public getPredicateDefs() {
+    return [...this.getSystemPredicateDefs(), ...this.getCustomPredicateDefs()];
+  }
+
+  public getSystemPredicateDefs() {
     return SystemPredicateDefs;
+  }
+
+  public getCustomPredicateDefs() {
+    return this.adaptable.adaptableOptions.customPredicateDefs;
   }
 
   public getPredicateDefsByFunctionScope(functionScope: FunctionScope): PredicateDef[] {
@@ -19,12 +26,24 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
   }
 
   public getPredicateDefById(predicateId: string): PredicateDef {
-    return SystemPredicateDefsById[predicateId];
+    return (
+      this.getSystemPredicateDefById(predicateId) ?? this.getCustomPredicateDefById(predicateId)
+    );
+  }
+
+  public getSystemPredicateDefById(predicateId: string): PredicateDef {
+    return this.getSystemPredicateDefs().find(predicateDef => predicateDef.id === predicateId);
+  }
+
+  public getCustomPredicateDefById(predicateId: string): PredicateDef {
+    return this.getCustomPredicateDefs().find(predicateDef => predicateDef.id === predicateId);
   }
 
   public predicateToString(predicate: Predicate): string {
     const predicateDef = this.getPredicateDefById(predicate.Id);
-    return predicateDef.toString({ inputs: predicate.Inputs });
+    return predicateDef.hasOwnProperty('toString')
+      ? predicateDef.toString({ inputs: predicate.Inputs })
+      : predicateDef.label;
   }
 
   public handlePredicate(
@@ -48,7 +67,7 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
         ...params,
       });
     } catch (error) {
-      console.error(`Error in predicate ${predicateDef.name}`, error);
+      console.error(`Error in predicate ${predicateDef.label}`, error);
       return false;
     }
   }
