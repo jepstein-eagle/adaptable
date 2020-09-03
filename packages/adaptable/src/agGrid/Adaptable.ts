@@ -2018,6 +2018,9 @@ export class Adaptable implements IAdaptable {
     this.addCalculatedColumnsToGrid([calculatedColumn]);
   }
   public addCalculatedColumnsToGrid(calculatedColumns: CalculatedColumn[], colDefs?: ColDef[]) {
+    if (!calculatedColumns.length) {
+      return;
+    }
     colDefs = colDefs || this.getColumnDefs();
 
     const cols: AdaptableColumn[] = this.api.columnApi.getColumns();
@@ -2096,6 +2099,9 @@ export class Adaptable implements IAdaptable {
     this.addFreeTextColumnsToGrid([freeTextColumn], colDefs);
   }
   public addFreeTextColumnsToGrid(freeTextColumns: FreeTextColumn[], colDefs?: ColDef[]) {
+    if (!freeTextColumns.length) {
+      return;
+    }
     colDefs = colDefs || this.getColumnDefs();
 
     const newColDefs: ColDef[] = freeTextColumns.map(freeTextColumn => {
@@ -2162,6 +2168,9 @@ export class Adaptable implements IAdaptable {
   }
 
   public addActionColumnsToGrid(actionColumns: ActionColumn[]) {
+    if (!actionColumns.length) {
+      return;
+    }
     const colDefs = this.getColumnDefs();
 
     const newColDefs: ColDef[] = actionColumns.map(actionColumn => {
