@@ -99,8 +99,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
               style={{
                 fontSize: 'var(--ab-font-size-2)',
                 border: '1px solid var(--ab-color-primarydark)',
-                borderRadius: 'var(--ab__border-radius)',
-                background: 'var(--ab-color-primarylight)',
+                background: 'var(--ab-color-defaultbackground)',
                 zIndex: 1000,
               }}
             >
@@ -129,7 +128,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             </Flex>
           )}
         >
-          <SimpleButton>{this.renderPredicateIcon(activePredicateDef)}</SimpleButton>
+          <SimpleButton style={{ borderRadius: 0, borderColor: 'var(--ab-color-primarydark)' }}>
+            {this.renderPredicateIcon(activePredicateDef)}
+          </SimpleButton>
         </OverlayTrigger>
         {filter?.Predicate.Id === 'Values' && this.renderValuesDropdown(filter)}
         {filter?.Predicate.Id !== 'Values' &&
@@ -149,7 +150,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
                 this.clearFilter();
               }
             }}
-            style={{ flex: 1, width: 0, minWidth: 0 }}
+            style={{
+              flex: 1,
+              minWidth: 0,
+              padding: 'var(--ab-space-1)',
+              borderRadius: 0,
+              borderLeftWidth: 0,
+            }}
           />
         ))}
       </>
@@ -189,7 +196,6 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             style={{
               fontSize: 'var(--ab-font-size-2)',
               border: '1px solid var(--ab-color-primarydark)',
-              borderRadius: 'var(--ab__border-radius)',
               background: 'var(--ab-color-defaultbackground)',
               zIndex: 1000,
             }}
@@ -220,8 +226,10 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            borderRadius: 0,
+            borderLeftWidth: 0,
+            borderColor: 'var(--ab-color-primarydark)',
           }}
-          ml={1}
         >
           {filter.Predicate.Inputs.join(', ') || 'Select Values'}
         </SimpleButton>
