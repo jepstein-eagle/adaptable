@@ -1,3 +1,7 @@
+## 7.0.0-canary.28
+
+All v7 features
+
 ## 7.0.0-canary.27
 
 Fixing today bug and Semantic class names
