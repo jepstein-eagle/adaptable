@@ -117,7 +117,7 @@ class SmartEditPopupComponent extends React.Component<SmartEditPopupProps, {}> {
           }
         }}
       >
-        <Flex flexDirection="row" padding={2}>
+        <Flex flexDirection="row" padding={2} data-name="smart-edit-operation">
           <DropdownButton
             items={operationMenuItems}
             columns={['label']}

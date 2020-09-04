@@ -9,7 +9,7 @@ import { PlusMinusRule } from '../../../PredefinedConfig/PlusMinusState';
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text } from 'rebass';
 import Input from '../../../components/Input';
-import Radio from '../../../components/Radio';
+import Radio, { RadioGroup } from '../../../components/Radio';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 
 export interface PlusMinusSettingsWizardProps extends AdaptableWizardStepProps<PlusMinusRule> {}
@@ -48,7 +48,7 @@ export class PlusMinusSettingsWizard
             <Text marginRight={2} style={{ flex: 2 }}>
               Apply As:
             </Text>
-            <Flex flexDirection="column" flex={9}>
+            <RadioGroup orientation="vertical" flex={9}>
               <Flex flexDirection="row" alignItems="center">
                 <Radio
                   value="expression"
@@ -79,7 +79,7 @@ export class PlusMinusSettingsWizard
                   bodyText={['Set default nudge value for the column']}
                 />
               </Flex>
-            </Flex>
+            </RadioGroup>
           </FormRow>
         </FormLayout>
       </WizardPanel>

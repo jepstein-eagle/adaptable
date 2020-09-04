@@ -9,8 +9,8 @@ import { Schedule, BaseSchedule } from '../../../PredefinedConfig/Common/Schedul
 import WizardPanel from '../../../components/WizardPanel';
 import { Flex, Text, Box } from 'rebass';
 import Dropdown from '../../../components/Dropdown';
-import Radio from '../../../components/Radio';
-import Checkbox from '../../../components/CheckBox';
+import Radio, { RadioGroup } from '../../../components/Radio';
+import Checkbox, { CheckBoxGroup } from '../../../components/CheckBox';
 import Input from '../../../components/Input';
 import { SyntheticEvent } from 'react';
 import HelpBlock from '../../../components/HelpBlock';
@@ -70,7 +70,7 @@ export class ScheduleScheduleWizard
                 <HelpBlock marginBottom={1} marginTop={1}>
                   Choose to run the Schedule on a One Off Date or on a series of Recurring Days
                 </HelpBlock>
-                <Flex flex={7} flexDirection="row" alignItems="center">
+                <RadioGroup marginTop={2} flex={7} orientation="horizontal" alignItems="center">
                   <Radio
                     marginRight={3}
                     marginLeft={2}
@@ -87,9 +87,9 @@ export class ScheduleScheduleWizard
                   >
                     One Off Date
                   </Radio>
-                </Flex>
+                </RadioGroup>
                 {this.state.IsRecurringDate ? (
-                  <Flex flex={7} marginTop={2} flexDirection="row" alignItems="center">
+                  <CheckBoxGroup flex={7} marginTop={2} orientation="horizontal">
                     <Checkbox
                       marginLeft={2}
                       value={DayOfWeek.Monday}
@@ -173,7 +173,7 @@ export class ScheduleScheduleWizard
                     >
                       Sunday
                     </Checkbox>
-                  </Flex>
+                  </CheckBoxGroup>
                 ) : (
                   <Flex flexDirection="column">
                     <HelpBlock marginBottom={1} marginTop={2}>

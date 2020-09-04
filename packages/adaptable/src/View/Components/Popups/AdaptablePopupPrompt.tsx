@@ -74,6 +74,7 @@ export class AdaptablePopupPrompt extends React.Component<
               <Flex padding={2}>
                 <SimpleButton
                   tone="accent"
+                  data-name="ok"
                   variant="raised"
                   disabled={StringExtensions.IsNullOrEmpty(this.state.PromptText)}
                   onClick={() => this.onConfirmmForm()}
@@ -81,7 +82,12 @@ export class AdaptablePopupPrompt extends React.Component<
                   OK
                 </SimpleButton>
                 <div style={{ flex: 1 }} />
-                <SimpleButton tone="neutral" variant="raised" onClick={() => this.onCloseForm()}>
+                <SimpleButton
+                  tone="neutral"
+                  variant="raised"
+                  onClick={() => this.onCloseForm()}
+                  data-name="cancel"
+                >
                   Cancel
                 </SimpleButton>
               </Flex>
