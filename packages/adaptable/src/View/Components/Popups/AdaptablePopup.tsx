@@ -85,6 +85,7 @@ export class AdaptablePopup extends React.Component<AdaptablePopupProps, {}> {
           footer={
             <>
               <SimpleButton
+                data-name="action-close"
                 onClick={() => {
                   if (this.props.onHide) {
                     this.props.onHide();

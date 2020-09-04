@@ -10,6 +10,8 @@ import { ReactComponentLike } from 'prop-types';
 import Tooltip from '../Tooltip';
 import { IconProps } from '../icons/DefaultIcon';
 import { AccessLevel } from '../../PredefinedConfig/EntitlementState';
+import theme from '../../theme';
+import { FontWeight } from '../../PredefinedConfig/Common/Enums';
 
 export const baseClassName = 'ab-SimpleButton';
 
@@ -99,6 +101,14 @@ const SimpleButton = (props: SimpleButtonProps) => {
     disabled = true;
   }
 
+  // for whatever reason, even if fontWeight is present in buttonProps
+  // and sent to rebass, styled-components/rebass does not honour it
+  // so we had to send it via css
+
+  const fontWeight = buttonProps.fontWeight
+    ? ((theme as any)[buttonProps.fontWeight as any] as any) ?? buttonProps.fontWeight ?? 'normal'
+    : 'normal';
+
   const btn = (
     <Button
       {...buttonProps}
@@ -107,6 +117,7 @@ const SimpleButton = (props: SimpleButtonProps) => {
         className,
         baseClassName,
         disabled ? `${baseClassName}--disabled` : '',
+        fontWeight ? `${baseClassName}--font-weight=${fontWeight}` : '',
         `${baseClassName}--variant-${variant}`,
         `${baseClassName}--tone-${tone}`
       )}

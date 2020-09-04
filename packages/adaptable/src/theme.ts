@@ -47,4 +47,8 @@ export default {
     sans: 'system-ui, sans-serif',
     mono: 'Menlo, monospace',
   },
+  fontWeights: {
+    normal: 'normal',
+    bold: '700',
+  },
 };

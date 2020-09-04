@@ -166,3 +166,17 @@
     }
   }
 }
+
+// for whatever reason, even if fontWeight is present in buttonProps
+// and sent to rebass, styled-components/rebass does not honour it
+// so we had to send it via css
+.ab-SimpleButton.ab-SimpleButton--font-weight\=normal {
+  font-weight: normal;
+}
+.ab-SimpleButton.ab-SimpleButton--font-weight\=bold,
+.ab-SimpleButton.ab-SimpleButton--font-weight\=700 {
+  font-weight: 700;
+}
+.ab-SimpleButton.ab-SimpleButton--font-weight\=bolder {
+  font-weight: 800;
+}

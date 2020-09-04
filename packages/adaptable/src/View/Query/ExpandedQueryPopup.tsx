@@ -54,21 +54,22 @@ class ExpandedQueryPopupComponent extends React.Component<
 
         <Flex flexDirection="row" padding={1} backgroundColor="primary" alignItems="center">
           <SimpleButton
-            padding={2}
-            margin={2}
+            margin={1}
+            variant="text"
+            data-name="action-close"
             onClick={() => {
               this.props.onClosePopup();
             }}
           >
-            Close
+            CLOSE
           </SimpleButton>
           <div style={{ flex: 1 }} />
 
           <SimpleButton
             variant="raised"
             tone="accent"
-            padding={2}
-            margin={2}
+            data-name="action-run"
+            margin={1}
             onClick={() => {
               this.props.onChangeCurrentQuery(this.state.expression);
               this.props.onClosePopup();
