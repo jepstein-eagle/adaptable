@@ -29,12 +29,21 @@ function EditorButton(props: EditorButtonProps) {
         event.dataTransfer.setDragImage(dragImage, 0, 0);
       }}
       onDragEnd={() => {
-        document.getSelection().collapseToEnd();
+        try {
+          document.getSelection()?.collapseToEnd();
+        } catch (err) {
+          console.error(err);
+        }
       }}
       onClick={() => {
         textAreaRef.current.focus();
-        document.execCommand('insertText', false, data + ' ');
-        document.getSelection().collapseToEnd();
+        try {
+          document.execCommand('insertText', false, data + ' ');
+
+          document.getSelection()?.collapseToEnd();
+        } catch (err) {
+          console.error(err);
+        }
       }}
       style={{
         cursor: 'grab',

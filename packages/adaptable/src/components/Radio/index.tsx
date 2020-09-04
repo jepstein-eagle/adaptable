@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ReactNode, useState, SyntheticEvent } from 'react';
-import { Box, BoxProps } from 'rebass';
+import { Box, BoxProps, FlexProps, Flex } from 'rebass';
 
 type TypeProps = {
   checked?: boolean;
@@ -88,6 +88,18 @@ const Radio = ({
       {afterGap}
       {after}
     </Box>
+  );
+};
+
+export const RadioGroup = (props: FlexProps & { orientation: 'horizontal' | 'vertical' }) => {
+  const { orientation, ...flexProps } = props;
+  return (
+    <Flex
+      className="ab-RadioGroup"
+      flexDirection={orientation == 'horizontal' ? 'row' : 'column'}
+      alignItems={orientation == 'horizontal' ? 'center' : 'flex=start'}
+      {...flexProps}
+    ></Flex>
   );
 };
 

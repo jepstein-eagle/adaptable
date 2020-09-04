@@ -252,8 +252,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
   );
 
   return (
-    <>
-      {' '}
+    <Flex flex={1} style={{ overflow: 'auto' }} flexDirection="column">
       {props.hideHelpBlock !== true && (
         <HelpBlock margin={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
           Create an Expression using a mixture (and any number) of:
@@ -268,7 +267,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           The Expression result is displayed underneath the Editor (using Test Data taken from first
           row). <br />
         </HelpBlock>
-      )}{' '}
+      )}
       <Flex flex={1} flexDirection="row" style={{ fontSize: 'var(--ab-font-size-2)' }}>
         <Box flex={1} mx={2}>
           <Flex
@@ -301,7 +300,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               fontSize: '1rem',
               padding: 'var(--ab-space-2)',
             }}
-          />{' '}
+          />
           {props.isFullExpression !== true && (
             <HelpBlock mt={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
               This Expression must resolve to a <b>boolean </b>(i.e. true / false) value
@@ -345,7 +344,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           {dataTableEditor}
         </Box>
       </Flex>
-    </>
+    </Flex>
   );
 }
 

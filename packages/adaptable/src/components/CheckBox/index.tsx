@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ReactNode, useState, SyntheticEvent, useRef } from 'react';
-import { Box, BoxProps } from 'rebass';
+import { Box, BoxProps, FlexProps, Flex } from 'rebass';
 import join from '../utils/join';
 import { getSize } from '../icons/DefaultIcon';
 
@@ -148,4 +148,15 @@ const CheckBox = ({
   );
 };
 
+export const CheckBoxGroup = (props: FlexProps & { orientation: 'horizontal' | 'vertical' }) => {
+  const { orientation, ...flexProps } = props;
+  return (
+    <Flex
+      className="ab-CheckBoxGroup"
+      flexDirection={orientation == 'horizontal' ? 'row' : 'column'}
+      alignItems={orientation == 'horizontal' ? 'center' : 'flex=start'}
+      {...flexProps}
+    ></Flex>
+  );
+};
 export default CheckBox;
