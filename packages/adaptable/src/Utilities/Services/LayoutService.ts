@@ -29,7 +29,7 @@ export class LayoutService implements ILayoutService {
 
     const defaults: Partial<Layout> = {
       ColumnSorts: [],
-      ColumnFlexMap: {},
+      //   ColumnFlexMap: {},
       ColumnWidthMap: {},
       RowGroupedColumns: [],
     };

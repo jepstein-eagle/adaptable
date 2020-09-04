@@ -116,9 +116,9 @@ export interface Layout extends AdaptableObject {
     [columnId: string]: number;
   };
 
-  ColumnFlexMap?: {
-    [columnId: string]: number;
-  };
+  //  ColumnFlexMap?: {
+  //    [columnId: string]: number;
+  // };
 
   /**
    * What sorting wil be applied in the Layout.

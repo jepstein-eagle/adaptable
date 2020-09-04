@@ -460,7 +460,7 @@ export function CreateEmptyLayout(
     Uuid: createUuid(),
     Columns: layout.Columns || [],
     ColumnSorts: layout.ColumnSorts || [],
-    ColumnFlexMap: layout.ColumnFlexMap || {},
+    //  ColumnFlexMap: layout.ColumnFlexMap || {},
     ColumnWidthMap: layout.ColumnWidthMap || {},
     RowGroupedColumns:
       layout.RowGroupedColumns ||

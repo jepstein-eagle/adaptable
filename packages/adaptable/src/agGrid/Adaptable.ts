@@ -1354,7 +1354,7 @@ export class Adaptable implements IAdaptable {
     pivotedColumns = pivotedColumns.filter(x => !!x);
 
     layout.ColumnWidthMap = columnWidths;
-    layout.ColumnFlexMap = columnFlexes;
+    //  layout.ColumnFlexMap = columnFlexes;
     layout.PinnedColumnsMap = pinnedColumns;
 
     layout.Columns = columnOrder;
