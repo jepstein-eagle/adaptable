@@ -303,7 +303,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
           />
           {props.isFullExpression !== true && (
             <HelpBlock mt={2} mb={2} p={2} style={{ fontSize: 'var(--ab-font-size-3)' }}>
-              Expression must resolve to a <b>boolean </b>(i.e. true / false) value
+              This Expression must resolve to a <b>boolean </b>(i.e. true / false) value
             </HelpBlock>
           )}
           {error && <ErrorBox mt={2}>{error.message}</ErrorBox>}

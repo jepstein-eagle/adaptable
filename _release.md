@@ -1,3 +1,7 @@
+## 7.0.0-canary.30
+
+Predicate updates
+
 ## 7.0.0-canary.29
 
 Fixes around default layout edge case.
