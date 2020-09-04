@@ -11,7 +11,7 @@ html.ab--theme-dark {
   --ab-color-primarylight: #2d3537;
   --ab-color-primarydark: #1c2021;
   --ab-color-text-on-primary: #E2E2E2  ;    //F2F2F2
- 
+
   // --ab-color-secondary: #f7f7f7;
   // --ab-color-secondarylight: #07456d;
   // --ab-color-secondarydark: #f7f7f7;
@@ -20,6 +20,8 @@ html.ab--theme-dark {
 
   --ab-dashboard__border: #555;
   --ab-cmp-dropdownbutton-list-separator__border: 1px solid #555;
+
+  --ab-gridheader--filtered__background: var(--ab-color-primarylight);
 
   input[type="number"].ab-Input::-webkit-outer-spin-button,
   input[type="number"].ab-Input::-webkit-inner-spin-button {
