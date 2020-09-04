@@ -8,7 +8,6 @@ export const CalendarsPopup: string = 'CalendarsPopup';
 export const CellValidationPopup: string = 'CellValidationPopup';
 export const ChartPopup: string = 'ChartPopup';
 export const ChartDisplayPopup: string = 'ChartDisplayPopup';
-export const ColumnChooserPopup: string = 'ColumnChooserPopup';
 export const FilterPopup: string = 'FilterPopup';
 export const ColumnFilterPopup: string = 'ColumnFilterPopup';
 export const ColumnInfoPopup: string = 'ColumnInfoPopup';

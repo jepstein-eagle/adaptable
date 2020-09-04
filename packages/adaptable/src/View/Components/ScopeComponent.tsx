@@ -23,15 +23,10 @@ export interface ScopeComponentState {
 export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeComponentState> {
   constructor(props: ScopeComponentProps) {
     super(props);
-    let scopeChoice: 'All' | 'Column' | 'DataType' = this.props.api.scopeApi.scopeIsAll(
-      this.props.scope
-    )
-      ? 'All'
-      : this.props.api.scopeApi.scopeHasColumns(this.props.scope)
-      ? 'Column'
-      : 'DataType';
+    console.log('component scope', this.props.scope);
+
     this.state = {
-      ScopeChoice: scopeChoice,
+      ScopeChoice: this.setScopeChoice(this.props.scope),
       componentScope: this.props.scope,
     };
   }
@@ -93,6 +88,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                 <CheckBox
                   data-name="scope"
                   checked={
+                    this.state.componentScope &&
                     'DataTypes' in this.state.componentScope &&
                     this.props.api.scopeApi
                       .getDataTypesInScope(this.state.componentScope)
@@ -106,6 +102,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                 <CheckBox
                   data-name="scope"
                   checked={
+                    this.state.componentScope &&
                     'DataTypes' in this.state.componentScope &&
                     this.props.api.scopeApi
                       .getDataTypesInScope(this.state.componentScope)
@@ -119,6 +116,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                 <CheckBox
                   data-name="scope"
                   checked={
+                    this.state.componentScope &&
                     'DataTypes' in this.state.componentScope &&
                     this.props.api.scopeApi
                       .getDataTypesInScope(this.state.componentScope)
@@ -132,6 +130,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
                 <CheckBox
                   data-name="scope"
                   checked={
+                    this.state.componentScope &&
                     'DataTypes' in this.state.componentScope &&
                     this.props.api.scopeApi
                       .getDataTypesInScope(this.state.componentScope)
@@ -151,6 +150,26 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
       </Panel>
     );
   }
+
+  private setScopeChoice(scope: Scope): 'All' | 'Column' | 'DataType' | undefined {
+    if (!scope) {
+      return undefined;
+    }
+
+    if (this.props.api.scopeApi.scopeIsAll(scope)) {
+      return 'All';
+    }
+
+    if (this.props.api.scopeApi.scopeHasColumns(this.props.scope)) {
+      return 'Column';
+    }
+
+    if (this.props.api.scopeApi.scopeHasDataType(this.props.scope)) {
+      return 'DataType';
+    }
+    return undefined;
+  }
+
   private onScopeSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
     let newScope: Scope;

@@ -13,7 +13,6 @@ import { ConditionalStyle } from '../../../PredefinedConfig/ConditionalStyleStat
 import Radio from '../../../components/Radio';
 import Panel from '../../../components/Panel';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
-import { ColorPicker } from '../../ColorPicker';
 
 export interface ConditionalStylePredicateWizardProps
   extends AdaptableWizardStepProps<ConditionalStyle> {}
@@ -32,7 +31,6 @@ export class ConditionalStylePredicateWizard
   implements AdaptableWizardStep {
   constructor(props: ConditionalStylePredicateWizardProps) {
     super(props);
-
     this.state = {
       PredicateId:
         this.props.data.Predicate != undefined ? this.props.data.Predicate.PredicateId : undefined,

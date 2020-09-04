@@ -423,9 +423,7 @@ export function CreateEmptyShortcut(): Shortcut {
 export function CreateEmptyConditionalStyle(): ConditionalStyle {
   return {
     Uuid: createUuid(),
-    Scope: {
-      All: true,
-    },
+    Scope: undefined,
     Predicate: undefined,
     Style: CreateEmptyStyle(),
     ExcludeGroupedRows: false,

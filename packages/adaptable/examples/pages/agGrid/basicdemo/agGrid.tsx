@@ -132,14 +132,7 @@ async function InitAdaptableDemo() {
 
       Filter: {
         Revision: 9,
-        UserFilters: [
-          {
-            Name: 'hello',
-            Scope: {
-              ColumnIds: ['currency'],
-            },
-          },
-        ],
+
         ColumnFilters: [
           {
             ColumnId: 'currency',

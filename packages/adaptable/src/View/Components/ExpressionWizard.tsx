@@ -85,10 +85,11 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
         {this.state.useSharedQuery == true && (
           <div>
             <DropdownButton
+              fontWeight="normal"
               margin={3}
               placeholder="Select Shared Query"
-              variant="outlined"
-              tone="none"
+              // variant="outlined"
+              //  tone="none"
               style={{
                 minWidth: '15rem',
                 whiteSpace: 'nowrap',
@@ -116,24 +117,6 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                     .find(sq => sq.Uuid == this.state.sharedQueryId).Name
                 : 'Select Shared Query'}
             </DropdownButton>
-
-            <Dropdown
-              placeholder="Select Shared Query"
-              value={this.state.sharedQueryId}
-              margin={3}
-              onChange={(value: any) =>
-                this.setState(
-                  {
-                    sharedQueryId: value,
-                  },
-                  () => this.props.updateGoBackState()
-                )
-              }
-              options={this.props.api.queryApi.getAllSharedQuery().map(item => ({
-                value: item.Uuid,
-                label: item.Name,
-              }))}
-            />
           </div>
         )}
         {this.state.useSharedQuery == false && (

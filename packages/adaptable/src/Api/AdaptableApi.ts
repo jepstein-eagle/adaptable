@@ -86,7 +86,6 @@ import { PredicateApi } from './PredicateApi';
  *  | [cellSummaryApi](#cellsummaryapi)               | Choose which [Cell Summaries](_src_predefinedconfig_cellsummarystate_.cellsummarystate.html) to display when cells are selected |
  *  | [cellValidationApi](#cellvalidationapi)         | Manages the [Cell Validation](_src_predefinedconfig_cellvalidationstate_.cellvalidationstate.html) function so that Grid cell edits are validated |
  *  | [chartApi](#chartapi)                           | Deals with the [Chart](_src_predefinedconfig_chartstate_.chartstate.html) functionality (available through a plugin) |
- *  | [columnChooserApi](#columnchooserapi)           | Popup which allows you quickly to order / hide Columns in the Grid|
  *  | [conditionalStyleApi](#conditionalstyleapi)     | Set bespoke [Conditional Styles](_src_predefinedconfig_conditionalstylestate_.conditionalstylestate.html)for rows and columns depending on cell data|
  *  | [customSortApi](#customsortapi)                 | Manages {@link CustomSortState|Custom Sorts} allowing bespoke column sorting|
  *  | [dashboardApi](#dashboardapi)                   | Large series of functions allowing full customisation of Adaptable [Dashboard](_src_predefinedconfig_dashboardstate_.dashboardstate.html)|
@@ -110,6 +109,7 @@ import { PredicateApi } from './PredicateApi';
  *  | [toolPanelApi](#toolpanelapi)                   | Functions for working with the AdapTable Tool Panel|
  *  | [updatedRowApi](#updatedrowapi)                 | Manges {@link UpdatedRowState|Updated Rows} which indicated which rows have updated|
  *  | [userFilterApi](#userfilterapi)                 | Functions dealing with {@link UserFilterState| Custom User Filters} |
+ *
  *
  * #### General Api classes
  *

@@ -134,7 +134,7 @@ let demoConfig: PredefinedConfig = {
         RowGroupedColumns: ['currency'],
 
         PivotColumns: ['status', 'stars'],
-        AggregationColumns: { bid: true, ask: true },
+        AggregationColumns: { bid: 'fdafdafdasfdasfdsa', ask: true },
       },
     ],
   },

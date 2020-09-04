@@ -136,6 +136,7 @@ export interface Layout extends AdaptableObject {
 
   ExpandedRowGroupValues?: any[];
 
+  // you can only use true where the column in agGrid defs has an aggFunc applied
   AggregationColumns?: Record<string, string | true>;
 
   EnablePivot?: boolean;

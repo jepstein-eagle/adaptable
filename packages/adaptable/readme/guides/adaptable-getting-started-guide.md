@@ -135,7 +135,7 @@ Note: many of the wizards include a step to build a **query**. This step is quit
 
 ### Selection Tool
 
-Many functions (e.g. Column Chooser or Custom Sort) in AdapTable use the Selection Tool. 
+Many functions (e.g. Custom Sort) in AdapTable use the Selection Tool. 
 
 This allows users easily to manage both order and visibility of items in a collection.
 

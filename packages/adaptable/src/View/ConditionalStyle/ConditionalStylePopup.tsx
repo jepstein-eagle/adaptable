@@ -233,7 +233,7 @@ class ConditionalStylePopupComponent extends React.Component<
     if (
       !this.state.useSharedQuery &&
       StringExtensions.IsNullOrEmpty(conditionalStyle.Expression) &&
-        conditionalStyle.Predicate == null
+      conditionalStyle.Predicate == null
     ) {
       return false;
     }

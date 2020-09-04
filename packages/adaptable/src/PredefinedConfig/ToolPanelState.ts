@@ -67,7 +67,7 @@ export interface ToolPanelState extends ConfigState {
    *
    * Clicking the button will open a dropdown listing all the Columns in your grid.  You can click the checkbox to show / hide the column.
    *
-   * Note: if you want to move Columns in your Grid then you need to use the `Column Chooser` Function.
+   * Note: if you want to move Columns in your Grid then you need to update the Layout.
    *
    * **Default Value**:  true
    */

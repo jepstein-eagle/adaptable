@@ -7,7 +7,6 @@ import * as StrategyConstants from '../../../Utilities/Constants/StrategyConstan
 import { AdaptableObjectExpressionAdaptableWizardProps } from '../../Wizard/Interface/IAdaptableWizard';
 import { ExpressionWizard } from '../../Components/ExpressionWizard';
 import { ConditionalStylePredicateWizard } from './ConditionalStylePredicateWizard';
-import { ConditionalStyleSelectQueryWizard } from './ConditionalStyleSelectQueryWizard';
 
 export interface ConditionalStyleWizardProps
   extends AdaptableObjectExpressionAdaptableWizardProps<ConditionalStyleWizard> {
@@ -38,11 +37,6 @@ export class ConditionalStyleWizard extends React.Component<ConditionalStyleWiza
               Index: 1,
               Element: <ConditionalStyleScopeWizard api={this.props.api} />,
             },
-            //   {
-            //      StepName: 'Condition',
-            //     Index: 2,
-            //     Element: <ConditionalStyleSelectQueryWizard api={this.props.api} />,
-            //   },
             {
               StepName: 'Condition',
               Index: 2,
