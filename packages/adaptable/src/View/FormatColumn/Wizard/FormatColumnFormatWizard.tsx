@@ -298,22 +298,14 @@ export class FormatColumnFormatWizard
     }
     // need to see if all columns are numeric or date
     if ('ColumnIds' in scope) {
-      let cols = scope.ColumnIds.map(c => this.props.api.columnApi.getColumnFromId(c));
-      if (ArrayExtensions.IsNotNullOrEmpty(cols)) {
-        let dataTypes: DataType[] = cols.map(c => {
-          return c.DataType as DataType;
-        });
+      const columns = scope.ColumnIds.map(c => this.props.api.columnApi.getColumnFromId(c));
+      const columnDataTypes = uniq(columns.map(c => c.DataType));
 
-        if (ArrayExtensions.IsNotNullOrEmpty(dataTypes)) {
-          let uniqVals = uniq(dataTypes);
-          if (uniqVals.length == 1) {
-            if (uniqVals[0] == 'Date') {
-              return 'Date';
-            } else if (uniqVals[0] == 'Number') {
-              return 'Number';
-            }
-          }
-        }
+      if (columnDataTypes.length == 1 && columnDataTypes[0] == 'Number') {
+        return 'Number';
+      }
+      if (columnDataTypes.length == 1 && columnDataTypes[0] == 'Date') {
+        return 'Date';
       }
 
       return undefined;

@@ -37,7 +37,7 @@
   --ab-color-errorlight: #ffd3d2;
   --ab-color-warn: #eb9316;
   --ab-color-info: #17a2b8;
-  --ab-color-success: #419641; 
+  --ab-color-success: #419641;
   --ab-color-accent: #07c;
   --ab-color-accentlight: #dbf0ff; // is this used?
 
@@ -51,7 +51,7 @@
   --ab-color-action-share: #eb9316;
   --ab-color-action-delete: #dc3545;
   --ab-color-action-clone: #419641;
-  
+
   --ab-color-text-on-add: white;
   --ab-color-text-on-edit: white;
   --ab-color-text-on-share: white;
@@ -90,6 +90,8 @@
   --at-gridrow__background: var(--at-grid__background, transparent);
   --at-gridrow--odd__background: var(--ab-color-primarylight);
   --at-gridrow__color: var(--ab-color-text-on-primary);
+
+  --ab-gridheader--filtered__background: var(--ab-color-primary);
 }
 
 .ab-style__list-group-item:nth-child(2n+1) {
@@ -97,8 +99,8 @@
 }
 
 .ab-Grid.ab-Grid--indicate-filtered-columns .ag-header-cell-filtered {
-  font-style: italic;
   font-weight: bolder;
+  background: var(--ab-gridheader--filtered__background);
 }
 
 @import './components/CheckBox/style.scss';

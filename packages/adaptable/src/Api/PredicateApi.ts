@@ -17,6 +17,7 @@ export interface PredicateApi {
 
   handlePredicate(
     predicate: Predicate,
-    params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>
+    params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>,
+    defaultReturn: boolean
   ): boolean;
 }

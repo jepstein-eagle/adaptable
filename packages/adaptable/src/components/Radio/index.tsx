@@ -59,6 +59,7 @@ const Radio = ({
       style={{
         display: 'inline-flex',
         flexFlow: 'row',
+        alignItems: 'center',
         cursor: 'pointer',
         position: 'relative',
         ...props.style,

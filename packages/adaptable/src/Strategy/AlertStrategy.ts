@@ -143,13 +143,17 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
   }
 
   private isAlertTriggered(alert: AlertDefinition, dataChangedEvent: DataChangedInfo): boolean {
-    return this.adaptable.api.predicateApi.handlePredicate(alert.Predicate, {
-      value: dataChangedEvent.NewValue,
-      oldValue: dataChangedEvent.OldValue,
-      // TODO send real display value
-      displayValue: null,
-      column: this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
-    });
+    return this.adaptable.api.predicateApi.handlePredicate(
+      alert.Predicate,
+      {
+        value: dataChangedEvent.NewValue,
+        oldValue: dataChangedEvent.OldValue,
+        // TODO send real display value
+        displayValue: null,
+        column: this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
+      },
+      false
+    );
   }
 
   public getTeamSharingAction(): TeamSharingImportInfo<AlertDefinition> {

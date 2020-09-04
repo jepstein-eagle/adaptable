@@ -97,16 +97,20 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
     value: any,
     node: any
   ): boolean {
-    return this.adaptable.api.predicateApi.handlePredicate(conditionalStyle.Predicate, {
-      value: value,
-      oldValue: null,
-      displayValue: this.adaptable.getValueFromRowNode(
-        node,
-        column.ColumnId,
-        CellValueType.DisplayValue
-      ),
-      column: column,
-    });
+    return this.adaptable.api.predicateApi.handlePredicate(
+      conditionalStyle.Predicate,
+      {
+        value: value,
+        oldValue: null,
+        displayValue: this.adaptable.getValueFromRowNode(
+          node,
+          column.ColumnId,
+          CellValueType.DisplayValue
+        ),
+        column: column,
+      },
+      false
+    );
   }
 
   private evaluateExpression(conditionalStyle: ConditionalStyle, node: RowNode): boolean {
