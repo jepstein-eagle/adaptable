@@ -1123,6 +1123,7 @@ export class Adaptable implements IAdaptable {
     if (!layout) {
       layout = this.api.layoutApi.getCurrentLayout();
     }
+    layout.Columns = layout.Columns || [];
     const layoutColumnsMap = layout.Columns.reduce((acc, colId: string) => {
       acc[colId] = true;
       return acc;
@@ -1178,10 +1179,9 @@ export class Adaptable implements IAdaptable {
           colsToAutoSize[colId] = true;
         }
 
-        // if (groupedColumnsIndexesMap[colId] != null) {
         newColState.rowGroupIndex =
           groupedColumnsIndexesMap[colId] != null ? groupedColumnsIndexesMap[colId] : null;
-        // }
+
         const pinned = layout.PinnedColumnsMap ? layout.PinnedColumnsMap[colId] : false;
         if (pinned) {
           newColState.pinned = pinned;
@@ -1264,9 +1264,12 @@ export class Adaptable implements IAdaptable {
     const colsToAutoSizeArray = Object.keys(colsToAutoSize);
 
     if (pivoted && this.adaptableOptions?.layoutOptions?.autoSizeColumnsInPivotLayout) {
+      // when a pivoted layout loads, autosize all cols
       requestAnimationFrame(() => {
         this.gridOptions.columnApi!.autoSizeAllColumns();
       });
+      //but if it's also the first time the grid is loading
+      //it's not timely enough the above call, so we keep trying... I know it's ugly, we need to find a better way
       setTimeout(() => {
         this.gridOptions.columnApi?.autoSizeAllColumns();
         setTimeout(() => {
@@ -1285,9 +1288,8 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  /**
-   * This is the opposite of saveLayout
-   *
+  /*
+   * This is the opposite of setLayout
    */
   private updateLayoutFromGrid() {
     const currentLayout = this.api.layoutApi.getCurrentLayout();
