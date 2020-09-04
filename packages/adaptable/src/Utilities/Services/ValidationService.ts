@@ -193,16 +193,20 @@ export class ValidationService implements IValidationService {
       dataChangedEvent.ColumnId
     );
 
-    return this.adaptable.api.predicateApi.handlePredicate(cellValidationRule.Predicate, {
-      value: dataChangedEvent.NewValue,
-      oldValue: dataChangedEvent.OldValue,
-      displayValue: this.adaptable.getValueFromRowNode(
-        dataChangedEvent.RowNode,
-        dataChangedEvent.ColumnId,
-        CellValueType.DisplayValue
-      ),
-      column,
-    });
+    return this.adaptable.api.predicateApi.handlePredicate(
+      cellValidationRule.Predicate,
+      {
+        value: dataChangedEvent.NewValue,
+        oldValue: dataChangedEvent.OldValue,
+        displayValue: this.adaptable.getValueFromRowNode(
+          dataChangedEvent.RowNode,
+          dataChangedEvent.ColumnId,
+          CellValueType.DisplayValue
+        ),
+        column,
+      },
+      false
+    );
   }
 
   private GetCellValidationState(): CellValidationState {

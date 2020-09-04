@@ -141,7 +141,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
             key={index}
             type={predicateInput.type === 'number' ? 'text' : predicateInput.type}
             autoFocus={index === 0}
-            value={filter.Predicate.Inputs[index]}
+            value={filter.Predicate.Inputs?.[index] ?? ''}
             onChange={(e: React.FormEvent) => this.changeColumnPredicateInput(e, index)}
             onKeyDownCapture={(e: React.KeyboardEvent) => {
               if (e.nativeEvent.key === 'Escape') {
@@ -295,6 +295,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       this.selectColumnPredicate(predicateId);
     } else {
       const { filter } = this.state;
+      filter.Predicate.Inputs = filter.Predicate.Inputs || [];
       filter.Predicate.Inputs[index] = value;
       this.updateFilter(filter);
     }

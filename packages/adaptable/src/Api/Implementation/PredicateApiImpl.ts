@@ -53,16 +53,21 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
 
   public handlePredicate(
     predicate: Predicate,
-    params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>
+    params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>,
+    defaultReturn: boolean
   ) {
     const predicateDef = this.adaptable.api.predicateApi.getPredicateDefById(predicate.PredicateId);
 
     if (predicateDef === undefined) {
-      return true;
+      return defaultReturn;
     }
 
-    if (predicate.Inputs?.some(Input => Input === '')) {
-      return true;
+    if (
+      predicateDef.inputs?.some(
+        (_, i) => predicate.Inputs?.[i] === undefined || predicate.Inputs?.[i] === ''
+      )
+    ) {
+      return defaultReturn;
     }
 
     try {

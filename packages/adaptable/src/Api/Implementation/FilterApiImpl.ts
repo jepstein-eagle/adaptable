@@ -175,11 +175,15 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     );
     const column = this.adaptable.api.columnApi.getColumnFromId(columnFilter.ColumnId);
 
-    return this.adaptable.api.predicateApi.handlePredicate(columnFilter.Predicate, {
-      value,
-      oldValue: null,
-      displayValue,
-      column,
-    });
+    return this.adaptable.api.predicateApi.handlePredicate(
+      columnFilter.Predicate,
+      {
+        value,
+        oldValue: null,
+        displayValue,
+        column,
+      },
+      true
+    );
   }
 }

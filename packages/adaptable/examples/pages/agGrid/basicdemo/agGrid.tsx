@@ -151,7 +151,7 @@ async function InitAdaptableDemo() {
           },
           {
             ColumnId: 'country',
-            Predicate: { PredicateId: 'Values', Inputs: ['Japan', 'Italy'] },
+            Predicate: { PredicateId: 'Contains' },
           },
         ],
       },
