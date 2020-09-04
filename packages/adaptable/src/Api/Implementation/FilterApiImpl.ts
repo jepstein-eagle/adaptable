@@ -6,14 +6,11 @@ import {
   FilterState,
   ColumnFilter,
   SystemFilterPredicateIds,
-  UserFilter,
 } from '../../PredefinedConfig/FilterState';
-import { AdaptableColumn } from '../../types';
-import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
-import { AdaptableApi } from '../AdaptableApi';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
+import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
@@ -184,9 +181,5 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
       displayValue,
       column,
     });
-  }
-
-  public getAllUserFilter(): UserFilter[] {
-    return this.getSystemFilterState().UserFilters;
   }
 }

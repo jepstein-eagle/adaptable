@@ -112,7 +112,7 @@ const initialFilterState: FilterState = {
   SystemFilters: SystemFilterPredicateIds as any,
   FilterPredicates: [],
   ColumnFilters: [],
-  UserFilters: [],
+  //  UserFilters: [],
 };
 
 export const FilterReducer: Redux.Reducer<FilterState> = (
@@ -183,7 +183,7 @@ export const FilterReducer: Redux.Reducer<FilterState> = (
       }
       return Object.assign({}, state, { ColumnFilters: columnFilters });
     }
-
+    /*
     case USER_FILTER_ADD: {
       const actionUserFilter: UserFilter = (action as UserFilterAction).userFilter;
 
@@ -211,7 +211,7 @@ export const FilterReducer: Redux.Reducer<FilterState> = (
         UserFilters: state.UserFilters.filter(abObject => abObject.Uuid !== actionUserFilter.Uuid),
       };
     }
-
+*/
     default:
       return state;
   }

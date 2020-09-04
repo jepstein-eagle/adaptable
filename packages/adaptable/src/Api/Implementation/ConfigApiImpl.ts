@@ -30,7 +30,7 @@ import { SparklineColumnState } from '../../PredefinedConfig/SparklineColumnStat
 import { EntitlementState } from '../../PredefinedConfig/EntitlementState';
 import { FreeTextColumnState } from '../../PredefinedConfig/FreeTextColumnState';
 import { PercentBarState } from '../../PredefinedConfig/PercentBarState';
-import { FilterState, UserFilter } from '../../PredefinedConfig/FilterState';
+import { FilterState } from '../../PredefinedConfig/FilterState';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import { ToolPanelState } from '../../PredefinedConfig/ToolPanelState';
 import { UserInterfaceState } from '../../PredefinedConfig/UserInterfaceState';

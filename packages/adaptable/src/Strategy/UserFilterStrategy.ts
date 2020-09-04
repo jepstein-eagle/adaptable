@@ -40,11 +40,12 @@ export class UserFilterStrategy extends AdaptableStrategyBase implements IUserFi
     }
   }
 
-  public getTeamSharingAction(): TeamSharingImportInfo<UserFilter> {
-    return {
-      FunctionEntities: this.adaptable.api.filterApi.getAllUserFilter(),
-      AddAction: FilterRedux.UserFilterAdd,
-      EditAction: FilterRedux.UserFilterEdit,
-    };
+  public getTeamSharingAction(): TeamSharingImportInfo<UserFilter> | undefined {
+    return undefined;
+    // to do{
+    //  FunctionEntities: this.adaptable.api.filterApi.getAllUserFilter(),
+    //  AddAction: FilterRedux.UserFilterAdd,
+    //  EditAction: FilterRedux.UserFilterEdit,
+    // };
   }
 }

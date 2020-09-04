@@ -94,8 +94,8 @@ class UserFilterPopupComponent extends React.Component<
       { Content: 'Description', Size: 6 },
       { Content: '', Size: 2 },
     ];
-
-    let UserFilterItems = this.props.api.filterApi.getAllUserFilter().map((userFilter, index) => {
+    /*
+    let UserFilterItems =  this.props.api.filterApi.getAllUserFilter().map((userFilter, index) => {
       return (
         <UserFilterEntityRow
           adaptableObject={userFilter}
@@ -110,7 +110,7 @@ class UserFilterPopupComponent extends React.Component<
         />
       );
     });
-
+*/
     let newButton = (
       <ButtonNew
         onClick={() => this.onNew()}
@@ -133,6 +133,7 @@ class UserFilterPopupComponent extends React.Component<
           glyphicon={StrategyConstants.UserFilterGlyph}
           bodyProps={{ padding: 0 }}
         >
+          {/*}
           {UserFilterItems.length > 0 ? (
             <AdaptableObjectCollection colItems={colItems} items={UserFilterItems} />
           ) : (
@@ -145,6 +146,7 @@ class UserFilterPopupComponent extends React.Component<
               </p>
             </EmptyContent>
           )}
+          */}
 
           {this.state.editedAdaptableObject != null && (
             <UserFilterWizard

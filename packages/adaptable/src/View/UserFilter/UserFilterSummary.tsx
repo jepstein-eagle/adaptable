@@ -37,7 +37,7 @@ export class UserFilterSummaryComponent extends React.Component<
   render(): any {
     let strategySummaries: any = [];
 
-    let userFilters: UserFilter[] = this.props.api.filterApi.getAllUserFilter();
+    let userFilters: UserFilter[] = []; //  this.props.api.filterApi.getAllUserFilter();
 
     // title row
     let titleRow = (

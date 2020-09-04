@@ -22,7 +22,13 @@ export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
 export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
 export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
 export { Scope } from './PredefinedConfig/Common/Scope';
-//export { Predicate } from './PredefinedConfig/Common/Predicate';
+export {
+  Predicate,
+  PredicateDef,
+  PredicateDefInput,
+  PredicateDefHandlerParams,
+  PredicateDefToStringParams,
+} from './PredefinedConfig/Common/Predicate';
 export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';
@@ -77,7 +83,7 @@ export {
   FreeTextStoredValue,
 } from './PredefinedConfig/FreeTextColumnState';
 export { GradientColumnState, GradientColumn } from './PredefinedConfig/GradientColumnState';
-export { FilterState as SystemFilterState } from './PredefinedConfig/FilterState';
+export { FilterState, ColumnFilter } from './PredefinedConfig/FilterState';
 export { LayoutState, Layout } from './PredefinedConfig/LayoutState';
 export { PercentBarState, PercentBar } from './PredefinedConfig/PercentBarState';
 export { PlusMinusState, PlusMinusRule } from './PredefinedConfig/PlusMinusState';

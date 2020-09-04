@@ -86,7 +86,8 @@ export interface FilterState extends ConfigState {
   ColumnFilters?: ColumnFilter[];
 
   // not sure about this?  Seems like a good idea but perhaps not
-  UserFilters?: UserFilter[];
+  // lets comment out so we dont confuse users until we add them...
+  // UserFilters?: UserFilter[];
 }
 
 export interface FilterPredicateInput {

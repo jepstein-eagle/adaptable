@@ -109,11 +109,7 @@ import { createUuid } from '../../PredefinedConfig/Uuid';
 import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedColumnStrategy';
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
-import {
-  ColumnFilter,
-  UserFilter,
-  SystemFilterPredicateId,
-} from '../../PredefinedConfig/FilterState';
+import { ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
