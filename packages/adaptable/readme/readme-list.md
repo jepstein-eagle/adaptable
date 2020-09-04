@@ -44,7 +44,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 
 - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 - [Action Column](./functions/action-column-function.md)
-- [Query]((functions/query-function.md)
 - [Alert](./functions/alert-function.md)
 - [Application](./functions/application-function.md)
 - [Bulk Update](./functions/bulk-update-function.md)
@@ -67,6 +66,7 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Layout](./functions/layout-function.md)
 - [Percent Bar](./functions/percent-bar-function.md)
 - [Plus Minus](./functions/plus-minus-function.md)
+- [Query](./functions/query-function.md)
 - [Quick Search](./functions/quick-search-function.md)
 - [Reminder](./functions/reminder-function.md)
 - [Schedule](./functions/schedule-function.md)

@@ -96,8 +96,7 @@ export interface SearchOptions {
    *
    * > DataSources are a good way of running 'big' searches on the server which can be predicted in advance without having to do any dynamic conversion of AdapTable configuration.
    *
-   *
-   * **Default Value: None**
+   * **Default Value: undefined**
    *
    */
   serverSearchOption?: ServerSearchOptions;
@@ -107,7 +106,7 @@ export interface SearchOptions {
    *
    * Used in the rare scenario when the user wants no previous searches to be re-applied at startup
    *
-   * Note: a neater implementation would be to use the state management functions
+   * Note: a possibly neater implementation would be to use the state management functions
    *
    * **Default Value: false**
    */
