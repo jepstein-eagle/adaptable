@@ -3,20 +3,6 @@ import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableApi } from '../../types';
 import Helper from '../../Utilities/Helpers/Helper';
 import {
-  mdiCheckboxBlankCircleOutline,
-  mdiCheckboxBlankCircle,
-  mdiGreaterThan,
-  mdiLessThan,
-  mdiEqual,
-  mdiNotEqual,
-  mdiFormatTitle,
-  mdiFormatStrikethrough,
-  mdiFormatLetterStartsWith,
-  mdiFormatLetterEndsWith,
-  mdiRegex,
-  mdiCalendar,
-} from '@mdi/js';
-import {
   isToday,
   isYesterday,
   isTomorrow,
@@ -83,7 +69,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Blanks',
     label: 'Blanks',
-    icon: { path: mdiCheckboxBlankCircleOutline },
+    icon: { path: 'blanks' },
     columnScope: { All: true },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Helper.IsInputNullOrEmpty(value),
@@ -91,7 +77,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'NonBlanks',
     label: 'Non Blanks',
-    icon: { path: mdiCheckboxBlankCircle },
+    icon: { path: 'non-blanks' },
     columnScope: { All: true },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => Helper.IsInputNotNullOrEmpty(value),
@@ -101,7 +87,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'GreaterThan',
     label: 'Greater Than',
-    icon: { path: mdiGreaterThan },
+    icon: { path: 'greater-than' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'number' }],
@@ -112,7 +98,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'LessThan',
     label: 'Less Than',
-    icon: { path: mdiLessThan },
+    icon: { path: 'less-than' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'number' }],
@@ -147,7 +133,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Equals',
     label: 'Equals',
-    icon: { path: mdiEqual },
+    icon: { path: 'equal' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'number' }],
@@ -158,7 +144,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'NotEquals',
     label: 'Not Equals',
-    icon: { path: mdiNotEqual },
+    icon: { path: 'not-equal' },
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'number' }],
@@ -195,7 +181,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Is',
     label: 'Equals',
-    icon: { path: mdiEqual },
+    icon: { path: 'equal' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -212,7 +198,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'IsNot',
     label: 'Not Equals',
-    icon: { path: mdiNotEqual },
+    icon: { path: 'not-equal' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -229,7 +215,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Contains',
     label: 'Contains',
-    icon: { path: mdiFormatTitle },
+    icon: { path: 'contains' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -245,7 +231,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'NotContains',
     label: 'Not Contains',
-    icon: { path: mdiFormatStrikethrough },
+    icon: { path: 'not-contains' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -261,7 +247,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'StartsWith',
     label: 'Starts With',
-    icon: { path: mdiFormatLetterStartsWith },
+    icon: { path: 'format-letter-starts-with' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -277,7 +263,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'EndsWith',
     label: 'Ends With',
-    icon: { path: mdiFormatLetterEndsWith },
+    icon: { path: 'format-letter-ends-with' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -293,7 +279,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Regex',
     label: 'Regex',
-    icon: { path: mdiRegex },
+    icon: { path: 'regex' },
     columnScope: { DataTypes: ['String'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'text' }],
@@ -305,7 +291,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Today',
     label: 'Today',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isToday(value),
@@ -313,7 +299,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Yesterday',
     label: 'Yesterday',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isYesterday(value),
@@ -321,7 +307,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Tomorrow',
     label: 'Tomorrow',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isTomorrow(value),
@@ -329,7 +315,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'ThisWeek',
     label: 'This Week',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisWeek(value),
@@ -337,7 +323,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'ThisMonth',
     label: 'This Month',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisMonth(value),
@@ -345,7 +331,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'ThisQuarter',
     label: 'This Quarter',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisQuarter(value),
@@ -353,7 +339,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'ThisYear',
     label: 'This Year',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isThisYear(value),
@@ -361,7 +347,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'InPast',
     label: 'In Past',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isPast(value),
@@ -369,7 +355,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'InFuture',
     label: 'In Future',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value }) => isFuture(value),
@@ -377,7 +363,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'After',
     label: 'After',
-    icon: { path: mdiGreaterThan },
+    icon: { path: 'greater-than' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'date' }],
@@ -387,7 +373,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'Before',
     label: 'Before',
-    icon: { path: mdiLessThan },
+    icon: { path: 'less-than' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'date' }],
@@ -397,7 +383,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'On',
     label: 'Equals',
-    icon: { path: mdiEqual },
+    icon: { path: 'equal' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'date' }],
@@ -407,7 +393,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'NotOn',
     label: 'NotEquals',
-    icon: { path: mdiNotEqual },
+    icon: { path: 'not-equal' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     inputs: [{ type: 'date' }],
@@ -417,7 +403,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'NextWorkDay',
     label: 'Next Work Day',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getNextWorkingDay()),
@@ -425,7 +411,7 @@ export const SystemPredicateDefs: PredicateDef[] = [
   {
     id: 'LastWorkDay',
     label: 'Last Work Day',
-    icon: { path: mdiCalendar },
+    icon: { path: 'calendar' },
     columnScope: { DataTypes: ['Date'] },
     functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
     handler: ({ value, api }) => isSameDay(value, api.calendarApi.getPreviousWorkingDay()),

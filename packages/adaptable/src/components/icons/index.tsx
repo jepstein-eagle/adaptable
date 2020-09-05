@@ -109,6 +109,13 @@ import Percent from './percent';
 import Exponent from './exponent';
 import Equal from './equal';
 import NotEqual from './not-equal';
+import EndsWith from './format-letter-ends-with';
+import StartsWith from './format-letter-starts-with';
+import Blanks from './blanks';
+import NonBlanks from './non-blanks';
+import Contains from './contains';
+import NotContains from './not-contains';
+import Regex from './regex';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -235,6 +242,13 @@ const allIcons = {
   exponent: Exponent,
   equal: Equal,
   'not-equal': NotEqual,
+  'format-letter-ends-with': EndsWith,
+  'format-letter-starts-with': StartsWith,
+  blanks: Blanks,
+  'non-blanks': NonBlanks,
+  'not-contains': NotContains,
+  contains: Contains,
+  regex: Regex,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

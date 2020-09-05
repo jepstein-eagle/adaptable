@@ -2,6 +2,6 @@ import * as React from 'react';
 import DefaultIcon from './DefaultIcon';
 export default (props: any) => (
   <DefaultIcon {...props}>
-    <path d="M19,19H5V8H19M16,1V3H8V1H6V3H5C3.89,3 3,3.89 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5C21,3.89 20.1,3 19,3H18V1M17,12H12V17H17V12Z" />
+    <path d="M3,14H21V12H3M5,4V7H10V10H14V7H19V4M10,19H14V16H10V19Z" />
   </DefaultIcon>
 );

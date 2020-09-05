@@ -17,7 +17,6 @@ import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import OverlayTrigger from '../../../components/OverlayTrigger';
 import SimpleButton from '../../../components/SimpleButton';
 import { Icon } from '../../../components/icons';
-import { Icon as ReactIcon } from '@mdi/react';
 import { Flex, Box } from 'rebass';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
@@ -170,7 +169,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
       return <span>{predicateDef.icon.text}</span>;
     }
     if ('path' in predicateDef.icon) {
-      return <ReactIcon size="1rem" path={predicateDef.icon.path} />;
+      return <Icon name={predicateDef.icon.path} />;
     }
   }
 
