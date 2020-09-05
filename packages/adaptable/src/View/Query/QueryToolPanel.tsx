@@ -6,34 +6,12 @@ import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
-import { StringExtensions } from '../../Utilities/Extensions/StringExtensions';
-
-import * as parser from '../../parser/src';
-import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
-import { ButtonDelete } from '../Components/Buttons/ButtonDelete';
-import { ButtonNew } from '../Components/Buttons/ButtonNew';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { SortOrder } from '../../PredefinedConfig/Common/Enums';
-import {
-  mdiViewColumn,
-  mdiContentSave,
-  mdiFolderOpen,
-  mdiClose,
-  mdiMagnify,
-  mdiArrowExpand,
-  mdiHistory,
-  mdiCheck,
-  mdiAlert,
-} from '@mdi/js';
-import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
-
 import { Flex } from 'rebass';
-import Dropdown from '../../components/Dropdown';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import DropdownButton from '../../components/DropdownButton';
-import { Icon } from '@mdi/react';
 import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import Input from '../../components/Input';
 import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
@@ -117,9 +95,8 @@ class QueryToolPanelComponent extends React.Component<
             //  items={availableSearches}
             marginRight={1}
             tooltip="Load Query"
-          >
-            <Icon size="1.1rem" path={mdiFolderOpen} />
-          </DropdownButton>
+            icon="folder-open"
+          ></DropdownButton>
         </Flex>
       </Flex>
     );
@@ -139,10 +116,7 @@ class QueryToolPanelComponent extends React.Component<
   }
 }
 
-function mapStateToProps(
-  state: AdaptableState,
-  ownProps: any
-): Partial<QueryToolPanelComponentProps> {
+function mapStateToProps(state: AdaptableState): Partial<QueryToolPanelComponentProps> {
   return {
     CurrentQuery: state.Query.CurrentQuery,
     SharedQueries: state.Query.SharedQueries,

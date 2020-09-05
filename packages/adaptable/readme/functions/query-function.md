@@ -6,19 +6,19 @@ These searches can include a very wide variety of *Search Criteria* and run acro
 
  > When an Query is applied, AdapTable will **only display those rows that match all of the Conditions in the Query**.
 
-Queryes are named and saved and, therefore, available for re-use.
+Queries are named and saved and, therefore, available for re-use.
 
-Queryes can be provided at design-time (through [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_querystate_.querystate.html)) or at run-time through the UI (if Entitlements allow).
+Queries can be provided at design-time (through [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_querystate_.querystate.html)) or at run-time through the UI (if Entitlements allow).
 
 ## UI Elements
 
 Query includes the following UI Elements:
 
-- **Popup** - Shows a list of existing Queryes with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Query Wizard.
+- **Popup** - Shows a list of existing Queries with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Query Wizard.
 
-- **Wizard** - A series of steps facilitating the creation and editing of Queryes.
+- **Wizard** - A series of steps facilitating the creation and editing of Queries.
 
-- **Toolbar** - Provides a list of the available Queryes in a dropdown, together with buttons for adding / adding / deleting.
+- **Toolbar** - Provides a list of the available Queries in a dropdown, together with buttons for adding / adding / deleting.
 
 - **Tool Panel** - Same as Toolbar above.
 
@@ -30,7 +30,7 @@ Query supports these Entitlement Rules:
 
 - **Hidden**: Everything is hidden from the User
 
-- **ReadOnly**: User can run Queryes in Predefined Config but not edit or delete them, nor add others.
+- **ReadOnly**: User can run Queries in Predefined Config but not edit or delete them, nor add others.
 
 ## FAQ
 
@@ -50,7 +50,7 @@ Note that this is the default behaviour. You can change this to Never, or only a
 That depends on what you have specified for the
 [filterActionOnExternalDataChange](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_filteroptions_.filteroptions.html#filteractiononexternaldatachange) property in FilterOptions.
 
-The default is *Never* meaning Queryes won't update as ticking data changes or the underlying data set changes. But you can change this to *Always* or after a *ThrottleDelay*.
+The default is *Never* meaning Queries won't update as ticking data changes or the underlying data set changes. But you can change this to *Always* or after a *ThrottleDelay*.
 
 ### Further Information
 

@@ -92,6 +92,9 @@ import Settings from './settings';
 import Dock from './dock';
 import Collapse from './collapse';
 import Expand from './expand';
+import ArrowExpand from './arrow-expand';
+import Invalid from './invalid';
+import History from './history';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -201,6 +204,9 @@ const allIcons = {
   dock: Dock,
   collapse: Collapse,
   expand: Expand,
+  arrowexpand: ArrowExpand,
+  invalid: Invalid,
+  history: History,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

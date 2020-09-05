@@ -14,13 +14,11 @@ import { ArrayExtensions } from '../../Utilities/Extensions/ArrayExtensions';
 import { Flex } from 'rebass';
 import Input from '../../components/Input';
 import DropdownButton from '../../components/DropdownButton';
-import { Icon } from '@mdi/react';
-import { mdiViewColumn, mdiFolderOpen, mdiHistory, mdiCheck } from '@mdi/js';
+import { Icon } from '../../components/icons';
 import FieldWrap from '../../components/FieldWrap';
 import * as parser from '../../parser/src';
 import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ButtonRunQuery } from '../Components/Buttons/ButtonRunQuery';
 import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
 import { ButtonInvalid } from '../Components/Buttons/ButtonInvalid';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
@@ -89,10 +87,7 @@ class QueryToolbarControlComponent extends React.Component<
       ...sortedSharedQueries.map(expression => {
         return {
           label: expression.Name,
-          icon:
-            expression.Expression === this.props.CurrentQuery ? (
-              <Icon size="1.1rem" path={mdiCheck} />
-            ) : null,
+          icon: expression.Expression === this.props.CurrentQuery ? <Icon name={'check'} /> : null,
           onClick: () => this.runQuery(expression.Expression),
         };
       }),
@@ -102,7 +97,7 @@ class QueryToolbarControlComponent extends React.Component<
         .reverse()
         .map(item => ({
           label: `Query at ${item.time.toLocaleTimeString('en-US')}`,
-          icon: <Icon size="1.1rem" path={mdiHistory} />,
+          icon: <Icon name={'history'} />,
           onClick: () => this.props.onChangeCurrentQuery(item.expression),
         })),
     ];
@@ -175,7 +170,7 @@ class QueryToolbarControlComponent extends React.Component<
           marginRight={1}
           tooltip="Pick Columns"
         >
-          <Icon size="1.1rem" path={mdiViewColumn} />
+          <Icon name={'list'} />
         </DropdownButton>
         <DropdownButton
           disabled={ArrayExtensions.IsNullOrEmpty(availableSearches)}
@@ -183,9 +178,8 @@ class QueryToolbarControlComponent extends React.Component<
           items={availableSearches}
           marginRight={1}
           tooltip="Load Query"
-        >
-          <Icon size="1.1rem" path={mdiFolderOpen} />
-        </DropdownButton>
+          icon="folder-open"
+        ></DropdownButton>
       </Flex>
     );
 
