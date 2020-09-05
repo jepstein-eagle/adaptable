@@ -165,7 +165,7 @@ export class agGridHelper {
     strategies.set(StrategyConstants.SystemStatusStrategyId, new SystemStatusStrategy(adaptable));
     strategies.set(StrategyConstants.ThemeStrategyId, new ThemeStrategy(adaptable));
     strategies.set(StrategyConstants.CellSummaryStrategyId, new CellSummaryStrategy(adaptable));
-    strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
+    // strategies.set(StrategyConstants.UserFilterStrategyId, new UserFilterStrategy(adaptable));
 
     strategies.set(StrategyConstants.GridInfoStrategyId, new GridInfoStrategy(adaptable));
     strategies.set(StrategyConstants.ReminderStrategyId, new ReminderStrategy(adaptable));
