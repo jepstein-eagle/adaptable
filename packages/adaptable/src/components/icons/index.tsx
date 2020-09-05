@@ -95,6 +95,20 @@ import Expand from './expand';
 import ArrowExpand from './arrow-expand';
 import Invalid from './invalid';
 import History from './history';
+import FilterOutline from './filter-outline';
+import Close from './close';
+import Function from './function';
+import GreaterThanOrEqual from './greater-than-or-equal';
+import GreaterThan from './greater-than';
+import LessThanOrEqual from './less-than-or-equal';
+import LessThan from './less-than';
+import Minus from './minus';
+import Multiplication from './multiplication';
+import Division from './division';
+import Percent from './percent';
+import Exponent from './exponent';
+import Equal from './equal';
+import NotEqual from './not-equal';
 
 import LoggingHelper from '../../Utilities/Helpers/LoggingHelper';
 
@@ -207,6 +221,20 @@ const allIcons = {
   arrowexpand: ArrowExpand,
   invalid: Invalid,
   history: History,
+  filteroutline: FilterOutline,
+  close: Close,
+  function: Function,
+  'greater-than-or-equal': GreaterThanOrEqual,
+  'greater-than': GreaterThan,
+  'less-than-or-equal': LessThanOrEqual,
+  'less-than': LessThan,
+  minus: Minus,
+  multiplication: Multiplication,
+  division: Division,
+  percent: Percent,
+  exponent: Exponent,
+  equal: Equal,
+  'not-equal': NotEqual,
 } as { [key: string]: ReactNode };
 
 Object.keys(allIcons).forEach(name => {

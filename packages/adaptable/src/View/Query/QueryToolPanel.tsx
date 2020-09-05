@@ -16,7 +16,7 @@ import { SharedQuery } from '../../PredefinedConfig/QueryState';
 import Input from '../../components/Input';
 import { ButtonExpand } from '../Components/Buttons/ButtonExpand';
 import { ButtonClear } from '../Components/Buttons/ButtonClear';
-import { ButtonRunQuery } from '../Components/Buttons/ButtonRunQuery';
+import { ButtonPlay } from '../Components/Buttons/ButtonPlay';
 
 interface QueryToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<QueryToolPanelComponent> {
@@ -82,12 +82,13 @@ class QueryToolPanelComponent extends React.Component<
             tooltip="Clear Query"
             accessLevel={'Full'}
           />
-          <ButtonRunQuery
-            // onClick={() => this.runQuery()}
+          <ButtonPlay
+            //  onClick={() => this.runQuery()}
             tooltip="Run Query"
             accessLevel={'Full'}
             variant="text"
             tone="neutral"
+            // disabled={this.state.expression == ''}
             marginRight={1}
           />
           <DropdownButton

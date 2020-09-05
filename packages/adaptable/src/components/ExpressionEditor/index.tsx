@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { AdaptableColumn, AdaptableApi } from '../../types';
-
 import { FunctionMap } from '../../parser/src/types';
 import useSelectionRange from '../utils/useSelectionRange';
 import { useState } from 'react';
@@ -8,30 +7,13 @@ import * as parser from '../../parser/src';
 import OverlayTrigger from '../OverlayTrigger';
 import { Flex, Box } from 'rebass';
 import EditorButton from './EditorButton';
-import SimpleButton from '../SimpleButton';
-import { Icon } from '@mdi/react';
 import Textarea from '../Textarea';
 import FormLayout, { FormRow } from '../FormLayout';
 import Input from '../Input';
 import CheckBox from '../CheckBox';
-import {
-  mdiPlus,
-  mdiMinus,
-  mdiMultiplication,
-  mdiDivision,
-  mdiPercent,
-  mdiExponent,
-  mdiEqual,
-  mdiNotEqual,
-  mdiLessThan,
-  mdiGreaterThan,
-  mdiLessThanOrEqual,
-  mdiGreaterThanOrEqual,
-  mdiDrag,
-  mdiFunction,
-} from '@mdi/js';
 import ErrorBox from '../ErrorBox';
 import HelpBlock from '../HelpBlock';
+import { ButtonFunction } from '../../View/Components/Buttons/ButtonFunction';
 
 interface ExpressionEditorProps {
   value: string;
@@ -91,50 +73,24 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       showEvent="click"
       hideEvent="blur"
     >
-      <SimpleButton mr={1}>
-        <Icon size="1rem" path={mdiFunction} />
-      </SimpleButton>
+      <ButtonFunction />
     </OverlayTrigger>
   );
 
   const operatorButtons = (
     <>
-      <EditorButton data="+" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiPlus} />
-      </EditorButton>
-      <EditorButton data="-" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiMinus} />
-      </EditorButton>
-      <EditorButton data="*" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiMultiplication} />
-      </EditorButton>
-      <EditorButton data="/" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiDivision} />
-      </EditorButton>
-      <EditorButton data="%" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiPercent} />
-      </EditorButton>
-      <EditorButton data="^" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiExponent} />
-      </EditorButton>
-      <EditorButton data="=" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiEqual} />
-      </EditorButton>
-      <EditorButton data="!=" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiNotEqual} />
-      </EditorButton>
-      <EditorButton data="<" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiLessThan} />
-      </EditorButton>
-      <EditorButton data=">" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiGreaterThan} />
-      </EditorButton>
-      <EditorButton data="<=" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiLessThanOrEqual} />
-      </EditorButton>
-      <EditorButton data=">=" textAreaRef={textAreaRef}>
-        <Icon size="1rem" path={mdiGreaterThanOrEqual} />
-      </EditorButton>
+      <EditorButton data="+" textAreaRef={textAreaRef} icon="plus" />
+      <EditorButton data="-" textAreaRef={textAreaRef} icon="minus" />
+      <EditorButton data="*" textAreaRef={textAreaRef} icon="multiplication" />
+      <EditorButton data="/" textAreaRef={textAreaRef} icon="division" />
+      <EditorButton data="%" textAreaRef={textAreaRef} icon="percent" />
+      <EditorButton data="^" textAreaRef={textAreaRef} icon="exponent" />
+      <EditorButton data="=" textAreaRef={textAreaRef} icon="equal" />
+      <EditorButton data="!=" textAreaRef={textAreaRef} icon="not-equal" />
+      <EditorButton data="<" textAreaRef={textAreaRef} icon="less-than" />
+      <EditorButton data=">" textAreaRef={textAreaRef} icon="greater-than" />
+      <EditorButton data="<=" textAreaRef={textAreaRef} icon={'less-than-or-equal'} />
+      <EditorButton data=">=" textAreaRef={textAreaRef} icon={'greater-than-or-equal'} />
       <EditorButton data="AND" textAreaRef={textAreaRef}>
         AND
       </EditorButton>
@@ -187,12 +143,16 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               <EditorButton
                 width="100%"
                 height="100%"
-                style={{ background: 'var(--ab-color-primary)', cursor: 'grab' }}
+                style={{
+                  background: 'var(--ab-color-primary)',
+                  cursor: 'grab',
+                  marginRight: 'var(--ab-space-1)',
+                }}
                 data={`[${column.ColumnId}]`}
                 data-name="column"
                 textAreaRef={textAreaRef}
+                icon="drag"
               >
-                <Icon size="1rem" path={mdiDrag} style={{ marginRight: 'var(--ab-space-1)' }} />
                 <Flex flexDirection="column" alignItems="start">
                   {showColumnIds ? `[${column.ColumnId}]` : column.FriendlyName}
                 </Flex>

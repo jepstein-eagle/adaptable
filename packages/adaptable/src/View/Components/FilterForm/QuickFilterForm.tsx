@@ -16,8 +16,8 @@ import { AdaptableApi } from '../../../Api/AdaptableApi';
 import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import OverlayTrigger from '../../../components/OverlayTrigger';
 import SimpleButton from '../../../components/SimpleButton';
-import Icon from '@mdi/react';
-import { mdiFilterOutline, mdiClose } from '@mdi/js';
+import { Icon } from '../../../components/icons';
+import { Icon as ReactIcon } from '@mdi/react';
 import { Flex, Box } from 'rebass';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
 import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
@@ -106,7 +106,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
                 <>
                   <SimpleButton p={2} variant="text" onClick={() => this.clearFilter()}>
                     <span style={{ width: 20, marginRight: 10 }}>
-                      <Icon size="1rem" path={mdiClose} />
+                      <Icon name="delete" />
                     </span>
                     Clear
                   </SimpleButton>
@@ -164,13 +164,13 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
   renderPredicateIcon(predicateDef: PredicateDef) {
     if (!predicateDef || !predicateDef.icon) {
-      return <Icon size="1rem" path={mdiFilterOutline} />;
+      return <Icon name="delete" />;
     }
     if ('text' in predicateDef.icon) {
       return <span>{predicateDef.icon.text}</span>;
     }
     if ('path' in predicateDef.icon) {
-      return <Icon size="1rem" path={predicateDef.icon.path} />;
+      return <ReactIcon size="1rem" path={predicateDef.icon.path} />;
     }
   }
 
