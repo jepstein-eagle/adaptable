@@ -14,6 +14,7 @@ import CheckBox from '../CheckBox';
 import ErrorBox from '../ErrorBox';
 import HelpBlock from '../HelpBlock';
 import { ButtonFunction } from '../../View/Components/Buttons/ButtonFunction';
+import SimpleButton from '../SimpleButton';
 
 interface ExpressionEditorProps {
   value: string;
@@ -73,7 +74,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
       showEvent="click"
       hideEvent="blur"
     >
-      <ButtonFunction />
+      <SimpleButton icon="function" mr={1}></SimpleButton>
     </OverlayTrigger>
   );
 

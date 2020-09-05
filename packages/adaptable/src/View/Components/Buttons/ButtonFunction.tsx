@@ -11,6 +11,7 @@ export class ButtonFunction extends React.Component<FunctionButtonProps, {}> {
         tooltip="Function"
         iconSize={20}
         icon="function"
+        mr={1}
         {...this.props}
       />
     );

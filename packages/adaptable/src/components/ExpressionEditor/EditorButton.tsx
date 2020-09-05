@@ -8,7 +8,6 @@ const DRAG_IMAGE_SRC = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQ
 interface EditorButtonProps extends SimpleButtonProps {
   data: string;
   textAreaRef: React.MutableRefObject<HTMLInputElement | HTMLTextAreaElement>;
-  icon?: string;
 }
 
 function EditorButton(props: EditorButtonProps) {
@@ -17,7 +16,6 @@ function EditorButton(props: EditorButtonProps) {
     <SimpleButton
       data-name={'operator-or-fn'}
       variant="text"
-      icon={props.icon ? props.icon : null}
       draggable={true}
       onDragStart={event => {
         if (!dragImage) {
