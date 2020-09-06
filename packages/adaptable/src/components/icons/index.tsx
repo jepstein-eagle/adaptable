@@ -228,7 +228,7 @@ const allIcons = {
   arrowexpand: ArrowExpand,
   invalid: Invalid,
   history: History,
-  filteroutline: FilterOutline,
+  'filter-outline': FilterOutline,
   close: Close,
   function: Function,
   'greater-than-or-equal': GreaterThanOrEqual,

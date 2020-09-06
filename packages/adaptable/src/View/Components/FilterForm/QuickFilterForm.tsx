@@ -163,7 +163,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
 
   renderPredicateIcon(predicateDef: AdaptablePredicateDef) {
     if (!predicateDef || !predicateDef.icon) {
-      return <Icon name="delete" />;
+      return <Icon name="filter-outline" />;
     }
     if ('text' in predicateDef.icon) {
       return <span>{predicateDef.icon.text}</span>;
