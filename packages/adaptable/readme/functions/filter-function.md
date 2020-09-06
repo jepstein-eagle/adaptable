@@ -163,7 +163,11 @@ Filter supports these Entitlement Rules:
 
 No, but this is available via a [Query](query-function.md).
 
+**Can a user include column values in a Query that are not present in the grid when the Query is created?**
 
+Yes.  The easiest way to do this is via Permitted Values.  You can set the permitted vales for each column, and can include any values you want.  (See Column Values for more information).
+
+Additionally, if the Query is built at design time and shipped with the product then it can include any Column Values that the developers want to include - they don't need to be present in the grid at the time of creation.
 
 ## Appendices
 

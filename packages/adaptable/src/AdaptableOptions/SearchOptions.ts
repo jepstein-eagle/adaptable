@@ -11,7 +11,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
  *
  * ```ts
  * searchOptions = {
- *  serverSearchOption: ['Query'],
+ *  serverSearchOptions: ['Query'],
  *  clearSearchesOnStartUp: true,
  *  excludeColumnFromQuickSearch: (column: AdaptableColumn) => {
  *      if (column.ColumnId === 'country' || column.ReadOnly) {

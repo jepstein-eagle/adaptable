@@ -26,7 +26,7 @@ Note: The Expression in the Calculated Column updates in real time as values in 
 
 ## Expression Editor
 
-Since [Version 7](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) Expressions can be most easily created using our Expression Editor.  
+Since [Version 7](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/upgrade-guides/upgrade-guide-v7.md) Expressions can be most easily created using the **Expression Editor**.  
 
 This has a number of useful features including:
 
@@ -40,24 +40,28 @@ This has a number of useful features including:
 
 ## Expression Syntax
 
-One key thing to note is that columns are referenced in the Expression as Col("ColumnName"), e.g. Col("Bid").  
+Columns can be referenced in an Expression in 2 ways:
 
-You currently have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. Col("orderId") rather than the Caption visible in the grid (e.g. 'Order Id').  However we provide the Caption in the UI to help you identify them
+* Col("ColumnId"), e.g. Col("Bid")
+  
+* [ColumnId], e.g. [Bid]  
 
-> In a forthcoming release we hope to enable both field and captions to be used in the Expression.
+Note: you have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. [orderId] rather than the Caption visible in the grid (e.g. 'Order Id').
+  
+> We provide the Caption in the Expression Editor to help you identify the column more easily together with an option to see the field value instead.
 
 We provide a 'shortcut' for the most commonly used functions.
 
 For example instead of using the 'ADD' function as follows:
 
 ```
-ADD(COL('ItemCount'),COL('PackageCost'))
- ```
+ADD([ItemCount], [PackageCost])
+```
  
-you can provide the '+' sign (available in the UI as a button): 
+you can provide the '+' sign (also available in the Expression Editor as a button): 
 
 ```
-COL('ItemCount') + COL('PackageCost')
+[ItemCount] + [PackageCost]
  ```
 
 ## Expression Examples
@@ -67,44 +71,44 @@ There are limitless Expressions you can create but here a few examples to show y
 To create an Expression which references another column and a mathematical operator: 
 
 ```
-Col("ItemCost") * 2
- ```      
+[ItemCost] * 2
+```      
 
 To create an Expression which references 2 columns:
 
 ```
-Col("ItemCost") / Col("ItemCount")
- ```      
+[ItemCost] / [ItemCount]
+```      
 
 To create an Expression which references 3 columns:
 
 ```
-ColumnExpression: Col("InvoicedCost") - ( Col("OrderCost") + Col("PackageCost"))
- ```      
+[InvoicedCost] - ( [OrderCost] + [PackageCost])
+```      
 
 To create an Expression which multiplies many columns:
 
 ```
-MUL(Col("OrderCost") , Col("ItemCost"), Col("PackageCost"))
- ```
+MUL([OrderCost] , [ItemCost], [PackageCost])
+```
  
 though this is more readable using the function short syntax as:
 
 ```
-Col("OrderCost") * Col("ItemCost")* Col("PackageCost")
- ```
+[OrderCost] * [ItemCost] * [PackageCost]
+```
  
 To create an Expression which uses ternary (if) logic (and outputs a string):
 
 ```
-Col("ItemCost") > 100 ? "High" : Col("ItemCost") > 50 ? "Medium": "Low"
- ``` 
+[ItemCost] > 100 ? "High" : [ItemCost] > 50 ? "Medium": "Low"
+``` 
 
 To create an Expression which returns the highest of 4 Columns in the row (great for things like MiFID):
 
 ```
-MAX(Col("ItemCost"), Col("OrderCost"), Col("InvoicedCost"), (Col("PackageCost")*10))
- ```
+MAX ( [ItemCost], [OrderCost], [InvoicedCost], ([PackageCost]*10) )
+```
 
 ## Calculated Column Settings
 
