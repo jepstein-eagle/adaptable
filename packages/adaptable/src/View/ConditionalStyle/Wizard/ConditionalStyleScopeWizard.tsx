@@ -25,7 +25,6 @@ export class ConditionalStyleScopeWizard
   implements AdaptableWizardStep {
   constructor(props: ConditionalStyleScopeWizardProps) {
     super(props);
-    console.log('style scope', this.props.data.Scope);
     this.state = {
       scope: this.props.data.Scope ? this.props.data.Scope : undefined,
       ExcludeGroupedRows: this.props.data.ExcludeGroupedRows,

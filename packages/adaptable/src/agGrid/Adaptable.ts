@@ -1847,19 +1847,7 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public setRowClassRules(
-    rowClassRules: any,
-
-    type: 'ConditionalStyle'
-  ) {
-    const localRowClassRules = this.gridOptions.rowClassRules;
-    // do we need to remove stuff or test?  Im not sure...
-    if (localRowClassRules) {
-      // do something?
-      if (type == 'ConditionalStyle') {
-        //  console.log(localRowClassRules);
-      }
-    }
+  public setRowClassRules(rowClassRules: any) {
     this.gridOptions.rowClassRules = rowClassRules;
   }
 

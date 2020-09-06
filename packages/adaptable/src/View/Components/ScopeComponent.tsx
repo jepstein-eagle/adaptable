@@ -23,8 +23,6 @@ export interface ScopeComponentState {
 export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeComponentState> {
   constructor(props: ScopeComponentProps) {
     super(props);
-    console.log('component scope', this.props.scope);
-
     this.state = {
       ScopeChoice: this.setScopeChoice(this.props.scope),
       componentScope: this.props.scope,

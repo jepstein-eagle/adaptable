@@ -14,6 +14,8 @@ import Input from '../../components/Input';
 import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { QueryObject } from '../../PredefinedConfig/Common/QueryObject';
 import DropdownButton from '../../components/DropdownButton';
+import FormLayout, { FormRow } from '../../components/FormLayout';
+import { DataType } from '../../PredefinedConfig/Common/Enums';
 
 export interface ExpressionWizardProps extends AdaptableWizardStepProps<QueryObject> {
   onSetNewSharedQueryName: (newSharedQueryName: string) => void;
@@ -83,13 +85,16 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
           </Radio>
         </Flex>
         {this.state.useSharedQuery == true && (
-          <div>
+          <Flex
+            flexDirection="row"
+            padding={2}
+            style={{ borderBottom: '1px solid var(--ab-color-primary)' }}
+          >
             <DropdownButton
-              fontWeight="normal"
               margin={3}
-              placeholder="Select Shared Query"
-              // variant="outlined"
-              //  tone="none"
+              placeholder="Select"
+              variant="outlined"
+              tone="none"
               style={{
                 minWidth: '15rem',
                 whiteSpace: 'nowrap',
@@ -117,7 +122,7 @@ export class ExpressionWizard extends React.Component<ExpressionWizardProps, Exp
                     .find(sq => sq.Uuid == this.state.sharedQueryId).Name
                 : 'Select Shared Query'}
             </DropdownButton>
-          </div>
+          </Flex>
         )}
         {this.state.useSharedQuery == false && (
           <>

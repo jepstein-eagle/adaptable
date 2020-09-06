@@ -35,7 +35,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
         }
       };
     });
-    theadaptable.setRowClassRules(rowClassRules, 'ConditionalStyle');
+    theadaptable.setRowClassRules(rowClassRules);
 
     // now do columns
     if (ArrayExtensions.IsNotNullOrEmpty(columns)) {
