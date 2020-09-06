@@ -1,4 +1,4 @@
-import { Scope } from './Scope';
+import { AdaptableScope } from './AdaptableScope';
 import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableApi } from '../../types';
 import Helper from '../../Utilities/Helpers/Helper';
@@ -17,7 +17,7 @@ import {
   isSameDay,
 } from 'date-fns';
 
-export interface Predicate {
+export interface AdaptablePredicate {
   PredicateId: string;
   Inputs?: any[];
 }
@@ -25,7 +25,7 @@ export interface Predicate {
 export interface PredicateDef {
   id: string;
   label: string;
-  columnScope: Scope;
+  columnScope: AdaptableScope;
   functionScope: FunctionScope[];
   inputs?: PredicateDefInput[];
   handler: (params: PredicateDefHandlerParams) => boolean;

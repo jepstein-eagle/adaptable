@@ -7,7 +7,7 @@ import {
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableColumn, Scope } from '../../types';
-import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 
 export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {

@@ -27,7 +27,7 @@ import AdaptableContext from '../../AdaptableContext';
 import { Flex } from 'rebass';
 import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import Radio from '../../../components/Radio';
-import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../../../PredefinedConfig/Common/AdaptablePredicate';
 import Helper from '../../../Utilities/Helpers/Helper';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {

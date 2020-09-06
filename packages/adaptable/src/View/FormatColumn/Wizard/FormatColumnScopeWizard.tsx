@@ -5,7 +5,7 @@ import {
 } from '../../Wizard/Interface/IAdaptableWizard';
 import { FormatColumn } from '../../../PredefinedConfig/FormatColumnState';
 import WizardPanel from '../../../components/WizardPanel';
-import { Scope } from '../../../PredefinedConfig/Common/Scope';
+import { AdaptableScope } from '../../../PredefinedConfig/Common/AdaptableScope';
 import { ScopeComponent } from '../../Components/ScopeComponent';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import { WizardScopeState } from '../../Components/SharedProps/WizardScopeState';
@@ -30,13 +30,13 @@ export class FormatColumnScopeWizard
         <ScopeComponent
           api={this.props.api}
           scope={this.state.scope}
-          updateScope={(scope: Scope) => this.onUpdateScope(scope)}
+          updateScope={(scope: AdaptableScope) => this.onUpdateScope(scope)}
         />{' '}
       </WizardPanel>
     );
   }
 
-  private onUpdateScope(scope: Scope) {
+  private onUpdateScope(scope: AdaptableScope) {
     this.setState({ scope: scope } as WizardScopeState, () => this.props.updateGoBackState());
   }
 

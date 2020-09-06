@@ -8,7 +8,7 @@ import { AG_GRID_GROUPED_COLUMN } from '../../Utilities/Constants/GeneralConstan
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import { ColumnApi } from '../ColumnApi';
 import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
-import { Scope, ScopeDataType } from '../../PredefinedConfig/Common/Scope';
+import { AdaptableScope, ScopeDataType } from '../../PredefinedConfig/Common/AdaptableScope';
 
 export class ColumnApiImpl extends ApiBase implements ColumnApi {
   public getColumns(): AdaptableColumn[] {

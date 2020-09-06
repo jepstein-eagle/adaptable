@@ -1,9 +1,9 @@
 import { ConfigState } from './ConfigState';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
-import { Scope } from './Common/Scope';
+import { AdaptableScope } from './Common/AdaptableScope';
 import { AdaptableApi, AdaptableColumn } from '../types';
 import { AdaptableObject } from './Common/AdaptableObject';
-import { Predicate } from './Common/Predicate';
+import { AdaptablePredicate } from './Common/AdaptablePredicate';
 import { TypeHint } from './Common/Types';
 
 /**
@@ -112,15 +112,15 @@ export interface ColumnFilter extends AdaptableObject {
   Predicate: ColumnFilterPredicate;
 }
 
-export interface ColumnFilterPredicate extends Predicate {
+export interface ColumnFilterPredicate extends AdaptablePredicate {
   PredicateId: TypeHint<string, SystemFilterPredicateId>;
 }
 
 export interface UserFilter extends AdaptableObject {
   Name: string;
-  Scope: Scope;
+  Scope: AdaptableScope;
   Values?: any[];
-  Predicates?: Predicate[];
+  Predicates?: AdaptablePredicate[];
 }
 
 export type SystemFilterPredicateIds = SystemFilterPredicateId[];

@@ -1,6 +1,6 @@
 import { ConditionalStyleState, ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { AdaptableColumn, Scope } from '../types';
-import { PredicateDef } from '../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
 
 /**
  * Provides full and comprehensive run-time access to the Conditional Style function and associated state.

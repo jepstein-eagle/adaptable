@@ -1,6 +1,6 @@
 import { ConfigState } from './ConfigState';
 import { QueryObject } from './Common/QueryObject';
-import { Predicate } from './Common/Predicate';
+import { AdaptablePredicate } from './Common/AdaptablePredicate';
 import { Scope } from '../types';
 import { TypeHint } from './Common/Types';
 export interface CellValidationState extends ConfigState {
@@ -13,7 +13,7 @@ export interface CellValidationRule extends QueryObject {
   ActionMode: 'Warn User' | 'Stop Edit';
 }
 
-export interface CellValidationRulePredicate extends Predicate {
+export interface CellValidationRulePredicate extends AdaptablePredicate {
   PredicateId: TypeHint<string, SystemValidationPredicateId>;
 }
 

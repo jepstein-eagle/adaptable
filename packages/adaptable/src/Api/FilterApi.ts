@@ -4,7 +4,7 @@ import {
   SystemFilterPredicateIds,
 } from '../PredefinedConfig/FilterState';
 import { AdaptableColumn } from '../types';
-import { PredicateDef } from '../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
 
 /**
  * Provides run-time access to the System Filter section of Adaptable State.

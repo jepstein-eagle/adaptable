@@ -1,9 +1,9 @@
 import {
   PredicateDef,
-  Predicate,
+  AdaptablePredicate,
   PredicateDefHandlerParams,
   FunctionScope,
-} from '../PredefinedConfig/Common/Predicate';
+} from '../PredefinedConfig/Common/AdaptablePredicate';
 
 export interface PredicateApi {
   getPredicateDefs(): PredicateDef[];
@@ -13,10 +13,10 @@ export interface PredicateApi {
   getPredicateDefById(predicateId: string): PredicateDef;
   getSystemPredicateDefById(predicateId: string): PredicateDef;
   getCustomPredicateDefById(predicateId: string): PredicateDef;
-  predicateToString(predicate: Predicate): string;
+  predicateToString(predicate: AdaptablePredicate): string;
 
   handlePredicate(
-    predicate: Predicate,
+    predicate: AdaptablePredicate,
     params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>,
     defaultReturn: boolean
   ): boolean;

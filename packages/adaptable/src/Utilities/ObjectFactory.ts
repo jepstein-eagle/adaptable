@@ -61,8 +61,8 @@ import { IPushPullSchedule } from '../PredefinedConfig/IPushPullState';
 import { OpenFinSchedule, OpenFinReport } from '../PredefinedConfig/OpenFinState';
 import { SharedQuery } from '../PredefinedConfig/QueryState';
 import { ColumnFilter, UserFilter } from '../PredefinedConfig/FilterState';
-import { Predicate } from '../PredefinedConfig/Common/Predicate';
-import { Scope } from '../PredefinedConfig/Common/Scope';
+import { AdaptablePredicate } from '../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptableScope } from '../PredefinedConfig/Common/AdaptableScope';
 
 export function CreateEmptyCustomSort(): CustomSort {
   return { Uuid: createUuid(), ColumnId: EMPTY_STRING, SortedValues: [] };
@@ -480,8 +480,8 @@ export function CreateUserFilterFromColumnFilter(
 }
 
 export function CreateCellValidationRule(
-  scope: Scope,
-  predicate: Predicate,
+  scope: AdaptableScope,
+  predicate: AdaptablePredicate,
   actionMode: ActionMode
 ): CellValidationRule {
   return {

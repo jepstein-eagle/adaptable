@@ -2,7 +2,7 @@ import { ConfigState } from './ConfigState';
 import { AdaptableObject } from './Common/AdaptableObject';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { AdaptableFormat } from './Common/AdaptableFormat';
-import { Scope } from './Common/Scope';
+import { AdaptableScope } from './Common/AdaptableScope';
 
 /**
  * The Predefined Configuration for the `FormatColumn` function.
@@ -131,7 +131,7 @@ export interface FormatColumnState extends ConfigState {
  * The FormatColumn object used in the Format Column function.
  */
 export interface FormatColumn extends AdaptableObject {
-  Scope: Scope;
+  Scope: AdaptableScope;
 
   /**
    * The Style to apply to the Column.

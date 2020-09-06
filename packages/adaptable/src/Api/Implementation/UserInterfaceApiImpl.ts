@@ -11,7 +11,7 @@ import {
 } from '../../PredefinedConfig/UserInterfaceState';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-import { Scope } from '../../PredefinedConfig/Common/Scope';
+import { AdaptableScope } from '../../PredefinedConfig/Common/AdaptableScope';
 
 export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
   public getUserInterfaceState(): UserInterfaceState {
@@ -126,7 +126,7 @@ export class UserInterfaceApiImpl extends ApiBase implements UserInterfaceApi {
     return undefined;
   }
 
-  public setPermittedValuesItem(scope: Scope, permittedValues: string[]): void {
+  public setPermittedValuesItem(scope: AdaptableScope, permittedValues: string[]): void {
     let permittedColumnValues: PermittedValuesItem = {
       Scope: scope,
       PermittedValues: permittedValues,

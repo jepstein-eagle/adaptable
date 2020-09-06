@@ -1,4 +1,4 @@
-import { Scope } from '../../../PredefinedConfig/Common/Scope';
+import { AdaptableScope } from '../../../PredefinedConfig/Common/AdaptableScope';
 export interface WizardScopeState {
-  scope: Scope;
+  scope: AdaptableScope;
 }

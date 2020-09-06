@@ -13,8 +13,8 @@ import { DataChangedInfo } from '../../PredefinedConfig/Common/DataChangedInfo';
 import ObjectFactory from '../../Utilities/ObjectFactory';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
-import { Scope } from '../../PredefinedConfig/Common/Scope';
-import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
+import { AdaptableScope } from '../../PredefinedConfig/Common/AdaptableScope';
+import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {
@@ -140,7 +140,7 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('alert');
   }
 
-  public getPredicateDefsForScope(scope: Scope): PredicateDef[] {
+  public getPredicateDefsForScope(scope: AdaptableScope): PredicateDef[] {
     return this.getPredicateDefs().filter(predicateDef =>
       this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
     );

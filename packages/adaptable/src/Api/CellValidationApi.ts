@@ -1,6 +1,6 @@
 import { CellValidationState, CellValidationRule } from '../PredefinedConfig/CellValidationState';
-import { PredicateDef } from '../PredefinedConfig/Common/Predicate';
-import { Scope } from '../PredefinedConfig/Common/Scope';
+import { PredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptableScope } from '../PredefinedConfig/Common/AdaptableScope';
 
 export interface CellValidationApi {
   getCellValidationState(): CellValidationState;
@@ -14,5 +14,5 @@ export interface CellValidationApi {
   showCellValidationPopup(): void;
 
   getPredicateDefs(): PredicateDef[];
-  getPredicateDefsForScope(scope: Scope): PredicateDef[];
+  getPredicateDefsForScope(scope: AdaptableScope): PredicateDef[];
 }

@@ -9,7 +9,7 @@ import {
 } from '../../PredefinedConfig/FilterState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
-import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {

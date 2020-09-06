@@ -4,20 +4,20 @@ import { Flex, Box } from 'rebass';
 import Panel from '../../components/Panel';
 import HelpBlock from '../../components/HelpBlock';
 import { AdaptableApi } from '../../Api/AdaptableApi';
-import { ScopeDataType, Scope } from '../../PredefinedConfig/Common/Scope';
+import { ScopeDataType, AdaptableScope } from '../../PredefinedConfig/Common/AdaptableScope';
 import Radio from '../../components/Radio';
 import { DualListBoxEditor, DisplaySize } from './ListBox/DualListBoxEditor';
 import CheckBox from '../../components/CheckBox';
 
 export interface ScopeComponentProps extends React.ClassAttributes<ScopeComponent> {
   api: AdaptableApi;
-  scope: Scope;
-  updateScope: (scope: Scope) => void;
+  scope: AdaptableScope;
+  updateScope: (scope: AdaptableScope) => void;
 }
 
 export interface ScopeComponentState {
   ScopeChoice: 'All' | 'Column' | 'DataType';
-  componentScope: Scope;
+  componentScope: AdaptableScope;
 }
 
 export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeComponentState> {
@@ -149,7 +149,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
     );
   }
 
-  private setScopeChoice(scope: Scope): 'All' | 'Column' | 'DataType' | undefined {
+  private setScopeChoice(scope: AdaptableScope): 'All' | 'Column' | 'DataType' | undefined {
     if (!scope) {
       return undefined;
     }
@@ -170,7 +170,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
 
   private onScopeSelectChanged(event: React.FormEvent<any>) {
     let e = event.target as HTMLInputElement;
-    let newScope: Scope;
+    let newScope: AdaptableScope;
     let newScopeChoice: 'All' | 'Column' | 'DataType';
     if (e.value == 'Column') {
       newScope = {
@@ -197,7 +197,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
 
   private onColumnsSelectedChanged(columnFriendlyNames: string[]) {
     let cols = this.props.api.columnApi.getColumnIdsFromFriendlyNames(columnFriendlyNames);
-    let newScope: Scope = {
+    let newScope: AdaptableScope = {
       ColumnIds: cols,
     };
     this.setState(
@@ -222,7 +222,7 @@ export class ScopeComponent extends React.Component<ScopeComponentProps, ScopeCo
         dataTypes.splice(index, 1);
       }
     }
-    let newScope: Scope = {
+    let newScope: AdaptableScope = {
       DataTypes: dataTypes,
     };
     this.setState({ componentScope: newScope } as ScopeComponentState, () => this.forceUpdate());

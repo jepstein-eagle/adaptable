@@ -2,11 +2,11 @@ import { ApiBase } from './ApiBase';
 import { PredicateApi } from '../PredicateApi';
 import {
   PredicateDef,
-  Predicate,
+  AdaptablePredicate,
   PredicateDefHandlerParams,
   SystemPredicateDefs,
   FunctionScope,
-} from '../../PredefinedConfig/Common/Predicate';
+} from '../../PredefinedConfig/Common/AdaptablePredicate';
 import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class PredicateApiImpl extends ApiBase implements PredicateApi {
@@ -40,7 +40,7 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
     return this.getCustomPredicateDefs().find(predicateDef => predicateDef.id === predicateId);
   }
 
-  public predicateToString(predicate: Predicate): string | undefined {
+  public predicateToString(predicate: AdaptablePredicate): string | undefined {
     const predicateDef = this.getPredicateDefById(predicate.PredicateId);
     if (!predicateDef) {
       LogAdaptableWarning('Cannot find Predicate with Id:' + predicate.PredicateId);
@@ -52,7 +52,7 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
   }
 
   public handlePredicate(
-    predicate: Predicate,
+    predicate: AdaptablePredicate,
     params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>,
     defaultReturn: boolean
   ) {

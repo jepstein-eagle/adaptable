@@ -1,6 +1,6 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { Scope, ScopeDataType } from '../PredefinedConfig/Common/Scope';
+import { AdaptableScope, ScopeDataType } from '../PredefinedConfig/Common/AdaptableScope';
 
 /**
  * Provides access to a suite of column-related functions in AdapTable

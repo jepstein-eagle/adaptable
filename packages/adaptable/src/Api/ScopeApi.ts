@@ -1,29 +1,29 @@
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { DataType } from '../PredefinedConfig/Common/Enums';
-import { Scope, ScopeDataType } from '../PredefinedConfig/Common/Scope';
+import { AdaptableScope, ScopeDataType } from '../PredefinedConfig/Common/AdaptableScope';
 
 /**
  * Provides access to a suite of functions related to the `Scope` object
  */
 export interface ScopeApi {
-  isColumnInScope(column: AdaptableColumn, scope: Scope): boolean;
-  getColumnsForScope(scope: Scope): AdaptableColumn[];
+  isColumnInScope(column: AdaptableColumn, scope: AdaptableScope): boolean;
+  getColumnsForScope(scope: AdaptableScope): AdaptableColumn[];
 
-  scopeIsEmpty(scope: Scope): boolean;
-  scopeIsAll(scope: Scope): boolean;
-  scopeHasDataType(scope: Scope): boolean;
-  scopeHasColumns(scope: Scope): boolean;
-  getScopeToString(scope: Scope): string;
+  scopeIsEmpty(scope: AdaptableScope): boolean;
+  scopeIsAll(scope: AdaptableScope): boolean;
+  scopeHasDataType(scope: AdaptableScope): boolean;
+  scopeHasColumns(scope: AdaptableScope): boolean;
+  getScopeToString(scope: AdaptableScope): string;
 
-  isColumnInScopeColumns(column: AdaptableColumn, scope: Scope): boolean;
+  isColumnInScopeColumns(column: AdaptableColumn, scope: AdaptableScope): boolean;
 
-  getColumnIdsInScope(scope: Scope): string[] | undefined;
-  getDataTypesInScope(scope: Scope): ScopeDataType[] | undefined;
+  getColumnIdsInScope(scope: AdaptableScope): string[] | undefined;
+  getDataTypesInScope(scope: AdaptableScope): ScopeDataType[] | undefined;
 
-  isColumnInNumericScope(column: AdaptableColumn, scope: Scope): boolean;
-  isColumnInDateScope(column: AdaptableColumn, scope: Scope): boolean;
+  isColumnInNumericScope(column: AdaptableColumn, scope: AdaptableScope): boolean;
+  isColumnInDateScope(column: AdaptableColumn, scope: AdaptableScope): boolean;
 
-  isScopeInScope(a: Scope, b: Scope): boolean;
+  isScopeInScope(a: AdaptableScope, b: AdaptableScope): boolean;
 
-  getScopeDescription(scope: Scope): string;
+  getScopeDescription(scope: AdaptableScope): string;
 }

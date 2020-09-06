@@ -1,8 +1,8 @@
 import { ConfigState } from './ConfigState';
 import { AdaptableStyle } from './Common/AdaptableStyle';
 import { QueryObject } from './Common/QueryObject';
-import { Scope } from './Common/Scope';
-import { Predicate } from './Common/Predicate';
+import { AdaptableScope } from './Common/AdaptableScope';
+import { AdaptablePredicate } from './Common/AdaptablePredicate';
 import { TypeHint } from './Common/Types';
 
 /**
@@ -61,7 +61,7 @@ export interface ConditionalStyle extends QueryObject {
   /**
    * Where the Style is applied - can be for whole Row, some Columns or all Colunns of given DataType
    */
-  Scope: Scope;
+  Scope: AdaptableScope;
 
   Predicate?: ConditionalStylePredicate;
 
@@ -82,7 +82,7 @@ export interface ConditionalStyle extends QueryObject {
   ExcludeGroupedRows?: boolean;
 }
 
-export interface ConditionalStylePredicate extends Predicate {
+export interface ConditionalStylePredicate extends AdaptablePredicate {
   PredicateId: TypeHint<string, SystemConditionalStylePredicateId>;
 }
 

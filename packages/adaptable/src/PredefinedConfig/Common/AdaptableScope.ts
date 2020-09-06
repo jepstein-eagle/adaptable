@@ -12,4 +12,4 @@ export type ScopeColumnIds = {
   ColumnIds: string[];
 };
 
-export type Scope = ScopeAll | ScopeDataTypes | ScopeColumnIds;
+export type AdaptableScope = ScopeAll | ScopeDataTypes | ScopeColumnIds;

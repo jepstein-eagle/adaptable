@@ -2,7 +2,7 @@ import { ConfigState } from './ConfigState';
 import { BaseSchedule } from './Common/Schedule';
 import { QueryObject } from './Common/QueryObject';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
-import { Scope } from './Common/Scope';
+import { AdaptableScope } from './Common/AdaptableScope';
 
 /**
  * The Predefined Configuration for the Export function
@@ -150,7 +150,7 @@ export interface Report extends QueryObject {
    *
    * This is only required if the `ReportColumnScope` is 'ScopedColumns' or 'CustomColumns'
    */
-  Scope?: Scope;
+  Scope?: AdaptableScope;
 
   /**
    * Function that is invoked when running a Custom Report.

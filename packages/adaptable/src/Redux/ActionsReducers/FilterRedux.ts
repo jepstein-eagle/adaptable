@@ -2,7 +2,7 @@ import { FilterState, ColumnFilter, UserFilter } from '../../PredefinedConfig/Fi
 import * as Redux from 'redux';
 import { createUuid } from '../../PredefinedConfig/Uuid';
 import { InputAction } from '../../Utilities/Interface/IMessage';
-import { SystemFilterPredicateIds } from '../../PredefinedConfig/Common/Predicate';
+import { SystemFilterPredicateIds } from '../../PredefinedConfig/Common/AdaptablePredicate';
 
 // System Filter constants
 export const SYSTEM_FILTER_SET = 'SYSTEM_FILTER_SET';

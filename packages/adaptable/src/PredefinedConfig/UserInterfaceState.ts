@@ -3,7 +3,7 @@ import { AdaptableStyle } from './Common/AdaptableStyle';
 import { MenuInfo } from './Common/Menu';
 import { AdaptableColumn } from './Common/AdaptableColumn';
 import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
-import { Scope } from './Common/Scope';
+import { AdaptableScope } from './Common/AdaptableScope';
 import { AdaptableObject } from './Common/AdaptableObject';
 
 /**
@@ -502,7 +502,7 @@ export interface PermittedValuesItem extends AdaptableObject {
   /**
    * The Scope
    */
-  Scope: Scope;
+  Scope: AdaptableScope;
 
   /**
    * Hardcoded list of Permitted Values that will be shown in the Column Filter and when building a Query.
@@ -529,7 +529,7 @@ export interface EditLookUpItem {
   /**
    * Which Column(s) will show the Edit Lookup - those match Scope
    */
-  Scope: Scope;
+  Scope: AdaptableScope;
 
   /**
    * Any particular values to show in the Lookup - the list can be either hard-coded or returned by a function.

@@ -5,7 +5,7 @@ import {
   UserMenuItem,
   PermittedValuesItem,
 } from '../PredefinedConfig/UserInterfaceState';
-import { Scope } from '../PredefinedConfig/Common/Scope';
+import { AdaptableScope } from '../PredefinedConfig/Common/AdaptableScope';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 
 export interface UserInterfaceApi {
@@ -49,7 +49,7 @@ export interface UserInterfaceApi {
    * @param scope
    * @param permittedValues
    */
-  setPermittedValuesItem(scope: Scope, permittedValues: string[]): void;
+  setPermittedValuesItem(scope: AdaptableScope, permittedValues: string[]): void;
 
   /**
    * If this function is called the column will revert to default behaviour

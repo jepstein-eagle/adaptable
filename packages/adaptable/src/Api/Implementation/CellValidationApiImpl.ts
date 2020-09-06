@@ -7,8 +7,8 @@ import {
 } from '../../PredefinedConfig/CellValidationState';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { PredicateDef } from '../../PredefinedConfig/Common/Predicate';
-import { Scope } from '../../PredefinedConfig/Common/Scope';
+import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptableScope } from '../../PredefinedConfig/Common/AdaptableScope';
 
 export class CellValidationApiImpl extends ApiBase implements CellValidationApi {
   public getCellValidationState(): CellValidationState {
@@ -38,7 +38,7 @@ export class CellValidationApiImpl extends ApiBase implements CellValidationApi 
     return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('validation');
   }
 
-  public getPredicateDefsForScope(scope: Scope): PredicateDef[] {
+  public getPredicateDefsForScope(scope: AdaptableScope): PredicateDef[] {
     return this.getPredicateDefs().filter(predicateDef =>
       this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
     );

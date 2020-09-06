@@ -1,10 +1,10 @@
 import { ApiBase } from './ApiBase';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
-import { Scope, ScopeDataType } from '../../PredefinedConfig/Common/Scope';
+import { AdaptableScope, ScopeDataType } from '../../PredefinedConfig/Common/AdaptableScope';
 import { ScopeApi } from '../ScopeApi';
 
 export class ScopeApiImpl extends ApiBase implements ScopeApi {
-  public isColumnInScope(column: AdaptableColumn, scope: Scope | undefined) {
+  public isColumnInScope(column: AdaptableColumn, scope: AdaptableScope | undefined) {
     if ('All' in scope) {
       // do we need a true check here?
       return true;
@@ -21,7 +21,7 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     return false;
   }
 
-  public getColumnsForScope(scope: Scope): AdaptableColumn[] {
+  public getColumnsForScope(scope: AdaptableScope): AdaptableColumn[] {
     if (scope == undefined) {
       return [];
     }
@@ -42,7 +42,7 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     });
   }
 
-  public getScopeDescription(scope: Scope): string {
+  public getScopeDescription(scope: AdaptableScope): string {
     if (scope === undefined) {
       return 'Nothing';
     }
@@ -66,24 +66,24 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     }
   }
 
-  public scopeIsEmpty(scope: Scope): boolean {
+  public scopeIsEmpty(scope: AdaptableScope): boolean {
     return scope === undefined;
   }
-  public scopeIsAll(scope: Scope): boolean {
+  public scopeIsAll(scope: AdaptableScope): boolean {
     return scope !== undefined && 'All' in scope;
   }
-  public scopeHasDataType(scope: Scope): boolean {
+  public scopeHasDataType(scope: AdaptableScope): boolean {
     return scope !== undefined && 'DataTypes' in scope;
   }
-  public scopeHasColumns(scope: Scope): boolean {
+  public scopeHasColumns(scope: AdaptableScope): boolean {
     return scope !== undefined && 'ColumnIds' in scope;
   }
 
-  public isColumnInScopeColumns(column: AdaptableColumn, scope: Scope): boolean {
+  public isColumnInScopeColumns(column: AdaptableColumn, scope: AdaptableScope): boolean {
     return this.scopeHasColumns(scope) && this.isColumnInScope(column, scope);
   }
 
-  public getScopeToString(scope: Scope): string {
+  public getScopeToString(scope: AdaptableScope): string {
     if ('All' in scope) {
       return 'All';
     }
@@ -98,21 +98,21 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     }
   }
 
-  public getColumnIdsInScope(scope: Scope): string[] | undefined {
+  public getColumnIdsInScope(scope: AdaptableScope): string[] | undefined {
     if (scope !== undefined && 'ColumnIds' in scope) {
       return scope.ColumnIds;
     }
     return undefined;
   }
 
-  public getDataTypesInScope(scope: Scope): ScopeDataType[] | undefined {
+  public getDataTypesInScope(scope: AdaptableScope): ScopeDataType[] | undefined {
     if (scope !== undefined && 'DataTypes' in scope) {
       return scope.DataTypes;
     }
     return undefined;
   }
 
-  public isColumnInNumericScope(column: AdaptableColumn, scope: Scope): boolean {
+  public isColumnInNumericScope(column: AdaptableColumn, scope: AdaptableScope): boolean {
     // if column is not even numeric then return false
     if (column == null || column == undefined || column.DataType !== 'Number') {
       return false;
@@ -136,7 +136,7 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     return false;
   }
 
-  public isColumnInDateScope(column: AdaptableColumn, scope: Scope): boolean {
+  public isColumnInDateScope(column: AdaptableColumn, scope: AdaptableScope): boolean {
     // if column is not even numeric then return false
     if (column == null || column == undefined || column.DataType !== 'Date') {
       return false;
@@ -170,7 +170,7 @@ export class ScopeApiImpl extends ApiBase implements ScopeApi {
     ColumnIds     DataTypes     all DataTypes of ColumnIds from A should be in B
     DataTypes     ColumnIds     false
   */
-  public isScopeInScope(a: Scope, b: Scope): boolean {
+  public isScopeInScope(a: AdaptableScope, b: AdaptableScope): boolean {
     if ('All' in b) {
       return true;
     }

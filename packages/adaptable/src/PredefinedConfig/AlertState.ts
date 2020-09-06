@@ -1,7 +1,7 @@
 import { ConfigState } from './ConfigState';
 import { QueryObject } from './Common/QueryObject';
-import { Scope } from './Common/Scope';
-import { Predicate } from './Common/Predicate';
+import { AdaptableScope } from './Common/AdaptableScope';
+import { AdaptablePredicate } from './Common/AdaptablePredicate';
 import { TypeHint } from './Common/Types';
 
 /**
@@ -104,7 +104,7 @@ export interface AlertState extends ConfigState {
  * See {@link AlertState|Alert State} for how to use this object.
  */
 export interface AlertDefinition extends QueryObject {
-  Scope: Scope;
+  Scope: AdaptableScope;
 
   // perhaps later | Predicate[]; // think about an array ... // ANDs  // later
   Predicate?: AlertDefinitionPredicate;
@@ -131,7 +131,7 @@ export interface AlertDefinition extends QueryObject {
   AlertProperties?: AlertProperties;
 }
 
-export interface AlertDefinitionPredicate extends Predicate {
+export interface AlertDefinitionPredicate extends AdaptablePredicate {
   PredicateId: TypeHint<string, SystemAlertPredicateId>;
 }
 

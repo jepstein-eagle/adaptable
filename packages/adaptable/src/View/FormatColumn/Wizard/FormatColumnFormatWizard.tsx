@@ -15,7 +15,7 @@ import CheckBox from '../../../components/CheckBox';
 import FormatHelper from '../../../Utilities/Helpers/FormatHelper';
 import FormLayout, { FormRow } from '../../../components/FormLayout';
 import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
-import { Scope } from '../../../PredefinedConfig/Common/Scope';
+import { AdaptableScope } from '../../../PredefinedConfig/Common/AdaptableScope';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
 import { uniq } from 'lodash';
@@ -289,7 +289,7 @@ export class FormatColumnFormatWizard
     this.setState({ DisplayFormat });
   }
 
-  getFormatDisplayTypeForScope(scope: Scope): 'Number' | 'Date' | undefined {
+  getFormatDisplayTypeForScope(scope: AdaptableScope): 'Number' | 'Date' | undefined {
     if (scope == undefined) {
       return undefined;
     }

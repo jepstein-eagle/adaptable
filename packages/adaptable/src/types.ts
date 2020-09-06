@@ -21,15 +21,15 @@ export { SelectedCellInfo } from './PredefinedConfig/Selection/SelectedCellInfo'
 export { SelectedRowInfo } from './PredefinedConfig/Selection/SelectedRowInfo';
 export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
 export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
-export { Scope } from './PredefinedConfig/Common/Scope';
+export { AdaptableScope as Scope } from './PredefinedConfig/Common/AdaptableScope';
 export {
-  Predicate,
+  AdaptablePredicate as Predicate,
   PredicateDef,
   PredicateDefInput,
   PredicateDefHandlerParams,
   PredicateDefToStringParams,
   FunctionScope,
-} from './PredefinedConfig/Common/Predicate';
+} from './PredefinedConfig/Common/AdaptablePredicate';
 export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';
 export { GridRow } from './PredefinedConfig/Selection/GridRow';

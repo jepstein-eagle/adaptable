@@ -19,7 +19,7 @@ import SimpleButton from '../../../components/SimpleButton';
 import { Icon } from '../../../components/icons';
 import { Flex, Box } from 'rebass';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
-import { PredicateDef } from '../../../PredefinedConfig/Common/Predicate';
+import { PredicateDef } from '../../../PredefinedConfig/Common/AdaptablePredicate';
 import { IAdaptable } from '../../../types';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
