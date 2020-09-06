@@ -32,11 +32,11 @@ Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
 
 The `floatingFilter` property is deprecated in gridOptions - you now have to specify it at column level (or in a default column definition).  
 
-Consequently, AdapTable will only show the Quick Filter bar **if at least one column** has this set to true (and will activate it only for those columns).
+Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and will activate it only for those columns).
 
 ### Themes
 
-ag-Grid have introduced a new _Alpine_ theme which has necessitated some slight changes to AdapTable theming:
+ag-Grid introduced a new _Alpine_ theme which has necessitated some slight changes to AdapTable theming:
 
 * If using a dark theme, make sure to specify your theme in your html, on the grid container element - it should be either `ag-theme-alpine` or `ag-theme-balham` (since they are the only themes that have a dark variant).  AdapTable will detect this theme, and apply the corresponding dark theme.
 
@@ -52,9 +52,9 @@ In Version 7 Layouts have had a makeover.  The main changes are:
 
 * If no Layouts are provided in Predefined Config a 'Default Layout' will be created by AdapTable using the column settings in GridOptions; this too will be saved automatically as changes are made.
 
-  > The `layoutOptions.createDefaultLayout` property can be set to tell AdapTable to provide a default layout even if other layouts exist
+  > Set `layoutOptions.createDefaultLayout` property to `true` for AdapTable to provide a default layout even if other layouts exist
 
-* This means that there must always be at least one Layout at any time
+* This means that there must always be at least one Layout at any time - AdapTable will prevent the last layout from being deleted.
 
 * The previous (confusing) multi-step Layout wizard has been replaced by a single screen which allows the User to set column visibility, order sorting, grouping, aggregation and pivoting.
 
@@ -76,9 +76,7 @@ Now AdapTable uses an internally-built parser to create the Expression which bri
 
 * Formatting has been decoupled from the Calculated Column Expression (which is just a parsed function) and instead this can be done through the improved [Format Column Function](../functions/format-column-function.md) - exactly the same way as it is for other columns.
 
-**This is a breaking change**.
-
-The required syntax is very similar to previous versions of AdapTable, and in most cases existing Calculated Columns will just run normally; however this cannot be guaranteed, particularly if they were using some of the more estoric features of math.js or its formatting.
+**This is a breaking change**:  the required syntax is similar to the previous version so in most cases existing Calculated Columns will run normally; however this cannot be guaranteed, particularly if some of the more estoric features of math.js or its formatting were being used.
 
 > One effect of this change is that the download size of AdapTable has been greatly reduced as the math.js folder was the single largest element in the downloaded package.
 
@@ -86,13 +84,15 @@ For more information see the [Calculated Column ReadMe](../functions/calculated-
 
 ## Queries
 
-Version 7 introduces the `Query` - a very powerful Expression that returns a Boolean (true/false) value.  It has a number of important features:
+Version 7 introduces the `Query` - a very powerful Expression that returns a Boolean (true/false) value.  
+
+Queries have a number of important features:
 
 * They can be written by hand as the syntax is very succint and easy to learn
 
-* Alternatively they can be created by using the Expression Editor - the smae as used for `CalculatedColumn` - as they both use the same underlying parser.
+* Alternatively they can be created by using the Expression Editor - the smae as used for `CalculatedColumn` (as they both use the same underlying parser).
 
-* They can also be **shared** - meaning the same Query can be searched for, used in a report or form part of a Conditional Style.
+* They can also be **shared** - via the `SharedQueries` property in Query state.  This allows the same Query to be the `CurrentQuery` (for Search), to be used in a report or to form part of a Conditional Style.
   
 * The `AdvancedSearch` function has been replaced by `CurrentQuery` which will run (and save) any query as a search.
 
@@ -102,27 +102,27 @@ For more information see the [Query ReadMe](../functions/query-function.md)
 
 Filtering has had a huge makeover in Version 7 including:
 
-* The 4 previous Filter functions (System, User, Column and Named) have been into one `Filter` object to reduce confusion
+* The 4 previous Filter functions (System, User, Column and Named) have been merged into one `Filter` object.
 
-* The Filter Dropdown and Quick Filter bar UI have been heavily updated and are both now fully in sync - so the same Filter can be entered (and be reflected) in each.
+* The Filter Dropdown and Quick Filter UI have been heavily updated and are both now fully in sync - so the same Filter can be entered (and be reflected) in each.
 
-* Both will create a Column Filter.  This now contains only a single `Predicate` (see below for more details) - though that can include the 'In' predicate to filter on multiple values.
+* Both will create a Column Filter.  This now contains only a single `Predicate` (see below for more details) - though that can include the 'IN' predicate to filter on multiple values.
 
-* Developers can easily provide their own Column Filters at design-time through a much improved syntax
+* Developers can easily provide their own Custom Filters at design-time through a much improved syntax
 
 * Wildcards can still be used in the Quick Filter bar (but are now less needed due to the improved UI).
 
 For more information see the [Filter ReadMe](../functions/filter-function.md)
 
-## New Types
+## Predicates and Scope
 
-2 important new objects have been introduced in AdapTable to promote object re-use and provide greater flexibility:
+2 important new types have been introduced in AdapTable to promote object re-use and provide greater flexibility:
 
 ### Predicate
 
 A type that returns a boolean value.  It incudes a 'handler' function that will run each time the predicate is required.  
 
-Developers can easily provide their own Predicates at DesignTime via the `customPredicateDefs` property of Adaptable Options.
+Developers can create their own Predicates at DesignTime via the `customPredicateDefs` property of Adaptable Options.
 
 A predicate can be used in as many of the following functions as required:
 
@@ -133,7 +133,7 @@ A predicate can be used in as many of the following functions as required:
 
 ### Scope
 
-Designed to state **where** an object or function can be applied.  It has 3 main values:
+Specifies **where** an object or function can be applied.  It has 3 main values:
 
 * All (i.e. everywhere)
 * Column(s)
@@ -147,6 +147,8 @@ The Scope object has been included in a number of functions including:
 * Cell Validation
 * Reports - which columns to include
 * Permitted Column Values
+
+This means that it is now possible to create a Conditional Style for all Numeric columns (e.g. Green Font for Positive values) with a single step.
 
 ## Percent Bar Improvements
 
@@ -164,9 +166,9 @@ For full information on all these changes see the [Percent Bar ReadMe](../functi
 
 ## New 'Partner' plugins
 
-The move of 'non-core functionality' out of the main package and into Plugins contains in Version 7. 
+The transfer of 'non-core functionality' out of the main package and into Plugins contains in Version 7.
 
-This enables a reduction in the size of the core package and allows users to choose just those additional plugins which meet their requirements.
+This enables a reduction in the size of the core package and allows users to select just those plugins which meet their requirements.
 
 4 new plugins have been created which contain bespoke functionality for specific AdapTable partners:
 
@@ -183,6 +185,10 @@ In each case any configuration that was previously stored in the relevant partne
 For example to use the ipushpull plugin something like this might be provided:
 
 ```ts
+......
+import ipp from '@adaptabletools/adaptable-plugin-ipushpull';
+......
+
 const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
@@ -225,7 +231,7 @@ To use this functionality you need to use the new `master-detail-aggrid` Plugin 
 
 In order to work seamlessly with agGrid 23, the React Wrapper was updated.
 
-This provides a quick summary of the changes - for fuller information see the [React Wrapper Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
+Below is a quick summary of the changes - for fuller information see the [React Wrapper Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-react-aggrid/README.md):
 
 * The `<AgGridReact>` component now needs to be rendered explicitly.  Note: although most ag-grid properties can be passed into the component via props, **you have to make sure you pass the `gridOptions` object** as a prop to the `<AgGridReact>` component
 
@@ -276,7 +282,7 @@ import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src
 
 In order to work seamlessly with ag-Grid 23, the Angular Wrapper was also updated.
 
-Here is a quick summary of the changes (for full information see the [Angular Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-ng-aggrid/README.md))
+Below is a quick summary of the changes (for full information see the [Angular Wrapper](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable-ng-aggrid/README.md))
 
  * The`<ag-grid-angular>` component needs to be provided explicitly.  Although most ag-grid properties can be passed into the component via inputs, **you have to make sure you pass the `"gridOptions"` object** as an input to the `<ag-grid-angular>` component.  The ag-Grid theme is set via the `class` property.
 
@@ -368,15 +374,15 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * Another consequence is `searchOptions.serverSearchOption` has been renamed to `serverSearchOptions` and become an array (which can take 'Query', 'Filter' or 'Sort')
 
-* `Alert`, `CellValidation` and `ConditionalStyle` now require a Predicate (see above)
+* **Alert**, **CellValidation** and **ConditionalStyle** now require a Predicate (see above)
 
 * The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**
 
-* Export now allows for CustomReports to be created; a function provided by the user is called when the Report is run.
+* **Export** now allows for CustomReports to be created; a function provided by the user is called when the Report is run.
 
 * The `--ab-cmp-field-wrap__border-radius` css variable has been added
 
-* All UI elements now include semantic class names to provide easier custom styling
+* All UI elements now include **semantic class names** to provide easier custom styling
 
 ## Demo
 
