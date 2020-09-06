@@ -2,7 +2,7 @@
 
 Version 7 of AdapTable was released in September 2020.
 
-This is a **major release** (primarily to cater for changes in the new ag-Grid version) and therefore contains some **breaking changes**.
+This was a **major release** (primarily to cater for changes in the new ag-Grid version) and therefore contained some **breaking changes**.
 
 Details of all the changes are listed here - for more detailed information with examples see the relevant 'Read Me' for that function.
 
@@ -12,17 +12,17 @@ These are the main updates to AdapTable in Version 7:
 
 * Support for latest ag-Grid Version (23) including Alpine theme
 * Changes to `Layout` (and a new UI) so they get saved automatically
-* New syntax and UI for 'Expressions' - used in `Calculated Column` and new `Query` function
-* Powerful new `Query` expression - that can be shared across AdapTable functions (and replaces Advanced Search)
-* Previous 4 filter-related functions moved into one `Filter` function
+* Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column` 
+* Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)
+* Previous 4 filter-related functions merged into one `Filter` function
 * New `Predicate` and `Scope` types - used in multiple functions
 * Improvements to `PercentBar` to enable Ranges
 * New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble
 * Support for Master / Detail grids
 * Framework Wrapper improvements
-* A new asynchrononus static constructor has been provided
-* Schedule-related state consolidated in one object
-* Smaller state changes and new CSS Variables
+* A new asynchrononus static constructor
+* All Schedule-related state consolidated into one object
+* Other minor state changes and new CSS Variables
 
 ## Support for ag-Grid Version 23
 
@@ -90,7 +90,7 @@ Queries have a number of important features:
 
 * They can be written by hand as the syntax is very succint and easy to learn
 
-* Alternatively they can be created by using the Expression Editor - the smae as used for `CalculatedColumn` (as they both use the same underlying parser).
+* Alternatively they can be created by using the Expression Editor - the same as used for `CalculatedColumn` (as they both use the same underlying parser).
 
 * They can also be **shared** - via the `SharedQueries` property in Query state.  This allows the same Query to be the `CurrentQuery` (for Search), to be used in a report or to form part of a Conditional Style.
   
@@ -374,7 +374,7 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * Another consequence is `searchOptions.serverSearchOption` has been renamed to `serverSearchOptions` and become an array (which can take 'Query', 'Filter' or 'Sort')
 
-* **Alert**, **CellValidation** and **ConditionalStyle** now require a Predicate (see above)
+* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` and include `Scope` (see above)
 
 * The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**
 
