@@ -80,6 +80,4 @@ Yes it does. Like Column Filters, Quick Search is reapplied as data changes.
 
 - [Quick Search Demo](https://demo.adaptabletools.com/search/aggridquicksearchdemo)
 
-- [Filtering Guide](../guides/adaptable-filtering-guide.md)
-
 - [Server Functionality Guide](../guides/adaptable-server-functionality-guide.md)

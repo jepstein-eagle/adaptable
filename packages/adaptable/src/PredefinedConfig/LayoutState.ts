@@ -83,15 +83,6 @@ export interface LayoutState extends ConfigState {
    * **Default Value**:  Empty array
    */
   Layouts?: Layout[];
-
-  /**
-   * Whether a Default Layout will be created **in addition to Layouts provided in Predefined Config**
-   *
-   * Note: If there are no Layouts in Predefined Config then the default layout will be created anyway and this property will be ignored.
-   *
-   * **Default Value**: false
-   */
-  CreateDefaultLayout?: boolean;
 }
 
 /**

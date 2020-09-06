@@ -1,4 +1,4 @@
-import { Scope, FunctionScope } from './Scope';
+import { Scope } from './Scope';
 import { AdaptableColumn } from './AdaptableColumn';
 import { AdaptableApi } from '../../types';
 import Helper from '../../Utilities/Helpers/Helper';
@@ -44,6 +44,7 @@ export interface PredicateDefHandlerParams {
   value: any;
   oldValue: any;
   displayValue: any;
+  node: any;
   inputs: any[];
   column: AdaptableColumn;
   api: AdaptableApi;
@@ -52,6 +53,8 @@ export interface PredicateDefHandlerParams {
 export interface PredicateDefToStringParams {
   inputs: any[];
 }
+
+export type FunctionScope = 'filter' | 'alert' | 'validation' | 'conditionalstyle';
 
 ////
 

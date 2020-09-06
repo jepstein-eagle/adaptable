@@ -99,7 +99,7 @@ export interface SearchOptions {
    * **Default Value: undefined**
    *
    */
-  serverSearchOption?: ServerSearchOptions;
+  serverSearchOptions?: ServerSearchOptions;
 
   /**
    * Whether to clear all searches when AdapTable loads.
@@ -115,4 +115,4 @@ export interface SearchOptions {
 
 export type ServerSearchOptions = ServerSearchOption[];
 
-export type ServerSearchOption = 'Query' | 'ColumnFilter' | 'Sort';
+export type ServerSearchOption = 'Query' | 'Filter' | 'Sort';

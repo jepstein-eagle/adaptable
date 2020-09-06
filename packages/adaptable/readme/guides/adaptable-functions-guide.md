@@ -34,13 +34,13 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | [Calendar](../functions/calendar-function.md)                    | No     | No      | No         | No          | No           |
 | [Cell Summary](../functions/cell-summary-function.md)            | No     | Yes     | Yes        | No          | Yes          |
 | [Cell Validation](../functions/cell-validation-function.md)      | Yes    | No      | No         | Yes         | No           |
-| [Column Filter](../functions/column-filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
 | [Column Info](../functions/column-info-function.md)              | No     | No      | No         | Yes         | Yes          |
 | [Conditional Style](../functions/conditional-style-function.md)  | Yes    | No      | No         | Yes         | No           |
 | [Custom Sort](../functions/custom-sort-function.md)              | Yes    | No      | No         | Yes         | No           |
 | [Dashboard](../functions/dashboard-function.md)                  | No     | No      | Yes        | Yes         | No           |
 | [Data Source](../functions/data-source-function.md)              | Yes    | Yes     | Yes        | No          | No           |
 | [Export](../functions/export-function.md)                        | Yes    | Yes     | Yes        | No          | No           |
+| [Filter](../functions/filter-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
 | [Flashing Cell](../functions/flashing-cell-function.md)          | No     | No      | No         | Yes         | No           |
 | [Format Column](../functions/format-column-function.md)          | Yes    | No      | No         | Yes         | No           |
 | [FreeText Column](../functions/freetext-column-function.md)     | Yes    | No      | No         | Yes         | No           |
@@ -58,7 +58,6 @@ Click on a link to go to a dedicated ReadMe for that AdapTableFunction.
 | [System Status](../functions/system-status-function.md)          | No     | Yes     | Yes        | Yes         | Yes          |
 | [Theme](../functions/theme-function.md)                          | No     | Yes     | Yes        | No          | No           |
 | [Updated Row](../functions/updated-row-function.md)              | No     | No      | No         | Yes         | Yes          |
-| [User Filter](../functions/user-filter-function.md)              | Yes    | No      | No         | Yes         | No           |
 
 ### Chart AdapTableFunctions (plugin)
 

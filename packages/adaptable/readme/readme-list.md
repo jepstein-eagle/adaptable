@@ -21,8 +21,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Theming and Styling Guide](./guides/adaptable-theming-guide.md)
 - [Entitlements Guide](./guides/adaptable-entitlements-guide.md)
 - [Adaptable State Guide](./guides/adaptable-state-guide.md)
-- [Filtering Guide](./guides/adaptable-filtering-guide.md)
-- [Adaptable Expression Guide](./guides/adaptable-expression-guide.md)
 - [Run Time Access Guide](./guides/adaptable-runtime-access-guide.md)
 - [AdapableFunction Guide](./guides/adaptable-functions-guide.md)
 - [Audit Log Guide](./guides/adaptable-audit-log-guide.md)
@@ -51,13 +49,13 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Calendar](./functions/calendar-function.md)
 - [Cell Summary](./functions/cell-summary-function.md)
 - [Cell Validation](./functions/cell-validation-function.md)
-- [Column Filter](./functions/column-filter-function.md)
 - [Column Info](./functions/column-info-function.md)
 - [Conditional Style](./functions/conditional-style-function.md)  
 - [Custom Sort](./functions/custom-sort-function.md)
 - [Dashboard](./functions/dashboard-function.md)
 - [Data Source](./functions/data-source-function.md)  
 - [Export](./functions/export-function.md)  
+- [Filter](./functions/filter-function.md)
 - [Flashing Cell](./functions/flashing-cell-function.md)
 - [Format Column](./functions/format-column-function.md)
 - [FreeText Column](./functions/freetext-column-function.md)
@@ -75,7 +73,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [System Status](./functions/system-status-function.md)
 - [Theme](./functions/theme-function.md)
 - [Updated Row](./functions/updated-row-function.md)
-- [User Filter](./functions/user-filter-function.md)
 
 ### Charting Functions
 

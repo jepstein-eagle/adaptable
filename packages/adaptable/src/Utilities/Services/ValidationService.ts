@@ -203,6 +203,7 @@ export class ValidationService implements IValidationService {
           dataChangedEvent.ColumnId,
           CellValueType.DisplayValue
         ),
+        node: dataChangedEvent.RowNode,
         column,
       },
       false

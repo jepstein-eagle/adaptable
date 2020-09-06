@@ -2760,8 +2760,8 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.doesExternalFilterPass = (node: RowNode) => {
       // first we assess Query (if its running locally)
       if (
-        this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
-        this.adaptableOptions!.searchOptions!.serverSearchOption.includes('Query')
+        this.adaptableOptions!.searchOptions!.serverSearchOptions != undefined &&
+        this.adaptableOptions!.searchOptions!.serverSearchOptions.includes('Query')
       ) {
         return true;
       } else {
@@ -2783,8 +2783,8 @@ export class Adaptable implements IAdaptable {
       // we then assess filters
       if (
         this.gridOptions.columnApi.isPivotMode() || //TODO fix properly - loading directly a pivot layout when we have a column filter it breaks aggrid
-        (this.adaptableOptions!.searchOptions!.serverSearchOption != undefined &&
-          this.adaptableOptions!.searchOptions!.serverSearchOption.includes('ColumnFilter'))
+        (this.adaptableOptions!.searchOptions!.serverSearchOptions != undefined &&
+          this.adaptableOptions!.searchOptions!.serverSearchOptions.includes('Filter'))
       ) {
         return true;
       } else {

@@ -56,6 +56,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     autoSaveLayouts: true,
     autoSizeColumnsInLayout: false,
     autoSizeColumnsInPivotLayout: false,
+    createDefaultLayout: false,
   },
   filterOptions: {
     indicateFilteredColumns: true,
@@ -95,7 +96,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     showGroupingTotalsAsHeader: false,
   },
   searchOptions: {
-    serverSearchOption: undefined,
+    serverSearchOptions: undefined,
     clearSearchesOnStartUp: false,
   },
   userInterfaceOptions: {

@@ -67,7 +67,7 @@ class FilterToolbarControlComponent extends React.Component<
               marginLeft={1}
               className="ab-DashboardToolbar__Filter__clear"
               onClick={() => this.onClearFilters()}
-              tooltip="Clear Column Filters"
+              tooltip="Clear Filters"
               disabled={this.props.ColumnFilters.length == 0}
               accessLevel={this.props.accessLevel}
             />

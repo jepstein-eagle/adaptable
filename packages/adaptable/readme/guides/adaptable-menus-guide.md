@@ -39,7 +39,7 @@ The full list (as of July 2020) is:
 | Hide Column                  | [Layout](../functions/layout-function.md)                       | All                   |
 | Select Column                | [Layout](../functions/layout-function.md)                       | All                   |
 | Show / Hide Quick Filter Bar | [Column Filter](../functions/column-filter-function.md)         | All                   |
-| Clear Column Filter          | [Column Filter](../functions/column-filter-function.md)         | Currently Filtered    |
+| Clear Filter                 | [Column Filter](../functions/filter-function.md)                | Currently Filtered    |
 | Column Info                  | [Column Info](../functions/column-info-function.md)             | All                   |
 | Create Conditional Style     | [Conditional Style](../functions/conditional-style-function.md) | All                   |
 | New / Edit Custom Sort       | [Custom Sort](../functions/custom-sort-function.md)             | All                   |
@@ -54,7 +54,6 @@ The full list (as of July 2020) is:
 | New Plus Minus Rule          | [Plus Minus](../functions/plus-minus-function.md)               | Numeric               |
 | Show System Status           | [System Status](../functions/system-status-function.md)         | All                   |
 | Clear Updated Rows           | [Updated Row](../functions/updated-row-function.md)             | All (if updated rows) |
-| Create User Filter           | [User Filer](../functions/user-filter-function.md)              | All                   |
 
 If running the [Chart Plugin](../../../plugins/charts/README.md) the following Column Menu Entries are also available:
 

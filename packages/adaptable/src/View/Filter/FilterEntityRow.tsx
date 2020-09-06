@@ -43,7 +43,7 @@ export class FilterEntityRow extends React.Component<FilterEntityRowProps<Filter
         />
         <ButtonClear
           onClick={() => this.props.onClear(this.props.columnFilter)}
-          tooltip="Clear Column Filter"
+          tooltip="Clear Filter"
           disabled={this.props.columnFilter == null}
           accessLevel={this.props.accessLevel}
         />

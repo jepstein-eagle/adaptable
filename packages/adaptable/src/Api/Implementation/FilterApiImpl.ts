@@ -181,6 +181,7 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
         value,
         oldValue: null,
         displayValue,
+        node,
         column,
       },
       true

@@ -21,7 +21,7 @@ import { TypeHint } from './Common/Types';
  *
  * {@link FilterApi| Filter API}
  *
- * [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ * [Filter ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
  *
  * --------------
  *

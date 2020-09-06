@@ -44,7 +44,7 @@ export class FilterSummaryComponent extends React.Component<
       <ButtonClear
         marginLeft={1}
         onClick={() => this.props.onClearFilter(columnFilter)}
-        tooltip="Clear Column Filter"
+        tooltip="Clear Filter"
         disabled={columnFilter == null}
         accessLevel={this.props.accessLevel}
       />

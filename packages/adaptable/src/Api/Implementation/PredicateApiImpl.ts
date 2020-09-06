@@ -5,8 +5,8 @@ import {
   Predicate,
   PredicateDefHandlerParams,
   SystemPredicateDefs,
+  FunctionScope,
 } from '../../PredefinedConfig/Common/Predicate';
-import { FunctionScope } from '../../PredefinedConfig/Common/Scope';
 import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class PredicateApiImpl extends ApiBase implements PredicateApi {

@@ -76,7 +76,7 @@ export class FilterStrategy extends AdaptableStrategyBase implements IFilterStra
       if (existingColumnFilter) {
         baseMenuItems.push(
           this.createColumnMenuItemReduxAction(
-            'Clear Column Filter',
+            'Clear Filter',
             StrategyConstants.FilterGlyph,
             FilterRedux.ColumnFilterClear(existingColumnFilter)
           )

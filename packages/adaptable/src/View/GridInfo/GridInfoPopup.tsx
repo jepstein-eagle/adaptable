@@ -632,8 +632,8 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     returnRows.push(
       this.createColItem(
         colItems,
-        'serverSearchOption',
-        options.searchOptions.serverSearchOption,
+        'serverSearchOptions',
+        options.searchOptions.serverSearchOptions,
         'Which searching and filtering options, if any, are taking place on the server.'
       )
     );

@@ -204,8 +204,6 @@ These include:
 * [AdapTable Getting Started Guide](./packages/adaptable/readme/guides/adaptable-getting-started-guide.md)
 * [AdapTable Theming and Styling Guide](./packages/adaptable/readme/guides/adaptable-theming-guide.md)
 * [AdapTable State Guide](./packages/adaptable/readme/guides/adaptable-state-guide.md)
-* [AdapTable Filtering Guide](./packages/adaptable/readme/guides/adaptable-filtering-guide.md)
-* [AdapTable Expression Guide](./packages/adaptable/readme/guides/adaptable-expression-guide.md)
 * [AdapTable Functions Guide](./packages/adaptable/readme/guides/adaptable-functions-guide.md)
 * [AdapTable ag-Grid Guide](./packages/adaptable/readme/guides/adaptable-aggrid-guide.md)
 * [Plugins](./packages/plugins/README.md)

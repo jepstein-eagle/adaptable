@@ -61,7 +61,7 @@ export class ActiveFiltersPanel extends React.Component<ActiveFiltersPanelProps,
 
         <ButtonClear
           onClick={() => this.props.onClear(columnFilter)}
-          tooltip="Clear Column Filter"
+          tooltip="Clear Filter"
           disabled={columnFilter == null}
           accessLevel={this.props.accessLevel}
         />

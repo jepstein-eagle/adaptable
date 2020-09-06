@@ -28,6 +28,7 @@ export {
   PredicateDefInput,
   PredicateDefHandlerParams,
   PredicateDefToStringParams,
+  FunctionScope,
 } from './PredefinedConfig/Common/Predicate';
 export { Schedule } from './PredefinedConfig/Common/Schedule';
 export { GridCell } from './PredefinedConfig/Selection/GridCell';

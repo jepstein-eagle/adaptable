@@ -2,8 +2,8 @@ import {
   PredicateDef,
   Predicate,
   PredicateDefHandlerParams,
+  FunctionScope,
 } from '../PredefinedConfig/Common/Predicate';
-import { FunctionScope } from '../PredefinedConfig/Common/Scope';
 
 export interface PredicateApi {
   getPredicateDefs(): PredicateDef[];

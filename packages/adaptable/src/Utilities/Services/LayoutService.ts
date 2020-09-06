@@ -53,7 +53,8 @@ export class LayoutService implements ILayoutService {
       return acc;
     }, {} as { [key: string]: AdaptableColumn });
 
-    let shouldCreateDefaultLayout = layoutState.CreateDefaultLayout;
+    let shouldCreateDefaultLayout = this.adaptable.api.internalApi.getAdaptableOptions()
+      .layoutOptions.createDefaultLayout;
 
     if (!layoutState.Layouts || !layoutState.Layouts.length) {
       shouldCreateDefaultLayout = true;

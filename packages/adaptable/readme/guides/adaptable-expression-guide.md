@@ -36,8 +36,7 @@ There are 3 types of Criteria in a Condition:
 
   The filter options visible will differ depending on the datatype of the column. 
 
-  See the [Filter ReadMe](./adaptable-filtering-guide.md) for more information.
-
+ 
 - **Ranges**. These are small expressions that you create via the Add Range button. Each Range consists of an Operator and an Operand. An Operand can be either a value (e.g. > 32) or another Column (> 'Bid'). 
 
   > You can use multiple ranges in your query. When you have defined one range, click the Add Range Entry button to add another.

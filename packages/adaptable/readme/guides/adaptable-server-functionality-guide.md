@@ -139,7 +139,7 @@ The property is an array that can take any combination of these 3 values:
 
 - **Query** - runs the [`Query` Function](../functions/query-function.md) on the server.
 
-- **ColumnFilter** - enables a [Column Filter](../functions/column-filter-function.md) to be run on the server
+- **Filter** - enables a [Filter](../functions/filter-function.md) to be run on the server
 
 - **Sort** - allows a sort to take place on the server (presumably to return a new Dataset)
 

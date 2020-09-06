@@ -150,6 +150,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         oldValue: dataChangedEvent.OldValue,
         // TODO send real display value
         displayValue: null,
+        node: dataChangedEvent.RowNode,
         column: this.adaptable.api.columnApi.getColumnFromId(dataChangedEvent.ColumnId),
       },
       false

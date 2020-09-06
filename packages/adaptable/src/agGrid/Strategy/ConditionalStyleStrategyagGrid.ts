@@ -107,6 +107,7 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           column.ColumnId,
           CellValueType.DisplayValue
         ),
+        node: node,
         column: column,
       },
       false
