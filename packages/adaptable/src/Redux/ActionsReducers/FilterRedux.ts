@@ -110,9 +110,7 @@ export const CreateUserFilterFromColumnFilter = (
 
 const initialFilterState: FilterState = {
   SystemFilters: SystemFilterPredicateIds as any,
-  FilterPredicates: [],
   ColumnFilters: [],
-  //  UserFilters: [],
 };
 
 export const FilterReducer: Redux.Reducer<FilterState> = (

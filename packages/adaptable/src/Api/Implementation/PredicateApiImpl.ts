@@ -1,7 +1,7 @@
 import { ApiBase } from './ApiBase';
 import { PredicateApi } from '../PredicateApi';
 import {
-  PredicateDef,
+  AdaptablePredicateDef,
   AdaptablePredicate,
   PredicateDefHandlerParams,
   SystemPredicateDefs,
@@ -22,21 +22,21 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
     return this.adaptable.adaptableOptions.customPredicateDefs;
   }
 
-  public getPredicateDefsByFunctionScope(functionScope: FunctionScope): PredicateDef[] {
+  public getPredicateDefsByFunctionScope(functionScope: FunctionScope): AdaptablePredicateDef[] {
     return this.getPredicateDefs().filter(p => p.functionScope.includes(functionScope));
   }
 
-  public getPredicateDefById(predicateId: string): PredicateDef {
+  public getPredicateDefById(predicateId: string): AdaptablePredicateDef {
     return (
       this.getSystemPredicateDefById(predicateId) ?? this.getCustomPredicateDefById(predicateId)
     );
   }
 
-  public getSystemPredicateDefById(predicateId: string): PredicateDef {
+  public getSystemPredicateDefById(predicateId: string): AdaptablePredicateDef {
     return this.getSystemPredicateDefs().find(predicateDef => predicateDef.id === predicateId);
   }
 
-  public getCustomPredicateDefById(predicateId: string): PredicateDef {
+  public getCustomPredicateDefById(predicateId: string): AdaptablePredicateDef {
     return this.getCustomPredicateDefs().find(predicateDef => predicateDef.id === predicateId);
   }
 

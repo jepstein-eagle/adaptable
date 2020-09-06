@@ -82,7 +82,7 @@ export interface FilterState extends ConfigState {
    * If this property is not set then **all** the system filters are available.
    */
   SystemFilters?: SystemFilterPredicateIds;
-  FilterPredicates?: string[];
+
   ColumnFilters?: ColumnFilter[];
 
   // not sure about this?  Seems like a good idea but perhaps not

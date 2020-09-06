@@ -7,7 +7,7 @@ import {
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableColumn, Scope } from '../../types';
-import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 
 export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {
@@ -69,11 +69,11 @@ export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyle
     return conditionalStyles.filter(fc => this.adaptable.api.scopeApi.scopeHasColumns(fc.Scope));
   }
 
-  public getPredicateDefs(): PredicateDef[] {
+  public getPredicateDefs(): AdaptablePredicateDef[] {
     return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('conditionalstyle');
   }
 
-  public getPredicateDefsForScope(scope: Scope): PredicateDef[] {
+  public getPredicateDefsForScope(scope: Scope): AdaptablePredicateDef[] {
     return this.getPredicateDefs().filter(predicateDef =>
       this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
     );

@@ -2,156 +2,153 @@
 
 The Filter Function facilitates the creation of powerful, dynamic filters for any column in AdapTable.
 
-> AdapTable provides a way for users to see at a glance which columns have filters applied to them, together with an option to clear them.
-
 Filtering is designed to be intuitive and easy to use, but that simplicity of use 'hides' a great deal of complexity in terms of the filtering options and functonalities on offer.
+
+Users can create Filters for as many Columns as required and the grid will automatically update so that it only shows rows that match the filters set for the column.
 
 ## Predicate
 
-A filter is a Predicate
+A Filter is essentially a **single** `AdaptablePredicate` - an object which wraps a boolean function.
 
-There are 2 UI 'controls' which provide filtering capabilities in AdapTable:
+> In earlier versions of AdapTable a ColumnFilter could have multiple criteria but this was reduced to a single Predicate in Version 7 with the parallel introduction of the [Query](query-function.md) - that facilitated multiple conditions with 'AND' and 'OR' support.
 
-- **Filter Dropdown**:  This powerful control allow you to buld very complex Column-based filters entirelly through the UI.
+This object contains a number of properties of which the most important are:
 
-- **Quick Filter Bar**:  The textbox that is displayed in the row between the Column Header and the first data row in the grid - allows Filters to be created through text entry.
+* `Scope` - where the Filter can be applied, i.e. to one, some or all columns or to columns of a particular DataType(s).
 
-Both controls update the same [FilterState](../../src/PredefinedConfig/FilterState.ts) section in AdaptableState.
+* `handler` - the boolean function to run when the filter is applied.
 
-## Column Filter Component
+* `inputs` - blah lah (Talk about teh IN / Values here)
 
-Each column in Adaptable - which is marked as filterable - will have Column Filter Component to enable quick filter selection.
 
-The Component can appear in 2 places:
+## Filter State
 
-1. In the dropdown which appears when you click the filter icon in any Column Header, or if you select the Filter tab in the Column Header Menu.
+The [Filter](../../src/PredefinedConfig/FilterState.ts)  section of Adaptable State (and Predefined Config) has 2 collections:
+
+* **System Filters** - in-build Predicates shipped by AdapTable in order to pre-populate the filter UI (see full list in Appendix 1).  
+
+    > You can use the `SystemFilters` property of FilterState to limit which System Predicates are available.
+
+* **Column Filters** - These are filters which have been applied to a particular column - either created by User at run-time and persisted automatically by AdapTable, or provided by a developer at design-time for first use.
+
+    > Any active Column Filters when the system closes are automatically persisted and then immediately re-applied on startup.
+
+## Custom Filters
+
+Developers are able to provide their own filters at design-time.
+
+This is done by creating an `AdaptablePredicateDef` and putting it in the `customPredicateDefs` collection in Adaptable Options.
+
+```js
+ const adaptableOptions: AdaptableOptions = {
+    primaryKey: 'tradeId',
+    userName: 'Demo User',
+    adaptableId: 'Basic Demo New',
+    customPredicateDefs: [
+      {
+        id: 'USBanks',
+        label: 'US Banks',
+        columnScope: { ColumnIds: ['counterparty'] },
+        functionScope: ['filter', 'conditionalstyle'],
+        handler: ({ value }) => {
+            ['Citi', 'BAML', 'JP Morgan'].includes(value)
+        }
+      },
+    ],
+  };
+ ```
+
+## UI Filter Controls
+
+There are 2 UI 'controls' which provide filtering capabilities in AdapTable.
+
+> Each remains fully in sync with the other, and each updates the same [Filter](../../src/PredefinedConfig/FilterState.ts) section in AdaptableState.
+
+### Filter Dropdown
+
+This is  powerful control that allows users to buld a Column Filter through the UI.
+
+Every column in AdapTable - which is marked as filterable - will have a Filter Dropdown to enable quick filter selection and creation.
+
+The dropdown can appear in 2 places:
+
+1. When the Filter tab in the Column Header Menu is selected
   
-2. In the Filter ToolPanel appears in the 'sidebar', by default at the right hand side of the grid.  
+2. In the 'Filter' ToolPanel in the 'sidebar' (which appears by default at the right hand side of the grid)
 
-Users can create as many Column Filters as required and the grid will automatically update so that it only shows rows that match the filters set for the column.
+The Dropdown contains 2 tabs:
 
-Any active Column Filters when the system closes are automatically persisted and then immediately re-applied on startup.
+* blah
 
-> Note: Column Filters cannot be saved and re-used elsewhere. But they can be easily converted into named - and re-usable [User Filters](../functions/user-filter-function.md) for this very purpose.
+* blah
 
-See the [Column Filter Read Me](../functions/column-filter-function.md) for more information on Column Filters and creating User Filters.
-
-There are 2 types of filter that you can apply:
-
-1. **Range Filters**: A range uses an 'Operator' (e.g. Greater Than, Starts With etc) and an Operand (ie. value) that you specify. 
-
-    They are similar to the Ranges used in Expressions (Queries).
-
-    The Operators will vary depending on the data type of the column - see the Appendix below for a full list.
-
-    > Most Range Operands will be a value (e.g. > 50) but they can referece another column (e.g. > 'Bid')
-
-2. **Value Filters**: A list of actual values to filter against.  
-    
-    There are, actually, up to 4 groups of Filters that can appear in the dropdown list:
-
-    - **System Filters**: filters shipped by AdapTable and for which it provides an evaluation (e.g. `Tomorrow` for Date columns or `Positive` for number columns).  
-
-        See the Appendix for the full list of System Filters and their associated column types.
-    
-        > You can choose - through System Filter Config - which, if any, System Filters you want available
-
-    - **User Filters**: filters created by Users (either at design-time or run-time). 
-
-        These are essentially named Column Filters (allowing for recursion) e.g. 'This Business Year' could be a filter for 'Between 1/05/20 and 31/04/21'
-
-        See the [User Filter Read Me](../functions/user-filter-function.md) for more information on how to create User Filters.
-
-   
-    - **Column Values**: the distinct column values for that Column.  
-
-        > Read [Showing Distinct Column Values FAQ](../faqs/adaptable-column-values-faq.md) to learn how AdapTable retrieves column values
-
-    > System, User and Named Filters all appear italicised in the Filter dropdown
-
-## Quick Filter Bar
-
-Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
-
-Each column in Adaptable - which is marked as filterable - has a filter dropdown which allows for quick filter selection.
-
-> In version 23 of ag-Grid the Quick Filter Bar is set at **column** level and not grid level (through the `floatingFilter` property).
-
-If the Quick Filter is visible then AdapTable will provide additional functionality such as wildcards.
-
-The Quick Filter bar allows you to use free text to find the data you want for a column.
-
-> By default, the filter uses 'Contains' when searching - so any cell which **contains** the inputted text will be included in the filter results.
-
-You can change this behaviour by using one of the wildcards (e.g. 'Starts With') that are listed below.
-
-AdapTable has special characters or wildcards that you can use to find text more easily. e.g. '5 : 15' will find all rows where the value for that column is between 5 and 15. See Appendix at foot of page for more details.
-
-> You can show / hide the Quick Filter Bar any time you want by selecting the 'Show / Hide Quick Filter' menu option from any Column menu, or by clicking the Show/Hide button in the Column Filter Function Toolbar.
-
-The Quick Filter bar is not available on all grids - only those where the underlying vendor grid supports it.
-
-> If you are using ag-Grid then you will need to set the floatingFilter property in GridOptions to true.
-
-If you want to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable then set the useAdaptableQuickFilter property to false.
-
-
-### Filtering
-Each column in Adaptable - which is marked as filterable - has a filter dropdown which allows for quick filter selection.
-
-Users can create as many filter items as they want and the grid will automatically update so that it only displays rows that match the filters set for the column.
-
-See the [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md) for detailed lists of the many different types of Filters that can be created.
-
-### Managing Column Filters
-To remove all the filters for a column click the 'Clear' button in the Filter Dropdown or in the Column Filter Toolbar.
-
-The caption (in the Column Header) is bold and italicised for any columns that are filtered.
-
-> You are also able to see which columns are being filtered by setting the indicateFilteredColumns property to true.  This will render the header cell text of filtered columns to be bold and italicised.
-
-Auto-apply filter is available.
-
-### Saving and Re-Using Column Filters
-
-Any active column filters when the system closes are immediately re-applied on startup.
-
-If you don't want this then you can set it.
-
-Column Filters cannot be saved for re-use.  In order to save - and then re-use - Column Filters in other functions (e.g. Export), click the save button in the top of the Filter Form which will convert the Column Filter into a named - and re-usable [User Filter](./user-filter-function.md).
-
-> If you dont want to use AdapTable's Filter Form and prefer to use that provided by the underlying vendor grid, then set the useAdaptableFilterForm property to false in Filter Options.
-
-Column Filters can be cleared either by using the Column Filter Popup, Toolbar or ToolPanel. 
+> Set `filterOptions.useAdaptableFilterForm` to `false` in order to use the underlying vendor grid's filter form instead of the one provided by AdapTable.
 
 ### Quick Filter Bar
 
-Some vendor grids like ag-Grid have a 'Quick Filter' : an area underneath the Column Header which users can access to filter quickly.
+This is a textbox that is displayed in the row between the Column Header and the first data row in the grid - allows Filters to be created through text entry.
 
-When this is used, AdapTable will create a Column Filter behind the scenes that can be used in the same way as a Column Filter created via the Dropdown.
+> In version 23 of ag-Grid the Quick Filter Bar is set at **column** level and not grid level (through the `floatingFilter` property) so the Quick Filter bar will only appear if at least one column has this property to set `true` and is enables just for those columns.
 
-See the [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md) for more details.
+The left hand side of the Quick Filter Bar contains a dropdown showing all the System and Custom Filters with scope for that column.  If the relevant predicate has `inputs` then the textbox will be enabled for these to be entered; otherwise it merely displays the name of the current predicate.
 
-## UI Elements
+> If the predicate type is 'IN' (i.e. column values) then a list of all distinct values for that column will display.
 
-Column Filters includes the following UI Elements:
+AdapTable provides wildcard support to make it easy to switch between predicates in the textbox itself, e.g. typing '>' will switch to 'GreaterThan'.  (See the full list in Appendix 2).
 
-- **Popup** - Shows a list of existing Column Filters with *Save as User Filter* and *Delete* buttons.  
+Each DataType has a default predicate as follows:
 
-- **Toolbar** - When any Column Filters are applied, it shows an Info icon which, when clicked, provides details of the Filters, with ability to delete or save them as User Filters.  
+* Number - Equals
+* String - Contains
+* Date - Equals
 
-  In grids which support a Quick Filter Bar, the Toolbar additionally contains a Check Box to enable the *Quick Filter Bar* to shown / hidden.
+The Quick Filter Bar can be hidden / displayed at any time you want by selecting the 'Show / Hide Quick Filter' menu option from any Column menu, or clicking the Show/Hide button in the Filter Toolbar.
+
+> Set `filterOptions.useAdaptableQuickFilter` to `false` in order to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable.
+
+## Managing Column Filters
+
+There are a number of options provided by AdapTable to help users configure and manage filters.
+
+### Seeing Filtered Columns
+
+AdapTable makes it easy for users to see at a glance which columns have filters applied to them by setting `filterOptions.indicateFilteredColumns` to `true` which will distinctly render the Column Header for any filtered columns.
+
+### Clearing Filters
+
+To remove the filter for a column click the 'Clear' button in the Filter Dropdown or in the Column Filter Toolbar.
+
+### Auto-Applying Filters
+
+By default the filter gets applied automatically - and the grid updated accordingly - each time a change is made to any predicate.  To avoid this behaviour (useful if you are peforming filtering on the server), set `filterOptions.autoApplyFilter` to `false` and a button will appear in the filter form; only on clicking that will the Filter be applied.
+
+### Saving Column Filters
+
+Any active column filters when the system closes are saved to state and then immediately re-applied on startup.
+
+If this behaviour is not desirable set `filterOptions.clearFiltersOnStartUp` to `true` and they will be cleared when AdapTable next loads.
+
+## Other UI Elements
+
+Filters also include the following UI Elements:
+
+- **Popup** - Shows a list of existing Column Filters with clear buttons.  
+
+- **Toolbar** - When any Column Filters are applied, it shows an Info icon which, when clicked, provides details of the Filters together with a clear option.  
+
+    The Toolbar also contains a Check Box to enable the *Quick Filter Bar* to be shown / hidden.
 
 - **Tool Panel** - Same as Toolbar above.
 
-- **Column Menu Item** - `Clear Filter` Menu Item opens enables all Column Filters to be cleared (only visible if Column Filters are currently applied).  
-
-    `Show / Hide Quick Filter Bar` Menu Item enables the *Quick Filter Bar* to be easily made visible or invisible (only available when a *Quick Filter Bar* is active).
+- **Column Menu Items**:
+  -  `Clear Filter` Menu Item opens enables all Filters to be cleared (it is only visible if Filters are currently applied).  
+  -  `Show / Hide Quick Filter Bar` Menu Item enables the *Quick Filter Bar* to be easily made visible or invisible (only available when a *Quick Filter Bar* is active).
 
 - **Context Menu Item** - `Filter on Cell Value(s)` Menu Item opens enables a cell or cells to be selected (from a single column) and a Column Filter to be immediately created on those values.
 
 ## Entitlements
-Column Filters supports these Entitlement Rules:
+
+Filter supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User
 
@@ -162,102 +159,69 @@ Column Filters supports these Entitlement Rules:
 
 ## FAQ
 
-**Can I save a Column Filter?**
+**Can we do AND or OR in the Quick Filter Bar?**
 
-Yes you can - by creating a [User Filter](./user-filter-function.md).  Column Filters are designed to be transient.  This will then allow you to reuse that Filter in multiple other Functions where you want to fetch specific rows or cells.
-
-### Further Information
-
-- [Column Filters State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_columnfilterstate_.columnfilterstate.html)
-
-- [ Filters Api](https://api.adaptabletools.com/interfaces/_src_api_filterapi_.filterapi.html)
-
-- [Column Filters Demo](https://demo.adaptabletools.com/filters/aggridcolumnfiltersdemo)
-
-- [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+No, but this is available via a [Query](query-function.md).
 
 
-# AdapTable Filtering Guide
-
-
-## Demos
-
-The [Demo Site's filter section](https://demo.adaptabletools.com/filters) contains a number of filtering-related demos
 
 ## Appendices
 
-### Column Range Filters
+### 1. System Filters
 
-| Operator               | Columns            |
-| ---------------------- | ------------------ |
-| Greater Than           | Number             |
-| Greater Than or Equals | Number             |
-| Less Than              | Number             |
-| Less Than or Equals    | Number             |
-| After                  | Dat                |
-| After or On            | Date               |
-| Before                 | Date               |
-| Before or On           | Date               |
-| Equals                 | Number, Date, Text |
-| NotEquals              | Number, Date, Text |
-| Between                | Number, Date       |
-| Contains               | Text               |
-| Not Contains           | Text               |
-| Starts With            | Text               |
-| Ends With              | Text               |
-| Matches Expression     | Text               |
-
-
-### System Filters
-
-The System Filters shipped by AdapTable are:
+The System Filter predicates shipped by AdapTable are:
 
 | System Filter           | Columns              |
 | --------  	          | ------               | 
-| Blanks                  | Number, Date, Text   | 
-| Non Blanks              | Number, Date, Text   | 
-| Positive                | Number               | 
-| Negative                | Number               | 
-| Zero                    | Number               | 
-| True                    | Boolean              | 
-| False                   | Boolean              | 
-| Today                   | Date                 | 
-| In Past                 | Date                 | 
-| In Future               | Date                 | 
-| Yesterday               | Date                 | 
-| Tomorrow                | Date                 | 
-| Next Working Day        | Date                 | 
-| Previous Working Day    | Date                 | 
-| This Year               | Date                 | 
+| Values| All   | 
+  | Blanks' | All   | 
+  | NonBlanks| All   | 
+  | Equals| Number   | 
+  | NotEquals| Number   | 
+  | GreaterThan| Number   | 
+  | LessThan| Number   | 
+  | Positive| Number   | 
+  | Negative| Number   | 
+  | Zero| Number   | 
+  | Between| Number   | 
+  | NotBetween| Number   | 
+  | Is| String   | 
+  |IsNot| String   | 
+  | Contains| String   | 
+  | NotContains| String   | 
+  | StartsWith| String   | 
+  |EndsWith| String   | 
+  | Regex| String   | 
+  | Today| Date   | 
+  | Yesterday| Date   | 
+  | Tomorrow| Date   | 
+  | ThisWeek| Date   | 
+  | ThisMonth| Date   | 
+  | ThisQuarter| Date   | 
+  | ThisYear| Date   | 
+  | InPast| Date   | 
+  | InFuture| Date   |
+  | Before| Date   | 
+  | After| Date   | 
+  | On| Date   | 
+  | NotOn| Date   | 
+  |NextWorkDay| Date   | 
+  | LastWorkDay| Date   | 
+  | True| Boolean   | 
+  | False| Boolean   | 
 
 
 
-### Quick Filter Bar Wildcards
+### 2. Quick Filter Bar Wildcards
 
-| Symbol   | Value                  | Columns      | Example     |
-| -------- | ---------------------- | ------------ | ----------- |
-| %        | Contains (the default) | Text, Number | 'S' or 'S%' |
-| =        | Equals                 | Text, Number | '=15'       |
-| <>       | Not Equals             | Number       | '<> 23'     |
-| >=       | Greater Than or Equals | Number       | '>= 49'     |
-| >        | Greater Than           | Number       | '> 5'       |
-| <=       | Less Than or Equals    | Number       | '<= 49'     |
-| <        | Less Than              | Number       | '<5'        |
-| :        | Between                | Number       | '5 : 100'   |
-| *        | Starts With            | Text, Number | 'd*'        |
-| !        | Doesn't Contain        | Text, Number | '!he'       |
-| 1        | True                   | Boolean      | '1'         |
-| t (or T) | True                   | Boolean      | 't'         |
-| y        | True                   | Boolean      | 'y'         |
-| 0        | False                  | Boolean      | '0'         |
-| f (or F) | False                  | Boolean      | 'f'         |
-| n        | False                  | Boolean      | 'n'         |
-
-## FAQ
-
-**Can we do AND or OR in the Quick Filter Bar?**
-
-Not at present but this is in the Issue Log and will be added in a future release.
+| Symbol | Value        | Columns      | Example    |
+| ------ | ------------ | ------------ | ---------- |
+| =      | Equals       | Text, Number | '=15'      |
+| !=     | Not Equals   | Number       | '<> 23'    |
+| >      | Greater Than | Number       | '> 5'      |
+| <      | Less Than    | Number       | '<5'       |
+| :      | Between      | Number       | '5 : 100'  |
+| !:     | Between      | Number       | '5 !: 100' |
 
 ## Help
 
@@ -267,7 +231,15 @@ The other source for Help is our collection of 'Read Me' Docs ([full list here](
 
 > Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
 
+## Demos
+
+The [Demo Site's filter section](https://demo.adaptabletools.com/filters) contains a number of filtering-related demos
+
 ## More Information
+
+- [Filters State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_filterstate_.filterstate.html)
+
+- [ Filters Api](https://api.adaptabletools.com/interfaces/_src_api_filterapi_.filterapi.html)
 
 General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
 

@@ -1,18 +1,18 @@
 import {
-  PredicateDef,
+  AdaptablePredicateDef,
   AdaptablePredicate,
   PredicateDefHandlerParams,
   FunctionScope,
 } from '../PredefinedConfig/Common/AdaptablePredicate';
 
 export interface PredicateApi {
-  getPredicateDefs(): PredicateDef[];
-  getSystemPredicateDefs(): PredicateDef[];
-  getCustomPredicateDefs(): PredicateDef[];
-  getPredicateDefsByFunctionScope(functionScope: FunctionScope): PredicateDef[];
-  getPredicateDefById(predicateId: string): PredicateDef;
-  getSystemPredicateDefById(predicateId: string): PredicateDef;
-  getCustomPredicateDefById(predicateId: string): PredicateDef;
+  getPredicateDefs(): AdaptablePredicateDef[];
+  getSystemPredicateDefs(): AdaptablePredicateDef[];
+  getCustomPredicateDefs(): AdaptablePredicateDef[];
+  getPredicateDefsByFunctionScope(functionScope: FunctionScope): AdaptablePredicateDef[];
+  getPredicateDefById(predicateId: string): AdaptablePredicateDef;
+  getSystemPredicateDefById(predicateId: string): AdaptablePredicateDef;
+  getCustomPredicateDefById(predicateId: string): AdaptablePredicateDef;
   predicateToString(predicate: AdaptablePredicate): string;
 
   handlePredicate(

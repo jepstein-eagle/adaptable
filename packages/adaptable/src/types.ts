@@ -24,7 +24,7 @@ export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
 export { AdaptableScope as Scope } from './PredefinedConfig/Common/AdaptableScope';
 export {
   AdaptablePredicate as Predicate,
-  PredicateDef,
+  AdaptablePredicateDef as PredicateDef,
   PredicateDefInput,
   PredicateDefHandlerParams,
   PredicateDefToStringParams,

@@ -27,7 +27,7 @@ import AdaptableContext from '../../AdaptableContext';
 import { Flex } from 'rebass';
 import { ColumnFilter } from '../../../PredefinedConfig/FilterState';
 import Radio from '../../../components/Radio';
-import { PredicateDef } from '../../../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../../../PredefinedConfig/Common/AdaptablePredicate';
 import Helper from '../../../Utilities/Helpers/Helper';
 
 interface FilterFormProps extends StrategyViewPopupProps<FilterFormComponent> {
@@ -225,7 +225,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     );
   }
 
-  private renderColumnPredicate(predicateDef: PredicateDef, index: number): JSX.Element {
+  private renderColumnPredicate(predicateDef: AdaptablePredicateDef, index: number): JSX.Element {
     const { editedColumnFilter } = this.state;
     const checked = editedColumnFilter?.Predicate?.PredicateId === predicateDef.id;
 
@@ -329,7 +329,7 @@ class FilterFormComponent extends React.Component<FilterFormProps, FilterFormSta
     this.props.onHideFilterForm();
   }
 
-  selectColumnPredicate(predicateDef: PredicateDef) {
+  selectColumnPredicate(predicateDef: AdaptablePredicateDef) {
     const { editedColumnFilter } = this.state;
 
     editedColumnFilter.Predicate = {

@@ -19,7 +19,7 @@ import SimpleButton from '../../../components/SimpleButton';
 import { Icon } from '../../../components/icons';
 import { Flex, Box } from 'rebass';
 import { ListBoxFilterForm } from './ListBoxFilterForm';
-import { PredicateDef } from '../../../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../../../PredefinedConfig/Common/AdaptablePredicate';
 import { IAdaptable } from '../../../types';
 
 interface QuickFilterFormProps extends StrategyViewPopupProps<QuickFilterFormComponent> {
@@ -161,7 +161,7 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     );
   }
 
-  renderPredicateIcon(predicateDef: PredicateDef) {
+  renderPredicateIcon(predicateDef: AdaptablePredicateDef) {
     if (!predicateDef || !predicateDef.icon) {
       return <Icon name="delete" />;
     }

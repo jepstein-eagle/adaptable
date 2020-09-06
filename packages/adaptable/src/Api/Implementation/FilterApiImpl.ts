@@ -9,7 +9,7 @@ import {
 } from '../../PredefinedConfig/FilterState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
-import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
@@ -21,10 +21,6 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     return this.getSystemFilterState().SystemFilters;
   }
 
-  public getAllUserFilterIds(): string[] {
-    return this.getSystemFilterState().FilterPredicates;
-  }
-
   public setSystemFilters(systemFilters: string[]): void {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet(systemFilters));
   }
@@ -33,7 +29,10 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     this.dispatchAction(SystemFilterRedux.SystemFilterSet([]));
   }
 
-  public findPredicateDefByShortcut(shortcut: string, column: AdaptableColumn): PredicateDef {
+  public findPredicateDefByShortcut(
+    shortcut: string,
+    column: AdaptableColumn
+  ): AdaptablePredicateDef {
     return this.getFilterPredicateDefsForColumn(column).find(i => i.shortcuts?.includes(shortcut));
   }
 
@@ -43,18 +42,18 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
   //   ) as FilterPredicate;
   // }
 
-  public getFilterPredicateDefsForColumn(column: AdaptableColumn): PredicateDef[] {
+  public getFilterPredicateDefsForColumn(column: AdaptableColumn): AdaptablePredicateDef[] {
     return this.getAllFilterPredicates().filter(predicate =>
       this.adaptable.api.scopeApi.isColumnInScope(column, predicate.columnScope)
     );
   }
 
-  public getFilterPredicateDefsForColumnId(columnId: string): PredicateDef[] {
+  public getFilterPredicateDefsForColumnId(columnId: string): AdaptablePredicateDef[] {
     const column = this.adaptable.api.columnApi.getColumnFromId(columnId);
     return this.getFilterPredicateDefsForColumn(column);
   }
 
-  private getAllFilterPredicates(): PredicateDef[] {
+  private getAllFilterPredicates(): AdaptablePredicateDef[] {
     return [
       ...this.getAllSystemFilterIds().map(predicateId =>
         this.adaptable.api.predicateApi.getPredicateDefById(predicateId)

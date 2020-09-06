@@ -297,7 +297,6 @@ async function InitAdaptableDemo() {
       Layout: {
         Revision: 25,
         CurrentLayout: 'Sigal',
-        CreateDefaultLayout: true,
         Layouts: [
           {
             Name: 'Sigal',

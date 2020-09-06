@@ -287,7 +287,7 @@ To set up the Adaptable Tool Panel while using the Angular Wrapper, you need to 
 
     ```js
     import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
-    ````
+    ```
 
 2. Reference the Component in the `components` section of ag-Grid GridOptions (and make sure the `sideBar` property is set also):
 

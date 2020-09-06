@@ -4,7 +4,7 @@ import {
   SystemFilterPredicateIds,
 } from '../PredefinedConfig/FilterState';
 import { AdaptableColumn } from '../types';
-import { PredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
 
 /**
  * Provides run-time access to the System Filter section of Adaptable State.
@@ -32,15 +32,13 @@ export interface FilterApi {
    */
   clearSystemFilters(): void;
 
-  findPredicateDefByShortcut(shortcut: string, column: AdaptableColumn): PredicateDef;
+  findPredicateDefByShortcut(shortcut: string, column: AdaptableColumn): AdaptablePredicateDef;
 
-  getFilterPredicateDefsForColumn(column: AdaptableColumn): PredicateDef[];
+  getFilterPredicateDefsForColumn(column: AdaptableColumn): AdaptablePredicateDef[];
 
-  getFilterPredicateDefsForColumnId(columnId: string): PredicateDef[];
+  getFilterPredicateDefsForColumnId(columnId: string): AdaptablePredicateDef[];
 
   getAllSystemFilterIds(): SystemFilterPredicateIds;
-
-  getAllUserFilterIds(): string[];
 
   // Column filters
 

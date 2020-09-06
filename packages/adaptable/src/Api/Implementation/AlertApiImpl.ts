@@ -14,7 +14,7 @@ import ObjectFactory from '../../Utilities/ObjectFactory';
 import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 import { AlertFiredEventArgs, AlertFiredInfo } from '../Events/AlertFired';
 import { AdaptableScope } from '../../PredefinedConfig/Common/AdaptableScope';
-import { PredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 
 export class AlertApiImpl extends ApiBase implements AlertApi {
   public getAlertState(): AlertState {
@@ -136,11 +136,11 @@ export class AlertApiImpl extends ApiBase implements AlertApi {
     );
   }
 
-  public getPredicateDefs(): PredicateDef[] {
+  public getPredicateDefs(): AdaptablePredicateDef[] {
     return this.adaptable.api.predicateApi.getPredicateDefsByFunctionScope('alert');
   }
 
-  public getPredicateDefsForScope(scope: AdaptableScope): PredicateDef[] {
+  public getPredicateDefsForScope(scope: AdaptableScope): AdaptablePredicateDef[] {
     return this.getPredicateDefs().filter(predicateDef =>
       this.adaptable.api.scopeApi.isScopeInScope(scope, predicateDef.columnScope)
     );

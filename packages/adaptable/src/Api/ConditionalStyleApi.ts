@@ -1,6 +1,6 @@
 import { ConditionalStyleState, ConditionalStyle } from '../PredefinedConfig/ConditionalStyleState';
 import { AdaptableColumn, Scope } from '../types';
-import { PredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
+import { AdaptablePredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
 
 /**
  * Provides full and comprehensive run-time access to the Conditional Style function and associated state.
@@ -25,8 +25,8 @@ export interface ConditionalStyleApi {
 
   getConditionalStylesForColumn(column: AdaptableColumn): ConditionalStyle[] | undefined;
 
-  getPredicateDefs(): PredicateDef[];
-  getPredicateDefsForScope(scope: Scope): PredicateDef[];
+  getPredicateDefs(): AdaptablePredicateDef[];
+  getPredicateDefsForScope(scope: Scope): AdaptablePredicateDef[];
 
   getOrderedConditionalStyles(): ConditionalStyle[] | undefined;
 }

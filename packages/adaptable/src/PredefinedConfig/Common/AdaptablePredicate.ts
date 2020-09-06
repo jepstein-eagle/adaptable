@@ -22,7 +22,7 @@ export interface AdaptablePredicate {
   Inputs?: any[];
 }
 
-export interface PredicateDef {
+export interface AdaptablePredicateDef {
   id: string;
   label: string;
   columnScope: AdaptableScope;
@@ -58,7 +58,7 @@ export type FunctionScope = 'filter' | 'alert' | 'validation' | 'conditionalstyl
 
 ////
 
-export const SystemPredicateDefs: PredicateDef[] = [
+export const SystemPredicateDefs: AdaptablePredicateDef[] = [
   {
     id: 'Values',
     label: 'Values',
