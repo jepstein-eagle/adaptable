@@ -26,9 +26,6 @@ These are the main updates to AdapTable in Version 7:
 * [Other minor state changes and new CSS Variables](#other-changes)
 * [Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others](#reduced-package-size)
 
-## React Wrapper Changes
-
-
 ## ag-Grid Version 23
 
 Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
