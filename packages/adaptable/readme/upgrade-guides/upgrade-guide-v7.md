@@ -13,7 +13,7 @@ These are the main updates to AdapTable in Version 7:
 * [Support for latest ag-Grid Version (23) including Alpine theme](#ag-grid-version-23)
 * [Changes to `Layout` (and a new UI) so they get saved automatically](#layout-changes)
 * [Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column`](#new-calculated-column-expression-syntax-and-ui)
-* [Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)](#queries)
+* [New `Query` object - expressions shareable across AdapTable functions (replacing Advanced Search)](#queries)
 * [Previous 4 filter-related functions merged into one `Filter` function](#filter)
 * [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
 * [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
