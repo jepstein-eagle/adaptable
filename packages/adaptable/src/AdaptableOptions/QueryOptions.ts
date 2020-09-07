@@ -72,7 +72,7 @@ export interface IServerColumnValues {
   /**
    * Whether the value being returned is the display or raw value.
    *
-   * A raw value is used if you then convert it before dispalying it (e.g. you might have a cell formatter).
+   * A raw value is used if you then convert it before displaying it (e.g. you might have a cell formatter).
    */
   DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
 

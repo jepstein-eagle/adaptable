@@ -1,6 +1,6 @@
 # Conditional Style (AdaptableFunction)
 
-The Conditional Style Function enables cells and rows to be given a distinctive style / look and feel when they contain data that matches a `Query`.
+The Conditional Style Function enables cells and rows to be given a distinctive style / look and feel when they contain data that matches a specifed Rule.
 
 ## Conditional Style Properties
 
@@ -14,7 +14,7 @@ This defines where the style is applied.  Options are:
 
 - one (or more) **DataTypes** (e.g. String, Number, Date etc)
 
-- an entire **Row**
+- an entire **Row** (Scope of 'All')
 
 > There is an option to exclude grouped rows from having the style applied.
 
@@ -24,12 +24,19 @@ These are the the colours and font properties used to create the style required;
 
 > There is an option to select the name of a pre-existing CSS style instead of creating the style individually - if the css style has been referenced in User Interface Predefined Config.
 
+### Rule
 
-### Query
+The Conditional Style rule is based either on a Predicate or an Expression depending on the complexity of the rule required.
 
-This is a standard Adaptable Query (either Shared or bespoke) which determines **where** the style will be applied.
+#### Predicate
 
-> Conditional Styles will only be applied when the cell (or row) values **match all the criteria set in the Expression**; otherwise the default styles will be used instead.
+This is the most common use case: Predicates are easy to use and ideal for when the evaluation required is a single column or operation (e.g. Positive, NonBlank etc.).
+
+#### Expression
+
+For more complicated scenarios there is an option to use an Expression.  This ia a standard Adaptable Query (either Shared or bespoke) which can reference multiple columns and contain AND and OR and more advanced logic.
+
+> Conditional Styles will only be applied when the cell (or row) values **satisfy the predicate** (or if an Expression is being used **match all the criteria set in the Expression**); otherwise the default styles for the cell will be used instead.
 
 ## UI Elements
 
@@ -42,6 +49,7 @@ Conditional Style includes the following UI Elements:
 - **Column Menu** - `Add Conditional Style` Menu Item opens the Conditional Style wizard (and jumps to Step 2 setting the Scope to be that Column automatically).
 
 ## Entitlements
+
 Conditional Style supports these Entitlement Rules:
 
 - **Full**: Everything is available to the User

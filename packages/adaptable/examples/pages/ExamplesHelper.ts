@@ -672,14 +672,15 @@ export class ExamplesHelper {
       //     'India',
       'Ireland',
       'Italy',
-      'Japan',
-      'Kenya',
+      // 'Japan',
+      //  'Kenya',
       'Luxembourg',
       'Portugal',
       //   'Qatar',
       //   'Russia',
       'Spain',
       'United Kingdom',
+      'United States',
     ];
     return countries;
   }

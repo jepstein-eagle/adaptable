@@ -34,7 +34,7 @@ This has a number of useful features including:
 
 - List of all the available functions as buttons or in a dropdown so they are immediately applied in the Editor
 
-- Dispaly the return value of the Expression (using data from the first row of the Grid)
+- Display the return value of the Expression (using data from the first row of the Grid)
 
 - Context sensitive Support / Help for each available function
 

@@ -14,6 +14,7 @@ import {
   AdaptableReadyInfo,
   SearchChangedEventArgs,
   AdaptableColumn,
+  PredicateDefHandlerParams,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
@@ -63,6 +64,17 @@ async function InitAdaptableDemo() {
         functionScope: ['filter', 'alert', 'validation', 'conditionalstyle'],
         handler: ({ value }) => ['Citi', 'BAML'].includes(value),
       },
+      {
+        id: 'regionNorthAmerica',
+        label: 'North America',
+        columnScope: {
+          ColumnIds: ['country'],
+        },
+        functionScope: ['filter', 'conditionalstyle'],
+        handler(params: PredicateDefHandlerParams) {
+          return params.value == 'Canada' || params.value == 'United States';
+        },
+      },
     ],
     userFunctions: [
       {
@@ -108,6 +120,23 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      ConditionalStyle: {
+        Revision: Date.now(),
+        ConditionalStyles: [
+          {
+            Scope: {
+              ColumnIds: ['country'],
+            },
+            Style: {
+              FontWeight: 'Bold',
+              BackColor: 'yellow',
+            },
+            Predicate: {
+              PredicateId: 'regionNorthAmerica',
+            },
+          },
+        ],
+      },
       CustomSort: {
         Revision: 2,
         CustomSorts: [

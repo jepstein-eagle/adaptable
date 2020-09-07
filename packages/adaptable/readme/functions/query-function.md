@@ -1,10 +1,10 @@
 # Query (AdaptableFunction)
 
-The Query Function enables you to run an 'Expression' - a powerful function which can contain multiple 'conditions'.
+The Query Function runs an 'Expression' - a function which can contain multiple 'conditions' - as a powerful search.
 
-When an Query is run, the AdapTable Expression Parser will **only return those rows that match all of the Conditions in the Query**.
+When the Query is run, the AdapTable Expression Parser will **only return those rows that match all of the Conditions in the Query**.
 
-> Expressions can have **any** return type - as demonstrated by Calculated Columns (which use Expressions); however when an Expression is used by a query it must return a Boolean (true / false) value.
+> Expressions can have **any** return type - as demonstrated by Calculated Columns (which use Expressions); however the Expression used by a query must always return a Boolean (true / false) value.
 
 ## Expression Syntax
 
@@ -12,13 +12,13 @@ The Expression syntax is designed to be human readable and writable (though Expr
 
 Columns can be referenced in an Expression in 2 ways:
 
-* Col("ColumnId") - e.g. Col("Bid")
+1. ``Col("ColumnId")`` - e.g. Col("Bid")
   
-* [ColumnId] -e.g. [Bid]  
+2. ``[ColumnId]`` -e.g. [Bid]  
 
-Note: you have to use the column's field name, i.e. the identifier for the column used by the underlying grid - e.g. [orderId] rather than the Caption visible in the grid (e.g. 'Order Id').
+Note: you have to use the column's Id (or field name), i.e. the identifier for the column used by the underlying grid - e.g. ``[orderId]`` rather than the Caption visible in the grid - e.g. ``'[Order Id]``.
   
-> We provide the Caption in the Expression Editor to help you identify the column more easily together with an option to see the field value instead.
+> We provide the Caption in the Expression Editor to help you identify the column more easily together with an option to see the Id value instead.
 
 Expresions use common operators and functions and can include paranetheses, AND and OR support, and ternary logic.
 
@@ -27,6 +27,8 @@ Examples of Queries (taken from our demo site) are:
 - [Employee] IN ("Robert King", "Andrew Fuller") AND [OrderCost] > 1000
 - [OrderChange] > 10 AND [PackageCost] > 10
 - [OrderChange] - ([PackageCost] + [OrderCost]) != [InvoicedCost]
+
+For more examples of Expressions see [Calculated Column ReadMe](calculated-column-function.md)
 
 ## Query State
 
@@ -46,15 +48,20 @@ Query includes the following UI Elements:
 
   * List of all the available functions as buttons or in a dropdown so they are immediately applied in the Editor
 
-  * Dispaly the return value of the Expression (using data from the first row of the Grid)
+  * Display the return value of the Expression (using data from the first row of the Grid)
 
   * Context sensitive Support / Help for each available function
 
-* **Popup** - Shows a list of existing Queries with *Edit* and *Delete* buttons, and a Radio Button to select one to be run.  Plus an *Add* button to start the Query Wizard.
+* **Popup** - Shows a list of existing Queries with *Edit* and *Delete* buttons, plus an *Add* button to start the Query Wizard.
 
 * **Wizard** - A series of steps facilitating the creation and editing of Queries.
 
-* **Toolbar** - Provides a large input to enable users to write (and then run) a Query by hand - albeit with an 'Expand' button to open the Expression Editor if UI support is needed.  Also contains a dropdown showing all `SharedQueries` together with the last 5 unsaved queries that were run. 
+* **Toolbar** - Provides a large input to enable users to write (and then run) a Query by hand if required.  Also contains:
+  * 'Run' button to perform the Search
+  * 'Clear' button to cancel a Search
+  * 'Expand' button to open the Expression Editor if UI support is needed
+  * 'Save' button to allow the query to be named - and then re-used elsewhere 
+  * A dropdown showing all `SharedQueries` together with the last 5 unsaved queries that were run. 
 
 ## Entitlements
 
@@ -88,7 +95,7 @@ The default is *Never* meaning Queries won't update as ticking data changes or t
 
 **Can we re-use the same query in different Functions - e.g. create a Query in Plus / Minus and use it also in Report?**
 
-Yes - by using a Shared Query.
+Yes - by using a Shared Query.  This allows you to use the same Query for searching, styling, reports setc.
 
 ### Further Information
 
@@ -98,7 +105,7 @@ Yes - by using a Shared Query.
 
 - [Search Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html)
 
-- [Query Demo](https://demo.adaptabletools.com/search/aggridquerydemo)
+- [Query Demo](https://demo.adaptabletools.com/search/aggridcurrentquerydemo)
 
 
 
