@@ -17,13 +17,17 @@ These are the main updates to AdapTable in Version 7:
 * [Previous 4 filter-related functions merged into one `Filter` function](#filter)
 * [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
 * [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
-* New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-'Partner'-plugins)
-* Support for Master / Detail grids
-* Framework Wrapper improvements
-* A new asynchronous static constructor
-* All Schedule-related state consolidated into one object
-* Other minor state changes and new CSS Variables
-* Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others
+* [New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-'Partner'-plugins)
+* [Support for Master / Detail grids](#support-for-master-detail-grids)
+* [React Wrapper Changes](#react-wrapper-changes)
+* [Angular Wrapper Changes](#angular-wrapper-changes)
+* [A new asynchronous static constructor](#async-static-constructor)
+* [All Schedule-related state consolidated into one object](#schedule-state-consolidation)
+* [Other minor state changes and new CSS Variables](#other-changes)
+* [Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others](#reduced-package-size)
+
+## React Wrapper Changes
+
 
 ## ag-Grid Version 23
 
@@ -218,7 +222,7 @@ const adaptableOptions: AdaptableOptions = {
 
 For more information see the [Plugin ReadMe](../../../plugins/README.md) which has links to more detailed information for each Plugin.
 
-## Support for Master / Detail grids
+## Support for Master Detail grids
 
 Version 7 of AdapTable provides support for Master / Detail grids in ag-Grid.
 
@@ -335,9 +339,9 @@ One consequence of the new ag-Grid version is that if you want to use the AdapTa
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ```
 
-## Async Static Constructor (for 'core' AdapTable)
+## Async Static Constructor
 
-The static constructor used for instantiating AdapTable (outside of a Wrapper) has become asynchronous.
+The static constructor used for instantiating AdapTable 'core' (i.e. outside of a Wrapper) has become asynchronous.
 
 It still returns an `AdaptableApi` object but now does so via a `Promise`.
 
@@ -363,7 +367,7 @@ One consequence of this is that the `Reminder` section of AdapTable State has be
 
 For more information see the [Schedule Function ReadMe](../functions/schedule-function.md)
 
-## Other State Changes
+## Other Changes
 
 A number of small changes have been made to AdapTable State and Adaptable functionaliy other than that listed above.  These include:
 
@@ -384,6 +388,12 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 * The `--ab-cmp-field-wrap__border-radius` css variable has been added
 
 * All UI elements now include **semantic class names** to provide easier custom styling
+
+## Reduced Package Size
+
+The size of the AdapTable download has decreased by 30%.
+
+This is caused primarily due to the removal of math.js and moment.js, but also to better tree-shaking and image management.
 
 ## Demo
 
