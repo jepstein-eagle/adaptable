@@ -13,11 +13,11 @@ These are the main updates to AdapTable in Version 7:
 * [Support for latest ag-Grid Version (23) including Alpine theme](#ag-grid-version-23)
 * [Changes to `Layout` (and a new UI) so they get saved automatically](#layout-changes)
 * [Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column`](#new-calculated-column-expression-syntax-and-ui)
-* Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)
-* Previous 4 filter-related functions merged into one `Filter` function
-* New `Predicate` and `Scope` types - used in multiple functions
-* Improvements to `PercentBar` to enable Ranges
-* New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble [Plugins](#quick-filter)
+* [Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)](#queries)
+* [Previous 4 filter-related functions merged into one `Filter` function](#filter)
+* [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
+* [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
+* New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-'Partner'-plugins)
 * Support for Master / Detail grids
 * Framework Wrapper improvements
 * A new asynchronous static constructor
@@ -165,7 +165,6 @@ Percent Bars have been redesigned with the following changes:
 
 For full information on all these changes see the [Percent Bar ReadMe](../functions/percent-bar-function.md)
 
-(#new-plugins)
 ## New 'Partner' plugins
 
 The transfer of 'non-core functionality' out of the main package and into Plugins contains in Version 7.
