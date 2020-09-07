@@ -28,17 +28,6 @@ export interface QueryOptions {
   maxColumnValueItemsDisplayed?: number;
 
   /**
-   * Whether the query builder will include just ColumnValues in the UI it displays.
-   *
-   * If false (the default) the Query Builder UI will display 3 tabs: Column Values, Filters and Ranges.
-   *
-   * This option is useful primarily if you are running Server Searching and want more easily to translate Adaptable Query JSON into something you can readily understand.
-   *
-   * **Default Value: false**
-   */
-  columnValuesOnlyInQueries?: boolean;
-
-  /**
    * Whether or not to ignore case when running queries on text (string) columns.
    *
    * If set to false (the default is 'true') then [StartsWith 'c'] will return false for the value 'Canada' but true for 'charlie'.

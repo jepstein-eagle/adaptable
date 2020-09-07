@@ -76,7 +76,6 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
   },
   queryOptions: {
     maxColumnValueItemsDisplayed: 2000,
-    columnValuesOnlyInQueries: false,
     getColumnValues: undefined,
     ignoreCaseInQueries: true,
   },
