@@ -10,7 +10,7 @@ Details of all the changes are listed here - for more detailed information with 
 
 These are the main updates to AdapTable in Version 7:
 
-* [Support for latest ag-Grid Version (23) including Alpine theme](ag-Grid-version-23)
+* [Support for latest ag-Grid Version (23) including Alpine theme](#ag-Grid-version-23)
 * Changes to `Layout` (and a new UI) so they get saved automatically
 * Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column` 
 * Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)
