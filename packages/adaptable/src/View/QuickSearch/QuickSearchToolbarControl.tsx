@@ -2,6 +2,8 @@
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
 
+import debounce from 'lodash-es/debounce';
+
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as DashboardRedux from '../../Redux/ActionsReducers/DashboardRedux';
 import { ToolbarStrategyViewPopupProps } from '../Components/SharedProps/ToolbarStrategyViewPopupProps';
@@ -42,7 +44,7 @@ class QuickSearchToolbarControlComponent extends React.Component<
       EditedQuickSearchText: nextProps.QuickSearchText,
     });
   }
-  debouncedRunQuickSearch = _.debounce(
+  debouncedRunQuickSearch = debounce(
     () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
     250
   );
