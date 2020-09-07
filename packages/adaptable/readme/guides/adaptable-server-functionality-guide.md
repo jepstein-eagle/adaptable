@@ -133,7 +133,7 @@ However you can choose to run some or all filtering and searching on the Server 
 
 > Modern browsers are very powerful and AdapTable is very fast and performant so only run server searching if you have more than 100,000 records that you need filtering.
 
-This is done through the `serverSearchOption` in the [SearchOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) section of Adaptable Options
+This is done through the `serverSearchOptions` in the [SearchOptions](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html#serversearchoption) section of Adaptable Options
 
 The property is an array that can take any combination of these 3 values:
 
