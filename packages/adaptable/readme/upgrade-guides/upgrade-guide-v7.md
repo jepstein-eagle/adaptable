@@ -34,7 +34,7 @@ Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
 
 The `floatingFilter` property is deprecated in gridOptions - you now have to specify it at column level (or in a default column definition).  
 
-Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and will activate it only for those columns).
+Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and activate it only for those columns).
 
 ### Themes
 
