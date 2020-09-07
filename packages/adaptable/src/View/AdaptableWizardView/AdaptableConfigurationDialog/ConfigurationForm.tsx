@@ -255,18 +255,6 @@ const ConfigurationForm = (props: ConfigurationFormOptions) => {
         margin={2}
         columns={[{ name: 'children' }, { name: 'label', style: { textAlign: 'start' } }]}
       >
-        <FormRow label="Use Only Column Values In Queries">
-          <CheckBox
-            checked={queryOptions.columnValuesOnlyInQueries}
-            onChange={(columnValuesOnlyInQueries: boolean) => {
-              abOptions = { ...abOptions };
-              abOptions.queryOptions = { ...abOptions.queryOptions };
-              abOptions.queryOptions.columnValuesOnlyInQueries = columnValuesOnlyInQueries;
-
-              props.onChangeadaptableOptions(abOptions);
-            }}
-          />
-        </FormRow>
         <FormRow label="Ignore Case In Queries">
           <CheckBox
             checked={queryOptions.ignoreCaseInQueries}

@@ -43,20 +43,25 @@ This is done by creating an `AdaptablePredicateDef` and putting it in the `custo
  const adaptableOptions: AdaptableOptions = {
     primaryKey: 'tradeId',
     userName: 'Demo User',
-    adaptableId: 'Basic Demo New',
+    adaptableId: 'Demo Grid',
     customPredicateDefs: [
-      {
-        id: 'USBanks',
-        label: 'US Banks',
-        columnScope: { ColumnIds: ['counterparty'] },
-        functionScope: ['filter', 'conditionalstyle'],
-        handler: ({ value }) => {
-            ['Citi', 'BAML', 'JP Morgan'].includes(value)
-        }
+     {
+      id: 'high_invoice',
+      label: 'High Invoice',
+      columnScope: {
+        ColumnIds: ['OrderId'],
       },
+      functionScope: ['filter'],
+      handler(params: PredicateDefHandlerParams) {
+        const invoiced: number = params.node.data.InvoicedCost;
+        const itemCount: number = params.node.data.ItemCount;
+        return invoiced > 100 && itemCount > 10 ? true : false;
+        },
     ],
   };
  ```
+
+ In this example we have created a filter predicate (see `functionScope` property) and which will operate on the 'OrderId' column (see `columnScope` property).
 
 ## UI Filter Controls
 
@@ -241,9 +246,9 @@ The [Demo Site's filter section](https://demo.adaptabletools.com/filters) contai
 
 ## More Information
 
-- [Filters State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_filterstate_.filterstate.html)
+- [Filter State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_filterstate_.filterstate.html)
 
-- [ Filters Api](https://api.adaptabletools.com/interfaces/_src_api_filterapi_.filterapi.html)
+- [ Filter Api](https://api.adaptabletools.com/interfaces/_src_api_filterapi_.filterapi.html)
 
 General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
 

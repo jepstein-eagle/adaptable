@@ -549,14 +549,6 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
     returnRows.push(
       this.createColItem(
         colItems,
-        'columnValuesOnlyInQueries',
-        options.queryOptions.columnValuesOnlyInQueries == true ? 'Yes' : 'No',
-        ' Whether query builder includes just ColumnValues, or should also include Filters and Ranges.'
-      )
-    );
-    returnRows.push(
-      this.createColItem(
-        colItems,
         'ignoreCaseInQueries',
         options.queryOptions.ignoreCaseInQueries == true ? 'Yes' : 'No',
         'Whether case is ignored when running queries (on text columns)'
