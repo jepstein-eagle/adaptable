@@ -17,7 +17,7 @@ These are the main updates to AdapTable in Version 7:
 * [Previous 4 filter-related functions merged into one `Filter` function](#filter)
 * [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
 * [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
-* [New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-'Partner'-plugins)
+* [New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-partner-plugins)
 * [Support for Master / Detail grids](#support-for-master-detail-grids)
 * [React Wrapper Changes](#react-wrapper-changes)
 * [Angular Wrapper Changes](#angular-wrapper-changes)
@@ -169,7 +169,7 @@ Percent Bars have been redesigned with the following changes:
 
 For full information on all these changes see the [Percent Bar ReadMe](../functions/percent-bar-function.md)
 
-## New 'Partner' plugins
+## New Partner plugins
 
 The transfer of 'non-core functionality' out of the main package and into Plugins contains in Version 7.
 
