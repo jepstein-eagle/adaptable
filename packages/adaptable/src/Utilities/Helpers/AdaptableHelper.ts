@@ -1,4 +1,5 @@
-import { cloneDeepWith, isPlainObject } from 'lodash';
+import cloneDeepWith from 'lodash-es/cloneDeepWith';
+import isPlainObject from 'lodash-es/isPlainObject';
 import { LoggingHelper } from './LoggingHelper';
 import { StringExtensions } from '../Extensions/StringExtensions';
 import { createUuid } from '../../PredefinedConfig/Uuid';

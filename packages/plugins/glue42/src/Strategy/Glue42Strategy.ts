@@ -11,7 +11,7 @@ import {
   Report,
   AdaptableColumn,
 } from '@adaptabletools/adaptable/types';
-import * as _ from 'lodash';
+import throttle from 'lodash-es/throttle';
 import {
   SELECTED_CELLS_REPORT,
   SELECTED_ROWS_REPORT,
@@ -70,7 +70,7 @@ export class Glue42Strategy extends AdaptableStrategyBase implements IGlue42Stra
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       setTimeout(() => {
-        this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
+        this.throttledRecomputeAndSendLiveDataEvent = throttle(
           () => this.sendNewLiveData(),
           this.getThrottleTimeFromState()
         );

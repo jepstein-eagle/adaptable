@@ -20,7 +20,6 @@ import { Flex } from 'rebass';
 import join from '../../components/utils/join';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
-import { isEqual } from 'lodash';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 
 interface LayoutToolbarControlComponentProps

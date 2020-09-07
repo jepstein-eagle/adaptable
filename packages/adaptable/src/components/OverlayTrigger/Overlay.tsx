@@ -5,7 +5,7 @@ import batchUpdate from '../utils/batchUpdate';
 import usePrevious from '../utils/usePrevious';
 import { BoundingClientRect } from '../utils/getAvailableSizeInfo';
 
-import { isEqual } from 'lodash';
+import isEqual from 'lodash-es/isEqual';
 import { getRect, getIntersection } from './utils';
 
 export interface OverlayProps extends HTMLAttributes<HTMLElement> {

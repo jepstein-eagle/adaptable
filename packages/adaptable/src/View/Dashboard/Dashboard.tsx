@@ -1,7 +1,7 @@
 ﻿import * as React from 'react';
 import { connect } from 'react-redux';
 import * as Redux from 'redux';
-import * as _ from 'lodash';
+import debounce from 'lodash-es/debounce';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import {
   DashboardState,
@@ -27,7 +27,7 @@ import {
   Dashboard as DashboardUI,
   DashboardTab as DashboardTabUI,
 } from '../../components/Dashboard';
-import { kebabCase } from 'lodash';
+import kebabCase from 'lodash-es/kebabCase';
 import UIHelper from '../UIHelper';
 import { SystemStatusState } from '../../PredefinedConfig/SystemStatusState';
 import {
@@ -77,7 +77,7 @@ class DashboardComponent extends React.Component<DashboardComponentProps, Dashbo
       EditedQuickSearchText: nextProps.QuickSearchText,
     });
   }
-  debouncedRunQuickSearch = _.debounce(
+  debouncedRunQuickSearch = debounce(
     () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
     250
   );

@@ -2,7 +2,7 @@ import { AdaptableStrategyBase } from '@adaptabletools/adaptable/src/Strategy/Ad
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '@adaptabletools/adaptable/src/AdaptableInterfaces/IAdaptable';
-import * as _ from 'lodash';
+import throttle from 'lodash-es/throttle';
 import { Report } from '@adaptabletools/adaptable/src/PredefinedConfig/ExportState';
 import { LoggingHelper } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
 import {
@@ -56,7 +56,7 @@ export class OpenFinStrategy extends AdaptableStrategyBase implements IOpenFinSt
       adaptable
     );
 
-    this.throttledRecomputeAndSendLiveDataEvent = _.throttle(
+    this.throttledRecomputeAndSendLiveDataEvent = throttle(
       () => this.sendNewLiveData(),
       this.getThrottleTimeFromState()
     );

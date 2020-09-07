@@ -1,6 +1,5 @@
 import * as GeneralConstants from '../Constants/GeneralConstants';
 import { AdaptableOptions } from '../../AdaptableOptions/AdaptableOptions';
-import { truncate } from 'lodash';
 
 export const DefaultAdaptableOptions: AdaptableOptions = {
   vendorGrid: null,

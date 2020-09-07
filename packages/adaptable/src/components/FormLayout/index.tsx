@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Box, BoxProps } from 'rebass';
 import { createContext, useContext, ReactNode } from 'react';
 import { ReactComponentLike } from 'prop-types';
-import { merge } from 'lodash';
+import merge from 'lodash-es/merge';
 import join from '../utils/join';
 
 const FormLayoutContext = createContext(null);

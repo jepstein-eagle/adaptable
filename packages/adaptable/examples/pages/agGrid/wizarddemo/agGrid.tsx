@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-import { startCase } from 'lodash';
+import startCase from 'lodash-es/startCase';
 
 import '@ag-grid-community/all-modules/dist/styles/ag-grid.css';
 import '@ag-grid-community/all-modules/dist/styles/ag-theme-balham.css';

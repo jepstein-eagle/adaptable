@@ -3,7 +3,7 @@ import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/
 import LoggingHelper, {
   LogAdaptableError,
 } from '@adaptabletools/adaptable/src/Utilities/Helpers/LoggingHelper';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash-es/cloneDeep';
 import Helper from '@adaptabletools/adaptable/src/Utilities/Helpers/Helper';
 import ArrayExtensions from '@adaptabletools/adaptable/src/Utilities/Extensions/ArrayExtensions';
 import { DataType, ActionMode } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
