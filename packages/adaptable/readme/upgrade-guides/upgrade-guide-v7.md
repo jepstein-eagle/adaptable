@@ -376,7 +376,9 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * Another consequence is `searchOptions.serverSearchOption` has been renamed to `serverSearchOptions` and become an array (which can take 'Query', 'Filter' or 'Sort')
 
-* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` and include `Scope` (see above)
+* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` (see above)
+
+* **Report**, **Alert**, **CellValidation** and **ConditionalStyle** now include `Scope` (see above)
 
 * The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**
 
