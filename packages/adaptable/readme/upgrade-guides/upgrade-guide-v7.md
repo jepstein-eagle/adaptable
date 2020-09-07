@@ -23,7 +23,7 @@ These are the main updates to AdapTable in Version 7:
 * A new asynchronous static constructor
 * All Schedule-related state consolidated into one object
 * Other minor state changes and new CSS Variables
-* Reduced package size - due to replaceing large libraries and tree-shaking others
+* Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others
 
 ## Support for ag-Grid Version 23
 
