@@ -26,6 +26,10 @@ import { ColumnSort } from './Common/ColumnSort';
  *      },
  *      {
  *        Name: 'Sorting Layout',
+ *        ColumnWidthMap: {
+ *          currency: 200,
+ *          counterparty: 300,
+ *        },
  *        ColumnSorts: [
  *          {
  *            Column: 'counterparty',
@@ -40,13 +44,15 @@ import { ColumnSort } from './Common/ColumnSort';
  *      },
  *      {
  *        Name: 'Grouping Layout',
- *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty'],
+ *        Columns: ['country', 'currency', 'tradeId', 'notional', 'counterparty', 'InvoicedCost', 'ItemCount'],
+ *        AggregationColumns: { InvoicedCost: 'sum', ItemCount: 'avg' },
  *        GroupedColumns: ['currency', 'country'],
  *      },
  *      {
  *        Name: 'Pivoted Layout',
  *        Columns: ['bid', 'ask', 'price', 'counterparty', 'status', 'stars'],
  *        RowGroupedColumns: ['currency'],
+ *        EnablePivot: true,
  *        PivotColumns: ['status', 'stars'],
  *        AggregationColumns: {'bid':'avg', 'ask':'avg'},
  *
@@ -59,9 +65,9 @@ import { ColumnSort } from './Common/ColumnSort';
  *
  * - *Simple Layout* - a basic Layout setting column visibility and order
  *
- * - *Sorting Layout* - a Layout that includes 2 sort orders
+ * - *Sorting Layout* - a Layout that includes 2 sort orders (and 2 columns with widths set)
  *
- * - *Grouping Layout* - a Layout which includes column grouping
+ * - *Grouping Layout* - a Layout which includes 2 grouped columns and 2 columns with aggregation set,
  *
  * - *Pivoted Layout* - a Layout that includes Pivot details (so that the grid will be pivoted when the Layout is selected)
  */
@@ -103,6 +109,16 @@ export interface Layout extends AdaptableObject {
    */
   Columns: string[];
 
+  /**
+   * A set of widths for some (or all columns)
+   *
+   * Pass the name of the Column (without quotes) together with the widths required
+   *
+   *    ColumnWidthMap: {
+   *        OrderId: 200,
+   *        Comments: 300,
+   *    },
+   */
   ColumnWidthMap?: {
     [columnId: string]: number;
   };
@@ -125,16 +141,60 @@ export interface Layout extends AdaptableObject {
    */
   RowGroupedColumns?: string[];
 
+  /**
+   * The values of any row groups that have been opened.
+   *
+   * This is only used if `hh` in LayoutOptions is set to true
+   *
+   * Its typically set by AdapTable at run-time and persisted in State than provided in Predefined Config
+   */
   ExpandedRowGroupValues?: any[];
 
   // you can only use true where the column in agGrid defs has an aggFunc applied
+
+  /**
+   * Which columns will show aggregated values in grouped rows
+   *
+   * This only applies when row grouping is enabled in the grid.
+   *
+   * The first value in a record is the column name
+   *
+   * The second is either the agg func you want (e.g. sum, avg, min etc.) or 'true' (to use the default aggfunc)
+   *
+   * You can only use 'true' if an aggFunc has been defined for the column
+   *
+   * AggregationColumns: { InvoicedCost: 'sum', ItemCount: 'avg' },
+   */
   AggregationColumns?: Record<string, string | true>;
 
+  /**
+   * Whether pivoting should be enabled in the Grid when this Layout loads
+   */
   EnablePivot?: boolean;
 
+  /**
+   * A list of columns which should be pivoted
+   *
+   * Only used when the grid is in pivot mode (or if Layout has `EanblePivot` set to true)
+   */
   PivotColumns?: string[];
 
+  /**
+   * A set of pinned columns
+   *
+   * Pass the name of the Column (without quotes) together with the direction
+   *
+   *    PinnedColumnsMap: {
+   *        OrderId: 'left',
+   *        Comments: 'right',
+   *    },
+   */
   PinnedColumnsMap?: { [columnId: string]: 'left' | 'right' };
 
+  /**
+   * Whether the Layout should automatically save or not.
+   *
+   * Usually the Layout gets the autoSave instruction from `autoSaveLayouts` property in LayoutOptions (which defaults) to true, but it can be overriden here for a particular Layout.
+   */
   AutoSave?: boolean;
 }
