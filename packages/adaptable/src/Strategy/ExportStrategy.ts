@@ -5,7 +5,6 @@ import { IExportStrategy } from './Interface/IExportStrategy';
 import { ExportDestination } from '../PredefinedConfig/Common/Enums';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { Helper } from '../Utilities/Helpers/Helper';
-import * as _ from 'lodash';
 import { Report } from '../PredefinedConfig/ExportState';
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';

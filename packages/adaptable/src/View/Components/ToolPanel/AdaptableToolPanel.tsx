@@ -1,7 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import * as _ from 'lodash';
-import { kebabCase } from 'lodash';
+import kebabCase from 'lodash-es/kebabCase';
 import * as ToolPanelRedux from '../../../Redux/ActionsReducers/ToolPanelRedux';
 import * as SystemRedux from '../../../Redux/ActionsReducers/SystemRedux';
 import * as PopupRedux from '../../../Redux/ActionsReducers/PopupRedux';

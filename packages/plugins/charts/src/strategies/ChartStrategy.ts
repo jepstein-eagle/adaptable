@@ -1,4 +1,4 @@
-import * as _ from 'lodash';
+import throttle from 'lodash-es/throttle';
 import { AdaptableStrategyBase } from '@adaptabletools/adaptable/src/Strategy/AdaptableStrategyBase';
 import * as StrategyConstants from '@adaptabletools/adaptable/src/Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '@adaptabletools/adaptable/src/Utilities/Constants/ScreenPopups';
@@ -55,7 +55,7 @@ export class ChartStrategy extends AdaptableStrategyBase implements IChartStrate
     });
 
     let refreshRate: number = this.GetChartState().RefreshRate * 1000;
-    this.throttleSetChartData = _.throttle(this.setChartData, refreshRate);
+    this.throttleSetChartData = throttle(this.setChartData, refreshRate);
   }
 
   protected InitState() {

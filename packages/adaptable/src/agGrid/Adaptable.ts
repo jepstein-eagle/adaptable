@@ -24,7 +24,12 @@ import {
 
 import * as ReactDOM from 'react-dom';
 import * as React from 'react';
-import * as _ from 'lodash';
+import throttle from 'lodash-es/throttle';
+import debounce from 'lodash-es/debounce';
+import uniq from 'lodash-es/uniq';
+import clamp from 'lodash-es/clamp';
+import zipObject from 'lodash-es/zipObject';
+import lodashIsEqual from 'lodash-es/isEqual';
 
 import {
   NewValueParams,
@@ -486,11 +491,11 @@ export class Adaptable implements IAdaptable {
       }
 
       // create debounce methods that take a time based on user settings
-      this.throttleOnDataChangedUser = _.throttle(
+      this.throttleOnDataChangedUser = throttle(
         this.applyDataChange,
         this.adaptableOptions!.filterOptions!.filterActionOnUserDataChange.ThrottleDelay
       );
-      this.throttleOnDataChangedExternal = _.throttle(
+      this.throttleOnDataChangedExternal = throttle(
         this.applyDataChange,
         this.adaptableOptions!.filterOptions.filterActionOnExternalDataChange.ThrottleDelay
       );
@@ -731,35 +736,35 @@ export class Adaptable implements IAdaptable {
   }
 
   // debounced methods
-  debouncedSetColumnIntoStore = _.debounce(() => {
+  debouncedSetColumnIntoStore = debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.updateColumnsIntoStore();
   }, HALF_SECOND);
 
-  debouncedSaveGridLayout = _.debounce(() => {
+  debouncedSaveGridLayout = debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.saveGridLayout();
   }, HALF_SECOND);
 
-  debouncedSetSelectedCells = _.debounce(() => {
+  debouncedSetSelectedCells = debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.setSelectedCells();
   }, 250);
 
-  debouncedSetSelectedRows = _.debounce(() => {
+  debouncedSetSelectedRows = debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
     this.setSelectedRows();
   }, HALF_SECOND);
 
-  debouncedFilterGrid = _.debounce(() => {
+  debouncedFilterGrid = debounce(() => {
     if (!this.gridOptions.api) {
       return;
     }
@@ -1199,7 +1204,7 @@ export class Adaptable implements IAdaptable {
               : (aggregationFunctionsColumnsMap[colId] as string);
         }
 
-        isChanged = isChanged || !_.isEqual(newColState, oldColState);
+        isChanged = isChanged || !lodashIsEqual(newColState, oldColState);
 
         return newColState;
       })
@@ -1231,7 +1236,7 @@ export class Adaptable implements IAdaptable {
       })
       .filter(x => !!x);
 
-    const equalSortModel = _.isEqual(oldSortModel, sortModel);
+    const equalSortModel = lodashIsEqual(oldSortModel, sortModel);
 
     const pivoted = !!layout.EnablePivot;
     const shouldUpdatePivoted = this.gridOptions.columnApi.isPivotMode() !== pivoted;
@@ -1570,7 +1575,7 @@ export class Adaptable implements IAdaptable {
         });
       }
     }
-    return _.uniq(returnValues).slice(
+    return uniq(returnValues).slice(
       0,
       this.adaptableOptions!.queryOptions.maxColumnValueItemsDisplayed
     );
@@ -3242,7 +3247,7 @@ export class Adaptable implements IAdaptable {
         // for now NOT using this PercentBarTooltip but we can add it later and will be powwerful.
         //  coldDef.tooltipComponent = PercentBarTooltip;
         colDef.tooltipValueGetter = ({ value }: ITooltipParams) => {
-          const clampedValue = _.clamp(value, min, max);
+          const clampedValue = clamp(value, min, max);
           const percentageValue = ((clampedValue - min) / (max - min)) * 100;
 
           if (pcr.DisplayRawValue && pcr.DisplayPercentageValue) {
@@ -3965,7 +3970,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       headerName: columnName,
     }));
 
-    const rowData: any[] = data.map(row => _.zipObject(columnNames, row));
+    const rowData: any[] = data.map(row => zipObject(columnNames, row));
 
     const gridOptions: GridOptions = {
       columnDefs,

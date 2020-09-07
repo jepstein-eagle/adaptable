@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import * as _ from 'lodash';
+
 import { connect } from 'react-redux';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as SystemStatusRedux from '../../Redux/ActionsReducers/SystemStatusRedux';

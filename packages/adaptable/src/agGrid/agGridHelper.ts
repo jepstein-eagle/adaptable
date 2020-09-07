@@ -77,7 +77,7 @@ import { GridInfoStrategy } from '../Strategy/GridInfoStrategy';
 import { CustomSortStrategy } from '../Strategy/CustomSortStrategy';
 import { SelectedRowInfo } from '../PredefinedConfig/Selection/SelectedRowInfo';
 import { AG_GRID_GROUPED_COLUMN } from '../Utilities/Constants/GeneralConstants';
-import { clamp } from 'lodash';
+import clamp from 'lodash-es/clamp';
 import { Color } from '../Utilities/color';
 import { IPPStyle } from '../Utilities/Interface/IPPStyle';
 import { QueryStrategy } from '../Strategy/QueryStrategy';

@@ -1,7 +1,8 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-import * as _ from 'lodash';
+import debounce from 'lodash-es/debounce';
+
 import * as PopupRedux from '../../Redux/ActionsReducers/PopupRedux';
 import * as ToolPanelRedux from '../../Redux/ActionsReducers/ToolPanelRedux';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
@@ -42,7 +43,7 @@ class QuickSearchToolPanelComponent extends React.Component<
     });
   }
 
-  debouncedRunQuickSearch = _.debounce(
+  debouncedRunQuickSearch = debounce(
     () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
     350
   );

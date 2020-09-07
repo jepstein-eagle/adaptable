@@ -18,7 +18,7 @@ import { AdaptableObjectRow } from '../../Components/AdaptableObjectRow';
 import { AdaptableScope } from '../../../PredefinedConfig/Common/AdaptableScope';
 import { DataType } from '../../../PredefinedConfig/Common/Enums';
 import ArrayExtensions from '../../../Utilities/Extensions/ArrayExtensions';
-import { uniq } from 'lodash';
+import uniq from 'lodash-es/uniq';
 export interface FormatColumnFormatWizardProps extends AdaptableWizardStepProps<FormatColumn> {}
 
 export interface FormatColumnFormatWizardState {

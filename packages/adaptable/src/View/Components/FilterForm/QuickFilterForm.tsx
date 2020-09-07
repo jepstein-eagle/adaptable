@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import * as _ from 'lodash';
+import debounce from 'lodash-es/debounce';
 import * as FilterRedux from '../../../Redux/ActionsReducers/FilterRedux';
 import { Provider, connect } from 'react-redux';
 import { AdaptableState } from '../../../PredefinedConfig/AdaptableState';
@@ -267,9 +267,9 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
     }
   }
 
-  debouncedAddFilter = _.debounce(() => this.props.onAddColumnFilter(this.state.filter), 250);
+  debouncedAddFilter = debounce(() => this.props.onAddColumnFilter(this.state.filter), 250);
 
-  debouncedEditFilter = _.debounce(() => this.props.onEditColumnFilter(this.state.filter), 250);
+  debouncedEditFilter = debounce(() => this.props.onEditColumnFilter(this.state.filter), 250);
 
   private updateFilter(filter: ColumnFilter) {
     this.setState({ filter });

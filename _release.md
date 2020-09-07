@@ -1,3 +1,11 @@
+## 7.0.0-canary.32
+
+Replace lodash with lodash-es
+
+## 7.0.0-canary.31
+
+Documentation changes
+
 ## 7.0.0-canary.30
 
 Predicate updates

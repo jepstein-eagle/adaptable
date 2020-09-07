@@ -1,5 +1,5 @@
 import fetch from 'isomorphic-fetch';
-import { debounce } from 'lodash';
+import debounce from 'lodash-es/debounce';
 import { LoggingHelper } from '../../Utilities/Helpers/LoggingHelper';
 import IStorageEngine from './Interface/IStorageEngine';
 import {

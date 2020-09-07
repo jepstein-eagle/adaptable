@@ -1,9 +1,14 @@
-import * as _ from 'lodash';
+import mergeWith from 'lodash-es/mergeWith';
+import merge from 'lodash-es/merge';
+import isArray from 'lodash-es/isArray';
+import extend from 'lodash-es/extend';
+import isObject from 'lodash-es/isObject';
+
 import { ConfigState } from '../../PredefinedConfig/ConfigState';
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 
 function customizer(objValue: any, srcValue: any): any {
-  if (_.isArray(objValue)) {
+  if (isArray(objValue)) {
     if (!Array.isArray(srcValue)) {
       /**
        * the new value might be a function: eg: UserInterface.ContextMenuItems defaults to an array
@@ -13,7 +18,7 @@ function customizer(objValue: any, srcValue: any): any {
       return srcValue;
     }
     const length = srcValue ? srcValue.length : null;
-    const result: any = _.mergeWith(objValue, srcValue, customizer);
+    const result: any = mergeWith(objValue, srcValue, customizer);
 
     if (length != null) {
       // when merging arrays, lodash result has the length of the
@@ -57,7 +62,7 @@ export function MergeStateFunction(oldState: any, newState: any) {
 
 // main merge function
 export function MergeState(oldState: any, newState: any) {
-  const result = _.extend({}, oldState);
+  const result = extend({}, oldState);
 
   for (const key in newState) {
     if (!newState.hasOwnProperty(key)) {
@@ -67,15 +72,15 @@ export function MergeState(oldState: any, newState: any) {
 
     // Assign if we don't need to merge at all
     if (!result.hasOwnProperty(key)) {
-      result[key] = _.isObject(value) && !Array.isArray(value) ? _.merge({}, value) : value;
+      result[key] = isObject(value) && !Array.isArray(value) ? merge({}, value) : value;
       continue;
     }
 
     const oldValue = (<any>result)[key];
 
-    if (_.isObject(value) && !Array.isArray(value)) {
+    if (isObject(value) && !Array.isArray(value)) {
       // use both lodash functions so that we can merge from State onto Predefined Config where it exists but from the former where it doesnt.
-      result[key] = _.mergeWith({}, oldValue, value, customizer);
+      result[key] = mergeWith({}, oldValue, value, customizer);
     } else {
       result[key] = value;
     }

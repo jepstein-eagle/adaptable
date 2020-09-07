@@ -1,27 +1,19 @@
 import * as React from 'react';
 import * as Redux from 'redux';
-import * as _ from 'lodash';
+
+import debounce from 'lodash-es/debounce';
 import { connect } from 'react-redux';
 
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as QuickSearchRedux from '../../Redux/ActionsReducers/QuickSearchRedux';
 import { StrategyViewPopupProps } from '../Components/SharedProps/StrategyViewPopupProps';
 import { PanelWithImage } from '../Components/Panels/PanelWithImage';
-import { ColorPicker } from '../ColorPicker';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
-import {
-  QUICK_SEARCH_DEFAULT_BACK_COLOR,
-  QUICK_SEARCH_DEFAULT_FORE_COLOR,
-} from '../../Utilities/Constants/GeneralConstants';
 import { AdaptableStyle } from '../../PredefinedConfig/Common/AdaptableStyle';
 
-import Checkbox from '../../components/CheckBox';
-import { Flex } from 'rebass';
 import Panel from '../../components/Panel';
 import FormLayout, { FormRow } from '../../components/FormLayout';
-import HelpBlock from '../../components/HelpBlock';
-import Radio from '../../components/Radio';
 import { AdaptableFormControlTextClear } from '../Components/Forms/AdaptableFormControlTextClear';
 import { StyleComponent } from '../Components/StyleComponent';
 
@@ -47,7 +39,7 @@ class QuickSearchPopupComponent extends React.Component<
     this.state = { EditedQuickSearchText: '', EditedStyle: null };
   }
 
-  debouncedRunQuickSearch = _.debounce(
+  debouncedRunQuickSearch = debounce(
     () => this.props.onRunQuickSearch(this.state.EditedQuickSearchText),
     250
   );
