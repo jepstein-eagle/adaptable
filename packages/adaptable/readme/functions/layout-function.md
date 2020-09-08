@@ -11,16 +11,10 @@ Layouts are primarily sets of column visibility and order; they **do not include
 However Layouts can, optionally, also include column sorting, grouping and pivoting information in their definitions which will be included in the [Layout](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layout.html).
 
 
-
 ### Creating Layouts
-When creating a Layout in the UI, the Layout Wizard provides 2 choices:
-
-- building the Layout from scratch (selecting bespoke column visibility, order and sorting)
-
-- copying the currently selected Layout - this will include the Layout's current column visilbity and order but not any vendor information (e.g. column widths, grouping, pinned rows etc.)
+Layouts are created through the Layout Editor which allows for the selection (and order) of visible columns, sorting, grouping, aggregrating and pivoting.
 
 Alternatively Layouts can be defined in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html) - with the ability to provide full sorting, grouping and pivoting details
-
 
 
 ### Saving and Restoring Layouts
@@ -44,13 +38,11 @@ There are 3 properties (all available in [Layout Options](https://api.adaptablet
 - `autoSizeColumnsInPivotLayout` - whether a pivot-based Layout should automatically autosize columns when **first opened** (*Default: false*)
 
 ### Default Layout
-AdapTable provides a 'Default Layout' at start-up based on the inital column definitions provided to the grid.  
+You must always have at least one Layout - which will automatically get updated as your grid changes.
 
-Whenever a Layout is unselected or cleared, AdapTable will revert to displaying the Default Layout.
+If no Layouts are provided in Predefined Config, then AdapTable provides a 'Default Layout' at start-up based on the inital column definitions provided to the grid.  
 
-**Note: the Default Layout is never updated or saved at runtime**.  This means that any changes made to Column sorting, visibilty or order will not be persisted; users who wish to persist column changes must create a bespoke Layout.
-
-> Do not create a Layout called 'Default Layout' or 'AB_Default_Layout' as these are used internally to refer to the Default Layout and can cause problems.
+> There is an option in LayoutOptions to tell AdapTable to create a Default Layout even if you have defined other Layouts in Predefined Config.
 
 
 ## UI Elements
