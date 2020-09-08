@@ -10,22 +10,23 @@ Details of all the changes are listed here - for more detailed information with 
 
 These are the main updates to AdapTable in Version 7:
 
-* Support for latest ag-Grid Version (23) including Alpine theme
-* Changes to `Layout` (and a new UI) so they get saved automatically
-* Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column` 
-* Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)
-* Previous 4 filter-related functions merged into one `Filter` function
-* New `Predicate` and `Scope` types - used in multiple functions
-* Improvements to `PercentBar` to enable Ranges
-* New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble
-* Support for Master / Detail grids
-* Framework Wrapper improvements
-* A new asynchronous static constructor
-* All Schedule-related state consolidated into one object
-* Other minor state changes and new CSS Variables
-* Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others
+* [Support for latest ag-Grid Version (23) including Alpine theme](#ag-grid-version-23)
+* [Changes to `Layout` (and a new UI) so they get saved automatically](#layout-changes)
+* [Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column`](#new-calculated-column-expression-syntax-and-ui)
+* [New `Query` object - expressions shareable across AdapTable functions (replacing Advanced Search)](#queries)
+* [Previous 4 filter-related functions merged into one `Filter` function](#filter)
+* [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
+* [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
+* [New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-partner-plugins)
+* [Support for Master / Detail grids](#support-for-master-detail-grids)
+* [React Wrapper Changes](#react-wrapper-changes)
+* [Angular Wrapper Changes](#angular-wrapper-changes)
+* [A new asynchronous static constructor](#async-static-constructor)
+* [All Schedule-related state consolidated into one object](#schedule-state-consolidation)
+* [Other minor state changes and new CSS Variables](#other-changes)
+* [Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others](#reduced-package-size)
 
-## Support for ag-Grid Version 23
+## ag-Grid Version 23
 
 Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
 
@@ -33,7 +34,7 @@ Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
 
 The `floatingFilter` property is deprecated in gridOptions - you now have to specify it at column level (or in a default column definition).  
 
-Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and will activate it only for those columns).
+Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and activate it only for those columns).
 
 ### Themes
 
@@ -165,7 +166,7 @@ Percent Bars have been redesigned with the following changes:
 
 For full information on all these changes see the [Percent Bar ReadMe](../functions/percent-bar-function.md)
 
-## New 'Partner' plugins
+## New Partner plugins
 
 The transfer of 'non-core functionality' out of the main package and into Plugins contains in Version 7.
 
@@ -218,7 +219,7 @@ const adaptableOptions: AdaptableOptions = {
 
 For more information see the [Plugin ReadMe](../../../plugins/README.md) which has links to more detailed information for each Plugin.
 
-## Support for Master / Detail grids
+## Support for Master Detail grids
 
 Version 7 of AdapTable provides support for Master / Detail grids in ag-Grid.
 
@@ -335,9 +336,9 @@ One consequence of the new ag-Grid version is that if you want to use the AdapTa
 import { AdaptableToolPanelAgGridComponent } from '@adaptabletools/adaptable/src/AdaptableComponents';
 ```
 
-## Async Static Constructor (for 'core' AdapTable)
+## Async Static Constructor
 
-The static constructor used for instantiating AdapTable (outside of a Wrapper) has become asynchronous.
+The static constructor used for instantiating AdapTable 'core' (i.e. outside of a Wrapper) has become asynchronous.
 
 It still returns an `AdaptableApi` object but now does so via a `Promise`.
 
@@ -363,7 +364,7 @@ One consequence of this is that the `Reminder` section of AdapTable State has be
 
 For more information see the [Schedule Function ReadMe](../functions/schedule-function.md)
 
-## Other State Changes
+## Other Changes
 
 A number of small changes have been made to AdapTable State and Adaptable functionaliy other than that listed above.  These include:
 
@@ -375,7 +376,9 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * Another consequence is `searchOptions.serverSearchOption` has been renamed to `serverSearchOptions` and become an array (which can take 'Query', 'Filter' or 'Sort')
 
-* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` and include `Scope` (see above)
+* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` (see above)
+
+* **Report**, **Alert**, **CellValidation** and **ConditionalStyle** now include `Scope` (see above)
 
 * The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**
 
@@ -384,6 +387,12 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 * The `--ab-cmp-field-wrap__border-radius` css variable has been added
 
 * All UI elements now include **semantic class names** to provide easier custom styling
+
+## Reduced Package Size
+
+The size of the AdapTable download has decreased by 30%.
+
+This is caused primarily due to the removal of math.js and moment.js, but also to better tree-shaking and image management.
 
 ## Demo
 
