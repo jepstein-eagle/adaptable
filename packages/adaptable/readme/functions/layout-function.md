@@ -18,13 +18,10 @@ Alternatively Layouts can be defined in [Predefined Config](https://api.adaptabl
 
 
 ### Saving and Restoring Layouts
-There is an option to have layouts save automatically when changes are made in the grid - ensure that the property `autoSaveLayouts` is set to true in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#autosavelayouts).
+By default layouts **save automatically** when changes are made in the grid
 
-> At present there is not an 'Auto-Save' option per Layout; it applies for **all Layouts**.
+To avoid this behaviour set the property `autoSaveLayouts` to **false** in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#autosavelayouts).  When this happens, a Save button will be visible in the Layout toolbar.
 
-If the `autoSaveLayouts` property is set to false, then a Save button will be available in the toolbar.
-
-Layout Toolbar and ToolPanel also include a *Restore* button which allows Users to revert the Layout back to its initial definition.
 
 ### Auto-Sizing Layout Columns
 AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
