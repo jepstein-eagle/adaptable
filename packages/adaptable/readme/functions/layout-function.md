@@ -22,6 +22,7 @@ By default layouts **save automatically** when changes are made in the grid
 
 To avoid this behaviour set the property `autoSaveLayouts` to **false** in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#autosavelayouts).  When this happens, a Save button will be visible in the Layout toolbar.
 
+You can override the LayoutOptions property in each Layout by setting the `AutoSave` property.
 
 ### Auto-Sizing Layout Columns
 AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
