@@ -8,12 +8,28 @@ Layouts can also include column sorting, grouping and pivoting information and c
 ### Layout Contents
 Layouts are primarily sets of column visibility and order; they **do not include styling functions** (e.g. Conditional Styles) **nor do they include searching or filtering functions**.
 
-However Layouts do include a number of important properties column sorting, grouping, aggregation and pivoting information in their definitions w
+However Layouts do include a number of important properties including:
+
+* column visibility
+
+* column order
+
+* sorting info - multiple columns can be sorted
+
+* columns widths
+
+* pinned column details
+
+* row grouping details
+
+* aggregation info (e.g. which columns will display an aggregation number in a grouped row)
+
+* pivoting information
 
 ### Creating Layouts
 Layouts are created in 2 ways:
 
-* visually through the Layout Editor which allows for the selection (and order) of visible columns, sorting, grouping, aggregrating and pivoting.
+* visually in the Layout Editor which allows for the selection (and order) of visible columns, sorting, grouping, aggregrating and pivoting.
 
 * defined in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html) - with the ability to provide full sorting, grouping and pivoting details
 
@@ -21,7 +37,7 @@ Layouts are created in 2 ways:
 
 
 ### Saving and Restoring Layouts
-By default layouts **save automatically** when changes are made in the grid
+By default layouts **save automatically** when any relevant changes are made in the grid.
 
 To avoid this behaviour set the property `autoSaveLayouts` to **false** in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#autosavelayouts).  When this happens, a Save button will be visible in the Layout toolbar.
 
@@ -30,14 +46,16 @@ You can override the LayoutOptions property in each Layout by setting the `AutoS
 ### Auto-Sizing Layout Columns
 AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
 
-There are 2 properties available in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html):
+There are 2 properties available in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html) (both of which default to *false*):
 
-- `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened** (*Default: false*) 
+- `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened**  
 
-- `autoSizeColumnsInPivotLayout` - whether a pivot-based Layout should automatically autosize columns when **first opened** (*Default: false*)
+- `autoSizeColumnsInPivotLayout` - whether pivot-based Layouts should automatically autosize columns when **first opened** 
 
 ### Default Layout
 You must always have at least one Layout - which will automatically get updated as your grid changes.
+
+> AdapTable will not allow you to default the last remaining Layout in your State.
 
 If no Layouts are provided in Predefined Config, then AdapTable provides a 'Default Layout' at start-up based on the inital column definitions provided to the grid.  
 
@@ -56,6 +74,7 @@ Layout includes the following UI Elements:
 - **Tool Panel** - Same as Toolbar above.
 
 ## Entitlements
+
 Layout supports these Entitlement Rules:
 
 - **Full**: All Layouts are available to the User
