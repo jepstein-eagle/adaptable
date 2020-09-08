@@ -8,13 +8,16 @@ Layouts can also include column sorting, grouping and pivoting information and c
 ### Layout Contents
 Layouts are primarily sets of column visibility and order; they **do not include styling functions** (e.g. Conditional Styles) **nor do they include searching or filtering functions**.
 
-However Layouts can, optionally, also include column sorting, grouping and pivoting information in their definitions which will be included in the [Layout](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layout.html).
-
+However Layouts do include a number of important properties column sorting, grouping, aggregation and pivoting information in their definitions w
 
 ### Creating Layouts
-Layouts are created through the Layout Editor which allows for the selection (and order) of visible columns, sorting, grouping, aggregrating and pivoting.
+Layouts are created in 2 ways:
 
-Alternatively Layouts can be defined in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html) - with the ability to provide full sorting, grouping and pivoting details
+* visually through the Layout Editor which allows for the selection (and order) of visible columns, sorting, grouping, aggregrating and pivoting.
+
+* defined in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html) - with the ability to provide full sorting, grouping and pivoting details
+
+> Creating a Layout in Predefined Config also allows you to set Pinning and Column Widths information - which cannot be done in the Layout Editor (as it is actioned in the Grid itself).
 
 
 ### Saving and Restoring Layouts
