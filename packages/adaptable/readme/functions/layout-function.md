@@ -7,6 +7,7 @@ Layouts typically contain column visibility and order information but can also i
 By default Layouts will save automatially when their contents change - and there must always be one active Layout in AdapTable.
 
 > This Read Me reflects how Layouts work as of Version 7 of AdapTable (released in September 2020). 
+
 > For the changes that this Version made to Layouts please read the [Upgrade Guide](../upgrade-guides/upgrade-guide-v7.md)).
 
 ### Layout Contents
