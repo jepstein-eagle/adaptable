@@ -59,7 +59,8 @@ You must always have at least one Layout - which will automatically get updated 
 
 If no Layouts are provided in Predefined Config, then AdapTable provides a **Default Layout** at start-up based on the inital column definitions provided to the grid.  
 
-> There is an option in LayoutOptions to tell AdapTable to create a Default Layout even if you have defined other Layouts in Predefined Config.
+> The `createDefaultLayout` property in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#createdefaultlayout)
+ tells AdapTable to create a Default Layout even if you have defined Layouts in Predefined Config.
 
 ### Persisting Expanded Grouped Rows
 By default a Layout will not store information about which Grouped Rows are currently open so this information is lost when the application next loads.
