@@ -79,7 +79,7 @@ const ColumnLabels = (
         const labelName = labelNames[index];
         const letter = labelName.charAt(0);
 
-        const renderBox = (enabled: boolean) => {
+        const renderBox = (enabled: boolean, key?: string) => {
           return (
             <Flex
               className="ab-LayoutEditor__LegendLetter"
@@ -101,7 +101,7 @@ const ColumnLabels = (
                 borderRadius: 'var(--ab__border-radius)',
                 opacity: enabled ? 1 : 0.5,
               }}
-              key={letter}
+              key={`${letter}${key ? key : ''}`}
             >
               {!enabled ? (
                 <div
@@ -121,11 +121,21 @@ const ColumnLabels = (
           );
         };
         return (
-          <Flex mt={flexDirection === 'row' ? 0 : 2} flexDirection="row" alignItems="center">
+          <Flex
+            key={letter}
+            mt={flexDirection === 'row' ? 0 : 2}
+            flexDirection="row"
+            alignItems="center"
+          >
             {renderBox(enabled)}
-            {showBoth ? renderBox(!enabled) : null}
+            {showBoth ? renderBox(!enabled, 'label') : null}
             {labelsProp ? (
-              <Flex flex={1} ml={2} className="ab-LayoutEditor__LegendLetterDescription">
+              <Flex
+                key="labelProps"
+                flex={1}
+                ml={2}
+                className="ab-LayoutEditor__LegendLetterDescription"
+              >
                 {labelsProp[labelName]}
               </Flex>
             ) : null}
@@ -137,8 +147,18 @@ const ColumnLabels = (
   );
 };
 
-export const LayoutEditor = (props: LayoutEditorProps) => {
+function areEqual(_prevProps: LayoutEditorProps, _nextProps: LayoutEditorProps) {
+  /*
+   * For now we don't need updates from the parent - the initial layout we receive on mount is enough
+   * so for performance reasons, skip updating this component on subsequent renders
+   *
+   */
+  return true;
+}
+
+export const LayoutEditor = React.memo((props: LayoutEditorProps) => {
   const { api } = props;
+
   const allColumns = React.useMemo(() => api.columnApi.getColumns(), []);
 
   const initialState = React.useMemo(() => getInitialState(props.layout), []);
@@ -452,11 +472,12 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
                       Groupable={c.Groupable}
                       Aggregatable={c.Aggregatable}
                     >
-                      <Flex flex={1}></Flex>
+                      <Flex key="flexchild" flex={1}></Flex>
                       {c.Aggregatable &&
                       c.AvailableAggregationFunctions &&
                       c.AvailableAggregationFunctions.length ? (
                         <CheckBox
+                          key="checkbox"
                           ml={3}
                           disabled={!layout.RowGroupedColumns || !layout.RowGroupedColumns.length}
                           onChange={checked => {
@@ -732,4 +753,4 @@ export const LayoutEditor = (props: LayoutEditorProps) => {
       </Box>
     </DragDropContext>
   );
-};
+}, areEqual);

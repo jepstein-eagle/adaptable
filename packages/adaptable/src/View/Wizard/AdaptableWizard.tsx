@@ -19,6 +19,8 @@ export interface IWizardStepInfo {
 export interface AdaptableWizardProps extends React.ClassAttributes<AdaptableWizard> {
   steps: IWizardStepInfo[];
   data: any;
+  closeText?: React.ReactNode;
+  closeTooltip?: string;
   onHide: Function;
   onFinish?: Function;
   stepStartIndex?: number;
@@ -140,10 +142,10 @@ export class AdaptableWizard extends React.Component<AdaptableWizardProps, Adapt
               variant="text"
               data-name="close"
               onClick={() => this.props.onHide()}
-              tooltip="Close wizard"
+              tooltip={this.props.closeTooltip ?? 'Close wizard'}
               accessLevel={'Full'}
             >
-              CLOSE
+              {this.props.closeText ?? 'CLOSE'}
             </SimpleButton>
             <div style={{ flex: 1 }} />
             {hasBack ? (

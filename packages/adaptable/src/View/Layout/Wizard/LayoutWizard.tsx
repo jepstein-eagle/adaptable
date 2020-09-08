@@ -21,6 +21,8 @@ export class LayoutWizard extends React.Component<LayoutWizardProps, {}> {
         modalContainer={this.props.modalContainer}
         api={this.props.api}
         showStepsLegend={false}
+        closeText="CANCEL"
+        closeTooltip="Cancel changes and close layout editor"
         steps={[
           {
             StepName: 'Layout Editor',
