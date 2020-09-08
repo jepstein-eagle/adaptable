@@ -15,6 +15,7 @@ import {
   SearchChangedEventArgs,
   AdaptableColumn,
   PredicateDefHandlerParams,
+  AdaptablePredicate,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
@@ -377,6 +378,24 @@ async function InitAdaptableDemo() {
   setTimeout(() => {
     api.eventApi.on('AdaptableReady', () => {
       console.log('READY');
+
+      const columnId = 'bid'; // this is your condition.ColumnId
+      const column = api.columnApi.getColumnFromId(columnId);
+      const value = -33;
+      let returnValue: boolean = api.predicateApi.handlePredicate(
+        {
+          PredicateId: 'Positive',
+        },
+        {
+          value: value,
+          oldValue: value,
+          displayValue: value,
+          node: undefined,
+          column: column,
+        },
+        false
+      );
+      console.log('return value', returnValue);
     });
   }, 1000);
 
