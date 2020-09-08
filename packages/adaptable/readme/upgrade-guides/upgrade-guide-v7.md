@@ -13,7 +13,7 @@ These are the main updates to AdapTable in Version 7:
 * [Support for latest ag-Grid Version (23) including Alpine theme](#ag-grid-version-23)
 * [Changes to `Layout` (and a new UI) so they get saved automatically](#layout-changes)
 * [Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column`](#new-calculated-column-expression-syntax-and-ui)
-* [Powerful new `Query` object - expressions that can be shared across AdapTable functions (and which replaces Advanced Search)](#queries)
+* [New `Query` object - expressions shareable across AdapTable functions (replacing Advanced Search)](#queries)
 * [Previous 4 filter-related functions merged into one `Filter` function](#filter)
 * [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
 * [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
@@ -26,9 +26,6 @@ These are the main updates to AdapTable in Version 7:
 * [Other minor state changes and new CSS Variables](#other-changes)
 * [Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others](#reduced-package-size)
 
-## React Wrapper Changes
-
-
 ## ag-Grid Version 23
 
 Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
@@ -37,7 +34,7 @@ Version 7 of AdapTable supports ag-Grid Version 23 requiring these changes:
 
 The `floatingFilter` property is deprecated in gridOptions - you now have to specify it at column level (or in a default column definition).  
 
-Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and will activate it only for those columns).
+Consequently, AdapTable will only show Quick Filter bar **if at least one column** has this set to true (and activate it only for those columns).
 
 ### Themes
 
@@ -379,7 +376,9 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * Another consequence is `searchOptions.serverSearchOption` has been renamed to `serverSearchOptions` and become an array (which can take 'Query', 'Filter' or 'Sort')
 
-* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` and include `Scope` (see above)
+* **Alert**, **CellValidation** and **ConditionalStyle** now require a `Predicate` (see above)
+
+* **Report**, **Alert**, **CellValidation** and **ConditionalStyle** now include `Scope` (see above)
 
 * The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**
 
