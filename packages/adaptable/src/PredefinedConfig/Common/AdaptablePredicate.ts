@@ -450,8 +450,12 @@ export const SystemPredicateDefs: AdaptablePredicateDef[] = [
     columnScope: { DataTypes: ['Number'] },
     functionScope: ['alert', 'validation'],
     inputs: [{ type: 'number' }],
-    handler: ({ value, oldValue, inputs }) =>
-      (Math.abs(Number(value) - Number(oldValue)) / Number(value)) * 100 > Number(inputs[0]),
+    handler: ({ value, oldValue, inputs }) => {
+      const change = Math.abs(Number(value) - Number(oldValue));
+      const base = Math.min(Number(value), Number(oldValue));
+      const threshold = Number(inputs[0]);
+      return (change / base) * 100 > threshold;
+    },
   },
   {
     id: 'PrimaryKeyDuplicate',
