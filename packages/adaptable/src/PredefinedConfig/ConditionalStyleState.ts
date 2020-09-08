@@ -10,11 +10,13 @@ import { TypeHint } from './Common/Types';
  *
  * Use Conditional Styles to set rules for how columns or rows should look visualy based on the data they contain.
  *
- * Conditional Styles uses an Expression (aka Query) for evaluation.
+ * Conditional Styles uses either a Predicate or an Expression (aka Query) for evaluation.
  *
  * **Further AdapTable Help Resources**
  *
  * [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo/)
+ *
+ * {@link ConditionalStyleApi|Conditional Style Api}
  *
  * [Conditional Style Api](_src_api_conditionalstyleapi_.conditionalstyleapi.html)
  *
@@ -27,22 +29,27 @@ import { TypeHint } from './Common/Types';
  * ConditionalStyle: {
  *   ConditionalStyles: [
  *     {
- *       Scope: {
-            DataTypes: ['Number'],
-        },
- *       Style: {
+ *        Scope: {
+ *         DataTypes: ['Number'],
+ *       },
+ *        Style: {
  *          ForeColor: '#008000',
- *       },
- *       Expression: '[ChangeLastOrder]> 0'
- *     },
- *     {
- *       Scope: {
-            DataTypes: ['Number'],
-         },
-         Style: {
- *          ForeColor: '#ff0000',
- *       },
- *       Expression: '[ChangeLastOrder]< 0'
+ *        },
+ *        Predicate: {
+ *          PredicateId: 'Positive',
+ *        },
+ *      },
+ *      {
+ *        Scope: {
+ *          ColumnIds: ['InvoicedCost'],
+ *        },
+ *        Style: {
+ *          BackColor: '#ffffcc',
+ *          FontStyle: 'Italic',
+ *          ForeColor: '#000000',
+ *        },
+ *        Expression: '[InvoicedCost] > 1000 AND [ItemCount] < 20',
+ *        ExcludeGroupedRows: true,
  *     },
  *   ],
  * },
@@ -56,6 +63,10 @@ export interface ConditionalStyleState extends ConfigState {
 
 /**
  * The ConditionalStyle object used in the Conditional Style function.
+ *
+ * Note: the Rule should be **either a Predicate or an Expression** but not both.
+ *
+ * Predicates are preferred and used in most scenarios but Expressions are available for more complicated use cases.
  */
 export interface ConditionalStyle extends QueryObject {
   /**
@@ -63,6 +74,11 @@ export interface ConditionalStyle extends QueryObject {
    */
   Scope: AdaptableScope;
 
+  /**
+   * The Rule to use for deciding if a style needs to be applied.
+   *
+   * The Predicate will include a type (e.g. 'GreaterThan' and potentially inputs (e.g. '20'))
+   */
   Predicate?: ConditionalStylePredicate;
 
   /**

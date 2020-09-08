@@ -133,7 +133,11 @@ class QuickFilterFormComponent extends React.Component<QuickFilterFormProps, Qui
         {filter?.Predicate.PredicateId === 'Values' && this.renderValuesDropdown(filter)}
         {filter?.Predicate.PredicateId !== 'Values' &&
           activePredicateDef &&
-          activePredicateDef?.inputs === undefined && <Box p={1}>{activePredicateDef.label}</Box>}
+          activePredicateDef?.inputs === undefined && (
+            <Box p={1} alignSelf="center">
+              {activePredicateDef.label}
+            </Box>
+          )}
         {activePredicateDef?.inputs?.map((predicateInput, index) => (
           <Input
             key={index}
