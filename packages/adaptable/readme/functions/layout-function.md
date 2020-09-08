@@ -27,11 +27,9 @@ You can override the LayoutOptions property in each Layout by setting the `AutoS
 ### Auto-Sizing Layout Columns
 AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
 
-There are 3 properties (all available in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html)):
+There are 2 properties available in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html):
 
 - `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened** (*Default: false*) 
-
-- `autoSizeColumnsInDefaultLayout` - whether the Default Layout should automatically autosize columns (*Default: true*)
 
 - `autoSizeColumnsInPivotLayout` - whether a pivot-based Layout should automatically autosize columns when **first opened** (*Default: false*)
 
@@ -48,7 +46,7 @@ Layout includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Layoutes with *Edit* and *Delete* buttons, and a 'Current' Radio Button to select one to be set.  Also includes an *Add* button to start the Layout Wizard.
 
-- **Wizard** - A series of steps facilitating the creation and editing of Layouts.
+- **Editor** - A single screen which enables the creation and editing of Layouts.
 
 - **Toolbar** - Provides a list of the available Layoute in a dropdown, together with buttons for adding / restoring / deleting.
 
@@ -67,7 +65,9 @@ Layout supports these Entitlement Rules:
 
 **Is there a limit on the number of layouts allowed?**
 
-No, you can create as many layouts as you wish.
+No, you can create as many layouts as you wish but you must always have at least one Layout.
+
+AdapTable will prevent you from deleting the last Layout in your state.
 
 **Can my colleague use the same layout as me?**
 
@@ -89,17 +89,13 @@ Yes. If the underlying grid supports multiple sorts, then the layout will as wel
 
 Yes - this can be provided in the Config and it will be saved automatically as the Layout changes.  
 
-**Can I copy what is currently in my grid as a layout?**
-
-Yes, in version 1.10 there is an option to copy the current grid setup as your new layout. You can then subsequently make changes to either the new or the original layout without affecting the other.
-
 **What is the "Default Layout"?**
 
-This is a Layout that we create on start-up based on the column definitions you provide AdapTable at start-up. Unlike other Layouts, the Default Layout is not editable or saveable.
+This is a Layout that we create on start-up based on the column definitions you provide AdapTable at start-up if you have not defined any Layouts in your Predefined Config.
 
 **Is every layout editable and deletable?**
 
-Yes, other than the Default Layout (assuming that your [Entitlements](../guides/adaptable-entitlements-guide.md) allow you to edit / delete predefined Adaptable Objects).
+Yes, assuming that your [Entitlements](../guides/adaptable-entitlements-guide.md) allow you to edit / delete predefined Adaptable Objects.
 
 ### Further Information
 - [Layout State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html)
