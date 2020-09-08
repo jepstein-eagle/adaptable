@@ -9,6 +9,7 @@ By default Layouts will save automatially when their contents change - and there
 > This 'ReadMe' reflects how Layouts work as of Version 7 of AdapTable (released Sept. 2020). See the [Upgrade Guide](../upgrade-guides/upgrade-guide-v7.md) for the changes this Version made to Layouts.
 
 ### Layout Contents
+
 Layouts are primarily sets of column visibility and order; they **do not include styling functions** (e.g. Conditional Styles) **nor do they include searching or filtering functions**.
 
 However Layouts do include a number of important properties including:
@@ -30,6 +31,7 @@ However Layouts do include a number of important properties including:
 * pivoting information
 
 ### Creating Layouts
+
 Layouts are created in 2 ways:
 
 * visually in the Layout Editor which allows for the selection (and order) of visible columns, sorting, grouping, aggregrating and pivoting.
@@ -39,6 +41,7 @@ Layouts are created in 2 ways:
 > Creating a Layout in Predefined Config also allows you to set Pinning and Column Widths information - which cannot be done in the Layout Editor (as it is actioned in the Grid itself).
 
 ### Saving Layouts
+
 By default layouts **save automatically** when any relevant changes are made in the grid.
 
 To avoid this behaviour set the `autoSaveLayouts` property to **false** in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#autosavelayouts).  When this happens, a Save button will be visible in the Layout toolbar.
@@ -46,18 +49,22 @@ To avoid this behaviour set the `autoSaveLayouts` property to **false** in [Layo
 You can override the LayoutOptions property in each Layout by setting the `AutoSave` property.
 
 ### Auto-Sizing Layout Columns
+
 AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
 
 There are 2 properties available in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html) (both of which default to *false*):
 
-- `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened**  
+- `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened**
+
+> This will only be used if no Column Width information was provided in the Layout definition.
 
 - `autoSizeColumnsInPivotLayout` - whether pivot-based Layouts should automatically autosize columns when **first opened** 
 
 ### Default Layout
-You must always have at least one Layout - which will automatically get updated as your grid changes.
 
-> AdapTable will not allow you to default the last remaining Layout in your State.
+AdapTable must always have **at least one Layout** - which will automatically get updated as the grid changes.
+
+> AdapTable will not allow the last remaining Layout in the State to be deleted.
 
 If no Layouts are provided in Predefined Config, then AdapTable provides a **Default Layout** at start-up based on the inital column definitions provided to the grid.  
 
@@ -65,11 +72,13 @@ If no Layouts are provided in Predefined Config, then AdapTable provides a **Def
  tells AdapTable to create a Default Layout even if you have defined Layouts in Predefined Config.
 
 ### Persisting Expanded Grouped Rows
+
 By default a Layout will not store information about which Grouped Rows are currently open so this information is lost when the application next loads.
 
 To change this behaviour set the `includeExpandedRowGroups` property to **true** in [Layout Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_layoutoptions_.layoutoptions.html#includeexpandedrowgroups)
 
 ## UI Elements
+
 Layout includes the following UI Elements:
 
 - **Popup** - Shows a list of existing Layoutes with *Edit* and *Delete* buttons, and a 'Current' Radio Button to select one to be set.  Also includes an *Add* button to start the Layout Wizard.
@@ -133,6 +142,7 @@ The only time a Layout cannot be deleted is if it's the last one in the State (a
 Layouts received a big makeover in Version 7 of AdapTable including a much improved Layout Editor which removed the need for a separate Column Chooser screen.
 
 ### Further Information
+
 - [Layout State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_layoutstate_.layoutstate.html)
 
 - [Layout Api](https://api.adaptabletools.com/interfaces/_src_api_layoutapi_.layoutapi.html)
