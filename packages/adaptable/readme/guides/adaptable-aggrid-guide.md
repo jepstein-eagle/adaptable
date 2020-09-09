@@ -16,10 +16,9 @@ Currently AdapTable supports the first 2 of these, providinga a [React Wrapper](
 
 AdapTable is designed to work seamlessly with ag-grid Enterprise Edition (currently version 23).
 
-In Version 22 ag-Grid introduced [modularisation](https://www.ag-grid.com/javascript-grid-modules/)
- to manage package size and provide more flexibility.
- 
- AdapTable supports this fully and will always check if a required module is present before adding its supporting code (e.g. when providing extra menu options).
+In Version 22 ag-Grid introduced [modularisation](https://www.ag-grid.com/javascript-grid-modules/) to manage package size and provide more flexibility.
+
+AdapTable supports this fully and will always check if a required module is present before adding its supporting code (e.g. when providing extra menu options).
 
 ## ag-Grid Community Edition
 
@@ -65,7 +64,7 @@ Anything not included in this list can be assumed to be available when working w
 
 AdapTable supports ag-Grid Theming.
 
-If you use AdapTable's Dark Theme then it will automatically switch to the ag-Grid dark theme that has been supplied (either the new Alpine or older Blaham theme).
+If you use AdapTable's Dark Theme then it will automatically switch to the ag-Grid dark theme that has been supplied (either the new Alpine or older Balham theme).
 
 ## Licences
 

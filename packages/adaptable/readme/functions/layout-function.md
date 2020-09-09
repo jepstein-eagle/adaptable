@@ -48,6 +48,8 @@ To avoid this behaviour set the `autoSaveLayouts` property to **false** in [Layo
 
 You can override the LayoutOptions property in each Layout by setting the `AutoSave` property.
 
+> Any changes made in the _Layout Editor_ will **always** be saved when the user clicks 'Finish' irrespective of the value of the `autoSaveLayouts` property.
+
 ### Auto-Sizing Layout Columns
 
 AdapTable enables layout columns to be auto-sized by default - popular with users where horizontal space is at a premium.  
