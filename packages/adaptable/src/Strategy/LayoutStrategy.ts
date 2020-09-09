@@ -68,18 +68,20 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     let layouts: Layout[] = this.adaptable.api.layoutApi
       .getAllLayout()
       .filter((layout: Layout) => layout.Columns.includes(specialColumnId));
 
-    return ArrayExtensions.IsNotNullOrEmpty(layouts)
-      ? 'Layouts:' +
+    if (ArrayExtensions.IsNotNullOrEmpty(layouts)) {
+      references.push(
+        'Layouts: ' +
           layouts
             .map(l => {
               return l.Name;
             })
             .join(',')
-      : undefined;
+      );
+    }
   }
 }

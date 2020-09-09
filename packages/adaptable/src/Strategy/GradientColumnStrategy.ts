@@ -101,13 +101,12 @@ export class GradientColumnStrategy extends AdaptableStrategyBase
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     let gradientColumns: GradientColumn[] = this.adaptable.api.gradientColumnApi
       .getAllGradientColumn()
       .filter((gc: GradientColumn) => gc.ColumnId == specialColumnId);
-
-    return ArrayExtensions.IsNotNullOrEmpty(gradientColumns)
-      ? gradientColumns.length + ' Gradient Columns'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(gradientColumns)) {
+      references.push(gradientColumns.length + ' Gradient Columns');
+    }
   }
 }

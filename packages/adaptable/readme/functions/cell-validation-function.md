@@ -8,13 +8,15 @@ The Cell Validation Function enables you to validate proposed cell edits and dis
 
 Cell Validation is based on a `CellValidationRule` which determines whether or not a cell edit is valid.
 
-This uses a **Predicate** - the same object as is used as in filters - which has a type (e.g. GreaterThan) and, optionally, inputs (e.g. 100)
+This uses a **Predicate** - the same boolean function as is used as in filters - which has a type (e.g. GreaterThan) and, optionally, inputs (e.g. 100)
 
 > Developers can easily provide their own Custom Predicates to create bespoke validation rules.
 
 ### Using a Query
 
-In more advanced scenarios (e.g. if you want the rule to look not only at the cell being edited but also at other values in the row) the Cell Validation Rule can additionally use a **Query**.  When this is added, the Cell Validation Rule will only be applied if **both** the Predicate and the Query return _true_.
+In more advanced scenarios (e.g. if you want the rule to look not only at the cell being edited but also at other values in the row) the Cell Validation Rule can additionally use a **Query**.  
+
+When this is added, the Cell Validation Rule will only be applied if **both** the Predicate and the Query return _true_.
 
 ## Behaviour when a Rule is triggered
 

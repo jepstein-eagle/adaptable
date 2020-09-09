@@ -147,7 +147,7 @@ export class CalculatedColumnStrategy extends AdaptableStrategyBase
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     // TODO:  Need to be able to search expressions for this column, but worth holding off until they have all been updated!
     return undefined;
   }

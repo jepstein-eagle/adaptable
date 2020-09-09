@@ -65,17 +65,16 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let formatColumns: FormatColumn[] = this.adaptable.api.formatColumnApi
       .getAllFormatColumn()
       .filter((fc: FormatColumn) =>
         this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, fc.Scope)
       );
-
-    return ArrayExtensions.IsNotNullOrEmpty(formatColumns)
-      ? formatColumns.length + ' Format Column()'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(formatColumns)) {
+      references.push(formatColumns.length + ' Format Columns');
+    }
   }
 
   public abstract initStyles(): void;

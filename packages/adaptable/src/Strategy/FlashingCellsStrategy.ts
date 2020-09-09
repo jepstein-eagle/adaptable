@@ -64,14 +64,13 @@ export abstract class FlashingCellsStrategy extends AdaptableStrategyBase
     }
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     let flashingCells: FlashingCell[] = this.adaptable.api.flashingCellApi
       .getAllFlashingCell()
       .filter((fc: FlashingCell) => fc.ColumnId == specialColumnId);
-
-    return ArrayExtensions.IsNotNullOrEmpty(flashingCells)
-      ? flashingCells.length + ' Flashing Cells'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(flashingCells)) {
+      references.push(flashingCells.length + ' Flashing Cells');
+    }
   }
 
   public abstract initStyles(): void;
