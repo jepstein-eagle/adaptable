@@ -10,12 +10,15 @@ import useExpanded, { ExpandedProps } from './useExpanded';
 import renderItem from './renderItem';
 import DropdownButtonItem from './DropdownButtonItem';
 import OverlayTrigger, { OverlayTriggerProps } from '../OverlayTrigger';
+import { Icon } from '../icons';
 
 const ICON = (
   <svg width="20" height="20" viewBox="0 0 24 24">
     <path d="M7 10l5 5 5-5H7z" />
   </svg>
 );
+
+const spacer = <div style={{ flex: 1 }} />;
 
 export type DropdownButtonProps = BoxProps &
   React.HTMLProps<HTMLElement> &
@@ -28,6 +31,9 @@ export type DropdownButtonProps = BoxProps &
     listOffset?: number;
     items?: DropdownButtonItem[];
     idProperty?: string;
+    showClearButton?: boolean;
+    onClear?: () => void;
+    clearButtonProps?: SimpleButtonProps;
     listItemClassName?: string;
     listStyle?: React.CSSProperties;
     listMinWidth?: number;
@@ -49,6 +55,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
     overlayProps,
     listOffset = 10,
     collapseOnItemClick = true,
+
     idProperty = 'id',
     isItemDisabled,
     items,
@@ -58,6 +65,9 @@ const DropdownButton = (props: DropdownButtonProps) => {
     listItemStyle,
     listItemClassName,
     constrainTo,
+    showClearButton = false,
+    onClear,
+    clearButtonProps,
     ...domProps
   } = props;
 
@@ -153,7 +163,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
     background: 'var(--ab-cmp-dropdownbutton-list__background)',
     ...listStyle,
   };
-  const icon = expanded
+  let icon = expanded
     ? cloneElement(ICON, {
         style: {
           ...ICON.props.style,
@@ -161,6 +171,38 @@ const DropdownButton = (props: DropdownButtonProps) => {
         },
       })
     : ICON;
+
+  const hasClearButton = onClear || showClearButton;
+
+  const clearButton = hasClearButton ? (
+    <SimpleButton
+      disabled={domProps.disabled}
+      onClick={event => {
+        event.stopPropagation();
+        if (onClear) {
+          onClear();
+        }
+      }}
+      ml={2}
+      padding={0}
+      variant={domProps.variant}
+      icon="clear"
+      {...clearButtonProps}
+      style={{
+        ...clearButtonProps?.style,
+        visibility: showClearButton ? 'visible' : 'hidden',
+      }}
+    />
+  ) : null;
+
+  icon = (
+    <>
+      {spacer}
+      {hasClearButton ? clearButton : null}
+      {icon}
+    </>
+  );
+
   return (
     <OverlayTrigger
       visible={expanded}

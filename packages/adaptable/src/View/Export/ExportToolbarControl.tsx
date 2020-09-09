@@ -91,7 +91,7 @@ class ExportToolbarControlComponent extends React.Component<
       return {
         label: report.Name,
         value: report.Name,
-        // onClick: () => this.onSelectedReportChanged(report.Name),
+        onClick: () => this.onSelectedReportChanged(report.Name),
       };
     });
 
@@ -150,17 +150,18 @@ class ExportToolbarControlComponent extends React.Component<
 
     let content = (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__Export__wrap">
-        <Dropdown
+        <DropdownButton
           disabled={allReports.length == 0}
           style={{ minWidth: 160 }}
-          options={availableReports}
+          items={availableReports}
           className="ab-DashboardToolbar__Export__select"
-          placeholder="Select Report"
-          onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
-          value={currentReport ? currentReport.Name : null}
-          showClearButton
+          onClear={() => this.onSelectedReportChanged(null)}
+          showClearButton={!!currentReport}
+          variant="text"
           marginRight={2}
-        ></Dropdown>
+        >
+          {currentReport ? currentReport.Name : 'Select Report'}
+        </DropdownButton>
         {/*
         <DropdownButton
           marginRight={2}
