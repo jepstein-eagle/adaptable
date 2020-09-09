@@ -2,13 +2,22 @@
 
 The Alert Function enables the creation of powerful and flexible Alerts that can respond to a wide variety of different events.
 
-Alerts can be provided at design-time (through `AlertDefinitions` in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)) or at run-time through the UI (if Entitlements allow).
 
-Alerts are triggered, typically, when data changes through a [QueryRange](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_common_expression_.queryrange.html) that you specify.  
+## Alert Definitions
 
-A QueryRange can include any type of data change.  For example, this could be all changes for a particular column or a much more specific use case (e.g. if the 'Price' column change > 10%, or 'Country' column StartsWith 'c').
+The Alert State contains a group of `AlertDefinition` objects - each of which defines a rule which - when met - will fire the Alert.
 
-Alerts can, additionally, include [*Expressions*](https://api.adaptabletools.com/classes/_src_predefinedconfig_common_expression_.expression.html) (aka Queries) as the trigger (e.g. if the 'Price' column change > 10% AND Currency Column = 'EUR')
+> Alert Definitions can be provided at design-time (through `AlertDefinitions` in [Predefined Config](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_alertstate_.alertstate.html)) or at run-time through the UI (if Entitlements allow).
+
+The Alert Definition uses a **Predicate** - the same boolean function as is used as in filters - which has a type (e.g. GreaterThan) and, optionally, inputs (e.g. 100)
+
+> Developers can easily provide their own Custom Predicates to create bespoke validation rules.
+
+### Using a Query
+
+In more advanced scenarios (e.g. if you want the Alert Definition to look not only at the cell being edited but also at other values in the row) you can, additionally, use a **Query**.  
+
+When this is added, the Alert will only be fired if **both** the Predicate and the Query return _true_.
 
 > Alerts will trigger both as the result of direct user edits in the Grid and as data ticks in the underlying data source.
 
@@ -26,7 +35,7 @@ The `MessageType` of the Alert sets what type of of Message is displayed (and th
 
 ## Alert Properties
 
-The `AlertProperties` property of `AlertDefinition` contains a number of properties to configure what happens when an Alert is triggered.
+The `AlertProperties` property of `AlertDefinition` contains a number of properties to configure the grid's behaviour when an Alert is triggered.
 
 Options for displaying an Alert include:
 
@@ -41,6 +50,12 @@ Options for displaying an Alert include:
 > Note: All Alerts when triggered will display (and update the count) in the Alert Toolbar and Alert Tool Panel.
 >
 > Additionally, all Alerts will fire the `AlertFired` event (the contents of which will be also sent to the console).
+
+## Alert Definition Scope
+
+Like many objects in AdapTable, Alert uses **Scope** to determine **where** an Alert should be applied.
+
+The Scope can be one, some or all columns, or it can be all columns of a particular DataType (or DataTypes).
 
 ## UI Elements
 

@@ -9,7 +9,6 @@
   "typings": "index.d.ts",
   "dependencies": {
     "@adaptabletools/grid": "^0.1.8",
-
     "@types/react": ">=16.0.0",
     "babel-polyfill": "^6.26.0",
     "babel-runtime": "^6.26.0",

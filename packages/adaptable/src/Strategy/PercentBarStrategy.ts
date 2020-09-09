@@ -129,13 +129,12 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     let percentBars: PercentBar[] = this.GetPercentBarState().PercentBars.filter(
       (pb: PercentBar) => pb.ColumnId == specialColumnId
     );
-
-    return ArrayExtensions.IsNotNullOrEmpty(percentBars)
-      ? percentBars.length + ' Percent Bars'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(percentBars)) {
+      references.push(percentBars.length + ' Percent Bars');
+    }
   }
 }

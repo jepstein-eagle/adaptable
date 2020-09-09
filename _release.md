@@ -1,3 +1,7 @@
+## 7.0.1
+
+Incredibly few and minor changes for Layout and Expressions
+
 ## 7.0.0
 
 🎉

@@ -64,7 +64,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     return undefined;
   }
 

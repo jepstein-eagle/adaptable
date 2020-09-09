@@ -61,17 +61,16 @@ export abstract class ConditionalStyleStrategy extends AdaptableStrategyBase
       : undefined;
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let conditionalStyles: ConditionalStyle[] = this.adaptable.api.conditionalStyleApi
       .getAllConditionalStyle()
       .filter((cs: ConditionalStyle) =>
         this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, cs.Scope)
       );
-
-    return ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)
-      ? conditionalStyles.length + ' Conditional Styles'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(conditionalStyles)) {
+      references.push(conditionalStyles.length + ' Conditional Styles');
+    }
   }
 
   public abstract initStyles(): void;
