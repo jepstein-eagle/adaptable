@@ -16,7 +16,7 @@ This uses a **Predicate** - the same object as is used as in filters - which has
 
 In more advanced scenarios (e.g. if you want the rule to look not only at the cell being edited but also at other values in the row) the Cell Validation Rule can additionally use a **Query**.  When this is added, the Cell Validation Rule will only be applied if **both** the Predicate and the Query return _true_.
 
-### Behaviour when a Rule is triggered
+## Behaviour when a Rule is triggered
 
 There are 2 potential outcomes for what happens when a cell validation rule is broken:
 
@@ -24,16 +24,23 @@ There are 2 potential outcomes for what happens when a cell validation rule is b
 
 2.  **Show a Warning**: The user will receive a warning that the proposed data edit will break validation rules. There is the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, a reason must be provided.
 
-> If Audit Log is running, this explanation will be included as part of the general audit stream. 
+  > If Audit Log is running, this explanation will be included as part of the general audit stream. 
+  
+## Cell Validation Rule Scope
+
+Like many objects in AdapTable, Cell Validation uses **Scope** to determine **where** a Rule should be applied.
+
+The Scope can be one, some or all columns, or it can be all columns of a particular DataType (or DataTypes). 
+
 
 ## UI Elements
 Cell Validation includes the following UI Elements:
 
-- **Popup** - Shows a list of existing Cell Validations with *Edit* and *Delete* buttons, plus an *Add* button to start the Cell Validation Wizard.
+- **Popup** - Shows a list of existing Cell Validation Rules with *Edit* and *Delete* buttons, plus an *Add* button to start the Cell Validation Wizard.
 
-- **Wizard** - A series of steps facilitating the creation and editing of Cell Validations.
+- **Wizard** - A series of steps facilitating the creation and editing of Cell Validation Rules.
 
-- **Column Menu** - `Create Cell Validation Rule` Menu Item starts the Cell Validation wizard for that column.
+- **Column Menu** - `Create Cell Validation Rule` Menu Item starts the Cell Validation wizard using that Column as the Scope.
 
 
 ## Entitlements
