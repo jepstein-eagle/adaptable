@@ -91,6 +91,8 @@ class CellSummaryToolbarControlComponent extends React.Component<
           className="ab-DashboardToolbar__CellSummary__select"
           items={[...operationMenuItems, ...operationDefinitions]}
           disabled={shouldDisable}
+          variant={'text'}
+          tone={'neutral'}
         >
           {this.props.CellSummaryOperation}
         </DropdownButton>

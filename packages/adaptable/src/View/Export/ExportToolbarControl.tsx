@@ -91,6 +91,7 @@ class ExportToolbarControlComponent extends React.Component<
       return {
         label: report.Name,
         value: report.Name,
+        // onClick: () => this.onSelectedReportChanged(report.Name),
       };
     });
 
@@ -160,7 +161,20 @@ class ExportToolbarControlComponent extends React.Component<
           showClearButton
           marginRight={2}
         ></Dropdown>
-
+        {/*
+        <DropdownButton
+          marginRight={2}
+          columns={['label']}
+          className="ab-DashboardToolbar__Export__select"
+          items={availableReports}
+          placeholder="Select"
+          disabled={availableReports.length == 0}
+          variant={'text'}
+          tone={'neutral'}
+        >
+          {currentReport ? currentReport.Name : 'Select Report'}
+        </DropdownButton>
+*/}
         <DropdownButton
           className="ab-DashboardToolbar__Export__export"
           columns={['label']}

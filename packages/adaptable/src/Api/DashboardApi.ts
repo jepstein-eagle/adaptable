@@ -1,4 +1,4 @@
-import { DashboardState, CustomToolbar } from '../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar, DashboardTab } from '../PredefinedConfig/DashboardState';
 import { AdaptableFunctionButtons } from '../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
 
@@ -113,4 +113,12 @@ export interface DashboardApi {
    * Opens the Dashboard popup screen
    */
   showDashboardPopup(): void;
+
+  getTabByName(tabName: string): DashboardTab;
+
+  fireToolbarVisibilityChangedEvent(
+    tab: DashboardTab,
+    toolbar: string,
+    visibility: 'Visible' | 'Hidden'
+  ): void;
 }

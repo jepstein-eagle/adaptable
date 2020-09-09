@@ -23,8 +23,8 @@ export { ColumnSort } from './PredefinedConfig/Common/ColumnSort';
 export { AdaptableStyle } from './PredefinedConfig/Common/AdaptableStyle';
 export { AdaptableScope as Scope } from './PredefinedConfig/Common/AdaptableScope';
 export {
-  AdaptablePredicate as Predicate,
-  AdaptablePredicateDef as PredicateDef,
+  AdaptablePredicate,
+  AdaptablePredicateDef,
   PredicateDefInput,
   PredicateDefHandlerParams,
   PredicateDefToStringParams,

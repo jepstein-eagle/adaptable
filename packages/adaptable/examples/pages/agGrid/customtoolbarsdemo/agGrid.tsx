@@ -11,6 +11,7 @@ import {
   AdaptableOptions,
   PredefinedConfig,
   DashboardButtonClickedInfo,
+  DashboardTab,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import ReactDOM from 'react-dom';
@@ -28,6 +29,9 @@ async function InitAdaptableDemo() {
     primaryKey: 'tradeId',
     userName: 'Demo User',
     adaptableId: 'Custom Toolbars Demo',
+    userInterfaceOptions: {
+      showAdaptableToolPanel: false,
+    },
     vendorGrid: {
       ...gridOptions,
       modules: AllEnterpriseModules,
@@ -43,6 +47,7 @@ async function InitAdaptableDemo() {
     console.log(toolbarVisibilityChangedInfo);
     if (toolbarVisibilityChangedInfo.visibility === 'Visible') {
       if (toolbarVisibilityChangedInfo.toolbar === 'Toolbar1') {
+        console.log('rendering Toolbar 1');
         let toolbarContents: any = (
           <div style={{ display: 'flex' }}>
             <button
@@ -84,9 +89,7 @@ async function InitAdaptableDemo() {
     }
   });
 
-  function onNewTradeClicked() {
-    alert('Hello Nat West');
-  }
+  function onNewTradeClicked() {}
 
   api.eventApi.on('ToolbarButtonClicked', toolbarButtonClickedEventArgs => {
     let eventInfo: ToolbarButtonClickedInfo = toolbarButtonClickedEventArgs.data[0].id;
@@ -127,6 +130,10 @@ async function InitAdaptableDemo() {
     let dashboardButton = eventInfo.dashboardButton;
     console.log(eventInfo);
     console.log(dashboardButton.Name);
+    if (dashboardButton.Name == 'cb3') {
+      let tab: DashboardTab = api.dashboardApi.getTabByName('Test');
+      api.dashboardApi.fireToolbarVisibilityChangedEvent(tab, 'Toolbar1', 'Visible');
+    }
   });
 
   api.eventApi.on('CustomToolbarConfigured', customToolbarConfiguredEventArgs => {
@@ -139,10 +146,16 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Dashboard: {
-    Revision: 8,
+    Revision: Date.now(),
     CanFloat: false,
     IsInline: false,
     VisibleButtons: ['BulkUpdate', 'CellValidation', 'ConditionalStyle', 'PercentBar'],
+    Tabs: [
+      {
+        Name: 'Test',
+        Toolbars: ['Toolbar1', 'Toolbar2'],
+      },
+    ],
     CustomButtons: [
       {
         Name: 'cb1',
@@ -286,7 +299,7 @@ let demoConfig: PredefinedConfig = {
     ColumnFilters: [
       {
         ColumnId: 'currency',
-        Predicate: { Id: 'In', Inputs: ['GBP', 'ZAR'] },
+        Predicate: { PredicateId: 'Values', Inputs: ['GBP', 'ZAR'] },
       },
     ],
   },

@@ -3,11 +3,13 @@ import { ApiBase } from './ApiBase';
 import { DashboardApi } from '../DashboardApi';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
-import { DashboardState, CustomToolbar } from '../../PredefinedConfig/DashboardState';
+import { DashboardState, CustomToolbar, DashboardTab } from '../../PredefinedConfig/DashboardState';
 import { AdaptableFunctionButtons } from '../../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import Helper from '../../Utilities/Helpers/Helper';
+import { ToolbarVisibilityChangedInfo, ToolbarVisibilityChangedEventArgs } from '../../types';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 
 export class DashboardApiImpl extends ApiBase implements DashboardApi {
   public getDashboardState(): DashboardState {
@@ -75,6 +77,10 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     }
   }
 
+  public getTabByName(tabName: string): DashboardTab {
+    return this.getDashboardState().Tabs.find(tab => tab.Name == tabName);
+  }
+
   public collapseDashboard(): void {
     this.dispatchAction(DashboardRedux.DashboardSetIsCollapsed(true));
   }
@@ -97,6 +103,25 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
 
   public setActiveTab(tabIndex: number): void {
     this.dispatchAction(DashboardRedux.DashboardSetActiveTab(tabIndex));
+  }
+
+  public fireToolbarVisibilityChangedEvent(
+    tab: DashboardTab,
+    toolbar: string,
+    visibility: 'Visible' | 'Hidden'
+  ): void {
+    let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo = {
+      tab: tab,
+      toolbar: toolbar,
+      visibility: visibility,
+      adaptableApi: this.adaptable.api,
+    };
+    const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = AdaptableHelper.createFDC3Message(
+      'Toolbar Visibility Changed Args',
+      toolbarVisibilityChangedInfo
+    );
+
+    this.adaptable.api.eventApi.emit('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs);
   }
 
   public showDashboardPopup(): void {

@@ -18,8 +18,8 @@ There are 3 types of reports you can run:
 
 Each report essentially contains 2 elements:
 
-1. List of Columns which will be exported
-2. Expression that will run when export is triggered and which will evaluate which Rows to include
+1. Details of which **Columns**  will be exported
+2. Details of which **Rows** will be exported
 
 You can specify for each report / column combination whether to export the **DisplayValue** or **RawValue** of the column's cell values.
 
@@ -64,13 +64,15 @@ and also - depending on whether the appropriate plugin is loaded:
 
 You can schedule your exports to run at at time of your choosing or export manually whenever you want, e.g. you can create an 'End of Day' Report to run every weekeday at 17:00.
 
+> Details of the schedule are stored in the [Schedule](schedule-function.md) section of Adaptable State.
+
 ## UI Elements
 
 Export includes the following UI Elements:
 
-- **Popup** - Shows all the available Reports (both System and User) together with an option to export to a destination of the User's choice.   Plus an *Add* button to start the Export Wizard.
+- **Popup** - Shows all the available Reports together with an option to export to a destination of the User's choice.   Plus an *Add* button to start the Export Wizard.
 
-- **Toolbar** - Shows all the available Reports (both System and User) together with an option to export to a destination of the User's choice.  Also includes a Schedule button to enable reports to be run on Schedules.
+- **Toolbar** - Shows all the available Reports together with an option to export to a destination of the User's choice.  Also includes a Schedule button to enable reports to be run on Schedules.
 
 - **Tool Panel** - Same as Toolbar above.
 

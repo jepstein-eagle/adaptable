@@ -114,6 +114,8 @@ class SmartEditToolbarControlComponent extends React.Component<
           items={operationMenuItems}
           columns={['label']}
           disabled={shouldDisable}
+          variant={'text'}
+          tone={'neutral'}
         >
           {this.props.MathOperation}
         </DropdownButton>

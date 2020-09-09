@@ -5,11 +5,6 @@ import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IDashboardStrategy } from './Interface/IDashboardStrategy';
 import * as DashboardRedux from '../Redux/ActionsReducers/DashboardRedux';
 import { AdaptableMenuItem } from '../PredefinedConfig/Common/Menu';
-import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
-import {
-  ToolbarVisibilityChangedEventArgs,
-  ToolbarVisibilityChangedInfo,
-} from '../Api/Events/ToolbarVisibilityChanged';
 import { DashboardTab } from '../PredefinedConfig/DashboardState';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 
@@ -49,7 +44,11 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         let tab: DashboardTab = this.adaptable.api.dashboardApi.getDashboardState().Tabs[activeTab];
         if (tab) {
           tab.Toolbars.forEach(toolbar => {
-            this.fireToolbarVisibilityChangedEvent(tab, toolbar);
+            this.adaptable.api.dashboardApi.fireToolbarVisibilityChangedEvent(
+              tab,
+              toolbar,
+              'Visible'
+            );
           });
         }
       }
@@ -97,20 +96,5 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
 
       return menuItems;
     }
-  }
-
-  private fireToolbarVisibilityChangedEvent(tab: DashboardTab, toolbar: string): void {
-    let toolbarVisibilityChangedInfo: ToolbarVisibilityChangedInfo = {
-      tab: tab,
-      toolbar: toolbar,
-      visibility: 'Visible',
-      adaptableApi: this.adaptable.api,
-    };
-    const toolbarVisibilityChangedEventArgs: ToolbarVisibilityChangedEventArgs = AdaptableHelper.createFDC3Message(
-      'Toolbar Visibility Changed Args',
-      toolbarVisibilityChangedInfo
-    );
-
-    this.adaptable.api.eventApi.emit('ToolbarVisibilityChanged', toolbarVisibilityChangedEventArgs);
   }
 }

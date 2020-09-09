@@ -33,31 +33,29 @@ import { TypeHint } from './Common/Types';
  *    MaxAlertsInStore: 10,
  *    AlertDefinitions: [
  *    {
- *      ColumnId: 'InvoicedCost',
+ *      Scope: {
+ *          ColumnIds: ['InvoicedCost'],
+ *        }
  *      MessageType: 'Warning',
- *      Range: {
- *        Operand1: '2000',
- *        Operand1Type: 'Value',
- *        Operand2: '',
- *        Operand2Type: 'Value',
- *        Operator: 'GreaterThan',
- *      },
+ *      Predicate: {
+ *          PredicateId: 'GreaterThan',
+ *          Inputs: [2000],
+ *        },
  *      AlertProperties: {
  *       ShowPopup: true,
  *      },
  *    },
  *    {
- *      ColumnId: 'ItemCount',
+ *     Scope: {
+ *         ColumnIds: ['ItemCount'],
+ *      }
  *      MessageType: 'Info',
- *      Range: {
- *        Operand1: '100',
- *        Operand1Type: 'Value',
- *        Operand2: '',
- *        Operand2Type: 'Value',
- *        Operator: 'PercentChange',
- *      },
+ *      Predicate: {
+ *          PredicateId: 'PercentChange',
+ *          Inputs: [100],
+ *        },
  *      AlertProperties: {
- *       ShowPopup: true,
+ *       ShowPopup: false,
  *      },
  *     },
  *   ],
@@ -104,19 +102,22 @@ export interface AlertState extends ConfigState {
  * See {@link AlertState|Alert State} for how to use this object.
  */
 export interface AlertDefinition extends QueryObject {
+  /**
+   * Where the `Alert` can be triggered - can be one, some or all Columns in the row
+   *
+   * Or can be all Colunns of a  given DataType(s)
+   */
   Scope: AdaptableScope;
 
-  // perhaps later | Predicate[]; // think about an array ... // ANDs  // later
-  Predicate?: AlertDefinitionPredicate;
-
   /**
-   * An (optional) Expression (or Query).
+   * The logic to use for triggering an `Alert`.
    *
-   * If set, then this Expression also needs to be satisfied before the Alert can be triggered.
+   * The Predicate will include a type (e.g. 'GreaterThan' and potentially inputs (e.g. '20'))
    *
-   * See Expression Object Config for more information.
+   * Note that there is also an optional Expression / Shared Query that can be set.  This is to be used **in addition to the predicate** for more advanced scenarios
+   *
    */
-  //Expression?: Expression;
+  Predicate?: AlertDefinitionPredicate;
 
   /**
    * The type of the Alert - will influence how the Alert is logged and also the colour and icon displayed.
