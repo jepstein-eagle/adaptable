@@ -7,7 +7,7 @@ import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
  *
  * --------------
  *
- * ### Search Options Example**
+ * ### Search Options Example
  *
  * ```ts
  * searchOptions = {

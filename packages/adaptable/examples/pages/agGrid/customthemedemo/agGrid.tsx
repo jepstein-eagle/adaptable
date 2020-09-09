@@ -11,7 +11,6 @@ import '../../../../src/themes/dark.scss';
 import './index.css';
 
 import { GridOptions } from '@ag-grid-community/all-modules';
-import { LicenseManager } from 'ag-grid-enterprise';
 import Adaptable from '../../../../src/agGrid';
 import {
   AdaptableOptions,

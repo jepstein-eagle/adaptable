@@ -70,7 +70,7 @@ class ConditionalStylePopupComponent extends React.Component<
 
           this.setState({
             editedAdaptableObject: _editedConditionalStyle,
-            wizardStartIndex: 1,
+            wizardStartIndex: 0,
             wizardStatus: WizardStatus.New,
           });
         }

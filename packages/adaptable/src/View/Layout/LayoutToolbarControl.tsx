@@ -21,6 +21,7 @@ import join from '../../components/utils/join';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import DropdownButton from '../../components/DropdownButton';
 
 interface LayoutToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<LayoutToolbarControlComponent> {
@@ -52,6 +53,7 @@ class LayoutToolbarControlComponent extends React.Component<
         ...layout,
         label: layout.Name,
         value: layout.Name,
+        // onClick: () => this.props.onSelectLayout(layout.Name),
       };
     });
 
@@ -70,7 +72,19 @@ class LayoutToolbarControlComponent extends React.Component<
           }}
           showClearButton={false}
         />
-
+        {/*
+        <DropdownButton
+          marginRight={2}
+          columns={['label']}
+          className="ab-DashboardToolbar__Layout__select"
+          items={availableLayoutOptions}
+          disabled={availableLayoutOptions.length == 0}
+          variant={'text'}
+          tone={'neutral'}
+        >
+          {layoutEntity ? layoutEntity.Name : null}
+        </DropdownButton>
+ */}
         <Flex
           flexDirection="row"
           className={join(
