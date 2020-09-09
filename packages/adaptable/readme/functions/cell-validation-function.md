@@ -1,22 +1,30 @@
 # Cell Validation (AdaptableFunction)
 
-The Cell Validation Function enables you to validate proposed cell edits through the creation of custom rules.
+The Cell Validation Function enables you to validate proposed cell edits and disallow them where they broke custom rules.
+
+> Cell Validation Rules take place on the client.  AdapTable also offers the ability - in Edit Options - to provide Server Validation: where an edit is checked on the server and either the same, a new or no value is returned.
 
 ## Validation Rules
 
-The Rule is based on a **Predicate** - the same as is used as in filters.
+Cell Validation is based on a `CellValidationRule` which determines whether or not a cell edit is valid.
 
-This means that you can easily provide your own Custom Predicates to create your own validation rules.
+This uses a **Predicate** - the same object as is used as in filters - which has a type (e.g. GreaterThan) and, optionally, inputs (e.g. 100)
 
-> The Cell Validation Rule can be dependent also on other values in the row by using an using **Query**.  When this is added, the Cell Validation Rule will only be applied if a row has values that match the conditions defined.
+> Developers can easily provide their own Custom Predicates to create bespoke validation rules.
 
-There are 2 outcomes for what happens when a cell validation rule is broken:
+### Using a Query
+
+In more advanced scenarios (e.g. if you want the rule to look not only at the cell being edited but also at other values in the row) the Cell Validation Rule can additionally use a **Query**.  When this is added, the Cell Validation Rule will only be applied if **both** the Predicate and the Query return _true_.
+
+### Behaviour when a Rule is triggered
+
+There are 2 potential outcomes for what happens when a cell validation rule is broken:
 
 1.  **Prevent the Cell Edit**: The proposed change will be disallowed and the cell being edited will return to its initial pre-edited value.
 
-2.  **Show a Warning**: The user will receive a warning that the proposed data edit will break validation rules. There is the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, a reason must be provided (which is then sent to the Audit Log if that is running).
+2.  **Show a Warning**: The user will receive a warning that the proposed data edit will break validation rules. There is the option of cancelling the change or overriding the rule so that the change takes place. If they do the latter, a reason must be provided.
 
-> Cell Validation Rules take place on the client.  AdapTable also offers the ability - in Edit Options - to provide Server Validation: where an edit is checked on the server and either the same, a new or no value is returned.
+> If Audit Log is running, this explanation will be included as part of the general audit stream. 
 
 ## UI Elements
 Cell Validation includes the following UI Elements:
@@ -39,30 +47,24 @@ Cell Validation supports these Entitlement Rules:
 
 
 ## FAQ
-> One advantage of Cell Validation rules is that they come into effect immediately after that they are created. There is no down-time needed, nor any custom development required, and no systems need to be restarted.
+
 **Why add validation on the client - surely it should take place on the server?**
 
 You are right, validation should ideally take place on the server and hopefully it does for our users. 
 
 The Cell Validation function is not designed to replace Server Validation [which AdapTable also offers](https://demo.adaptabletools.com/edit/aggridservervalidationdemo)
 
-Instead Cell Validation specifically deals with 2 common use cases:
+Instead Cell Validation specifically deals with 3 common use cases:
 
 - to add an extra level of validation so that you can prevent or set warnings for edits which are usually permitted, but which in particular scenarios or use cases should be avoided or checked first (e.g. if things are particularly volatile and you want to limit how much a cell can change by).
 
-- to avoid unnecessary round trips to the server, particularly if this will have other knock-on consequences or effect other users
+- to avoid unnecessary round trips to the server, particularly if this will have other knock-on consequences or effect other users that might see their screen flash first with the new value and then again with the old value
+
+- as a temporary measure before Server Validation has been added; like all AdapTable objects, Cell Validation rules will ome into effect immediately after that they are created - there is no down-time needed, nor any custom development required, and no systems need to be restarted.
 
 **I dont want to stop the edit when a rule is broken but I do want to know; is that possible?**
 
-Yes there are 2 possible actions when a Cell Validation rule is breached:
-
-- Prevent - the edit won't happen under any circumstances.
-
-- Warning - the user is shown a warning which he can override (with an accompanying comment).  If this happens then the edit completes.
-
-It seems as though the second of these is more appropriate in this use case.
-
-> Note: AdapTable only allows 'Warning' overrides when an associated explanation is provided; if Audit Log is running, this explanation will be sent as part of the general audit stream.
+Yes set the `ActionMode` to 'Warn User'.  This will display a warning that you can override (with an accompanying comment).  If this happens then the edit completes.
 
 
 ### Further Information
