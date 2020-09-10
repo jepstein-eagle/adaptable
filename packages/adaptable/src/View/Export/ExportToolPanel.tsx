@@ -99,6 +99,7 @@ class ExportToolPanelComponent extends React.Component<
       return {
         label: report.Name,
         value: report.Name,
+        onClick: () => this.onSelectedReportChanged(report.Name),
       };
     });
 
@@ -159,17 +160,19 @@ class ExportToolPanelComponent extends React.Component<
     let content = (
       <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__Export__wrap">
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Export__wrap">
-          <Dropdown
+          <DropdownButton
             disabled={allReports.length == 0}
-            style={{ minWidth: 160 }}
-            options={availableReports}
+            style={{ minWidth: 160, fontSize: 'small' }}
+            items={availableReports}
             className="ab-ToolPanel__Export__select"
-            placeholder="Select Report"
-            onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
-            value={currentReport ? currentReport.Name : null}
-            showClearButton
+            showClearButton={!!currentReport}
             marginRight={2}
-          ></Dropdown>
+            marginBottom={1}
+            onClear={() => this.onSelectedReportChanged(null)}
+            variant="outlined"
+          >
+            {currentReport?.Name ?? 'Select Report'}
+          </DropdownButton>
         </Flex>
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Export_wrap">
           <DropdownButton

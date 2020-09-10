@@ -18,12 +18,6 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
       adaptable
     );
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      // create a default Dashboard tab if one not provided
-      this.adaptable.api.internalApi.setDefaultDashboardTab();
-      this.prepareToolbarVisibilityChangedEvent();
-    });
-
     adaptable.adaptableStore.onAny((eventName: string) => {
       if (
         eventName == DashboardRedux.DASHBOARD_SET_ACTIVE_TAB ||
@@ -34,6 +28,12 @@ export class DashboardStrategy extends AdaptableStrategyBase implements IDashboa
         this.prepareToolbarVisibilityChangedEvent();
       }
     });
+  }
+
+  public tidyOldConfig(): void {
+    // create a default Dashboard tab if one not provided
+    this.adaptable.api.internalApi.setDefaultDashboardTab();
+    this.prepareToolbarVisibilityChangedEvent();
   }
 
   private prepareToolbarVisibilityChangedEvent(): void {

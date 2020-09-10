@@ -59,7 +59,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
     return menuItemShowPopup;
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let alertDefinitions: AlertDefinition[] = this.adaptable.api.alertApi
       .getAlertDefinitions()
@@ -67,9 +67,10 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
         this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, ad.Scope)
       );
 
-    return ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)
-      ? alertDefinitions.length + ' Alerts'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(alertDefinitions)) {
+      let reference: string = alertDefinitions.length == 1 ? ' Alert' : ' Alerts';
+      references.push(alertDefinitions.length + reference);
+    }
   }
 
   protected handleDataSourceChanged(dataChangedInfo: DataChangedInfo): void {
@@ -100,7 +101,7 @@ export abstract class AlertStrategy extends AdaptableStrategyBase implements IAl
       );
     let triggeredAlerts: AlertDefinition[] = [];
     if (ArrayExtensions.IsNotNullOrEmpty(relatedAlertDefinitions)) {
-      // first check the rules which have expressions
+      // first check the rules which have a Query
       let expressionAlertDefinitions: AlertDefinition[] = relatedAlertDefinitions.filter(
         r => this.adaptable.api.queryApi.QueryObjectToString(r) != undefined
       );

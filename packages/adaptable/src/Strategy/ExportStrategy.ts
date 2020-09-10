@@ -167,7 +167,7 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     let reports: Report[] = this.adaptable.api.exportApi.getAllReports().filter((r: Report) =>
       this.adaptable.api.scopeApi
         .getColumnsForScope(r.Scope)
@@ -177,6 +177,15 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
         .includes(specialColumnId)
     );
 
-    return ArrayExtensions.IsNotNullOrEmpty(reports) ? reports.length + ' Reports' : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(reports)) {
+      references.push(
+        'Reports: ' +
+          reports
+            .map(r => {
+              return r.Name;
+            })
+            .join(',')
+      );
+    }
   }
 }

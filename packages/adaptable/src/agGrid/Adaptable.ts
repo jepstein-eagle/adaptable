@@ -2076,15 +2076,15 @@ export class Adaptable implements IAdaptable {
   };
 
   public isSpecialColumnReferenced(columnId: string): boolean {
-    let referencedText: string | undefined = '';
+    let references: string[] = [];
     this.strategies.forEach(s => {
-      const strategyReference = s.getSpecialColumnReferences(columnId);
-      if (StringExtensions.IsNotNullOrEmpty(strategyReference)) {
-        referencedText += ' ' + strategyReference;
-      }
+      s.getSpecialColumnReferences(columnId, references);
     });
-    if (StringExtensions.IsNotNullOrEmpty(referencedText)) {
-      alert('Cannot delete the column because it is referenced in' + referencedText);
+    if (ArrayExtensions.IsNotNullOrEmpty(references)) {
+      this.api.alertApi.showAlertError(
+        'Cannot Delete the Column as it is referenced in:',
+        references.join('\n')
+      );
       return true;
     }
     return false;

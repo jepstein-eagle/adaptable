@@ -49,7 +49,7 @@ export class CellValidationStrategy extends AdaptableStrategyBase
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(specialColumnId);
     let cellValidations: CellValidationRule[] = this.adaptable.api.cellValidationApi
       .getAllCellValidation()
@@ -57,8 +57,8 @@ export class CellValidationStrategy extends AdaptableStrategyBase
         this.adaptable.api.scopeApi.isColumnInScopeColumns(abColumn, cs.Scope)
       );
 
-    return ArrayExtensions.IsNotNullOrEmpty(cellValidations)
-      ? cellValidations.length + ' Cell Validations'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(cellValidations)) {
+      references.push(cellValidations.length + ' Cell Validations');
+    }
   }
 }

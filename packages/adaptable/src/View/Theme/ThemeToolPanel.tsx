@@ -45,6 +45,7 @@ class ThemeToolPanelComponent extends React.Component<
       return {
         label: theme.Description,
         value: theme.Description,
+        onClick: () => this.onSelectTheme(theme.Description),
       };
     });
 
@@ -66,16 +67,15 @@ class ThemeToolPanelComponent extends React.Component<
               'ab-ToolPanel__Theme__wrap'
             )}
           >
-            <Dropdown
-              style={{ minWidth: 170 }}
+            <DropdownButton
+              style={{ minWidth: 170, fontSize: 'small' }}
               className="ab-ToolPanel__Theme__select"
               placeholder="Select Theme"
-              showEmptyItem={false}
               value={currentTheme!.Description}
-              options={themes}
-              showClearButton={false}
-              onChange={(themeDescription: string) => this.onSelectTheme(themeDescription)}
-            />
+              items={themes}
+            >
+              {currentTheme!.Description}
+            </DropdownButton>
           </div>
         )}
       </PanelToolPanel>

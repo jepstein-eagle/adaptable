@@ -35,6 +35,7 @@ import ObjectFactory from '@adaptabletools/adaptable/src/Utilities/ObjectFactory
 import { ButtonNewPage } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonNewPage';
 import { ButtonLogout } from '@adaptabletools/adaptable/src/View/Components/Buttons/ButtonLogout';
 import { AdaptableDashboardToolbar } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Types';
+import DropdownButton from '@adaptabletools/adaptable/src/components/DropdownButton';
 
 interface IPushPullToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<IPushPullToolbarControlComponent> {
@@ -119,6 +120,7 @@ class IPushPullToolbarControlComponent extends React.Component<
       return {
         label: report.Name,
         value: report.Name,
+        onClick: () => this.onSelectedReportChanged(report.Name),
       };
     });
 
@@ -147,17 +149,20 @@ class IPushPullToolbarControlComponent extends React.Component<
 
     let content = this.props.IsIPushPullRunning ? (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__IPushPull__wrap">
-        <Dropdown
+        <DropdownButton
           disabled={allReports.length == 0 || isLiveIPushPullReport}
-          style={{ minWidth: 140 }}
-          options={availableReports}
+          style={{ minWidth: 140, fontSize: 'small' }}
+          items={availableReports}
           className="ab-DashboardToolbar__IPushPull__select"
-          placeholder="Select Report"
-          onChange={(reportName: string) => this.onSelectedReportChanged(reportName)}
-          value={this.state.ReportName} // do props and update after we change????
-          showClearButton
+          onClear={() => this.onSelectedReportChanged(null)}
+          showClearButton={StringExtensions.IsNotNullOrEmpty(this.state.ReportName)}
+          variant="outlined"
           marginRight={2}
-        ></Dropdown>
+        >
+          {StringExtensions.IsNotNullOrEmpty(this.state.ReportName)
+            ? this.state.ReportName
+            : 'Select Report'}
+        </DropdownButton>
         <Dropdown
           disabled={allReports.length == 0 || isLiveIPushPullReport}
           style={{ minWidth: 140 }}

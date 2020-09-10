@@ -11,6 +11,7 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
+import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class FilterApiImpl extends ApiBase implements FilterApi {
   public getSystemFilterState(): FilterState {
@@ -68,10 +69,17 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
 
   public setColumnFilter(columnFilters: ColumnFilter[]): void {
     columnFilters.forEach(columnFilter => {
-      if (this.getAllColumnFilter().find(cf => cf.ColumnId == columnFilter.ColumnId)) {
-        this.dispatchAction(FilterRedux.ColumnFilterEdit(columnFilter));
+      const isValidPredicate: boolean = this.adaptable.api.predicateApi.isValidPredicate(
+        columnFilter.Predicate
+      );
+      if (!isValidPredicate) {
+        LogAdaptableWarning('Column Filter Predicate is not valid', columnFilter);
       } else {
-        this.dispatchAction(FilterRedux.ColumnFilterAdd(columnFilter));
+        if (this.getAllColumnFilter().find(cf => cf.ColumnId == columnFilter.ColumnId)) {
+          this.dispatchAction(FilterRedux.ColumnFilterEdit(columnFilter));
+        } else {
+          this.dispatchAction(FilterRedux.ColumnFilterAdd(columnFilter));
+        }
       }
     });
   }

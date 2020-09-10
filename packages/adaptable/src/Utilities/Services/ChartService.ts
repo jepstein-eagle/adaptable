@@ -192,27 +192,6 @@ export class ChartService implements IChartService {
 
     showAverageTotal: boolean
   ): number {
-    /*
-    // think we need this to help me work out what is being evaluated here!
-    let columnValueExpressions: ColumnValueExpression[] = kvps.map(kvp => {
-      return {
-        ColumnId: kvp.Key,
-        ColumnDisplayValues: [kvp.Value],
-        ColumnRawValues: [],
-      };
-    });
-
-    let completedExpression: Expression = {
-      Uuid: createUuid(),
-      ColumnValueExpressions: columnValueExpressions,
-      FilterExpressions: [],
-      RangeExpressions: [],
-    };
-    */
-
-    // need here to create a 'completedExpresson' based on the kvp passed in
-    // but for now lets just create an empty one
-    // TODO - to fix!!!!
     let completedExpressionTemp: string = '[' + xAxisColumnId + '] = "' + xAxisColumnValue + '"';
 
     let finalTotal: number = 0;

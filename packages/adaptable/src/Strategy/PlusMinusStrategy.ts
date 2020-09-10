@@ -249,13 +249,13 @@ export class PlusMinusStrategy extends AdaptableStrategyBase implements IPlusMin
     };
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string | undefined {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     let plusMinusRules: PlusMinusRule[] = this.adaptable.api.plusMinusApi
       .getAllPlusMinus()
       .filter((pmr: PlusMinusRule) => pmr.ColumnId == specialColumnId);
 
-    return ArrayExtensions.IsNotNullOrEmpty(plusMinusRules)
-      ? plusMinusRules.length + ' Plus Minus Rules'
-      : undefined;
+    if (ArrayExtensions.IsNotNullOrEmpty(plusMinusRules)) {
+      references.push(plusMinusRules.length + ' Plus Minus Rules');
+    }
   }
 }

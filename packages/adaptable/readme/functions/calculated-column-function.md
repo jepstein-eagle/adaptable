@@ -182,9 +182,9 @@ Yes, your Calculated Column can return a number, string, date or boolean. AdapTa
 
 **Can I change the name of a Calculated Column?**
 
-You can and the change will persist.  
+You can change the **FriendlyName** of a Calculated Column, but you cannot change the **Id** (as this could be used in other objects like Layouts.
 
-> However please note that AdapTable will not update any layouts or other objects (e.g. filters) that reference this Calculated Column so be very careful before changing the name of a Calculated Column that is used elsewhere.
+> AdapTable will prevent you from deleting a Calculated Column that is referenced elsewhere.
 
 ### Further Information
 

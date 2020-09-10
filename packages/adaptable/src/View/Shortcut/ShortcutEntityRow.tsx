@@ -11,6 +11,7 @@ import { EntityRowItem } from '../Components/EntityRowItem';
 import { Shortcut } from '../../PredefinedConfig/ShortcutState';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
+import DropdownButton from '../../components/DropdownButton';
 
 export interface ShortcutEntityRowProps extends SharedEntityRowProps<ShortcutEntityRow> {
   onChangeKey: (shortcut: Shortcut, NewShortcutKey: string) => void;
@@ -32,19 +33,20 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
     colItems[1].Content = (
       <EntityRowItem
         Content={
-          <Dropdown
+          <DropdownButton
             style={{ minWidth: 'auto', width: '100%' }}
-            showClearButton={false}
-            showEmptyItem={false}
-            options={this.props.AvailableKeys.map(x => {
+            items={this.props.AvailableKeys.map(x => {
               return {
                 value: x,
                 label: x,
+                onClick: () => this.onKeySelectChange(x),
               };
             })}
-            value={shortcut.ShortcutKey}
-            onChange={(x: any) => this.onKeySelectChange(x)}
-          ></Dropdown>
+            variant="outlined"
+            marginRight={2}
+          >
+            {shortcut.ShortcutKey}
+          </DropdownButton>
         }
       />
     );
@@ -55,16 +57,20 @@ export class ShortcutEntityRow extends React.Component<ShortcutEntityRowProps, {
           shortcut.ColumnType == DataType.Date ? (
             'Replace Cell'
           ) : (
-            <Dropdown
+            <DropdownButton
               style={{ minWidth: 'auto', width: '100%' }}
-              showEmptyItem={false}
-              showClearButton={false}
-              value={shortcut.ShortcutOperation}
-              onChange={x => this.onActionChange(x)}
-              options={this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
-                return { value: shortcutOperation, label: MathOperation[shortcutOperation] };
+              items={this.props.AvailableActions.map((shortcutOperation: MathOperation) => {
+                return {
+                  value: shortcutOperation,
+                  label: MathOperation[shortcutOperation],
+                  onClick: () => this.onActionChange(shortcutOperation),
+                };
               })}
-            ></Dropdown>
+              variant="outlined"
+              marginRight={2}
+            >
+              {shortcut.ShortcutOperation}
+            </DropdownButton>
           )
         }
       />

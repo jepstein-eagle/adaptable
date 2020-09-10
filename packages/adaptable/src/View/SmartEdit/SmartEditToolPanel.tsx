@@ -24,6 +24,7 @@ import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import Dropdown from '../../components/Dropdown';
 import { IAdaptable } from '../../AdaptableInterfaces/IAdaptable';
+import DropdownButton from '../../components/DropdownButton';
 
 interface SmartEditToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<SmartEditToolPanelComponent> {
@@ -87,12 +88,12 @@ class SmartEditToolPanelComponent extends React.Component<
       />
     );
 
-    let operations: any[] = EnumExtensions.getNames(MathOperation)
+    let operationMenuItems = EnumExtensions.getNames(MathOperation)
       .filter(e => e != MathOperation.Replace)
-      .map((operation: MathOperation, index) => {
+      .map((mathOperation: MathOperation, index) => {
         return {
-          label: operation,
-          value: operation,
+          onClick: () => this.props.onSmartEditOperationChange(mathOperation),
+          label: mathOperation as MathOperation,
         };
       });
 
@@ -109,15 +110,18 @@ class SmartEditToolPanelComponent extends React.Component<
     let content = (
       <Flex flexDirection="column" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__SmartEdit__wrap">
-          <Dropdown
-            style={{ minWidth: 90 }}
-            showEmptyItem={false}
-            className="ab-ToolPanel__SmartEdit__select"
-            value={this.props.MathOperation}
-            options={operations}
-            showClearButton={false}
-            onChange={(mathOperation: string) => this.onchangeMathOperation(mathOperation)}
-          />
+          <DropdownButton
+            className="ab-DashboardToolbar__SmartEdit__select"
+            marginRight={2}
+            items={operationMenuItems}
+            style={{ fontSize: 'small' }}
+            columns={['label']}
+            disabled={shouldDisable}
+            variant="outlined"
+          >
+            {this.props.MathOperation}
+          </DropdownButton>
+
           <Input
             style={{
               width: '5rem',

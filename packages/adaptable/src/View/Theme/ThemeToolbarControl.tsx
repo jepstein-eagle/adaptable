@@ -58,11 +58,10 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
             whiteSpace: 'nowrap',
             overflow: 'hidden',
             textOverflow: 'ellipsis',
+            fontSize: 'small',
           }}
           items={themes}
           columns={['label']}
-          variant={'text'}
-          tone={'neutral'}
         >
           {currentThemeDescription}
         </DropdownButton>

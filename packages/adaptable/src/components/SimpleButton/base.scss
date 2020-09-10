@@ -91,9 +91,8 @@
 
   &--variant-outlined {
     background: var(--ab-cmp-simple-button--outlined__background);
-    border-width: var(--ab-cmp-simple-button--outlined__border-width);
-    border-color: currentColor;
-    border-style: solid;
+    border: var(--ab-cmp-simple-button--outlined__border);
+
   }
 
   &--variant-raised {

@@ -20,19 +20,19 @@ export class FreeTextColumnStrategy extends AdaptableStrategyBase
       ScreenPopups.FreeTextColumnPopup,
       adaptable
     );
+  }
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      let freeTextColumns = this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn();
+  public tidyOldConfig(): void {
+    let freeTextColumns = this.adaptable.api.freeTextColumnApi.getAllFreeTextColumn();
 
-      freeTextColumns = freeTextColumns.map(freeTextColumn => {
-        if (!freeTextColumn.ColumnId && freeTextColumn.FriendlyName) {
-          freeTextColumn.ColumnId = freeTextColumn.FriendlyName;
-        }
-        return freeTextColumn;
-      });
-
-      this.adaptable.api.freeTextColumnApi.setFreeTextColumns(freeTextColumns);
+    freeTextColumns = freeTextColumns.map(freeTextColumn => {
+      if (!freeTextColumn.ColumnId && freeTextColumn.FriendlyName) {
+        freeTextColumn.ColumnId = freeTextColumn.FriendlyName;
+      }
+      return freeTextColumn;
     });
+
+    this.adaptable.api.freeTextColumnApi.setFreeTextColumns(freeTextColumns);
   }
 
   public addFreeTextColumnsToGrid(): void {

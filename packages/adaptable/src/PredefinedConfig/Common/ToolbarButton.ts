@@ -51,11 +51,9 @@ export interface ButtonStyle {
    *
    * -'raised' (the button will be raised)
    *
-   * -'unelevated'(the button will appear in the primary colour of the theme - primarily used for non light themes)
-   *
    * **Default Value: 'outlined'**
    */
-  Variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
+  Variant?: 'text' | 'outlined' | 'raised';
   /**
    * The tone of the button
    *

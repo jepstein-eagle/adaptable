@@ -33,6 +33,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
     this.Glyph = Glyph;
     this.Popup = Popup;
     this.adaptable = adaptable;
+
+    this.adaptable.api.eventApi.on('AdaptableReady', () => {
+      this.tidyOldConfig();
+    });
   }
 
   public AccessLevel: AccessLevel;
@@ -40,6 +44,10 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   public initializeWithRedux() {
     this.InitState();
     this.adaptable.adaptableStore.TheStore.subscribe(() => this.InitState());
+  }
+
+  public tidyOldConfig(): void {
+    // override where necessary in base classes
   }
 
   public setStrategyEntitlement(): void {
@@ -64,7 +72,7 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      */
   }
 
-  public getSpecialColumnReferences(specialColumnId: string): string {
+  public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
     return undefined;
   }
 

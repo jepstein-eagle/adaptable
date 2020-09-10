@@ -64,7 +64,7 @@ export class AdaptablePopupAlert extends React.Component<AdaptablePopupAlertProp
                   );
                 })}
               </Flex>
-              <Flex flexDirection="row" marginTop={2} alignItems="center" padding={2}>
+              <Flex flexDirection="column" marginTop={2} alignItems="center" padding={2}>
                 <SimpleButton
                   data-name="ok"
                   variant="raised"

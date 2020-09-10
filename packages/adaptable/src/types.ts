@@ -5,7 +5,6 @@ export {
 } from './AdaptableInterfaces/AdaptableNoCodeWizard';
 export { IAdaptable } from './AdaptableInterfaces/IAdaptable';
 export { IAdaptableStore } from './Redux/Store/Interface/IAdaptableStore';
-export { AdaptableApi } from './Api/AdaptableApi';
 export { AdaptablePlugin } from './AdaptableOptions/AdaptablePlugin';
 
 // Types we use
@@ -130,6 +129,52 @@ export { UserInterfaceOptions } from './AdaptableOptions/UserInterfaceOptions';
 export { Glue42PluginOptions } from './AdaptableOptions/Glue42PluginOptions';
 export { OpenFinPluginOptions } from './AdaptableOptions/OpenFinPluginOptions';
 export { IPushPullPluginOptions } from './AdaptableOptions/IPushPullPluginOptions';
+
+// API
+export { AdaptableApi } from './Api/AdaptableApi';
+export { ActionColumnApi } from './Api/ActionColumnApi';
+export { AlertApi } from './Api/AlertApi';
+export { BulkUpdateApi } from './Api/BulkUpdateApi';
+export { CalculatedColumnApi } from './Api/CalculatedColumnApi';
+export { CalendarApi } from './Api/CalendarApi';
+export { CellSummaryApi } from './Api/CellSummaryApi';
+export { CellValidationApi } from './Api/CellValidationApi';
+export { ChartApi } from './Api/ChartApi';
+export { ConditionalStyleApi } from './Api/ConditionalStyleApi';
+export { ConfigApi } from './Api/ConfigApi';
+export { CustomSortApi } from './Api/CustomSortApi';
+export { DashboardApi } from './Api/DashboardApi';
+export { DataSourceApi } from './Api/DataSourceApi';
+export { EntitlementsApi } from './Api/EntitlementsApi';
+export { ExportApi } from './Api/ExportApi';
+export { FilterApi } from './Api/FilterApi';
+export { FlashingCellApi } from './Api/FlashingCellApi';
+export { FormatColumnApi } from './Api/FormatColumnApi';
+export { FreeTextColumnApi } from './Api/FreeTextColumnApi';
+export { Glue42Api } from './Api/Glue42Api';
+export { GradientColumnApi } from './Api/GradientColumnApi';
+export { GridApi } from './Api/GridApi';
+export { IPushPullApi } from './Api/IPushPullApi';
+export { LayoutApi } from './Api/LayoutApi';
+export { OpenFinApi } from './Api/OpenFinApi';
+export { PercentBarApi } from './Api/PercentBarApi';
+export { PluginsApi } from './Api/PluginsApi';
+export { PlusMinusApi } from './Api/PlusMinusApi';
+export { PredicateApi } from './Api/PredicateApi';
+export { QueryApi } from './Api/QueryApi';
+export { QuickSearchApi } from './Api/QuickSearchApi';
+export { ReminderApi } from './Api/ReminderApi';
+export { ScheduleApi } from './Api/ScheduleApi';
+export { ScopeApi } from './Api/ScopeApi';
+export { ShortcutApi } from './Api/ShortcutApi';
+export { SmartEditApi } from './Api/SmartEditApi';
+export { SparklineColumnApi } from './Api/SparklineColumnApi';
+export { SystemStatusApi } from './Api/SystemStatusApi';
+export { TeamSharingApi } from './Api/TeamSharingApi';
+export { ThemeApi } from './Api/ThemeApi';
+export { ToolPanelApi } from './Api/ToolPanelApi';
+export { UpdatedRowApi } from './Api/UpdatedRowApi';
+export { UserInterfaceApi } from './Api/UserInterfaceApi';
 
 export { AdaptablePersistStateFunction } from './AdaptableOptions/StateOptions';
 export { AdaptableLoadStateFunction } from './AdaptableOptions/StateOptions';

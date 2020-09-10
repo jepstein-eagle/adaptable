@@ -29,4 +29,6 @@ export interface ConditionalStyleApi {
   getPredicateDefsForScope(scope: Scope): AdaptablePredicateDef[];
 
   getOrderedConditionalStyles(): ConditionalStyle[] | undefined;
+
+  editConditionalStyle(conditionalStyle: ConditionalStyle): void;
 }
