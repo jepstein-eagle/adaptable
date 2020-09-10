@@ -10,21 +10,36 @@ Details of all the changes are listed here - for more detailed information with 
 
 These are the main updates to AdapTable in Version 7:
 
-* [Support for latest ag-Grid Version (23) including Alpine theme](#ag-grid-version-23)
-* [Changes to `Layout` (and a new UI) so they get saved automatically](#layout-changes)
-* [Re-written 'Expresion' syntax (and Expression Editor) for `Calculated Column`](#new-calculated-column-expression-syntax-and-ui)
-* [New `Query` object - expressions shareable across AdapTable functions (replacing Advanced Search)](#queries)
-* [Previous 4 filter-related functions merged into one `Filter` function](#filter)
-* [New `Predicate` and `Scope` types - used in multiple functions](#predicates-and-scope)
-* [Improvements to `PercentBar` to enable Ranges](#percent-bar-improvements)
-* [New 'Partner' plugins - ipushpull, OpenFin, Glue42 and Finsemble](#new-partner-plugins)
-* [Support for Master / Detail grids](#support-for-master-detail-grids)
-* [React Wrapper Changes](#react-wrapper-changes)
-* [Angular Wrapper Changes](#angular-wrapper-changes)
-* [A new asynchronous static constructor](#async-static-constructor)
-* [All Schedule-related state consolidated into one object](#schedule-state-consolidation)
-* [Other minor state changes and new CSS Variables](#other-changes)
-* [Reduced package size by 1/3 - due to replaceing large libraries and tree-shaking others](#reduced-package-size)
+- [AdapTable Version 7 Upgrade Guide](#adaptable-version-7-upgrade-guide)
+  - [Summary of Main Changes](#summary-of-main-changes)
+  - [ag-Grid Version 23](#ag-grid-version-23)
+    - [Quick Filter](#quick-filter)
+    - [Themes](#themes)
+  - [Layout Changes](#layout-changes)
+  - [New Calculated Column Expression Syntax and UI](#new-calculated-column-expression-syntax-and-ui)
+  - [Queries](#queries)
+  - [Filter](#filter)
+  - [Predicates and Scope](#predicates-and-scope)
+    - [Predicate](#predicate)
+    - [Scope](#scope)
+  - [Percent Bar Improvements](#percent-bar-improvements)
+  - [New Partner plugins](#new-partner-plugins)
+  - [Support for Master Detail grids](#support-for-master-detail-grids)
+  - [React Wrapper Changes](#react-wrapper-changes)
+      - [React Wrapper Example](#react-wrapper-example)
+    - [AdapTable Tool Panel Component](#adaptable-tool-panel-component)
+    - [Deprecated props](#deprecated-props)
+  - [Angular Wrapper Changes](#angular-wrapper-changes)
+      - [Angular Wrapper Example](#angular-wrapper-example)
+    - [AdapTable Tool Panel Component](#adaptable-tool-panel-component-1)
+  - [Async Static Constructor](#async-static-constructor)
+  - [Schedule State Consolidation](#schedule-state-consolidation)
+  - [Other Changes](#other-changes)
+  - [Reduced Package Size](#reduced-package-size)
+  - [Demo](#demo)
+  - [Help](#help)
+  - [More Information](#more-information)
+  - [Support](#support)
 
 ## ag-Grid Version 23
 
@@ -366,7 +381,7 @@ For more information see the [Schedule Function ReadMe](../functions/schedule-fu
 
 ## Other Changes
 
-A number of small changes have been made to AdapTable State and Adaptable functionaliy other than that listed above.  These include:
+A number of small changes have been made to AdapTable State and Adaptable functionaliy other than those listed above.  These include:
 
 * **Config Server**  - which has long been deprecated - has finally been removed.  The only way to manage state remotely is via the `StateOptions` functions in Adaptable Options.
 
@@ -380,7 +395,7 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * **Report**, **Alert**, **CellValidation** and **ConditionalStyle** now include `Scope` (see above)
 
-* The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**
+* The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**, so set explicitly to **false** if you do not want this to appear.
 
 * **Export** now allows for CustomReports to be created; a function provided by the user is called when the Report is run.
 

@@ -41,7 +41,7 @@ let demoConfig: PredefinedConfig = {
     SharedQueries: [
       {
         Name: 'US Banks',
-        Expression: "[counterparty] IN ('BAML', 'Citi')",
+        Expression: "[counterparty] IN ('BAML', 'Citi') AND ([bid] > 3 OR [ask] < 5)",
       },
     ],
   },

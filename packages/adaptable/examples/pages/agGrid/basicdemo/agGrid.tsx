@@ -21,7 +21,6 @@ import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
-import { getColumnsFromExpression } from '../../../../src/parser/src';
 var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
@@ -135,6 +134,16 @@ async function InitAdaptableDemo() {
             Predicate: {
               PredicateId: 'regionNorthAmerica',
             },
+          },
+          {
+            Scope: {
+              ColumnIds: ['currency'],
+            },
+            Style: {
+              FontWeight: 'Bold',
+              BackColor: 'green',
+            },
+            Expression: '[currency]="EUR"  AND [country] != "blah"  ',
           },
         ],
       },
@@ -404,7 +413,11 @@ async function InitAdaptableDemo() {
     //   console.log(searchChangedArgs.data[0].id);
   });
 
-  console.log('cols', getColumnsFromExpression('[A] > Min([B], [C])'));
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    let condStyle = api.conditionalStyleApi.getAllConditionalStyle()[1];
+    let returnString: string[] = api.queryApi.getColumnsFromQueryObject(condStyle);
+    console.log('cols in expression', returnString);
+  });
 }
 
 export default () => {
