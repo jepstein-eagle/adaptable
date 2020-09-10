@@ -125,7 +125,7 @@ Filtering has had a huge makeover in Version 7 including:
 
 * Both will create a Column Filter.  This now contains only a single `Predicate` (see below for more details) - though that can include the 'IN' predicate to filter on multiple values.
 
-* Developers can easily provide their own Custom Filters at design-time through a much improved syntax
+* Developers can easily provide their own **Custom Filters** at design-time through a much improved syntax - this replaces the previous **Named Filters**
 
 * Wildcards can still be used in the Quick Filter bar (but are now less needed due to the improved UI).
 

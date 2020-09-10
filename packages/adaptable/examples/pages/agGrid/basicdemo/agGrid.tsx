@@ -121,6 +121,9 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      Query: {
+        CurrentQuery: 'Any old rubbish',
+      },
       ConditionalStyle: {
         Revision: Date.now(),
         ConditionalStyles: [

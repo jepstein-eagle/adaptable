@@ -7,7 +7,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
 /**
  * The Predefined Configuration for the `FormatColumn` function.
  *
- * A Format Column is a column that is given specific Style and / or Display Format properties that are always (i.e. unconditionally) rendered.
+ * A Format Column is a column that is given Scope, and a specific Style and / or Display Format properties that are always (i.e. unconditionally) rendered.
+ *
+ * - **`Scope`** - where the Format Column will be applied - either to one, some or all columns.
  *
  * - **`Style`** - a visual style that is **always** applied (unlike Conditional Styles where the style is dependent on a rule being met).
  *
@@ -37,7 +39,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *   FormatColumns: [
  *     // Set a Style and Cell Alignment for OrderId
  *     {
- *       ColumnId: 'OrderId',
+ *       Scope: {
+ *         ColumnIds: ['currency'],
+ *       },
  *       Style: {
  *         BackColor: '#d4fb79',
  *         ForeColor: '#8b0000',
@@ -46,7 +50,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *     },
  *     // Set a Time-based Display Format for LastUpdatedTime
  *     {
- *       ColumnId: 'LastUpdatedTime',
+ *       Scope: {
+ *         ColumnIds: ['LastUpdatedTime'],
+ *       },
  *       DisplayFormat: {
  *         Formatter: 'DateFormatter',
  *         Options: {
@@ -56,7 +62,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *     },
  *     // Set both a Style and a (Date-based) Display Format for OrderDate
  *     {
- *       ColumnId: 'OrderDate',
+ *       Scope: {
+ *         ColumnIds: ['OrderDate'],
+ *       },
  *       Style: {
  *         FontWeight: 'Bold',
  *         FontSize: 'XSmall',
@@ -71,7 +79,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *     },
  *     // Set a Display Format of negative parentheses for ChangeLastOrder
  *     {
- *       ColumnId: 'ChangeLastOrder',
+ *       Scope: {
+ *         ColumnIds: ['ChangeLastOrder'],
+ *       },
  *       DisplayFormat: {
  *         Formatter: 'NumberFormatter',
  *         Options: {
@@ -81,7 +91,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *     },
  *     // Set a Display Format of £ and 2 dp for InvoicedCost
  *     {
- *       ColumnId: 'InvoicedCost',
+ *       Scope: {
+ *         ColumnIds: ['InvoicedCost'],
+ *       },
  *       DisplayFormat: {
  *         Formatter: 'NumberFormatter',
  *         Options: {
@@ -92,7 +104,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *     },
  *     // Set Display Format of $ with 'AUD' suffix and integer space separator for OrderCost
  *     {
- *       ColumnId: 'OrderCost',
+ *       Scope: {
+ *         ColumnIds: ['OrderCost'],
+ *       },
  *       DisplayFormat: {
  *         Formatter: 'NumberFormatter',
  *         Options: {
@@ -105,7 +119,9 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *     },
  *     // Set the Cell Aligment of the 'Bid' Column to the right
  *     {
- *        ColumnId: 'bid',
+ *       Scope: {
+ *         ColumnIds: ['bid'],
+ *       },
  *        CellAlignment: 'Right',
  *     },
  *   ],
@@ -131,6 +147,10 @@ export interface FormatColumnState extends ConfigState {
  * The FormatColumn object used in the Format Column function.
  */
 export interface FormatColumn extends AdaptableObject {
+  /**
+   * Where the Format Column will be applied - can be for whole Row, some Columns or all Colunns of given DataType
+   */
+
   Scope: AdaptableScope;
 
   /**

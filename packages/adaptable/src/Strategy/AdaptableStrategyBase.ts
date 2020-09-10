@@ -36,7 +36,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
     this.adaptable.api.eventApi.on('AdaptableReady', () => {
       this.tidyOldConfig();
-      this.setInvalidObjects();
     });
   }
 
@@ -48,10 +47,6 @@ export abstract class AdaptableStrategyBase implements IStrategy {
   }
 
   public tidyOldConfig(): void {
-    // override where necessary in base classes
-  }
-
-  public setInvalidObjects(): void {
     // override where necessary in base classes
   }
 

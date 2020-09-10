@@ -58,11 +58,39 @@ This is done by creating an `AdaptablePredicateDef` and putting it in the `custo
         const itemCount: number = params.node.data.ItemCount;
         return invoiced > 100 && itemCount > 10 ? true : false;
         },
+      }
+     {
+        id: 'new_starter',
+        label: 'New Starter',
+        columnScope: {
+          ColumnIds: ['Employee'],
+        },
+        functionScope: ['filter'],
+        handler(params: PredicateDefHandlerParams) {
+          return (
+            params.value == 'Robert King' ||
+            params.value == 'Laura Callahan' ||
+            params.value == 'Andrew Fuller'
+          );
+        },
+      },
+      {
+        id: 'post_takeover',
+        label: 'Post Takeover',
+        columnScope: {
+          DataTypes: ['Date'],
+        },
+        functionScope: ['filter'],
+        handler(params: PredicateDefHandlerParams) {
+          let takeOverDate = new Date('2019-09-21');
+          return (params.value as Date) > takeOverDate;
+        },
+      },
     ],
   };
  ```
 
- In this example we have created a filter predicate (see `functionScope` property) and which will operate on the 'OrderId' column (see `columnScope` property).
+ In this example we have created 3 predicates: 2 have `ColumnScope` of a single column and one of DataType of 'Date'.
 
 ## UI Filter Controls
 
@@ -185,57 +213,59 @@ Additionally, if the Query is built at design time and shipped with the product 
 
 The System Filter predicates shipped by AdapTable are:
 
-| System Filter           | Columns              |
-| --------  	          | ------               | 
-| Values| All   | 
-  | Blanks' | All   | 
-  | NonBlanks| All   | 
-  | Equals| Number   | 
-  | NotEquals| Number   | 
-  | GreaterThan| Number   | 
-  | LessThan| Number   | 
-  | Positive| Number   | 
-  | Negative| Number   | 
-  | Zero| Number   | 
-  | Between| Number   | 
-  | NotBetween| Number   | 
-  | Is| String   | 
-  |IsNot| String   | 
-  | Contains| String   | 
-  | NotContains| String   | 
-  | StartsWith| String   | 
-  |EndsWith| String   | 
-  | Regex| String   | 
-  | Today| Date   | 
-  | Yesterday| Date   | 
-  | Tomorrow| Date   | 
-  | ThisWeek| Date   | 
-  | ThisMonth| Date   | 
-  | ThisQuarter| Date   | 
-  | ThisYear| Date   | 
-  | InPast| Date   | 
-  | InFuture| Date   |
-  | Before| Date   | 
-  | After| Date   | 
-  | On| Date   | 
-  | NotOn| Date   | 
-  |NextWorkDay| Date   | 
-  | LastWorkDay| Date   | 
-  | True| Boolean   | 
-  | False| Boolean   | 
+| System Filter           | Columns              | Inputs|
+| --------  	          | ------               | ------               | 
+| Values| All   | Yes |
+  | Blanks' | All   | No |
+  | NonBlanks| All   | No |
+  | Equals| Number   | Yes |
+  | NotEquals| Number   | Yes |
+  | GreaterThan| Number   | Yes |
+  | LessThan| Number   | Yes |
+  | Positive| Number   | No |
+  | Negative| Number   | No |
+  | Zero| Number   | No |
+  | Between| Number   | Yes |
+  | NotBetween| Number   | Yes |
+  | Is| String   | Yes |
+  |IsNot| String   | Yes |
+  | Contains| String   | Yes |
+  | NotContains| String   | Yes |
+  | StartsWith| String   | Yes |
+  |EndsWith| String   | Yes |
+  | Regex| String   | Yes |
+  | Today| Date   | No |
+  | Yesterday| Date   | No |
+  | Tomorrow| Date   | No |
+  | ThisWeek| Date   | No |
+  | ThisMonth| Date   | No |
+  | ThisQuarter| Date   | No |
+  | ThisYear| Date   | No |
+  | InPast| Date   | No |
+  | InFuture| Date   |No |
+  | Before| Date   | Yes |
+  | After| Date   | Yes |
+  | On| Date   | Yes |
+  | NotOn| Date   | Yes |
+  |NextWorkDay| Date   | No |
+  | LastWorkDay| Date   | No |
+  | True| Boolean   | No |
+  | False| Boolean   | No |
 
 
 
 ### 2. Quick Filter Bar Wildcards
 
-| Symbol | Value        | Columns      | Example    |
-| ------ | ------------ | ------------ | ---------- |
-| =      | Equals       | Text, Number | '=15'      |
-| !=     | Not Equals   | Number       | '<> 23'    |
-| >      | Greater Than | Number       | '> 5'      |
-| <      | Less Than    | Number       | '<5'       |
-| :      | Between      | Number       | '5 : 100'  |
-| !:     | Between      | Number       | '5 !: 100' |
+| Symbol | Predicate    | Columns      |
+| ------ | ------------ | ------------ |
+| =      | Equals       | Text, Number |
+| !=     | Not Equals   | Text, Number |
+| >      | Greater Than | Number       |
+| <      | Less Than    | Number       |
+| :      | Between      | Number       |
+| !:     | Between      | Number       |
+| [      | IN / Values  | All          |
+| #      | IN / Values  | All          |
 
 ## Help
 

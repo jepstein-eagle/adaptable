@@ -8,6 +8,7 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { AdaptableColumn, Scope } from '../../types';
 import { AdaptablePredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
+import * as ConditionalStyleRedux from '../../Redux/ActionsReducers/ConditionalStyleRedux';
 
 export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyleApi {
   public getConditionalStyleState(): ConditionalStyleState {
@@ -16,6 +17,10 @@ export class ConditionalStyleApiImpl extends ApiBase implements ConditionalStyle
 
   public getAllConditionalStyle(): ConditionalStyle[] {
     return this.getConditionalStyleState().ConditionalStyles;
+  }
+
+  public editConditionalStyle(conditionalStyle: ConditionalStyle): void {
+    this.dispatchAction(ConditionalStyleRedux.ConditionalStyleEdit(conditionalStyle));
   }
 
   public showConditionalStylePopup(): void {
