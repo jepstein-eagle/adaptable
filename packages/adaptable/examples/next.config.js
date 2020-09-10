@@ -5,9 +5,7 @@ const Dotenv = require('dotenv-webpack');
 // make the app accept sources from everywhere in the monorepo
 const SRC_PATH = path.resolve('../../');
 
-// const TS_PRESET = '@babel/preset-typescript';
-
-const withTypescript = (nextConfig = {}) => {
+const withApp = (nextConfig = {}) => {
   if (!nextConfig.pageExtensions) {
     nextConfig.pageExtensions = ['jsx', 'js'];
   }
@@ -89,7 +87,7 @@ let nextConfig = withSass(
     })
   )
 );
-nextConfig = withTypescript(withFonts(nextConfig));
+nextConfig = withApp(withFonts(nextConfig));
 
 module.exports = Object.assign({}, nextConfig, {
   pageExtensions: ['jsx', 'js', 'tsx', 'ts'],
