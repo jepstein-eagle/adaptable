@@ -185,7 +185,7 @@ const DropdownButton = (props: DropdownButtonProps) => {
       }}
       ml={2}
       padding={0}
-      variant={domProps.variant}
+      variant={'text'}
       icon="clear"
       {...clearButtonProps}
       style={{

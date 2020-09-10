@@ -17,7 +17,7 @@ export const baseClassName = 'ab-SimpleButton';
 
 export interface SimpleButtonProps extends ButtonProps {
   tooltip?: string;
-  variant?: 'text' | 'outlined' | 'raised' | 'unelevated';
+  variant?: 'text' | 'outlined' | 'raised';
   tone?: 'success' | 'error' | 'neutral' | 'none' | 'warning' | 'info' | 'accent';
   icon?: ReactNode;
   iconSize?: number;

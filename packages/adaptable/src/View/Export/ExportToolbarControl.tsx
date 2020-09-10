@@ -157,7 +157,7 @@ class ExportToolbarControlComponent extends React.Component<
           className="ab-DashboardToolbar__Export__select"
           onClear={() => this.onSelectedReportChanged(null)}
           showClearButton={!!currentReport}
-          variant="text"
+          variant="outlined"
           marginRight={2}
         >
           {currentReport ? currentReport.Name : 'Select Report'}
