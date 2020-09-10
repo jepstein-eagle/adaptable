@@ -23,6 +23,7 @@ import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolPanelStrategyViewPopupProps';
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
+import DropdownButton from '../../components/DropdownButton';
 
 interface LayoutToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<LayoutToolPanelComponent> {
@@ -63,25 +64,23 @@ class LayoutToolPanelComponent extends React.Component<
         ...layout,
         label: layout.Name,
         value: layout.Name,
+        onClick: () => this.props.onSelectLayout(layout.Name),
       };
     });
 
     let content = (
       <Flex flexDirection="column">
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Layout__wrap">
-          <Dropdown
+          <DropdownButton
             disabled={availableLayoutOptions.length == 0}
             style={{ minWidth: 160 }}
             marginRight={2}
+            marginBottom={1}
             className="ab-ToolPanel__Layout__select"
-            showEmptyItem={false}
-            value={layoutEntity ? layoutEntity.Name : null}
-            options={availableLayoutOptions}
-            onChange={(layoutName: any) => {
-              this.props.onSelectLayout(layoutName);
-            }}
-            showClearButton={false}
-          />
+            items={availableLayoutOptions}
+          >
+            {layoutEntity?.Name ?? null}
+          </DropdownButton>
         </Flex>
         <Flex
           flexDirection="row"

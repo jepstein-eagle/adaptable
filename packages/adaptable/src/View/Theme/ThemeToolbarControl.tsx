@@ -61,8 +61,6 @@ class ThemeToolbarControlComponent extends React.Component<ThemeToolbarControlCo
           }}
           items={themes}
           columns={['label']}
-          variant={'text'}
-          tone={'neutral'}
         >
           {currentThemeDescription}
         </DropdownButton>

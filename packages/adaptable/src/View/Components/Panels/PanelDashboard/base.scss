@@ -1,6 +1,6 @@
 .ab-DashboardPanel {
   .ab-CheckBox:not(.ab-dd-checkbox),
-  .ab-SimpleButton.ab-SimpleButton--tone-neutral {
+  .ab-SimpleButton.ab-SimpleButton--tone-neutral:not(.ab-DropdownButton) {
     fill: currentColor;
     color: var(--ab-cmp-dashboardpanel_header__color);
     border-color: currentColor;

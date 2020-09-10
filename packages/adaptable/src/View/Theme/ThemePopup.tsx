@@ -9,9 +9,9 @@ import { PanelWithButton } from '../Components/Panels/PanelWithButton';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 
 import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
-import { Flex, Box, Text } from 'rebass';
-import Dropdown from '../../components/Dropdown';
+import { Flex } from 'rebass';
 import FormLayout, { FormRow } from '../../components/FormLayout';
+import DropdownButton from '../../components/DropdownButton';
 
 interface ThemePopupProps extends StrategyViewPopupProps<ThemePopupComponent> {
   SystemThemes: (AdaptableTheme | string)[];
@@ -41,6 +41,7 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
       availableThemes.push(ut);
     });
 
+    let currentThemeDescription = '';
     let optionThemes = availableThemes.map(theme => {
       if (typeof theme === 'string') {
         // protection against old state, which could be string
@@ -49,9 +50,14 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
           Description: theme,
         };
       }
+
+      if (theme.Name === this.props.CurrentTheme) {
+        currentThemeDescription = theme.Description;
+      }
       return {
         value: theme.Name,
         label: theme.Description,
+        onClick: () => this.onChangeTheme(theme.Name),
       };
     });
     return (
@@ -63,15 +69,14 @@ class ThemePopupComponent extends React.Component<ThemePopupProps, {}> {
         >
           <FormLayout>
             <FormRow label="Current Theme:">
-              <Dropdown
+              <DropdownButton
                 style={{ width: '50%', minWidth: 200 }}
                 placeholder="Select theme"
-                showEmptyItem={false}
-                showClearButton={false}
                 value={this.props.CurrentTheme}
-                onChange={(value: any) => this.onChangeTheme(value)}
-                options={optionThemes}
-              />
+                items={optionThemes}
+              >
+                {currentThemeDescription}
+              </DropdownButton>
             </FormRow>
           </FormLayout>
         </PanelWithButton>

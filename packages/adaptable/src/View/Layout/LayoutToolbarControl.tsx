@@ -15,10 +15,8 @@ import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants'
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import * as GeneralConstants from '../../Utilities/Constants/GeneralConstants';
 import { Layout } from '../../PredefinedConfig/LayoutState';
-import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
 import join from '../../components/utils/join';
-import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
 import { ButtonEdit } from '../Components/Buttons/ButtonEdit';
 import DropdownButton from '../../components/DropdownButton';
@@ -53,38 +51,23 @@ class LayoutToolbarControlComponent extends React.Component<
         ...layout,
         label: layout.Name,
         value: layout.Name,
-        // onClick: () => this.props.onSelectLayout(layout.Name),
+        onClick: () => this.props.onSelectLayout(layout.Name),
       };
     });
 
     let content = (
       <Flex flexDirection="row">
-        <Dropdown
-          disabled={availableLayoutOptions.length == 0}
-          style={{ minWidth: 160 }}
-          marginRight={2}
-          className="ab-DashboardToolbar__Layout__select"
-          showEmptyItem={false}
-          value={layoutEntity ? layoutEntity.Name : null}
-          options={availableLayoutOptions}
-          onChange={(layoutName: any) => {
-            this.props.onSelectLayout(layoutName);
-          }}
-          showClearButton={false}
-        />
-        {/*
         <DropdownButton
           marginRight={2}
           columns={['label']}
+          style={{ minWidth: 150 }}
           className="ab-DashboardToolbar__Layout__select"
           items={availableLayoutOptions}
           disabled={availableLayoutOptions.length == 0}
-          variant={'text'}
-          tone={'neutral'}
         >
           {layoutEntity ? layoutEntity.Name : null}
         </DropdownButton>
- */}
+
         <Flex
           flexDirection="row"
           className={join(
