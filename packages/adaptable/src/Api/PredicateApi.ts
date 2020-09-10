@@ -15,6 +15,8 @@ export interface PredicateApi {
   getCustomPredicateDefById(predicateId: string): AdaptablePredicateDef;
   predicateToString(predicate: AdaptablePredicate): string;
 
+  isValidPredicate(predicate: AdaptablePredicate): boolean;
+
   handlePredicate(
     predicate: AdaptablePredicate,
     params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>,

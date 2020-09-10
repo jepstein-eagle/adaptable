@@ -73,11 +73,12 @@ class LayoutToolPanelComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Layout__wrap">
           <DropdownButton
             disabled={availableLayoutOptions.length == 0}
-            style={{ minWidth: 160 }}
+            style={{ minWidth: 160, fontSize: 'small' }}
             marginRight={2}
             marginBottom={1}
             className="ab-ToolPanel__Layout__select"
             items={availableLayoutOptions}
+            variant="outlined"
           >
             {layoutEntity?.Name ?? null}
           </DropdownButton>

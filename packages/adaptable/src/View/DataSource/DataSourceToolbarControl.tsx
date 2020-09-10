@@ -19,6 +19,7 @@ import { ButtonApply } from '../Components/Buttons/ButtonApply';
 import Dropdown from '../../components/Dropdown';
 import { Flex } from 'rebass';
 import { AdaptableDashboardToolbar } from '../../PredefinedConfig/Common/Types';
+import DropdownButton from '../../components/DropdownButton';
 
 interface DataSourceToolbarControlComponentProps
   extends ToolbarStrategyViewPopupProps<DataSourceToolbarControlComponent> {
@@ -64,6 +65,7 @@ class DataSourceToolbarControlComponent extends React.Component<
         return {
           value: dataSource.Name,
           label: dataSource.Name,
+          onClick: () => this.onSelectedDataSourceChanged(dataSource.Name),
         };
       });
 
@@ -74,16 +76,17 @@ class DataSourceToolbarControlComponent extends React.Component<
 
     let content = (
       <Flex alignItems="stretch" className="ab-DashboardToolbar__DataSource__wrap">
-        <Dropdown
+        <DropdownButton
+          marginRight={2}
+          columns={['label']}
+          style={{ fontSize: 'small' }}
           className="ab-DashboardToolbar__DataSource__select"
-          disabled={availableDataSources.length == 0}
-          style={{ minWidth: 160 }}
-          placeholder="Select Data Source"
-          value={currentDataSourceName}
-          options={availableDataSources}
-          onChange={(dataSourceName: string) => this.onSelectedDataSourceChanged(dataSourceName)}
-          showClearButton={false}
-        ></Dropdown>
+          items={availableDataSources}
+          variant="outlined"
+          tone={'neutral'}
+        >
+          {currentDataSourceName}
+        </DropdownButton>
 
         <ButtonApply
           className="ab-DashboardToolbar__DataSource__apply"

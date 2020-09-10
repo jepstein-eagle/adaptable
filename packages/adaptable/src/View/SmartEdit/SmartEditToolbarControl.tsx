@@ -112,10 +112,10 @@ class SmartEditToolbarControlComponent extends React.Component<
           className="ab-DashboardToolbar__SmartEdit__select"
           marginRight={2}
           items={operationMenuItems}
+          style={{ fontSize: 'small' }}
           columns={['label']}
           disabled={shouldDisable}
-          variant={'text'}
-          tone={'neutral'}
+          variant="outlined"
         >
           {this.props.MathOperation}
         </DropdownButton>

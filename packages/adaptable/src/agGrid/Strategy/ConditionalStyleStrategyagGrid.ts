@@ -10,6 +10,7 @@ import { RowNode } from '@ag-grid-community/core';
 import * as parser from '../../parser/src';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { CellValueType } from '../../PredefinedConfig/Common/Enums';
+import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
 
 export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
   implements IConditionalStyleStrategy {
@@ -27,14 +28,17 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
 
     // first do rows
     let rowClassRules: any = {};
-    this.adaptable.api.conditionalStyleApi.getRowConditionalStyles().forEach(cs => {
-      let styleName: string = this.getNameForStyle(cs);
-      rowClassRules[styleName] = (params: any) => {
-        if (shouldRunStyle(cs, theadaptable, params.node)) {
-          return this.evaluateExpression(cs, params.node);
-        }
-      };
-    });
+    this.adaptable.api.conditionalStyleApi
+      .getRowConditionalStyles()
+      .filter(cs => this.isValidStyle(cs))
+      .forEach(cs => {
+        let styleName: string = this.getNameForStyle(cs);
+        rowClassRules[styleName] = (params: any) => {
+          if (shouldRunStyle(cs, theadaptable, params.node)) {
+            return this.evaluateExpression(cs, params.node);
+          }
+        };
+      });
     theadaptable.setRowClassRules(rowClassRules);
 
     // now do columns
@@ -48,47 +52,80 @@ export class ConditionalStyleStrategyagGrid extends ConditionalStyleStrategy
           column
         );
 
-        conditionalStylesForColumn.forEach((conditionalStyleForColumn: ConditionalStyle) => {
-          if (conditionalStyleForColumn) {
-            let styleName: string = this.getNameForStyle(conditionalStyleForColumn);
+        conditionalStylesForColumn
+          .filter(cs => this.isValidStyle(cs))
+          .forEach((conditionalStyleForColumn: ConditionalStyle) => {
+            if (conditionalStyleForColumn) {
+              let styleName: string = this.getNameForStyle(conditionalStyleForColumn);
 
-            cellClassRules[styleName] = (params: any) => {
-              if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
-                // first run the predicate
-                if (
-                  conditionalStyleForColumn.Predicate &&
-                  conditionalStyleForColumn.Predicate.PredicateId
-                ) {
+              cellClassRules[styleName] = (params: any) => {
+                if (shouldRunStyle(conditionalStyleForColumn, theadaptable, params.node)) {
+                  // first run the predicate
                   if (
-                    this.evaluatePredicate(
-                      conditionalStyleForColumn,
-                      column,
-                      params.value,
-                      params.node
-                    )
+                    conditionalStyleForColumn.Predicate &&
+                    conditionalStyleForColumn.Predicate.PredicateId
                   ) {
-                    return true;
+                    if (
+                      this.evaluatePredicate(
+                        conditionalStyleForColumn,
+                        column,
+                        params.value,
+                        params.node
+                      )
+                    ) {
+                      return true;
+                    }
+                  } else if (
+                    StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.Expression) ||
+                    StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.SharedQueryId)
+                  ) {
+                    if (this.evaluateExpression(conditionalStyleForColumn, params.node)) {
+                      return true;
+                    }
                   }
-                } else if (
-                  StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.Expression) ||
-                  StringExtensions.IsNotNullOrEmpty(conditionalStyleForColumn.SharedQueryId)
-                ) {
-                  if (this.evaluateExpression(conditionalStyleForColumn, params.node)) {
-                    return true;
-                  }
+                  // nothing has passed then return false
+                  return false;
                 }
-                // nothing has passed then return false
-                return false;
-              }
-            };
-          }
-        });
+              };
+            }
+          });
         theadaptable.setCellClassRules(cellClassRules, column.ColumnId, 'ConditionalStyle');
       }
     }
 
     // Redraw Adaptableto be on safe side (its rare use case)
     this.adaptable.redraw();
+  }
+
+  private isValidStyle(conditionalStyle: ConditionalStyle): boolean {
+    if (conditionalStyle.Predicate && conditionalStyle.Predicate.PredicateId) {
+      // need to know its a predicate I think
+
+      const isValidPredicate: boolean = this.adaptable.api.predicateApi.isValidPredicate(
+        conditionalStyle.Predicate
+      );
+      if (isValidPredicate) {
+        return true;
+      } else {
+        LogAdaptableWarning('Conditional Style Predicate is not valid', conditionalStyle);
+        return false;
+      }
+    }
+
+    if (
+      StringExtensions.IsNotNullOrEmpty(conditionalStyle.Expression) ||
+      StringExtensions.IsNotNullOrEmpty(conditionalStyle.SharedQueryId)
+    ) {
+      let expression: string = this.adaptable.api.queryApi.QueryObjectToString(conditionalStyle);
+      let isValidExpression: boolean = parser.validateBoolean(expression);
+      if (isValidExpression) {
+        return true;
+      } else {
+        LogAdaptableWarning('Conditional Style Expression is not valid', conditionalStyle);
+        return false;
+      }
+    }
+    return false;
   }
 
   private evaluatePredicate(

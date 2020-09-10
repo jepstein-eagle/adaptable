@@ -34,4 +34,6 @@ export interface QueryApi {
   clearCurrentQuery(): void;
 
   getCurrentQuery(): string | undefined;
+
+  getColumnsFromQueryObject(queryObject: QueryObject): string[];
 }

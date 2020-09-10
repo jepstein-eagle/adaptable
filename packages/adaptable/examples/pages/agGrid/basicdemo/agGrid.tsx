@@ -16,12 +16,12 @@ import {
   AdaptableColumn,
   PredicateDefHandlerParams,
   AdaptablePredicate,
+  ColumnFilter,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
 import Adaptable from '../../../../agGrid';
 import { TickingDataHelper } from '../../TickingDataHelper';
-import { getColumnsFromExpression } from '../../../../src/parser/src';
 var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
@@ -121,20 +121,43 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      Query: {
+        CurrentQuery: 'Any old rubbish',
+      },
       ConditionalStyle: {
         Revision: Date.now(),
         ConditionalStyles: [
           {
             Scope: {
-              ColumnIds: ['country'],
+              All: true,
+            },
+            Style: {
+              ClassName: 'allRowStyle',
+            },
+            Expression: ' Positive ',
+          },
+          {
+            Scope: {
+              DataTypes: ['Number'],
             },
             Style: {
               FontWeight: 'Bold',
               BackColor: 'yellow',
             },
             Predicate: {
-              PredicateId: 'regionNorthAmerica',
+              //  PredicateId: 'regionNorthAmerica',
+              PredicateId: 'Positivity',
             },
+          },
+          {
+            Scope: {
+              ColumnIds: ['currency'],
+            },
+            Style: {
+              FontWeight: 'Bold',
+              BackColor: 'green',
+            },
+            Expression: '[currency]="EUR"  AND [country] != "blah"  ',
           },
         ],
       },
@@ -161,7 +184,7 @@ async function InitAdaptableDemo() {
       },
 
       Filter: {
-        Revision: 9,
+        Revision: 10,
 
         ColumnFilters: [
           {
@@ -404,7 +427,15 @@ async function InitAdaptableDemo() {
     //   console.log(searchChangedArgs.data[0].id);
   });
 
-  console.log('cols', getColumnsFromExpression('[A] > Min([B], [C])'));
+  api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
+    let columnFilter: ColumnFilter = {
+      ColumnId: 'country',
+      Predicate: {
+        PredicateId: 'any old rubbish',
+      },
+    };
+    api.filterApi.setColumnFilter([columnFilter]);
+  });
 }
 
 export default () => {

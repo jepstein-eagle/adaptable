@@ -68,7 +68,7 @@ class ThemeToolPanelComponent extends React.Component<
             )}
           >
             <DropdownButton
-              style={{ minWidth: 170 }}
+              style={{ minWidth: 170, fontSize: 'small' }}
               className="ab-ToolPanel__Theme__select"
               placeholder="Select Theme"
               value={currentTheme!.Description}

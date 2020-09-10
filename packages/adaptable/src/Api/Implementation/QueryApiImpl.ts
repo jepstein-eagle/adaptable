@@ -7,6 +7,7 @@ import { TypeUuid } from '../../PredefinedConfig/Uuid';
 import { QueryObject } from '../../PredefinedConfig/Common/QueryObject';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
 import * as QueryRedux from '../../Redux/ActionsReducers/QueryRedux';
+import * as parser from '../../parser/src';
 
 export class QueryApiImpl extends ApiBase implements QueryApi {
   public getQueryState(): QueryState {
@@ -65,5 +66,10 @@ export class QueryApiImpl extends ApiBase implements QueryApi {
 
   public getCurrentQuery(): string | undefined {
     return this.getAdaptableState().Query.CurrentQuery;
+  }
+
+  public getColumnsFromQueryObject(queryObject: QueryObject): string[] {
+    const expression: string = this.QueryObjectToString(queryObject);
+    return parser.getColumnsFromExpression(expression);
   }
 }

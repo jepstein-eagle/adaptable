@@ -162,13 +162,14 @@ class ExportToolPanelComponent extends React.Component<
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__Export__wrap">
           <DropdownButton
             disabled={allReports.length == 0}
-            style={{ minWidth: 160 }}
+            style={{ minWidth: 160, fontSize: 'small' }}
             items={availableReports}
             className="ab-ToolPanel__Export__select"
             showClearButton={!!currentReport}
             marginRight={2}
             marginBottom={1}
             onClear={() => this.onSelectedReportChanged(null)}
+            variant="outlined"
           >
             {currentReport?.Name ?? 'Select Report'}
           </DropdownButton>

@@ -152,7 +152,7 @@ class ExportToolbarControlComponent extends React.Component<
       <Flex alignItems="stretch" className="ab-DashboardToolbar__Export__wrap">
         <DropdownButton
           disabled={allReports.length == 0}
-          style={{ minWidth: 160 }}
+          style={{ minWidth: 160, fontSize: 'small' }}
           items={availableReports}
           className="ab-DashboardToolbar__Export__select"
           onClear={() => this.onSelectedReportChanged(null)}

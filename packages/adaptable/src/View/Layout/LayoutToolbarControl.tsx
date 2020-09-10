@@ -60,7 +60,7 @@ class LayoutToolbarControlComponent extends React.Component<
         <DropdownButton
           marginRight={2}
           columns={['label']}
-          style={{ minWidth: 150 }}
+          style={{ minWidth: 150, fontSize: 'small' }}
           className="ab-DashboardToolbar__Layout__select"
           items={availableLayoutOptions}
           disabled={availableLayoutOptions.length == 0}

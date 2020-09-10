@@ -15,3 +15,9 @@ html {
 :root {
   /* --ab-color-defaultbackground: red; */
 }
+
+.allRowStyle {
+  background: orange !important;
+  font-weight: normal !important;
+  font-style: italic !important;
+}
