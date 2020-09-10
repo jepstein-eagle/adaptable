@@ -10,28 +10,18 @@ Details of all the changes are listed here - for more detailed information with 
 
 These are the main updates to AdapTable in Version 7:
 
-- [AdapTable Version 7 Upgrade Guide](#adaptable-version-7-upgrade-guide)
   - [Summary of Main Changes](#summary-of-main-changes)
   - [ag-Grid Version 23](#ag-grid-version-23)
-    - [Quick Filter](#quick-filter)
-    - [Themes](#themes)
   - [Layout Changes](#layout-changes)
   - [New Calculated Column Expression Syntax and UI](#new-calculated-column-expression-syntax-and-ui)
   - [Queries](#queries)
   - [Filter](#filter)
   - [Predicates and Scope](#predicates-and-scope)
-    - [Predicate](#predicate)
-    - [Scope](#scope)
   - [Percent Bar Improvements](#percent-bar-improvements)
   - [New Partner plugins](#new-partner-plugins)
   - [Support for Master Detail grids](#support-for-master-detail-grids)
   - [React Wrapper Changes](#react-wrapper-changes)
-      - [React Wrapper Example](#react-wrapper-example)
-    - [AdapTable Tool Panel Component](#adaptable-tool-panel-component)
-    - [Deprecated props](#deprecated-props)
   - [Angular Wrapper Changes](#angular-wrapper-changes)
-      - [Angular Wrapper Example](#angular-wrapper-example)
-    - [AdapTable Tool Panel Component](#adaptable-tool-panel-component-1)
   - [Async Static Constructor](#async-static-constructor)
   - [Schedule State Consolidation](#schedule-state-consolidation)
   - [Other Changes](#other-changes)
@@ -63,21 +53,31 @@ ag-Grid introduced a new _Alpine_ theme which has necessitated some slight chang
 
 ## Layout Changes
 
-In Version 7 Layouts have had a makeover.  The main changes are:
+In Version 7 Layouts have had a major conceptual and UI makeover.  
 
-* All layouts will get **automatically** updated whenever a relevant change made (unless the `layoutOptions.autoSaveLayouts` option is set to true in which case the user has a 'Save' button to persist any changes).
+The primary changes are:
 
-* If no Layouts are provided in Predefined Config a 'Default Layout' will be created by AdapTable using the column settings in GridOptions; this too will be saved automatically as changes are made.
+* Instead of simply storing the internal layout-related logic of the underlying grid in Layout state, AdapTable will now save all the constitudent part as 'first-class' properties.  This means that Layouts can include elements that were not previously possible.
+
+* All layouts  get **automatically updated** whenever a relevant change made (unless the `layoutOptions.autoSaveLayouts` option is set to true in which case the user has a 'Save' button to persist any changes).
+
+* If no Layouts are provided in Predefined Config a **Default Layout** will be created by AdapTable using the column settings in GridOptions; this too will be saved automatically as changes are made.
 
   > Set `layoutOptions.createDefaultLayout` property to `true` for AdapTable to provide a default layout even if other layouts exist
 
 * This means that there must always be at least one Layout at any time - AdapTable will prevent the last layout from being deleted.
 
-* The previous (confusing) multi-step Layout wizard has been replaced by a single screen which allows the User to set column visibility, order sorting, grouping, aggregation and pivoting.
+* The previous (confusing) multi-step Layout wizard has been replaced by a single  _Edit Layout_ screen which allows the User to set column visibility, order sorting, grouping, aggregation and pivoting.
 
 * The `Layout` object in AdapTable State has been enhanced to include the ability to set column widths and aggregation properties.
 
 * The `restoreLayout` and `clearLayout` methods in LayoutApi have been removed as they are no longer required.
+
+### Layout Migration
+
+This is a breaking change: due to the new way Layouts work, not everything currently persisted in v.6 Layout State will be automatically migrated. 
+
+The contents of the **initial Layout definition** provided either through Predefined Config or in the Layout creation UI will be migrated, but any subsequent changes to that layout made via actions in the grid (e.g. widening or grouping columns) during the lifetime of the Layout will be lost.  
 
 For more information see the [Layout ReadMe](../functions/layout-function.md)
 
@@ -141,12 +141,35 @@ A type that returns a boolean value.  It incudes a 'handler' function that will 
 
 Developers can create their own Predicates at DesignTime via the `customPredicateDefs` property of Adaptable Options.
 
-A predicate can be used in as many of the following functions as required:
+Each predicate can be used in the following functions (and mul):
 
 * Filter
 * Alert
 * Cell Validation
 * Conditional Style
+
+
+```js
+ const adaptableOptions: AdaptableOptions = {
+   ...
+    customPredicateDefs: [
+     {
+      id: 'high_invoice',
+      label: 'High Invoice',
+      columnScope: {
+        ColumnIds: ['OrderId'],
+      },
+      functionScope: ['filter', 'conditionalstyle', 'alert', 'cellvalidation'],
+      handler(params: PredicateDefHandlerParams) {
+        const invoiced: number = params.node.data.InvoicedCost;
+        const itemCount: number = params.node.data.ItemCount;
+        return invoiced > 100 && itemCount > 10 ? true : false;
+        },
+      }
+    ],
+  };
+ ```
+
 
 ### Scope
 
@@ -407,7 +430,7 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 The size of the AdapTable download has decreased by 30%.
 
-This is caused primarily due to the removal of math.js and moment.js, but also to better tree-shaking and image management.
+This is caused primarily due to the removal of some big packages (notably math.js and moment.js), but also to better tree-shaking and image management so that only imports actually used in AdapTable are included in the download.
 
 ## Demo
 
