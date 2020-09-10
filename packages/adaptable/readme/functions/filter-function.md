@@ -18,8 +18,9 @@ This object contains a number of properties of which the most important are:
 
 * `handler` - the boolean function to run when the filter is applied.
 
-* `inputs` - blah lah (Talk about teh IN / Values here)
+* `inputs` - any additional values the Predicate requires (e.g. if its a 'GreaterThan' or 'LessThan' Predicate it will need a number, or if it is 'StartsWith' it will need a string).
 
+  > If the Predicate is 'IN' then the inputs will be an array of all the Column Values selected in the list.
 
 ## Filter State
 
@@ -69,11 +70,11 @@ There are 2 UI 'controls' which provide filtering capabilities in AdapTable.
 
 > Each remains fully in sync with the other, and each updates the same [Filter](../../src/PredefinedConfig/FilterState.ts) section in AdaptableState.
 
-### Filter Dropdown
+### Filter Form
 
 This is  powerful control that allows users to buld a Column Filter through the UI.
 
-Every column in AdapTable - which is marked as filterable - will have a Filter Dropdown to enable quick filter selection and creation.
+Every column in AdapTable - which is marked as filterable - will have a Filter Form to enable quick filter selection and creation.
 
 The dropdown can appear in 2 places:
 
@@ -83,11 +84,13 @@ The dropdown can appear in 2 places:
 
 The Dropdown contains 2 tabs:
 
-* blah
+* **Predicates** - This lists all the available Predicates for this column (System and Custom) as radio buttons.  Where a Predicate requirs an input (e.g. 'GreaterThan') this will appear when the Predicate is selected.
 
-* blah
+* **Column Values** - This lists all the distinct Column Values for that Column (or any Permitted Values if they have been set).  Each value is a checkbox enabling multiple items to be selected.
 
-> Set `filterOptions.useAdaptableFilterForm` to `false` in order to use the underlying vendor grid's filter form instead of the one provided by AdapTable.
+  > Column Values become an 'IN' Predicate.
+
+> By default AdapTable's Filter Form will be used (in preference to one provided by the underlying Grid).  To change this behaviour, set `filterOptions.useAdaptableFilterForm` to `false` in order to use the underlying vendor grid's filter form instead of the one provided by AdapTable.
 
 ### Quick Filter Bar
 
@@ -109,7 +112,7 @@ Each DataType has a default predicate as follows:
 
 The Quick Filter Bar can be hidden / displayed at any time you want by selecting the 'Show / Hide Quick Filter' menu option from any Column menu, or clicking the Show/Hide button in the Filter Toolbar.
 
-> Set `filterOptions.useAdaptableQuickFilter` to `false` in order to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable.
+> By default AdapTable's Quick Filter Bar will be used (in preference to one provided by the underlying Grid).  To change this behaviour, set `filterOptions.useAdaptableQuickFilter` to `false` in order to use the underlying vendor grid's quick filter bar instead of the one provided by AdapTable.
 
 ## Managing Column Filters
 
@@ -117,15 +120,17 @@ There are a number of options provided by AdapTable to help users configure and 
 
 ### Seeing Filtered Columns
 
-AdapTable makes it easy for users to see at a glance which columns have filters applied to them by setting `filterOptions.indicateFilteredColumns` to `true` which will distinctly render the Column Header for any filtered columns.
+AdapTable makes it easy for users to see at a glance which columns have filters applied to them through the `filterOptions.indicateFilteredColumns` property.  This defaults to `true` and will distinctly render the Column Header for any filtered columns.
 
 ### Clearing Filters
 
-To remove the filter for a column click the 'Clear' button in the Filter Dropdown or in the Column Filter Toolbar.
+To remove the filter for a column click the 'Clear' button in the Filter Form or in the Column Filter Toolbar.
 
 ### Auto-Applying Filters
 
-By default the filter gets applied automatically - and the grid updated accordingly - each time a change is made to any predicate.  To avoid this behaviour (useful if you are peforming filtering on the server), set `filterOptions.autoApplyFilter` to `false` and a button will appear in the filter form; only on clicking that will the Filter be applied.
+By default the filter gets applied **automatically** - and the grid updated accordingly - each time a change is made to any predicate (e.g. another column value is added to an 'IN' predicate).  
+
+Where this is not the desired behaviour (e.g. if you are peforming filtering on the server and want to apply the final filter only), set `filterOptions.autoApplyFilter` to `false` and a button will appear in the filter form; only on clicking that will the Filter be applied.
 
 ### Saving Column Filters
 
