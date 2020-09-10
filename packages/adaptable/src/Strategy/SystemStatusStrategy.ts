@@ -32,12 +32,12 @@ export class SystemStatusStrategy extends AdaptableStrategyBase implements ISyst
         this.setSystemMessage();
       }
     });
+  }
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      setTimeout(() => {
-        this.adaptable.api.systemStatusApi.setDefaultMessage();
-      }, 300);
-    });
+  public tidyOldConfig(): void {
+    setTimeout(() => {
+      this.adaptable.api.systemStatusApi.setDefaultMessage();
+    }, 300);
   }
 
   protected setSystemMessage(): void {

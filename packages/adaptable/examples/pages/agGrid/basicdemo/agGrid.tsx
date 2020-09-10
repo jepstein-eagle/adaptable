@@ -16,6 +16,7 @@ import {
   AdaptableColumn,
   PredicateDefHandlerParams,
   AdaptablePredicate,
+  ColumnFilter,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
@@ -125,14 +126,24 @@ async function InitAdaptableDemo() {
         ConditionalStyles: [
           {
             Scope: {
-              ColumnIds: ['country'],
+              All: true,
+            },
+            Style: {
+              ClassName: 'allRowStyle',
+            },
+            Expression: ' Positive ',
+          },
+          {
+            Scope: {
+              DataTypes: ['Number'],
             },
             Style: {
               FontWeight: 'Bold',
               BackColor: 'yellow',
             },
             Predicate: {
-              PredicateId: 'regionNorthAmerica',
+              //  PredicateId: 'regionNorthAmerica',
+              PredicateId: 'Positivity',
             },
           },
           {
@@ -170,7 +181,7 @@ async function InitAdaptableDemo() {
       },
 
       Filter: {
-        Revision: 9,
+        Revision: 10,
 
         ColumnFilters: [
           {
@@ -414,9 +425,13 @@ async function InitAdaptableDemo() {
   });
 
   api.eventApi.on('AdaptableReady', (info: AdaptableReadyInfo) => {
-    let condStyle = api.conditionalStyleApi.getAllConditionalStyle()[1];
-    let returnString: string[] = api.queryApi.getColumnsFromQueryObject(condStyle);
-    console.log('cols in expression', returnString);
+    let columnFilter: ColumnFilter = {
+      ColumnId: 'country',
+      Predicate: {
+        PredicateId: 'any old rubbish',
+      },
+    };
+    api.filterApi.setColumnFilter([columnFilter]);
   });
 }
 

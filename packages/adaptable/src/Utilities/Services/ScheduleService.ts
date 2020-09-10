@@ -72,16 +72,6 @@ export class ScheduleService implements IScheduleService {
 
     this.AddMidnightRefreshSchedule();
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      setTimeout(() => {
-        this.updateReminderJobs();
-        this.updateReportJobs();
-        this.updateIPushPullJobs();
-        this.updateGlue42Jobs();
-        this.updateOpenFinJobs();
-      }, 2000);
-    });
-
     this.adaptable.adaptableStore.onAny((eventName: string) => {
       if (this.adaptable.isInitialised) {
         if (
@@ -117,6 +107,16 @@ export class ScheduleService implements IScheduleService {
         }
       }
     });
+  }
+
+  public tidyOldConfig(): void {
+    setTimeout(() => {
+      this.updateReminderJobs();
+      this.updateReportJobs();
+      this.updateIPushPullJobs();
+      this.updateGlue42Jobs();
+      this.updateOpenFinJobs();
+    }, 2000);
   }
 
   private updateReminderJobs() {

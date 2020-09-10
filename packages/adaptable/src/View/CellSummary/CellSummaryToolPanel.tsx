@@ -22,6 +22,7 @@ import { ToolPanelStrategyViewPopupProps } from '../Components/SharedProps/ToolP
 import { AdaptableToolPanel } from '../../PredefinedConfig/Common/Types';
 import { PanelToolPanel } from '../Components/Panels/PanelToolPanel';
 import Dropdown from '../../components/Dropdown';
+import DropdownButton from '../../components/DropdownButton';
 
 interface CellSummaryToolPanelComponentProps
   extends ToolPanelStrategyViewPopupProps<CellSummaryToolPanelComponent> {
@@ -100,19 +101,17 @@ class CellSummaryToolPanelComponent extends React.Component<
         }
       >
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__CellSummary__wrap">
-          <Dropdown
-            style={{ minWidth: 170 }}
-            showEmptyItem={false}
+          <DropdownButton
+            style={{ fontSize: 'small' }}
+            marginRight={2}
+            columns={['label']}
             className="ab-ToolPanel__CellSummary__select"
-            placeholder="Select Summary Operation"
-            value={this.props.CellSummaryOperation}
-            options={availableOptions}
-            showClearButton={false}
-            //  onChange={() => this.onSelectionChanged()}
-            onChange={(summaryOperation: any) =>
-              this.props.onCellSummaryOperationChange(summaryOperation)
-            }
-          />
+            items={[...operationMenuItems, ...operationDefinitions]}
+            variant="outlined"
+            tone={'neutral'}
+          >
+            {this.props.CellSummaryOperation}
+          </DropdownButton>
         </Flex>
         <Flex flexDirection="row" alignItems="stretch" className="ab-ToolPanel__CellSummary__wrap">
           {!shouldDisable && (

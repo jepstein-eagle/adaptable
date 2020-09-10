@@ -22,34 +22,34 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
       ScreenPopups.PercentBarPopup,
       adaptable
     );
+  }
 
-    this.adaptable.api.eventApi.on('AdaptableReady', () => {
-      const percentBars = this.adaptable.api.percentBarApi.getAllPercentBar();
-      percentBars.forEach(percentBar => {
-        if (percentBar.Ranges) {
-          return;
-        }
+  public tidyOldConfig(): void {
+    const percentBars = this.adaptable.api.percentBarApi.getAllPercentBar();
+    percentBars.forEach(percentBar => {
+      if (percentBar.Ranges) {
+        return;
+      }
 
-        percentBar.Ranges = [];
+      percentBar.Ranges = [];
 
-        if (percentBar.NegativeValue !== undefined) {
-          percentBar.Ranges.push({
-            Min: percentBar.NegativeValue,
-            Max: 0,
-            Color: percentBar.NegativeColor,
-          });
-        }
+      if (percentBar.NegativeValue !== undefined) {
+        percentBar.Ranges.push({
+          Min: percentBar.NegativeValue,
+          Max: 0,
+          Color: percentBar.NegativeColor,
+        });
+      }
 
-        if (percentBar.PositiveValue !== undefined) {
-          percentBar.Ranges.push({
-            Min: 0,
-            Max: percentBar.PositiveValue,
-            Color: percentBar.PositiveColor,
-          });
-        }
+      if (percentBar.PositiveValue !== undefined) {
+        percentBar.Ranges.push({
+          Min: 0,
+          Max: percentBar.PositiveValue,
+          Color: percentBar.PositiveColor,
+        });
+      }
 
-        this.adaptable.api.percentBarApi.editPercentBar(percentBar);
-      });
+      this.adaptable.api.percentBarApi.editPercentBar(percentBar);
     });
   }
 

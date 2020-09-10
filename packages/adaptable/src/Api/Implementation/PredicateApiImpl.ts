@@ -51,6 +51,14 @@ export class PredicateApiImpl extends ApiBase implements PredicateApi {
       : predicateDef.label;
   }
 
+  public isValidPredicate(predicate: AdaptablePredicate): boolean {
+    if (this.getPredicateDefById(predicate.PredicateId) == undefined) {
+      return false;
+    }
+    // need some way idealy of checking the inputs are correct for the type but not the end of the world if we dont have
+    return true;
+  }
+
   public handlePredicate(
     predicate: AdaptablePredicate,
     params: Omit<PredicateDefHandlerParams, 'api' | 'inputs'>,

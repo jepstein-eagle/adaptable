@@ -87,11 +87,12 @@ class CellSummaryToolbarControlComponent extends React.Component<
       >
         <DropdownButton
           marginRight={2}
+          style={{ fontSize: 'small' }}
           columns={['label']}
           className="ab-DashboardToolbar__CellSummary__select"
           items={[...operationMenuItems, ...operationDefinitions]}
           disabled={shouldDisable}
-          variant={'text'}
+          variant="outlined"
           tone={'neutral'}
         >
           {this.props.CellSummaryOperation}
