@@ -374,7 +374,7 @@ class GridInfoPopupComponent extends React.Component<GridInfoPopupProps, Adaptab
 
     returnRows.push(this.createColItem(colItems, 'Vendor Grid', adaptable.vendorGridName));
 
-    returnRows.push(this.createColItem(colItems, 'Adaptable Version', version));
+    returnRows.push(this.createColItem(colItems, 'AdapTable Version', version));
 
     returnRows.push(
       this.createColItem(

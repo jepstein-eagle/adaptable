@@ -97,9 +97,11 @@ Layout supports these Entitlement Rules:
 
 - **Full**: All Layouts are available to the User
 
+- **ReadOnly**: User can select Layouts that have been provided in Predefined Config but cannot edit or delete them, nor add others.
+
 - **Hidden**: All Layouts are  hidden from the User
 
-- **ReadOnly**: User can select Layouts that have been provided in Predefined Config but cannot edit or delete them, nor add others.
+  > Even when Layouts are hidden AdapTable will still create a Default Layout, update (and persit) it as the grid changes, and load it when the grid re-starts; however it will be invisible to the User.
 
 ## FAQ
 
