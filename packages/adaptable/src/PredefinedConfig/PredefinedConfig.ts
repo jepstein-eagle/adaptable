@@ -226,15 +226,17 @@ import { QueryState } from './QueryState';
  *    Reports: [
  *      {
  *        Name: 'High Freight',
- *        ReportColumnScope: 'BespokeColumns',
+ *        ReportColumnScope: 'ScopeColumns',
  *        ReportRowScope: 'ExpressionRows',
- *        ColumnIds: [
- *          'OrderId',
- *          'Freight',
- *          'Employee',
- *          'PackageCost',
- *          'InvoicedCost',
- *         ],
+ *        Scope: {
+ *          ColumnIds: [
+ *            'OrderId',
+ *            'ChangeLastOrder',
+ *            'ContactName',
+ *            'InvoicedCost',
+ *            'OrderDate',
+ *          ],
+ *         }
  *         Expression: '[Freight]> 500'
  *       },
  *     ],

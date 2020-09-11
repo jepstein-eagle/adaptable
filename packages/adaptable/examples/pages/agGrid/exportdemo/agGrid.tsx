@@ -54,35 +54,26 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Export: {
+    Revision: Date.now(),
     Reports: [
       {
         Name: 'End of Day',
-        Scope: {
-          ColumnIds: [
-            'bid',
-            'changeOnYear',
-            'counterparty',
-            'country',
-            'currency',
-            'tradeDate',
-            'settlementDate',
-            'ask',
-            'moodysRating',
-            'bloombergBid',
-            'bloombergAsk',
-          ],
-        },
-        ReportColumnScope: 'ScopedColumns',
+        ColumnIds: [
+          'bid',
+          'changeOnYear',
+          'counterparty',
+          'country',
+          'currency',
+          'tradeDate',
+          'settlementDate',
+          'ask',
+          'moodysRating',
+          'bloombergBid',
+          'bloombergAsk',
+        ],
+
+        ReportColumnScope: 'BespokeColumns',
         ReportRowScope: 'VisibleRows',
-        /*
-        AutoExport: {
-          Schedule: {
-            Hour: 17,
-            Minute: 30,
-            DaysOfWeek: [5, 4, 3, 2, 1],
-          },
-          ExportDestination: 'JSON',
-        }, */
       },
     ],
     CurrentReport: 'End of Day',

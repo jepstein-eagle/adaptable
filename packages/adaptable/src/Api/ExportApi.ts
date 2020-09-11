@@ -69,10 +69,24 @@ export interface ExportApi {
    */
   canExportToExcel(): boolean;
 
+  /**
+   * Exports data to Excel
+   *
+   * @param columnIds columns to include in the Sheet
+   * @param data data to export
+   * @param fileName name of the spreadsheet that is created
+   */
   exportDataToExcel(columnIds: string[], data: any[], fileName: string): void;
 
   /**
    * Opens the Export popup screen
    */
   showExportPopup(): void;
+
+  /**
+   * Edits an existing report
+   *
+   * @param report report to Edit - will replace an existing report with the same Uuid
+   */
+  editReport(report: Report): void;
 }

@@ -30,6 +30,27 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
     );
   }
 
+  public tidyOldConfig(): void {
+    this.adaptable.api.exportApi
+      .getAllReports()
+      .filter(r => !this.adaptable.ReportService.IsSystemReport(r))
+      .forEach((report: Report) => {
+        console.log('report1', report);
+        if ((report.ReportColumnScope as any) == 'BespokeColumns') {
+          if ((report as any).ColumnIds) {
+            const newReport = Helper.cloneObject(report);
+            const oldReport: any = report as any;
+            newReport.ReportColumnScope = 'ScopeColumns';
+            newReport.Scope = {
+              ColumnIds: oldReport.ColumnIds,
+            };
+            console.log('updating report to use new "Scope" object');
+            this.adaptable.api.exportApi.editReport(newReport);
+          }
+        }
+      });
+  }
+
   public addContextMenuItem(menuInfo: MenuInfo): AdaptableMenuItem | undefined {
     let menuItemClickFunction: MenuItemDoClickFunction | undefined = undefined;
     if (this.canCreateMenuItem('ReadOnly')) {

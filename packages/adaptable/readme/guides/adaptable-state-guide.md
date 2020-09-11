@@ -220,15 +220,20 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
     Reports: [
       {
         Name: 'High Freight',
-        ReportColumnScope: 'BespokeColumns',
+        ReportColumnScope: 'ScopeColumns',
         ReportRowScope: 'ExpressionRows',
-        ColumnIds: [
-          'OrderId',
-          'Freight',
-          'Employee',
-          'PackageCost',
-          'InvoicedCost',
+         Scope: {
+         ColumnIds: [
+           'OrderId',
+           'ChangeLastOrder',
+           'ContactName',
+           'InvoicedCost',
+           'ItemCost',
+           'ItemCount',
+           'OrderCost',
+           'OrderDate',
          ],
+        }
          Expression: '[Freight]> 500'
          },
        },

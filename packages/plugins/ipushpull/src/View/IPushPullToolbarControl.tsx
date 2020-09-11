@@ -129,9 +129,18 @@ class IPushPullToolbarControlComponent extends React.Component<
         return {
           label: iPushPullDomain.Name,
           value: iPushPullDomain.Name,
+          onClick: () => this.onFolderChanged(iPushPullDomain.Name),
         };
       }
     );
+
+    let availablePages: any[] = this.state.AvailablePages.map(page => {
+      return {
+        label: page,
+        value: page,
+        onClick: () => this.onPageChanged(page),
+      };
+    });
 
     // this is clearly ridiculous!
     // im getting tired...
@@ -163,27 +172,32 @@ class IPushPullToolbarControlComponent extends React.Component<
             ? this.state.ReportName
             : 'Select Report'}
         </DropdownButton>
-        <Dropdown
+        <DropdownButton
           disabled={allReports.length == 0 || isLiveIPushPullReport}
-          style={{ minWidth: 140 }}
-          options={availableFolders}
+          style={{ minWidth: 140, fontSize: 'small' }}
+          items={availableFolders}
           className="ab-DashboardToolbar__IPushPull__select"
-          onChange={(folder: string) => this.onFolderChanged(folder)}
-          value={this.state.Folder}
-          placeholder="Select Folder"
+          onClear={() => this.onFolderChanged(null)}
+          showClearButton={StringExtensions.IsNotNullOrEmpty(this.state.Folder)}
+          variant="outlined"
           marginRight={2}
-        ></Dropdown>
-        <Dropdown
+        >
+          {StringExtensions.IsNotNullOrEmpty(this.state.Folder)
+            ? this.state.Folder
+            : 'Select Folder'}
+        </DropdownButton>
+        <DropdownButton
           disabled={allReports.length == 0 || isLiveIPushPullReport}
-          style={{ minWidth: 140 }}
-          options={this.state.AvailablePages}
+          style={{ minWidth: 140, fontSize: 'small' }}
+          items={availablePages}
           className="ab-DashboardToolbar__IPushPull__select"
-          placeholder="Select Page"
-          onChange={(page: string) => this.onPageChanged(page)}
-          value={this.state.Page ? this.state.Page : null}
-          showClearButton
+          onClear={() => this.onPageChanged(null)}
+          showClearButton={StringExtensions.IsNotNullOrEmpty(this.state.Page)}
+          variant="outlined"
           marginRight={2}
-        ></Dropdown>
+        >
+          {StringExtensions.IsNotNullOrEmpty(this.state.Page) ? this.state.Page : 'Select Page'}
+        </DropdownButton>
         <ButtonExport
           marginLeft={1}
           className="ab-DashboardToolbar__IPushPull__export"

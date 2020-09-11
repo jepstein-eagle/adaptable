@@ -53,4 +53,8 @@ export class ExportApiImpl extends ApiBase implements ExportApi {
       ScreenPopups.ExportPopup
     );
   }
+
+  public editReport(report: Report): void {
+    this.dispatchAction(ExportRedux.ReportEdit(report));
+  }
 }
