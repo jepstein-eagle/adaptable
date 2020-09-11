@@ -75,9 +75,11 @@ The primary changes are:
 
 ### Layout Migration
 
-This is a breaking change: due to the new way Layouts work, not everything currently persisted in v.6 Layout State will be automatically migrated. 
+Note: due to the new way Layouts work, not everything currently persisted in v.6 Layout State will be migrated. 
 
-The contents of the **initial Layout definition** provided either through Predefined Config or in the Layout creation UI will be migrated, but any subsequent changes to that layout made via actions in the grid (e.g. widening or grouping columns) during the lifetime of the Layout will be lost.  
+The contents of the **initial Layout definition** - provided either through Predefined Config or in the Layout creation UI - will be automatically migrated by AdapTable.
+
+However, any **subsequent changes** to that Layout as the result of user actions in the grid (e.g. widening or grouping columns) will be lost.  
 
 For more information see the [Layout ReadMe](../functions/layout-function.md)
 
