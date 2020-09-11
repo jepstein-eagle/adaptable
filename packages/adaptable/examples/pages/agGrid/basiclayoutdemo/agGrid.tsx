@@ -305,9 +305,20 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Layout: {
-    Revision: 23,
-    CurrentLayout: '',
-    Layouts: [],
+    Revision: Date.now(),
+    CurrentLayout: 'Test',
+    Layouts: [
+      {
+        Name: 'Simple Layout',
+        AutoSave: true,
+        Columns: ['price', 'model', 'make', 'Multiply'],
+        PivotDetails: {
+          PivotColumns: ['make'],
+          //  AggregationColumns: ['InvoicedCost', 'ItemCost'],
+          AggregationColumns: ['price'],
+        },
+      },
+    ],
   },
   // Layout: {
   //   CreateDefaultLayout: true,
@@ -316,29 +327,7 @@ let demoConfig: PredefinedConfig = {
   //   //   CreateDefaultLayout: false,
   //   Revision: 2,
   //   CurrentLayout: 'Simple Layout',
-  //   Layouts: [
-  //     {
-  //       Name: 'Simple Layout',
-  //       AutoSave: true,
-  //       Columns: ['price', 'model', 'make', 'Multiply'],
-  //       RowGroupedColumns: ['make'],
-  //       EnablePivot: true,
-  //       ColumnWidthMap: {
-  //         price: 500,
-  //       },
-  //       AggregationColumns: {
-  //         price: 'avg',
-  //       },
-  //       PivotColumns: ['make', 'model'],
-  //     },
-  //     {
-  //       Name: 'Pivot Layout',
-  //       Columns: [],
-  //       //    PivotDetails: {
-  //       //      PivotColumns: ['make'],
-  //       //     AggregationColumns: ['price'],
-  //       //   },
-  //     },
+
   //     {
   //       Name: 'Full Layout',
   //       Columns: ['year', 'model', 'make', 'identifier', 'price'],
