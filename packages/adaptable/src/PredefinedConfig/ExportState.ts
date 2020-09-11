@@ -40,19 +40,21 @@ import { AdaptableScope } from './Common/AdaptableScope';
  *       ReportRowScope: 'ExpressionRows',
  *     },
  *     {
- *       ColumnIds: [
- *         'OrderId',
- *         'ChangeLastOrder',
- *         'ContactName',
- *         'InvoicedCost',
- *         'ItemCost',
- *         'ItemCount',
- *         'OrderCost',
- *         'OrderDate',
- *       ],
  *       Name: 'End of Day',
- *       ReportColumnScope: 'BespokeColumns',
+ *       ReportColumnScope: 'ScopeColumns',
  *       ReportRowScope: 'VisibleRows',
+ *       Scope: {
+ *        ColumnIds: [
+ *          'OrderId',
+ *          'ChangeLastOrder',
+ *          'ContactName',
+ *          'InvoicedCost',
+ *          'ItemCost',
+ *          'ItemCount',
+ *          'OrderCost',
+ *          'OrderDate',
+ *        ],
+ *       }
  *     },
  *   ],
  * },
@@ -113,7 +115,7 @@ export interface Report extends QueryObject {
    *
    * - SelectedColumns - all columns which are currently selected (only available in Vendor Grids where multiple columns can be selected)
    *
-   * - BespokeColumns - a list of Columns to be provided by you; if the Report is built using the UI Wizard a separate page appears to facilitate this column selection
+   * - ScopeColumns - a list of Columns to be provided by you; if the Report is built using the UI Wizard a separate page appears to facilitate this column selection
    *
    * - CustomColumns - only used when you want to run a report externally (and not through AdapTable)
    */
