@@ -6,7 +6,7 @@ Layouts typically contain column visibility and order information but can also i
 
 By default Layouts will save automatially when their contents change - and there must always be one active Layout in AdapTable.
 
-> This 'ReadMe' reflects how Layouts work as of Version 7 of AdapTable (released Sept. 2020). See the [Upgrade Guide](../upgrade-guides/upgrade-guide-v7.md) for the changes this Version made to Layouts.
+> This 'ReadMe' reflects how Layouts work as of Version 7 of AdapTable (released Sept. 2020). See the [Upgrade Guide](../upgrade-guides/upgrade-guide-v7.md) for the changes this Version made to Layouts and the limited migration path it offers for Layouts from previous versions.
 
 ### Layout Contents
 
@@ -58,7 +58,7 @@ There are 2 properties available in [Layout Options](https://api.adaptabletools.
 
 - `autoSizeColumnsInLayout` - whether all Layouts should automatically autosize columns when **first opened**
 
-> This will only be used if no Column Width information was provided in the Layout definition.
+  > This will only be used if no Column Width information was provided in the Layout definition.
 
 - `autoSizeColumnsInPivotLayout` - whether pivot-based Layouts should automatically autosize columns when **first opened** 
 
@@ -83,11 +83,11 @@ To change this behaviour set the `includeExpandedRowGroups` property to **true**
 
 Layout includes the following UI Elements:
 
-- **Popup** - Shows a list of existing Layoutes with *Edit* and *Delete* buttons, and a 'Current' Radio Button to select one to be set.  Also includes an *Add* button to start the Layout Wizard.
+- **Popup** - Shows a list of existing Layouts with *Edit* and *Delete* buttons, and a 'Current' Radio Button to select the current Layout.  Also includes an *Add* button to open the Layout Editor.
 
 - **Editor** - A single screen which enables the creation and editing of Layouts.
 
-- **Toolbar** - Provides a list of the available Layoute in a dropdown, together with buttons for adding / restoring / deleting.
+- **Toolbar** - Provides a list of the available Layouts in a dropdown, together with buttons for adding / restoring / deleting.
 
 - **Tool Panel** - Same as Toolbar above.
 
