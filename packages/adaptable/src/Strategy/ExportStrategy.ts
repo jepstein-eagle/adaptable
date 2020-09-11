@@ -18,6 +18,7 @@ import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
 import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
 import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
+import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
   constructor(adaptable: IAdaptable) {
@@ -35,7 +36,6 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
       .getAllReports()
       .filter(r => !this.adaptable.ReportService.IsSystemReport(r))
       .forEach((report: Report) => {
-        console.log('report1', report);
         if ((report.ReportColumnScope as any) == 'BespokeColumns') {
           if ((report as any).ColumnIds) {
             const newReport = Helper.cloneObject(report);
@@ -44,7 +44,9 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
             newReport.Scope = {
               ColumnIds: oldReport.ColumnIds,
             };
-            console.log('updating report to use new "Scope" object');
+            LoggingHelper.LogAdaptableInfo(
+              'Updating Report: ' + report.Name + ' to use new "Scope" object'
+            );
             this.adaptable.api.exportApi.editReport(newReport);
           }
         }
