@@ -251,13 +251,10 @@ function mapDispatchToProps(
 ): Partial<LayoutPopupProps> {
   return {
     onSaveLayout: (layout: Layout) => {
-      const autoSave = ownProps.api.layoutApi.shouldAutoSaveLayout(layout);
-
-      if (autoSave) {
-        dispatch(LayoutRedux.LayoutSave(layout));
-      } else {
-        dispatch(LayoutRedux.LayoutUpdateCurrentDraft(layout));
-      }
+      // SAVE it when user clicks FINISH, even if autoSave: false
+      // since it makes sense to persist when clicking FINISH - for the user
+      // clicking FINISH is equivalent to clicking save
+      dispatch(LayoutRedux.LayoutSave(layout));
     },
     onAddLayout: (layout: Layout) => {
       dispatch(LayoutRedux.LayoutAdd(layout));
