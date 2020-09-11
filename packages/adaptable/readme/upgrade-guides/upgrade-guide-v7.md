@@ -420,13 +420,16 @@ A number of small changes have been made to AdapTable State and Adaptable functi
 
 * **Report**, **Alert**, **CellValidation** and **ConditionalStyle** now include `Scope` (see above)
 
-* The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**, so set explicitly to **false** if you do not want this to appear.
+* The 'BespokeColumns' value in `ReportColumnScope` has been changed to 'ScopeColumns'
 
-* **Export** now allows for CustomReports to be created; a function provided by the user is called when the Report is run.
+* **Export** now allows for _CustomReports_ to be created; a function provided by the user is called when the Report is run.
+
+* The `userInterfaceOptions.showAdaptableToolPanel` property now defaults to **true**, so set explicitly to **false** if you do not want this to appear.
 
 * The `--ab-cmp-field-wrap__border-radius` css variable has been added
 
 * All UI elements now include **semantic class names** to provide easier custom styling
+
 
 ## Reduced Package Size
 
