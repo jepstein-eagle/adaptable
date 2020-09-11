@@ -84,7 +84,7 @@ const columnSchema: ColDef[] = [
   {
     headerName: 'Price',
     field: 'price',
-    aggFunc: 'min',
+    aggFunc: 'max',
     enableRowGroup: true,
     enableValue: true,
     filter: true,

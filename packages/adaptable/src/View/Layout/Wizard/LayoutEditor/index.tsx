@@ -424,6 +424,10 @@ export const LayoutEditor = React.memo((props: LayoutEditorProps) => {
             renderItem={c => {
               const visible = !!visibleColumnsMap[c.ColumnId];
               const aggregate = !!aggregationColumnsMap[c.ColumnId];
+              // we need to enable aggregation if there are row groups
+              // or if pivoting is enabled
+              const aggregateEnabled =
+                (layout.RowGroupedColumns && layout.RowGroupedColumns.length) || layout.EnablePivot;
               return (
                 <Flex flexDirection="column" alignItems="stretch" data-name="drag-item">
                   <Flex
@@ -479,7 +483,7 @@ export const LayoutEditor = React.memo((props: LayoutEditorProps) => {
                         <CheckBox
                           key="checkbox"
                           ml={3}
-                          disabled={!layout.RowGroupedColumns || !layout.RowGroupedColumns.length}
+                          disabled={!aggregateEnabled}
                           onChange={checked => {
                             let aggCols: null | Record<string, string | true> =
                               layout.AggregationColumns || {};

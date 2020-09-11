@@ -195,17 +195,7 @@ type RuntimeConfig = {
   waitForAgGrid?: boolean;
 };
 
-type VendorColumnState = {
-  colId: string;
-  hide?: boolean;
-  aggFunc?: string | IAggFunc | null;
-  width?: number;
-  pivotIndex?: number | null;
-  pinned?: boolean | string | 'left' | 'right';
-  rowGroupIndex?: number | null;
-  flex?: number;
-};
-type VendorColumnStateMap = { [key: string]: VendorColumnState };
+type ColumnStateMap = Record<string, ColumnState>;
 
 const RowNodeProto: any = RowNode.prototype as unknown;
 const RowNode_dispatchLocalEvent = RowNodeProto.dispatchLocalEvent;
@@ -1058,7 +1048,7 @@ export class Adaptable implements IAdaptable {
 
   private getSortedColumnStateForVisibleColumns(
     visibleColumnList: string[],
-    columnState?: VendorColumnState[]
+    columnState?: ColumnState[]
   ) {
     columnState = columnState || this.gridOptions.columnApi!.getColumnState();
 
@@ -1107,7 +1097,10 @@ export class Adaptable implements IAdaptable {
 
         return newVisibleColumnsMap[colState1.colId] - newVisibleColumnsMap[colState2.colId];
       })
-      .map(colDef => ({ ...colDef, hide: NewVisibleColumnIdsMap[colDef.colId] == null }));
+      .map(colState => ({
+        ...colState,
+        hide: NewVisibleColumnIdsMap[colState.colId] == null,
+      }));
   }
 
   public setColumnOrder(VisibleColumnList: string[]): void {
@@ -1141,7 +1134,7 @@ export class Adaptable implements IAdaptable {
       acc[colState.colId] = colState;
 
       return acc;
-    }, {} as VendorColumnStateMap);
+    }, {} as ColumnStateMap);
     const groupedColumnsIndexesMap = (layout.RowGroupedColumns || []).reduce(
       (acc, colId: string, index) => {
         acc[colId] = index;
@@ -1170,13 +1163,14 @@ export class Adaptable implements IAdaptable {
     const colsToAutoSize: Record<string, boolean> = {};
 
     const newColState = this.getSortedColumnStateForVisibleColumns(columnsToShow, columnsState)
-      .map((colDef: ColDef) => {
-        const { colId } = colDef;
-        const oldColState: VendorColumnState = columnsStateMap[colId];
+      .map((colState: ColumnState) => {
+        const { colId } = colState;
+
+        const oldColState: ColumnState = columnsStateMap[colId];
 
         const hide = !layoutColumnsMap[colId];
 
-        const newColState: VendorColumnState = { ...oldColState, hide };
+        const newColState: ColumnState = { ...oldColState, hide };
 
         if (layout.ColumnWidthMap && layout.ColumnWidthMap[colId] != null) {
           newColState.width = layout.ColumnWidthMap[colId];
@@ -1198,9 +1192,13 @@ export class Adaptable implements IAdaptable {
         }
         newColState.aggFunc = null;
         if (aggregationFunctionsColumnsMap[colId] != null) {
+          const colDef = this.gridOptions?.api?.getColumnDef(colId);
           newColState.aggFunc =
             aggregationFunctionsColumnsMap[colId] === true
-              ? colDef.aggFunc
+              ? // if we have true, it means - take the default aggFunc from colDef
+                // NOTE: colState gives us the current aggFunc, which can be null,
+                // while the colDef gives us the initially configured aggFunc for that column
+                colState.aggFunc ?? colDef?.aggFunc ?? 'sum'
               : (aggregationFunctionsColumnsMap[colId] as string);
         }
 
@@ -1321,33 +1319,33 @@ export class Adaptable implements IAdaptable {
     const pivotColumns: string[] = [];
     const aggregatedColumns: Record<string, string> = {};
 
-    const columnWidths = columnState.reduce((acc, colDef) => {
-      const { colId } = colDef;
+    const columnWidths = columnState.reduce((acc, colState: ColumnState) => {
+      const { colId } = colState;
 
-      if (colDef.width != null) {
-        acc[colId] = colDef.width;
+      if (colState.width != null) {
+        acc[colId] = colState.width;
       }
-      if (colDef.flex != null) {
-        columnFlexes[colId] = colDef.flex;
+      if (colState.flex != null) {
+        columnFlexes[colId] = colState.flex;
       }
-      if (colDef.pinned === 'left') {
+      if (colState.pinned === 'left') {
         pinnedColumns[colId] = 'left';
       }
-      if (colDef.pinned === 'right') {
+      if (colState.pinned === 'right') {
         pinnedColumns[colId] = 'right';
       }
-      if (!colDef.hide) {
+      if (!colState.hide) {
         columnOrder.push(colId);
       }
 
-      if (colDef.rowGroupIndex != null) {
-        groupedColumns[colDef.rowGroupIndex] = colId;
+      if (colState.rowGroupIndex != null) {
+        groupedColumns[colState.rowGroupIndex] = colId;
       }
-      if (colDef.pivotIndex != null) {
-        pivotedColumns[colDef.pivotIndex] = colId;
+      if (colState.pivotIndex != null) {
+        pivotedColumns[colState.pivotIndex] = colId;
       }
-      if (colDef.aggFunc && typeof colDef.aggFunc === 'string') {
-        aggregatedColumns[colId] = colDef.aggFunc;
+      if (colState.aggFunc && typeof colState.aggFunc === 'string') {
+        aggregatedColumns[colId] = colState.aggFunc;
       }
 
       return acc;

@@ -65,15 +65,15 @@ export class LayoutStrategy extends AdaptableStrategyBase implements ILayoutStra
         PivotColumns?: string[];
       } = (layout as any).PivotDetails;
 
-      let newAggregationColumns: Record<string, string>;
+      let newAggregationColumns: Record<string, true>;
       let newPivotColumns: string[] = PivotDetails?.PivotColumns;
 
       if (PivotDetails) {
         if (PivotDetails.AggregationColumns && PivotDetails.AggregationColumns.length) {
           newAggregationColumns = PivotDetails.AggregationColumns.reduce((acc, colId) => {
-            acc[colId] = 'sum';
+            acc[colId] = true;
             return acc;
-          }, {} as Record<string, string>);
+          }, {} as Record<string, true>);
         }
       }
 
