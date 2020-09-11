@@ -1,3 +1,8 @@
+## 7.0.2
+
+Fix bug that only allowed aggregation when the layout had row groups. Now aggregation is also possible in pivot mode.
+Add backward compatibility layer for v6 layouts.
+
 ## 7.0.1
 
 Incredibly few and minor changes for Layout and Expressions
