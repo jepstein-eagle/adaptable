@@ -1,3 +1,7 @@
+## 7.0.3
+
+Upgrade path for reports not using Scope
+
 ## 7.0.2
 
 Fix bug that only allowed aggregation when the layout had row groups. Now aggregation is also possible in pivot mode.
