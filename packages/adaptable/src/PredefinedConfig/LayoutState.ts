@@ -175,7 +175,7 @@ export interface Layout extends AdaptableObject {
   /**
    * A list of columns which should be pivoted
    *
-   * Only used when the grid is in pivot mode (or if Layout has `EanblePivot` set to true)
+   * Only used when the grid is in pivot mode (or if Layout has `EnablePivot` set to true)
    */
   PivotColumns?: string[];
 
