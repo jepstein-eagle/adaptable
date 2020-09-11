@@ -77,7 +77,7 @@ The primary changes are:
 
 Note: due to the new way Layouts work, not everything currently persisted in v.6 Layout State will be migrated. 
 
-The contents of the **initial Layout definition** - provided either through Predefined Config or in the Layout creation UI - will be automatically migrated by AdapTable.
+The contents of the **initial Layout definition** - provided either through Predefined Config or in the Layout creation UI - will be automatically migrated by AdapTable (in versions 7.0.2 and later).
 
 However, any **subsequent changes** to that Layout as the result of user actions in the grid (e.g. widening or grouping columns) will be lost.  
 
