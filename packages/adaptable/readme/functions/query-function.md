@@ -38,7 +38,7 @@ The Query State includes 2 elements:
 
 * **SharedQueries** - these are Queries that have been named and so can be **re-used** in other functions in AdapTable (e.g. Reports, Conditional Styles).
 
-  > If a Shared Query is provided in Predefined Config then - unlike with all other AdapTable functions -  **the Uuid must be included in the Config**.  This should be something guaranteed to be unique - which will be referenced elsewhere - and unlike other properties (e.g. 'Name') will never change.
+  > If a Shared Query is provided in Predefined Config then - unlike with all other AdapTable functions -  **the Uuid must be included in the Config**.  This should be something guaranteed to be unique (as it will be referenced elsewhere), and unlike other properties (e.g. 'Name') will never change.
   
 ## UI Elements
 
@@ -49,8 +49,10 @@ Query includes the following UI Elements:
   * Drag n Drop of Columns into the Editor
 
   * List of all the available functions as buttons or in a dropdown so they are immediately applied in the Editor
+  
+  * Provides the first row in the grid as (editable) 'dummy data'
 
-  * Display the return value of the Expression (using data from the first row of the Grid)
+  * Displays the return value of the Expression (using data from the first row of the Grid)
 
   * Context sensitive Support / Help for each available function
 
@@ -109,32 +111,10 @@ Yes - by using a Shared Query.  This allows you to use the same Query for search
 
 - [Query Demo](https://demo.adaptabletools.com/search/aggridcurrentquerydemo)
 
+The following demos also contain Expressions:
 
-
-## Demos
-
-The following demos all contain Expressions:
-
-- [Current Query Demo](https://demo.adaptabletools.com/search/aggridcurrentquerydemo)
 - [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
 - [Cell Validation Demo](https://demo.adaptabletools.com/edit/aggridcellvalidationdemo)
 - [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo)
 - [Export Demos](https://demo.adaptabletools.com/export)
 - [Plus / Minus Demo](https://demo.adaptabletools.com/edit/aggridplusminusdemo)
-- [User Filter Demo](https://demo.adaptabletools.com/filters/aggriduserfiltersdemo)
-
-## Help
-
-Developers can learn how to access AdapTable programmatically at [AdapTable Developer Documentation](https://api.adaptabletools.com) 
-
-The other source for Help is our collection of 'Read Me' Docs ([full list here](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/readme-list.md)).
-
-> Previously the main source of AdapTable Help was our [Zendesk Pages](https://adaptabletools.zendesk.com/hc/en-us/articles/360007083017-Help-) but these have been replaced by these 'Read Me' docs and the Developer Documentation that is automatically produced and therefore always up to date.
-
-## More Information
-
-General information about Adaptable Tools is available at our [Website](http://www.adaptabletools.com) 
-
-## Support
-
-For all support enquiries please email [`support@adaptabletools.com`](mailto:support@adaptabletools.com) or [raise a Support Ticket](https://adaptabletools.zendesk.com/hc/en-us/requests/new).
