@@ -6,9 +6,10 @@ import {
   FilterState,
   ColumnFilter,
   SystemFilterPredicateIds,
+  SystemFilterPredicateId,
 } from '../../PredefinedConfig/FilterState';
 import StringExtensions from '../../Utilities/Extensions/StringExtensions';
-import { CellValueType } from '../../PredefinedConfig/Common/Enums';
+import { CellValueType, DataType } from '../../PredefinedConfig/Common/Enums';
 import { AdaptablePredicateDef } from '../../PredefinedConfig/Common/AdaptablePredicate';
 import { AdaptableColumn } from '../../PredefinedConfig/Common/AdaptableColumn';
 import { LogAdaptableWarning } from '../../Utilities/Helpers/LoggingHelper';
@@ -131,20 +132,36 @@ export class FilterApiImpl extends ApiBase implements FilterApi {
     }
   }
 
-  public createColumnFilterForCell(column: string, primarykeyValues: any[]): void {
+  public createColumnFilterForCell(columnId: string, primarykeyValues: any[]): void {
     let displayValues: any[] = [];
 
     primarykeyValues.forEach(pk => {
       let rowNode = this.adaptable.getRowNodeForPrimaryKey(pk);
       displayValues.push(
-        this.adaptable.getValueFromRowNode(rowNode, column, CellValueType.DisplayValue)
+        this.adaptable.getValueFromRowNode(rowNode, columnId, CellValueType.DisplayValue)
       );
     });
 
+    let predicateId: SystemFilterPredicateId;
+    if (displayValues.length > 1) {
+      predicateId = 'Values';
+    } else {
+      const abColumn: AdaptableColumn = this.adaptable.api.columnApi.getColumnFromId(columnId);
+      if (abColumn.DataType == 'Number') {
+        predicateId = 'Equals';
+      } else if (abColumn.DataType == 'Date') {
+        predicateId = 'On';
+      } else if (abColumn.DataType == 'String') {
+        predicateId = 'Is';
+      } else {
+        predicateId = 'Values';
+      }
+    }
+
     let filter: ColumnFilter = {
-      ColumnId: column,
+      ColumnId: columnId,
       Predicate: {
-        PredicateId: 'Values',
+        PredicateId: predicateId,
         Inputs: displayValues,
       },
     };

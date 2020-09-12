@@ -282,7 +282,7 @@ function ExpressionEditor(props: ExpressionEditorProps) {
               }}
             >
               <pre style={{ whiteSpace: 'pre-wrap', margin: 0 }}>
-                Result: <b>{JSON.stringify(result)}</b>
+                Result (using Test Data): <b>{JSON.stringify(result)}</b>
               </pre>
             </Box>
           )}
