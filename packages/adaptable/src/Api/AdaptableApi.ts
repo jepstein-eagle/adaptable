@@ -121,7 +121,7 @@ import { PredicateApi } from './PredicateApi';
  *  | [gridApi](#gridapi)                             | Series of Grid-management related functions e.g. get/set data|
  *  | [internalapi](#internalapi)                     | Used for **internal purposes only** - not designed for external use |
  *  | [pluginsApi](#pluginsapi)                       | Series of functions for when using Plugins|
- *  | [predicateApi](#predicateapi)                   | Helper functions for the commonly-used `Predicate` - boolean return function|
+ *  | [predicateApi](#predicateapi)                   | Helper functions for the {@link AdaptablePredicate|Predicate} - boolean return function|
  *  | [scopeApi](#scopeapi)                           | Many methods to manage the {@link Scope|Scope} object|
  *  | [userInterfaceApi](#userinterfaceapiapi)        | Many properties & methods to manage the {@link UserInterfaceState|User Interface}|
  *

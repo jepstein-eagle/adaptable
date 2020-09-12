@@ -143,10 +143,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().ActionColumn)
           : this.getAdaptableState().ActionColumn;
-      case 'Query':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().Query)
-          : this.getAdaptableState().Query;
       case 'Alert':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Alert)
@@ -179,7 +175,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Chart)
           : this.getAdaptableState().Chart;
-
       case 'ConditionalStyle':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().ConditionalStyle)
@@ -204,6 +199,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().Export)
           : this.getAdaptableState().Export;
+      case 'Filter':
+        return returnJson
+          ? JSON.stringify(this.getAdaptableState().Filter)
+          : this.getAdaptableState().Filter;
       case 'FlashingCell':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().FlashingCell)
@@ -241,6 +240,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().PlusMinus)
           : this.getAdaptableState().PlusMinus;
+      case 'Query':
+        return returnJson
+          ? JSON.stringify(this.getAdaptableState().Query)
+          : this.getAdaptableState().Query;
       case 'QuickSearch':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().QuickSearch)
@@ -262,10 +265,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().SparklineColumn)
           : this.getAdaptableState().SparklineColumn;
-      case 'Filter':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().Filter)
-          : this.getAdaptableState().Filter;
       case 'SystemStatus':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().SystemStatus)
@@ -282,10 +281,10 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
         return returnJson
           ? JSON.stringify(this.getAdaptableState().UpdatedRow)
           : this.getAdaptableState().UpdatedRow;
-      case 'UserFilter':
-        return returnJson
-          ? JSON.stringify(this.getAdaptableState().UserFilter)
-          : this.getAdaptableState().UserFilter;
+      //   case 'UserFilter':
+      //     return returnJson
+      //       ? JSON.stringify(this.getAdaptableState().UserFilter)
+      //      : this.getAdaptableState().UserFilter;
       case 'UserInterface':
         return returnJson
           ? JSON.stringify(this.getAdaptableState().UserInterface)
@@ -297,9 +296,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     return this.configGetUserStateByStateKey('ActionColumn', returnJson) as ActionColumnState;
   }
 
-  public configGetQueryState(returnJson: boolean = false): QueryState {
-    return this.configGetUserStateByStateKey('Query', returnJson) as QueryState;
-  }
   public configGetAlertState(returnJson: boolean = false): AlertState {
     return this.configGetUserStateByStateKey('Alert', returnJson) as AlertState;
   }
@@ -327,7 +323,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetChartState(returnJson: boolean = false): ChartState {
     return this.configGetUserStateByStateKey('Chart', returnJson) as ChartState;
   }
-
   public configGetConditionalStyleState(returnJson: boolean = false): ConditionalStyleState {
     return this.configGetUserStateByStateKey(
       'ConditionalStyle',
@@ -349,6 +344,9 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetExportState(returnJson: boolean = false): ExportState {
     return this.configGetUserStateByStateKey('Export', returnJson) as ExportState;
   }
+  public configGetFilterState(returnJson: boolean = false): FilterState {
+    return this.configGetUserStateByStateKey('Filter', returnJson) as FilterState;
+  }
   public configGetFlashingCellState(returnJson: boolean = false): FlashingCellState {
     return this.configGetUserStateByStateKey('FlashingCell', returnJson) as FlashingCellState;
   }
@@ -361,7 +359,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetLayoutState(returnJson: boolean = false): LayoutState {
     return this.configGetUserStateByStateKey('Layout', returnJson) as LayoutState;
   }
-
   public configGetIPushPullState(returnJson: boolean = false): IPushPullState {
     return this.configGetUserStateByStateKey('IPushPull', returnJson) as IPushPullState;
   }
@@ -373,6 +370,9 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   }
   public configGetPlusMinusState(returnJson: boolean = false): PlusMinusState {
     return this.configGetUserStateByStateKey('PlusMinus', returnJson) as PlusMinusState;
+  }
+  public configGetQueryState(returnJson: boolean = false): QueryState {
+    return this.configGetUserStateByStateKey('Query', returnJson) as QueryState;
   }
   public configGetQuickSearchState(returnJson: boolean = false): QuickSearchState {
     return this.configGetUserStateByStateKey('QuickSearch', returnJson) as QuickSearchState;
@@ -389,9 +389,6 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetSparklineColumnState(returnJson: boolean = false): SparklineColumnState {
     return this.configGetUserStateByStateKey('SparklineColumn', returnJson) as SparklineColumnState;
   }
-  public configGetFilterState(returnJson: boolean = false): FilterState {
-    return this.configGetUserStateByStateKey('Filter', returnJson) as FilterState;
-  }
   public configGetSystemStatusState(returnJson: boolean = false): SystemStatusState {
     return this.configGetUserStateByStateKey('SystemStatus', returnJson) as SystemStatusState;
   }
@@ -404,15 +401,11 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
   public configGetUpdatedRowState(returnJson: boolean = false): UpdatedRowState {
     return this.configGetUserStateByStateKey('UpdatedRow', returnJson) as UpdatedRowState;
   }
-
   public configGetUserInterfaceState(returnJson: boolean = false): UserInterfaceState {
     return this.configGetUserStateByStateKey('UserInterface', returnJson) as UserInterfaceState;
   }
 
   public configGetAdaptableSearchState(): AdaptableSearchState {
-    const currentDataSource: DataSource = this.adaptable.api.dataSourceApi.getCurrentDataSource();
-
-    // lets get the searchstate
     const adaptableSearchState: AdaptableSearchState = {
       dataSource: this.adaptable.api.dataSourceApi.getCurrentDataSource(),
       currentQuery: this.adaptable.api.queryApi.getCurrentQuery(),

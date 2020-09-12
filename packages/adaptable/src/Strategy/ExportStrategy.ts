@@ -8,16 +8,13 @@ import { Helper } from '../Utilities/Helpers/Helper';
 import { Report } from '../PredefinedConfig/ExportState';
 import * as ExportRedux from '../Redux/ActionsReducers/ExportRedux';
 import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
-import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import {
   VISIBLE_DATA_REPORT,
   SELECTED_CELLS_REPORT,
 } from '../Utilities/Constants/GeneralConstants';
 import { AdaptableMenuItem, MenuInfo } from '../PredefinedConfig/Common/Menu';
 import { MenuItemDoClickFunction } from '../Utilities/MenuItem';
-import { SelectedCellInfo } from '../PredefinedConfig/Selection/SelectedCellInfo';
 import ArrayExtensions from '../Utilities/Extensions/ArrayExtensions';
-import AdaptableHelper from '../Utilities/Helpers/AdaptableHelper';
 import LoggingHelper from '../Utilities/Helpers/LoggingHelper';
 
 export class ExportStrategy extends AdaptableStrategyBase implements IExportStrategy {
