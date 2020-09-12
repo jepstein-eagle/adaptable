@@ -110,11 +110,3 @@ Yes - by using a Shared Query.  This allows you to use the same Query for search
 - [Search Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_searchoptions_.searchoptions.html)
 
 - [Query Demo](https://demo.adaptabletools.com/search/aggridcurrentquerydemo)
-
-The following demos also contain Expressions:
-
-- [Alerts Demo](https://demo.adaptabletools.com/alertsmessages/aggridalertdemo)
-- [Cell Validation Demo](https://demo.adaptabletools.com/edit/aggridcellvalidationdemo)
-- [Conditional Style Demo](https://demo.adaptabletools.com/style/aggridconditionalstyledemo)
-- [Export Demos](https://demo.adaptabletools.com/export)
-- [Plus / Minus Demo](https://demo.adaptabletools.com/edit/aggridplusminusdemo)
