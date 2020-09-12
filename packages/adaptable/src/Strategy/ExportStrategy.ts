@@ -133,17 +133,8 @@ export class ExportStrategy extends AdaptableStrategyBase implements IExportStra
 
   private convertReportToExcel(report: Report): void {
     let reportAsArray: any[] = this.ConvertReportToArray(report);
-
-    let reportCols = reportAsArray.shift();
-
-    let cols: AdaptableColumn[];
-    if (report.ReportColumnScope == 'CustomColumns') {
-      cols = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
-    } else {
-      cols = this.adaptable.api.columnApi.getColumnsFromFriendlyNames(reportCols);
-    }
     this.adaptable.api.exportApi.exportDataToExcel(
-      cols.map(c => c.FriendlyName),
+      reportAsArray.shift(),
       reportAsArray,
       report.Name
     );

@@ -3835,19 +3835,6 @@ export class Adaptable implements IAdaptable {
       }
     }
 
-    // if (isSystemTheme) {
-    //   const container = this.getGridContainerElement();
-    //   if (container != null) {
-    //     const vendorLight = this.agGridHelper.getVendorLightThemeName();
-    //     const vendorDark = this.agGridHelper.getVendorDarkThemeName();
-
-    //     container.classList.remove(vendorLight);
-    //     container.classList.remove(vendorDark);
-
-    //     container.classList.add(themeName === LIGHT_THEME ? vendorLight : vendorDark);
-    //   }
-    // }
-
     if (abLoaded !== '777') {
       LoggingHelper.LogError('Please import Adaptable styles from "adaptableadaptable/index.css"');
     }
@@ -3909,31 +3896,7 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
       this.api.internalApi.setTreeModeOn();
     }
 
-    if (this.isQuickFilterActive()) {
-      this.api.gridApi.showQuickFilterBar();
-    }
-
-    const currentlayout: string = this.api.layoutApi.getCurrentLayoutName();
-
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
-
-    // if the current layout is the default or not set then autosize all columns if requested
-    // if (currentlayout === DEFAULT_LAYOUT || StringExtensions.IsNullOrEmpty(currentlayout)) {
-    //   if (this.adaptableOptions!.layoutOptions!.autoSizeColumnsInDefaultLayout === true) {
-    //     this.gridOptions.columnApi!.autoSizeAllColumns();
-    //   }
-    // } else {
-    //   // at the end so load the current layout (as its not default)
-    //   this.api.layoutApi.setLayout(currentlayout);
-    // }
-
-    // in case we have an existing quick search we need to make sure its applied
-    this.api.quickSearchApi.applyQuickSearch(this.api.quickSearchApi.getQuickSearchValue());
-  }
-
-  // A couple of state management functions
-  private getState(): AdaptableState {
-    return this.adaptableStore.TheStore.getState();
   }
 
   private getGridOptionsApi(): GridApi {

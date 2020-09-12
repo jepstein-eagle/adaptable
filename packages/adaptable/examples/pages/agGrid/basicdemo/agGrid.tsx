@@ -121,9 +121,9 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
-      Query: {
-        CurrentQuery: 'Any old rubbish',
-      },
+      //  Query: {
+      //    CurrentQuery: 'Any old rubbish',
+      //  },
       ConditionalStyle: {
         Revision: Date.now(),
         ConditionalStyles: [
@@ -182,7 +182,7 @@ async function InitAdaptableDemo() {
           },
         ],
       },
-
+      /*
       Filter: {
         Revision: 10,
 
@@ -201,6 +201,7 @@ async function InitAdaptableDemo() {
           },
         ],
       },
+      */
       FormatColumn: {
         Revision: 7,
         FormatColumns: [

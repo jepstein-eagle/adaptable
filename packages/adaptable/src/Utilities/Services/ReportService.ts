@@ -137,7 +137,11 @@ export class ReportService implements IReportService {
         reportColumns = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
         break;
       case ReportColumnScope.CustomColumns:
-        reportColumns = this.adaptable.api.scopeApi.getColumnsForScope(report.Scope);
+        if ('ColumnIds' in report.Scope) {
+          reportColumns = report.Scope.ColumnIds.map(c => {
+            return AdaptableHelper.createAdaptableColumnFromColumnId(c);
+          });
+        }
         break;
     }
     return reportColumns;
@@ -151,7 +155,7 @@ export class ReportService implements IReportService {
         ActionReturn: dataToExport,
         Alert: {
           Header: 'Export Error',
-          Msg: 'No cells are selected',
+          Msg: 'No Data To Export ',
           AlertDefinition: ObjectFactory.CreateInternalAlertDefinitionForMessages(
             MessageType.Error
           ),

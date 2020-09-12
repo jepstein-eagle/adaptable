@@ -48,35 +48,58 @@ async function InitAdaptableDemo() {
       return false;
     },
   };
-
-  api = await Adaptable.init(adaptableOptions);
+  (adaptableOptions.userFunctions = [
+    {
+      type: 'CustomReportFunction',
+      name: 'getDummyData',
+      handler(reportName: string) {
+        // this will typically run a call on the server but here we just provide some dummy data
+        // note that it takes the form of an array of arrays - each array is a row and must match the column names
+        let data = [
+          ['Joe', 52, 'London'],
+          ['Dawn', 39, 'New York'],
+          ['Peter', , 'France'],
+          ['Eleanor', 55],
+        ];
+        return data;
+      },
+    },
+  ]),
+    (api = await Adaptable.init(adaptableOptions));
 }
 
 let demoConfig: PredefinedConfig = {
   Export: {
-    Revision: Date.now(),
     Reports: [
       {
+        ReportColumnScope: 'CustomColumns',
+        ReportRowScope: 'CustomRows',
+        Scope: { ColumnIds: ['Name', 'Age', 'Location'] },
+        Name: 'People Report',
+        CustomReportFunction: 'getDummyData',
+      },
+      {
         Name: 'End of Day',
-        ColumnIds: [
-          'bid',
-          'changeOnYear',
-          'counterparty',
-          'country',
-          'currency',
-          'tradeDate',
-          'settlementDate',
-          'ask',
-          'moodysRating',
-          'bloombergBid',
-          'bloombergAsk',
-        ],
-
-        ReportColumnScope: 'BespokeColumns',
+        Scope: {
+          ColumnIds: [
+            'bid',
+            'changeOnYear',
+            'counterparty',
+            'country',
+            'currency',
+            'tradeDate',
+            'settlementDate',
+            'ask',
+            'moodysRating',
+            'bloombergBid',
+            'bloombergAsk',
+          ],
+        },
+        ReportColumnScope: 'ScopeColumns',
         ReportRowScope: 'VisibleRows',
       },
     ],
-    CurrentReport: 'End of Day',
+    CurrentReport: 'People Report',
   },
   Layout: {
     Layouts: [
