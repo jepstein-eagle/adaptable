@@ -34,10 +34,12 @@ For more examples of Expressions see [Calculated Column ReadMe](calculated-colum
 
 The Query State includes 2 elements:
 
-* **CurrentQuery** - an Expression which will run as a 'Search'.  This can be provided via Predefined Config but is more typically persisted at run-time after having been run by a user.
+* **CurrentQuery** - an Expression which will run as a 'Search'.  This can be provided via Predefined Config but is more typically persisted at run-time after having been run by a user.  Only the actual Expression string itself is persisted here.
 
-* **SharedQueries** - these are queries that have been named and so can be re-used across multiple functions.
+* **SharedQueries** - these are Queries that have been named and so can be **re-used** in other functions in AdapTable (e.g. Reports, Conditional Styles).
 
+  > If a Shared Query is provided in Predefined Config then - unlike with all other AdapTable functions -  **the Uuid must be included in the Config**.  This should be something guaranteed to be unique - which will be referenced elsewhere - and unlike other properties (e.g. 'Name') will never change.
+  
 ## UI Elements
 
 Query includes the following UI Elements:
