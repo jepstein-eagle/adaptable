@@ -139,7 +139,9 @@ class QueryToolbarControlComponent extends React.Component<
               accessLevel={'Full'}
               variant="text"
               tone="neutral"
-              disabled={this.state.expression == ''}
+              disabled={
+                this.state.expression == '' || this.state.expression == this.props.CurrentQuery
+              }
               marginRight={1}
             />
           ) : (
