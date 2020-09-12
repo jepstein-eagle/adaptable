@@ -70,7 +70,6 @@ async function InitAdaptableDemo() {
 
 let demoConfig: PredefinedConfig = {
   Export: {
-    Revision: Date.now(),
     Reports: [
       {
         ReportColumnScope: 'CustomColumns',
