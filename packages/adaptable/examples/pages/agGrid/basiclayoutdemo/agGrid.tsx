@@ -26,6 +26,7 @@ const columnSchema: ColDef[] = [
     filter: true,
     editable: false,
     resizable: true,
+    rowGroup: true,
     // lockPinned: true,
     enableRowGroup: true,
     hide: true,
@@ -36,7 +37,7 @@ const columnSchema: ColDef[] = [
   {
     headerName: 'Model',
     field: 'model',
-
+    rowGroup: true,
     enablePivot: true,
     enableRowGroup: true,
     filter: true,
@@ -134,6 +135,7 @@ async function InitAdaptableDemo() {
     enableRangeSelection: true,
     sideBar: true,
     suppressAggFuncInHeader: true,
+    //  groupMultiAutoColumn: true,
     suppressMenuHide: true,
     floatingFilter: true,
     columnTypes: {
@@ -307,6 +309,7 @@ let demoConfig: PredefinedConfig = {
   Layout: {
     Revision: Date.now(),
     CurrentLayout: 'Test',
+    /*
     Layouts: [
       {
         Name: 'Simple Layout',
@@ -320,40 +323,41 @@ let demoConfig: PredefinedConfig = {
       },
     ],
   },
-  // Layout: {
-  //   CreateDefaultLayout: true,
-  //   // },
-  //   // // Layout: {
-  //   //   CreateDefaultLayout: false,
-  //   Revision: 2,
-  //   CurrentLayout: 'Simple Layout',
+  */
+    // Layout: {
+    //   CreateDefaultLayout: true,
+    //   // },
+    //   // // Layout: {
+    //   //   CreateDefaultLayout: false,
+    //   Revision: 2,
+    //   CurrentLayout: 'Simple Layout',
 
-  //     {
-  //       Name: 'Full Layout',
-  //       Columns: ['year', 'model', 'make', 'identifier', 'price'],
-  //       RowGroupedColumns: ['make'],
-  //       // GroupedColumns: ['make', 'model'],
-  //       ColumnWidthMap: {
-  //         model: 600,
-  //         year: 400,
-  //       },
-  //       ColumnFlexMap: {
-  //         make: 1,
-  //       },
-  //       //  ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
-  //       PinnedColumnsMap: {
-  //         // year: 'left',
-  //         // model: 'right',
-  //       },
-  //       ColumnSorts: [
-  //         {
-  //           ColumnId: 'model',
-  //           SortOrder: 'Desc',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+    //     {
+    //       Name: 'Full Layout',
+    //       Columns: ['year', 'model', 'make', 'identifier', 'price'],
+    //       RowGroupedColumns: ['make'],
+    //       // GroupedColumns: ['make', 'model'],
+    //       ColumnWidthMap: {
+    //         model: 600,
+    //         year: 400,
+    //       },
+    //       ColumnFlexMap: {
+    //         make: 1,
+    //       },
+    //       //  ExpandedRowGroupKeys: ['Toyota', 'Toyota/Celica'],
+    //       PinnedColumnsMap: {
+    //         // year: 'left',
+    //         // model: 'right',
+    //       },
+    //       ColumnSorts: [
+    //         {
+    //           ColumnId: 'model',
+    //           SortOrder: 'Desc',
+    //         },
+    //       ],
+    //     },
+    //   ],
+  },
 };
 
 export default () => {

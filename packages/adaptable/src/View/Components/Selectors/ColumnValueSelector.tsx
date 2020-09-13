@@ -94,8 +94,16 @@ export class ColumnValueSelector extends React.Component<
 
     const input = (
       <Input
-        type={UIHelper.getDescriptionForDataType(this.props.selectedColumn.DataType)}
-        placeholder={UIHelper.getPlaceHolderforDataType(this.props.selectedColumn.DataType)}
+        type={
+          this.props.selectedColumn
+            ? UIHelper.getDescriptionForDataType(this.props.selectedColumn.DataType)
+            : 'text'
+        }
+        placeholder={
+          this.props.selectedColumn
+            ? UIHelper.getPlaceHolderforDataType(this.props.selectedColumn.DataType)
+            : 'Enter Value'
+        }
         autoFocus
         disabled={this.props.disabled}
         style={{ width: fieldWidth }}
