@@ -1,7 +1,6 @@
 ﻿import * as React from 'react';
 import * as Redux from 'redux';
 import { connect } from 'react-redux';
-
 import { AdaptableState } from '../../PredefinedConfig/AdaptableState';
 import * as BulkUpdateRedux from '../../Redux/ActionsReducers/BulkUpdateRedux';
 import * as SystemRedux from '../../Redux/ActionsReducers/SystemRedux';

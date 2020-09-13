@@ -10,6 +10,7 @@ import FieldWrap from '../../../components/FieldWrap';
 import DropdownButton, { DropdownButtonProps } from '../../../components/DropdownButton';
 import Input from '../../../components/Input';
 import { AdaptableApi } from '../../../Api/AdaptableApi';
+import UIHelper from '../../UIHelper';
 
 export interface ColumnValueSelectorProps extends React.HTMLProps<ColumnValueSelector> {
   selectedColumn: AdaptableColumn;
@@ -93,7 +94,8 @@ export class ColumnValueSelector extends React.Component<
 
     const input = (
       <Input
-        type="text"
+        type={UIHelper.getDescriptionForDataType(this.props.selectedColumn.DataType)}
+        placeholder={UIHelper.getPlaceHolderforDataType(this.props.selectedColumn.DataType)}
         autoFocus
         disabled={this.props.disabled}
         style={{ width: fieldWidth }}
