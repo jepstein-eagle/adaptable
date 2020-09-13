@@ -52,11 +52,12 @@ import { AdaptablePredicateDef } from '../PredefinedConfig/Common/AdaptablePredi
  *  | [userFunctions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userfunctions)             | Implementations of User Functions which are referenced in Config |
  *  | [userInterfaceOptions](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#userinterfaceoptions)| User Interface related functions (e.g. menus, toolbars)       |
  *  | [plugins](_src_adaptableoptions_adaptableoptions_.adaptableoptions.html#plugins)                         | Options used by the AdapTable plugins (e.g. charting, finance)|
+ *  | [customPredicateDefs](_src_predefinedconfig_common_adaptablepredicate_.adaptablepredicatedef.html)       | Custom predicates provided by devs (e.g. for filters, alerts etc.)|
  *  | [ipushpullPluginOptions](_src_adaptableoptions_ipushpullpluginoptions_.ipushpullpluginoptions.html)      | Options used by the ipushpull Plugin|
  *  | [glue42PluginOptions](_src_adaptableoptions_glue42pluginoptions_.glue42pluginoptions.html)      | Options used by the Glue42 Plugin|
  *  | [openfinPluginOptions](_src_adaptableoptions_openfinpluginoptions_.openfinpluginoptions.html)      | Options used by the OpenFin Plugin|
  *  | [finsemblePluginOptions](_src_adaptableoptions_finsemblepluginoptions_.finsemblepluginoptions.html)      | Options used by the Finsemble Plugin|
- *  | [masterdetailaggridPluginOptions](_src_adaptableoptions_masterdetailaggridpluginoptions_.masterdetailaggridpluginoptions.html)      | Options used by the Master / Detail Plugin|
+ *  | [masterdetailPluginOptions](_src_adaptableoptions_masterdetailaggridpluginoptions_.masterdetailaggridpluginoptions.html)      | Options used by the Master / Detail Plugin|
  *
  */
 export interface AdaptableOptions {

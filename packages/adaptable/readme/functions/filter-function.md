@@ -213,7 +213,7 @@ Additionally, if the Query is built at design time and shipped with the product 
 
 The System Filter predicates shipped by AdapTable are:
 
-| System Filter           | Columns              | Inputs|
+| System Filter Predicate          | Columns              | Inputs|
 | --------  	          | ------               | ------               | 
 | Values| All   | Yes |
   | Blanks' | All   | No |

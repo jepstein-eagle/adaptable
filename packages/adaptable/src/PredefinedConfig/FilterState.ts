@@ -1,5 +1,4 @@
 import { ConfigState } from './ConfigState';
-import { BaseUserFunction } from '../AdaptableOptions/UserFunctions';
 import { AdaptableScope } from './Common/AdaptableScope';
 import { AdaptableApi, AdaptableColumn } from '../types';
 import { AdaptableObject } from './Common/AdaptableObject';
@@ -29,51 +28,72 @@ import { TypeHint } from './Common/Types';
  *
  * --------------
  *
- * ##System Filters
+ * ## System Filters
  *
- * **If this section is not set then all System Filters will be used**
+ * A selection of the System Filter Predicates which will be available to users.
  *
- * By default **all** the System Filters provided by Adaptable will be used, so only set this property if you dont want to use the full range.
+ * By default **all** the System Filter Predicates provided by AdapTable will be available, so only set this property if you dont want to use the full range.
  *
- * If you want **no System Filters** to be used then provide an empty array:
+ * If you want **no System Filter Predicates** to be available then provide an empty array:
  *
  * ```ts
  * export default {
- *  SystemFilter: {
+ *  Filter: {
  *    SystemFilters: [],
  *  },
  * } as PredefinedConfig;
  * ```
  *
- *  If you want to set which System Filters should be used then provide an array with those values:
+ *  If you want to set which System Filter Predicates should be used then provide an array with just those values:
  *
  * ```ts
  * export default {
- *  SystemFilter: {
+ *  Filter: {
  *    SystemFilters: ['Positive', 'Today', 'Blanks'],
  *  },
  * } as PredefinedConfig;
  * ```
  *
- * The full list of available System Filters is:
+ * The full list of System Filter predicates shipped by AdapTable is:
  *
- *  | Filter                  | Columns
- *  | -----------             | -----------
- *  | Blanks                  | String, Date, Number
- *  | Non Blanks              | String, Date, Number
- *  | Positive                | Number
- *  | Negative                | Number
- *  | Zero                    | Number
- *  | True                    | Boolean
- *  | False                   | Boolean
- *  | Today                   | Date
- *  | In Past                 | Date
- *  | In Future               | Date
- *  | Yesterday               | Date
- *  | Tomorrow                | Date
- *  | Next Working Day        | Date
- *  | Previous Working Day    | Date
- *  | This Year               | Date
+ * | System Filter Predicate          | Columns              | Inputs|
+ * | --------  	          | ------               | ------               |
+ * | Values| All   | Yes |
+ *   | Blanks' | All   | No |
+ *   | NonBlanks| All   | No |
+ *   | Equals| Number   | Yes |
+ *   | NotEquals| Number   | Yes |
+ *  | GreaterThan| Number   | Yes |
+ *  | LessThan| Number   | Yes |
+ *  | Positive| Number   | No |
+ *  | Negative| Number   | No |
+ *  | Zero| Number   | No |
+ *  | Between| Number   | Yes |
+ *  | NotBetween| Number   | Yes |
+ *  | Is| String   | Yes |
+ *  |IsNot| String   | Yes |
+ *  | Contains| String   | Yes |
+ *  | NotContains| String   | Yes |
+ *  | StartsWith| String   | Yes |
+ *  |EndsWith| String   | Yes |
+ *  | Regex| String   | Yes |
+ *  | Today| Date   | No |
+ *  | Yesterday| Date   | No |
+ *  | Tomorrow| Date   | No |
+ *  | ThisWeek| Date   | No |
+ *  | ThisMonth| Date   | No |
+ *  | ThisQuarter| Date   | No |
+ *  | ThisYear| Date   | No |
+ *  | InPast| Date   | No |
+ *  | InFuture| Date   |No |
+ *  | Before| Date   | Yes |
+ *  | After| Date   | Yes |
+ *  | On| Date   | Yes |
+ *  | NotOn| Date   | Yes |
+ *  |NextWorkDay| Date   | No |
+ *  | LastWorkDay| Date   | No |
+ *  | True| Boolean   | No |
+ *  | False| Boolean   | No |
  *
  *  --------------
  *
