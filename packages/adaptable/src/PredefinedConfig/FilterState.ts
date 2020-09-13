@@ -59,47 +59,129 @@ import { TypeHint } from './Common/Types';
  * | System Filter Predicate          | Columns              | Inputs|
  * | --------  	          | ------               | ------               |
  * | Values| All   | Yes |
- *   | Blanks' | All   | No |
- *   | NonBlanks| All   | No |
- *   | Equals| Number   | Yes |
- *   | NotEquals| Number   | Yes |
- *  | GreaterThan| Number   | Yes |
- *  | LessThan| Number   | Yes |
- *  | Positive| Number   | No |
- *  | Negative| Number   | No |
- *  | Zero| Number   | No |
- *  | Between| Number   | Yes |
- *  | NotBetween| Number   | Yes |
- *  | Is| String   | Yes |
- *  |IsNot| String   | Yes |
- *  | Contains| String   | Yes |
- *  | NotContains| String   | Yes |
- *  | StartsWith| String   | Yes |
- *  |EndsWith| String   | Yes |
- *  | Regex| String   | Yes |
- *  | Today| Date   | No |
- *  | Yesterday| Date   | No |
- *  | Tomorrow| Date   | No |
- *  | ThisWeek| Date   | No |
- *  | ThisMonth| Date   | No |
- *  | ThisQuarter| Date   | No |
- *  | ThisYear| Date   | No |
- *  | InPast| Date   | No |
- *  | InFuture| Date   |No |
- *  | Before| Date   | Yes |
- *  | After| Date   | Yes |
- *  | On| Date   | Yes |
- *  | NotOn| Date   | Yes |
- *  |NextWorkDay| Date   | No |
- *  | LastWorkDay| Date   | No |
- *  | True| Boolean   | No |
- *  | False| Boolean   | No |
+ * | Blanks' | All   | No |
+ * | NonBlanks| All   | No |
+ * | Equals| Number   | Yes |
+ * | NotEquals| Number   | Yes |
+ * | GreaterThan| Number   | Yes |
+ * | LessThan| Number   | Yes |
+ * | Positive| Number   | No |
+ * | Negative| Number   | No |
+ * | Zero| Number   | No |
+ * | Between| Number   | Yes |
+ * | NotBetween| Number   | Yes |
+ * | Is| String   | Yes |
+ * | IsNot| String   | Yes |
+ * | Contains| String   | Yes |
+ * | NotContains| String   | Yes |
+ * | StartsWith| String   | Yes |
+ * | EndsWith| String   | Yes |
+ * | Regex| String   | Yes |
+ * | Today| Date   | No |
+ * | Yesterday| Date   | No |
+ * | Tomorrow| Date   | No |
+ * | ThisWeek| Date   | No |
+ * | ThisMonth| Date   | No |
+ * | ThisQuarter| Date   | No |
+ * | ThisYear| Date   | No |
+ * | InPast| Date   | No |
+ * | InFuture| Date   |No |
+ * | Before| Date   | Yes |
+ * | After| Date   | Yes |
+ * | On| Date   | Yes |
+ * | NotOn| Date   | Yes |
+ * | NextWorkDay| Date   | No |
+ * | LastWorkDay| Date   | No |
+ * | True| Boolean   | No |
+ * | False| Boolean   | No |
  *
  *  --------------
  *
- *  * ##Column Filters
+ *  ## Column Filters
  *
- * To do...
+ *  This a list of which Columns are filtered.
+ *
+ *  This can be provided either in Predefined Config or, more typically, saved by AdapTable at run-time so its available when the system next restarts.
+ *
+ *  A Column Filter contains 2 properties:
+ *
+ *  - ColumnID - which Column is being filtered
+ *
+ *  - Predicate - the predicate to be applied in the filter.  This will be the name of the PredicateId and, optionally, any inputs that it requires.
+ *
+ *  ### Column Filter Example
+ *
+ *  Filter: {
+ *   ColumnFilters: [
+ *   {
+ *      ColumnId: 'ChangeLastOrder',
+ *      Predicate: { PredicateId: 'Positive' },
+ *   },
+ *   {
+ *      ColumnId: 'Employee',
+ *      Predicate: {
+ *        PredicateId: 'Values',
+ *        Inputs: ['Janet Leverling', 'Margaret Peacock', 'Nancy Davolio'],
+ *      },
+ *   },
+ *   {
+ *      ColumnId: 'InvoicedCost',
+ *      Predicate: {
+ *        PredicateId: 'Between',
+ *        Inputs: [10, 300],
+ *      },
+ *   },
+ *   {
+ *      ColumnId: 'OrderDate',
+ *      Predicate: {
+ *        PredicateId: 'InPast',
+ *      },
+ *   },
+ *   {
+ *      ColumnId: 'Employee',
+ *      Predicate: { PredicateId: 'new_starter' },
+ *   },
+ *   {
+ *      ColumnId: 'LastUpdatedTime',
+ *      Predicate: { PredicateId: 'after_work' },
+ *   },
+ *  ],
+ * },
+ *
+ *  .........
+ *
+ *     const adaptableOptions: AdaptableOptions = {
+ *      ....
+ *        customPredicateDefs: [
+ *          {
+ *            id: 'new_starter',
+ *            label: 'New Starter',
+ *            columnScope: { ColumnIds: ['Employee'] },
+ *            functionScope: ['filter'],
+ *            handler(params: PredicateDefHandlerParams) {
+ *              return (
+ *                params.value == 'Robert King' ||
+ *                params.value == 'Laura Callahan' ||
+ *                params.value == 'Andrew Fuller'
+ *             );
+ *            },
+ *          },
+ *          {
+ *            id: 'after_work',
+ *            label: 'After Work',
+ *            columnScope: { ColumnIds: ['LastUpdatedTime'] },
+ *            functionScope: ['filter'],
+ *            handler(params: PredicateDefHandlerParams) {
+ *             return (params.value as Date).getHours() > 17;
+ *           },
+ *         },
+ *       ],
+ *       ......
+ *     };
+ *
+ *  In this example we have created 6 Column Filters.
+ *
+ *  The last 2 of these reference Custom Predicates (as opposed to System Predicates) which will be defined `customPredicateDefs` (as in this example)
  *
  * Read more at the [Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/filter-function.md)
  *
