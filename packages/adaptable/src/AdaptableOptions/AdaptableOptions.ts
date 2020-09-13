@@ -302,5 +302,21 @@ export interface AdaptableOptions {
    */
   userFunctions?: UserFunctions;
 
+  /**
+   * Predicate Definitions provided by Develoeprs at Design Time
+   *
+   * A Predicate Definition contains a number of properties of which the most important are:
+   *
+   * `id`: the unique identifier for the Predicate (a more friendly `label` can also be provided)
+   *
+   * `columnScope`: for which columns or DataTypes the Predicate can be applied
+   *
+   * `functionScope`: which AdapTable Functions can use this predicate (e.g. Filters, Conditional Styles, Alerts etc.)
+   *
+   * `inputs`: the definitions of any values the Predicate needs
+   *
+   * `handler`: the actual function that will run each time the Predicate is evaluated - it will receive a `PredicateDefHandlerParams' object and return a boolean
+   *
+   */
   customPredicateDefs?: AdaptablePredicateDef[];
 }

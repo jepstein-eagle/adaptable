@@ -30,26 +30,28 @@ AdapTable, by default, includes a number of entries in the Column Menu.
 
 Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont wish to appear).
 
-The full list (as of July 2020) is:
+The full list (as of v.7) is:
 
 | Menu Entry                   | AdaptableFunction                                               | Columns Displayed     |
 | ---------------------------- | --------------------------------------------------------------- | --------------------- |
 | Edit Calculated Column       | [Calculated Column](../functions/calculated-column-function.md) | Calculated Columns    |
 | Create Cell Validation Rule  | [Cell Validation](../functions/cell-validation-function.md)     | All                   |
-| Hide Column                  | [Layout](../functions/layout-function.md)                       | All                   |
-| Select Column                | [Layout](../functions/layout-function.md)                       | All                   |
-| Show / Hide Quick Filter Bar | [Column Filter](../functions/column-filter-function.md)         | All                   |
-| Clear Filter                 | [Column Filter](../functions/filter-function.md)                | Currently Filtered    |
 | Column Info                  | [Column Info](../functions/column-info-function.md)             | All                   |
 | Create Conditional Style     | [Conditional Style](../functions/conditional-style-function.md) | All                   |
 | New / Edit Custom Sort       | [Custom Sort](../functions/custom-sort-function.md)             | All                   |
 | Expand / Collapse Dashboard  | [Dashboard](../functions/dashboard-function.md)                 | All                   |
 | Dock / Float Dashboard       | [Dashboard](../functions/dashboard-function.md)                 | All                   |
+| Show / Hide Quick Filter Bar | [Filter](../functions/filter-function.md)                       | All                   |
+| Clear Filter                 | [Filter](../functions/filter-function.md)                       | Currently Filtered    |
 | Turn Flashing Cell Off / On  | [Flashing Cells](../functions/flashing-cell-function.md)        | Numeric               |
 | New / Edit Format Column     | [Format Column](../functions/format-column-function.md)         | All                   |
 | Edit Free Text Column        | [Free Text Column](../functions/freetext-column-function.md)    | Free Text Columns     |
 | New / Edit Gradient Column   | [Gradient Column](../functions/gradient-column-function.md)     | Numeric               |
 | Show Grid Info               | [Grid Info](../functions/grid-info-function.md)                 | All                   |
+| Edit Layout                  | [Layout](../functions/layout-function.md)                       | All                   |
+| Select Column                | [Layout](../functions/layout-function.md)                       | All                   |
+| Select Whole Grid            | [Layout](../functions/layout-function.md)                       | All                   |
+| Hide Column                  | [Layout](../functions/layout-function.md)                       | All                   |
 | New / Edit Percent Bar       | [Percent Bar](../functions/percent-bar-function.md)             | Numeric               |
 | New Plus Minus Rule          | [Plus Minus](../functions/plus-minus-function.md)               | Numeric               |
 | Show System Status           | [System Status](../functions/system-status-function.md)         | All                   |
@@ -105,19 +107,19 @@ AdapTable, by default, includes a number of entries in the Context Menu.
 
 Each entry is associated with a different `AdapTableFunction` (to make it easy for devs to exclude those entries they dont want to appear).
 
-The full list (as of July 2020) is:
+The full list (as of v.7) is:
 
 | Menu Entry              | AdaptableFunction                                           | When Displayed                           |
 | ----------------------- | ----------------------------------------------------------- | ---------------------------------------- |
 | Clear Alert             | [Alert](../functions/alert-function.md)                     | If any live Alerts                       |
 | Apply Bulk Update       | [Bulk Update](../functions/bulk-update-function.md)         | Single, editable column selected         |
 | See Cell Summary        | [Cell Summary](../functions/cell-summary-function.md)       | Any cells selected                       |
-| Edit Layout             | [Layout](../functions/layout-function.md)                   | Always                                   |
-| Filter on Cell Value(s) | [Column Filter](../functions/column-filter-function.md)     | Always                                   |
 | Show Column Info        | [Column Info](../functions/column-info-function.md)         | Single column selected                   |
 | Export Selected Cells   | [Export](../functions/export-function.md)                   | Any cells selected                       |
+| Filter on Cell Value(s) | [Filter](../functions/filter-function.md)                   | Always                                   |
 | Edit Gradient Column    | [Gradient Column](../functions/gradient-column-function.md) | Single Gradient Column selected          |
 | Show Grid Info          | [Grid Info](../functions/grid-info-function.md)             | Always                                   |
+| Edit Layout             | [Layout](../functions/layout-function.md)                   | Always                                   |
 | Edit Percent Bar        | [Percent Bar](../functions/percent-bar-function.md)         | Single Percent Bar Column selected       |
 | Apply Smart Edit        | [Smart Edit](../functions/smart-edit-function.md)           | Single, editable numeric column selected |
 | Show System Status      | [System Status](../functions/system-status-function.md)     | Always                                   |

@@ -7,11 +7,17 @@ import { AdaptableColumn } from '../types';
 import { AdaptablePredicateDef } from '../PredefinedConfig/Common/AdaptablePredicate';
 
 /**
- * Provides run-time access to the System Filter section of Adaptable State.
+ * Provides run-time access to the Filter section of Adaptable State.
  *
- *  **Further AdapTable Help Resources**
+ *  --------------
  *
- * [Demo Site](https://demo.adaptabletools.com/filters/aggridsystemfiltersdemo/) | [System Filter State](_src_predefinedconfig_systemfilterstate_.systemfilterstate.html) | [AdapTable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ * **Further AdapTable Help Resources**
+ *
+ * [Filter Demos](https://demo.adaptabletools.com/filters/)
+ *
+ * {@link FilterState|Filter State}
+ *
+ * [Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/filter-function.md)
  *
  */
 export interface FilterApi {

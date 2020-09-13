@@ -9,23 +9,31 @@ import { TypeHint } from './Common/Types';
 /**
  * The Predefined Configuration for Filters
  *
- * This allows you to specify which of the filters shipped by Adaptable are available to the User.
+ * It contains 2 sections:
  *
- * By default **all** the System Filters provided by Adaptable will be used, so only set this property if you dont want to use the full range.
+ * **System Filters** - Specifies which of the Filter shipped by AdapTable will be available to the Users
+ *
+ * **Column Filters** - Which columns are **currently** filtered together with the predicates that form the filter
+ *
+ * Note: Developer are able to write **Custom Predicates** which can then appear in Filters but these are provided in `customPredicateDefs` section of {@link AdaptableOptions| Adaptable Options} and not in Filter State.
  *
  * --------------
  *
  * **Further AdapTable Help Resources**
  *
- * [System Filter Demo](https://demo.adaptabletools.com/filters/aggridsystemfiltersdemo/)
+ * [Filter Demos](https://demo.adaptabletools.com/filters/)
  *
  * {@link FilterApi| Filter API}
  *
- * [Filter ReadMe](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ * [Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/filter-function.md)
  *
  * --------------
  *
+ * ##System Filters
+ *
  * **If this section is not set then all System Filters will be used**
+ *
+ * By default **all** the System Filters provided by Adaptable will be used, so only set this property if you dont want to use the full range.
  *
  * If you want **no System Filters** to be used then provide an empty array:
  *
@@ -69,7 +77,11 @@ import { TypeHint } from './Common/Types';
  *
  *  --------------
  *
- * Read more at the [Adaptable Filtering Guide](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/guides/adaptable-filtering-guide.md)
+ *  * ##Column Filters
+ *
+ * To do...
+ *
+ * Read more at the [Filter Read Me](https://github.com/AdaptableTools/adaptable/blob/master/packages/adaptable/readme/functions/filter-function.md)
  *
  */
 
