@@ -116,11 +116,15 @@ export interface UserInterfaceState extends ConfigState {
    *  UserInterface: {
    *     PermittedValuesColumns: [
    *     {
-   *        ColumnId: 'status',
+   *        Scope: {
+   *           ColumnIds: ['status'],
+   *        },
    *        PermittedValues: ['Rejected', 'Pending'],
    *     },
    *     {
-   *        ColumnId: 'counterparty',
+   *        Scope: {
+   *            ColumnIds: ['counterparty'],
+   *          },
    *        PermittedValues: (column: AdaptableColumn) => {
    *          return ['BAML', 'Nomura', 'UBS'];
    *        },
@@ -155,25 +159,35 @@ export interface UserInterfaceState extends ConfigState {
    *  UserInterface: {
    *     EditLookUpItems: [
    *     {
-   *        ColumnId: 'country',
+   *        Scope: {
+   *           ColumnIds: ['country'],
+   *        },
    *        LookUpValues: ['UK', 'France', 'Italy', 'Germany'],
    *     },
    *     {
-   *        ColumnId: 'counterparty',
+   *        Scope: {
+   *           ColumnIds: ['counterparty'],
+   *        },
    *        LookUpValues: (column: AdaptableColumn) => {
    *          return ['BAML', 'Nomura', 'UBS'];
    *        },
    *     },
    *     {
-   *        ColumnId: 'status',
+   *        Scope: {
+   *           ColumnIds: ['status'],
+   *        }
    *     },
    *     {
-   *        ColumnId: 'currency',
+   *        Scope: {
+   *           ColumnIds: ['currency'],
+   *        }
    *     },
    *   ],
    *   PermittedValuesColumns: [
    *   {
-   *        ColumnId: 'status',
+   *       Scope: {
+   *          ColumnIds: ['status'],
+   *        },
    *        PermittedValues: ['Rejected', 'Pending'],
    *    },
    *   ],
@@ -672,12 +686,22 @@ export interface UserMenuItemShowPredicate extends BaseUserFunction {
  * Each time it runs it is given a `MenuInfo` class which provides full information of the column / cell where the menu is being displayed.
  *
  * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
- */ export interface UserMenuItemLabelFunction extends BaseUserFunction {
+ */
+
+export interface UserMenuItemLabelFunction extends BaseUserFunction {
   type: 'UserMenuItemLabelFunction';
   name: string;
   handler: (menuInfo: MenuInfo) => string;
 }
 
+/**
+ * A Function which will run each time distinct values need to be fetched remotely for a column.
+ *
+ * The function recieves the name of the column and will return an array of the values that should be displayed.
+ *
+ * Note: The implementation of this function is inserted into the UserFunctions section of AdaptableOptions, with a named reference to it in the `UserInterface` section of Predefined Config.
+ *
+ */
 export interface GetColumnValuesFunction extends BaseUserFunction {
   type: 'GetColumnValuesFunction';
   name: string;

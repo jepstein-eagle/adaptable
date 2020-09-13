@@ -43,12 +43,16 @@ let demoConfig: PredefinedConfig = {
   UserInterface: {
     PermittedValuesItems: [
       {
-        ColumnId: 'status',
+        Scope: {
+          ColumnIds: ['status'],
+        },
         PermittedValues: ['Rejected', 'Pending'],
       },
 
       {
-        ColumnId: 'counterparty',
+        Scope: {
+          ColumnIds: ['counterparty'],
+        },
         PermittedValues: ['BAML', 'Nomura', 'UBS', 'JP Morgan', 'Citi', 'Soc Gen', 'Nat West'],
       },
     ],
