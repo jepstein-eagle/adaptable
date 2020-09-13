@@ -239,7 +239,7 @@ Yes you can. You have the option in Server Validation of returning:
 The following demos all relate to the use cases in this Read Me:
 
 - [Server Validation](https://demo.adaptabletools.com/edit/aggridservervalidationdemo)
-- [Server Lookups](https://demo.adaptabletools.com/lookups/aggridserverlookupsdemo)
+- [Permitted Values](https://demo.adaptabletools.com/lookups/aggridpermittedvaluesdemo)
 - [Search Changed](https://demo.adaptabletools.com/events/searchchangedeventdemo)
 
 ## Help
