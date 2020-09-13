@@ -34,6 +34,10 @@ export class CalculatedColumnSummaryWizard
       { Key: 'DataType', Value: this.props.data.CalculatedColumnSettings.DataType },
       { Key: 'Width', Value: this.props.data.CalculatedColumnSettings.Width },
       {
+        Key: 'Show Tooltip',
+        Value: this.props.data.CalculatedColumnSettings.ShowToolTip ? 'True' : 'False',
+      },
+      {
         Key: 'Filterable',
         Value: this.props.data.CalculatedColumnSettings.Filterable ? 'True' : 'False',
       },

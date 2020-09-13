@@ -69,6 +69,11 @@ export interface CalculatedColumnSettings {
   DataType?: 'String' | 'Number' | 'Boolean' | 'Date';
 
   /**
+   * Will show the underlying Expression as a ToolTip when hovering over a cell
+   */
+  ShowToolTip?: boolean;
+
+  /**
    * The preferred width (in pixels) for the Column
    *
    * If not provided, the width will be set automatically by the underling grid based on other properties and columns

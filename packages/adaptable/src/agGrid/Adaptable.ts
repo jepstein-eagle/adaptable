@@ -1973,6 +1973,13 @@ export class Adaptable implements IAdaptable {
       calculatedColumn.CalculatedColumnSettings.DataType as DataType
     );
 
+    colDef.tooltipValueGetter = () => {
+      return calculatedColumn.CalculatedColumnSettings.ShowToolTip != null &&
+        calculatedColumn.CalculatedColumnSettings.ShowToolTip == true
+        ? cleanedExpression
+        : undefined;
+    };
+
     col.setColDef(colDef, null);
 
     this.updateColumnsIntoStore();
@@ -2050,6 +2057,14 @@ export class Adaptable implements IAdaptable {
             params.node
           ),
       };
+      if (
+        calculatedColumn.CalculatedColumnSettings.ShowToolTip != null &&
+        calculatedColumn.CalculatedColumnSettings.ShowToolTip == true
+      ) {
+        newColDef.tooltipValueGetter = () => {
+          return cleanedExpression;
+        };
+      }
       return newColDef;
     });
     colDefs.push(...newColDefs);

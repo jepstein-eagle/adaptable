@@ -31,6 +31,7 @@ export interface CalculatedColumnSettingsWizardState {
   Pivotable?: boolean;
   Aggregatable?: boolean;
   ColumnNameFocused: boolean;
+  ShowTooltip: boolean;
 }
 
 export class CalculatedColumnSettingsWizard
@@ -51,6 +52,7 @@ export class CalculatedColumnSettingsWizard
       Sortable: this.props.data.CalculatedColumnSettings.Sortable,
       Pivotable: this.props.data.CalculatedColumnSettings.Pivotable,
       Aggregatable: this.props.data.CalculatedColumnSettings.Aggregatable,
+      ShowTooltip: this.props.data.CalculatedColumnSettings.ShowToolTip,
     };
   }
   render(): any {
@@ -116,6 +118,14 @@ export class CalculatedColumnSettingsWizard
                     this.setState({ Width: Number((e.target as HTMLInputElement).value) })
                   }
                 />
+              </FormRow>
+              <FormRow label="">
+                <CheckBox
+                  onChange={(checked: boolean) => this.setState({ ShowTooltip: checked })}
+                  checked={this.state.ShowTooltip}
+                >
+                  Show Expression as Tooltip
+                </CheckBox>
               </FormRow>
             </FormLayout>
           </Flex>
@@ -225,6 +235,7 @@ export class CalculatedColumnSettingsWizard
     this.props.data.CalculatedColumnSettings.Sortable = this.state.Sortable;
     this.props.data.CalculatedColumnSettings.Pivotable = this.state.Pivotable;
     this.props.data.CalculatedColumnSettings.Aggregatable = this.state.Aggregatable;
+    this.props.data.CalculatedColumnSettings.ShowToolTip = this.state.ShowTooltip;
   }
   public back(): void {
     //
