@@ -111,6 +111,7 @@ import { TypeHint } from './Common/Types';
  *
  *  ### Column Filter Example
  *
+ *  ```ts
  *  Filter: {
  *   ColumnFilters: [
  *   {
@@ -178,6 +179,7 @@ import { TypeHint } from './Common/Types';
  *       ],
  *       ......
  *     };
+ *  ```
  *
  *  In this example we have created 6 Column Filters.
  *
