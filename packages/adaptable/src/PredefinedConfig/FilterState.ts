@@ -105,48 +105,48 @@ import { TypeHint } from './Common/Types';
  *
  *  A Column Filter contains 2 properties:
  *
- *  - ColumnID - which Column is being filtered
+ *  - `ColumnId` - which Column is being filtered
  *
- *  - Predicate - the predicate to be applied in the filter.  This will be the name of the PredicateId and, optionally, any inputs that it requires.
+ *  - `Predicate` - the predicate to be applied in the filter.  This will be the name of the PredicateId and, optionally, any inputs that it requires.
  *
  *  ### Column Filter Example
  *
  *  ```ts
  *  Filter: {
- *   ColumnFilters: [
- *   {
- *      ColumnId: 'ChangeLastOrder',
- *      Predicate: { PredicateId: 'Positive' },
- *   },
- *   {
- *      ColumnId: 'Employee',
- *      Predicate: {
- *        PredicateId: 'Values',
- *        Inputs: ['Janet Leverling', 'Margaret Peacock', 'Nancy Davolio'],
- *      },
- *   },
- *   {
- *      ColumnId: 'InvoicedCost',
- *      Predicate: {
- *        PredicateId: 'Between',
- *        Inputs: [10, 300],
- *      },
- *   },
- *   {
- *      ColumnId: 'OrderDate',
- *      Predicate: {
- *        PredicateId: 'InPast',
- *      },
- *   },
- *   {
- *      ColumnId: 'Employee',
- *      Predicate: { PredicateId: 'new_starter' },
- *   },
- *   {
- *      ColumnId: 'LastUpdatedTime',
- *      Predicate: { PredicateId: 'after_work' },
- *   },
- *  ],
+ *    ColumnFilters: [
+ *    {
+ *       ColumnId: 'ChangeLastOrder',
+ *       Predicate: { PredicateId: 'Positive' },
+ *    },
+ *    {
+ *       ColumnId: 'Employee',
+ *       Predicate: {
+ *         PredicateId: 'Values',
+ *         Inputs: ['Janet Leverling', 'Margaret Peacock', 'Nancy Davolio'],
+ *       },
+ *    },
+ *    {
+ *       ColumnId: 'InvoicedCost',
+ *       Predicate: {
+ *         PredicateId: 'Between',
+ *         Inputs: [10, 300],
+ *       },
+ *    },
+ *    {
+ *       ColumnId: 'OrderDate',
+ *       Predicate: {
+ *         PredicateId: 'InPast',
+ *       },
+ *    },
+ *    {
+ *       ColumnId: 'Employee',
+ *       Predicate: { PredicateId: 'new_starter' },
+ *    },
+ *    {
+ *       ColumnId: 'LastUpdatedTime',
+ *       Predicate: { PredicateId: 'after_work' },
+ *    },
+ *   ],
  * },
  *
  *  .........
@@ -191,7 +191,7 @@ import { TypeHint } from './Common/Types';
 
 export interface FilterState extends ConfigState {
   /**
-   * Which of the system's SystemFilters you wish to make available.
+   * Which of the System Filter Predicates shipped by AdapTable you wish to make available.
    *
    * Provide an empty array if you want **no** system filters, or list just the system filters you want.
    *
@@ -199,6 +199,16 @@ export interface FilterState extends ConfigState {
    */
   SystemFilters?: SystemFilterPredicateIds;
 
+  /**
+   * List of which Columns are filtered.
+   *
+   *  A Column Filter contains 2 properties:
+   *
+   *  - `ColumnId` - which Column is being filtered
+   *
+   *  - `Predicate` - the predicate to be applied in the filter.  This will be the name of the PredicateId and, optionally, any inputs that it requires.
+   *
+   */
   ColumnFilters?: ColumnFilter[];
 
   // not sure about this?  Seems like a good idea but perhaps not
