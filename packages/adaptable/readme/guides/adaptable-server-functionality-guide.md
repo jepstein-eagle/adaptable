@@ -171,28 +171,47 @@ There are a number of different Adaptable Api methods you can use but the most c
 
 >  Once the data is sent back, AdapTable will automatically make any changes to your sorting, styles etc as required.
 
-## Getting Distinct Column Values From Server
-There are many places where AdapTable requires a list of distinct column values e.g. when opening a Column Filter or when creating an Expression.
+## Getting Column Values From Server
+
+There are many places where AdapTable requires a list of distinct column values e.g. when opening a Column Filter list or when creating an Expression.
 
 By default AdapTable will loop through values in the grid for that column retrieiving distinct items.
 
-However there is an option to allow developers dynamically to get the list of values for a column externally each time it is required.
+However there is an option to get the values for a column **remotely**.
 
-The `getColumnValues` property in the [Query Options](https://api.adaptabletools.com/interfaces/_src_adaptableoptions_queryoptions_.queryoptions.html#getcolumnvalues) section of AdaptableOptions defines this callback function:
+To do this set the `PermittedColumnValues` in UserInterfaceState to be the **name** of a `GetColumnValuesFunction` implementation.
+
+And then provide the **implementation** of that `GetColumnValuesFunction` in the UserFunctions section of AdaptableOptions.
 
 ```ts
- getColumnValues?: (column: string) => Promise<IServerColumnValues>;
+ const demoConfig: PredefinedConfig = {
+  UserInterface: {
+    PermittedValuesItems: [
+      {
+        Scope: { ColumnIds: ['CustomerReference'] },
+        GetColumnValuesFunction: 'PermittedValuesForCustomer',
+      },
+    ],
+  },
+} as PredefinedConfig;
+
+  const adaptableOptions: AdaptableOptions = {
+    ....
+    userFunctions: [
+      {
+        name: 'PermittedValuesForCustomer',
+        type: 'GetColumnValuesFunction',
+        handler(column: AdaptableColumn) {
+          return myServer.getValuesForColumn(column);
+        },
+      },
+    ],
+   ...
+  };
  ```
- In other words, it takes the name of the column in question as the only parameter and returns a Promise of type `IServerColumnValues` that contains the list of column values to display and whether to show display or raw values:
 
-```ts
-export interface IServerColumnValues {
-    DistinctCriteriaPairValue: 'RawValue' | 'DisplayValue';
-    ColumnValues: string[];
-}
-```
 
-Read more about the various options available in getting distinct column values in the [Column Values FAQ](../faqs/adaptable-column-values-faq.md).
+Read more about Permitted Column Values in [User Interface State]([../../src/PredefinedConfig/UserInterfaceState.ts](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html#permittedvaluesitems)).
 
 ## Getting Data From the Server (infinite scrolling)
 

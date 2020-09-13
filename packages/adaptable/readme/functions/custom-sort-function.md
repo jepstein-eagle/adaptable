@@ -44,9 +44,9 @@ Custom Sort supports these Entitlement Rules:
 
 **Not all the values we want to include in the sort are currently in the grid, so they dont appear in the dropdown.  Can we add items by hand?**
 
-That is not possible because in previous versions where it was, users ended up with multiple spelled variations of the same item. 
+That is not possible because in previous versions where it was, users ended up with multiple spelled variations of the same item.
 
-However there is an option for developers to supply their own list of values to the listbox so it can contain all the items that you will require for your sort (see [Getting Distinct Column Values FAQ](../faqs/adaptable-column-values-faq.md))
+However there is an option for developers to supply their own list of `Permitted Values Items` so the listbox will contain all the items that you will require for your sort (see [User Interface State]([../../src/PredefinedConfig/UserInterfaceState.ts](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_userinterfacestate_.userinterfacestate.html#permittedvaluesitems))).
 
 Additionally, if you provide a Custom Sort as part of your Predefined Config then it can contain whichever values you want.
 

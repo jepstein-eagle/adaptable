@@ -36,7 +36,6 @@ These should be used in conjunction with the more technical [AdapTable Developer
 - [Look & Feel FAQ](./faqs/look-and-feel-faq.md)
 - [Technical FAQ](./faqs/technical-faq.md)
 - [Troubleshooting FAQ](./faqs/troubleshooting-faq.md)
-- [Column Values FAQ](./faqs/adaptable-column-values-faq.md)
 
 ## Adaptable Functions
 

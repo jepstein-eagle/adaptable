@@ -72,11 +72,11 @@ export default {
      },
      {
         ColumnId: 'Country',
-        CustomSortComparerFunction: 'country',
+        CustomSortComparerFunction: 'countryComparer',
       },
      {
-        ColumnId: 'currency',
-        CustomSortComparerFunction: 'currency',
+        ColumnId: 'Currency',
+        CustomSortComparerFunction: 'currencyComparer',
       },
    ],
    },
@@ -119,7 +119,7 @@ There are 2 modes of storage available in AdapTable:
 
   > If using Local Storage, all user state will be lost each time the user clear's the browser cache and will not be available when switching computer.
 
-- **Remote Storage** - Adaptable state is automatically persisted (and retrieved from) a specificed, remote, location
+- **Remote Storage** - Adaptable state will be persisted to, and retrieved from, a remote location which you manage via **State Options** functions (see below).
   
   > In older versions of AdapTable remote storage was managed via *Config Server*; however in Version 7 this was removed.
 
@@ -176,7 +176,7 @@ Yes, that is possible and expected.  AdapTable allows you provide highly configu
 
 **Can we store our own data in the AdapTable State / Predefined Config?**
 
-Yes you can. Use the AdaptableEntries property of Application State.
+Yes you can. Use the `AdaptableEntries` property of [Application State](https://api.adaptabletools.com/interfaces/_src_predefinedconfig_applicationstate_.applicationstate.html).
 
 This provides an array of key / value pairs which you can use to store your own bespoke data and AdapTable will persist it with the rest of the state.
 
@@ -185,7 +185,7 @@ This provides an array of key / value pairs which you can use to store your own 
 Yes, it needs to be something that can be JSON stringified so it cannot be a function.
 
 
-## Predefined Config example
+## Predefined Config Example
 
  ```ts
  export default {
