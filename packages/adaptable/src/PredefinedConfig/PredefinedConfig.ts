@@ -157,7 +157,7 @@ import { QueryState } from './QueryState';
  *  | [DataSource](_src_predefinedconfig_datasourcestate.datasourcestate.html)                    | Yes 	              | Provide Data Sources that will populate Grid via the server   |
  *  | [Entitlements](_src_predefinedconfig_entitlementstate_.entitlementstate.html)               | No	                | Manage permissions so users only see relevant functions       |
  *  | [Export](_src_predefinedconfig_exportstate_.exportstate.html)                               | Yes 	              | Create reports to export data from grid to numerous loctions  |
- *  | [Filter](_src_predefinedconfig_filterstate_.filterstate.html)                               | Yes                 | Manages creation, saving of System, User and Column filters   |
+ *  | [Filter](_src_predefinedconfig_filterstate_.filterstate.html)                               | Yes                 | Manages creation & saving of System and Column filters   |
  *  | [FlashingCell](_src_predefinedconfig_flashingcellstate_.flashingcellstate.html)             | Yes 	              | Specify how cells will briefly flash as their values change   |
  *  | [FormatColumn](_src_predefinedconfig_formatcolumnstate_.formatcolumnstate.html)             | Yes 	              | Style a column so it always has a particular set of colours   |
  *  | [FreeTextColumn](_src_predefinedconfig_freetextcolumnstate_.freetextcolumnstate.html)       | Yes 	              | Special free entry columns (e.g. Comments) saved with state   |
@@ -256,24 +256,27 @@ import { QueryState } from './QueryState';
  *   ConditionalStyle: {
  *     ConditionalStyles: [
  *       {
+ *         Scope: { DataTypes: ['Number'] },
  *         Style: {
  *           ForeColor: '#008000',
  *         },
- *         Expression: '[ChangeLastOrder]> 0'
+ *         Predicate: { PredicateId: 'Positive' },
  *       },
  *       {
+ *         Scope: { DataTypes: ['Number'] },
  *         Style: {
  *           ForeColor: '#ff0000',
  *         },
- *         Expression: '[ChangeLastOrder]< 0'
+ *         Predicate: { PredicateId: 'Negative' },
  *       },
  *       {
+ *         Scope: { ColumnIds: ['InvoicedCost'] }
  *         Style: {
  *           BackColor: '#ffffcc',
  *           FontStyle: 'Italic',
  *           ForeColor: '#000000',
  *         },
- *         Expression: '[InvoicedCost]> 2000'
+ *         Expression: '[InvoicedCost]> 2000 AND [ItemCount] > 30'
  *       },
  *     ],
  *   },
@@ -294,8 +297,7 @@ import { QueryState } from './QueryState';
  *           'ItemCost',
  *           'ItemCount',
  *         ],
- *         ColumnSorts: [],
- *         Name: 'Orders View',
+ *           Name: 'Orders View',
  *       },
  *       {
  *         Columns: [
@@ -310,7 +312,7 @@ import { QueryState } from './QueryState';
  *         ColumnSorts: [
  *           {
  *             Column: 'ShipName',
- *             SortOrder: 'Ascending',
+ *             SortOrder: 'Asc',
  *           },
  *         ],
  *         Name: 'Shipping View',
@@ -320,7 +322,7 @@ import { QueryState } from './QueryState';
  *   FormatColumn: {
  *     FormatColumns: [
  *       {
- *         ColumnId: 'OrderId',
+ *         Scope: { ColumnIds: ['OrderId'] },
  *         Style: {
  *           BackColor: '#d4fb79',
  *           ForeColor: '#8b0000',

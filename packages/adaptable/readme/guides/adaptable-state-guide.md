@@ -223,16 +223,16 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
         ReportColumnScope: 'ScopeColumns',
         ReportRowScope: 'ExpressionRows',
          Scope: {
-         ColumnIds: [
-           'OrderId',
-           'ChangeLastOrder',
-           'ContactName',
-           'InvoicedCost',
-           'ItemCost',
-           'ItemCount',
-           'OrderCost',
-           'OrderDate',
-         ],
+            ColumnIds: [
+              'OrderId',
+              'ChangeLastOrder',
+              'ContactName',
+              'InvoicedCost',
+              'ItemCost',
+              'ItemCount',
+              'OrderCost',
+              'OrderDate',
+            ],
         }
          Expression: '[Freight]> 500'
          },
@@ -253,24 +253,29 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
    },
    ConditionalStyle: {
      ConditionalStyles: [
+        {
+          Scope: { DataTypes: ['Number'] },
+          Style: {
+            ForeColor: '#008000',
+          },
+          Predicate: { PredicateId: 'Positive' },
+        },
+        {
+          Scope: { DataTypes: ['Number'] },
+          Style: {
+            ForeColor: '#ff0000',
+          },
+          Predicate: { PredicateId: 'Negative' },
+        },
        {
-        Scope: {
-          DataTypes: ['Number'],
+          Scope: { ColumnIds: ['InvoicedCost'] }
+          Style: {
+            BackColor: '#ffffcc',
+            FontStyle: 'Italic',
+            ForeColor: '#000000',
+          },
+          Expression: '[InvoicedCost]> 2000 AND [ItemCount] > 30'
         },
-        Style: {
-           ForeColor: '#008000',
-        },
-        Expression: '[ChangeLastOrder]> 0'
-       },
-       {
-        Scope: {
-          DataTypes: ['Number'],
-        },
-        Style: {
-           ForeColor: '#ff0000',
-        },
-         Expression: '[ChangeLastOrder]< 0'
-       },
      ],
    },
    Layout: {
@@ -290,7 +295,6 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
            'ItemCost',
            'ItemCount',
          ],
-         ColumnSorts: [],
          Name: 'Orders View',
        },
        {
@@ -306,7 +310,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
          ColumnSorts: [
            {
              Column: 'ShipName',
-             SortOrder: 'Ascending',
+             SortOrder: 'Asc',
            },
          ],
          Name: 'Shipping View',
@@ -316,7 +320,7 @@ Yes, it needs to be something that can be JSON stringified so it cannot be a fun
    FormatColumn: {
      FormatColumns: [
        {
-         ColumnId: 'OrderId',
+         Scope: { ColumnIds: ['OrderId'] },
          Style: {
            BackColor: '#d4fb79',
            ForeColor: '#8b0000',
