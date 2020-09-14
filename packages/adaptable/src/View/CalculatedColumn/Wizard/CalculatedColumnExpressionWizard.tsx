@@ -33,12 +33,13 @@ export class CalculatedColumnExpressionWizard
     this.state = { ColumnExpression: this.props.data.ColumnExpression };
   }
   render(): any {
-    const firstRow = this.props.api.gridApi.getFirstRowNode().data;
+    const firstNode = this.props.api.gridApi.getFirstRowNode();
+    const initialData = firstNode ? firstNode.data : {};
     return (
       <ExpressionEditor
         value={this.state.ColumnExpression}
         onChange={(e: React.SyntheticEvent) => this.handleExpressionChange(e)}
-        initialData={firstRow}
+        initialData={initialData}
         columns={this.props.api.columnApi.getColumns()}
         functions={defaultFunctions}
         isFullExpression={true}
