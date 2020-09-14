@@ -5,6 +5,4 @@ import {
   AdaptableNodeComparerFunction,
 } from '../../PredefinedConfig/Common/AdaptableComparerFunction';
 
-export interface ICustomSortStrategy extends IStrategy {
-  getComparerFunction(customSort: CustomSort): AdaptableComparerFunction;
-}
+export interface ICustomSortStrategy extends IStrategy {}

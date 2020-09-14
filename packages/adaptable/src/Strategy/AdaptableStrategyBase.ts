@@ -65,10 +65,8 @@ export abstract class AdaptableStrategyBase implements IStrategy {
      *  derived in each strategy that needs to manage state
      * Most now have been taken elsewhere into services.  All that is left is:
      *  Chart Strategy - lots
-     *  Custom Sort
      *  Percent Bar
      *  Sparkline Column
-     *  Theme
      */
   }
 

@@ -1,4 +1,5 @@
 import { AdaptableEventArgs, AdaptableEventData, AdaptableEventInfo } from './AdaptableEvents';
+import { AdaptableTheme } from '../../PredefinedConfig/ThemeState';
 
 /**
  * Event Args used as part of the **on('ThemeChanged')** event.
@@ -14,5 +15,5 @@ export interface ThemeChangedEventData extends AdaptableEventData {
 }
 
 export interface ThemeChangedInfo extends AdaptableEventInfo {
-  themeName: string;
+  theme: AdaptableTheme | string;
 }

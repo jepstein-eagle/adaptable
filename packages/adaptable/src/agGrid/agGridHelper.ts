@@ -880,14 +880,7 @@ export class agGridHelper {
           const groupCustomSort: CustomSort = ObjectFactory.CreateEmptyCustomSort();
           groupCustomSort.ColumnId = AG_GRID_GROUPED_COLUMN;
           groupCustomSort.SortedValues = customSort.SortedValues;
-
-          const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
-            ? this.adaptable.getUserFunctionHandler(
-                'CustomSortComparerFunction',
-                customSort.CustomSortComparerFunction
-              )
-            : customSortStrategy.getComparerFunction(groupCustomSort);
-          this.adaptable.setCustomSort(AG_GRID_GROUPED_COLUMN, customSortComparerFunction);
+          this.adaptable.setCustomSort(groupCustomSort);
         }
       }
     }

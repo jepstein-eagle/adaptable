@@ -31,6 +31,7 @@ import { GradientColumn } from '../PredefinedConfig/GradientColumnState';
 import { UserFunction } from '../AdaptableOptions/UserFunctions';
 import { Report } from '../PredefinedConfig/ExportState';
 import { KeyValuePair } from '../Utilities/Interface/KeyValuePair';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
 
 /**
  *  The only interface for Adaptable
@@ -164,8 +165,8 @@ export interface IAdaptable {
   getFirstGroupedColumn(): AdaptableColumn | undefined;
 
   //  Sort
-  setCustomSort(columnId: string, comparer: Function): void;
-  removeCustomSort(columnId: string): void;
+  setCustomSort(customSort: CustomSort): void;
+  removeCustomSort(ccustomSort: CustomSort): void;
   setColumnSort(columnSorts: ColumnSort[]): void;
   //sortLayout(layout: Layout):void;
 

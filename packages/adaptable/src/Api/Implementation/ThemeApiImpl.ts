@@ -4,6 +4,8 @@ import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { ApiBase } from './ApiBase';
 import { ThemeApi } from '../ThemeApi';
 import { ThemeState, AdaptableTheme } from '../../PredefinedConfig/ThemeState';
+import { ThemeChangedInfo, ThemeChangedEventArgs } from '../../types';
+import AdaptableHelper from '../../Utilities/Helpers/AdaptableHelper';
 
 export class ThemeApiImpl extends ApiBase implements ThemeApi {
   public getThemeState(): ThemeState {
@@ -47,6 +49,31 @@ export class ThemeApiImpl extends ApiBase implements ThemeApi {
 
       return theme;
     });
+  }
+
+  public applyCurrentTheme(): void {
+    const currentTheme: AdaptableTheme | string = this.getAllTheme().filter(theme =>
+      typeof theme === 'string'
+        ? theme === this.getCurrentTheme()
+        : theme.Name === this.getCurrentTheme()
+    )[0];
+
+    if (!currentTheme) {
+      return;
+    }
+
+    this.adaptable.applyAdaptableTheme(currentTheme);
+
+    let themeChangedInfo: ThemeChangedInfo = {
+      theme: currentTheme,
+      adaptableApi: this.adaptable.api,
+    };
+    const themeChangedEventArgs: ThemeChangedEventArgs = AdaptableHelper.createFDC3Message(
+      'Theme Changed Args',
+      themeChangedInfo
+    );
+
+    this.adaptable.api.eventApi.emit('ThemeChanged', themeChangedEventArgs);
   }
 
   public getAllUserTheme(): AdaptableTheme[] {

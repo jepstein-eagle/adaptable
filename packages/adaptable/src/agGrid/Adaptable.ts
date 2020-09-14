@@ -155,6 +155,7 @@ import * as parser from '../parser/src';
 import { ColumnFilter, SystemFilterPredicateId } from '../PredefinedConfig/FilterState';
 import { FlashingCellStrategyagGrid } from './Strategy/FlashingCellsStrategyagGrid';
 import { Cancelable } from '../Utilities/Cancelable';
+import { CustomSort } from '../PredefinedConfig/CustomSortState';
 
 ModuleRegistry.registerModules(AllCommunityModules);
 
@@ -3624,20 +3625,27 @@ export class Adaptable implements IAdaptable {
     }
   }
 
-  public setCustomSort(columnId: string, comparer: AdaptableComparerFunction): void {
+  public setCustomSort(customSort: CustomSort): void {
+    const customSortComparerFunction: AdaptableComparerFunction = customSort.CustomSortComparerFunction
+      ? this.getUserFunctionHandler(
+          'CustomSortComparerFunction',
+          customSort.CustomSortComparerFunction
+        )
+      : this.runAdaptableComparerFunction(customSort.ColumnId, customSort.SortedValues);
+
     const sortModel = this.gridOptions.api!.getSortModel();
-    const columnDef = this.gridOptions.api!.getColumnDef(columnId);
+    const columnDef = this.gridOptions.api!.getColumnDef(customSort.ColumnId);
 
     if (columnDef) {
-      columnDef.comparator = <any>comparer;
-      columnDef.pivotComparator = <any>comparer;
+      columnDef.comparator = <any>customSortComparerFunction;
+      columnDef.pivotComparator = <any>customSortComparerFunction;
     }
     this.gridOptions.api!.setSortModel(sortModel);
   }
 
-  public removeCustomSort(columnId: string): void {
+  public removeCustomSort(customSort: CustomSort): void {
     const sortModel = this.gridOptions.api!.getSortModel();
-    const columnDef = this.gridOptions.api!.getColumnDef(columnId);
+    const columnDef = this.gridOptions.api!.getColumnDef(customSort.ColumnId);
 
     if (columnDef) {
       columnDef.comparator = null;
@@ -3645,8 +3653,48 @@ export class Adaptable implements IAdaptable {
     this.gridOptions.api!.setSortModel(sortModel);
   }
 
-  private setColumnState(columnApi: any, columnState: any, columnEventType: string) {
-    columnApi.setColumnState(columnState, columnEventType);
+  private runAdaptableComparerFunction(
+    columnId: string,
+    columnValues: any[]
+  ): AdaptableComparerFunction {
+    let adaptable: IAdaptable = this;
+    return function compareItemsOfCustomSort(
+      valueA: any,
+      valueB: any,
+      nodeA?: any,
+      nodeB?: any
+    ): number {
+      let firstElementValueString = nodeA
+        ? adaptable.getValueFromRowNode(nodeA, columnId, CellValueType.DisplayValue)
+        : valueA;
+
+      let secondElementValueString = nodeB
+        ? adaptable.getValueFromRowNode(nodeB, columnId, CellValueType.DisplayValue)
+        : valueB;
+
+      let indexFirstElement = columnValues.indexOf(firstElementValueString);
+      let containsFirstElement = indexFirstElement >= 0;
+      let indexSecondElement = columnValues.indexOf(secondElementValueString);
+      let containsSecondElement = indexSecondElement >= 0;
+      //if none of the element are in the list we jsut return normal compare
+      if (!containsFirstElement && !containsSecondElement) {
+        if (valueA == valueB) {
+          return 0;
+        }
+        return valueA < valueB ? -1 : 1;
+      }
+      //if first item not in the list make sure we put it after the second item
+      if (!containsFirstElement) {
+        return 1;
+      }
+      //if second item not in the list make sure we put it after the first item
+      if (!containsSecondElement) {
+        return -1;
+      }
+
+      //return the comparison from the list if the two items are in the list
+      return indexFirstElement - indexSecondElement;
+    };
   }
 
   // do we want to do this each time or check once at startup and then set a flag?

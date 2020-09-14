@@ -110,6 +110,8 @@ import { ICalculatedColumnStrategy } from '../../Strategy/Interface/ICalculatedC
 import { IFreeTextColumnStrategy } from '../../Strategy/Interface/IFreeTextColumnStrategy';
 import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStrategy';
 import { ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
+import { CustomSort } from '../../PredefinedConfig/CustomSortState';
+import { IThemeStrategy } from '../../Strategy/Interface/IThemeStrategy';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -2074,6 +2076,38 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           }
 
           /*******************
+           * CUSTOM SORT ACTIONS
+           *******************/
+          /**
+           * Use Cases: User has created / edited / deleted a Custom Sort
+           * Action:  Tell Adaptable so it can update the sort model accordingly
+           */
+          case CustomSortRedux.CUSTOM_SORT_ADD: {
+            const actionTyped = action as CustomSortRedux.CustomSortAddAction;
+            const customSort: CustomSort = actionTyped.customSort;
+            adaptable.setCustomSort(customSort);
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          case CustomSortRedux.CUSTOM_SORT_EDIT: {
+            const actionTyped = action as CustomSortRedux.CustomSortEditAction;
+            const customSort: CustomSort = actionTyped.customSort;
+            adaptable.removeCustomSort(customSort);
+            adaptable.setCustomSort(customSort);
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          case CustomSortRedux.CUSTOM_SORT_DELETE: {
+            const actionTyped = action as CustomSortRedux.CustomSortDeleteAction;
+            const customSort: CustomSort = actionTyped.customSort;
+            adaptable.removeCustomSort(customSort);
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          /*******************
            * FREE TEXT COLUMN ACTIONS
            *******************/
 
@@ -2089,7 +2123,7 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
           }
 
           case FreeTextColumnRedux.FREE_TEXT_COLUMN_EDIT: {
-            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnAddAction;
+            const actionTyped = action as FreeTextColumnRedux.FreeTextColumnEditAction;
             adaptable.editFreeTextColumnInGrid(actionTyped.freeTextColumn);
             let returnAction = next(action);
             adaptable.redraw();
@@ -2103,6 +2137,16 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
               return returnAction;
             }
             return null;
+          }
+
+          /*******************
+           * THEME ACTIONS
+           *******************/
+
+          case ThemeRedux.THEME_SELECT: {
+            let returnAction = next(action);
+            adaptable.api.themeApi.applyCurrentTheme();
+            return returnAction;
           }
 
           /*******************

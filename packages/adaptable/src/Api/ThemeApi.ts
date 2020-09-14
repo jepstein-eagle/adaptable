@@ -9,6 +9,8 @@ export interface ThemeApi {
    */
   getThemeState(): ThemeState;
 
+  applyCurrentTheme(): void;
+
   /**
    * Sets Adaptable to use the given theme
    * @param theme name of the theme to apply

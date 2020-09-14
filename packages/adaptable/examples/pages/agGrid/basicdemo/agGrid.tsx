@@ -26,7 +26,7 @@ var api: AdaptableApi;
 
 async function InitAdaptableDemo() {
   const examplesHelper = new ExamplesHelper();
-  const tradeCount: number = 200;
+  const tradeCount: number = 1500;
   const tradeData: any = examplesHelper.getTrades(tradeCount);
   const gridOptions: GridOptions = examplesHelper.getGridOptionsTrade(tradeData);
   gridOptions.sideBar = 'columns';
@@ -39,7 +39,7 @@ async function InitAdaptableDemo() {
     userInterfaceOptions: {
       //  showAdaptableToolPanel: false,
       //showUngroupColumnMenuItem: false,
-      adaptableToolPanelTitle: 'Hello',
+      // adaptableToolPanelTitle: 'Hello',
     },
     vendorGrid: {
       ...gridOptions,
@@ -77,6 +77,7 @@ async function InitAdaptableDemo() {
         },
       },
     ],
+
     userFunctions: [
       {
         name: 'country',
@@ -121,11 +122,34 @@ async function InitAdaptableDemo() {
     ],
 
     predefinedConfig: {
+      CustomSort: {
+        Revision: 2,
+        CustomSorts: [
+          {
+            ColumnId: 'country',
+            CustomSortComparerFunction: 'country',
+          },
+          {
+            ColumnId: 'currency',
+            CustomSortComparerFunction: 'currency',
+          },
+          {
+            ColumnId: 'counterparty',
+            SortedValues: ['Citi', 'Nat West'],
+          },
+          {
+            ColumnId: 'status',
+            SortedValues: ['Pending', 'Completed', 'Rejected'],
+          },
+        ],
+      },
       //  Query: {
       //    CurrentQuery: 'Any old rubbish',
       //  },
+      /*
       ConditionalStyle: {
-        Revision: Date.now(),
+        // Revision: Date.now(),
+       
         ConditionalStyles: [
           {
             Scope: {
@@ -161,28 +185,8 @@ async function InitAdaptableDemo() {
           },
         ],
       },
-      CustomSort: {
-        Revision: 2,
-        CustomSorts: [
-          {
-            ColumnId: 'country',
-            CustomSortComparerFunction: 'country',
-          },
-          {
-            ColumnId: 'currency',
-            CustomSortComparerFunction: 'currency',
-          },
-          {
-            ColumnId: 'counterparty',
-            SortedValues: ['Citi', 'Nat West'],
-          },
-          {
-            ColumnId: 'status',
-            SortedValues: ['Pending', 'Completed', 'Rejected'],
-          },
-        ],
-      },
-      /*
+     
+     
       Filter: {
         Revision: 10,
 
@@ -271,7 +275,7 @@ async function InitAdaptableDemo() {
           },
         ],
       },
-      */
+      
       UserInterface: {
         PermittedValuesItems: [
           /*
@@ -291,7 +295,7 @@ async function InitAdaptableDemo() {
             },
             PermittedValues: [4, 5, 6],
           },
-          */
+          
 
           // for counterparty we will get a hard-coded list
           {
@@ -348,15 +352,17 @@ async function InitAdaptableDemo() {
           },
         ],
       },
+      */
       Layout: {
-        Revision: 25,
-        CurrentLayout: 'Sigal',
+        //  Revision: Date.now(),
+        CurrentLayout: 'Basic Layout',
         Layouts: [
           {
-            Name: 'Sigal',
+            Name: 'Basic Layout',
             Columns: [
-              'country',
               'tradeId',
+              'country',
+
               'bid',
               'currency',
               'countryStars',
