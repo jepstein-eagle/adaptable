@@ -83,7 +83,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
-    docs: [{ type: 'code', content: 'number = number' }],
+    docs: [{ type: 'code', content: 'value = value' }],
   },
   NEQ: {
     handler(args) {
@@ -91,7 +91,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
-    docs: [{ type: 'code', content: 'number != number' }],
+    docs: [{ type: 'code', content: 'value != value' }],
   },
   LT: {
     handler(args) {
@@ -99,7 +99,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
-    docs: [{ type: 'code', content: 'number < number' }],
+    docs: [{ type: 'code', content: 'value < value' }],
   },
   LTE: {
     handler(args) {
@@ -107,7 +107,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
-    docs: [{ type: 'code', content: 'number <= number' }],
+    docs: [{ type: 'code', content: 'value <= value' }],
   },
   GT: {
     handler(args) {
@@ -115,7 +115,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
-    docs: [{ type: 'code', content: 'number > number' }],
+    docs: [{ type: 'code', content: 'value > value' }],
   },
   GTE: {
     handler(args) {
@@ -123,7 +123,7 @@ export const defaultFunctions: FunctionMap = {
     },
     hidden: true,
     type: 'boolean',
-    docs: [{ type: 'code', content: 'number >= number' }],
+    docs: [{ type: 'code', content: 'value >= value' }],
   },
   //
   COL: {
