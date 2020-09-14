@@ -38,6 +38,10 @@ async function InitAdaptableDemo() {
     autoSizeColumnsInLayout: true,
   };
 
+  adaptableOptions.filterOptions = {
+    //  clearFiltersOnStartUp: true,
+  };
+
   adaptableOptions.exportOptions = {
     exportColumnRawValue: (column: AdaptableColumn, report: Report) => {
       if (column.ColumnId === 'bid') {

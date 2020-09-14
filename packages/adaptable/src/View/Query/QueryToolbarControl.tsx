@@ -135,7 +135,7 @@ class QueryToolbarControlComponent extends React.Component<
           {isExpressionValid ? (
             <ButtonPlay
               onClick={() => this.runQuery()}
-              tooltip="Run Query"
+              tooltip={''}
               accessLevel={'Full'}
               variant="text"
               tone="neutral"

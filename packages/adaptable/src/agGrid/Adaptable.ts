@@ -3912,6 +3912,8 @@ import "@adaptabletools/adaptable/themes/${themeName}.css"`);
     }
 
     this.agGridHelper.checkShouldClearExistingFiltersOrSearches();
+
+    this.applyGridFiltering();
   }
 
   private getGridOptionsApi(): GridApi {
