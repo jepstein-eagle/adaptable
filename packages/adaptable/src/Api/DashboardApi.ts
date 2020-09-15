@@ -1,5 +1,9 @@
 import { DashboardState, CustomToolbar, DashboardTab } from '../PredefinedConfig/DashboardState';
-import { AdaptableFunctionButtons } from '../PredefinedConfig/Common/Types';
+import {
+  AdaptableFunctionButtons,
+  AdaptableDashboardToolbars,
+  AdaptableDashboardToolbar,
+} from '../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../PredefinedConfig/Common/ToolbarButton';
 
 /**
@@ -98,9 +102,14 @@ export interface DashboardApi {
   dockDashboard(): void;
 
   /**
+   * Returns the current Active Tab index (if there is one)
+   */
+  getActiveTabIndex(): number | undefined;
+
+  /**
    * Returns the current Active Tab (if there is one)
    */
-  getActiveTab(): number | undefined;
+  getActiveTab(): DashboardTab | undefined;
 
   /**
    * Sets the Active Tab in the Dashboard Header
@@ -108,6 +117,10 @@ export interface DashboardApi {
    * @param tabIndex the tab index to set
    */
   setActiveTab(tabIndex: number): void;
+
+  getCurrentToolbars(): AdaptableDashboardToolbars | string[];
+
+  isToolbarVisible(toolbar: AdaptableDashboardToolbar): boolean;
 
   /**
    * Opens the Dashboard popup screen

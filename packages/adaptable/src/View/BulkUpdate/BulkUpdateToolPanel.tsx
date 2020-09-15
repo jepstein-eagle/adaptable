@@ -184,9 +184,11 @@ class BulkUpdateToolPanelControlComponent extends React.Component<
   }
 
   private checkSelectedCells() {
-    this.props.onBulkUpdateCheckSelectedCells();
-    if (StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue)) {
-      this.props.onBulkUpdateValueChange('');
+    if (!this.props.api.dashboardApi.isToolbarVisible('BulkUpdate')) {
+      this.props.onBulkUpdateCheckSelectedCells();
+      if (StringExtensions.IsNotNullOrEmpty(this.props.BulkUpdateValue)) {
+        this.props.onBulkUpdateValueChange('');
+      }
     }
   }
 

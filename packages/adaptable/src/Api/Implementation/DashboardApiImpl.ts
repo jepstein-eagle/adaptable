@@ -4,7 +4,11 @@ import { DashboardApi } from '../DashboardApi';
 import * as StrategyConstants from '../../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../../Utilities/Constants/ScreenPopups';
 import { DashboardState, CustomToolbar, DashboardTab } from '../../PredefinedConfig/DashboardState';
-import { AdaptableFunctionButtons } from '../../PredefinedConfig/Common/Types';
+import {
+  AdaptableFunctionButtons,
+  AdaptableDashboardToolbars,
+  AdaptableDashboardToolbar,
+} from '../../PredefinedConfig/Common/Types';
 import { ToolbarButton } from '../../PredefinedConfig/Common/ToolbarButton';
 import ArrayExtensions from '../../Utilities/Extensions/ArrayExtensions';
 import Helper from '../../Utilities/Helpers/Helper';
@@ -97,12 +101,28 @@ export class DashboardApiImpl extends ApiBase implements DashboardApi {
     this.dispatchAction(DashboardRedux.DashboardSetIsFloating(false));
   }
 
-  public getActiveTab(): number | undefined {
+  public getActiveTabIndex(): number | undefined {
     return this.getDashboardState().ActiveTab;
+  }
+
+  public getActiveTab(): DashboardTab | undefined {
+    return this.getDashboardState().Tabs[this.getActiveTabIndex()];
+  }
+
+  public isToolbarVisible(toolbar: AdaptableDashboardToolbar): boolean {
+    return this.getCurrentToolbars().find(c => c == toolbar) != undefined;
   }
 
   public setActiveTab(tabIndex: number): void {
     this.dispatchAction(DashboardRedux.DashboardSetActiveTab(tabIndex));
+  }
+
+  public getCurrentToolbars(): AdaptableDashboardToolbars | string[] | undefined {
+    const currentTab: DashboardTab | undefined = this.getActiveTab();
+    if (!currentTab) {
+      return undefined;
+    }
+    return currentTab.Toolbars;
   }
 
   public fireToolbarVisibilityChangedEvent(

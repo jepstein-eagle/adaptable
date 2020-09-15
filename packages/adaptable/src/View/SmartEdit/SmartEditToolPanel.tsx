@@ -65,7 +65,7 @@ class SmartEditToolPanelComponent extends React.Component<
       const adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       if (adaptable) {
         adaptable._on('CellsSelected', () => {
-          this.props.onSmartEditCheckSelectedCells();
+          this.onSelectionChanged();
         });
       }
     }
@@ -182,6 +182,12 @@ class SmartEditToolPanelComponent extends React.Component<
         {this.state.IsMinimised ? null : content}
       </PanelToolPanel>
     );
+  }
+
+  private onSelectionChanged(): void {
+    if (!this.props.api.dashboardApi.isToolbarVisible('SmartEdit')) {
+      this.props.onSmartEditCheckSelectedCells();
+    }
   }
 
   private onSmartEditValueChange(event: React.FormEvent<any>) {

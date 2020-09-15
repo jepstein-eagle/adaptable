@@ -47,7 +47,7 @@ class CellSummaryToolbarControlComponent extends React.Component<
     if (this.props.api) {
       let adaptable: IAdaptable = this.props.api.internalApi.getAdaptableInstance();
       adaptable._on('CellsSelected', () => {
-        this.props.onCreateCellSummary();
+        this.onSelectionChanged();
       });
     }
   }

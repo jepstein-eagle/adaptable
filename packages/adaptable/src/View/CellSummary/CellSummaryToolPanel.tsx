@@ -50,7 +50,7 @@ class CellSummaryToolPanelComponent extends React.Component<
   }
   public componentDidMount() {
     this.props.api.internalApi.getAdaptableInstance()._on('CellsSelected', () => {
-      this.props.onCreateCellSummary();
+      this.onSelectionChanged();
     });
   }
 
@@ -164,7 +164,9 @@ class CellSummaryToolPanelComponent extends React.Component<
   }
 
   private onSelectionChanged(): void {
-    this.props.onCreateCellSummary();
+    if (!this.props.api.dashboardApi.isToolbarVisible('CellSummary')) {
+      this.props.onCreateCellSummary();
+    }
   }
 
   private getOperationValue(): any {
