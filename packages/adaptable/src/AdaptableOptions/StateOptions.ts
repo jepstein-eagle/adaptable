@@ -101,7 +101,7 @@ export interface StateOptions {
    *
    * **Default implementation: (state) => state**
    */
-  saveState?: (state: AdaptableState) => any;
+  saveState?: AdaptableSaveStateFunction;
 
   /**
    * Allows hooking into AdaptableState hydration - useful when `saveState` was specified and added new custom properties, which will again be accessible into the `applyState` function.
@@ -137,8 +137,24 @@ export interface StateOptions {
    *
    * **Default implementation: (state) => state**
    */
-  applyState?: (state: any) => any;
+  applyState?: (state: Partial<AdaptableState>) => Partial<AdaptableState>;
+
+  /**
+   * An optional delay (in milliseconds) to debounce state persistence - namely saveState/persistState calls.
+   *
+   * The debounce technique allow us to "group" multiple sequential calls in a single one - a good illustration is elevator doors.
+   *
+   * **Defaults to: 400**. Also, the wait will be max 1000ms, at which point the save/persist calls will happen anyway.
+   */
+  debounceStateDelay?: number;
 }
+
+type AdaptableStateFunctionConfig = {
+  adaptableId: string;
+  adaptableStateKey: string;
+  userName: string;
+  url?: string;
+};
 
 /**
  * Allows the customization of state persistence.
@@ -148,8 +164,20 @@ export interface StateOptions {
 export interface AdaptablePersistStateFunction {
   (
     state: any,
-    { adaptableId, userName, url }: { adaptableId: string; userName: string; url?: string }
+    { adaptableId, adaptableStateKey, userName, url }: AdaptableStateFunctionConfig
   ): Promise<any>;
+}
+
+/**
+ * Allows the customization of state persistence.
+ *
+ * Used by the `saveState` function property in StateOptions
+ */
+export interface AdaptableSaveStateFunction {
+  (
+    state: AdaptableState,
+    { adaptableId, adaptableStateKey, userName, url }: AdaptableStateFunctionConfig
+  ): Partial<AdaptableState>;
 }
 
 /**
@@ -158,5 +186,5 @@ export interface AdaptablePersistStateFunction {
  * Userd by the `loadState` function property in StateOptions
  */
 export interface AdaptableLoadStateFunction {
-  (config: { adaptableId: string; userName: string; url?: string }): Promise<any>;
+  (config: AdaptableStateFunctionConfig): Promise<any>;
 }

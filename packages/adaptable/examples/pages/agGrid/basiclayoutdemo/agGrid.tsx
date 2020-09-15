@@ -15,6 +15,7 @@ import {
   AdaptableApi,
   ActionColumnClickedEventArgs,
   ActionColumnClickedInfo,
+  AdaptableState,
 } from '../../../../src/types';
 import { ExamplesHelper } from '../../ExamplesHelper';
 import { AllEnterpriseModules } from '@ag-grid-enterprise/all-modules';
@@ -85,7 +86,7 @@ const columnSchema: ColDef[] = [
   {
     headerName: 'Price',
     field: 'price',
-    aggFunc: 'max',
+    aggFunc: 'sum',
     enableRowGroup: true,
     enableValue: true,
     filter: true,
@@ -154,10 +155,24 @@ async function InitAdaptableDemo() {
     adaptableId: 'Basic Setup Demo Layout 1',
     userInterfaceOptions: {},
 
+    stateOptions: {
+      applyState: state => {
+        console.log('loading view id', state.viewId);
+        delete state.viewId;
+        return state;
+      },
+      saveState: (state: AdaptableState, { adaptableStateKey }): Partial<AdaptableState> => {
+        const result: any = state;
+        result.viewId = adaptableStateKey;
+        console.log('saving view id', adaptableStateKey);
+
+        return result;
+      },
+    },
     layoutOptions: {
       autoSaveLayouts: true,
       autoSizeColumnsInLayout: false,
-      autoSizeColumnsInPivotLayout: true,
+      autoSizeColumnsInPivotLayout: false,
       includeExpandedRowGroups: true,
     },
     userFunctions: [
@@ -200,39 +215,40 @@ async function InitAdaptableDemo() {
   adaptableApi.eventApi.on(
     'ActionColumnClicked',
     (actionColumnEventArgs: ActionColumnClickedEventArgs) => {
-      let actionColumnClickedInfo: ActionColumnClickedInfo = actionColumnEventArgs.data[0].id;
-      let rowData: any = actionColumnClickedInfo.rowData;
-      const column = actionColumnEventArgs.data[0].id.actionColumn;
-      if (column.ColumnId == 'Plus') {
-        let price = rowData.price;
-        adaptableApi.gridApi.setCellValue(
-          'price',
-          price + 1,
-          actionColumnClickedInfo.primaryKeyValue,
-          true
-        );
-      } else if (column.ColumnId == 'Minus') {
-        let price = rowData.price;
-        adaptableApi.gridApi.setCellValue(
-          'price',
-          price - 1,
-          actionColumnClickedInfo.primaryKeyValue,
-          true
-        );
-      } else if (column.ColumnId == 'Multiply') {
-        let multiplier: number =
-          rowData.Employee == 'Robert King' || rowData.Employee == 'Janet Leverling' ? 2 : 3;
-        let newItemCost = rowData.ItemCost * multiplier;
-        newItemCost = Math.round(newItemCost * 100) / 100;
-        adaptableApi.gridApi.setCellValue(
-          'ItemCost',
-          newItemCost,
-          actionColumnClickedInfo.primaryKeyValue,
-          true
-        );
-      } else if (column.ColumnId == 'Action') {
-        adaptableApi.gridApi.deleteGridData([actionColumnClickedInfo.rowData]);
-      }
+      // adaptableApi.configApi
+      // let actionColumnClickedInfo: ActionColumnClickedInfo = actionColumnEventArgs.data[0].id;
+      // let rowData: any = actionColumnClickedInfo.rowData;
+      // const column = actionColumnEventArgs.data[0].id.actionColumn;
+      // if (column.ColumnId == 'Plus') {
+      //   let price = rowData.price;
+      //   adaptableApi.gridApi.setCellValue(
+      //     'price',
+      //     price + 1,
+      //     actionColumnClickedInfo.primaryKeyValue,
+      //     true
+      //   );
+      // } else if (column.ColumnId == 'Minus') {
+      //   let price = rowData.price;
+      //   adaptableApi.gridApi.setCellValue(
+      //     'price',
+      //     price - 1,
+      //     actionColumnClickedInfo.primaryKeyValue,
+      //     true
+      //   );
+      // } else if (column.ColumnId == 'Multiply') {
+      //   let multiplier: number =
+      //     rowData.Employee == 'Robert King' || rowData.Employee == 'Janet Leverling' ? 2 : 3;
+      //   let newItemCost = rowData.ItemCost * multiplier;
+      //   newItemCost = Math.round(newItemCost * 100) / 100;
+      //   adaptableApi.gridApi.setCellValue(
+      //     'ItemCost',
+      //     newItemCost,
+      //     actionColumnClickedInfo.primaryKeyValue,
+      //     true
+      //   );
+      // } else if (column.ColumnId == 'Action') {
+      //   adaptableApi.gridApi.deleteGridData([actionColumnClickedInfo.rowData]);
+      // }
     }
   );
   // Step 7 (optional): Listen to the AdaptableReady event to do anything required at startup
@@ -249,6 +265,8 @@ async function InitAdaptableDemo() {
     // adaptableApi.gridApi.showColumn('rating');
     // }, 3000);
   });
+
+  (global as any).adaptableApi = adaptableApi;
 }
 
 let demoConfig: PredefinedConfig = {
@@ -307,23 +325,23 @@ let demoConfig: PredefinedConfig = {
     ],
   },
   Layout: {
-    Revision: Date.now(),
-    CurrentLayout: 'Test',
-    /*
+    Revision: 2,
+    CurrentLayout: 'Simple Layout',
+
     Layouts: [
       {
         Name: 'Simple Layout',
         AutoSave: true,
         Columns: ['price', 'model', 'make', 'Multiply'],
-        PivotDetails: {
-          PivotColumns: ['make'],
-          //  AggregationColumns: ['InvoicedCost', 'ItemCost'],
-          AggregationColumns: ['price'],
-        },
+
+        EnablePivot: true,
+        PivotColumns: ['make'],
+        //  AggregationColumns: ['InvoicedCost', 'ItemCost'],
+        AggregationColumns: { price: true },
       },
     ],
   },
-  */
+  
     // Layout: {
     //   CreateDefaultLayout: true,
     //   // },

@@ -194,10 +194,7 @@ export class agGridHelper {
     return true;
   }
 
-  public createSparklineCellRendererComp(
-    sparkline: SparklineColumn,
-    adaptableId: string
-  ): ICellRendererFunc | void {
+  public createSparklineCellRendererComp(sparkline: SparklineColumn): ICellRendererFunc | void {
     return this.adaptable.lookupPlugins('sparklineColumnRenderer', sparkline);
   }
 

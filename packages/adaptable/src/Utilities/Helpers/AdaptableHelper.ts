@@ -15,6 +15,9 @@ import { CellValueType } from '../../PredefinedConfig/Common/Enums';
 export function assignadaptableOptions(adaptableOptions: AdaptableOptions): AdaptableOptions {
   const returnadaptableOptions = Object.assign({}, DefaultAdaptableOptions, adaptableOptions);
 
+  returnadaptableOptions.adaptableStateKey =
+    returnadaptableOptions.adaptableStateKey ?? returnadaptableOptions.adaptableId;
+
   returnadaptableOptions.auditOptions = Object.assign(
     {},
     DefaultAdaptableOptions.auditOptions,

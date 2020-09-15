@@ -33,6 +33,10 @@ function customizer(objValue: any, srcValue: any): any {
 
 export function MergeStateFunction(oldState: any, newState: any) {
   // return MergeState(oldState, newState);
+
+  if (newState === '') {
+    newState = {};
+  }
   const config = oldState;
   const state = newState;
 

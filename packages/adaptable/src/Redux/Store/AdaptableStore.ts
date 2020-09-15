@@ -154,6 +154,7 @@ export class AdaptableStore implements IAdaptableStore {
   public TheStore: Redux.Store<AdaptableState>;
   public Load: PromiseLike<any>;
   private emitter: Emitter;
+  private storageEngine: IStorageEngine;
 
   private loadStartOnStartup: boolean = true; // set to false if you want no state
 
@@ -293,10 +294,12 @@ This is the main store for Adaptable State
 
     storageEngine = createEngineLocal({
       adaptableId: adaptable.adaptableOptions.adaptableId,
+      adaptableStateKey: adaptable.adaptableOptions.adaptableStateKey,
       userName: adaptable.adaptableOptions.userName,
       predefinedConfig: adaptable.adaptableOptions.predefinedConfig,
       loadState: adaptable.adaptableOptions.stateOptions.loadState,
       persistState: adaptable.adaptableOptions.stateOptions.persistState,
+      debounceStateDelay: adaptable.adaptableOptions.stateOptions.debounceStateDelay,
     });
 
     const nonPersistentReduxKeys = [
@@ -347,7 +350,7 @@ This is the main store for Adaptable State
           delete storageState[key];
         });
 
-        storageEngine.save(adaptable.adaptableOptions.stateOptions.saveState(storageState));
+        storageEngine.save(storageState, adaptable.adaptableOptions.stateOptions.saveState);
       }
 
       return finalState;
@@ -366,7 +369,14 @@ This is the main store for Adaptable State
       )
     );
 
-    this.Load = storageEngine
+    this.storageEngine = storageEngine;
+
+    this.loadStore(adaptable, adaptable.adaptableOptions.adaptableStateKey);
+  }
+
+  public loadStore = (adaptable: IAdaptable, adaptableStateKey: string): PromiseLike<any> => {
+    this.storageEngine.setStateKey(adaptableStateKey);
+    return (this.Load = this.storageEngine
       .load()
       .then(storedState => {
         if (storedState && this.loadStartOnStartup) {
@@ -392,8 +402,8 @@ This is the main store for Adaptable State
             })
           );
         }
-      );
-  }
+      ));
+  };
 }
 
 // this function checks for any differences in the state and sends it to AUDIT LOGGER (for use in Audit Log)

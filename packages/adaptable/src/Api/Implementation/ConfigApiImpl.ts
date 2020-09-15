@@ -422,4 +422,9 @@ export class ConfigApiImpl extends ApiBase implements ConfigApi {
     };
     return adaptableSortState;
   }
+
+  public setAdaptableStateKey(adaptableStateKey: string): void {
+    this.adaptable.adaptableOptions.adaptableStateKey = adaptableStateKey;
+    this.adaptable.adaptableStore.loadStore(this.adaptable, adaptableStateKey);
+  }
 }

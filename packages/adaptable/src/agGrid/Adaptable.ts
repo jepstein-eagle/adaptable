@@ -3190,8 +3190,7 @@ export class Adaptable implements IAdaptable {
 
     if (renderedColumn) {
       const cellRendererComp: any = this.agGridHelper.createSparklineCellRendererComp(
-        sparklineColumn,
-        this.adaptableOptions!.adaptableId!
+        sparklineColumn
       );
       const vendorGridColumn: Column = this.gridOptions.columnApi!.getColumn(
         sparklineColumn.ColumnId

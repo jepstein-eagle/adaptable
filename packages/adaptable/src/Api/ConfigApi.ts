@@ -113,4 +113,6 @@ export interface ConfigApi {
 
   configGetAdaptableSearchState(): AdaptableSearchState;
   configGetAdaptableSortState(): AdaptableSortState;
+
+  setAdaptableStateKey(adaptableStateKey: string): void;
 }

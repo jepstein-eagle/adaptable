@@ -108,6 +108,7 @@ export const DefaultAdaptableOptions: AdaptableOptions = {
     exportColumnRawValue: undefined,
   },
   stateOptions: {
+    debounceStateDelay: 400,
     applyState: state => state,
     saveState: state => state,
   },

@@ -75,6 +75,13 @@ export interface AdaptableOptions {
   adaptableId?: string;
 
   /**
+   * Identifier to be used as the localStorage persistence key for the AdaptableState.
+   *
+   * If not provided, will default to the value of the [adaptableId] option
+   */
+  adaptableStateKey?: string;
+
+  /**
    * User State (a.ka. `predefinedConfig`) set at design-time and shipped with AdapTable for first use.
    *
    * Contains a mixture of objects and properties.
