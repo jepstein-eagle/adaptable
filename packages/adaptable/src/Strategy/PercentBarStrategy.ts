@@ -3,7 +3,7 @@ import * as StrategyConstants from '../Utilities/Constants/StrategyConstants';
 import * as ScreenPopups from '../Utilities/Constants/ScreenPopups';
 import { IAdaptable } from '../AdaptableInterfaces/IAdaptable';
 import { IPercentBarStrategy } from './Interface/IPercentBarStrategy';
-import { PercentBarState, PercentBar } from '../PredefinedConfig/PercentBarState';
+import { PercentBar } from '../PredefinedConfig/PercentBarState';
 import { ArrayExtensions } from '../Utilities/Extensions/ArrayExtensions';
 import { AdaptableColumn } from '../PredefinedConfig/Common/AdaptableColumn';
 import { MenuItemShowPopup } from '../Utilities/MenuItem';
@@ -13,7 +13,6 @@ import { TeamSharingImportInfo } from '../PredefinedConfig/TeamSharingState';
 import * as PercentBarRedux from '../Redux/ActionsReducers/PercentBarRedux';
 
 export class PercentBarStrategy extends AdaptableStrategyBase implements IPercentBarStrategy {
-  protected PercentBarState: PercentBarState;
   constructor(adaptable: IAdaptable) {
     super(
       StrategyConstants.PercentBarStrategyId,
@@ -56,7 +55,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && column.DataType == 'Number') {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
-        this.PercentBarState.PercentBars.map(f => f.ColumnId),
+        this.adaptable.api.percentBarApi.getAllPercentBar().map(f => f.ColumnId),
         column.ColumnId
       );
       let label = percentBarExists ? 'Edit ' : 'Create ';
@@ -82,7 +81,7 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     let menuItemShowPopup: MenuItemShowPopup = undefined;
     if (this.canCreateMenuItem('Full')) {
       let percentBarExists: boolean = ArrayExtensions.ContainsItem(
-        this.PercentBarState.PercentBars.map(f => f.ColumnId),
+        this.adaptable.api.percentBarApi.getAllPercentBar().map(f => f.ColumnId),
         menuInfo.Column.ColumnId
       );
       if (menuInfo.Column && percentBarExists) {
@@ -100,39 +99,18 @@ export class PercentBarStrategy extends AdaptableStrategyBase implements IPercen
     return menuItemShowPopup;
   }
 
-  protected InitState() {
-    if (this.PercentBarState != this.GetPercentBarState()) {
-      if (this.adaptable.isInitialised) {
-        // if we have made any changes then first delete them all
-        this.PercentBarState.PercentBars.forEach(pb => {
-          this.adaptable.removePercentBar(pb);
-        });
-
-        this.GetPercentBarState().PercentBars.forEach(pb => {
-          this.adaptable.editPercentBar(pb);
-        });
-        this.adaptable.redraw();
-      }
-      this.PercentBarState = this.GetPercentBarState();
-    }
-  }
-
-  protected GetPercentBarState(): PercentBarState {
-    return this.adaptable.api.percentBarApi.getPercentBarState();
-  }
-
   public getTeamSharingAction(): TeamSharingImportInfo<PercentBar> {
     return {
-      FunctionEntities: this.GetPercentBarState().PercentBars,
+      FunctionEntities: this.adaptable.api.percentBarApi.getAllPercentBar(),
       AddAction: PercentBarRedux.PercentBarAdd,
       EditAction: PercentBarRedux.PercentBarEdit,
     };
   }
 
   public getSpecialColumnReferences(specialColumnId: string, references: string[]): void {
-    let percentBars: PercentBar[] = this.GetPercentBarState().PercentBars.filter(
-      (pb: PercentBar) => pb.ColumnId == specialColumnId
-    );
+    let percentBars: PercentBar[] = this.adaptable.api.percentBarApi
+      .getAllPercentBar()
+      .filter((pb: PercentBar) => pb.ColumnId == specialColumnId);
     if (ArrayExtensions.IsNotNullOrEmpty(percentBars)) {
       references.push(percentBars.length + ' Percent Bars');
     }

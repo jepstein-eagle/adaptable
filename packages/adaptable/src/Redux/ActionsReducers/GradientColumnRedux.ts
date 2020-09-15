@@ -8,7 +8,7 @@ export const GRADIENT_COLUMN_EDIT = 'GRADIENT_COLUMN_EDIT';
 export const GRADIENT_COLUMN_DELETE = 'GRADIENT_COLUMN_DELETE';
 
 export interface GradientColumnAction extends Redux.Action {
-  GradientColumn: GradientColumn;
+  gradientColumn: GradientColumn;
 }
 
 export interface GradientColumnAddAction extends GradientColumnAction {}
@@ -17,20 +17,20 @@ export interface GradientColumnEditAction extends GradientColumnAction {}
 
 export interface GradientColumnDeleteAction extends GradientColumnAction {}
 
-export const GradientColumnAdd = (GradientColumn: GradientColumn): GradientColumnAddAction => ({
+export const GradientColumnAdd = (gradientColumn: GradientColumn): GradientColumnAddAction => ({
   type: GRADIENT_COLUMN_ADD,
-  GradientColumn,
+  gradientColumn,
 });
 
-export const GradientColumnEdit = (GradientColumn: GradientColumn): GradientColumnEditAction => ({
+export const GradientColumnEdit = (gradientColumn: GradientColumn): GradientColumnEditAction => ({
   type: GRADIENT_COLUMN_EDIT,
-  GradientColumn,
+  gradientColumn,
 });
 export const GradientColumnDelete = (
-  GradientColumn: GradientColumn
+  gradientColumn: GradientColumn
 ): GradientColumnDeleteAction => ({
   type: GRADIENT_COLUMN_DELETE,
-  GradientColumn,
+  gradientColumn,
 });
 
 const initialGradientColumnState: GradientColumnState = {
@@ -45,7 +45,7 @@ export const GradientColumnReducer: Redux.Reducer<GradientColumnState> = (
 
   switch (action.type) {
     case GRADIENT_COLUMN_ADD: {
-      const actionGradientColumn: GradientColumn = (action as GradientColumnAction).GradientColumn;
+      const actionGradientColumn: GradientColumn = (action as GradientColumnAction).gradientColumn;
 
       if (!actionGradientColumn.Uuid) {
         actionGradientColumn.Uuid = createUuid();
@@ -56,7 +56,7 @@ export const GradientColumnReducer: Redux.Reducer<GradientColumnState> = (
     }
 
     case GRADIENT_COLUMN_EDIT: {
-      const actionGradientColumn: GradientColumn = (action as GradientColumnAction).GradientColumn;
+      const actionGradientColumn: GradientColumn = (action as GradientColumnAction).gradientColumn;
       return {
         ...state,
         GradientColumns: state.GradientColumns.map(abObject =>
@@ -65,7 +65,7 @@ export const GradientColumnReducer: Redux.Reducer<GradientColumnState> = (
       };
     }
     case GRADIENT_COLUMN_DELETE: {
-      const actionGradientColumn: GradientColumn = (action as GradientColumnAction).GradientColumn;
+      const actionGradientColumn: GradientColumn = (action as GradientColumnAction).gradientColumn;
       return {
         ...state,
         GradientColumns: state.GradientColumns.filter(

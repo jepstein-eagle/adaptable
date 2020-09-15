@@ -112,6 +112,9 @@ import { IActionColumnStrategy } from '../../Strategy/Interface/IActionColumnStr
 import { ColumnFilter, UserFilter } from '../../PredefinedConfig/FilterState';
 import { CustomSort } from '../../PredefinedConfig/CustomSortState';
 import { IThemeStrategy } from '../../Strategy/Interface/IThemeStrategy';
+import { PercentBar } from '../../PredefinedConfig/PercentBarState';
+import { GradientColumn } from '../../PredefinedConfig/GradientColumnState';
+import { SparklineColumn } from '../../PredefinedConfig/SparklineColumnState';
 
 type EmitterCallback = (data?: any) => any;
 type EmitterAnyCallback = (eventName: string, data?: any) => any;
@@ -2103,6 +2106,124 @@ var adaptableMiddleware = (adaptable: IAdaptable): any =>
             const actionTyped = action as CustomSortRedux.CustomSortDeleteAction;
             const customSort: CustomSort = actionTyped.customSort;
             adaptable.removeCustomSort(customSort);
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          /*******************
+           * PERCENT BAR ACTIONS
+           *******************/
+          /**
+           * Use Cases: User has created / edited / deleted a Percent Bar
+           * Action:  Tell Adaptable so it can create / edite / delete the renderers as required
+           */
+          case PercentBarRedux.PERCENT_BAR_ADD: {
+            const actionTyped = action as PercentBarRedux.PercentBarAddAction;
+            const percentBar: PercentBar = actionTyped.percentBar;
+            let returnAction = next(action);
+            adaptable.addPercentBar(percentBar);
+            adaptable.redraw();
+            return returnAction;
+          }
+
+          case PercentBarRedux.PERCENT_BAR_EDIT: {
+            const actionTyped = action as PercentBarRedux.PercentBarEditAction;
+            const percentBar: PercentBar = actionTyped.percentBar;
+            let returnAction = next(action);
+            adaptable.editPercentBar(percentBar);
+            adaptable.redraw();
+            return returnAction;
+          }
+
+          case PercentBarRedux.PERCENT_BAR_DELETE: {
+            const actionTyped = action as PercentBarRedux.PercentBarDeleteAction;
+            const percentBar: PercentBar = actionTyped.percentBar;
+            adaptable.removePercentBar(percentBar);
+            adaptable.redraw();
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          /*******************
+           * SPARKLINE COLUMN ACTIONS
+           *******************/
+          /**
+           * Use Cases: User has created / edited / deleted a Sparkline Column
+           * Action:  Tell Adaptable so it can create / edite / delete the renderers as required
+           */
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_ADD: {
+            const actionTyped = action as SparklineColumnRedux.SparklineColumnAddAction;
+            const sparklineColumn: SparklineColumn = actionTyped.sparklineColumn;
+            let returnAction = next(action);
+            adaptable.addSparklineColumn(sparklineColumn);
+            adaptable.redraw();
+            return returnAction;
+          }
+
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_EDIT: {
+            const actionTyped = action as SparklineColumnRedux.SparklineColumnEditAction;
+            const sparklineColumn: SparklineColumn = actionTyped.sparklineColumn;
+            let returnAction = next(action);
+            adaptable.editSparklineColumn(sparklineColumn);
+            adaptable.redraw();
+            return returnAction;
+          }
+
+          case SparklineColumnRedux.SPARKLINE_COLUMNS_DELETE: {
+            const actionTyped = action as SparklineColumnRedux.SparklineColumnDeleteAction;
+            const sparklineColumn: SparklineColumn = actionTyped.sparklineColumn;
+            adaptable.removeSparklineColumn(sparklineColumn);
+            adaptable.redraw();
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          /*******************
+           * FORMAT COLUMN ACTIONS
+           *******************/
+          /**
+           * Use Cases: User has created / edited / deleted a Format Column
+           * Action:  Tell Adaptable so it can create / edite / delete the renderers as required
+           */
+          case FormatColumnRedux.FORMAT_COLUMN_ADD:
+          case FormatColumnRedux.FORMAT_COLUMN_EDIT:
+          case FormatColumnRedux.FORMAT_COLUMN_DELETE: {
+            adaptable.applyFormatColumnDisplayFormats();
+            adaptable.redraw();
+            let returnAction = next(action);
+            return returnAction;
+          }
+
+          /*******************
+           * GRADIENT COLUMN ACTIONS
+           *******************/
+          /**
+           * Use Cases: User has created / edited / deleted a Gradient Column
+           * Action:  Tell Adaptable so it can create / edite / delete the renderers as required
+           */
+          case GradientColumnRedux.GRADIENT_COLUMN_ADD: {
+            const actionTyped = action as GradientColumnRedux.GradientColumnAddAction;
+            const gradientColumn: GradientColumn = actionTyped.gradientColumn;
+            let returnAction = next(action);
+            adaptable.addGradientColumn(gradientColumn);
+            adaptable.redraw();
+            return returnAction;
+          }
+
+          case GradientColumnRedux.GRADIENT_COLUMN_EDIT: {
+            const actionTyped = action as GradientColumnRedux.GradientColumnEditAction;
+            const gradientColumn: GradientColumn = actionTyped.gradientColumn;
+            let returnAction = next(action);
+            adaptable.editGradientColumn(gradientColumn);
+            adaptable.redraw();
+            return returnAction;
+          }
+
+          case GradientColumnRedux.GRADIENT_COLUMN_DELETE: {
+            const actionTyped = action as GradientColumnRedux.GradientColumnDeleteAction;
+            const gradientColumn: GradientColumn = actionTyped.gradientColumn;
+            adaptable.removeGradientColumn(gradientColumn);
+            adaptable.redraw();
             let returnAction = next(action);
             return returnAction;
           }

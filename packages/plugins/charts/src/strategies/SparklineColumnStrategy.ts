@@ -6,7 +6,6 @@ import { ISparklineColumnStrategy } from './ISparklineColumnStrategy';
 
 import { AdaptableColumn } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/AdaptableColumn';
 import { SparklineColumnState } from '@adaptabletools/adaptable/src/PredefinedConfig/SparklineColumnState';
-import { DataType } from '@adaptabletools/adaptable/src/PredefinedConfig/Common/Enums';
 import { MenuItemShowPopup } from '@adaptabletools/adaptable/src/Utilities/MenuItem';
 import {
   AdaptableMenuItem,
@@ -59,26 +58,5 @@ export class SparklineColumnStrategy extends AdaptableStrategyBase
       });
     }
     return menuItemShowPopup;
-  }
-
-  protected InitState() {
-    if (this.SparklinesState != this.GetSparklinesState()) {
-      if (this.adaptable.isInitialised) {
-        // if we have made any changes then first delete them all
-        this.SparklinesState.SparklineColumns.forEach(sparklineColumn => {
-          this.adaptable.removeSparklineColumn(sparklineColumn);
-        });
-
-        this.GetSparklinesState().SparklineColumns.forEach(sparklineColumn => {
-          this.adaptable.editSparklineColumn(sparklineColumn);
-        });
-        this.adaptable.redraw();
-      }
-      this.SparklinesState = this.GetSparklinesState();
-    }
-  }
-
-  protected GetSparklinesState(): SparklineColumnState {
-    return this.adaptable.api.sparklineColumnApi.getSparklineColumnState();
   }
 }

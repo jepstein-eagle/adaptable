@@ -2810,10 +2810,7 @@ export class Adaptable implements IAdaptable {
       return originaldoesExternalFilterPass ? originaldoesExternalFilterPass(node) : true;
     };
 
-    // add any special renderers
-    this.addSpecialRendereredColumns();
-
-    this.applyFormatColumnDisplayFormats();
+    this.prepareGrid();
 
     // Build the COLUMN HEADER MENU.  Note that we do this EACH time the menu is opened (as items can change)
     const originalgetMainMenuItems: GetMainMenuItems = this.gridOptions.getMainMenuItems;
@@ -3092,6 +3089,25 @@ export class Adaptable implements IAdaptable {
     return returnValues;
   }
 
+  private prepareGrid(): void {
+    // add any special renderers, display formats, custom sorts and apply the theeme
+    this.addSpecialRendereredColumns();
+    this.applyFormatColumnDisplayFormats();
+    this.applyCustomSorts();
+    this.applyCurrentTheme();
+    this.redraw();
+  }
+
+  private applyCurrentTheme(): void {
+    this.api.themeApi.applyCurrentTheme();
+  }
+
+  private applyCustomSorts(): void {
+    this.api.customSortApi.getAllCustomSort().forEach(cs => {
+      this.setCustomSort(cs);
+    });
+  }
+
   public applyFormatColumnDisplayFormats(): void {
     // we will always call this method whenever any Format Column formats change - no need to manage adding, editing, deleting seperately
 
@@ -3277,6 +3293,7 @@ export class Adaptable implements IAdaptable {
       } else {
         colDef.tooltipField = '';
       }
+      // this.redraw();
     }
   }
 

@@ -21,17 +21,6 @@ export abstract class FormatColumnStrategy extends AdaptableStrategyBase
       ScreenPopups.FormatColumnPopup,
       adaptable
     );
-
-    adaptable.adaptableStore.onAny((eventName: string) => {
-      if (
-        eventName == FormatColumnRedux.FORMAT_COLUMN_ADD ||
-        eventName == FormatColumnRedux.FORMAT_COLUMN_EDIT ||
-        eventName == FormatColumnRedux.FORMAT_COLUMN_DELETE
-      ) {
-        this.adaptable.applyFormatColumnDisplayFormats();
-        this.adaptable.redraw();
-      }
-    });
   }
 
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {

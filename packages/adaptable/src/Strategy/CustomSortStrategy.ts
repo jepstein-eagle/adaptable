@@ -21,12 +21,6 @@ export class CustomSortStrategy extends AdaptableStrategyBase implements ICustom
     );
   }
 
-  public tidyOldConfig(): void {
-    this.adaptable.api.customSortApi.getAllCustomSort().forEach(cs => {
-      this.adaptable.setCustomSort(cs);
-    });
-  }
-
   public addColumnMenuItems(column: AdaptableColumn): AdaptableMenuItem[] | undefined {
     if (this.canCreateMenuItem('Full') && column.Sortable) {
       let customSort = this.adaptable.api.customSortApi

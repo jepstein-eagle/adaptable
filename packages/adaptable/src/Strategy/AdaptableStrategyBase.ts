@@ -18,7 +18,6 @@ import { AdaptableObject } from '../PredefinedConfig/Common/AdaptableObject';
 
 /**
  * Base class for all strategies and does most of the work of creating menus
- * Each strategy is reponsible for managing state (through InitState())
  */
 export abstract class AdaptableStrategyBase implements IStrategy {
   constructor(
@@ -62,11 +61,9 @@ export abstract class AdaptableStrategyBase implements IStrategy {
 
   protected InitState(): void {
     /**
-     *  derived in each strategy that needs to manage state
-     * Most now have been taken elsewhere into services.  All that is left is:
-     *  Chart Strategy - lots
-     *  Percent Bar
-     *  Sparkline Column
+     * used to be derived in each strategy that needs to manage state
+     * All now have been taken elsewhere into services as this is realy not a good pattern.
+     *  Only exception is Chart Strategy
      */
   }
 

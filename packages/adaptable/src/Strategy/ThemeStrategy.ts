@@ -14,8 +14,4 @@ export class ThemeStrategy extends AdaptableStrategyBase implements IThemeStrate
       adaptable
     );
   }
-
-  public tidyOldConfig(): void {
-    this.adaptable.api.themeApi.applyCurrentTheme();
-  }
 }
